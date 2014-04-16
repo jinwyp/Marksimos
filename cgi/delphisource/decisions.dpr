@@ -20,6 +20,8 @@ begin
 
     ReadDecisionRecord(0, 1, decision);
 
+    WriteDecisionRecord(0, 1, decision);
+
     jo := SO;
     jo.I['d_CID'] := decision.d_CID;
     Writeln(jo.AsJSon(False, False));

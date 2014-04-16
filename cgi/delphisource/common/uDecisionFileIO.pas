@@ -8,9 +8,9 @@ uses
 Function ReadDecisionRecord(pPeriodNumber: TPeriodNumber; pTeamNumber : TCIndx;
  var pDecision: TDecision): integer;
 
-//Function WriteDecisionRecord(pPeriodNumber: TPeriodNumber; pTeamNumber:TCIndx;
-//  var pDecision: TDecision) : integer;
-//
+Function WriteDecisionRecord(pPeriodNumber: TPeriodNumber; pTeamNumber:TCIndx;
+  var pDecision: TDecision) : integer;
+
 //Function ReadBackupRecord(pPeriodNumber: TPeriodNumber; pTeamNumber : TCIndx;
 // var pDecision: TDecision): integer;
 //
@@ -56,32 +56,33 @@ begin
 end;
 
 
-//Function WriteDecisionRecord(pPeriodNumber: TPeriodNumber; pTeamNumber:TCIndx;
-//  var pDecision: TDecision) : integer;
-//var
-//  vFile    : file of TDecision;
-//  vFileName   : String;
-//  vTempResult : integer;
-//begin
-//  vFileName := IncludeTrailingPathDelimiter(DataDirectory) + TeamsDecisionFileNames[pTeamNumber] + SeminarCode;
-//  try
-//    AssignFile( vFile, vFileName );
-//    Reset( vFile );
-//    if ( pPeriodNumber < Period_0 ) then pPeriodNumber := Period_0;
-//    Seek( vFile, pPeriodNumber);
-//    Write( vFile, pDecision);
-//    CloseFile( vFile );
-//    vTempResult := 0;
-//  except
-//    on E: EInOutError do
-//    begin
-//   //   ShowMessage( 'Error: ' + IntToStr( E.ErrorCode ) + #13 + #10 + vFileName + #13 + #10 + E.Message );
-//      vTempResult := E.ErrorCode;
-//      CloseFile( vFile );
-//    end;
-//  end;
-//  Result := vTempResult;
-//end;
+Function WriteDecisionRecord(pPeriodNumber: TPeriodNumber; pTeamNumber:TCIndx;
+  var pDecision: TDecision) : integer;
+var
+  vFile    : file of TDecision;
+  vFileName   : String;
+  vTempResult : integer;
+begin
+  vFileName := IncludeTrailingPathDelimiter(DataDirectory) + TeamsDecisionFileNames[pTeamNumber] + SeminarCode;
+  vFileName := 'D:\\myfiles\\marksimons-data\\Decisions_Team1.TTT';
+  try
+    AssignFile( vFile, vFileName );
+    Reset( vFile );
+    if ( pPeriodNumber < Period_0 ) then pPeriodNumber := Period_0;
+    Seek( vFile, pPeriodNumber);
+    Write( vFile, pDecision);
+    CloseFile( vFile );
+    vTempResult := 0;
+  except
+    on E: EInOutError do
+    begin
+   //   ShowMessage( 'Error: ' + IntToStr( E.ErrorCode ) + #13 + #10 + vFileName + #13 + #10 + E.Message );
+      vTempResult := E.ErrorCode;
+      CloseFile( vFile );
+    end;
+  end;
+  Result := vTempResult;
+end;
 //
 //Function ReadBackupRecord(pPeriodNumber: TPeriodNumber;  pTeamNumber : TCIndx;
 //  var pDecision: TDecision): integer;
