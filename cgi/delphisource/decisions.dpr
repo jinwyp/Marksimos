@@ -11,7 +11,7 @@ uses
 var
   decision: TDecision;
   jo : ISuperObject;
-
+  ctx: TSuperRttiContext;
 
 begin
   try
@@ -20,10 +20,9 @@ begin
 
     ReadDecisionRecord(0, 1, decision);
 
-    WriteDecisionRecord(0, 1, decision);
-
-    jo := SO;
-    jo.I['d_CID'] := decision.d_CID;
+    //WriteDecisionRecord(0, 1, decision);
+    ctx := TSuperRttiContext.Create;
+    jo := ctx.AsJson<TDecision>(decision);
     Writeln(jo.AsJSon(False, False));
     Writeln('HELO');
   except
