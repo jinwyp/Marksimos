@@ -2,3 +2,4 @@ __history
 .identcache
 .DS_Store
 *.dcu
+node_modules
