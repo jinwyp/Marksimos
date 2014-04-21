@@ -13,7 +13,7 @@ const
   dummyPeriod = 0;
   dummyTeam = 'MAY';
 
-function getTeamsListData : TStrings): string;
+function getTeam(sListData : TStrings): string;
 function getPeriod(sListData : TStrings): Integer;
 
 
