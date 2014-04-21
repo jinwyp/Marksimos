@@ -3,3 +3,58 @@ __history
 .DS_Store
 *.dcu
 node_modules
+
+# Numerous always-ignore extensions
+*.diff
+*.err
+*.orig
+*.log
+*.rej
+*.swo
+*.swp
+*.vi
+*.tags*
+*~
+*.sass-cache
+
+# OS or Editor folders
+.DS_Store
+Thumbs.db
+.cache
+.project
+.settings
+.tmproj
+*.esproj
+nbproject
+
+# Dreamweaver added files
+_notes
+dwsync.xml
+
+# Komodo
+*.komodoproject
+.komodotools
+
+# Folders to ignore
+.hg
+.svn
+.CVS
+intermediate
+publish
+.idea
+imgstorage
+
+# Zend files
+.buildpath
+
+# Mysql Database chart
+*.mwb.bak
+
+
+# Testing Report
+unit.xml
+
+# Excel Temp file
+~$*.xlsx
+
+# webstorm
