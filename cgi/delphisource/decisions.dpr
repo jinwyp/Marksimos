@@ -38,7 +38,6 @@ begin
     ctx := TSuperRttiContext.Create;
 
     sValue := getVariable('REQUEST_METHOD');
-    sValue := 'GET';
 
     if sValue='GET' then
     begin
@@ -75,9 +74,12 @@ begin
 
       try
         //jo := SO;
-        jo := TSuperObject.ParseFile('D:\\myfiles\\decision.json', False);
-        decision := ctx.AsType<TDecision>(jo);
+        //jo := TSuperObject.ParseFile('D:\\myfiles\\decision.json', False);
+        //decision := ctx.AsType<TDecision>(jo);
         //sku := ctx.AsType<TOneSKUDecision>(jo);
+
+        jo := TSuperObject.ParseFile('D:\\myfiles\\all_results.json', False);
+        onePeriodNotAPointer := ctx.AsType<TOnePeriodInfo>(jo);
         //WriteDecisionRecord(0, 1, decision);
       finally
         ctx.Free
