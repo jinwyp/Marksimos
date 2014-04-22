@@ -21,7 +21,8 @@ Function DLLStr( aStringID : Integer ) : String;
 //Function ReadParameters( var GenPar : TGeneralParameters; vSimulationVariant : TSimulationVariant; var SegPar : TSegmentsParameters ) : Integer;overload;
 
 
-//Function ReadResults( PeriodNumber : TPeriodNumber; var OnePeriodResults : POnePeriodInfo ) : Integer;
+Function ReadResults( PeriodNumber : TPeriodNumber; var OnePeriodResults : POnePeriodInfo ) : Integer;
+//Function ReadResults( PeriodNumber : TPeriodNumber; var OnePeriodResults : TOnePeriodInfo ) : Integer;
 procedure WriteToLogfile(messa : string);
 
 Implementation {-------------------------------------------------------------------------------------------------------------}
@@ -211,7 +212,49 @@ end;
 //
 //end;
 
-//Function ReadResults( PeriodNumber : TPeriodNumber; var OnePeriodResults : POnePeriodInfo ) : Integer;
+Function ReadResults( PeriodNumber : TPeriodNumber; var OnePeriodResults : POnePeriodInfo ) : Integer;
+var
+  ResultsFile : file of TOnePeriodInfo;
+  FileName    :  String;
+  TempResult  : Integer;
+  RecNo       : Integer;
+
+begin
+  RecNo := PeriodNumber - History_2;
+  FileName := IncludeTrailingPathDelimiter(DataDirectory) +  AllResultsFileName + SeminarCode;
+  FileName := 'D:\\myfiles\\marksimons-data\\AllResults.TTT';
+  if FileExists(FileName) = false then
+  begin
+      //MessageDlg('result file does not exist:' + FileName,mtWarning,[mbOK], 0);
+      Result := -1;
+      exit;
+  end;
+
+  try
+      try
+        AssignFile( ResultsFile, FileName);
+        Reset( ResultsFile);
+        Seek( ResultsFile, RecNo );
+        Read( ResultsFile, OnePeriodResults^ );
+        TempResult := ReadResultsOK;
+      except
+        on E: EInOutError do
+        begin
+         // ShowMessage( 'Error: ' + IntToStr( E.ErrorCode ) + #13 + #10 + FileName + #13 + #10 + E.Message );
+          TempResult := E.ErrorCode;
+        end;
+      end;  { try }
+
+  finally
+      CloseFile( ResultsFile);
+  end;
+
+  Result := TempResult;
+
+end;
+
+//ReadResults method without using pointer
+//Function ReadResults( PeriodNumber : TPeriodNumber; var OnePeriodResults : TOnePeriodInfo ) : Integer;
 //var
 //  ResultsFile : file of TOnePeriodInfo;
 //  FileName    :  String;
@@ -221,10 +264,10 @@ end;
 //begin
 //  RecNo := PeriodNumber - History_2;
 //  FileName := IncludeTrailingPathDelimiter(DataDirectory) +  AllResultsFileName + SeminarCode;
-//
+//  FileName := 'D:\\myfiles\\marksimons-data\\AllResults.TTT';
 //  if FileExists(FileName) = false then
 //  begin
-//      MessageDlg('result file does not exist:' + FileName,mtWarning,[mbOK], 0);
+//      //MessageDlg('result file does not exist:' + FileName,mtWarning,[mbOK], 0);
 //      Result := -1;
 //      exit;
 //  end;
@@ -234,7 +277,7 @@ end;
 //        AssignFile( ResultsFile, FileName);
 //        Reset( ResultsFile);
 //        Seek( ResultsFile, RecNo );
-//        Read( ResultsFile, OnePeriodResults^ );
+//        Read( ResultsFile, OnePeriodResults );
 //        TempResult := ReadResultsOK;
 //      except
 //        on E: EInOutError do

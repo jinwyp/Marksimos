@@ -8,6 +8,8 @@ uses
   System.SysUtils, Windows, Classes, MA0_SharedElements, superobject,
   System.TypInfo, uDecisionFileIO, CgiCommonFunction;
 
+type
+  Test = 1..5;
 
 var
   decision: TDecision;
@@ -19,6 +21,10 @@ var
   iSize: string;
   sDati: string;
   jsonStr: string;
+  t: Test;
+  onePeriod: POnePeriodInfo;
+  allPeriod: PAllPeriodsInfos;
+  onePeriodNotAPointer: TOnePeriodInfo;
 
 begin
   SetMultiByteConversionCodePage(CP_UTF8);
@@ -32,17 +38,26 @@ begin
     ctx := TSuperRttiContext.Create;
 
     sValue := getVariable('REQUEST_METHOD');
-    //sValue := 'GET';
+    sValue := 'GET';
 
     if sValue='GET' then
     begin
-//        sValue := getVariable('QUERY_STRING');
-//        Writeln(sValue);
+        sValue := getVariable('QUERY_STRING');
+        //t := StrToInt(Copy(sValue, 1, 1));
+
         WriteLn;
-        ReadDecisionRecord(0, 1, decision);
-        ctx := TSuperRttiContext.Create;
-        jo := ctx.AsJson<TDecision>(decision);
-        Writeln(jo.AsJSon(False, True));
+          ctx := TSuperRttiContext.Create;
+//        ReadDecisionRecord(0, 1, decision);
+//        jo := ctx.AsJson<TDecision>(decision);
+//        Writeln(jo.AsJSon(False, True));
+
+        //read all results
+        allPeriod := AllocMem(Sizeof(TAllPeriodsInfos));
+        onePeriod := @(allPeriod[0]);
+        //onePeriod := @(onePeriodNotAPointer);
+        ReadResults(1, onePeriod);
+        jo := ctx.AsJson<TOnePeriodInfo>(onePeriod^);
+        Writeln(jo.AsJSon());
     end
     else
     begin
@@ -61,8 +76,8 @@ begin
       try
         //jo := SO;
         jo := TSuperObject.ParseFile('D:\\myfiles\\decision.json', False);
-        //decision := ctx.AsType<TDecision>(jo);
-        sku := ctx.AsType<TOneSKUDecision>(jo);
+        decision := ctx.AsType<TDecision>(jo);
+        //sku := ctx.AsType<TOneSKUDecision>(jo);
         //WriteDecisionRecord(0, 1, decision);
       finally
         ctx.Free
