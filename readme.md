@@ -1,4 +1,5 @@
-# 程序环境设置
+# 环境设置
+##基本环境配置
 前端依赖安装：
 ```
 bower install
@@ -7,7 +8,7 @@ bower install
 ```
 bower list
 ```
-后端依赖安装：
+后端(NodeJS)依赖安装：
 ```
 npm install
 ```
@@ -15,10 +16,9 @@ npm install
 ```
 npm list
 ```
+##后端Delphi CGI环境配置
 
 
-
-## NODE JS 环境设置
 
 
 # 代码架构说明
