@@ -6,31 +6,19 @@ program decisions;
 
 uses
   System.SysUtils, Windows, Classes, MA0_SharedElements, superobject,
-  System.TypInfo, uDecisionFileIO, CgiCommonFunction;
-
-type
-  Test = 1..5;
+  System.TypInfo, uDecisionFileIO, CgiCommonFunction, Generics.Collections;
 
 var
   decision: TDecision;
-  sku: TOneSKUDecision;
   jo : ISuperObject;
   ctx: TSuperRttiContext;
-  sListData: tStrings;
+  params: TDictionary<String, String>;
   sValue: string;
-  iSize: string;
-  sDati: string;
-  jsonStr: string;
-  t: Test;
-  onePeriod: POnePeriodInfo;
-  allPeriod: PAllPeriodsInfos;
-  onePeriodNotAPointer: TOnePeriodInfo;
+  period: integer;
+  team: Integer;
 
 begin
   SetMultiByteConversionCodePage(CP_UTF8);
-  sDati := '';
-  sListData := TStringList.Create;
-  sListData.Clear;
 
   try
     WriteLn('Content-type: application/json');
@@ -42,21 +30,13 @@ begin
     if sValue='GET' then
     begin
         sValue := getVariable('QUERY_STRING');
-        //t := StrToInt(Copy(sValue, 1, 1));
+        //sValue := 'period=0&team=1';
+        params := Explode(sValue);
 
         WriteLn;
-          ctx := TSuperRttiContext.Create;
-//        ReadDecisionRecord(0, 1, decision);
-//        jo := ctx.AsJson<TDecision>(decision);
-//        Writeln(jo.AsJSon(False, True));
-
-        //read all results
-        allPeriod := AllocMem(Sizeof(TAllPeriodsInfos));
-        onePeriod := @(allPeriod[0]);
-        //onePeriod := @(onePeriodNotAPointer);
-        ReadResults(1, onePeriod);
-        jo := ctx.AsJson<TOnePeriodInfo>(onePeriod^);
-        Writeln(jo.AsJSon());
+        ReadDecisionRecord(StrToInt(params['period']), StrToInt(params['team']), decision);
+        jo := ctx.AsJson<TDecision>(decision);
+        Writeln(jo.AsJSon(False, True));
     end
     else
     begin
@@ -78,8 +58,8 @@ begin
         //decision := ctx.AsType<TDecision>(jo);
         //sku := ctx.AsType<TOneSKUDecision>(jo);
 
-        jo := TSuperObject.ParseFile('D:\\myfiles\\all_results.json', False);
-        onePeriodNotAPointer := ctx.AsType<TOnePeriodInfo>(jo);
+//        jo := TSuperObject.ParseFile('D:\\myfiles\\all_results.json', False);
+//        onePeriodNotAPointer := ctx.AsType<TOnePeriodInfo>(jo);
         //WriteDecisionRecord(0, 1, decision);
       finally
         ctx.Free
@@ -87,6 +67,8 @@ begin
     end;
   except
     on E: Exception do
+    begin
       Writeln(E.ClassName, ': ', E.Message);
+    end;
   end;
 end.
