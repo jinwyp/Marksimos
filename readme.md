@@ -1,4 +1,22 @@
 # 程序环境设置
+前端依赖安装：
+```
+bower install
+```
+前端依赖列表(bower.json)：
+```
+bower list
+```
+后端依赖安装：
+```
+npm install
+```
+后端依赖列表(package.json):
+```
+npm list
+```
+
+
 
 ## NODE JS 环境设置
 
