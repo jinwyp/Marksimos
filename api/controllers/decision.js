@@ -1,5 +1,5 @@
 var request = require('request');
-var config = require('config.js');
+var config = require('../config.js');
 var url = require('url');
 var util = require('util');
 
@@ -15,7 +15,7 @@ exports.getDecision = function(req, res, next){
         return res.json({errMsg: 'parameter error'});
     }
 
-    var reqUrl = config.cgiService + util.format('?period=%s&team=&s');
+    var reqUrl = config.cgiService + util.format('decisions.exe?period=%s&team=&s');
     request(reqUrl, function(err, response, body){
         if(err){
             return next(err);
