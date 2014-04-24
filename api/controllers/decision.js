@@ -15,7 +15,7 @@ exports.getDecision = function(req, res, next){
         return res.json({errMsg: 'parameter error'});
     }
 
-    var reqUrl = config.cgiService + util.format('decisions.exe?period=%s&team=&s');
+    var reqUrl = config.cgiService + util.format('decisions.exe?period=%s&team=%s', period, team);
     request(reqUrl, function(err, response, body){
         if(err){
             return next(err);
