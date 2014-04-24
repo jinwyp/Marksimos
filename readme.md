@@ -1,5 +1,6 @@
 #Directory layout#
 
+
 ```
 trunk
 ├── AdminCockpit
