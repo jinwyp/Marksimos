@@ -9,8 +9,10 @@ var bodyParser = require('body-parser');
 var app = express();
 
 // view engine setup
-//app.set('views', path.join(__dirname, 'app'));
-//app.set('view engine', 'ejs');
+app.set('views', path.join(__dirname, 'views'));
+app.set('view engine', 'ejs');
+
+
 
 app.use(favicon());
 app.use(logger('dev'));
@@ -20,6 +22,7 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
 require('./api/routes.js')(app);
+
 
 /// catch 404 and forwarding to error handler
 // app.use(function(req, res, next) {
