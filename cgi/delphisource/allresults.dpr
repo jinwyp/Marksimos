@@ -34,7 +34,6 @@ begin
       ReadResults(StrToInt(params['period']), onePeriod);
       jo := ctx.AsJson<TOnePeriodInfo>(onePeriod^);
       Writeln(jo.AsJSon());
-      Writeln('asdf');
     end;
   except
     on E: Exception do
