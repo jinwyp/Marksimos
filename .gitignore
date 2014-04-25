@@ -59,3 +59,4 @@ unit.xml
 ~$*.xlsx
 
 # webstorm
+*Win32
