@@ -66,3 +66,6 @@ unit.xml
 *.dcu
 *.local
 *.dproj
+
+*.sublime-project
+*.sublime-workspace

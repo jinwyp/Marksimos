@@ -1,4 +1,37 @@
+# 环境设置
+##基本环境配置
+前端依赖安装：
+```
+bower install
+```
+前端依赖列表(bower.json)：
+```
+bower list
+```
+后端(NodeJS)依赖安装：
+```
+npm install
+```
+后端依赖列表(package.json):
+```
+npm list
+```
+##后端Delphi CGI环境配置
+
+
+
+
+# 代码架构说明
+
+## 前端
+
+## 后端
+
+
+
+
 #Directory layout#
+
 
 ```
 trunk
@@ -49,3 +82,11 @@ trunk
 ├── Parameters
 └── ...
 ```
+
+
+
+
+
+
+
+
