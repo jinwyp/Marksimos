@@ -3,19 +3,15 @@ var config = require('../config.js');
 var url = require('url');
 var util = require('util');
 
-exports.getDecision = function(req, res, next){
-    var team = req.query.team;
-    var period = req.query.period;
 
-    if(team===undefined || team===''){
-        return res.json({errMsg: 'parameter error'});
-    }
+exports.getMarketshare = function(req, res, next){
+    var period = req.query.period;
 
     if(period===undefined || period===''){
         return res.json({errMsg: 'parameter error'});
     }
 
-    var reqUrl = config.cgiService + util.format('decisions.exe?period=%s&team=%s', period, team);
+    var reqUrl = config.cgiService + util.format('allresults.exe?period=%s', period);
     request(reqUrl, function(err, response, body){
         if(err){
             return next(err);
