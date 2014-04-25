@@ -7,7 +7,7 @@ module.exports = function(app){
     });
 
 
-    
+
     app.get('/api/decision', decisionController.getDecision);
     app.get('/api/marketshare', marketshareController.getMarketshare);
 };
