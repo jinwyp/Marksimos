@@ -60,3 +60,9 @@ unit.xml
 
 # webstorm
 *Win32
+
+*.identcache
+*.res
+*.dcu
+*.local
+*.dproj
