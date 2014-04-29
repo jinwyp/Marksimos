@@ -12,22 +12,35 @@ var decisionModel = require('../models/decision.js');
  * 
  */
 exports.init = function(req, res, next){
-    var periods = [-3];
-    var teams = [1];
+    var seminar = req.session.seminar;
 
-    var queries = [];
-    periods.forEach(function(period){
-        teams.forEach(function(team){
-            queries.push(initOnePeriodDecison(period, team));
-        })
-    });
-
-    Q.all(queries).then(function(){
-        res.send('init success');
+    initDecision(seminar).then(function(){
+        res.send('initialize decision success');
     }).fail(function(err){
         next(err);
     });
 };
+
+/**
+ * Initialize decision
+ *
+ * @method initDecision
+ * @param {Number} seminar
+ * @return {Object} a promise
+ */
+function initDecision(seminar){
+    var periods = config.initPeriods
+    var teams = config.initTeams;
+
+    var queries = [];
+    periods.forEach(function(period){
+        teams.forEach(function(team){
+            queries.push(initOnePeriodDecison(seminar, team, period));
+        })
+    });
+
+    return Q.all(queries);
+}
 
 /**
  * Get decision from CGI service, save it to mongo
@@ -38,8 +51,9 @@ exports.init = function(req, res, next){
  * @param {team} team
  * @return {Object} a promise
  */
-function initOnePeriodDecison(period, team){
-    var reqUrl = config.cgiService + util.format('decisions.exe?period=%s&team=%s', period, team);
+function initOnePeriodDecison(seminar, team, period){
+    var reqUrl = config.cgiService + util.format('decisions.exe?period=%s&team=%s&seminar=%s'
+        , period, team, seminar);
     return request(reqUrl).then(function(result){
         decisionCleaner.clean(result);
         return decisionModel.saveDecision(result);
