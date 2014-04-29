@@ -15,7 +15,7 @@
 ``` npm install bower --save-dev ```
 
 
-* 安装前段的包与库资源,通过编辑bower.json文件,然后运行 ：
+* 安装前段的包与库资源,通过编辑 bower.json 文件,然后运行 ：
 ``` bower install ```
 
 * 查看已安装的前段的包
@@ -26,7 +26,7 @@
 
 ### 后端(NodeJS)依赖安装：
 
-* 编辑后端依赖列表文件(package.json),然后安装
+* 编辑后端依赖列表文件 package.json 文件,然后运行
 ``` npm install --save-dev ```
 
 * 查看当前已安装的包
