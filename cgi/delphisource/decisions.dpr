@@ -14,8 +14,8 @@ var
   ctx: TSuperRttiContext;
   params: TDictionary<String, String>;
   sValue: string;
-  period: integer;
   team: Integer;
+  DataDirectory: string;
 
 begin
   SetMultiByteConversionCodePage(CP_UTF8);
@@ -26,15 +26,17 @@ begin
     ctx := TSuperRttiContext.Create;
 
     sValue := getVariable('REQUEST_METHOD');
-
+    //sValue := 'GET';
     if sValue='GET' then
     begin
         sValue := getVariable('QUERY_STRING');
-        //sValue := 'period=0&team=1';
+        //sValue := 'period=0&team=1&seminar=TTT';
         params := Explode(sValue);
 
+        LoadConfigIni(DataDirectory, params['seminar']);
+
         WriteLn;
-        ReadDecisionRecord(StrToInt(params['period']), StrToInt(params['team']), decision);
+        ReadDecisionRecord(DataDirectory, params['seminar'], StrToInt(params['period']), StrToInt(params['team']), decision);
         jo := ctx.AsJson<TDecision>(decision);
         Writeln(jo.AsJSon(False, True));
     end

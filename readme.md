@@ -1,21 +1,80 @@
 # 环境设置
-##基本环境配置
-前端依赖安装：
+
+
+
+## 基本环境配置
+
+### 前端包与依赖管理 使用Bower工具
+
+* 安装Bower
+
+1. 安装Bower到默认全局环境下
+``` npm install -g bower ```
+
+2. 安装Bower到当前项目下并写入package.json文件里面
+``` npm install bower --save-dev ```
+
+
+* 安装前段的包与库资源,通过编辑 bower.json 文件,然后运行 ：
+``` bower install ```
+
+* 查看已安装的前段的包
+``` bower list ```
+
+
+
+
+### 后端(NodeJS)依赖安装：
+
+* 编辑后端依赖列表文件 package.json 文件,然后运行
+``` npm install --save-dev ```
+
+* 查看当前已安装的包
+``` npm ls ```
+
+
+
+### Mongo 数据库安装：
+
+* Mac下使用 Homebrew 安装 ``` brew install mongodb ```
+
+* 安装完成后 可以
+
+To have launchd start mongodb at login:
+    ``` ln -sfv /usr/local/opt/mongodb/*.plist ~/Library/LaunchAgents ```
+Then to load mongodb now:
+    ``` launchctl load ~/Library/LaunchAgents/homebrew.mxcl.mongodb.plist ```
+Or, if you don't want/need launchctl, you can just run:
+    ``` mongod --config /usr/local/etc/mongod.conf ```
+
+* 运行mongo, 并指定数据库路径(默认路径在/usr/local/var/mongodb) ``` mongod --dbpath <path to data directory> ``` (请确保当前用户对数据库文件路径有读写权限)
+
+* 或运行mongo, 并指定配置文件路径(默认的配置文件在 /usr/local/etc/mongod.conf) ``` mongod --dbpath <path to data directory> ```
+
+* mongo 的配置文件范例
+
 ```
-bower install
+# Store data in /usr/local/var/mongodb instead of the default /data/db
+# dbpath = /usr/local/var/mongodb
+dbpath = /Users/jinwyp/Documents/mongodata
+
+# Append logs to /usr/local/var/log/mongodb/mongo.log
+# logpath = /usr/local/var/log/mongodb/mongo.log
+logpath = /Users/jinwyp/Documents/mongolog/mongo.log
+logappend = true
+
+# Only accept local connections
+bind_ip = 127.0.0.1
+
+
+# fork = true
+# port = 27017
+# quiet = true
+# journal = true
+
 ```
-前端依赖列表(bower.json)：
-```
-bower list
-```
-后端(NodeJS)依赖安装：
-```
-npm install
-```
-后端依赖列表(package.json):
-```
-npm list
-```
+
+
 ##后端Delphi CGI环境配置
 
 
@@ -30,9 +89,8 @@ npm list
 
 
 
-#Directory layout#
-
-
+#Delphi 代码说明#
+##Directory layout##
 ```
 trunk
 ├── AdminCockpit
@@ -82,11 +140,107 @@ trunk
 ├── Parameters
 └── ...
 ```
+##Marksimos charts implementation : where to find related field?##
+
+**Unit location**
+```
+trunk/AdminCockpit/uTeamMainForm.pas
+```
+
+Company info series line chart:
+```
+procedure FillChartWithCompany(...);
+```
+
+Market/Segment info series line chart:
+```
+procedure FillChartMarketEvolution(…);
+```
+
+Segment share series pie chart:
+```
+procedure FillChartSegmentShare(…);
+```
+
+SKU leader series bar chart:
+```
+procedure FillChartSegmentLeader(…);
+```
+
+SKU/Brand perception map:
+```
+procedure CreateTreeBrands(…);
+procedure CreateMapBrands(…);
+procedure CreateTreeSkus(…);
+procedure CreateMapSkus(…);
+```
+
+SKU perception map pop info:
+```
+chartSKUMouseMove
+```
+
+SKU/Brand inventory map:
+```
+procedure CreateTreeInventorySkus(…);
+procedure CreateMapInventorySkus(…);
+```
+
+##Marksimos reports implementation : where to find related field?##
+
+Company status:
+```
+trunk/AdminCockpit/MA0_Companies_Profiles.pas
+trunk/AdminCockpit/MA0_Brands_Profiles.pas
+trunk/AdminCockpit/MA0_SKUs_Profiles.pas
+```
+
+Financial data -> Financial report:
+```
+trunk/AdminiCockpit/MA0_FinancialReports.pas
+trunk/AdminiCockpit/MA0_FinancialReports_TN.pas
+```
+
+Financial data -> Profitability Evolution:
+```
+trunk/AdminCockpit/MA0_Companies_ProfitabilityEvolution.pas
+trunk/AdminCockpit/MA0_Brands_ProfitabilityEvolution.pas
+trunk/AdminCockpit/MA0_SKUs_ProfitabilityEvolution.pas
+```
+
+Segment distribution:
+```
+trunk/AdminCockpit/MA0_ConsumerSurvey.pas
+```
+
+Competitor info -> Competitor intelligence 
+```
+trunk/AdminCockpit/MA0_CompetitveIntelligence.pas
+```
+
+Competitor info -> Market Trends
+```
+trunk/AdminCockpit/MA0_MarketSurveys.pas
+trunk/AdminCockpit/MA0 Companies Market Studies.INC
+trunk/AdminCockpit/MA0 Brands Market Studies.INC
+trunk/AdminCockpit/MA0 SKUs Market Studies.INC
+```
 
 
 
 
 
+
+
+# Mongo 安装后
+
+==> Caveats
+To have launchd start mongodb at login:
+    ln -sfv /usr/local/opt/mongodb/*.plist ~/Library/LaunchAgents
+Then to load mongodb now:
+    launchctl load ~/Library/LaunchAgents/homebrew.mxcl.mongodb.plist
+Or, if you don't want/need launchctl, you can just run:
+    mongod --config /usr/local/etc/mongod.conf
 
 
 
