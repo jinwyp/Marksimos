@@ -69,3 +69,7 @@ unit.xml
 
 *.sublime-project
 *.sublime-workspace
+
+
+# mongo
+*mongodbdata
