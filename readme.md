@@ -115,30 +115,42 @@ procedure CreateMapInventorySkus(…);
 ##Marksimos reports implementation : where to find related field?##
 
 1. Company status:
+```
 trunk/AdminCockpit/MA0_Companies_Profiles.pas
 trunk/AdminCockpit/MA0_Brands_Profiles.pas
 trunk/AdminCockpit/MA0_SKUs_Profiles.pas
+```
 
 2. Financial data -> Financial report:
+```
 trunk/AdminiCockpit/MA0_FinancialReports.pas
 trunk/AdminiCockpit/MA0_FinancialReports_TN.pas
+```
 
 3. Financial data -> Profitability Evolution:
+```
 trunk/AdminCockpit/MA0_Companies_ProfitabilityEvolution.pas
 trunk/AdminCockpit/MA0_Brands_ProfitabilityEvolution.pas
 trunk/AdminCockpit/MA0_SKUs_ProfitabilityEvolution.pas
+```
 
 4. Segment distribution:
+```
 trunk/AdminCockpit/MA0_ConsumerSurvey.pas
+```
 
 5. Competitor info -> Competitor intelligence 
+```
 trunk/AdminCockpit/MA0_CompetitveIntelligence.pas
+```
 
 6. Competitor info -> Market Trends
+```
 trunk/AdminCockpit/MA0_MarketSurveys.pas
-{$I 'MA0 Companies Market Studies.INC'}
-{$I 'MA0 Brands Market Studies.INC'}
-{$I 'MA0 SKUs Market Studies.INC'}
+trunk/AdminCockpit/MA0 Companies Market Studies.INC
+trunk/AdminCockpit/MA0 Brands Market Studies.INC
+trunk/AdminCockpit/MA0 SKUs Market Studies.INC
+```
 
 
 
