@@ -5,10 +5,10 @@ interface
 uses
   SysUtils, Windows, Messages, MA0_SharedElements;
 
-Function ReadDecisionRecord(pPeriodNumber: TPeriodNumber; pTeamNumber : TCIndx;
+Function ReadDecisionRecord(DataDirectory: string; seminar: string; pPeriodNumber: TPeriodNumber; pTeamNumber : TCIndx;
  var pDecision: TDecision): integer;
 
-Function WriteDecisionRecord(pPeriodNumber: TPeriodNumber; pTeamNumber:TCIndx;
+Function WriteDecisionRecord(DataDirectory: string; seminar: string; pPeriodNumber: TPeriodNumber; pTeamNumber:TCIndx;
   var pDecision: TDecision) : integer;
 
 //Function ReadBackupRecord(pPeriodNumber: TPeriodNumber; pTeamNumber : TCIndx;
@@ -21,17 +21,15 @@ Function WriteDecisionRecord(pPeriodNumber: TPeriodNumber; pTeamNumber:TCIndx;
 
 implementation
 
-Function ReadDecisionRecord(pPeriodNumber: TPeriodNumber;  pTeamNumber : TCIndx;
+Function ReadDecisionRecord(DataDirectory: string; seminar: string; pPeriodNumber: TPeriodNumber;  pTeamNumber : TCIndx;
   var pDecision: TDecision): integer;
 var
   vFile    : file of TDecision;
   vFileName   : String;
   vTempResult : integer;
 begin
-  vFileName := IncludeTrailingPathDelimiter(DataDirectory) + TeamsDecisionFileNames[pTeamNumber] + SeminarCode;
-  //showmessage(inttostr(pPeriodNumber) + inttostr( pTeamNumber));
+  vFileName := DataDirectory + 'Decisions_Team' + IntToStr(pTeamNumber) + '.' + seminar;
   try
-    vFileName := 'D:\\myfiles\\marksimons-data\\Decisions_Team1.TTT';
     AssignFile( vFile, vFileName );
     //add by Michael
    // FileMode := fmOpenRead;
@@ -56,15 +54,14 @@ begin
 end;
 
 
-Function WriteDecisionRecord(pPeriodNumber: TPeriodNumber; pTeamNumber:TCIndx;
+Function WriteDecisionRecord(DataDirectory: string; seminar: string; pPeriodNumber: TPeriodNumber; pTeamNumber:TCIndx;
   var pDecision: TDecision) : integer;
 var
   vFile    : file of TDecision;
   vFileName   : String;
   vTempResult : integer;
 begin
-  vFileName := IncludeTrailingPathDelimiter(DataDirectory) + TeamsDecisionFileNames[pTeamNumber] + SeminarCode;
-  vFileName := 'D:\\myfiles\\marksimons-data\\Decisions_Team1.TTT';
+  vFileName := DataDirectory + 'Decisions_Team' + IntToStr(pTeamNumber) + '.' + seminar;
   try
     AssignFile( vFile, vFileName );
     Reset( vFile );

@@ -14,29 +14,12 @@ const
   dummyPeriod = 0;
   dummyTeam = 'MAY';
 
-function getTeam(sListData : TStrings): string;
-function getPeriod(sListData : TStrings): Integer;
-
-
 function getVariable(name : string):string;
 function Split(rawStr: string; c: Char):TStringList;
 function Explode(sQuery: string):TDictionary<String, string>;
+procedure LoadConfigIni(var DataDirectory: string; seminar : string);
 
 implementation {-------------------------------------------------------------------------------------------------------------------}
-
-function getTeam(sListData : TStrings): string;
-begin
-  Result := dummyTeam;
-  if sListData.IndexOfName('seminar') <> -1 then
-    Result  := sListData.Values['seminar'];
-end;
-
-function getPeriod(sListData : tStrings): Integer;
-begin
-  Result := dummyPeriod;
-  if sListData.IndexOfName('period') <> -1 then
-     Result := StrToInt(sListData.Values['period']);
-end;
 
 
 function getVariable(name:string):string;
@@ -83,8 +66,6 @@ end;
 
 function Explode(sQuery: string):TDictionary<String, string>;
 var
-  key: string;
-  value: string;
   parameters: TStringList;
   keyValue: TStringList;
   i: Integer;
@@ -100,6 +81,21 @@ begin
     end;
   end;
 end;
+
+
+procedure LoadConfigIni(var DataDirectory: string; seminar : string);
+var
+	ini : Tinifile;
+begin
+	ini := TIniFile.Create(ExtractFilePath(ParamStr(0)) + 'CgiConfig.ini');
+	with ini do
+	begin
+	  DataDirectory := ini.ReadString('Options','DataDirectory','C:\Marksimos\');
+    //DataDirectory := DataDirectory + seminar + '\';
+	  ini.Free;
+	end;
+end;
+
 
 end.
 
