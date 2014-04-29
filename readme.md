@@ -34,6 +34,47 @@
 
 
 
+### Mongo 数据库安装：
+
+* Mac下使用 Homebrew 安装 ``` brew install mongodb ```
+
+* 安装完成后 可以
+
+To have launchd start mongodb at login:
+    ``` ln -sfv /usr/local/opt/mongodb/*.plist ~/Library/LaunchAgents ```
+Then to load mongodb now:
+    ``` launchctl load ~/Library/LaunchAgents/homebrew.mxcl.mongodb.plist ```
+Or, if you don't want/need launchctl, you can just run:
+    ``` mongod --config /usr/local/etc/mongod.conf ```
+
+* 运行mongo, 并指定数据库路径(默认路径在/usr/local/var/mongodb) ``` mongod --dbpath <path to data directory> ``` (请确保当前用户对数据库文件路径有读写权限)
+
+* 或运行mongo, 并指定配置文件路径(默认的配置文件在 /usr/local/etc/mongod.conf) ``` mongod --dbpath <path to data directory> ```
+
+* mongo 的配置文件范例
+
+```
+# Store data in /usr/local/var/mongodb instead of the default /data/db
+# dbpath = /usr/local/var/mongodb
+dbpath = /Users/jinwyp/Documents/mongodata
+
+# Append logs to /usr/local/var/log/mongodb/mongo.log
+# logpath = /usr/local/var/log/mongodb/mongo.log
+logpath = /Users/jinwyp/Documents/mongolog/mongo.log
+logappend = true
+
+# Only accept local connections
+bind_ip = 127.0.0.1
+
+
+# fork = true
+# port = 27017
+# quiet = true
+# journal = true
+
+```
+
+
 ##后端Delphi CGI环境配置
 
 
