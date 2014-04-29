@@ -9,17 +9,17 @@
 * 安装Bower
 
 安装Bower到默认全局环境下
-``` npm install -g bower
+``` npm install -g bower ```
 
 安装Bower到当前项目下并写入package.json文件里面
-``` npm install bower --save-dev
+``` npm install bower --save-dev ```
 
 
 * 安装前段的包与库资源,通过编辑bower.json文件,然后运行 ：
-``` bower install
+``` bower install ```
 
 * 查看已安装的前段的包
-``` bower list
+``` bower list ```
 
 
 
@@ -27,12 +27,10 @@
 ### 后端(NodeJS)依赖安装：
 
 * 编辑后端依赖列表文件(package.json),然后安装
+``` npm install --save-dev ```
 
-``` npm install --save-dev
-
-
-```
-npm list
+* 查看当前已安装的包
+``` npm ls ```
 
 
 
