@@ -8,10 +8,10 @@
 
 * 安装Bower
 
-安装Bower到默认全局环境下
+1. 安装Bower到默认全局环境下
 ``` npm install -g bower ```
 
-安装Bower到当前项目下并写入package.json文件里面
+2. 安装Bower到当前项目下并写入package.json文件里面
 ``` npm install bower --save-dev ```
 
 
