@@ -88,27 +88,27 @@ trunk
 trunk/AdminCockpit/uTeamMainForm.pas
 ```
 
-1. Company info series line chart:
+Company info series line chart:
 ```
 procedure FillChartWithCompany(...);
 ```
 
-2. Market/Segment info series line chart:
+Market/Segment info series line chart:
 ```
 procedure FillChartMarketEvolution(…);
 ```
 
-3. Segment share series pie chart:
+Segment share series pie chart:
 ```
 procedure FillChartSegmentShare(…);
 ```
 
-4. SKU leader series bar chart:
+SKU leader series bar chart:
 ```
 procedure FillChartSegmentLeader(…);
 ```
 
-5. SKU/Brand perception map:
+SKU/Brand perception map:
 ```
 procedure CreateTreeBrands(…);
 procedure CreateMapBrands(…);
@@ -116,12 +116,12 @@ procedure CreateTreeSkus(…);
 procedure CreateMapSkus(…);
 ```
 
-6. SKU perception map pop info:
+SKU perception map pop info:
 ```
 chartSKUMouseMove
 ```
 
-7. SKU/Brand inventory map:
+SKU/Brand inventory map:
 ```
 procedure CreateTreeInventorySkus(…);
 procedure CreateMapInventorySkus(…);
@@ -129,37 +129,37 @@ procedure CreateMapInventorySkus(…);
 
 ##Marksimos reports implementation : where to find related field?##
 
-1. Company status:
+Company status:
 ```
 trunk/AdminCockpit/MA0_Companies_Profiles.pas
 trunk/AdminCockpit/MA0_Brands_Profiles.pas
 trunk/AdminCockpit/MA0_SKUs_Profiles.pas
 ```
 
-2. Financial data -> Financial report:
+Financial data -> Financial report:
 ```
 trunk/AdminiCockpit/MA0_FinancialReports.pas
 trunk/AdminiCockpit/MA0_FinancialReports_TN.pas
 ```
 
-3. Financial data -> Profitability Evolution:
+Financial data -> Profitability Evolution:
 ```
 trunk/AdminCockpit/MA0_Companies_ProfitabilityEvolution.pas
 trunk/AdminCockpit/MA0_Brands_ProfitabilityEvolution.pas
 trunk/AdminCockpit/MA0_SKUs_ProfitabilityEvolution.pas
 ```
 
-4. Segment distribution:
+Segment distribution:
 ```
 trunk/AdminCockpit/MA0_ConsumerSurvey.pas
 ```
 
-5. Competitor info -> Competitor intelligence 
+Competitor info -> Competitor intelligence 
 ```
 trunk/AdminCockpit/MA0_CompetitveIntelligence.pas
 ```
 
-6. Competitor info -> Market Trends
+Competitor info -> Market Trends
 ```
 trunk/AdminCockpit/MA0_MarketSurveys.pas
 trunk/AdminCockpit/MA0 Companies Market Studies.INC
