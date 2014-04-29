@@ -11,7 +11,7 @@ exports.getDecision = function(req, res, next){
         return res.json({errMsg: 'parameter error'});
     }
 
-    if(period===undefined || team===''){
+    if(period===undefined || period===''){
         return res.json({errMsg: 'parameter error'});
     }
 

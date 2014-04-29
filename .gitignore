@@ -59,6 +59,17 @@ unit.xml
 ~$*.xlsx
 
 # webstorm
+*Win32
+
+*.identcache
+*.res
+*.dcu
+*.local
+*.dproj
 
 *.sublime-project
 *.sublime-workspace
+
+
+# mongo
+*mongodbdata

@@ -4,13 +4,16 @@ var favicon = require('static-favicon');
 var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
+var mongoose = require('mongoose');
 
 
 var app = express();
 
 // view engine setup
-//app.set('views', path.join(__dirname, 'app'));
-//app.set('view engine', 'ejs');
+app.set('views', path.join(__dirname, 'views'));
+app.set('view engine', 'ejs');
+
+
 
 app.use(favicon());
 app.use(logger('dev'));
@@ -20,6 +23,7 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
 require('./api/routes.js')(app);
+
 
 /// catch 404 and forwarding to error handler
 // app.use(function(req, res, next) {
@@ -55,8 +59,15 @@ require('./api/routes.js')(app);
 
 app.set('port', process.env.PORT || 3000);
 
-var server = app.listen(app.get('port'), function() {
-  console.log('Express server listening on port ' + server.address().port);
+
+mongoose.connect('mongodb://localhost/Marksimos');
+var db = mongoose.connection;
+db.on('error', console.error.bind(console, 'connection error:'));
+db.once('open', function(response,request) {
+    var server = app.listen(app.get('port'), function() {
+      console.log('Express server listening on port ' + server.address().port);
+    });
 });
+
 
 module.exports = app;
