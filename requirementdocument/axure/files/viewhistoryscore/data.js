@@ -1,6 +1,6 @@
 ﻿$axure.loadCurrentPage({
   "url":"viewhistoryscore.html",
-  "generationDate":new Date(1398839128836.29),
+  "generationDate":new Date(1398842383223.6),
   "isCanvasEnabled":false,
   "variables":["OnLoadVariable"],
   "page":{
