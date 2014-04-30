@@ -5,6 +5,7 @@ var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 var mongoose = require('mongoose');
+var session = require('cookie-session');
 
 
 var app = express();
@@ -20,7 +21,15 @@ app.use(logger('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded());
 app.use(cookieParser());
+app.use(session({secret: 'marksimos'}));
 app.use(express.static(path.join(__dirname, 'public')));
+
+//initialize session data
+app.use(function(req, res, next){
+    req.session.userid = 'testid';
+    req.session.seminar = 'TTT';
+    next();
+})
 
 require('./api/routes.js')(app);
 

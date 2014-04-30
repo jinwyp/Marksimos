@@ -3,7 +3,6 @@ var Schema = mongoose.Schema;
 var consts = require('../consts.js');
 var Q = require('q');
 
-
 var tDecisionSchema = new Schema({
     d_CID                        : Number,
     d_CompanyName                : String,
@@ -38,6 +37,7 @@ var tOneSKUDecisionSchema = new Schema({
     d_PackSize                 : String,
     d_ProductionVolume         : Number,
     d_PromotionalBudget        : Number,
+
     d_PromotionalEpisodes      : [],
     d_TargetConsumerSegment    : Number,
     d_Technology               : Number,
