@@ -12,5 +12,4 @@ module.exports = function(app){
     app.get('/api/init', initController.init);
     app.get('/api/decision', decisionController.getDecision);
     app.get('/api/marketshare', marketshareController.getMarketshare);
-    app.get('/api/getAllResults', allResultsController.getAllResults);
 };
