@@ -40,28 +40,10 @@ function initAllResult(seminar){
 
     var p = Q.all(queries)
     .then(function(results){
-        console.log(results);
         return allResultsModel.updateAllResults(seminar, results);
     });
 
     return p;
-
-    // var allResultList = [];
-
-    // var result = initOnePeriodAllResult(seminar, periods[0]);
-    // periods = periods.slice(1);
-    // periods.forEach(function(period){
-    //     result = result.then(function(input){
-    //         allResultList.push(input);
-    //         return initOnePeriodAllResult(seminar, period);
-    //     })
-    // });
-
-    // result = result.then(function(input){
-    //     return allResultsModel.updateAllResults(seminar, allResultList);
-    // });
-
-    // return result;
 }
 
 function initOnePeriodAllResult(seminar, period){
