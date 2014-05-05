@@ -19,15 +19,21 @@ exports.clean = function(decision) {
                 tempSku.push(sku);
             }
 
-            sku.d_SKUName = sku.d_SKUName.join('').trim();
+            sku.d_SKUName = sku.d_SKUName
+                .filter(function(n){return n!=='\u0000'})
+                .join('').trim();
         }
 
         brand.d_SKUsDecisions = tempSku;
 
-        brand.d_BrandName = brand.d_BrandName.join('').trim();
+        brand.d_BrandName = brand.d_BrandName
+            .filter(function(n){return n!=='\u0000'})
+            .join('').trim();
     }
 
-    decision.d_CompanyName = decision.d_CompanyName.join('').trim();
+    decision.d_CompanyName = decision.d_CompanyName
+        .filter(function(n){return n!=='\u0000'})
+        .join('').trim();
 };
 
 
