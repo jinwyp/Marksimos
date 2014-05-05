@@ -9,6 +9,10 @@ module.exports = function(app){
         res.render('index.ejs', {});
     });
 
+    app.get('/mainhome', function(req, res, next){
+        res.render('usermainhome.ejs', {});
+    });
+
     app.get('/api/init', initController.init);
     app.get('/api/decision', decisionController.getDecision);
     app.get('/api/marketshare', marketshareController.getMarketshare);
