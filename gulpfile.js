@@ -9,11 +9,14 @@ var paths = {
     app: './public/app/**',
     views: './views/**',
     javascript: './public/app/js/*.js',
+
     compass_config : './public/app/css/config.rb',
     sassfiles: './public/app/css/sass/*.scss',
+    csspath: './public/app/css/stylesheets',
     sasspath: './public/app/css/sass',
-    target_csspath: './public/app/css/stylesheets',
-    imagespath : './public/app/css/images'
+    imagespath : './public/app/css/images',
+    target_csspath: './public/app/css/stylesheets'
+
 };
 
 
@@ -29,9 +32,9 @@ gulp.task('jshint',function(){
 gulp.task('compass', function() {
     gulp.src(paths.sassfiles)
         .pipe(compass({
-            css : paths.target_csspath,
+            css : paths.csspath,
             sass : paths.sasspath,
-            images : paths.imagespath,
+            image : paths.imagespath,
             style : 'nested',  //The output style for the compiled css. One of: nested, expanded, compact, or compressed.
             comments : true
         }))

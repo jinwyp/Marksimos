@@ -1,0 +1,32 @@
+/* line 12, ../public/app/css/sass/main.scss */
+.mainbox {
+  width: 1300px; }
+
+/* line 17, ../public/app/css/sass/main.scss */
+header .navbar {
+  border: 0px;
+  -webkit-border-radius: 0px;
+  -moz-border-radius: 0px;
+  -ms-border-radius: 0px;
+  -o-border-radius: 0px;
+  border-radius: 0px; }
+/* line 21, ../public/app/css/sass/main.scss */
+header .navbar-inverse {
+  background-image: -webkit-linear-gradient(top, #2d428e 100%, #2d428e 100%);
+  background-image: linear-gradient(to bottom, #2d428e 100%, #2d428e 100%);
+  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#ff3c3c3c', endColorstr='#ff222222', GradientType=0);
+  filter: progid:DXImageTransform.Microsoft.gradient(enabled = false);
+  background-color: #2d428e; }
+  /* line 30, ../public/app/css/sass/main.scss */
+  header .navbar-inverse .navbar-brand {
+    color: #ffffff;
+    font-family: "Verdana", "Geneva, sans-serif";
+    font-size: 12px;
+    font-weight: bold;
+    background: url('../public/app/css/images/.//logoheader.png?1399275286'); }
+  /* line 39, ../public/app/css/sass/main.scss */
+  header .navbar-inverse .navbar-nav li a {
+    color: #d5def5;
+    font-family: "Verdana", "Geneva, sans-serif";
+    font-size: 11px;
+    font-weight: bold; }
