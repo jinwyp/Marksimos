@@ -6,14 +6,15 @@ var decisionConvertor = require('../convertors/decision.js');
 var allResultsConvertor = require('../convertors/allresults.js');
 var decisionModel = require('../models/decision.js');
 var allResultsModel = require('../models/allresults.js');
+var chartDataModel = require('../models/chartData.js');
 
 /**
  * Initialize game data
  *
  * @method init
- * 
+ *
  */
-exports.init = function(req, res, next){
+exports.init = function(req, res, next) {
     var seminar = req.session.seminar;
 
     // initDecision(seminar).then(function(){
@@ -22,40 +23,46 @@ exports.init = function(req, res, next){
     //     next(err);
     // });
 
-    initAllResult(seminar).then(function(){
-        res.send('Got allresults');
-    }).fail(function(err){
-        next(err);
-    }).done();
+    initAllResult(seminar)
+        .then(function(value) {
+            console.log(value);
+            res.send('Got allresults');
+        }).fail(function(err) {
+            next(err);
+        }).done();
 };
 
 
 
-function initAllResult(seminar){
+function initAllResult(seminar) {
     var periods = config.initPeriods;
 
     var queries = [];
-    periods.forEach(function(period){
+    periods.forEach(function(period) {
         queries.push(initOnePeriodResult(seminar, period));
     });
 
     var p = Q.all(queries)
-    .then(function(results){
-        results.forEach(function(onePeriodResult){
-            allResultsConvertor.clean(onePeriodResult);
-        })
+        .then(function(results) {
+            results.forEach(function(onePeriodResult) {
+                allResultsConvertor.clean(onePeriodResult);
+            })
 
-        var marketShareInValueChart = allResultsConvertor.marketShareInValue(results);
-        console.log(marketShareInValueChart);
-        return allResultsModel.updateAllResults(seminar, results);
-    });
+            var marketShareInValueChart = allResultsConvertor.marketShareInValue(results);
+            return {
+                seminarId: 'testid',
+                marketShareInValue: JSON.stringify(marketShareInValueChart)
+            };
+        })
+        .then(function(chartData) {
+            return chartDataModel.updateChartData(chartData);
+        })
 
     return p;
 }
 
-function initOnePeriodResult(seminar, period){
-    var reqUrl = config.cgiService 
-        + util.format('allresults.exe?seminar=%s&period=%s', seminar, period);
+function initOnePeriodResult(seminar, period) {
+    var reqUrl = config.cgiService + util.format('allresults.exe?seminar=%s&period=%s', seminar, period);
 
     return request(reqUrl);
 }
@@ -67,13 +74,13 @@ function initOnePeriodResult(seminar, period){
  * @param {Number} seminar
  * @return {Object} a promise
  */
-function initDecision(seminar){
+function initDecision(seminar) {
     var periods = config.initPeriods
     var teams = config.initTeams;
 
     var queries = [];
-    periods.forEach(function(period){
-        teams.forEach(function(team){
+    periods.forEach(function(period) {
+        teams.forEach(function(team) {
             queries.push(initOnePeriodDecison(seminar, team, period));
         })
     });
@@ -90,30 +97,10 @@ function initDecision(seminar){
  * @param {team} team
  * @return {Object} a promise
  */
-function initOnePeriodDecison(seminar, team, period){
-    var reqUrl = config.cgiService 
-        + util.format('decisions.exe?period=%s&team=%s&seminar=%s'
-        , period, team, seminar);
-    return request(reqUrl).then(function(result){
+function initOnePeriodDecison(seminar, team, period) {
+    var reqUrl = config.cgiService + util.format('decisions.exe?period=%s&team=%s&seminar=%s', period, team, seminar);
+    return request(reqUrl).then(function(result) {
         decisionConvertor.clean(result);
         return decisionModel.saveDecision(result);
     });
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
