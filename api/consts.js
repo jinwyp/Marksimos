@@ -1,54 +1,107 @@
+var CompanyLengthMax = 15;
+var BrandNameLengthMax = 5;
+var SKUNameLengthMax = 2;
+var SeminarIDLengthMax = 5;
+var SeminarFullNameLengthMax = 40;
+var UserNameLengthMax = 40;
+
+var CompaniesMax = 6;
+var BrandsMax = 5;
+var SKUsMax = 5;
+
+var AllBrandsMax = CompaniesMax * BrandsMax;
+var AllSKUsMax = AllBrandsMax * SKUsMax;
+var ConsumerSegmentsMax = 6;
+var ConsumerSegmentsMaxTotal = ConsumerSegmentsMax + 1;
+
+var TEN = 10;
+var Last_CID = CompaniesMax;
+var Last_CIDPlus = CompaniesMax + 1;
+var Last_BID = TEN * Last_CID + BrandsMax;
+var Last_SID = TEN * TEN * Last_CID + TEN * BrandsMax + SKUsMax;
+
+var History_3 = -3;
+var History_2 = -2;
+var History_1 = -1;
+var History_0 = 0;
+var Period_0 = 0;
+var Period_Max = 9;
+var Period_Display = 6; //Max period number of chart&data which displayed in the form and reports
+var Never = Period_Max + 1;
+
+var WeeksInQuarter = 13;
+var MonthsInYear = 12;
+
+var EpisodesMax = WeeksInQuarter;
+var EpisodesBeyondMax = EpisodesMax + 1;
+var StocksMax = 4;
+var StocksMaxTotal = StocksMax + 1;
+var PriceMax = 2; //{ prices may be set for= current production (0); last period production (1); older production (2) }
+
+var P_DimensionsMax = 2;
+
+var TechnologyUltimateLevel = 20;
+var IngredientsUltimateQuality = TechnologyUltimateLevel + 2;
+var TechnologyToImproveFreshness = 11;
+var AdditionalBudgetsMax = 2;
+
+var SimulationName = 'MARKSIMOS';
+var ReadParametersOK = 0;
+var ReadExogenousOK = 0;
+var ReadResultsOK = 0
+
+
 module.exports = {
-  CompanyLengthMax              : 15,
-  BrandNameLengthMax            :  5,
-  SKUNameLengthMax              :  2,
-  SeminarIDLengthMax            :  5,
-  SeminarFullNameLengthMax      : 40,
-  UserNameLengthMax             : 40,
+  CompanyLengthMax              : CompanyLengthMax,
+  BrandNameLengthMax            : BrandNameLengthMax,
+  SKUNameLengthMax              : SKUNameLengthMax,
+  SeminarIDLengthMax            : SeminarIDLengthMax,
+  SeminarFullNameLengthMax      : SeminarFullNameLengthMax,
+  UserNameLengthMax             : UserNameLengthMax,
 
-  CompaniesMax                  : 6,
-  BrandsMax                     : 5,
-  SKUsMax                       : 5,
+  CompaniesMax                  : CompaniesMax,
+  BrandsMax                     : BrandsMax,
+  SKUsMax                       : SKUsMax,
 
-  AllBrandsMax                  : this.CompaniesMax * this.BrandsMax,
-  AllSKUsMax                    : this.AllBrandsMax * this.SKUsMax,
-  ConsumerSegmentsMax           : 6,
-  ConsumerSegmentsMaxTotal      : this.ConsumerSegmentsMax + 1,  
+  AllBrandsMax                  : AllBrandsMax,
+  AllSKUsMax                    : AllSKUsMax,
+  ConsumerSegmentsMax           : ConsumerSegmentsMax,
+  ConsumerSegmentsMaxTotal      : ConsumerSegmentsMaxTotal,
 
-  TEN                           : 10,
-  Last_CID                      : this.CompaniesMax,
-  Last_CIDPlus                  : this.CompaniesMax + 1,
-  Last_BID                      : this.TEN * this.Last_CID + this.BrandsMax,
-  Last_SID                      : this.TEN * this.TEN * this.Last_CID + this.TEN * this.BrandsMax + this.SKUsMax,
+  TEN                           : TEN,
+  Last_CID                      : Last_CID,
+  Last_CIDPlus                  : Last_CIDPlus,
+  Last_BID                      : Last_BID,
+  Last_SID                      : Last_SID,
 
-  History_3                     : -3,
-  History_2                     : -2,
-  History_1                     : -1,
-  History_0                     : 0,
-  Period_0                      : 0,
-  Period_Max                    : 9,
-  Period_Display                : 6,       //Max period number of chart&data which displayed in the form and reports
-  Never                         : this.Period_Max + 1,
+  History_3                     : History_3,
+  History_2                     : History_2,
+  History_1                     : History_1,
+  History_0                     : History_0,
+  Period_0                      : Period_0,
+  Period_Max                    : Period_Max,
+  Period_Display                : Period_Display,
+  Never                         : Never,
 
-  WeeksInQuarter                : 13,
-  MonthsInYear                  : 12,
+  WeeksInQuarter                : WeeksInQuarter,
+  MonthsInYear                  : MonthsInYear,
 
-  EpisodesMax                   : this.WeeksInQuarter,
-  EpisodesBeyondMax             : this.EpisodesMax + 1,
-  StocksMax                     : 4,
-  StocksMaxTotal                : this.StocksMax + 1,  
-  PriceMax                      : 2, //{ prices may be set for: current production (0), last period production (1), older production (2) }
+  EpisodesMax                   : EpisodesMax,
+  EpisodesBeyondMax             : EpisodesBeyondMax,
+  StocksMax                     : StocksMax,
+  StocksMaxTotal                : StocksMaxTotal,
+  PriceMax                      : PriceMax,
 
-  P_DimensionsMax               : 2,
+  P_DimensionsMax               : P_DimensionsMax,
 
-  TechnologyUltimateLevel       : 20,
-  IngredientsUltimateQuality    : this.TechnologyUltimateLevel + 2,
-  TechnologyToImproveFreshness  : 11,
-  AdditionalBudgetsMax          : 2,
+  TechnologyUltimateLevel       : TechnologyUltimateLevel,
+  IngredientsUltimateQuality    : IngredientsUltimateQuality,
+  TechnologyToImproveFreshness  : TechnologyToImproveFreshness,
+  AdditionalBudgetsMax          : AdditionalBudgetsMax,
 
-  SimulationName                : 'MARKSIMOS', 
-  ReadParametersOK              : 0,
-  ReadExogenousOK               : 0,
-  ReadResultsOK                 : 0
+  SimulationName                : SimulationName,
+  ReadParametersOK              : ReadParametersOK,
+  ReadExogenousOK               : ReadExogenousOK,
+  ReadResultsOK                 : ReadResultsOK
 };
 

@@ -1,6 +1,5 @@
 var decisionController = require('./controllers/decision.js');
 var marketshareController = require('./controllers/marketshare.js');
-var allResultsController = require('./controllers/allresults.js');
 var initController = require('./controllers/init.js');
 
 
