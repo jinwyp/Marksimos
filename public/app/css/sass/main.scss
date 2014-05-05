@@ -1,0 +1,29 @@
+@import "compass";
+
+
+$color_main_header: #2d428e;
+
+
+.mainbox{
+  width : 1300px;
+}
+
+//
+//nav {
+//  @include float-right;   /* Cross-browser floating helper */
+//  a {
+//    text-decoration: none;  /* Good ol' fashioned CSS */
+//    color: $my_color;
+//    /* Cross-browser inline-block helper */
+//    @include inline-block;
+//    /* Text-shadow helper + rgba() is a built-in Sass mixin */
+//    @include text-shadow(0 1px 1px rgba(#000,0.3));
+//    /* Cross-browser CSS3 transition */
+//    @include single-transition(color, 0.5s, ease-in);
+//    &:hover {
+//      /* Compass color mixin: shade() */
+//      color: shade($my_color, 20%);
+//    }
+//  }
+//}
+
