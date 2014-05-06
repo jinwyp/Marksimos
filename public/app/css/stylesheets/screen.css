@@ -57,32 +57,3 @@ a img {
 /* line 116, ../../../../../../../../../Library/Ruby/Gems/2.0.0/gems/compass-0.12.6/frameworks/compass/stylesheets/compass/reset/_utilities.scss */
 article, aside, details, figcaption, figure, footer, header, hgroup, menu, nav, section, summary {
   display: block; }
-
-/* line 12, ../sass/screen.scss */
-nav {
-  display: inline;
-  float: right;
-  /* Cross-browser floating helper */ }
-  /* line 14, ../sass/screen.scss */
-  nav a {
-    text-decoration: none;
-    /* Good ol' fashioned CSS */
-    color: #bada52;
-    /* Cross-browser inline-block helper */
-    display: -moz-inline-stack;
-    display: inline-block;
-    vertical-align: middle;
-    *vertical-align: auto;
-    zoom: 1;
-    *display: inline;
-    /* Text-shadow helper + rgba() is a built-in Sass mixin */
-    text-shadow: 0 1px 1px rgba(0, 0, 0, 0.3);
-    /* Cross-browser CSS3 transition */
-    -webkit-transition: color 0.5s ease-in;
-    -moz-transition: color 0.5s ease-in;
-    -o-transition: color 0.5s ease-in;
-    transition: color 0.5s ease-in; }
-    /* line 23, ../sass/screen.scss */
-    nav a:hover {
-      /* Compass color mixin: shade() */
-      color: #94ae41; }

@@ -12,7 +12,7 @@
 ``` npm install -g bower ```
 
 2. 安装Bower到当前项目下并写入package.json文件里面
-``` npm install bower --save-dev ```
+``` npm install bower --save ```
 
 
 * 安装前段的包与库资源,通过编辑 bower.json 文件,然后运行 ：
