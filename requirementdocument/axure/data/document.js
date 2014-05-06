@@ -37,10 +37,6 @@
             "type":"Wireframe",
             "url":"mainscreen.html",
             "children":[{
-                "pageName":"ViewHistoryScore",
-                "type":"Wireframe",
-                "url":"viewhistoryscore.html"},
-{
                 "pageName":"Report",
                 "type":"Wireframe",
                 "url":"report.html",
@@ -60,6 +56,10 @@
                 "pageName":"MakeDecision",
                 "type":"Wireframe",
                 "url":"makedecision.html"},
+{
+                "pageName":"ViewHistoryScore",
+                "type":"Wireframe",
+                "url":"viewhistoryscore.html"},
 {
                 "pageName":"Result",
                 "type":"Wireframe",
