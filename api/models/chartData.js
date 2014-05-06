@@ -3,21 +3,29 @@ var Schema = mongoose.Schema;
 var Q = require('q');
 
 
-var chartDataSchema = new Schema({
+var seminarChartSchema = new Schema({
     seminarId: String,
     marketShareInValue: String,
     marketShareInVolume: String,
     mindSpaceShare: String,
-    shelfSpaceShare: String
+    shelfSpaceShare: String,
+    totalInvestment: String,
+    netProfitByCompanies: String,
+    returnOnInvestment: String,
+    investmentsVersusBudget: String,
+    marketSalesValue: String,
+    marketSalesVolume: String,
+    totalInventoryAtFactory: String,
+    totalInventoryAtTrade: String
 });
 
 
-var ChartData = mongoose.model('ChartData', chartDataSchema);
+var SeminarChart = mongoose.model('ChartData', seminarChartSchema);
 
 
 exports.updateChartData = function(chartData){
     var deferred = Q.defer();
-    var c = new ChartData(chartData);
+    var c = new SeminarChart(chartData);
     c.save(function(err){
         if(err) return deferred.reject(err);
         return deferred.resolve(null);

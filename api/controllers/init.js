@@ -8,6 +8,7 @@ var allResultsCleaner = require('../convertors/allResultsCleaner.js');
 var decisionModel = require('../models/decision.js');
 var allResultsModel = require('../models/allResults.js');
 var chartDataModel = require('../models/chartData.js');
+var seminarModel = require('../models/seminar.js');
 
 /**
  * Initialize game data
@@ -16,7 +17,7 @@ var chartDataModel = require('../models/chartData.js');
  *
  */
 exports.init = function(req, res, next) {
-    var seminar = req.session.seminar;
+    var seminarId = req.session.seminarId;
 
     // initDecision(seminar).then(function(){
     //     res.send('initialize decision success');
@@ -24,23 +25,25 @@ exports.init = function(req, res, next) {
     //     next(err);
     // });
 
-    initAllResult(seminar)
-        .then(function(value) {
-            console.log(value);
-            res.send('Got allresults');
-        }).fail(function(err) {
-            next(err);
-        }).done();
+    seminarModel.getSeminarSetting()
+    .then(function(seminarSetting){
+        return initAllResult(seminarId, seminarSetting);
+    }).then(function(value) {
+        console.log(value);
+        res.send('Got allresults');
+    }).fail(function(err) {
+        next(err);
+    }).done();
 };
 
 
 
-function initAllResult(seminar) {
+function initAllResult(seminarId, seminarSetting) {
     var periods = config.initPeriods;
 
     var queries = [];
     periods.forEach(function(period) {
-        queries.push(initOnePeriodResult(seminar, period));
+        queries.push(initOnePeriodResult(seminarId, period));
     });
 
     var p = Q.all(queries)
@@ -51,11 +54,32 @@ function initAllResult(seminar) {
 
             var marketShareInValue = allResultsConvertor.marketShareInValue(results);
             var marketShareInVolume = allResultsConvertor.marketShareInVolume(results);
+            var mindSpaceShare = allResultsConvertor.mindSpaceShare(results);
+            var shelfSpaceShare = allResultsConvertor.shelfSpaceShare(results);
+            var totalInvestment = allResultsConvertor.totalInvestment(results);
+            var netProfitByCompanies = allResultsConvertor.netProfitByCompanies(results);
+            var returnOnInvestment = allResultsConvertor.returnOnInvestment(results);
+            var investmentsVersusBudget = allResultsConvertor.investmentsVersusBudget(results, seminarSetting);
+            var marketSalesValue = allResultsConvertor.marketSalesValue(results);
+            var marketSalesVolume = allResultsConvertor.marketSalesVolume(results);
+            var totalInventoryAtFactory = allResultsConvertor.totalInventoryAtFactory(results);
+            var totalInventoryAtTrade = allResultsConvertor.totalInventoryAtTrade(results);
 
             return {
                 seminarId: 'testid',
                 marketShareInValue: JSON.stringify(marketShareInValue),
-                marketShareInVolume: JSON.stringify(marketShareInVolume)
+                marketShareInVolume: JSON.stringify(marketShareInVolume),
+                mindSpaceShare: JSON.stringify(mindSpaceShare),
+                shelfSpaceShare: JSON.stringify(shelfSpaceShare),
+                totalInvestment: JSON.stringify(totalInvestment),
+                netProfitByCompanies: JSON.stringify(netProfitByCompanies),
+                returnOnInvestment: JSON.stringify(returnOnInvestment),
+                investmentsVersusBudget: JSON.stringify(investmentsVersusBudget),
+                marketSalesValue: JSON.stringify(marketSalesValue),
+                marketSalesVolume: JSON.stringify(marketSalesVolume),
+                totalInventoryAtFactory: JSON.stringify(totalInventoryAtFactory),
+                totalInventoryAtTrade: JSON.stringify(totalInventoryAtTrade)
+
             };
         })
         .then(function(chartData) {
@@ -65,8 +89,8 @@ function initAllResult(seminar) {
     return p;
 }
 
-function initOnePeriodResult(seminar, period) {
-    var reqUrl = config.cgiService + util.format('allresults.exe?seminar=%s&period=%s', seminar, period);
+function initOnePeriodResult(seminarId, period) {
+    var reqUrl = config.cgiService + util.format('allresults.exe?seminar=%s&period=%s', seminarId, period);
 
     return request(reqUrl);
 }
@@ -78,14 +102,14 @@ function initOnePeriodResult(seminar, period) {
  * @param {Number} seminar
  * @return {Object} a promise
  */
-function initDecision(seminar) {
+function initDecision(seminarId) {
     var periods = config.initPeriods
     var teams = config.initTeams;
 
     var queries = [];
     periods.forEach(function(period) {
         teams.forEach(function(team) {
-            queries.push(initOnePeriodDecison(seminar, team, period));
+            queries.push(initOnePeriodDecison(seminarId, team, period));
         })
     });
 
@@ -101,8 +125,8 @@ function initDecision(seminar) {
  * @param {team} team
  * @return {Object} a promise
  */
-function initOnePeriodDecison(seminar, team, period) {
-    var reqUrl = config.cgiService + util.format('decisions.exe?period=%s&team=%s&seminar=%s', period, team, seminar);
+function initOnePeriodDecison(seminarId, team, period) {
+    var reqUrl = config.cgiService + util.format('decisions.exe?period=%s&team=%s&seminar=%s', period, team, seminarId);
     return request(reqUrl).then(function(result) {
         decisionCleaner.clean(result);
         return decisionModel.saveDecision(result);

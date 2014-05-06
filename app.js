@@ -26,8 +26,9 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 //initialize session data
 app.use(function(req, res, next){
-    req.session.userid = 'testid';
-    req.session.seminar = 'TTT';
+    req.session.userId = 'testid';
+    req.session.seminarId = 'TTT';
+    req.session.simulationSpan = 3;
     next();
 })
 
