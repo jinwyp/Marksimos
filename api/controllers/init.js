@@ -2,10 +2,11 @@ var request = require('../promises/request.js');
 var util = require('util');
 var config = require('../config.js');
 var Q = require('q');
-var decisionConvertor = require('../convertors/decision.js');
-var allResultsConvertor = require('../convertors/allresults.js');
+var decisionCleaner = require('../convertors/decisionCleaner.js');
+var allResultsConvertor = require('../convertors/allResults.js');
+var allResultsCleaner = require('../convertors/allResultsCleaner.js');
 var decisionModel = require('../models/decision.js');
-var allResultsModel = require('../models/allresults.js');
+var allResultsModel = require('../models/allResults.js');
 var chartDataModel = require('../models/chartData.js');
 
 /**
@@ -45,13 +46,16 @@ function initAllResult(seminar) {
     var p = Q.all(queries)
         .then(function(results) {
             results.forEach(function(onePeriodResult) {
-                allResultsConvertor.clean(onePeriodResult);
+                allResultsCleaner.clean(onePeriodResult);
             })
 
-            var marketShareInValueChart = allResultsConvertor.marketShareInValue(results);
+            var marketShareInValue = allResultsConvertor.marketShareInValue(results);
+            var marketShareInVolume = allResultsConvertor.marketShareInVolume(results);
+
             return {
                 seminarId: 'testid',
-                marketShareInValue: JSON.stringify(marketShareInValueChart)
+                marketShareInValue: JSON.stringify(marketShareInValue),
+                marketShareInVolume: JSON.stringify(marketShareInVolume)
             };
         })
         .then(function(chartData) {
@@ -100,7 +104,7 @@ function initDecision(seminar) {
 function initOnePeriodDecison(seminar, team, period) {
     var reqUrl = config.cgiService + util.format('decisions.exe?period=%s&team=%s&seminar=%s', period, team, seminar);
     return request(reqUrl).then(function(result) {
-        decisionConvertor.clean(result);
+        decisionCleaner.clean(result);
         return decisionModel.saveDecision(result);
     });
 }
