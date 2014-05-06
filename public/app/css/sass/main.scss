@@ -27,8 +27,8 @@ $path_images: "./";
     border:0px solid #fff;
     border-radius:16px;
     position:absolute;
-    margin-top:-26px;
-    margin-left:34px;
+    top:9px;
+    left:50px;
     box-shadow: 0 1px 3px 0px rgba(0,0,0,1);
     text-shadow: -1px -1px 0 #000;
     text-indent: 0;
@@ -39,7 +39,21 @@ $path_images: "./";
     font-weight:normal;
     font-size: 11px;
 }
+
+
+
 /*********************************************************/
+
+body{
+    font-family: $font_main_header;
+    font-size: 12px;
+    font-weight: normal;
+    a {
+        font-family: $font_main_header;
+        font-size: 12px;
+        font-weight: normal;
+    }
+}
 
 .mainbox {
     width: 1340px;
@@ -49,14 +63,7 @@ $path_images: "./";
 
 
 header {
-    font-family: $font_main_header;
-    font-size: 12px;
-    font-weight: normal;
-    a {
-        font-family: $font_main_header;
-        font-size: 12px;
-        font-weight: normal;
-    }
+
 
     .navbar {
         border: 0px;
@@ -93,11 +100,29 @@ header {
                 padding-right: 15px;
             }
 
+
             .active a {
                 background-image: -webkit-linear-gradient(top, $color_main_header_menu_active 100%, $color_main_header_menu_active 100%);
                 background-image: linear-gradient(to bottom, $color_main_header_menu_active 100%, $color_main_header_menu_active 100%);
                 box-shadow: none;
+
+                &:before{
+                    border-color:transparent transparent #ffffff transparent;
+                    border-style:dashed dashed solid dashed;
+                    border-width:0px 8px 7px 8px;
+                    height:0;
+                    width:0;
+                    overflow: hidden; /* 这里设置overflow, font-size, line-height */
+                    font-size: 0;     /*是因为, 虽然宽高度为0, 但在IE6下会具有默认的 */
+                    line-height: 0;  /* 字体大小和行高, 导致盒子呈现被撑开的长矩形 */
+                    content:"";
+                    top: 43px;
+                    left: 26px;
+                    position:absolute;
+                }
             }
+
+
 
             .open a, .open a:hover, .open a:focus  {
                 background-color: $color_main_header_menu_active;

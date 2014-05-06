@@ -16,8 +16,8 @@
   border: 0px solid #fff;
   border-radius: 16px;
   position: absolute;
-  margin-top: -26px;
-  margin-left: 34px;
+  top: 9px;
+  left: 50px;
   box-shadow: 0 1px 3px 0px black;
   text-shadow: -1px -1px 0 #000;
   text-indent: 0;
@@ -29,72 +29,90 @@
   font-size: 11px; }
 
 /*********************************************************/
-/* line 44, ../sass/main.scss */
-.mainbox {
-  width: 1340px; }
-
-/* line 51, ../sass/main.scss */
-header {
+/* line 47, ../sass/main.scss */
+body {
   font-family: "Verdana", "Geneva, sans-serif";
   font-size: 12px;
   font-weight: normal; }
-  /* line 55, ../sass/main.scss */
-  header a {
+  /* line 51, ../sass/main.scss */
+  body a {
     font-family: "Verdana", "Geneva, sans-serif";
     font-size: 12px;
     font-weight: normal; }
-  /* line 61, ../sass/main.scss */
-  header .navbar {
-    border: 0px;
-    -webkit-border-radius: 0px;
-    -moz-border-radius: 0px;
-    -ms-border-radius: 0px;
-    -o-border-radius: 0px;
-    border-radius: 0px; }
-  /* line 65, ../sass/main.scss */
-  header .navbar-inverse {
-    background-image: -webkit-linear-gradient(top, #2d428e 100%, #2d428e 100%);
-    background-image: linear-gradient(to bottom, #2d428e 100%, #2d428e 100%);
-    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#ff3c3c3c', endColorstr='#ff222222', GradientType=0);
-    filter: progid:DXImageTransform.Microsoft.gradient(enabled = false);
-    background-color: #2d428e;
-    background-position: 0px 0px;
-    background-size: 100% 100%; }
-    /* line 74, ../sass/main.scss */
-    header .navbar-inverse .navbar-brand {
+
+/* line 58, ../sass/main.scss */
+.mainbox {
+  width: 1340px; }
+
+/* line 68, ../sass/main.scss */
+header .navbar {
+  border: 0px;
+  -webkit-border-radius: 0px;
+  -moz-border-radius: 0px;
+  -ms-border-radius: 0px;
+  -o-border-radius: 0px;
+  border-radius: 0px; }
+/* line 72, ../sass/main.scss */
+header .navbar-inverse {
+  background-image: -webkit-linear-gradient(top, #2d428e 100%, #2d428e 100%);
+  background-image: linear-gradient(to bottom, #2d428e 100%, #2d428e 100%);
+  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#ff3c3c3c', endColorstr='#ff222222', GradientType=0);
+  filter: progid:DXImageTransform.Microsoft.gradient(enabled = false);
+  background-color: #2d428e;
+  background-position: 0px 0px;
+  background-size: 100% 100%; }
+  /* line 81, ../sass/main.scss */
+  header .navbar-inverse .navbar-brand {
+    color: #ffffff;
+    font-weight: bold;
+    font-size: 12px;
+    margin-right: 30px;
+    padding: 13px 15px; }
+    /* line 87, ../sass/main.scss */
+    header .navbar-inverse .navbar-brand img {
+      max-width: 100%;
+      max-height: 100%; }
+  /* line 95, ../sass/main.scss */
+  header .navbar-inverse .navbar-nav li a {
+    color: #d5def5;
+    font-size: 11px;
+    font-weight: bold;
+    padding-left: 15px;
+    padding-right: 15px; }
+  /* line 104, ../sass/main.scss */
+  header .navbar-inverse .navbar-nav .active a {
+    background-image: -webkit-linear-gradient(top, #4358a1 100%, #4358a1 100%);
+    background-image: linear-gradient(to bottom, #4358a1 100%, #4358a1 100%);
+    box-shadow: none; }
+    /* line 109, ../sass/main.scss */
+    header .navbar-inverse .navbar-nav .active a:before {
+      border-color: transparent transparent #ffffff transparent;
+      border-style: dashed dashed solid dashed;
+      border-width: 0px 8px 7px 8px;
+      height: 0;
+      width: 0;
+      overflow: hidden;
+      /* 这里设置overflow, font-size, line-height */
+      font-size: 0;
+      /*是因为, 虽然宽高度为0, 但在IE6下会具有默认的 */
+      line-height: 0;
+      /* 字体大小和行高, 导致盒子呈现被撑开的长矩形 */
+      content: "";
+      top: 43px;
+      left: 26px;
+      position: absolute; }
+  /* line 127, ../sass/main.scss */
+  header .navbar-inverse .navbar-nav .open a, header .navbar-inverse .navbar-nav .open a:hover, header .navbar-inverse .navbar-nav .open a:focus {
+    background-color: #4358a1; }
+  /* line 131, ../sass/main.scss */
+  header .navbar-inverse .navbar-nav .mk_dropdownlist {
+    background-color: #4d6bd1; }
+    /* line 134, ../sass/main.scss */
+    header .navbar-inverse .navbar-nav .mk_dropdownlist li a {
       color: #ffffff;
-      font-weight: bold;
+      font-weight: normal;
       font-size: 12px;
-      margin-right: 30px;
-      padding: 13px 15px; }
-      /* line 80, ../sass/main.scss */
-      header .navbar-inverse .navbar-brand img {
-        max-width: 100%;
-        max-height: 100%; }
-    /* line 88, ../sass/main.scss */
-    header .navbar-inverse .navbar-nav li a {
-      color: #d5def5;
-      font-size: 11px;
-      font-weight: bold;
-      padding-left: 15px;
-      padding-right: 15px; }
-    /* line 96, ../sass/main.scss */
-    header .navbar-inverse .navbar-nav .active a {
-      background-image: -webkit-linear-gradient(top, #4358a1 100%, #4358a1 100%);
-      background-image: linear-gradient(to bottom, #4358a1 100%, #4358a1 100%);
-      box-shadow: none; }
-    /* line 102, ../sass/main.scss */
-    header .navbar-inverse .navbar-nav .open a, header .navbar-inverse .navbar-nav .open a:hover, header .navbar-inverse .navbar-nav .open a:focus {
-      background-color: #4358a1; }
-    /* line 106, ../sass/main.scss */
-    header .navbar-inverse .navbar-nav .mk_dropdownlist {
       background-color: #4d6bd1; }
-      /* line 109, ../sass/main.scss */
-      header .navbar-inverse .navbar-nav .mk_dropdownlist li a {
-        color: #ffffff;
-        font-weight: normal;
-        font-size: 12px;
-        background-color: #4d6bd1; }
-    /* line 121, ../sass/main.scss */
-    header .navbar-inverse .navbar-nav .mk_dropdowndivider {
-      background-color: #3e5bbf; }
+  /* line 146, ../sass/main.scss */
+  header .navbar-inverse .navbar-nav .mk_dropdowndivider {
+    background-color: #3e5bbf; }
