@@ -3,6 +3,7 @@
 ## /api/chart/:chartName
 ### Parameters
 ##### :chartName
+注意: chartName是区分大小写的
   * marketShareInValue 
   * marketShareInVolume
   * mindSpaceShare
