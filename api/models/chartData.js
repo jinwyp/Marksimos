@@ -33,3 +33,13 @@ exports.updateChartData = function(chartData){
     //return Q.nfcall(c.save, chartData);
     return deferred.promise;
 }
+
+exports.getChartData = function(seminarId){
+    var deferred = Q.defer();
+    SeminarChart.findOne({seminarId: seminarId}, function(err, chart){
+        if(err) return defer.reject(err);
+
+        return deferred.resolve(chart);
+    })
+    return deferred.promise;
+}
