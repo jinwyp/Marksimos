@@ -1,6 +1,6 @@
 @charset "UTF-8";
 /** 仿 iOS 系统通知数字样式 **/
-/* line 18, ../sass/main.scss */
+/* line 71, ../sass/main.scss */
 .num {
   background-color: #bf1031;
   background-image: -webkit-linear-gradient(top, #bf1031, #bf1031);
@@ -29,31 +29,33 @@
   font-size: 11px; }
 
 /*********************************************************/
-/* line 47, ../sass/main.scss */
+/* line 100, ../sass/main.scss */
 body {
   font-family: "Verdana", "Geneva, sans-serif";
   font-size: 12px;
   font-weight: normal; }
-  /* line 51, ../sass/main.scss */
-  body a {
+  /* line 104, ../sass/main.scss */
+  body a, body button {
     font-family: "Verdana", "Geneva, sans-serif";
     font-size: 12px;
     font-weight: normal; }
 
-/* line 58, ../sass/main.scss */
+/* line 111, ../sass/main.scss */
 .mainbox {
-  width: 1340px; }
+  width: 1340px;
+  padding: 0 15px; }
 
-/* line 68, ../sass/main.scss */
-header .navbar {
+/* line 121, ../sass/main.scss */
+.header .navbar {
+  margin-bottom: 0px;
   border: 0px;
   -webkit-border-radius: 0px;
   -moz-border-radius: 0px;
   -ms-border-radius: 0px;
   -o-border-radius: 0px;
   border-radius: 0px; }
-/* line 72, ../sass/main.scss */
-header .navbar-inverse {
+/* line 127, ../sass/main.scss */
+.header .navbar-inverse {
   background-image: -webkit-linear-gradient(top, #2d428e 100%, #2d428e 100%);
   background-image: linear-gradient(to bottom, #2d428e 100%, #2d428e 100%);
   filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#ff3c3c3c', endColorstr='#ff222222', GradientType=0);
@@ -61,31 +63,31 @@ header .navbar-inverse {
   background-color: #2d428e;
   background-position: 0px 0px;
   background-size: 100% 100%; }
-  /* line 81, ../sass/main.scss */
-  header .navbar-inverse .navbar-brand {
+  /* line 136, ../sass/main.scss */
+  .header .navbar-inverse .navbar-brand {
     color: #ffffff;
     font-weight: bold;
     font-size: 12px;
-    margin-right: 30px;
+    margin-right: 20px;
     padding: 13px 15px; }
-    /* line 87, ../sass/main.scss */
-    header .navbar-inverse .navbar-brand img {
+    /* line 142, ../sass/main.scss */
+    .header .navbar-inverse .navbar-brand img {
       max-width: 100%;
       max-height: 100%; }
-  /* line 95, ../sass/main.scss */
-  header .navbar-inverse .navbar-nav li a {
+  /* line 150, ../sass/main.scss */
+  .header .navbar-inverse .navbar-nav li a {
     color: #d5def5;
     font-size: 11px;
     font-weight: bold;
     padding-left: 15px;
     padding-right: 15px; }
-  /* line 104, ../sass/main.scss */
-  header .navbar-inverse .navbar-nav .active a {
+  /* line 158, ../sass/main.scss */
+  .header .navbar-inverse .navbar-nav .active a {
     background-image: -webkit-linear-gradient(top, #4358a1 100%, #4358a1 100%);
     background-image: linear-gradient(to bottom, #4358a1 100%, #4358a1 100%);
     box-shadow: none; }
-    /* line 109, ../sass/main.scss */
-    header .navbar-inverse .navbar-nav .active a:before {
+    /* line 163, ../sass/main.scss */
+    .header .navbar-inverse .navbar-nav .active a:before {
       border-color: transparent transparent #ffffff transparent;
       border-style: dashed dashed solid dashed;
       border-width: 0px 8px 7px 8px;
@@ -101,18 +103,214 @@ header .navbar-inverse {
       top: 43px;
       left: 26px;
       position: absolute; }
-  /* line 127, ../sass/main.scss */
-  header .navbar-inverse .navbar-nav .open a, header .navbar-inverse .navbar-nav .open a:hover, header .navbar-inverse .navbar-nav .open a:focus {
+  /* line 179, ../sass/main.scss */
+  .header .navbar-inverse .navbar-nav .open a, .header .navbar-inverse .navbar-nav .open a:hover, .header .navbar-inverse .navbar-nav .open a:focus {
     background-color: #4358a1; }
-  /* line 131, ../sass/main.scss */
-  header .navbar-inverse .navbar-nav .mk_dropdownlist {
+  /* line 183, ../sass/main.scss */
+  .header .navbar-inverse .navbar-nav .mk_dropdownlist {
     background-color: #4d6bd1; }
-    /* line 134, ../sass/main.scss */
-    header .navbar-inverse .navbar-nav .mk_dropdownlist li a {
+    /* line 186, ../sass/main.scss */
+    .header .navbar-inverse .navbar-nav .mk_dropdownlist li a {
       color: #ffffff;
       font-weight: normal;
       font-size: 12px;
       background-color: #4d6bd1; }
-  /* line 146, ../sass/main.scss */
-  header .navbar-inverse .navbar-nav .mk_dropdowndivider {
+  /* line 194, ../sass/main.scss */
+  .header .navbar-inverse .navbar-nav .mk_dropdowndivider {
     background-color: #3e5bbf; }
+
+/* line 203, ../sass/main.scss */
+.mainbody {
+  background-color: #fbfbfb;
+  border: 1px solid #eceff1; }
+  /* line 207, ../sass/main.scss */
+  .mainbody .user_homedivider {
+    border-right: 1px solid #eceff1;
+    height: 200px; }
+  /* line 211, ../sass/main.scss */
+  .mainbody .user_homedivider_horizontal {
+    border-bottom: 1px solid #eceff1; }
+  /* line 215, ../sass/main.scss */
+  .mainbody .user_maincompany {
+    font-family: "Helvetica", "Arial, sans-serif";
+    color: #373737;
+    font-weight: normal;
+    font-size: 24px;
+    margin: 30px 1px 20px 28px; }
+    /* line 222, ../sass/main.scss */
+    .mainbody .user_maincompany .company_a {
+      color: white;
+      background-color: #39ae41;
+      width: 36px;
+      height: 36px;
+      padding: 5px 10px;
+      -webkit-border-radius: 4px;
+      -moz-border-radius: 4px;
+      -ms-border-radius: 4px;
+      -o-border-radius: 4px;
+      border-radius: 4px; }
+  /* line 232, ../sass/main.scss */
+  .mainbody h5 {
+    color: #373737;
+    font-size: 14px; }
+  /* line 237, ../sass/main.scss */
+  .mainbody .user_brandcolumn {
+    width: 19%;
+    margin-left: 6px; }
+  /* line 242, ../sass/main.scss */
+  .mainbody .user_title {
+    color: #373737;
+    font-size: 11px;
+    display: -moz-inline-stack;
+    display: inline-block;
+    vertical-align: middle;
+    *vertical-align: auto;
+    zoom: 1;
+    *display: inline;
+    padding-bottom: 5px; }
+  /* line 249, ../sass/main.scss */
+  .mainbody .user_brand {
+    color: #2f4e9b;
+    font-size: 14px;
+    background-image: url(../images/userbrand.png);
+    background-repeat: no-repeat;
+    background-position: 1px 0px;
+    padding-left: 25px;
+    margin: 32px 5px 20px 3px;
+    display: block; }
+  /* line 260, ../sass/main.scss */
+  .mainbody .user_product {
+    color: #464646;
+    font-size: 11px;
+    background-image: url(../images/userproduct.png);
+    background-repeat: no-repeat;
+    background-position: 1px 2px;
+    padding-left: 20px;
+    width: 130px;
+    height: 24px; }
+    /* line 270, ../sass/main.scss */
+    .mainbody .user_product span {
+      color: #6f6f6f; }
+  /* line 275, ../sass/main.scss */
+  .mainbody .user_competitorsnum {
+    color: #2f4e9b;
+    font-family: "Helvetica", "Arial, sans-serif";
+    font-size: 32px;
+    margin: 55px 10px 15px 30px;
+    display: block; }
+  /* line 282, ../sass/main.scss */
+  .mainbody .user_competitors {
+    color: #464646;
+    margin: 0px 10px 10px 5px;
+    display: block; }
+  /* line 288, ../sass/main.scss */
+  .mainbody .user_clock {
+    color: #373737;
+    font-size: 11px;
+    background-image: url(../images/userclock.png);
+    background-repeat: no-repeat;
+    background-position: 1px 0px;
+    padding-left: 62px;
+    padding-top: 9px;
+    margin: 25px 0px 20px 0px;
+    display: block;
+    height: 55px; }
+    /* line 299, ../sass/main.scss */
+    .mainbody .user_clock strong {
+      display: block; }
+  /* line 304, ../sass/main.scss */
+  .mainbody .user_makedecision {
+    color: #373737;
+    font-size: 11px;
+    margin: 12px 0px 13px 23px;
+    display: block; }
+  /* line 312, ../sass/main.scss */
+  .mainbody .user_decisionbutton {
+    font-family: "Helvetica", "Arial, sans-serif";
+    font-size: 14px;
+    margin: 0px 0px 0px 23px;
+    padding: 10px 40px 10px 40px;
+    color: #ffffff;
+    background-color: #19acfe;
+    background: -webkit-gradient(linear, 50% 0%, 50% 100%, color-stop(0%, #19acfe), color-stop(100%, #19acfe));
+    background: -webkit-linear-gradient(top, #19acfe, #19acfe);
+    background: -moz-linear-gradient(top, #19acfe, #19acfe);
+    background: -o-linear-gradient(top, #19acfe, #19acfe);
+    background: linear-gradient(top, #19acfe, #19acfe);
+    background: -webkit-gradient(linear, to bottom, to top, color-stop(0%, #19acfe), color-stop(100%, #19acfe));
+    background: -webkit-linear-gradient(to bottom, #19acfe, #19acfe);
+    background: -moz-linear-gradient(to bottom, #19acfe, #19acfe);
+    background: -o-linear-gradient(to bottom, #19acfe, #19acfe);
+    background: linear-gradient(to bottom, #19acfe, #19acfe);
+    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#ff19acfe', endColorstr='#ff19acfe', GradientType=0);
+    filter: progid:DXImageTransform.Microsoft.gradient(enabled = false);
+    border-color: #19acfe; }
+    /* line 44, ../sass/main.scss */
+    .mainbody .user_decisionbutton:hover, .mainbody .user_decisionbutton:focus {
+      background-color: #1F9BFE;
+      background: -webkit-gradient(linear, 50% 0%, 50% 100%, color-stop(0%, #1f9bfe), color-stop(100%, #1f9bfe));
+      background: -webkit-linear-gradient(top, #1f9bfe, #1f9bfe);
+      background: -moz-linear-gradient(top, #1f9bfe, #1f9bfe);
+      background: -o-linear-gradient(top, #1f9bfe, #1f9bfe);
+      background: linear-gradient(top, #1f9bfe, #1f9bfe);
+      background: -webkit-gradient(linear, to bottom, to top, color-stop(0%, #1f9bfe), color-stop(100%, #1f9bfe));
+      background: -webkit-linear-gradient(to bottom, #1f9bfe, #1f9bfe);
+      background: -moz-linear-gradient(to bottom, #1f9bfe, #1f9bfe);
+      background: -o-linear-gradient(to bottom, #1f9bfe, #1f9bfe);
+      background: linear-gradient(to bottom, #1f9bfe, #1f9bfe); }
+    /* line 51, ../sass/main.scss */
+    .mainbody .user_decisionbutton .active, .mainbody .user_decisionbutton:active {
+      background-color: #298ffe;
+      background: -webkit-gradient(linear, 50% 0%, 50% 100%, color-stop(0%, #298ffe), color-stop(100%, #298ffe));
+      background: -webkit-linear-gradient(top, #298ffe, #298ffe);
+      background: -moz-linear-gradient(top, #298ffe, #298ffe);
+      background: -o-linear-gradient(top, #298ffe, #298ffe);
+      background: linear-gradient(top, #298ffe, #298ffe);
+      background: -webkit-gradient(linear, to bottom, to top, color-stop(0%, #298ffe), color-stop(100%, #298ffe));
+      background: -webkit-linear-gradient(to bottom, #298ffe, #298ffe);
+      background: -moz-linear-gradient(to bottom, #298ffe, #298ffe);
+      background: -o-linear-gradient(to bottom, #298ffe, #298ffe);
+      background: linear-gradient(to bottom, #298ffe, #298ffe);
+      border-color: #298FFE; }
+  /* line 320, ../sass/main.scss */
+  .mainbody .user_search_chart {
+    padding-top: 40px;
+    padding-bottom: 30px; }
+    /* line 324, ../sass/main.scss */
+    .mainbody .user_search_chart .droplist_company {
+      color: #6f6f6f; }
+  /* line 329, ../sass/main.scss */
+  .mainbody .user_chartlist {
+    border-color: #cfd3e0;
+    height: 335px; }
+    /* line 334, ../sass/main.scss */
+    .mainbody .user_chartlist .panel-heading {
+      background-color: #dbe3f6;
+      border-color: #cfd3e0; }
+    /* line 340, ../sass/main.scss */
+    .mainbody .user_chartlist h3 {
+      font-size: 16px;
+      color: #2f4e9b;
+      padding: 10px 10px 10px 20px;
+      text-align: center; }
+    /* line 347, ../sass/main.scss */
+    .mainbody .user_chartlist ul .list-group-item {
+      font-size: 13px;
+      font-family: "Helvetica", "Arial, sans-serif";
+      color: #464646;
+      font-weight: bold;
+      background-color: #ffffff;
+      background-image: url(../images/userchartlist.png);
+      background-repeat: no-repeat;
+      background-position: 75px 20px;
+      padding: 18px 1px 18px 95px; }
+    /* line 358, ../sass/main.scss */
+    .mainbody .user_chartlist ul .list-group-item-active {
+      background-color: #fbfbfb; }
+  /* line 362, ../sass/main.scss */
+  .mainbody .user_chartlist2 {
+    background-color: #fbfbfb; }
+
+/* line 367, ../sass/main.scss */
+.bgbrand {
+  background-color: #fdfdfd; }
