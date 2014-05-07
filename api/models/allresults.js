@@ -2,16 +2,16 @@ var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
 var Q = require('q');
 
-var allResultSchema = new Schema({
+var allResultsSchema = new Schema({
     seminarId: String,
-    allResult: []
+    allResults: []
 });
 
-var AllResults = mongoose.model("AllResult", allResultSchema);
+var AllResults = mongoose.model("AllResults", allResultsSchema);
 
 
-exports.updateAllResults = function(seminarId, allResult){
-    var result = new AllResults({seminarId: seminarId, allResult: allResult});
+exports.updateAllResults = function(seminarId, allResults){
+    var result = new AllResults({seminarId: seminarId, allResults: allResults});
     result.save(function(err){
         var deferred = Q.defer();
         if(err){

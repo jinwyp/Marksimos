@@ -1,5 +1,5 @@
 var decisionController = require('./controllers/decision.js');
-var marketshareController = require('./controllers/marketshare.js');
+var chartController = require('./controllers/chart.js');
 var initController = require('./controllers/init.js');
 
 
@@ -14,5 +14,7 @@ module.exports = function(app){
 
     app.get('/api/init', initController.init);
     app.get('/api/decision', decisionController.getDecision);
-    app.get('/api/marketshare', marketshareController.getMarketshare);
+
+    //chart
+    app.get('/api/chart/:chartName', chartController.getChart);
 };
