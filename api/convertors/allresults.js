@@ -126,6 +126,40 @@ exports.totalInventoryAtTrade = function(allResults){
     })
 }
 
+exports.segmentsLeadersByValue = function(allResults, segment){
+    var currentPeriodIndex = allResults.length-1;
+    var currentPeriodAllResults = allResults[currentPeriodIndex];
+
+    var segmentNameAndIndex = {
+        'priceSensitive':0, 
+        'pretenders': 1,
+        'moderate': 2,
+        'goodLife': 3,
+        'ultimate': 4,
+        'pramatic': 5
+    };
+
+    var segmentIndex = segmentNameAndIndex[segment];
+
+    var valueSegmentShare = currentPeriodAllResults.p_SKUs.map(function(SKU){
+        //SKU.u_ParentBrandIndx是从1开始的index, 所以需要减1
+        var brand = currentPeriodAllResults.p_Brands[SKU.u_ParentBrandIndx-1];
+        var brandName = brand.b_BrandName;
+
+        var SKUName = brandName + SKU.u_SKUName;
+        return {
+            SKUName: SKUName,
+            valueSegmentShare: SKU.u_ValueSegmentShare[segmentIndex]
+        };
+    });
+
+    valueSegmentShare.sort(function(a, b){
+        return a.valueSegmentShare - b.valueSegmentShare;
+    })
+
+    return valueSegmentShare.slice(0, 5);
+}
+
 
 
 

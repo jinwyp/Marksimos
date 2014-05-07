@@ -52,6 +52,7 @@ function initAllResult(seminarId, seminarSetting) {
                 allResultsCleaner.clean(onePeriodResult);
             })
 
+            //保存chart数据
             var marketShareInValue = allResultsConvertor.marketShareInValue(results);
             var marketShareInVolume = allResultsConvertor.marketShareInVolume(results);
             var mindSpaceShare = allResultsConvertor.mindSpaceShare(results);
@@ -64,9 +65,11 @@ function initAllResult(seminarId, seminarSetting) {
             var marketSalesVolume = allResultsConvertor.marketSalesVolume(results);
             var totalInventoryAtFactory = allResultsConvertor.totalInventoryAtFactory(results);
             var totalInventoryAtTrade = allResultsConvertor.totalInventoryAtTrade(results);
+            var segmentsLeadersByValue = allResultsConvertor.segmentsLeadersByValue(results);
+            console.log(segmentsLeadersByValue);
 
             return {
-                seminarId: 'testid',
+                seminarId: seminarId,
                 marketShareInValue: JSON.stringify(marketShareInValue),
                 marketShareInVolume: JSON.stringify(marketShareInVolume),
                 mindSpaceShare: JSON.stringify(mindSpaceShare),
