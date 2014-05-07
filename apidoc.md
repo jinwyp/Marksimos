@@ -1,7 +1,7 @@
 #API
 
 ## /api/chart/:chartName
-* Parameters
+### Parameters
 ##### :chartName
   * marketShareInValue 
   * marketShareInVolume
@@ -15,7 +15,8 @@
   * totalInventoryAtFactory
   * totalInventoryAtTrade
 
-* Response
+### Response
+ 
     {
         "公司A": [
             0.528017640113831,
