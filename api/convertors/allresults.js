@@ -128,7 +128,7 @@ exports.totalInventoryAtTrade = function(allResults){
 
 exports.segmentsLeadersByValue = function(allResults, segment){
     var currentPeriodIndex = allResults.length-1;
-    var currentPeriodAllResults = allResults[currentPeriodIndex];
+    var currentPeriodResult = allResults[currentPeriodIndex];
 
     var segmentNameAndIndex = {
         'priceSensitive':0, 
@@ -141,9 +141,8 @@ exports.segmentsLeadersByValue = function(allResults, segment){
 
     var segmentIndex = segmentNameAndIndex[segment];
 
-    var valueSegmentShare = currentPeriodAllResults.p_SKUs.map(function(SKU){
-        //SKU.u_ParentBrandIndx是从1开始的index, 所以需要减1
-        var brand = currentPeriodAllResults.p_Brands[SKU.u_ParentBrandIndx-1];
+    var valueSegmentShare = currentPeriodResult.p_SKUs.map(function(SKU){
+        var brand = findBrand(currentPeriodResult, SKU.u_ParentBrandID);
         var brandName = brand.b_BrandName;
 
         var SKUName = brandName + SKU.u_SKUName;
@@ -154,10 +153,19 @@ exports.segmentsLeadersByValue = function(allResults, segment){
     });
 
     valueSegmentShare.sort(function(a, b){
-        return a.valueSegmentShare - b.valueSegmentShare;
+        return b.valueSegmentShare - a.valueSegmentShare;
     })
 
     return valueSegmentShare.slice(0, 5);
+}
+
+function findBrand(currentPeriodResult, u_ParentBrandID){
+    for(var i=0; i<currentPeriodResult.p_Brands.length; i++){
+        var brand = currentPeriodResult.p_Brands[i];
+        if(brand.b_BrandID === u_ParentBrandID){
+            return brand;
+        }
+    }
 }
 
 

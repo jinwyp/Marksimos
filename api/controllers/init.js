@@ -47,12 +47,14 @@ function initAllResult(seminarId, seminarSetting) {
     });
 
     var p = Q.all(queries)
-        .then(function(results) {
+        .then(function(results){
             results.forEach(function(onePeriodResult) {
                 allResultsCleaner.clean(onePeriodResult);
             })
-
-            //保存chart数据
+            return allResultsModel.updateAllResults(seminarId, results);
+        })
+        .then(function(results) {
+            //生成chart数据
             var marketShareInValue = allResultsConvertor.marketShareInValue(results);
             var marketShareInVolume = allResultsConvertor.marketShareInVolume(results);
             var mindSpaceShare = allResultsConvertor.mindSpaceShare(results);
@@ -65,7 +67,12 @@ function initAllResult(seminarId, seminarSetting) {
             var marketSalesVolume = allResultsConvertor.marketSalesVolume(results);
             var totalInventoryAtFactory = allResultsConvertor.totalInventoryAtFactory(results);
             var totalInventoryAtTrade = allResultsConvertor.totalInventoryAtTrade(results);
-            var segmentsLeadersByValue = allResultsConvertor.segmentsLeadersByValue(results);
+            var segmentsLeadersByValue = allResultsConvertor.segmentsLeadersByValue(results, 'priceSensitive');
+            var segmentsLeadersByValue = allResultsConvertor.segmentsLeadersByValue(results, 'pretenders');
+            var segmentsLeadersByValue = allResultsConvertor.segmentsLeadersByValue(results, 'moderate');
+            var segmentsLeadersByValue = allResultsConvertor.segmentsLeadersByValue(results, 'goodLife');
+            var segmentsLeadersByValue = allResultsConvertor.segmentsLeadersByValue(results, 'ultimate');
+            var segmentsLeadersByValue = allResultsConvertor.segmentsLeadersByValue(results, 'pramatic');
             console.log(segmentsLeadersByValue);
 
             return {
