@@ -152,6 +152,24 @@ exports.netMarketPrice = function(allResults){
     });
 };
 
+exports.segmentValueShareTotalMarket = function(allResults){
+    var currentPeriodIndex = allResults.length-1;
+    var period = allResults[currentPeriodIndex];
+    var market = period.p_Market;
+
+    //there are only 6 segments
+    var segmentNum = consts.ConsumerSegmentsMaxTotal - 1; 
+    var segmentNames = config.segmentNames;
+
+    var results = {};
+    
+    for(var i=0; i<segmentNum; i++){
+        var segmentName = segmentNames[i];
+        results[segmentName] = market.m_ValueSegmentShare[i];
+    }
+    return results;
+}
+
 function generateChartData(allResults, dataExtractor){
     var companyNum = allResults[allResults.length - 1].p_Market.m_CompaniesCount;
 

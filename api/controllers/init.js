@@ -108,6 +108,7 @@ function extractChartData(results, seminarSetting){
     var growthRateInVolume = allResultsConvertor.growthRateInVolume(results);
     var growthRateInValue = allResultsConvertor.growthRateInValue(results);
     var netMarketPrice = allResultsConvertor.netMarketPrice(results);
+    var segmentValueShareTotalMarket = allResultsConvertor.segmentValueShareTotalMarket(results);
 
     return {
         marketShareInValue: JSON.stringify(marketShareInValue),
@@ -132,8 +133,8 @@ function extractChartData(results, seminarSetting){
         },
         growthRateInVolume: JSON.stringify(growthRateInVolume),
         growthRateInValue: JSON.stringify(growthRateInValue),
-        netMarketPrice: JSON.stringify(netMarketPrice)
-        //segmentValueShareTotalMarket: segmentValueShareTotalMarket
+        netMarketPrice: JSON.stringify(netMarketPrice),
+        segmentValueShareTotalMarket: JSON.stringify(segmentValueShareTotalMarket)
     };
 }
 
