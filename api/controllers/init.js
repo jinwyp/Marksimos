@@ -19,6 +19,10 @@ var seminarModel = require('../models/seminar.js');
 exports.init = function(req, res, next) {
     var seminarId = req.session.seminarId;
 
+    if(!seminarId){
+        return next(new Error("seminarId cannot be empty."));
+    }
+
     // initDecision(seminar).then(function(){
     //     res.send('initialize decision success');
     // }).fail(function(err){
