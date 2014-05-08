@@ -9,14 +9,22 @@ var seminarChartSchema = new Schema({
     marketShareInVolume: String,
     mindSpaceShare: String,
     shelfSpaceShare: String,
-    totalInvestment: String,
+    shelfSpaceShare: String,
     netProfitByCompanies: String,
     returnOnInvestment: String,
     investmentsVersusBudget: String,
     marketSalesValue: String,
     marketSalesVolume: String,
     totalInventoryAtFactory: String,
-    totalInventoryAtTrade: String
+    totalInventoryAtTrade: String,
+    segmentsLeadersByValue: {
+        'priceSensitive': String,
+        'pretenders': String,
+        'moderate': String,
+        'goodLife': String,
+        'ultimate': String,
+        'pramatic': String
+    }
 });
 
 

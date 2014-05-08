@@ -17,4 +17,5 @@ module.exports = function(app){
 
     //chart
     app.get('/api/chart/:chartName', chartController.getChart);
+    app.get('/api/chart/segmentsLeadersByValue/:chartName', chartController.getSegmentsLeadersByValueChart);
 };

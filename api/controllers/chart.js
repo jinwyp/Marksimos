@@ -13,3 +13,19 @@ exports.getChart = function(req, res, next){
     })
 }
 
+exports.getSegmentsLeadersByValueChart = function(req, res, next){
+    var seminarId = req.session.seminarId;
+    var chartName = req.params.chartName;
+
+    chartDataModel.getChartData(seminarId)
+    .then(function(chart){
+        console.log(chart);
+        console.log(chart.segmentsLeadersByValue[chartName]);
+        res.send(chart.segmentsLeadersByValue[chartName]);
+    })
+    .fail(function(err){
+        next(err);
+    })
+}
+
+

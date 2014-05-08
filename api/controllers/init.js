@@ -67,13 +67,12 @@ function initAllResult(seminarId, seminarSetting) {
             var marketSalesVolume = allResultsConvertor.marketSalesVolume(results);
             var totalInventoryAtFactory = allResultsConvertor.totalInventoryAtFactory(results);
             var totalInventoryAtTrade = allResultsConvertor.totalInventoryAtTrade(results);
-            var segmentsLeadersByValue = allResultsConvertor.segmentsLeadersByValue(results, 'priceSensitive');
-            var segmentsLeadersByValue = allResultsConvertor.segmentsLeadersByValue(results, 'pretenders');
-            var segmentsLeadersByValue = allResultsConvertor.segmentsLeadersByValue(results, 'moderate');
-            var segmentsLeadersByValue = allResultsConvertor.segmentsLeadersByValue(results, 'goodLife');
-            var segmentsLeadersByValue = allResultsConvertor.segmentsLeadersByValue(results, 'ultimate');
-            var segmentsLeadersByValue = allResultsConvertor.segmentsLeadersByValue(results, 'pramatic');
-            console.log(segmentsLeadersByValue);
+            var priceSensitive = allResultsConvertor.segmentsLeadersByValue(results, 'priceSensitive');
+            var pretenders = allResultsConvertor.segmentsLeadersByValue(results, 'pretenders');
+            var moderate = allResultsConvertor.segmentsLeadersByValue(results, 'moderate');
+            var goodLife = allResultsConvertor.segmentsLeadersByValue(results, 'goodLife');
+            var ultimate = allResultsConvertor.segmentsLeadersByValue(results, 'ultimate');
+            var pramatic = allResultsConvertor.segmentsLeadersByValue(results, 'pramatic');
 
             return {
                 seminarId: seminarId,
@@ -88,8 +87,15 @@ function initAllResult(seminarId, seminarSetting) {
                 marketSalesValue: JSON.stringify(marketSalesValue),
                 marketSalesVolume: JSON.stringify(marketSalesVolume),
                 totalInventoryAtFactory: JSON.stringify(totalInventoryAtFactory),
-                totalInventoryAtTrade: JSON.stringify(totalInventoryAtTrade)
-
+                totalInventoryAtTrade: JSON.stringify(totalInventoryAtTrade),
+                segmentsLeadersByValue: {
+                    'priceSensitive': JSON.stringify(priceSensitive),
+                    'pretenders': JSON.stringify(pretenders),
+                    'moderate': JSON.stringify(moderate),
+                    'goodLife': JSON.stringify(goodLife),
+                    'ultimate': JSON.stringify(ultimate),
+                    'pramatic': JSON.stringify(pramatic)
+                }
             };
         })
         .then(function(chartData) {
