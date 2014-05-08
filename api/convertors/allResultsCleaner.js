@@ -9,6 +9,32 @@ exports.clean = function(onePeriodResult) {
     removeEmptySKU(onePeriodResult);
 
 
+    cleanCompanyName(onePeriodResult);
+    cleanBrandName(onePeriodResult);
+    cleanSKUName(onePeriodResult);
+};
+
+function cleanBrandName(onePeriodResult){
+    var Brands = onePeriodResult.p_Brands;
+    for (var i = 0; i < Brands.length; i++) {
+        var brand = Brands[i];
+        brand.b_BrandName = brand.b_BrandName
+            .filter(function(n){return n!=='\u0000'})
+            .join('').trim();
+    }
+}
+
+function cleanSKUName(onePeriodResult){
+    var SKUs = onePeriodResult.p_SKUs;
+    for (var i = 0; i < SKUs.length; i++) {
+        var SKU = SKUs[i];
+        SKU.u_SKUName = SKU.u_SKUName
+            .filter(function(n){return n!=='\u0000'})
+            .join('').trim();
+    }
+}
+
+function cleanCompanyName(onePeriodResult){
     //clean company name
     for (var i = 0; i < onePeriodResult.p_Companies.length; i++) {
         var company = onePeriodResult.p_Companies[i];
@@ -16,7 +42,7 @@ exports.clean = function(onePeriodResult) {
             .filter(function(n){return n!=='\u0000'})
             .join('').trim();
     }
-};
+}
 
 function removeEmptyBrands(onePeriodResult) {
     var brands = [];

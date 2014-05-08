@@ -52,7 +52,7 @@ gulp.task('nodemon', function () {
 // Rerun the task when a file changes
 gulp.task('watch', function() {
     gulp.watch(paths.javascript, ['jshint']);
-    gulp.watch(paths.sassfiles, ['compass']);
+    //gulp.watch(paths.sassfiles, ['compass']);
 
     var server = livereload();
     gulp.watch(paths.app).on('change', function(file) {
@@ -66,5 +66,5 @@ gulp.task('watch', function() {
 
 // 默认任务
 // The default task (called when you run `gulp` from cli)
-gulp.task('default', ['nodemon', 'compass', 'watch']);
+gulp.task('default', ['nodemon', 'watch']);
 

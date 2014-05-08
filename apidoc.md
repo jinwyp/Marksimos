@@ -34,3 +34,17 @@
     }
     
 
+## /api/chart/segmentsleadersbyvalue/:chartName
+### Parameters
+##### :chartName
+注意: chartName是区分大小写的
+ * priceSensitive
+ * pretenders
+ * moderate
+ * goodLife
+ * ultimate
+ * pramatic
+
+### Response
+同/api/chart/:chartName
+
