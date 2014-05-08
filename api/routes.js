@@ -1,6 +1,7 @@
 var decisionController = require('./controllers/decision.js');
 var chartController = require('./controllers/chart.js');
 var initController = require('./controllers/init.js');
+var util = require('util');
 
 
 module.exports = function(app){
@@ -18,4 +19,8 @@ module.exports = function(app){
     //chart
     app.get('/api/chart/:chartName', chartController.getChart);
     app.get('/api/chart/segmentsLeadersByValue/:chartName', chartController.getSegmentsLeadersByValueChart);
+
+    // app.get('*', function(req, res){
+    //     res.send("404 page");
+    // })
 };
