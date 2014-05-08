@@ -12,6 +12,11 @@ module.exports = function(app){
         res.render('usermainhome.ejs', {});
     });
 
+    app.get('/report', function(req, res, next){
+        res.render('userreport.ejs', {});
+    });
+
+
     app.get('/api/init', initController.init);
     app.get('/api/decision', decisionController.getDecision);
 
