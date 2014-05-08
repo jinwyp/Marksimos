@@ -60,7 +60,7 @@ if (app.get('env') === 'development') {
 app.use(function(err, req, res, next) {
     res.json(500, {
         message: err.message,
-        error: err
+        error: {}
     });
 });
 

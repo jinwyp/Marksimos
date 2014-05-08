@@ -58,52 +58,14 @@ function initAllResult(seminarId, seminarSetting) {
             return allResultsModel.updateAllResults(seminarId, results);
         })
         .then(function(results) {
-            //生成chart数据
-            var marketShareInValue = allResultsConvertor.marketShareInValue(results);
-            var marketShareInVolume = allResultsConvertor.marketShareInVolume(results);
-            var mindSpaceShare = allResultsConvertor.mindSpaceShare(results);
-            var shelfSpaceShare = allResultsConvertor.shelfSpaceShare(results);
-            var totalInvestment = allResultsConvertor.totalInvestment(results);
-            var netProfitByCompanies = allResultsConvertor.netProfitByCompanies(results);
-            var returnOnInvestment = allResultsConvertor.returnOnInvestment(results);
-            var investmentsVersusBudget = allResultsConvertor.investmentsVersusBudget(results, seminarSetting);
-            var marketSalesValue = allResultsConvertor.marketSalesValue(results);
-            var marketSalesVolume = allResultsConvertor.marketSalesVolume(results);
-            var totalInventoryAtFactory = allResultsConvertor.totalInventoryAtFactory(results);
-            var totalInventoryAtTrade = allResultsConvertor.totalInventoryAtTrade(results);
-            var priceSensitive = allResultsConvertor.segmentsLeadersByValue(results, 'priceSensitive');
-            var pretenders = allResultsConvertor.segmentsLeadersByValue(results, 'pretenders');
-            var moderate = allResultsConvertor.segmentsLeadersByValue(results, 'moderate');
-            var goodLife = allResultsConvertor.segmentsLeadersByValue(results, 'goodLife');
-            var ultimate = allResultsConvertor.segmentsLeadersByValue(results, 'ultimate');
-            var pramatic = allResultsConvertor.segmentsLeadersByValue(results, 'pramatic');
-
-            return {
-                seminarId: seminarId,
-                marketShareInValue: JSON.stringify(marketShareInValue),
-                marketShareInVolume: JSON.stringify(marketShareInVolume),
-                mindSpaceShare: JSON.stringify(mindSpaceShare),
-                shelfSpaceShare: JSON.stringify(shelfSpaceShare),
-                totalInvestment: JSON.stringify(totalInvestment),
-                netProfitByCompanies: JSON.stringify(netProfitByCompanies),
-                returnOnInvestment: JSON.stringify(returnOnInvestment),
-                investmentsVersusBudget: JSON.stringify(investmentsVersusBudget),
-                marketSalesValue: JSON.stringify(marketSalesValue),
-                marketSalesVolume: JSON.stringify(marketSalesVolume),
-                totalInventoryAtFactory: JSON.stringify(totalInventoryAtFactory),
-                totalInventoryAtTrade: JSON.stringify(totalInventoryAtTrade),
-                segmentsLeadersByValue: {
-                    'priceSensitive': JSON.stringify(priceSensitive),
-                    'pretenders': JSON.stringify(pretenders),
-                    'moderate': JSON.stringify(moderate),
-                    'goodLife': JSON.stringify(goodLife),
-                    'ultimate': JSON.stringify(ultimate),
-                    'pramatic': JSON.stringify(pramatic)
-                }
-            };
+            return extractChartData(results, seminarSetting);
         })
         .then(function(chartData) {
-            return chartDataModel.updateChartData(chartData);
+            chartData.seminarId = seminarId;
+            return chartDataModel.removeChartData(seminarId)
+            .then(function(){
+                return chartDataModel.updateChartData(chartData);
+            })
         })
 
     return p;
@@ -113,6 +75,66 @@ function initOnePeriodResult(seminarId, period) {
     var reqUrl = config.cgiService + util.format('allresults.exe?seminar=%s&period=%s', seminarId, period);
 
     return request(reqUrl);
+}
+
+function extractChartData(results, seminarSetting){
+    //生成chart数据
+    var marketShareInValue = allResultsConvertor.marketShareInValue(results);
+    var marketShareInVolume = allResultsConvertor.marketShareInVolume(results);
+    var mindSpaceShare = allResultsConvertor.mindSpaceShare(results);
+    var shelfSpaceShare = allResultsConvertor.shelfSpaceShare(results);
+
+    //investment and profit
+    var totalInvestment = allResultsConvertor.totalInvestment(results);
+    var netProfitByCompanies = allResultsConvertor.netProfitByCompanies(results);
+    var returnOnInvestment = allResultsConvertor.returnOnInvestment(results);
+    var investmentsVersusBudget = allResultsConvertor.investmentsVersusBudget(results, seminarSetting);
+    
+    //market sales and inventory
+    var marketSalesValue = allResultsConvertor.marketSalesValue(results);
+    var marketSalesVolume = allResultsConvertor.marketSalesVolume(results);
+    var totalInventoryAtFactory = allResultsConvertor.totalInventoryAtFactory(results);
+    var totalInventoryAtTrade = allResultsConvertor.totalInventoryAtTrade(results);
+    var priceSensitive = allResultsConvertor.segmentsLeadersByValue(results, 'priceSensitive');
+    
+    //segment leaders top 5
+    var pretenders = allResultsConvertor.segmentsLeadersByValue(results, 'pretenders');
+    var moderate = allResultsConvertor.segmentsLeadersByValue(results, 'moderate');
+    var goodLife = allResultsConvertor.segmentsLeadersByValue(results, 'goodLife');
+    var ultimate = allResultsConvertor.segmentsLeadersByValue(results, 'ultimate');
+    var pramatic = allResultsConvertor.segmentsLeadersByValue(results, 'pramatic');
+
+    //Market evolution
+    var growthRateInVolume = allResultsConvertor.growthRateInVolume(results);
+    var growthRateInValue = allResultsConvertor.growthRateInValue(results);
+    var netMarketPrice = allResultsConvertor.netMarketPrice(results);
+
+    return {
+        marketShareInValue: JSON.stringify(marketShareInValue),
+        marketShareInVolume: JSON.stringify(marketShareInVolume),
+        mindSpaceShare: JSON.stringify(mindSpaceShare),
+        shelfSpaceShare: JSON.stringify(shelfSpaceShare),
+        totalInvestment: JSON.stringify(totalInvestment),
+        netProfitByCompanies: JSON.stringify(netProfitByCompanies),
+        returnOnInvestment: JSON.stringify(returnOnInvestment),
+        investmentsVersusBudget: JSON.stringify(investmentsVersusBudget),
+        marketSalesValue: JSON.stringify(marketSalesValue),
+        marketSalesVolume: JSON.stringify(marketSalesVolume),
+        totalInventoryAtFactory: JSON.stringify(totalInventoryAtFactory),
+        totalInventoryAtTrade: JSON.stringify(totalInventoryAtTrade),
+        segmentsLeadersByValue: {
+            'priceSensitive': JSON.stringify(priceSensitive),
+            'pretenders': JSON.stringify(pretenders),
+            'moderate': JSON.stringify(moderate),
+            'goodLife': JSON.stringify(goodLife),
+            'ultimate': JSON.stringify(ultimate),
+            'pramatic': JSON.stringify(pramatic)
+        },
+        growthRateInVolume: JSON.stringify(growthRateInVolume),
+        growthRateInValue: JSON.stringify(growthRateInValue),
+        netMarketPrice: JSON.stringify(netMarketPrice)
+        //segmentValueShareTotalMarket: segmentValueShareTotalMarket
+    };
 }
 
 /**
