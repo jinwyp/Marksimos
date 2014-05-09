@@ -49,7 +49,7 @@ begin
     if sValue='GET' then
     begin
       sValue := getVariable('QUERY_STRING');
-      sValue := 'period=0&simulationVariant=FMCG&targetMarket=GENERIC';
+      //sValue := 'period=0&simulationVariant=FMCG&targetMarket=GENERIC';
       params := Explode(sValue);
 
       GConfigureRecord.cr_SimulationVariant := parseSimulationVariant(params['simulationVariant']);
