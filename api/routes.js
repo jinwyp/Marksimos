@@ -18,6 +18,10 @@ module.exports = function(app){
     });
 
 
+
+
+
+
     app.get('/api/init', initController.init);
     app.get('/api/decision', decisionController.getDecision);
 

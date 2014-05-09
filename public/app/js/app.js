@@ -6,51 +6,37 @@
 var marksimosapp = angular.module('marksimos', ['angularCharts']);
 
 // controller business logic
-marksimosapp.controller('chartController', function AppCtrl ($scope,  $timeout) {
-    $timeout(function() {
+marksimosapp.controller('chartController', function AppCtrl ($scope,  $timeout, $http) {
+
+    $http.get('/api/chart/marketShareInValue').success(function(data, status, headers, config){
+        $scope.chartData = data;
+        console.log($scope.chartData);
+    });
+
         $scope.data = {
-            series: ['Sales', 'Income', 'Expense', 'Laptops', 'Keyboards'],
-            data : [{
-                x : "Sales",
-                y: [100,500, 0],
-                tooltip:"this is tooltip"
-            },
+            series: ['A', 'B', 'C', 'D', 'F'],
+            data : [
                 {
-                    x : "Not Sales",
+                    x : "Round 1",
+                    y: [100,500, 1000],
+                    tooltip:"this is tooltip"
+                },
+                {
+                    x : "Round 2",
                     y: [300, 100, 100]
                 },
                 {
-                    x : "Tax",
-                    y: [351]
+                    x : "Round 3",
+                    y: [351, 210]
                 },
                 {
-                    x : "Not Tax",
+                    x : "Round 4",
                     y: [54, 0, 879]
                 }]
         };
-    }, 100);
 
 
-    $scope.data1 = {
-        series: ['Sales', 'Income', 'Expense', 'Laptops', 'Keyboards'],
-        data : [{
-            x : "Sales",
-            y: [100,500, 0],
-            tooltip:"this is tooltip"
-        },
-            {
-                x : "Not Sales",
-                y: [300, 100, 100]
-            },
-            {
-                x : "Tax",
-                y: [351]
-            },
-            {
-                x : "Not Tax",
-                y: [54, 0, 879]
-            }]
-    }
+
 
     $scope.chartType = 'bar';
 
