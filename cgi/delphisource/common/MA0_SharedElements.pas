@@ -14,7 +14,7 @@ uses
 {'HCD Viewer Data Structure.INC'}
 
 Function DLLStr( aStringID : Integer ) : String;
-//Function ReadExogenous( PeriodNumber : TPeriodNumber; ConfigRecord : TConfigurationRecord; var ExoRecord : TExogenous ) : Integer; overload;
+Function ReadExogenous( PeriodNumber : TPeriodNumber; ConfigRecord : TConfigurationRecord; var ExoRecord : TExogenous ) : Integer;
 //Function ReadParameters( var GenPar : TGeneralParameters; ConfigRecord : TConfigurationRecord; var SegPar : TSegmentsParameters ) : Integer;overload;
 
 //Function ReadExogenous( PeriodNumber : TPeriodNumber; vSimulationVariant : TSimulationVariant; var ExoRecord : TExogenous ) : Integer; overload;
@@ -92,38 +92,37 @@ end;
 //
 //end;
 
-//Function ReadExogenous( PeriodNumber : TPeriodNumber; ConfigRecord : TConfigurationRecord; var ExoRecord : TExogenous ) : Integer;
-//var
-//  ExoFile    : file of TExogenous;
-//  FileName   : String;
-//  TempResult : Integer;
-//  vPath : string;
-//begin
-//  vPath := ParamStr(0);
-//  vPath := ExtractFilePath(vPath);
-//  with ConfigRecord do FileName := ExogenousFileName[cr_SimulationVariant, cr_TargetMarket];
-//  FileName := IncludeTrailingPathDelimiter(vPath)+FileName;
-//  try
-//      try
-//        AssignFile( ExoFile, FileName );
-//        Reset( ExoFile );
-//        Seek( ExoFile, PeriodNumber - History_3 );
-//        Read( ExoFile, ExoRecord );
-//        TempResult := ReadExogenousOK;
-//      except
-//        on E: EInOutError do
-//        begin
-//          ShowMessage( 'Error: ' + IntToStr( E.ErrorCode ) + #13 + #10 + FileName + #13 + #10 + E.Message );
-//          TempResult := E.ErrorCode;
-//        end;
-//      end;
-//  finally
-//        CloseFile( ExoFile );
-//  end;
-//
-//  Result := TempResult;
-//
-//end;
+Function ReadExogenous( PeriodNumber : TPeriodNumber; ConfigRecord : TConfigurationRecord; var ExoRecord : TExogenous ) : Integer;
+var
+  ExoFile    : file of TExogenous;
+  FileName   : String;
+  TempResult : Integer;
+  vPath : string;
+begin
+  vPath := ParamStr(0);
+  vPath := ExtractFilePath(vPath);
+  with ConfigRecord do FileName := ExogenousFileName[cr_SimulationVariant, cr_TargetMarket];
+  FileName := IncludeTrailingPathDelimiter(vPath)+FileName;
+  try
+      try
+        AssignFile( ExoFile, FileName );
+        Reset( ExoFile );
+        Seek( ExoFile, PeriodNumber - History_3 );
+        Read( ExoFile, ExoRecord );
+        TempResult := ReadExogenousOK;
+      except
+        on E: EInOutError do
+        begin
+          TempResult := E.ErrorCode;
+        end;
+      end;
+  finally
+        CloseFile( ExoFile );
+  end;
+
+  Result := TempResult;
+
+end;
 
 ////overload : use SimulationVariant intead of ConfigRecord
 //Function ReadParameters( var GenPar : TGeneralParameters; vSimulationVariant : TSimulationVariant;vTargetMarket : TTargetMarket; var SegPar : TSegmentsParameters ) : Integer;
@@ -220,7 +219,7 @@ var
   RecNo       : Integer;
 
 begin
-  RecNo := PeriodNumber - History_2;
+  RecNo := PeriodNumber - History_3;
   FileName := IncludeTrailingPathDelimiter(DataDirectory) +  AllResultsFileName + SeminarCode;
   FileName := 'D:\\myfiles\\marksimons-data\\AllResults.TTT';
   if FileExists(FileName) = false then
