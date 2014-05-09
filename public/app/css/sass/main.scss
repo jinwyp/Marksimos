@@ -28,13 +28,17 @@ $color_main_body_user_decision_button: #19acfe;
 $color_main_body_user_chart_title: #2f4e9b;
 $color_main_body_user_chart_list: #464646;
 $color_main_body_user_chart_list_border: #cfd3e0;
+$color_main_body_user_chart_leftmenu_title: #6f6f6f;
+$color_main_body_user_chart_leftmenu_active_bg: #eef3ff;
+$color_main_body_user_chart_leftmenu_active_bgbefore: #236ac7;
+$color_main_body_user_chart_leftmenu_border: #e7e9ed;
 
 
 @mixin user_decision_button{
     color: #ffffff;
     background-color: $color_main_body_user_decision_button;
     @include background(linear-gradient(top, $color_main_body_user_decision_button, $color_main_body_user_decision_button));
-    @include background(linear-gradient(to bottom, $color_main_body_user_decision_button, $color_main_body_user_decision_button));
+//    @include background(linear-gradient(to bottom, $color_main_body_user_decision_button, $color_main_body_user_decision_button));
 
     filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#ff19acfe', endColorstr='#ff19acfe', GradientType=0);
     filter: progid:DXImageTransform.Microsoft.gradient(enabled = false);
@@ -44,14 +48,14 @@ $color_main_body_user_chart_list_border: #cfd3e0;
     &:focus{
         background-color: #1F9BFE;
         @include background(linear-gradient(top, #1F9BFE, #1F9BFE));
-        @include background(linear-gradient(to bottom, #1F9BFE, #1F9BFE));
+//        @include background(linear-gradient(to bottom, #1F9BFE, #1F9BFE));
     }
 
     .active,
     &:active {
         background-color: #298ffe;
         @include background(linear-gradient(top, #298ffe, #298ffe));
-        @include background(linear-gradient(to bottom, #298ffe, #298ffe));
+//        @include background(linear-gradient(to bottom, #298ffe, #298ffe));
         border-color: #298FFE;
     }
 
@@ -200,15 +204,23 @@ body{
 
 
 
+
+
 .mainbody{
+
+    /***** Mainuser 页面开始 *****/
 
     background-color: $color_main_body_background;
     border: 1px solid $color_main_body_border;
-    .user_homedivider{
-        border-right: 1px solid $color_main_body_border;
+    
+    .user_brand_box{
         height: 200px;
     }
-    .user_homedivider_horizontal{
+    
+    .user_home_divider{
+        border-right: 1px solid $color_main_body_border;
+    }
+    .user_home_divider_horizontal{
         border-bottom: 1px solid $color_main_body_border;
     }
 
@@ -276,12 +288,15 @@ body{
         color: $color_main_body_competitors;
         font-family: $font_main_header2;
         font-size: 32px;
-        margin: 55px 10px 15px 30px;
+        text-align: center;
+        margin: 55px 0px 15px 0px;
         display: block;
+        
     }
     .user_competitors{
+        text-align: center;
         color: $color_main_body_product;
-        margin: 0px 10px 10px 5px;
+        margin: 0px 0px 5px 0px;
         display: block;
     }
 
@@ -318,7 +333,7 @@ body{
     }
     
     .user_search_chart{
-        padding-top: 40px;
+        padding-top: 30px;
         padding-bottom: 30px;
 
         .droplist_company{
@@ -326,7 +341,7 @@ body{
         }
     }
 
-    .user_chartlist{
+    .user_chart_list{
         border-color: $color_main_body_user_chart_list_border;
         height: 335px;
 //        background-color: $color_main_body_background;
@@ -359,13 +374,121 @@ body{
             background-color: $color_main_body_background;
         }
     }
-    .user_chartlist2{
+    .user_chart_list_bg2{
         background-color: $color_main_body_background;
     }
 
+
+
+    /***** Report 页面开始 *****/
+
+    .user_chart_box{
+        height: 70px;
+    }
+
+    .user_chart_company {
+        margin: 18px 0px 1px 28px;
+    }
+
+    .user_chart_search {
+        padding-top: 16px;
+        padding-bottom: 10px;
+    }
+
+
+    .user_chart_vs{
+        color: $color_main_body_user_clock;
+        font-size: 10px;
+        text-align: center;
+        background-image: url(../images/chartvs.png);
+        background-repeat: no-repeat;
+        background-position: 12px 0px;
+        padding-top: 25px;
+        margin: 16px 0px 1px 0px;
+        display: block;
+    }
+
+    .user_chart_clock{
+        font-size: 10px;
+        margin: 10px 0px 1px 0px;
+    }
+
+    .user_chart_make_decision{
+        color: $color_main_body_user_clock;
+        font-size: 10px;
+        text-align: center;
+        margin: 5px 0px 5px 0px;
+        display: block;
+    }
+
+    .user_chart_decision_button{
+        font-family: $font_main_header2;
+        font-size: 11px;
+        font-weight: normal;
+        margin: 0px 0px 0px 19px;
+        padding: 8px 40px 8px 40px;
+        @include user_decision_button;
+    }
+
+    .user_chart_padding{
+        padding-left: 0px;
+        padding-right: 0px;
+    }
+    .user_chart_leftmenu{
+
+        background-color: $color_main_body_background_brand;
+        border-width: 0px 0px 1px 0px;
+        border-color: $color_main_body_user_chart_leftmenu_border;
+        @include border-radius(0px);
+        @include box-shadow($color_main_body_user_chart_leftmenu_border 0px 0px 0px);
+        margin-bottom: 5px;
+
+        .panel-heading{
+            font-size: 14px;
+            color: $color_main_body_user_chart_leftmenu_title;
+            margin: 10px 0px 0px 15px;
+        }
+
+
+        ul .list-group-item{
+            font-size: 11px;
+            color: $color_main_body_user_chart_list;
+            border: 0px none #000000;
+            background-color: $color_main_body_background_brand;
+            background-image: url(../images/userchartlist.png);
+            background-repeat: no-repeat;
+            background-position: 30px 12px;
+            padding: 11px 1px 13px 50px;
+        }
+        ul .list-group-item-active{
+            font-weight: bold;
+            color: $color_main_body_user_chart_title;
+            background-color: $color_main_body_user_chart_leftmenu_active_bg;
+
+            &:before{
+                border: 3px solid $color_main_body_user_chart_leftmenu_active_bgbefore;
+                width: 0;
+                height: 100%;
+                content: "";
+                display: block;
+                position: absolute;
+                top:0px;
+                left:0px;
+            }
+        }
+
+    }
+
 }
+
 .bgbrand{
     background-color: $color_main_body_background_brand;
+}
+
+.chart {
+    float:left;
+    width: 50%;
+    height:400px;
 }
 
 //
