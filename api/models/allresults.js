@@ -2,6 +2,12 @@ var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
 var Q = require('q');
 
+/*
+ * allResults : {
+    periodId: -3,
+    onePeriodResult: {}
+ }
+ */
 var allResultsSchema = new Schema({
     seminarId: String,
     allResults: []

@@ -52,19 +52,26 @@ function initAllResult(seminarId, seminarSetting) {
 
     var p = Q.all(queries)
         .then(function(results){
-            results.forEach(function(onePeriodResult) {
-                allResultsCleaner.clean(onePeriodResult);
-            })
-            return allResultsModel.updateAllResults(seminarId, results);
+            var tempResults = [];
+            for(var i=0; i<results.length; i++){
+                allResultsCleaner.clean(results[i]);
+                tempResults.push({
+                    periodId: periods[i],
+                    onePeriodResult: results[i]
+                });
+            }
+            return allResultsModel.updateAllResults(seminarId, tempResults);
         })
         .then(function(results) {
             return extractChartData(results, seminarSetting);
         })
         .then(function(chartData) {
-            chartData.seminarId = seminarId;
             return chartDataModel.removeChartData(seminarId)
             .then(function(){
-                return chartDataModel.updateChartData(chartData);
+                return chartDataModel.updateChartData({
+                    seminarId: seminarId,
+                    charts: chartData
+                });
             })
         })
 
@@ -95,14 +102,14 @@ function extractChartData(results, seminarSetting){
     var marketSalesVolume = allResultsConvertor.marketSalesVolume(results);
     var totalInventoryAtFactory = allResultsConvertor.totalInventoryAtFactory(results);
     var totalInventoryAtTrade = allResultsConvertor.totalInventoryAtTrade(results);
-    var priceSensitive = allResultsConvertor.segmentsLeadersByValue(results, 'priceSensitive');
-    
+
     //segment leaders top 5
-    var pretenders = allResultsConvertor.segmentsLeadersByValue(results, 'pretenders');
-    var moderate = allResultsConvertor.segmentsLeadersByValue(results, 'moderate');
-    var goodLife = allResultsConvertor.segmentsLeadersByValue(results, 'goodLife');
-    var ultimate = allResultsConvertor.segmentsLeadersByValue(results, 'ultimate');
-    var pramatic = allResultsConvertor.segmentsLeadersByValue(results, 'pramatic');
+    var segmentsLeadersByValuePriceSensitive = allResultsConvertor.segmentsLeadersByValue(results, 'priceSensitive');    
+    var segmentsLeadersByValuePretenders = allResultsConvertor.segmentsLeadersByValue(results, 'pretenders');
+    var segmentsLeadersByValueModerate = allResultsConvertor.segmentsLeadersByValue(results, 'moderate');
+    var segmentsLeadersByValueGoodLife = allResultsConvertor.segmentsLeadersByValue(results, 'goodLife');
+    var segmentsLeadersByValueUltimate = allResultsConvertor.segmentsLeadersByValue(results, 'ultimate');
+    var segmentsLeadersByValuePramatic = allResultsConvertor.segmentsLeadersByValue(results, 'pramatic');
 
     //Market evolution
     var growthRateInVolume = allResultsConvertor.growthRateInVolume(results);
@@ -110,7 +117,99 @@ function extractChartData(results, seminarSetting){
     var netMarketPrice = allResultsConvertor.netMarketPrice(results);
     var segmentValueShareTotalMarket = allResultsConvertor.segmentValueShareTotalMarket(results);
 
-    return {
+    return [
+        {
+            chartName: 'marketShareInValue',
+            chartData: marketShareInValue
+        },
+        {
+            chartName: 'marketShareInVolume',
+            chartData: marketShareInVolume
+        },
+        {
+            chartName: 'mindSpaceShare',
+            chartData: mindSpaceShare
+        },
+        {
+            chartName: 'shelfSpaceShare',
+            chartData: shelfSpaceShare
+        },
+        {
+            chartName: 'totalInvestment',
+            chartData: totalInvestment
+        },
+        {
+            chartName: 'netProfitByCompanies',
+            chartData: netProfitByCompanies
+        },
+        {
+            chartName: 'returnOnInvestment',
+            chartData: returnOnInvestment
+        },
+        {
+            chartName: 'investmentsVersusBudget',
+            chartData: investmentsVersusBudget
+        },
+        {
+            chartName: 'marketSalesValue',
+            chartData: marketSalesValue
+        },
+        {
+            chartName: 'marketSalesVolume',
+            chartData: marketSalesVolume
+        },
+        {
+            chartName: 'totalInventoryAtFactory',
+            chartData: totalInventoryAtFactory
+        },
+        {
+            chartName: 'totalInventoryAtTrade',
+            chartData: totalInventoryAtTrade
+        },
+        {
+            chartName: 'segmentsLeadersByValuePriceSensitive',
+            chartData: segmentsLeadersByValuePriceSensitive
+        },
+        {
+            chartName: 'segmentsLeadersByValuePretenders',
+            chartData: segmentsLeadersByValuePretenders
+        },
+        {
+            chartName: 'segmentsLeadersByValueModerate',
+            chartData: segmentsLeadersByValueModerate
+        },
+        {
+            chartName: 'segmentsLeadersByValueGoodLife',
+            chartData: segmentsLeadersByValueGoodLife
+        },
+        {
+            chartName: 'segmentsLeadersByValueUltimate',
+            chartData: segmentsLeadersByValueUltimate
+        },
+        {
+            chartName: 'segmentsLeadersByValuePramatic',
+            chartData: segmentsLeadersByValuePramatic
+        },
+        {
+            chartName: 'growthRateInVolume',
+            chartData: growthRateInVolume
+        },
+        {
+            chartName: 'growthRateInValue',
+            chartData: growthRateInValue
+        },
+        {
+            chartName: 'netMarketPrice',
+            chartData: netMarketPrice
+        },
+        {
+            chartName: 'segmentValueShareTotalMarket',
+            chartData: segmentValueShareTotalMarket
+        }
+    ];
+
+    /*
+    {
         marketShareInValue: JSON.stringify(marketShareInValue),
         marketShareInVolume: JSON.stringify(marketShareInVolume),
         mindSpaceShare: JSON.stringify(mindSpaceShare),
@@ -135,7 +234,8 @@ function extractChartData(results, seminarSetting){
         growthRateInValue: JSON.stringify(growthRateInValue),
         netMarketPrice: JSON.stringify(netMarketPrice),
         segmentValueShareTotalMarket: JSON.stringify(segmentValueShareTotalMarket)
-    };
+    }
+    */
 }
 
 /**

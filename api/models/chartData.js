@@ -5,30 +5,35 @@ var Q = require('q');
 
 var seminarChartSchema = new Schema({
     seminarId: String,
-    marketShareInValue: String,
-    marketShareInVolume: String,
-    mindSpaceShare: String,
-    shelfSpaceShare: String,
-    shelfSpaceShare: String,
-    netProfitByCompanies: String,
-    returnOnInvestment: String,
-    investmentsVersusBudget: String,
-    marketSalesValue: String,
-    marketSalesVolume: String,
-    totalInventoryAtFactory: String,
-    totalInventoryAtTrade: String,
-    segmentsLeadersByValue: {
-        'priceSensitive': String,
-        'pretenders': String,
-        'moderate': String,
-        'goodLife': String,
-        'ultimate': String,
-        'pramatic': String
-    },
-    growthRateInVolume: String,
-    growthRateInValue: String,
-    netMarketPrice: String,
-    segmentValueShareTotalMarket: String
+    charts: []
+    // marketShareInValue: String,
+    // marketShareInVolume: String,
+    // mindSpaceShare: String,
+    // shelfSpaceShare: String,
+
+    // totalInvestment: String,
+    // netProfitByCompanies: String,
+    // returnOnInvestment: String,
+    // investmentsVersusBudget: String,
+
+    // marketSalesValue: String,
+    // marketSalesVolume: String,
+    // totalInventoryAtFactory: String,
+    // totalInventoryAtTrade: String,
+
+    // segmentsLeadersByValue: {
+    //     'priceSensitive': String,
+    //     'pretenders': String,
+    //     'moderate': String,
+    //     'goodLife': String,
+    //     'ultimate': String,
+    //     'pramatic': String
+    // },
+
+    // growthRateInVolume: String,
+    // growthRateInValue: String,
+    // netMarketPrice: String,
+    // segmentValueShareTotalMarket: String
 });
 
 

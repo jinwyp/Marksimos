@@ -50,12 +50,12 @@ exports.returnOnInvestment = function(allResults){
 }
 
 exports.investmentsVersusBudget = function(allResults, seminarSetting){
-    var companyNum = allResults[allResults.length - 1].p_Market.m_CompaniesCount;
+    var companyNum = allResults[allResults.length - 1].onePeriodResult.p_Market.m_CompaniesCount;
 
     var result = {};
 
     for (var i = 0; i < allResults.length; i++) {
-        var period = allResults[i];
+        var period = allResults[i].onePeriodResult;
 
         for (var j = 0; j < companyNum; j++) {
             var company = period.p_Companies[j];
@@ -109,7 +109,7 @@ exports.totalInventoryAtTrade = function(allResults){
 //segment leader top 5
 exports.segmentsLeadersByValue = function(allResults, segment){
     var currentPeriodIndex = allResults.length-1;
-    var currentPeriodResult = allResults[currentPeriodIndex];
+    var currentPeriodResult = allResults[currentPeriodIndex].onePeriodResult;
 
     var segmentNameAndIndex = config.segmentNameAndIndex;
 
@@ -154,41 +154,75 @@ exports.netMarketPrice = function(allResults){
 
 exports.segmentValueShareTotalMarket = function(allResults){
     var currentPeriodIndex = allResults.length-1;
-    var period = allResults[currentPeriodIndex];
+    var period = allResults[currentPeriodIndex].onePeriodResult;
     var market = period.p_Market;
 
     //there are only 6 segments
     var segmentNum = consts.ConsumerSegmentsMaxTotal - 1; 
     var segmentNames = config.segmentNames;
 
-    var results = {};
+    var results = {
+        segmentNames: [],
+        charData: []
+    };
     
     for(var i=0; i<segmentNum; i++){
         var segmentName = segmentNames[i];
-        results[segmentName] = market.m_ValueSegmentShare[i];
+        results.segmentNames.push(segmentName);
+        results.charData.push(market.m_ValueSegmentShare[i]);
     }
     return results;
 }
 
-function generateChartData(allResults, dataExtractor){
-    var companyNum = allResults[allResults.length - 1].p_Market.m_CompaniesCount;
+exports.perceptionMapsSKU = function(allResults){
+    var periodResult = allResults[allResults.length-1].onePeriodResult;
 
-    var result = {};
+    var result = [];
+    for(var i=0; i < periodResult.p_Companies.length; i++){
+        var company = periodResult.p_Companies[i];
+        var companyName = company.c_CompanyName;
+        
+    }
+}
+
+/**
+ * Helper function for some charts
+ *
+ * @method generateChartData
+ * @param {Object} the JSON object got from allresults CGI
+ * @param {Function} the function to get a certain field of JSON object
+ * @return {Object} Copy of ...
+ */
+function generateChartData(allResults, dataExtractor){
+    var lastPeriodResult = allResults[allResults.length - 1].onePeriodResult;
+    var companyNum = lastPeriodResult.p_Market.m_CompaniesCount;
+
+    var result = {
+        periods: [],
+        companyNames: [],
+        chartData: []
+    };
 
     for (var i = 0; i < allResults.length; i++) {
-        var period = allResults[i];
+        var period = allResults[i].onePeriodResult;
+        var periodId = allResults[i].periodId;
 
+        result.periods.push(periodId);
+        var periodChartData = [];
         for (var j = 0; j < companyNum; j++) {
             var company = period.p_Companies[j];
 
             var companyName = company.c_CompanyName;
-
-            if (!result[companyName]) {
-                result[companyName] = [];
+            if(result.companyNames.indexOf(companyName) === -1){
+                result.companyNames.push(companyName);
             }
-            result[companyName].push(dataExtractor(company));
+
+            periodChartData.push(dataExtractor(company));
         }
+        result.chartData.push(periodChartData);
     }
+
+    //throw new Error("some errros");
 
     return result;
 }
@@ -199,17 +233,28 @@ function extractMarketEvolutionChartData(allResults, dataExtractor){
     var segmentNameAndIndex = config.segmentNameAndIndex;
     var segmentNames = config.segmentNames;
 
-    var result = {};
+    var result = {
+        periods: [],
+        segmentNames: [],
+        chartData: []
+    };
+
     for(var i=0; i<periodNum; i++){
-        var periodResult = allResults[i];
+        var periodResult = allResults[i].onePeriodResult;
+        var periodId = allResults[i].periodId;
+
         var market = periodResult.p_Market;
+
+        result.periods.push(periodId);
+        var segmentChartData = [];
         for(var j=0; j<segmentNum; j++){
             var segmentName = segmentNames[j];
-            if(!result[segmentName]){
-                result[segmentName] = [];
+            if(result.segmentNames.indexOf(segmentName) === -1){
+                result.segmentNames.push(segmentName);
             }
-            result[segmentName].push(dataExtractor(market)[j]);
+            segmentChartData.push(dataExtractor(market)[j]);
         }
+        result.chartData.push(segmentChartData);
     }
     return result;
 }
