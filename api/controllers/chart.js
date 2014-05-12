@@ -26,11 +26,12 @@ exports.getChart = function(req, res, next){
             return next(new Error(util.format("chart %s does not exist.", chartName)));
         }
 
-        res.send(chart.chartData);
+        res.json(chart.chartData);
     })
     .fail(function(err){
         next(err);
-    });
+    })
+    .done();
 
     function mapChartName(chartName){
         chartName = chartName.toLowerCase();

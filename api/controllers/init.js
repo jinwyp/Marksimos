@@ -207,35 +207,6 @@ function extractChartData(results, seminarSetting){
             chartData: segmentValueShareTotalMarket
         }
     ];
-
-    /*
-    {
-        marketShareInValue: JSON.stringify(marketShareInValue),
-        marketShareInVolume: JSON.stringify(marketShareInVolume),
-        mindSpaceShare: JSON.stringify(mindSpaceShare),
-        shelfSpaceShare: JSON.stringify(shelfSpaceShare),
-        totalInvestment: JSON.stringify(totalInvestment),
-        netProfitByCompanies: JSON.stringify(netProfitByCompanies),
-        returnOnInvestment: JSON.stringify(returnOnInvestment),
-        investmentsVersusBudget: JSON.stringify(investmentsVersusBudget),
-        marketSalesValue: JSON.stringify(marketSalesValue),
-        marketSalesVolume: JSON.stringify(marketSalesVolume),
-        totalInventoryAtFactory: JSON.stringify(totalInventoryAtFactory),
-        totalInventoryAtTrade: JSON.stringify(totalInventoryAtTrade),
-        segmentsLeadersByValue: {
-            'priceSensitive': JSON.stringify(priceSensitive),
-            'pretenders': JSON.stringify(pretenders),
-            'moderate': JSON.stringify(moderate),
-            'goodLife': JSON.stringify(goodLife),
-            'ultimate': JSON.stringify(ultimate),
-            'pramatic': JSON.stringify(pramatic)
-        },
-        growthRateInVolume: JSON.stringify(growthRateInVolume),
-        growthRateInValue: JSON.stringify(growthRateInValue),
-        netMarketPrice: JSON.stringify(netMarketPrice),
-        segmentValueShareTotalMarket: JSON.stringify(segmentValueShareTotalMarket)
-    }
-    */
 }
 
 /**
