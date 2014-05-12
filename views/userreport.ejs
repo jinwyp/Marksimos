@@ -1,5 +1,6 @@
 <!DOCTYPE html>
-<html>
+<html ng-app="marksimos">
+
 <head lang="en">
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -90,115 +91,18 @@
 
 
     <div class="row mainbody bgbrand">
-        <div class="col-md-2 user_homedivider">
+        <div class="col-md-2 user_home_divider user_chart_box">
 
             <div class="row ">
-                <h4 class="user_maincompany">Company <span class="company_a">A</span> </h4>
+                <h4 class="user_maincompany user_chart_company">Company <span class="company_a">A</span> </h4>
 
-            </div>
-            <div class="row">
-                <div class="col-md-5">
-                    <img src="./app/css/images/avator.png">
-                </div>
-                <div class="col-md-7">
-                    <h5>ID Name</h5>
-                    <span class="user_title">Market Manage</span>
-                    <span class="user_title">5 Team Member</span>
-                </div>
-            </div>
-        </div>
-
-        <div class="col-md-7 user_homedivider">
-            <div class="row">
-                <div class="col-md-2 user_brandcolumn">
-                    <span class="user_brand">Brand 1</span>
-                    <ul>
-                        <li class="user_product">P1A - <span>Sensitive</span></li>
-                        <li class="user_product">P1A - <span>Sensitive</span></li>
-                        <li class="user_product">P1A - <span>Sensitive</span></li>
-                        <li class="user_product">P1A - <span>Sensitive</span></li>
-                        <li class="user_product">P1A - <span>Sensitive</span></li>
-                    </ul>
-                </div>
-                <div class="col-md-2 user_brandcolumn">
-                    <span class="user_brand">Brand 2</span>
-                    <ul>
-                        <li class="user_product">P1A - <span>Sensitive</span></li>
-                        <li class="user_product">P1A - <span>Sensitive</span></li>
-                        <li class="user_product">P1A - <span>Sensitive</span></li>
-                        <li class="user_product">P1A - <span>Sensitive</span></li>
-                        <li class="user_product">P1A - <span>Sensitive</span></li>
-                    </ul>
-                </div>
-                <div class="col-md-2 user_brandcolumn">
-                    <span class="user_brand">Brand 3</span>
-                    <ul>
-                        <li class="user_product">P1A - <span>Sensitive</span></li>
-                        <li class="user_product">P1A - <span>Sensitive</span></li>
-                        <li class="user_product">P1A - <span>Sensitive</span></li>
-                        <li class="user_product">P1A - <span>Sensitive</span></li>
-                        <li class="user_product">P1A - <span>Sensitive</span></li>
-                    </ul>
-                </div>
-                <div class="col-md-2 user_brandcolumn">
-                    <span class="user_brand">Brand 4</span>
-                    <ul>
-                        <li class="user_product">P1A - <span>Sensitive</span></li>
-                        <li class="user_product">P1A - <span>Sensitive</span></li>
-                        <li class="user_product">P1A - <span>Sensitive</span></li>
-                        <li class="user_product">P1A - <span>Sensitive</span></li>
-                        <li class="user_product">P1A - <span>Sensitive</span></li>
-                    </ul>
-                </div>
-                <div class="col-md-2 user_brandcolumn">
-                    <span class="user_brand">Brand 5</span>
-                    <ul>
-                        <li class="user_product">P1A - <span>Sensitive</span></li>
-                        <li class="user_product">P1A - <span>Sensitive</span></li>
-                        <li class="user_product">P1A - <span>Sensitive</span></li>
-                        <li class="user_product">P1A - <span>Sensitive</span></li>
-                        <li class="user_product">P1A - <span>Sensitive</span></li>
-                    </ul>
-                </div>
-
-            </div>
-        </div>
-
-        <div class="col-md-1 user_homedivider">
-            <div class="row">
-                <div class="col-md-12">
-                    <span class="user_competitorsnum">6</span>
-                    <span class="user_competitors">Companies</span>
-                </div>
             </div>
 
         </div>
 
-        <div class="col-md-2">
+        <div class="col-md-5 user_home_divider user_chart_box" >
             <div class="row">
-                <div class="col-md-12 user_homedivider_horizontal">
-                    <span class="user_clock"><strong>1h22mins left</strong> for submitting decision</span>
-                </div>
-            </div>
-            <div class="row">
-                <span class="user_makedecision">Mission: Market Share + Profit</span>
-                <button type="button" class="btn user_decisionbutton">Make Decision</button>
-            </div>
-        </div>
-
-    </div>
-
-    <div class="row mainbody">
-        <div class="col-md-12">
-            <div class="row user_homedivider_horizontal ">
-                <div class="col-md-6 col-md-offset-3 ">
-                    <img src="./app/css/images/temp1.png" alt=""/>
-                </div>
-            </div>
-
-
-            <div class="row">
-                <div class="col-md-6 col-md-offset-3 user_search_chart">
+                <div class="col-md-12 user_search_chart user_chart_search">
                     <div class="input-group">
                         <div class="input-group-btn">
 
@@ -211,15 +115,105 @@
                         </div><!-- /btn-group -->
 
                         <input type="text" class="form-control" placeholder="find report or chart">
-                        <span class="input-group-btn">
-                            <button class="btn btn-default" type="button"><span class="glyphicon glyphicon-search"></span></button>
-                        </span>
                     </div><!-- /input-group -->
                 </div>
+
+            </div>
+        </div>
+
+        <div class="col-md-1 user_home_divider user_chart_box">
+            <div class="row">
+                <div class="col-md-12 ">
+                    <span class="user_chart_vs"> Compare Data</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-2 user_home_divider user_chart_box">
+            <div class="row">
+                <div class="col-md-12 ">
+                    <span class="user_clock user_chart_clock"><strong>1h22mins left</strong> for submitting decision</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-2">
+            <div class="row">
+                <div class="col-md-12 ">
+                    <span class="user_chart_make_decision">Mission: Market Share + Profit</span>
+                    <button type="button" class="btn user_chart_decision_button">Make Decision</button>
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+
+    <div class="row mainbody bgbrand">
+        <div class="col-md-2 user_chart_padding user_home_divider">
+
+            <div class="panel user_chart_leftmenu">
+                <div class="panel-heading">Your Company</div>
+
+                <!-- List group -->
+                <ul class="list-group">
+                    <li class="list-group-item">Company Status</li>
+                    <li class="list-group-item list-group-item-active">Financial Data</li>
+                    <li class="list-group-item">Inventory Report</li>
+                </ul>
+            </div>
+
+            <div class="panel user_chart_leftmenu">
+                <div class="panel-heading">Your Competitor</div>
+
+                <!-- List group -->
+                <ul class="list-group">
+                    <li class="list-group-item">Market Share</li>
+                    <li class="list-group-item ">Competitor Information</li>
+                    <li class="list-group-item">Invest & Profits</li>
+                    <li class="list-group-item ">Market Sales & Inventory</li>
+                </ul>
+            </div>
+
+            <div class="panel user_chart_leftmenu">
+                <div class="panel-heading">Market Landscape</div>
+
+                <!-- List group -->
+                <ul class="list-group">
+                    <li class="list-group-item">Segment Leader Top5</li>
+                    <li class="list-group-item ">Perception Map</li>
+                    <li class="list-group-item ">Segment Distributions</li>
+                    <li class="list-group-item ">Market Evolution</li>
+                    <li class="list-group-item">Market Indicator</li>
+                </ul>
             </div>
 
 
         </div>
+
+        <div class="col-md-10 " ng-controller="chartController">
+
+            <select ng-model='chartType'>
+                <option value="pie">pie</option>
+                <option value="bar">bar</option>
+                <option value="line">line</option>
+                <option value="point">point</option>
+                <option value="area">area</option>
+            </select>
+
+            <span ng-show="chartType==='pie'">
+                <label>Radius: <input ng-model="config.innerRadius" type="text" ></label>
+            </span>
+
+            <div class='charts'>
+                <div ac-chart="chartType" ac-data="data" ac-config="config" id='chart' class='chart'></div>
+            </div>
+
+
+
+        </div>
+
+
     </div>
 
 </div>
@@ -227,9 +221,15 @@
 
 
 <script src="libs/jquery/dist/jquery.min.js"></script>
+<script src="libs/angular/angular.js"></script>
+<script src="libs/d3/d3.js"></script>
+<script src="libs/angular-charts/dist/angular-charts.js"></script>
 
 <!-- Include all compiled plugins (below), or include individual files as needed -->
 <script src="libs/bootstrap/dist/js/bootstrap.js"></script>
+
+
+<script src="app/js/app.js"></script>
 
 
 </body>
