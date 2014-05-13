@@ -32,6 +32,14 @@ app.use(function(req, res, next){
     next();
 })
 
+//set Content-Type for all API JSON resppnse
+app.use(function(req, res, next){
+    if(req.path.indexOf('/api')===0){
+        res.set('Content-Type', 'application/json; charset=utf-8');
+    }
+    next();
+})
+
 require('./api/routes.js')(app);
 
 
