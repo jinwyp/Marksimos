@@ -9,6 +9,10 @@ module.exports = function(app){
         res.render('index.ejs', {});
     });
 
+    app.get('/login', function(req, res, next){
+        res.render('login.ejs', {});
+    });
+
     app.get('/mainhome', function(req, res, next){
         res.render('usermainhome.ejs', {});
     });
@@ -23,6 +27,9 @@ module.exports = function(app){
 
 
     app.get('/api/init', initController.init);
+    app.get('/api/accesstoken', initController.init);
+
+
     app.get('/api/decision', decisionController.getDecision);
 
     //chart
