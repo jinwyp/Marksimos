@@ -1,9 +1,11 @@
 #API
 
+## /api/init
+初始化game
+
 ## /api/chart/:chartName
 ### Parameters
 ##### :chartName
-注意: chartName是区分大小写的
   * market_share_in_value 
   * market_share_in_volume
   * mind_space_share
