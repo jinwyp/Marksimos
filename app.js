@@ -40,6 +40,11 @@ app.use(function(req, res, next){
     next();
 })
 
+app.get('/test/:name', function(req, res, next){
+    var name = req.params.Name;
+    res.json({a: name});
+})
+
 require('./api/routes.js')(app);
 
 

@@ -1,0 +1,51 @@
+var userModel = require('../models/user.js');
+var logger = require('../../logger.js');
+
+exports.register = function(req, res, next){
+    var email = req.body.email;
+    var userName = req.body.user_name;
+    var password = req.body.password;
+
+    if(!email){
+        return res.json({status: 0, message: "email can't be empty."});
+    }
+
+    if(!password){
+        return res.json({status: 0, message: "password can't be empty."});
+    }
+
+    email = email.trim();
+    password = password.trim();
+    if(userName) userName = userName.trim();
+
+    userModel.isUserExisted(email)
+    .then(function(result){
+        console.log(result);
+        if(result===false){
+            return userModel.addUser({
+                email: email,
+                userName: userName,
+                password: encryptPassword(password),
+                role: 4
+            }).then(function(){
+                return res.json({status: 1, message: "register success."});
+            }).fail(function(err){
+                logger.error('failed to save user to db');
+                console.log("-------");
+                throw err;
+            })
+        }else{
+            return res.json({status: 1, message: "User is existed."});
+        }
+    }).fail(function(err){
+        if(err){
+            logger.error(JSON.stringify(err));
+        }
+        return res.json({status: 0, message: "register failed."});
+    })
+};
+
+
+function encryptPassword(password){
+    return password;
+}

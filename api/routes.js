@@ -9,6 +9,8 @@ module.exports = function(app){
         res.render('index.ejs', {});
     });
 
+    app.post('/api/register', require('./controllers/user.js').register);
+
     app.get('/login', function(req, res, next){
         res.render('login.ejs', {});
     });
@@ -20,10 +22,6 @@ module.exports = function(app){
     app.get('/report', function(req, res, next){
         res.render('userreport.ejs', {});
     });
-
-
-
-
 
 
     app.get('/api/init', initController.init);
