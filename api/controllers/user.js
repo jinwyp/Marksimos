@@ -44,7 +44,67 @@ exports.register = function(req, res, next){
     }).done();
 };
 
+exports.login = function(req, res, next){
+    var email = req.body.email;
+    var password = req.body.password;
+
+    if(!email){
+        return res.json({status: 0, message: "email can't be empty."});
+    }
+
+    if(!password){
+        return res.json({status: 0, message: "password can't be empty."})
+    }
+
+    email = email.trim();
+    password = encryptPassword(password.trim());
+
+    userModel.login(email, password)
+    .then(function(result){
+        var clientToken = createClientToken();
+        req.session.user = {
+            clientToken: clientToken,
+            email: email
+        };
+        res.cookie('clientToken', clientToken);
+        res.json({status: 1, message: "login success."});
+    }).fail(function(err){
+        if(err){
+            logger.error(err.message);
+            return res.json({status: 0, message: "login failed."})
+        }
+    }).done();
+}
+
 
 function encryptPassword(password){
     return password;
 }
+
+function createClientToken(){
+    return require('node-uuid').v1();
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

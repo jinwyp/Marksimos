@@ -52,3 +52,52 @@ exports.addUser = function(user){
 
     return deferred.promise;
 };
+
+exports.login = function(email, password){
+    var deferred = Q.defer();
+
+    var errorMessage = null;
+    if(!email){
+        errorMessage = "email can't be empty.";
+    }
+
+    if(!password){
+        errorMessage = "password can't be empty.";
+    }
+
+    if(errorMessage){
+        process.nextTick(function(){
+            deferred.reject(new Error(errorMessage));
+        })
+    }else{
+        User.find({
+            email: email,
+            password: password
+        }, function(err, result){
+            if(err) return deferred.reject(err);
+
+            return deferred.resolve(result);
+        })
+    }
+
+    return deferred.promise;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

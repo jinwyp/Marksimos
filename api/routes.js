@@ -11,6 +11,8 @@ module.exports = function(app){
 
     app.post('/api/register', require('./controllers/user.js').register);
 
+    app.post('/api/login', require('./controllers/user.js').login);
+
     app.get('/login', function(req, res, next){
         res.render('login.ejs', {});
     });
@@ -32,7 +34,6 @@ module.exports = function(app){
 
     //chart
     app.get('/api/chart/:chartName', chartController.getChart);
-    app.get('/api/chart/segmentsLeadersByValue/:chartName', chartController.getSegmentsLeadersByValueChart);
 
     // app.get('*', function(req, res){
     //     res.send("404 page");

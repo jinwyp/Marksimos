@@ -5,7 +5,8 @@ var Q = require('q');
 var seminarSchema = new Schema({
     simulationSpan: Number,  //seminar有多少个round
     teams: [],
-    facilitatorId: String
+    facilitatorId: String,
+    isActive: Boolean
 });
 
 var teamSchema = new Schema({
