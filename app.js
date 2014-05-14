@@ -46,7 +46,7 @@ app.get('/test/:name', function(req, res, next){
 })
 
 require('./api/routes.js')(app);
-
+require('./routes.js')(app);
 
 /// catch 404 and forwarding to error handler
 // app.use(function(req, res, next) {
