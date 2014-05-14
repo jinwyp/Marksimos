@@ -60,3 +60,16 @@
             0
         ]
     }
+
+## /api/register
+### POST
+### parameter
+####:email
+####:password
+### response
+
+
+## url
+### method
+### parameters
+### response
