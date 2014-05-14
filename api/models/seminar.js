@@ -3,7 +3,15 @@ var Schema = mongoose.Schema;
 var Q = require('q');
 
 var seminarSchema = new Schema({
-    simulationSpan: Number   //seminar有多少个round
+    simulationSpan: Number,  //seminar有多少个round
+    teams: [],
+    facilitatorId: String,
+    isActive: Boolean
+});
+
+var teamSchema = new Schema({
+    teamName: String,
+    userIds: [String]
 });
 
 exports.getSeminarSetting = function(){

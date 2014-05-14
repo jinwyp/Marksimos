@@ -40,8 +40,13 @@ app.use(function(req, res, next){
     next();
 })
 
-require('./api/routes.js')(app);
+app.get('/test/:name', function(req, res, next){
+    var name = req.params.Name;
+    res.json({a: name});
+})
 
+require('./api/routes.js')(app);
+require('./routes.js')(app);
 
 /// catch 404 and forwarding to error handler
 // app.use(function(req, res, next) {

@@ -5,32 +5,9 @@ var util = require('util');
 
 
 module.exports = function(app){
-    app.get('/', function(req, res, next){
-        res.render('index.ejs', {});
-    });
+    app.post('/api/register', require('./controllers/user.js').register);
 
-    app.get('/login', function(req, res, next){
-        res.render('login.ejs', {});
-    });
-
-    app.get('/mainhome', function(req, res, next){
-        res.render('usermainhome.ejs', {});
-    });
-
-    app.get('/report', function(req, res, next){
-        res.render('userreport.ejs', {});
-    });
-
-
-
-    app.get('/admin', function(req, res, next){
-        res.render('adminhome.ejs', {});
-    });
-
-
-
-
-
+    app.post('/api/login', require('./controllers/user.js').login);
 
     app.get('/api/init', initController.init);
     app.get('/api/accesstoken', initController.init);
@@ -40,7 +17,6 @@ module.exports = function(app){
 
     //chart
     app.get('/api/chart/:chartName', chartController.getChart);
-    app.get('/api/chart/segmentsLeadersByValue/:chartName', chartController.getSegmentsLeadersByValueChart);
 
     // app.get('*', function(req, res){
     //     res.send("404 page");
