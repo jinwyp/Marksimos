@@ -42,7 +42,8 @@ exports.addUser = function(user){
             deferred.reject(new Error('user can not be empty.'));
         });
     }else{
-        User.save(user, function(err){
+        var u = new User(user);
+        u.save(function(err){
             if(err) return deferred.reject(err);
 
             return deferred.resolve(true);

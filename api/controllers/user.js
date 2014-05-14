@@ -31,7 +31,6 @@ exports.register = function(req, res, next){
                 return res.json({status: 1, message: "register success."});
             }).fail(function(err){
                 logger.error('failed to save user to db');
-                console.log("-------");
                 throw err;
             })
         }else{
@@ -39,10 +38,10 @@ exports.register = function(req, res, next){
         }
     }).fail(function(err){
         if(err){
-            logger.error(JSON.stringify(err));
+            logger.error(JSON.stringify(err.message));
         }
         return res.json({status: 0, message: "register failed."});
-    })
+    }).done();
 };
 
 
