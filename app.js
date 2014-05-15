@@ -21,7 +21,10 @@ app.use(logger('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded());
 app.use(cookieParser());
-app.use(session({secret: 'marksimos'}));
+app.use(session({
+    secret: 'marksimos',
+    maxage: 24 * 60000
+}));
 app.use(express.static(path.join(__dirname, 'public')));
 
 //initialize session data
@@ -40,9 +43,13 @@ app.use(function(req, res, next){
     next();
 })
 
-app.get('/test/:name', function(req, res, next){
+app.get('/test', function(req, res, next){
     var name = req.params.Name;
-    res.json({a: name});
+    if(!req.session.count){
+        req.session.count = 1;
+    }
+    req.session.count+=1;
+    res.json(req.session.count.toString());
 })
 
 require('./api/routes.js')(app);

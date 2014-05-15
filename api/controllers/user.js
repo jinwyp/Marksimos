@@ -61,9 +61,7 @@ exports.login = function(req, res, next){
 
     userModel.login(email, password)
     .then(function(result){
-        var clientToken = createClientToken();
         req.session.user = {
-            clientToken: clientToken,
             email: email
         };
         res.cookie('clientToken', clientToken);
@@ -79,10 +77,6 @@ exports.login = function(req, res, next){
 
 function encryptPassword(password){
     return password;
-}
-
-function createClientToken(){
-    return require('node-uuid').v1();
 }
 
 
