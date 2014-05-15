@@ -174,15 +174,61 @@ exports.segmentValueShareTotalMarket = function(allResults){
     return results;
 }
 
-exports.perceptionMapsSKU = function(allResults){
+/**
+ * Generate perception map chart
+ * 
+ * @method perceptionMap
+ * @param {Object} exogenous parameters of the game
+ */
+exports.perceptionMap = function(allResults, exogenous){
     var periodResult = allResults[allResults.length-1].onePeriodResult;
 
     var result = [];
     for(var i=0; i < periodResult.p_Companies.length; i++){
         var company = periodResult.p_Companies[i];
         var companyName = company.c_CompanyName;
+        var companyData = {
+            companyName: companyName,
+            brands: [],
+            SKUs: [],
+            exogenous: []
+        };
         
+        for(var j=0; j<periodResult.p_Brands.length; j++){
+            var brand = periodResult.p_Brands[j];
+            if(company.c_CompanyID === brand.b_ParentCompanyID){
+                companyData.brands.push({
+                    brandName: brand.b_BrandName,
+                    imagePerception: brand.b_Perception[1],
+                    valuePerception: brand.b_Perception[0]
+                })
+            }
+        }
+
+        for(var k=0; k<periodResult.p_SKUs.length; k++){
+            var SKU = periodResult.p_SKUs[k];
+            if(company.c_CompanyID === SKU.u_ParentCompanyID){
+                companyData.SKUs.push({
+                    SKUName: SKU.u_SKUName,
+                    imagePerception: SKU.u_Perception[1],
+                    valuePerception: SKU.u_Perception[0]
+                })
+            }
+        }
+
+        var exoSegmentsIdealPoints = exogenous.exo_SegmentsIdealPoints;
+        for(var p=0; p<exoSegmentsIdealPoints.length; p++){
+            var point = exoSegmentsIdealPoints[p];
+            companyData.exogenous.push({
+                segmentName: config.segmentNames[p],
+                imagePerception: point[1],
+                valuePerception: point[0]
+            });
+        }
+
+        result.push(companyData);
     }
+    return result;
 }
 
 /**
@@ -191,7 +237,7 @@ exports.perceptionMapsSKU = function(allResults){
  * @method generateChartData
  * @param {Object} the JSON object got from allresults CGI
  * @param {Function} the function to get a certain field of JSON object
- * @return {Object} Copy of ...
+ * @return {Object} chart data
  */
 function generateChartData(allResults, dataExtractor){
     var lastPeriodResult = allResults[allResults.length - 1].onePeriodResult;
@@ -227,6 +273,14 @@ function generateChartData(allResults, dataExtractor){
     return result;
 }
 
+/**
+ * Helper function to generate MarketEvolution chart
+ *
+ * @method extractMarketEvolutionChartData
+ * @param {Object} allResults the JSON object got from allresults CGI
+ * @param {Function} dataExtractor the function to get a certain field of JSON object
+ * @return {Object} chart data
+ */
 function extractMarketEvolutionChartData(allResults, dataExtractor){
     var segmentNum = consts.ConsumerSegmentsMaxTotal;
     var periodNum = allResults.length;
@@ -259,6 +313,14 @@ function extractMarketEvolutionChartData(allResults, dataExtractor){
     return result;
 }
 
+/**
+ * Find brand by brandId
+ *
+ * @method findBrand
+ * @param {Object} currentPeriodResult data from allResults
+ * @param {Function} u_ParentBrandID
+ * @return {Object} the brand data from allResults
+ */
 function findBrand(currentPeriodResult, u_ParentBrandID){
     for(var i=0; i<currentPeriodResult.p_Brands.length; i++){
         var brand = currentPeriodResult.p_Brands[i];
@@ -267,7 +329,6 @@ function findBrand(currentPeriodResult, u_ParentBrandID){
         }
     }
 }
-
 
 
 

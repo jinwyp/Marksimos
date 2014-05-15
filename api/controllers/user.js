@@ -20,7 +20,6 @@ exports.register = function(req, res, next){
 
     userModel.isUserExisted(email)
     .then(function(result){
-        console.log(result);
         if(result===false){
             return userModel.addUser({
                 email: email,
