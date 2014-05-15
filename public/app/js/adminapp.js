@@ -9,7 +9,7 @@ marksimosapp.directive('adminHeader', function() {
     return {
         scope: {},
         restrict: 'AE',
-        templateUrl: 'app/js/component/headeradmin.html'
+        templateUrl: 'app/js/websitecomponent/headeradmin.html'
     };
 });
 // controller business logic

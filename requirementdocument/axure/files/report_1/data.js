@@ -1,12 +1,12 @@
 ﻿$axure.loadCurrentPage({
-  "url":"companymanagement.html",
-  "generationDate":new Date(1399955994950.11),
+  "url":"report_1.html",
+  "generationDate":new Date(1400123444895.13),
   "isCanvasEnabled":false,
   "variables":["OnLoadVariable"],
   "page":{
-    "packageId":"f2385bdcfe9543ebb82b09a331fd4c75",
+    "packageId":"5165df8bb278407090a0fd5facf017db",
     "type":"Axure:Page",
-    "name":"CompanyManagement",
+    "name":"report",
     "notes":{
 },
     "style":{

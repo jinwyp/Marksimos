@@ -1,12 +1,12 @@
 ﻿$axure.loadCurrentPage({
-  "url":"introvideomaintenance.html",
-  "generationDate":new Date(1399955994975.25),
+  "url":"chart.html",
+  "generationDate":new Date(1400123444891.62),
   "isCanvasEnabled":false,
   "variables":["OnLoadVariable"],
   "page":{
-    "packageId":"cc7f11eb86da4c21932669f6bd99a0d7",
+    "packageId":"a8f3ace82f9f4c03a5b29a1ec55ea8ba",
     "type":"Axure:Page",
-    "name":"IntrovideoMaintenance",
+    "name":"chart",
     "notes":{
 },
     "style":{

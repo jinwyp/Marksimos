@@ -1,6 +1,6 @@
 ﻿$axure.loadCurrentPage({
   "url":"makedecision.html",
-  "generationDate":new Date(1399955993073.81),
+  "generationDate":new Date(1400123442273.9),
   "isCanvasEnabled":false,
   "variables":["OnLoadVariable"],
   "page":{
@@ -3992,7 +3992,7 @@
                 "adaptiveStyles":{
 }}],
             "images":{
-              "normal~":"images/introduction/u21.png"}},
+              "normal~":"images/mainscreen/u1.png"}},
 {
             "id":"41d1bcdce1d4449197b8ef6bc945805e",
             "label":"",
@@ -4139,7 +4139,7 @@
                 "adaptiveStyles":{
 }}],
             "images":{
-              "normal~":"images/introduction/u27.png"}},
+              "normal~":"images/login/u9.png"}},
 {
             "id":"5b177912dc8146e796017c8c72004b73",
             "label":"",
@@ -4227,7 +4227,7 @@
                 "adaptiveStyles":{
 }}],
             "images":{
-              "normal~":"images/introduction/u31.png"}},
+              "normal~":"images/mainscreen/u11.png"}},
 {
             "id":"a19273aad5e84f14b1fa81e5785797c6",
             "label":"",
@@ -4260,7 +4260,7 @@
                 "adaptiveStyles":{
 }}],
             "images":{
-              "normal~":"images/introduction/u33.png"}},
+              "normal~":"images/mainscreen/u13.png"}},
 {
             "id":"59fe3b170417467e9815eada63bdbdf2",
             "label":"",
