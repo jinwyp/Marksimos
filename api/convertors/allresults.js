@@ -209,9 +209,10 @@ exports.perceptionMap = function(allResults, exogenous){
         //SKU data
         for(var k=0; k<periodResult.p_SKUs.length; k++){
             var SKU = periodResult.p_SKUs[k];
+            var brand = findBrand(periodResult, SKU.u_ParentBrandID);
             if(company.c_CompanyID === SKU.u_ParentCompanyID){
                 companyData.SKUs.push({
-                    SKUName: SKU.u_SKUName,
+                    SKUName: brand.b_BrandName + SKU.u_SKUName,
                     imagePerception: SKU.u_Perception[1],
                     valuePerception: SKU.u_Perception[0],
                     tooltips: prepareSKUTooltips(allResults, SKU.u_SKUID)
