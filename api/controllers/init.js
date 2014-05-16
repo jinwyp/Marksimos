@@ -159,6 +159,8 @@ function extractChartData(results, settings){
 
     var perceptionMap = allResultsConvertor.perceptionMap(results, settings.exogenous);
 
+    var inventoryReport = allResultsConvertor.inventoryReport(results, settings.seminarSetting);
+
     return [
         {
             chartName: 'marketShareInValue',
@@ -251,6 +253,10 @@ function extractChartData(results, settings){
         {
             chartName: 'perceptionMap',
             chartData: perceptionMap
+        },
+        {
+            chartName: 'inventoryReport',
+            chartData: inventoryReport
         }
     ];
 }

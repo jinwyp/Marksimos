@@ -236,6 +236,67 @@ exports.perceptionMap = function(allResults, exogenous){
     return result;
 }
 
+exports.inventoryReport = function(allResults, seminarSetting){
+    var periodResult = allResults[allResults.length-1].onePeriodResult;
+
+    var result = [];
+    for(var i=0; i < periodResult.p_Companies.length; i++){
+        var company = periodResult.p_Companies[i];
+        var companyName = company.c_CompanyName;
+        var companyData = {
+            companyName: companyName,
+            SKUs: []
+        };
+
+        for(var k=0; k<periodResult.p_SKUs.length; k++){
+            var SKU = periodResult.p_SKUs[k];
+            var brand = findBrand(periodResult, SKU.u_ParentBrandID);
+            if(company.c_CompanyID === SKU.u_ParentCompanyID){
+                companyData.SKUs.push({
+                    SKUName: brand.b_BrandName + SKU.u_SKUName,
+                    inventoryData: getSKUInventory(SKU, seminarSetting)
+                })
+            }
+        }
+
+        result.push(companyData);
+    }
+
+    return result;
+
+    function getSKUInventory(SKU, seminarSetting){
+        if(!SKU) throw new Error("Invalid parameter SKU.");
+
+        if(!seminarSetting) throw new Error("Invalid parameter seminarSetting.");
+
+        var result = [];
+
+        if(seminarSetting.simulationVariant === 'FMCG'){
+            //FMCG can keep stocks in 3 periods
+            for(var i=2; i>=0; i--){
+                var totalStock = SKU.u_ps_FactoryStocks[i].s_ps_Volume;
+                totalStock = totalStock * consts.ActualSize[SKU.u_PackSize];
+                result.push({
+                    inventoryName: config.inventoryNames.FMCG[i],
+                    inventoryValue: totalStock
+                })
+            }
+        }else{
+            //FMCG can keep stocks in 3 periods
+            for(var i=4; i>=0; i--){
+                var totalStock = SKU.u_ps_FactoryStocks[i].s_ps_Volume;
+                totalStock = totalStock * consts.ActualSize[SKU.u_PackSize];
+                result.push({
+                    inventoryName: config.inventoryNames.DURABLES[i],
+                    inventoryValue: totalStock
+                })
+            }
+        }
+
+        return result;
+    }
+}
+
 /**
  * Prepare tooltips data for SKU label on SKU perception map
  *
