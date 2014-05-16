@@ -4,6 +4,7 @@ var util = require('util');
 exports.getChart = function(req, res, next){
     var seminarId = req.session.seminarId;
     var chartName = req.params.chartName;
+    var companyId = req.session.companyId;
 
     if(!seminarId){
         return next(new Error('seminarId cannot be empty.'));
@@ -17,9 +18,16 @@ exports.getChart = function(req, res, next){
     .then(function(allCharts){
         var chart = null;
         for(var i=0; i<allCharts.charts.length; i++){
-            chartName = mapChartName(chartName);
-            if(allCharts.charts[i].chartName.toLowerCase() === chartName.toLowerCase()){
+            console.log("-----"+chartName);
+            var chartNameTemp = mapChartName(chartName);
+            
+            if(allCharts.charts[i].chartName.toLowerCase() === chartNameTemp.toLowerCase()){
                 chart = allCharts.charts[i];
+                if(chartNameTemp==='inventoryReport'){
+                    //this function changes data in chart object
+                    filterChart(chart, companyId);
+                }
+                break;
             }
         }
         if(!chart){
@@ -32,6 +40,30 @@ exports.getChart = function(req, res, next){
         next(err);
     })
     .done();
+
+    /**
+     * chart contains data of all the companies, 
+     * this function removes chart data of other companies from chart
+     *
+     * @param {Object} chart chartData got from db
+     * @param {Number} companyId
+     */
+    function filterChart(chart, companyId){
+        if(!chart) throw new Error("invalid parameter chart");
+        if(!companyId) throw new Error("invalid parameter companyId");
+
+        var chartData = chart.chartData;
+        var chartOfCurrentCompany;
+        for(var j=0; j<chartData.length; j++){
+            if(chartData[j].companyId === companyId){
+                chartOfCurrentCompany = chartData[j];
+                break;
+            }
+        }
+        if(chartOfCurrentCompany){
+            chart.chartData = [chartOfCurrentCompany];
+        }
+    }
 
     function mapChartName(chartName){
         chartName = chartName.toLowerCase();
@@ -80,6 +112,10 @@ exports.getChart = function(req, res, next){
                 return 'netMarketPrice';
             case 'segment_value_share_total_market':
                 return 'segmentValueShareTotalMarket';
+            case 'perception_map':
+                return 'perceptionMap';
+            case 'inventory_report':
+                return 'inventoryReport';
             default:
                 return '';
         }

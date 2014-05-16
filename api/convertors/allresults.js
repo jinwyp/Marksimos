@@ -245,6 +245,7 @@ exports.inventoryReport = function(allResults, seminarSetting){
         var companyName = company.c_CompanyName;
         var companyData = {
             companyName: companyName,
+            companyId: company.c_CompanyID,
             SKUs: []
         };
 
