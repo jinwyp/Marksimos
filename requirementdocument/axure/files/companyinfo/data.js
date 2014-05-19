@@ -1,6 +1,6 @@
 ﻿$axure.loadCurrentPage({
   "url":"companyinfo.html",
-  "generationDate":new Date(1400123436296.7),
+  "generationDate":new Date(1400493969275.57),
   "isCanvasEnabled":false,
   "variables":["OnLoadVariable"],
   "page":{
@@ -87,7 +87,7 @@
               "x":576,
               "y":150},
             "size":{
-              "width":145,
+              "width":179,
               "height":42}},
           "adaptiveStyles":{
 },
@@ -109,7 +109,7 @@
                   "x":576,
                   "y":150},
                 "size":{
-                  "width":145,
+                  "width":179,
                   "height":42}},
               "adaptiveStyles":{
 }}],

@@ -1,6 +1,6 @@
 ﻿$axure.loadCurrentPage({
   "url":"login.html",
-  "generationDate":new Date(1400123435946.01),
+  "generationDate":new Date(1400493968995.04),
   "isCanvasEnabled":false,
   "variables":["OnLoadVariable"],
   "page":{
@@ -212,7 +212,63 @@
               "width":200,
               "height":25}},
           "adaptiveStyles":{
-}},
+},
+          "interactionMap":{
+            "onTextChange":{
+              "description":"OnTextChange",
+              "cases":[{
+                  "description":"Case 1<br> (If text on This equals &quot;jin&quot;)",
+                  "isNewIfGroup":false,
+                  "condition":{
+                    "exprType":"binaryOp",
+                    "op":"==",
+                    "leftExpr":{
+                      "exprType":"fcall",
+                      "functionName":"GetWidgetText",
+                      "arguments":[{
+                          "exprType":"pathLiteral",
+                          "isThis":true,
+                          "isFocused":false,
+                          "isTarget":false}]},
+                    "rightExpr":{
+                      "exprType":"stringLiteral",
+                      "value":"jin",
+                      "stos":[]}},
+                  "actions":[{
+                      "action":"setPanelState",
+                      "description":"Set Roles to Facilitator",
+                      "panelsToStates":[{
+                          "panelPath":["220b638ec28443cb84365c714c4b5eef"],
+                          "stateInfo":{
+                            "setStateType":"diagram",
+                            "stateNumber":2,
+                            "stateValue":{
+                              "exprType":"stringLiteral",
+                              "value":"1",
+                              "stos":[]},
+                            "loop":false,
+                            "showWhenSet":false,
+                            "options":{
+                              "compress":false}}}]}]},
+{
+                  "description":"Case 2<br> (Else If True)",
+                  "isNewIfGroup":false,
+                  "actions":[{
+                      "action":"setPanelState",
+                      "description":"Set Roles to State1",
+                      "panelsToStates":[{
+                          "panelPath":["220b638ec28443cb84365c714c4b5eef"],
+                          "stateInfo":{
+                            "setStateType":"diagram",
+                            "stateNumber":1,
+                            "stateValue":{
+                              "exprType":"stringLiteral",
+                              "value":"1",
+                              "stos":[]},
+                            "loop":false,
+                            "showWhenSet":false,
+                            "options":{
+                              "compress":false}}}]}]}]}}},
 {
           "id":"f6f6cf2e08804054be6e64abbfd0e7ef",
           "label":"",
@@ -226,21 +282,6 @@
             "size":{
               "width":200,
               "height":25}},
-          "adaptiveStyles":{
-}},
-{
-          "id":"8d5e0c6ad63a427f81e14f384605d817",
-          "label":"",
-          "type":"comboBox",
-          "styleType":"comboBox",
-          "visible":true,
-          "style":{
-            "location":{
-              "x":759,
-              "y":396},
-            "size":{
-              "width":200,
-              "height":22}},
           "adaptiveStyles":{
 }},
 {
@@ -382,8 +423,8 @@
           "visible":true,
           "style":{
             "location":{
-              "x":805,
-              "y":438},
+              "x":759,
+              "y":441},
             "size":{
               "width":108,
               "height":42}},
@@ -398,8 +439,8 @@
               "visible":true,
               "style":{
                 "location":{
-                  "x":805,
-                  "y":438},
+                  "x":759,
+                  "y":441},
                 "size":{
                   "width":108,
                   "height":42}},
@@ -421,7 +462,68 @@
                       "linkType":"current"}]}]}},
           "tabbable":true,
           "images":{
-            "normal~":"images/login/u28.png"}}]}},
+            "normal~":"images/login/u27.png"}},
+{
+          "id":"220b638ec28443cb84365c714c4b5eef",
+          "label":"Roles",
+          "type":"dynamicPanel",
+          "styleType":"dynamicPanel",
+          "visible":true,
+          "style":{
+            "location":{
+              "x":759,
+              "y":398},
+            "size":{
+              "width":221,
+              "height":32}},
+          "adaptiveStyles":{
+},
+          "scrollbars":"none",
+          "fitToContent":false,
+          "propagate":false,
+          "diagrams":[{
+              "id":"187aa080946449979cb95f4ab7ce3b39",
+              "label":"State1",
+              "type":"Axure:PanelDiagram",
+              "objects":[],
+              "style":{
+                "fill":{
+                  "fillType":"solid",
+                  "color":0xFFFFFF},
+                "image":null,
+                "imageHorizontalAlignment":"near",
+                "imageVerticalAlignment":"near",
+                "imageRepeat":"auto"},
+              "adaptiveStyles":{
+}},
+{
+              "id":"fa789fc217a34e2d82a9794f4c8185ac",
+              "label":"Facilitator",
+              "type":"Axure:PanelDiagram",
+              "objects":[{
+                  "id":"259de6f0f6b94cfaaea61c814b763fb3",
+                  "label":"",
+                  "parentDynamicPanel":"220b638ec28443cb84365c714c4b5eef",
+                  "panelIndex":1,
+                  "type":"comboBox",
+                  "styleType":"comboBox",
+                  "visible":true,
+                  "style":{
+                    "size":{
+                      "width":200,
+                      "height":22}},
+                  "adaptiveStyles":{
+}}],
+              "style":{
+                "fill":{
+                  "fillType":"solid",
+                  "color":0xFFFFFF},
+                "image":null,
+                "imageHorizontalAlignment":"near",
+                "imageVerticalAlignment":"near",
+                "imageRepeat":"auto"},
+              "adaptiveStyles":{
+}}]}]}},
   "masters":{
     "9b3ccec187f446b1a8804d9888116ed6":{
       "packageId":"9b3ccec187f446b1a8804d9888116ed6",
@@ -719,21 +821,23 @@
       "scriptId":"u19"},
     "f6f6cf2e08804054be6e64abbfd0e7ef":{
       "scriptId":"u20"},
-    "8d5e0c6ad63a427f81e14f384605d817":{
-      "scriptId":"u21"},
     "8b7724fb9b0b4795baa48a849ebc37fc":{
-      "scriptId":"u22"},
+      "scriptId":"u21"},
     "8d981621d8a74fa1bc930247c5e0b17b":{
-      "scriptId":"u23"},
+      "scriptId":"u22"},
     "2d1a8ed0ea5d4476801692524e2d1513":{
-      "scriptId":"u24"},
+      "scriptId":"u23"},
     "0351355efb634ed39bafcd501cd41d63":{
-      "scriptId":"u25"},
+      "scriptId":"u24"},
     "ba227482acb04c4f9789867cd141e652":{
-      "scriptId":"u26"},
+      "scriptId":"u25"},
     "ce95ceacf3f244c4b94742bccd86894a":{
-      "scriptId":"u27"},
+      "scriptId":"u26"},
     "8e0b39f61fa441e3b06d21cf7bad4cf6":{
-      "scriptId":"u28"},
+      "scriptId":"u27"},
     "1ff094a5f6fb481d90856950d736838e":{
-      "scriptId":"u29"}}});
+      "scriptId":"u28"},
+    "220b638ec28443cb84365c714c4b5eef":{
+      "scriptId":"u29"},
+    "259de6f0f6b94cfaaea61c814b763fb3":{
+      "scriptId":"u30"}}});

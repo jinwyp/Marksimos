@@ -1,6 +1,6 @@
 ﻿$axure.loadCurrentPage({
   "url":"chart.html",
-  "generationDate":new Date(1400123444891.62),
+  "generationDate":new Date(1400493979811.86),
   "isCanvasEnabled":false,
   "variables":["OnLoadVariable"],
   "page":{

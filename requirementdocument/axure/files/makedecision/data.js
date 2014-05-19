@@ -1,6 +1,6 @@
 ﻿$axure.loadCurrentPage({
   "url":"makedecision.html",
-  "generationDate":new Date(1400123442273.9),
+  "generationDate":new Date(1400493975481.3),
   "isCanvasEnabled":false,
   "variables":["OnLoadVariable"],
   "page":{
@@ -3570,10 +3570,10 @@
                           "isNewIfGroup":false,
                           "actions":[{
                               "action":"linkWindow",
-                              "description":"Open Result in Current Window",
+                              "description":"Open ViewHistoryScore in Current Window",
                               "target":{
                                 "targetType":"page",
-                                "url":"result.html",
+                                "url":"viewhistoryscore.html",
                                 "includeVariables":true},
                               "linkType":"current"}]}]}},
                   "tabbable":true,

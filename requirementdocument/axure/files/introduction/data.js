@@ -1,6 +1,6 @@
 ﻿$axure.loadCurrentPage({
   "url":"introduction.html",
-  "generationDate":new Date(1400123436081.65),
+  "generationDate":new Date(1400493969113.52),
   "isCanvasEnabled":false,
   "variables":["OnLoadVariable"],
   "page":{
@@ -196,10 +196,10 @@
                   "isNewIfGroup":false,
                   "actions":[{
                       "action":"linkWindow",
-                      "description":"Open Introduction in Current Window",
+                      "description":"Open CompanyInfo in Current Window",
                       "target":{
                         "targetType":"page",
-                        "url":"introduction.html",
+                        "url":"companyinfo.html",
                         "includeVariables":true},
                       "linkType":"current"}]}]}},
           "tabbable":true,

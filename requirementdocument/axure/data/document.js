@@ -59,12 +59,12 @@
 {
                 "pageName":"ViewHistoryScore",
                 "type":"Wireframe",
-                "url":"viewhistoryscore.html"},
-{
-                "pageName":"Result",
-                "type":"Wireframe",
-                "url":"result.html",
+                "url":"viewhistoryscore.html",
                 "children":[{
+                    "pageName":"Result",
+                    "type":"Wireframe",
+                    "url":"result.html"},
+{
                     "pageName":"Questionnaire",
                     "type":"Wireframe",
                     "url":"questionnaire.html"}]}]},

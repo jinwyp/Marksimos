@@ -1,6 +1,6 @@
 ﻿$axure.loadCurrentPage({
   "url":"seminarmanagement.html",
-  "generationDate":new Date(1400123444086.37),
+  "generationDate":new Date(1400493979021.01),
   "isCanvasEnabled":false,
   "variables":["OnLoadVariable"],
   "page":{
