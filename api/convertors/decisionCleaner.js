@@ -2,7 +2,7 @@
  * Clean the decision data got from CGI service
  * Include:
  *   remove empty SKU
- *   chage array of char to string
+ *   change array of char to string
  * 
  * @method toJSON
  * @return {Object} Copy of ...
