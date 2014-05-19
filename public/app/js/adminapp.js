@@ -175,5 +175,8 @@ marksimosapp.controller('adminController', function AppCtrl ($scope, $timeout, $
 //        $scope.chartData = data;
 //        console.log($scope.chartData);
 //    });
+
+
+
 });
 
