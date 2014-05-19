@@ -50,7 +50,7 @@ exports.removeChartData = function(seminarId){
     return deferred.promise;
 }
 
-exports.updateChartData = function(chartData){
+exports.saveChartData = function(chartData){
     var deferred = Q.defer();
     var c = new SeminarChart(chartData);
     c.save(function(err){

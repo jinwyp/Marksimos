@@ -31,7 +31,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use(function(req, res, next){
     req.session.userId = 'testid';
     req.session.seminarId = 'TTT';
-    req.session.simulationSpan = 3;
+    req.session.companyId = 2;
     next();
 })
 

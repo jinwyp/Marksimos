@@ -51,6 +51,14 @@ var ReadExogenousOK = 0;
 var ReadResultsOK = 0
 
 
+var ActualSize  = [ 0.5, 1.0, 2.0 ];
+var WarrantyYears = [1, 3, 5 ];
+var EpisodesCount = [13, 12 ];
+var ObsoleteAge   = [StocksMax - 2, StocksMaxTotal ];
+
+var TSimulationVariant = ['FMCG', 'DURABLES'];
+
+
 module.exports = {
   CompanyLengthMax              : CompanyLengthMax,
   BrandNameLengthMax            : BrandNameLengthMax,
@@ -102,6 +110,8 @@ module.exports = {
   SimulationName                : SimulationName,
   ReadParametersOK              : ReadParametersOK,
   ReadExogenousOK               : ReadExogenousOK,
-  ReadResultsOK                 : ReadResultsOK
+  ReadResultsOK                 : ReadResultsOK,
+
+  ActualSize: ActualSize
 };
 

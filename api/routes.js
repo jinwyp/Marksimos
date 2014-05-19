@@ -6,12 +6,9 @@ var util = require('util');
 
 module.exports = function(app){
     app.post('/api/register', require('./controllers/user.js').register);
-
     app.post('/api/login', require('./controllers/user.js').login);
 
     app.get('/api/init', initController.init);
-    app.get('/api/accesstoken', initController.init);
-
 
     app.get('/api/decision', decisionController.getDecision);
 
@@ -20,5 +17,5 @@ module.exports = function(app){
 
     // app.get('*', function(req, res){
     //     res.send("404 page");
-    // })
+    // }) 
 };

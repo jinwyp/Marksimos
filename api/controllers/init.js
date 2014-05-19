@@ -1,5 +1,6 @@
 var request = require('../promises/request.js');
 var util = require('util');
+var url = require('url');
 var config = require('../config.js');
 var Q = require('q');
 var decisionCleaner = require('../convertors/decisionCleaner.js');
@@ -29,10 +30,8 @@ exports.init = function(req, res, next) {
     //     next(err);
     // });
 
-    seminarModel.getSeminarSetting()
-    .then(function(seminarSetting){
-        return initAllResult(seminarId, seminarSetting);
-    }).then(function(value) {
+    initAllResult(seminarId)
+    .then(function(value) {
         console.log(value);
         res.send('Got allresults');
     }).fail(function(err) {
@@ -41,10 +40,17 @@ exports.init = function(req, res, next) {
 };
 
 
-
-function initAllResult(seminarId, seminarSetting) {
+/**
+ * Get allResults from CGI service, remove useless data,
+ * and save charts and reports to db
+ * 
+ * @method initAllResult
+ *
+ */
+function initAllResult(seminarId) {
     var periods = config.initPeriods;
 
+    //allResults contains data of several periods
     var queries = [];
     periods.forEach(function(period) {
         queries.push(initOnePeriodResult(seminarId, period));
@@ -54,37 +60,71 @@ function initAllResult(seminarId, seminarSetting) {
         .then(function(results){
             var tempResults = [];
             for(var i=0; i<results.length; i++){
+                //remove useless data like empty SKU, company
                 allResultsCleaner.clean(results[i]);
                 tempResults.push({
                     periodId: periods[i],
                     onePeriodResult: results[i]
                 });
             }
+
+            //save allResults to db, for debug purpose, we don't have to do this
             return allResultsModel.updateAllResults(seminarId, tempResults);
         })
         .then(function(results) {
-            return extractChartData(results, seminarSetting);
+            return seminarModel.getSeminarSetting(seminarId)
+            .then(function(seminarSetting){
+                return getExogenous(seminarSetting)
+                .then(function(exogenous){
+                    //generate charts from allResults
+                    return extractChartData(results, {
+                        seminarSetting: seminarSetting,
+                        exogenous: exogenous
+                    });
+                })
+            })
         })
         .then(function(chartData) {
+            //before save new chart data, remove the existed one
             return chartDataModel.removeChartData(seminarId)
             .then(function(){
-                return chartDataModel.updateChartData({
+                return chartDataModel.saveChartData({
                     seminarId: seminarId,
                     charts: chartData
                 });
             })
-        })
+        });
 
     return p;
 }
 
-function initOnePeriodResult(seminarId, period) {
-    var reqUrl = config.cgiService + util.format('allresults.exe?seminar=%s&period=%s', seminarId, period);
-
+/**
+ * Get exogenous, exogenous are some parameters of the game
+ * 
+ * @method getExogenous
+ * @param {Object} seminarSetting {simulationVariant, targetMarket}
+ *
+ */
+function getExogenous(seminarSetting){
+    var reqUrl = url.resolve(config.cgiService,
+        util.format('exogenous.exe?period=%s&simulationVariant=%s&targetMarket=%s',
+            0,seminarSetting.simulationVariant, seminarSetting.targetMarket));
     return request(reqUrl);
 }
 
-function extractChartData(results, seminarSetting){
+/**
+ * Query allResults CGI service
+ * 
+ * @method initOnePeriodResult
+ * @param {String} seminarId
+ * @param {Number} period [-3, -2, -1]
+ */
+function initOnePeriodResult(seminarId, period) {
+    var reqUrl = config.cgiService + util.format('allresults.exe?seminar=%s&period=%s', seminarId, period);
+    return request(reqUrl);
+}
+
+function extractChartData(results, settings){
     //生成chart数据
     var marketShareInValue = allResultsConvertor.marketShareInValue(results);
     var marketShareInVolume = allResultsConvertor.marketShareInVolume(results);
@@ -95,7 +135,7 @@ function extractChartData(results, seminarSetting){
     var totalInvestment = allResultsConvertor.totalInvestment(results);
     var netProfitByCompanies = allResultsConvertor.netProfitByCompanies(results);
     var returnOnInvestment = allResultsConvertor.returnOnInvestment(results);
-    var investmentsVersusBudget = allResultsConvertor.investmentsVersusBudget(results, seminarSetting);
+    var investmentsVersusBudget = allResultsConvertor.investmentsVersusBudget(results, settings.seminarSetting);
     
     //market sales and inventory
     var marketSalesValue = allResultsConvertor.marketSalesValue(results);
@@ -116,6 +156,10 @@ function extractChartData(results, seminarSetting){
     var growthRateInValue = allResultsConvertor.growthRateInValue(results);
     var netMarketPrice = allResultsConvertor.netMarketPrice(results);
     var segmentValueShareTotalMarket = allResultsConvertor.segmentValueShareTotalMarket(results);
+
+    var perceptionMap = allResultsConvertor.perceptionMap(results, settings.exogenous);
+
+    var inventoryReport = allResultsConvertor.inventoryReport(results, settings.seminarSetting);
 
     return [
         {
@@ -205,6 +249,14 @@ function extractChartData(results, seminarSetting){
         {
             chartName: 'segmentValueShareTotalMarket',
             chartData: segmentValueShareTotalMarket
+        },
+        {
+            chartName: 'perceptionMap',
+            chartData: perceptionMap
+        },
+        {
+            chartName: 'inventoryReport',
+            chartData: inventoryReport
         }
     ];
 }
