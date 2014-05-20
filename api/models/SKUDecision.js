@@ -5,6 +5,7 @@ var Q = require('q');
 
 var tOneSKUDecisionSchema = new Schema({
     seminarId: String,
+    period: Number,
     d_SKUID: Number,
     d_SKUName: String,
     d_Advertising: Number,
@@ -29,6 +30,17 @@ var tOneSKUDecisionSchema = new Schema({
 
 var SKUDecision = mongoose.model('SKUDecision', tOneSKUDecisionSchema);
 
+exports.remove =  function(seminarId){
+    var deferred = Q.defer();
+    SKUDecision.remove({seminarId: seminarId}, function(err){
+        if(err){
+            return deferred.reject(err);
+        }else{
+            return deferred.resolve(null);
+        }
+    });
+    return deferred;
+}
 
 exports.save = function(decision){
     var deferred = Q.defer();
@@ -44,14 +56,30 @@ exports.save = function(decision){
 };
 
 
-exports.find = function(seminarId, SKUID){
+exports.find = function(seminarId, period, SKUID){
     var deferred = Q.defer();
-    Decision.find({seminarId: seminarId, d_SKUID: SKUID}, function(err, decision){
+    SKUDecision.find({
+        seminarId: seminarId, 
+        period: period, 
+        d_SKUID: SKUID
+    }, function(err, decision){
         if(err){
             return deferred.reject(err);
         }else{
             return deferred.resolve(decision);
         }
-    })
+    });
     return deferred.promise;
 };
+
+exports.findAll = function(seminarId, period){
+    var deferred = Q.defer();
+    SKUDecision.find({seminarId: seminarId}, function(err, result){
+        if(err){
+            return deferred.reject(err);
+        }else{
+            return deferred.resolve(result);
+        }
+    })
+    return deferred.promise;
+}

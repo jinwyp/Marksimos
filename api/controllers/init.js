@@ -297,11 +297,14 @@ function initOnePeriodDecison(seminarId, team, period) {
     var reqUrl = config.cgiService + util.format('decisions.exe?period=%s&team=%s&seminar=%s', period, team, seminarId);
     return request(reqUrl).then(function(result) {
         decisionCleaner.clean(result);
-
         var decision = getDecision(result);
         decision.seminarId = seminarId;
 
-        var d = decisionModel.save(decision);
+        var d = removeExistedData(seminarId);
+
+        d = d.then(function(){
+            decisionModel.save(decision);
+        });
 
         var brandDecisions = getBrandDecisions(result);
 
@@ -322,6 +325,12 @@ function initOnePeriodDecison(seminarId, team, period) {
         
         return d;
     });
+
+    function removeExistedData(seminarId){
+        return Q.all([decisionModel.remove(seminarId),
+            brandDecisionModel.remove(seminarId),
+            SKUDecisionModel.remove(seminarId)]);
+    }
 
     function getDecision(result){
         var brandIds = result.d_BrandsDecisions.map(function(brand){

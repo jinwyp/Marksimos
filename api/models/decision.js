@@ -5,6 +5,7 @@ var Q = require('q');
 
 var tDecisionSchema = new Schema({
     seminarId: String,
+    period: Number,
     d_CID                        : Number,
     d_CompanyName                : String,
     d_BrandsDecisions            : [Number], //Array of d_BrandID
@@ -17,16 +18,63 @@ var tDecisionSchema = new Schema({
 
 var Decision = mongoose.model('Decision', tDecisionSchema);
 
+exports.remove =  function(seminarId){
+    var deferred = Q.defer();
+
+    if(!seminarId){
+        process.nextTick(function(){
+            deferred.reject(new Error("Invalid argument seminarId"));
+        })
+    }else{
+        Decision.remove({seminarId: seminarId}, function(err){
+            if(err){
+                return deferred.reject(err);
+            }else{
+                return deferred.resolve(null);
+            }
+        });
+    }
+
+    return deferred;
+}
+
 exports.save = function(decision){
     var deferred = Q.defer();
-    var decision = new Decision(decision);
-    decision.save(function(err){
-        if(err){
-            deferred.reject(err);
-        }else{
-            deferred.resolve(null);
-        }
-    });
+
+    if(!decision){
+        process.nextTick(function(){
+            deferred.reject(new Error("Invalid argument decision."));
+        })
+    }else{
+        var decision = new Decision(decision);
+        decision.save(function(err){
+            if(err){
+                deferred.reject(err);
+            }else{
+                deferred.resolve(null);
+            }
+        });
+    }
+    
     return deferred.promise;
 };
 
+exports.findAll = function(seminarId){
+    var deferred = Q.defer();
+
+    if(!seminarId){
+        process.nextTick(function(){
+            deferred.reject(new Error("Invalid argument seminarId"));
+        })
+    }else{
+        Decision.find({seminarId: seminarId}, function(err, result){
+            if(err){
+                return deferred.reject(err);
+            }else{
+                return deferred.resolve(result);
+            }
+        })
+    }
+
+    return deferred.promise;
+}
