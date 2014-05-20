@@ -17,7 +17,7 @@
         "type":"Wireframe",
         "url":"home.html"},
 {
-        "pageName":"User",
+        "pageName":"Student",
         "type":"Folder",
         "url":"",
         "children":[{
@@ -59,12 +59,12 @@
 {
                 "pageName":"ViewHistoryScore",
                 "type":"Wireframe",
-                "url":"viewhistoryscore.html"},
-{
-                "pageName":"Result",
-                "type":"Wireframe",
-                "url":"result.html",
+                "url":"viewhistoryscore.html",
                 "children":[{
+                    "pageName":"Result",
+                    "type":"Wireframe",
+                    "url":"result.html"},
+{
                     "pageName":"Questionnaire",
                     "type":"Wireframe",
                     "url":"questionnaire.html"}]}]},
@@ -79,23 +79,55 @@
 {
         "pageName":"Facilitator",
         "type":"Folder",
-        "url":""},
+        "url":"",
+        "children":[{
+            "pageName":"StudentManagement",
+            "type":"Wireframe",
+            "url":"studentmanagement.html"},
+{
+            "pageName":"SeminarManagement",
+            "type":"Wireframe",
+            "url":"seminarmanagement.html",
+            "children":[{
+                "pageName":"seminarsetting",
+                "type":"Wireframe",
+                "url":"seminarsetting.html"}]}]},
 {
         "pageName":"Distributor",
         "type":"Folder",
-        "url":""},
+        "url":"",
+        "children":[{
+            "pageName":"FacilitatorManagement",
+            "type":"Wireframe",
+            "url":"facilitatormanagement.html"}]},
 {
         "pageName":"Admin",
         "type":"Folder",
         "url":"",
         "children":[{
-            "pageName":"CompanyManagement",
+            "pageName":"DistributorManagement",
             "type":"Wireframe",
-            "url":"companymanagement.html"},
+            "url":"distributormanagement.html"},
 {
-            "pageName":"IntrovideoMaintenance",
+            "pageName":"FacilitatorManagement",
             "type":"Wireframe",
-            "url":"introvideomaintenance.html"}]}]},
+            "url":"facilitatormanagement_1.html"},
+{
+            "pageName":"SeminarManagement",
+            "type":"Wireframe",
+            "url":"seminarmanagement_1.html",
+            "children":[{
+                "pageName":"singleseminar",
+                "type":"Wireframe",
+                "url":"singleseminar.html",
+                "children":[{
+                    "pageName":"chart",
+                    "type":"Wireframe",
+                    "url":"chart.html"},
+{
+                    "pageName":"report",
+                    "type":"Wireframe",
+                    "url":"report_1.html"}]}]}]}]},
   "globalVariables":{
     "onloadvariable":""},
   "defaultAdaptiveView":{
