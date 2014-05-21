@@ -7,6 +7,8 @@ var decisionCleaner = require('../convertors/decisionCleaner.js');
 var allResultsConvertor = require('../convertors/allResults.js');
 var allResultsCleaner = require('../convertors/allResultsCleaner.js');
 var decisionModel = require('../models/decision.js');
+var brandDecisionModel = require('../models/brandDecision.js');
+var SKUDecisionModel = require('../models/SKUDecision.js');
 var allResultsModel = require('../models/allResults.js');
 var chartDataModel = require('../models/chartData.js');
 var seminarModel = require('../models/seminar.js');
@@ -24,19 +26,19 @@ exports.init = function(req, res, next) {
         return next(new Error("seminarId cannot be empty."));
     }
 
-    // initDecision(seminar).then(function(){
-    //     res.send('initialize decision success');
-    // }).fail(function(err){
-    //     next(err);
-    // });
-
-    initAllResult(seminarId)
-    .then(function(value) {
-        console.log(value);
-        res.send('Got allresults');
-    }).fail(function(err) {
+    initDecision(seminarId).then(function(){
+        res.send('initialize decision success');
+    }).fail(function(err){
         next(err);
     }).done();
+    
+    // initAllResult(seminarId)
+    // .then(function(value) {
+    //     console.log(value);
+    //     res.send('Got allresults');
+    // }).fail(function(err) {
+    //     next(err);
+    // }).done();
 };
 
 
@@ -295,6 +297,143 @@ function initOnePeriodDecison(seminarId, team, period) {
     var reqUrl = config.cgiService + util.format('decisions.exe?period=%s&team=%s&seminar=%s', period, team, seminarId);
     return request(reqUrl).then(function(result) {
         decisionCleaner.clean(result);
-        return decisionModel.saveDecision(result);
+        var decision = getDecision(result);
+        decision.seminarId = seminarId;
+
+        var d = removeExistedData(seminarId);
+
+        d = d.then(function(){
+            decisionModel.save(decision);
+        });
+
+        var brandDecisions = getBrandDecisions(result);
+
+        brandDecisions.forEach(function(brandDecision){
+            brandDecision.seminarId = seminarId;
+            d = d.then(function(){
+                return brandDecisionModel.save(brandDecision)
+            });
+        });
+
+        var SKUDecisions = getSKUDecisions(result);
+        SKUDecisions.forEach(function(SKUDecision){
+            SKUDecision.seminarId = seminarId;
+            d = d.then(function(){
+                return SKUDecisionModel.save(SKUDecision)
+            })
+        });
+        
+        return d;
     });
+
+    function removeExistedData(seminarId){
+        return Q.all([decisionModel.remove(seminarId),
+            brandDecisionModel.remove(seminarId),
+            SKUDecisionModel.remove(seminarId)]);
+    }
+
+    function getDecision(result){
+        var brandIds = result.d_BrandsDecisions.map(function(brand){
+            return brand.d_BrandID;
+        });
+
+        return {
+            d_CID                        : result.d_CID,
+            d_CompanyName                : result.d_CompanyName,
+            d_BrandsDecisions            : brandIds,
+            d_IsAdditionalBudgetAccepted : result.d_IsAdditionalBudgetAccepted,
+            d_RequestedAdditionalBudget  : result.d_RequestedAdditionalBudget,
+            d_InvestmentInEfficiency     : result.d_InvestmentInEfficiency,
+            d_InvestmentInTechnology     : result.d_InvestmentInTechnology,
+            d_InvestmentInServicing      : result.d_InvestmentInServicing
+        }
+    }
+
+    function getBrandDecisions(result){
+        var results = [];
+
+        for(var i=0; i<result.d_BrandsDecisions.length; i++){
+            var brandDecision = result.d_BrandsDecisions[i];
+            var SKUIDs = brandDecision.d_SKUsDecisions.map(function(SKUDecision){
+                return SKUDecision.d_SKUID;
+            })
+            results.push({
+                d_BrandID       : brandDecision.d_BrandID,
+                d_BrandName     : brandDecision.d_BrandName,
+                d_SalesForce    : brandDecision.d_SalesForce,
+                d_SKUsDecisions : SKUIDs
+            });
+        }
+
+        return results;
+    }
+
+    function getSKUDecisions(result){
+        var results = [];
+
+        for(var i=0; i<result.d_BrandsDecisions.length; i++){
+            var brandDecision = result.d_BrandsDecisions[i];
+            for(var j=0; j<brandDecision.d_SKUsDecisions.length; j++){
+                var SKUDecision = brandDecision.d_SKUsDecisions[j];
+                results.push({
+                    d_SKUID: SKUDecision.d_SKUID,
+                    d_SKUName: SKUDecision.d_SKUName,
+                    d_Advertising: SKUDecision.d_Advertising,
+                    d_AdditionalTradeMargin: SKUDecision.d_AdditionalTradeMargin,
+                    d_ConsumerPrice: SKUDecision.d_ConsumerPrice,
+                    d_RepriceFactoryStocks: SKUDecision.d_RepriceFactoryStocks,
+                    d_IngredientsQuality: SKUDecision.d_IngredientsQuality,
+                    d_PackSize: SKUDecision.d_PackSize,
+                    d_ProductionVolume: SKUDecision.d_ProductionVolume,
+                    d_PromotionalBudget: SKUDecision.d_PromotionalBudget,
+
+                    d_PromotionalEpisodes: SKUDecision.d_PromotionalEpisodes,
+                    d_TargetConsumerSegment: SKUDecision.d_TargetConsumerSegment,
+                    d_Technology: SKUDecision.d_Technology,
+                    d_ToDrop: SKUDecision.d_ToDrop,
+                    d_TradeExpenses: SKUDecision.d_TradeExpenses,
+                    d_WholesalesBonusMinVolume: SKUDecision.d_WholesalesBonusMinVolume,
+                    d_WholesalesBonusRate: SKUDecision.d_WholesalesBonusRate,
+                    d_WarrantyLength: SKUDecision.d_WarrantyLength,
+                })
+            }
+        }
+
+        return results;
+    }
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

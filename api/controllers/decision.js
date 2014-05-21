@@ -2,35 +2,24 @@ var request = require('request');
 var config = require('../config.js');
 var url = require('url');
 var util = require('util');
+var decisionModel = require('../models/decision.js');
+var brandDecisionModel = require('../models/brandDecision.js');
+var SKUDecisionModel = require('../models/SKUDecision.js');
+var decisionCleaner = require('../convertors/decisionCleaner.js');
+var Q = require('q');
 
-exports.getDecision = function(req, res, next){
-    var team = req.query.team;
-    var period = req.query.period;
 
-    if(team===undefined || team===''){
-        return res.json({errMsg: 'parameter error'});
-    }
+exports.submitDecision = function(req, res, next){
+    var teamId = req.session.teamId;
+    var period = req.session.period;
+    var seminarId = req.session.seminar_Id;
 
-    if(period===undefined || period===''){
-        return res.json({errMsg: 'parameter error'});
-    }
-
-    var reqUrl = config.cgiService + util.format('decisions.exe?period=%s&team=%s', period, team);
-    request(reqUrl, function(err, response, body){
-        if(err){
-            return next(err);
-        }
-        if(response.statusCode!==200){
-            return next(new Error(response.statusCode.toString()));
-        }
-
-        var jsonData;
-        try{
-            jsonData = JSON.parse(body);
-        }catch(parseError){
-            return next(parseError);
-        }
-
-        return res.json(jsonData);
-    })
+    Q.all([decisionModel.findAll(seminarId),
+        brandDecisionModel.findAll(seminarId),
+        SKUDecisionModel.findAll(seminarId)])
+    .spread(function(decisions, brandDecisions, SKUDecisions){
+        res.send('submit decision');
+    }).fail(function(err){
+        next(err);
+    }).done();
 }
