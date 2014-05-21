@@ -46,12 +46,21 @@ app.use(function(req, res, next){
 })
 
 app.get('/test', function(req, res, next){
-    var name = req.params.Name;
-    if(!req.session.count){
-        req.session.count = 1;
+    var chartDataModel = require('./api/models/chartData.js');
+    chartDataModel.getChartData('TTT')
+    .then(function(allCharts){
+        test1(allCharts);
+        console.log(allCharts);
+    })
+    .fail(function(err){
+        console.log(err);
+    }).done();
+    res.send('123');
+
+    function test1(allCharts){
+        delete allCharts.seminarId;
+        allCharts.seminarId = allCharts;
     }
-    req.session.count+=1;
-    res.json(req.session.count.toString());
 })
 
 require('./api/routes.js')(app);

@@ -59,15 +59,23 @@ exports.save = function(decision){
     return deferred.promise;
 };
 
-exports.findAll = function(seminarId){
+exports.findOne = function(seminarId, period, companyId){
     var deferred = Q.defer();
 
     if(!seminarId){
         process.nextTick(function(){
             deferred.reject(new Error("Invalid argument seminarId"));
         })
+    }else if(period===undefined){
+        process.nextTick(function(){
+            deferred.reject(new Error("Invalid argument period."));
+        })
     }else{
-        Decision.find({seminarId: seminarId}, function(err, result){
+        Decision.find({
+            seminarId: seminarId,
+            period: period,
+            //d_CID: companyId
+        }, function(err, result){
             if(err){
                 return deferred.reject(err);
             }else{
