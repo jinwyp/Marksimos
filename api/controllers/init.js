@@ -26,19 +26,16 @@ exports.init = function(req, res, next) {
         return next(new Error("seminarId cannot be empty."));
     }
 
-    initDecision(seminarId).then(function(){
-        res.send('initialize decision success');
-    }).fail(function(err){
+    initDecision(seminarId)
+    .then(function(){
+        return initAllResult(seminarId);
+    })
+    .then(function(){
+        res.send('initialize success');
+    })
+    .fail(function(err){
         next(err);
     }).done();
-    
-    // initAllResult(seminarId)
-    // .then(function(value) {
-    //     console.log(value);
-    //     res.send('Got allresults');
-    // }).fail(function(err) {
-    //     next(err);
-    // }).done();
 };
 
 
@@ -297,8 +294,10 @@ function initOnePeriodDecison(seminarId, team, period) {
     var reqUrl = config.cgiService + util.format('decisions.exe?period=%s&team=%s&seminar=%s', period, team, seminarId);
     return request(reqUrl).then(function(result) {
         decisionCleaner.clean(result);
+
         var decision = getDecision(result);
         decision.seminarId = seminarId;
+        decision.period = period;
 
         var d = removeExistedData(seminarId);
 
@@ -310,6 +309,7 @@ function initOnePeriodDecison(seminarId, team, period) {
 
         brandDecisions.forEach(function(brandDecision){
             brandDecision.seminarId = seminarId;
+            brandDecision.period = period;
             d = d.then(function(){
                 return brandDecisionModel.save(brandDecision)
             });
@@ -318,6 +318,7 @@ function initOnePeriodDecison(seminarId, team, period) {
         var SKUDecisions = getSKUDecisions(result);
         SKUDecisions.forEach(function(SKUDecision){
             SKUDecision.seminarId = seminarId;
+            SKUDecision.period = period;
             d = d.then(function(){
                 return SKUDecisionModel.save(SKUDecision)
             })
@@ -332,6 +333,9 @@ function initOnePeriodDecison(seminarId, team, period) {
             SKUDecisionModel.remove(seminarId)]);
     }
 
+    /**
+     * @param {Object} result decision of one company in one period
+     */
     function getDecision(result){
         var brandIds = result.d_BrandsDecisions.map(function(brand){
             return brand.d_BrandID;
@@ -358,6 +362,7 @@ function initOnePeriodDecison(seminarId, team, period) {
                 return SKUDecision.d_SKUID;
             })
             results.push({
+                d_CID: result.d_CID,
                 d_BrandID       : brandDecision.d_BrandID,
                 d_BrandName     : brandDecision.d_BrandName,
                 d_SalesForce    : brandDecision.d_SalesForce,
@@ -376,6 +381,8 @@ function initOnePeriodDecison(seminarId, team, period) {
             for(var j=0; j<brandDecision.d_SKUsDecisions.length; j++){
                 var SKUDecision = brandDecision.d_SKUsDecisions[j];
                 results.push({
+                    d_CID: result.d_CID,
+                    d_BrandID: brandDecision.d_BrandID,
                     d_SKUID: SKUDecision.d_SKUID,
                     d_SKUName: SKUDecision.d_SKUName,
                     d_Advertising: SKUDecision.d_Advertising,
