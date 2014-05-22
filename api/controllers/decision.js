@@ -14,6 +14,18 @@ exports.submitDecision = function(req, res, next){
     var period = req.session.period;
     var seminarId = req.session.seminarId;
 
+    if(!companyId){
+        return res.json({status: 0, message: "Invalid companyId"});
+    }
+
+    if(period === undefined){
+        return res.json({status: 0, message: "Invalid period"});
+    }
+
+    if(!seminarId){
+        return res.json({status: 0, message: "Invalid seminarId"});
+    }
+
     var result = {};
 
     decisionModel.findOne(seminarId, period, companyId)
@@ -74,6 +86,11 @@ exports.submitDecision = function(req, res, next){
                 })
     })
     .then(function(){
+        if(Object.keys(result).length===0){
+            return res.json({result: 0, message: "fail to get decisions"})
+        }
+
+        insertEmptyBrandsAndSKUs(result);
         //console.log(result);
         res.send(result);
     })
@@ -81,83 +98,35 @@ exports.submitDecision = function(req, res, next){
         next(err);
     }).done();
 
-    // Q.all([
-    //     decisionModel.findAll(seminarId, period, teamId),
-    //     brandDecisionModel.findAll(seminarId, period, teamId, companyId),
-    //     SKUDecisionModel.findAll(seminarId, period, teamId, companyId, brandId)
-    // ])
-    // .spread(function(decisions, brandDecisions, SKUDecisions){
-    //     console.log(decisions);
-    //     var t = combineDecisions(decisions, brandDecisions, SKUDecisions);
-    //     console.log(t);
-    //     res.send('submit decision');
+    /**
+     * CGI service can not convert JSON string to delphi object,
+     * if the number of SKUs or brnads is not the same as
+     * the length of correspond array in delphi data structure.
+     *
+     * @method insertEmptyBrands
+     */
+    function insertEmptyBrandsAndSKUs(decision){
+        for(var i=0; i< decision.d_BrandsDecisions.length; i++){
+            var brand = decision.d_BrandsDecisions[i];
+            var numOfSKUToInsert = 5 - brand.d_SKUsDecisions.length;
+            for(var j=0; j<numOfSKUToInsert; j++){
+                var emptySKU = JSON.parse(JSON.stringify(brand.d_SKUsDecisions[0]));
+                emptySKU.d_SKUID = 0;
+                emptySKU.d_SKUName = '';
+                brand.d_SKUsDecisions.push(emptySKU);
+            }
+        }
 
-    //     function combineDecisions(decisions, brandDecisions, SKUDecisions){
-    //         var result = {};
-    //         //there's only one decision record of this period in this seminar
-    //         if(decisions && decisions.length === 1){
-    //             result.d_CID = decisions[0].d_CID;
-    //             result.d_CompanyName = decisions[0].d_CompanyName;
-    //             result.d_BrandsDecisions = [];
-    //             result.d_IsAdditionalBudgetAccepted = decisions[0].d_IsAdditionalBudgetAccepted;
-    //             result.d_RequestedAdditionalBudget = decisions[0].d_RequestedAdditionalBudget;
-    //             result.d_InvestmentInEfficiency = decisions[0].d_InvestmentInEfficiency;
-    //             result.d_InvestmentInTechnology = decisions[0].d_InvestmentInTechnology;
-    //             result.d_InvestmentInServicing = decisions[0].d_InvestmentInServicing;
-
-    //             decisions[0].d_BrandsDecisions.forEach(function(brandID){
-    //                 brandDecisions.forEach(function(brandDecision){
-    //                 });
-    //             })
-                    
-    //                 var brandDecision = brandDecisions[i];
-    //                 var tempBrandDecision = {};
-    //                 tempBrandDecision.d_BrandID = brandDecision.d_BrandID;
-    //                 tempBrandDecision.d_BrandName = brandDecision.d_BrandName;
-    //                 tempBrandDecision.d_SalesForce = brandDecision.d_SalesForce;
-    //                 tempBrandDecision.d_SKUsDecisions = [];
-    //                 brandDecision.d_SKUsDecisions.forEach(function(SKUID){
-    //                     var SKUDec = findSKUDecisions(SKUID, SKUDecisions);
-    //                     if(SKUDec){
-    //                         var tempSKUDecision = {};
-    //                         tempSKUDecision.d_SKUID = SKUDec.d_SKUID;
-    //                         tempSKUDecision.d_SKUName = SKUDec.d_SKUName;
-    //                         tempSKUDecision.d_Advertising = SKUDec.d_Advertising;
-    //                         tempSKUDecision.d_AdditionalTradeMargin = SKUDec.d_AdditionalTradeMargin;
-    //                         tempSKUDecision.d_FactoryPrice = SKUDec.d_FactoryPrice;
-    //                         tempSKUDecision.d_ConsumerPrice = SKUDec.d_ConsumerPrice;
-    //                         tempSKUDecision.d_RepriceFactoryStocks = SKUDec.d_RepriceFactoryStocks;
-    //                         tempSKUDecision.d_IngredientsQuality = SKUDec.d_IngredientsQuality;
-    //                         tempSKUDecision.d_PackSize = SKUDec.d_PackSize;
-    //                         tempSKUDecision.d_ProductionVolume = SKUDec.d_ProductionVolume;
-    //                         tempSKUDecision.d_PromotionalBudget = SKUDec.d_PromotionalBudget;
-    //                         tempSKUDecision.d_PromotionalEpisodes = SKUDec.d_PromotionalEpisodes;
-    //                         tempSKUDecision.d_TargetConsumerSegment = SKUDec.d_TargetConsumerSegment;
-    //                         tempSKUDecision.d_Technology = SKUDec.d_Technology;
-    //                         tempSKUDecision.d_ToDrop = SKUDec.d_ToDrop;
-    //                         tempSKUDecision.d_TradeExpenses = SKUDec.d_TradeExpenses;
-    //                         tempSKUDecision.d_WholesalesBonusMinVolume = SKUDec.d_WholesalesBonusMinVolume;
-    //                         tempSKUDecision.d_WholesalesBonusRate = SKUDec.d_WholesalesBonusRate;
-    //                         tempSKUDecision.d_WarrantyLength = SKUDec.d_WarrantyLength;
-    //                         tempBrandDecision.d_SKUsDecisions.push(tempSKUDecision);
-    //                     }
-    //                 })
-    //                 result.d_BrandsDecisions.push(tempBrandDecision);
-    //             }                
-    //             }
-                
-    //         }else{
-    //             throw new Error("decisions.length should be 1.");
-    //         }
-    //         return result;
-    //     }
-
-        //find all SKUDecisi
-        // function findSKUDecisions(SKUID, SKUDecisions){
-        //     for(var i=0; i<SKUDecisions.length; i++){
-        //         if(SKUDecisions[i].d_SKUID === SKUID){
-        //             return SKUDecisions[i];
-        //         }
-        //     }
-        // }
+        var numOfBrandToInsert = 5 - decision.d_BrandsDecisions.length;
+        for(var k=0; k<numOfBrandToInsert; k++){
+            var emptyBrand = JSON.parse(JSON.stringify(decision.d_BrandsDecisions[0]));
+            for(var p=0; p<emptyBrand.d_SKUsDecisions.length; p++){
+                emptyBrand.d_SKUsDecisions[p].d_SKUID = 0;
+                emptyBrand.d_SKUsDecisions[p].d_SKUName = '';
+            }
+            emptyBrand.d_BrandID = 0;
+            emptyBrand.d_BrandName = '';
+            decision.d_BrandsDecisions.push(emptyBrand);
+        }
+    }
 }
