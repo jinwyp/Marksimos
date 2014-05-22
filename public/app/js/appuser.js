@@ -3,10 +3,14 @@
  */
 
 // create module for custom directives
-var marksimosapp = angular.module('marksimos', ['angularCharts']);
+var marksimosapp = angular.module('marksimos', ['angularCharts', 'marksimos.component']);
+
+
+
 
 // controller business logic
 marksimosapp.controller('chartController', function AppCtrl ($scope,  $timeout, $http) {
+
 
     $http.get('/api/chart/marketShareInValue').success(function(data, status, headers, config){
         $scope.chartData = data;
