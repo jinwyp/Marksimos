@@ -9,7 +9,7 @@ var userSchema = new Schema({
     role: Number   //1: Admin, 2:Distributor, 3: Facilitator, 4:Students
 });
 
-var User = mongoose.model('User', userSchema);
+var User = mongoose.model('Useraccount', userSchema);
 
 
 exports.isUserExisted = function(email){
@@ -70,13 +70,20 @@ exports.login = function(email, password){
             deferred.reject(new Error(errorMessage));
         })
     }else{
-        User.find({
+        console.log(email, password);
+        User.findOne({
             email: email,
             password: password
         }, function(err, result){
-            if(err) return deferred.reject(err);
 
-            return deferred.resolve(result);
+            if(err) deferred.reject(err);
+
+            console.log(result);
+            if(result){
+                deferred.resolve(result);
+            } else {
+                deferred.reject('user not exist');
+            }
         })
     }
 

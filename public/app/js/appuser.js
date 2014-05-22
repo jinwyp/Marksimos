@@ -7,7 +7,6 @@ var marksimosapp = angular.module('marksimos', ['angularCharts', 'marksimos.comp
 
 
 
-
 // controller business logic
 marksimosapp.controller('chartController', function AppCtrl ($scope,  $timeout, $http) {
 

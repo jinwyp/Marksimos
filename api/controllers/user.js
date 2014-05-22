@@ -63,7 +63,7 @@ exports.login = function(req, res, next){
         req.session.user = {
             email: email
         };
-        res.cookie('clientToken', clientToken);
+//        res.cookie('clientToken', clientToken);
         res.json({status: 1, message: "login success."});
     }).fail(function(err){
         if(err){
