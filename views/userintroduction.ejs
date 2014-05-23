@@ -7,43 +7,91 @@
     <header-user login="false"></header-user>
 
 
-    <div class="row login" ng-controller="userLoginController">
+    <div class="row login" >
         <div class="col-md-8 col-md-offset-2 panelbox">
 
 
             <div class="row">
-                <div class="col-md-12"><h3>Welcome !</h3></div>
+                <div class="col-md-12"><h3>Introduction Videos</h3></div>
             </div>
 
 
-            <div class="row contentbox">
+            <div class="row video_list">
+                <div class="col-md-3 col-md-offset-1">
 
-                <div class="col-md-5 col-md-offset-7 divider_left">
+                    <iframe width="200" height="150" src="//www.youtube.com/embed/8ILQOFAgaXE" frameborder="0" allowfullscreen></iframe>
 
-                    <h4>Sign In</h4>
-                    <form role="form" name="loginForm">
-                        <div class="form-group has-feedback" ng-class="{'has-success':loginForm.email.$dirty && loginForm.email.$valid , 'has-error': loginForm.email.$dirty && loginForm.email.$invalid}">
-                            <label for="loginInputEmail">Email:</label>
-                            <input type="email" class="form-control" id="loginInputEmail" name="email" placeholder="Email" ng-model="data.newUser.email" required>
-                            <span class="glyphicon glyphicon-ok form-control-feedback" ng-show="loginForm.email.$dirty && loginForm.email.$valid"></span>
-                            <span class="glyphicon glyphicon-remove form-control-feedback" ng-show="loginForm.email.$dirty && loginForm.email.$invalid"></span>
-                        </div>
-
-                        <div class="form-group has-feedback" ng-class="{'has-success':loginForm.password.$dirty && loginForm.password.$valid , 'has-error': loginForm.password.$dirty && loginForm.password.$invalid}">
-                            <label for="loginInputpassword">Password:</label>
-                            <input type="password" class="form-control" id="loginInputpassword" name="password" placeholder="Password" ng-model="data.newUser.password" required ng-minlength="5" ng-maxlength="12">
-                            <span class="glyphicon glyphicon-ok form-control-feedback" ng-show="loginForm.password.$dirty && loginForm.password.$valid"></span>
-                            <span class="glyphicon glyphicon-remove form-control-feedback" ng-show="loginForm.password.$dirty && loginForm.password.$invalid"></span>
-                        </div>
-
-                        <button type="submit" class="btn btn-default login_button" ng-click="login(loginForm)">Sign In</button>
-                    </form>
                 </div>
 
+                <div class="col-md-3">
+
+                    <iframe width="200" height="150" src="//www.youtube.com/embed/8ILQOFAgaXE" frameborder="0" allowfullscreen></iframe>
+
+                </div>
+
+                <div class="col-md-3">
+
+                    <iframe width="200" height="150" src="//www.youtube.com/embed/8ILQOFAgaXE" frameborder="0" allowfullscreen></iframe>
+
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-2 col-md-offset-9">
+                    <button type="submit" class="btn btn-default intro_video_next_button" ng-click="introVideosNext()">Next</button>
+                </div>
             </div>
 
 
+        </div>
 
+    </div>
+
+
+
+    <div class="row login">
+        <div class="col-md-8 col-md-offset-2 panelbox">
+
+
+            <div class="row">
+                <div class="col-md-12"><h3 class="text-center first_intro">Who am I ? </h3></div>
+            </div>
+
+
+            <div class="row whoami">
+
+
+                <div class="col-md-8 col-md-offset-2">
+
+                    <div class="row ">
+                        <div class="col-md-12">
+
+                            <h4>I am leading Company A. I manage 7 products under 3 brands.
+                                I compete with 5 other companies.
+
+                                  </h4>
+
+                        </div>
+                    </div>
+
+                    <div class="row ">
+                        <div class="col-md-12">
+
+                            <h4>My company’s mission is to get the highest Market Share and Profit!</h4>
+
+                        </div>
+                    </div>
+
+                </div>
+
+
+            </div>
+
+            <div class="row">
+                <div class="col-md-2 col-md-offset-9">
+                    <button type="submit" class="btn btn-default intro_video_next_button" ng-click="introVideosNext()">Start</button>
+                </div>
+            </div>
 
 
         </div>

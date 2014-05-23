@@ -165,8 +165,6 @@ body{
 
             background-color: $color_login_content_background;
             margin: 10px 20px 35px 20px;
-
-
         }
 
         label {
@@ -187,6 +185,31 @@ body{
             padding-right: 30px;
             padding-bottom: 40px;
         }
+
+        .video_list{
+            margin-top : 70px;
+            padding: 0px 0px 70px 30px;
+        }
+
+        .intro_video_next_button{
+            font-size: 14px;
+            @include user_decision_button;
+            margin-bottom: 20px;
+        }
+
+        .first_intro{
+            margin-top: 50px;
+
+        }
+
+        .whoami {
+            background-image: url(../images/whoami.png);
+            background-repeat: no-repeat;
+            background-position: 0px 30px;
+
+            margin: 10px 20px 35px 20px;
+        }
+
     }
 }
 
