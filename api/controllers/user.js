@@ -48,11 +48,11 @@ exports.login = function(req, res, next){
     var password = req.body.password;
 
     if(!email){
-        return res.json({status: 0, message: "email can't be empty."});
+        return res.json({status: 409, message: "email can't be empty."});
     }
 
     if(!password){
-        return res.json({status: 0, message: "password can't be empty."})
+        return res.json({status: 409, message: "password can't be empty."})
     }
 
     email = email.trim();
@@ -64,11 +64,12 @@ exports.login = function(req, res, next){
             email: email
         };
 //        res.cookie('clientToken', clientToken);
-        res.json({status: 1, message: "login success."});
+        res.json({status: 303, message: "login success."});
+
     }).fail(function(err){
         if(err){
             logger.error(err.message);
-            return res.json({status: 0, message: "login failed."})
+            return res.json({status: 401, message: "login failed."})
         }
     }).done();
 }

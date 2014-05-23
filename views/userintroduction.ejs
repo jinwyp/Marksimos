@@ -7,7 +7,7 @@
     <header-user login="false"></header-user>
 
 
-    <div class="row login" ng-controller="userLoginController" ng-cloak>
+    <div class="row login" ng-controller="userLoginController">
         <div class="col-md-8 col-md-offset-2 panelbox">
 
 
@@ -22,16 +22,15 @@
 
                     <h4>Sign In</h4>
                     <form role="form" name="loginForm">
-                        <div class="form-group has-feedback" ng-class="{'has-success':loginForm.email.$dirty && loginForm.email.$valid, 'has-error': loginForm.email.$dirty && loginForm.email.$invalid}">
-                            <label class="control-label" for="loginInputEmail">Email:</label>
+                        <div class="form-group has-feedback" ng-class="{'has-success':loginForm.email.$dirty && loginForm.email.$valid , 'has-error': loginForm.email.$dirty && loginForm.email.$invalid}">
+                            <label for="loginInputEmail">Email:</label>
                             <input type="email" class="form-control" id="loginInputEmail" name="email" placeholder="Email" ng-model="data.newUser.email" required>
                             <span class="glyphicon glyphicon-ok form-control-feedback" ng-show="loginForm.email.$dirty && loginForm.email.$valid"></span>
                             <span class="glyphicon glyphicon-remove form-control-feedback" ng-show="loginForm.email.$dirty && loginForm.email.$invalid"></span>
                         </div>
 
                         <div class="form-group has-feedback" ng-class="{'has-success':loginForm.password.$dirty && loginForm.password.$valid , 'has-error': loginForm.password.$dirty && loginForm.password.$invalid}">
-                            <label class="control-label" for="loginInputpassword" ng-hide="css.newUser.passwordPrompt && loginForm.password.$invalid">Password:</label>
-                            <label class="control-label" for="loginInputpassword" ng-show="css.newUser.passwordPrompt && loginForm.password.$invalid">Password Incorrect ! </label>
+                            <label for="loginInputpassword">Password:</label>
                             <input type="password" class="form-control" id="loginInputpassword" name="password" placeholder="Password" ng-model="data.newUser.password" required ng-minlength="5" ng-maxlength="12">
                             <span class="glyphicon glyphicon-ok form-control-feedback" ng-show="loginForm.password.$dirty && loginForm.password.$valid"></span>
                             <span class="glyphicon glyphicon-remove form-control-feedback" ng-show="loginForm.password.$dirty && loginForm.password.$invalid"></span>

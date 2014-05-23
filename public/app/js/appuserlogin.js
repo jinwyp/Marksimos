@@ -19,10 +19,12 @@ marksimosapp.factory('currentUser',function(){
 
 
 // controller business logic
-marksimosapp.controller('userLoginController', function AppCtrl ($scope,  $timeout, $http , currentUser) {
+marksimosapp.controller('userLoginController', function AppCtrl ($scope,  $timeout, $http, $window, currentUser) {
 
     $scope.css = {
-
+        newUser : {
+            passwordPrompt : false
+        }
     };
 
     $scope.data = {
@@ -35,13 +37,13 @@ marksimosapp.controller('userLoginController', function AppCtrl ($scope,  $timeo
 
 
 
-        $http.post('/api/register', {
-            email: 'jinwyp@163.com',
-            user_name: 'jinwyp',
-            password: '123456'}
-        ).success(function(data, status, headers, config){
-            console.log(data);
-        });
+//    $http.post('/api/register', {
+//        email: 'jinwyp@163.com',
+//        user_name: 'jinwyp',
+//        password: '123456'}
+//    ).success(function(data, status, headers, config){
+//
+//    });
 
 
 
@@ -49,7 +51,18 @@ marksimosapp.controller('userLoginController', function AppCtrl ($scope,  $timeo
 
         if(form.$valid){
             $http.post('/api/login', $scope.data.newUser).success(function(data, status, headers, config){
-                console.log(data);
+                if(data.status == 303){
+                    $window.location.href = "/introduction" ;
+                }else if(data.status == 401){
+                    console.log(data, form.password);
+
+                    form.password.$valid = false;
+                    form.password.$invalid = true;
+                    $scope.css.newUser.passwordPrompt = true;
+                }
+
+            }).error(function(data, status, headers, config){
+
             });
         }
 

@@ -7,6 +7,10 @@ module.exports = function(app){
         res.render('login.ejs', { title : 'MarkSimos - User Sign In'});
     });
 
+    app.get('/introduction', function(req, res, next){
+        res.render('userintroduction.ejs', { title : 'MarkSimos - Introduction Videos'});
+    });
+
     app.get('/mainhome', function(req, res, next){
         res.render('usermainhome.ejs', { title : 'MarkSimos - User Home'});
     });

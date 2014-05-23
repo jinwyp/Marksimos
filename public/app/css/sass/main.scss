@@ -84,11 +84,6 @@ $color_main_body_user_chart_leftmenu_border: #e7e9ed;
 
 /*********************************************************/
 
-
-
-
-
-
 /** 仿 iOS 系统通知数字样式 **/
 .num{
     background-color: $color_main_header_menu_num;
@@ -116,10 +111,14 @@ $color_main_body_user_chart_leftmenu_border: #e7e9ed;
 }
 
 
+/********************  Angular JS 首次载入页面默认隐藏模板显示  ********************/
+
+[ng\:cloak], [ng-cloak], .ng-cloak {
+    display: none !important;
+}
+
 
 /*********************************************************/
-
-
 
 body{
     font-family: $font_main_header;
@@ -173,7 +172,7 @@ body{
         label {
             font-weight: normal;
             font-size: 13px;
-            color: $color_login_input_lable;
+//            color: $color_login_input_lable;
             font-family: $font_main_header2;
         }
 
