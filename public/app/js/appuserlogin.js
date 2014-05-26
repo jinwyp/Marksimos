@@ -34,19 +34,6 @@ marksimosapp.controller('userLoginController', function AppCtrl ($scope,  $timeo
         }
     };
 
-
-
-
-//    $http.post('/api/register', {
-//        email: 'jinwyp@163.com',
-//        user_name: 'jinwyp',
-//        password: '123456'}
-//    ).success(function(data, status, headers, config){
-//
-//    });
-
-
-
     $scope.login = function(form){
 
         if(form.$valid){
@@ -65,10 +52,27 @@ marksimosapp.controller('userLoginController', function AppCtrl ($scope,  $timeo
 
             });
         }
+    };
+
+});
 
 
+marksimosapp.controller('userIntroController', function AppCtrl ($scope,  $timeout, $http, $window, currentUser) {
+
+    $scope.css = {
+        intro : true
+    };
+
+    $scope.data = {
 
     };
 
+    $scope.introVideosNext = function(){
+        $scope.css.intro = false;
+    };
+
+    $scope.startGame = function(){
+        $window.location.href = "/mainhome" ;
+    };
 
 });

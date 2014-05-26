@@ -79,7 +79,31 @@ $color_main_body_user_chart_leftmenu_border: #e7e9ed;
 
 }
 
+@mixin user_brand {
+    color: $color_main_body_brand;
+    font-size: 14px;
+    background-image: url(../images/userbrand.png);
+    background-repeat: no-repeat;
+    background-position: 1px 0px;
+    padding-left: 25px;
+    margin: 32px 5px 20px 3px;
+    display: block;
+}
 
+@mixin user_product{
+    color: $color_main_body_product;
+    font-size: 11px;
+    background-image: url(../images/userproduct.png);
+    background-repeat: no-repeat;
+    background-position: 1px 2px;
+    padding-left: 20px;
+    width: 130px;
+    height: 24px;
+
+    span{
+        color: $color_main_body_product_target;
+    }
+}
 
 
 /*********************************************************/
@@ -139,6 +163,13 @@ body{
 .login {
     background-color: $color_login_background;
     padding: 50px 0px 50px 0px;
+
+    .bg_whoami {
+        background-image: url(../images/whoami.png);
+        background-repeat: no-repeat;
+        background-position: 0px 120px;
+
+    }
 
     .panelbox {
         border: $color_login_panel_border 1px solid;
@@ -203,11 +234,50 @@ body{
         }
 
         .whoami {
-            background-image: url(../images/whoami.png);
-            background-repeat: no-repeat;
-            background-position: 0px 30px;
 
             margin: 10px 20px 35px 20px;
+        }
+
+        h2 {
+            color: $color_login_title;
+            font-size: 36px;
+            font-family: $font_login_title;
+        }
+
+        h5 {
+            color: $color_main_body_company;
+            font-family: $font_main_header2;
+            padding : 15px 0px 1px 0px;
+            font-size: 14px;
+        }
+
+        .highlight1{
+            font-weight: bold;
+            color: $color_login_title;
+        }
+        .highlight2{
+            font-weight: bold;
+            color: $color_login_title;
+            font-size: 24px;
+        }
+
+        .brand_list{
+            background-color: $color_login_content_background;
+
+            .user_brand{
+                @include user_brand;
+            }
+
+            .user_product{
+                @include user_product;
+            }
+        }
+
+        .start_button{
+            font-size: 14px;
+            @include user_decision_button;
+            margin-top: 20px;
+            margin-bottom: 40px;
         }
 
     }
@@ -353,29 +423,11 @@ body{
     }
 
     .user_brand{
-        color: $color_main_body_brand;
-        font-size: 14px;
-        background-image: url(../images/userbrand.png);
-        background-repeat: no-repeat;
-        background-position: 1px 0px;
-        padding-left: 25px;
-        margin: 32px 5px 20px 3px;
-        display: block;
+        @include user_brand;
     }
 
     .user_product{
-        color: $color_main_body_product;
-        font-size: 11px;
-        background-image: url(../images/userproduct.png);
-        background-repeat: no-repeat;
-        background-position: 1px 2px;
-        padding-left: 20px;
-        width: 130px;
-        height: 24px;
-
-        span{
-            color: $color_main_body_product_target;
-        }
+        @include user_product;
     }
 
     .user_competitorsnum{

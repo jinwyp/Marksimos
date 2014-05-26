@@ -2,12 +2,12 @@
 
 <body ng-app="marksimos">
 
-<div class="container-fluid width_big_screen" >
+<div class="container-fluid width_big_screen" ng-controller="userIntroController" >
 
-    <header-user login="false"></header-user>
+    <header-user login="true"></header-user>
 
 
-    <div class="row login" >
+    <div class="row login" ng-if="css.intro">
         <div class="col-md-8 col-md-offset-2 panelbox">
 
 
@@ -49,27 +49,26 @@
 
 
 
-    <div class="row login">
-        <div class="col-md-8 col-md-offset-2 panelbox">
+    <div class="row login" ng-if="!css.intro">
+        <div class="col-md-8 col-md-offset-2 panelbox bg_whoami">
 
 
             <div class="row">
-                <div class="col-md-12"><h3 class="text-center first_intro">Who am I ? </h3></div>
+                <div class="col-md-12"><h2 class="text-center first_intro">Who am I ? </h2></div>
             </div>
 
 
             <div class="row whoami">
-
-
                 <div class="col-md-8 col-md-offset-2">
 
                     <div class="row ">
                         <div class="col-md-12">
 
-                            <h4>I am leading Company A. I manage 7 products under 3 brands.
-                                I compete with 5 other companies.
+                            <h5 class="text-center">I am leading <span class="highlight1">Company A</span> .
+                                I manage <span class="highlight2">7</span>  <span class="highlight1">products</span> under <span class="highlight2">3</span>  <span class="highlight1">brands</span> .
+                                <br/> I compete with <span class="highlight2">5</span>  other companies.
 
-                                  </h4>
+                            </h5>
 
                         </div>
                     </div>
@@ -77,23 +76,82 @@
                     <div class="row ">
                         <div class="col-md-12">
 
-                            <h4>My company’s mission is to get the highest Market Share and Profit!</h4>
+                            <h5 class="text-center">My company’s mission is to get the <span class="highlight1">highest Market Share</span>  and <span class="highlight1">Profit</span> !</h5>
 
                         </div>
                     </div>
 
                 </div>
 
-
             </div>
 
-            <div class="row">
-                <div class="col-md-2 col-md-offset-9">
-                    <button type="submit" class="btn btn-default intro_video_next_button" ng-click="introVideosNext()">Start</button>
+
+
+
+            <div class="row brand_list">
+                <div class="row">
+                    <div class="col-md-2 col-md-offset-1">
+                        <span class="user_brand">Brand 1</span>
+                        <ul>
+                            <li class="user_product">P1A - <span>Sensitive</span></li>
+                            <li class="user_product">P1A - <span>Sensitive</span></li>
+                            <li class="user_product">P1A - <span>Sensitive</span></li>
+                            <li class="user_product">P1A - <span>Sensitive</span></li>
+                            <li class="user_product">P1A - <span>Sensitive</span></li>
+                        </ul>
+                    </div>
+                    <div class="col-md-2 user_brandcolumn">
+                        <span class="user_brand">Brand 2</span>
+                        <ul>
+                            <li class="user_product">P1A - <span>Sensitive</span></li>
+                            <li class="user_product">P1A - <span>Sensitive</span></li>
+                            <li class="user_product">P1A - <span>Sensitive</span></li>
+                            <li class="user_product">P1A - <span>Sensitive</span></li>
+                            <li class="user_product">P1A - <span>Sensitive</span></li>
+                        </ul>
+                    </div>
+                    <div class="col-md-2 user_brandcolumn">
+                        <span class="user_brand">Brand 3</span>
+                        <ul>
+                            <li class="user_product">P1A - <span>Sensitive</span></li>
+                            <li class="user_product">P1A - <span>Sensitive</span></li>
+                            <li class="user_product">P1A - <span>Sensitive</span></li>
+                            <li class="user_product">P1A - <span>Sensitive</span></li>
+                            <li class="user_product">P1A - <span>Sensitive</span></li>
+                        </ul>
+                    </div>
+                    <div class="col-md-2 user_brandcolumn">
+                        <span class="user_brand">Brand 4</span>
+                        <ul>
+                            <li class="user_product">P1A - <span>Sensitive</span></li>
+                            <li class="user_product">P1A - <span>Sensitive</span></li>
+                            <li class="user_product">P1A - <span>Sensitive</span></li>
+                            <li class="user_product">P1A - <span>Sensitive</span></li>
+                            <li class="user_product">P1A - <span>Sensitive</span></li>
+                        </ul>
+                    </div>
+                    <div class="col-md-2 user_brandcolumn">
+                        <span class="user_brand">Brand 5</span>
+                        <ul>
+                            <li class="user_product">P1A - <span>Sensitive</span></li>
+                            <li class="user_product">P1A - <span>Sensitive</span></li>
+                            <li class="user_product">P1A - <span>Sensitive</span></li>
+                            <li class="user_product">P1A - <span>Sensitive</span></li>
+                            <li class="user_product">P1A - <span>Sensitive</span></li>
+                        </ul>
+                    </div>
+
                 </div>
+
+
+                <div class="row">
+                    <div class="col-md-2 col-md-offset-9">
+                        <button type="submit" class="btn btn-default start_button" ng-click="startGame()">Start</button>
+                    </div>
+                </div>
+
+
             </div>
-
-
         </div>
 
     </div>

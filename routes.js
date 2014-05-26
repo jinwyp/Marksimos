@@ -15,9 +15,8 @@ module.exports = function(app){
         res.render('usermainhome.ejs', { title : 'MarkSimos - User Home'});
     });
 
-    app.get('/report', function(req, res, next){
-        res.render('userreport.ejs', { title : 'MarkSimos - User Home'});
-    });
+
+
 
 
     app.get('/admin', function(req, res, next){
