@@ -44,7 +44,7 @@ gulp.task('compass', function() {
 
 // 自动重启服务器
 gulp.task('nodemon', function () {
-    nodemon({ script: 'app.js'})
+    nodemon({ script: 'app.js'});
 //        .on('restart', 'default')
 });
 

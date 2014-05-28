@@ -1,50 +1,107 @@
 #API
 
+## API json 返回状态码定义
+
+格式如下,status 属性表示状态码
+```
+
+    {
+        status: 0,
+        message: "email can't be empty."
+    }
+
+```
+### 服务器正常工作,没有挂掉的情况下返回码为 2xx,3xx 或4xx
+
+##### 服务器正常工作, Get或Put数据请求正常返回 200 ,操作成功.
+##### 服务器正常工作, Post数据请求正常返回 201 ,操作成功, 一般是Create操作
+##### 服务器正常工作, Delete 数据请求正常返回 204, 操作成功.一般是delete操作, 返回值 body为空, 由于204响应被禁止包含任何消息体，因此它始终以消息头后的第一个空行结尾。
+
+##### 服务器正常工作, Post或Put 请求后接受的数据格式不对,无法继续处理, 返回值 为409
+##### 服务器正常工作, Post或Put 请求后 权限不够, 无法继续处理, 返回值 为401
+##### 服务器正常工作, Get, Post或Put 请求后 路由页面出现错误 返回值 为404 Not Found
+
+##### 服务器正常工作, 返回 3xx 一般为重定向,例如301为永久重定向, 302为临时重定向 303 为服务器跳转到新的路由页面上
+
+##### 服务器挂掉的情况下返回码为 5xx
+
+### HTTP 状态码 参考文献 [Wikipedia](http://zh.wikipedia.org/wiki/HTTP%E7%8A%B6%E6%80%81%E7%A0%81/) .
+
+
+
+
+
+
+## /api/init
+初始化game
+
 ## /api/chart/:chartName
 ### Parameters
 ##### :chartName
-注意: chartName是区分大小写的
-  * marketShareInValue 
-  * marketShareInVolume
-  * mindSpaceShare
-  * shelfSpaceShare
-  * netProfitByCompanies
-  * returnOnInvestment
-  * investmentsVersusBudget
-  * marketSalesValue
-  * marketSalesVolume
-  * totalInventoryAtFactory
-  * totalInventoryAtTrade
+  * market_share_in_value 
+  * market_share_in_volume
+  * mind_space_share
+  * shelf_space_share
+  * net_profit_by_companies
+  * return_on_investment
+  * investments_versus_budget
+  * market_sales_value
+  * market_sales_volume
+  * total_inventory_at_factory
+  * total_inventory_at_trade
+  * segmentsLeaders_by_value_price_sensitive
+  * segments_leaders_by_value_pretenders
+  * segments_leaders_by_value_moderate
+  * segments_leaders_by_value_goodLife
+  * segments_leaders_by_value_ultimate
+  * segments_leaders_by_value_pramatic
+  * growth_rate_in_volume
+  * growth_rate_in_value
+  * net_market_price
+  * segment_value_share_total_market
 
 ### Response
  
     {
-        "公司A": [
-            0.528017640113831,
-            0.519770801067352,
-            0.521866738796234,
-            0.517049491405487
+        "chartData": [
+            [
+                0.528017640113831,
+                0.471982389688492
+            ],
+            [
+                0.519770801067352,
+                0.480229258537292
+            ],
+            [
+                0.521866738796234,
+                0.478133261203766
+            ],
+            [
+                0.517049491405487,
+                0.482950508594513
+            ]
         ],
-        "公司B": [
-            0.471982389688492,
-            0.480229258537292,
-            0.478133261203766,
-            0.482950508594513
+        "companyNames": [
+            "公司A",
+            "公司B"
+        ],
+        "periods": [
+            -3,
+            -2,
+            -1,
+            0
         ]
     }
-    
 
-## /api/chart/segmentsleadersbyvalue/:chartName
-### Parameters
-##### :chartName
-注意: chartName是区分大小写的
- * priceSensitive
- * pretenders
- * moderate
- * goodLife
- * ultimate
- * pramatic
+## /api/register
+### POST
+### parameter
+####:email
+####:password
+### response
 
-### Response
-同/api/chart/:chartName
 
+## url
+### method
+### parameters
+### response

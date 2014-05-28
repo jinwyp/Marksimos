@@ -21,19 +21,50 @@ app.use(logger('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded());
 app.use(cookieParser());
-app.use(session({secret: 'marksimos'}));
+app.use(session({
+    secret: 'marksimos',
+    maxage: 24 * 60000
+}));
 app.use(express.static(path.join(__dirname, 'public')));
 
 //initialize session data
 app.use(function(req, res, next){
     req.session.userId = 'testid';
     req.session.seminarId = 'TTT';
-    req.session.simulationSpan = 3;
+    req.session.companyId = 2;
+    req.session.period = 0;
+    req.session.team = 0;
     next();
 })
 
-require('./api/routes.js')(app);
+//set Content-Type for all API JSON resppnse
+app.use(function(req, res, next){
+    if(req.path.indexOf('/api')===0){
+        res.set('Content-Type', 'application/json; charset=utf-8');
+    }
+    next();
+})
 
+app.get('/test', function(req, res, next){
+    var chartDataModel = require('./api/models/chartData.js');
+    chartDataModel.getChartData('TTT')
+    .then(function(allCharts){
+        test1(allCharts);
+        console.log(allCharts);
+    })
+    .fail(function(err){
+        console.log(err);
+    }).done();
+    res.send('123');
+
+    function test1(allCharts){
+        delete allCharts.seminarId;
+        allCharts.seminarId = allCharts;
+    }
+})
+
+require('./api/routes.js')(app);
+require('./routes.js')(app);
 
 /// catch 404 and forwarding to error handler
 // app.use(function(req, res, next) {
@@ -46,23 +77,23 @@ require('./api/routes.js')(app);
 
 // development error handler
 // will print stacktrace
-if (app.get('env') === 'development') {
-    app.use(function(err, req, res, next) {
-        res.json(500, {
-            message: err.message,
-            error: err
-        });
-    });
-}
+// if (app.get('env') === 'development') {
+//     app.use(function(err, req, res, next) {
+//         res.json(500, {
+//             message: err.message,
+//             error: err
+//         });
+//     });
+// }
 
 // production error handler
 // no stacktraces leaked to user
-app.use(function(err, req, res, next) {
-    res.json(500, {
-        message: err.message,
-        error: {}
-    });
-});
+// app.use(function(err, req, res, next) {
+//     res.json(500, {
+//         message: err.message,
+//         error: {}
+//     });
+// });
 
 
 app.set('port', process.env.PORT || 3000);

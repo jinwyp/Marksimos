@@ -21,5 +21,20 @@ module.exports = {
         'ultimate',
         'pramatic',
         'allSegments'
-    ]
+    ],
+
+    inventoryNames: {
+        'FMCG': [
+            'FreshInventory',
+            'PreviousInventory',
+            'CloseToEXpireInventory' 
+        ],
+        'DURABLES': [
+            'Latest Stock',
+            'one-year old Stock',
+            'Two-year old Stock',
+            'Three-year old Stock',
+            'Oldest Stock'
+        ]
+    }
 };

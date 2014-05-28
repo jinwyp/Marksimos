@@ -5,27 +5,17 @@ var util = require('util');
 
 
 module.exports = function(app){
-    app.get('/', function(req, res, next){
-        res.render('index.ejs', {});
-    });
-
-    app.get('/mainhome', function(req, res, next){
-        res.render('usermainhome.ejs', {});
-    });
-
-    app.get('/report', function(req, res, next){
-        res.render('userreport.ejs', {});
-    });
-
+    app.post('/api/register', require('./controllers/user.js').register);
+    app.post('/api/login', require('./controllers/user.js').login);
 
     app.get('/api/init', initController.init);
-    app.get('/api/decision', decisionController.getDecision);
+
+    app.get('/api/decision/:team', decisionController.submitDecision);
 
     //chart
     app.get('/api/chart/:chartName', chartController.getChart);
-    app.get('/api/chart/segmentsLeadersByValue/:chartName', chartController.getSegmentsLeadersByValueChart);
 
     // app.get('*', function(req, res){
     //     res.send("404 page");
-    // })
+    // }) 
 };
