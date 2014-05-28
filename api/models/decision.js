@@ -71,7 +71,7 @@ exports.findOne = function(seminarId, period, companyId){
             deferred.reject(new Error("Invalid argument period."));
         })
     }else{
-        Decision.find({
+        Decision.findOne({
             seminarId: seminarId,
             period: period,
             //d_CID: companyId
