@@ -7,19 +7,26 @@ var marksimosapp = angular.module('marksimos', [ 'marksimos.component']);
 
 
 marksimosapp.factory('currentUser',function(){
-    var a = " Hello, World! ";
-    this.sayHello = function() {
-        return a;
+    var user = {
+        name : 'aaa',
+        company : 'Company A'
     };
-    this.seta = function(xx) {
-        a = xx;
+
+    var seminar ={
+        currentRound : -3, // -3,-2, -1, 0, 1, 2, 3, 4, 5, 6
+        companylist : []
     };
+
+
+    return {
+
+    }
 });
 
 
 
 // controller business logic
-marksimosapp.controller('userLoginController', function AppCtrl ($scope,  $timeout, $http, $window, currentUser) {
+marksimosapp.controller('userLoginController', function AppCtrl ($scope,  $timeout, $http, $window) {
 
     $scope.css = {
         newUser : {
@@ -54,10 +61,11 @@ marksimosapp.controller('userLoginController', function AppCtrl ($scope,  $timeo
         }
     };
 
+
 });
 
 
-marksimosapp.controller('userIntroController', function AppCtrl ($scope,  $timeout, $http, $window, currentUser) {
+marksimosapp.controller('userIntroController', function AppCtrl ($scope,  $timeout, $http, $window) {
 
     $scope.css = {
         intro : true

@@ -42,10 +42,21 @@ marksimosapp.controller('chartController', function AppCtrl ($scope,  $timeout, 
             }]
     };
 
+    $scope.switchHome = function(user){
+        $scope.css.menu = 'home';
+    };
+
+    $scope.switchReport = function(){
+        $scope.css.menu = 'chart';
+    };
+
 
     $scope.showChart = function(){
         $scope.css.menu = 'chart';
     };
+
+
+
 
 
 
