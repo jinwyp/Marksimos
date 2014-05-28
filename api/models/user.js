@@ -82,7 +82,7 @@ exports.login = function(email, password){
             if(result){
                 deferred.resolve(result);
             } else {
-                deferred.reject('user not exist');
+                deferred.reject(new Error('user not exist'));
             }
         })
     }

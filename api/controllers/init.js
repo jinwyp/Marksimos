@@ -108,7 +108,7 @@ function getExogenous(seminarSetting){
     var reqUrl = url.resolve(config.cgiService,
         util.format('exogenous.exe?period=%s&simulationVariant=%s&targetMarket=%s',
             0,seminarSetting.simulationVariant, seminarSetting.targetMarket));
-    return request(reqUrl);
+    return request.get(reqUrl);
 }
 
 /**
@@ -120,7 +120,7 @@ function getExogenous(seminarSetting){
  */
 function initOnePeriodResult(seminarId, period) {
     var reqUrl = config.cgiService + util.format('allresults.exe?seminar=%s&period=%s', seminarId, period);
-    return request(reqUrl);
+    return request.get(reqUrl);
 }
 
 function extractChartData(results, settings){
@@ -292,7 +292,7 @@ function initDecision(seminarId) {
  */
 function initOnePeriodDecison(seminarId, team, period) {
     var reqUrl = config.cgiService + util.format('decisions.exe?period=%s&team=%s&seminar=%s', period, team, seminarId);
-    return request(reqUrl).then(function(result) {
+    return request.get(reqUrl).then(function(result) {
         decisionCleaner.clean(result);
 
         var decision = getDecision(result);

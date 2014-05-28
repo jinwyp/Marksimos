@@ -1,4 +1,4 @@
-var request = require('request');
+var request = require('../promises/request.js');
 var config = require('../config.js');
 var url = require('url');
 var util = require('util');
@@ -91,8 +91,18 @@ exports.submitDecision = function(req, res, next){
         }
 
         insertEmptyBrandsAndSKUs(result);
-        //console.log(result);
-        res.send(result);
+
+        var reqUrl = url.resolve(config.cgiService, '/cgi-bin/decisions.exe');
+        return request.post(reqUrl, {
+            decision: JSON.stringify(result),
+            seminarId: seminarId,
+            period: period,
+            team: companyId
+        });
+    })
+    .then(function(postDecisionResult){
+        //console.log(!postDecisionResult);
+        res.send(postDecisionResult);
     })
     .fail(function(err){
         next(err);
