@@ -14,6 +14,7 @@ const
   dummyPeriod = 0;
   dummyTeam = 'MAY';
 
+function urlDecode(url: string): string;
 function getVariable(name : string):string;
 function Split(rawStr: string; c: Char):TStringList;
 function Explode(sQuery: string):TDictionary<String, string>;
@@ -21,6 +22,26 @@ procedure LoadConfigIni(var DataDirectory: string; seminar : string);
 
 implementation {-------------------------------------------------------------------------------------------------------------------}
 
+function urlDecode(url: string): string;
+var i, s, g: Integer;
+begin
+  Result :='';
+
+  for i := 1 to Length(url) do
+  begin
+
+    if url[i] = '%' then
+    begin
+      s := StrtoInt('$' + url[i + 1]) * 16;
+      g := StrtoInt('$' + url[i + 2]);
+
+      Result := Result + Chr(s + g);
+    end
+    else if not (((url[i - 1] = '%') and (url[i + 1] <> '%')) or ((url[i - 2] = '%') and (url[i - 1] <> '%') and (url[i + 1] = '%')) or ((url[i - 2] = '%') and (url[i - 1] <> '%') and (url[i + 1] <> '%'))) then
+      Result := Result + url[i];
+
+  end;
+end;
 
 function getVariable(name:string):string;
    {$IFNDEF LINUX}
