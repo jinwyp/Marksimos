@@ -16,6 +16,10 @@ var
   sValue: string;
   team: Integer;
   DataDirectory: string;
+  iSize: Integer;
+  sDati: string;
+  i: Integer;
+  sTemp: string;
 
 begin
   SetMultiByteConversionCodePage(CP_UTF8);
@@ -42,29 +46,34 @@ begin
     end
     else
     begin
-//      sValue := trim(getVariable('CONTENT_LENGTH'));
-//      if (sValue<>'') then
-//      begin
-//        iSize := strtoint(sValue);
-//        SetLength(sDati,iSize);
-//        sValue := getVariable('HTTP_CONTENT_TYPE');
-//        if (Trim(sValue)<>'') and (Trim(sValue) <> 'application/x-www-form-urlencoded') then
-//          bUpload := true;
-//
-//      end;
-      WriteLn;
+      sValue := trim(getVariable('CONTENT_LENGTH'));
+      if (sValue<>'') then
+      begin
+        iSize := strtoint(sValue);
+        SetLength(sDati,iSize);
 
-      try
-        //jo := SO;
-        //jo := TSuperObject.ParseFile('D:\\myfiles\\decision.json', False);
+        for i:=1 to iSize do
+          Read(sDati[i]);
+
+        params := Explode(sDati);
+
+        WriteLn;
+
+        sTemp := urlDecode(params['decision']);
+
+        jo := SO(sTemp);
         //decision := ctx.AsType<TDecision>(jo);
-        //sku := ctx.AsType<TOneSKUDecision>(jo);
 
-//        jo := TSuperObject.ParseFile('D:\\myfiles\\all_results.json', False);
-//        onePeriodNotAPointer := ctx.AsType<TOnePeriodInfo>(jo);
-        //WriteDecisionRecord(0, 1, decision);
-      finally
-        ctx.Free
+        //LoadConfigIni(DataDirectory, params['seminarId']);
+
+        {WriteDecisionRecord(DataDirectory,
+          params['seminar'],
+          StrToInt(params['period']),
+          StrToInt(params['team']),
+          decision); }
+        Writeln(sTemp);
+        //Writeln(urlDecode(sDati));
+        //Writeln('{"data": "' + params['decision'] + '"}');
       end;
     end;
   except
