@@ -6,6 +6,7 @@ var decisionModel = require('../models/decision.js');
 var brandDecisionModel = require('../models/brandDecision.js');
 var SKUDecisionModel = require('../models/SKUDecision.js');
 var decisionCleaner = require('../convertors/decisionCleaner.js');
+var decisionConvertor = require('../convertors/decision.js');
 var Q = require('q');
 
 
@@ -91,6 +92,8 @@ exports.submitDecision = function(req, res, next){
         }
 
         insertEmptyBrandsAndSKUs(result);
+        //convert result to data format that can be accepted by CGI service
+        decisionConvertor.convert(result);
 
         var reqUrl = url.resolve(config.cgiService, '/cgi-bin/decisions.exe');
         return request.post(reqUrl, {
@@ -122,7 +125,8 @@ exports.submitDecision = function(req, res, next){
             for(var j=0; j<numOfSKUToInsert; j++){
                 var emptySKU = JSON.parse(JSON.stringify(brand.d_SKUsDecisions[0]));
                 emptySKU.d_SKUID = 0;
-                emptySKU.d_SKUName = '';
+                emptySKU.d_SKUName = '\u0000\u0000\u0000';
+
                 brand.d_SKUsDecisions.push(emptySKU);
             }
         }
@@ -132,10 +136,10 @@ exports.submitDecision = function(req, res, next){
             var emptyBrand = JSON.parse(JSON.stringify(decision.d_BrandsDecisions[0]));
             for(var p=0; p<emptyBrand.d_SKUsDecisions.length; p++){
                 emptyBrand.d_SKUsDecisions[p].d_SKUID = 0;
-                emptyBrand.d_SKUsDecisions[p].d_SKUName = '';
+                emptyBrand.d_SKUsDecisions[p].d_SKUName = '\u0000\u0000\u0000';
             }
             emptyBrand.d_BrandID = 0;
-            emptyBrand.d_BrandName = '';
+            emptyBrand.d_BrandName = '\u0000\u0000\u0000\u0000\u0000\u0000';
             decision.d_BrandsDecisions.push(emptyBrand);
         }
     }
