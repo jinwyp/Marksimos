@@ -3,24 +3,36 @@
  */
 
 // create module for custom directives
-var marksimosapp = angular.module('marksimos', ['angularCharts', 'marksimos.component']);
+var marksimosapp = angular.module('marksimos', ['angularCharts', 'marksimos.component', 'marksimos.factory' ]);
 
 
 
 // controller business logic
-marksimosapp.controller('chartController', function AppCtrl ($scope,  $timeout, $http) {
-
-//
-//    $http.get('/api/chart/marketShareInValue').success(function(data, status, headers, config){
-//        $scope.chartData = data;
-//        console.log($scope.chartData);
-//    });
+marksimosapp.controller('chartController', function AppCtrl ($scope,  $timeout, $http, report) {
 
     $scope.css = {
-        menu : 'home'
+        menu : 'chart'
     };
 
-    $scope.data = {
+    $scope.chart = {
+        type : 'line',
+        config : {
+            title: 'Market Share in Value',
+            tooltips: true,
+            labels: false,
+            legend: {
+                display: true,
+                position: 'left' //could be 'left, right'
+            },
+            innerRadius: 0, // applicable on pieCharts, can be a percentage like '50%'
+            lineLegend: 'lineEnd' // can be also 'lineEnd' or 'traditional', defaults to 'lineEnd'
+//            mouseover: function() {},
+//            mouseout: function() {},
+//            click: function() {}
+        }
+    };
+
+    $scope.dataReport1 = {
         series: ['A', 'B', 'C', 'D', 'F'],
         data : [
             {
@@ -42,6 +54,14 @@ marksimosapp.controller('chartController', function AppCtrl ($scope,  $timeout, 
             }]
     };
 
+
+    report.marketShareInValue().then(function(data, status, headers, config){
+        $scope.dataReport1 = data;
+        console.log($scope.dataReport1);
+    });
+
+
+
     $scope.switchHome = function(user){
         $scope.css.menu = 'home';
     };
@@ -55,14 +75,6 @@ marksimosapp.controller('chartController', function AppCtrl ($scope,  $timeout, 
         $scope.css.menu = 'chart';
     };
 
-
-
-
-
-
-
-
-    $scope.chartType = 'bar';
 
     $scope.config = {
         labels: false,

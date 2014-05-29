@@ -29,9 +29,6 @@
 
 
 
-
-
-
 ## /api/init
 初始化game
 
