@@ -62,6 +62,9 @@ marksimosapp.controller('chartController', function AppCtrl ($scope,  $timeout, 
 
 
 
+
+
+    /********************  切换菜单  ********************/
     $scope.switchHome = function(user){
         $scope.css.menu = 'home';
     };
@@ -76,24 +79,6 @@ marksimosapp.controller('chartController', function AppCtrl ($scope,  $timeout, 
     };
 
 
-    $scope.config = {
-        labels: false,
-        title : "Not Products",
-        legend : {
-            display:true,
-            position:'left'
-        },
-        innerRadius: 0
-    };
 
-    $scope.config1 = {
-        labels: false,
-        title : "Products",
-        legend : {
-            display:true,
-            position:'right'
-        },
-        lineLegend: 'traditional'
-    }
 });
 
