@@ -16,7 +16,7 @@ var tOneSKUDecisionSchema = new Schema({
     d_ConsumerPrice: Number,
     d_RepriceFactoryStocks: Boolean,
     d_IngredientsQuality: Number,
-    d_PackSize: String,
+    d_PackSize: Number,
     d_ProductionVolume: Number,
     d_PromotionalBudget: Number,
 
@@ -27,7 +27,7 @@ var tOneSKUDecisionSchema = new Schema({
     d_TradeExpenses: Number,
     d_WholesalesBonusMinVolume: Number,
     d_WholesalesBonusRate: Number,
-    d_WarrantyLength: String,
+    d_WarrantyLength: Number,
 }); 
 
 var SKUDecision = mongoose.model('SKUDecision', tOneSKUDecisionSchema);

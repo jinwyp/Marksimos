@@ -88,7 +88,7 @@ exports.login = function(email, password){
     }
 
     return deferred.promise;
-}
+};
 
 
 

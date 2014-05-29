@@ -10,7 +10,7 @@ module.exports = function(app){
 
     app.get('/api/init', initController.init);
 
-    app.get('/api/decision/:team', decisionController.submitDecision);
+    app.get('/api/decision', decisionController.submitDecision);
 
     //chart
     app.get('/api/chart/:chartName', chartController.getChart);

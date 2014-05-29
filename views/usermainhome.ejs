@@ -5,7 +5,7 @@
 
 <div class="container-fluid width_big_screen" ng-controller="chartController">
 
-    <header-user login="true"></header-user>
+    <header-user login="true" click-home="switchHome(user)" click-report="switchReport()"></header-user>
 
 
     <div class="row mainbody bgbrand" ng-if="css.menu=='home'">
