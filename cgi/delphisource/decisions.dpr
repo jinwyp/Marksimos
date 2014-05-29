@@ -29,6 +29,9 @@ begin
 
     ctx := TSuperRttiContext.Create;
 
+    //jo := TSuperObject.ParseFile('D:\\myfiles\\decision.json', True, True) ;
+    //decision := ctx.AsType<TDecision>(jo);
+
     sValue := getVariable('REQUEST_METHOD');
     //sValue := 'GET';
     if sValue='GET' then
@@ -62,16 +65,16 @@ begin
         sTemp := urlDecode(params['decision']);
 
         jo := SO(sTemp);
-        //decision := ctx.AsType<TDecision>(jo);
+        decision := ctx.AsType<TDecision>(jo);
 
-        //LoadConfigIni(DataDirectory, params['seminarId']);
+        LoadConfigIni(DataDirectory, params['seminarId']);
 
-        {WriteDecisionRecord(DataDirectory,
-          params['seminar'],
+        WriteDecisionRecord(DataDirectory,
+          params['seminarId'],
           StrToInt(params['period']),
           StrToInt(params['team']),
-          decision); }
-        Writeln(sTemp);
+          decision);
+        Writeln('{"status": 1, "message": "submit decision success."}');
         //Writeln(urlDecode(sDati));
         //Writeln('{"data": "' + params['decision'] + '"}');
       end;
