@@ -163,13 +163,13 @@ exports.segmentValueShareTotalMarket = function(allResults){
 
     var results = {
         segmentNames: [],
-        charData: []
+        chartData: []
     };
     
     for(var i=0; i<segmentNum; i++){
         var segmentName = segmentNames[i];
         results.segmentNames.push(segmentName);
-        results.charData.push(market.m_ValueSegmentShare[i]);
+        results.chartData.push(market.m_ValueSegmentShare[i]);
     }
     return results;
 }
