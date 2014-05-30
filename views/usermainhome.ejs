@@ -5,10 +5,10 @@
 
 <div class="container-fluid width_big_screen" ng-controller="chartController">
 
-    <header-user login="true" click-home="switchHome(user)" click-report="switchReport()"></header-user>
+    <header-user login="true" click-home="switchHeaderMenu('Home')" click-report="switchHeaderMenu('Report')" current-menu="css.menu"></header-user>
 
 
-    <div class="row mainbody bgbrand" ng-if="css.menu=='home'">
+    <div class="row mainbody bgbrand" ng-if="css.menu=='Home'">
         <div class="col-md-2 user_home_divider user_brand_box">
 
             <div class="row ">
@@ -108,7 +108,7 @@
     </div>
 
 
-    <div class="row mainbody" ng-if="css.menu=='home'">
+    <div class="row mainbody" ng-if="css.menu=='Home'">
         <div class="col-md-12">
             <div class="row user_home_divider_horizontal ">
                 <div class="col-md-6 col-md-offset-3 ">
@@ -148,9 +148,9 @@
 
                         <!-- List group -->
                         <ul class="list-group">
-                            <li class="list-group-item" ng-click="showChart()">Company Status</li>
-                            <li class="list-group-item list-group-item-active" ng-click="showChart()">Financial Data</li>
-                            <li class="list-group-item" ng-click="showChart()">Inventory Report</li>
+                            <li class="list-group-item" ng-click="clickChartMenu('A1')">Company Status</li>
+                            <li class="list-group-item list-group-item-active" ng-click="clickChartMenu('A2')">Financial Data</li>
+                            <li class="list-group-item" ng-click="clickChartMenu('A3')">Inventory Report</li>
                         </ul>
                     </div>
                 </div>
@@ -163,10 +163,10 @@
 
                         <!-- List group -->
                         <ul class="list-group">
-                            <li class="list-group-item" ng-click="showChart()">Market Share</li>
-                            <li class="list-group-item list-group-item-active" ng-click="showChart()">Competitor Information</li>
-                            <li class="list-group-item" ng-click="showChart()">Invest & Profits</li>
-                            <li class="list-group-item list-group-item-active" ng-click="showChart()">Market Sales & Inventory</li>
+                            <li class="list-group-item" ng-click="clickChartMenu('B1')">Market Share</li>
+                            <li class="list-group-item list-group-item-active" ng-click="clickChartMenu('B2')">Competitor Information</li>
+                            <li class="list-group-item" ng-click="clickChartMenu('B3')">Investment & Profits</li>
+                            <li class="list-group-item list-group-item-active" ng-click="clickChartMenu('B4')">Market Sales & Inventory</li>
 
                         </ul>
                     </div>
@@ -180,11 +180,11 @@
 
                         <!-- List group -->
                         <ul class="list-group">
-                            <li class="list-group-item" ng-click="showChart()">Segment Leader Top5</li>
-                            <li class="list-group-item list-group-item-active" ng-click="showChart()">Perception Map</li>
-                            <li class="list-group-item" ng-click="showChart()">Segment Distributions</li>
-                            <li class="list-group-item list-group-item-active" ng-click="showChart()">Market Evolution</li>
-                            <li class="list-group-item" ng-click="showChart()">Market Indicator</li>
+                            <li class="list-group-item" ng-click="clickChartMenu('C1')">Segment Leader Top5</li>
+                            <li class="list-group-item list-group-item-active" ng-click="clickChartMenu('C2')">Perception Map</li>
+                            <li class="list-group-item" ng-click="clickChartMenu('C3')">Segment Distributions</li>
+                            <li class="list-group-item list-group-item-active" ng-click="clickChartMenu('C4')">Market Evolution</li>
+                            <li class="list-group-item" ng-click="clickChartMenu('C5')">Market Indicator</li>
                         </ul>
                     </div>
                 </div>
@@ -195,7 +195,10 @@
 
 
 
-    <div class="row mainbody bgbrand" ng-if="css.menu=='chart'">
+
+
+
+    <div class="row mainbody bgbrand" ng-if="css.menu=='Report'">
         <div class="col-md-2 user_home_divider user_chart_box">
 
             <div class="row ">
@@ -254,7 +257,7 @@
 
     </div>
 
-    <div class="row mainbody bgbrand" ng-if="css.menu=='chart'">
+    <div class="row mainbody bgbrand" ng-if="css.menu=='Report'">
         <div class="col-md-2 user_chart_padding user_home_divider">
 
             <div class="panel user_chart_leftmenu">
@@ -262,9 +265,9 @@
 
                 <!-- List group -->
                 <ul class="list-group">
-                    <li class="list-group-item" >Company Status</li>
-                    <li class="list-group-item list-group-item-active">Financial Data</li>
-                    <li class="list-group-item">Inventory Report</li>
+                    <li class="list-group-item" ng-class="{'list-group-item-active': css.chartMenu=='A1'}" ng-click="clickChartMenu('A1')">Company Status</li>
+                    <li class="list-group-item" ng-class="{'list-group-item-active': css.chartMenu=='A2'}" ng-click="clickChartMenu('A2')">Financial Data</li>
+                    <li class="list-group-item" ng-class="{'list-group-item-active': css.chartMenu=='A3'}" ng-click="clickChartMenu('A3')">Inventory Report</li>
                 </ul>
             </div>
 
@@ -273,10 +276,10 @@
 
                 <!-- List group -->
                 <ul class="list-group">
-                    <li class="list-group-item">Market Share</li>
-                    <li class="list-group-item ">Competitor Information</li>
-                    <li class="list-group-item">Invest & Profits</li>
-                    <li class="list-group-item ">Market Sales & Inventory</li>
+                    <li class="list-group-item" ng-class="{'list-group-item-active': css.chartMenu=='B1'}" ng-click="clickChartMenu('B1')">Market Share</li>
+                    <li class="list-group-item" ng-class="{'list-group-item-active': css.chartMenu=='B2'}" ng-click="clickChartMenu('B2')">Competitor Information</li>
+                    <li class="list-group-item" ng-class="{'list-group-item-active': css.chartMenu=='B3'}" ng-click="clickChartMenu('B3')">Investment & Profits</li>
+                    <li class="list-group-item" ng-class="{'list-group-item-active': css.chartMenu=='B4'}" ng-click="clickChartMenu('B4')">Market Sales & Inventory</li>
                 </ul>
             </div>
 
@@ -285,40 +288,77 @@
 
                 <!-- List group -->
                 <ul class="list-group">
-                    <li class="list-group-item">Segment Leader Top5</li>
-                    <li class="list-group-item ">Perception Map</li>
-                    <li class="list-group-item ">Segment Distributions</li>
-                    <li class="list-group-item ">Market Evolution</li>
-                    <li class="list-group-item">Market Indicator</li>
+                    <li class="list-group-item" ng-class="{'list-group-item-active': css.chartMenu=='C1'}" ng-click="clickChartMenu('C1')">Segment Leader Top5</li>
+                    <li class="list-group-item" ng-class="{'list-group-item-active': css.chartMenu=='C2'}" ng-click="clickChartMenu('C2')">Perception Map</li>
+                    <li class="list-group-item" ng-class="{'list-group-item-active': css.chartMenu=='C3'}" ng-click="clickChartMenu('C3')">Segment Distributions</li>
+                    <li class="list-group-item" ng-class="{'list-group-item-active': css.chartMenu=='C4'}" ng-click="clickChartMenu('C4')">Market Evolution</li>
+                    <li class="list-group-item" ng-class="{'list-group-item-active': css.chartMenu=='C5'}" ng-click="clickChartMenu('C5')">Market Indicator</li>
                 </ul>
             </div>
 
 
         </div>
 
-        <div class="col-md-10 " >
-
+        <div class="col-md-10" ng-if="css.chartMenu=='A1'">
             <div class="row">
-
                 <div class="col-md-6">
-
-                    <div ac-chart="chart.type" ac-data="dataReport1" ac-config="chart.config" id='chart' class="chartBox"></div>
-
+                    <div ac-chart="data.chartA11MarketShareInValue.type" ac-data="data.chartA11MarketShareInValue.data" ac-config="data.chartA11MarketShareInValue.config" class="chartBox"></div>
                 </div>
-
                 <div class="col-md-6">
-
-                    <div ac-chart="chart.type" ac-data="dataReport1" ac-config="chart.config" id='chart' class="chartBox"></div>
-
+                    <div ac-chart="data.chartA12MarketShareInVolume.type" ac-data="data.chartA12MarketShareInVolume.data" ac-config="data.chartA12MarketShareInVolume.config" class="chartBox"></div>
                 </div>
-
-
             </div>
 
+            <div class="row">
+                <div class="col-md-6">
+                    <div ac-chart="data.chartA13MindSpaceShare.type" ac-data="data.chartA13MindSpaceShare.data" ac-config="data.chartA13MindSpaceShare.config" class="chartBox"></div>
+                </div>
+                <div class="col-md-6">
+                    <div ac-chart="data.chartA14ShelfSpaceShare.type" ac-data="data.chartA14ShelfSpaceShare.data" ac-config="data.chartA14ShelfSpaceShare.config" class="chartBox"></div>
+                </div>
+            </div>
+        </div>
 
 
+        <div class="col-md-10" ng-if="css.chartMenu=='B3'">
+            <div class="row">
+                <div class="col-md-6">
+                    <div ac-chart="data.chartB31TotalInvestment.type" ac-data="data.chartB31TotalInvestment.data" ac-config="data.chartB31TotalInvestment.config" class="chartBox"></div>
+                </div>
+                <div class="col-md-6">
+                    <div ac-chart="data.chartB32NetProfitByCompanies.type" ac-data="data.chartB32NetProfitByCompanies.data" ac-config="data.chartB32NetProfitByCompanies.config" class="chartBox"></div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-6">
+                    <div ac-chart="data.chartB33ReturnOnInvestment.type" ac-data="data.chartB33ReturnOnInvestment.data" ac-config="data.chartB33ReturnOnInvestment.config" class="chartBox"></div>
+                </div>
+                <div class="col-md-6">
+                    <div ac-chart="data.chartB34InvestmentsVersusBudget.type" ac-data="data.chartB34InvestmentsVersusBudget.data" ac-config="data.chartB34InvestmentsVersusBudget.config" class="chartBox"></div>
+                </div>
+            </div>
+        </div>
 
 
+        <div class="col-md-10" ng-if="css.chartMenu=='B4'">
+            <div class="row">
+                <div class="col-md-6">
+                    <div ac-chart="data.chartB41MarketSalesValue.type" ac-data="data.chartB41MarketSalesValue.data" ac-config="data.chartB41MarketSalesValue.config" class="chartBox"></div>
+                </div>
+                <div class="col-md-6">
+                    <div ac-chart="data.chartB42MarketSalesVolume.type" ac-data="data.chartB42MarketSalesVolume.data" ac-config="data.chartB42MarketSalesVolume.config" class="chartBox"></div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-6">
+                    <div ac-chart="data.chartB43TotalInventoryAtFactory.type" ac-data="data.chartB43TotalInventoryAtFactory.data" ac-config="data.chartB43TotalInventoryAtFactory.config" class="chartBox"></div>
+                </div>
+                <div class="col-md-6">
+                    <div ac-chart="data.chartB44TotalInventoryAtTrade.type" ac-data="data.chartB44TotalInventoryAtTrade.data" ac-config="data.chartB44TotalInventoryAtTrade.config" class="chartBox"></div>
+                </div>
+            </div>
         </div>
 
 
