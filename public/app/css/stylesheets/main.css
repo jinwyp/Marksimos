@@ -725,5 +725,9 @@ body a, body button {
 .chartBox .ac-title {
   text-align: center;
 }
+/* line 640, ../sass/main.scss */
+.chartBox .bar_chart_label {
+  font-size: 10px;
+}
 
 /*************************** admin ******************************/

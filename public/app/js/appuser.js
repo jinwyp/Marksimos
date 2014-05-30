@@ -12,7 +12,7 @@ marksimosapp.controller('chartController', function AppCtrl ($scope,  $timeout, 
 
     $scope.css = {
         menu : 'Report',
-        chartMenu : 'C1'
+        chartMenu : 'C4'
     };
 
 
@@ -31,97 +31,119 @@ marksimosapp.controller('chartController', function AppCtrl ($scope,  $timeout, 
     $scope.data = {
         chartA11MarketShareInValue : {
             type : report.getChartType1(),
-            config : report.getChartConfig(),
+            config : report.getChartConfig1(),
             data : $scope.dataChartSimple
         },
         chartA12MarketShareInVolume : {
             type : report.getChartType1(),
-            config : report.getChartConfig(),
+            config : report.getChartConfig1(),
             data : $scope.dataChartSimple
         },
         chartA13MindSpaceShare : {
             type : report.getChartType1(),
-            config : report.getChartConfig(),
+            config : report.getChartConfig1(),
             data : $scope.dataChartSimple
         },
         chartA14ShelfSpaceShare : {
             type : report.getChartType1(),
-            config : report.getChartConfig(),
+            config : report.getChartConfig1(),
             data : $scope.dataChartSimple
         },
 
         chartB31TotalInvestment : {
             type : report.getChartType1(),
-            config : report.getChartConfig(),
+            config : report.getChartConfig1(),
             data : $scope.dataChartSimple
         },
         chartB32NetProfitByCompanies : {
             type : report.getChartType1(),
-            config : report.getChartConfig(),
+            config : report.getChartConfig1(),
             data : $scope.dataChartSimple
         },
         chartB33ReturnOnInvestment : {
             type : report.getChartType1(),
-            config : report.getChartConfig(),
+            config : report.getChartConfig1(),
             data : $scope.dataChartSimple
         },
         chartB34InvestmentsVersusBudget : {
             type : report.getChartType1(),
-            config : report.getChartConfig(),
+            config : report.getChartConfig1(),
             data : $scope.dataChartSimple
         },
 
         chartB41MarketSalesValue : {
             type : report.getChartType1(),
-            config : report.getChartConfig(),
+            config : report.getChartConfig1(),
             data : $scope.dataChartSimple
         },
         chartB42MarketSalesVolume : {
             type : report.getChartType1(),
-            config : report.getChartConfig(),
+            config : report.getChartConfig1(),
             data : $scope.dataChartSimple
         },
         chartB43TotalInventoryAtFactory : {
             type : report.getChartType1(),
-            config : report.getChartConfig(),
+            config : report.getChartConfig1(),
             data : $scope.dataChartSimple
         },
         chartB44TotalInventoryAtTrade : {
             type : report.getChartType1(),
-            config : report.getChartConfig(),
+            config : report.getChartConfig1(),
             data : $scope.dataChartSimple
         },
 
         chartC11SegmentsLeadersByValuePriceSensitive : {
             type : report.getChartType2(),
-            config : report.getChartConfig(),
+            config : report.getChartConfig2(),
             data : $scope.dataChartSimple
         },
         chartC12SegmentsLeadersByValuePretenders : {
             type : report.getChartType2(),
-            config : report.getChartConfig(),
+            config : report.getChartConfig2(),
             data : $scope.dataChartSimple
         },
         chartC13SegmentsLeadersByValueModerate : {
             type : report.getChartType2(),
-            config : report.getChartConfig(),
+            config : report.getChartConfig2(),
             data : $scope.dataChartSimple
         },
         chartC14SegmentsLeadersByValueGoodLife : {
             type : report.getChartType2(),
-            config : report.getChartConfig(),
+            config : report.getChartConfig2(),
             data : $scope.dataChartSimple
         },
         chartC15SegmentsLeadersByValueUltimate : {
             type : report.getChartType2(),
-            config : report.getChartConfig(),
+            config : report.getChartConfig2(),
             data : $scope.dataChartSimple
         },
         chartC16SegmentsLeadersByValuePragmatic : {
             type : report.getChartType2(),
-            config : report.getChartConfig(),
+            config : report.getChartConfig2(),
+            data : $scope.dataChartSimple
+        },
+
+        chartC41GrowthRateInVolume : {
+            type : report.getChartType1(),
+            config : report.getChartConfig1(),
+            data : $scope.dataChartSimple
+        },
+        chartC42GrowthRateInValue : {
+            type : report.getChartType1(),
+            config : report.getChartConfig1(),
+            data : $scope.dataChartSimple
+        },
+        chartC43NetMarketPrice : {
+            type : report.getChartType1(),
+            config : report.getChartConfig1(),
+            data : $scope.dataChartSimple
+        },
+        chartC44SegmentValueShareTotalMarket : {
+            type : report.getChartType3(),
+            config : report.getChartConfig1(),
             data : $scope.dataChartSimple
         }
+
     };
 
     // Chart A1
@@ -195,6 +217,7 @@ marksimosapp.controller('chartController', function AppCtrl ($scope,  $timeout, 
         $scope.data.chartB44TotalInventoryAtTrade.data = data;
     });
 
+
     // Chart C1
     $scope.data.chartC11SegmentsLeadersByValuePriceSensitive.config.title = 'Price Sensitive (%)';
     $scope.data.chartC12SegmentsLeadersByValuePretenders.config.title = 'Pretenders (%)';
@@ -204,30 +227,53 @@ marksimosapp.controller('chartController', function AppCtrl ($scope,  $timeout, 
     $scope.data.chartC16SegmentsLeadersByValuePragmatic.config.title = 'Pragmatic (%)';
 
     report.segmentsLeadersByValuePriceSensitive().then(function(data, status, headers, config){
-        console.log(data);
+//        console.log(data);
         $scope.data.chartC11SegmentsLeadersByValuePriceSensitive.data = data;
     });
     report.segmentsLeadersByValuePretenders().then(function(data, status, headers, config){
-        console.log(data);
+//        console.log(data);
         $scope.data.chartC12SegmentsLeadersByValuePretenders.data = data;
     });
     report.segmentsLeadersByValueModerate().then(function(data, status, headers, config){
-        console.log(data);
+//        console.log(data);
         $scope.data.chartC13SegmentsLeadersByValueModerate.data = data;
     });
     report.segmentsLeadersByValueGoodLife().then(function(data, status, headers, config){
-        console.log(data);
+//        console.log(data);
         $scope.data.chartC14SegmentsLeadersByValueGoodLife.data = data;
     });
     report.segmentsLeadersByValueUltimate().then(function(data, status, headers, config){
-        console.log(data);
+//        console.log(data);
         $scope.data.chartC15SegmentsLeadersByValueUltimate.data = data;
     });
     report.segmentsLeadersByValuePragmatic().then(function(data, status, headers, config){
-        console.log(data);
+//        console.log(data);
         $scope.data.chartC16SegmentsLeadersByValuePragmatic.data = data;
     });
 
+
+    // Chart C4
+    $scope.data.chartC41GrowthRateInVolume.config.title = 'Growth Rate In Volume (Period 3 = 100)';
+    $scope.data.chartC42GrowthRateInValue.config.title = 'Growth Rate In Value (Period 3 = 100)';
+    $scope.data.chartC43NetMarketPrice.config.title = 'Net Market Price (Period 3 = 100)';
+    $scope.data.chartC44SegmentValueShareTotalMarket.config.title = 'Segment Value Share In Total Market (%)';
+
+    report.growthRateInVolume().then(function(data, status, headers, config){
+        console.log(data);
+        $scope.data.chartC41GrowthRateInVolume.data = data;
+    });
+    report.growthRateInValue().then(function(data, status, headers, config){
+        console.log(data);
+        $scope.data.chartC42GrowthRateInValue.data = data;
+    });
+    report.netMarketPrice().then(function(data, status, headers, config){
+        console.log(data);
+        $scope.data.chartC43NetMarketPrice.data = data;
+    });
+    report.segmentValueShareTotalMarket().then(function(data, status, headers, config){
+        console.log(data);
+        $scope.data.chartC44SegmentValueShareTotalMarket.data = data;
+    });
 
 
 
