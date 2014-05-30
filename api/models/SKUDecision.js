@@ -99,4 +99,191 @@ exports.findAll = function(seminarId, period, companyId, brandId){
         })
     }
     return deferred.promise;
-}
+};
+
+exports.discontinue = function(seminarId, period, companyId, brandId, SKUID, isContinue){
+    var deferred = Q.defer();
+
+    if(!seminarId){
+        process.nextTick(function(){
+            deferred.reject(new Error("Invalid argument seminarId."));
+        })
+    }else if(period===undefined){
+        process.nextTick(function(){
+            deferred.reject(new Error("Invalid argument period."));
+        });
+    }else if(!companyId){
+        process.nextTick(function(){
+            deferred.reject(new Error("Invalid argument companyId."));
+        });
+    }else if(!brandId){
+        process.nextTick(function(){
+            deferred.reject(new Error("Invalid argument brandId."));
+        });
+    }else if(!SKUID){
+        process.nextTick(function(){
+            deferred.reject(new Error("Invalid argument SKUID."));
+        })
+    }else if(isContinue===undefined){
+        process.nextTick(function(){
+            deferred.reject(new Error("Invalid argument isContinue."))
+        })
+    }else{
+        SKUDecision.update({
+            seminarId: seminarId,
+            period: period,
+            d_CID: companyId,
+            d_BrandID: brandId,
+            d_SKUID: SKUID
+        },
+        {
+            d_ToDrop: isContinue
+        },
+        function(err, numAffected){
+            if(err){
+                return deferred.reject(err);
+            }
+
+            return deferred.resolve(numAffected);
+        })
+    }
+    return deferred.promise;
+};
+
+exports.updateProcessingTechnology = function(seminarId, period, companyId, brandId, SKUID, technology){
+    var deferred = Q.defer();
+
+    if(!seminarId){
+        deferred.reject(new Error("Invalid argument seminarId."));
+    }else if(period===undefined){
+        deferred.reject(new Error("Invalid argument period."));
+    }else if(!companyId){
+        deferred.reject(new Error("Invalid argument companyId."));
+    }else if(!brandId){
+        deferred.reject(new Error("Invalid argument brandId."));
+    }else if(!SKUID){
+        deferred.reject(new Error("Invalid argument SKUID."));
+    }else if(technology===undefined){
+        deferred.reject(new Error("Invalid argument technology."))
+    }else{
+        SKUDecision.update({
+            seminarId: seminarId,
+            period: period,
+            d_CID: companyId,
+            d_BrandID: brandId,
+            d_SKUID: SKUID
+        },
+        {
+            d_Technology: technology
+        },
+        function(err, numAffected){
+            if(err){
+                return deferred.reject(err);
+            }
+
+            return deferred.resolve(numAffected);
+        })
+    }
+    return deferred.promise;
+};
+
+exports.updateIngredientQuality = function(seminarId, period, companyId, brandId, SKUID, quality){
+    var deferred = Q.defer();
+
+    if(!seminarId){
+        deferred.reject(new Error("Invalid argument seminarId."));
+    }else if(period===undefined){
+        deferred.reject(new Error("Invalid argument period."));
+    }else if(!companyId){
+        deferred.reject(new Error("Invalid argument companyId."));
+    }else if(!brandId){
+        deferred.reject(new Error("Invalid argument brandId."));
+    }else if(!SKUID){
+        deferred.reject(new Error("Invalid argument SKUID."));
+    }else if(quality===undefined){
+        deferred.reject(new Error("Invalid argument quality."))
+    }else{
+        SKUDecision.update({
+            seminarId: seminarId,
+            period: period,
+            d_CID: companyId,
+            d_BrandID: brandId,
+            d_SKUID: SKUID
+        },
+        {
+            d_IngredientsQuality: quality
+        },
+        function(err, numAffected){
+            if(err){
+                return deferred.reject(err);
+            }
+
+            return deferred.resolve(numAffected);
+        })
+    }
+    return deferred.promise;
+};
+
+exports.updatePackageSize = function(seminarId, period, companyId, brandId, SKUID, packageSize){
+    var deferred = Q.defer();
+
+    if(!seminarId){
+        deferred.reject(new Error("Invalid argument seminarId."));
+    }else if(period===undefined){
+        deferred.reject(new Error("Invalid argument period."));
+    }else if(!companyId){
+        deferred.reject(new Error("Invalid argument companyId."));
+    }else if(!brandId){
+        deferred.reject(new Error("Invalid argument brandId."));
+    }else if(!SKUID){
+        deferred.reject(new Error("Invalid argument SKUID."));
+    }else if(packageSize===undefined){
+        deferred.reject(new Error("Invalid argument packageSize."));
+    }else{
+        SKUDecision.update({
+            seminarId: seminarId,
+            period: period,
+            d_CID: companyId,
+            d_BrandID: brandId,
+            d_SKUID: SKUID
+        },
+        {
+            d_PackSize: packageSize
+        },
+        function(err, numAffected){
+            if(err){
+                deferred.reject(err);
+            }
+
+            deferred.resolve(numAffected);
+        })
+    }
+
+    return deferred.promise;
+};
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
