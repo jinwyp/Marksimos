@@ -12,7 +12,7 @@ marksimosapp.controller('chartController', function AppCtrl ($scope,  $timeout, 
 
     $scope.css = {
         menu : 'Report',
-        chartMenu : 'A1'
+        chartMenu : 'C1'
     };
 
 
@@ -30,64 +30,95 @@ marksimosapp.controller('chartController', function AppCtrl ($scope,  $timeout, 
 
     $scope.data = {
         chartA11MarketShareInValue : {
-            type : report.getChartType(),
+            type : report.getChartType1(),
             config : report.getChartConfig(),
             data : $scope.dataChartSimple
         },
         chartA12MarketShareInVolume : {
-            type : report.getChartType(),
+            type : report.getChartType1(),
             config : report.getChartConfig(),
             data : $scope.dataChartSimple
         },
         chartA13MindSpaceShare : {
-            type : report.getChartType(),
+            type : report.getChartType1(),
             config : report.getChartConfig(),
             data : $scope.dataChartSimple
         },
         chartA14ShelfSpaceShare : {
-            type : report.getChartType(),
+            type : report.getChartType1(),
             config : report.getChartConfig(),
             data : $scope.dataChartSimple
         },
 
         chartB31TotalInvestment : {
-            type : report.getChartType(),
+            type : report.getChartType1(),
             config : report.getChartConfig(),
             data : $scope.dataChartSimple
         },
         chartB32NetProfitByCompanies : {
-            type : report.getChartType(),
+            type : report.getChartType1(),
             config : report.getChartConfig(),
             data : $scope.dataChartSimple
         },
         chartB33ReturnOnInvestment : {
-            type : report.getChartType(),
+            type : report.getChartType1(),
             config : report.getChartConfig(),
             data : $scope.dataChartSimple
         },
         chartB34InvestmentsVersusBudget : {
-            type : report.getChartType(),
+            type : report.getChartType1(),
             config : report.getChartConfig(),
             data : $scope.dataChartSimple
         },
 
         chartB41MarketSalesValue : {
-            type : report.getChartType(),
+            type : report.getChartType1(),
             config : report.getChartConfig(),
             data : $scope.dataChartSimple
         },
         chartB42MarketSalesVolume : {
-            type : report.getChartType(),
+            type : report.getChartType1(),
             config : report.getChartConfig(),
             data : $scope.dataChartSimple
         },
         chartB43TotalInventoryAtFactory : {
-            type : report.getChartType(),
+            type : report.getChartType1(),
             config : report.getChartConfig(),
             data : $scope.dataChartSimple
         },
         chartB44TotalInventoryAtTrade : {
-            type : report.getChartType(),
+            type : report.getChartType1(),
+            config : report.getChartConfig(),
+            data : $scope.dataChartSimple
+        },
+
+        chartC11SegmentsLeadersByValuePriceSensitive : {
+            type : report.getChartType2(),
+            config : report.getChartConfig(),
+            data : $scope.dataChartSimple
+        },
+        chartC12SegmentsLeadersByValuePretenders : {
+            type : report.getChartType2(),
+            config : report.getChartConfig(),
+            data : $scope.dataChartSimple
+        },
+        chartC13SegmentsLeadersByValueModerate : {
+            type : report.getChartType2(),
+            config : report.getChartConfig(),
+            data : $scope.dataChartSimple
+        },
+        chartC14SegmentsLeadersByValueGoodLife : {
+            type : report.getChartType2(),
+            config : report.getChartConfig(),
+            data : $scope.dataChartSimple
+        },
+        chartC15SegmentsLeadersByValueUltimate : {
+            type : report.getChartType2(),
+            config : report.getChartConfig(),
+            data : $scope.dataChartSimple
+        },
+        chartC16SegmentsLeadersByValuePragmatic : {
+            type : report.getChartType2(),
             config : report.getChartConfig(),
             data : $scope.dataChartSimple
         }
@@ -148,22 +179,54 @@ marksimosapp.controller('chartController', function AppCtrl ($scope,  $timeout, 
     $scope.data.chartB44TotalInventoryAtTrade.config.title = 'Total Inventory At Trade (std pack)';
 
     report.marketSalesValue().then(function(data, status, headers, config){
-        console.log(data);
+//        console.log(data);
         $scope.data.chartB41MarketSalesValue.data = data;
     });
     report.marketSalesVolume().then(function(data, status, headers, config){
-        console.log(data);
+//        console.log(data);
         $scope.data.chartB42MarketSalesVolume.data = data;
     });
     report.totalInventoryAtFactory().then(function(data, status, headers, config){
-        console.log(data);
+//        console.log(data);
         $scope.data.chartB43TotalInventoryAtFactory.data = data;
     });
     report.totalInventoryAtTrade().then(function(data, status, headers, config){
-        console.log(data);
+//        console.log(data);
         $scope.data.chartB44TotalInventoryAtTrade.data = data;
     });
 
+    // Chart C1
+    $scope.data.chartC11SegmentsLeadersByValuePriceSensitive.config.title = 'Price Sensitive (%)';
+    $scope.data.chartC12SegmentsLeadersByValuePretenders.config.title = 'Pretenders (%)';
+    $scope.data.chartC13SegmentsLeadersByValueModerate.config.title = 'Moderate (%)';
+    $scope.data.chartC14SegmentsLeadersByValueGoodLife.config.title = 'GoodLife (%)';
+    $scope.data.chartC15SegmentsLeadersByValueUltimate.config.title = 'Ultimate (%)';
+    $scope.data.chartC16SegmentsLeadersByValuePragmatic.config.title = 'Pragmatic (%)';
+
+    report.segmentsLeadersByValuePriceSensitive().then(function(data, status, headers, config){
+        console.log(data);
+        $scope.data.chartC11SegmentsLeadersByValuePriceSensitive.data = data;
+    });
+    report.segmentsLeadersByValuePretenders().then(function(data, status, headers, config){
+        console.log(data);
+        $scope.data.chartC12SegmentsLeadersByValuePretenders.data = data;
+    });
+    report.segmentsLeadersByValueModerate().then(function(data, status, headers, config){
+        console.log(data);
+        $scope.data.chartC13SegmentsLeadersByValueModerate.data = data;
+    });
+    report.segmentsLeadersByValueGoodLife().then(function(data, status, headers, config){
+        console.log(data);
+        $scope.data.chartC14SegmentsLeadersByValueGoodLife.data = data;
+    });
+    report.segmentsLeadersByValueUltimate().then(function(data, status, headers, config){
+        console.log(data);
+        $scope.data.chartC15SegmentsLeadersByValueUltimate.data = data;
+    });
+    report.segmentsLeadersByValuePragmatic().then(function(data, status, headers, config){
+        console.log(data);
+        $scope.data.chartC16SegmentsLeadersByValuePragmatic.data = data;
+    });
 
 
 

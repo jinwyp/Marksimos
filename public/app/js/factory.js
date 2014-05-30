@@ -37,6 +37,8 @@ app.factory('report',function($http){
     };
 
     var chartType1 = 'line';  //'pie', 'bar', 'line', 'point', 'area'
+    var chartType2 = 'bar';  //'pie', 'bar', 'line', 'point', 'area'
+
     var chartConfig1 = {
         title: '',
         tooltips: true,
@@ -96,8 +98,11 @@ app.factory('report',function($http){
 
 
     var factory = {
-        getChartType : function(){
+        getChartType1 : function(){
             return angular.copy(chartType1);
+        },
+        getChartType2 : function(){
+            return angular.copy(chartType2);
         },
         getChartConfig : function(){
             return angular.copy(chartConfig1);
@@ -174,7 +179,7 @@ app.factory('report',function($http){
         // Chart B4
         marketSalesValue : function(){
             return $http.get(apiPath + 'chart/market_sales_value').then(function(result){
-                console.log(result.data);
+//                console.log(result.data);
 
                 return chartTool(result.data, 0);
             });
@@ -182,7 +187,7 @@ app.factory('report',function($http){
 
         marketSalesVolume : function(){
             return $http.get(apiPath + 'chart/market_sales_volume').then(function(result){
-                console.log(result.data);
+//                console.log(result.data);
 
                 return chartTool(result.data, 0);
             });
@@ -190,7 +195,7 @@ app.factory('report',function($http){
 
         totalInventoryAtFactory : function(){
             return $http.get(apiPath + 'chart/total_inventory_at_factory').then(function(result){
-                console.log(result.data);
+//                console.log(result.data);
 
                 return chartTool(result.data, 0);
             });
@@ -198,6 +203,56 @@ app.factory('report',function($http){
 
         totalInventoryAtTrade : function(){
             return $http.get(apiPath + 'chart/total_inventory_at_trade').then(function(result){
+//                console.log(result.data);
+
+                return chartTool(result.data, 0);
+            });
+        },
+
+
+        // Chart C1
+        segmentsLeadersByValuePriceSensitive : function(){
+            return $http.get(apiPath + 'chart/segments_leaders_by_value_price_sensitive').then(function(result){
+                console.log(result.data);
+
+                return chartTool(result.data, 0);
+            });
+        },
+
+        segmentsLeadersByValuePretenders : function(){
+            return $http.get(apiPath + 'chart/segments_leaders_by_value_pretenders').then(function(result){
+                console.log(result.data);
+
+                return chartTool(result.data, 0);
+            });
+        },
+
+        segmentsLeadersByValueModerate : function(){
+            return $http.get(apiPath + 'chart/segments_leaders_by_value_moderate').then(function(result){
+                console.log(result.data);
+
+                return chartTool(result.data, 0);
+            });
+        },
+
+        segmentsLeadersByValueGoodLife : function(){
+            return $http.get(apiPath + 'chart/segments_leaders_by_value_goodLife').then(function(result){
+                console.log(result.data);
+
+                return chartTool(result.data, 0);
+            });
+        },
+
+        segmentsLeadersByValueUltimate : function(){
+            return $http.get(apiPath + 'chart/segments_leaders_by_value_ultimate').then(function(result){
+                console.log(result.data);
+
+                return chartTool(result.data, 0);
+            });
+        },
+
+        segmentsLeadersByValuePragmatic : function(){
+            return $http.get(apiPath + 'chart/segments_leaders_by_value_pragmatic').then(function(result){
                 console.log(result.data);
 
                 return chartTool(result.data, 0);

@@ -50,13 +50,13 @@
   * total_inventory_at_factory
   * total_inventory_at_trade
 
-  * segmentsLeaders_by_value_price_sensitive
+  * segments_leaders_by_value_price_sensitive
   * segments_leaders_by_value_pretenders
   * segments_leaders_by_value_moderate
   * segments_leaders_by_value_goodLife
   * segments_leaders_by_value_ultimate
-  * segments_leaders_by_value_pramatic
-  
+  * segments_leaders_by_value_pragmatic
+
   * growth_rate_in_volume
   * growth_rate_in_value
   * net_market_price

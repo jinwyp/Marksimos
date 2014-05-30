@@ -102,8 +102,8 @@ exports.getChart = function(req, res, next){
                 return 'segmentsLeadersByValueGoodLife';
             case 'segments_leaders_by_value_ultimate':
                 return 'segmentsLeadersByValueUltimate';
-            case 'segments_leaders_by_value_pramatic':
-                return 'segmentsLeadersByValuePramatic';
+            case 'segments_leaders_by_value_pragmatic':
+                return 'segmentsLeadersByValuePragmatic';
             case 'growth_rate_in_volume':
                 return 'growthRateInVolume';
             case 'growth_rate_in_value':
