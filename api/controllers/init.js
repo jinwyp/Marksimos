@@ -148,7 +148,7 @@ function extractChartData(results, settings){
     var segmentsLeadersByValueModerate = allResultsConvertor.segmentsLeadersByValue(results, 'moderate');
     var segmentsLeadersByValueGoodLife = allResultsConvertor.segmentsLeadersByValue(results, 'goodLife');
     var segmentsLeadersByValueUltimate = allResultsConvertor.segmentsLeadersByValue(results, 'ultimate');
-    var segmentsLeadersByValuePramatic = allResultsConvertor.segmentsLeadersByValue(results, 'pramatic');
+    var segmentsLeadersByValuePragmatic = allResultsConvertor.segmentsLeadersByValue(results, 'pragmatic');
 
     //Market evolution
     var growthRateInVolume = allResultsConvertor.growthRateInVolume(results);
@@ -230,8 +230,8 @@ function extractChartData(results, settings){
             chartData: segmentsLeadersByValueUltimate
         },
         {
-            chartName: 'segmentsLeadersByValuePramatic',
-            chartData: segmentsLeadersByValuePramatic
+            chartName: 'segmentsLeadersByValuePragmatic',
+            chartData: segmentsLeadersByValuePragmatic
         },
         {
             chartName: 'growthRateInVolume',
@@ -328,9 +328,11 @@ function initOnePeriodDecison(seminarId, team, period) {
     });
 
     function removeExistedData(seminarId){
-        return Q.all([decisionModel.remove(seminarId),
-            brandDecisionModel.remove(seminarId),
-            SKUDecisionModel.remove(seminarId)]);
+        return Q.all([
+                decisionModel.remove(seminarId),
+                brandDecisionModel.remove(seminarId),
+                SKUDecisionModel.remove(seminarId)
+            ]);
     }
 
     /**

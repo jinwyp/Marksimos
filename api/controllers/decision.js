@@ -326,6 +326,50 @@ exports.packageSize = function(req, res, next){
     .done();
 };
 
+exports.productionVolume = function(req, res, next){
+    var brandId = req.body.brand_id;
+    var SKUID = req.body.sku_id;
+    var productionVolume = req.body.production_volume;
+
+    var seminarId = req.session.seminarId;
+    var companyId = req.session.companyId;
+    var period = req.session.period;
+
+    if(!brandId){
+        return res.send(400, {status: 0, message: "Invalid parameter brand_id."});
+    }
+
+    if(!SKUID){
+        return res.send(400, {status: 0, message: "Invalid parameter sku_id."});
+    }
+
+    if(!productionVolume){
+        return res.send(400, {status: 0, message: "Invalid parameter production_volume"});
+    }
+
+    if(!seminarId){
+        return res.send(400, {status: 0, message: "Invalid seminarId in session."});
+    }
+
+    if(!companyId){
+        return res.send(400, {status: 0, message: "Invalid companyId in session."});
+    }
+
+    if(period === undefined){
+        return res.send(400, {status: 0, message: "Invalid period in session."});
+    }
+
+    SKUDecisionModel.updatePackageSize(seminarId, period, companyId, brandId, SKUID, productionVolume)
+    .then(function(numAffected){
+        res.send({status: 1, message: 'update success.'});
+    })
+    .fail(function(err){
+        logger.error(err);
+        res.send(500, {status: 0, message: 'update failed.'});
+    })
+    .done();
+}
+
 
 
 

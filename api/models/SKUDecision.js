@@ -240,10 +240,48 @@ exports.updatePackageSize = function(seminarId, period, companyId, brandId, SKUI
         },
         function(err, numAffected){
             if(err){
-                deferred.reject(err);
+                return deferred.reject(err);
             }
 
-            deferred.resolve(numAffected);
+            return deferred.resolve(numAffected);
+        })
+    }
+
+    return deferred.promise;
+};
+
+exports.productionVolume = function(seminarId, period, companyId, brandId, SKUID, productionVolume){
+    var deferred = Q.defer();
+
+    if(!seminarId){
+        deferred.reject(new Error("Invalid argument seminarId."));
+    }else if(period===undefined){
+        deferred.reject(new Error("Invalid argument period."));
+    }else if(!companyId){
+        deferred.reject(new Error("Invalid argument companyId."));
+    }else if(!brandId){
+        deferred.reject(new Error("Invalid argument brandId."));
+    }else if(!SKUID){
+        deferred.reject(new Error("Invalid argument SKUID."));
+    }else if(productionVolume===undefined){
+        deferred.reject(new Error("Invalid argument productionVolume."));
+    }else{
+        SKUDecision.update({
+            seminarId: seminarId,
+            period: period,
+            d_CID: companyId,
+            d_BrandID: brandId,
+            d_SKUID: SKUID
+        },
+        {
+            d_ProductionVolume: productionVolume
+        },
+        function(err, numAffected){
+            if(err){
+                return deferred.reject(err);
+            }
+
+            return deferred.resolve(numAffected);
         })
     }
 

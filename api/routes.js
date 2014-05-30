@@ -17,7 +17,7 @@ module.exports = function(app){
     app.post('/api/decision/sku/processing_technology', decisionController.processingTechnology);
     app.post('/api/decision/sku/ingredient_quality', decisionController.ingredientQuality);
     app.post('/api/decision/sku/package_size', decisionController.packageSize);
-    //app.post('/api/decision/sku/package_size', decisionController.packageSize)
+    app.post('/api/decision/sku/production_volume', decisionController.productionVolume)
     //app.post('/api/decision/')
 
     //chart

@@ -10,7 +10,7 @@ module.exports = {
         'moderate': 2,
         'goodLife': 3,
         'ultimate': 4,
-        'pramatic': 5,
+        'pragmatic': 5,
         'allSegments': 6
     },
     segmentNames: [
@@ -19,7 +19,7 @@ module.exports = {
         'moderate',
         'goodLife',
         'ultimate',
-        'pramatic',
+        'pragmatic',
         'allSegments'
     ],
 
