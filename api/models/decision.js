@@ -85,4 +85,7 @@ exports.findOne = function(seminarId, period, companyId){
     }
 
     return deferred.promise;
-}
+};
+
+
+

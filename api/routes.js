@@ -12,6 +12,14 @@ module.exports = function(app){
 
     app.get('/api/decision', decisionController.submitDecision);
 
+    //decision
+    app.post('/api/decision/sku/discontinue', decisionController.discontinue);
+    app.post('/api/decision/sku/processing_technology', decisionController.processingTechnology);
+    app.post('/api/decision/sku/ingredient_quality', decisionController.ingredientQuality);
+    app.post('/api/decision/sku/package_size', decisionController.packageSize);
+    //app.post('/api/decision/sku/package_size', decisionController.packageSize)
+    //app.post('/api/decision/')
+
     //chart
     app.get('/api/chart/:chartName', chartController.getChart);
 
