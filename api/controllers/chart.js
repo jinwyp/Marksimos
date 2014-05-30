@@ -18,7 +18,6 @@ exports.getChart = function(req, res, next){
     .then(function(allCharts){
         var chart = null;
         for(var i=0; i<allCharts.charts.length; i++){
-            console.log("-----"+chartName);
             var chartNameTemp = mapChartName(chartName);
             
             if(allCharts.charts[i].chartName.toLowerCase() === chartNameTemp.toLowerCase()){
@@ -98,7 +97,7 @@ exports.getChart = function(req, res, next){
                 return 'segmentsLeadersByValuePretenders';
             case 'segments_leaders_by_value_moderate':
                 return 'segmentsLeadersByValueModerate';
-            case 'segments_leaders_by_value_goodLife':
+            case 'segments_leaders_by_value_good_life':
                 return 'segmentsLeadersByValueGoodLife';
             case 'segments_leaders_by_value_ultimate':
                 return 'segmentsLeadersByValueUltimate';
