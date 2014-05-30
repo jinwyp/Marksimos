@@ -44,13 +44,9 @@ exports.findAll = function(seminarId, period, companyId){
     var deferred = Q.defer();
 
     if(!seminarId){
-        process.nextTick(function(){
-            deferred.reject(new Error("Invalid argument seminarId"));
-        })
+        deferred.reject(new Error("Invalid argument seminarId"));
     }else if(period===undefined){
-        process.nextTick(function(){
-            deferred.reject(new Error("Invalid argument period."));
-        })
+        deferred.reject(new Error("Invalid argument period."));
     }else{
         BrandDecision.find({
             seminarId: seminarId,

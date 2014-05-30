@@ -22,9 +22,7 @@ exports.remove =  function(seminarId){
     var deferred = Q.defer();
 
     if(!seminarId){
-        process.nextTick(function(){
-            deferred.reject(new Error("Invalid argument seminarId"));
-        })
+        deferred.reject(new Error("Invalid argument seminarId"));
     }else{
         Decision.remove({seminarId: seminarId}, function(err){
             if(err){
@@ -42,9 +40,7 @@ exports.save = function(decision){
     var deferred = Q.defer();
 
     if(!decision){
-        process.nextTick(function(){
-            deferred.reject(new Error("Invalid argument decision."));
-        })
+        deferred.reject(new Error("Invalid argument decision."));
     }else{
         var decision = new Decision(decision);
         decision.save(function(err){
@@ -63,18 +59,14 @@ exports.findOne = function(seminarId, period, companyId){
     var deferred = Q.defer();
 
     if(!seminarId){
-        process.nextTick(function(){
-            deferred.reject(new Error("Invalid argument seminarId"));
-        })
+        deferred.reject(new Error("Invalid argument seminarId"));
     }else if(period===undefined){
-        process.nextTick(function(){
-            deferred.reject(new Error("Invalid argument period."));
-        })
+        deferred.reject(new Error("Invalid argument period."));
     }else{
         Decision.findOne({
             seminarId: seminarId,
             period: period,
-            //d_CID: companyId
+            d_CID: companyId
         }, function(err, result){
             if(err){
                 return deferred.reject(err);

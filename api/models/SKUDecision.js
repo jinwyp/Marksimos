@@ -105,29 +105,17 @@ exports.discontinue = function(seminarId, period, companyId, brandId, SKUID, isC
     var deferred = Q.defer();
 
     if(!seminarId){
-        process.nextTick(function(){
-            deferred.reject(new Error("Invalid argument seminarId."));
-        })
+        deferred.reject(new Error("Invalid argument seminarId."));
     }else if(period===undefined){
-        process.nextTick(function(){
-            deferred.reject(new Error("Invalid argument period."));
-        });
+        deferred.reject(new Error("Invalid argument period."));
     }else if(!companyId){
-        process.nextTick(function(){
-            deferred.reject(new Error("Invalid argument companyId."));
-        });
+        deferred.reject(new Error("Invalid argument companyId."));
     }else if(!brandId){
-        process.nextTick(function(){
-            deferred.reject(new Error("Invalid argument brandId."));
-        });
+        deferred.reject(new Error("Invalid argument brandId."));
     }else if(!SKUID){
-        process.nextTick(function(){
-            deferred.reject(new Error("Invalid argument SKUID."));
-        })
+        deferred.reject(new Error("Invalid argument SKUID."));
     }else if(isContinue===undefined){
-        process.nextTick(function(){
-            deferred.reject(new Error("Invalid argument isContinue."))
-        })
+        deferred.reject(new Error("Invalid argument isContinue."))
     }else{
         SKUDecision.update({
             seminarId: seminarId,
