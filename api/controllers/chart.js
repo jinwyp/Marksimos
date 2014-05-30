@@ -18,8 +18,10 @@ exports.getChart = function(req, res, next){
     .then(function(allCharts){
         var chart = null;
         for(var i=0; i<allCharts.charts.length; i++){
-            var chartNameTemp = mapChartName(chartName);
-            
+            //chart name saved in db doesn't contain _
+            var chartNameTemp = chartName.replace(/_/g,'');
+
+            //find chart data by chart name
             if(allCharts.charts[i].chartName.toLowerCase() === chartNameTemp.toLowerCase()){
                 chart = allCharts.charts[i];
                 if(chartNameTemp==='inventoryReport'){
@@ -64,14 +66,14 @@ exports.getChart = function(req, res, next){
         }
     }
 
-    function mapChartName(chartName){
-        chartName = chartName.toLowerCase();
-        var names = chartName.split('_');
-        for(var i=1; i<names.length; i++){
-            names[i] = names[i][0].toUpperCase() + names[i].substring(1);
-        }
+    // function mapChartName(chartName){
+    //     chartName = chartName.toLowerCase();
+    //     var names = chartName.split('_');
+    //     for(var i=1; i<names.length; i++){
+    //         names[i] = names[i][0].toUpperCase() + names[i].substring(1);
+    //     }
 
-        return names.join('');
-    }
+    //     return names.join('');
+    // }
 };
 
