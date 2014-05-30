@@ -629,10 +629,14 @@ body{
     background-color: $color_main_body_background_brand;
 }
 
-.chart {
-    float:left;
-    width: 50%;
+.chartBox {
+    width: 96%;
     height:400px;
+    margin: 20px 0px;
+    .ac-title {
+        text-align: center;
+
+    }
 }
 
 

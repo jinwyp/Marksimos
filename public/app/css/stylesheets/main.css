@@ -716,10 +716,14 @@ body a, body button {
 }
 
 /* line 632, ../sass/main.scss */
-.chart {
-  float: left;
-  width: 50%;
+.chartBox {
+  width: 96%;
   height: 400px;
+  margin: 20px 0px;
+}
+/* line 636, ../sass/main.scss */
+.chartBox .ac-title {
+  text-align: center;
 }
 
 /*************************** admin ******************************/

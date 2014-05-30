@@ -72,7 +72,7 @@ exports.login = function(req, res, next){
             return res.json({status: 401, message: "login failed."})
         }
     }).done();
-}
+};
 
 
 function encryptPassword(password){
