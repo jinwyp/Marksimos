@@ -109,8 +109,112 @@
 ####: sku_id
 ####: is_continue
 ### response
+失败的Response
+
+    HTTP Status: 400, {status: 0, message: "Invalid parameter brand_id."}
+    HTTP Status: 500, {status: 0, message: 'update failed.'}
+
+成功的Response
+
+    HTTP Status: 200, {status: 1, message: 'update success.'}
 
 
+## /api/decision/sku/discontinue
+### POST
+### Parameters
+####: brand_id
+####: sku_id
+####: is_continue
+### response
+
+
+## /api/decision/sku/processing_technology
+### POST
+### Parameters
+####: brand_id
+####: sku_id
+####: technology
+### response
+
+## /api/decision/sku/ingredient_quality
+### POST
+### Parameters
+####: brand_id
+####: sku_id
+####: quality
+### response
+
+## /api/decision/sku/package_size
+### POST
+### Parameters
+####: brand_id
+####: sku_id
+####: package_size
+### response
+
+## /api/decision/sku/production_volume
+### POST
+### Parameters
+####: brand_id
+####: sku_id
+####: production_volume
+### response
+
+## /api/decision/sku/manufacture_price
+### POST
+### Parameters
+####: brand_id
+####: sku_id
+####: manufacture_price
+### response
+
+## /api/decision/sku/consumer_communication
+### POST
+### Parameters
+####: brand_id
+####: sku_id
+####: consumer_communication
+### response
+
+## /api/decision/sku/target_consumer_segment
+### POST
+### Parameters
+####: brand_id
+####: sku_id
+####: target_consumer_segment
+### response
+
+## /api/decision/sku/trade_expenses
+### POST
+### Parameters
+####: brand_id
+####: sku_id
+####: trade_expenses
+### response
+
+## /api/decision/sku/additional_trade_margin
+### POST
+### Parameters
+####: brand_id
+####: sku_id
+####: additional_trade_margin
+### response
+
+## /api/decision/sku/wholesale_minimum_volume
+### POST
+### Parameters
+####: brand_id
+####: sku_id
+####: wholesale_minimum_volume
+### response
+
+## /api/decision/sku/wholesale_bonus_rate
+### POST
+### Parameters
+####: brand_id
+####: sku_id
+####: wholesale_bonus_rate
+### response
 
 ## url
 ### method
