@@ -148,7 +148,7 @@ exports.submitDecision = function(req, res, next){
     }
 };
 
-exports.discontinue = function(req, res, next){
+exports.updateDiscontinue = function(req, res, next){
     var brandId = req.body.brand_id;
     var SKUID = req.body.sku_id;
     var isContinue = req.body.is_continue;
@@ -183,7 +183,7 @@ exports.discontinue = function(req, res, next){
     }
 
 
-    SKUDecisionModel.discontinue(seminarId, period, companyId, brandId, SKUID, isContinue)
+    SKUDecisionModel.updateDiscontinue(seminarId, period, companyId, brandId, SKUID, isContinue)
     .then(function(numAffected){
         res.send({status: 1, message: 'update success.'});
     })
@@ -194,7 +194,7 @@ exports.discontinue = function(req, res, next){
     .done(); 
 };
 
-exports.processingTechnology = function(req, res, next){
+exports.updateProcessingTechnology = function(req, res, next){
     var brandId = req.body.brand_id;
     var SKUID = req.body.sku_id;
     var technology = req.body.technology;
@@ -238,7 +238,7 @@ exports.processingTechnology = function(req, res, next){
     .done();
 };
 
-exports.ingredientQuality = function(req, res, next){
+exports.updateIngredientQuality = function(req, res, next){
     var brandId = req.body.brand_id;
     var SKUID = req.body.sku_id;
     var quality = req.body.quality;
@@ -282,7 +282,7 @@ exports.ingredientQuality = function(req, res, next){
     .done();
 };
 
-exports.packageSize = function(req, res, next){
+exports.updatePackageSize = function(req, res, next){
     var brandId = req.body.brand_id;
     var SKUID = req.body.sku_id;
     var packageSize = req.body.package_size;
@@ -326,7 +326,7 @@ exports.packageSize = function(req, res, next){
     .done();
 };
 
-exports.productionVolume = function(req, res, next){
+exports.updateProductionVolume = function(req, res, next){
     var brandId = req.body.brand_id;
     var SKUID = req.body.sku_id;
     var productionVolume = req.body.production_volume;
@@ -359,7 +359,7 @@ exports.productionVolume = function(req, res, next){
         return res.send(400, {status: 0, message: "Invalid period in session."});
     }
 
-    SKUDecisionModel.updatePackageSize(seminarId, period, companyId, brandId, SKUID, productionVolume)
+    SKUDecisionModel.updateProductionVolume(seminarId, period, companyId, brandId, SKUID, productionVolume)
     .then(function(numAffected){
         res.send({status: 1, message: 'update success.'});
     })
@@ -368,8 +368,315 @@ exports.productionVolume = function(req, res, next){
         res.send(500, {status: 0, message: 'update failed.'});
     })
     .done();
-}
+};
 
+exports.updateManufacturePrice = function(req, res, next){
+    var brandId = req.body.brand_id;
+    var SKUID = req.body.sku_id;
+    var manufacturePrice = req.body.manufacture_price;
+
+    var seminarId = req.session.seminarId;
+    var companyId = req.session.companyId;
+    var period = req.session.period;
+
+    if(!brandId){
+        return res.send(400, {status: 0, message: "Invalid parameter brand_id."});
+    }
+
+    if(!SKUID){
+        return res.send(400, {status: 0, message: "Invalid parameter sku_id."});
+    }
+
+    if(!manufacturePrice){
+        return res.send(400, {status: 0, message: "Invalid parameter manufacture_price"});
+    }
+
+    if(!seminarId){
+        return res.send(400, {status: 0, message: "Invalid seminarId in session."});
+    }
+
+    if(!companyId){
+        return res.send(400, {status: 0, message: "Invalid companyId in session."});
+    }
+
+    if(period === undefined){
+        return res.send(400, {status: 0, message: "Invalid period in session."});
+    }
+
+    SKUDecisionModel.updateManufacturePrice(seminarId, period, companyId, brandId, SKUID, manufacturePrice)
+    .then(function(numAffected){
+        res.send({status: 1, message: 'update success.'});
+    })
+    .fail(function(err){
+        logger.error(err);
+        res.send(500, {status: 0, message: 'update failed.'});
+    })
+    .done();
+};
+
+exports.updateConsumerCommunication = function(req, res, next){
+    var brandId = req.body.brand_id;
+    var SKUID = req.body.sku_id;
+    var consumerCommunication = req.body.consumer_communication;
+
+    var seminarId = req.session.seminarId;
+    var companyId = req.session.companyId;
+    var period = req.session.period;
+
+    if(!brandId){
+        return res.send(400, {status: 0, message: "Invalid parameter brand_id."});
+    }
+
+    if(!SKUID){
+        return res.send(400, {status: 0, message: "Invalid parameter sku_id."});
+    }
+
+    if(!consumerCommunication){
+        return res.send(400, {status: 0, message: "Invalid parameter consumer_communication"});
+    }
+
+    if(!seminarId){
+        return res.send(400, {status: 0, message: "Invalid seminarId in session."});
+    }
+
+    if(!companyId){
+        return res.send(400, {status: 0, message: "Invalid companyId in session."});
+    }
+
+    if(period === undefined){
+        return res.send(400, {status: 0, message: "Invalid period in session."});
+    }
+
+    SKUDecisionModel.updateConsumerCommunication(seminarId, period, companyId, brandId, SKUID, consumerCommunication)
+    .then(function(numAffected){
+        res.send({status: 1, message: 'update success.'});
+    })
+    .fail(function(err){
+        logger.error(err);
+        res.send(500, {status: 0, message: 'update failed.'});
+    })
+    .done();
+};
+
+exports.updateTargetConsumerSegment = function(req, res, next){
+    var brandId = req.body.brand_id;
+    var SKUID = req.body.sku_id;
+    var targetConsumerSegment = req.body.target_consumer_segment;
+
+    var seminarId = req.session.seminarId;
+    var companyId = req.session.companyId;
+    var period = req.session.period;
+
+    if(!brandId){
+        return res.send(400, {status: 0, message: "Invalid parameter brand_id."});
+    }
+
+    if(!SKUID){
+        return res.send(400, {status: 0, message: "Invalid parameter sku_id."});
+    }
+
+    if(!targetConsumerSegment){
+        return res.send(400, {status: 0, message: "Invalid parameter target_consumer_segment"});
+    }
+
+    if(!seminarId){
+        return res.send(400, {status: 0, message: "Invalid seminarId in session."});
+    }
+
+    if(!companyId){
+        return res.send(400, {status: 0, message: "Invalid companyId in session."});
+    }
+
+    if(period === undefined){
+        return res.send(400, {status: 0, message: "Invalid period in session."});
+    }
+
+    SKUDecisionModel.updateTargetConsumerSegment(seminarId, period, companyId, brandId, SKUID, targetConsumerSegment)
+    .then(function(numAffected){
+        res.send({status: 1, message: 'update success.'});
+    })
+    .fail(function(err){
+        logger.error(err);
+        res.send(500, {status: 0, message: 'update failed.'});
+    })
+    .done();
+};
+
+exports.updateTradeExpenses = function(req, res, next){
+    var brandId = req.body.brand_id;
+    var SKUID = req.body.sku_id;
+    var tradeExpenses = req.body.trade_expenses;
+
+    var seminarId = req.session.seminarId;
+    var companyId = req.session.companyId;
+    var period = req.session.period;
+
+    if(!brandId){
+        return res.send(400, {status: 0, message: "Invalid parameter brand_id."});
+    }
+
+    if(!SKUID){
+        return res.send(400, {status: 0, message: "Invalid parameter sku_id."});
+    }
+
+    if(!tradeExpenses){
+        return res.send(400, {status: 0, message: "Invalid parameter trade_expenses"});
+    }
+
+    if(!seminarId){
+        return res.send(400, {status: 0, message: "Invalid seminarId in session."});
+    }
+
+    if(!companyId){
+        return res.send(400, {status: 0, message: "Invalid companyId in session."});
+    }
+
+    if(period === undefined){
+        return res.send(400, {status: 0, message: "Invalid period in session."});
+    }
+
+    SKUDecisionModel.updateTradeExpenses(seminarId, period, companyId, brandId, SKUID, tradeExpenses)
+    .then(function(numAffected){
+        res.send({status: 1, message: 'update success.'});
+    })
+    .fail(function(err){
+        logger.error(err);
+        res.send(500, {status: 0, message: 'update failed.'});
+    })
+    .done();
+};
+
+exports.updateAdditionalTradeMargin = function(req, res, next){
+    var brandId = req.body.brand_id;
+    var SKUID = req.body.sku_id;
+    var additionalTradeMargin = req.body.additional_trade_margin;
+
+    var seminarId = req.session.seminarId;
+    var companyId = req.session.companyId;
+    var period = req.session.period;
+
+    if(!brandId){
+        return res.send(400, {status: 0, message: "Invalid parameter brand_id."});
+    }
+
+    if(!SKUID){
+        return res.send(400, {status: 0, message: "Invalid parameter sku_id."});
+    }
+
+    if(!additionalTradeMargin){
+        return res.send(400, {status: 0, message: "Invalid parameter additional_trade_margin"});
+    }
+
+    if(!seminarId){
+        return res.send(400, {status: 0, message: "Invalid seminarId in session."});
+    }
+
+    if(!companyId){
+        return res.send(400, {status: 0, message: "Invalid companyId in session."});
+    }
+
+    if(period === undefined){
+        return res.send(400, {status: 0, message: "Invalid period in session."});
+    }
+
+    SKUDecisionModel.updateAdditionalTradeMargin(seminarId, period, companyId, brandId, SKUID, additionalTradeMargin)
+    .then(function(numAffected){
+        res.send({status: 1, message: 'update success.'});
+    })
+    .fail(function(err){
+        logger.error(err);
+        res.send(500, {status: 0, message: 'update failed.'});
+    })
+    .done();
+};
+
+exports.updateWholesaleMinimumVolume = function(req, res, next){
+    var brandId = req.body.brand_id;
+    var SKUID = req.body.sku_id;
+    var wholesaleMinimumVolume = req.body.wholesale_minimum_volume;
+
+    var seminarId = req.session.seminarId;
+    var companyId = req.session.companyId;
+    var period = req.session.period;
+
+    if(!brandId){
+        return res.send(400, {status: 0, message: "Invalid parameter brand_id."});
+    }
+
+    if(!SKUID){
+        return res.send(400, {status: 0, message: "Invalid parameter sku_id."});
+    }
+
+    if(!wholesaleMinimumVolume){
+        return res.send(400, {status: 0, message: "Invalid parameter wholesale_minimum_volume"});
+    }
+
+    if(!seminarId){
+        return res.send(400, {status: 0, message: "Invalid seminarId in session."});
+    }
+
+    if(!companyId){
+        return res.send(400, {status: 0, message: "Invalid companyId in session."});
+    }
+
+    if(period === undefined){
+        return res.send(400, {status: 0, message: "Invalid period in session."});
+    }
+
+    SKUDecisionModel.updateWholesaleMinimumVolume(seminarId, period, companyId, brandId, SKUID, wholesaleMinimumVolume)
+    .then(function(numAffected){
+        res.send({status: 1, message: 'update success.'});
+    })
+    .fail(function(err){
+        logger.error(err);
+        res.send(500, {status: 0, message: 'update failed.'});
+    })
+    .done();
+};
+
+exports.updateWholesaleBonusRate = function(req, res, next){
+    var brandId = req.body.brand_id;
+    var SKUID = req.body.sku_id;
+    var wholesaleBonusRate = req.body.wholesale_bonus_rate;
+
+    var seminarId = req.session.seminarId;
+    var companyId = req.session.companyId;
+    var period = req.session.period;
+
+    if(!brandId){
+        return res.send(400, {status: 0, message: "Invalid parameter brand_id."});
+    }
+
+    if(!SKUID){
+        return res.send(400, {status: 0, message: "Invalid parameter sku_id."});
+    }
+
+    if(!wholesaleBonusRate){
+        return res.send(400, {status: 0, message: "Invalid parameter wholesale_bonus_rate"});
+    }
+
+    if(!seminarId){
+        return res.send(400, {status: 0, message: "Invalid seminarId in session."});
+    }
+
+    if(!companyId){
+        return res.send(400, {status: 0, message: "Invalid companyId in session."});
+    }
+
+    if(period === undefined){
+        return res.send(400, {status: 0, message: "Invalid period in session."});
+    }
+
+    SKUDecisionModel.updateWholesaleBonusRate(seminarId, period, companyId, brandId, SKUID, wholesaleBonusRate)
+    .then(function(numAffected){
+        res.send({status: 1, message: 'update success.'});
+    })
+    .fail(function(err){
+        logger.error(err);
+        res.send(500, {status: 0, message: 'update failed.'});
+    })
+    .done();
+};
 
 
 
