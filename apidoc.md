@@ -104,7 +104,7 @@
 
 ## /api/decision/sku/discontinue
 ### POST
-### parameter
+### Parameters
 ####: brand_id
 ####: sku_id
 ####: is_continue
@@ -114,5 +114,5 @@
 
 ## url
 ### method
-### parameters
+### Parameters
 ### response
