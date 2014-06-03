@@ -27,6 +27,8 @@ app.factory('currentUser',function(){
 
 
 
+
+
 app.factory('report',function($http){
 
     var apiPath = '/api/';
@@ -92,12 +94,9 @@ app.factory('report',function($http){
         chartResult.series = [];
         chartResult.data = [];
 
-
         if(angular.isUndefined(chartHttpData.periods)){
             // 如果periods 没有定义则是普通的图表,不带有系列的图表
-
             angular.forEach(chartHttpData.chartData, function(value, key) {
-
                 if(angular.isUndefined(value.segmentName)){
                     // 判断是否是消费者segmentName的图表还是SKUName的图表
 
@@ -121,9 +120,10 @@ app.factory('report',function($http){
                     var index = chartResult.series.indexOf(value.SKUName.substring(0,1));
                     // 插入空数据占位, 用来显示不同颜色
                     if( index !== -1){
+
                         for (var i = 0; i <= index; i++) {
                             if(i == index){
-                                if(decimalNumber == 0){
+                                if(decimalNumber === 0){
                                     oneBarData.y.push(Math.round(value.valueSegmentShare * 100) / 100 );
                                 }else{
                                     oneBarData.y.push(Math.round(value.valueSegmentShare * 10000) / Math.pow(10, Number(decimalNumber)) );
@@ -138,7 +138,7 @@ app.factory('report',function($http){
                 }else{
                     oneBarData.x = value.segmentName;
 
-                    if(decimalNumber == 0){
+                    if(decimalNumber === 0){
                         oneBarData.y.push(Math.round(value.value * 100) / 100 );
                     }else{
                         oneBarData.y.push( Math.round(value.value * 10000) / Math.pow(10, Number(decimalNumber)) );
@@ -162,7 +162,7 @@ app.factory('report',function($http){
                 };
 
                 angular.forEach(oneLineData.y, function(value, key) {
-                    if(decimalNumber == 0){
+                    if(decimalNumber === 0){
                         oneLineData.y[key] = Math.round(value * 100) / 100;
                     }else{
                         oneLineData.y[key] = Math.round(value * 10000 )/Math.pow(10, Number(decimalNumber));
@@ -191,6 +191,7 @@ app.factory('report',function($http){
 
 
     var factory = {
+
         getChartType1 : function(){
             return angular.copy(chartType1);
         },
@@ -394,8 +395,6 @@ app.factory('report',function($http){
                 return chartTool(result.data, 2);
             });
         }
-
-
 
 
 
