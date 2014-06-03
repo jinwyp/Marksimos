@@ -53,7 +53,7 @@
   * segments_leaders_by_value_price_sensitive
   * segments_leaders_by_value_pretenders
   * segments_leaders_by_value_moderate
-  * segments_leaders_by_value_goodLife
+  * segments_leaders_by_value_good_life
   * segments_leaders_by_value_ultimate
   * segments_leaders_by_value_pragmatic
 

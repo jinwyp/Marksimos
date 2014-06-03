@@ -8667,6 +8667,7 @@
             lineUpdate.attr("x2", 0).attr("y2", innerTickSize);
             textUpdate.attr("x", 0).attr("y", Math.max(innerTickSize, 0) + tickPadding);
             text.attr("dy", ".71em").style("text-anchor", "middle");
+            text.attr("class", "bar_chart_label");
             pathUpdate.attr("d", "M" + range[0] + "," + outerTickSize + "V0H" + range[1] + "V" + outerTickSize);
             break;
           }
