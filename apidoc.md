@@ -102,6 +102,15 @@
 ####:password
 ### response
 
+## /api/decision/sku/discontinue
+### POST
+### parameter
+####: brand_id
+####: sku_id
+####: is_continue
+### response
+
+
 
 ## url
 ### method
