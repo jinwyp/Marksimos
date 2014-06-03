@@ -19,7 +19,6 @@ var tOneSKUDecisionSchema = new Schema({
     d_PackSize: Number,
     d_ProductionVolume: Number,
     d_PromotionalBudget: Number,
-
     d_PromotionalEpisodes: [Boolean],
     d_TargetConsumerSegment: Number,
     d_Technology: Number,
@@ -96,6 +95,41 @@ exports.findAll = function(seminarId, period, companyId, brandId){
             }else{
                 return deferred.resolve(result);
             }
+        })
+    }
+    return deferred.promise;
+};
+
+exports.updateSKU = function(seminarId, period, companyId, brandId, SKUID, SKU){
+    var deferred = Q.defer();
+
+    if(!seminarId){
+        deferred.reject(new Error("Invalid argument seminarId."));
+    }else if(period===undefined){
+        deferred.reject(new Error("Invalid argument period."));
+    }else if(!companyId){
+        deferred.reject(new Error("Invalid argument companyId."));
+    }else if(!brandId){
+        deferred.reject(new Error("Invalid argument brandId."));
+    }else if(!SKUID){
+        deferred.reject(new Error("Invalid argument SKUID."));
+    }else if(SKU===undefined){
+        deferred.reject(new Error("Invalid argument SKU."))
+    }else{
+        SKUDecision.update({
+            seminarId: seminarId,
+            period: period,
+            d_CID: companyId,
+            d_BrandID: brandId,
+            d_SKUID: SKUID
+        },
+        SKU,
+        function(err, numAffected){
+            if(err){
+                return deferred.reject(err);
+            }
+
+            return deferred.resolve(numAffected);
         })
     }
     return deferred.promise;
