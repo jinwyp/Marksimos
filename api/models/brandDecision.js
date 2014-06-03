@@ -24,7 +24,7 @@ exports.remove =  function(seminarId){
             return deferred.resolve(null);
         }
     });
-    return deferred;
+    return deferred.promise;
 }
 
 exports.save = function(decision){

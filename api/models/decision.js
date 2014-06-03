@@ -33,7 +33,7 @@ exports.remove =  function(seminarId){
         });
     }
 
-    return deferred;
+    return deferred.promise;
 }
 
 exports.save = function(decision){

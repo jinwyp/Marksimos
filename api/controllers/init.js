@@ -271,14 +271,26 @@ function initDecision(seminarId) {
     var periods = config.initPeriods
     var teams = config.initTeams;
 
-    var queries = [];
-    periods.forEach(function(period) {
-        teams.forEach(function(team) {
-            queries.push(initOnePeriodDecison(seminarId, team, period));
-        })
+    var d = removeExistedData(seminarId);
+    d = d.then(function(){
+        var queries = [];
+        periods.forEach(function(period) {
+            teams.forEach(function(team) {
+                queries.push(initOnePeriodDecison(seminarId, team, period));
+            })
+        });
+        return Q.all(queries);
     });
 
-    return Q.all(queries);
+    return d;
+
+    function removeExistedData(seminarId){
+        return Q.all([
+                decisionModel.remove(seminarId),
+                brandDecisionModel.remove(seminarId),
+                SKUDecisionModel.remove(seminarId)
+            ]);
+    }
 }
 
 /**
@@ -299,11 +311,7 @@ function initOnePeriodDecison(seminarId, team, period) {
         decision.seminarId = seminarId;
         decision.period = period;
 
-        var d = removeExistedData(seminarId);
-
-        d = d.then(function(){
-            decisionModel.save(decision);
-        });
+        var d = decisionModel.save(decision);
 
         var brandDecisions = getBrandDecisions(result);
 
@@ -326,14 +334,6 @@ function initOnePeriodDecison(seminarId, team, period) {
         
         return d;
     });
-
-    function removeExistedData(seminarId){
-        return Q.all([
-                decisionModel.remove(seminarId),
-                brandDecisionModel.remove(seminarId),
-                SKUDecisionModel.remove(seminarId)
-            ]);
-    }
 
     /**
      * Convert onePeriodResult to a decision object which can be saved to db

@@ -41,7 +41,7 @@ exports.remove =  function(seminarId){
             return deferred.resolve(null);
         }
     });
-    return deferred;
+    return deferred.promise;
 }
 
 exports.save = function(decision){
@@ -287,9 +287,6 @@ exports.productionVolume = function(seminarId, period, companyId, brandId, SKUID
 
     return deferred.promise;
 };
-
-
-
 
 
 
