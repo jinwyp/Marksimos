@@ -3,7 +3,7 @@ var util = require('util');
 
 exports.getChart = function(req, res, next){
     var seminarId = req.session.seminarId;
-    var chartName = req.params.chartName;
+    var chartName = req.params.chart_name;
     var companyId = req.session.companyId;
 
     if(!seminarId){
