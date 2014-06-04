@@ -27,6 +27,8 @@ app.factory('currentUser',function(){
 
 
 
+
+
 app.factory('report',function($http){
 
     var apiPath = '/api/';
@@ -70,34 +72,76 @@ app.factory('report',function($http){
 //        click: function() {}
     };
 
+    var chartConfig3 = {
+        title: '',
+        tooltips: true,
+        labels: false,
+        legend: {
+            display: true,
+            position: 'right' //could be 'left, right'
+        },
+        innerRadius: 0, // applicable on pieCharts, can be a percentage like '50%'
+        lineLegend: 'traditional' // can be also 'lineEnd' or 'traditional', defaults to 'lineEnd'
+//        mouseover: function() {},
+//        mouseout: function() {},
+//        click: function() {}
+    };
+
+
+
     var chartTool = function(chartHttpData, decimalNumber){
 
         chartResult.series = [];
         chartResult.data = [];
 
+        if(angular.isUndefined(chartHttpData.periods)){
+            // 如果periods 没有定义则是普通的图表,不带有系列的图表
+            angular.forEach(chartHttpData.chartData, function(value, key) {
+                if(angular.isUndefined(value.segmentName)){
+                    // 判断是否是消费者segmentName的图表还是SKUName的图表
 
-        if(angular.isArray(chartHttpData)){
-            angular.forEach(chartHttpData, function(value, key) {
-                if(chartResult.series.indexOf(value.SKUName.substring(0,1)) == -1 ){
-                    chartResult.series.push(value.SKUName.substring(0,1));
+                    if(chartResult.series.indexOf(value.SKUName.substring(0,1)) == -1 ){
+                        chartResult.series.push(value.SKUName.substring(0,1));
+                    }
+                }else{
+                    chartResult.series.push(value.segmentName);
                 }
             });
 
-            angular.forEach(chartHttpData, function(value, key) {
+            angular.forEach(chartHttpData.chartData, function(value, key) {
                 var oneBarData = {
-                    x : value.SKUName, //Round Name
+                    x : 0, //Round Name
                     y : []
                 };
 
-                var index = chartResult.series.indexOf(value.SKUName.substring(0,1));
-                // 插入空数据占位
-                if( index !== -1){
-                    for (var i = 0; i <= index; i++) {
-                        if(i == index){
-                            oneBarData.y.push(Math.round(value.valueSegmentShare * 10000) / Math.pow(10, Number(decimalNumber) ) );
-                        }else{
-                            oneBarData.y.push(0);
+                if(angular.isUndefined(value.segmentName) ){
+                    oneBarData.x = value.SKUName;
+
+                    var index = chartResult.series.indexOf(value.SKUName.substring(0,1));
+                    // 插入空数据占位, 用来显示不同颜色
+                    if( index !== -1){
+
+                        for (var i = 0; i <= index; i++) {
+                            if(i == index){
+                                if(decimalNumber === 0){
+                                    oneBarData.y.push(Math.round(value.valueSegmentShare * 100) / 100 );
+                                }else{
+                                    oneBarData.y.push(Math.round(value.valueSegmentShare * 10000) / Math.pow(10, Number(decimalNumber)) );
+                                }
+
+                            }else{
+                                oneBarData.y.push(0);
+                            }
                         }
+                    }
+
+                }else{
+                    oneBarData.x = value.segmentName;
+
+                    if(decimalNumber === 0){
+                        oneBarData.y.push(Math.round(value.value * 100) / 100 );
+                    }else{
+                        oneBarData.y.push( Math.round(value.value * 10000) / Math.pow(10, Number(decimalNumber)) );
                     }
                 }
 
@@ -107,62 +151,36 @@ app.factory('report',function($http){
 
             return angular.copy(chartResult);
 
-        }else if(angular.isObject(chartHttpData) ){
 
-            if(angular.isArray(chartHttpData.periods)){
+        }else if(angular.isArray(chartHttpData.periods) ){
 
-                angular.forEach(chartHttpData.periods, function(value, key) {
+            angular.forEach(chartHttpData.periods, function(value, key) {
 
-                    var oneLineData = {
-                        x : value.toString(), //Round Name
-                        y : angular.copy(chartHttpData.chartData[key])
-                    };
+                var oneLineData = {
+                    x : value.toString(), //Round Name
+                    y : angular.copy(chartHttpData.chartData[key])
+                };
 
-                    angular.forEach(oneLineData.y, function(value, key) {
-                        if(decimalNumber == 0){
-                            oneLineData.y[key] = Math.round(value);
-                        }else{
-                            oneLineData.y[key] = Math.round(value * 10000 )/Math.pow(10, Number(decimalNumber));
-                        }
-                    });
-
-                    chartResult.data.push(oneLineData);
+                angular.forEach(oneLineData.y, function(value, key) {
+                    if(decimalNumber === 0){
+                        oneLineData.y[key] = Math.round(value * 100) / 100;
+                    }else{
+                        oneLineData.y[key] = Math.round(value * 10000 )/Math.pow(10, Number(decimalNumber));
+                    }
                 });
 
+                chartResult.data.push(oneLineData);
+            });
 
-                if(angular.isUndefined(chartHttpData.companyNames)){
-                    chartResult.series = chartHttpData.segmentNames;
-                }else{
-                    chartResult.series = chartHttpData.companyNames;
-                }
-
-
-                return angular.copy(chartResult);
+            // 判断是 company的图表还是 消费者群体的图表
+            if(angular.isUndefined(chartHttpData.companyNames)){
+                chartResult.series = chartHttpData.segmentNames;
             }else{
-
-                // pie chart
-                angular.forEach(chartHttpData.segmentNames, function(value, key) {
-
-                    var onePieData = {
-                        x : value, //Round Name
-                        y : chartHttpData.chartData[key]
-                    };
-
-//                    onePieData.y =  Math.round(chartHttpData.chartData[key] * 10000 )/Math.pow(10, Number(decimalNumber)) ;
-
-                    chartResult.data.push(onePieData);
-                });
-                console.log(chartResult);
-
-                if(angular.isUndefined(chartHttpData.companyNames)){
-                    chartResult.series = chartHttpData.segmentNames;
-                }else{
-                    chartResult.series = chartHttpData.companyNames;
-                }
-
-
-                return angular.copy(chartResult);
+                chartResult.series = chartHttpData.companyNames;
             }
+
+
+            return angular.copy(chartResult);
 
         }else{
             console.log('chart Data format is wrong !');
@@ -173,6 +191,7 @@ app.factory('report',function($http){
 
 
     var factory = {
+
         getChartType1 : function(){
             return angular.copy(chartType1);
         },
@@ -187,6 +206,9 @@ app.factory('report',function($http){
         },
         getChartConfig2 : function(){
             return angular.copy(chartConfig2);
+        },
+        getChartConfig3 : function(){
+            return angular.copy(chartConfig3);
         },
 
         // Chart A1
@@ -294,7 +316,7 @@ app.factory('report',function($http){
         // Chart C1
         segmentsLeadersByValuePriceSensitive : function(){
             return $http.get(apiPath + 'chart/segments_leaders_by_value_price_sensitive').then(function(result){
-//                console.log(result.data);
+                console.log(result.data);
 
                 return chartTool(result.data, 2);
             });
@@ -344,7 +366,7 @@ app.factory('report',function($http){
         // Chart C4
         growthRateInVolume : function(){
             return $http.get(apiPath + 'chart/growth_rate_in_volume').then(function(result){
-                console.log(result.data);
+//                console.log(result.data);
 
                 return chartTool(result.data, 0);
             });
@@ -352,7 +374,7 @@ app.factory('report',function($http){
 
         growthRateInValue : function(){
             return $http.get(apiPath + 'chart/growth_rate_in_value').then(function(result){
-                console.log(result.data);
+//                console.log(result.data);
 
                 return chartTool(result.data, 0);
             });
@@ -370,11 +392,9 @@ app.factory('report',function($http){
             return $http.get(apiPath + 'chart/segment_value_share_total_market').then(function(result){
                 console.log(result.data);
 
-                return chartTool(result.data, 0);
+                return chartTool(result.data, 2);
             });
         }
-
-
 
 
 

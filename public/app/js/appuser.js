@@ -140,7 +140,7 @@ marksimosapp.controller('chartController', function AppCtrl ($scope,  $timeout, 
         },
         chartC44SegmentValueShareTotalMarket : {
             type : report.getChartType3(),
-            config : report.getChartConfig1(),
+            config : report.getChartConfig3(),
             data : $scope.dataChartSimple
         }
 
@@ -227,7 +227,7 @@ marksimosapp.controller('chartController', function AppCtrl ($scope,  $timeout, 
     $scope.data.chartC16SegmentsLeadersByValuePragmatic.config.title = 'Pragmatic (%)';
 
     report.segmentsLeadersByValuePriceSensitive().then(function(data, status, headers, config){
-//        console.log(data);
+        console.log(data);
         $scope.data.chartC11SegmentsLeadersByValuePriceSensitive.data = data;
     });
     report.segmentsLeadersByValuePretenders().then(function(data, status, headers, config){
@@ -259,11 +259,11 @@ marksimosapp.controller('chartController', function AppCtrl ($scope,  $timeout, 
     $scope.data.chartC44SegmentValueShareTotalMarket.config.title = 'Segment Value Share In Total Market (%)';
 
     report.growthRateInVolume().then(function(data, status, headers, config){
-        console.log(data);
+//        console.log(data);
         $scope.data.chartC41GrowthRateInVolume.data = data;
     });
     report.growthRateInValue().then(function(data, status, headers, config){
-        console.log(data);
+//        console.log(data);
         $scope.data.chartC42GrowthRateInValue.data = data;
     });
     report.netMarketPrice().then(function(data, status, headers, config){
@@ -281,7 +281,7 @@ marksimosapp.controller('chartController', function AppCtrl ($scope,  $timeout, 
 
     /********************  切换左部图标菜单  ********************/
     $scope.clickChartMenu = function(chart){
-        $scope.css.menu = 'Report'
+        $scope.css.menu = 'Report';
         $scope.css.chartMenu = chart;
     };
 
@@ -290,8 +290,6 @@ marksimosapp.controller('chartController', function AppCtrl ($scope,  $timeout, 
     $scope.switchHeaderMenu = function(menu){
         $scope.css.menu = menu;
     };
-
-
 
 
 
