@@ -41,7 +41,7 @@ exports.remove =  function(seminarId){
         }
     });
     return deferred.promise;
-};
+}
 
 exports.save = function(decision){
     var deferred = Q.defer();
@@ -57,11 +57,13 @@ exports.save = function(decision){
 };
 
 
-exports.findBySKU = function(seminarId, period, SKUID){
+exports.findOne = function(seminarId, period, companyId, brandId, SKUID){
     var deferred = Q.defer();
-    SKUDecision.find({
-        seminarId: seminarId, 
-        period: period, 
+    SKUDecision.findOne({
+        seminarId: seminarId,
+        period: period,
+        d_CID: companyId,
+        d_BrandID: brandId,
         d_SKUID: SKUID
     }, function(err, decision){
         if(err){
@@ -76,19 +78,39 @@ exports.findBySKU = function(seminarId, period, SKUID){
 exports.findAll = function(seminarId, period, companyId, brandId){
     var deferred = Q.defer();
     if(!seminarId){
-        process.nextTick(function(){
-            deferred.reject(new Error("Invalid argument seminarId"));
-        })
+        deferred.reject(new Error("Invalid argument seminarId"));
     }else if(period===undefined){
-        process.nextTick(function(){
-            deferred.reject(new Error("Invalid argument period."));
-        })
+        deferred.reject(new Error("Invalid argument period."));
     }else{
         SKUDecision.find({
             seminarId: seminarId,
             period: period,
             d_CID: companyId,
             d_BrandID: brandId
+        }, function(err, result){
+            if(err){
+                return deferred.reject(err);
+            }else{
+                return deferred.resolve(result);
+            }
+        })
+    }
+    return deferred.promise;
+};
+
+exports.findAllInCompany = function(seminarId, period, companyId){
+    var deferred = Q.defer();
+    if(!seminarId){
+        deferred.reject(new Error("Invalid argument seminarId"));
+    }else if(period===undefined){
+        deferred.reject(new Error("Invalid argument period."));
+    }else if(companyId === undefined){
+        deferred.reject(new Error("Invalid argument companyId."));
+    }else{
+        SKUDecision.find({
+            seminarId: seminarId,
+            period: period,
+            d_CID: companyId,
         }, function(err, result){
             if(err){
                 return deferred.reject(err);

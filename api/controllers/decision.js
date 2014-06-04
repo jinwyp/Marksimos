@@ -351,7 +351,7 @@ exports.updateCompanyDecision = function(req, res, next){
 
         return result;
     }
-}
+};
 
 
 

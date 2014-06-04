@@ -1,6 +1,7 @@
 var decisionController = require('./controllers/decision.js');
 var chartController = require('./controllers/chart.js');
 var initController = require('./controllers/init.js');
+var decisionPageController = require('./controllers/decisionPage.js');
 var util = require('util');
 
 
@@ -17,10 +18,13 @@ module.exports = function(app){
 
     app.post('/api/brand/decision', decisionController.updateBrandDecision);
 
-    app.post('/api/company/decision', decisionController.updateCompanyDecision)
+    app.post('/api/company/decision', decisionController.updateCompanyDecision);
 
     //chart
     app.get('/api/chart/:chart_name', chartController.getChart);
+
+    //make decision page
+    app.get('/api/companydata', decisionPageController.companyData);
 
     // app.get('*', function(req, res){
     //     res.send("404 page");
