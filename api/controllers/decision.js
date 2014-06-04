@@ -148,10 +148,10 @@ exports.submitDecision = function(req, res, next){
     }
 };
 
-exports.updateSKU = function(req, res, next){
+exports.updateSKUDecision = function(req, res, next){
     var brandId = req.body.brand_id;
     var SKUID = req.body.sku_id;
-    var SKU = req.body.sku;
+    var SKU = req.body.sku_data;
 
     var seminarId = req.session.seminarId;
     var companyId = req.session.companyId;
@@ -221,6 +221,77 @@ exports.updateSKU = function(req, res, next){
         return result;
     }
 };
+
+exports.updateBrandDecision = function(req, res, next){
+    var brandId = req.body.brand_id;
+    var brand = req.body.brand_data;
+
+    var seminarId = req.session.seminarId;
+    var companyId = req.session.companyId;
+    var period = req.session.period;
+
+
+    if(!brandId){
+        return res.send(400, {status: 0, message: "Invalid parameter brand_id."});
+    }
+
+    if(!brand){
+        return res.send(400, {status: 0, message: "Invalid parameter brand_data"});
+    }
+
+    if(!seminarId){
+        return res.send(400, {status: 0, message: "Invalid seminarId in session."});
+    }
+
+    if(!companyId){
+        return res.send(400, {status: 0, message: "Invalid companyId in session."});
+    }
+
+    if(period === undefined){
+        return res.send(400, {status: 0, message: "Invalid period in session."});
+    }
+
+    var jsonBrand = null;
+    try{
+        jsonBrand = JSON.parse(brand);
+    }catch(err){
+        logger.error(err);
+        return res.send(400, {status: 0, message: "Invalid parameter brand_data"});
+    }
+
+    var tempBrand = createBrand(jsonBrand);
+
+
+    brandDecisionModel.updateBrand(seminarId, period, companyId, brandId, tempBrand)
+    .then(function(numAffected){
+        if(numAffected !== 1){
+            return res.send(400, {status: 0, message: 'brand does not exist.'});
+        }
+        res.send({status: 1, message: 'update success.'});
+    })
+    .fail(function(err){
+        logger.error(err);
+        res.send(500, {status: 0, message: 'update failed.'});
+    })
+    .done(); 
+
+
+    function createBrand(postedBrand){
+        var result = {};
+
+        var fields = ['d_BrandName', 'd_SalesForce', 'd_SKUsDecisions'];
+        fields.forEach(function(field){
+            if(postedBrand[field] !== undefined){
+                result[field] = postedBrand[field];
+            }
+        });
+
+        return result;
+    }
+};
+
+exports.updateCompanyDecision = function(req, res, next){
+}
 
 
 

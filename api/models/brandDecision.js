@@ -61,4 +61,36 @@ exports.findAll = function(seminarId, period, companyId){
         })
     }
     return deferred.promise;
+};
+
+exports.updateBrand = function(seminarId, period, companyId, brandId, brand){
+    var deferred = Q.defer();
+
+    if(!seminarId){
+        deferred.reject(new Error("Invalid argument seminarId."));
+    }else if(period===undefined){
+        deferred.reject(new Error("Invalid argument period."));
+    }else if(!companyId){
+        deferred.reject(new Error("Invalid argument companyId."));
+    }else if(!brandId){
+        deferred.reject(new Error("Invalid argument brandId."));
+    }else if(!brand){
+        deferred.reject(new Error("Invalid argument SKU."))
+    }else{
+        BrandDecision.update({
+            seminarId: seminarId,
+            period: period,
+            d_CID: companyId,
+            d_BrandID: brandId
+        },
+        brand,
+        function(err, numAffected){
+            if(err){
+                return deferred.reject(err);
+            }
+
+            return deferred.resolve(numAffected);
+        })
+    }
+    return deferred.promise;
 }

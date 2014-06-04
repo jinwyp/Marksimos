@@ -10,10 +10,14 @@ module.exports = function(app){
 
     app.get('/api/init', initController.init);
 
-    app.get('/api/decision', decisionController.submitDecision);
+    app.get('/api/submitdecision', decisionController.submitDecision);
 
     //decision
-    app.post('/api/decision/sku', decisionController.updateSKU);
+    app.post('/api/decision/sku', decisionController.updateSKUDecision);
+
+    app.post('/api/decision/brand', decisionController.updateBrandDecision);
+
+    app.post('/api/decision/company', decisionController.updateCompanyDecision)
 
     //chart
     app.get('/api/chart/:chartName', chartController.getChart);
