@@ -16,7 +16,7 @@ var tDecisionSchema = new Schema({
     d_InvestmentInServicing      : Number
 });
 
-var Decision = mongoose.model('Decision', tDecisionSchema);
+var CompanyDecision = mongoose.model('CompanyDecision', tDecisionSchema);
 
 exports.remove =  function(seminarId){
     var deferred = Q.defer();
@@ -24,7 +24,7 @@ exports.remove =  function(seminarId){
     if(!seminarId){
         deferred.reject(new Error("Invalid argument seminarId"));
     }else{
-        Decision.remove({seminarId: seminarId}, function(err){
+        CompanyDecision.remove({seminarId: seminarId}, function(err){
             if(err){
                 return deferred.reject(err);
             }else{
@@ -42,8 +42,8 @@ exports.save = function(decision){
     if(!decision){
         deferred.reject(new Error("Invalid argument decision."));
     }else{
-        var decision = new Decision(decision);
-        decision.save(function(err){
+        var d = new CompanyDecision(decision);
+        d.save(function(err){
             if(err){
                 deferred.reject(err);
             }else{
@@ -63,7 +63,7 @@ exports.findOne = function(seminarId, period, companyId){
     }else if(period===undefined){
         deferred.reject(new Error("Invalid argument period."));
     }else{
-        Decision.findOne({
+        CompanyDecision.findOne({
             seminarId: seminarId,
             period: period,
             d_CID: companyId
@@ -78,6 +78,35 @@ exports.findOne = function(seminarId, period, companyId){
 
     return deferred.promise;
 };
+
+exports.updateCompanyDecision = function(seminarId, period, companyId, companyDecision){
+    var deferred = Q.defer();
+
+    if(!seminarId){
+        deferred.reject(new Error("Invalid argument seminarId."));
+    }else if(period===undefined){
+        deferred.reject(new Error("Invalid argument period."));
+    }else if(!companyId){
+        deferred.reject(new Error("Invalid argument companyId."));
+    }else if(!companyDecision){
+        deferred.reject(new Error("Invalid argument companyDecision."))
+    }else{
+        CompanyDecision.update({
+            seminarId: seminarId,
+            period: period,
+            d_CID: companyId
+        },
+        companyDecision,
+        function(err, numAffected){
+            if(err){
+                return deferred.reject(err);
+            }
+
+            return deferred.resolve(numAffected);
+        })
+    }
+    return deferred.promise;
+}
 
 
 

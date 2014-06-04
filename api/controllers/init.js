@@ -6,7 +6,7 @@ var Q = require('q');
 var decisionCleaner = require('../convertors/decisionCleaner.js');
 var allResultsConvertor = require('../convertors/allResults.js');
 var allResultsCleaner = require('../convertors/allResultsCleaner.js');
-var decisionModel = require('../models/decision.js');
+var companyDecisionModel = require('../models/companyDecision.js');
 var brandDecisionModel = require('../models/brandDecision.js');
 var SKUDecisionModel = require('../models/SKUDecision.js');
 var allResultsModel = require('../models/allResults.js');
@@ -269,14 +269,14 @@ function extractChartData(results, settings){
  */
 function initDecision(seminarId) {
     var periods = config.initPeriods
-    var teams = config.initTeams;
+    var companies = config.initCompanies;
 
     var d = removeExistedData(seminarId);
     d = d.then(function(){
         var queries = [];
         periods.forEach(function(period) {
-            teams.forEach(function(team) {
-                queries.push(initOnePeriodDecison(seminarId, team, period));
+            companies.forEach(function(company) {
+                queries.push(initOnePeriodDecison(seminarId, company, period));
             })
         });
         return Q.all(queries);
@@ -286,7 +286,7 @@ function initDecision(seminarId) {
 
     function removeExistedData(seminarId){
         return Q.all([
-                decisionModel.remove(seminarId),
+                companyDecisionModel.remove(seminarId),
                 brandDecisionModel.remove(seminarId),
                 SKUDecisionModel.remove(seminarId)
             ]);
@@ -311,7 +311,7 @@ function initOnePeriodDecison(seminarId, team, period) {
         decision.seminarId = seminarId;
         decision.period = period;
 
-        var d = decisionModel.save(decision);
+        var d = companyDecisionModel.save(decision);
 
         var brandDecisions = getBrandDecisions(result);
 

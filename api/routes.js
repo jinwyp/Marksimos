@@ -13,11 +13,11 @@ module.exports = function(app){
     app.get('/api/submitdecision', decisionController.submitDecision);
 
     //decision
-    app.post('/api/decision/sku', decisionController.updateSKUDecision);
+    app.post('/api/sku/decision', decisionController.updateSKUDecision);
 
-    app.post('/api/decision/brand', decisionController.updateBrandDecision);
+    app.post('/api/brand/decision', decisionController.updateBrandDecision);
 
-    app.post('/api/decision/company', decisionController.updateCompanyDecision)
+    app.post('/api/company/decision', decisionController.updateCompanyDecision)
 
     //chart
     app.get('/api/chart/:chartName', chartController.getChart);

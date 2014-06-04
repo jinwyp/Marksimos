@@ -2,7 +2,7 @@ var request = require('../promises/request.js');
 var config = require('../config.js');
 var url = require('url');
 var util = require('util');
-var decisionModel = require('../models/decision.js');
+var companyDecisionModel = require('../models/companyDecision.js');
 var brandDecisionModel = require('../models/brandDecision.js');
 var SKUDecisionModel = require('../models/SKUDecision.js');
 var decisionCleaner = require('../convertors/decisionCleaner.js');
@@ -32,7 +32,7 @@ exports.submitDecision = function(req, res, next){
 
     var result = {};
 
-    decisionModel.findOne(seminarId, period, companyId)
+    companyDecisionModel.findOne(seminarId, period, companyId)
     .then(function(decision){
         if(!decision){
             throw new Error("decision doesn't exist.");
@@ -197,7 +197,7 @@ exports.updateSKUDecision = function(req, res, next){
     SKUDecisionModel.updateSKU(seminarId, period, companyId, brandId, SKUID, tempSKU)
     .then(function(numAffected){
         if(numAffected !== 1){
-            return res.send(400, {status: 0, message: 'SKU does not exist.'});
+            return res.send(400, {status: 0, message: 'SKUDecision does not exist.'});
         }
         res.send({status: 1, message: 'update success.'});
     })
@@ -224,7 +224,7 @@ exports.updateSKUDecision = function(req, res, next){
 
 exports.updateBrandDecision = function(req, res, next){
     var brandId = req.body.brand_id;
-    var brand = req.body.brand_data;
+    var brand_decision = req.body.brand_decision;
 
     var seminarId = req.session.seminarId;
     var companyId = req.session.companyId;
@@ -235,7 +235,7 @@ exports.updateBrandDecision = function(req, res, next){
         return res.send(400, {status: 0, message: "Invalid parameter brand_id."});
     }
 
-    if(!brand){
+    if(!brand_decision){
         return res.send(400, {status: 0, message: "Invalid parameter brand_data"});
     }
 
@@ -253,7 +253,7 @@ exports.updateBrandDecision = function(req, res, next){
 
     var jsonBrand = null;
     try{
-        jsonBrand = JSON.parse(brand);
+        jsonBrand = JSON.parse(brand_decision);
     }catch(err){
         logger.error(err);
         return res.send(400, {status: 0, message: "Invalid parameter brand_data"});
@@ -265,7 +265,7 @@ exports.updateBrandDecision = function(req, res, next){
     brandDecisionModel.updateBrand(seminarId, period, companyId, brandId, tempBrand)
     .then(function(numAffected){
         if(numAffected !== 1){
-            return res.send(400, {status: 0, message: 'brand does not exist.'});
+            return res.send(400, {status: 0, message: 'brandDecision does not exist.'});
         }
         res.send({status: 1, message: 'update success.'});
     })
@@ -279,7 +279,7 @@ exports.updateBrandDecision = function(req, res, next){
     function createBrand(postedBrand){
         var result = {};
 
-        var fields = ['d_BrandName', 'd_SalesForce', 'd_SKUsDecisions'];
+        var fields = ['d_BrandName', 'd_SalesForce'];
         fields.forEach(function(field){
             if(postedBrand[field] !== undefined){
                 result[field] = postedBrand[field];
@@ -291,6 +291,66 @@ exports.updateBrandDecision = function(req, res, next){
 };
 
 exports.updateCompanyDecision = function(req, res, next){
+    var company_decision = req.body.company_decision;
+
+    var seminarId = req.session.seminarId;
+    var companyId = req.session.companyId;
+    var period = req.session.period;
+
+
+    if(!company_decision){
+        return res.send(400, {status: 0, message: "Invalid parameter company_decision"});
+    }
+
+    if(!seminarId){
+        return res.send(400, {status: 0, message: "Invalid seminarId in session."});
+    }
+
+    if(!companyId){
+        return res.send(400, {status: 0, message: "Invalid companyId in session."});
+    }
+
+    if(period === undefined){
+        return res.send(400, {status: 0, message: "Invalid period in session."});
+    }
+
+    var jsonCompanyDecision = null;
+    try{
+        jsonCompanyDecision = JSON.parse(company_decision);
+    }catch(err){
+        logger.error(err);
+        return res.send(400, {status: 0, message: "Invalid parameter company_decision"});
+    }
+
+    var tempCompanyDecision = createCompanyDecision(jsonCompanyDecision);
+
+
+    companyDecisionModel.updateCompanyDecision(seminarId, period, companyId, tempCompanyDecision)
+    .then(function(numAffected){
+        if(numAffected !== 1){
+            return res.send(400, {status: 0, message: 'companyDecision does not exist.'});
+        }
+        res.send({status: 1, message: 'update success.'});
+    })
+    .fail(function(err){
+        logger.error(err);
+        res.send(500, {status: 0, message: 'update failed.'});
+    })
+    .done(); 
+
+
+    function createCompanyDecision(postedCompanyDecision){
+        var result = {};
+
+        var fields = ['d_CompanyName','d_IsAdditionalBudgetAccepted','d_RequestedAdditionalBudget','d_InvestmentInEfficiency','d_InvestmentInTechnology','d_InvestmentInServicing'];
+        fields.forEach(function(field){
+            if(postedCompanyDecision[field] !== undefined){
+                result[field] = postedCompanyDecision[field];
+            }
+        });
+
+        return result;
+    }
 }
 
 
