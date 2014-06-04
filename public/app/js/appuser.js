@@ -11,8 +11,9 @@ var marksimosapp = angular.module('marksimos', ['angularCharts', 'marksimos.comp
 marksimosapp.controller('chartController', function AppCtrl ($scope,  $timeout, $http, report) {
 
     $scope.css = {
-        menu : 'Report',
-        chartMenu : 'C4'
+        menu : 'Decision',
+        chartMenu : 'C4',
+        additionalBudget : true
     };
 
 

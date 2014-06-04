@@ -8,6 +8,7 @@
     <header-user login="true" click-home="switchHeaderMenu('Home')" click-report="switchHeaderMenu('Report')" current-menu="css.menu"></header-user>
 
 
+
     <div class="row mainbody bgbrand" ng-if="css.menu=='Home'">
         <div class="col-md-2 user_home_divider user_brand_box">
 
@@ -107,7 +108,6 @@
 
     </div>
 
-
     <div class="row mainbody" ng-if="css.menu=='Home'">
         <div class="col-md-12">
             <div class="row user_home_divider_horizontal ">
@@ -195,9 +195,6 @@
 
 
 
-
-
-
     <div class="row mainbody bgbrand" ng-if="css.menu=='Report'">
         <div class="col-md-2 user_home_divider user_chart_box">
 
@@ -210,7 +207,7 @@
 
         <div class="col-md-5 user_home_divider user_chart_box" >
             <div class="row">
-                <div class="col-md-12 user_search_chart user_chart_search">
+                <div class="col-md-12 user_chart_search_box">
                     <div class="input-group">
                         <div class="input-group-btn">
 
@@ -410,6 +407,159 @@
         </div>
 
     </div>
+
+
+
+
+    <div class="row mainbody bgbrand" ng-if="css.menu=='Decision'">
+        <div class="col-md-2 user_home_divider user_chart_box">
+
+            <div class="row ">
+                <h4 class="user_maincompany user_chart_company">Company <span class="company_a">A</span> </h4>
+            </div>
+
+        </div>
+
+        <div class="col-md-7 user_home_divider user_chart_box" >
+            <div class="row">
+                <div class="col-md-4">
+                    <h6 class="progress_title text-center">Total Available Budget</h6>
+                    <div class="progress progress_radius">
+                        <div class="progress-bar progress_bar_budget" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style="width: 60%;">
+                            60%
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-4">
+                    <h6 class="progress_title text-center">Normal Capacity</h6>
+                    <div class="progress progress_radius">
+                        <div class="progress-bar progress_bar_normal_capacity" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style="width: 60%;">
+                            60%
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-4">
+                    <h6 class="progress_title text-center">Overtime Capacity</h6>
+                    <div class="progress progress_radius">
+                        <div class="progress-bar progress_bar_overtime" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style="width: 60%;">
+                            60%
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+        <div class="col-md-1 user_home_divider user_chart_box">
+
+            <form class=" budget_form" role="form">
+                <div class="form-group">
+                    <label class="budget_title" for="additionalBudget" ng-show="css.additionalBudget" ng-click="css.additionalBudget=false">$</label>
+                    <label class="text-center" for="additionalBudget" ng-show="css.additionalBudget" ng-click="css.additionalBudget=false">Additional Budget</label>
+                    <input type="number" class="form-control input-sm" id="additionalBudget"  ng-hide="css.additionalBudget" placeholder="Budget" >
+                    <button type="submit" class="btn btn-default btn-sm" ng-hide="css.additionalBudget" ng-click="css.additionalBudget=true">Save</button>
+                </div>
+            </form>
+        </div>
+
+        <div class="col-md-2">
+            <div class="row">
+                <div class="col-md-12 ">
+                    <span class="user_clock user_chart_clock"><strong>1h22mins left</strong> for submitting decision</span>
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+
+    <div class="row mainbody" ng-if="css.menu=='Decision'">
+        <div class="col-md-12">
+            <div class="row user_home_divider_horizontal ">
+                <div class="col-md-6 col-md-offset-3 ">
+                    <img src="./app/css/images/temp1.png" alt=""/>
+                </div>
+            </div>
+
+
+            <div class="row">
+                <div class="col-md-6 col-md-offset-3 user_search_chart">
+                    <div class="input-group">
+                        <div class="input-group-btn">
+
+                            <button type="button" class="btn btn-default dropdown-toggle droplist_company" data-toggle="dropdown">Company A <span class="caret"></span></button>
+                            <ul class="dropdown-menu">
+                                <li><a href="#">Company A</a></li>
+                                <li><a href="#">Company B</a></li>
+                                <li><a href="#">Company C</a></li>
+                            </ul>
+                        </div><!-- /btn-group -->
+
+                        <input type="text" class="form-control" placeholder="find report or chart">
+                        <span class="input-group-btn">
+                            <button class="btn btn-default" type="button"><span class="glyphicon glyphicon-search"></span></button>
+                        </span>
+                    </div><!-- /input-group -->
+                </div>
+            </div>
+
+
+            <div class="row">
+                <div class="col-md-3 col-md-offset-1">
+                    <div class="panel panel-primary user_chart_list">
+                        <div class="panel-heading">
+                            <h3 class="panel-title">Your Company</h3>
+                        </div>
+
+                        <!-- List group -->
+                        <ul class="list-group">
+                            <li class="list-group-item" ng-click="clickChartMenu('A1')">Company Status</li>
+                            <li class="list-group-item list-group-item-active" ng-click="clickChartMenu('A2')">Financial Data</li>
+                            <li class="list-group-item" ng-click="clickChartMenu('A3')">Inventory Report</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="col-md-3 ">
+                    <div class="panel panel-primary user_chart_list user_chart_list_bg2">
+                        <div class="panel-heading">
+                            <h3 class="panel-title">Your Competitor</h3>
+                        </div>
+
+                        <!-- List group -->
+                        <ul class="list-group">
+                            <li class="list-group-item" ng-click="clickChartMenu('B1')">Market Share</li>
+                            <li class="list-group-item list-group-item-active" ng-click="clickChartMenu('B2')">Competitor Information</li>
+                            <li class="list-group-item" ng-click="clickChartMenu('B3')">Investment & Profits</li>
+                            <li class="list-group-item list-group-item-active" ng-click="clickChartMenu('B4')">Market Sales & Inventory</li>
+
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="col-md-3 ">
+                    <div class="panel panel-primary user_chart_list">
+                        <div class="panel-heading">
+                            <h3 class="panel-title">Market Landscape</h3>
+                        </div>
+
+                        <!-- List group -->
+                        <ul class="list-group">
+                            <li class="list-group-item" ng-click="clickChartMenu('C1')">Segment Leader Top5</li>
+                            <li class="list-group-item list-group-item-active" ng-click="clickChartMenu('C2')">Perception Map</li>
+                            <li class="list-group-item" ng-click="clickChartMenu('C3')">Segment Distributions</li>
+                            <li class="list-group-item list-group-item-active" ng-click="clickChartMenu('C4')">Market Evolution</li>
+                            <li class="list-group-item" ng-click="clickChartMenu('C5')">Market Indicator</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
 </div>
 
 
