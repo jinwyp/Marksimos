@@ -186,6 +186,7 @@ exports.updateSKU = function(req, res, next){
     try{
         jsonSKU = JSON.parse(SKU);
     }catch(err){
+        logger.error(err);
         return res.send(400, {status: 0, message: "Invalid parameter sku"});
     }
 
