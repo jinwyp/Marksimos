@@ -47,9 +47,15 @@ $color_main_body_user_chart_leftmenu_active_bg: #eef3ff;
 $color_main_body_user_chart_leftmenu_active_bgbefore: #236ac7;
 $color_main_body_user_chart_leftmenu_border: #e7e9ed;
 
+
 $color_main_body_progress_bar_budget: #6071b9;
 $color_main_body_progress_bar_normal_capacity: #7169af;
 $color_main_body_progress_bar_overtime: #ad5ab3;
+
+$color_main_body_decision_subtitle: #bdbdbd;
+$color_main_body_decision_brand_border: #c2c2d3;
+
+
 
 
 /********************  自定义按钮样式  ********************/
@@ -687,6 +693,66 @@ body{
         input{
             width: 80px
         }
+    }
+
+    .decision_box{
+        margin : 10px 15px;
+        border:1px solid $color_login_panel_border;
+        background-color: $color_login_panel_background;
+
+        h4{
+            color: $color_main_body_competitors;
+            font-size: 18px;
+            font-weight: normal;
+            font-family: $font_main_header2;
+            margin:30px 0 5px 0;
+        }
+        h6{
+            color: $color_main_body_decision_subtitle;
+            font-family: $font_main_header2;
+            font-weight: normal;
+            margin-top: 0;
+        }
+
+        .brand_box{
+            border:1px solid $color_main_body_decision_brand_border;
+            margin : 0px -10px;
+            @include border-radius(4px);
+        }
+
+        .nav li {
+            a{
+                padding: 7px 15px;
+            }
+        }
+        .nav-pills li{
+            a{
+                background-color: $color_login_background;
+                color: $color_main_body_user_chart_leftmenu_title;
+                font-family: $font_main_header2;
+                @include border-top-radius(4px);
+                @include border-bottom-radius(0px);
+
+                &:hover,
+                &:focus{
+                    background-color: $color_main_body_background_chart;
+                }
+            }
+        }
+        .nav-pills li.active{
+            a,
+            a:hover,
+            a:focus{
+                color: $color_main_body_company_a;
+                font-family: $font_main_header2;
+                background-color: $color_main_body_user_chart_title;
+            }
+        }
+
+        .brand_form{
+            margin: 30px 0px;
+        }
+
     }
 
 

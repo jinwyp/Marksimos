@@ -476,86 +476,122 @@
     </div>
 
     <div class="row mainbody" ng-if="css.menu=='Decision'">
-        <div class="col-md-12">
-            <div class="row user_home_divider_horizontal ">
-                <div class="col-md-6 col-md-offset-3 ">
-                    <img src="./app/css/images/temp1.png" alt=""/>
+        <div class="col-md-5 decision_box">
+            <div class="row">
+                <div class="col-md-12">
+                    <h4 class="text-center">MAKE DECISIONS</h4>
+                    <h6 class="text-center">Market Share + Profit</h6>
                 </div>
             </div>
-
 
             <div class="row">
-                <div class="col-md-6 col-md-offset-3 user_search_chart">
-                    <div class="input-group">
-                        <div class="input-group-btn">
+                <div class="col-md-12">
 
-                            <button type="button" class="btn btn-default dropdown-toggle droplist_company" data-toggle="dropdown">Company A <span class="caret"></span></button>
-                            <ul class="dropdown-menu">
-                                <li><a href="#">Company A</a></li>
-                                <li><a href="#">Company B</a></li>
-                                <li><a href="#">Company C</a></li>
-                            </ul>
-                        </div><!-- /btn-group -->
 
-                        <input type="text" class="form-control" placeholder="find report or chart">
-                        <span class="input-group-btn">
-                            <button class="btn btn-default" type="button"><span class="glyphicon glyphicon-search"></span></button>
-                        </span>
-                    </div><!-- /input-group -->
+                    <ul class="nav nav-pills">
+                        <li class="active"><a href="#">Brand A</a></li>
+                        <li><a href="#">Brand B</a></li>
+                        <li><a href="#">Brand C</a></li>
+                        <li><a href="#">Brand D</a></li>
+                        <li><a href="#">Brand E</a></li>
+                        <li><a href="#">+</a></li>
+                    </ul>
+
+                    <div class="row brand_box">
+                        <div class="col-md-12">
+
+                            <form class="form-horizontal brand_form" role="form">
+                                <div class="form-group">
+                                    <label class="col-sm-4 control-label" for="brandSalesForce">Sales Force($min)</label>
+                                    <div class="col-sm-5">
+                                        <input type="text" class="form-control" id="brandSalesForce" placeholder="">
+                                    </div>
+                                    <div class="col-sm-2">
+                                        <button type="submit" class="btn btn-default">Save</button>
+                                    </div>
+                                </div>
+                            </form>
+
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <ul class="nav nav-pills">
+                                        <li class="active"><a href="#">SKU A</a></li>
+                                        <li><a href="#">SKU B</a></li>
+                                        <li><a href="#">SKU C</a></li>
+                                        <li><a href="#">SKU D</a></li>
+                                        <li><a href="#">SKU E</a></li>
+                                        <li><a href="#">+</a></li>
+                                    </ul>
+                                </div>
+                            </div>
+
+                            <div class="row brand_box">
+                                <div class="col-md-12">
+                                    <table class="table table-hover">
+                                        <thead>
+                                            <tr>
+                                                <th>#</th>
+                                                <th>First Name</th>
+                                                <th>Last Name</th>
+                                                <th>Username</th>
+                                                <th>Username</th>
+                                                <th>Username</th>
+                                            </tr>
+                                        </thead>
+
+
+                                        <tbody>
+                                            <tr>
+                                                <td>Discontinue</td>
+                                                <td>Yes</td>
+                                                <td>Yes</td>
+                                                <td>No</td>
+                                                <td>No</td>
+                                                <td>No</td>
+                                            </tr>
+                                            <tr>
+                                                <td>Discontinue</td>
+                                                <td>Yes</td>
+                                                <td>Yes</td>
+                                                <td>No</td>
+                                                <td>No</td>
+                                                <td>No</td>
+                                            </tr>
+                                            <tr>
+                                                <td>Discontinue</td>
+                                                <td>Yes</td>
+                                                <td>Yes</td>
+                                                <td>No</td>
+                                                <td>No</td>
+                                                <td>No</td>
+                                            </tr>
+                                            <tr>
+                                                <td>Discontinue</td>
+                                                <td>Yes</td>
+                                                <td>Yes</td>
+                                                <td>No</td>
+                                                <td>No</td>
+                                                <td>No</td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
                 </div>
             </div>
 
 
-            <div class="row">
-                <div class="col-md-3 col-md-offset-1">
-                    <div class="panel panel-primary user_chart_list">
-                        <div class="panel-heading">
-                            <h3 class="panel-title">Your Company</h3>
-                        </div>
+        </div>
 
-                        <!-- List group -->
-                        <ul class="list-group">
-                            <li class="list-group-item" ng-click="clickChartMenu('A1')">Company Status</li>
-                            <li class="list-group-item list-group-item-active" ng-click="clickChartMenu('A2')">Financial Data</li>
-                            <li class="list-group-item" ng-click="clickChartMenu('A3')">Inventory Report</li>
-                        </ul>
-                    </div>
-                </div>
+        <div class="col-md-7">
 
-                <div class="col-md-3 ">
-                    <div class="panel panel-primary user_chart_list user_chart_list_bg2">
-                        <div class="panel-heading">
-                            <h3 class="panel-title">Your Competitor</h3>
-                        </div>
 
-                        <!-- List group -->
-                        <ul class="list-group">
-                            <li class="list-group-item" ng-click="clickChartMenu('B1')">Market Share</li>
-                            <li class="list-group-item list-group-item-active" ng-click="clickChartMenu('B2')">Competitor Information</li>
-                            <li class="list-group-item" ng-click="clickChartMenu('B3')">Investment & Profits</li>
-                            <li class="list-group-item list-group-item-active" ng-click="clickChartMenu('B4')">Market Sales & Inventory</li>
 
-                        </ul>
-                    </div>
-                </div>
 
-                <div class="col-md-3 ">
-                    <div class="panel panel-primary user_chart_list">
-                        <div class="panel-heading">
-                            <h3 class="panel-title">Market Landscape</h3>
-                        </div>
-
-                        <!-- List group -->
-                        <ul class="list-group">
-                            <li class="list-group-item" ng-click="clickChartMenu('C1')">Segment Leader Top5</li>
-                            <li class="list-group-item list-group-item-active" ng-click="clickChartMenu('C2')">Perception Map</li>
-                            <li class="list-group-item" ng-click="clickChartMenu('C3')">Segment Distributions</li>
-                            <li class="list-group-item list-group-item-active" ng-click="clickChartMenu('C4')">Market Evolution</li>
-                            <li class="list-group-item" ng-click="clickChartMenu('C5')">Market Indicator</li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
         </div>
     </div>
 
