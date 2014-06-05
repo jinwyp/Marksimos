@@ -60,5 +60,14 @@ exports.companyData = function(req, res, next){
         u_AverageTechnology
         */
 
+        var productPortfolio = {};
+
+        var lastPeriodResult = allResults.allResults[allResults.allResults.length];
+        for(var i=0; i<lastPeriodResult.onePeriodResult.p_SKUs.length; i++){
+            var SKU = lastPeriodResult.onePeriodResult.p_SKUs[i];
+            productPortfolio.SKUName = '';
+            productPortfolio.u_TargetConsumerSegment = SKU.u_TargetConsumerSegment;
+
+        }
     }
 }

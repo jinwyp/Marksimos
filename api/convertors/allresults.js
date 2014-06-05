@@ -3,6 +3,7 @@
 */
 var consts = require('../consts.js');
 var config = require('../config.js');
+var utility = require('./utility.js');
 
 //Market Share
 exports.marketShareInValue = function(allResults) {
@@ -116,7 +117,7 @@ exports.segmentsLeadersByValue = function(allResults, segment){
     var segmentIndex = segmentNameAndIndex[segment];
 
     var valueSegmentShare = currentPeriodResult.p_SKUs.map(function(SKU){
-        var brand = findBrand(currentPeriodResult, SKU.u_ParentBrandID);
+        var brand = utility.findBrand(currentPeriodResult, SKU.u_ParentBrandID);
         var brandName = brand.b_BrandName;
 
         var SKUName = brandName + SKU.u_SKUName;
@@ -212,7 +213,7 @@ exports.perceptionMap = function(allResults, exogenous){
         //SKU data
         for(var k=0; k<periodResult.p_SKUs.length; k++){
             var SKU = periodResult.p_SKUs[k];
-            var brand = findBrand(periodResult, SKU.u_ParentBrandID);
+            var brand = utility.findBrand(periodResult, SKU.u_ParentBrandID);
             if(company.c_CompanyID === SKU.u_ParentCompanyID){
                 companyData.SKUs.push({
                     SKUName: brand.b_BrandName + SKU.u_SKUName,
@@ -254,7 +255,7 @@ exports.inventoryReport = function(allResults, seminarSetting){
 
         for(var k=0; k<periodResult.p_SKUs.length; k++){
             var SKU = periodResult.p_SKUs[k];
-            var brand = findBrand(periodResult, SKU.u_ParentBrandID);
+            var brand = utility.findBrand(periodResult, SKU.u_ParentBrandID);
             if(company.c_CompanyID === SKU.u_ParentCompanyID){
                 companyData.SKUs.push({
                     SKUName: brand.b_BrandName + SKU.u_SKUName,
@@ -301,6 +302,7 @@ exports.inventoryReport = function(allResults, seminarSetting){
     }
 }
 
+
 /**
  * Prepare tooltips data for SKU label on SKU perception map
  *
@@ -323,8 +325,8 @@ function prepareSKUTooltips(allResults, SKUID){
 
     var tooltips = [];
 
-    var currentPeriodSKU = findSKY(currentPeriodResult, SKUID);
-    var previousPeriodSKU = findSKY(perviousPeriodResult, SKUID);
+    var currentPeriodSKU = utility.findSKU(currentPeriodResult, SKUID);
+    var previousPeriodSKU = utility.findSKU(perviousPeriodResult, SKUID);
 
     //marke share
     var marketShareChange = compare(currentPeriodSKU.u_ValueSegmentShare[consts.ConsumerSegmentsMax] 
@@ -510,31 +512,7 @@ function extractMarketEvolutionChartData(allResults, dataExtractor){
     return result;
 }
 
-/**
- * Find brand by brandId
- *
- * @method findBrand
- * @param {Object} currentPeriodResult data from allResults
- * @param {Function} u_ParentBrandID
- * @return {Object} the brand data from allResults
- */
-function findBrand(currentPeriodResult, u_ParentBrandID){
-    for(var i=0; i<currentPeriodResult.p_Brands.length; i++){
-        var brand = currentPeriodResult.p_Brands[i];
-        if(brand.b_BrandID === u_ParentBrandID){
-            return brand;
-        }
-    }
-}
 
-function findSKY(periodResult, SKUID){
-    for(var i=0; i<periodResult.p_SKUs.length; i++){
-        var SKU = periodResult.p_SKUs[i];
-        if(SKUID === SKU.u_SKUID){
-            return SKU;
-        }
-    }
-}
 
 
 
