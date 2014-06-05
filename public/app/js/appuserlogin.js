@@ -3,13 +3,32 @@
  */
 
 // create module for custom directives
+<<<<<<< HEAD
+var marksimosapp = angular.module('marksimos', [ 'marksimos.component']);
+
+
+marksimosapp.factory('currentUser',function(){
+    var user = {
+        name : 'aaa',
+        company : 'Company A'
+    };
+
+    var seminar ={
+        currentRound : -3, // -3,-2, -1, 0, 1, 2, 3, 4, 5, 6
+        companylist : []
+    };
+    return {
+
+    }
+});
+=======
 var marksimosapp = angular.module('marksimos', [ 'marksimos.component', 'marksimos.factory']);
+>>>>>>> FETCH_HEAD
 
 
 
 // controller business logic
 marksimosapp.controller('userLoginController', function AppCtrl ($scope,  $timeout, $http, $window) {
-
     $scope.css = {
         newUser : {
             passwordPrompt : false
@@ -24,9 +43,8 @@ marksimosapp.controller('userLoginController', function AppCtrl ($scope,  $timeo
     };
 
     $scope.login = function(form){
-
         if(form.$valid){
-            $http.post('/api/login', $scope.data.newUser).success(function(data, status, headers, config){
+             $http.post('/api/login', $scope.data.newUser).success(function(data, status, headers, config){
                 if(data.status == 303){
                     $window.location.href = "/introduction" ;
                 }else if(data.status == 401){
@@ -37,13 +55,11 @@ marksimosapp.controller('userLoginController', function AppCtrl ($scope,  $timeo
                     form.password.$invalid = true;
                     $scope.css.newUser.passwordPrompt = true;
                 }
-
             }).error(function(data, status, headers, config){
 
             });
         }
     };
-
 
 });
 
