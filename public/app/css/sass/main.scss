@@ -726,8 +726,8 @@ body{
             margin : 0px -10px 10px -10px;
             @include border-radius(4px);
         }
+
         .table > thead > tr > th {
-            width : 125px;
             font-weight: bold;
         }
 
@@ -741,9 +741,12 @@ body{
             color:$color_main_body_company;
         }
 
-
         .table .tdgroup{
             padding-top: 20px;
+        }
+
+        .sku_table {
+            width : 125px;
         }
 
         .nav li {
@@ -799,16 +802,10 @@ body{
             }
         }
 
-        .investment_table {
-            th {
-                 width : 300px;
-                 font-weight: bold;
-            }
-
-        }
 
         .decision_button{
             @include user_decision_button;
+            margin: 0px 0px 20px 0px;
         }
 
     }

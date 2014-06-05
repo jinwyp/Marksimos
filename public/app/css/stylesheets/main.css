@@ -813,9 +813,8 @@ body a, body button {
   -o-border-radius: 4px;
   border-radius: 4px;
 }
-/* line 729, ../sass/main.scss */
+/* line 730, ../sass/main.scss */
 .mainbody .decision_box .table > thead > tr > th {
-  width: 125px;
   font-weight: bold;
 }
 /* line 736, ../sass/main.scss */
@@ -828,15 +827,19 @@ body a, body button {
   font-size: 12px;
   color: #373737;
 }
-/* line 745, ../sass/main.scss */
+/* line 744, ../sass/main.scss */
 .mainbody .decision_box .table .tdgroup {
   padding-top: 20px;
 }
-/* line 750, ../sass/main.scss */
+/* line 748, ../sass/main.scss */
+.mainbody .decision_box .sku_table {
+  width: 125px;
+}
+/* line 753, ../sass/main.scss */
 .mainbody .decision_box .nav li a {
   padding: 7px 15px;
 }
-/* line 755, ../sass/main.scss */
+/* line 758, ../sass/main.scss */
 .mainbody .decision_box .nav-pills li a {
   background-color: whitesmoke;
   color: #6f6f6f;
@@ -854,11 +857,11 @@ body a, body button {
   -webkit-border-bottom-right-radius: 0px;
   border-bottom-right-radius: 0px;
 }
-/* line 763, ../sass/main.scss */
+/* line 766, ../sass/main.scss */
 .mainbody .decision_box .nav-pills li a:hover, .mainbody .decision_box .nav-pills li a:focus {
   background-color: #dbe3f6;
 }
-/* line 771, ../sass/main.scss */
+/* line 774, ../sass/main.scss */
 .mainbody .decision_box .nav-pills li.active a,
 .mainbody .decision_box .nav-pills li.active a:hover,
 .mainbody .decision_box .nav-pills li.active a:focus {
@@ -866,11 +869,11 @@ body a, body button {
   font-family: "Helvetica", "Arial, sans-serif";
   background-color: #2f4e9b;
 }
-/* line 778, ../sass/main.scss */
+/* line 781, ../sass/main.scss */
 .mainbody .decision_box .brand_form {
   margin: 30px 0px;
 }
-/* line 782, ../sass/main.scss */
+/* line 785, ../sass/main.scss */
 .mainbody .decision_box h5 {
   color: #252525;
   font-family: "Helvetica", "Arial, sans-serif";
@@ -878,12 +881,12 @@ body a, body button {
   font-size: 16px;
   padding: 10px 0px 0px 10px;
 }
-/* line 790, ../sass/main.scss */
+/* line 793, ../sass/main.scss */
 .mainbody .decision_box .investment_form {
   margin-top: 20px;
   margin-left: 10px;
 }
-/* line 793, ../sass/main.scss */
+/* line 796, ../sass/main.scss */
 .mainbody .decision_box .investment_form label {
   text-align: left;
   color: #373737;
@@ -891,12 +894,7 @@ body a, body button {
   font-weight: normal;
   font-size: 13px;
 }
-/* line 803, ../sass/main.scss */
-.mainbody .decision_box .investment_table th {
-  width: 300px;
-  font-weight: bold;
-}
-/* line 810, ../sass/main.scss */
+/* line 806, ../sass/main.scss */
 .mainbody .decision_box .decision_button {
   color: #ffffff;
   font-family: "Helvetica", "Arial, sans-serif";
@@ -910,6 +908,7 @@ body a, body button {
   filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#ff19acfe', endColorstr='#ff19acfe', GradientType=0);
   filter: progid:DXImageTransform.Microsoft.gradient(enabled = false);
   border-color: #19acfe;
+  margin: 0px 0px 20px 0px;
 }
 /* line 78, ../sass/main.scss */
 .mainbody .decision_box .decision_button:hover, .mainbody .decision_box .decision_button:focus {
@@ -931,22 +930,22 @@ body a, body button {
   border-color: #298FFE;
 }
 
-/* line 821, ../sass/main.scss */
+/* line 818, ../sass/main.scss */
 .bgbrand {
   background-color: #fdfdfd;
 }
 
-/* line 825, ../sass/main.scss */
+/* line 822, ../sass/main.scss */
 .chartBox {
   width: 96%;
   height: 350px;
   margin: 20px 0px;
 }
-/* line 829, ../sass/main.scss */
+/* line 826, ../sass/main.scss */
 .chartBox .ac-title {
   text-align: center;
 }
-/* line 833, ../sass/main.scss */
+/* line 830, ../sass/main.scss */
 .chartBox .bar_chart_label {
   font-size: 10px;
 }

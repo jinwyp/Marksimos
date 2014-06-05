@@ -14,7 +14,8 @@ marksimosapp.controller('chartController', function AppCtrl ($scope,  $timeout, 
         menu : 'Decision',
         chartMenu : 'C4',
         additionalBudget : true,
-        currentBrandId : 0
+        currentBrandId : 0,
+        investmentInfo : false
     };
 
 
@@ -156,6 +157,7 @@ marksimosapp.controller('chartController', function AppCtrl ($scope,  $timeout, 
         $scope.data.currentCompany = data;
         $scope.css.currentBrandId = $scope.data.currentCompany.d_BrandsDecisions[0]._id;
         $scope.data.currentBrand = $scope.data.currentCompany.d_BrandsDecisions[0];
+
     });
 
     $scope.clickBrand = function(brand){
