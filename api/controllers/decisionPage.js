@@ -1,6 +1,7 @@
 var companyDecisionModel = require('../models/companyDecision.js');
 var brandDecisionModel = require('../models/brandDecision.js');
 var SKUDecisionModel = require('../models/SKUDecision.js');
+var allResultsModel = require('../models/allResults.js');
 var Q = require('q');
 var logger = require('../../logger.js');
 
@@ -12,9 +13,10 @@ exports.companyData = function(req, res, next){
     Q.all([
         companyDecisionModel.findOne(seminarId, period, companyId),
         brandDecisionModel.findAll(seminarId, period, companyId),
-        SKUDecisionModel.findAllInCompany(seminarId, period, companyId)
+        SKUDecisionModel.findAllInCompany(seminarId, period, companyId),
+        allResultsModel.findOne(seminarId)
     ])
-    .spread(function(companyDecision, brandDecisionList, SKUDecisionList){
+    .spread(function(companyDecision, brandDecisionList, SKUDecisionList, allResults){
         companyDecision = JSON.parse(JSON.stringify(companyDecision));
         brandDecisionList = JSON.parse(JSON.stringify(brandDecisionList));
         SKUDecisionList = JSON.parse(JSON.stringify(SKUDecisionList));
@@ -42,5 +44,21 @@ exports.companyData = function(req, res, next){
         return SKUDecisionList.filter(function(item){
             return item.d_BrandID === brandId;
         })
+    }
+
+    function getBasicInfo(){
+        /*
+        c_Capacity
+        */
+    }
+
+    function getProductPortfolio(allResults){
+        /*
+        u_TargetConsumerSegment
+        u_FactoryPrice
+        u_AverageIngredientsQuality
+        u_AverageTechnology
+        */
+
     }
 }

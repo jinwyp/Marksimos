@@ -29,3 +29,22 @@ exports.updateAllResults = function(seminarId, allResults){
     });
     return deferred.promise;
 };
+
+exports.findOne = function(seminarId){
+    var deferred = Q.defer();
+
+    if(!seminarId){
+        deferred.reject(new Error("Invalid argument seminarId."));
+    }else{
+        AllResults.findOne({
+            seminarId: seminarId
+        },
+        function(err, result){
+            if(err) return deferred.reject(err);
+
+            return deferred.resolve(result);
+        })
+    }
+
+    return deferred.promise;
+};
