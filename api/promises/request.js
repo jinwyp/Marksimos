@@ -38,7 +38,7 @@ exports.post = function(reqUrl, data){
 
         var jsonData;
         try{
-            console.log("............"+body);
+            //console.log("............"+body);
             jsonData = JSON.parse(body);          
         }catch(parseError){
             deferred.reject(parseError);

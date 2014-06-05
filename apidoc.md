@@ -29,9 +29,6 @@
 
 
 
-
-
-
 ## /api/init
 初始化game
 
@@ -42,19 +39,24 @@
   * market_share_in_volume
   * mind_space_share
   * shelf_space_share
+
+  * total_investment
   * net_profit_by_companies
   * return_on_investment
   * investments_versus_budget
+
   * market_sales_value
   * market_sales_volume
   * total_inventory_at_factory
   * total_inventory_at_trade
-  * segmentsLeaders_by_value_price_sensitive
+
+  * segments_leaders_by_value_price_sensitive
   * segments_leaders_by_value_pretenders
   * segments_leaders_by_value_moderate
-  * segments_leaders_by_value_goodLife
+  * segments_leaders_by_value_good_life
   * segments_leaders_by_value_ultimate
-  * segments_leaders_by_value_pramatic
+  * segments_leaders_by_value_pragmatic
+
   * growth_rate_in_volume
   * growth_rate_in_value
   * net_market_price
@@ -100,8 +102,35 @@
 ####:password
 ### response
 
+## /api/decision/sku/discontinue
+### POST
+### Parameters
+####: brand_id
+####: sku_id
+####: is_continue
+### response
+失败的Response
+
+    HTTP Status: 400, {status: 0, message: "Invalid parameter brand_id."}
+    HTTP Status: 500, {status: 0, message: 'update failed.'}
+
+成功的Response
+
+    HTTP Status: 200, {status: 1, message: 'update success.'}
+
+
+## /api/decision/sku/discontinue
+### POST
+### Parameters
+####: sku
+{
+
+}
+### response
+
+
 
 ## url
 ### method
-### parameters
+### Parameters
 ### response

@@ -12,18 +12,16 @@ app.directive('headerUser', function() {
             menuhome : '&clickHome',
             menureport : '&clickReport',
             menuscore : '&clickScore',
-            menudecision : '&clickDecision'
+            menudecision : '&clickDecision',
+            currentMenu : '='
         },
         restrict: 'AE',
         templateUrl: 'app/js/websitecomponent/headeruser.html',
         link: function (scope, element, attrs) {
 
-            scope.css = {
-                currentMenu : 'Home'
-            };
 
             scope.clickMenu = function(currentmenu){
-                scope.css.currentMenu = currentmenu;
+                scope.currentMenu = currentmenu;
 
                 if (currentmenu == 'Home'){
                     scope.menuhome();
@@ -34,7 +32,8 @@ app.directive('headerUser', function() {
                 }else if (currentmenu == 'Decision'){
                     scope.menudecision();
                 }
-            }
+            };
+
 
 
 

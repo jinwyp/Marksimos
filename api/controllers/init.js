@@ -6,7 +6,7 @@ var Q = require('q');
 var decisionCleaner = require('../convertors/decisionCleaner.js');
 var allResultsConvertor = require('../convertors/allResults.js');
 var allResultsCleaner = require('../convertors/allResultsCleaner.js');
-var decisionModel = require('../models/decision.js');
+var companyDecisionModel = require('../models/companyDecision.js');
 var brandDecisionModel = require('../models/brandDecision.js');
 var SKUDecisionModel = require('../models/SKUDecision.js');
 var allResultsModel = require('../models/allResults.js');
@@ -148,7 +148,7 @@ function extractChartData(results, settings){
     var segmentsLeadersByValueModerate = allResultsConvertor.segmentsLeadersByValue(results, 'moderate');
     var segmentsLeadersByValueGoodLife = allResultsConvertor.segmentsLeadersByValue(results, 'goodLife');
     var segmentsLeadersByValueUltimate = allResultsConvertor.segmentsLeadersByValue(results, 'ultimate');
-    var segmentsLeadersByValuePramatic = allResultsConvertor.segmentsLeadersByValue(results, 'pramatic');
+    var segmentsLeadersByValuePragmatic = allResultsConvertor.segmentsLeadersByValue(results, 'pragmatic');
 
     //Market evolution
     var growthRateInVolume = allResultsConvertor.growthRateInVolume(results);
@@ -230,8 +230,8 @@ function extractChartData(results, settings){
             chartData: segmentsLeadersByValueUltimate
         },
         {
-            chartName: 'segmentsLeadersByValuePramatic',
-            chartData: segmentsLeadersByValuePramatic
+            chartName: 'segmentsLeadersByValuePragmatic',
+            chartData: segmentsLeadersByValuePragmatic
         },
         {
             chartName: 'growthRateInVolume',
@@ -269,16 +269,28 @@ function extractChartData(results, settings){
  */
 function initDecision(seminarId) {
     var periods = config.initPeriods
-    var teams = config.initTeams;
+    var companies = config.initCompanies;
 
-    var queries = [];
-    periods.forEach(function(period) {
-        teams.forEach(function(team) {
-            queries.push(initOnePeriodDecison(seminarId, team, period));
-        })
+    var d = removeExistedData(seminarId);
+    d = d.then(function(){
+        var queries = [];
+        periods.forEach(function(period) {
+            companies.forEach(function(company) {
+                queries.push(initOnePeriodDecison(seminarId, company, period));
+            })
+        });
+        return Q.all(queries);
     });
 
-    return Q.all(queries);
+    return d;
+
+    function removeExistedData(seminarId){
+        return Q.all([
+                companyDecisionModel.remove(seminarId),
+                brandDecisionModel.remove(seminarId),
+                SKUDecisionModel.remove(seminarId)
+            ]);
+    }
 }
 
 /**
@@ -299,11 +311,7 @@ function initOnePeriodDecison(seminarId, team, period) {
         decision.seminarId = seminarId;
         decision.period = period;
 
-        var d = removeExistedData(seminarId);
-
-        d = d.then(function(){
-            decisionModel.save(decision);
-        });
+        var d = companyDecisionModel.save(decision);
 
         var brandDecisions = getBrandDecisions(result);
 
@@ -327,42 +335,41 @@ function initOnePeriodDecison(seminarId, team, period) {
         return d;
     });
 
-    function removeExistedData(seminarId){
-        return Q.all([decisionModel.remove(seminarId),
-            brandDecisionModel.remove(seminarId),
-            SKUDecisionModel.remove(seminarId)]);
-    }
-
     /**
-     * @param {Object} result decision of one company in one period
+     * Convert onePeriodResult to a decision object which can be saved to db
+     * @param {Object} onePeriodResult decision of one company in one period
      */
-    function getDecision(result){
-        var brandIds = result.d_BrandsDecisions.map(function(brand){
+    function getDecision(onePeriodResult){
+        var brandIds = onePeriodResult.d_BrandsDecisions.map(function(brand){
             return brand.d_BrandID;
         });
 
         return {
-            d_CID                        : result.d_CID,
-            d_CompanyName                : result.d_CompanyName,
+            d_CID                        : onePeriodResult.d_CID,
+            d_CompanyName                : onePeriodResult.d_CompanyName,
             d_BrandsDecisions            : brandIds,
-            d_IsAdditionalBudgetAccepted : result.d_IsAdditionalBudgetAccepted,
-            d_RequestedAdditionalBudget  : result.d_RequestedAdditionalBudget,
-            d_InvestmentInEfficiency     : result.d_InvestmentInEfficiency,
-            d_InvestmentInTechnology     : result.d_InvestmentInTechnology,
-            d_InvestmentInServicing      : result.d_InvestmentInServicing
+            d_IsAdditionalBudgetAccepted : onePeriodResult.d_IsAdditionalBudgetAccepted,
+            d_RequestedAdditionalBudget  : onePeriodResult.d_RequestedAdditionalBudget,
+            d_InvestmentInEfficiency     : onePeriodResult.d_InvestmentInEfficiency,
+            d_InvestmentInTechnology     : onePeriodResult.d_InvestmentInTechnology,
+            d_InvestmentInServicing      : onePeriodResult.d_InvestmentInServicing
         }
     }
 
-    function getBrandDecisions(result){
+    /**
+     * Convert onePeriodResult to an array of brandDecision objects which can be saved to db
+     * @param {Object} onePeriodResult decision of one company in one period
+     */
+    function getBrandDecisions(onePeriodResult){
         var results = [];
 
-        for(var i=0; i<result.d_BrandsDecisions.length; i++){
-            var brandDecision = result.d_BrandsDecisions[i];
+        for(var i=0; i<onePeriodResult.d_BrandsDecisions.length; i++){
+            var brandDecision = onePeriodResult.d_BrandsDecisions[i];
             var SKUIDs = brandDecision.d_SKUsDecisions.map(function(SKUDecision){
                 return SKUDecision.d_SKUID;
             })
             results.push({
-                d_CID: result.d_CID,
+                d_CID: onePeriodResult.d_CID,
                 d_BrandID       : brandDecision.d_BrandID,
                 d_BrandName     : brandDecision.d_BrandName,
                 d_SalesForce    : brandDecision.d_SalesForce,
@@ -373,20 +380,25 @@ function initOnePeriodDecison(seminarId, team, period) {
         return results;
     }
 
-    function getSKUDecisions(result){
+    /**
+     * Convert onePeriodResult to an array of SKUDecision objects which can be saved to db
+     * @param {Object} onePeriodResult decision of one company in one period
+     */
+    function getSKUDecisions(onePeriodResult){
         var results = [];
 
-        for(var i=0; i<result.d_BrandsDecisions.length; i++){
-            var brandDecision = result.d_BrandsDecisions[i];
+        for(var i=0; i<onePeriodResult.d_BrandsDecisions.length; i++){
+            var brandDecision = onePeriodResult.d_BrandsDecisions[i];
             for(var j=0; j<brandDecision.d_SKUsDecisions.length; j++){
                 var SKUDecision = brandDecision.d_SKUsDecisions[j];
                 results.push({
-                    d_CID: result.d_CID,
+                    d_CID: onePeriodResult.d_CID,
                     d_BrandID: brandDecision.d_BrandID,
                     d_SKUID: SKUDecision.d_SKUID,
                     d_SKUName: SKUDecision.d_SKUName,
                     d_Advertising: SKUDecision.d_Advertising,
                     d_AdditionalTradeMargin: SKUDecision.d_AdditionalTradeMargin,
+                    d_FactoryPrice: SKUDecision.d_FactoryPrice,
                     d_ConsumerPrice: SKUDecision.d_ConsumerPrice,
                     d_RepriceFactoryStocks: SKUDecision.d_RepriceFactoryStocks,
                     d_IngredientsQuality: SKUDecision.d_IngredientsQuality,

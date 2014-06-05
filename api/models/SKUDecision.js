@@ -16,10 +16,9 @@ var tOneSKUDecisionSchema = new Schema({
     d_ConsumerPrice: Number,
     d_RepriceFactoryStocks: Boolean,
     d_IngredientsQuality: Number,
-    d_PackSize: String,
+    d_PackSize: Number,
     d_ProductionVolume: Number,
     d_PromotionalBudget: Number,
-
     d_PromotionalEpisodes: [Boolean],
     d_TargetConsumerSegment: Number,
     d_Technology: Number,
@@ -27,7 +26,7 @@ var tOneSKUDecisionSchema = new Schema({
     d_TradeExpenses: Number,
     d_WholesalesBonusMinVolume: Number,
     d_WholesalesBonusRate: Number,
-    d_WarrantyLength: String,
+    d_WarrantyLength: Number,
 }); 
 
 var SKUDecision = mongoose.model('SKUDecision', tOneSKUDecisionSchema);
@@ -41,7 +40,7 @@ exports.remove =  function(seminarId){
             return deferred.resolve(null);
         }
     });
-    return deferred;
+    return deferred.promise;
 }
 
 exports.save = function(decision){
@@ -58,11 +57,13 @@ exports.save = function(decision){
 };
 
 
-exports.findBySKU = function(seminarId, period, SKUID){
+exports.findOne = function(seminarId, period, companyId, brandId, SKUID){
     var deferred = Q.defer();
-    SKUDecision.find({
-        seminarId: seminarId, 
-        period: period, 
+    SKUDecision.findOne({
+        seminarId: seminarId,
+        period: period,
+        d_CID: companyId,
+        d_BrandID: brandId,
         d_SKUID: SKUID
     }, function(err, decision){
         if(err){
@@ -77,13 +78,9 @@ exports.findBySKU = function(seminarId, period, SKUID){
 exports.findAll = function(seminarId, period, companyId, brandId){
     var deferred = Q.defer();
     if(!seminarId){
-        process.nextTick(function(){
-            deferred.reject(new Error("Invalid argument seminarId"));
-        })
+        deferred.reject(new Error("Invalid argument seminarId"));
     }else if(period===undefined){
-        process.nextTick(function(){
-            deferred.reject(new Error("Invalid argument period."));
-        })
+        deferred.reject(new Error("Invalid argument period."));
     }else{
         SKUDecision.find({
             seminarId: seminarId,
@@ -99,4 +96,84 @@ exports.findAll = function(seminarId, period, companyId, brandId){
         })
     }
     return deferred.promise;
-}
+};
+
+exports.findAllInCompany = function(seminarId, period, companyId){
+    var deferred = Q.defer();
+    if(!seminarId){
+        deferred.reject(new Error("Invalid argument seminarId"));
+    }else if(period===undefined){
+        deferred.reject(new Error("Invalid argument period."));
+    }else if(companyId === undefined){
+        deferred.reject(new Error("Invalid argument companyId."));
+    }else{
+        SKUDecision.find({
+            seminarId: seminarId,
+            period: period,
+            d_CID: companyId,
+        }, function(err, result){
+            if(err){
+                return deferred.reject(err);
+            }else{
+                return deferred.resolve(result);
+            }
+        })
+    }
+    return deferred.promise;
+};
+
+exports.updateSKU = function(seminarId, period, companyId, brandId, SKUID, SKU){
+    var deferred = Q.defer();
+
+    if(!seminarId){
+        deferred.reject(new Error("Invalid argument seminarId."));
+    }else if(period===undefined){
+        deferred.reject(new Error("Invalid argument period."));
+    }else if(!companyId){
+        deferred.reject(new Error("Invalid argument companyId."));
+    }else if(!brandId){
+        deferred.reject(new Error("Invalid argument brandId."));
+    }else if(!SKUID){
+        deferred.reject(new Error("Invalid argument SKUID."));
+    }else if(SKU===undefined){
+        deferred.reject(new Error("Invalid argument SKU."))
+    }else{
+        SKUDecision.update({
+            seminarId: seminarId,
+            period: period,
+            d_CID: companyId,
+            d_BrandID: brandId,
+            d_SKUID: SKUID
+        },
+        SKU,
+        function(err, numAffected){
+            if(err){
+                return deferred.reject(err);
+            }
+
+            return deferred.resolve(numAffected);
+        })
+    }
+    return deferred.promise;
+};
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

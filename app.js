@@ -31,9 +31,8 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use(function(req, res, next){
     req.session.userId = 'testid';
     req.session.seminarId = 'TTT';
-    req.session.companyId = 2;
-    req.session.period = 0;
-    req.session.team = 0;
+    req.session.companyId = 1;
+    req.session.period = -3;
     next();
 })
 

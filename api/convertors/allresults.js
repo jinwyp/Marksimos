@@ -130,7 +130,9 @@ exports.segmentsLeadersByValue = function(allResults, segment){
         return b.valueSegmentShare - a.valueSegmentShare;
     })
 
-    return valueSegmentShare.slice(0, 5);
+    return {
+        chartData: valueSegmentShare.slice(0, 5)
+    };
 }
 
 //Market evolution
@@ -162,17 +164,18 @@ exports.segmentValueShareTotalMarket = function(allResults){
     var segmentNames = config.segmentNames;
 
     var results = {
-        segmentNames: [],
-        charData: []
+        chartData: []
     };
     
     for(var i=0; i<segmentNum; i++){
         var segmentName = segmentNames[i];
-        results.segmentNames.push(segmentName);
-        results.charData.push(market.m_ValueSegmentShare[i]);
+        results.chartData.push({
+            segmentName: segmentName,
+            value: market.m_ValueSegmentShare[i]
+        });
     }
     return results;
-}
+};
 
 /**
  * Generate perception map chart
