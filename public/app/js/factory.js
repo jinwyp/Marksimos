@@ -20,11 +20,25 @@ app.factory('currentUser',function(){
     };
 
     return factory;
-
-
 });
 
+app.factory('company',function($http){
 
+    var apiPath = '/api/';
+
+    var factory = {
+        getCompany : function(){
+            return $http.get(apiPath + 'companydata').then(function(result){
+                console.log(result.data);
+
+                return result.data.decision.companyDecision;
+            });
+        }
+    };
+
+
+    return factory;
+});
 
 
 
@@ -316,7 +330,7 @@ app.factory('report',function($http){
         // Chart C1
         segmentsLeadersByValuePriceSensitive : function(){
             return $http.get(apiPath + 'chart/segments_leaders_by_value_price_sensitive').then(function(result){
-                console.log(result.data);
+//                console.log(result.data);
 
                 return chartTool(result.data, 2);
             });
@@ -382,7 +396,7 @@ app.factory('report',function($http){
 
         netMarketPrice : function(){
             return $http.get(apiPath + 'chart/net_market_price').then(function(result){
-                console.log(result.data);
+//                console.log(result.data);
 
                 return chartTool(result.data, 0);
             });
@@ -390,7 +404,7 @@ app.factory('report',function($http){
 
         segmentValueShareTotalMarket : function(){
             return $http.get(apiPath + 'chart/segment_value_share_total_market').then(function(result){
-                console.log(result.data);
+//                console.log(result.data);
 
                 return chartTool(result.data, 2);
             });
