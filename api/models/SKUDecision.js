@@ -76,50 +76,20 @@ exports.findOne = function(seminarId, period, companyId, brandId, SKUID){
 };
 
 exports.findAll = function(seminarId, period, companyId, brandId){
-    var deferred = Q.defer();
-    if(!seminarId){
-        deferred.reject(new Error("Invalid argument seminarId"));
-    }else if(period===undefined){
-        deferred.reject(new Error("Invalid argument period."));
-    }else{
-        SKUDecision.find({
-            seminarId: seminarId,
-            period: period,
-            d_CID: companyId,
-            d_BrandID: brandId
-        }, function(err, result){
-            if(err){
-                return deferred.reject(err);
-            }else{
-                return deferred.resolve(result);
-            }
-        })
-    }
-    return deferred.promise;
+    return SKUDecision.find({
+        seminarId: seminarId,
+        period: period,
+        d_CID: companyId,
+        d_BrandID: brandId
+    }).sort({d_SKUID: 'asc'}).exec();
 };
 
 exports.findAllInCompany = function(seminarId, period, companyId){
-    var deferred = Q.defer();
-    if(!seminarId){
-        deferred.reject(new Error("Invalid argument seminarId"));
-    }else if(period===undefined){
-        deferred.reject(new Error("Invalid argument period."));
-    }else if(companyId === undefined){
-        deferred.reject(new Error("Invalid argument companyId."));
-    }else{
-        SKUDecision.find({
-            seminarId: seminarId,
-            period: period,
-            d_CID: companyId,
-        }, function(err, result){
-            if(err){
-                return deferred.reject(err);
-            }else{
-                return deferred.resolve(result);
-            }
-        })
-    }
-    return deferred.promise;
+    return SKUDecision.find({
+        seminarId: seminarId,
+        period: period,
+        d_CID: companyId,
+    }).sort({d_SKUID: 'asc'}).exec();
 };
 
 exports.updateSKU = function(seminarId, period, companyId, brandId, SKUID, SKU){

@@ -5,38 +5,6 @@ exports.convert = function(decision){
     convertBrandName(decision);
 }
 
-exports.productPortfolio = function(decision, seminarSetting){
-    var productPortfolio = [];
-
-    for(var i=0; i<decision.d_BrandsDecisions.length; i++){
-        var brandDecision = decision.d_BrandsDecisions[i];
-        for(var j=0; j<brandDecision.d_SKUsDecisions.length; j++){
-            var SKUDecision = brandDecision.d_SKUsDecisions[j];
-            var productPortfolioForSKU = {};
-            productPortfolioForSKU.SKUName = brandDecision.d_BrandName + SKUDecision.d_SKUName;
-            productPortfolioForSKU.targetSegment = config.segmentNamesOnProductPortfolio[SKUDecision.d_TargetConsumerSegment];
-
-            if(seminarSetting.simulationVariant === 'FMCG'){
-                productPortfolio.factoryPrice = SKUDecision.d_FactoryPrice[0] + ' / (' 
-                    + SKUDecision.d_FactoryPrice[0]/consts.ActualSize[SKUDecision.d_PackSize]
-                    + ')';
-            }else{
-                productPortfolio.factoryPrice = SKUDecision.d_FactoryPrice[0];
-            }
-
-            productPortfolio.ingredientsQuality = SKUDecision.d_IngredientsQuality;
-            productPortfolio.technologyLevel = SKUDecision.d_Technology;
-            productPortfolio.productionVolume = SKUDecision.d_ProductionVolume;
-            productPortfolio.averageFactoryPrice = '';
-            productPortfolio.averageIngredientsQuality = '';
-            productPortfolio.averageTechnologyLevel = '';
-            productPortfolio.totalInventoryVolumeAtFactory = '';
-        }
-    }
-
-    return productPortfolio;
-};
-
 function convertCompanyName(decision){
     decision.d_CompanyName = decision.d_CompanyName.split('');
     append(decision.d_CompanyName, 16, '\u0000');

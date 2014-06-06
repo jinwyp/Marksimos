@@ -41,26 +41,11 @@ exports.save = function(decision){
 };
 
 exports.findAll = function(seminarId, period, companyId){
-    var deferred = Q.defer();
-
-    if(!seminarId){
-        deferred.reject(new Error("Invalid argument seminarId"));
-    }else if(period===undefined){
-        deferred.reject(new Error("Invalid argument period."));
-    }else{
-        BrandDecision.find({
-            seminarId: seminarId,
-            period: period,
-            d_CID: companyId
-        }, function(err, result){
-            if(err){
-                return deferred.reject(err);
-            }else{
-                return deferred.resolve(result);
-            }
-        })
-    }
-    return deferred.promise;
+    return BrandDecision.find({
+        seminarId: seminarId,
+        period: period,
+        d_CID: companyId
+    }).sort({d_BrandID: 'asc'}).exec();
 };
 
 exports.updateBrand = function(seminarId, period, companyId, brandId, brand){

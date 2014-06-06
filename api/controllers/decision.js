@@ -97,7 +97,7 @@ exports.submitDecision = function(req, res, next){
         insertEmptyBrandsAndSKUs(result);
         //convert result to data format that can be accepted by CGI service
         decisionConvertor.convert(result);
-
+        //return result;
         var reqUrl = url.resolve(config.cgiService, '/cgi-bin/decisions.exe');
         return request.post(reqUrl, {
             decision: JSON.stringify(result),

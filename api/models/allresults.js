@@ -15,6 +15,10 @@ var allResultsSchema = new Schema({
 
 var AllResults = mongoose.model("AllResults", allResultsSchema);
 
+exports.remove = function(seminarId){
+    return AllResults.remove({seminarId: seminarId}).exec()
+};
+
 
 exports.updateAllResults = function(seminarId, allResults){
     var result = new AllResults({seminarId: seminarId, allResults: allResults});

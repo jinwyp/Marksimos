@@ -26,10 +26,6 @@ exports.companyData = function(req, res, next){
 
         result.decision = {};
 
-        for(var i=0; i<brandDecisionList.length; i++){
-            brandDecisionList[i].d_SKUsDecisions = findSKUDecision(brandDecisionList[i].d_BrandID, SKUDecisionList);
-        }
-
         companyDecision.d_BrandsDecisions = brandDecisionList;
   
         result.decision.companyDecision = companyDecision;
@@ -39,35 +35,4 @@ exports.companyData = function(req, res, next){
         logger.error(err);
         res.send(500, {message: "get company data failed."});
     });
-
-    function findSKUDecision(brandId, SKUDecisionList){
-        return SKUDecisionList.filter(function(item){
-            return item.d_BrandID === brandId;
-        })
-    }
-
-    function getBasicInfo(){
-        /*
-        c_Capacity
-        */
-    }
-
-    function getProductPortfolio(allResults){
-        /*
-        u_TargetConsumerSegment
-        u_FactoryPrice
-        u_AverageIngredientsQuality
-        u_AverageTechnology
-        */
-
-        var productPortfolio = {};
-
-        var lastPeriodResult = allResults.allResults[allResults.allResults.length];
-        for(var i=0; i<lastPeriodResult.onePeriodResult.p_SKUs.length; i++){
-            var SKU = lastPeriodResult.onePeriodResult.p_SKUs[i];
-            productPortfolio.SKUName = '';
-            productPortfolio.u_TargetConsumerSegment = SKU.u_TargetConsumerSegment;
-
-        }
-    }
 }
