@@ -247,12 +247,14 @@ function queryAllResults(seminarId){
     periods.forEach(function(period) {
         queries.push(queryOnePeriodResult(seminarId, period));
     });
+
     return Q.all(queries)
     .then(function(allResults){
+        console.log(allResults[0]);
         var tempAllResults = [];
         for(var i=0; i<allResults.length; i++){
             tempAllResults.push({
-                period: periods[i],
+                periodId: periods[i],
                 onePeriodResult: allResults[i]
             })
         }

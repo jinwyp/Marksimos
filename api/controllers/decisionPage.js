@@ -26,6 +26,17 @@ exports.companyData = function(req, res, next){
 
         result.decision = {};
 
+        brandDecisionList.forEach(function(brandDecision){
+            var tempSKUDecisionList = [];
+            for(var i=0; i<SKUDecisionList.length; i++){
+                var SKUDecision = SKUDecisionList[i];
+                if(SKUDecision.d_BrandID === brandDecision.d_BrandID){
+                    tempSKUDecisionList.push(SKUDecision);
+                }
+            }
+            brandDecision.d_SKUsDecisions = tempSKUDecisionList;
+        })
+
         companyDecision.d_BrandsDecisions = brandDecisionList;
   
         result.decision.companyDecision = companyDecision;
