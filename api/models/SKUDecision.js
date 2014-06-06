@@ -26,7 +26,7 @@ var tOneSKUDecisionSchema = new Schema({
     d_TradeExpenses: Number,
     d_WholesalesBonusMinVolume: Number,
     d_WholesalesBonusRate: Number,
-    d_WarrantyLength: Number,
+    d_WarrantyLength: Number
 }); 
 
 var SKUDecision = mongoose.model('SKUDecision', tOneSKUDecisionSchema);
@@ -110,7 +110,7 @@ exports.findAllInCompany = function(seminarId, period, companyId){
         SKUDecision.find({
             seminarId: seminarId,
             period: period,
-            d_CID: companyId,
+            d_CID: companyId
         }, function(err, result){
             if(err){
                 return deferred.reject(err);
