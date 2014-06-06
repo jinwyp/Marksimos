@@ -534,19 +534,24 @@
                                             </tr>
                                         </thead>
 
-
                                         <tbody>
                                             <tr >
                                                 <td>Discontinue?</td>
-                                                <td ng-repeat="sku in data.currentBrand.d_SKUsDecisions"><input type="checkbox" ng-model="sku.d_ToDrop" ng-click="leaveSkuInput(sku, 'd_ToDrop', sku.d_ToDrop)"></td>
+                                                <td ng-repeat="sku in data.currentBrand.d_SKUsDecisions">
+                                                    <input type="checkbox" ng-model="sku.d_ToDrop" ng-change="leaveSkuInput(sku, 'd_ToDrop', sku.d_ToDrop)">
+                                                </td>
                                             </tr>
                                             <tr >
                                                 <td class="tdgroup">Processing Technology</td>
-                                                <td ng-repeat="sku in data.currentBrand.d_SKUsDecisions"><input type="text" class="form-control input-sm" ng-model="sku.d_Technology" ng-blur="leaveSkuInput(sku, 'd_Technology', sku.d_Technology)"></td>
+                                                <td ng-repeat="sku in data.currentBrand.d_SKUsDecisions">
+                                                    <input type="text" class="form-control input-sm" ng-model="sku.d_Technology" ng-blur="leaveSkuInput(sku, 'd_Technology', sku.d_Technology)">
+                                                </td>
                                             </tr>
                                             <tr>
                                                 <td>Ingredients Quality</td>
-                                                <td ng-repeat="sku in data.currentBrand.d_SKUsDecisions"><input type="text" class="form-control input-sm" ng-model="sku.d_IngredientsQuality"></td>
+                                                <td ng-repeat="sku in data.currentBrand.d_SKUsDecisions">
+                                                    <input type="text" class="form-control input-sm" ng-model="sku.d_IngredientsQuality" ng-blur="leaveSkuInput(sku, 'd_IngredientsQuality', sku.d_IngredientsQuality)">
+                                                </td>
                                             </tr>
                                             <tr>
                                                 <td>Packaging Size</td>
@@ -558,51 +563,71 @@
                                             </tr>
                                             <tr>
                                                 <td class="tdgroup">Production Volume (mln Packs)</td>
-                                                <td ng-repeat="sku in data.currentBrand.d_SKUsDecisions"><input type="text" class="form-control input-sm" ng-model="sku.d_ProductionVolume"></td>
+                                                <td ng-repeat="sku in data.currentBrand.d_SKUsDecisions">
+                                                    <input type="text" class="form-control input-sm" ng-model="sku.d_ProductionVolume" ng-blur="leaveSkuInput(sku, 'd_ProductionVolume', sku.d_ProductionVolume)">
+                                                </td>
                                             </tr>
                                             <tr>
                                                 <td>Manufacturer Price ($)</td>
-                                                <td ng-repeat="sku in data.currentBrand.d_SKUsDecisions"><input type="text" class="form-control input-sm" ng-model="sku.d_FactoryPrice[sku.d_FactoryPrice.length-1]"></td>
+                                                <td ng-repeat="sku in data.currentBrand.d_SKUsDecisions">
+                                                    <input type="text" class="form-control input-sm" ng-model="sku.d_FactoryPrice[sku.d_FactoryPrice.length-1]" ng-blur="leaveSkuInput(sku, 'd_FactoryPrice', sku.d_FactoryPrice[sku.d_FactoryPrice.length-1])">
+                                                </td>
                                             </tr>
                                             <tr>
                                                 <td>Reprice Factory Stock?</td>
-                                                <td ng-repeat="sku in data.currentBrand.d_SKUsDecisions"><input type="checkbox" ng-model="sku.d_RepriceFactoryStocks"></td>
+                                                <td ng-repeat="sku in data.currentBrand.d_SKUsDecisions">
+                                                    <input type="checkbox" ng-model="sku.d_RepriceFactoryStocks" ng-change="leaveSkuInput(sku, 'd_RepriceFactoryStocks', sku.d_RepriceFactoryStocks)">
+                                                </td>
                                             </tr>
                                             <tr>
                                                 <td class="tdgroup">Consumer Communication ($mln)</td>
-                                                <td ng-repeat="sku in data.currentBrand.d_SKUsDecisions"><input type="text" class="form-control input-sm" ng-model="sku.d_Advertising"></td>
+                                                <td ng-repeat="sku in data.currentBrand.d_SKUsDecisions">
+                                                    <input type="text" class="form-control input-sm" ng-model="sku.d_Advertising" ng-blur="leaveSkuInput(sku, 'd_Advertising', sku.d_Advertising)">
+                                                </td>
                                             </tr>
                                             <tr>
                                                 <td>Target Consumer Segment</td>
                                                 <td ng-repeat="sku in data.currentBrand.d_SKUsDecisions">
-                                                    <select ng-model="sku.d_TargetConsumerSegment" ng-options="segment.id as segment.name for segment in data.userSegment"></select>
+                                                    <select ng-model="sku.d_TargetConsumerSegment" ng-options="segment.id as segment.name for segment in data.userSegment" ng-change="leaveSkuInput(sku, 'd_TargetConsumerSegment', sku.d_TargetConsumerSegment)"></select>
                                                 </td>
                                             </tr>
                                             <tr>
                                                 <td class="tdgroup">Consumer Promotions ($mln) </td>
-                                                <td ng-repeat="sku in data.currentBrand.d_SKUsDecisions"><input type="text" class="form-control input-sm" ng-model="sku.d_PromotionalBudget"></td>
+                                                <td ng-repeat="sku in data.currentBrand.d_SKUsDecisions">
+                                                    <input type="text" class="form-control input-sm" ng-model="sku.d_PromotionalBudget" ng-blur="leaveSkuInput(sku, 'd_PromotionalBudget', sku.d_PromotionalBudget)">
+                                                </td>
                                             </tr>
                                             <tr>
                                                 <td>Consumer Promotions Schedule </td>
                                                 <td ng-repeat="sku in data.currentBrand.d_SKUsDecisions">week
-                                                    <span ng-repeat="week in sku.d_PromotionalEpisodes track by $index"><input type="checkbox" ng-model="week"></span>
+                                                    <span ng-repeat="week in sku.d_PromotionalEpisodes track by $index">
+                                                        <input type="checkbox" ng-model="week" ng-change="leaveSkuInput(sku, 'd_PromotionalEpisodes', sku.d_PromotionalEpisodes, week, $index)">
+                                                    </span>
                                                 </td>
                                             </tr>
                                             <tr>
                                                 <td class="tdgroup">Trade Expenses ($min)</td>
-                                                <td ng-repeat="sku in data.currentBrand.d_SKUsDecisions"><input type="text" class="form-control input-sm" ng-model="sku.d_TradeExpenses"></td>
+                                                <td ng-repeat="sku in data.currentBrand.d_SKUsDecisions">
+                                                    <input type="text" class="form-control input-sm" ng-model="sku.d_TradeExpenses" ng-blur="leaveSkuInput(sku, 'd_TradeExpenses', sku.d_TradeExpenses)">
+                                                </td>
                                             </tr>
                                             <tr>
                                                 <td>Additional Trade Margin (%)</td>
-                                                <td ng-repeat="sku in data.currentBrand.d_SKUsDecisions"><input type="text" class="form-control input-sm" ng-model="sku.d_AdditionalTradeMargin"></td>
+                                                <td ng-repeat="sku in data.currentBrand.d_SKUsDecisions">
+                                                    <input type="text" class="form-control input-sm" ng-model="sku.d_AdditionalTradeMargin" ng-blur="leaveSkuInput(sku, 'd_AdditionalTradeMargin', sku.d_AdditionalTradeMargin)">
+                                                </td>
                                             </tr>
                                             <tr>
                                                 <td class="tdgroup">Wholesale Minimum Volume (min Packs)</td>
-                                                <td ng-repeat="sku in data.currentBrand.d_SKUsDecisions"><input type="text" class="form-control input-sm" ng-model="sku.d_WholesalesBonusMinVolume"></td>
+                                                <td ng-repeat="sku in data.currentBrand.d_SKUsDecisions">
+                                                    <input type="text" class="form-control input-sm" ng-model="sku.d_WholesalesBonusMinVolume" ng-blur="leaveSkuInput(sku, 'd_WholesalesBonusMinVolume', sku.d_WholesalesBonusMinVolume)">
+                                                </td>
                                             </tr>
                                             <tr>
                                                 <td>Wholesale Bonus Rate</td>
-                                                <td ng-repeat="sku in data.currentBrand.d_SKUsDecisions"><input type="text" class="form-control input-sm" ng-model="sku.d_WholesalesBonusRate"></td>
+                                                <td ng-repeat="sku in data.currentBrand.d_SKUsDecisions">
+                                                    <input type="text" class="form-control input-sm" ng-model="sku.d_WholesalesBonusRate" ng-blur="leaveSkuInput(sku, 'd_WholesalesBonusRate', sku.d_WholesalesBonusRate)">
+                                                </td>
                                             </tr>
 
                                         </tbody>
