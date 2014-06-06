@@ -34,6 +34,15 @@ marksimosapp.controller('chartController', function AppCtrl ($scope,  $timeout, 
     $scope.data = {
         currentCompany : {},
         currentBrand : {},
+        updateSku : {},
+        userSegment : [
+            {id:1, name:'1 Price Sensitive'},
+            {id:2, name:'2 Pretenders'},
+            {id:3, name:'3 Moderate'},
+            {id:4, name:'4 Good Life'},
+            {id:5, name:'5 Ultimate'},
+            {id:6, name:'6 Pragmatic'}
+        ],
         chartA11MarketShareInValue : {
             type : report.getChartType1(),
             config : report.getChartConfig1(),
@@ -164,6 +173,22 @@ marksimosapp.controller('chartController', function AppCtrl ($scope,  $timeout, 
         $scope.css.currentBrandId = brand._id;
         $scope.data.currentBrand = brand;
     };
+
+    $scope.leaveSkuInput = function(sku, fieldname, fielddata){
+        $scope.data.updateSku = {
+            brand_id : sku.d_BrandID,
+            sku_id : sku.d_SKUID,
+            sku_data : {}
+        };
+        $scope.data.updateSku.sku_data[fieldname] = fielddata;
+        console.log($scope.data.updateSku);
+
+        company.updateSku($scope.data.updateSku).success(function(data){
+            console.log(data);
+        });
+    };
+
+
 
     // Chart A1
     $scope.data.chartA11MarketShareInValue.config.title = 'Market Share in Value (%)';
