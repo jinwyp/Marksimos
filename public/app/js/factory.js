@@ -33,6 +33,9 @@ app.factory('company',function($http){
 
                 return result.data.decision.companyDecision;
             });
+        },
+        updateSku : function(postdata){
+            return $http.post(apiPath + 'sku/decision/', postdata);
         }
     };
 

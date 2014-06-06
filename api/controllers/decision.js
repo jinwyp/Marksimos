@@ -163,11 +163,12 @@ exports.updateSKUDecision = function(req, res, next){
     }
 
     if(!SKUID){
+        console.log(SKUID);
         return res.send(400, {status: 0, message: "Invalid parameter sku_id."});
     }
 
     if(!SKU){
-        return res.send(400, {status: 0, message: "Invalid parameter sku"});
+        return res.send(400, {status: 0, message: "Invalid parameter skudata"});
     }
 
     if(!seminarId){
@@ -182,13 +183,14 @@ exports.updateSKUDecision = function(req, res, next){
         return res.send(400, {status: 0, message: "Invalid period in session."});
     }
 
-    var jsonSKU = null;
-    try{
-        jsonSKU = JSON.parse(SKU);
-    }catch(err){
-        logger.error(err);
-        return res.send(400, {status: 0, message: "Invalid parameter sku"});
-    }
+    var jsonSKU = SKU;
+//    try{
+//        console.log(SKU);
+//        jsonSKU = JSON.parse(SKU);
+//    }catch(err){
+//        logger.error(err);
+//        return res.send(400, {status: 0, message: "Invalid parameter sku"});
+//    }
 
     //create a SKU object using the data posted by the client
     var tempSKU = createSKU(jsonSKU);

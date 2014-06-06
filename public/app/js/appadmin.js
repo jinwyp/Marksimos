@@ -31,10 +31,10 @@ marksimosapp.controller('adminController', function AppCtrl ($scope, $timeout, $
             licence : ""
         },
         distributors : [
-            {id:001, name:"Algeria", email:"Algeria@gmail.com", licence:100},
-            {id:002, name:"Antigua", email:"Antigua@gmail.com", licence:200},
-            {id:003, name:"Belgium", email:"Belgium@gmail.com", licence:400},
-            {id:004, name:"Brazil", email:"Brazil@gmail.com", licence:10}
+            {id:1, name:"Algeria", email:"Algeria@gmail.com", licence:1},
+            {id:2, name:"Antigua", email:"Antigua@gmail.com", licence:2},
+            {id:3, name:"Belgium", email:"Belgium@gmail.com", licence:4},
+            {id:4, name:"Brazil", email:"Brazil@gmail.com", licence:10}
         ],
 
         newFacilitator : {
@@ -47,10 +47,10 @@ marksimosapp.controller('adminController', function AppCtrl ($scope, $timeout, $
             licence : ""
         },
         facilitators : [
-            {id:001, name:"Algeria", email:"Algeria@gmail.com", licence:100, distributor:"Mike"},
-            {id:002, name:"Antigua", email:"Antigua@gmail.com", licence:200, distributor:"Mike"},
-            {id:003, name:"Belgium", email:"Belgium@gmail.com", licence:400, distributor:"Mike"},
-            {id:004, name:"Brazil", email:"Brazil@gmail.com", licence:10, distributor:"Mike"}
+            {id:1, name:"Algeria", email:"Algeria@gmail.com", licence:1, distributor:"Mike"},
+            {id:2, name:"Antigua", email:"Antigua@gmail.com", licence:2, distributor:"Mike"},
+            {id:3, name:"Belgium", email:"Belgium@gmail.com", licence:4, distributor:"Mike"},
+            {id:4, name:"Brazil", email:"Brazil@gmail.com", licence:10, distributor:"Mike"}
         ],
 
 

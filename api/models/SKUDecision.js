@@ -26,7 +26,7 @@ var tOneSKUDecisionSchema = new Schema({
     d_TradeExpenses: Number,
     d_WholesalesBonusMinVolume: Number,
     d_WholesalesBonusRate: Number,
-    d_WarrantyLength: Number,
+    d_WarrantyLength: Number
 }); 
 
 var SKUDecision = mongoose.model('SKUDecision', tOneSKUDecisionSchema);
