@@ -10,16 +10,16 @@ var tOneSKUDecisionSchema = new Schema({
     d_BrandID: Number,
     d_SKUID: Number,
     d_SKUName: String,
-    d_Advertising: Number,
+    d_Advertising: Number, //consumer communication
     d_AdditionalTradeMargin: Number,
     d_FactoryPrice: [Number],
     d_ConsumerPrice: Number,
     d_RepriceFactoryStocks: Boolean,
     d_IngredientsQuality: Number,
     d_PackSize: Number,
-    d_ProductionVolume: Number,
-    d_PromotionalBudget: Number,
-    d_PromotionalEpisodes: [Boolean],
+    d_ProductionVolume: Number, 
+    d_PromotionalBudget: Number, //consumer promotions
+    d_PromotionalEpisodes: [Boolean], //consumer promotions schedule
     d_TargetConsumerSegment: Number,
     d_Technology: Number,
     d_ToDrop: Boolean,
