@@ -8,12 +8,14 @@ var marksimosapp = angular.module('marksimos', ['angularCharts', 'marksimos.comp
 
 
 // controller business logic
-marksimosapp.controller('chartController', function AppCtrl ($scope,  $timeout, $http, report) {
+marksimosapp.controller('chartController', function AppCtrl ($scope,  $timeout, $http, report, company) {
 
     $scope.css = {
         menu : 'Decision',
         chartMenu : 'C4',
-        additionalBudget : true
+        additionalBudget : true,
+        currentBrandId : 0,
+        investmentInfo : false
     };
 
 
@@ -30,6 +32,8 @@ marksimosapp.controller('chartController', function AppCtrl ($scope,  $timeout, 
 
 
     $scope.data = {
+        currentCompany : {},
+        currentBrand : {},
         chartA11MarketShareInValue : {
             type : report.getChartType1(),
             config : report.getChartConfig1(),
@@ -147,6 +151,20 @@ marksimosapp.controller('chartController', function AppCtrl ($scope,  $timeout, 
 
     };
 
+
+    company.getCompany().then(function(data, status, headers, config){
+        console.log(data);
+        $scope.data.currentCompany = data;
+        $scope.css.currentBrandId = $scope.data.currentCompany.d_BrandsDecisions[0]._id;
+        $scope.data.currentBrand = $scope.data.currentCompany.d_BrandsDecisions[0];
+
+    });
+
+    $scope.clickBrand = function(brand){
+        $scope.css.currentBrandId = brand._id;
+        $scope.data.currentBrand = brand;
+    };
+
     // Chart A1
     $scope.data.chartA11MarketShareInValue.config.title = 'Market Share in Value (%)';
     $scope.data.chartA12MarketShareInVolume.config.title = 'Market Share in Volume (%)';
@@ -228,7 +246,7 @@ marksimosapp.controller('chartController', function AppCtrl ($scope,  $timeout, 
     $scope.data.chartC16SegmentsLeadersByValuePragmatic.config.title = 'Pragmatic (%)';
 
     report.segmentsLeadersByValuePriceSensitive().then(function(data, status, headers, config){
-        console.log(data);
+//        console.log(data);
         $scope.data.chartC11SegmentsLeadersByValuePriceSensitive.data = data;
     });
     report.segmentsLeadersByValuePretenders().then(function(data, status, headers, config){
@@ -268,11 +286,11 @@ marksimosapp.controller('chartController', function AppCtrl ($scope,  $timeout, 
         $scope.data.chartC42GrowthRateInValue.data = data;
     });
     report.netMarketPrice().then(function(data, status, headers, config){
-        console.log(data);
+//        console.log(data);
         $scope.data.chartC43NetMarketPrice.data = data;
     });
     report.segmentValueShareTotalMarket().then(function(data, status, headers, config){
-        console.log(data);
+//        console.log(data);
         $scope.data.chartC44SegmentValueShareTotalMarket.data = data;
     });
 
