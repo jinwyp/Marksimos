@@ -26,28 +26,28 @@ function getProductPortfolioForOneCompany(decision, allResults, seminarSetting){
             productPortfolioForSKU.targetSegment = config.segmentNamesOnProductPortfolio[SKUDecision.d_TargetConsumerSegment-1];
 
             if(seminarSetting.simulationVariant === 'FMCG'){
-                productPortfolioForSKU.factoryPrice = SKUDecision.d_FactoryPrice[0] + ' / (' 
-                    + SKUDecision.d_FactoryPrice[0]/consts.ActualSize[SKUDecision.d_PackSize]
+                productPortfolioForSKU.factoryPrice = SKUDecision.d_FactoryPrice[0].toFixed(2) + ' / (' 
+                    + (SKUDecision.d_FactoryPrice[0]/consts.ActualSize[SKUDecision.d_PackSize]).toFixed(2)
                     + ')';
             }else{
-                productPortfolioForSKU.factoryPrice = SKUDecision.d_FactoryPrice[0];
+                productPortfolioForSKU.factoryPrice = SKUDecision.d_FactoryPrice[0].toFixed(2);
             }
 
             productPortfolioForSKU.ingredientsQuality = SKUDecision.d_IngredientsQuality;
             productPortfolioForSKU.technologyLevel = SKUDecision.d_Technology;
             productPortfolioForSKU.productionVolume = SKUDecision.d_ProductionVolume;
 
-            // var SKUInAllResults = utility.findSKU(lastPeriodResult, SKUDecision.d_SKUID);
-            // if(seminarSetting.simulationVariant === 'FMCG'){
-            //     productPortfolioForSKU.averageFactoryPrice = SKUInAllResults.u_AverageManufacturerPrice * consts.Actualsize[SKUInAllResults.u_PackSize]
-            //     + ' / (' + SKUInAllResults.u_AverageManufacturerPrice;
-            // }else{
-            //     productPortfolioForSKU.averageFactoryPrice = SKUInAllResults.u_AverageManufacturerPrice;
-            // }
+            var SKUInAllResults = utility.findSKU(lastPeriodResult, SKUDecision.d_SKUID);
+            if(seminarSetting.simulationVariant === 'FMCG'){
+                productPortfolioForSKU.averageFactoryPrice = (SKUInAllResults.u_AverageManufacturerPrice * consts.ActualSize[SKUInAllResults.u_PackSize]).toFixed(2)
+                + ' / (' + SKUInAllResults.u_AverageManufacturerPrice.toFixed(2) +")";
+            }else{
+                productPortfolioForSKU.averageFactoryPrice = SKUInAllResults.u_AverageManufacturerPrice.toFixed(2);
+            }
             
-            // productPortfolioForSKU.averageIngredientsQuality = SKUInAllResults.u_ps_FactoryStocks[consts.StocksMaxTotal].s_IngredientsQuality;
-            // productPortfolioForSKU.averageTechnologyLevel = SKUInAllResults.u_ps_FactoryStocks[consts.StocksMaxTotal].s_Technology;
-            // productPortfolioForSKU.totalInventoryVolumeAtFactory = SKUInAllResults.u_ps_FactoryStocks[consts.StocksMaxTotal].s_ps_Volume;
+            productPortfolioForSKU.averageIngredientsQuality = SKUInAllResults.u_ps_FactoryStocks[consts.StocksMaxTotal].s_IngredientsQuality;
+            productPortfolioForSKU.averageTechnologyLevel = SKUInAllResults.u_ps_FactoryStocks[consts.StocksMaxTotal].s_Technology;
+            productPortfolioForSKU.totalInventoryVolumeAtFactory = SKUInAllResults.u_ps_FactoryStocks[consts.StocksMaxTotal].s_ps_Volume;
             productPortfolioForOneCompany.push(productPortfolioForSKU);
         }
     }
