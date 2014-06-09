@@ -1,7 +1,7 @@
 var companyDecisionModel = require('../models/companyDecision.js');
 var brandDecisionModel = require('../models/brandDecision.js');
 var SKUDecisionModel = require('../models/SKUDecision.js');
-var allResultsModel = require('../models/allResults.js');
+var seminarModel = require('../models/seminar.js');
 var Q = require('q');
 var logger = require('../../logger.js');
 
@@ -14,17 +14,16 @@ exports.companyData = function(req, res, next){
         companyDecisionModel.findOne(seminarId, period, companyId),
         brandDecisionModel.findAll(seminarId, period, companyId),
         SKUDecisionModel.findAllInCompany(seminarId, period, companyId),
-        allResultsModel.findOne(seminarId)
+        seminarModel.getProductPortfolio(seminarId, companyId)
     ])
-    .spread(function(companyDecision, brandDecisionList, SKUDecisionList, allResults){
+    .spread(function(companyDecision, brandDecisionList, SKUDecisionList, productPortfolio){
         companyDecision = JSON.parse(JSON.stringify(companyDecision));
         brandDecisionList = JSON.parse(JSON.stringify(brandDecisionList));
         SKUDecisionList = JSON.parse(JSON.stringify(SKUDecisionList));
+        productPortfolio = JSON.parse(JSON.stringify(productPortfolio));
 
         //combine decisions
         var result = {};
-
-        result.decision = {};
 
         brandDecisionList.forEach(function(brandDecision){
             var tempSKUDecisionList = [];
@@ -39,7 +38,9 @@ exports.companyData = function(req, res, next){
 
         companyDecision.d_BrandsDecisions = brandDecisionList;
   
-        result.decision.companyDecision = companyDecision;
+        result.companyDecision = companyDecision;
+        result.productPortfolio = productPortfolio;
+        
         res.send(result);
     })
     .fail(function(err){

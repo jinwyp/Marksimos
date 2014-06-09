@@ -9,18 +9,17 @@ var allResultsCleaner = require('../convertors/allResultsCleaner.js');
 var companyDecisionModel = require('../models/companyDecision.js');
 var brandDecisionModel = require('../models/brandDecision.js');
 var SKUDecisionModel = require('../models/SKUDecision.js');
-var allResultsModel = require('../models/allResults.js');
-var chartDataModel = require('../models/chartData.js');
 var seminarModel = require('../models/seminar.js');
+var productPortfolio = require('../convertors/productPortfolio.js');
 
 /**
- * Initialize game data
+ * Initialize game data, only certain perople can call this method
  *
  * @method init
  *
  */
 exports.init = function(req, res, next) {
-    var seminarId = req.session.seminarId;
+    var seminarId = 'TTT'; //this parameter should be posted from client
 
     if(!seminarId){
         return next(new Error("seminarId cannot be empty."));
@@ -28,9 +27,11 @@ exports.init = function(req, res, next) {
 
     Q.all([
         removeExistedDecisions(seminarId),
-        allResultsModel.remove(seminarId),
-        chartDataModel.removeChartData(seminarId)
+        seminarModel.remove(seminarId)
     ])
+    .then(function(){
+        return seminarModel.insertEmptySeminar(seminarId);
+    })
     .then(function(){
         return Q.all([
             queryAllResults(seminarId),
@@ -44,9 +45,10 @@ exports.init = function(req, res, next) {
         cleanDecisions(allDecisions);
 
         return Q.all([
-            allResultsModel.updateAllResults(seminarId, allResults),
+            seminarModel.update(seminarId, {allResults: allResults}),
             initChartData(seminarId, allResults),
-            initDecision(allDecisions, seminarId)
+            initDecision(seminarId, allDecisions),
+            initProductPortfolio(seminarId, allDecisions, allResults)
         ]);
     })
     .then(function(){
@@ -57,12 +59,22 @@ exports.init = function(req, res, next) {
     }).done();
 };
 
+function initProductPortfolio(seminarId, allDecisions, allResults){
+    return seminarModel.getSeminarSetting(seminarId)
+    .then(function(seminarSetting){
+        var allProductionPortfolio = productPortfolio.getAllProductPortfolio(allDecisions, allResults, seminarSetting);
+        return seminarModel.update(seminarId, {
+            productPortfolio: allProductionPortfolio
+        });
+    });
+}
+
 /**
  * Split allDecisions into companyDecision, brandDecison, and SKUDecision,
  * then save them to db
  *
  */
-function initDecision(allDecisions, seminarId){
+function initDecision(seminarId, allDecisions){
     allDecisions.forEach(function(decision){
         return Q.all([
             initCompanyDecision(decision, seminarId, decision.period),
@@ -216,8 +228,8 @@ function cleanAllResults(allResults){
  * @param {Object} allResults allResults of all periods
  */
 function initChartData(seminarId, allResults){
-    var p = seminarModel.getSeminarSetting(seminarId);
-    p.then(function(seminarSetting){
+    return seminarModel.getSeminarSetting(seminarId)
+    .then(function(seminarSetting){
         return getExogenous(seminarSetting)
         .then(function(exogenous){
             //generate charts from allResults
@@ -226,13 +238,9 @@ function initChartData(seminarId, allResults){
                 exogenous: exogenous
             });
 
-            return chartDataModel.saveChartData({
-                seminarId: seminarId,
-                charts: chartData
-            });
+            return seminarModel.update(seminarId, {charts: chartData})
         });
     });
-    return p;
 }
 
 function removeExistedDecisions(seminarId){
