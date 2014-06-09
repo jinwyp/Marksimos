@@ -65,9 +65,9 @@ exports.init = function(req, res, next) {
 function initDecision(allDecisions, seminarId){
     allDecisions.forEach(function(decision){
         return Q.all([
-            initCompanyDecision(decision.decision, seminarId, decision.period),
-            initBrandDecision(decision.decision, seminarId, decision.period),
-            initSKUDecision(decision.decision, seminarId, decision.period)
+            initCompanyDecision(decision, seminarId, decision.period),
+            initBrandDecision(decision, seminarId, decision.period),
+            initSKUDecision(decision, seminarId, decision.period)
         ])
     })
 }
@@ -150,6 +150,7 @@ function getBrandDecisions(decision){
             d_BrandName     : brandDecision.d_BrandName,
             d_SalesForce    : brandDecision.d_SalesForce,
             d_SKUsDecisions : SKUIDs
+
         });
     }
 
@@ -200,24 +201,27 @@ function getSKUDecisions(decision){
 
 function cleanDecisions(allDecisions){
     allDecisions.forEach(function(decision){
-        decisionCleaner.clean(decision.decision);
+        decisionCleaner.clean(decision);
     })
 }
 
 function cleanAllResults(allResults){
     allResults.forEach(function(onePeriodResult){
         //remove useless data like empty SKU, company
-        allResultsCleaner.clean(onePeriodResult.onePeriodResult);
+        allResultsCleaner.clean(onePeriodResult);
     })
 }
 
-function initChartData(seminarId, results){
+/**
+ * @param {Object} allResults allResults of all periods
+ */
+function initChartData(seminarId, allResults){
     var p = seminarModel.getSeminarSetting(seminarId);
     p.then(function(seminarSetting){
         return getExogenous(seminarSetting)
         .then(function(exogenous){
             //generate charts from allResults
-            var chartData =  extractChartData(results, {
+            var chartData =  extractChartData(allResults, {
                 seminarSetting: seminarSetting,
                 exogenous: exogenous
             });
@@ -250,15 +254,10 @@ function queryAllResults(seminarId){
 
     return Q.all(queries)
     .then(function(allResults){
-        console.log(allResults[0]);
-        var tempAllResults = [];
         for(var i=0; i<allResults.length; i++){
-            tempAllResults.push({
-                periodId: periods[i],
-                onePeriodResult: allResults[i]
-            })
+            allResults[i].periodId = periods[i];
         }
-        return tempAllResults;
+        return allResults;
     });
 }
 
@@ -267,12 +266,13 @@ function queryAllDecision(seminarId){
 
     var queries = [];
     periods.forEach(function(period) {
-        queries.push(queryDecisionsInOnPeriod(seminarId, period));
+        queries.push(queryDecisionsInOnePeriod(seminarId, period));
     });
 
     return Q.all(queries)
     .then(function(decisions){
-        //decisions: [[decision1, decision2], [decision1, decision2]]
+        //decisions: [[decision1, decision2], [decision3, decision4]]
+        //tempDecisions: [decisoon1, decison2, decision3, decision4]
         var tempDecisions = [];
         decisions.forEach(function(a){
             a.forEach(function(b){
@@ -283,7 +283,10 @@ function queryAllDecision(seminarId){
     });
 }
 
-function queryDecisionsInOnPeriod(seminarId, period){
+/**
+ * Query all decisions in one period
+ */
+function queryDecisionsInOnePeriod(seminarId, period){
     var companies = config.initCompanies;
 
     var queries = [];
@@ -294,14 +297,10 @@ function queryDecisionsInOnPeriod(seminarId, period){
 
     return Q.all(queries)
     .then(function(decisions){
-        var tempDecisions = [];
         for(var i=0; i<decisions.length; i++){
-            tempDecisions.push({
-                period: period,
-                decision: decisions[i]
-            })
+            decisions[i].period = period;
         }
-        return tempDecisions;
+        return decisions;
     });
 }
 

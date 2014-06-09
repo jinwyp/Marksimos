@@ -51,15 +51,15 @@ exports.returnOnInvestment = function(allResults){
 }
 
 exports.investmentsVersusBudget = function(allResults, seminarSetting){
-    var companyNum = allResults[allResults.length - 1].onePeriodResult.p_Market.m_CompaniesCount;
+    var companyNum = allResults[allResults.length - 1].p_Market.m_CompaniesCount;
 
     var result = {};
 
     for (var i = 0; i < allResults.length; i++) {
-        var period = allResults[i].onePeriodResult;
+        var onePeriodResult = allResults[i];
 
         for (var j = 0; j < companyNum; j++) {
-            var company = period.p_Companies[j];
+            var company = onePeriodResult.p_Companies[j];
 
             var companyName = company.c_CompanyName;
 
@@ -110,7 +110,7 @@ exports.totalInventoryAtTrade = function(allResults){
 //segment leader top 5
 exports.segmentsLeadersByValue = function(allResults, segment){
     var currentPeriodIndex = allResults.length-1;
-    var currentPeriodResult = allResults[currentPeriodIndex].onePeriodResult;
+    var currentPeriodResult = allResults[currentPeriodIndex];
 
     var segmentNameAndIndex = config.segmentNameAndIndex;
 
@@ -157,7 +157,7 @@ exports.netMarketPrice = function(allResults){
 
 exports.segmentValueShareTotalMarket = function(allResults){
     var currentPeriodIndex = allResults.length-1;
-    var period = allResults[currentPeriodIndex].onePeriodResult;
+    var period = allResults[currentPeriodIndex];
     var market = period.p_Market;
 
     //there are only 6 segments
@@ -185,7 +185,7 @@ exports.segmentValueShareTotalMarket = function(allResults){
  * @param {Object} exogenous parameters of the game
  */
 exports.perceptionMap = function(allResults, exogenous){
-    var periodResult = allResults[allResults.length-1].onePeriodResult;
+    var periodResult = allResults[allResults.length-1];
 
     var result = [];
     for(var i=0; i < periodResult.p_Companies.length; i++){
@@ -241,7 +241,7 @@ exports.perceptionMap = function(allResults, exogenous){
 }
 
 exports.inventoryReport = function(allResults, seminarSetting){
-    var periodResult = allResults[allResults.length-1].onePeriodResult;
+    var periodResult = allResults[allResults.length-1];
 
     var result = [];
     for(var i=0; i < periodResult.p_Companies.length; i++){
@@ -320,8 +320,8 @@ function prepareSKUTooltips(allResults, SKUID){
         throw new Error("SKUID can't be empty");
     }
 
-    var currentPeriodResult = allResults[allResults.length-1].onePeriodResult;
-    var perviousPeriodResult = allResults[allResults.length-2].onePeriodResult;
+    var currentPeriodResult = allResults[allResults.length-1];
+    var perviousPeriodResult = allResults[allResults.length-2];
 
     var tooltips = [];
 
@@ -439,7 +439,7 @@ function prepareSKUTooltips(allResults, SKUID){
  * @return {Object} chart data
  */
 function generateChartData(allResults, dataExtractor){
-    var lastPeriodResult = allResults[allResults.length - 1].onePeriodResult;
+    var lastPeriodResult = allResults[allResults.length - 1];
     var companyNum = lastPeriodResult.p_Market.m_CompaniesCount;
 
     var result = {
@@ -449,13 +449,13 @@ function generateChartData(allResults, dataExtractor){
     };
 
     for (var i = 0; i < allResults.length; i++) {
-        var period = allResults[i].onePeriodResult;
+        var onePeriodResult = allResults[i];
         var periodId = allResults[i].periodId;
 
         result.periods.push(periodId);
         var periodChartData = [];
         for (var j = 0; j < companyNum; j++) {
-            var company = period.p_Companies[j];
+            var company = onePeriodResult.p_Companies[j];
 
             var companyName = company.c_CompanyName;
             if(result.companyNames.indexOf(companyName) === -1){
@@ -493,7 +493,7 @@ function extractMarketEvolutionChartData(allResults, dataExtractor){
     };
 
     for(var i=0; i<periodNum; i++){
-        var periodResult = allResults[i].onePeriodResult;
+        var periodResult = allResults[i];
         var periodId = allResults[i].periodId;
 
         var market = periodResult.p_Market;
