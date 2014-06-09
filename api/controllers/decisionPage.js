@@ -39,8 +39,8 @@ exports.companyData = function(req, res, next){
         companyDecision.d_BrandsDecisions = brandDecisionList;
   
         result.companyDecision = companyDecision;
-        result.productPortfolio = productPortfolio;
-        
+        result.productPortfolio = productPortfolio.productPortfolioForOneCompany;
+
         res.send(result);
     })
     .fail(function(err){
