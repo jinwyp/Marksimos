@@ -62,6 +62,10 @@
   * net_market_price
   * segment_value_share_total_market
 
+  * perception_map
+  * inventory_report
+
+
 ### Response
  
     {

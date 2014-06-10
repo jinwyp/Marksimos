@@ -10,7 +10,8 @@ var companyDecisionModel = require('../models/companyDecision.js');
 var brandDecisionModel = require('../models/brandDecision.js');
 var SKUDecisionModel = require('../models/SKUDecision.js');
 var seminarModel = require('../models/seminar.js');
-var productPortfolio = require('../convertors/productPortfolio.js');
+var productPortfolioConvertor = require('../convertors/productPortfolio.js');
+var spendingVersusBudgetConvertor = require('../convertors/spendingVersusBudget.js');
 
 /**
  * Initialize game data, only certain perople can call this method
@@ -45,10 +46,12 @@ exports.init = function(req, res, next) {
         cleanDecisions(allDecisions);
 
         return Q.all([
+            //save allResult data
             seminarModel.update(seminarId, {allResults: allResults}),
             initChartData(seminarId, allResults),
             initDecision(seminarId, allDecisions),
-            initProductPortfolio(seminarId, allDecisions, allResults)
+            initProductPortfolio(seminarId, allDecisions, allResults),
+            initSpendingVersusBudget(seminarId, allDecisions)
         ]);
     })
     .then(function(){
@@ -59,10 +62,21 @@ exports.init = function(req, res, next) {
     }).done();
 };
 
+/**
+ * Get data for speding detail 
+ */
+function initSpendingVersusBudget(seminarId, allDecisions){
+    var spendingVersusBudget = spendingVersusBudgetConvertor.getAllSpendingVersusBudget(seminarId, allDecisions);
+    console.log(spendingVersusBudget)
+    return seminarModel.update(seminarId, {
+        spendingVersusBudget: spendingVersusBudget
+    });
+}
+
 function initProductPortfolio(seminarId, allDecisions, allResults){
     return seminarModel.getSeminarSetting(seminarId)
     .then(function(seminarSetting){
-        var allProductionPortfolio = productPortfolio.getAllProductPortfolio(allDecisions, allResults, seminarSetting);
+        var allProductionPortfolio = productPortfolioConvertor.getAllProductPortfolio(allDecisions, allResults, seminarSetting);
         return seminarModel.update(seminarId, {
             productPortfolio: allProductionPortfolio
         });

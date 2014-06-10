@@ -13,6 +13,7 @@ var seminarSchema = new Schema({
 
     allResults: [],
     productPortfolio: [],
+    spendingVersusBudget: [], //spending details
     charts: [],
     reports: []
 });
@@ -53,11 +54,20 @@ exports.insertEmptySeminar = function(seminarId){
 }
 
 exports.remove = function(seminarId){
-    return Seminar.remove({seminarId: seminarId}).exec();
+    var deferred = Q.defer();
+    Seminar.remove({seminarId: seminarId}, function(err){
+        if(err){
+            deferred.reject(err);
+        }else{
+            deferred.resolve();
+        }
+    })
+    return deferred.promise;
 }
 
 exports.clearExistedData = function(seminarId){
-    return Seminar.update({
+    var deferred = Q.defer();
+    Seminar.update({
         seminarId: seminarId
     }, 
     {
@@ -65,30 +75,67 @@ exports.clearExistedData = function(seminarId){
         productPortfolio: [],
         charts: [],
         reports: []
-    }).exec();
+    },
+    function(err, numAffected){
+        if(err){
+            deferred.reject(err);
+        }else{
+            deferred.resolve(numAffected);
+        }
+    });
+    return deferred.promise;
 }
 
 exports.getChartData = function(seminarId){
-    return Seminar.findOne({seminarId: seminarId})
-    .exec().then(function(seminar){
-        if(seminar){
-            return seminar.charts;
+    var deferred = Q.defer();
+    Seminar.findOne({seminarId: seminarId}, function(err, result){
+        if(err){
+            deferred.reject(err);
+        }else{
+            deferred.resolve(result);
         }
-        return null;
-    })
+    });
+    return deferred.promise;
 }
 
 exports.getProductPortfolio = function(seminarId, companyId){
-    return Seminar.findOne({seminarId: seminarId})
-    .exec().then(function(seminar){
-        if(seminar){
-            for(var i=0; i<seminar.productPortfolio.length; i++){
-                if(seminar.productPortfolio[i].companyId === companyId){
-                    return seminar.productPortfolio[i];
-                } 
-            }
+    var deferred = Q.defer();
+    Seminar.findOne({seminarId: seminarId}, function(err, seminar){
+        if(err){
+            deferred.reject(err);
         }else{
-            return null;
+            if(seminar){
+                for(var i=0; i<seminar.productPortfolio.length; i++){
+                    if(seminar.productPortfolio[i].companyId === companyId){
+                        deferred.resolve(seminar.productPortfolio[i]);
+                        break;
+                    } 
+                }
+            }else{
+                deferred.resolve(null);
+            }
         }
-    })
+    });
+    return deferred.promise;
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
