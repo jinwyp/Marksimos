@@ -298,7 +298,7 @@
 
         <div class="col-md-10 user_chart_right" ng-if="css.chartMenu=='A1'">
             <div class="row">
-                <div class="col-md-6 user_chart_single chart-2">
+                <div class="col-md-6 user_chart_single chart_2">
                     <h5>{{data.chartA11MarketShareInValue.config.title}}
                         <span class="glyphicon glyphicon-info-sign"></span>
                         <!--<span class="glyphicon glyphicon-resize-full chart_icon"></span>-->
@@ -306,7 +306,7 @@
                     </h5>
                     <div ac-chart="data.chartA11MarketShareInValue.type" ac-data="data.chartA11MarketShareInValue.data" ac-config="data.chartA11MarketShareInValue.config" class="chartBox"></div>
                 </div>
-                <div class="col-md-6 user_chart_single chart-2">
+                <div class="col-md-6 user_chart_single chart_2">
                     <h5>{{data.chartA12MarketShareInVolume.config.title}}
                         <span class="glyphicon glyphicon-info-sign"></span>
                         <!--<span class="glyphicon glyphicon-resize-full chart_icon"></span>-->
@@ -317,7 +317,7 @@
             </div>
 
             <div class="row">
-                <div class="col-md-6 user_chart_single chart-2">
+                <div class="col-md-6 user_chart_single chart_2">
                     <h5>{{data.chartA13MindSpaceShare.config.title}}
                         <span class="glyphicon glyphicon-info-sign"></span>
                         <!--<span class="glyphicon glyphicon-resize-full chart_icon"></span>-->
@@ -325,7 +325,7 @@
                     </h5>
                     <div ac-chart="data.chartA13MindSpaceShare.type" ac-data="data.chartA13MindSpaceShare.data" ac-config="data.chartA13MindSpaceShare.config" class="chartBox"></div>
                 </div>
-                <div class="col-md-6 user_chart_single chart-2">
+                <div class="col-md-6 user_chart_single chart_2">
                     <h5>{{data.chartA14ShelfSpaceShare.config.title}}
                         <span class="glyphicon glyphicon-info-sign"></span>
                         <!--<span class="glyphicon glyphicon-resize-full chart_icon"></span>-->
@@ -337,9 +337,34 @@
         </div>
 
 
+        <div class="col-md-10 user_chart_right" ng-if="css.chartMenu=='A3'">
+            <div class="row">
+                <div class="col-md-12 user_chart_single chart_1">
+                    <h5>{{data.chartA11MarketShareInValue.config.title}}
+                        <span class="glyphicon glyphicon-info-sign"></span>
+                        <!--<span class="glyphicon glyphicon-resize-full chart_icon"></span>-->
+                        <span class="glyphicon glyphicon-save chart_icon"></span>
+                    </h5>
+                    <nvd3-multi-bar-chart
+                            data="exampleData"
+                            id="exampleId"
+                            xAxisTickFormat=""
+                            width="700"
+                            height="350"
+                            showXAxis="true"
+                            showYAxis="true">
+                        <svg></svg>
+                    </nvd3-multi-bar-chart>
+                </div>
+
+            </div>
+
+        </div>
+
+
         <div class="col-md-10 user_chart_right" ng-if="css.chartMenu=='B3'">
             <div class="row">
-                <div class="col-md-6 user_chart_single chart-2">
+                <div class="col-md-6 user_chart_single chart_2">
                     <h5>{{data.chartB31TotalInvestment.config.title}}
                         <span class="glyphicon glyphicon-info-sign"></span>
                         <!--<span class="glyphicon glyphicon-resize-full chart_icon"></span>-->
@@ -347,7 +372,7 @@
                     </h5>
                     <div ac-chart="data.chartB31TotalInvestment.type" ac-data="data.chartB31TotalInvestment.data" ac-config="data.chartB31TotalInvestment.config" class="chartBox"></div>
                 </div>
-                <div class="col-md-6 user_chart_single chart-2">
+                <div class="col-md-6 user_chart_single chart_2">
                     <h5>{{data.chartB32NetProfitByCompanies.config.title}}
                         <span class="glyphicon glyphicon-info-sign"></span>
                         <!--<span class="glyphicon glyphicon-resize-full chart_icon"></span>-->
@@ -358,7 +383,7 @@
             </div>
 
             <div class="row">
-                <div class="col-md-6 user_chart_single chart-2">
+                <div class="col-md-6 user_chart_single chart_2">
                     <h5>{{data.chartB33ReturnOnInvestment.config.title}}
                         <span class="glyphicon glyphicon-info-sign"></span>
                         <!--<span class="glyphicon glyphicon-resize-full chart_icon"></span>-->
@@ -366,7 +391,7 @@
                     </h5>
                     <div ac-chart="data.chartB33ReturnOnInvestment.type" ac-data="data.chartB33ReturnOnInvestment.data" ac-config="data.chartB33ReturnOnInvestment.config" class="chartBox"></div>
                 </div>
-                <div class="col-md-6 user_chart_single chart-2">
+                <div class="col-md-6 user_chart_single chart_2">
                     <h5>{{data.chartB34InvestmentsVersusBudget.config.title}}
                         <span class="glyphicon glyphicon-info-sign"></span>
                         <!--<span class="glyphicon glyphicon-resize-full chart_icon"></span>-->
@@ -380,7 +405,7 @@
 
         <div class="col-md-10 user_chart_right" ng-if="css.chartMenu=='B4'">
             <div class="row">
-                <div class="col-md-6 user_chart_single chart-2">
+                <div class="col-md-6 user_chart_single chart_2">
                     <h5>{{data.chartB41MarketSalesValue.config.title}}
                         <span class="glyphicon glyphicon-info-sign"></span>
                         <!--<span class="glyphicon glyphicon-resize-full chart_icon"></span>-->
@@ -388,7 +413,7 @@
                     </h5>
                     <div ac-chart="data.chartB41MarketSalesValue.type" ac-data="data.chartB41MarketSalesValue.data" ac-config="data.chartB41MarketSalesValue.config" class="chartBox"></div>
                 </div>
-                <div class="col-md-6 user_chart_single chart-2">
+                <div class="col-md-6 user_chart_single chart_2">
                     <h5>{{data.chartB42MarketSalesVolume.config.title}}
                         <span class="glyphicon glyphicon-info-sign"></span>
                         <!--<span class="glyphicon glyphicon-resize-full chart_icon"></span>-->
@@ -399,7 +424,7 @@
             </div>
 
             <div class="row">
-                <div class="col-md-6 user_chart_single chart-2">
+                <div class="col-md-6 user_chart_single chart_2">
                     <h5>{{data.chartB43TotalInventoryAtFactory.config.title}}
                         <span class="glyphicon glyphicon-info-sign"></span>
                         <!--<span class="glyphicon glyphicon-resize-full chart_icon"></span>-->
@@ -407,7 +432,7 @@
                     </h5>
                     <div ac-chart="data.chartB43TotalInventoryAtFactory.type" ac-data="data.chartB43TotalInventoryAtFactory.data" ac-config="data.chartB43TotalInventoryAtFactory.config" class="chartBox"></div>
                 </div>
-                <div class="col-md-6 user_chart_single chart-2">
+                <div class="col-md-6 user_chart_single chart_2">
                     <h5>{{data.chartB44TotalInventoryAtTrade.config.title}}
                         <span class="glyphicon glyphicon-info-sign"></span>
                         <!--<span class="glyphicon glyphicon-resize-full chart_icon"></span>-->
@@ -421,7 +446,7 @@
 
         <div class="col-md-10 user_chart_right" ng-if="css.chartMenu=='C1'">
             <div class="row">
-                <div class="col-md-4 user_chart_single chart-3">
+                <div class="col-md-4 user_chart_single chart_3">
                     <h5>{{data.chartC11SegmentsLeadersByValuePriceSensitive.config.title}}
                         <span class="glyphicon glyphicon-info-sign"></span>
                         <!--<span class="glyphicon glyphicon-resize-full chart_icon"></span>-->
@@ -429,7 +454,7 @@
                     </h5>
                     <div ac-chart="data.chartC11SegmentsLeadersByValuePriceSensitive.type" ac-data="data.chartC11SegmentsLeadersByValuePriceSensitive.data" ac-config="data.chartC11SegmentsLeadersByValuePriceSensitive.config" class="chartBox"></div>
                 </div>
-                <div class="col-md-4 user_chart_single chart-3">
+                <div class="col-md-4 user_chart_single chart_3">
                     <h5>{{data.chartC12SegmentsLeadersByValuePretenders.config.title}}
                         <span class="glyphicon glyphicon-info-sign"></span>
                         <!--<span class="glyphicon glyphicon-resize-full chart_icon"></span>-->
@@ -437,7 +462,7 @@
                     </h5>
                     <div ac-chart="data.chartC12SegmentsLeadersByValuePretenders.type" ac-data="data.chartC12SegmentsLeadersByValuePretenders.data" ac-config="data.chartC12SegmentsLeadersByValuePretenders.config" class="chartBox"></div>
                 </div>
-                <div class="col-md-4 user_chart_single chart-3">
+                <div class="col-md-4 user_chart_single chart_3">
                     <h5>{{data.chartC13SegmentsLeadersByValueModerate.config.title}}
                         <span class="glyphicon glyphicon-info-sign"></span>
                         <!--<span class="glyphicon glyphicon-resize-full chart_icon"></span>-->
@@ -448,7 +473,7 @@
             </div>
 
             <div class="row">
-                <div class="col-md-4 user_chart_single chart-3">
+                <div class="col-md-4 user_chart_single chart_3">
                     <h5>{{data.chartC14SegmentsLeadersByValueGoodLife.config.title}}
                         <span class="glyphicon glyphicon-info-sign"></span>
                         <!--<span class="glyphicon glyphicon-resize-full chart_icon"></span>-->
@@ -456,7 +481,7 @@
                     </h5>
                     <div ac-chart="data.chartC14SegmentsLeadersByValueGoodLife.type" ac-data="data.chartC14SegmentsLeadersByValueGoodLife.data" ac-config="data.chartC14SegmentsLeadersByValueGoodLife.config" class="chartBox"></div>
                 </div>
-                <div class="col-md-4 user_chart_single chart-3">
+                <div class="col-md-4 user_chart_single chart_3">
                     <h5>{{data.chartC15SegmentsLeadersByValueUltimate.config.title}}
                         <span class="glyphicon glyphicon-info-sign"></span>
                         <!--<span class="glyphicon glyphicon-resize-full chart_icon"></span>-->
@@ -464,7 +489,7 @@
                     </h5>
                     <div ac-chart="data.chartC15SegmentsLeadersByValueUltimate.type" ac-data="data.chartC15SegmentsLeadersByValueUltimate.data" ac-config="data.chartC15SegmentsLeadersByValueUltimate.config" class="chartBox"></div>
                 </div>
-                <div class="col-md-4 user_chart_single chart-3">
+                <div class="col-md-4 user_chart_single chart_3">
                     <h5>{{data.chartC16SegmentsLeadersByValuePragmatic.config.title}}
                         <span class="glyphicon glyphicon-info-sign"></span>
                         <!--<span class="glyphicon glyphicon-resize-full chart_icon"></span>-->
@@ -478,7 +503,7 @@
 
         <div class="col-md-10 user_chart_right" ng-if="css.chartMenu=='C4'">
             <div class="row">
-                <div class="col-md-6 user_chart_single chart-2">
+                <div class="col-md-6 user_chart_single chart_2">
                     <h5>{{data.chartC41GrowthRateInVolume.config.title}}
                         <span class="glyphicon glyphicon-info-sign"></span>
                         <!--<span class="glyphicon glyphicon-resize-full chart_icon"></span>-->
@@ -486,7 +511,7 @@
                     </h5>
                     <div ac-chart="data.chartC41GrowthRateInVolume.type" ac-data="data.chartC41GrowthRateInVolume.data" ac-config="data.chartC41GrowthRateInVolume.config" class="chartBox"></div>
                 </div>
-                <div class="col-md-6 user_chart_single chart-2">
+                <div class="col-md-6 user_chart_single chart_2">
                     <h5>{{data.chartC42GrowthRateInValue.config.title}}
                         <span class="glyphicon glyphicon-info-sign"></span>
                         <!--<span class="glyphicon glyphicon-resize-full chart_icon"></span>-->
@@ -497,7 +522,7 @@
             </div>
 
             <div class="row">
-                <div class="col-md-6 user_chart_single chart-2">
+                <div class="col-md-6 user_chart_single chart_2">
                     <h5>{{data.chartC43NetMarketPrice.config.title}}
                         <span class="glyphicon glyphicon-info-sign"></span>
                         <!--<span class="glyphicon glyphicon-resize-full chart_icon"></span>-->
@@ -505,7 +530,7 @@
                     </h5>
                     <div ac-chart="data.chartC43NetMarketPrice.type" ac-data="data.chartC43NetMarketPrice.data" ac-config="data.chartC43NetMarketPrice.config" class="chartBox"></div>
                 </div>
-                <div class="col-md-6 user_chart_single chart-2">
+                <div class="col-md-6 user_chart_single chart_2">
                     <h5>{{data.chartC44SegmentValueShareTotalMarket.config.title}}
                         <span class="glyphicon glyphicon-info-sign"></span>
                         <!--<span class="glyphicon glyphicon-resize-full chart_icon"></span>-->

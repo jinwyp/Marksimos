@@ -754,19 +754,23 @@ body a, body button {
   float: right;
   padding-right: 10px;
 }
-/* line 685, ../sass/main.scss */
-.mainbody .user_chart_right .chart-2 {
+/* line 686, ../sass/main.scss */
+.mainbody .user_chart_right .chart_1 {
+  width: 98%;
+}
+/* line 690, ../sass/main.scss */
+.mainbody .user_chart_right .chart_2 {
   width: 48%;
 }
-/* line 688, ../sass/main.scss */
-.mainbody .user_chart_right .chart-3 {
+/* line 693, ../sass/main.scss */
+.mainbody .user_chart_right .chart_3 {
   width: 31%;
 }
-/* line 697, ../sass/main.scss */
+/* line 702, ../sass/main.scss */
 .mainbody .progress_title {
   color: #6f6f6f;
 }
-/* line 701, ../sass/main.scss */
+/* line 706, ../sass/main.scss */
 .mainbody .progress_radius {
   -webkit-border-radius: 16px;
   -moz-border-radius: 16px;
@@ -774,44 +778,44 @@ body a, body button {
   -o-border-radius: 16px;
   border-radius: 16px;
 }
-/* line 704, ../sass/main.scss */
+/* line 709, ../sass/main.scss */
 .mainbody .progress_bar_budget {
   background-color: #6071b9;
 }
-/* line 707, ../sass/main.scss */
+/* line 712, ../sass/main.scss */
 .mainbody .progress_bar_normal_capacity {
   background-color: #7169af;
 }
-/* line 710, ../sass/main.scss */
+/* line 715, ../sass/main.scss */
 .mainbody .progress_bar_overtime {
   background-color: #ad5ab3;
 }
-/* line 714, ../sass/main.scss */
+/* line 719, ../sass/main.scss */
 .mainbody .budget_form {
   padding: 5px 0px;
 }
-/* line 717, ../sass/main.scss */
+/* line 722, ../sass/main.scss */
 .mainbody .budget_form label {
   color: #252525;
   font-size: 10px;
   font-weight: normal;
 }
-/* line 722, ../sass/main.scss */
+/* line 727, ../sass/main.scss */
 .mainbody .budget_form .budget_title {
   font-size: 18px;
   padding-left: 34px;
 }
-/* line 727, ../sass/main.scss */
+/* line 732, ../sass/main.scss */
 .mainbody .budget_form input {
   width: 80px;
 }
-/* line 732, ../sass/main.scss */
+/* line 737, ../sass/main.scss */
 .mainbody .decision_box {
   margin: 10px 15px;
   border: 1px solid #e1e1e1;
   background-color: white;
 }
-/* line 737, ../sass/main.scss */
+/* line 742, ../sass/main.scss */
 .mainbody .decision_box h4 {
   color: #2f4e9b;
   font-size: 18px;
@@ -819,14 +823,14 @@ body a, body button {
   font-family: "Helvetica", "Arial, sans-serif";
   margin: 30px 0 5px 0;
 }
-/* line 744, ../sass/main.scss */
+/* line 749, ../sass/main.scss */
 .mainbody .decision_box h6 {
   color: #bdbdbd;
   font-family: "Helvetica", "Arial, sans-serif";
   font-weight: normal;
   margin-top: 0;
 }
-/* line 751, ../sass/main.scss */
+/* line 756, ../sass/main.scss */
 .mainbody .decision_box .brand_box {
   border: 1px solid #c2c2d3;
   margin: 0px -10px 20px -10px;
@@ -836,7 +840,7 @@ body a, body button {
   -o-border-radius: 4px;
   border-radius: 4px;
 }
-/* line 757, ../sass/main.scss */
+/* line 762, ../sass/main.scss */
 .mainbody .decision_box .sku_box {
   border: 1px solid #ebebeb;
   margin: 0px -10px 10px -10px;
@@ -846,11 +850,11 @@ body a, body button {
   -o-border-radius: 4px;
   border-radius: 4px;
 }
-/* line 763, ../sass/main.scss */
+/* line 768, ../sass/main.scss */
 .mainbody .decision_box .table > thead > tr > th {
   font-weight: bold;
 }
-/* line 769, ../sass/main.scss */
+/* line 774, ../sass/main.scss */
 .mainbody .decision_box .table > thead > tr > td,
 .mainbody .decision_box .table > tbody > tr > td,
 .mainbody .decision_box .table > tfoot > tr > td {
@@ -860,19 +864,19 @@ body a, body button {
   font-size: 12px;
   color: #373737;
 }
-/* line 777, ../sass/main.scss */
+/* line 782, ../sass/main.scss */
 .mainbody .decision_box .table .tdgroup {
   padding-top: 20px;
 }
-/* line 781, ../sass/main.scss */
+/* line 786, ../sass/main.scss */
 .mainbody .decision_box .sku_table {
   width: 125px;
 }
-/* line 786, ../sass/main.scss */
+/* line 791, ../sass/main.scss */
 .mainbody .decision_box .nav li a {
   padding: 7px 15px;
 }
-/* line 791, ../sass/main.scss */
+/* line 796, ../sass/main.scss */
 .mainbody .decision_box .nav-pills li a {
   background-color: whitesmoke;
   color: #6f6f6f;
@@ -890,11 +894,11 @@ body a, body button {
   -webkit-border-bottom-right-radius: 0px;
   border-bottom-right-radius: 0px;
 }
-/* line 799, ../sass/main.scss */
+/* line 804, ../sass/main.scss */
 .mainbody .decision_box .nav-pills li a:hover, .mainbody .decision_box .nav-pills li a:focus {
   background-color: #dbe3f6;
 }
-/* line 807, ../sass/main.scss */
+/* line 812, ../sass/main.scss */
 .mainbody .decision_box .nav-pills li.active a,
 .mainbody .decision_box .nav-pills li.active a:hover,
 .mainbody .decision_box .nav-pills li.active a:focus {
@@ -902,11 +906,11 @@ body a, body button {
   font-family: "Helvetica", "Arial, sans-serif";
   background-color: #2f4e9b;
 }
-/* line 814, ../sass/main.scss */
+/* line 819, ../sass/main.scss */
 .mainbody .decision_box .brand_form {
   margin: 30px 0px;
 }
-/* line 818, ../sass/main.scss */
+/* line 823, ../sass/main.scss */
 .mainbody .decision_box h5 {
   color: #252525;
   font-family: "Helvetica", "Arial, sans-serif";
@@ -914,12 +918,12 @@ body a, body button {
   font-size: 16px;
   padding: 10px 0px 0px 10px;
 }
-/* line 826, ../sass/main.scss */
+/* line 831, ../sass/main.scss */
 .mainbody .decision_box .investment_form {
   margin-top: 20px;
   margin-left: 10px;
 }
-/* line 829, ../sass/main.scss */
+/* line 834, ../sass/main.scss */
 .mainbody .decision_box .investment_form label {
   text-align: left;
   color: #373737;
@@ -927,7 +931,7 @@ body a, body button {
   font-weight: normal;
   font-size: 13px;
 }
-/* line 839, ../sass/main.scss */
+/* line 844, ../sass/main.scss */
 .mainbody .decision_box .decision_button {
   color: #ffffff;
   font-family: "Helvetica", "Arial, sans-serif";
@@ -963,23 +967,23 @@ body a, body button {
   border-color: #298FFE;
 }
 
-/* line 851, ../sass/main.scss */
+/* line 856, ../sass/main.scss */
 .bgbrand {
   background-color: #fdfdfd;
 }
 
-/* line 855, ../sass/main.scss */
+/* line 860, ../sass/main.scss */
 .chartBox {
   width: 99%;
   height: 350px;
   margin: 0px 0px;
 }
-/* line 859, ../sass/main.scss */
+/* line 864, ../sass/main.scss */
 .chartBox .ac-title {
   text-align: center;
   display: none;
 }
-/* line 864, ../sass/main.scss */
+/* line 869, ../sass/main.scss */
 .chartBox .bar_chart_label {
   font-size: 10px;
 }
