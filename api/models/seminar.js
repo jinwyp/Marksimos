@@ -12,8 +12,6 @@ var seminarSchema = new Schema({
     isFinished: Boolean, //if this seminar is finished
 
     allResults: [],
-    productPortfolio: [],
-    spendingVersusBudget: [], //spending details
     charts: [],
     reports: []
 });
@@ -115,26 +113,26 @@ exports.getChartData = function(seminarId){
     return deferred.promise;
 }
 
-exports.getProductPortfolio = function(seminarId, companyId){
-    var deferred = Q.defer();
-    Seminar.findOne({seminarId: seminarId}, function(err, seminar){
-        if(err){
-            deferred.reject(err);
-        }else{
-            if(seminar){
-                for(var i=0; i<seminar.productPortfolio.length; i++){
-                    if(seminar.productPortfolio[i].companyId === companyId){
-                        deferred.resolve(seminar.productPortfolio[i]);
-                        break;
-                    } 
-                }
-            }else{
-                deferred.resolve(null);
-            }
-        }
-    });
-    return deferred.promise;
-}
+// exports.getProductPortfolio = function(seminarId, companyId){
+//     var deferred = Q.defer();
+//     Seminar.findOne({seminarId: seminarId}, function(err, seminar){
+//         if(err){
+//             deferred.reject(err);
+//         }else{
+//             if(seminar){
+//                 for(var i=0; i<seminar.productPortfolio.length; i++){
+//                     if(seminar.productPortfolio[i].companyId === companyId){
+//                         deferred.resolve(seminar.productPortfolio[i]);
+//                         break;
+//                     } 
+//                 }
+//             }else{
+//                 deferred.resolve(null);
+//             }
+//         }
+//     });
+//     return deferred.promise;
+// }
 
 
 

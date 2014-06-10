@@ -24,7 +24,8 @@ module.exports = function(app){
     app.get('/api/chart/:chart_name', chartController.getChart);
 
     //make decision page
-    app.get('/api/companydata', decisionPageController.companyData);
+    app.get('/api/decision', decisionPageController.getDecision);
+    app.get('/api/spending_details', decisionPageController.getSpendingDetails)
 
     // app.get('*', function(req, res){
     //     res.send("404 page");
