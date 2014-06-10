@@ -32,7 +32,7 @@ app.use(function(req, res, next){
     req.session.userId = 'testid';
     req.session.seminarId = 'TTT';
     req.session.companyId = 1;
-    req.session.period = -1;
+    req.session.period = 0;
     next();
 });
 

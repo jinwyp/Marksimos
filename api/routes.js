@@ -25,7 +25,8 @@ module.exports = function(app){
 
     //make decision page
     app.get('/api/decision', decisionPageController.getDecision);
-    app.get('/api/spending_details', decisionPageController.getSpendingDetails)
+    app.get('/api/product_portfolio', decisionPageController.getProductPortfolio);
+    app.get('/api/spending_details', decisionPageController.getSpendingDetails);
 
     // app.get('*', function(req, res){
     //     res.send("404 page");
