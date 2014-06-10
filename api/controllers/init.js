@@ -9,18 +9,18 @@ var allResultsCleaner = require('../convertors/allResultsCleaner.js');
 var companyDecisionModel = require('../models/companyDecision.js');
 var brandDecisionModel = require('../models/brandDecision.js');
 var SKUDecisionModel = require('../models/SKUDecision.js');
-var allResultsModel = require('../models/allResults.js');
-var chartDataModel = require('../models/chartData.js');
 var seminarModel = require('../models/seminar.js');
+var productPortfolioConvertor = require('../convertors/productPortfolio.js');
+var spendingVersusBudgetConvertor = require('../convertors/spendingVersusBudget.js');
 
 /**
- * Initialize game data
+ * Initialize game data, only certain perople can call this method
  *
  * @method init
  *
  */
 exports.init = function(req, res, next) {
-    var seminarId = req.session.seminarId;
+    var seminarId = 'TTT'; //this parameter should be posted from client
 
     if(!seminarId){
         return next(new Error("seminarId cannot be empty."));
@@ -28,9 +28,11 @@ exports.init = function(req, res, next) {
 
     Q.all([
         removeExistedDecisions(seminarId),
-        allResultsModel.remove(seminarId),
-        chartDataModel.removeChartData(seminarId)
+        seminarModel.remove(seminarId)
     ])
+    .then(function(){
+        return seminarModel.insertEmptySeminar(seminarId);
+    })
     .then(function(){
         return Q.all([
             queryAllResults(seminarId),
@@ -44,9 +46,12 @@ exports.init = function(req, res, next) {
         cleanDecisions(allDecisions);
 
         return Q.all([
-            allResultsModel.updateAllResults(seminarId, allResults),
+            //save allResult data
+            seminarModel.update(seminarId, {allResults: allResults}),
             initChartData(seminarId, allResults),
-            initDecision(allDecisions, seminarId)
+            initDecision(seminarId, allDecisions),
+            initProductPortfolio(seminarId, allDecisions, allResults),
+            initSpendingVersusBudget(seminarId, allDecisions)
         ]);
     })
     .then(function(){
@@ -58,11 +63,32 @@ exports.init = function(req, res, next) {
 };
 
 /**
+ * Get data for speding detail 
+ */
+function initSpendingVersusBudget(seminarId, allDecisions){
+    var spendingVersusBudget = spendingVersusBudgetConvertor.getAllSpendingVersusBudget(seminarId, allDecisions);
+    console.log(spendingVersusBudget)
+    return seminarModel.update(seminarId, {
+        spendingVersusBudget: spendingVersusBudget
+    });
+}
+
+function initProductPortfolio(seminarId, allDecisions, allResults){
+    return seminarModel.getSeminarSetting(seminarId)
+    .then(function(seminarSetting){
+        var allProductionPortfolio = productPortfolioConvertor.getAllProductPortfolio(allDecisions, allResults, seminarSetting);
+        return seminarModel.update(seminarId, {
+            productPortfolio: allProductionPortfolio
+        });
+    });
+}
+
+/**
  * Split allDecisions into companyDecision, brandDecison, and SKUDecision,
  * then save them to db
  *
  */
-function initDecision(allDecisions, seminarId){
+function initDecision(seminarId, allDecisions){
     allDecisions.forEach(function(decision){
         return Q.all([
             initCompanyDecision(decision, seminarId, decision.period),
@@ -216,8 +242,8 @@ function cleanAllResults(allResults){
  * @param {Object} allResults allResults of all periods
  */
 function initChartData(seminarId, allResults){
-    var p = seminarModel.getSeminarSetting(seminarId);
-    p.then(function(seminarSetting){
+    return seminarModel.getSeminarSetting(seminarId)
+    .then(function(seminarSetting){
         return getExogenous(seminarSetting)
         .then(function(exogenous){
             //generate charts from allResults
@@ -226,13 +252,9 @@ function initChartData(seminarId, allResults){
                 exogenous: exogenous
             });
 
-            return chartDataModel.saveChartData({
-                seminarId: seminarId,
-                charts: chartData
-            });
+            return seminarModel.update(seminarId, {charts: chartData})
         });
     });
-    return p;
 }
 
 function removeExistedDecisions(seminarId){

@@ -1,4 +1,4 @@
-var chartDataModel = require('../models/chartData.js');
+var seminarDataModel = require('../models/seminar.js');
 var util = require('util');
 
 exports.getChart = function(req, res, next){
@@ -14,7 +14,7 @@ exports.getChart = function(req, res, next){
         return next(new Error('chartName cannot be empty.'));
     }
 
-    chartDataModel.getChartData(seminarId)
+    seminarDataModel.getChartData(seminarId)
     .then(function(allCharts){
         var chart = null;
         for(var i=0; i<allCharts.charts.length; i++){

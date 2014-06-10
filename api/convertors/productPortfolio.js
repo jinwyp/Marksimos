@@ -1,16 +1,18 @@
 var utility = require('./utility.js');
+var config = require('../config.js');
+var consts = require('../consts.js');
 
 /**
  * Assemble product portfolio data
  * 
  * @param {Object} decision current decision got from CGI service
- * @param {Object} allResults allResults got from CGI service
- * @param {Object} seminarSetting
+ * @param {Object} allResults allResults got from CGI service, allResults of all periods
+ * @param {Object} seminarSetting {simulationVariant: 'FMCG'}
  */
-exports.productPortfolio = function(decision, allResults, seminarSetting){
-    var productPortfolio = [];
+function getProductPortfolioForOneCompany(decision, allResults, seminarSetting){
+    var productPortfolioForOneCompany = [];
 
-    var lastPeriodResult = allResults[allResults.length-1].onePeriodResult;
+    var lastPeriodResult = allResults[allResults.length-1];
 
     for(var i=0; i<decision.d_BrandsDecisions.length; i++){
         var brandDecision = decision.d_BrandsDecisions[i];
@@ -21,33 +23,82 @@ exports.productPortfolio = function(decision, allResults, seminarSetting){
             var productPortfolioForSKU = {};
             
             productPortfolioForSKU.SKUName = brandDecision.d_BrandName + SKUDecision.d_SKUName;
-            productPortfolioForSKU.targetSegment = config.segmentNamesOnProductPortfolio[SKUDecision.d_TargetConsumerSegment];
+            productPortfolioForSKU.targetSegment = config.segmentNamesOnProductPortfolio[SKUDecision.d_TargetConsumerSegment-1];
 
             if(seminarSetting.simulationVariant === 'FMCG'){
-                productPortfolio.factoryPrice = SKUDecision.d_FactoryPrice[0] + ' / (' 
-                    + SKUDecision.d_FactoryPrice[0]/consts.ActualSize[SKUDecision.d_PackSize]
+                productPortfolioForSKU.factoryPrice = SKUDecision.d_FactoryPrice[0].toFixed(2) + ' / (' 
+                    + (SKUDecision.d_FactoryPrice[0]/consts.ActualSize[SKUDecision.d_PackSize]).toFixed(2)
                     + ')';
             }else{
-                productPortfolio.factoryPrice = SKUDecision.d_FactoryPrice[0];
+                productPortfolioForSKU.factoryPrice = SKUDecision.d_FactoryPrice[0].toFixed(2);
             }
 
-            productPortfolio.ingredientsQuality = SKUDecision.d_IngredientsQuality;
-            productPortfolio.technologyLevel = SKUDecision.d_Technology;
-            productPortfolio.productionVolume = SKUDecision.d_ProductionVolume;
+            productPortfolioForSKU.ingredientsQuality = SKUDecision.d_IngredientsQuality;
+            productPortfolioForSKU.technologyLevel = SKUDecision.d_Technology;
+            productPortfolioForSKU.productionVolume = SKUDecision.d_ProductionVolume;
 
             var SKUInAllResults = utility.findSKU(lastPeriodResult, SKUDecision.d_SKUID);
             if(seminarSetting.simulationVariant === 'FMCG'){
-                productPortfolio.averageFactoryPrice = SKUInAllResults.u_AverageManufacturerPrice * consts.Actualsize[SKUInAllResults.u_PackSize]
-                + ' / (' + SKUInAllResults.u_AverageManufacturerPrice;
+                productPortfolioForSKU.averageFactoryPrice = (SKUInAllResults.u_AverageManufacturerPrice * consts.ActualSize[SKUInAllResults.u_PackSize]).toFixed(2)
+                + ' / (' + SKUInAllResults.u_AverageManufacturerPrice.toFixed(2) +")";
             }else{
-                productPortfolio.averageFactoryPrice = SKUInAllResults.u_AverageManufacturerPrice;
+                productPortfolioForSKU.averageFactoryPrice = SKUInAllResults.u_AverageManufacturerPrice.toFixed(2);
             }
             
-            productPortfolio.averageIngredientsQuality = SKUInAllResults.u_ps_FactoryStocks[consts.StocksMaxTotal].s_IngredientsQuality;
-            productPortfolio.averageTechnologyLevel = SKUInAllResults.u_ps_FactoryStocks[consts.StocksMaxTotal].s_Technology;
-            productPortfolio.totalInventoryVolumeAtFactory = SKUInAllResults.u_ps_FactoryStocks[consts.StocksMaxTotal].s_ps_Volume;
+            productPortfolioForSKU.averageIngredientsQuality = SKUInAllResults.u_ps_FactoryStocks[consts.StocksMaxTotal].s_IngredientsQuality;
+            productPortfolioForSKU.averageTechnologyLevel = SKUInAllResults.u_ps_FactoryStocks[consts.StocksMaxTotal].s_Technology;
+            productPortfolioForSKU.totalInventoryVolumeAtFactory = SKUInAllResults.u_ps_FactoryStocks[consts.StocksMaxTotal].s_ps_Volume.toFixed(2);
+            productPortfolioForOneCompany.push(productPortfolioForSKU);
         }
     }
 
-    return productPortfolio;
+    return productPortfolioForOneCompany;
 };
+
+/**
+ * @param {Object} allDecisions all decisions of all the companies in all periods
+ * @param {Object} allResults allResults of all periods
+ * @param {Object} seminarSetting {simulationVariant: 'FMCG'}
+ */
+exports.getAllProductPortfolio = function(allDecisions, allResults, seminarSetting){
+    var allProductPortfolio = [];
+    for(var i=0; i<allDecisions.length; i++){
+        var decision = allDecisions[i];
+        
+        var productPortfolioForOneCompany = getProductPortfolioForOneCompany(decision, allResults, seminarSetting);
+        allProductPortfolio.push({
+            companyId: decision.d_CID,
+            productPortfolioForOneCompany: productPortfolioForOneCompany
+        })
+    }
+    
+    return allProductPortfolio;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
