@@ -32,6 +32,32 @@ exports.getSpendingDetails = function(seminarId, period, companyId){
             brandData.push(brandDataRow);
         }
 
+        var total = {};
+        total.brandName = "Total";
+        total.salesForce = brandData.reduce(function(lastResult, nextValue){
+            return lastResult + nextValue.salesForce;
+        }, 0);
+        total.consumerCommunication = brandData.reduce(function(lastResult, nextValue){
+            return lastResult + nextValue.consumerCommunication;
+        }, 0);
+        total.consumerPromotion = brandData.reduce(function(lastResult, nextValue){
+            return lastResult + nextValue.consumerPromotion;
+        }, 0);
+        total.tradeExpenses = brandData.reduce(function(lastResult, nextValue){
+            return lastResult + nextValue.tradeExpenses;
+        }, 0);
+        total.estimatedAdditionalTradeMarginCost = brandData.reduce(function(lastResult, nextValue){
+            return lastResult + nextValue.estimatedAdditionalTradeMarginCost;
+        }, 0)
+        total.estimatedWholesaleBonusCost = brandData.reduce(function(lastResult, nextValue){
+            return lastResult + nextValue.estimatedWholesaleBonusCost;
+        }, 0)
+        brandData.push(total);
+
+        companyData.investmentInProductionEfficiency = decision.d_InvestmentInEfficiency;
+        companyData.investmentInProcessingTechnology = decision.d_InvestmentInTechnology;
+
+
         return {
             brandData: brandData,
             companyData: companyData
