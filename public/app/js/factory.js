@@ -31,7 +31,7 @@ app.factory('company',function($http){
             return $http.get(apiPath + 'companydata').then(function(result){
                 console.log(result.data);
 
-                return result.data.decision.companyDecision;
+                return result.data.companyDecision;
             });
         },
         updateSku : function(postdata){
