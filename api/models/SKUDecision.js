@@ -76,20 +76,41 @@ exports.findOne = function(seminarId, period, companyId, brandId, SKUID){
 };
 
 exports.findAll = function(seminarId, period, companyId, brandId){
-    return SKUDecision.find({
+    var deferred = Q.defer();
+    SKUDecision.find({
         seminarId: seminarId,
         period: period,
         d_CID: companyId,
         d_BrandID: brandId
-    }).sort({d_SKUID: 'asc'}).exec();
+    })
+    .sort({d_SKUID: 'asc'})
+    .exec(function(err, result){
+        if(err){
+            deferred.reject(err);
+        }else{
+            deferred.resolve(result);
+        }
+    });
+    return deferred.promise;
 };
 
 exports.findAllInCompany = function(seminarId, period, companyId){
-    return SKUDecision.find({
+    var deferred = Q.defer();
+
+    SKUDecision.find({
         seminarId: seminarId,
         period: period,
         d_CID: companyId,
-    }).sort({d_SKUID: 'asc'}).exec();
+    })
+    .sort({d_SKUID: 'asc'})
+    .exec(function(err, result){
+        if(err){
+            deferred.reject(err);
+        }else{
+            deferred.resolve(result);
+        }
+    });
+    return deferred.promise;
 };
 
 exports.updateSKU = function(seminarId, period, companyId, brandId, SKUID, SKU){

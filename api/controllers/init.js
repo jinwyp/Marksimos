@@ -67,7 +67,6 @@ exports.init = function(req, res, next) {
  */
 function initSpendingVersusBudget(seminarId, allDecisions){
     var spendingVersusBudget = spendingVersusBudgetConvertor.getAllSpendingVersusBudget(seminarId, allDecisions);
-    console.log(spendingVersusBudget)
     return seminarModel.update(seminarId, {
         spendingVersusBudget: spendingVersusBudget
     });

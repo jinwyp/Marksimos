@@ -41,11 +41,21 @@ exports.save = function(decision){
 };
 
 exports.findAll = function(seminarId, period, companyId){
-    return BrandDecision.find({
+    var deferred = Q.defer();
+    BrandDecision.find({
         seminarId: seminarId,
         period: period,
         d_CID: companyId
-    }).sort({d_BrandID: 'asc'}).exec();
+    })
+    .sort({d_BrandID: 'asc'})
+    .exec(function(err, result){
+        if(err){
+            deferred.reject(err);
+        }else{
+            deferred.resolve(result);
+        }
+    });
+    return deferred.promise;
 };
 
 exports.updateBrand = function(seminarId, period, companyId, brandId, brand){

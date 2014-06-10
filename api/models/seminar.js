@@ -40,17 +40,34 @@ exports.getSeminarSetting = function(seminarId){
 }
 
 exports.update = function(seminarId, seminar){
-    return Seminar.update({seminarId: seminarId}, seminar).exec();
+    var deferred = Q.defer();
+    Seminar.update({seminarId: seminarId}, seminar)
+    .exec(function(err, numAffected){
+        if(err){
+            deferred.reject(err);
+        }else{
+            deferred.resolve(numAffected);
+        }
+    });
+    return deferred.promise;
 }
 
 exports.insertEmptySeminar = function(seminarId){
-    return Seminar.create({
+    var deferred = Q.defer();
+    Seminar.create({
         seminarId: seminarId,
         allResults: [],
         productPortfolio: [],
         charts: [],
         reports: []
+    }, function(err){
+        if(err){
+            deferred.reject(err);
+        }else{
+            deferred.resolve(null);
+        }
     });
+    return deferred.promise;
 }
 
 exports.remove = function(seminarId){
