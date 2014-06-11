@@ -226,18 +226,20 @@ function cleanAllResults(allResults){
  * @param {Object} allResults allResults of all periods
  */
 function initChartData(seminarId, allResults){
-    return seminarModel.getSeminarSetting(seminarId)
-    .then(function(seminarSetting){
-        return getExogenous(seminarSetting)
-        .then(function(exogenous){
-            //generate charts from allResults
-            var chartData =  extractChartData(allResults, {
-                seminarSetting: seminarSetting,
-                exogenous: exogenous
-            });
-
-            return seminarModel.update(seminarId, {charts: chartData})
+    var period = allResults[allResults.length-1].periodId;
+    return Q.all([
+        seminarModel.findOne(seminarId),
+        //get exogenous of period:0, FMCG and GENERIC market
+        getExogenous(period, 'FMCG', 'GENERIC')
+    ])
+    .spread(function(seminar, exogenous){
+        //generate charts from allResults
+        var chartData =  extractChartData(allResults, {
+            simulationSpan: seminar.simulationSpan,
+            exogenous: exogenous
         });
+
+        return seminarModel.update(seminarId, {charts: chartData})
     });
 }
 
@@ -335,10 +337,10 @@ function queryOneDecision(seminarId, team, period){
  * @param {Object} seminarSetting {simulationVariant, targetMarket}
  *
  */
-function getExogenous(seminarSetting){
+function getExogenous(period, simulationVariant, targetMarket){
     var reqUrl = url.resolve(config.cgiService,
         util.format('exogenous.exe?period=%s&simulationVariant=%s&targetMarket=%s',
-            0,seminarSetting.simulationVariant, seminarSetting.targetMarket));
+            period, simulationVariant, targetMarket));
     return request.get(reqUrl);
 }
 
@@ -355,7 +357,7 @@ function extractChartData(results, settings){
     var totalInvestment = allResultsConvertor.totalInvestment(results);
     var netProfitByCompanies = allResultsConvertor.netProfitByCompanies(results);
     var returnOnInvestment = allResultsConvertor.returnOnInvestment(results);
-    var investmentsVersusBudget = allResultsConvertor.investmentsVersusBudget(results, settings.seminarSetting);
+    var investmentsVersusBudget = allResultsConvertor.investmentsVersusBudget(results, settings.simulationSpan);
     
     //market sales and inventory
     var marketSalesValue = allResultsConvertor.marketSalesValue(results);

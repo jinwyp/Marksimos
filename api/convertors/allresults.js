@@ -50,7 +50,7 @@ exports.returnOnInvestment = function(allResults){
     })
 }
 
-exports.investmentsVersusBudget = function(allResults, seminarSetting){
+exports.investmentsVersusBudget = function(allResults, simulationSpan){
     var companyNum = allResults[allResults.length - 1].p_Market.m_CompaniesCount;
 
     var result = {};
@@ -67,7 +67,7 @@ exports.investmentsVersusBudget = function(allResults, seminarSetting){
                 result[companyName] = [];
             }
 
-            var percentage = (i+1)/seminarSetting.simulationSpan
+            var percentage = (i+1)/simulationSpan
                 * (company.c_TotalInvestmentBudget - company.c_FutureXtraBudget);
             if(percentage > 0){
                 percentage = company.c_CumulatedInvestments / percentage * 100;
