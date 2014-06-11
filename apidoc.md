@@ -66,7 +66,7 @@
   * inventory_report
 
 
-### Response
+### Response Format
  
     {
         "chartData": [
@@ -98,6 +98,25 @@
             0
         ]
     }
+
+
+    {
+        "chartData": [
+            {
+                SKUName : "APONE_1",
+                valueSegmentShare : 0.480229258537292
+            },
+            {
+                SKUName : "APONE_2",
+                valueSegmentShare : 0.160229258537292
+            },
+            {
+                SKUName : "BOBOB_2",
+                valueSegmentShare : 0.138133261203766
+            }
+        ]
+    }
+
 
 ## /api/register
 ### POST

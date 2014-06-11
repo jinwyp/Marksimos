@@ -29,7 +29,7 @@ app.factory('company',function($http){
     var factory = {
         getCompany : function(){
             return $http.get(apiPath + 'companydata').then(function(result){
-                console.log(result.data);
+//                console.log(result.data);
 
                 return result.data.companyDecision;
             });
@@ -106,7 +106,8 @@ app.factory('report',function($http){
 
 
 
-    var chartTool = function(chartHttpData, decimalNumber){
+    var chartFormatTool1 = function(chartHttpData, decimalNumber){
+        // 使用angular-chart 插件的数据格式
 
         chartResult.series = [];
         chartResult.data = [];
@@ -170,7 +171,7 @@ app.factory('report',function($http){
 
 
         }else if(angular.isArray(chartHttpData.periods) ){
-
+            // 如果periods 有定义 则是带有系列的图表
             angular.forEach(chartHttpData.periods, function(value, key) {
 
                 var oneLineData = {
@@ -205,6 +206,50 @@ app.factory('report',function($http){
         }
     };
 
+    var exampleData = [
+        {
+            "key": "Series 1",
+            "values": [ [ 1025409600000 , 0] , [ 1028088000000 , -6.3382185140371] , [ 1030766400000 , -5.9507873460847] , [ 1033358400000 , -11.569146943813] , [ 1036040400000 , -5.4767332317425] , [ 1038632400000 , 0.50794682203014] , [ 1041310800000 , -5.5310285460542] , [ 1043989200000 , -5.7838296963382] , [ 1046408400000 , -7.3249341615649] , [ 1049086800000 , -6.7078630712489] , [ 1051675200000 , 0.44227126150934] , [ 1054353600000 , 7.2481659343222] , [ 1056945600000 , 9.2512381306992] ]
+        },
+        {
+            "key": "Series 2",
+            "values": [ [ 1025409600000 , 0] , [ 1028088000000 , 0] , [ 1030766400000 , 0] , [ 1033358400000 , 0] , [ 1036040400000 , 0] , [ 1038632400000 , 0] , [ 1041310800000 , 0] , [ 1043989200000 , 0] , [ 1046408400000 , 0] , [ 1049086800000 , 0] , [ 1051675200000 , 0] , [ 1054353600000 , 0] , [ 1056945600000 , 0] , [ 1059624000000 , 0] , [ 1062302400000 , 0] , [ 1064894400000 , 0] , [ 1067576400000 , 0] , [ 1070168400000 , 0] , [ 1072846800000 , 0] , [ 1075525200000 , -0.049184266875945] ]
+        },
+        {
+            "key": "Series 3",
+            "values": [ [ 1025409600000 , 0] , [ 1028088000000 , -6.3382185140371] , [ 1030766400000 , -5.9507873460847] , [ 1033358400000 , -11.569146943813] , [ 1036040400000 , -5.4767332317425] , [ 1038632400000 , 0.50794682203014] , [ 1041310800000 , -5.5310285460542] , [ 1043989200000 , -5.7838296963382] , [ 1046408400000 , -7.3249341615649] , [ 1049086800000 , -6.7078630712489] , [ 1051675200000 , 0.44227126150934] , [ 1054353600000 , 7.2481659343222] , [ 1056945600000 , 9.2512381306992] ]
+        },
+        {
+            "key": "Series 4",
+            "values": [ [ 1025409600000 , -7.0674410638835] , [ 1028088000000 , -14.663359292964] , [ 1030766400000 , -14.104393060540] , [ 1033358400000 , -23.114477037218] , [ 1036040400000 , -16.774256687841] , [ 1038632400000 , -11.902028464000] , [ 1041310800000 , -16.883038668422] , [ 1043989200000 , -19.104223676831] , [ 1046408400000 , -20.420523282736] , [ 1049086800000 , -19.660555051587] , [ 1051675200000 , -13.106911231646] , [ 1054353600000 , -8.2448460302143] , [ 1056945600000 , -7.0313058730976] ]
+        }
+    ];
+    var chartFormatTool2 = function(chartHttpData, decimalNumber) {
+        // 使用angular-nvd3 插件的数据格式
+
+        chartResult.series = [];
+        chartResult.data = [];
+
+        angular.forEach(chartHttpData.SKUs, function(value, key) {
+
+            var oneLineData = {
+                key : value.SKUName, //Round Name
+                values : angular.copy(chartHttpData.chartData[key])
+            };
+
+            angular.forEach(oneLineData.y, function(value, key) {
+                if(decimalNumber === 0){
+                    oneLineData.y[key] = Math.round(value * 100) / 100;
+                }else{
+                    oneLineData.y[key] = Math.round(value * 10000 )/Math.pow(10, Number(decimalNumber));
+                }
+            });
+
+            chartResult.data.push(oneLineData);
+        });
+
+    };
+
 
 
     var factory = {
@@ -233,7 +278,7 @@ app.factory('report',function($http){
             return $http.get(apiPath + 'chart/market_share_in_value').then(function(result){
 //                console.log(result.data);
 
-                return chartTool(result.data, 2);
+                return chartFormatTool1(result.data, 2);
             });
         },
 
@@ -241,7 +286,7 @@ app.factory('report',function($http){
             return $http.get(apiPath + 'chart/market_share_in_volume').then(function(result){
 //                console.log(result.data);
 
-                return chartTool(result.data, 2);
+                return chartFormatTool1(result.data, 2);
             });
         },
 
@@ -249,7 +294,7 @@ app.factory('report',function($http){
             return $http.get(apiPath + 'chart/mind_space_share').then(function(result){
 //                console.log(result.data);
 
-                return chartTool(result.data, 2);
+                return chartFormatTool1(result.data, 2);
             });
         },
 
@@ -257,9 +302,20 @@ app.factory('report',function($http){
             return $http.get(apiPath + 'chart/shelf_space_share').then(function(result){
 //                console.log(result.data);
 
-                return chartTool(result.data, 2);
+                return chartFormatTool1(result.data, 2);
             });
         },
+
+
+        // Chart A3
+        inventoryReport : function(){
+            return $http.get(apiPath + 'chart/inventory_report').then(function(result){
+                console.log(result.data);
+
+                return chartFormatTool2(result.data, 2);
+            });
+        },
+
 
 
         // Chart B3
@@ -267,7 +323,7 @@ app.factory('report',function($http){
             return $http.get(apiPath + 'chart/total_investment').then(function(result){
 //                console.log(result.data);
 
-                return chartTool(result.data, 0);
+                return chartFormatTool1(result.data, 0);
             });
         },
 
@@ -275,7 +331,7 @@ app.factory('report',function($http){
             return $http.get(apiPath + 'chart/net_profit_by_companies').then(function(result){
 //                console.log(result.data);
 
-                return chartTool(result.data, 0);
+                return chartFormatTool1(result.data, 0);
             });
         },
 
@@ -283,7 +339,7 @@ app.factory('report',function($http){
             return $http.get(apiPath + 'chart/return_on_investment').then(function(result){
 //                console.log(result.data);
 
-                return chartTool(result.data, 2);
+                return chartFormatTool1(result.data, 2);
             });
         },
 
@@ -291,7 +347,7 @@ app.factory('report',function($http){
             return $http.get(apiPath + 'chart/investments_versus_budget').then(function(result){
 //                console.log(result.data);
 
-                return chartTool(result.data, 2);
+                return chartFormatTool1(result.data, 2);
             });
         },
 
@@ -301,7 +357,7 @@ app.factory('report',function($http){
             return $http.get(apiPath + 'chart/market_sales_value').then(function(result){
 //                console.log(result.data);
 
-                return chartTool(result.data, 0);
+                return chartFormatTool1(result.data, 0);
             });
         },
 
@@ -309,7 +365,7 @@ app.factory('report',function($http){
             return $http.get(apiPath + 'chart/market_sales_volume').then(function(result){
 //                console.log(result.data);
 
-                return chartTool(result.data, 0);
+                return chartFormatTool1(result.data, 0);
             });
         },
 
@@ -317,7 +373,7 @@ app.factory('report',function($http){
             return $http.get(apiPath + 'chart/total_inventory_at_factory').then(function(result){
 //                console.log(result.data);
 
-                return chartTool(result.data, 0);
+                return chartFormatTool1(result.data, 0);
             });
         },
 
@@ -325,7 +381,7 @@ app.factory('report',function($http){
             return $http.get(apiPath + 'chart/total_inventory_at_trade').then(function(result){
 //                console.log(result.data);
 
-                return chartTool(result.data, 0);
+                return chartFormatTool1(result.data, 0);
             });
         },
 
@@ -335,7 +391,7 @@ app.factory('report',function($http){
             return $http.get(apiPath + 'chart/segments_leaders_by_value_price_sensitive').then(function(result){
 //                console.log(result.data);
 
-                return chartTool(result.data, 2);
+                return chartFormatTool1(result.data, 2);
             });
         },
 
@@ -343,7 +399,7 @@ app.factory('report',function($http){
             return $http.get(apiPath + 'chart/segments_leaders_by_value_pretenders').then(function(result){
 //                console.log(result.data);
 
-                return chartTool(result.data, 2);
+                return chartFormatTool1(result.data, 2);
             });
         },
 
@@ -351,7 +407,7 @@ app.factory('report',function($http){
             return $http.get(apiPath + 'chart/segments_leaders_by_value_moderate').then(function(result){
 //                console.log(result.data);
 
-                return chartTool(result.data, 2);
+                return chartFormatTool1(result.data, 2);
             });
         },
 
@@ -359,7 +415,7 @@ app.factory('report',function($http){
             return $http.get(apiPath + 'chart/segments_leaders_by_value_good_life').then(function(result){
 //                console.log(result.data);
 
-                return chartTool(result.data, 2);
+                return chartFormatTool1(result.data, 2);
             });
         },
 
@@ -367,7 +423,7 @@ app.factory('report',function($http){
             return $http.get(apiPath + 'chart/segments_leaders_by_value_ultimate').then(function(result){
 //                console.log(result.data);
 
-                return chartTool(result.data, 2);
+                return chartFormatTool1(result.data, 2);
             });
         },
 
@@ -375,7 +431,7 @@ app.factory('report',function($http){
             return $http.get(apiPath + 'chart/segments_leaders_by_value_pragmatic').then(function(result){
 //                console.log(result.data);
 
-                return chartTool(result.data, 2);
+                return chartFormatTool1(result.data, 2);
             });
         },
 
@@ -385,7 +441,7 @@ app.factory('report',function($http){
             return $http.get(apiPath + 'chart/growth_rate_in_volume').then(function(result){
 //                console.log(result.data);
 
-                return chartTool(result.data, 0);
+                return chartFormatTool1(result.data, 0);
             });
         },
 
@@ -393,7 +449,7 @@ app.factory('report',function($http){
             return $http.get(apiPath + 'chart/growth_rate_in_value').then(function(result){
 //                console.log(result.data);
 
-                return chartTool(result.data, 0);
+                return chartFormatTool1(result.data, 0);
             });
         },
 
@@ -401,7 +457,7 @@ app.factory('report',function($http){
             return $http.get(apiPath + 'chart/net_market_price').then(function(result){
 //                console.log(result.data);
 
-                return chartTool(result.data, 0);
+                return chartFormatTool1(result.data, 0);
             });
         },
 
@@ -409,7 +465,7 @@ app.factory('report',function($http){
             return $http.get(apiPath + 'chart/segment_value_share_total_market').then(function(result){
 //                console.log(result.data);
 
-                return chartTool(result.data, 2);
+                return chartFormatTool1(result.data, 2);
             });
         }
 

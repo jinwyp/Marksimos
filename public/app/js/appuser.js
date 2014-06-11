@@ -237,6 +237,13 @@ marksimosapp.controller('chartController', function AppCtrl ($scope,  $timeout, 
     });
 
 
+    // Chart A3
+    report.inventoryReport().then(function(data, status, headers, config){
+        console.log(data);
+//        $scope.data.chartA14ShelfSpaceShare.data = data;
+    });
+
+
     // Chart B3
     $scope.data.chartB31TotalInvestment.config.title = 'Total Investment (mln RMB)';
     $scope.data.chartB32NetProfitByCompanies.config.title = 'Net Profit By Companies (mln RMB)';
