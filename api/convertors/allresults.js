@@ -55,7 +55,7 @@ exports.investmentsVersusBudget = function(allResults, simulationSpan){
 
     var result = {};
 
-    for (var i = 0; i < allResults.length; i++) {
+    for (var i = 4; i < allResults.length; i++) {
         var onePeriodResult = allResults[i];
 
         for (var j = 0; j < companyNum; j++) {
