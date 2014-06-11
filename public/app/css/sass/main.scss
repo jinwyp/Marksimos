@@ -46,6 +46,7 @@ $color_main_body_user_chart_leftmenu_title: #6f6f6f;
 $color_main_body_user_chart_leftmenu_active_bg: #eef3ff;
 $color_main_body_user_chart_leftmenu_active_bgbefore: #236ac7;
 $color_main_body_user_chart_leftmenu_border: #e7e9ed;
+$color_main_body_user_chart_single_border: #d9dce3;
 
 
 $color_main_body_progress_bar_budget: #6071b9;
@@ -612,6 +613,7 @@ body{
         padding-left: 0px;
         padding-right: 0px;
     }
+
     .user_chart_leftmenu{
 
         background-color: $color_main_body_background_brand;
@@ -655,6 +657,42 @@ body{
             }
         }
 
+    }
+
+    .user_chart_right{
+        background-color: $color_login_background;
+
+        .user_chart_single{
+            border: 1px solid $color_main_body_user_chart_single_border;
+            background-color: $color_login_panel_background;
+            margin: 10px 5px 10px 10px;
+            padding: 0px 0px 0px 0px;
+
+            h5 {
+                text-align: center;
+                font-size: 14px;
+                color: $color_main_body_company;
+                background-color: $color_login_content_background;
+                margin: 0px 0px 0px 0px;
+                padding: 13px 0px;
+
+                .chart_icon{
+                    float: right;
+                    padding-right: 10px;
+                }
+            }
+        }
+
+        .chart_1{
+            width: 98%;
+        }
+
+        .chart_2{
+            width: 48%;
+        }
+        .chart_3{
+            width: 31%;
+        }
     }
 
 
@@ -820,11 +858,12 @@ body{
 }
 
 .chartBox {
-    width: 96%;
+    width: 99%;
     height:350px;
-    margin: 20px 0px;
+    margin: 0px 0px;
     .ac-title {
         text-align: center;
+        display: none;
     }
 
     .bar_chart_label{

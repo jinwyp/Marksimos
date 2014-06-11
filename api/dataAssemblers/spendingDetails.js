@@ -3,6 +3,7 @@ var seminarModel = require('../models/seminar.js');
 var Q = require('q');
 var utility = require('../utility.js');
 var consts = require('../consts.js');
+var gameParameters = require('../gameParameters.js').parameters;
 
 exports.getSpendingDetails = function(seminarId, period, companyId){
     return Q.all([
@@ -71,6 +72,7 @@ exports.getSpendingDetails = function(seminarId, period, companyId){
         + total.tradeExpenses + total.estimatedAdditionalTradeMarginCost + total.estimatedWholesaleBonusCost).toFixed(2);
 
         var companyDataInAllResults = utility.findCompany(seminar.allResults[seminar.allResults.length-1], companyId)
+        
         //average budget per period
         companyData.averageBudgetPerPeriod = (companyDataInAllResults.c_TotalInvestmentBudget / seminar.simulationSpan).toFixed(2);
 
@@ -81,15 +83,28 @@ exports.getSpendingDetails = function(seminarId, period, companyId){
         companyData.availableBudget = (companyDataInAllResults.c_TotalInvestmentBudget - companyDataInAllResults.c_CumulatedInvestments 
             - companyData.totalInvestment).toFixed(2);
 
-        companyData.normalCapacity = calculateTotalVolume(decision);
+        //normal capacity
+        companyData.normalCapacity = companyDataInAllResults.c_Capacity - calculateTotalVolume(decision)
+        if(companyData.normalCapacity < -1){
+            companyData.normalCapacity = 0;
+        }
 
-        companyData.availableOvertimeCapacityExtension = '';
+        //company data in all results
+        if(companyDataInAllResults.c_Capacity - calculateTotalVolume(decision) < 0){
+            companyData.availableOvertimeCapacityExtension = companyDataInAllResults.c_Capacity - calculateTotalVolume(decision) 
+                + companyDataInAllResults.c_Capacity * gameParameters.pgen.firm_OvertimeCapacity;
+        }else{
+            companyData.availableOvertimeCapacityExtension = companyDataInAllResults.c_Capacity * gameParameters.pgen.firm_OvertimeCapacity;
+        }
 
-        companyData.acquiredEfficiency = '';
+        companyData.availableOvertimeCapacityExtension = companyData.availableOvertimeCapacityExtension.toFixed(2);
+        
 
-        companyData.acquiredProductionVolumeFlexibility = '';
+        companyData.acquiredEfficiency = (companyDataInAllResults.c_AcquiredEfficiency*100).toFixed(2);
 
-        companyData.acquiredTechnologyLevel = '';
+        companyData.acquiredProductionVolumeFlexibility = (companyDataInAllResults.c_AcquiredFlexibility * 100).toFixed(2);
+
+        companyData.acquiredTechnologyLevel = companyDataInAllResults.c_AcquiredTechnologyLevel;
 
         
         return {

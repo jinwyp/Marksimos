@@ -100,7 +100,7 @@ exports.getChartData = function(seminarId){
         if(err){
             deferred.reject(err);
         }else{
-            deferred.resolve(result);
+            deferred.resolve(result.charts);
         }
     });
     return deferred.promise;
