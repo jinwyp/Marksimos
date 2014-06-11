@@ -10,8 +10,6 @@ var companyDecisionModel = require('../models/companyDecision.js');
 var brandDecisionModel = require('../models/brandDecision.js');
 var SKUDecisionModel = require('../models/SKUDecision.js');
 var seminarModel = require('../models/seminar.js');
-var productPortfolioConvertor = require('../convertors/productPortfolio.js');
-var spendingVersusBudgetConvertor = require('../convertors/spendingVersusBudget.js');
 
 /**
  * Initialize game data, only certain perople can call this method
@@ -21,6 +19,7 @@ var spendingVersusBudgetConvertor = require('../convertors/spendingVersusBudget.
  */
 exports.init = function(req, res, next) {
     var seminarId = 'TTT'; //this parameter should be posted from client
+    var simulationSpan = 6; //should be posted from client
 
     if(!seminarId){
         return next(new Error("seminarId cannot be empty."));
@@ -31,7 +30,14 @@ exports.init = function(req, res, next) {
         seminarModel.remove(seminarId)
     ])
     .then(function(){
-        return seminarModel.insertEmptySeminar(seminarId);
+        return seminarModel.insert(seminarId, {
+            seminarId: seminarId,
+            simulationSpan: simulationSpan,
+            allResults: [],
+            productPortfolio: [],
+            charts: [],
+            reports: []
+        });
     })
     .then(function(){
         return Q.all([
@@ -49,9 +55,7 @@ exports.init = function(req, res, next) {
             //save allResult data
             seminarModel.update(seminarId, {allResults: allResults}),
             initChartData(seminarId, allResults),
-            initDecision(seminarId, allDecisions),
-            initProductPortfolio(seminarId, allDecisions, allResults),
-            initSpendingVersusBudget(seminarId, allDecisions)
+            initDecision(seminarId, allDecisions)
         ]);
     })
     .then(function(){
@@ -62,25 +66,6 @@ exports.init = function(req, res, next) {
     }).done();
 };
 
-/**
- * Get data for speding detail 
- */
-function initSpendingVersusBudget(seminarId, allDecisions){
-    var spendingVersusBudget = spendingVersusBudgetConvertor.getAllSpendingVersusBudget(seminarId, allDecisions);
-    return seminarModel.update(seminarId, {
-        spendingVersusBudget: spendingVersusBudget
-    });
-}
-
-function initProductPortfolio(seminarId, allDecisions, allResults){
-    return seminarModel.getSeminarSetting(seminarId)
-    .then(function(seminarSetting){
-        var allProductionPortfolio = productPortfolioConvertor.getAllProductPortfolio(allDecisions, allResults, seminarSetting);
-        return seminarModel.update(seminarId, {
-            productPortfolio: allProductionPortfolio
-        });
-    });
-}
 
 /**
  * Split allDecisions into companyDecision, brandDecison, and SKUDecision,

@@ -3,7 +3,7 @@
 */
 var consts = require('../consts.js');
 var config = require('../config.js');
-var utility = require('./utility.js');
+var utility = require('../utility.js');
 
 //Market Share
 exports.marketShareInValue = function(allResults) {
@@ -240,7 +240,7 @@ exports.perceptionMap = function(allResults, exogenous){
     return result;
 }
 
-exports.inventoryReport = function(allResults, seminarSetting){
+exports.inventoryReport = function(allResults){
     var periodResult = allResults[allResults.length-1];
 
     var result = [];
@@ -259,7 +259,7 @@ exports.inventoryReport = function(allResults, seminarSetting){
             if(company.c_CompanyID === SKU.u_ParentCompanyID){
                 companyData.SKUs.push({
                     SKUName: brand.b_BrandName + SKU.u_SKUName,
-                    inventoryData: getSKUInventory(SKU, seminarSetting)
+                    inventoryData: getSKUInventory(SKU)
                 })
             }
         }
@@ -269,33 +269,19 @@ exports.inventoryReport = function(allResults, seminarSetting){
 
     return result;
 
-    function getSKUInventory(SKU, seminarSetting){
+    function getSKUInventory(SKU){
         if(!SKU) throw new Error("Invalid parameter SKU.");
-
-        if(!seminarSetting) throw new Error("Invalid parameter seminarSetting.");
 
         var result = [];
 
-        if(seminarSetting.simulationVariant === 'FMCG'){
-            //FMCG can keep stocks in 3 periods
-            for(var i=2; i>=0; i--){
-                var totalStock = SKU.u_ps_FactoryStocks[i].s_ps_Volume;
-                totalStock = totalStock * consts.ActualSize[SKU.u_PackSize];
-                result.push({
-                    inventoryName: config.inventoryNames.FMCG[i],
-                    inventoryValue: totalStock
-                })
-            }
-        }else{
-            //FMCG can keep stocks in 3 periods
-            for(var i=4; i>=0; i--){
-                var totalStock = SKU.u_ps_FactoryStocks[i].s_ps_Volume;
-                totalStock = totalStock * consts.ActualSize[SKU.u_PackSize];
-                result.push({
-                    inventoryName: config.inventoryNames.DURABLES[i],
-                    inventoryValue: totalStock
-                })
-            }
+        //FMCG can keep stocks in 3 periods
+        for(var i=2; i>=0; i--){
+            var totalStock = SKU.u_ps_FactoryStocks[i].s_ps_Volume;
+            totalStock = totalStock * consts.ActualSize[SKU.u_PackSize];
+            result.push({
+                inventoryName: config.inventoryNames.FMCG[i],
+                inventoryValue: totalStock
+            })
         }
 
         return result;

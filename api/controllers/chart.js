@@ -14,25 +14,29 @@ exports.getChart = function(req, res, next){
         return next(new Error('chartName cannot be empty.'));
     }
 
+    //chart name saved in db doesn't contain _
+    var chartNameTemp = chartName.replace(/_/g,'');
+
     seminarDataModel.getChartData(seminarId)
     .then(function(allCharts){
         var chart = null;
-        for(var i=0; i<allCharts.charts.length; i++){
-            //chart name saved in db doesn't contain _
-            var chartNameTemp = chartName.replace(/_/g,'');
-
+        for(var i=0; i<allCharts.length; i++){
             //find chart data by chart name
-            if(allCharts.charts[i].chartName.toLowerCase() === chartNameTemp.toLowerCase()){
-                chart = allCharts.charts[i];
-                if(chartNameTemp==='inventoryReport'){
-                    //this function changes data in chart object
-                    filterChart(chart, companyId);
-                }
+            if(allCharts[i].chartName.toLowerCase() === chartNameTemp.toLowerCase()){
+                chart = allCharts[i];
                 break;
             }
         }
+
         if(!chart){
             return next(new Error(util.format("chart %s does not exist.", chartName)));
+        }
+
+        if(chartName==='inventory_report'){
+            //this function changes data in chart object
+            var chartData = filterChart(chart, companyId);
+            console.log(chartData)
+            return res.send(chartData);
         }
 
         res.json(chart.chartData);
@@ -47,6 +51,10 @@ exports.getChart = function(req, res, next){
      * this function removes chart data of other companies from chart
      *
      * @param {Object} chart chartData got from db
+     {
+        chartName: "inventoryReport",
+        chartData: []
+     }
      * @param {Number} companyId
      */
     function filterChart(chart, companyId){
@@ -61,19 +69,10 @@ exports.getChart = function(req, res, next){
                 break;
             }
         }
+
         if(chartOfCurrentCompany){
-            chart.chartData = [chartOfCurrentCompany];
+            return chartOfCurrentCompany;
         }
     }
-
-    // function mapChartName(chartName){
-    //     chartName = chartName.toLowerCase();
-    //     var names = chartName.split('_');
-    //     for(var i=1; i<names.length; i++){
-    //         names[i] = names[i][0].toUpperCase() + names[i].substring(1);
-    //     }
-
-    //     return names.join('');
-    // }
 };
 

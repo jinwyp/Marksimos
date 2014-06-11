@@ -12,8 +12,6 @@ var seminarSchema = new Schema({
     isFinished: Boolean, //if this seminar is finished
 
     allResults: [],
-    productPortfolio: [],
-    spendingVersusBudget: [], //spending details
     charts: [],
     reports: []
 });
@@ -25,7 +23,6 @@ var teamSchema = new Schema({
 
 var Seminar = mongoose.model("Seminar", seminarSchema);
 
-exports.add
 
 exports.getSeminarSetting = function(seminarId){
     var deferred = Q.defer();
@@ -52,15 +49,9 @@ exports.update = function(seminarId, seminar){
     return deferred.promise;
 }
 
-exports.insertEmptySeminar = function(seminarId){
+exports.insert = function(seminarId, seminar){
     var deferred = Q.defer();
-    Seminar.create({
-        seminarId: seminarId,
-        allResults: [],
-        productPortfolio: [],
-        charts: [],
-        reports: []
-    }, function(err){
+    Seminar.create(seminar, function(err){
         if(err){
             deferred.reject(err);
         }else{
@@ -109,28 +100,19 @@ exports.getChartData = function(seminarId){
         if(err){
             deferred.reject(err);
         }else{
-            deferred.resolve(result);
+            deferred.resolve(result.charts);
         }
     });
     return deferred.promise;
 }
 
-exports.getProductPortfolio = function(seminarId, companyId){
+exports.findOne = function(seminarId){
     var deferred = Q.defer();
-    Seminar.findOne({seminarId: seminarId}, function(err, seminar){
+    Seminar.findOne({seminarId: seminarId}, function(err, result){
         if(err){
             deferred.reject(err);
         }else{
-            if(seminar){
-                for(var i=0; i<seminar.productPortfolio.length; i++){
-                    if(seminar.productPortfolio[i].companyId === companyId){
-                        deferred.resolve(seminar.productPortfolio[i]);
-                        break;
-                    } 
-                }
-            }else{
-                deferred.resolve(null);
-            }
+            deferred.resolve(result);
         }
     });
     return deferred.promise;
