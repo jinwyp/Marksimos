@@ -9,6 +9,7 @@ var decisionCleaner = require('../convertors/decisionCleaner.js');
 var decisionConvertor = require('../convertors/decision.js');
 var Q = require('q');
 var logger = require('../../logger.js');
+var gameParameters = require('../gameParameters.js').parameters;
 
 /**
  * Sumit decision to CGI service
@@ -184,14 +185,6 @@ exports.updateSKUDecision = function(req, res, next){
     }
 
     var jsonSKU = SKU;
-//    try{
-//        console.log(SKU);
-//        jsonSKU = JSON.parse(SKU);
-//    }catch(err){
-//        logger.error(err);
-//        return res.send(400, {status: 0, message: "Invalid parameter sku"});
-//    }
-
     //create a SKU object using the data posted by the client
     var tempSKU = createSKU(jsonSKU);
 
@@ -213,10 +206,14 @@ exports.updateSKUDecision = function(req, res, next){
     function createSKU(postedSKU){
         var result = {};
 
-        var fields = ['d_SKUName','d_Advertising','d_AdditionalTradeMargin','d_FactoryPrice','d_ConsumerPrice','d_RepriceFactoryStocks','d_IngredientsQuality','d_PackSize','d_ProductionVolume','d_PromotionalBudget','d_PromotionalEpisodes','d_TargetConsumerSegment','d_Technology','d_ToDrop','d_TradeExpenses','d_WholesalesBonusMinVolume','d_WholesalesBonusRate','d_WarrantyLength'];
+        var fields = ['d_SKUName','d_Advertising','d_AdditionalTradeMargin','d_FactoryPrice','d_RepriceFactoryStocks','d_IngredientsQuality','d_PackSize','d_ProductionVolume','d_PromotionalBudget','d_PromotionalEpisodes','d_TargetConsumerSegment','d_Technology','d_ToDrop','d_TradeExpenses','d_WholesalesBonusMinVolume','d_WholesalesBonusRate','d_WarrantyLength'];
         fields.forEach(function(field){
             if(postedSKU[field] !== undefined){
                 result[field] = postedSKU[field];
+                if(field === 'd_FactoryPrice'){
+                    result.d_ConsumerPrice = result.d_FactoryPrice[0] * (gameParameters.pgen.wholesale_Markup + 1)
+                        * (gameParameters.pgen.retail_Markup + 1);
+                }
             }
         })
 
@@ -226,7 +223,7 @@ exports.updateSKUDecision = function(req, res, next){
 
 exports.updateBrandDecision = function(req, res, next){
     var brandId = req.body.brand_id;
-    var brand_decision = req.body.brand_decision;
+    var brand_data = req.body.brand_data;
 
     var seminarId = req.session.seminarId;
     var companyId = req.session.companyId;
@@ -237,7 +234,7 @@ exports.updateBrandDecision = function(req, res, next){
         return res.send(400, {status: 0, message: "Invalid parameter brand_id."});
     }
 
-    if(!brand_decision){
+    if(!brand_data){
         return res.send(400, {status: 0, message: "Invalid parameter brand_data"});
     }
 
@@ -255,7 +252,7 @@ exports.updateBrandDecision = function(req, res, next){
 
     var jsonBrand = null;
     try{
-        jsonBrand = JSON.parse(brand_decision);
+        jsonBrand = JSON.parse(brand_data);
     }catch(err){
         logger.error(err);
         return res.send(400, {status: 0, message: "Invalid parameter brand_data"});
@@ -293,15 +290,15 @@ exports.updateBrandDecision = function(req, res, next){
 };
 
 exports.updateCompanyDecision = function(req, res, next){
-    var company_decision = req.body.company_decision;
+    var company_data = req.body.company_data;
 
     var seminarId = req.session.seminarId;
     var companyId = req.session.companyId;
     var period = req.session.period;
 
 
-    if(!company_decision){
-        return res.send(400, {status: 0, message: "Invalid parameter company_decision"});
+    if(!company_data){
+        return res.send(400, {status: 0, message: "Invalid parameter company_data"});
     }
 
     if(!seminarId){
@@ -318,10 +315,10 @@ exports.updateCompanyDecision = function(req, res, next){
 
     var jsonCompanyDecision = null;
     try{
-        jsonCompanyDecision = JSON.parse(company_decision);
+        jsonCompanyDecision = JSON.parse(company_data);
     }catch(err){
         logger.error(err);
-        return res.send(400, {status: 0, message: "Invalid parameter company_decision"});
+        return res.send(400, {status: 0, message: "Invalid parameter company_data"});
     }
 
     var tempCompanyDecision = createCompanyDecision(jsonCompanyDecision);
