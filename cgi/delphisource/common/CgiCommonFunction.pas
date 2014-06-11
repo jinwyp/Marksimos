@@ -113,6 +113,10 @@ begin
 	begin
 	  DataDirectory := ini.ReadString('Options','DataDirectory','C:\Marksimos\');
     //DataDirectory := DataDirectory + seminar + '\';
+    if Copy(DataDirectory, Length(DataDirectory), 1) <> '\' then
+    begin
+      DataDirectory := DataDirectory + '\';
+    end;
 	  ini.Free;
 	end;
 end;

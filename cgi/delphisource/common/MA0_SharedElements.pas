@@ -15,7 +15,7 @@ uses
 
 Function DLLStr( aStringID : Integer ) : String;
 Function ReadExogenous( PeriodNumber : TPeriodNumber; ConfigRecord : TConfigurationRecord; var ExoRecord : TExogenous ) : Integer;
-//Function ReadParameters( var GenPar : TGeneralParameters; ConfigRecord : TConfigurationRecord; var SegPar : TSegmentsParameters ) : Integer;overload;
+Function ReadParameters( var GenPar : TGeneralParameters; ConfigRecord : TConfigurationRecord; var SegPar : TSegmentsParameters ) : Integer;
 
 //Function ReadExogenous( PeriodNumber : TPeriodNumber; vSimulationVariant : TSimulationVariant; var ExoRecord : TExogenous ) : Integer; overload;
 //Function ReadParameters( var GenPar : TGeneralParameters; vSimulationVariant : TSimulationVariant; var SegPar : TSegmentsParameters ) : Integer;overload;
@@ -168,48 +168,47 @@ end;
 //
 //end;
 //
-//Function ReadParameters( var GenPar : TGeneralParameters; ConfigRecord : TConfigurationRecord; var SegPar : TSegmentsParameters ) : Integer;
-//var
-//  ParFile    : file of TParameters;
-//  ParRecord  : TParameters;
-//  FileName   : String;
-//  TempResult : Integer;
-//  vPath : string;
-//begin
-//  vPath := ParamStr(0);
-//  vPath := ExtractFilePath(vPath);
-//  //MessageBox(0,Pchar(vPath),'note',MB_OK);
-//
-//  with ConfigRecord do FileName := ParametersFileName[cr_SimulationVariant, cr_TargetMarket];
-//  FileName := IncludeTrailingPathDelimiter(vPath)+FileName;
-//  //WriteToLogfile(FileName);
-//  try
-//        try
-//          AssignFile( ParFile, FileName );
-//          Reset( ParFile );
-//          Seek( ParFile, 0 );
-//          //MessageBox(0,Pchar(FileName),'note',MB_OK);
-//          Read( ParFile, ParRecord );
-//          //MessageBox(0,'after read','note',MB_OK);
-//          with ParRecord do
-//          begin
-//            GenPar := ParRecord.pgen;
-//            SegPar := ParRecord.pseg;
-//          end;
-//          TempResult := ReadParametersOK;
-//        except
-//          on E: EInOutError do
-//          begin
-//            ShowMessage( 'Read Error: ' + IntToStr( E.ErrorCode ) + #13 + #10 + FileName + #13 + #10 + E.Message );
-//            TempResult := E.ErrorCode;
-//          end;
-//        end;
-//  finally
-//        CloseFile( ParFile );
-//  end;
-//  Result := TempResult;
-//
-//end;
+Function ReadParameters( var GenPar : TGeneralParameters; ConfigRecord : TConfigurationRecord; var SegPar : TSegmentsParameters ) : Integer;
+var
+  ParFile    : file of TParameters;
+  ParRecord  : TParameters;
+  FileName   : String;
+  TempResult : Integer;
+  vPath : string;
+begin
+  vPath := ParamStr(0);
+  vPath := ExtractFilePath(vPath);
+  //MessageBox(0,Pchar(vPath),'note',MB_OK);
+
+  with ConfigRecord do FileName := ParametersFileName[cr_SimulationVariant, cr_TargetMarket];
+  FileName := IncludeTrailingPathDelimiter(vPath)+FileName;
+  //WriteToLogfile(FileName);
+  try
+        try
+          AssignFile( ParFile, FileName );
+          Reset( ParFile );
+          Seek( ParFile, 0 );
+          //MessageBox(0,Pchar(FileName),'note',MB_OK);
+          Read( ParFile, ParRecord );
+          //MessageBox(0,'after read','note',MB_OK);
+          with ParRecord do
+          begin
+            GenPar := ParRecord.pgen;
+            SegPar := ParRecord.pseg;
+          end;
+          TempResult := ReadParametersOK;
+        except
+          on E: EInOutError do
+          begin
+            TempResult := E.ErrorCode;
+          end;
+        end;
+  finally
+        CloseFile( ParFile );
+  end;
+  Result := TempResult;
+
+end;
 
 Function ReadResults( PeriodNumber : TPeriodNumber; var OnePeriodResults : POnePeriodInfo ) : Integer;
 var

@@ -12,10 +12,12 @@ uses
 var
   jo : ISuperObject;
   ctx: TSuperRttiContext;
-  FExogenous: ^TExogenous;
   sValue: String;
   params: TDictionary<String, String>;
   GConfigureRecord: TConfigurationRecord;
+  GenPar : TGeneralParameters;
+  SegPar : TSegmentsParameters;
+  jsonResult: String;
 
 function parseSimulationVariant(p: String): TSimulationVariant;
 begin
@@ -55,13 +57,25 @@ begin
       GConfigureRecord.cr_SimulationVariant := parseSimulationVariant(params['simulationVariant']);
       GConfigureRecord.cr_TargetMarket := parseTargetMarket(params['targetMarket']);
 
-      FExogenous := AllocMem(sizeof(TExogenous));
-
       WriteLn;
-      ReadExogenous(StrToInt(params['period']), GConfigureRecord, FExogenous^);
+      ReadParameters(GenPar, GConfigureRecord, SegPar);
 
-      jo := ctx.AsJson<TExogenous>(FExogenous^);
-      Writeln(jo.AsJSon(False, True));
+      jo := ctx.AsJson<TGeneralParameters>(GenPar);
+
+      jsonResult := jsonResult + '{"pgen": ';
+      jsonResult := jsonResult +  jo.AsJSon(False, True);
+      jsonResult := jsonResult + ',';
+
+      jo := ctx.AsJson<TSegmentsParameters>(SegPar);
+
+      jsonResult := jsonResult + '"pseg": ';
+      jsonResult := jsonResult + jo.AsJSon(False, True);
+      jsonResult := jsonResult + '}';
+
+      jsonResult := StringReplace(jsonResult, ':NAN,', ':"",',
+                          [rfReplaceAll, rfIgnoreCase]);
+
+      Writeln(jsonResult);
     end;
     { TODO -oUser -cConsole Main : Insert code here }
   except

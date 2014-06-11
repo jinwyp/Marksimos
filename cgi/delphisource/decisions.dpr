@@ -82,7 +82,7 @@ begin
   except
     on E: Exception do
     begin
-      Writeln(E.ClassName, ': ', E.Message);
+      Writeln('{"message": "' + E.ClassName + ': ' + E.Message +'"}');
     end;
   end;
 end.
