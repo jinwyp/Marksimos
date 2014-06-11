@@ -19,7 +19,7 @@ $color_login_panel_border : #e1e1e1;
 $color_login_panel_background : #ffffff;
 $color_login_content_background : #fcfcfc;
 $color_login_title : #5375e1;
-$color_login_input_lable : #252525;
+$color_login_input_label : #252525;
 
 
 
@@ -29,6 +29,7 @@ $color_main_body_border: #eceff1;
 $color_main_body_background: #fbfbfb;
 $color_main_body_background_brand: #fdfdfd;
 $color_main_body_background_chart: #dbe3f6;
+
 $color_main_body_company: #373737;
 $color_main_body_company_a: #ffffff;
 $color_main_body_company_a_bg: #39ae41;
@@ -45,6 +46,17 @@ $color_main_body_user_chart_leftmenu_title: #6f6f6f;
 $color_main_body_user_chart_leftmenu_active_bg: #eef3ff;
 $color_main_body_user_chart_leftmenu_active_bgbefore: #236ac7;
 $color_main_body_user_chart_leftmenu_border: #e7e9ed;
+
+
+$color_main_body_progress_bar_budget: #6071b9;
+$color_main_body_progress_bar_normal_capacity: #7169af;
+$color_main_body_progress_bar_overtime: #ad5ab3;
+
+$color_main_body_decision_subtitle: #bdbdbd;
+$color_main_body_decision_brand_border: #c2c2d3;
+$color_main_body_decision_sku_border: #ebebeb;
+
+
 
 
 /********************  自定义按钮样式  ********************/
@@ -110,6 +122,27 @@ $color_main_body_user_chart_leftmenu_border: #e7e9ed;
 
 /** 仿 iOS 系统通知数字样式 **/
 .num{
+
+    color:#fff;
+
+    padding:0px 5px;
+
+    position:absolute;
+    top:9px;
+    left:50px;
+
+    text-indent: 0;
+    text-align: center;
+    text-decoration: none;
+    line-height: 16px;
+    font-family:$font_main_header;
+    font-weight:normal;
+    font-size: 11px;
+    z-index: 999;
+}
+
+/** 仿 iOS 系统通知数字样式 **/
+.num2{
     background-color: $color_main_header_menu_num;
     background-image: -webkit-linear-gradient(top, $color_main_header_menu_num, $color_main_header_menu_num); /* Chrome 10+, Saf5.1+, iOS 5+ */
     background-image:    -moz-linear-gradient(top, $color_main_header_menu_num, $color_main_header_menu_num); /* FF3.6+ */
@@ -132,6 +165,7 @@ $color_main_body_user_chart_leftmenu_border: #e7e9ed;
     font-family:$font_main_header;
     font-weight:normal;
     font-size: 11px;
+    z-index: 999;
 }
 
 
@@ -201,7 +235,7 @@ body{
         label {
             font-weight: normal;
             font-size: 13px;
-//            color: $color_login_input_lable;
+//            color: $color_login_input_label;
             font-family: $font_main_header2;
         }
 
@@ -372,7 +406,7 @@ body{
 
 .mainbody{
 
-    /***** Mainuser 页面开始 *****/
+    /***** MainUserHome 页面开始 *****/
 
     background-color: $color_main_body_background;
     border: 1px solid $color_main_body_border;
@@ -535,7 +569,7 @@ body{
         margin: 18px 0px 1px 28px;
     }
 
-    .user_chart_search {
+    .user_chart_search_box {
         padding-top: 16px;
         padding-bottom: 10px;
     }
@@ -623,6 +657,162 @@ body{
 
     }
 
+
+
+    /***** Decision 页面开始 *****/
+
+    .progress_title{
+        color : $color_main_body_product_target;
+    }
+
+    .progress_radius{
+        @include border-radius(16px);
+    }
+    .progress_bar_budget {
+        background-color: $color_main_body_progress_bar_budget;
+    }
+    .progress_bar_normal_capacity {
+        background-color: $color_main_body_progress_bar_normal_capacity;
+    }
+    .progress_bar_overtime {
+        background-color: $color_main_body_progress_bar_overtime;
+    }
+
+    .budget_form {
+        padding: 5px 0px;
+
+        label {
+            color: $color_login_input_label;
+            font-size: 10px;
+            font-weight: normal;
+        }
+        .budget_title {
+            font-size: 18px;
+            padding-left: 34px;
+        }
+
+        input{
+            width: 80px
+        }
+    }
+
+    .decision_box{
+        margin : 10px 15px;
+        border:1px solid $color_login_panel_border;
+        background-color: $color_login_panel_background;
+
+        h4{
+            color: $color_main_body_competitors;
+            font-size: 18px;
+            font-weight: normal;
+            font-family: $font_main_header2;
+            margin:30px 0 5px 0;
+        }
+        h6{
+            color: $color_main_body_decision_subtitle;
+            font-family: $font_main_header2;
+            font-weight: normal;
+            margin-top: 0;
+        }
+
+        .brand_box{
+            border:1px solid $color_main_body_decision_brand_border;
+            margin : 0px -10px 20px -10px;
+            @include border-radius(4px);
+        }
+
+        .sku_box{
+            border:1px solid $color_main_body_decision_sku_border;
+            margin : 0px -10px 10px -10px;
+            @include border-radius(4px);
+        }
+
+        .table > thead > tr > th {
+            font-weight: bold;
+        }
+
+        .table > thead > tr > td,
+        .table > tbody > tr > td,
+        .table > tfoot > tr > td {
+            vertical-align: middle;
+            border-top: 1px none #ddd;
+            font-family: $font_main_header2;
+            font-size: 12px;
+            color:$color_main_body_company;
+        }
+
+        .table .tdgroup{
+            padding-top: 20px;
+        }
+
+        .sku_table {
+            width : 125px;
+        }
+
+        .nav li {
+            a{
+                padding: 7px 15px;
+            }
+        }
+        .nav-pills li{
+            a{
+                background-color: $color_login_background;
+                color: $color_main_body_user_chart_leftmenu_title;
+                font-family: $font_main_header2;
+                @include border-top-radius(4px);
+                @include border-bottom-radius(0px);
+
+                &:hover,
+                &:focus{
+                    background-color: $color_main_body_background_chart;
+                }
+            }
+        }
+        .nav-pills li.active{
+            a,
+            a:hover,
+            a:focus{
+                color: $color_main_body_company_a;
+                font-family: $font_main_header2;
+                background-color: $color_main_body_user_chart_title;
+            }
+        }
+
+        .brand_form{
+            margin: 30px 0px;
+        }
+
+        h5{
+            color: $color_login_input_label;
+            font-family: $font_main_header2;
+            font-weight: normal;
+            font-size: 16px;
+            padding: 10px 0px 0px 10px;
+        }
+
+        .investment_form{
+            margin-top: 20px;
+            margin-left: 10px;
+            label {
+                text-align: left;
+                color: $color_main_body_company;
+                font-family: $font_main_header2;
+                font-weight: normal;
+                font-size: 13px;
+            }
+        }
+
+
+        .decision_button{
+            @include user_decision_button;
+            margin: 0px 0px 20px 0px;
+        }
+
+    }
+
+
+
+
 }
 
 .bgbrand{
@@ -631,11 +821,14 @@ body{
 
 .chartBox {
     width: 96%;
-    height:400px;
+    height:350px;
     margin: 20px 0px;
     .ac-title {
         text-align: center;
+    }
 
+    .bar_chart_label{
+        font-size: 10px;
     }
 }
 

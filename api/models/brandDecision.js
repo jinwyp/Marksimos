@@ -24,7 +24,7 @@ exports.remove =  function(seminarId){
             return deferred.resolve(null);
         }
     });
-    return deferred;
+    return deferred.promise;
 }
 
 exports.save = function(decision){
@@ -42,26 +42,49 @@ exports.save = function(decision){
 
 exports.findAll = function(seminarId, period, companyId){
     var deferred = Q.defer();
+    BrandDecision.find({
+        seminarId: seminarId,
+        period: period,
+        d_CID: companyId
+    })
+    .sort({d_BrandID: 'asc'})
+    .exec(function(err, result){
+        if(err){
+            deferred.reject(err);
+        }else{
+            deferred.resolve(result);
+        }
+    });
+    return deferred.promise;
+};
+
+exports.updateBrand = function(seminarId, period, companyId, brandId, brand){
+    var deferred = Q.defer();
 
     if(!seminarId){
-        process.nextTick(function(){
-            deferred.reject(new Error("Invalid argument seminarId"));
-        })
+        deferred.reject(new Error("Invalid argument seminarId."));
     }else if(period===undefined){
-        process.nextTick(function(){
-            deferred.reject(new Error("Invalid argument period."));
-        })
+        deferred.reject(new Error("Invalid argument period."));
+    }else if(!companyId){
+        deferred.reject(new Error("Invalid argument companyId."));
+    }else if(!brandId){
+        deferred.reject(new Error("Invalid argument brandId."));
+    }else if(!brand){
+        deferred.reject(new Error("Invalid argument SKU."))
     }else{
-        BrandDecision.find({
+        BrandDecision.update({
             seminarId: seminarId,
             period: period,
-            d_CID: companyId
-        }, function(err, result){
+            d_CID: companyId,
+            d_BrandID: brandId
+        },
+        brand,
+        function(err, numAffected){
             if(err){
                 return deferred.reject(err);
-            }else{
-                return deferred.resolve(result);
             }
+
+            return deferred.resolve(numAffected);
         })
     }
     return deferred.promise;

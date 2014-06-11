@@ -1,8 +1,8 @@
 module.exports = {
     cgiService: 'http://10.20.30.97/cgi-bin/',
 
-    initPeriods: [-3, -2, -1, 0],  //Periods at the start of the game
-    initTeams: [1, 2], //Teams at the start of the game
+    initPeriods: [-3, -2, -1, 0, 1],  //Periods at the start of the game
+    initCompanies: [1, 2], //Teams at the start of the game
 
     segmentNameAndIndex: {
         'priceSensitive':0, 
@@ -10,7 +10,7 @@ module.exports = {
         'moderate': 2,
         'goodLife': 3,
         'ultimate': 4,
-        'pramatic': 5,
+        'pragmatic': 5,
         'allSegments': 6
     },
     segmentNames: [
@@ -19,8 +19,17 @@ module.exports = {
         'moderate',
         'goodLife',
         'ultimate',
-        'pramatic',
+        'pragmatic',
         'allSegments'
+    ],
+
+    segmentNamesOnProductPortfolio: [
+        '1. Price Sensitive',
+        '2. Pretenders',
+        '3. Moderate',
+        '4. Good Life',
+        '5. Ultimate',
+        '6. Pragmatic'
     ],
 
     inventoryNames: {

@@ -31,11 +31,10 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use(function(req, res, next){
     req.session.userId = 'testid';
     req.session.seminarId = 'TTT';
-    req.session.companyId = 2;
-    req.session.period = 0;
-    req.session.team = 0;
+    req.session.companyId = 1;
+    req.session.period = 1;
     next();
-})
+});
 
 //set Content-Type for all API JSON resppnse
 app.use(function(req, res, next){
@@ -43,7 +42,7 @@ app.use(function(req, res, next){
         res.set('Content-Type', 'application/json; charset=utf-8');
     }
     next();
-})
+});
 
 app.get('/test', function(req, res, next){
     var chartDataModel = require('./api/models/chartData.js');
@@ -61,7 +60,7 @@ app.get('/test', function(req, res, next){
         delete allCharts.seminarId;
         allCharts.seminarId = allCharts;
     }
-})
+});
 
 require('./api/routes.js')(app);
 require('./routes.js')(app);

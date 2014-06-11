@@ -16,9 +16,7 @@ exports.isUserExisted = function(email){
     var deferred = Q.defer();
 
     if(!email){
-        process.nextTick(function(){
-            deferred.resolve(false);
-        });
+        deferred.resolve(false);
     }else{
         User.find({email: email}, function(err, userData){
             if(err) return deferred.reject(err);
@@ -38,9 +36,7 @@ exports.addUser = function(user){
     var deferred = Q.defer();
 
     if(!user){
-        process.nextTick(function(){
-            deferred.reject(new Error('user can not be empty.'));
-        });
+        deferred.reject(new Error('user can not be empty.'));
     }else{
         var u = new User(user);
         u.save(function(err){
@@ -66,11 +62,8 @@ exports.login = function(email, password){
     }
 
     if(errorMessage){
-        process.nextTick(function(){
-            deferred.reject(new Error(errorMessage));
-        })
+        deferred.reject(new Error(errorMessage));
     }else{
-        console.log(email, password);
         User.findOne({
             email: email,
             password: password
@@ -78,7 +71,6 @@ exports.login = function(email, password){
 
             if(err) deferred.reject(err);
 
-            console.log(result);
             if(result){
                 deferred.resolve(result);
             } else {

@@ -3,13 +3,14 @@
  */
 
 // create module for custom directives
+
 var marksimosapp = angular.module('marksimos', [ 'marksimos.component', 'marksimos.factory']);
+
 
 
 
 // controller business logic
 marksimosapp.controller('userLoginController', function AppCtrl ($scope,  $timeout, $http, $window) {
-
     $scope.css = {
         newUser : {
             passwordPrompt : false
@@ -24,9 +25,8 @@ marksimosapp.controller('userLoginController', function AppCtrl ($scope,  $timeo
     };
 
     $scope.login = function(form){
-
         if(form.$valid){
-            $http.post('/api/login', $scope.data.newUser).success(function(data, status, headers, config){
+             $http.post('/api/login', $scope.data.newUser).success(function(data, status, headers, config){
                 if(data.status == 303){
                     $window.location.href = "/introduction" ;
                 }else if(data.status == 401){
@@ -37,13 +37,11 @@ marksimosapp.controller('userLoginController', function AppCtrl ($scope,  $timeo
                     form.password.$invalid = true;
                     $scope.css.newUser.passwordPrompt = true;
                 }
-
             }).error(function(data, status, headers, config){
 
             });
         }
     };
-
 
 });
 
@@ -51,7 +49,7 @@ marksimosapp.controller('userLoginController', function AppCtrl ($scope,  $timeo
 
 
 
-marksimosapp.controller('userIntroController', function AppCtrl ($scope,  $timeout, $http, $window, currentUser) {
+marksimosapp.controller('userIntroController', function AppCtrl ($scope,  $timeout, $http, $window) {
 
     $scope.css = {
         intro : true

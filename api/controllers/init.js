@@ -6,29 +6,57 @@ var Q = require('q');
 var decisionCleaner = require('../convertors/decisionCleaner.js');
 var allResultsConvertor = require('../convertors/allResults.js');
 var allResultsCleaner = require('../convertors/allResultsCleaner.js');
-var decisionModel = require('../models/decision.js');
+var companyDecisionModel = require('../models/companyDecision.js');
 var brandDecisionModel = require('../models/brandDecision.js');
 var SKUDecisionModel = require('../models/SKUDecision.js');
-var allResultsModel = require('../models/allResults.js');
-var chartDataModel = require('../models/chartData.js');
 var seminarModel = require('../models/seminar.js');
 
 /**
- * Initialize game data
+ * Initialize game data, only certain perople can call this method
  *
  * @method init
  *
  */
 exports.init = function(req, res, next) {
-    var seminarId = req.session.seminarId;
+    var seminarId = 'TTT'; //this parameter should be posted from client
+    var simulationSpan = 6; //should be posted from client
 
     if(!seminarId){
         return next(new Error("seminarId cannot be empty."));
     }
 
-    initDecision(seminarId)
+    Q.all([
+        removeExistedDecisions(seminarId),
+        seminarModel.remove(seminarId)
+    ])
     .then(function(){
-        return initAllResult(seminarId);
+        return seminarModel.insert(seminarId, {
+            seminarId: seminarId,
+            simulationSpan: simulationSpan,
+            allResults: [],
+            productPortfolio: [],
+            charts: [],
+            reports: []
+        });
+    })
+    .then(function(){
+        return Q.all([
+            queryAllResults(seminarId),
+            queryAllDecision(seminarId)
+        ])
+    })
+    .spread(function(allResults, allDecisions){
+        cleanAllResults(allResults);
+
+        //this function modify allDecisions directly
+        cleanDecisions(allDecisions);
+
+        return Q.all([
+            //save allResult data
+            seminarModel.update(seminarId, {allResults: allResults}),
+            initChartData(seminarId, allResults),
+            initDecision(seminarId, allDecisions)
+        ]);
     })
     .then(function(){
         res.send('initialize success');
@@ -40,62 +68,265 @@ exports.init = function(req, res, next) {
 
 
 /**
- * Get allResults from CGI service, remove useless data,
- * and save charts and reports to db
- * 
- * @method initAllResult
+ * Split allDecisions into companyDecision, brandDecison, and SKUDecision,
+ * then save them to db
  *
  */
-function initAllResult(seminarId) {
+function initDecision(seminarId, allDecisions){
+    allDecisions.forEach(function(decision){
+        return Q.all([
+            initCompanyDecision(decision, seminarId, decision.period),
+            initBrandDecision(decision, seminarId, decision.period),
+            initSKUDecision(decision, seminarId, decision.period)
+        ])
+    })
+}
+
+function initCompanyDecision(decision, seminarId, period){
+    var companyDecision = getCompanyDecision(decision);
+    companyDecision.seminarId = seminarId;
+    companyDecision.period = period;
+
+    return companyDecisionModel.save(companyDecision);
+}
+
+function initBrandDecision(decision, seminarId, period){
+    var brandDecisions = getBrandDecisions(decision);
+
+    var d = Q();
+    brandDecisions.forEach(function(brandDecision){
+        brandDecision.seminarId = seminarId;
+        brandDecision.period = period;
+        d = d.then(function(){
+            return brandDecisionModel.save(brandDecision)
+        });
+    });
+    return d;
+}
+
+function initSKUDecision(decision, seminarId, period){
+    var SKUDecisions = getSKUDecisions(decision);
+
+    var d = Q();
+    SKUDecisions.forEach(function(SKUDecision){
+        SKUDecision.seminarId = seminarId;
+        SKUDecision.period = period;
+        d = d.then(function(){
+            return SKUDecisionModel.save(SKUDecision)
+        })
+    });
+    
+    return d;
+}
+
+/**
+ * Convert decision to a companyDecision object which can be saved to db
+ *
+ * @param {Object} decision decision got from CGI service
+ */
+function getCompanyDecision(decision){
+    var brandIds = decision.d_BrandsDecisions.map(function(brand){
+        return brand.d_BrandID;
+    });
+
+    return {
+        d_CID                        : decision.d_CID,
+        d_CompanyName                : decision.d_CompanyName,
+        d_BrandsDecisions            : brandIds,
+        d_IsAdditionalBudgetAccepted : decision.d_IsAdditionalBudgetAccepted,
+        d_RequestedAdditionalBudget  : decision.d_RequestedAdditionalBudget,
+        d_InvestmentInEfficiency     : decision.d_InvestmentInEfficiency,
+        d_InvestmentInTechnology     : decision.d_InvestmentInTechnology,
+        d_InvestmentInServicing      : decision.d_InvestmentInServicing
+    }
+}
+
+/**
+ * Convert decision to an array of brandDecision objects which can be saved to db
+ *
+ * @param {Object} decision decision got from CGI service
+ */
+function getBrandDecisions(decision){
+    var results = [];
+
+    for(var i=0; i<decision.d_BrandsDecisions.length; i++){
+        var brandDecision = decision.d_BrandsDecisions[i];
+        var SKUIDs = brandDecision.d_SKUsDecisions.map(function(SKUDecision){
+            return SKUDecision.d_SKUID;
+        })
+        results.push({
+            d_CID: decision.d_CID,
+            d_BrandID       : brandDecision.d_BrandID,
+            d_BrandName     : brandDecision.d_BrandName,
+            d_SalesForce    : brandDecision.d_SalesForce,
+            d_SKUsDecisions : SKUIDs
+
+        });
+    }
+
+    return results;
+}
+
+/**
+ * Convert decision to an array of SKUDecision objects which can be saved to db
+ *
+ * @param {Object} decision decision got from CGI service
+ */
+function getSKUDecisions(decision){
+    var results = [];
+
+    for(var i=0; i<decision.d_BrandsDecisions.length; i++){
+        var brandDecision = decision.d_BrandsDecisions[i];
+        for(var j=0; j<brandDecision.d_SKUsDecisions.length; j++){
+            var SKUDecision = brandDecision.d_SKUsDecisions[j];
+            results.push({
+                d_CID: decision.d_CID,
+                d_BrandID: brandDecision.d_BrandID,
+                d_SKUID: SKUDecision.d_SKUID,
+                d_SKUName: SKUDecision.d_SKUName,
+                d_Advertising: SKUDecision.d_Advertising,
+                d_AdditionalTradeMargin: SKUDecision.d_AdditionalTradeMargin,
+                d_FactoryPrice: SKUDecision.d_FactoryPrice,
+                d_ConsumerPrice: SKUDecision.d_ConsumerPrice,
+                d_RepriceFactoryStocks: SKUDecision.d_RepriceFactoryStocks,
+                d_IngredientsQuality: SKUDecision.d_IngredientsQuality,
+                d_PackSize: SKUDecision.d_PackSize,
+                d_ProductionVolume: SKUDecision.d_ProductionVolume,
+                d_PromotionalBudget: SKUDecision.d_PromotionalBudget,
+
+                d_PromotionalEpisodes: SKUDecision.d_PromotionalEpisodes,
+                d_TargetConsumerSegment: SKUDecision.d_TargetConsumerSegment,
+                d_Technology: SKUDecision.d_Technology,
+                d_ToDrop: SKUDecision.d_ToDrop,
+                d_TradeExpenses: SKUDecision.d_TradeExpenses,
+                d_WholesalesBonusMinVolume: SKUDecision.d_WholesalesBonusMinVolume,
+                d_WholesalesBonusRate: SKUDecision.d_WholesalesBonusRate,
+                d_WarrantyLength: SKUDecision.d_WarrantyLength,
+            })
+        }
+    }
+
+    return results;
+}
+
+function cleanDecisions(allDecisions){
+    allDecisions.forEach(function(decision){
+        decisionCleaner.clean(decision);
+    })
+}
+
+function cleanAllResults(allResults){
+    allResults.forEach(function(onePeriodResult){
+        //remove useless data like empty SKU, company
+        allResultsCleaner.clean(onePeriodResult);
+    })
+}
+
+/**
+ * @param {Object} allResults allResults of all periods
+ */
+function initChartData(seminarId, allResults){
+    return seminarModel.getSeminarSetting(seminarId)
+    .then(function(seminarSetting){
+        return getExogenous(seminarSetting)
+        .then(function(exogenous){
+            //generate charts from allResults
+            var chartData =  extractChartData(allResults, {
+                seminarSetting: seminarSetting,
+                exogenous: exogenous
+            });
+
+            return seminarModel.update(seminarId, {charts: chartData})
+        });
+    });
+}
+
+function removeExistedDecisions(seminarId){
+    return Q.all([
+            companyDecisionModel.remove(seminarId),
+            brandDecisionModel.remove(seminarId),
+            SKUDecisionModel.remove(seminarId)
+        ]);
+}
+
+function queryAllResults(seminarId){
     var periods = config.initPeriods;
 
     //allResults contains data of several periods
     var queries = [];
     periods.forEach(function(period) {
-        queries.push(initOnePeriodResult(seminarId, period));
+        queries.push(queryOnePeriodResult(seminarId, period));
     });
 
-    var p = Q.all(queries)
-        .then(function(results){
-            var tempResults = [];
-            for(var i=0; i<results.length; i++){
-                //remove useless data like empty SKU, company
-                allResultsCleaner.clean(results[i]);
-                tempResults.push({
-                    periodId: periods[i],
-                    onePeriodResult: results[i]
-                });
-            }
-
-            //save allResults to db, for debug purpose, we don't have to do this
-            return allResultsModel.updateAllResults(seminarId, tempResults);
-        })
-        .then(function(results) {
-            return seminarModel.getSeminarSetting(seminarId)
-            .then(function(seminarSetting){
-                return getExogenous(seminarSetting)
-                .then(function(exogenous){
-                    //generate charts from allResults
-                    return extractChartData(results, {
-                        seminarSetting: seminarSetting,
-                        exogenous: exogenous
-                    });
-                })
-            })
-        })
-        .then(function(chartData) {
-            //before save new chart data, remove the existed one
-            return chartDataModel.removeChartData(seminarId)
-            .then(function(){
-                return chartDataModel.saveChartData({
-                    seminarId: seminarId,
-                    charts: chartData
-                });
-            })
-        });
-
-    return p;
+    return Q.all(queries)
+    .then(function(allResults){
+        for(var i=0; i<allResults.length; i++){
+            allResults[i].periodId = periods[i];
+        }
+        return allResults;
+    });
 }
+
+function queryAllDecision(seminarId){
+    var periods = config.initPeriods
+
+    var queries = [];
+    periods.forEach(function(period) {
+        queries.push(queryDecisionsInOnePeriod(seminarId, period));
+    });
+
+    return Q.all(queries)
+    .then(function(decisions){
+        //decisions: [[decision1, decision2], [decision3, decision4]]
+        //tempDecisions: [decisoon1, decison2, decision3, decision4]
+        var tempDecisions = [];
+        decisions.forEach(function(a){
+            a.forEach(function(b){
+                tempDecisions.push(b);
+            })
+        })
+        return tempDecisions;
+    });
+}
+
+/**
+ * Query all decisions in one period
+ */
+function queryDecisionsInOnePeriod(seminarId, period){
+    var companies = config.initCompanies;
+
+    var queries = [];
+
+    companies.forEach(function(company) {
+        queries.push(queryOneDecision(seminarId, company, period));
+    })
+
+    return Q.all(queries)
+    .then(function(decisions){
+        for(var i=0; i<decisions.length; i++){
+            decisions[i].period = period;
+        }
+        return decisions;
+    });
+}
+
+/**
+ * Query allResults CGI service
+ * 
+ * @method queryOnePeriodResult
+ * @param {String} seminarId
+ * @param {Number} period [-3, -2, -1]
+ */
+function queryOnePeriodResult(seminarId, period) {
+    var reqUrl = config.cgiService + util.format('allresults.exe?seminar=%s&period=%s', seminarId, period);
+    return request.get(reqUrl);
+}
+
+function queryOneDecision(seminarId, team, period){
+    var reqUrl = config.cgiService + util.format('decisions.exe?period=%s&team=%s&seminar=%s', period, team, seminarId);
+    return request.get(reqUrl);
+}
+
 
 /**
  * Get exogenous, exogenous are some parameters of the game
@@ -111,17 +342,7 @@ function getExogenous(seminarSetting){
     return request.get(reqUrl);
 }
 
-/**
- * Query allResults CGI service
- * 
- * @method initOnePeriodResult
- * @param {String} seminarId
- * @param {Number} period [-3, -2, -1]
- */
-function initOnePeriodResult(seminarId, period) {
-    var reqUrl = config.cgiService + util.format('allresults.exe?seminar=%s&period=%s', seminarId, period);
-    return request.get(reqUrl);
-}
+
 
 function extractChartData(results, settings){
     //生成chart数据
@@ -148,7 +369,7 @@ function extractChartData(results, settings){
     var segmentsLeadersByValueModerate = allResultsConvertor.segmentsLeadersByValue(results, 'moderate');
     var segmentsLeadersByValueGoodLife = allResultsConvertor.segmentsLeadersByValue(results, 'goodLife');
     var segmentsLeadersByValueUltimate = allResultsConvertor.segmentsLeadersByValue(results, 'ultimate');
-    var segmentsLeadersByValuePramatic = allResultsConvertor.segmentsLeadersByValue(results, 'pramatic');
+    var segmentsLeadersByValuePragmatic = allResultsConvertor.segmentsLeadersByValue(results, 'pragmatic');
 
     //Market evolution
     var growthRateInVolume = allResultsConvertor.growthRateInVolume(results);
@@ -230,8 +451,8 @@ function extractChartData(results, settings){
             chartData: segmentsLeadersByValueUltimate
         },
         {
-            chartName: 'segmentsLeadersByValuePramatic',
-            chartData: segmentsLeadersByValuePramatic
+            chartName: 'segmentsLeadersByValuePragmatic',
+            chartData: segmentsLeadersByValuePragmatic
         },
         {
             chartName: 'growthRateInVolume',
@@ -259,167 +480,6 @@ function extractChartData(results, settings){
         }
     ];
 }
-
-/**
- * Initialize decision
- *
- * @method initDecision
- * @param {Number} seminar
- * @return {Object} a promise
- */
-function initDecision(seminarId) {
-    var periods = config.initPeriods
-    var teams = config.initTeams;
-
-    var queries = [];
-    periods.forEach(function(period) {
-        teams.forEach(function(team) {
-            queries.push(initOnePeriodDecison(seminarId, team, period));
-        })
-    });
-
-    return Q.all(queries);
-}
-
-/**
- * Get decision from CGI service, save it to mongo
- * return a promise
- *
- * @method initOnePeriodDecison
- * @param {Number} period
- * @param {team} team
- * @return {Object} a promise
- */
-function initOnePeriodDecison(seminarId, team, period) {
-    var reqUrl = config.cgiService + util.format('decisions.exe?period=%s&team=%s&seminar=%s', period, team, seminarId);
-    return request.get(reqUrl).then(function(result) {
-        decisionCleaner.clean(result);
-
-        var decision = getDecision(result);
-        decision.seminarId = seminarId;
-        decision.period = period;
-
-        var d = removeExistedData(seminarId);
-
-        d = d.then(function(){
-            decisionModel.save(decision);
-        });
-
-        var brandDecisions = getBrandDecisions(result);
-
-        brandDecisions.forEach(function(brandDecision){
-            brandDecision.seminarId = seminarId;
-            brandDecision.period = period;
-            d = d.then(function(){
-                return brandDecisionModel.save(brandDecision)
-            });
-        });
-
-        var SKUDecisions = getSKUDecisions(result);
-        SKUDecisions.forEach(function(SKUDecision){
-            SKUDecision.seminarId = seminarId;
-            SKUDecision.period = period;
-            d = d.then(function(){
-                return SKUDecisionModel.save(SKUDecision)
-            })
-        });
-        
-        return d;
-    });
-
-    function removeExistedData(seminarId){
-        return Q.all([decisionModel.remove(seminarId),
-            brandDecisionModel.remove(seminarId),
-            SKUDecisionModel.remove(seminarId)]);
-    }
-
-    /**
-     * Convert onePeriodResult to a decision object which can be saved to db
-     * @param {Object} onePeriodResult decision of one company in one period
-     */
-    function getDecision(onePeriodResult){
-        var brandIds = onePeriodResult.d_BrandsDecisions.map(function(brand){
-            return brand.d_BrandID;
-        });
-
-        return {
-            d_CID                        : onePeriodResult.d_CID,
-            d_CompanyName                : onePeriodResult.d_CompanyName,
-            d_BrandsDecisions            : brandIds,
-            d_IsAdditionalBudgetAccepted : onePeriodResult.d_IsAdditionalBudgetAccepted,
-            d_RequestedAdditionalBudget  : onePeriodResult.d_RequestedAdditionalBudget,
-            d_InvestmentInEfficiency     : onePeriodResult.d_InvestmentInEfficiency,
-            d_InvestmentInTechnology     : onePeriodResult.d_InvestmentInTechnology,
-            d_InvestmentInServicing      : onePeriodResult.d_InvestmentInServicing
-        }
-    }
-
-    /**
-     * Convert onePeriodResult to an array of brandDecision objects which can be saved to db
-     * @param {Object} onePeriodResult decision of one company in one period
-     */
-    function getBrandDecisions(onePeriodResult){
-        var results = [];
-
-        for(var i=0; i<onePeriodResult.d_BrandsDecisions.length; i++){
-            var brandDecision = onePeriodResult.d_BrandsDecisions[i];
-            var SKUIDs = brandDecision.d_SKUsDecisions.map(function(SKUDecision){
-                return SKUDecision.d_SKUID;
-            })
-            results.push({
-                d_CID: onePeriodResult.d_CID,
-                d_BrandID       : brandDecision.d_BrandID,
-                d_BrandName     : brandDecision.d_BrandName,
-                d_SalesForce    : brandDecision.d_SalesForce,
-                d_SKUsDecisions : SKUIDs
-            });
-        }
-
-        return results;
-    }
-
-    /**
-     * Convert onePeriodResult to an array of SKUDecision objects which can be saved to db
-     * @param {Object} onePeriodResult decision of one company in one period
-     */
-    function getSKUDecisions(onePeriodResult){
-        var results = [];
-
-        for(var i=0; i<onePeriodResult.d_BrandsDecisions.length; i++){
-            var brandDecision = onePeriodResult.d_BrandsDecisions[i];
-            for(var j=0; j<brandDecision.d_SKUsDecisions.length; j++){
-                var SKUDecision = brandDecision.d_SKUsDecisions[j];
-                results.push({
-                    d_CID: onePeriodResult.d_CID,
-                    d_BrandID: brandDecision.d_BrandID,
-                    d_SKUID: SKUDecision.d_SKUID,
-                    d_SKUName: SKUDecision.d_SKUName,
-                    d_Advertising: SKUDecision.d_Advertising,
-                    d_AdditionalTradeMargin: SKUDecision.d_AdditionalTradeMargin,
-                    d_FactoryPrice: SKUDecision.d_FactoryPrice,
-                    d_ConsumerPrice: SKUDecision.d_ConsumerPrice,
-                    d_RepriceFactoryStocks: SKUDecision.d_RepriceFactoryStocks,
-                    d_IngredientsQuality: SKUDecision.d_IngredientsQuality,
-                    d_PackSize: SKUDecision.d_PackSize,
-                    d_ProductionVolume: SKUDecision.d_ProductionVolume,
-                    d_PromotionalBudget: SKUDecision.d_PromotionalBudget,
-
-                    d_PromotionalEpisodes: SKUDecision.d_PromotionalEpisodes,
-                    d_TargetConsumerSegment: SKUDecision.d_TargetConsumerSegment,
-                    d_Technology: SKUDecision.d_Technology,
-                    d_ToDrop: SKUDecision.d_ToDrop,
-                    d_TradeExpenses: SKUDecision.d_TradeExpenses,
-                    d_WholesalesBonusMinVolume: SKUDecision.d_WholesalesBonusMinVolume,
-                    d_WholesalesBonusRate: SKUDecision.d_WholesalesBonusRate,
-                    d_WarrantyLength: SKUDecision.d_WarrantyLength,
-                })
-            }
-        }
-
-        return results;
-    }
-}
-
 
 
 
