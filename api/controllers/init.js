@@ -379,7 +379,7 @@ function extractChartData(results, settings){
 
     var perceptionMap = allResultsConvertor.perceptionMap(results, settings.exogenous);
 
-    var inventoryReport = allResultsConvertor.inventoryReport(results, settings.seminarSetting);
+    var inventoryReport = allResultsConvertor.inventoryReport(results);
 
     return [
         {

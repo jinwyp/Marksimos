@@ -1,4 +1,4 @@
-
+var decisionAssembler = require('../dataAssemblers/decision.js');
 var productPortfolioAssembler = require('../dataAssemblers/productPortfolio.js');
 var spendingDetailsAssembler = require('../dataAssemblers/spendingDetails.js');
 var Q = require('q');
@@ -38,7 +38,7 @@ exports.getSpendingDetails = function(req, res, next){
     var seminarId = req.session.seminarId;
     var period = req.session.period;
     var companyId = req.session.companyId;
-    
+
     spendingDetailsAssembler.getSpendingDetails(seminarId, period, companyId)
     .then(function(spendingDetails){
         res.send(spendingDetails);
