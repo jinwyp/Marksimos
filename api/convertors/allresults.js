@@ -3,7 +3,7 @@
 */
 var consts = require('../consts.js');
 var config = require('../config.js');
-var utility = require('./utility.js');
+var utility = require('../utility.js');
 
 //Market Share
 exports.marketShareInValue = function(allResults) {

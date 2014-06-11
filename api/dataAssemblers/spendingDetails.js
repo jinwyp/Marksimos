@@ -1,8 +1,14 @@
 var decisionAssembler = require('../dataAssemblers/decision.js');
+var seminarModel = require('../models/seminar.js');
+var Q = require('q');
+var utility = require('../utility.js');
 
 exports.getSpendingDetails = function(seminarId, period, companyId){
-    return decisionAssembler.getDecision(seminarId, period, companyId)
-    .then(function(decision){
+    return Q.all([
+        decisionAssembler.getDecision(seminarId, period, companyId),
+        seminarModel.findOne(seminarId)
+    ])
+    .spread(function(decision, seminar){
         var brandData = [];
         var companyData = {}
 
@@ -32,6 +38,7 @@ exports.getSpendingDetails = function(seminarId, period, companyId){
             brandData.push(brandDataRow);
         }
 
+        //calculate total value
         var total = {};
         total.brandName = "Total";
         total.salesForce = brandData.reduce(function(lastResult, nextValue){
@@ -47,12 +54,17 @@ exports.getSpendingDetails = function(seminarId, period, companyId){
             return lastResult + nextValue.tradeExpenses;
         }, 0);
         total.estimatedAdditionalTradeMarginCost = brandData.reduce(function(lastResult, nextValue){
-            return lastResult + nextValue.estimatedAdditionalTradeMarginCost;
+            return lastResult + parseFloat(nextValue.estimatedAdditionalTradeMarginCost);
         }, 0)
         total.estimatedWholesaleBonusCost = brandData.reduce(function(lastResult, nextValue){
-            return lastResult + nextValue.estimatedWholesaleBonusCost;
+            return lastResult + parseFloat(nextValue.estimatedWholesaleBonusCost);
         }, 0)
         brandData.push(total);
+
+
+        var companyDataInAllResults = utility.findCompany(seminar.allResults[seminar.allResults.length-1], companyId)
+        //average budget per period
+        companyData.averageBudgetPerPeriod = (companyDataInAllResults.c_TotalInvestmentBudget / seminar.simulationSpan).toFixed(2);
 
         companyData.investmentInProductionEfficiency = decision.d_InvestmentInEfficiency;
         companyData.investmentInProcessingTechnology = decision.d_InvestmentInTechnology;

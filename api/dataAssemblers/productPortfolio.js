@@ -1,4 +1,4 @@
-var utility = require('../convertors/utility.js');
+var utility = require('../utility.js');
 var config = require('../config.js');
 var consts = require('../consts.js');
 var seminarModel = require('../models/seminar.js');

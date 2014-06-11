@@ -49,15 +49,9 @@ exports.update = function(seminarId, seminar){
     return deferred.promise;
 }
 
-exports.insertEmptySeminar = function(seminarId){
+exports.insert = function(seminarId, seminar){
     var deferred = Q.defer();
-    Seminar.create({
-        seminarId: seminarId,
-        allResults: [],
-        productPortfolio: [],
-        charts: [],
-        reports: []
-    }, function(err){
+    Seminar.create(seminar, function(err){
         if(err){
             deferred.reject(err);
         }else{
