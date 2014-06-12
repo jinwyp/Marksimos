@@ -264,7 +264,7 @@
                 <ul class="list-group">
                     <li class="list-group-item" ng-class="{'list-group-item-active': css.chartMenu=='A1'}" ng-click="clickChartMenu('A1')">Company Status(F)</li>
                     <li class="list-group-item" ng-class="{'list-group-item-active': css.chartMenu=='A2'}" ng-click="clickChartMenu('A2')">Financial Data</li>
-                    <li class="list-group-item" ng-class="{'list-group-item-active': css.chartMenu=='A3'}" ng-click="clickChartMenu('A3')">Inventory Report</li>
+                    <li class="list-group-item" ng-class="{'list-group-item-active': css.chartMenu=='A3'}" ng-click="clickChartMenu('A3')">Inventory Report(F)</li>
                 </ul>
             </div>
 
@@ -340,25 +340,21 @@
         <div class="col-md-10 user_chart_right" ng-if="css.chartMenu=='A3'">
             <div class="row">
                 <div class="col-md-12 user_chart_single chart_1">
-                    <h5>{{data.chartA11MarketShareInValue.config.title}}
+                    <h5>{{data.chartA31InventoryReport.title}}
                         <span class="glyphicon glyphicon-info-sign"></span>
                         <!--<span class="glyphicon glyphicon-resize-full chart_icon"></span>-->
                         <span class="glyphicon glyphicon-save chart_icon"></span>
                     </h5>
-                    <nvd3-multi-bar-chart
-                            data="exampleData"
-                            id="exampleId"
-                            xAxisTickFormat=""
-                            width="700"
-                            height="350"
-                            showXAxis="true"
-                            showYAxis="true">
+                    <nvd3-multi-bar-chart data="data.chartA31InventoryReport.data" id="chartA31InventoryReport"
+                        xAxisTickFormat="A31xAxisTickFormatFunction()" color="A31ColorFunction()" legendcolor="A31ColorFunction()"
+                         height="600" showXAxis="true" showYAxis="true" stacked="true" showLegend="true" reduceXTicks="false" tooltips="true" interactive="false">
                         <svg></svg>
                     </nvd3-multi-bar-chart>
+
+                    <p class="text-center">Total Stock (milions of standard pack) = Factory Stock + Trade Stock + Retailer Stock</p>
                 </div>
 
             </div>
-
         </div>
 
 
@@ -497,6 +493,27 @@
                     </h5>
                     <div ac-chart="data.chartC16SegmentsLeadersByValuePragmatic.type" ac-data="data.chartC16SegmentsLeadersByValuePragmatic.data" ac-config="data.chartC16SegmentsLeadersByValuePragmatic.config" class="chartBox"></div>
                 </div>
+            </div>
+        </div>
+
+
+        <div class="col-md-10 user_chart_right" ng-if="css.chartMenu=='C2'">
+            <div class="row">
+                <div class="col-md-12 user_chart_single chart_1">
+                    <h5>{{data.chartC31PerceptionMap.title}}
+                        <span class="glyphicon glyphicon-info-sign"></span>
+                        <!--<span class="glyphicon glyphicon-resize-full chart_icon"></span>-->
+                        <span class="glyphicon glyphicon-save chart_icon"></span>
+                    </h5>
+                    <nvd3-scatter-chart data="exampleData" id="chartC31PerceptionMap"
+                                          xAxisTickFormat="A31xAxisTickFormatFunction()" color="A31ColorFunction()" legendcolor="A31ColorFunction()"
+                                          height="600" showXAxis="true" showYAxis="true"  showLegend="true"  tooltips="true" >
+                        <svg></svg>
+                    </nvd3-scatter-chart>
+
+                    <p class="text-center">Total Stock (milions of standard pack) = Factory Stock + Trade Stock + Retailer Stock</p>
+                </div>
+
             </div>
         </div>
 
