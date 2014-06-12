@@ -1,3 +1,6 @@
+var gameParameters = require('./gameParameters.js').parameters;
+var cgiapi = require('./cgiapi.js');
+
 /**
  * Find brand by brandId
  *
@@ -32,3 +35,83 @@ exports.findCompany = function(onePeriodResult, companyId){
         }
     }
 }
+
+exports.unitCost = function(configurationRecord
+    , periodNumber
+    , packsize
+    , ingredientsQuality
+    , technologyLevel
+    , previousCumulatedVolumes
+    , efficiencyOfProduction
+    , currentVolume){
+
+    var tLevel;
+    var inflation;
+    var QI;
+    var TL;
+    var costNow;
+    var volumeNow = currentVolume * consts.ActualSize[packsize];
+
+    volumeNow += previousCumulatedVolumes[technologyLevel];
+
+    if(technologyLevel < consts.TechnologyUltimateLevel){
+        for(var i = technologyLevel+1; i <= consts.TechnologyUltimateLevel; i++){
+            volumeNow += previousCumulatedVolumes[i] * gameParameters.pgen.firm_HigherTechnologyImpact;
+        }
+    }
+
+    volumeNow = Math.max(volumeNow, gameParameters.pgen.sku_MinProductionVolume);
+
+    return cgiapi.getExogenous(periodNumber)
+    .then(function(exogenous){
+        if(periodNumber < 0){
+            inflation = Math.power(1 + exogenous.exo_InflationRate, Math.abs(periodNumber));
+        }
+
+        QI = gameParameters.pgen.sku_CostIQSquare * ingredientsQuality * ingredientsQuality
+            + gameParameters.pgen.sku_CostIQLinear * ingredientsQuality
+            + gameParameters.pgen.sku_CostIQIntercept;
+
+        TL = gameParameters.pgen.sku_CostTLSquare * technologyLevel * technologyLevel
+            + gameParameters.pgen.sku_CostTLLinear * technologyLevel
+            + gameParameters.sku_CostTLIntercept;
+
+        costNow = exogenous.exo_IngredientsCost / inflation * QI
+            + exogenous.exo_TechnologyExpense / inflation * TL;
+
+        costNow *= Math.power(volumeNow / gameParameters.pgen.sku_MinProductionVolume, gameParameters.pgen.sku_DefaultCostDrop);
+
+        costNow = (costNow + exogenous.exo_LogisticsFixedCosts / inflation) * (1.00 - efficiencyOfProduction);
+
+        costNow = costNow * consts.ActualSize[packsize];
+
+        return costNow;
+    })
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
