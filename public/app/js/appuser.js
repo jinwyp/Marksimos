@@ -12,7 +12,7 @@ marksimosapp.controller('chartController', function AppCtrl ($scope,  $timeout, 
 
     $scope.css = {
         menu : 'Report',
-        chartMenu : 'A3',
+        chartMenu : 'C2',
         additionalBudget : true,
         currentBrandId : 0,
         investmentInfo : false
@@ -29,26 +29,6 @@ marksimosapp.controller('chartController', function AppCtrl ($scope,  $timeout, 
             }
         ]
     };
-
-
-        $scope.exampleData = [
-              {
-                  "key": "Series 1",
-                   "values": [ [ 1025409600000 , 0] , [ 1028088000000 , -6.3382185140371] , [ 1030766400000 , -5.9507873460847] , [ 1033358400000 , -11.569146943813] , [ 1036040400000 , -5.4767332317425] , [ 1038632400000 , 0.50794682203014] , [ 1041310800000 , -5.5310285460542] , [ 1043989200000 , -5.7838296963382] , [ 1046408400000 , -7.3249341615649] , [ 1049086800000 , -6.7078630712489] , [ 1051675200000 , 0.44227126150934] , [ 1054353600000 , 7.2481659343222] , [ 1056945600000 , 9.2512381306992] ]
-             },
-            {
-                 "key": "Series 2",
-                    "values": [ [ 1025409600000 , 0] , [ 1028088000000 , 0] , [ 1030766400000 , 0] , [ 1033358400000 , 0] , [ 1036040400000 , 0] , [ 1038632400000 , 0] , [ 1041310800000 , 0] , [ 1043989200000 , 0] , [ 1046408400000 , 0] , [ 1049086800000 , 0] , [ 1051675200000 , 0] , [ 1054353600000 , 0] , [ 1056945600000 , 0] , [ 1059624000000 , 0] , [ 1062302400000 , 0] , [ 1064894400000 , 0] , [ 1067576400000 , 0] , [ 1070168400000 , 0] , [ 1072846800000 , 0] , [ 1075525200000 , -0.049184266875945] ]
-                },
-              {
-                   "key": "Series 3",
-                   "values": [ [ 1025409600000 , 0] , [ 1028088000000 , -6.3382185140371] , [ 1030766400000 , -5.9507873460847] , [ 1033358400000 , -11.569146943813] , [ 1036040400000 , -5.4767332317425] , [ 1038632400000 , 0.50794682203014] , [ 1041310800000 , -5.5310285460542] , [ 1043989200000 , -5.7838296963382] , [ 1046408400000 , -7.3249341615649] , [ 1049086800000 , -6.7078630712489] , [ 1051675200000 , 0.44227126150934] , [ 1054353600000 , 7.2481659343222] , [ 1056945600000 , 9.2512381306992] ]
-              },
-           {
-               "key": "Series 4",
-                 "values": [ [ 1025409600000 , -7.0674410638835] , [ 1028088000000 , -14.663359292964] , [ 1030766400000 , -14.104393060540] , [ 1033358400000 , -23.114477037218] , [ 1036040400000 , -16.774256687841] , [ 1038632400000 , -11.902028464000] , [ 1041310800000 , -16.883038668422] , [ 1043989200000 , -19.104223676831] , [ 1046408400000 , -20.420523282736] , [ 1049086800000 , -19.660555051587] , [ 1051675200000 , -13.106911231646] , [ 1054353600000 , -8.2448460302143] , [ 1056945600000 , -7.0313058730976] ]
-             }
-];
 
     $scope.data = {
         currentCompany : {},
@@ -81,6 +61,12 @@ marksimosapp.controller('chartController', function AppCtrl ($scope,  $timeout, 
             type : report.getChartType1(),
             config : report.getChartConfig1(),
             data : $scope.dataChartSimple
+        },
+
+        chartA31InventoryReport : {
+            data : [],
+            title : 'Inventory Report',
+            color : ['#39b54a', '#ff983d', '#0087f0', '#8781bd', '#f26c4f', '#bd8cbf']
         },
 
         chartB31TotalInvestment : {
@@ -156,6 +142,12 @@ marksimosapp.controller('chartController', function AppCtrl ($scope,  $timeout, 
             data : $scope.dataChartSimple
         },
 
+        chartC31PerceptionMap : {
+            data : [],
+            title : 'Perception Maps',
+            color : ['#39b54a', '#ff983d', '#0087f0', '#8781bd', '#f26c4f', '#bd8cbf']
+        },
+
         chartC41GrowthRateInVolume : {
             type : report.getChartType1(),
             config : report.getChartConfig1(),
@@ -177,6 +169,18 @@ marksimosapp.controller('chartController', function AppCtrl ($scope,  $timeout, 
             data : $scope.dataChartSimple
         }
 
+    };
+
+
+    $scope.A31ColorFunction = function(){
+        return function(d, i){
+            return $scope.data.chartA31InventoryReport.color[i];
+        };
+    };
+    $scope.A31xAxisTickFormatFunction = function(){
+        return function(d){
+            return d;
+        }
     };
 
 
@@ -239,8 +243,8 @@ marksimosapp.controller('chartController', function AppCtrl ($scope,  $timeout, 
 
     // Chart A3
     report.inventoryReport().then(function(data, status, headers, config){
-        console.log(data);
-//        $scope.data.chartA14ShelfSpaceShare.data = data;
+        $scope.data.chartA31InventoryReport.data = data;
+//        console.log($scope.data.chartA31InventoryReport.data);
     });
 
 
@@ -325,6 +329,26 @@ marksimosapp.controller('chartController', function AppCtrl ($scope,  $timeout, 
         $scope.data.chartC16SegmentsLeadersByValuePragmatic.data = data;
     });
 
+
+    // Chart C2
+    report.perceptionMap().then(function(data, status, headers, config){
+        console.log(data);
+        $scope.data.chartC31PerceptionMap.data = data;
+    });
+    $scope.exampleData = [
+        {"key":"Group 0",
+            "values":[{"x":1,"y":1,"size":0.9}]
+        },
+        {"key":"Group 1",
+            "values":[{"x":2,"y":2,"size":0.9}]
+        },
+        {"key":"Group 2",
+            "values":[{"x":3,"y":3,"size":0.9310796288773417}]
+        },
+        {"key":"Group 3",
+            "values":[{"x":4,"y":4,"size":0.6179190273396671}]
+        }
+    ];
 
     // Chart C4
     $scope.data.chartC41GrowthRateInVolume.config.title = 'Growth Rate In Volume (Period 3 = 100)';
