@@ -250,7 +250,74 @@ app.factory('report',function($http){
 
     var chartFormatTool3 = function(chartHttpData) {
         // 使用angular-nvd3 插件的数据格式   Scatter Chart 散点图
-            return angular.copy(chartResult.data);
+        chartResult.series = [];
+        chartResult.data = [];
+        chartResult.dataSKU = [];
+        chartResult.dataBrand = [];
+
+        if(angular.isArray(chartHttpData) ){
+
+            angular.forEach(chartHttpData, function(value, key) {
+                var oneCompanySku = {
+                    "key" : value.companyName,
+                    "values" : []
+                };
+
+                var oneCompanyBrand = {
+                    "key" : value.companyName,
+                    "values" : []
+                };
+
+                angular.forEach(value.SKUs, function(valueSku, keySku) {
+                    var oneLineSku1 = {
+                        'x' : Math.round(valueSku.valuePerception * 100) / 100,
+                        'y' : Math.round(valueSku.imagePerception * 100) / 100,
+                        'size' : 1,
+                        'SKUName' : valueSku.SKUName,
+                        'CompanyName' : value.companyName
+                    };
+
+                    oneCompanySku.values.push(oneLineSku1);
+                });
+
+                angular.forEach(value.brands, function(valueBrand, keyBrand) {
+                    var oneLineBrand1 = {
+                        'x' : Math.round(valueBrand.valuePerception * 100) / 100,
+                        'y' : Math.round(valueBrand.imagePerception * 100) / 100,
+                        'size' : 1,
+                        'BrandName' : valueBrand.brandName,
+                        'CompanyName' : value.companyName
+                    };
+
+                    oneCompanyBrand.values.push(oneLineBrand1);
+                });
+
+                chartResult.dataSKU.push(oneCompanySku);
+                chartResult.dataBrand.push(oneCompanyBrand);
+
+            });
+
+            var oneSegment = {
+                "key" : 'Segment',
+                "values" : []
+            };
+
+            angular.forEach(chartHttpData[0].exogenous, function(value, key) {
+                var oneLineData = {
+                    'x' : Math.round(value.valuePerception * 100) / 100,
+                    'y' : Math.round(value.imagePerception * 100) / 100,
+                    'size' : 1,
+                    'Name' : value.segmentName
+                };
+
+                oneSegment.values.push(oneLineData);
+            });
+
+            chartResult.dataSKU.push(oneSegment);
+            chartResult.dataBrand.push(oneSegment);
+
+            return angular.copy(chartResult);
+        }
     };
 
     var factory = {
