@@ -333,20 +333,20 @@ marksimosapp.controller('chartController', function AppCtrl ($scope,  $timeout, 
     // Chart C2
     report.perceptionMap().then(function(data, status, headers, config){
         console.log(data);
-        $scope.data.chartC31PerceptionMap.data = data;
+        $scope.data.chartC31PerceptionMap.data = data.dataSKU;
     });
     $scope.exampleData = [
         {"key":"Group 0",
-            "values":[{"x":1,"y":1,"size":0.9}]
+            "values":[{"x":1,"y":1,"size":1}]
         },
         {"key":"Group 1",
             "values":[{"x":2,"y":2,"size":0.9}]
         },
         {"key":"Group 2",
-            "values":[{"x":3,"y":3,"size":0.9310796288773417}]
+            "values":[{"x":3,"y":3,"size":0.9}]
         },
         {"key":"Group 3",
-            "values":[{"x":4,"y":4,"size":0.6179190273396671}]
+            "values":[{"x":4,"y":4,"size":0.6}]
         }
     ];
 
