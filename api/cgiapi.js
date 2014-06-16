@@ -1,5 +1,7 @@
 var request = require('./promises/request.js');
 var url = require('url');
+var config = require('./config.js');
+var util = require('util');
 
 /**
  * Get exogenous, exogenous are some parameters of the game

@@ -113,7 +113,8 @@ exports.submitDecision = function(req, res, next){
     })
     .fail(function(err){
         next(err);
-    }).done();
+    })
+    .done();
 
     /**
      * CGI service can not convert JSON string to delphi object,
@@ -351,10 +352,6 @@ exports.updateCompanyDecision = function(req, res, next){
         return result;
     }
 };
-
-
-
-
 
 
 
