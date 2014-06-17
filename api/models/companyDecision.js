@@ -18,7 +18,29 @@ var tDecisionSchema = new Schema({
 
 var CompanyDecision = mongoose.model('CompanyDecision', tDecisionSchema);
 
-exports.remove =  function(seminarId){
+exports.remove =  function(seminarId, companyId){
+    var deferred = Q.defer();
+
+    if(!seminarId){
+        deferred.reject(new Error("Invalid argument seminarId"));
+    }else{
+        CompanyDecision.remove({
+            seminarId: seminarId,
+            companyId: companyId
+        }, 
+        function(err){
+            if(err){
+                return deferred.reject(err);
+            }else{
+                return deferred.resolve(null);
+            }
+        });
+    }
+
+    return deferred.promise;
+}
+
+exports.removeAll =  function(seminarId){
     var deferred = Q.defer();
 
     if(!seminarId){

@@ -15,7 +15,24 @@ var tOneBrandDecisionSchema = new Schema({
 
 var BrandDecision = mongoose.model('BrandDecision', tOneBrandDecisionSchema);
 
-exports.remove =  function(seminarId){
+exports.remove =  function(seminarId, period, companyId, brandId){
+    var deferred = Q.defer();
+    BrandDecision.remove({
+        seminarId: seminarId,
+        period: period,
+        companyId: companyId,
+        brandId: brandId
+    }, function(err){
+        if(err){
+            return deferred.reject(err);
+        }else{
+            return deferred.resolve(null);
+        }
+    });
+    return deferred.promise;
+}
+
+exports.removeAll =  function(seminarId){
     var deferred = Q.defer();
     BrandDecision.remove({seminarId: seminarId}, function(err){
         if(err){

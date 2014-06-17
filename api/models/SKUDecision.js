@@ -31,13 +31,48 @@ var tOneSKUDecisionSchema = new Schema({
 
 var SKUDecision = mongoose.model('SKUDecision', tOneSKUDecisionSchema);
 
-exports.remove =  function(seminarId){
+exports.remove =  function(seminarId, period, companyId, brandId, SKUID){
+    console.log(seminarId, period, companyId, brandId, SKUID);
+    var deferred = Q.defer();
+    SKUDecision.remove({
+        seminarId: seminarId,
+        period: period,
+        companyId: companyId,
+        brandId: brandId,
+        SKUID: SKUID
+    }, function(err){
+        if(err){
+            return deferred.reject(err);
+        }else{
+            return deferred.resolve(undefined);
+        }
+    });
+    return deferred.promise;
+}
+
+exports.removeAll =  function(seminarId){
     var deferred = Q.defer();
     SKUDecision.remove({seminarId: seminarId}, function(err){
         if(err){
             return deferred.reject(err);
         }else{
-            return deferred.resolve(null);
+            return deferred.resolve(undefined);
+        }
+    });
+    return deferred.promise;
+}
+
+exports.removeAllInBrand = function(seminarId, period, companyId){
+    var deferred = Q.defer();
+    SKUDecision.remove({
+        seminarId: seminarId,
+        companyId: companyId
+    }, 
+    function(err){
+        if(err){
+            return deferred.reject(err);
+        }else{
+            return deferred.resolve(undefined);
         }
     });
     return deferred.promise;

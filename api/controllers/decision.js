@@ -462,6 +462,58 @@ exports.addSKU = function(req, res, next){
     .done();
 }
 
+exports.deleteSKU = function(req, res, next){
+    var seminarId = req.session.seminarId;
+    var period = req.session.period;
+    var companyId = req.session.companyId;
+
+    var brand_id = req.body.brand_id;
+    var sku_id = req.body.sku_id;
+
+    if(!brand_id){
+        return res.send(400, {message: "Invalid parameter brand_id."});
+    }
+
+    if(!sku_id){
+        return res.send(400, {message: "Invalid parameter sku_id."})
+    }
+
+    SKUDecisionModel.remove(seminarId, period, companyId, brand_id, sku_id)
+    .then(function(){
+        res.send({message: "remove SKU successfully."});
+    })
+    .fail(function(err){
+        logger.error(err);
+        res.send(500, {message: "remove SKU failed."});
+    })
+    .done();
+}
+
+exports.deleteBrand = function(req, res, next){
+    var seminarId = req.session.seminarId;
+    var period = req.session.period;
+    var companyId = req.session.companyId;
+
+    var brand_id = req.body.brand_id;
+    
+    if(!brand_id){
+        return res.send(400, {message: "Invalid parameter brand_id."});
+    }
+
+    brandDecisionModel.remove(seminarId, period, companyId)
+    .then(function(){
+        return SKUDecisionModel.removeAllInBrand(seminarId, period, companyId, brand_id);
+    })
+    .then(function(){
+        res.send({message: "Remove brand successfully."});
+    })
+    .fail(function(err){
+        logger.error(err);
+        res.send(500, {message: "remove brand failed."});
+    })
+    .done();
+}
+
 
 
 

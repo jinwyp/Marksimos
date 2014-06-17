@@ -19,14 +19,18 @@ module.exports = function(app){
     //make decision page
     app.put('/api/sku/decision', decisionController.updateSKUDecision);
     app.post('/api/sku/decision', decisionController.addSKU);
+    app.delete('/api/sku/decision', decisionController.deleteSKU);
+
     app.put('/api/brand/decision', decisionController.updateBrandDecision);
     app.post('/api/brand/decision', decisionController.addBrand);
+    app.delete('/api/brand/decision', decisionController.deleteBrand);
+
     app.put('/api/company/decision', decisionController.updateCompanyDecision);
 
     app.get('/api/decision', decisionPageController.getDecision);
     app.get('/api/product_portfolio', decisionPageController.getProductPortfolio);
     app.get('/api/spending_details', decisionPageController.getSpendingDetails);
-    app.get('/api/sku_info/:sku_id', decisionPageController.getSKUInfo);
+    app.get('/api/future_projection_calculator/:sku_id', decisionPageController.getSKUInfo);
     app.get('/api/decisionpage/otherinfo', decisionPageController.getOtherinfo);
 
     //app.get('/api/');
