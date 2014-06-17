@@ -8,6 +8,7 @@ var seminarModel = require('../models/seminar.js');
 var utility = require('../utility.js');
 var gameParameters = require('../gameParameters.js').parameters;
 
+
 exports.getDecision = function(req, res, next){
     var seminarId = req.session.seminarId;
     var period = req.session.period - 1;
@@ -122,8 +123,6 @@ exports.getOtherinfo = function(req, res, next){
     })
     .done();
 }
-
-
 
 
 

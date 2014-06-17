@@ -353,6 +353,67 @@ exports.updateCompanyDecision = function(req, res, next){
     }
 };
 
+exports.addBrand = function(req, res, next){
+    var seminarId = req.session.seminarId;
+    var period = req.session.period;
+    var companyId = req.session.companyId;
+
+    var brand_name = req.body.brand_name;
+    var sku_name = req.body.sku_name;
+
+    if(!brand_name){
+        return res.send(400, {message: "Invalid parameter brand_name."});
+    }
+
+    if(!sku_name){
+        return res.send(400, {message: "Invalid parameter sku_name."})
+    }
+
+    brandDecisionModel.findAll(seminarId, period, companyId)
+    .then(function(allBrands){
+        var maxBrandId = 0;
+        allBrands.forEach(function(brand){
+            if(brand.d_BrandID>maxBrandId){
+                maxBrandId = brand.d_BrandID;
+            }
+        })
+
+        if(maxBrandId===0 || maxBrandId % 10 > 4){
+            return res.send(400, {message: "you alread have 5 brands."});
+        }
+
+        var nextBrandId = maxBrandId +1;
+        var firstSKUID = (maxBrandId+1)*10 + 1;//SKUID =  brandID * 10 + 1 
+
+        return SKUDecisionModel.save({
+            seminarId: seminarId,
+            period: period,
+            d_CID: companyId,
+            d_BrandID: nextBrandId,
+            d_SKUID: firstSKUID,
+            d_SKUName: sku_name
+        })
+        .then(function(){
+            return brandDecisionModel.save({
+                seminarId: seminarId,
+                period: period,
+                d_CID: companyId,
+                d_BrandID: nextBrandId,
+                d_BrandName     : brand_name,
+                d_SKUsDecisions : [firstSKUID] 
+            })
+        })      
+    })
+    .then(function(){
+        res.send({message: "add brand success."});
+    })
+    .fail(function(err){
+        logger.error(err);
+        res.send(500, {message: "addBrand failed."})
+    })
+    .done();
+}
+
 
 
 

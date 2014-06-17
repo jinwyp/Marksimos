@@ -13,23 +13,20 @@ module.exports = function(app){
 
     app.get('/api/submitdecision', decisionController.submitDecision);
 
-    //decision
-    app.post('/api/sku/decision', decisionController.updateSKUDecision);
-
-    app.post('/api/brand/decision', decisionController.updateBrandDecision);
-
-    app.post('/api/company/decision', decisionController.updateCompanyDecision);
-
     //chart
     app.get('/api/chart/:chart_name', chartController.getChart);
 
     //make decision page
+    app.put('/api/sku/decision', decisionController.updateSKUDecision);
+    app.put('/api/brand/decision', decisionController.updateBrandDecision);
+    app.post('/api/brand/decision', decisionController.addBrand);
+    app.put('/api/company/decision', decisionController.updateCompanyDecision);
+
     app.get('/api/decision', decisionPageController.getDecision);
     app.get('/api/product_portfolio', decisionPageController.getProductPortfolio);
     app.get('/api/spending_details', decisionPageController.getSpendingDetails);
     app.get('/api/sku_info/:sku_id', decisionPageController.getSKUInfo);
     app.get('/api/decisionpage/otherinfo', decisionPageController.getOtherinfo);
-
 
     //app.get('/api/');
     // app.get('*', function(req, res){
