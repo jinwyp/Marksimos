@@ -435,7 +435,11 @@ exports.addSKU = function(req, res, next){
             }
         })
 
-        if(maxSKUID===0 || maxSKUID.toString()[maxSKUID.toString().length-1] === '5'){
+        if(maxSKUID===0){
+            return res.send({message: "there's no SKU, probably the brand doesn't exist."});
+        }
+
+        if(maxSKUID.toString()[maxSKUID.toString().length-1] === '5'){
             return res.send({message: "You already have 5 SKUs."});
         }
 
