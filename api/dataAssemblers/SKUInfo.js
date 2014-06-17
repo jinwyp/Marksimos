@@ -1,6 +1,7 @@
 var Q = require('q');
 var seminarModel = require('../models/seminar.js');
 var SKUDecisionModel = require('../models/SKUDecision.js');
+var brandDecisionModel = require('../models/brandDecision.js');
 var utility = require('../utility.js');
 var consts = require('../consts.js');
 var gameParameters = require('../gameParameters.js').parameters;
@@ -8,8 +9,9 @@ var gameParameters = require('../gameParameters.js').parameters;
 exports.getSKUInfo = function(seminarId, period, companyId, SKUID){
     return Q.all([
         seminarModel.findOne(seminarId),
-        SKUDecisionModel.findOne(seminarId, period, companyId, SKUID.slice(0, 2), SKUID)
-    ]).spread(function(seminar, decision){
+        SKUDecisionModel.findOne(seminarId, period, companyId, SKUID.slice(0, 2), SKUID),
+        brandDecisionModel.findOne(seminarId, period, companyId, SKUID.slice(0, 2))
+    ]).spread(function(seminar, decision, brandDecision){
         var allResults = seminar.allResults;
 
         var result = {
@@ -26,6 +28,7 @@ exports.getSKUInfo = function(seminarId, period, companyId, SKUID){
 
         var lastPeriodResult = allResults[allResults.length-1];
         var companyResult = utility.findCompany(lastPeriodResult, companyId);
+        var brandResult = utility.findBrand(lastPeriodResult, parseInt(SKUID.slice(0, 2)))
         var SKUResult = utility.findSKU(lastPeriodResult, parseInt(SKUID));
 
         //current period data
@@ -54,15 +57,15 @@ exports.getSKUInfo = function(seminarId, period, companyId, SKUID){
                 companyResult.c_AcquiredEfficiency,
                 decision.d_ProductionVolume)
         .then(function(unitProductionCost){
-            currentPeriodInfo.unitProductionCost = [unitProductionCost, unitProductionCost / consts.ActualSize[SKUResult.u_PackSize]]; 
+            currentPeriodInfo.unitProductionCost = [parseFloat(unitProductionCost.toFixed(2)), parseFloat((unitProductionCost / consts.ActualSize[SKUResult.u_PackSize]).toFixed(2))]; 
             
             //not sure if currentPeriodInfo.d_ConsumerPrice is the right value for that parameter
             var wholesalePrice = utility.unitPrice('WHOLESALERS', decision.d_ConsumerPrice);
-            currentPeriodInfo.wholesalePrice = [wholesalePrice, wholesalePrice/consts.ActualSize[SKUResult.u_PackSize]];
+            currentPeriodInfo.wholesalePrice = [parseFloat(wholesalePrice.toFixed(2)), parseFloat((wholesalePrice/consts.ActualSize[SKUResult.u_PackSize]).toFixed(2))];
 
             var recommendedConsumer = decision.d_FactoryPrice[0] * (gameParameters.pgen.wholesale_Markup + 1)
                 * (1+ gameParameters.pgen.retail_Markup);
-            currentPeriodInfo.recommendedConsumer = [recommendedConsumer, recommendedConsumer / consts.ActualSize[SKUResult.u_PackSize]];
+            currentPeriodInfo.recommendedConsumer = [parseFloat(recommendedConsumer.toFixed(2)), parseFloat((recommendedConsumer / consts.ActualSize[SKUResult.u_PackSize]).toFixed(2))];
 
             currentPeriodInfo.period = period;
 
@@ -71,23 +74,23 @@ exports.getSKUInfo = function(seminarId, period, companyId, SKUID){
             //previous period data
             var previousPeriodInfo = {};
             previousPeriodInfo.marketSales = [
-                SKUResult.u_MarketSalesVolume[consts.ConsumerSegmentsMaxTotal-1]/consts.ActualSize[SKUResult.u_PackSize],
-                SKUResult.u_MarketSalesVolume[consts.ConsumerSegmentsMaxTotal-1]
+                parseFloat((SKUResult.u_MarketSalesVolume[consts.ConsumerSegmentsMaxTotal-1] / consts.ActualSize[SKUResult.u_PackSize]).toFixed(2)),
+                parseFloat(SKUResult.u_MarketSalesVolume[consts.ConsumerSegmentsMaxTotal-1].toFixed(2))
             ];
 
             previousPeriodInfo.shipmentsToRetailers = [
-                SKUResult.u_WholesalesVolume/consts.ActualSize[SKUResult.u_PackSize],
-                SKUResult.u_WholesalesVolume
+                parseFloat((SKUResult.u_WholesalesVolume/consts.ActualSize[SKUResult.u_PackSize]).toFixed(2)),
+                parseFloat(SKUResult.u_WholesalesVolume.toFixed(2))
             ];
 
             previousPeriodInfo.unitProductionCost = [
-                SKUResult.u_ps_UnitCost,
-                SKUResult.u_ps_UnitCost / consts.ActualSize[SKUResult.u_PackSize]
+                parseFloat(SKUResult.u_ps_UnitCost.toFixed(2)),
+                parseFloat((SKUResult.u_ps_UnitCost / consts.ActualSize[SKUResult.u_PackSize]).toFixed(2))
             ];
 
             previousPeriodInfo.averageConsumerPrice = [
-                SKUResult.u_AverageNetMarketPrice * consts.ActualSize[SKUResult.u_PackSize],
-                SKUResult.u_AverageNetMarketPrice
+                parseFloat((SKUResult.u_AverageNetMarketPrice * consts.ActualSize[SKUResult.u_PackSize]).toFixed(2)),
+                parseFloat(SKUResult.u_AverageNetMarketPrice.toFixed(2))
             ];
 
             previousPeriodInfo.consumerCommunication = SKUResult.u_Advertising;
@@ -101,27 +104,51 @@ exports.getSKUInfo = function(seminarId, period, companyId, SKUID){
             var expectedSales = {};
 
             if(decision.d_RepriceFactoryStocks){
-                expectedSales.expectedMaximalSales = (SKUResult.u_ps_FactoryStocks[consts.StocksMaxTotal-1].s_ps_Volume
+                expectedSales.expectedMaximalSales = (SKUResult.u_ps_FactoryStocks[consts.StocksMaxTotal].s_ps_Volume
                 + decision.d_ProductionVolume) * decision.d_FactoryPrice[0];
             }else{
-                expectedSales.expectedMaximalSales = SKUResult.u_ps_FactoryStocks[consts.StocksMaxTotal-1].s_ps_Volume 
-                * SKUResult.u_ps_FactoryStocks[consts.StocksMaxTotal-1].s_ps_UnitPrice 
+                expectedSales.expectedMaximalSales = SKUResult.u_ps_FactoryStocks[consts.StocksMaxTotal].s_ps_Volume 
+                * SKUResult.u_ps_FactoryStocks[consts.StocksMaxTotal].s_ps_UnitPrice 
                 + decision.d_ProductionVolume * decision.d_FactoryPrice[0];
             }
+            expectedSales.expectedMaximalSales = parseFloat(expectedSales.expectedMaximalSales.toFixed(2));
 
             expectedSales.expectedGrossMargin = (expectedSales.expectedMaximalSales 
-            - (SKUResult.u_ps_FactoryStocks[consts.StocksMaxTotal-1].s_ps_Volume 
-                * SKUResult.u_ps_FactoryStocks[consts.StocksMaxTotal-1].s_ps_UnitCost
+            - (SKUResult.u_ps_FactoryStocks[consts.StocksMaxTotal].s_ps_Volume 
+                * SKUResult.u_ps_FactoryStocks[consts.StocksMaxTotal].s_ps_UnitCost
                 + decision.d_ProductionVolume * decision.d_FactoryPrice[0])) / expectedSales.expectedMaximalSales * 100;
+            expectedSales.expectedGrossMargin = parseFloat(expectedSales.expectedGrossMargin.toFixed(2));
 
-            // var vVolumeWeight = ((SKUResult.u_ps_FactoryStocks[consts.StocksMaxTotal].s_ps_Volume 
-            //     * consts.ActualSize[SKUResult.u_PackSize]) 
-            //     + (decision.d_ProductionVolume * consts.ActualSize[SKUResult.u_PackSize])) / 
-            //     (vBrandFactoryStock + decision.d_ProductionVolume);
-            // expected.operatingMargin = (expectedSales.expectedGrossMargin 
-            //     - decision.d_Advertising/expectedSales.expectedMaximalSales * 100
-            //     - decision.d_PromotionalBudget/expectedSales.expectedMaximalSales * 100
-            //     - decision.d_TradeExpenses/expectedSales.expectedMaximalSales * 100)
+            //vVolumeWeight is like average packsize
+            var vVolumeWeight = ((SKUResult.u_ps_FactoryStocks[consts.StocksMaxTotal].s_ps_Volume 
+                    * consts.ActualSize[SKUResult.u_PackSize]) 
+                    + (decision.d_ProductionVolume * consts.ActualSize[SKUResult.u_PackSize]
+                )) / 
+                (brandResult.b_FactoryStocks[consts.StocksMaxTotal].s_Volume + decision.d_ProductionVolume);
+
+            var vEMSVAdditionalTradeMarginCost = (((decision.d_ProductionVolume + SKUResult.u_ps_FactoryStocks[consts.StocksMaxTotal].s_ps_Volume
+                + SKUResult.u_ps_WholesaleStocks[consts.StocksMaxTotal].s_ps_Volume
+                + SKUResult.u_ps_RetailStocks[consts.StocksMaxTotal].s_ps_Volume) 
+                * decision.d_ConsumerPrice * (decision.d_AdditionalTradeMargin * 0.01)) / expectedSales.expectedMaximalSales) 
+                * 100;
+
+            var vEMSVWholesalesBonusCost = (
+                    (decision.d_ProductionVolume + SKUResult.u_ps_FactoryStocks[consts.StocksMaxTotal].s_ps_Volume)
+                    * decision.d_FactoryPrice[0] 
+                    * (decision.d_WholesalesBonusRate * 0.01)
+                ) / expectedSales.expectedMaximalSales * 100;
+    
+            var vEMSVGeneralExpenses = 3;
+
+            expectedSales.expectedOperatingMargin = parseFloat((expectedSales.expectedGrossMargin 
+                - decision.d_Advertising / expectedSales.expectedMaximalSales * 100
+                - decision.d_PromotionalBudget / expectedSales.expectedMaximalSales * 100
+                - decision.d_TradeExpenses / expectedSales.expectedMaximalSales * 100
+                - brandDecision.d_SalesForce * vVolumeWeight / expectedSales.expectedMaximalSales
+                - vEMSVAdditionalTradeMarginCost
+                - vEMSVWholesalesBonusCost
+                - vEMSVGeneralExpenses).toFixed(2));
+
             result.expectedSales = expectedSales;
 
             return result;
