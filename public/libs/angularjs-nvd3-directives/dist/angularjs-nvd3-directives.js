@@ -1941,6 +1941,7 @@
                     if ( attrs.tooltipcontent ) {
                         chart.tooltipContent( scope.tooltipcontent() );
                     }
+
                   scope.d3Call( data, chart );
                   nv.utils.windowResize( chart.update );
                   scope.chart = chart;

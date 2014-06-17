@@ -500,18 +500,22 @@
         <div class="col-md-10 user_chart_right" ng-if="css.chartMenu=='C2'">
             <div class="row">
                 <div class="col-md-12 user_chart_single chart_1">
-                    <h5>{{data.chartC31PerceptionMap.title}}
+                    <h5>{{data.chartC21PerceptionMap.title}}
                         <span class="glyphicon glyphicon-info-sign"></span>
                         <!--<span class="glyphicon glyphicon-resize-full chart_icon"></span>-->
                         <span class="glyphicon glyphicon-save chart_icon"></span>
+
+                        <div class="btn-group btn-group-xs perception_map_group">
+                            <button type="button" class="btn btn-default perception_map_button" ng-click="switchPerceptionMapsData('sku')">SKU</button>
+                            <button type="button" class="btn btn-default perception_map_button" ng-click="switchPerceptionMapsData('brand')">Brand</button>
+                        </div>
                     </h5>
-                    <nvd3-scatter-chart data="data.chartC31PerceptionMap.data" id="chartC31PerceptionMap"
-                        xAxisTickFormat="A31xAxisTickFormatFunction()" color="A31ColorFunction()" legendcolor="A31ColorFunction()" shape="C31shapeFunction()" tooltipContent="C31shapeTooltipFunction()"
-                        height="600" showXAxis="true" showYAxis="true"  showLegend="true"  tooltips="true" interactive="true" fisheye="1000" >
+                    <nvd3-scatter-chart data="data.chartC21PerceptionMap.dataChart"
+                        xaxislabel="Value Perception" yaxislabel="Image Perception" color="A31ColorFunction()" legendcolor="A31ColorFunction()" shape="C31shapeFunction()" tooltipContent="C31shapeTooltipFunction()"
+                        width="1000" height="600" margin="{left:100}" showXAxis="true" showYAxis="true"  showLegend="true"  tooltips="true" interactive="true" fisheye="1000" transitionDuration="500">
                         <svg></svg>
                     </nvd3-scatter-chart>
 
-                    <p class="text-center">Total Stock (milions of standard pack) = Factory Stock + Trade Stock + Retailer Stock</p>
                 </div>
 
             </div>
