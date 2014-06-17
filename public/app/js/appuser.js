@@ -66,7 +66,7 @@ marksimosapp.controller('chartController', function AppCtrl ($scope,  $timeout, 
         chartA31InventoryReport : {
             data : [],
             title : 'Inventory Report',
-            color : ['#39b54a', '#ff983d', '#0087f0', '#8781bd', '#f26c4f', '#bd8cbf']
+            color : ['#39b54a', '#ff983d', '#0087f0', '#8781bd', '#f26c4f', '#bd8cbf', '#000000']
         },
 
         chartB31TotalInvestment : {
