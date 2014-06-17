@@ -17,7 +17,7 @@ exports.getProductPortfolioForOneCompany = function(seminarId, period, companyId
         decisionAssembler.getDecision(seminarId, period, companyId)
     ])
     .spread(function(seminar, decision){
-        allResults = seminar.allResults;
+        var allResults = seminar.allResults;
 
         var productPortfolioForOneCompany = [];
         var lastPeriodResult = allResults[allResults.length-1];

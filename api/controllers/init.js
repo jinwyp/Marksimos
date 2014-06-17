@@ -10,6 +10,7 @@ var companyDecisionModel = require('../models/companyDecision.js');
 var brandDecisionModel = require('../models/brandDecision.js');
 var SKUDecisionModel = require('../models/SKUDecision.js');
 var seminarModel = require('../models/seminar.js');
+var cgiapi = require('../cgiapi.js');
 
 /**
  * Initialize game data, only certain perople can call this method
@@ -230,7 +231,7 @@ function initChartData(seminarId, allResults){
     return Q.all([
         seminarModel.findOne(seminarId),
         //get exogenous of period:0, FMCG and GENERIC market
-        getExogenous(period, 'FMCG', 'GENERIC')
+        cgiapi.getExogenous(period)
     ])
     .spread(function(seminar, exogenous){
         //generate charts from allResults
@@ -328,22 +329,6 @@ function queryOneDecision(seminarId, team, period){
     var reqUrl = config.cgiService + util.format('decisions.exe?period=%s&team=%s&seminar=%s', period, team, seminarId);
     return request.get(reqUrl);
 }
-
-
-/**
- * Get exogenous, exogenous are some parameters of the game
- * 
- * @method getExogenous
- * @param {Object} seminarSetting {simulationVariant, targetMarket}
- *
- */
-function getExogenous(period, simulationVariant, targetMarket){
-    var reqUrl = url.resolve(config.cgiService,
-        util.format('exogenous.exe?period=%s&simulationVariant=%s&targetMarket=%s',
-            period, simulationVariant, targetMarket));
-    return request.get(reqUrl);
-}
-
 
 
 function extractChartData(results, settings){
