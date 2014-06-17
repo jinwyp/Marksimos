@@ -18,6 +18,7 @@ module.exports = function(app){
 
     //make decision page
     app.put('/api/sku/decision', decisionController.updateSKUDecision);
+    app.post('/api/sku/decision', decisionController.addSKU);
     app.put('/api/brand/decision', decisionController.updateBrandDecision);
     app.post('/api/brand/decision', decisionController.addBrand);
     app.put('/api/company/decision', decisionController.updateCompanyDecision);

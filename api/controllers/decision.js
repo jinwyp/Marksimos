@@ -414,6 +414,50 @@ exports.addBrand = function(req, res, next){
     .done();
 }
 
+exports.addSKU = function(req, res, next){
+    var seminarId = req.session.seminarId;
+    var period = req.session.period;
+    var companyId = req.session.companyId;
+
+    var brand_id = req.body.brand_id;
+    var sku_name = req.body.sku_name;
+
+    if(!sku_name){
+        return res.send(400, {message: "Invalid parameter sku_name."})
+    }
+
+    SKUDecisionModel.findAll(seminarId, period, companyId, brand_id)
+    .then(function(allSKUs){
+        var maxSKUID = 0;
+        allSKUs.forEach(function(SKU){
+            if(SKU.d_SKUID > maxSKUID){
+                maxSKUID = SKU.d_SKUID;
+            }
+        })
+
+        if(maxSKUID===0 || maxSKUID.toString()[maxSKUID.toString().length-1] === '5'){
+            return res.send({message: "You already have 5 SKUs."});
+        }
+
+        return SKUDecisionModel.save({
+            seminarId: seminarId,
+            period: period,
+            d_CID: companyId,
+            d_BrandID: brand_id,
+            d_SKUID: maxSKUID + 1,
+            d_SKUName: sku_name
+        })
+    })
+    .then(function(){
+        res.send({message: 'add SKU successfully.'});
+    })
+    .fail(function(err){
+        logger.error(err);
+        res.send(500, {message: "addSKU failed."})
+    })
+    .done();
+}
+
 
 
 
