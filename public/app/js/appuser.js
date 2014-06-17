@@ -148,6 +148,7 @@ marksimosapp.controller('chartController', function AppCtrl ($scope,  $timeout, 
             color : ['#39b54a', '#ff983d', '#0087f0', '#8781bd', '#f26c4f', '#bd8cbf']
         },
 
+
         chartC41GrowthRateInVolume : {
             type : report.getChartType1(),
             config : report.getChartConfig1(),
@@ -180,6 +181,20 @@ marksimosapp.controller('chartController', function AppCtrl ($scope,  $timeout, 
     $scope.A31xAxisTickFormatFunction = function(){
         return function(d){
             return d;
+        }
+    };
+
+    $scope.C31shapeFunction = function(){
+        return function(d) {
+            return 'square';
+        };
+    };
+
+    $scope.C31shapeTooltipFunction = function(){
+        return function(key, x, y, e, graph) {
+            return  'Super New Tooltip' +
+                '<h1>' + key + '</h1>' +
+                '<p>' +  y + ' at ' + x + '</p>'
         }
     };
 
@@ -335,20 +350,8 @@ marksimosapp.controller('chartController', function AppCtrl ($scope,  $timeout, 
         console.log(data);
         $scope.data.chartC31PerceptionMap.data = data.dataSKU;
     });
-    $scope.exampleData = [
-        {"key":"Group 0",
-            "values":[{"x":1,"y":1,"size":1}]
-        },
-        {"key":"Group 1",
-            "values":[{"x":2,"y":2,"size":0.9}]
-        },
-        {"key":"Group 2",
-            "values":[{"x":3,"y":3,"size":0.9}]
-        },
-        {"key":"Group 3",
-            "values":[{"x":4,"y":4,"size":0.6}]
-        }
-    ];
+
+
 
     // Chart C4
     $scope.data.chartC41GrowthRateInVolume.config.title = 'Growth Rate In Volume (Period 3 = 100)';

@@ -1795,7 +1795,7 @@
           fisheye: '@',
           xPadding: '@',
           yPadding: '@',
-          tooltipContent: '&',
+          tooltipcontent: '&',
           tooltipXContent: '&',
           tooltipYContent: '&',
           color: '&',
@@ -1938,6 +1938,9 @@
                     chart.sizeRange( scope.sizerange() );
                     chart.zScale( scope.zscale() );
                   }
+                    if ( attrs.tooltipcontent ) {
+                        chart.tooltipContent( scope.tooltipcontent() );
+                    }
                   scope.d3Call( data, chart );
                   nv.utils.windowResize( chart.update );
                   scope.chart = chart;

@@ -106,6 +106,7 @@ app.factory('report',function($http){
 
 
 
+
     var chartFormatTool1 = function(chartHttpData, decimalNumber){
         // 使用angular-chart 插件的数据格式
 
@@ -272,7 +273,7 @@ app.factory('report',function($http){
                     var oneLineSku1 = {
                         'x' : Math.round(valueSku.valuePerception * 100) / 100,
                         'y' : Math.round(valueSku.imagePerception * 100) / 100,
-                        'size' : 1,
+                        'size' : 0.6,
                         'SKUName' : valueSku.SKUName,
                         'CompanyName' : value.companyName
                     };
@@ -284,7 +285,7 @@ app.factory('report',function($http){
                     var oneLineBrand1 = {
                         'x' : Math.round(valueBrand.valuePerception * 100) / 100,
                         'y' : Math.round(valueBrand.imagePerception * 100) / 100,
-                        'size' : 1,
+                        'size' : 0.6,
                         'BrandName' : valueBrand.brandName,
                         'CompanyName' : value.companyName
                     };
@@ -306,7 +307,7 @@ app.factory('report',function($http){
                 var oneLineData = {
                     'x' : Math.round(value.valuePerception * 100) / 100,
                     'y' : Math.round(value.imagePerception * 100) / 100,
-                    'size' : 1,
+                    'size' : 0.55,
                     'Name' : value.segmentName
                 };
 
@@ -347,6 +348,8 @@ app.factory('report',function($http){
                 console.log(result.data);
 
                 return chartFormatTool1(result.data, 2);
+            }, function(err){
+                console.log(err);
             });
         },
 

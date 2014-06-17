@@ -506,8 +506,8 @@
                         <span class="glyphicon glyphicon-save chart_icon"></span>
                     </h5>
                     <nvd3-scatter-chart data="data.chartC31PerceptionMap.data" id="chartC31PerceptionMap"
-                                          xAxisTickFormat="A31xAxisTickFormatFunction()" color="A31ColorFunction()" legendcolor="A31ColorFunction()"
-                                          height="600" showXAxis="true" showYAxis="true"  showLegend="true"  tooltips="true" >
+                        xAxisTickFormat="A31xAxisTickFormatFunction()" color="A31ColorFunction()" legendcolor="A31ColorFunction()" shape="C31shapeFunction()" tooltipContent="C31shapeTooltipFunction()"
+                        height="600" showXAxis="true" showYAxis="true"  showLegend="true"  tooltips="true" interactive="true" fisheye="1000" >
                         <svg></svg>
                     </nvd3-scatter-chart>
 
@@ -516,6 +516,8 @@
 
             </div>
         </div>
+
+
 
 
         <div class="col-md-10 user_chart_right" ng-if="css.chartMenu=='C4'">
