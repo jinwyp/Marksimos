@@ -115,6 +115,17 @@ exports.unitPrice = function(localtion, consumerPrice){
     return priceNow;
 }
 
+exports.calculateTotalVolume = function(currentDecision){
+    var totalVolume = 0;
+    currentDecision.d_BrandsDecisions.forEach(function(brandDecision){
+        brandDecision.d_SKUsDecisions.forEach(function(SKUDecision){
+            totalVolume += SKUDecision.d_ProductionVolume * consts.ActualSize[SKUDecision.d_PackSize];
+        })
+    })
+    return totalVolume;
+}
+
+
 
 
 

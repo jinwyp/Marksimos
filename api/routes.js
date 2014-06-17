@@ -28,6 +28,9 @@ module.exports = function(app){
     app.get('/api/product_portfolio', decisionPageController.getProductPortfolio);
     app.get('/api/spending_details', decisionPageController.getSpendingDetails);
     app.get('/api/sku_info/:sku_id', decisionPageController.getSKUInfo);
+    app.get('/api/decisionpage/otherinfo', decisionPageController.getOtherinfo);
+
+
     //app.get('/api/');
     // app.get('*', function(req, res){
     //     res.send("404 page");
