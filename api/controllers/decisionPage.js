@@ -7,7 +7,7 @@ var logger = require('../../logger.js');
 
 exports.getDecision = function(req, res, next){
     var seminarId = req.session.seminarId;
-    var period = req.session.period;
+    var period = req.session.period - 1;
     var companyId = req.session.companyId;
 
     decisionAssembler.getDecision(seminarId, period, companyId)

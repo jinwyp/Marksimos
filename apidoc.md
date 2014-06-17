@@ -125,12 +125,12 @@
 ####:password
 ### response
 
-## /api/decision/sku/discontinue
+## /api/sku/decision
 ### POST
 ### Parameters
 ####: brand_id
 ####: sku_id
-####: is_continue
+####: sku_data
 ### response
 失败的Response
 
@@ -142,15 +142,38 @@
     HTTP Status: 200, {status: 1, message: 'update success.'}
 
 
-## /api/decision/sku/discontinue
-### POST
+## /api/brand/decision
+
+## /api/company/decision
+
+## /api/decision
+Get all decisions of all brands in one company in the last period
+### Method
+GET
 ### Parameters
-####: sku
-{
+no
 
-}
-### response
+## /api/product_portfolio
+Get production portfolio information
+### Method
+GET
+### Parameters
+no parameters
 
+## /api/spending_details
+Get spending details
+### Method
+GET
+### Parameters
+no parameters
+
+
+## /api/sku_info/:sku_id
+Get SKU information
+### Method
+GET
+### Parameters
+sku_id
 
 
 ## url
