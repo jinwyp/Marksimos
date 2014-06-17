@@ -106,6 +106,7 @@ app.factory('report',function($http){
 
 
 
+
     var chartFormatTool1 = function(chartHttpData, decimalNumber){
         // 使用angular-chart 插件的数据格式
 
@@ -272,9 +273,11 @@ app.factory('report',function($http){
                     var oneLineSku1 = {
                         'x' : Math.round(valueSku.valuePerception * 100) / 100,
                         'y' : Math.round(valueSku.imagePerception * 100) / 100,
-                        'size' : 1,
+                        'size' : 0.6,
                         'SKUName' : valueSku.SKUName,
-                        'CompanyName' : value.companyName
+                        'name' : valueSku.SKUName,
+                        'CompanyName' : value.companyName,
+                        'tooltips' : valueSku.tooltips
                     };
 
                     oneCompanySku.values.push(oneLineSku1);
@@ -284,9 +287,11 @@ app.factory('report',function($http){
                     var oneLineBrand1 = {
                         'x' : Math.round(valueBrand.valuePerception * 100) / 100,
                         'y' : Math.round(valueBrand.imagePerception * 100) / 100,
-                        'size' : 1,
+                        'size' : 0.6,
                         'BrandName' : valueBrand.brandName,
-                        'CompanyName' : value.companyName
+                        'name' : valueBrand.brandName,
+                        'CompanyName' : value.companyName,
+                        'tooltips' : []
                     };
 
                     oneCompanyBrand.values.push(oneLineBrand1);
@@ -294,7 +299,6 @@ app.factory('report',function($http){
 
                 chartResult.dataSKU.push(oneCompanySku);
                 chartResult.dataBrand.push(oneCompanyBrand);
-
             });
 
             var oneSegment = {
@@ -306,8 +310,9 @@ app.factory('report',function($http){
                 var oneLineData = {
                     'x' : Math.round(value.valuePerception * 100) / 100,
                     'y' : Math.round(value.imagePerception * 100) / 100,
-                    'size' : 1,
-                    'Name' : value.segmentName
+                    'size' : 0.5,
+                    'name' : key + ' ' + value.segmentName,
+                    'tooltips' : []
                 };
 
                 oneSegment.values.push(oneLineData);
@@ -347,6 +352,8 @@ app.factory('report',function($http){
                 console.log(result.data);
 
                 return chartFormatTool1(result.data, 2);
+            }, function(err){
+                console.log(err);
             });
         },
 

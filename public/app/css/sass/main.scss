@@ -47,6 +47,8 @@ $color_main_body_user_chart_leftmenu_active_bg: #eef3ff;
 $color_main_body_user_chart_leftmenu_active_bgbefore: #236ac7;
 $color_main_body_user_chart_leftmenu_border: #e7e9ed;
 $color_main_body_user_chart_single_border: #d9dce3;
+$color_main_body_user_chart_perception_map_bg: #f9f9f9;
+$color_main_body_user_chart_perception_map_border: #bdbdbd;
 
 
 $color_main_body_progress_bar_budget: #6071b9;
@@ -680,6 +682,58 @@ body{
                     float: right;
                     padding-right: 10px;
                 }
+
+                .perception_map_button{
+                    font-size: 11px;
+                    font-family: $font_main_header2;
+                }
+                .perception_map_group{
+                    float: right;
+                    margin-right: 60px;
+                }
+            }
+
+            .nvtooltip{
+                border: 0 none;
+
+                h5{
+                    border: 1px solid $color_main_body_user_chart_perception_map_border;
+                    @include border-radius(4px);
+                    padding: 8px 10px;
+
+                }
+            }
+            .perception_panel{
+                margin-bottom: 0px;
+                .panel-heading{
+                    font-size: 12px;
+                    font-weight: bold;
+                    font-family: $font_main_header2;
+                    color: $color_main_body_user_chart_leftmenu_title;
+                }
+            }
+            .perception_list{
+                padding: 5px 10px;
+                font-size: 12px;
+                font-family: $font_main_header2;
+                color: $color_main_body_company;
+            }
+            .perception_list_bg{
+                background-color: $color_main_body_user_chart_perception_map_bg;
+            }
+            .perception_info{
+                width: 180px;
+                display: inline-block;
+            }
+            .perception_info_number{
+                width: 40px;
+                display: inline-block;
+            }
+            .perception_logo{
+                padding: 6px 6px;
+                margin: 0px 5px 0px 0px ;
+                background-color: #0000FF;
+                display: inline-block;
             }
         }
 

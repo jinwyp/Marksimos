@@ -41,7 +41,7 @@
 
             $scope.tooltipXContentFunction = function(){
                 return function(key, x, y) {
-                    return '<strong>YO!' + x + '</strong>'
+                    return '<h3>YO!' + key + '</h3>'
                 }
             }
 
@@ -74,12 +74,13 @@
     <nvd3-scatter-chart
             data="exampleData"
             id="exampleId"
-            width="600"
-            height="300"
+            width="1200"
+            height="800"
             margin="{left:150,top:100,bottom:100,right:150}"
             tooltips="true"
             interactive="true"
-            tooltipContent="tooltipXContentFunction()"
+            fisheye="1"
+            tooltipcontent="tooltipXContentFunction()"
             shape="getShapeCross()">
         <svg></svg>
     </nvd3-scatter-chart>

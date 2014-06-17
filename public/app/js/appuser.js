@@ -142,11 +142,13 @@ marksimosapp.controller('chartController', function AppCtrl ($scope,  $timeout, 
             data : $scope.dataChartSimple
         },
 
-        chartC31PerceptionMap : {
+        chartC21PerceptionMap : {
             data : [],
+            dataChart : [],
             title : 'Perception Maps',
             color : ['#39b54a', '#ff983d', '#0087f0', '#8781bd', '#f26c4f', '#bd8cbf']
         },
+
 
         chartC41GrowthRateInVolume : {
             type : report.getChartType1(),
@@ -177,11 +179,106 @@ marksimosapp.controller('chartController', function AppCtrl ($scope,  $timeout, 
             return $scope.data.chartA31InventoryReport.color[i];
         };
     };
-    $scope.A31xAxisTickFormatFunction = function(){
-        return function(d){
-            return d;
+
+    $scope.C31shapeFunction = function(){
+        return function(d) {
+            return 'square';
+        };
+    };
+
+    $scope.C31shapeTooltipFunction = function(){
+        return function(key, x, y, e, graph) {
+
+            var iconColor = $scope.data.chartC21PerceptionMap.color[e.seriesIndex];
+            var htmlResult = '';
+
+            var arrow0 = 'glyphicon-arrow-right';
+            var arrow1 = 'glyphicon-arrow-right';
+            var arrow2 = 'glyphicon-arrow-right';
+            var arrow3 = 'glyphicon-arrow-right';
+            var arrow4 = 'glyphicon-arrow-right';
+            var arrow5 = 'glyphicon-arrow-right';
+            var arrow6 = 'glyphicon-arrow-right';
+            var arrow7 = 'glyphicon-arrow-right';
+
+            if(e.point.tooltips.length > 0){
+                if(e.point.tooltips[0].compareWithPreviousPeriod === 1){
+                    arrow0 = 'glyphicon-arrow-up';
+                }else if(e.point.tooltips[0].compareWithPreviousPeriod === -1){
+                    arrow0 = 'glyphicon-arrow-down';
+                }
+
+                if(e.point.tooltips[1].compareWithPreviousPeriod === 1){
+                    arrow1 = 'glyphicon-arrow-up';
+                }else if(e.point.tooltips[1].compareWithPreviousPeriod === -1){
+                    arrow1 = 'glyphicon-arrow-down';
+                }
+
+                if(e.point.tooltips[2].compareWithPreviousPeriod === 1){
+                    arrow2 = 'glyphicon-arrow-up';
+                }else if(e.point.tooltips[2].compareWithPreviousPeriod === -1){
+                    arrow2 = 'glyphicon-arrow-down';
+                }
+
+                if(e.point.tooltips[3].compareWithPreviousPeriod === 1){
+                    arrow3 = 'glyphicon-arrow-up';
+                }else if(e.point.tooltips[3].compareWithPreviousPeriod === -1){
+                    arrow3 = 'glyphicon-arrow-down';
+                }
+
+                if(e.point.tooltips[4].compareWithPreviousPeriod === 1){
+                    arrow4 = 'glyphicon-arrow-up';
+                }else if(e.point.tooltips[4].compareWithPreviousPeriod === -1){
+                    arrow4 = 'glyphicon-arrow-down';
+                }
+
+                if(e.point.tooltips[5].compareWithPreviousPeriod === 1){
+                    arrow5 = 'glyphicon-arrow-up';
+                }else if(e.point.tooltips[5].compareWithPreviousPeriod === -1){
+                    arrow5 = 'glyphicon-arrow-down';
+                }
+
+                if(e.point.tooltips[6].compareWithPreviousPeriod === 1){
+                    arrow6 = 'glyphicon-arrow-up';
+                }else if(e.point.tooltips[6].compareWithPreviousPeriod === -1){
+                    arrow6 = 'glyphicon-arrow-down';
+                }
+
+                if(e.point.tooltips[7].compareWithPreviousPeriod === 1){
+                    arrow7 = 'glyphicon-arrow-up';
+                }else if(e.point.tooltips[7].compareWithPreviousPeriod === -1){
+                    arrow7 = 'glyphicon-arrow-down';
+                }
+
+                htmlResult = '<div class="panel panel-default perception_panel"> <div class="panel-heading"><span class="perception_logo" style="background-color:' + iconColor + '"></span>' + key + ' - ' + e.point.name + '</div>' +
+                    '<ul class="list-group">' +
+                    '<li class="list-group-item perception_list"><span class="perception_info">Market Share (Value %)  </span><span class="perception_info_number">' + Math.round(e.point.tooltips[0].value * 10000) / 100 +
+                    '</span><span class="glyphicon ' + arrow0 + ' "></span></li>' +
+                    '<li class="list-group-item perception_list perception_list_bg"><span class="perception_info">Average Display Price   </span><span class="perception_info_number">' + Math.round(e.point.tooltips[1].value * 100) / 100 +
+                    '</span><span class="glyphicon ' + arrow1 + ' "></span></li>' +
+                    '<li class="list-group-item perception_list"><span class="perception_info">Applied Technology Index </span><span class="perception_info_number">' + e.point.tooltips[2].value +
+                    '</span><span class="glyphicon ' + arrow2 + ' "></span></li>' +
+                    '<li class="list-group-item perception_list perception_list_bg"><span class="perception_info">Ingredients Quality Index</span><span class="perception_info_number">' + e.point.tooltips[3].value +
+                    '</span><span class="glyphicon ' + arrow3 + ' "></span></li>' +
+                    '<li class="list-group-item perception_list"><span class="perception_info">Awareness (%)            </span><span class="perception_info_number">' + Math.round(e.point.tooltips[4].value * 10000) / 100 +
+                    '</span><span class="glyphicon ' + arrow4 + ' "></span></li>' +
+                    '<li class="list-group-item perception_list perception_list_bg"><span class="perception_info">Shelf Space (%)          </span><span class="perception_info_number">' + Math.round(e.point.tooltips[5].value * 10000) / 100 +
+                    '</span><span class="glyphicon ' + arrow5 + ' "></span></li>' +
+                    '<li class="list-group-item perception_list"><span class="perception_info">Value Perception Change </span><span class="perception_info_number">' + Math.round(e.point.tooltips[6].value * 100) / 100 +
+                    '</span><span class="glyphicon ' + arrow6 + ' "></span></li>' +
+                    '<li class="list-group-item perception_list perception_list_bg"><span class="perception_info">Image Perception Change </span><span class="perception_info_number">' + Math.round(e.point.tooltips[7].value * 100) / 100 +
+                    '</span><span class="glyphicon ' + arrow7 + ' "></span></li>' +
+                    '</ul></div>'
+
+            }else {
+                htmlResult = '<h5><span class="perception_logo" style="background-color:' + iconColor + '"></span>' + key + ' ' + e.point.name + '</h5>'
+            }
+
+
+            return htmlResult
         }
     };
+
 
 
     company.getCompany().then(function(data, status, headers, config){
@@ -333,22 +430,17 @@ marksimosapp.controller('chartController', function AppCtrl ($scope,  $timeout, 
     // Chart C2
     report.perceptionMap().then(function(data, status, headers, config){
         console.log(data);
-        $scope.data.chartC31PerceptionMap.data = data.dataSKU;
+        $scope.data.chartC21PerceptionMap.data = data;
+        $scope.data.chartC21PerceptionMap.dataChart = data.dataSKU;
     });
-    $scope.exampleData = [
-        {"key":"Group 0",
-            "values":[{"x":1,"y":1,"size":1}]
-        },
-        {"key":"Group 1",
-            "values":[{"x":2,"y":2,"size":0.9}]
-        },
-        {"key":"Group 2",
-            "values":[{"x":3,"y":3,"size":0.9}]
-        },
-        {"key":"Group 3",
-            "values":[{"x":4,"y":4,"size":0.6}]
+
+    $scope.switchPerceptionMapsData = function(flag){
+        if(flag === 'sku'){
+            $scope.data.chartC21PerceptionMap.dataChart = $scope.data.chartC21PerceptionMap.data.dataSKU;
+        }else{
+            $scope.data.chartC21PerceptionMap.dataChart = $scope.data.chartC21PerceptionMap.data.dataBrand;
         }
-    ];
+    };
 
     // Chart C4
     $scope.data.chartC41GrowthRateInVolume.config.title = 'Growth Rate In Volume (Period 3 = 100)';
