@@ -84,13 +84,13 @@ exports.getSpendingDetails = function(seminarId, period, companyId){
             - companyData.totalInvestment).toFixed(2);
 
         //normal capacity
-        companyData.normalCapacity = companyDataInAllResults.c_Capacity - calculateTotalVolume(decision)
+        companyData.normalCapacity = companyDataInAllResults.c_Capacity - utility.calculateTotalVolume(decision)
         if(companyData.normalCapacity < -1){
             companyData.normalCapacity = 0;
         }
 
         //company data in all results
-        if(companyDataInAllResults.c_Capacity - calculateTotalVolume(decision) < 0){
+        if(companyDataInAllResults.c_Capacity - utility.calculateTotalVolume(decision) < 0){
             companyData.availableOvertimeCapacityExtension = companyDataInAllResults.c_Capacity - calculateTotalVolume(decision) 
                 + companyDataInAllResults.c_Capacity * gameParameters.pgen.firm_OvertimeCapacity;
         }else{
@@ -114,15 +114,6 @@ exports.getSpendingDetails = function(seminarId, period, companyId){
     });
 }
 
-function calculateTotalVolume(currentDecision){
-    var totalVolume = 0;
-    currentDecision.d_BrandsDecisions.forEach(function(brandDecision){
-        brandDecision.d_SKUsDecisions.forEach(function(SKUDecision){
-            totalVolume += SKUDecision.d_ProductionVolume * consts.ActualSize[SKUDecision.d_PackSize];
-        })
-    })
-    return totalVolume;
-}
 
 
 
