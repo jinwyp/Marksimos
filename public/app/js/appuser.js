@@ -271,7 +271,7 @@ marksimosapp.controller('chartController', function AppCtrl ($scope,  $timeout, 
                     '</ul></div>'
 
             }else {
-                htmlResult = '<h5><span class="perception_logo" style="background-color:' + iconColor + '"></span>' + key + ' - ' + e.point.name + '</h5>'
+                htmlResult = '<h5><span class="perception_logo" style="background-color:' + iconColor + '"></span>' + key + ' ' + e.point.name + '</h5>'
             }
 
 

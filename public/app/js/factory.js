@@ -311,7 +311,7 @@ app.factory('report',function($http){
                     'x' : Math.round(value.valuePerception * 100) / 100,
                     'y' : Math.round(value.imagePerception * 100) / 100,
                     'size' : 0.5,
-                    'name' : value.segmentName,
+                    'name' : key + ' ' + value.segmentName,
                     'tooltips' : []
                 };
 
