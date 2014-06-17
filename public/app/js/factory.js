@@ -277,7 +277,8 @@ app.factory('report',function($http){
                         'SKUName' : valueSku.SKUName,
                         'name' : valueSku.SKUName,
                         'CompanyName' : value.companyName,
-                        'tooltips' : valueSku.tooltips
+                        'tooltips' : valueSku.tooltips,
+                        'shape' : 'circle'
                     };
 
                     oneCompanySku.values.push(oneLineSku1);
@@ -291,7 +292,8 @@ app.factory('report',function($http){
                         'BrandName' : valueBrand.brandName,
                         'name' : valueBrand.brandName,
                         'CompanyName' : value.companyName,
-                        'tooltips' : []
+                        'tooltips' : [],
+                        'shape' : 'circle'
                     };
 
                     oneCompanyBrand.values.push(oneLineBrand1);
@@ -312,7 +314,8 @@ app.factory('report',function($http){
                     'y' : Math.round(value.imagePerception * 100) / 100,
                     'size' : 0.5,
                     'name' : key + ' ' + value.segmentName,
-                    'tooltips' : []
+                    'tooltips' : [],
+                    'shape' : 'diamond'
                 };
 
                 oneSegment.values.push(oneLineData);

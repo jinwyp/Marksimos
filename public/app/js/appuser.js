@@ -182,7 +182,7 @@ marksimosapp.controller('chartController', function AppCtrl ($scope,  $timeout, 
 
     $scope.C31shapeFunction = function(){
         return function(d) {
-            return 'square';
+            return d.shape;
         };
     };
 
