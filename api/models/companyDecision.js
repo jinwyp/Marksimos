@@ -9,11 +9,11 @@ var tDecisionSchema = new Schema({
     d_CID                        : Number,
     d_CompanyName                : String,
     d_BrandsDecisions            : [Number], //Array of d_BrandID
-    d_IsAdditionalBudgetAccepted : Boolean,
-    d_RequestedAdditionalBudget  : Number,
-    d_InvestmentInEfficiency     : Number,
-    d_InvestmentInTechnology     : Number,
-    d_InvestmentInServicing      : Number
+    d_IsAdditionalBudgetAccepted : {type: Boolean, default: true},
+    d_RequestedAdditionalBudget  : {type: Number, default: 0},
+    d_InvestmentInEfficiency     : {type: Number, default: 0},
+    d_InvestmentInTechnology     : {type: Number, default: 0},
+    d_InvestmentInServicing      : {type: Number, default: 0}
 });
 
 var CompanyDecision = mongoose.model('CompanyDecision', tDecisionSchema);

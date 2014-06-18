@@ -103,10 +103,6 @@ exports.getOtherinfo = function(req, res, next){
                 ).toFixed(2)
             );
 
-        console.log(companyResult.c_TotalInvestmentBudget );
-        console.log(companyResult.c_CumulatedInvestments);
-        console.log(totalInvestment);
-
         var normalCapacity = parseFloat((spendingDetails.companyData.normalCapacity/companyResult.c_Capacity).toFixed(2));
         
         var overtimeCapacity = parseFloat(((companyResult.c_Capacity * gameParameters.pgen.firm_OvertimeCapacity +  spendingDetails.companyData.normalCapacity

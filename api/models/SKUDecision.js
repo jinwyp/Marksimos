@@ -10,23 +10,23 @@ var tOneSKUDecisionSchema = new Schema({
     d_BrandID: Number,
     d_SKUID: Number,
     d_SKUName: String,
-    d_Advertising: Number, //consumer communication
-    d_AdditionalTradeMargin: Number,
+    d_Advertising: {type: Number, default: 0}, //consumer communication
+    d_AdditionalTradeMargin: {type: Number, default: 0},
     d_FactoryPrice: [Number],
-    d_ConsumerPrice: Number,
-    d_RepriceFactoryStocks: Boolean,
-    d_IngredientsQuality: Number,
-    d_PackSize: Number,
-    d_ProductionVolume: Number, 
-    d_PromotionalBudget: Number, //consumer promotions
-    d_PromotionalEpisodes: [Boolean], //consumer promotions schedule
-    d_TargetConsumerSegment: Number,
-    d_Technology: Number,
-    d_ToDrop: Boolean,
-    d_TradeExpenses: Number,
-    d_WholesalesBonusMinVolume: Number,
-    d_WholesalesBonusRate: Number,
-    d_WarrantyLength: Number
+    d_ConsumerPrice: {type: Number, default: 0},
+    d_RepriceFactoryStocks: {type: Boolean, default: 0},
+    d_IngredientsQuality: {type: Number, default: 0},
+    d_PackSize: {type: Number, default: 0},
+    d_ProductionVolume: {type: Number, default: 0}, 
+    d_PromotionalBudget: {type: Number, default: 0}, //consumer promotions
+    d_PromotionalEpisodes: [{type: Number, default: 0}], //consumer promotions schedule
+    d_TargetConsumerSegment: {type: Number, default: 0},
+    d_Technology: {type: Number, default: 0},
+    d_ToDrop: {type: Boolean, default: 0},
+    d_TradeExpenses: {type: Number, default: 0},
+    d_WholesalesBonusMinVolume: {type: Number, default: 0},
+    d_WholesalesBonusRate: {type: Number, default: 0},
+    d_WarrantyLength: {type: Number, default: 0}
 }); 
 
 var SKUDecision = mongoose.model('SKUDecision', tOneSKUDecisionSchema);

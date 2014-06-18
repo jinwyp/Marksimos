@@ -23,7 +23,11 @@ function generateCompanyReport(allResults){
     var companyReport = [];
 
     allResults[0].p_Companies.forEach(function(company){
-
+        if(!isCompanyExist(company.c_CompanyID, companyReport)){
+            companyReport.push({
+                companyId: ''
+            })
+        }
     })
 
     allResults.forEach(function(onePeriodResult){
@@ -35,7 +39,7 @@ function generateCompanyReport(allResults){
     })
 
     function isCompanyExist(companyId, companyReport){
-        companyReport.some(function(company){
+        return companyReport.some(function(company){
             return company.companyId === companyId;
         })
     }
