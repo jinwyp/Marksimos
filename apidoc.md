@@ -119,19 +119,23 @@
 
 
 ## /api/register
-### POST
+### Method
+POST
 ### Parameters
-####:email
-####:password
-### response
+* email
+* password
+* response
 
 ## /api/sku/decision
+
 ### Method
 PUT
+
 ### Parameters
 * brand_id
 * sku_id
 * sku_data
+
 ### response
 失败的Response
 
@@ -143,81 +147,103 @@ PUT
     HTTP Status: 200, {status: 1, message: 'update success.'}
 
 ## /api/sku/decision
+
 ### Method
 POST
+
 ### Parameters
 * brand_id
 * sku_name
 
 ## /api/sku/decision
+
 ### Method
 DELETE
+
 ### Parameters
 brand_id
 sku_id
 
 ## /api/brand/decision
+
 ### Method
 PUT
+
 ### Parameters
 * brand_id
 * brand_data
 
 
 ## /api/brand/decision
+
 ### Method
 POST
+
 ### Parameters
 brand_name
 sku_name
 
 
 ## /api/brand/decision
+
 ### Method
 DELETE
+
 ### Parameters
 * brand_id
 
 ## /api/company/decision
+
 ### Method
 PUT
+
 ### Parameters
 * company_data
 
 ## /api/company/decision
+
 ### Method
 POST
 
 ## /api/company/decision
+
 ### Method
 DELETE
 
 ## /api/decision
 Get all decisions of all brands in one company in the last period
+
 ### Method
 GET
+
 ### Parameters
 no parameters
 
 ## /api/product_portfolio
 Get production portfolio information
+
 ### Method
 GET
+
 ### Parameters
 no parameters
 
 ## /api/spending_details
 Get spending details
+
 ### Method
 GET
+
 ### Parameters
 no parameters
 
 
 ## /api/sku_info/:sku_id
 Get SKU information
+
 ### Method
 GET
+
 ### Parameters
 * sku_id
 
