@@ -197,7 +197,7 @@ Get all decisions of all brands in one company in the last period
 ### Method
 GET
 ### Parameters
-no
+no parameters
 
 ## /api/product_portfolio
 Get production portfolio information
