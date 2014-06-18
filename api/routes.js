@@ -27,11 +27,11 @@ module.exports = function(app){
 
     app.put('/api/company/decision', decisionController.updateCompanyDecision);
 
-    app.get('/api/decision', decisionPageController.getDecision);
+    app.get('/api/company', decisionPageController.getDecision);
     app.get('/api/product_portfolio', decisionPageController.getProductPortfolio);
     app.get('/api/spending_details', decisionPageController.getSpendingDetails);
     app.get('/api/future_projection_calculator/:sku_id', decisionPageController.getSKUInfo);
-    app.get('/api/decisionpage/otherinfo', decisionPageController.getOtherinfo);
+    app.get('/api/company/otherinfo', decisionPageController.getOtherinfo);
 
     //app.get('/api/');
     // app.get('*', function(req, res){
