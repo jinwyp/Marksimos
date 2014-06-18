@@ -251,15 +251,7 @@ exports.updateBrandDecision = function(req, res, next){
         return res.send(400, {status: 0, message: "Invalid period in session."});
     }
 
-    var jsonBrand = null;
-    try{
-        jsonBrand = JSON.parse(brand_data);
-    }catch(err){
-        logger.error(err);
-        return res.send(400, {status: 0, message: "Invalid parameter brand_data"});
-    }
-
-    var tempBrand = createBrand(jsonBrand);
+    var tempBrand = createBrand(brand_data);
 
 
     brandDecisionModel.updateBrand(seminarId, period, companyId, brandId, tempBrand)
@@ -314,15 +306,7 @@ exports.updateCompanyDecision = function(req, res, next){
         return res.send(400, {status: 0, message: "Invalid period in session."});
     }
 
-    var jsonCompanyDecision = null;
-    try{
-        jsonCompanyDecision = JSON.parse(company_data);
-    }catch(err){
-        logger.error(err);
-        return res.send(400, {status: 0, message: "Invalid parameter company_data"});
-    }
-
-    var tempCompanyDecision = createCompanyDecision(jsonCompanyDecision);
+    var tempCompanyDecision = createCompanyDecision(company_data);
 
 
     companyDecisionModel.updateCompanyDecision(seminarId, period, companyId, tempCompanyDecision)
