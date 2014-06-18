@@ -120,17 +120,18 @@
 
 ## /api/register
 ### POST
-### parameter
+### Parameters
 ####:email
 ####:password
 ### response
 
 ## /api/sku/decision
-### POST
+### Method
+PUT
 ### Parameters
-####: brand_id
-####: sku_id
-####: sku_data
+brand_id
+sku_id
+sku_data
 ### response
 失败的Response
 
@@ -141,10 +142,55 @@
 
     HTTP Status: 200, {status: 1, message: 'update success.'}
 
+## /api/sku/decision
+### Method
+POST
+### Parameters
+brand_id
+sku_name
+
+## /api/sku/decision
+### Method
+DELETE
+### Parameters
+brand_id
+sku_id
 
 ## /api/brand/decision
+### Method
+PUT
+### Parameters
+brand_id
+brand_data
+
+
+## /api/brand/decision
+### Method
+POST
+### Parameters
+brand_name
+sku_name
+
+
+## /api/brand/decision
+### Method
+DELETE
+### Parameters
+brand_id
 
 ## /api/company/decision
+### Method
+PUT
+### Parameters
+company_data
+
+## /api/company/decision
+### Method
+POST
+
+## /api/company/decision
+### Method
+DELETE
 
 ## /api/decision
 Get all decisions of all brands in one company in the last period
