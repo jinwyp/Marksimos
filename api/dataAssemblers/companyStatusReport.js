@@ -1,46 +1,50 @@
 var preGeneratedDataModel = require('../models/preGeneratedData.js');
 var Q = require('q');
 var utility = require('../utility.js');
+var consts = require('../consts.js');
 
-exports.getCompanyStatusReport = function(seminarId){
-    return Q.all([
-        preGeneratedDataModel.findOne(seminarId)
-    ])
-    .spread(function(preGeneratedData){
-        var allResults = preGeneratedData.allResults;
+exports.getCompanyStatusReport = function(allResults){
+    var result = {
+        company: {},
+        brand: {},
+        SKU: {}
+    };
 
-        var result = {
-            company: {},
-            brand: {},
-            SKU: {}
-        };
+    result.company = generateCompanyReport(allResults);
 
-
-    })
+    return result;
 }
 
 function generateCompanyReport(allResults){
-    var companyReport = [];
-
+    var allCompanyReport = [];
     allResults[0].p_Companies.forEach(function(company){
-        if(!isCompanyExist(company.c_CompanyID, companyReport)){
-            companyReport.push({
-                companyId: ''
+        if(!isCompanyExist(company.c_CompanyID, allCompanyReport)){
+            allCompanyReport.push({
+                companyId: company.c_CompanyID
             })
         }
     })
 
-    allResults.forEach(function(onePeriodResult){
-        var onePeriodCompanyReport = {};
-
-        onePeriodCompanyReport.period = onePeriodResult.period;
-
-        onePeriodCompanyReport. = ;
+    allCompanyReport.forEach(function(companyReport){
+        allResults.forEach(function(onePeriodResult){
+            for(var i=0; i<onePeriodResult.p_Companies.length; i++){
+                var companyResult = onePeriodResult.p_Companies[i];
+                if(companyResult.c_CompanyID === companyReport.companyId){
+                    if(!companyReport.marketShare){
+                        companyReport.marketShare = [];
+                    }
+                    companyReport.marketShare.push(companyResult.c_ValueSegmentShare[consts.ConsumerSegmentsMaxTotal-1]);
+                    break;
+                }
+            }
+        })
     })
 
-    function isCompanyExist(companyId, companyReport){
-        return companyReport.some(function(company){
-            return company.companyId === companyId;
+    return allCompanyReport;
+
+    function isCompanyExist(companyId, allCompanyReport){
+        return allCompanyReport.some(function(companyReport){
+            return companyReport.companyId === companyId;
         })
     }
 }

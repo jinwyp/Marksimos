@@ -13,6 +13,8 @@ var seminarModel = require('../models/seminar.js');
 var cgiapi = require('../cgiapi.js');
 var decisionAssembler = require('../dataAssemblers/decision.js');
 var preGeneratedDataModel = require('../models/preGeneratedData.js');
+var companyStatusReportAssembler = require('../dataAssemblers/companyStatusReport.js');
+var reportModel = require('../models/report.js');
 
 /**
  * Initialize game data, only certain perople can call this method
@@ -31,7 +33,8 @@ exports.init = function(req, res, next) {
     Q.all([
         removeExistedDecisions(seminarId),
         seminarModel.remove(seminarId),
-        preGeneratedDataModel.remove(seminarId)
+        preGeneratedDataModel.remove(seminarId),
+        reportModel.remove(seminarId)
     ])
     .then(function(){
         //insert empty data into mongo, so that we can update them
@@ -45,6 +48,9 @@ exports.init = function(req, res, next) {
                 allResults: [],
                 charts: [],
                 reports: []
+            }),
+            reportModel.insert(seminarId, {
+                seminarId: seminarId
             })
         ]);
     })
@@ -64,7 +70,8 @@ exports.init = function(req, res, next) {
             //save allResult data
             preGeneratedDataModel.update(seminarId, {allResults: allResults}),
             initChartData(seminarId, allResults),
-            initDecision(seminarId, allDecisions)
+            initDecision(seminarId, allDecisions),
+            initCompanyReport(seminarId, allResults)
         ]);
     })
     .then(function(){
@@ -79,6 +86,13 @@ exports.init = function(req, res, next) {
     })
     .done();
 };
+
+
+function initCompanyReport(seminarId, allResults){
+    return require('../models/report.js').update(seminarId, {
+        companyStatus: companyStatusReportAssembler.getCompanyStatusReport(allResults)
+    })
+}
 
 
 /**
