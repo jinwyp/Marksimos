@@ -129,9 +129,9 @@
 ### Method
 PUT
 ### Parameters
-brand_id
-sku_id
-sku_data
+* brand_id
+* sku_id
+* sku_data
 ### response
 失败的Response
 
@@ -146,8 +146,8 @@ sku_data
 ### Method
 POST
 ### Parameters
-brand_id
-sku_name
+* brand_id
+* sku_name
 
 ## /api/sku/decision
 ### Method
@@ -160,8 +160,8 @@ sku_id
 ### Method
 PUT
 ### Parameters
-brand_id
-brand_data
+* brand_id
+* brand_data
 
 
 ## /api/brand/decision
@@ -176,13 +176,13 @@ sku_name
 ### Method
 DELETE
 ### Parameters
-brand_id
+* brand_id
 
 ## /api/company/decision
 ### Method
 PUT
 ### Parameters
-company_data
+* company_data
 
 ## /api/company/decision
 ### Method
@@ -219,7 +219,7 @@ Get SKU information
 ### Method
 GET
 ### Parameters
-sku_id
+* sku_id
 
 
 ## url
