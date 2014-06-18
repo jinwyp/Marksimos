@@ -180,8 +180,8 @@ PUT
 POST
 
 ### Parameters
-brand_name
-sku_name
+* brand_name
+* sku_name
 
 
 ## /api/brand/decision
@@ -205,10 +205,6 @@ PUT
 ### Method
 POST
 
-## /api/company/decision
-
-### Method
-DELETE
 
 ## /api/decision
 Get all decisions of all brands in one company in the last period
@@ -238,8 +234,8 @@ GET
 no parameters
 
 
-## /api/sku_info/:sku_id
-Get SKU information
+## /api/future_projection_calculator/:sku_id
+Get future projection calculator
 
 ### Method
 GET
