@@ -209,7 +209,7 @@ app.factory('report',function($http){
 
 
     var chartFormatTool2 = function(chartHttpData) {
-        // 使用angular-nvd3 插件的数据格式
+        // 使用angular-nvd3 插件的数据格式 Stacked Multi Bar Chart
 
         chartResult.series = [];
         chartResult.data = [];
@@ -244,7 +244,6 @@ app.factory('report',function($http){
                 chartResult.data[2].values.push(oneLineData3);
 
             });
-
             return angular.copy(chartResult.data);
         }
     };
@@ -352,7 +351,7 @@ app.factory('report',function($http){
         // Chart A1
         marketShareInValue : function(){
             return $http.get(apiPath + 'chart/market_share_in_value').then(function(result){
-                console.log(result.data);
+//                console.log(result.data);
 
                 return chartFormatTool1(result.data, 2);
             }, function(err){
@@ -388,7 +387,7 @@ app.factory('report',function($http){
         // Chart A3
         inventoryReport : function(){
             return $http.get(apiPath + 'chart/inventory_report').then(function(result){
-                console.log(result.data);
+//                console.log(result.data);
 
                 return chartFormatTool2(result.data);
             });
@@ -516,7 +515,7 @@ app.factory('report',function($http){
         // Chart C2
         perceptionMap : function(){
             return $http.get(apiPath + 'chart/perception_map').then(function(result){
-                console.log(result.data);
+//                console.log(result.data);
 
                 return chartFormatTool3(result.data);
             });
