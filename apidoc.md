@@ -147,6 +147,7 @@ PUT
     HTTP Status: 200, {status: 1, message: 'update success.'}
 
 ## /api/sku/decision
+Add a SKU
 
 ### Method
 POST
@@ -156,6 +157,7 @@ POST
 * sku_name
 
 ## /api/sku/decision
+Delete a SKU
 
 ### Method
 DELETE
@@ -165,6 +167,7 @@ DELETE
 * sku_id
 
 ## /api/brand/decision
+Update a brand decision
 
 ### Method
 PUT
@@ -175,6 +178,7 @@ PUT
 
 
 ## /api/brand/decision
+Add a brand
 
 ### Method
 POST
@@ -185,6 +189,7 @@ POST
 
 
 ## /api/brand/decision
+Delete a brand
 
 ### Method
 DELETE
@@ -194,6 +199,7 @@ DELETE
 
 ## /api/company/decision
 Update a company decision
+
 ### Method
 PUT
 
