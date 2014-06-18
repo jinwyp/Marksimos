@@ -75,6 +75,23 @@ exports.findAllInCompany = function(seminarId, period, companyId){
     return deferred.promise;
 };
 
+exports.findAllInPeriod = function(seminarId, period){
+    var deferred = Q.defer();
+    BrandDecision.find({
+        seminarId: seminarId,
+        period: period
+    })
+    .sort({d_BrandID: 'asc'})
+    .exec(function(err, result){
+        if(err){
+            deferred.reject(err);
+        }else{
+            deferred.resolve(result);
+        }
+    });
+    return deferred.promise;
+}
+
 exports.findOne = function(seminarId, period, companyId, brandId){
     var deferred = Q.defer();
 

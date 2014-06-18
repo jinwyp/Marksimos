@@ -11,6 +11,7 @@ var brandDecisionModel = require('../models/brandDecision.js');
 var SKUDecisionModel = require('../models/SKUDecision.js');
 var seminarModel = require('../models/seminar.js');
 var cgiapi = require('../cgiapi.js');
+var decisionAssembler = require('../dataAssemblers/decision.js');
 
 /**
  * Initialize game data, only certain perople can call this method
@@ -58,6 +59,10 @@ exports.init = function(req, res, next) {
             initChartData(seminarId, allResults),
             initDecision(seminarId, allDecisions)
         ]);
+    })
+    .then(function(){
+        //when init is called, current period is 1
+        return decisionAssembler.insertEmptyDecision(seminarId, 1);
     })
     .then(function(){
         res.send('initialize success');

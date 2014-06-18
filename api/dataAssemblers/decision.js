@@ -37,7 +37,9 @@ exports.getDecision = function(seminarId, period, companyId){
  *
  */
 exports.insertEmptyDecision = function(seminarId, period){
-
+    insertEmptyCompanyDecision(seminarId, period);
+    insertEmptyBrandDecision(seminarId, period);
+    insertEmptySKUDecision(seminarId, period);
 }
 
 /**
@@ -45,30 +47,68 @@ exports.insertEmptyDecision = function(seminarId, period){
  */
 function insertEmptyCompanyDecision(seminarId, period){
     //find all company decisions in the last period
-    companyDecisionModel.findAllInPeriod(seminarId, period - 1)
+    return companyDecisionModel.findAllInPeriod(seminarId, period - 1)
     .then(function(allCompanyDecisions){
         var p = Q();
         allCompanyDecisions.forEach(function(companyDecision){
-            companyDecisionModel.save({
-                seminarId: seminarId,
-                period: period,
-                d_CID: companyDecision.d_CID,   
-                d_CompanyName: companyDecision.d_CompanyName
-            })
+            p = p.then(function(){
+                return companyDecisionModel.save({
+                    seminarId: seminarId,
+                    period: period,
+                    d_CID: companyDecision.d_CID,   
+                    d_CompanyName: companyDecision.d_CompanyName
+                });
+            });
         })
+        return p;
     })
 }
 
 /**
  * Insert empty brand decisions for all brands in the next period
  */
-function insertEmptyBrandDecision(){
-
+function insertEmptyBrandDecision(seminarId, period){
+    return brandDecisionModel.findAllInPeriod(seminarId, period - 1)
+    .then(function(allBrandDecisions){
+        var p = Q();
+        allBrandDecisions.forEach(function(brandDecision){
+            p = p.then(function(){
+                return brandDecisionModel.save({
+                    seminarId: seminarId,
+                    period: period,
+                    d_CID: brandDecision.d_CID,  
+                    d_BrandID: brandDecision.d_BrandID, 
+                    d_BrandName: brandDecision.d_BrandName
+                })
+            })
+        })
+        return p;
+    })
 }
 
 /**
  * Insert empty SKU decisions for all SKUs in the next period
  */
-function insertEmptySKUDecision(){
-
+function insertEmptySKUDecision(seminarId, period){
+    return SKUDecisionModel.findAllInPeriod(seminarId, period-1)
+    .then(function(allSKUDecisions){
+        var p = Q();
+        allSKUDecisions.forEach(function(SKUDecision){
+            p = p.then(function(){
+                return SKUDecisionModel.save({
+                    seminarId: seminarId,
+                    period: period,
+                    d_CID: SKUDecision.d_CID,  
+                    d_BrandID: SKUDecision.d_BrandID, 
+                    d_SKUID: SKUDecision.d_SKUID,
+                    d_SKUName: SKUDecision.d_SKUName
+                })
+            })
+        })
+        return p;
+    })
 }
+
+
+
+
