@@ -12,12 +12,11 @@ marksimosapp.controller('chartController', function AppCtrl ($scope,  $timeout, 
 
     $scope.css = {
         menu : 'Report',
-        chartMenu : 'C2',
+        chartMenu : 'A3',
         additionalBudget : true,
         currentBrandId : 0,
         investmentInfo : false
     };
-
 
     $scope.dataChartSimple = {
         series: ['A', 'B', 'C'],
@@ -42,6 +41,7 @@ marksimosapp.controller('chartController', function AppCtrl ($scope,  $timeout, 
             {id:5, name:'5 Ultimate'},
             {id:6, name:'6 Pragmatic'}
         ],
+
         chartA11MarketShareInValue : {
             type : report.getChartType1(),
             config : report.getChartConfig1(),
@@ -62,7 +62,6 @@ marksimosapp.controller('chartController', function AppCtrl ($scope,  $timeout, 
             config : report.getChartConfig1(),
             data : $scope.dataChartSimple
         },
-
         chartA31InventoryReport : {
             data : [],
             title : 'Inventory Report',
@@ -89,7 +88,6 @@ marksimosapp.controller('chartController', function AppCtrl ($scope,  $timeout, 
             config : report.getChartConfig1(),
             data : $scope.dataChartSimple
         },
-
         chartB41MarketSalesValue : {
             type : report.getChartType1(),
             config : report.getChartConfig1(),
@@ -141,15 +139,12 @@ marksimosapp.controller('chartController', function AppCtrl ($scope,  $timeout, 
             config : report.getChartConfig2(),
             data : $scope.dataChartSimple
         },
-
         chartC21PerceptionMap : {
             data : [],
             dataChart : [],
             title : 'Perception Maps',
-            color : ['#39b54a', '#ff983d', '#0087f0', '#8781bd', '#f26c4f', '#bd8cbf']
+            color : ['#39b54a', '#ff983d', '#0087f0', '#8781bd', '#f26c4f', '#bd8cbf', '#000000']
         },
-
-
         chartC41GrowthRateInVolume : {
             type : report.getChartType1(),
             config : report.getChartConfig1(),
@@ -180,13 +175,20 @@ marksimosapp.controller('chartController', function AppCtrl ($scope,  $timeout, 
         };
     };
 
+    $scope.A31ToolTipContent = function(){
+        return function(key, x, y, e, graph) {
+            return  '<h5>' + y + '</h5>';
+        };
+    };
+
+
     $scope.C31shapeFunction = function(){
         return function(d) {
             return d.shape;
         };
     };
 
-    $scope.C31shapeTooltipFunction = function(){
+    $scope.C31TooltipContent = function(){
         return function(key, x, y, e, graph) {
 
             var iconColor = $scope.data.chartC21PerceptionMap.color[e.seriesIndex];
@@ -268,53 +270,19 @@ marksimosapp.controller('chartController', function AppCtrl ($scope,  $timeout, 
                     '</span><span class="glyphicon ' + arrow6 + ' "></span></li>' +
                     '<li class="list-group-item perception_list perception_list_bg"><span class="perception_info">Image Perception Change </span><span class="perception_info_number">' + Math.round(e.point.tooltips[7].value * 100) / 100 +
                     '</span><span class="glyphicon ' + arrow7 + ' "></span></li>' +
-                    '</ul></div>'
+                    '</ul></div>' ;
 
             }else {
-                htmlResult = '<h5><span class="perception_logo" style="background-color:' + iconColor + '"></span>' + key + ' ' + e.point.name + '</h5>'
+                htmlResult = '<h5><span class="perception_logo" style="background-color:' + iconColor + '"></span>' + key + ' ' + e.point.name + '</h5>';
             }
 
 
-            return htmlResult
-        }
-    };
-
-
-
-    company.getCompany().then(function(data, status, headers, config){
-        console.log(data);
-        $scope.data.currentCompany = data;
-        $scope.css.currentBrandId = $scope.data.currentCompany.d_BrandsDecisions[0]._id;
-        $scope.data.currentBrand = $scope.data.currentCompany.d_BrandsDecisions[0];
-
-    });
-
-    $scope.clickBrand = function(brand){
-        $scope.css.currentBrandId = brand._id;
-        $scope.data.currentBrand = brand;
-    };
-
-    $scope.leaveSkuInput = function(sku, fieldname, fielddata, week, weekindex){
-        $scope.data.updateSku = {
-            brand_id : sku.d_BrandID,
-            sku_id : sku.d_SKUID,
-            sku_data : {}
+            return htmlResult;
         };
-        $scope.data.updateSku.sku_data[fieldname] = fielddata;
-        if(!angular.isUndefined(weekindex)){
-            // 针对d_PromotionalEpisodes 字段需要特殊处理
-            $scope.data.updateSku.sku_data[fieldname][weekindex] = week;
-        }
-        console.log($scope.data.updateSku, sku);
-
-        company.updateSku($scope.data.updateSku).success(function(data, status, headers, config){
-            console.log(data);
-        });
     };
 
 
-
-    // Chart A1
+    /********************  Chart A1  ********************/
     $scope.data.chartA11MarketShareInValue.config.title = 'Market Share in Value (%)';
     $scope.data.chartA12MarketShareInVolume.config.title = 'Market Share in Volume (%)';
     $scope.data.chartA13MindSpaceShare.config.title = 'Mind Space Share (%)';
@@ -338,14 +306,15 @@ marksimosapp.controller('chartController', function AppCtrl ($scope,  $timeout, 
     });
 
 
-    // Chart A3
+    /********************  Chart A3  ********************/
     report.inventoryReport().then(function(data, status, headers, config){
         $scope.data.chartA31InventoryReport.data = data;
 //        console.log($scope.data.chartA31InventoryReport.data);
     });
 
 
-    // Chart B3
+
+    /********************  Chart B3  ********************/
     $scope.data.chartB31TotalInvestment.config.title = 'Total Investment (mln RMB)';
     $scope.data.chartB32NetProfitByCompanies.config.title = 'Net Profit By Companies (mln RMB)';
     $scope.data.chartB33ReturnOnInvestment.config.title = 'Return On Investment (%)';
@@ -369,7 +338,7 @@ marksimosapp.controller('chartController', function AppCtrl ($scope,  $timeout, 
     });
 
 
-    // Chart B4
+    /********************  Chart B4  ********************/
     $scope.data.chartB41MarketSalesValue.config.title = 'Market Sales Value (mln RMB)';
     $scope.data.chartB42MarketSalesVolume.config.title = 'Market Sales Volume (std pack)';
     $scope.data.chartB43TotalInventoryAtFactory.config.title = 'Total Inventory At Factory (std pack)';
@@ -393,7 +362,7 @@ marksimosapp.controller('chartController', function AppCtrl ($scope,  $timeout, 
     });
 
 
-    // Chart C1
+    /********************  Chart C1  ********************/
     $scope.data.chartC11SegmentsLeadersByValuePriceSensitive.config.title = 'Price Sensitive (%)';
     $scope.data.chartC12SegmentsLeadersByValuePretenders.config.title = 'Pretenders (%)';
     $scope.data.chartC13SegmentsLeadersByValueModerate.config.title = 'Moderate (%)';
@@ -427,9 +396,9 @@ marksimosapp.controller('chartController', function AppCtrl ($scope,  $timeout, 
     });
 
 
-    // Chart C2
+    /********************  Chart C2  ********************/
     report.perceptionMap().then(function(data, status, headers, config){
-        console.log(data);
+//        console.log(data);
         $scope.data.chartC21PerceptionMap.data = data;
         $scope.data.chartC21PerceptionMap.dataChart = data.dataSKU;
     });
@@ -442,7 +411,8 @@ marksimosapp.controller('chartController', function AppCtrl ($scope,  $timeout, 
         }
     };
 
-    // Chart C4
+
+    /********************  Chart C4  ********************/
     $scope.data.chartC41GrowthRateInVolume.config.title = 'Growth Rate In Volume (Period 3 = 100)';
     $scope.data.chartC42GrowthRateInValue.config.title = 'Growth Rate In Value (Period 3 = 100)';
     $scope.data.chartC43NetMarketPrice.config.title = 'Net Market Price (Period 3 = 100)';
@@ -481,6 +451,40 @@ marksimosapp.controller('chartController', function AppCtrl ($scope,  $timeout, 
         $scope.css.menu = menu;
     };
 
+
+
+
+    /********************  获取Decision信息  ********************/
+    company.getCompany().then(function(data, status, headers, config){
+        console.log(data);
+        $scope.data.currentCompany = data;
+        $scope.css.currentBrandId = $scope.data.currentCompany.d_BrandsDecisions[0]._id;
+        $scope.data.currentBrand = $scope.data.currentCompany.d_BrandsDecisions[0];
+
+    });
+
+    $scope.clickBrand = function(brand){
+        $scope.css.currentBrandId = brand._id;
+        $scope.data.currentBrand = brand;
+    };
+
+    $scope.leaveSkuInput = function(sku, fieldname, fielddata, week, weekindex){
+        $scope.data.updateSku = {
+            brand_id : sku.d_BrandID,
+            sku_id : sku.d_SKUID,
+            sku_data : {}
+        };
+        $scope.data.updateSku.sku_data[fieldname] = fielddata;
+        if(!angular.isUndefined(weekindex)){
+            // 针对d_PromotionalEpisodes 字段需要特殊处理
+            $scope.data.updateSku.sku_data[fieldname][weekindex] = week;
+        }
+        console.log($scope.data.updateSku, sku);
+
+        company.updateSku($scope.data.updateSku).success(function(data, status, headers, config){
+            console.log(data);
+        });
+    };
 
 
 });
