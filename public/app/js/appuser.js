@@ -177,8 +177,8 @@ marksimosapp.controller('chartController', function AppCtrl ($scope,  $timeout, 
 
     $scope.A31ToolTipContent = function(){
         return function(key, x, y, e, graph) {
-            return  '<h5>' + y + '</h5>'
-        }
+            return  '<h5>' + y + '</h5>';
+        };
     };
 
 
@@ -270,17 +270,16 @@ marksimosapp.controller('chartController', function AppCtrl ($scope,  $timeout, 
                     '</span><span class="glyphicon ' + arrow6 + ' "></span></li>' +
                     '<li class="list-group-item perception_list perception_list_bg"><span class="perception_info">Image Perception Change </span><span class="perception_info_number">' + Math.round(e.point.tooltips[7].value * 100) / 100 +
                     '</span><span class="glyphicon ' + arrow7 + ' "></span></li>' +
-                    '</ul></div>'
+                    '</ul></div>' ;
 
             }else {
-                htmlResult = '<h5><span class="perception_logo" style="background-color:' + iconColor + '"></span>' + key + ' ' + e.point.name + '</h5>'
+                htmlResult = '<h5><span class="perception_logo" style="background-color:' + iconColor + '"></span>' + key + ' ' + e.point.name + '</h5>';
             }
 
 
-            return htmlResult
-        }
+            return htmlResult;
+        };
     };
-
 
 
     /********************  Chart A1  ********************/
@@ -312,6 +311,7 @@ marksimosapp.controller('chartController', function AppCtrl ($scope,  $timeout, 
         $scope.data.chartA31InventoryReport.data = data;
 //        console.log($scope.data.chartA31InventoryReport.data);
     });
+
 
 
     /********************  Chart B3  ********************/
