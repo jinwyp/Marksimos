@@ -4,13 +4,15 @@ var Q = require('q');
 var utility = require('../utility.js');
 var consts = require('../consts.js');
 var gameParameters = require('../gameParameters.js').parameters;
+var preGeneratedDataModel = require('../models/preGeneratedData.js');
 
 exports.getSpendingDetails = function(seminarId, period, companyId){
     return Q.all([
         decisionAssembler.getDecision(seminarId, period, companyId),
-        seminarModel.findOne(seminarId)
+        seminarModel.findOne(seminarId),
+        preGeneratedDataModel.findOne(seminarId)
     ])
-    .spread(function(decision, seminar){
+    .spread(function(decision, seminar, preGeneratedData){
         var brandData = [];
         var companyData = {}
 
@@ -71,7 +73,7 @@ exports.getSpendingDetails = function(seminarId, period, companyId){
         companyData.totalInvestment = (total.salesForce + total.consumerCommunication + total.consumerPromotion
         + total.tradeExpenses + total.estimatedAdditionalTradeMarginCost + total.estimatedWholesaleBonusCost).toFixed(2);
 
-        var companyDataInAllResults = utility.findCompany(seminar.allResults[seminar.allResults.length-1], companyId)
+        var companyDataInAllResults = utility.findCompany(preGeneratedData.allResults[preGeneratedData.allResults.length-1], companyId)
         
         //average budget per period
         companyData.averageBudgetPerPeriod = (companyDataInAllResults.c_TotalInvestmentBudget / seminar.simulationSpan).toFixed(2);

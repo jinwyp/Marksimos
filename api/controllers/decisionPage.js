@@ -7,6 +7,7 @@ var logger = require('../../logger.js');
 var seminarModel = require('../models/seminar.js');
 var utility = require('../utility.js');
 var gameParameters = require('../gameParameters.js').parameters;
+var preGeneratedDataModel = require('../models/preGeneratedData.js');
 
 
 exports.getDecision = function(req, res, next){
@@ -88,11 +89,11 @@ exports.getOtherinfo = function(req, res, next){
 
     Q.all([
         spendingDetailsAssembler.getSpendingDetails(seminarId, period, companyId),
-        seminarModel.findOne(seminarId)
+        preGeneratedDataModel.findOne(seminarId)
     ])
-    .spread(function(spendingDetails, seminar){
+    .spread(function(spendingDetails, preGeneratedData){
         var totalInvestment = spendingDetails.companyData.totalInvestment;
-        var lastPeriodResult = seminar.allResults[seminar.allResults.length-1];
+        var lastPeriodResult = preGeneratedData.allResults[preGeneratedData.allResults.length-1];
         var companyResult = utility.findCompany(lastPeriodResult, companyId);
 
         var totalAvailableBudget = parseFloat(

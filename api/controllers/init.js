@@ -12,6 +12,7 @@ var SKUDecisionModel = require('../models/SKUDecision.js');
 var seminarModel = require('../models/seminar.js');
 var cgiapi = require('../cgiapi.js');
 var decisionAssembler = require('../dataAssemblers/decision.js');
+var preGeneratedDataModel = require('../models/preGeneratedData.js');
 
 /**
  * Initialize game data, only certain perople can call this method
@@ -29,17 +30,23 @@ exports.init = function(req, res, next) {
 
     Q.all([
         removeExistedDecisions(seminarId),
-        seminarModel.remove(seminarId)
+        seminarModel.remove(seminarId),
+        preGeneratedDataModel.remove(seminarId)
     ])
     .then(function(){
-        return seminarModel.insert(seminarId, {
-            seminarId: seminarId,
-            simulationSpan: simulationSpan,
-            allResults: [],
-            productPortfolio: [],
-            charts: [],
-            reports: []
-        });
+        //insert empty data into mongo, so that we can update them
+        return Q.all([
+            seminarModel.insert(seminarId, {
+                seminarId: seminarId,
+                simulationSpan: simulationSpan
+            }),
+            preGeneratedDataModel.insert(seminarId, {
+                seminarId: seminarId,
+                allResults: [],
+                charts: [],
+                reports: []
+            })
+        ]);
     })
     .then(function(){
         return Q.all([
@@ -55,7 +62,7 @@ exports.init = function(req, res, next) {
 
         return Q.all([
             //save allResult data
-            seminarModel.update(seminarId, {allResults: allResults}),
+            preGeneratedDataModel.update(seminarId, {allResults: allResults}),
             initChartData(seminarId, allResults),
             initDecision(seminarId, allDecisions)
         ]);
@@ -69,7 +76,8 @@ exports.init = function(req, res, next) {
     })
     .fail(function(err){
         next(err);
-    }).done();
+    })
+    .done();
 };
 
 
@@ -245,7 +253,7 @@ function initChartData(seminarId, allResults){
             exogenous: exogenous
         });
 
-        return seminarModel.update(seminarId, {charts: chartData})
+        return preGeneratedDataModel.update(seminarId, {charts: chartData})
     });
 }
 

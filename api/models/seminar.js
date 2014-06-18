@@ -10,10 +10,6 @@ var seminarSchema = new Schema({
     teams: [],
     facilitatorId: String,
     isFinished: Boolean, //if this seminar is finished
-
-    allResults: [],
-    charts: [],
-    reports: []
 });
 
 var teamSchema = new Schema({
@@ -55,7 +51,7 @@ exports.insert = function(seminarId, seminar){
         if(err){
             deferred.reject(err);
         }else{
-            deferred.resolve(null);
+            deferred.resolve(undefined);
         }
     });
     return deferred.promise;

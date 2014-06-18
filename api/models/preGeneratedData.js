@@ -13,6 +13,34 @@ var preGeneratedDataSchema = new Schema({
 
 var PreGeneratedData = mongoose.model('PreGeneratedData', preGeneratedDataSchema);
 
+exports.insert = function(seminarId, preGeneratedData){
+    var deferred = Q.defer();
+    PreGeneratedData.create(preGeneratedData, function(err){
+        if(err){
+            deferred.reject(err);
+        }else{
+            deferred.resolve(undefined);
+        }
+    });
+    return deferred.promise;
+}
+
+exports.remove = function(seminarId){
+    var deferred = Q.defer();
+
+    PreGeneratedData.remove({
+        seminarId: seminarId
+    },
+    function(err){
+        if(err){
+            return deferred.reject(err);
+        }
+        return deferred.resolve(undefined);
+    })
+
+    return deferred.promise;
+}
+
 exports.findOne = function(seminarId){
     var deferred = Q.defer();
 

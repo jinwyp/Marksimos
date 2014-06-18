@@ -5,14 +5,15 @@ var brandDecisionModel = require('../models/brandDecision.js');
 var utility = require('../utility.js');
 var consts = require('../consts.js');
 var gameParameters = require('../gameParameters.js').parameters;
+var preGeneratedDataModel = require('../models/preGeneratedData.js');
 
 exports.getSKUInfo = function(seminarId, period, companyId, SKUID){
     return Q.all([
-        seminarModel.findOne(seminarId),
+        preGeneratedDataModel.findOne(seminarId),
         SKUDecisionModel.findOne(seminarId, period, companyId, SKUID.slice(0, 2), SKUID),
         brandDecisionModel.findOne(seminarId, period, companyId, SKUID.slice(0, 2))
-    ]).spread(function(seminar, decision, brandDecision){
-        var allResults = seminar.allResults;
+    ]).spread(function(preGeneratedData, decision, brandDecision){
+        var allResults = preGeneratedData.allResults;
 
         var result = {
             currentPeriodInfo: {
