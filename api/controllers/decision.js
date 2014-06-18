@@ -223,6 +223,15 @@ exports.updateSKUDecision = function(req, res, next){
 };
 
 exports.updateBrandDecision = function(req, res, next){
+    /*
+    application/json; charset=utf-8
+    {
+      "brand_id": 12,
+      "brand_data": {
+        "d_SalesForce": 10
+      }
+    }
+    */
     var brandId = req.body.brand_id;
     var brand_data = req.body.brand_data;
 
