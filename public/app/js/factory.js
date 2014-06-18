@@ -41,7 +41,7 @@ app.factory('company',function($http){
         },
         getCompanyOtherInfo : function(){
             return $http.get(apiPath + 'company/otherinfo').then(function(result){
-                console.log(result.data);
+//                console.log(result.data);
 
                 return result.data;
             }, function(err){
