@@ -246,9 +246,9 @@ function initChartData(seminarId, allResults){
 
 function removeExistedDecisions(seminarId){
     return Q.all([
-            companyDecisionModel.remove(seminarId),
-            brandDecisionModel.remove(seminarId),
-            SKUDecisionModel.remove(seminarId)
+            companyDecisionModel.removeAll(seminarId),
+            brandDecisionModel.removeAll(seminarId),
+            SKUDecisionModel.removeAll(seminarId)
         ]);
 }
 

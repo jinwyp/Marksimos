@@ -32,7 +32,6 @@ var tOneSKUDecisionSchema = new Schema({
 var SKUDecision = mongoose.model('SKUDecision', tOneSKUDecisionSchema);
 
 exports.remove =  function(seminarId, period, companyId, brandId, SKUID){
-    console.log(seminarId, period, companyId, brandId, SKUID);
     var deferred = Q.defer();
     SKUDecision.remove({
         seminarId: seminarId,
