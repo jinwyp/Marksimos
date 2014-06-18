@@ -854,13 +854,57 @@
                 </div>
             </div>
 
-
         </div>
 
-        <div class="col-md-7">
+        <div class="col-md-7 decision_box decision_right_box">
+
+            <div class="row">
+                <div class="col-md-12">
+                    <h4 class="text-center">MAKE DECISIONS</h4>
+                    <h6 class="text-center">Market Share + Profit</h6>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-12">
 
 
+                <ul class="nav nav-pills">
+                    <li ng-class="{'active': css.currentDecisionRightMenu==1}"  ng-click="css.currentDecisionRightMenu=1"> <a href="" >Future Projection Calculator</a> </li>
+                    <li ng-class="{'active': css.currentDecisionRightMenu==2}"  ng-click="css.currentDecisionRightMenu=2"> <a href="" >Product Portfolio</a> </li>
+                    <li ng-class="{'active': css.currentDecisionRightMenu==3}"  ng-click="css.currentDecisionRightMenu=3"> <a href="" >Spending Details</a> </li>
+                    <!--<li ng-class="{'active': css.currentDecisionRightMenu==4}"  ng-click="css.currentDecisionRightMenu=4"> <a href="" >My Favorite</a> </li>-->
+                </ul>
 
+
+                <div class="row brand_box right_menu">
+                    <div class="col-md-12">
+                        <h5>New Product Development Investment  <span class="glyphicon glyphicon-info-sign" ng-mouseenter="css.investmentInfo='true'" ></span></h5>
+                        <form class="form-horizontal investment_form" role="form">
+                            <div class="form-group">
+                                <label class="col-sm-8 control-label text-left" for="brandInvestmentProductionEfficiency">Investment in Production Efficiency ($mln)</label>
+                                <div class="col-sm-3">
+                                    <input type="text" class="form-control" id="brandInvestmentProductionEfficiency" placeholder="">
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="col-sm-8 control-label text-left"  for="brandInvestmentProcessingTechnology">Investment in Processing Technology ($mln)</label>
+                                <div class="col-sm-3">
+                                    <input type="text" class="form-control" id="brandInvestmentProcessingTechnology" placeholder="">
+                                </div>
+                            </div>
+
+
+                        </form>
+
+
+                    </div>
+                </div>
+
+
+                </div>
+            </div>
 
         </div>
     </div>

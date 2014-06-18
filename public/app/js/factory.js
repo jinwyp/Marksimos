@@ -22,6 +22,9 @@ app.factory('currentUser',function(){
     return factory;
 });
 
+
+
+
 app.factory('company',function($http){
 
     var apiPath = '/api/';
@@ -36,6 +39,13 @@ app.factory('company',function($http){
         },
         updateSku : function(postdata){
             return $http.post(apiPath + 'sku/decision/', postdata);
+        },
+        getCompanyOtherInfo : function(){
+            return $http.get(apiPath + 'decision').then(function(result){
+//                console.log(result.data);
+
+                return result.data;
+            });
         }
     };
 
