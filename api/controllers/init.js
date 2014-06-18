@@ -87,13 +87,17 @@ exports.init = function(req, res, next) {
  *
  */
 function initDecision(seminarId, allDecisions){
+    var p = Q();
     allDecisions.forEach(function(decision){
-        return Q.all([
-            initCompanyDecision(decision, seminarId, decision.period),
-            initBrandDecision(decision, seminarId, decision.period),
-            initSKUDecision(decision, seminarId, decision.period)
-        ])
+        p = p.then(function(){
+            return Q.all([
+                initCompanyDecision(decision, seminarId, decision.period),
+                initBrandDecision(decision, seminarId, decision.period),
+                initSKUDecision(decision, seminarId, decision.period)
+            ])
+        })
     })
+    return p;
 }
 
 function initCompanyDecision(decision, seminarId, period){
@@ -120,8 +124,8 @@ function initBrandDecision(decision, seminarId, period){
 
 function initSKUDecision(decision, seminarId, period){
     var SKUDecisions = getSKUDecisions(decision);
-
     var d = Q();
+
     SKUDecisions.forEach(function(SKUDecision){
         SKUDecision.seminarId = seminarId;
         SKUDecision.period = period;

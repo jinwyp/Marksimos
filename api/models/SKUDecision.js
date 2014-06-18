@@ -12,14 +12,14 @@ var tOneSKUDecisionSchema = new Schema({
     d_SKUName: String,
     d_Advertising: {type: Number, default: 0}, //consumer communication
     d_AdditionalTradeMargin: {type: Number, default: 0},
-    d_FactoryPrice: [Number],
+    d_FactoryPrice: {type: [Number], default: [0,0,0]},
     d_ConsumerPrice: {type: Number, default: 0},
     d_RepriceFactoryStocks: {type: Boolean, default: 0},
     d_IngredientsQuality: {type: Number, default: 0},
     d_PackSize: {type: Number, default: 0},
     d_ProductionVolume: {type: Number, default: 0}, 
     d_PromotionalBudget: {type: Number, default: 0}, //consumer promotions
-    d_PromotionalEpisodes: [{type: Number, default: 0}], //consumer promotions schedule
+    d_PromotionalEpisodes: {type: [Boolean], default: [false, false,false,false,false,false,false,false,false,false,false,false,false]}, //consumer promotions schedule
     d_TargetConsumerSegment: {type: Number, default: 0},
     d_Technology: {type: Number, default: 0},
     d_ToDrop: {type: Boolean, default: 0},
@@ -79,12 +79,15 @@ exports.removeAllInBrand = function(seminarId, period, companyId){
 
 exports.save = function(decision){
     var deferred = Q.defer();
-    var decision = new SKUDecision(decision);
-    decision.save(function(err){
+    var d = new SKUDecision(decision);
+
+    d.save(function(err, result, numAffected){
         if(err){
             deferred.reject(err);
+        }else if(numAffected!==1){
+            deferred.reject(new Error("no result found in db"))
         }else{
-            deferred.resolve(null);
+            deferred.resolve(undefined);
         }
     });
     return deferred.promise;

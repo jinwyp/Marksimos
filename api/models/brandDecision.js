@@ -10,7 +10,7 @@ var tOneBrandDecisionSchema = new Schema({
     d_BrandID       : Number,
     d_BrandName     : String,
     d_SalesForce    : {type: Number, default: 0},
-    d_SKUsDecisions : [{type: Number, default: 0}]  //Array of d_SKUID
+    d_SKUsDecisions : [Number]  //Array of d_SKUID
 });
 
 var BrandDecision = mongoose.model('BrandDecision', tOneBrandDecisionSchema);
