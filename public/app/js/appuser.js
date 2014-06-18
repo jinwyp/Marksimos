@@ -31,6 +31,7 @@ marksimosapp.controller('chartController', function AppCtrl ($scope,  $timeout, 
 
     $scope.data = {
         currentCompany : {},
+        currentCompanyOtherInfo : {},
         currentBrand : {},
         updateSku : {},
         userSegment : [
@@ -456,10 +457,15 @@ marksimosapp.controller('chartController', function AppCtrl ($scope,  $timeout, 
 
     /********************  获取Decision信息  ********************/
     company.getCompany().then(function(data, status, headers, config){
-        console.log(data);
+//        console.log(data);
         $scope.data.currentCompany = data;
         $scope.css.currentBrandId = $scope.data.currentCompany.d_BrandsDecisions[0]._id;
         $scope.data.currentBrand = $scope.data.currentCompany.d_BrandsDecisions[0];
+    });
+
+    company.getCompanyOtherInfo().then(function(data, status, headers, config){
+        console.log(data);
+        $scope.data.currentCompanyOtherInfo = data;
 
     });
 

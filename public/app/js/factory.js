@@ -31,22 +31,28 @@ app.factory('company',function($http){
 
     var factory = {
         getCompany : function(){
-            return $http.get(apiPath + 'decision').then(function(result){
+            return $http.get(apiPath + 'company').then(function(result){
 //                console.log(result.data);
 
                 return result.data;
+            }, function(err){
+                console.log(err);
             });
-        },
-        updateSku : function(postdata){
-            return $http.post(apiPath + 'sku/decision/', postdata);
         },
         getCompanyOtherInfo : function(){
-            return $http.get(apiPath + 'decision').then(function(result){
-//                console.log(result.data);
+            return $http.get(apiPath + 'company/otherinfo').then(function(result){
+                console.log(result.data);
 
                 return result.data;
+            }, function(err){
+                console.log(err);
             });
+        },
+
+        updateSku : function(postdata){
+            return $http.post(apiPath + 'sku/decision/', postdata);
         }
+
     };
 
 
