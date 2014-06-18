@@ -161,8 +161,8 @@ POST
 DELETE
 
 ### Parameters
-brand_id
-sku_id
+* brand_id
+* sku_id
 
 ## /api/brand/decision
 
