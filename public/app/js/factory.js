@@ -48,6 +48,34 @@ app.factory('company',function($http){
                 console.log(err);
             });
         },
+        getCompanyFutureProjectionCalculator : function(id){
+            return $http.get(apiPath + 'future_projection_calculator/' + id).then(function(result){
+                console.log(result.data);
+
+                return result.data;
+            }, function(err){
+                console.log(err);
+            });
+        },
+        getCompanyProductPortfolio : function(){
+            return $http.get(apiPath + 'product_portfolio').then(function(result){
+                console.log(result.data);
+
+                return result.data;
+            }, function(err){
+                console.log(err);
+            });
+        },
+        getCompanySpendingDetails : function(){
+            return $http.get(apiPath + 'spending_details').then(function(result){
+                console.log(result.data);
+
+                return result.data;
+            }, function(err){
+                console.log(err);
+            });
+        },
+
 
         updateSku : function(postdata){
             return $http.post(apiPath + 'sku/decision/', postdata);

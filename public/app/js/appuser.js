@@ -32,8 +32,11 @@ marksimosapp.controller('chartController', function AppCtrl ($scope,  $timeout, 
     $scope.data = {
         currentCompany : {},
         currentCompanyOtherInfo : {},
+        currentCompanyProductPortfolio : {},
+        currentCompanySpendingDetails : {},
+        currentCompanyFutureProjectionCalculator : [],
         currentBrand : {},
-        updateSku : {},
+        currentModifiedSku : {},
         userSegment : [
             {id:1, name:'1 Price Sensitive'},
             {id:2, name:'2 Pretenders'},
@@ -461,13 +464,35 @@ marksimosapp.controller('chartController', function AppCtrl ($scope,  $timeout, 
         $scope.data.currentCompany = data;
         $scope.css.currentBrandId = $scope.data.currentCompany.d_BrandsDecisions[0]._id;
         $scope.data.currentBrand = $scope.data.currentCompany.d_BrandsDecisions[0];
+
+        angular.forEach($scope.data.currentBrand.d_SKUsDecisions, function(value, key){
+            company.getCompanyFutureProjectionCalculator(value.d_SKUID).then(function(data, status, headers, config){
+                console.log(data);
+                $scope.data.currentCompanyFutureProjectionCalculator.push(data);
+
+            });
+        });
+
+
     });
 
     company.getCompanyOtherInfo().then(function(data, status, headers, config){
         console.log(data);
         $scope.data.currentCompanyOtherInfo = data;
-
     });
+
+
+
+    company.getCompanyProductPortfolio().then(function(data, status, headers, config){
+        console.log(data);
+        $scope.data.currentCompanyOtherInfo = data;
+    });
+
+    company.getCompanySpendingDetails().then(function(data, status, headers, config){
+        console.log(data);
+        $scope.data.currentCompanyOtherInfo = data;
+    });
+
 
     $scope.clickBrand = function(brand){
         $scope.css.currentBrandId = brand._id;
@@ -475,19 +500,19 @@ marksimosapp.controller('chartController', function AppCtrl ($scope,  $timeout, 
     };
 
     $scope.leaveSkuInput = function(sku, fieldname, fielddata, week, weekindex){
-        $scope.data.updateSku = {
+        $scope.data.currentModifiedSku = {
             brand_id : sku.d_BrandID,
             sku_id : sku.d_SKUID,
             sku_data : {}
         };
-        $scope.data.updateSku.sku_data[fieldname] = fielddata;
+        $scope.data.currentModifiedSku.sku_data[fieldname] = fielddata;
         if(!angular.isUndefined(weekindex)){
             // 针对d_PromotionalEpisodes 字段需要特殊处理
-            $scope.data.updateSku.sku_data[fieldname][weekindex] = week;
+            $scope.data.currentModifiedSku.sku_data[fieldname][weekindex] = week;
         }
-        console.log($scope.data.updateSku, sku);
+        console.log($scope.data.currentModifiedSku, sku);
 
-        company.updateSku($scope.data.updateSku).success(function(data, status, headers, config){
+        company.updateSku($scope.data.currentModifiedSku).success(function(data, status, headers, config){
             console.log(data);
         });
     };
