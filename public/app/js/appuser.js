@@ -11,11 +11,11 @@ var marksimosapp = angular.module('marksimos', ['angularCharts', 'nvd3ChartDirec
 marksimosapp.controller('chartController', function AppCtrl ($scope,  $timeout, $http, report, company) {
 
     $scope.css = {
-        menu : 'Report',
+        menu : 'Decision',
         chartMenu : 'A3',
         additionalBudget : true,
         currentBrandId : 0,
-        investmentInfo : false
+        currentDecisionRightMenu : 0
     };
 
     $scope.dataChartSimple = {
