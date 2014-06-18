@@ -477,20 +477,34 @@ marksimosapp.controller('chartController', function AppCtrl ($scope,  $timeout, 
     });
 
     company.getCompanyOtherInfo().then(function(data, status, headers, config){
-        console.log(data);
-        $scope.data.currentCompanyOtherInfo = data;
+        $scope.data.currentCompanyOtherInfo = {
+            totalAvailableBudget : data.totalAvailableBudget * 100,
+            totalAvailableBudgetCSS : data.totalAvailableBudget * 100 + '%',
+            normalCapacity : data.normalCapacity * 100,
+            normalCapacityCSS : data.normalCapacity * 100 + '%',
+            overtimeCapacity : data.overtimeCapacity * 100,
+            overtimeCapacityCSS : data.overtimeCapacity * 100 + '%'
+        }
+
+
+
+
+
+
+        console.log($scope.data.currentCompanyOtherInfo);
+
     });
 
 
 
     company.getCompanyProductPortfolio().then(function(data, status, headers, config){
         console.log(data);
-        $scope.data.currentCompanyOtherInfo = data;
+        $scope.data.currentCompanyProductPortfolio = data;
     });
 
     company.getCompanySpendingDetails().then(function(data, status, headers, config){
         console.log(data);
-        $scope.data.currentCompanyOtherInfo = data;
+        $scope.data.currentCompanySpendingDetails = data;
     });
 
 
