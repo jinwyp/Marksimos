@@ -109,7 +109,7 @@ exports.findOne = function(seminarId, period, companyId, brandId, SKUID){
     return deferred.promise;
 };
 
-exports.findAll = function(seminarId, period, companyId, brandId){
+exports.findAllInBrand = function(seminarId, period, companyId, brandId){
     var deferred = Q.defer();
     SKUDecision.find({
         seminarId: seminarId,

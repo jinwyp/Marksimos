@@ -48,7 +48,7 @@ exports.submitDecision = function(req, res, next){
         result.d_InvestmentInTechnology = decision.d_InvestmentInTechnology;
         result.d_InvestmentInServicing = decision.d_InvestmentInServicing;
 
-        return brandDecisionModel.findAll(seminarId, period, companyId)
+        return brandDecisionModel.findAllInCompany(seminarId, period, companyId)
                 .then(function(brandDecisions){
                     var p2 = Q();
                     brandDecisions.forEach(function(brandDecision){
@@ -59,7 +59,7 @@ exports.submitDecision = function(req, res, next){
                         tempBrandDecision.d_SKUsDecisions = [];
 
                         p2 = p2.then(function(){
-                            return SKUDecisionModel.findAll(seminarId, period, companyId, brandDecision.d_BrandID);
+                            return SKUDecisionModel.findAllInBrand(seminarId, period, companyId, brandDecision.d_BrandID);
                         }).then(function(SKUDecisions){
                             SKUDecisions.forEach(function(SKUDecision){
                                 var tempSKUDecision = {};
@@ -369,7 +369,7 @@ exports.addBrand = function(req, res, next){
         return res.send(400, {message: "Invalid parameter sku_name."})
     }
 
-    brandDecisionModel.findAll(seminarId, period, companyId)
+    brandDecisionModel.findAllInCompany(seminarId, period, companyId)
     .then(function(allBrands){
         var maxBrandId = 0;
         allBrands.forEach(function(brand){
@@ -426,7 +426,7 @@ exports.addSKU = function(req, res, next){
         return res.send(400, {message: "Invalid parameter sku_name."})
     }
 
-    SKUDecisionModel.findAll(seminarId, period, companyId, brand_id)
+    SKUDecisionModel.findAllInBrand(seminarId, period, companyId, brand_id)
     .then(function(allSKUs){
         var maxSKUID = 0;
         allSKUs.forEach(function(SKU){

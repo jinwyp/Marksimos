@@ -130,5 +130,20 @@ exports.updateCompanyDecision = function(seminarId, period, companyId, companyDe
     return deferred.promise;
 }
 
+exports.findAllInPeriod = function(seminarId, period){
+    var deferred = Q.defer();
+
+    CompanyDecision.find({
+        seminarId: seminarId,
+        period: period
+    }, function(err, result){
+        if(err) return deferred.reject(err);
+
+        return deferred.resolve(result);
+    })
+
+    return deferred.promise;
+}
+
 
 

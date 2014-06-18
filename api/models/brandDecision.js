@@ -57,7 +57,7 @@ exports.save = function(decision){
     return deferred.promise;
 };
 
-exports.findAll = function(seminarId, period, companyId){
+exports.findAllInCompany = function(seminarId, period, companyId){
     var deferred = Q.defer();
     BrandDecision.find({
         seminarId: seminarId,
