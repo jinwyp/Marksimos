@@ -20,15 +20,15 @@ exports.submitDecision = function(req, res, next){
     var seminarId = req.session.seminarId;
 
     if(!companyId){
-        return res.json({status: 0, message: "Invalid companyId"});
+        return res.json({message: "Invalid companyId"});
     }
 
     if(period === undefined){
-        return res.json({status: 0, message: "Invalid period"});
+        return res.json({message: "Invalid period"});
     }
 
     if(!seminarId){
-        return res.json({status: 0, message: "Invalid seminarId"});
+        return res.json({message: "Invalid seminarId"});
     }
 
     var result = {};
@@ -92,7 +92,7 @@ exports.submitDecision = function(req, res, next){
     })
     .then(function(){
         if(Object.keys(result).length===0){
-            return res.json({result: 0, message: "fail to get decisions"})
+            return res.send(500, {message: "fail to get decisions"})
         }
 
         insertEmptyBrandsAndSKUs(result);
@@ -161,28 +161,28 @@ exports.updateSKUDecision = function(req, res, next){
 
 
     if(!brandId){
-        return res.send(400, {status: 0, message: "Invalid parameter brand_id."});
+        return res.send(400, {message: "Invalid parameter brand_id."});
     }
 
     if(!SKUID){
         console.log(SKUID);
-        return res.send(400, {status: 0, message: "Invalid parameter sku_id."});
+        return res.send(400, {message: "Invalid parameter sku_id."});
     }
 
     if(!SKU){
-        return res.send(400, {status: 0, message: "Invalid parameter skudata"});
+        return res.send(400, {message: "Invalid parameter skudata"});
     }
 
     if(!seminarId){
-        return res.send(400, {status: 0, message: "Invalid seminarId in session."});
+        return res.send(400, {message: "Invalid seminarId in session."});
     }
 
     if(!companyId){
-        return res.send(400, {status: 0, message: "Invalid companyId in session."});
+        return res.send(400, {message: "Invalid companyId in session."});
     }
 
     if(period === undefined){
-        return res.send(400, {status: 0, message: "Invalid period in session."});
+        return res.send(400, {message: "Invalid period in session."});
     }
 
     var jsonSKU = SKU;
@@ -193,13 +193,13 @@ exports.updateSKUDecision = function(req, res, next){
     SKUDecisionModel.updateSKU(seminarId, period, companyId, brandId, SKUID, tempSKU)
     .then(function(numAffected){
         if(numAffected !== 1){
-            return res.send(400, {status: 0, message: 'SKUDecision does not exist.'});
+            return res.send(400, {message: 'SKUDecision does not exist.'});
         }
         res.send({status: 1, message: 'update success.'});
     })
     .fail(function(err){
         logger.error(err);
-        res.send(500, {status: 0, message: 'update failed.'});
+        res.send(500, {message: 'update failed.'});
     })
     .done(); 
 
@@ -241,23 +241,23 @@ exports.updateBrandDecision = function(req, res, next){
 
 
     if(!brandId){
-        return res.send(400, {status: 0, message: "Invalid parameter brand_id."});
+        return res.send(400, {message: "Invalid parameter brand_id."});
     }
 
     if(!brand_data){
-        return res.send(400, {status: 0, message: "Invalid parameter brand_data"});
+        return res.send(400, {message: "Invalid parameter brand_data"});
     }
 
     if(!seminarId){
-        return res.send(400, {status: 0, message: "Invalid seminarId in session."});
+        return res.send(400, {message: "Invalid seminarId in session."});
     }
 
     if(!companyId){
-        return res.send(400, {status: 0, message: "Invalid companyId in session."});
+        return res.send(400, {message: "Invalid companyId in session."});
     }
 
     if(period === undefined){
-        return res.send(400, {status: 0, message: "Invalid period in session."});
+        return res.send(400, {message: "Invalid period in session."});
     }
 
     var tempBrand = createBrand(brand_data);
@@ -266,13 +266,13 @@ exports.updateBrandDecision = function(req, res, next){
     brandDecisionModel.updateBrand(seminarId, period, companyId, brandId, tempBrand)
     .then(function(numAffected){
         if(numAffected !== 1){
-            return res.send(400, {status: 0, message: 'brandDecision does not exist.'});
+            return res.send(400, {message: 'brandDecision does not exist.'});
         }
         res.send({status: 1, message: 'update success.'});
     })
     .fail(function(err){
         logger.error(err);
-        res.send(500, {status: 0, message: 'update failed.'});
+        res.send(500, {message: 'update failed.'});
     })
     .done(); 
 
@@ -300,19 +300,19 @@ exports.updateCompanyDecision = function(req, res, next){
 
 
     if(!company_data){
-        return res.send(400, {status: 0, message: "Invalid parameter company_data"});
+        return res.send(400, {message: "Invalid parameter company_data"});
     }
 
     if(!seminarId){
-        return res.send(400, {status: 0, message: "Invalid seminarId in session."});
+        return res.send(400, {message: "Invalid seminarId in session."});
     }
 
     if(!companyId){
-        return res.send(400, {status: 0, message: "Invalid companyId in session."});
+        return res.send(400, {message: "Invalid companyId in session."});
     }
 
     if(period === undefined){
-        return res.send(400, {status: 0, message: "Invalid period in session."});
+        return res.send(400, {message: "Invalid period in session."});
     }
 
     var tempCompanyDecision = createCompanyDecision(company_data);
@@ -321,13 +321,13 @@ exports.updateCompanyDecision = function(req, res, next){
     companyDecisionModel.updateCompanyDecision(seminarId, period, companyId, tempCompanyDecision)
     .then(function(numAffected){
         if(numAffected !== 1){
-            return res.send(400, {status: 0, message: 'companyDecision does not exist.'});
+            return res.send(400, {message: 'companyDecision does not exist.'});
         }
-        res.send({status: 1, message: 'update success.'});
+        res.send({message: 'update success.'});
     })
     .fail(function(err){
         logger.error(err);
-        res.send(500, {status: 0, message: 'update failed.'});
+        res.send(500, {message: 'update failed.'});
     })
     .done(); 
 

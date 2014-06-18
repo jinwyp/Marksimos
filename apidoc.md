@@ -193,18 +193,24 @@ DELETE
 * brand_id
 
 ## /api/company/decision
-
+Update a company decision
 ### Method
 PUT
 
 ### Parameters
 * company_data
 
-## /api/company/decision
+### Request
 
-### Method
-POST
+    {
+      "company_data": {
+        "d_IsAdditionalBudgetAccepted": true
+      }
+    }
 
+### Response
+
+    {message: 'update success.'}
 
 ## /api/decision
 Get all decisions of all brands in one company in the last period
