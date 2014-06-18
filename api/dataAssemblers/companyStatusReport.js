@@ -1,5 +1,6 @@
 var preGeneratedDataModel = require('../models/preGeneratedData.js');
 var Q = require('q');
+var utility = require('../utility.js');
 
 exports.getCompanyStatusReport = function(seminarId){
     return Q.all([
@@ -21,6 +22,10 @@ exports.getCompanyStatusReport = function(seminarId){
 function generateCompanyReport(allResults){
     var companyReport = [];
 
+    allResults[0].p_Companies.forEach(function(company){
+
+    })
+
     allResults.forEach(function(onePeriodResult){
         var onePeriodCompanyReport = {};
 
@@ -28,4 +33,10 @@ function generateCompanyReport(allResults){
 
         onePeriodCompanyReport. = ;
     })
+
+    function isCompanyExist(companyId, companyReport){
+        companyReport.some(function(company){
+            return company.companyId === companyId;
+        })
+    }
 }

@@ -1,4 +1,4 @@
-var preGeneratedDataModel = require('../models/seminar.js');
+var preGeneratedDataModel = require('../models/preGeneratedData.js');
 var util = require('util');
 
 exports.getChart = function(req, res, next){
