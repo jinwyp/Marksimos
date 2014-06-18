@@ -500,7 +500,7 @@ exports.deleteBrand = function(req, res, next){
         return res.send(400, {message: "Invalid parameter brand_id."});
     }
 
-    brandDecisionModel.remove(seminarId, period, companyId)
+    brandDecisionModel.remove(seminarId, period, companyId, brand_id)
     .then(function(){
         return SKUDecisionModel.removeAllInBrand(seminarId, period, companyId, brand_id);
     })

@@ -26,7 +26,7 @@ exports.remove =  function(seminarId, companyId){
     }else{
         CompanyDecision.remove({
             seminarId: seminarId,
-            companyId: companyId
+            d_CID: companyId
         }, 
         function(err){
             if(err){

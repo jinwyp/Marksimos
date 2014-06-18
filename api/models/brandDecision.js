@@ -20,8 +20,8 @@ exports.remove =  function(seminarId, period, companyId, brandId){
     BrandDecision.remove({
         seminarId: seminarId,
         period: period,
-        companyId: companyId,
-        brandId: brandId
+        d_CID: companyId,
+        d_BrandID: brandId
     }, function(err){
         if(err){
             return deferred.reject(err);

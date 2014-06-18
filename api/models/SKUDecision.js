@@ -37,9 +37,9 @@ exports.remove =  function(seminarId, period, companyId, brandId, SKUID){
     SKUDecision.remove({
         seminarId: seminarId,
         period: period,
-        companyId: companyId,
-        brandId: brandId,
-        SKUID: SKUID
+        d_CID: companyId,
+        d_BrandID: brandId,
+        d_SKUID: SKUID
     }, function(err){
         if(err){
             return deferred.reject(err);
@@ -66,7 +66,7 @@ exports.removeAllInBrand = function(seminarId, period, companyId){
     var deferred = Q.defer();
     SKUDecision.remove({
         seminarId: seminarId,
-        companyId: companyId
+        d_CID: companyId
     }, 
     function(err){
         if(err){
