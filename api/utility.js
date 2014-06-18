@@ -42,12 +42,12 @@ exports.findCompany = function(onePeriodResult, companyId){
 
 exports.unitCost = function(periodNumber, packsize, ingredientsQuality, technologyLevel, previousCumulatedVolumes, efficiencyOfProduction, currentVolume){
     if(periodNumber === undefined) throw new Error("Invalid parameter periodNumber.");
-    if(!packsize) throw new Error("Invalid parameter packsize.");
-    if(!ingredientsQuality) throw new Error("Invalid parameter ingredientQuality.");
-    if(!technologyLevel) throw new Error("Invalid parameter technologyLevel.");
-    if(!previousCumulatedVolumes) throw new Error("Invalid parameter previousCumulatedVolumes.");
-    if(!efficiencyOfProduction) throw new Error("Invalid parameter efficiencyOfProduction.");
-    if(!currentVolume) throw new Error("Invalid patameter currentVolume.");
+    if(packsize === undefined) throw new Error("Invalid parameter packsize.");
+    if(ingredientsQuality===undefined) throw new Error("Invalid parameter ingredientQuality.");
+    if(technologyLevel === undefined) throw new Error("Invalid parameter technologyLevel.");
+    if(previousCumulatedVolumes === undefined) throw new Error("Invalid parameter previousCumulatedVolumes.");
+    if(efficiencyOfProduction === undefined) throw new Error("Invalid parameter efficiencyOfProduction.");
+    if(currentVolume === undefined) throw new Error("Invalid patameter currentVolume.");
 
     var tLevel;
     var inflation;
