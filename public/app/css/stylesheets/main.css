@@ -1041,25 +1041,52 @@ body a, body button {
   -ms-border-radius: 0px;
   -o-border-radius: 0px;
   border-radius: 0px;
+  padding: 20px 0px 0px 0px;
+}
+/* line 915, ../sass/main.scss */
+.mainbody .decision_right_box .right_menu .product_portfolio .panel-heading {
+  font-size: 13px;
+  font-family: "Helvetica", "Arial, sans-serif";
+  font-weight: bold;
+  color: #6f6f6f;
+  background-color: #f1f1f1;
+}
+/* line 922, ../sass/main.scss */
+.mainbody .decision_right_box .right_menu .product_portfolio .table > thead > tr > th {
+  font-size: 12px;
+  font-family: "Helvetica", "Arial, sans-serif";
+  font-weight: normal;
+  color: #252525;
+  background-color: whitesmoke;
+}
+/* line 932, ../sass/main.scss */
+.mainbody .decision_right_box .right_menu .product_portfolio .table > thead > tr > td,
+.mainbody .decision_right_box .right_menu .product_portfolio .table > tbody > tr > td,
+.mainbody .decision_right_box .right_menu .product_portfolio .table > tfoot > tr > td {
+  vertical-align: middle;
+  border-top: 1px solid #ddd;
+  font-family: "Helvetica", "Arial, sans-serif";
+  font-size: 12px;
+  color: #252525;
 }
 
-/* line 917, ../sass/main.scss */
+/* line 947, ../sass/main.scss */
 .bgbrand {
   background-color: #fdfdfd;
 }
 
-/* line 921, ../sass/main.scss */
+/* line 951, ../sass/main.scss */
 .chartBox {
   width: 99%;
   height: 350px;
   margin: 0px 0px;
 }
-/* line 925, ../sass/main.scss */
+/* line 955, ../sass/main.scss */
 .chartBox .ac-title {
   text-align: center;
   display: none;
 }
-/* line 930, ../sass/main.scss */
+/* line 960, ../sass/main.scss */
 .chartBox .bar_chart_label {
   font-size: 10px;
 }

@@ -908,6 +908,36 @@ body{
         .right_menu{
             border-width: 1px 0px 0px 0px;
             @include border-radius(0px);
+
+            padding: 20px 0px 0px 0px;
+
+            .product_portfolio{
+                .panel-heading{
+                    font-size: 13px;
+                    font-family: $font_main_header2;
+                    font-weight: bold;
+                    color: $color_main_body_user_chart_leftmenu_title;
+                    background-color: #f1f1f1;
+                }
+                .table > thead > tr > th{
+                    font-size: 12px;
+                    font-family: $font_main_header2;
+                    font-weight: normal;
+                    color: $color_login_input_label;
+                    background-color: $color_login_background;
+                }
+
+                .table > thead > tr > td,
+                .table > tbody > tr > td,
+                .table > tfoot > tr > td {
+                    vertical-align: middle;
+                    border-top: 1px solid #ddd;
+                    font-family: "Helvetica", "Arial, sans-serif";
+                    font-size: 12px;
+                    color: $color_login_input_label;
+                }
+
+            }
         }
     }
 

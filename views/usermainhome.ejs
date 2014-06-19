@@ -878,26 +878,64 @@
 
 
                 <div class="row brand_box right_menu">
-                    <div class="col-md-12">
-                        <h5>New Product Development Investment  <span class="glyphicon glyphicon-info-sign" ng-mouseenter="css.investmentInfo='true'" ></span></h5>
-                        <form class="form-horizontal investment_form" role="form">
-                            <div class="form-group">
-                                <label class="col-sm-8 control-label text-left" for="brandInvestmentProductionEfficiency">Investment in Production Efficiency ($mln)</label>
-                                <div class="col-sm-3">
-                                    <input type="text" class="form-control" id="brandInvestmentProductionEfficiency" placeholder="">
-                                </div>
-                            </div>
 
-                            <div class="form-group">
-                                <label class="col-sm-8 control-label text-left"  for="brandInvestmentProcessingTechnology">Investment in Processing Technology ($mln)</label>
-                                <div class="col-sm-3">
-                                    <input type="text" class="form-control" id="brandInvestmentProcessingTechnology" placeholder="">
-                                </div>
-                            </div>
+                    <div class="col-md-12 " ng-if="css.currentDecisionRightMenu==2">
+                        <div class="panel panel-default product_portfolio">
+                            <!-- Default panel contents -->
+                            <div class="panel-heading text-center ">Current Production</div>
 
+                            <!-- Table -->
+                            <table class="table  table-bordered table-hover">
+                                <thead>
+                                    <tr>
+                                        <th>SKU Name</th>
+                                        <th>Target Segment</th>
+                                        <th>Factory Price</th>
+                                        <th>Ingredients Quality</th>
+                                        <th>Technology Level</th>
+                                        <th>Production Volume</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr ng-repeat="sku in data.currentCompanyProductPortfolio">
+                                        <td>{{sku.SKUName}}</td>
+                                        <td>{{sku.SKUName}}</td>
+                                        <td>{{sku.factoryPrice}}</td>
+                                        <td>{{sku.ingredientsQuality}}</td>
+                                        <td>{{sku.technologyLevel}}</td>
+                                        <td>{{sku.productionVolume}}</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
 
-                        </form>
+                        <div class="panel panel-default product_portfolio">
+                            <!-- Default panel contents -->
+                            <div class="panel-heading text-center ">Previous Inventory</div>
 
+                            <!-- Table -->
+                            <table class="table  table-bordered table-hover">
+                                <thead>
+                                    <tr>
+                                        <th>SKU Name</th>
+                                        <th>Average Factory Price</th>
+                                        <th>Average Ingredient Price</th>
+                                        <th>Average Technology Level</th>
+                                        <th>Total Inventory Volume at Factory</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr ng-repeat="sku in data.currentCompanyProductPortfolio">
+                                        <td>{{sku.SKUName}}</td>
+                                        <td>{{sku.averageFactoryPrice}}</td>
+                                        <td>{{sku.averageIngredientsQuality}}</td>
+                                        <td>{{sku.averageTechnologyLevel}}</td>
+                                        <td>{{sku.totalInventoryVolumeAtFactory}}</td>
+                                    </tr>
+
+                                </tbody>
+                            </table>
+                        </div>
 
                     </div>
                 </div>

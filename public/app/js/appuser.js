@@ -15,7 +15,7 @@ marksimosapp.controller('chartController', function AppCtrl ($scope,  $timeout, 
         chartMenu : 'A3',
         additionalBudget : true,
         currentBrandId : 0,
-        currentDecisionRightMenu : 0
+        currentDecisionRightMenu : 2
     };
 
     $scope.dataChartSimple = {
@@ -484,12 +484,7 @@ marksimosapp.controller('chartController', function AppCtrl ($scope,  $timeout, 
             normalCapacityCSS : data.normalCapacity * 100 + '%',
             overtimeCapacity : data.overtimeCapacity * 100,
             overtimeCapacityCSS : data.overtimeCapacity * 100 + '%'
-        }
-
-
-
-
-
+        };
 
         console.log($scope.data.currentCompanyOtherInfo);
 
