@@ -1,9 +1,148 @@
 /*
-所有chart和report数据
+所有chart
 */
 var consts = require('../consts.js');
 var config = require('../config.js');
 var utility = require('../utility.js');
+
+exports.extractChartData = function(results, settings){
+    //生成chart数据
+    var marketShareInValue = exports.marketShareInValue(results);
+    var marketShareInVolume = exports.marketShareInVolume(results);
+    var mindSpaceShare = exports.mindSpaceShare(results);
+    var shelfSpaceShare = exports.shelfSpaceShare(results);
+
+    //investment and profit
+    var totalInvestment = exports.totalInvestment(results);
+    var netProfitByCompanies = exports.netProfitByCompanies(results);
+    var returnOnInvestment = exports.returnOnInvestment(results);
+    var investmentsVersusBudget = exports.investmentsVersusBudget(results, settings.simulationSpan);
+    
+    //market sales and inventory
+    var marketSalesValue = exports.marketSalesValue(results);
+    var marketSalesVolume = exports.marketSalesVolume(results);
+    var totalInventoryAtFactory = exports.totalInventoryAtFactory(results);
+    var totalInventoryAtTrade = exports.totalInventoryAtTrade(results);
+
+    //segment leaders top 5
+    var segmentsLeadersByValuePriceSensitive = exports.segmentsLeadersByValue(results, 'priceSensitive');    
+    var segmentsLeadersByValuePretenders = exports.segmentsLeadersByValue(results, 'pretenders');
+    var segmentsLeadersByValueModerate = exports.segmentsLeadersByValue(results, 'moderate');
+    var segmentsLeadersByValueGoodLife = exports.segmentsLeadersByValue(results, 'goodLife');
+    var segmentsLeadersByValueUltimate = exports.segmentsLeadersByValue(results, 'ultimate');
+    var segmentsLeadersByValuePragmatic = exports.segmentsLeadersByValue(results, 'pragmatic');
+
+    //Market evolution
+    var growthRateInVolume = exports.growthRateInVolume(results);
+    var growthRateInValue = exports.growthRateInValue(results);
+    var netMarketPrice = exports.netMarketPrice(results);
+    var segmentValueShareTotalMarket = exports.segmentValueShareTotalMarket(results);
+
+    var perceptionMap = exports.perceptionMap(results, settings.exogenous);
+
+    var inventoryReport = exports.inventoryReport(results);
+
+    console.log(investmentsVersusBudget)
+
+    return [
+        {
+            chartName: 'marketShareInValue',
+            chartData: marketShareInValue
+        },
+        {
+            chartName: 'marketShareInVolume',
+            chartData: marketShareInVolume
+        },
+        {
+            chartName: 'mindSpaceShare',
+            chartData: mindSpaceShare
+        },
+        {
+            chartName: 'shelfSpaceShare',
+            chartData: shelfSpaceShare
+        },
+        {
+            chartName: 'totalInvestment',
+            chartData: totalInvestment
+        },
+        {
+            chartName: 'netProfitByCompanies',
+            chartData: netProfitByCompanies
+        },
+        {
+            chartName: 'returnOnInvestment',
+            chartData: returnOnInvestment
+        },
+        {
+            chartName: 'investmentsVersusBudget',
+            chartData: investmentsVersusBudget
+        },
+        {
+            chartName: 'marketSalesValue',
+            chartData: marketSalesValue
+        },
+        {
+            chartName: 'marketSalesVolume',
+            chartData: marketSalesVolume
+        },
+        {
+            chartName: 'totalInventoryAtFactory',
+            chartData: totalInventoryAtFactory
+        },
+        {
+            chartName: 'totalInventoryAtTrade',
+            chartData: totalInventoryAtTrade
+        },
+        {
+            chartName: 'segmentsLeadersByValuePriceSensitive',
+            chartData: segmentsLeadersByValuePriceSensitive
+        },
+        {
+            chartName: 'segmentsLeadersByValuePretenders',
+            chartData: segmentsLeadersByValuePretenders
+        },
+        {
+            chartName: 'segmentsLeadersByValueModerate',
+            chartData: segmentsLeadersByValueModerate
+        },
+        {
+            chartName: 'segmentsLeadersByValueGoodLife',
+            chartData: segmentsLeadersByValueGoodLife
+        },
+        {
+            chartName: 'segmentsLeadersByValueUltimate',
+            chartData: segmentsLeadersByValueUltimate
+        },
+        {
+            chartName: 'segmentsLeadersByValuePragmatic',
+            chartData: segmentsLeadersByValuePragmatic
+        },
+        {
+            chartName: 'growthRateInVolume',
+            chartData: growthRateInVolume
+        },
+        {
+            chartName: 'growthRateInValue',
+            chartData: growthRateInValue
+        },
+        {
+            chartName: 'netMarketPrice',
+            chartData: netMarketPrice
+        },
+        {
+            chartName: 'segmentValueShareTotalMarket',
+            chartData: segmentValueShareTotalMarket
+        },
+        {
+            chartName: 'perceptionMap',
+            chartData: perceptionMap
+        },
+        {
+            chartName: 'inventoryReport',
+            chartData: inventoryReport
+        }
+    ];
+}
 
 //Market Share
 exports.marketShareInValue = function(allResults) {
@@ -54,10 +193,8 @@ exports.investmentsVersusBudget = function(allResults, simulationSpan){
     var companyNum = allResults[allResults.length - 1].p_Market.m_CompaniesCount;
 
     var result = {};
-
     for (var i = 4; i < allResults.length; i++) {
         var onePeriodResult = allResults[i];
-
         for (var j = 0; j < companyNum; j++) {
             var company = onePeriodResult.p_Companies[j];
 
@@ -436,7 +573,7 @@ function generateChartData(allResults, dataExtractor){
 
     for (var i = 0; i < allResults.length; i++) {
         var onePeriodResult = allResults[i];
-        var periodId = allResults[i].periodId;
+        var periodId = allResults[i].period;
 
         result.periods.push(periodId);
         var periodChartData = [];
@@ -480,7 +617,7 @@ function extractMarketEvolutionChartData(allResults, dataExtractor){
 
     for(var i=0; i<periodNum; i++){
         var periodResult = allResults[i];
-        var periodId = allResults[i].periodId;
+        var periodId = allResults[i].period;
 
         var market = periodResult.p_Market;
 

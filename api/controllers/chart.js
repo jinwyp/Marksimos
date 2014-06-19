@@ -1,4 +1,4 @@
-var preGeneratedDataModel = require('../models/preGeneratedData.js');
+var chartModel = require('../models/chart.js');
 var util = require('util');
 
 exports.getChart = function(req, res, next){
@@ -17,9 +17,9 @@ exports.getChart = function(req, res, next){
     //chart name saved in db doesn't contain _
     var chartNameTemp = chartName.replace(/_/g,'');
 
-    preGeneratedDataModel.findOne(seminarId)
-    .then(function(preGeneratedData){
-        var allCharts = preGeneratedData.charts;
+    chartModel.findOne(seminarId)
+    .then(function(result){
+        var allCharts = result.charts;
         var chart = null;
         for(var i=0; i<allCharts.length; i++){
             //find chart data by chart name

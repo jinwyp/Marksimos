@@ -4,7 +4,8 @@ var Q = require('q');
 
 var reportSchema = new Schema({
     seminarId: String,
-    companyStatus: {}
+    reportName: String,
+    reportData: {}
 });
 
 
@@ -20,13 +21,12 @@ exports.remove = function(seminarId){
         }
     })
     return deferred.promise;
-}
+};
 
-exports.insert = function(seminarId, report){
+exports.insert = function(report){
     var deferred = Q.defer();
 
-    Report.create(report,
-    function(err){
+    Report.create(report, function(err){
         if(err){
             return deferred.reject(err);
         }
@@ -34,7 +34,7 @@ exports.insert = function(seminarId, report){
     });
 
     return deferred.promise;
-}
+};
 
 exports.update = function(seminarId, report){
     var deferred = Q.defer();
@@ -54,4 +54,10 @@ exports.update = function(seminarId, report){
     });
 
     return deferred.promise;
-}
+};
+
+exports.initCompanyReport = function(seminarId, allResults){
+    return exports.update(seminarId, {
+        companyStatus: companyStatusReportAssembler.getCompanyStatusReport(allResults)
+    })
+};

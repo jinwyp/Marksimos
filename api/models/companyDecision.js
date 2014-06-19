@@ -145,5 +145,28 @@ exports.findAllInPeriod = function(seminarId, period){
     return deferred.promise;
 }
 
+/**
+ * Insert empty company decisions for all companies in the next period
+ */
+exports.insertEmptyCompanyDecision = function(seminarId, period){
+    //find all company decisions in the last period
+    return exports.findAllInPeriod(seminarId, period - 1)
+    .then(function(allCompanyDecisions){
+        var p = Q();
+        allCompanyDecisions.forEach(function(companyDecision){
+            p = p.then(function(){
+                return exports.save({
+                    seminarId: seminarId,
+                    period: period,
+                    d_CID: companyDecision.d_CID,   
+                    d_CompanyName: companyDecision.d_CompanyName,
+                    d_BrandsDecisions: companyDecision.d_BrandsDecisions
+                });
+            });
+        })
+        return p;
+    })
+}
+
 
 

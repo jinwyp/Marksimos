@@ -142,3 +142,26 @@ exports.updateBrand = function(seminarId, period, companyId, brandId, brand){
     }
     return deferred.promise;
 }
+
+/**
+ * Insert empty brand decisions for all brands in the next period
+ */
+exports.insertEmptyBrandDecision = function(seminarId, period){
+    return exports.findAllInPeriod(seminarId, period - 1)
+    .then(function(allBrandDecisions){
+        var p = Q();
+        allBrandDecisions.forEach(function(brandDecision){
+            p = p.then(function(){
+                return exports.save({
+                    seminarId: seminarId,
+                    period: period,
+                    d_CID: brandDecision.d_CID,  
+                    d_BrandID: brandDecision.d_BrandID, 
+                    d_BrandName: brandDecision.d_BrandName,
+                    d_SKUsDecisions: brandDecision.d_SKUsDecisions
+                })
+            })
+        })
+        return p;
+    })
+}

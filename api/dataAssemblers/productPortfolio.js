@@ -4,7 +4,7 @@ var consts = require('../consts.js');
 var seminarModel = require('../models/seminar.js');
 var decisionAssembler = require('./decision.js');
 var Q = require('q');
-var preGeneratedDataModel = require('../models/preGeneratedData.js');
+var simulationResultModel = require('../models/simulationResult.js');
 
 /**
  * Assemble product portfolio data
@@ -14,14 +14,12 @@ var preGeneratedDataModel = require('../models/preGeneratedData.js');
  */
 exports.getProductPortfolioForOneCompany = function(seminarId, period, companyId){
     return Q.all([
-        preGeneratedDataModel.findOne(seminarId),
+        simulationResultModel.findOne(seminarId, period),
         decisionAssembler.getDecision(seminarId, period, companyId)
     ])
-    .spread(function(preGeneratedData, decision){
-        var allResults = preGeneratedData.allResults;
+    .spread(function(lastPeriodResult, decision){
 
         var productPortfolioForOneCompany = [];
-        var lastPeriodResult = allResults[allResults.length-1];
 
         for(var i=0; i<decision.d_BrandsDecisions.length; i++){
             var brandDecision = decision.d_BrandsDecisions[i];

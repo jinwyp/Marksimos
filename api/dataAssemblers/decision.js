@@ -3,6 +3,9 @@ var brandDecisionModel = require('../models/brandDecision.js');
 var SKUDecisionModel = require('../models/SKUDecision.js');
 var Q = require('q');
 
+/**
+ * Get decision of one period
+ */
 exports.getDecision = function(seminarId, period, companyId){
     return Q.all([
         companyDecisionModel.findOne(seminarId, period, companyId),
@@ -36,82 +39,93 @@ exports.getDecision = function(seminarId, period, companyId){
 }
 
 /**
- * @param {Number} period current period
+ * Convert decision to a companyDecision object which can be saved to db
  *
+ * @param {Object} decision decision got from CGI service
  */
-exports.insertEmptyDecision = function(seminarId, period){
-    insertEmptyCompanyDecision(seminarId, period);
-    insertEmptyBrandDecision(seminarId, period);
-    insertEmptySKUDecision(seminarId, period);
+exports.getCompanyDecision = function(decision){
+    var brandIds = decision.d_BrandsDecisions.map(function(brand){
+        return brand.d_BrandID;
+    });
+
+    return {
+        d_CID                        : decision.d_CID,
+        d_CompanyName                : decision.d_CompanyName,
+        d_BrandsDecisions            : brandIds,
+        d_IsAdditionalBudgetAccepted : decision.d_IsAdditionalBudgetAccepted,
+        d_RequestedAdditionalBudget  : decision.d_RequestedAdditionalBudget,
+        d_InvestmentInEfficiency     : decision.d_InvestmentInEfficiency,
+        d_InvestmentInTechnology     : decision.d_InvestmentInTechnology,
+        d_InvestmentInServicing      : decision.d_InvestmentInServicing
+    }
 }
 
 /**
- * Insert empty company decisions for all companies in the next period
+ * Convert decision to an array of brandDecision objects which can be saved to db
+ *
+ * @param {Object} decision decision got from CGI service
  */
-function insertEmptyCompanyDecision(seminarId, period){
-    //find all company decisions in the last period
-    return companyDecisionModel.findAllInPeriod(seminarId, period - 1)
-    .then(function(allCompanyDecisions){
-        var p = Q();
-        allCompanyDecisions.forEach(function(companyDecision){
-            p = p.then(function(){
-                return companyDecisionModel.save({
-                    seminarId: seminarId,
-                    period: period,
-                    d_CID: companyDecision.d_CID,   
-                    d_CompanyName: companyDecision.d_CompanyName,
-                    d_BrandsDecisions: companyDecision.d_BrandsDecisions
-                });
-            });
+exports.getBrandDecisions = function(decision){
+    var results = [];
+
+    for(var i=0; i<decision.d_BrandsDecisions.length; i++){
+        var brandDecision = decision.d_BrandsDecisions[i];
+        var SKUIDs = brandDecision.d_SKUsDecisions.map(function(SKUDecision){
+            return SKUDecision.d_SKUID;
         })
-        return p;
-    })
+        results.push({
+            d_CID: decision.d_CID,
+            d_BrandID       : brandDecision.d_BrandID,
+            d_BrandName     : brandDecision.d_BrandName,
+            d_SalesForce    : brandDecision.d_SalesForce,
+            d_SKUsDecisions : SKUIDs
+
+        });
+    }
+
+    return results;
 }
 
 /**
- * Insert empty brand decisions for all brands in the next period
+ * Convert decision to an array of SKUDecision objects which can be saved to db
+ *
+ * @param {Object} decision decision got from CGI service
  */
-function insertEmptyBrandDecision(seminarId, period){
-    return brandDecisionModel.findAllInPeriod(seminarId, period - 1)
-    .then(function(allBrandDecisions){
-        var p = Q();
-        allBrandDecisions.forEach(function(brandDecision){
-            p = p.then(function(){
-                return brandDecisionModel.save({
-                    seminarId: seminarId,
-                    period: period,
-                    d_CID: brandDecision.d_CID,  
-                    d_BrandID: brandDecision.d_BrandID, 
-                    d_BrandName: brandDecision.d_BrandName,
-                    d_SKUsDecisions: brandDecision.d_SKUsDecisions
-                })
+exports.getSKUDecisions = function(decision){
+    var results = [];
+
+    for(var i=0; i<decision.d_BrandsDecisions.length; i++){
+        var brandDecision = decision.d_BrandsDecisions[i];
+        for(var j=0; j<brandDecision.d_SKUsDecisions.length; j++){
+            var SKUDecision = brandDecision.d_SKUsDecisions[j];
+            results.push({
+                d_CID: decision.d_CID,
+                d_BrandID: brandDecision.d_BrandID,
+                d_SKUID: SKUDecision.d_SKUID,
+                d_SKUName: SKUDecision.d_SKUName,
+                d_Advertising: SKUDecision.d_Advertising,
+                d_AdditionalTradeMargin: SKUDecision.d_AdditionalTradeMargin,
+                d_FactoryPrice: SKUDecision.d_FactoryPrice,
+                d_ConsumerPrice: SKUDecision.d_ConsumerPrice,
+                d_RepriceFactoryStocks: SKUDecision.d_RepriceFactoryStocks,
+                d_IngredientsQuality: SKUDecision.d_IngredientsQuality,
+                d_PackSize: SKUDecision.d_PackSize,
+                d_ProductionVolume: SKUDecision.d_ProductionVolume,
+                d_PromotionalBudget: SKUDecision.d_PromotionalBudget,
+
+                d_PromotionalEpisodes: SKUDecision.d_PromotionalEpisodes,
+                d_TargetConsumerSegment: SKUDecision.d_TargetConsumerSegment,
+                d_Technology: SKUDecision.d_Technology,
+                d_ToDrop: SKUDecision.d_ToDrop,
+                d_TradeExpenses: SKUDecision.d_TradeExpenses,
+                d_WholesalesBonusMinVolume: SKUDecision.d_WholesalesBonusMinVolume,
+                d_WholesalesBonusRate: SKUDecision.d_WholesalesBonusRate,
+                d_WarrantyLength: SKUDecision.d_WarrantyLength,
             })
-        })
-        return p;
-    })
-}
+        }
+    }
 
-/**
- * Insert empty SKU decisions for all SKUs in the next period
- */
-function insertEmptySKUDecision(seminarId, period){
-    return SKUDecisionModel.findAllInPeriod(seminarId, period-1)
-    .then(function(allSKUDecisions){
-        var p = Q();
-        allSKUDecisions.forEach(function(SKUDecision){
-            p = p.then(function(){
-                return SKUDecisionModel.save({
-                    seminarId: seminarId,
-                    period: period,
-                    d_CID: SKUDecision.d_CID,  
-                    d_BrandID: SKUDecision.d_BrandID, 
-                    d_SKUID: SKUDecision.d_SKUID,
-                    d_SKUName: SKUDecision.d_SKUName
-                })
-            })
-        })
-        return p;
-    })
+    return results;
 }
 
 

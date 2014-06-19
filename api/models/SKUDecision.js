@@ -204,6 +204,31 @@ exports.updateSKU = function(seminarId, period, companyId, brandId, SKUID, SKU){
 
 
 
+/**
+ * Insert empty SKU decisions for all SKUs in the next period
+ */
+exports.insertEmptySKUDecision = function(seminarId, period){
+    return exports.findAllInPeriod(seminarId, period-1)
+    .then(function(allSKUDecisions){
+        var p = Q();
+        allSKUDecisions.forEach(function(SKUDecision){
+            p = p.then(function(){
+                return exports.save({
+                    seminarId: seminarId,
+                    period: period,
+                    d_CID: SKUDecision.d_CID,  
+                    d_BrandID: SKUDecision.d_BrandID, 
+                    d_SKUID: SKUDecision.d_SKUID,
+                    d_SKUName: SKUDecision.d_SKUName
+                })
+            })
+        })
+        return p;
+    })
+}
+
+
+
 
 
 
