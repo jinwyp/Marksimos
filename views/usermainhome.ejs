@@ -860,8 +860,8 @@
 
             <div class="row">
                 <div class="col-md-12">
-                    <h4 class="text-center">MAKE DECISIONS</h4>
-                    <h6 class="text-center">Market Share + Profit</h6>
+                    <h4 class="text-center">DATA REFERENCE</h4>
+                    <h6 class="text-center">　</h6>
                 </div>
             </div>
 
@@ -934,6 +934,126 @@
                                     </tr>
 
                                 </tbody>
+                            </table>
+                        </div>
+
+                    </div>
+
+
+
+                    <div class="col-md-12 " ng-if="css.currentDecisionRightMenu==3">
+                        <div class="panel panel-default product_portfolio">
+                            <!-- Default panel contents -->
+
+                            <!-- Table -->
+                            <table class="table table-bordered table-hover">
+                                <thead>
+                                    <tr>
+                                        <th>Brand Name</th>
+                                        <th ng-repeat="brand in data.currentCompanySpendingDetails.brandData">{{brand.brandName}}</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <th>Sale Force</th>
+                                        <td ng-repeat="brand in data.currentCompanySpendingDetails.brandData">{{brand.salesForce}}</td>
+                                    </tr>
+                                    <tr>
+                                        <th>Consumer Communication</th>
+                                        <td ng-repeat="brand in data.currentCompanySpendingDetails.brandData">{{brand.consumerCommunication}}</td>
+                                    </tr>
+                                    <tr>
+                                        <th>Consumer Promotions</th>
+                                        <td ng-repeat="brand in data.currentCompanySpendingDetails.brandData">{{brand.consumerPromotion}}</td>
+                                    </tr>
+                                    <tr>
+                                        <th>Trade Expenses</th>
+                                        <td ng-repeat="brand in data.currentCompanySpendingDetails.brandData">{{brand.tradeExpenses}}</td>
+                                    </tr>
+                                    <tr>
+                                        <th>Estimated Additional Trade Margin Cost</th>
+                                        <td ng-repeat="brand in data.currentCompanySpendingDetails.brandData">{{brand.estimatedAdditionalTradeMarginCost}}</td>
+                                    </tr>
+                                    <tr>
+                                        <th>Estimated Wholesale Bonus Cost</th>
+                                        <td ng-repeat="brand in data.currentCompanySpendingDetails.brandData">{{brand.estimatedWholesaleBonusCost}}</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+
+                        <div class="panel panel-default product_portfolio">
+                            <!-- Default panel contents -->
+                            <table class="table table-bordered table-hover">
+                                <!--<thead>-->
+                                    <!--<tr>-->
+                                        <!--<th>Investment in Production Efficiency</th>-->
+                                        <!--<th>Investment in Processing Technology</th>-->
+                                        <!--<th>Total Investment</th>-->
+                                        <!--<th>Average Budget per Period</th>-->
+                                        <!--<th>Total Investment Budget</th>-->
+                                        <!--<th>Cumulated Previous Investments</th>-->
+                                        <!--<th>Available Budget</th>-->
+                                        <!--<th>Normal Capacity (mln Packs)</th>-->
+                                        <!--<th>Available Overtime Capacity Extenstion (mln Packs)</th>-->
+                                        <!--<th>Acquired Efficiency (%)</th>-->
+                                        <!--<th>Acquired Production Volmume Flexibility (%)</th>-->
+                                        <!--<th>Acquired Technology Level</th>-->
+                                    <!--</tr>-->
+                                <!--</thead>-->
+                                <tbody>
+                                    <tr>
+                                        <td>Investment in Production Efficiency</td>
+                                        <td>{{data.currentCompanySpendingDetails.companyData.investmentInProductionEfficiency}}</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Investment in Processing Technology</td>
+                                        <td>{{data.currentCompanySpendingDetails.companyData.investmentInProcessingTechnology}}</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Total Investment</td>
+                                        <td>{{data.currentCompanySpendingDetails.companyData.totalInvestment}}</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Average Budget per Period</td>
+                                        <td>{{data.currentCompanySpendingDetails.companyData.averageBudgetPerPeriod}}</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Total Investment Budget</td>
+                                        <td>{{data.currentCompanySpendingDetails.companyData.totalInvestmentBudget}}</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Cumulated Previous Investments</td>
+                                        <td>{{data.currentCompanySpendingDetails.companyData.cumulatedPreviousInvestments}}</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Available Budget</td>
+                                        <td>{{data.currentCompanySpendingDetails.companyData.averageBudgetPerPeriod}}</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Normal Capacity (mln Packs)</td>
+                                        <td>{{data.currentCompanySpendingDetails.companyData.normalCapacity}}</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Available Overtime Capacity Extenstion (mln Packs)</td>
+                                        <td>{{data.currentCompanySpendingDetails.companyData.availableOvertimeCapacityExtension}}</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Acquired Efficiency (%)</td>
+                                        <td>{{data.currentCompanySpendingDetails.companyData.acquiredEfficiency}}</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Acquired Production Volmume Flexibility (%)</td>
+                                        <td>{{data.currentCompanySpendingDetails.companyData.acquiredProductionVolumeFlexibility}}</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Acquired Technology Level</td>
+                                        <td>{{data.currentCompanySpendingDetails.companyData.acquiredTechnologyLevel}}</td>
+                                    </tr>
+
+                                </tbody>
+
+
                             </table>
                         </div>
 
