@@ -5,7 +5,6 @@ var config = require('../config.js');
 var Q = require('q');
 
 var decisionCleaner = require('../convertors/decisionCleaner.js');
-var allResultsConvertor = require('../convertors/allResults.js');
 var allResultsCleaner = require('../convertors/allResultsCleaner.js');
 
 var companyDecisionModel = require('../models/companyDecision.js');

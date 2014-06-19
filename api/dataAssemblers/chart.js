@@ -42,8 +42,6 @@ exports.extractChartData = function(results, settings){
 
     var inventoryReport = exports.inventoryReport(results);
 
-    console.log(investmentsVersusBudget)
-
     return [
         {
             chartName: 'marketShareInValue',

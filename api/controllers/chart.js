@@ -36,7 +36,6 @@ exports.getChart = function(req, res, next){
         if(chartName==='inventory_report'){
             //this function changes data in chart object
             var chartData = filterChart(chart, companyId);
-            console.log(chartData)
             return res.send(chartData);
         }
 

@@ -165,7 +165,6 @@ exports.updateSKUDecision = function(req, res, next){
     }
 
     if(!SKUID){
-        console.log(SKUID);
         return res.send(400, {message: "Invalid parameter sku_id."});
     }
 

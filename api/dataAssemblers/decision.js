@@ -23,7 +23,6 @@ exports.getDecision = function(seminarId, period, companyId){
             var tempSKUDecisionList = [];
             for(var i=0; i<SKUDecisionList.length; i++){
                 var SKUDecision = SKUDecisionList[i];
-                console.log(typeof brandDecision.d_BrandID);
                 if(SKUDecision.d_BrandID === brandDecision.d_BrandID){
 
                     tempSKUDecisionList.push(SKUDecision);
