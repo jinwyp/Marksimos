@@ -20,13 +20,13 @@ exports.getProductPortfolioForOneCompany = function(seminarId, period, companyId
     .spread(function(lastPeriodResult, decision){
 
         var productPortfolioForOneCompany = [];
-
+        
         for(var i=0; i<decision.d_BrandsDecisions.length; i++){
             var brandDecision = decision.d_BrandsDecisions[i];
 
             for(var j=0; j<brandDecision.d_SKUsDecisions.length; j++){
                 var SKUDecision = brandDecision.d_SKUsDecisions[j];
-
+                
                 var productPortfolioForSKU = {};
                 
                 productPortfolioForSKU.SKUName = brandDecision.d_BrandName + SKUDecision.d_SKUName;

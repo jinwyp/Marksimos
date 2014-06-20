@@ -1,5 +1,6 @@
 var decisionController = require('./controllers/decision.js');
 var chartController = require('./controllers/chart.js');
+var reportController = require('./controllers/report.js');
 var initController = require('./controllers/init.js');
 var decisionPageController = require('./controllers/decisionPage.js');
 var util = require('util');
@@ -16,6 +17,9 @@ module.exports = function(app){
     //chart
     app.get('/api/chart/:chart_name', chartController.getChart);
 
+    //report
+    app.get('/api/report/:report_name', reportController.getReport);
+
     //make decision page
     app.put('/api/sku/decision', decisionController.updateSKUDecision);
     app.post('/api/sku/decision', decisionController.addSKU);
@@ -26,6 +30,7 @@ module.exports = function(app){
     app.delete('/api/brand/decision', decisionController.deleteBrand);
 
     app.put('/api/company/decision', decisionController.updateCompanyDecision);
+
 
     app.get('/api/company', decisionPageController.getDecision);
     app.get('/api/product_portfolio', decisionPageController.getProductPortfolio);

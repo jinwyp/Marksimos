@@ -3,6 +3,9 @@ var cgiapi = require('./cgiapi.js');
 var consts = require('./consts.js');
 var config = require('./config.js');
 
+exports.setSize = function(num){
+    return num;
+}
 
 /**
  * Find brand by brandId

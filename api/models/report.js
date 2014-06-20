@@ -1,6 +1,7 @@
 var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
 var Q = require('q');
+var companyStatusReportAssembler = require('../dataAssemblers/companyStatusReport.js');
 
 var reportSchema = new Schema({
     seminarId: String,
@@ -10,6 +11,22 @@ var reportSchema = new Schema({
 
 
 var Report = mongoose.model("Report", reportSchema);
+
+exports.findOne = function(seminarId, reportName){
+    var deferred = Q.defer();
+
+    Report.findOne({
+        seminarId: seminarId,
+        reportName: reportName
+    }, function(err, result){
+        if(err){
+            deferred.reject(err);
+        }else{
+            deferred.resolve(result);
+        }
+    })
+    return deferred.promise;
+}
 
 exports.remove = function(seminarId){
     var deferred = Q.defer();
@@ -56,8 +73,13 @@ exports.update = function(seminarId, report){
     return deferred.promise;
 };
 
-exports.initCompanyReport = function(seminarId, allResults){
-    return exports.update(seminarId, {
-        companyStatus: companyStatusReportAssembler.getCompanyStatusReport(allResults)
+exports.initReport = function(seminarId, allResults){
+    return exports.insert({
+        seminarId: seminarId,
+        reportName: "company_status",
+        reportData: companyStatusReportAssembler.getCompanyStatusReport(allResults)
     })
 };
+
+
+
