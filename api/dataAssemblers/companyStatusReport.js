@@ -33,46 +33,49 @@ function generateBrandReport(allResults){
 
     allResults[0].p_Brands.forEach(function(brand){
         if(!isBrandExist(brand.b_BrandID, allBrandReport)){
-            allBrandReport.push([]);
             allBrandReport.push({
-                brandId: brand.b_BrandID,
-                marketShareValue: [],
-                marketShareVolume: [],
-                marketSalesVolumeStdPack: [],
-                lostSalesVolumeDueToOOSStdPack: [],
-                numbericalDistribution: [],
-                volumeWeightedDistribution: [],
-                shelfSpace: [],
+               brandId: brand.b_BrandID,
+               data: [] 
+            });
+            // allBrandReport.push({
+            //     brandId: brand.b_BrandID,
+            //     marketShareValue: [],
+            //     marketShareVolume: [],
+            //     marketSalesVolumeStdPack: [],
+            //     lostSalesVolumeDueToOOSStdPack: [],
+            //     numbericalDistribution: [],
+            //     volumeWeightedDistribution: [],
+            //     shelfSpace: [],
 
-                awareness: [],
+            //     awareness: [],
 
-                averageNetMarketPriceStdPack: [],
-                averageDisplayPriceStdPack: [],
+            //     averageNetMarketPriceStdPack: [],
+            //     averageDisplayPriceStdPack: [],
 
-                priceRankingIndex: [],
-                valuePerception: [],
-                imagePerception: [],
+            //     priceRankingIndex: [],
+            //     valuePerception: [],
+            //     imagePerception: [],
 
-                ingredientsQualityIndex: [],
-                appliedTechnologyIndex: [],
+            //     ingredientsQualityIndex: [],
+            //     appliedTechnologyIndex: [],
 
-                marketSalesValue:[],
-                consumerPricePromotions: [],
-                marketNetSalesValues: [],
-                //lostSalesVolumeDueToOOSStdPack,
-                numberOfOutOfStockEpisodes: [],
-                //marketSalesVolumeStdPack,
-                retailersPurchasesVolumeStdPack: [],
-                shippmentsToWholesalersStdPack: [],
-                productionVolumeStdPack: [],
-                inventoryVolumeAtManufacturerStdPack: [],
-                inventoryVolumeAtWholesalersStdPack: [],
-                inventoryVolumeAtRetailersStdPack: [],
-                //inventoryVolumeAtRetailersStdPack2: [],
+            //     marketSalesValue:[],
+            //     consumerPricePromotions: [],
+            //     marketNetSalesValues: [],
+            //     //lostSalesVolumeDueToOOSStdPack,
+            //     numberOfOutOfStockEpisodes: [],
+            //     //marketSalesVolumeStdPack,
+            //     retailersPurchasesVolumeStdPack: [],
+            //     shippmentsToWholesalersStdPack: [],
+            //     productionVolumeStdPack: [],
+            //     inventoryVolumeAtManufacturerStdPack: [],
+            //     inventoryVolumeAtWholesalersStdPack: [],
+            //     inventoryVolumeAtRetailersStdPack: [],
+            //     //inventoryVolumeAtRetailersStdPack2: [],
 
-                stocksCoverAtRetailersWeeks: [],
-                stocksCoverAtWholesalersWeeks: []
-            })
+            //     stocksCoverAtRetailersWeeks: [],
+            //     stocksCoverAtWholesalersWeeks: []
+            // })
         }
     })
 
@@ -80,42 +83,51 @@ function generateBrandReport(allResults){
         allResults.forEach(function(onePeriodResult){
             for(var i=0; i<onePeriodResult.p_Brands.length; i++){
                 var brandResult = onePeriodResult.p_Brands[i];
+
                 if(brandResult.b_BrandID === brandReport.brandId){
                     brandReport.brandName = brandResult.b_BrandName;
                     brandReport.companyId = brandResult.b_ParentCompanyID;
-                    brandReport.marketShareValue.push(brandResult.b_ValueSegmentShare[consts.ConsumerSegmentsMaxTotal - 1] * 100);
-                    brandReport.marketShareVolume.push(brandResult.b_VolumeSegmentShare[consts.ConsumerSegmentsMaxTotal - 1] * 100);
-                    brandReport.marketSalesVolumeStdPack.push(brandResult.b_MarketSalesVolume[consts.ConsumerSegmentsMaxTotal - 1]);
-                    brandReport.lostSalesVolumeDueToOOSStdPack.push(brandResult.b_StockOutVolume);
-                    brandReport.numbericalDistribution.push(brandResult.b_AverageDistributionNum * 100);
-                    brandReport.volumeWeightedDistribution.push(brandResult.b_AverageDistributionVol * 100);
-                    brandReport.shelfSpace.push(brandResult.b_ShelfSpace * 100);
-                    brandReport.awareness.push(brandResult.b_Awareness * 100);
-                    brandReport.averageNetMarketPriceStdPack.push(brandResult.b_AverageNetMarketPrice);
-                    brandReport.averageDisplayPriceStdPack.push(brandResult.b_AverageDisplayPrice);
-                    brandReport.priceRankingIndex.push(brandResult.b_AveragePriceIndex);
-                    brandReport.valuePerception.push(brandResult.b_Perception[0]);
-                    brandReport.imagePerception.push(brandResult.b_Perception[1]);
-                    brandReport.ingredientsQualityIndex.push(brandResult.b_AverageIngredientsQuality);
-                    brandReport.appliedTechnologyIndex.push(brandResult.b_AverageTechnology);
-                    brandReport.marketSalesValue.push(brandResult.b_MarketSalesValue[consts.ConsumerSegmentsMaxTotal - 1]);
-                    brandReport.consumerPricePromotions.push(-brandResult.b_PricePromotionsCost);
-                    brandReport.marketNetSalesValues.push(brandResult.b_MarketNetSalesValue[consts.ConsumerSegmentsMaxTotal - 1]);
-                    brandReport.numberOfOutOfStockEpisodes.push(utility.setSize(brandResult.b_CompleteOOSEpisodesNumbers));
-                    brandReport.retailersPurchasesVolumeStdPack.push(brandResult.b_WholesalesVolume);
-                    brandReport.shippmentsToWholesalersStdPack.push(brandResult.b_FactorySalesVolume);
-                    brandReport.productionVolumeStdPack.push(brandResult.b_ActualProductionVolume);
-                    brandReport.inventoryVolumeAtManufacturerStdPack.push(brandResult.b_FactoryStocks[consts.StocksMaxTotal].s_Volume);
-                    brandReport.inventoryVolumeAtWholesalersStdPack.push(brandResult.b_WholesalesStocks[consts.StocksMaxTotal].s_Volume);
-                    brandReport.inventoryVolumeAtRetailersStdPack.push(brandResult.b_RetailStocks[consts.StocksMaxTotal].s_Volume);
-                    brandReport.stocksCoverAtRetailersWeeks.push(brandResult.b_StockCoverAtRetailers);
-                    brandReport.stocksCoverAtWholesalersWeeks.push(brandResult.b_StockCoverAtWholesalers);
+
+                    var onePeriodReport = {};
+                    onePeriodReport.period = "Quarter " + onePeriodResult.period;
+                    onePeriodReport.marketShareValue = brandResult.b_ValueSegmentShare[consts.ConsumerSegmentsMaxTotal - 1] * 100;
+                    onePeriodReport.marketShareVolume = brandResult.b_VolumeSegmentShare[consts.ConsumerSegmentsMaxTotal - 1] * 100;
+                    onePeriodReport.marketSalesVolumeStdPack = brandResult.b_MarketSalesVolume[consts.ConsumerSegmentsMaxTotal - 1];
+                    onePeriodReport.lostSalesVolumeDueToOOSStdPack = brandResult.b_StockOutVolume;
+                    onePeriodReport.numbericalDistribution = brandResult.b_AverageDistributionNum * 100;
+                    onePeriodReport.volumeWeightedDistribution = brandResult.b_AverageDistributionVol * 100;
+                    onePeriodReport.shelfSpace = brandResult.b_ShelfSpace * 100;
+                    onePeriodReport.awareness = brandResult.b_Awareness * 100;
+                    onePeriodReport.averageNetMarketPriceStdPack = brandResult.b_AverageNetMarketPrice;
+                    onePeriodReport.averageDisplayPriceStdPack = brandResult.b_AverageDisplayPrice;
+                    onePeriodReport.priceRankingIndex = brandResult.b_AveragePriceIndex;
+                    onePeriodReport.valuePerception = brandResult.b_Perception[0];
+                    onePeriodReport.imagePerception = brandResult.b_Perception[1];
+                    onePeriodReport.ingredientsQualityIndex = brandResult.b_AverageIngredientsQuality;
+                    onePeriodReport.appliedTechnologyIndex = brandResult.b_AverageTechnology;
+                    onePeriodReport.marketSalesValue = brandResult.b_MarketSalesValue[consts.ConsumerSegmentsMaxTotal - 1];
+                    onePeriodReport.consumerPricePromotions = -brandResult.b_PricePromotionsCost;
+                    onePeriodReport.marketNetSalesValues = brandResult.b_MarketNetSalesValue[consts.ConsumerSegmentsMaxTotal - 1];
+                    onePeriodReport.numberOfOutOfStockEpisodes = utility.setSize(brandResult.b_CompleteOOSEpisodesNumbers);
+                    onePeriodReport.retailersPurchasesVolumeStdPack = brandResult.b_WholesalesVolume;
+                    onePeriodReport.shippmentsToWholesalersStdPack = brandResult.b_FactorySalesVolume;
+                    onePeriodReport.productionVolumeStdPack = brandResult.b_ActualProductionVolume;
+                    onePeriodReport.inventoryVolumeAtManufacturerStdPack = brandResult.b_FactoryStocks[consts.StocksMaxTotal].s_Volume;
+                    onePeriodReport.inventoryVolumeAtWholesalersStdPack = brandResult.b_WholesalesStocks[consts.StocksMaxTotal].s_Volume;
+                    onePeriodReport.inventoryVolumeAtRetailersStdPack = brandResult.b_RetailStocks[consts.StocksMaxTotal].s_Volume;
+                    onePeriodReport.stocksCoverAtRetailersWeeks = brandResult.b_StockCoverAtRetailers;
+                    onePeriodReport.stocksCoverAtWholesalersWeeks = brandResult.b_StockCoverAtWholesalers;
+                    brandReport.data.push(onePeriodReport);
+                    break;
                 }
             }
         })
     })
 
     return allBrandReport;
+
+
+
     function isBrandExist(brandId, allBrandReport){
         return allBrandReport.some(function(brandReport){
             return brandReport.brandId === brandId;
