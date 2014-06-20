@@ -15,11 +15,25 @@ exports.getCompanyStatusReport = function(allResults){
     return result;
 }
 
+function generateSKUReport(allResults){
+    var allSKUReport = [];
+
+    allResults[0].p_SKUs.forEach(function(SKU){
+        if(!isSKUExist(SKU.u_SKUID)){
+            allSKUReport.push({
+                SKUID: SKU.u_SKUID,
+
+            })
+        }
+    })
+}
+
 function generateBrandReport(allResults){
     var allBrandReport = [];
 
     allResults[0].p_Brands.forEach(function(brand){
         if(!isBrandExist(brand.b_BrandID, allBrandReport)){
+            allBrandReport.push([]);
             allBrandReport.push({
                 brandId: brand.b_BrandID,
                 marketShareValue: [],
@@ -67,6 +81,8 @@ function generateBrandReport(allResults){
             for(var i=0; i<onePeriodResult.p_Brands.length; i++){
                 var brandResult = onePeriodResult.p_Brands[i];
                 if(brandResult.b_BrandID === brandReport.brandId){
+                    brandReport.brandName = brandResult.b_BrandName;
+                    brandReport.companyId = brandResult.b_ParentCompanyID;
                     brandReport.marketShareValue.push(brandResult.b_ValueSegmentShare[consts.ConsumerSegmentsMaxTotal - 1] * 100);
                     brandReport.marketShareVolume.push(brandResult.b_VolumeSegmentShare[consts.ConsumerSegmentsMaxTotal - 1] * 100);
                     brandReport.marketSalesVolumeStdPack.push(brandResult.b_MarketSalesVolume[consts.ConsumerSegmentsMaxTotal - 1]);
