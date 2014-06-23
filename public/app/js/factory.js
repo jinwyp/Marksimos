@@ -50,7 +50,7 @@ app.factory('company',function($http){
         },
         getCompanyFutureProjectionCalculator : function(id){
             return $http.get(apiPath + 'future_projection_calculator/' + id).then(function(result){
-                console.log(result.data);
+//                console.log(result.data);
 
                 return result.data;
             }, function(err){
@@ -59,7 +59,7 @@ app.factory('company',function($http){
         },
         getCompanyProductPortfolio : function(){
             return $http.get(apiPath + 'product_portfolio').then(function(result){
-                console.log(result.data);
+//                console.log(result.data);
 
                 return result.data;
             }, function(err){
@@ -68,7 +68,7 @@ app.factory('company',function($http){
         },
         getCompanySpendingDetails : function(){
             return $http.get(apiPath + 'spending_details').then(function(result){
-                console.log(result.data);
+//                console.log(result.data);
 
                 return result.data;
             }, function(err){

@@ -15,7 +15,7 @@ marksimosapp.controller('chartController', function AppCtrl ($scope,  $timeout, 
         chartMenu : 'A3',
         additionalBudget : true,
         currentBrandId : 0,
-        currentDecisionRightMenu : 2
+        currentDecisionRightMenu : 1
     };
 
     $scope.dataChartSimple = {
@@ -37,6 +37,7 @@ marksimosapp.controller('chartController', function AppCtrl ($scope,  $timeout, 
         currentCompanyFutureProjectionCalculator : [],
         currentBrand : {},
         currentModifiedSku : {},
+        currentSku : {},
         userSegment : [
             {id:1, name:'1 Price Sensitive'},
             {id:2, name:'2 Pretenders'},
@@ -464,15 +465,13 @@ marksimosapp.controller('chartController', function AppCtrl ($scope,  $timeout, 
         $scope.data.currentCompany = data;
         $scope.css.currentBrandId = $scope.data.currentCompany.d_BrandsDecisions[0]._id;
         $scope.data.currentBrand = $scope.data.currentCompany.d_BrandsDecisions[0];
+        $scope.data.currentSku = $scope.data.currentCompany.d_BrandsDecisions[0].d_SKUsDecisions[0];
 
-        angular.forEach($scope.data.currentBrand.d_SKUsDecisions, function(value, key){
-            company.getCompanyFutureProjectionCalculator(value.d_SKUID).then(function(data, status, headers, config){
-                console.log(data);
-                $scope.data.currentCompanyFutureProjectionCalculator.push(data);
+        company.getCompanyFutureProjectionCalculator($scope.data.currentSku.d_SKUID).then(function(data, status, headers, config){
+            console.log(data);
+            $scope.data.currentCompanyFutureProjectionCalculator = data;
 
-            });
         });
-
 
     });
 
@@ -486,21 +485,23 @@ marksimosapp.controller('chartController', function AppCtrl ($scope,  $timeout, 
             overtimeCapacityCSS : data.overtimeCapacity * 100 + '%'
         };
 
-        console.log($scope.data.currentCompanyOtherInfo);
+//        console.log($scope.data.currentCompanyOtherInfo);
 
     });
 
 
 
     company.getCompanyProductPortfolio().then(function(data, status, headers, config){
-        console.log(data);
+//        console.log(data);
         $scope.data.currentCompanyProductPortfolio = data;
     });
 
     company.getCompanySpendingDetails().then(function(data, status, headers, config){
-        console.log(data);
+//        console.log(data);
         $scope.data.currentCompanySpendingDetails = data;
     });
+
+
 
 
     $scope.clickBrand = function(brand){

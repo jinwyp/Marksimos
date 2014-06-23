@@ -580,7 +580,7 @@
                 <div class="col-md-4">
                     <h6 class="progress_title text-center">Total Available Budget</h6>
                     <div class="progress progress_radius">
-                        <div class="progress-bar progress_bar_budget" role="progressbar" aria-valuenow="data.currentCompanyOtherInfo.totalAvailableBudget" aria-valuemin="0" aria-valuemax="100" style="width: {{data.currentCompanyOtherInfo.totalAvailableBudgetCSS}};">
+                        <div class="progress-bar progress_bar_budget" role="progressbar" aria-valuenow="data.currentCompanyOtherInfo.totalAvailableBudget" aria-valuemin="0" aria-valuemax="100" style="width: {{ data.currentCompanyOtherInfo.totalAvailableBudgetCSS}};">
                              {{data.currentCompanyOtherInfo.totalAvailableBudget}}%
                         </div>
                     </div>
@@ -589,7 +589,7 @@
                 <div class="col-md-4">
                     <h6 class="progress_title text-center">Normal Capacity</h6>
                     <div class="progress progress_radius">
-                        <div class="progress-bar progress_bar_normal_capacity" role="progressbar" aria-valuenow="{{data.currentCompanyOtherInfo.normalCapacity}}" aria-valuemin="0" aria-valuemax="100" style="width: {{data.currentCompanyOtherInfo.normalCapacityCSS}};">
+                        <div class="progress-bar progress_bar_normal_capacity" role="progressbar" aria-valuenow="{{data.currentCompanyOtherInfo.normalCapacity}}" aria-valuemin="0" aria-valuemax="100" style="width: {{ data.currentCompanyOtherInfo.normalCapacityCSS}};">
                             {{data.currentCompanyOtherInfo.normalCapacity}}%
                         </div>
                     </div>
@@ -598,7 +598,7 @@
                 <div class="col-md-4">
                     <h6 class="progress_title text-center">Overtime Capacity</h6>
                     <div class="progress progress_radius">
-                        <div class="progress-bar progress_bar_overtime" role="progressbar" aria-valuenow="{{data.currentCompanyOtherInfo.overtimeCapacity}}" aria-valuemin="0" aria-valuemax="100" style="width: {{data.currentCompanyOtherInfo.overtimeCapacityCSS}};">
+                        <div class="progress-bar progress_bar_overtime" role="progressbar" aria-valuenow="{{data.currentCompanyOtherInfo.overtimeCapacity}}" aria-valuemin="0" aria-valuemax="100" style="width: {{ data.currentCompanyOtherInfo.overtimeCapacityCSS}};">
                             {{data.currentCompanyOtherInfo.overtimeCapacity}}%
                         </div>
                     </div>
@@ -868,198 +868,326 @@
             <div class="row">
                 <div class="col-md-12">
 
+                    <ul class="nav nav-pills">
+                        <li ng-class="{'active': css.currentDecisionRightMenu==1}"  ng-click="css.currentDecisionRightMenu=1"> <a href="" >Future Projection Calculator</a> </li>
+                        <li ng-class="{'active': css.currentDecisionRightMenu==2}"  ng-click="css.currentDecisionRightMenu=2"> <a href="" >Product Portfolio</a> </li>
+                        <li ng-class="{'active': css.currentDecisionRightMenu==3}"  ng-click="css.currentDecisionRightMenu=3"> <a href="" >Spending Details</a> </li>
+                        <!--<li ng-class="{'active': css.currentDecisionRightMenu==4}"  ng-click="css.currentDecisionRightMenu=4"> <a href="" >My Favorite</a> </li>-->
+                    </ul>
 
-                <ul class="nav nav-pills">
-                    <li ng-class="{'active': css.currentDecisionRightMenu==1}"  ng-click="css.currentDecisionRightMenu=1"> <a href="" >Future Projection Calculator</a> </li>
-                    <li ng-class="{'active': css.currentDecisionRightMenu==2}"  ng-click="css.currentDecisionRightMenu=2"> <a href="" >Product Portfolio</a> </li>
-                    <li ng-class="{'active': css.currentDecisionRightMenu==3}"  ng-click="css.currentDecisionRightMenu=3"> <a href="" >Spending Details</a> </li>
-                    <!--<li ng-class="{'active': css.currentDecisionRightMenu==4}"  ng-click="css.currentDecisionRightMenu=4"> <a href="" >My Favorite</a> </li>-->
-                </ul>
+
+                    <div class="row brand_box right_menu">
+
+                        <div class="col-md-12 " ng-if="css.currentDecisionRightMenu==1">
+
+                            <div class="row ">
+                                <div class="col-md-8 col-md-offset-2 product_portfolio ">
+                                    <h4>{{data.currentBrand.d_BrandName}}{{data.currentSku.d_SKUName}} (Period {{data.currentCompanyFutureProjectionCalculator.currentPeriodInfo.period}})</h4>
+
+                                    <!-- Table -->
+                                    <table class="table table-striped table-bordered table-hover">
+                                        <thead>
+                                            <tr>
+                                                <th></th>
+                                                <th>In Pack Units</th>
+                                                <th>In Standard Units</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr >
+                                                <td>Stocks at Factory (mln)</td>
+                                                <td ng-repeat="sku in data.currentCompanyFutureProjectionCalculator.currentPeriodInfo.stocksAtFactory track by $index">{{sku}}</td>
+                                            </tr>
+                                            <tr >
+                                                <td>Stocks at Wholesales</td>
+                                                <td ng-repeat="sku in data.currentCompanyFutureProjectionCalculator.currentPeriodInfo.stocksAtWholsalers track by $index">{{sku}}</td>
+                                            </tr>
+                                            <tr >
+                                                <td>Stocks at Retailers (mln)</td>
+                                                <td ng-repeat="sku in data.currentCompanyFutureProjectionCalculator.currentPeriodInfo.stocksAtRetailers track by $index">{{sku | number:2}}</td>
+                                            </tr>
+                                            <tr >
+                                                <td>Unit Production Cost($)</td>
+                                                <td ng-repeat="sku in data.currentCompanyFutureProjectionCalculator.currentPeriodInfo.unitProductionCost track by $index">{{sku}}</td>
+                                            </tr>
+                                            <tr >
+                                                <td>Wholesale Price ($)</td>
+                                                <td ng-repeat="sku in data.currentCompanyFutureProjectionCalculator.currentPeriodInfo.wholesalePrice track by $index">{{sku}}</td>
+                                            </tr>
+                                            <tr >
+                                                <td>Recommended Consumer</td>
+                                                <td ng-repeat="sku in data.currentCompanyFutureProjectionCalculator.currentPeriodInfo.recommendedConsumer track by $index">{{sku}}</td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
 
 
-                <div class="row brand_box right_menu">
+                                    <h4>{{data.currentBrand.d_BrandName}}{{data.currentSku.d_SKUName}} (Period {{data.currentCompanyFutureProjectionCalculator.previousPeriodInfo.period}})</h4>
 
-                    <div class="col-md-12 " ng-if="css.currentDecisionRightMenu==2">
-                        <div class="panel panel-default product_portfolio">
-                            <!-- Default panel contents -->
-                            <div class="panel-heading text-center ">Current Production</div>
+                                    <!-- Table -->
+                                    <table class="table table-striped table-bordered table-hover">
+                                        <thead>
+                                            <tr>
+                                                <th></th>
+                                                <th>In Pack Units</th>
+                                                <th>In Standard Units</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr >
+                                                <td>Market Sales (mln Packs)</td>
+                                                <td ng-repeat="sku in data.currentCompanyFutureProjectionCalculator.previousPeriodInfo.marketSales track by $index">{{sku}}</td>
+                                            </tr>
+                                            <tr >
+                                                <td>Shipments to retailers (mln)</td>
+                                                <td ng-repeat="sku in data.currentCompanyFutureProjectionCalculator.previousPeriodInfo.shipmentsToRetailers track by $index">{{sku}}</td>
+                                            </tr>
+                                            <tr >
+                                                <td>Unit Production Cost ($)</td>
+                                                <td ng-repeat="sku in data.currentCompanyFutureProjectionCalculator.previousPeriodInfo.unitProductionCost track by $index">{{sku }}</td>
+                                            </tr>
+                                            <tr >
+                                                <td>Average Consumer Price</td>
+                                                <td ng-repeat="sku in data.currentCompanyFutureProjectionCalculator.previousPeriodInfo.averageConsumerPrice track by $index">{{sku}}</td>
+                                            </tr>
+                                            <tr >
+                                                <td>Consumer Communication</td>
+                                                <td colspan="2">{{data.currentCompanyFutureProjectionCalculator.previousPeriodInfo.consumerCommunication | number:2}}</td>
+                                            </tr>
+                                            <tr >
+                                                <td>Consumer Promotions</td>
+                                                <td colspan="2">{{data.currentCompanyFutureProjectionCalculator.previousPeriodInfo.consumerPromotions }}</td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
 
-                            <!-- Table -->
-                            <table class="table  table-bordered table-hover">
-                                <thead>
-                                    <tr>
-                                        <th>SKU Name</th>
-                                        <th>Target Segment</th>
-                                        <th>Factory Price</th>
-                                        <th>Ingredients Quality</th>
-                                        <th>Technology Level</th>
-                                        <th>Production Volume</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <tr ng-repeat="sku in data.currentCompanyProductPortfolio">
-                                        <td>{{sku.SKUName}}</td>
-                                        <td>{{sku.targetSegment}}</td>
-                                        <td>{{sku.factoryPrice}}</td>
-                                        <td>{{sku.ingredientsQuality}}</td>
-                                        <td>{{sku.technologyLevel}}</td>
-                                        <td>{{sku.productionVolume}}</td>
-                                    </tr>
-                                </tbody>
-                            </table>
+
+                                    <h4 class="sku_bg">SKU: Expected Sales</h4>
+
+                                    <!-- Table -->
+                                    <table class="table table-striped table-bordered table-hover">
+                                        <thead>
+                                            <tr>
+                                                <th colspan="2">Additional Information (SKU)</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr >
+                                                <td>Expected maximal sales</td>
+                                                <td >{{data.currentCompanyFutureProjectionCalculator.expectedSales.expectedMaximalSales}}</td>
+                                            </tr>
+                                            <tr >
+                                                <td>Expected Gross Margin (%)</td>
+                                                <td >{{data.currentCompanyFutureProjectionCalculator.expectedSales.expectedGrossMargin}}</td>
+                                            </tr>
+                                            <tr >
+                                                <td>Consumer Communication</td>
+                                                <td >{{data.currentCompanyFutureProjectionCalculator.expectedSales.expectedMaximalSales}}</td>
+                                            </tr>
+                                            <tr >
+                                                <td>Consumer Promotion as</td>
+                                                <td >{{data.currentCompanyFutureProjectionCalculator.expectedSales.expectedMaximalSales}}</td>
+                                            </tr>
+
+                                        </tbody>
+                                    </table>
+
+                                </div>
+                            </div>
+
+
                         </div>
 
-                        <div class="panel panel-default product_portfolio">
-                            <!-- Default panel contents -->
-                            <div class="panel-heading text-center ">Previous Inventory</div>
 
-                            <!-- Table -->
-                            <table class="table  table-bordered table-hover">
-                                <thead>
-                                    <tr>
-                                        <th>SKU Name</th>
-                                        <th>Average Factory Price</th>
-                                        <th>Average Ingredient Price</th>
-                                        <th>Average Technology Level</th>
-                                        <th>Total Inventory Volume at Factory</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <tr ng-repeat="sku in data.currentCompanyProductPortfolio">
-                                        <td>{{sku.SKUName}}</td>
-                                        <td>{{sku.averageFactoryPrice}}</td>
-                                        <td>{{sku.averageIngredientsQuality}}</td>
-                                        <td>{{sku.averageTechnologyLevel}}</td>
-                                        <td>{{sku.totalInventoryVolumeAtFactory}}</td>
-                                    </tr>
 
-                                </tbody>
-                            </table>
+
+
+                        <div class="col-md-12 " ng-if="css.currentDecisionRightMenu==2">
+                            <div class="panel panel-default product_portfolio">
+                                <!-- Default panel contents -->
+                                <div class="panel-heading text-center ">Current Production</div>
+
+                                <!-- Table -->
+                                <table class="table table-striped table-bordered table-hover">
+                                    <thead>
+                                        <tr>
+                                            <th>SKU Name</th>
+                                            <th>Target Segment</th>
+                                            <th>Factory Price</th>
+                                            <th>Ingredients Quality</th>
+                                            <th>Technology Level</th>
+                                            <th>Production Volume</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr ng-repeat="sku in data.currentCompanyProductPortfolio">
+                                            <td>{{sku.SKUName}}</td>
+                                            <td>{{sku.targetSegment}}</td>
+                                            <td>{{sku.factoryPrice}}</td>
+                                            <td>{{sku.ingredientsQuality}}</td>
+                                            <td>{{sku.technologyLevel}}</td>
+                                            <td>{{sku.productionVolume}}</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+
+                            <div class="panel panel-default product_portfolio">
+                                <!-- Default panel contents -->
+                                <div class="panel-heading text-center ">Previous Inventory</div>
+
+                                <!-- Table -->
+                                <table class="table table-striped table-bordered table-hover">
+                                    <thead>
+                                        <tr>
+                                            <th>SKU Name</th>
+                                            <th>Average Factory Price</th>
+                                            <th>Average Ingredient Price</th>
+                                            <th>Average Technology Level</th>
+                                            <th>Total Inventory Volume at Factory</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr ng-repeat="sku in data.currentCompanyProductPortfolio">
+                                            <td>{{sku.SKUName}}</td>
+                                            <td>{{sku.averageFactoryPrice}}</td>
+                                            <td>{{sku.averageIngredientsQuality}}</td>
+                                            <td>{{sku.averageTechnologyLevel}}</td>
+                                            <td>{{sku.totalInventoryVolumeAtFactory}}</td>
+                                        </tr>
+
+                                    </tbody>
+                                </table>
+                            </div>
+
                         </div>
 
+
+                        <div class="col-md-12 " ng-if="css.currentDecisionRightMenu==3">
+                            <div class="panel panel-default product_portfolio">
+                                <!-- Default panel contents -->
+
+                                <!-- Table -->
+                                <table class="table table-striped table-bordered table-hover">
+                                    <thead>
+                                        <tr>
+                                            <th>Brand Name</th>
+                                            <th ng-repeat="brand in data.currentCompanySpendingDetails.brandData">{{brand.brandName}}</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <th>Sale Force</th>
+                                            <td ng-repeat="brand in data.currentCompanySpendingDetails.brandData">{{brand.salesForce}}</td>
+                                        </tr>
+                                        <tr>
+                                            <th>Consumer Communication</th>
+                                            <td ng-repeat="brand in data.currentCompanySpendingDetails.brandData">{{brand.consumerCommunication}}</td>
+                                        </tr>
+                                        <tr>
+                                            <th>Consumer Promotions</th>
+                                            <td ng-repeat="brand in data.currentCompanySpendingDetails.brandData">{{brand.consumerPromotion}}</td>
+                                        </tr>
+                                        <tr>
+                                            <th>Trade Expenses</th>
+                                            <td ng-repeat="brand in data.currentCompanySpendingDetails.brandData">{{brand.tradeExpenses}}</td>
+                                        </tr>
+                                        <tr>
+                                            <th>Estimated Additional Trade Margin Cost</th>
+                                            <td ng-repeat="brand in data.currentCompanySpendingDetails.brandData">{{brand.estimatedAdditionalTradeMarginCost}}</td>
+                                        </tr>
+                                        <tr>
+                                            <th>Estimated Wholesale Bonus Cost</th>
+                                            <td ng-repeat="brand in data.currentCompanySpendingDetails.brandData">{{brand.estimatedWholesaleBonusCost}}</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+
+                            <div class="panel panel-default product_portfolio">
+                                <!-- Default panel contents -->
+                                <table class="table table-striped table-bordered table-hover">
+                                    <!--<thead>-->
+                                        <!--<tr>-->
+                                            <!--<th>Investment in Production Efficiency</th>-->
+                                            <!--<th>Investment in Processing Technology</th>-->
+                                            <!--<th>Total Investment</th>-->
+                                            <!--<th>Average Budget per Period</th>-->
+                                            <!--<th>Total Investment Budget</th>-->
+                                            <!--<th>Cumulated Previous Investments</th>-->
+                                            <!--<th>Available Budget</th>-->
+                                            <!--<th>Normal Capacity (mln Packs)</th>-->
+                                            <!--<th>Available Overtime Capacity Extenstion (mln Packs)</th>-->
+                                            <!--<th>Acquired Efficiency (%)</th>-->
+                                            <!--<th>Acquired Production Volmume Flexibility (%)</th>-->
+                                            <!--<th>Acquired Technology Level</th>-->
+                                        <!--</tr>-->
+                                    <!--</thead>-->
+
+                                    <thead>
+                                        <tr>
+                                            <th>Company</th>
+                                            <th>Total</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td>Investment in Production Efficiency</td>
+                                            <td>{{data.currentCompanySpendingDetails.companyData.investmentInProductionEfficiency}}</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Investment in Processing Technology</td>
+                                            <td>{{data.currentCompanySpendingDetails.companyData.investmentInProcessingTechnology}}</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Total Investment</td>
+                                            <td>{{data.currentCompanySpendingDetails.companyData.totalInvestment}}</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Average Budget per Period</td>
+                                            <td>{{data.currentCompanySpendingDetails.companyData.averageBudgetPerPeriod}}</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Total Investment Budget</td>
+                                            <td>{{data.currentCompanySpendingDetails.companyData.totalInvestmentBudget}}</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Cumulated Previous Investments</td>
+                                            <td>{{data.currentCompanySpendingDetails.companyData.cumulatedPreviousInvestments}}</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Available Budget</td>
+                                            <td>{{data.currentCompanySpendingDetails.companyData.averageBudgetPerPeriod}}</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Normal Capacity (mln Packs)</td>
+                                            <td>{{data.currentCompanySpendingDetails.companyData.normalCapacity}}</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Available Overtime Capacity Extenstion (mln Packs)</td>
+                                            <td>{{data.currentCompanySpendingDetails.companyData.availableOvertimeCapacityExtension}}</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Acquired Efficiency (%)</td>
+                                            <td>{{data.currentCompanySpendingDetails.companyData.acquiredEfficiency}}%</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Acquired Production Volmume Flexibility (%)</td>
+                                            <td>{{data.currentCompanySpendingDetails.companyData.acquiredProductionVolumeFlexibility}}%</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Acquired Technology Level</td>
+                                            <td>{{data.currentCompanySpendingDetails.companyData.acquiredTechnologyLevel}}</td>
+                                        </tr>
+
+                                    </tbody>
+
+
+                                </table>
+                            </div>
+
+                        </div>
                     </div>
-
-
-
-                    <div class="col-md-12 " ng-if="css.currentDecisionRightMenu==3">
-                        <div class="panel panel-default product_portfolio">
-                            <!-- Default panel contents -->
-
-                            <!-- Table -->
-                            <table class="table table-bordered table-hover">
-                                <thead>
-                                    <tr>
-                                        <th>Brand Name</th>
-                                        <th ng-repeat="brand in data.currentCompanySpendingDetails.brandData">{{brand.brandName}}</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <tr>
-                                        <th>Sale Force</th>
-                                        <td ng-repeat="brand in data.currentCompanySpendingDetails.brandData">{{brand.salesForce}}</td>
-                                    </tr>
-                                    <tr>
-                                        <th>Consumer Communication</th>
-                                        <td ng-repeat="brand in data.currentCompanySpendingDetails.brandData">{{brand.consumerCommunication}}</td>
-                                    </tr>
-                                    <tr>
-                                        <th>Consumer Promotions</th>
-                                        <td ng-repeat="brand in data.currentCompanySpendingDetails.brandData">{{brand.consumerPromotion}}</td>
-                                    </tr>
-                                    <tr>
-                                        <th>Trade Expenses</th>
-                                        <td ng-repeat="brand in data.currentCompanySpendingDetails.brandData">{{brand.tradeExpenses}}</td>
-                                    </tr>
-                                    <tr>
-                                        <th>Estimated Additional Trade Margin Cost</th>
-                                        <td ng-repeat="brand in data.currentCompanySpendingDetails.brandData">{{brand.estimatedAdditionalTradeMarginCost}}</td>
-                                    </tr>
-                                    <tr>
-                                        <th>Estimated Wholesale Bonus Cost</th>
-                                        <td ng-repeat="brand in data.currentCompanySpendingDetails.brandData">{{brand.estimatedWholesaleBonusCost}}</td>
-                                    </tr>
-                                </tbody>
-                            </table>
-                        </div>
-
-                        <div class="panel panel-default product_portfolio">
-                            <!-- Default panel contents -->
-                            <table class="table table-bordered table-hover">
-                                <!--<thead>-->
-                                    <!--<tr>-->
-                                        <!--<th>Investment in Production Efficiency</th>-->
-                                        <!--<th>Investment in Processing Technology</th>-->
-                                        <!--<th>Total Investment</th>-->
-                                        <!--<th>Average Budget per Period</th>-->
-                                        <!--<th>Total Investment Budget</th>-->
-                                        <!--<th>Cumulated Previous Investments</th>-->
-                                        <!--<th>Available Budget</th>-->
-                                        <!--<th>Normal Capacity (mln Packs)</th>-->
-                                        <!--<th>Available Overtime Capacity Extenstion (mln Packs)</th>-->
-                                        <!--<th>Acquired Efficiency (%)</th>-->
-                                        <!--<th>Acquired Production Volmume Flexibility (%)</th>-->
-                                        <!--<th>Acquired Technology Level</th>-->
-                                    <!--</tr>-->
-                                <!--</thead>-->
-                                <tbody>
-                                    <tr>
-                                        <td>Investment in Production Efficiency</td>
-                                        <td>{{data.currentCompanySpendingDetails.companyData.investmentInProductionEfficiency}}</td>
-                                    </tr>
-                                    <tr>
-                                        <td>Investment in Processing Technology</td>
-                                        <td>{{data.currentCompanySpendingDetails.companyData.investmentInProcessingTechnology}}</td>
-                                    </tr>
-                                    <tr>
-                                        <td>Total Investment</td>
-                                        <td>{{data.currentCompanySpendingDetails.companyData.totalInvestment}}</td>
-                                    </tr>
-                                    <tr>
-                                        <td>Average Budget per Period</td>
-                                        <td>{{data.currentCompanySpendingDetails.companyData.averageBudgetPerPeriod}}</td>
-                                    </tr>
-                                    <tr>
-                                        <td>Total Investment Budget</td>
-                                        <td>{{data.currentCompanySpendingDetails.companyData.totalInvestmentBudget}}</td>
-                                    </tr>
-                                    <tr>
-                                        <td>Cumulated Previous Investments</td>
-                                        <td>{{data.currentCompanySpendingDetails.companyData.cumulatedPreviousInvestments}}</td>
-                                    </tr>
-                                    <tr>
-                                        <td>Available Budget</td>
-                                        <td>{{data.currentCompanySpendingDetails.companyData.averageBudgetPerPeriod}}</td>
-                                    </tr>
-                                    <tr>
-                                        <td>Normal Capacity (mln Packs)</td>
-                                        <td>{{data.currentCompanySpendingDetails.companyData.normalCapacity}}</td>
-                                    </tr>
-                                    <tr>
-                                        <td>Available Overtime Capacity Extenstion (mln Packs)</td>
-                                        <td>{{data.currentCompanySpendingDetails.companyData.availableOvertimeCapacityExtension}}</td>
-                                    </tr>
-                                    <tr>
-                                        <td>Acquired Efficiency (%)</td>
-                                        <td>{{data.currentCompanySpendingDetails.companyData.acquiredEfficiency}}</td>
-                                    </tr>
-                                    <tr>
-                                        <td>Acquired Production Volmume Flexibility (%)</td>
-                                        <td>{{data.currentCompanySpendingDetails.companyData.acquiredProductionVolumeFlexibility}}</td>
-                                    </tr>
-                                    <tr>
-                                        <td>Acquired Technology Level</td>
-                                        <td>{{data.currentCompanySpendingDetails.companyData.acquiredTechnologyLevel}}</td>
-                                    </tr>
-
-                                </tbody>
-
-
-                            </table>
-                        </div>
-
-                    </div>
-                </div>
-
 
                 </div>
             </div>
