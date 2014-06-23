@@ -128,6 +128,30 @@ exports.calculateTotalVolume = function(currentDecision){
     return totalVolume;
 }
 
+exports.calculateTechnology = function(SKUResult){
+    if(SKUResult.u_ps_RetailStocks[consts.StocksMaxTotal].s_ps_Volume > 0){
+        return SKUResult.u_ps_RetailStocks[consts.StocksMaxTotal].s_Technology;
+    }else if(SKUResult.u_ps_WholesaleStocks[consts.StocksMaxTotal].s_ps_Volume > 0){
+        return SKUResult.u_ps_WholesaleStocks[consts.StocksMaxTotal].s_Technology;
+    }else if(SKUResult.u_ps_FactoryStocks[consts.StocksMaxTotal].s_ps_Volume > 0){
+        return SKUResult.u_ps_FactoryStocks[consts.StocksMaxTotal].s_Technology;
+    }else{
+        return SKUResult.u_ps_FactoryStocks[0].s_Technology;
+    }
+}
+
+exports.calculateIngredientsQuality = function(SKUResult){
+    if(SKUResult.u_ps_RetailStocks[consts.StocksMaxTotal].s_ps_Volume > 0){
+        return SKUResult.u_ps_RetailStocks[consts.StocksMaxTotal].s_IngredientsQuality;
+    }else if(SKUResult.u_ps_WholesaleStocks[consts.StocksMaxTotal].s_ps_Volume > 0){
+        return SKUResult.u_ps_WholesaleStocks[consts.StocksMaxTotal].s_IngredientsQuality;
+    }else if(SKUResult.u_ps_FactoryStocks[consts.StocksMaxTotal].s_ps_Volume > 0){
+        return SKUResult.u_ps_FactoryStocks[consts.StocksMaxTotal].s_IngredientsQuality;
+    }else{
+        return SKUResult.u_ps_FactoryStocks[0].s_IngredientsQuality;
+    }
+}
+
 
 
 

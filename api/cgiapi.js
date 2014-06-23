@@ -20,6 +20,7 @@ exports.getExogenous = function(period){
     var reqUrl = url.resolve(config.cgiService,
         util.format('exogenous.exe?period=%s&simulationVariant=%s&targetMarket=%s',
             period, simulationVariant, targetMarket));
+
     return request.get(reqUrl);
 }
 

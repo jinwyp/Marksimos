@@ -1,8 +1,9 @@
 var Q = require('q');
 var utility = require('../utility.js');
 var consts = require('../consts.js');
+var config = require('../config.js');
 
-exports.getCompanyStatusReport = function(allResults){
+exports.getCompanyStatusReport = function(allResults, allExogenous){
     var result = {
         company: {},
         brand: {},
@@ -11,21 +12,84 @@ exports.getCompanyStatusReport = function(allResults){
 
     result.company = generateCompanyReport(allResults);
     result.brand = generateBrandReport(allResults);
+    result.SKU = generateSKUReport(allResults, allExogenous);
 
     return result;
 }
 
-function generateSKUReport(allResults){
+function generateSKUReport(allResults, allExogenous){
+    if(allResults === undefined) throw new Error("Invalid parameter allResult.");
+    if(allExogenous === undefined) throw new Error("Invalid parameter allExogenous.");
+
     var allSKUReport = [];
 
     allResults[0].p_SKUs.forEach(function(SKU){
-        if(!isSKUExist(SKU.u_SKUID)){
+        if(!isSKUExist(SKU.u_SKUID, allSKUReport)){
             allSKUReport.push({
                 SKUID: SKU.u_SKUID,
-
+                data: []
             })
         }
+    });
+
+    allSKUReport.forEach(function(SKUReport){
+        var index = 0;
+        allResults.forEach(function(onePeriodResult){
+            var SKUResult = onePeriodResult.p_SKUs;
+            var exogenous = allExogenous[index];
+
+            SKUResult.forEach(function(SKU){
+                if(SKU.u_SKUID === SKUReport.SKUID){
+                    var brandName = utility.findBrand(onePeriodResult, SKU.u_ParentBrandID).b_BrandName;
+                    SKUReport.SKUName = brandName + SKU.u_SKUName + ' ' + config.packsizeDescription[SKU.u_PackSize];
+
+                    var onePeriodReport = {};
+                    onePeriodReport.marketShareValue = SKU.u_ValueSegmentShare[consts.ConsumerSegmentsMaxTotal-1] * 100.0;
+                    onePeriodReport.marketShareVolume = SKU.u_VolumeSegmentShare[consts.ConsumerSegmentsMaxTotal-1] * 100.0;
+                    onePeriodReport.marketSalesVolumeStdPack = SKU.u_MarketSalesVolume[consts.ConsumerSegmentsMaxTotal-1];
+                    onePeriodReport.lostSalesVolumeDueToOOSStdPack = SKU.u_StockOutVolume;
+                    onePeriodReport.numbericalDistribution = SKU.u_DistributionNum * 100;
+                    onePeriodReport.volumeWeightedDistribution = SKU.u_DistributionVol * 100;
+                    onePeriodReport.shelfSpace = SKU.u_ShelfSpace;
+                    onePeriodReport.awareness = SKU.u_Awareness;
+                    onePeriodReport.averageNetMarketPriceStdPack = SKU.u_AverageNetMarketPrice;
+                    onePeriodReport.averageDisplayPriceStdPack = SKU.u_AverageDisplayPrice;
+                    onePeriodReport.priceRankingIndex = SKU.u_PriceIndex;
+                    onePeriodReport.targetConsumerSegment = SKU.u_TargetConsumerSegment;
+                    onePeriodReport.targetConsumerSegmentExpectedValuePerception = exogenous.exo_SegmentsIdealPoints[SKU.u_TargetConsumerSegment][0];
+                    onePeriodReport.valuePerception = SKU.u_Perception[0];
+                    onePeriodReport.targetConsumerSegmentExpectedImagePerception = exogenous.exo_SegmentsIdealPoints[SKU.u_TargetConsumerSegment][1];
+                    onePeriodReport.imagePerception = SKU.u_Perception[1];
+                    onePeriodReport.ingredientsQualityIndex = utility.calculateIngredientsQuality(SKU);
+                    onePeriodReport.appliedTechnologyIndex = utility.calculateTechnology(SKU);
+                    onePeriodReport.marketSalesValue = SKU.u_MarketSalesValue[consts.ConsumerSegmentsMaxTotal-1];
+                    onePeriodReport.consumerPricePromotions = -SKU.u_PricePromotionsCost;
+                    onePeriodReport.marketNetSalesValue = SKU.u_MarketNetSalesValue[consts.ConsumerSegmentsMaxTotal-1];
+                    onePeriodReport.lostSalesVolumeDueToOOS = SKU.u_StockOutVolume / consts.ActualSize[SKU.u_PackSize];
+                    onePeriodReport.numberOfOutOfStockEpisodes = utility.setSize(SKU.u_OOSEpisodesNumbers);
+                    onePeriodReport.marketSalesVolume = SKU.u_MarketSalesVolume[consts.ConsumerSegmentsMaxTotal-1] / consts.ActualSize[SKU.u_PackSize];
+                    onePeriodReport.retailersPurchasesVolume = SKU.u_WholesalesVolume / consts.ActualSize[SKU.u_PackSize];
+                    onePeriodReport.shippmentsToWholesalers = SKU.u_FactorySalesVolume / consts.ActualSize[SKU.u_PackSize];
+                    onePeriodReport.productionVolume = SKU.u_ps_ActualProductionVolume;
+                    onePeriodReport.inventoryVolumeAtManufacturer = SKU.u_ps_FactoryStocks[consts.StocksMaxTotal].s_ps_Volume;;
+                    onePeriodReport.inventoryVolumeAtWholesalers = SKU.u_ps_WholesaleStocks[consts.StocksMaxTotal].s_ps_Volume;
+                    onePeriodReport.inventoryVolumeAtRetailers = SKU.u_ps_RetailStocks[consts.StocksMaxTotal].s_ps_Volume;
+                    onePeriodReport.stocksCoverAtRetailers = SKU.u_StockCoverAtRetailers;
+                    onePeriodReport.stocksCoverAtWholesalers = SKU.u_StockCoverAtWholesalers;
+                    SKUReport.data.push(onePeriodReport);
+                }
+            })
+        })
+        index++;
     })
+
+    return allSKUReport;
+
+    function isSKUExist(SKUID, allSKUReport){
+        return allSKUReport.some(function(SKUReport){
+            return SKUReport.SKUID === SKUID;
+        })
+    }
 }
 
 function generateBrandReport(allResults){
@@ -68,7 +132,7 @@ function generateBrandReport(allResults){
                     onePeriodReport.appliedTechnologyIndex = brandResult.b_AverageTechnology;
                     onePeriodReport.marketSalesValue = brandResult.b_MarketSalesValue[consts.ConsumerSegmentsMaxTotal - 1];
                     onePeriodReport.consumerPricePromotions = -brandResult.b_PricePromotionsCost;
-                    onePeriodReport.marketNetSalesValues = brandResult.b_MarketNetSalesValue[consts.ConsumerSegmentsMaxTotal - 1];
+                    onePeriodReport.marketNetSalesValue = brandResult.b_MarketNetSalesValue[consts.ConsumerSegmentsMaxTotal - 1];
                     onePeriodReport.numberOfOutOfStockEpisodes = utility.setSize(brandResult.b_CompleteOOSEpisodesNumbers);
                     onePeriodReport.retailersPurchasesVolumeStdPack = brandResult.b_WholesalesVolume;
                     onePeriodReport.shippmentsToWholesalersStdPack = brandResult.b_FactorySalesVolume;
@@ -133,7 +197,7 @@ function generateCompanyReport(allResults){
                     onePeriodReport.appliedTechnologyIndex = companyResult.c_AverageIngredientsQuality;
                     onePeriodReport.marketSalesValue = companyResult.c_MarketSalesValue[consts.ConsumerSegmentsMaxTotal-1];
                     onePeriodReport.consumerPricePromotions = -companyResult.c_PricePromotionsCost;
-                    onePeriodReport.marketNetSalesValues = companyResult.c_MarketNetSalesValue[consts.ConsumerSegmentsMaxTotal-1];
+                    onePeriodReport.marketNetSalesValue = companyResult.c_MarketNetSalesValue[consts.ConsumerSegmentsMaxTotal-1];
                     onePeriodReport.retailersPurchasesVolume = companyResult.c_WholesalesVolume;
                     onePeriodReport.shippmentsToWholesalers = companyResult.c_FactorySalesVolume;
                     onePeriodReport.productionVolume = companyResult.c_ActualProductionVolume;
