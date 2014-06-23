@@ -37,45 +37,6 @@ function generateBrandReport(allResults){
                brandId: brand.b_BrandID,
                data: [] 
             });
-            // allBrandReport.push({
-            //     brandId: brand.b_BrandID,
-            //     marketShareValue: [],
-            //     marketShareVolume: [],
-            //     marketSalesVolumeStdPack: [],
-            //     lostSalesVolumeDueToOOSStdPack: [],
-            //     numbericalDistribution: [],
-            //     volumeWeightedDistribution: [],
-            //     shelfSpace: [],
-
-            //     awareness: [],
-
-            //     averageNetMarketPriceStdPack: [],
-            //     averageDisplayPriceStdPack: [],
-
-            //     priceRankingIndex: [],
-            //     valuePerception: [],
-            //     imagePerception: [],
-
-            //     ingredientsQualityIndex: [],
-            //     appliedTechnologyIndex: [],
-
-            //     marketSalesValue:[],
-            //     consumerPricePromotions: [],
-            //     marketNetSalesValues: [],
-            //     //lostSalesVolumeDueToOOSStdPack,
-            //     numberOfOutOfStockEpisodes: [],
-            //     //marketSalesVolumeStdPack,
-            //     retailersPurchasesVolumeStdPack: [],
-            //     shippmentsToWholesalersStdPack: [],
-            //     productionVolumeStdPack: [],
-            //     inventoryVolumeAtManufacturerStdPack: [],
-            //     inventoryVolumeAtWholesalersStdPack: [],
-            //     inventoryVolumeAtRetailersStdPack: [],
-            //     //inventoryVolumeAtRetailersStdPack2: [],
-
-            //     stocksCoverAtRetailersWeeks: [],
-            //     stocksCoverAtWholesalersWeeks: []
-            // })
         }
     })
 
@@ -144,7 +105,8 @@ function generateCompanyReport(allResults){
     allResults[0].p_Companies.forEach(function(company){
         if(!isCompanyExist(company.c_CompanyID, allCompanyReport)){
             allCompanyReport.push({
-                companyId: company.c_CompanyID
+                companyId: company.c_CompanyID,
+                data: []
             })
         }
     })
@@ -153,56 +115,34 @@ function generateCompanyReport(allResults){
         allResults.forEach(function(onePeriodResult){
             for(var i=0; i<onePeriodResult.p_Companies.length; i++){
                 var companyResult = onePeriodResult.p_Companies[i];
+
                 if(companyResult.c_CompanyID === companyReport.companyId){
-
-                    if(!companyReport.marketShareValue) companyReport.marketShareValue = [];
-                    if(!companyReport.marketShareVolume) companyReport.marketShareVolume = [];
-                    if(!companyReport.marketSalesVolume) companyReport.marketSalesVolume = [];
-                    if(!companyReport.lostSalesVolumeDueToOOS) companyReport.lostSalesVolumeDueToOOS = [];
-                    if(!companyReport.numbericalDistribution)  companyReport.numbericalDistribution = [];
-                    if(!companyReport.volumeWeightedDistribution) companyReport.volumeWeightedDistribution = [];
-                    if(!companyReport.shelfSpace) companyReport.shelfSpace = [];
-                    if(!companyReport.mindSpaceShare) companyReport.mindSpaceShare = [];
-                    if(!companyReport.averageNetMarketPrice) companyReport.averageNetMarketPrice = [];
-                    if(!companyReport.averageDisplayPrice) companyReport.averageDisplayPrice = [];
-                    if(!companyReport.ingredientsQualityIndex)  companyReport.ingredientsQualityIndex = [];
-                    if(!companyReport.appliedTechnologyIndex)  companyReport.appliedTechnologyIndex = [];
-                    if(!companyReport.marketSalesValue)  companyReport.marketSalesValue = [];
-                    if(!companyReport.consumerPricePromotions)  companyReport.consumerPricePromotions = [];
-                    if(!companyReport.marketNetSalesValues)  companyReport.marketNetSalesValues = [];
-                    if(!companyReport.retailersPurchasesVolume)  companyReport.retailersPurchasesVolume = [];
-                    if(!companyReport.shippmentsToWholesalers)  companyReport.shippmentsToWholesalers = [];
-                    if(!companyReport.productionVolume)   companyReport.productionVolume = [];
-                    if(!companyReport.inventoryVolumeAtManufacturer)   companyReport.inventoryVolumeAtManufacturer = [];
-                    if(!companyReport.inventoryVolumeAtWholesalers)    companyReport.inventoryVolumeAtWholesalers = [];
-                    if(!companyReport.inventoryVolumeAtRetailers)    companyReport.inventoryVolumeAtRetailers = [];
-                    if(!companyReport.stocksCoverAtRetailers)    companyReport.stocksCoverAtRetailers = [];
-                    if(!companyReport.stocksCoverAtWholesalers)    companyReport.stocksCoverAtWholesalers = [];
-
-                    companyReport.marketShareValue.push(companyResult.c_ValueSegmentShare[consts.ConsumerSegmentsMaxTotal-1] * 100);
-                    companyReport.marketShareVolume.push(companyResult.c_VolumeSegmentShare[consts.ConsumerSegmentsMaxTotal -1] * 100);
-                    companyReport.marketSalesVolume.push(companyResult.c_MarketSalesVolume[consts.ConsumerSegmentsMaxTotal-1] * 100);
-                    companyReport.lostSalesVolumeDueToOOS.push(companyResult.c_TotalStockOutVolume);
-                    companyReport.numbericalDistribution.push(companyResult.c_AverageDistributionNum * 100);
-                    companyReport.volumeWeightedDistribution.push(companyResult.c_AverageDistributionVol * 100);
-                    companyReport.shelfSpace.push(companyResult.c_ShelfSpace * 100);
-                    companyReport.mindSpaceShare.push(companyResult.c_MindSpaceShare * 100);
-                    companyReport.averageNetMarketPrice.push(companyResult.c_AverageNetMarketPrice);
-                    companyReport.averageDisplayPrice.push(companyResult.c_AverageDisplayPrice);
-                    companyReport.ingredientsQualityIndex.push(companyResult.c_AverageIngredientsQuality);
-                    companyReport.appliedTechnologyIndex.push(companyResult.c_AverageIngredientsQuality);
-                    companyReport.marketSalesValue.push(companyResult.c_MarketSalesValue[consts.ConsumerSegmentsMaxTotal-1]);
-                    companyReport.consumerPricePromotions.push(-companyResult.c_PricePromotionsCost);
-                    companyReport.marketNetSalesValues.push(companyResult.c_MarketNetSalesValue[consts.ConsumerSegmentsMaxTotal-1]);
-                    companyReport.retailersPurchasesVolume.push(companyResult.c_WholesalesVolume);
-                    companyReport.shippmentsToWholesalers.push(companyResult.c_FactorySalesVolume);
-                    companyReport.productionVolume.push(companyResult.c_ActualProductionVolume);
-                    companyReport.inventoryVolumeAtManufacturer.push(companyResult.c_FactoryStocks[consts.StocksMaxTotal].s_Volume)
-                    companyReport.inventoryVolumeAtWholesalers.push(companyResult.c_WholesalesStocks[consts.StocksMaxTotal].s_Volume);
-                    companyReport.inventoryVolumeAtRetailers.push(companyResult.c_RetailStocks[consts.StocksMaxTotal].s_Volume);
-                    companyReport.stocksCoverAtRetailers.push(companyResult.c_StockCoverAtRetailers);
-                    companyReport.stocksCoverAtWholesalers.push(companyResult.c_StockCoverAtWholesalers);
-
+                    companyReport.companyName = companyResult.c_CompanyName;
+                    var onePeriodReport = {};
+                    onePeriodReport.marketShareValue = companyResult.c_ValueSegmentShare[consts.ConsumerSegmentsMaxTotal-1] * 100;
+                    onePeriodReport.marketShareVolume = companyResult.c_VolumeSegmentShare[consts.ConsumerSegmentsMaxTotal -1] * 100;
+                    onePeriodReport.marketSalesVolume = companyResult.c_MarketSalesVolume[consts.ConsumerSegmentsMaxTotal-1] * 100;
+                    onePeriodReport.lostSalesVolumeDueToOOS = companyResult.c_TotalStockOutVolume;
+                    onePeriodReport.numbericalDistribution = companyResult.c_AverageDistributionNum * 100;
+                    onePeriodReport.volumeWeightedDistribution = companyResult.c_AverageDistributionVol * 100;
+                    onePeriodReport.shelfSpace = companyResult.c_ShelfSpace * 100;
+                    onePeriodReport.mindSpaceShare = companyResult.c_MindSpaceShare * 100;
+                    onePeriodReport.averageNetMarketPrice = companyResult.c_AverageNetMarketPrice;
+                    onePeriodReport.averageDisplayPrice = companyResult.c_AverageDisplayPrice;
+                    onePeriodReport.ingredientsQualityIndex = companyResult.c_AverageIngredientsQuality;
+                    onePeriodReport.appliedTechnologyIndex = companyResult.c_AverageIngredientsQuality;
+                    onePeriodReport.marketSalesValue = companyResult.c_MarketSalesValue[consts.ConsumerSegmentsMaxTotal-1];
+                    onePeriodReport.consumerPricePromotions = -companyResult.c_PricePromotionsCost;
+                    onePeriodReport.marketNetSalesValues = companyResult.c_MarketNetSalesValue[consts.ConsumerSegmentsMaxTotal-1];
+                    onePeriodReport.retailersPurchasesVolume = companyResult.c_WholesalesVolume;
+                    onePeriodReport.shippmentsToWholesalers = companyResult.c_FactorySalesVolume;
+                    onePeriodReport.productionVolume = companyResult.c_ActualProductionVolume;
+                    onePeriodReport.inventoryVolumeAtManufacturer = companyResult.c_FactoryStocks[consts.StocksMaxTotal].s_Volume;
+                    onePeriodReport.inventoryVolumeAtWholesalers = companyResult.c_WholesalesStocks[consts.StocksMaxTotal].s_Volume;
+                    onePeriodReport.inventoryVolumeAtRetailers = companyResult.c_RetailStocks[consts.StocksMaxTotal].s_Volume;
+                    onePeriodReport.stocksCoverAtRetailers = companyResult.c_StockCoverAtRetailers;
+                    onePeriodReport.stocksCoverAtWholesalers = companyResult.c_StockCoverAtWholesalers;
+                    companyReport.data.push(onePeriodReport);
                     break;
                 }
             }
