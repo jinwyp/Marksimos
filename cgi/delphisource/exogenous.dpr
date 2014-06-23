@@ -16,6 +16,7 @@ var
   sValue: String;
   params: TDictionary<String, String>;
   GConfigureRecord: TConfigurationRecord;
+  jsonResult: string;
 
 function parseSimulationVariant(p: String): TSimulationVariant;
 begin
@@ -61,7 +62,11 @@ begin
       ReadExogenous(StrToInt(params['period']), GConfigureRecord, FExogenous^);
 
       jo := ctx.AsJson<TExogenous>(FExogenous^);
-      Writeln(jo.AsJSon(False, True));
+
+      jsonResult := jo.AsJSon(False, True);
+      jsonResult := StringReplace(jsonResult, 'NAN,', '0,',
+                          [rfReplaceAll, rfIgnoreCase]);
+      Writeln(jsonResult);
     end;
     { TODO -oUser -cConsole Main : Insert code here }
   except
