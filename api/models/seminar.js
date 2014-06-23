@@ -10,10 +10,6 @@ var seminarSchema = new Schema({
     teams: [],
     facilitatorId: String,
     isFinished: Boolean, //if this seminar is finished
-
-    allResults: [],
-    charts: [],
-    reports: []
 });
 
 var teamSchema = new Schema({
@@ -23,18 +19,6 @@ var teamSchema = new Schema({
 
 var Seminar = mongoose.model("Seminar", seminarSchema);
 
-
-exports.getSeminarSetting = function(seminarId){
-    var deferred = Q.defer();
-    process.nextTick(function(){
-        deferred.resolve({
-            simulationSpan: 3,
-            simulationVariant: 'FMCG',
-            targetMarket: 'GENERIC'
-        });
-    });
-    return deferred.promise;
-}
 
 exports.update = function(seminarId, seminar){
     var deferred = Q.defer();
@@ -55,7 +39,7 @@ exports.insert = function(seminarId, seminar){
         if(err){
             deferred.reject(err);
         }else{
-            deferred.resolve(null);
+            deferred.resolve(undefined);
         }
     });
     return deferred.promise;
@@ -70,39 +54,6 @@ exports.remove = function(seminarId){
             deferred.resolve();
         }
     })
-    return deferred.promise;
-}
-
-exports.clearExistedData = function(seminarId){
-    var deferred = Q.defer();
-    Seminar.update({
-        seminarId: seminarId
-    }, 
-    {
-        allResults: [],
-        productPortfolio: [],
-        charts: [],
-        reports: []
-    },
-    function(err, numAffected){
-        if(err){
-            deferred.reject(err);
-        }else{
-            deferred.resolve(numAffected);
-        }
-    });
-    return deferred.promise;
-}
-
-exports.getChartData = function(seminarId){
-    var deferred = Q.defer();
-    Seminar.findOne({seminarId: seminarId}, function(err, result){
-        if(err){
-            deferred.reject(err);
-        }else{
-            deferred.resolve(result.charts);
-        }
-    });
     return deferred.promise;
 }
 

@@ -20,15 +20,15 @@ exports.submitDecision = function(req, res, next){
     var seminarId = req.session.seminarId;
 
     if(!companyId){
-        return res.json({status: 0, message: "Invalid companyId"});
+        return res.json({message: "Invalid companyId"});
     }
 
     if(period === undefined){
-        return res.json({status: 0, message: "Invalid period"});
+        return res.json({message: "Invalid period"});
     }
 
     if(!seminarId){
-        return res.json({status: 0, message: "Invalid seminarId"});
+        return res.json({message: "Invalid seminarId"});
     }
 
     var result = {};
@@ -48,7 +48,7 @@ exports.submitDecision = function(req, res, next){
         result.d_InvestmentInTechnology = decision.d_InvestmentInTechnology;
         result.d_InvestmentInServicing = decision.d_InvestmentInServicing;
 
-        return brandDecisionModel.findAll(seminarId, period, companyId)
+        return brandDecisionModel.findAllInCompany(seminarId, period, companyId)
                 .then(function(brandDecisions){
                     var p2 = Q();
                     brandDecisions.forEach(function(brandDecision){
@@ -59,7 +59,7 @@ exports.submitDecision = function(req, res, next){
                         tempBrandDecision.d_SKUsDecisions = [];
 
                         p2 = p2.then(function(){
-                            return SKUDecisionModel.findAll(seminarId, period, companyId, brandDecision.d_BrandID);
+                            return SKUDecisionModel.findAllInBrand(seminarId, period, companyId, brandDecision.d_BrandID);
                         }).then(function(SKUDecisions){
                             SKUDecisions.forEach(function(SKUDecision){
                                 var tempSKUDecision = {};
@@ -92,7 +92,7 @@ exports.submitDecision = function(req, res, next){
     })
     .then(function(){
         if(Object.keys(result).length===0){
-            return res.json({result: 0, message: "fail to get decisions"})
+            return res.send(500, {message: "fail to get decisions"})
         }
 
         insertEmptyBrandsAndSKUs(result);
@@ -113,7 +113,8 @@ exports.submitDecision = function(req, res, next){
     })
     .fail(function(err){
         next(err);
-    }).done();
+    })
+    .done();
 
     /**
      * CGI service can not convert JSON string to delphi object,
@@ -160,28 +161,27 @@ exports.updateSKUDecision = function(req, res, next){
 
 
     if(!brandId){
-        return res.send(400, {status: 0, message: "Invalid parameter brand_id."});
+        return res.send(400, {message: "Invalid parameter brand_id."});
     }
 
     if(!SKUID){
-        console.log(SKUID);
-        return res.send(400, {status: 0, message: "Invalid parameter sku_id."});
+        return res.send(400, {message: "Invalid parameter sku_id."});
     }
 
     if(!SKU){
-        return res.send(400, {status: 0, message: "Invalid parameter skudata"});
+        return res.send(400, {message: "Invalid parameter skudata"});
     }
 
     if(!seminarId){
-        return res.send(400, {status: 0, message: "Invalid seminarId in session."});
+        return res.send(400, {message: "Invalid seminarId in session."});
     }
 
     if(!companyId){
-        return res.send(400, {status: 0, message: "Invalid companyId in session."});
+        return res.send(400, {message: "Invalid companyId in session."});
     }
 
     if(period === undefined){
-        return res.send(400, {status: 0, message: "Invalid period in session."});
+        return res.send(400, {message: "Invalid period in session."});
     }
 
     var jsonSKU = SKU;
@@ -192,13 +192,13 @@ exports.updateSKUDecision = function(req, res, next){
     SKUDecisionModel.updateSKU(seminarId, period, companyId, brandId, SKUID, tempSKU)
     .then(function(numAffected){
         if(numAffected !== 1){
-            return res.send(400, {status: 0, message: 'SKUDecision does not exist.'});
+            return res.send(400, {message: 'SKUDecision does not exist.'});
         }
         res.send({status: 1, message: 'update success.'});
     })
     .fail(function(err){
         logger.error(err);
-        res.send(500, {status: 0, message: 'update failed.'});
+        res.send(500, {message: 'update failed.'});
     })
     .done(); 
 
@@ -222,6 +222,15 @@ exports.updateSKUDecision = function(req, res, next){
 };
 
 exports.updateBrandDecision = function(req, res, next){
+    /*
+    application/json; charset=utf-8
+    {
+      "brand_id": 12,
+      "brand_data": {
+        "d_SalesForce": 10
+      }
+    }
+    */
     var brandId = req.body.brand_id;
     var brand_data = req.body.brand_data;
 
@@ -231,46 +240,38 @@ exports.updateBrandDecision = function(req, res, next){
 
 
     if(!brandId){
-        return res.send(400, {status: 0, message: "Invalid parameter brand_id."});
+        return res.send(400, {message: "Invalid parameter brand_id."});
     }
 
     if(!brand_data){
-        return res.send(400, {status: 0, message: "Invalid parameter brand_data"});
+        return res.send(400, {message: "Invalid parameter brand_data"});
     }
 
     if(!seminarId){
-        return res.send(400, {status: 0, message: "Invalid seminarId in session."});
+        return res.send(400, {message: "Invalid seminarId in session."});
     }
 
     if(!companyId){
-        return res.send(400, {status: 0, message: "Invalid companyId in session."});
+        return res.send(400, {message: "Invalid companyId in session."});
     }
 
     if(period === undefined){
-        return res.send(400, {status: 0, message: "Invalid period in session."});
+        return res.send(400, {message: "Invalid period in session."});
     }
 
-    var jsonBrand = null;
-    try{
-        jsonBrand = JSON.parse(brand_data);
-    }catch(err){
-        logger.error(err);
-        return res.send(400, {status: 0, message: "Invalid parameter brand_data"});
-    }
-
-    var tempBrand = createBrand(jsonBrand);
+    var tempBrand = createBrand(brand_data);
 
 
     brandDecisionModel.updateBrand(seminarId, period, companyId, brandId, tempBrand)
     .then(function(numAffected){
         if(numAffected !== 1){
-            return res.send(400, {status: 0, message: 'brandDecision does not exist.'});
+            return res.send(400, {message: 'brandDecision does not exist.'});
         }
         res.send({status: 1, message: 'update success.'});
     })
     .fail(function(err){
         logger.error(err);
-        res.send(500, {status: 0, message: 'update failed.'});
+        res.send(500, {message: 'update failed.'});
     })
     .done(); 
 
@@ -298,42 +299,34 @@ exports.updateCompanyDecision = function(req, res, next){
 
 
     if(!company_data){
-        return res.send(400, {status: 0, message: "Invalid parameter company_data"});
+        return res.send(400, {message: "Invalid parameter company_data"});
     }
 
     if(!seminarId){
-        return res.send(400, {status: 0, message: "Invalid seminarId in session."});
+        return res.send(400, {message: "Invalid seminarId in session."});
     }
 
     if(!companyId){
-        return res.send(400, {status: 0, message: "Invalid companyId in session."});
+        return res.send(400, {message: "Invalid companyId in session."});
     }
 
     if(period === undefined){
-        return res.send(400, {status: 0, message: "Invalid period in session."});
+        return res.send(400, {message: "Invalid period in session."});
     }
 
-    var jsonCompanyDecision = null;
-    try{
-        jsonCompanyDecision = JSON.parse(company_data);
-    }catch(err){
-        logger.error(err);
-        return res.send(400, {status: 0, message: "Invalid parameter company_data"});
-    }
-
-    var tempCompanyDecision = createCompanyDecision(jsonCompanyDecision);
+    var tempCompanyDecision = createCompanyDecision(company_data);
 
 
     companyDecisionModel.updateCompanyDecision(seminarId, period, companyId, tempCompanyDecision)
     .then(function(numAffected){
         if(numAffected !== 1){
-            return res.send(400, {status: 0, message: 'companyDecision does not exist.'});
+            return res.send(400, {message: 'companyDecision does not exist.'});
         }
-        res.send({status: 1, message: 'update success.'});
+        res.send({message: 'update success.'});
     })
     .fail(function(err){
         logger.error(err);
-        res.send(500, {status: 0, message: 'update failed.'});
+        res.send(500, {message: 'update failed.'});
     })
     .done(); 
 
@@ -352,9 +345,166 @@ exports.updateCompanyDecision = function(req, res, next){
     }
 };
 
+exports.addBrand = function(req, res, next){
+    var seminarId = req.session.seminarId;
+    var period = req.session.period;
+    var companyId = req.session.companyId;
 
+    var brand_name = req.body.brand_name;
+    var sku_name = req.body.sku_name;
 
+    if(!brand_name){
+        return res.send(400, {message: "Invalid parameter brand_name."});
+    }
 
+    if(!sku_name){
+        return res.send(400, {message: "Invalid parameter sku_name."})
+    }
+
+    brandDecisionModel.findAllInCompany(seminarId, period, companyId)
+    .then(function(allBrands){
+        var maxBrandId = 0;
+        allBrands.forEach(function(brand){
+            if(brand.d_BrandID>maxBrandId){
+                maxBrandId = brand.d_BrandID;
+            }
+        })
+
+        if(maxBrandId===0 || maxBrandId % 10 > 4){
+            return res.send(400, {message: "you alread have 5 brands."});
+        }
+
+        var nextBrandId = maxBrandId +1;
+        var firstSKUID = (maxBrandId+1)*10 + 1;//SKUID =  brandID * 10 + 1 
+
+        return SKUDecisionModel.save({
+            seminarId: seminarId,
+            period: period,
+            d_CID: companyId,
+            d_BrandID: nextBrandId,
+            d_SKUID: firstSKUID,
+            d_SKUName: sku_name
+        })
+        .then(function(){
+            return brandDecisionModel.save({
+                seminarId: seminarId,
+                period: period,
+                d_CID: companyId,
+                d_BrandID: nextBrandId,
+                d_BrandName     : brand_name,
+                d_SKUsDecisions : [firstSKUID] 
+            })
+        })      
+    })
+    .then(function(){
+        res.send({message: "add brand success."});
+    })
+    .fail(function(err){
+        logger.error(err);
+        res.send(500, {message: "addBrand failed."})
+    })
+    .done();
+}
+
+exports.addSKU = function(req, res, next){
+    var seminarId = req.session.seminarId;
+    var period = req.session.period;
+    var companyId = req.session.companyId;
+
+    var brand_id = req.body.brand_id;
+    var sku_name = req.body.sku_name;
+
+    if(!sku_name){
+        return res.send(400, {message: "Invalid parameter sku_name."})
+    }
+
+    SKUDecisionModel.findAllInBrand(seminarId, period, companyId, brand_id)
+    .then(function(allSKUs){
+        var maxSKUID = 0;
+        allSKUs.forEach(function(SKU){
+            if(SKU.d_SKUID > maxSKUID){
+                maxSKUID = SKU.d_SKUID;
+            }
+        })
+
+        if(maxSKUID===0){
+            return res.send({message: "there's no SKU, probably the brand doesn't exist."});
+        }
+
+        if(maxSKUID.toString()[maxSKUID.toString().length-1] === '5'){
+            return res.send({message: "You already have 5 SKUs."});
+        }
+
+        return SKUDecisionModel.save({
+            seminarId: seminarId,
+            period: period,
+            d_CID: companyId,
+            d_BrandID: brand_id,
+            d_SKUID: maxSKUID + 1,
+            d_SKUName: sku_name
+        })
+    })
+    .then(function(){
+        res.send({message: 'add SKU successfully.'});
+    })
+    .fail(function(err){
+        logger.error(err);
+        res.send(500, {message: "addSKU failed."})
+    })
+    .done();
+}
+
+exports.deleteSKU = function(req, res, next){
+    var seminarId = req.session.seminarId;
+    var period = req.session.period;
+    var companyId = req.session.companyId;
+
+    var brand_id = req.body.brand_id;
+    var sku_id = req.body.sku_id;
+
+    if(!brand_id){
+        return res.send(400, {message: "Invalid parameter brand_id."});
+    }
+
+    if(!sku_id){
+        return res.send(400, {message: "Invalid parameter sku_id."})
+    }
+
+    SKUDecisionModel.remove(seminarId, period, companyId, brand_id, sku_id)
+    .then(function(){
+        res.send({message: "remove SKU successfully."});
+    })
+    .fail(function(err){
+        logger.error(err);
+        res.send(500, {message: "remove SKU failed."});
+    })
+    .done();
+}
+
+exports.deleteBrand = function(req, res, next){
+    var seminarId = req.session.seminarId;
+    var period = req.session.period;
+    var companyId = req.session.companyId;
+
+    var brand_id = req.body.brand_id;
+    
+    if(!brand_id){
+        return res.send(400, {message: "Invalid parameter brand_id."});
+    }
+
+    brandDecisionModel.remove(seminarId, period, companyId, brand_id)
+    .then(function(){
+        return SKUDecisionModel.removeAllInBrand(seminarId, period, companyId, brand_id);
+    })
+    .then(function(){
+        res.send({message: "Remove brand successfully."});
+    })
+    .fail(function(err){
+        logger.error(err);
+        res.send(500, {message: "remove brand failed."});
+    })
+    .done();
+}
 
 
 

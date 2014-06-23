@@ -1,9 +1,13 @@
+/**
+ * @param {Object} decision decision got from CGI service
+ */
 exports.convert = function(decision){
     convertCompanyName(decision);
     //convert SKUName
     convertSKUName(decision);
     convertBrandName(decision);
 }
+
 
 function convertCompanyName(decision){
     decision.d_CompanyName = decision.d_CompanyName.split('');

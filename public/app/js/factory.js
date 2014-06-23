@@ -22,21 +22,65 @@ app.factory('currentUser',function(){
     return factory;
 });
 
+
+
+
 app.factory('company',function($http){
 
     var apiPath = '/api/';
 
     var factory = {
         getCompany : function(){
-            return $http.get(apiPath + 'companydata').then(function(result){
+            return $http.get(apiPath + 'company').then(function(result){
 //                console.log(result.data);
 
-                return result.data.companyDecision;
+                return result.data;
+            }, function(err){
+                console.log(err);
             });
         },
+        getCompanyOtherInfo : function(){
+            return $http.get(apiPath + 'company/otherinfo').then(function(result){
+//                console.log(result.data);
+
+                return result.data;
+            }, function(err){
+                console.log(err);
+            });
+        },
+        getCompanyFutureProjectionCalculator : function(id){
+            return $http.get(apiPath + 'future_projection_calculator/' + id).then(function(result){
+                console.log(result.data);
+
+                return result.data;
+            }, function(err){
+                console.log(err);
+            });
+        },
+        getCompanyProductPortfolio : function(){
+            return $http.get(apiPath + 'product_portfolio').then(function(result){
+                console.log(result.data);
+
+                return result.data;
+            }, function(err){
+                console.log(err);
+            });
+        },
+        getCompanySpendingDetails : function(){
+            return $http.get(apiPath + 'spending_details').then(function(result){
+                console.log(result.data);
+
+                return result.data;
+            }, function(err){
+                console.log(err);
+            });
+        },
+
+
         updateSku : function(postdata){
             return $http.post(apiPath + 'sku/decision/', postdata);
         }
+
     };
 
 
@@ -103,6 +147,7 @@ app.factory('report',function($http){
 //        mouseout: function() {},
 //        click: function() {}
     };
+
 
 
 
@@ -206,51 +251,125 @@ app.factory('report',function($http){
         }
     };
 
-    var exampleData = [
-        {
-            "key": "Series 1",
-            "values": [ [ 1025409600000 , 0] , [ 1028088000000 , -6.3382185140371] , [ 1030766400000 , -5.9507873460847] , [ 1033358400000 , -11.569146943813] , [ 1036040400000 , -5.4767332317425] , [ 1038632400000 , 0.50794682203014] , [ 1041310800000 , -5.5310285460542] , [ 1043989200000 , -5.7838296963382] , [ 1046408400000 , -7.3249341615649] , [ 1049086800000 , -6.7078630712489] , [ 1051675200000 , 0.44227126150934] , [ 1054353600000 , 7.2481659343222] , [ 1056945600000 , 9.2512381306992] ]
-        },
-        {
-            "key": "Series 2",
-            "values": [ [ 1025409600000 , 0] , [ 1028088000000 , 0] , [ 1030766400000 , 0] , [ 1033358400000 , 0] , [ 1036040400000 , 0] , [ 1038632400000 , 0] , [ 1041310800000 , 0] , [ 1043989200000 , 0] , [ 1046408400000 , 0] , [ 1049086800000 , 0] , [ 1051675200000 , 0] , [ 1054353600000 , 0] , [ 1056945600000 , 0] , [ 1059624000000 , 0] , [ 1062302400000 , 0] , [ 1064894400000 , 0] , [ 1067576400000 , 0] , [ 1070168400000 , 0] , [ 1072846800000 , 0] , [ 1075525200000 , -0.049184266875945] ]
-        },
-        {
-            "key": "Series 3",
-            "values": [ [ 1025409600000 , 0] , [ 1028088000000 , -6.3382185140371] , [ 1030766400000 , -5.9507873460847] , [ 1033358400000 , -11.569146943813] , [ 1036040400000 , -5.4767332317425] , [ 1038632400000 , 0.50794682203014] , [ 1041310800000 , -5.5310285460542] , [ 1043989200000 , -5.7838296963382] , [ 1046408400000 , -7.3249341615649] , [ 1049086800000 , -6.7078630712489] , [ 1051675200000 , 0.44227126150934] , [ 1054353600000 , 7.2481659343222] , [ 1056945600000 , 9.2512381306992] ]
-        },
-        {
-            "key": "Series 4",
-            "values": [ [ 1025409600000 , -7.0674410638835] , [ 1028088000000 , -14.663359292964] , [ 1030766400000 , -14.104393060540] , [ 1033358400000 , -23.114477037218] , [ 1036040400000 , -16.774256687841] , [ 1038632400000 , -11.902028464000] , [ 1041310800000 , -16.883038668422] , [ 1043989200000 , -19.104223676831] , [ 1046408400000 , -20.420523282736] , [ 1049086800000 , -19.660555051587] , [ 1051675200000 , -13.106911231646] , [ 1054353600000 , -8.2448460302143] , [ 1056945600000 , -7.0313058730976] ]
-        }
-    ];
-    var chartFormatTool2 = function(chartHttpData, decimalNumber) {
-        // 使用angular-nvd3 插件的数据格式
+
+    var chartFormatTool2 = function(chartHttpData) {
+        // 使用angular-nvd3 插件的数据格式 Stacked Multi Bar Chart
 
         chartResult.series = [];
         chartResult.data = [];
 
-        angular.forEach(chartHttpData.SKUs, function(value, key) {
 
-            var oneLineData = {
-                key : value.SKUName, //Round Name
-                values : angular.copy(chartHttpData.chartData[key])
-            };
-
-            angular.forEach(oneLineData.y, function(value, key) {
-                if(decimalNumber === 0){
-                    oneLineData.y[key] = Math.round(value * 100) / 100;
-                }else{
-                    oneLineData.y[key] = Math.round(value * 10000 )/Math.pow(10, Number(decimalNumber));
-                }
+        if(angular.isArray(chartHttpData.SKUs) ){
+            angular.forEach(chartHttpData.SKUs[0].inventoryData, function(value, key) {
+                var oneSeries = {
+                    "key": value.inventoryName,
+                    "values": []
+                };
+                chartResult.data.push(oneSeries);
+                chartResult.series.push(value.inventoryName);
             });
 
-            chartResult.data.push(oneLineData);
-        });
+            angular.forEach(chartHttpData.SKUs, function(value, key) {
 
+                var oneLineData1 = []; // CloseToEXpireInventory
+                oneLineData1.push( value.SKUName );
+                oneLineData1.push( angular.copy(Math.round(value.inventoryData[0].inventoryValue * 100) / 100 ) );
+
+                var oneLineData2 = []; // PreviousInventory
+                oneLineData2.push( value.SKUName );
+                oneLineData2.push( angular.copy(Math.round(value.inventoryData[1].inventoryValue * 100) / 100 ) );
+
+                var oneLineData3 = []; // FreshInventory
+                oneLineData3.push( value.SKUName );
+                oneLineData3.push( angular.copy(Math.round(value.inventoryData[2].inventoryValue * 100) / 100 ) );
+
+                chartResult.data[0].values.push(oneLineData1);
+                chartResult.data[1].values.push(oneLineData2);
+                chartResult.data[2].values.push(oneLineData3);
+
+            });
+            return angular.copy(chartResult.data);
+        }
     };
 
+    var chartFormatTool3 = function(chartHttpData) {
+        // 使用angular-nvd3 插件的数据格式   Scatter Chart 散点图
+        chartResult.series = [];
+        chartResult.data = [];
+        chartResult.dataSKU = [];
+        chartResult.dataBrand = [];
 
+        if(angular.isArray(chartHttpData) ){
+
+            angular.forEach(chartHttpData, function(value, key) {
+                var oneCompanySku = {
+                    "key" : value.companyName,
+                    "values" : []
+                };
+
+                var oneCompanyBrand = {
+                    "key" : value.companyName,
+                    "values" : []
+                };
+
+                angular.forEach(value.SKUs, function(valueSku, keySku) {
+                    var oneLineSku1 = {
+                        'x' : Math.round(valueSku.valuePerception * 100) / 100,
+                        'y' : Math.round(valueSku.imagePerception * 100) / 100,
+                        'size' : 0.6,
+                        'SKUName' : valueSku.SKUName,
+                        'name' : valueSku.SKUName,
+                        'CompanyName' : value.companyName,
+                        'tooltips' : valueSku.tooltips,
+                        'shape' : 'circle'
+                    };
+
+                    oneCompanySku.values.push(oneLineSku1);
+                });
+
+                angular.forEach(value.brands, function(valueBrand, keyBrand) {
+                    var oneLineBrand1 = {
+                        'x' : Math.round(valueBrand.valuePerception * 100) / 100,
+                        'y' : Math.round(valueBrand.imagePerception * 100) / 100,
+                        'size' : 0.6,
+                        'BrandName' : valueBrand.brandName,
+                        'name' : valueBrand.brandName,
+                        'CompanyName' : value.companyName,
+                        'tooltips' : [],
+                        'shape' : 'circle'
+                    };
+
+                    oneCompanyBrand.values.push(oneLineBrand1);
+                });
+
+                chartResult.dataSKU.push(oneCompanySku);
+                chartResult.dataBrand.push(oneCompanyBrand);
+            });
+
+            var oneSegment = {
+                "key" : 'Segment',
+                "values" : []
+            };
+
+            angular.forEach(chartHttpData[0].exogenous, function(value, key) {
+                var oneLineData = {
+                    'x' : Math.round(value.valuePerception * 100) / 100,
+                    'y' : Math.round(value.imagePerception * 100) / 100,
+                    'size' : 0.5,
+                    'name' : key + ' ' + value.segmentName,
+                    'tooltips' : [],
+                    'shape' : 'diamond'
+                };
+
+                oneSegment.values.push(oneLineData);
+            });
+
+            chartResult.dataSKU.push(oneSegment);
+            chartResult.dataBrand.push(oneSegment);
+
+            return angular.copy(chartResult);
+        }
+    };
 
     var factory = {
 
@@ -279,6 +398,8 @@ app.factory('report',function($http){
 //                console.log(result.data);
 
                 return chartFormatTool1(result.data, 2);
+            }, function(err){
+                console.log(err);
             });
         },
 
@@ -310,12 +431,11 @@ app.factory('report',function($http){
         // Chart A3
         inventoryReport : function(){
             return $http.get(apiPath + 'chart/inventory_report').then(function(result){
-                console.log(result.data);
+//                console.log(result.data);
 
-                return chartFormatTool2(result.data, 2);
+                return chartFormatTool2(result.data);
             });
         },
-
 
 
         // Chart B3
@@ -432,6 +552,16 @@ app.factory('report',function($http){
 //                console.log(result.data);
 
                 return chartFormatTool1(result.data, 2);
+            });
+        },
+
+
+        // Chart C2
+        perceptionMap : function(){
+            return $http.get(apiPath + 'chart/perception_map').then(function(result){
+//                console.log(result.data);
+
+                return chartFormatTool3(result.data);
             });
         },
 

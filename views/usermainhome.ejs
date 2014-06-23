@@ -264,7 +264,7 @@
                 <ul class="list-group">
                     <li class="list-group-item" ng-class="{'list-group-item-active': css.chartMenu=='A1'}" ng-click="clickChartMenu('A1')">Company Status(F)</li>
                     <li class="list-group-item" ng-class="{'list-group-item-active': css.chartMenu=='A2'}" ng-click="clickChartMenu('A2')">Financial Data</li>
-                    <li class="list-group-item" ng-class="{'list-group-item-active': css.chartMenu=='A3'}" ng-click="clickChartMenu('A3')">Inventory Report</li>
+                    <li class="list-group-item" ng-class="{'list-group-item-active': css.chartMenu=='A3'}" ng-click="clickChartMenu('A3')">Inventory Report(F)</li>
                 </ul>
             </div>
 
@@ -286,7 +286,7 @@
                 <!-- List group -->
                 <ul class="list-group">
                     <li class="list-group-item" ng-class="{'list-group-item-active': css.chartMenu=='C1'}" ng-click="clickChartMenu('C1')">Segment Leader Top5(F)</li>
-                    <li class="list-group-item" ng-class="{'list-group-item-active': css.chartMenu=='C2'}" ng-click="clickChartMenu('C2')">Perception Map</li>
+                    <li class="list-group-item" ng-class="{'list-group-item-active': css.chartMenu=='C2'}" ng-click="clickChartMenu('C2')">Perception Map(F)</li>
                     <li class="list-group-item" ng-class="{'list-group-item-active': css.chartMenu=='C3'}" ng-click="clickChartMenu('C3')">Segment Distributions</li>
                     <li class="list-group-item" ng-class="{'list-group-item-active': css.chartMenu=='C4'}" ng-click="clickChartMenu('C4')">Market Evolution(F)</li>
                     <li class="list-group-item" ng-class="{'list-group-item-active': css.chartMenu=='C5'}" ng-click="clickChartMenu('C5')">Market Indicator</li>
@@ -340,25 +340,21 @@
         <div class="col-md-10 user_chart_right" ng-if="css.chartMenu=='A3'">
             <div class="row">
                 <div class="col-md-12 user_chart_single chart_1">
-                    <h5>{{data.chartA11MarketShareInValue.config.title}}
+                    <h5>{{data.chartA31InventoryReport.title}}
                         <span class="glyphicon glyphicon-info-sign"></span>
                         <!--<span class="glyphicon glyphicon-resize-full chart_icon"></span>-->
                         <span class="glyphicon glyphicon-save chart_icon"></span>
                     </h5>
-                    <nvd3-multi-bar-chart
-                            data="exampleData"
-                            id="exampleId"
-                            xAxisTickFormat=""
-                            width="700"
-                            height="350"
-                            showXAxis="true"
-                            showYAxis="true">
+                    <nvd3-multi-bar-chart data="data.chartA31InventoryReport.data" tooltipcontent="A31ToolTipContent()"
+                         color="A31ColorFunction()" legendcolor="A31ColorFunction()"
+                         height="600" showXAxis="true" showYAxis="true" stacked="true" showLegend="true" reduceXTicks="false" tooltips="true" interactive="true">
                         <svg></svg>
                     </nvd3-multi-bar-chart>
+
+                    <p class="text-center">Total Stock (milions of standard pack) = Factory Stock + Trade Stock + Retailer Stock</p>
                 </div>
 
             </div>
-
         </div>
 
 
@@ -501,6 +497,29 @@
         </div>
 
 
+        <div class="col-md-10 user_chart_right" ng-if="css.chartMenu=='C2'">
+            <div class="row">
+                <div class="col-md-12 user_chart_single chart_1">
+                    <h5>{{data.chartC21PerceptionMap.title}}
+                        <span class="glyphicon glyphicon-info-sign"></span>
+                        <!--<span class="glyphicon glyphicon-resize-full chart_icon"></span>-->
+                        <span class="glyphicon glyphicon-save chart_icon"></span>
+
+                        <div class="btn-group btn-group-xs perception_map_group">
+                            <button type="button" class="btn btn-default perception_map_button" ng-click="switchPerceptionMapsData('sku')">SKU</button>
+                            <button type="button" class="btn btn-default perception_map_button" ng-click="switchPerceptionMapsData('brand')">Brand</button>
+                        </div>
+                    </h5>
+                    <nvd3-scatter-chart data="data.chartC21PerceptionMap.dataChart"
+                        xaxislabel="Value Perception" yaxislabel="Image Perception" color="A31ColorFunction()" legendcolor="A31ColorFunction()" shape="C31shapeFunction()" tooltipContent="C31TooltipContent()"
+                        height="600" margin="{left:100}" showXAxis="true" showYAxis="true"  showLegend="true"  tooltips="true" interactive="true" fisheye="1000" transitionDuration="500">
+                        <svg></svg>
+                    </nvd3-scatter-chart>
+                </div>
+            </div>
+        </div>
+
+
         <div class="col-md-10 user_chart_right" ng-if="css.chartMenu=='C4'">
             <div class="row">
                 <div class="col-md-6 user_chart_single chart_2">
@@ -541,6 +560,7 @@
             </div>
         </div>
 
+
     </div>
 
 
@@ -560,8 +580,8 @@
                 <div class="col-md-4">
                     <h6 class="progress_title text-center">Total Available Budget</h6>
                     <div class="progress progress_radius">
-                        <div class="progress-bar progress_bar_budget" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style="width: 60%;">
-                            60%
+                        <div class="progress-bar progress_bar_budget" role="progressbar" aria-valuenow="data.currentCompanyOtherInfo.totalAvailableBudget" aria-valuemin="0" aria-valuemax="100" style="width: {{data.currentCompanyOtherInfo.totalAvailableBudgetCSS}};">
+                             {{data.currentCompanyOtherInfo.totalAvailableBudget}}%
                         </div>
                     </div>
                 </div>
@@ -569,8 +589,8 @@
                 <div class="col-md-4">
                     <h6 class="progress_title text-center">Normal Capacity</h6>
                     <div class="progress progress_radius">
-                        <div class="progress-bar progress_bar_normal_capacity" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style="width: 60%;">
-                            60%
+                        <div class="progress-bar progress_bar_normal_capacity" role="progressbar" aria-valuenow="{{data.currentCompanyOtherInfo.normalCapacity}}" aria-valuemin="0" aria-valuemax="100" style="width: {{data.currentCompanyOtherInfo.normalCapacityCSS}};">
+                            {{data.currentCompanyOtherInfo.normalCapacity}}%
                         </div>
                     </div>
                 </div>
@@ -578,8 +598,8 @@
                 <div class="col-md-4">
                     <h6 class="progress_title text-center">Overtime Capacity</h6>
                     <div class="progress progress_radius">
-                        <div class="progress-bar progress_bar_overtime" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style="width: 60%;">
-                            60%
+                        <div class="progress-bar progress_bar_overtime" role="progressbar" aria-valuenow="{{data.currentCompanyOtherInfo.overtimeCapacity}}" aria-valuemin="0" aria-valuemax="100" style="width: {{data.currentCompanyOtherInfo.overtimeCapacityCSS}};">
+                            {{data.currentCompanyOtherInfo.overtimeCapacity}}%
                         </div>
                     </div>
                 </div>
@@ -834,13 +854,215 @@
                 </div>
             </div>
 
-
         </div>
 
-        <div class="col-md-7">
+        <div class="col-md-7 decision_box decision_right_box">
+
+            <div class="row">
+                <div class="col-md-12">
+                    <h4 class="text-center">DATA REFERENCE</h4>
+                    <h6 class="text-center">　</h6>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-12">
+
+
+                <ul class="nav nav-pills">
+                    <li ng-class="{'active': css.currentDecisionRightMenu==1}"  ng-click="css.currentDecisionRightMenu=1"> <a href="" >Future Projection Calculator</a> </li>
+                    <li ng-class="{'active': css.currentDecisionRightMenu==2}"  ng-click="css.currentDecisionRightMenu=2"> <a href="" >Product Portfolio</a> </li>
+                    <li ng-class="{'active': css.currentDecisionRightMenu==3}"  ng-click="css.currentDecisionRightMenu=3"> <a href="" >Spending Details</a> </li>
+                    <!--<li ng-class="{'active': css.currentDecisionRightMenu==4}"  ng-click="css.currentDecisionRightMenu=4"> <a href="" >My Favorite</a> </li>-->
+                </ul>
+
+
+                <div class="row brand_box right_menu">
+
+                    <div class="col-md-12 " ng-if="css.currentDecisionRightMenu==2">
+                        <div class="panel panel-default product_portfolio">
+                            <!-- Default panel contents -->
+                            <div class="panel-heading text-center ">Current Production</div>
+
+                            <!-- Table -->
+                            <table class="table  table-bordered table-hover">
+                                <thead>
+                                    <tr>
+                                        <th>SKU Name</th>
+                                        <th>Target Segment</th>
+                                        <th>Factory Price</th>
+                                        <th>Ingredients Quality</th>
+                                        <th>Technology Level</th>
+                                        <th>Production Volume</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr ng-repeat="sku in data.currentCompanyProductPortfolio">
+                                        <td>{{sku.SKUName}}</td>
+                                        <td>{{sku.targetSegment}}</td>
+                                        <td>{{sku.factoryPrice}}</td>
+                                        <td>{{sku.ingredientsQuality}}</td>
+                                        <td>{{sku.technologyLevel}}</td>
+                                        <td>{{sku.productionVolume}}</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+
+                        <div class="panel panel-default product_portfolio">
+                            <!-- Default panel contents -->
+                            <div class="panel-heading text-center ">Previous Inventory</div>
+
+                            <!-- Table -->
+                            <table class="table  table-bordered table-hover">
+                                <thead>
+                                    <tr>
+                                        <th>SKU Name</th>
+                                        <th>Average Factory Price</th>
+                                        <th>Average Ingredient Price</th>
+                                        <th>Average Technology Level</th>
+                                        <th>Total Inventory Volume at Factory</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr ng-repeat="sku in data.currentCompanyProductPortfolio">
+                                        <td>{{sku.SKUName}}</td>
+                                        <td>{{sku.averageFactoryPrice}}</td>
+                                        <td>{{sku.averageIngredientsQuality}}</td>
+                                        <td>{{sku.averageTechnologyLevel}}</td>
+                                        <td>{{sku.totalInventoryVolumeAtFactory}}</td>
+                                    </tr>
+
+                                </tbody>
+                            </table>
+                        </div>
+
+                    </div>
 
 
 
+                    <div class="col-md-12 " ng-if="css.currentDecisionRightMenu==3">
+                        <div class="panel panel-default product_portfolio">
+                            <!-- Default panel contents -->
+
+                            <!-- Table -->
+                            <table class="table table-bordered table-hover">
+                                <thead>
+                                    <tr>
+                                        <th>Brand Name</th>
+                                        <th ng-repeat="brand in data.currentCompanySpendingDetails.brandData">{{brand.brandName}}</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <th>Sale Force</th>
+                                        <td ng-repeat="brand in data.currentCompanySpendingDetails.brandData">{{brand.salesForce}}</td>
+                                    </tr>
+                                    <tr>
+                                        <th>Consumer Communication</th>
+                                        <td ng-repeat="brand in data.currentCompanySpendingDetails.brandData">{{brand.consumerCommunication}}</td>
+                                    </tr>
+                                    <tr>
+                                        <th>Consumer Promotions</th>
+                                        <td ng-repeat="brand in data.currentCompanySpendingDetails.brandData">{{brand.consumerPromotion}}</td>
+                                    </tr>
+                                    <tr>
+                                        <th>Trade Expenses</th>
+                                        <td ng-repeat="brand in data.currentCompanySpendingDetails.brandData">{{brand.tradeExpenses}}</td>
+                                    </tr>
+                                    <tr>
+                                        <th>Estimated Additional Trade Margin Cost</th>
+                                        <td ng-repeat="brand in data.currentCompanySpendingDetails.brandData">{{brand.estimatedAdditionalTradeMarginCost}}</td>
+                                    </tr>
+                                    <tr>
+                                        <th>Estimated Wholesale Bonus Cost</th>
+                                        <td ng-repeat="brand in data.currentCompanySpendingDetails.brandData">{{brand.estimatedWholesaleBonusCost}}</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+
+                        <div class="panel panel-default product_portfolio">
+                            <!-- Default panel contents -->
+                            <table class="table table-bordered table-hover">
+                                <!--<thead>-->
+                                    <!--<tr>-->
+                                        <!--<th>Investment in Production Efficiency</th>-->
+                                        <!--<th>Investment in Processing Technology</th>-->
+                                        <!--<th>Total Investment</th>-->
+                                        <!--<th>Average Budget per Period</th>-->
+                                        <!--<th>Total Investment Budget</th>-->
+                                        <!--<th>Cumulated Previous Investments</th>-->
+                                        <!--<th>Available Budget</th>-->
+                                        <!--<th>Normal Capacity (mln Packs)</th>-->
+                                        <!--<th>Available Overtime Capacity Extenstion (mln Packs)</th>-->
+                                        <!--<th>Acquired Efficiency (%)</th>-->
+                                        <!--<th>Acquired Production Volmume Flexibility (%)</th>-->
+                                        <!--<th>Acquired Technology Level</th>-->
+                                    <!--</tr>-->
+                                <!--</thead>-->
+                                <tbody>
+                                    <tr>
+                                        <td>Investment in Production Efficiency</td>
+                                        <td>{{data.currentCompanySpendingDetails.companyData.investmentInProductionEfficiency}}</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Investment in Processing Technology</td>
+                                        <td>{{data.currentCompanySpendingDetails.companyData.investmentInProcessingTechnology}}</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Total Investment</td>
+                                        <td>{{data.currentCompanySpendingDetails.companyData.totalInvestment}}</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Average Budget per Period</td>
+                                        <td>{{data.currentCompanySpendingDetails.companyData.averageBudgetPerPeriod}}</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Total Investment Budget</td>
+                                        <td>{{data.currentCompanySpendingDetails.companyData.totalInvestmentBudget}}</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Cumulated Previous Investments</td>
+                                        <td>{{data.currentCompanySpendingDetails.companyData.cumulatedPreviousInvestments}}</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Available Budget</td>
+                                        <td>{{data.currentCompanySpendingDetails.companyData.averageBudgetPerPeriod}}</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Normal Capacity (mln Packs)</td>
+                                        <td>{{data.currentCompanySpendingDetails.companyData.normalCapacity}}</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Available Overtime Capacity Extenstion (mln Packs)</td>
+                                        <td>{{data.currentCompanySpendingDetails.companyData.availableOvertimeCapacityExtension}}</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Acquired Efficiency (%)</td>
+                                        <td>{{data.currentCompanySpendingDetails.companyData.acquiredEfficiency}}</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Acquired Production Volmume Flexibility (%)</td>
+                                        <td>{{data.currentCompanySpendingDetails.companyData.acquiredProductionVolumeFlexibility}}</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Acquired Technology Level</td>
+                                        <td>{{data.currentCompanySpendingDetails.companyData.acquiredTechnologyLevel}}</td>
+                                    </tr>
+
+                                </tbody>
+
+
+                            </table>
+                        </div>
+
+                    </div>
+                </div>
+
+
+                </div>
+            </div>
 
         </div>
     </div>

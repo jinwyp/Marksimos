@@ -10,34 +10,68 @@ var tOneSKUDecisionSchema = new Schema({
     d_BrandID: Number,
     d_SKUID: Number,
     d_SKUName: String,
-    d_Advertising: Number, //consumer communication
-    d_AdditionalTradeMargin: Number,
-    d_FactoryPrice: [Number],
-    d_ConsumerPrice: Number,
-    d_RepriceFactoryStocks: Boolean,
-    d_IngredientsQuality: Number,
-    d_PackSize: Number,
-    d_ProductionVolume: Number, 
-    d_PromotionalBudget: Number, //consumer promotions
-    d_PromotionalEpisodes: [Boolean], //consumer promotions schedule
-    d_TargetConsumerSegment: Number,
-    d_Technology: Number,
-    d_ToDrop: Boolean,
-    d_TradeExpenses: Number,
-    d_WholesalesBonusMinVolume: Number,
-    d_WholesalesBonusRate: Number,
-    d_WarrantyLength: Number
+    d_Advertising: {type: Number, default: 0}, //consumer communication
+    d_AdditionalTradeMargin: {type: Number, default: 0},
+    d_FactoryPrice: {type: [Number], default: [0,0,0]},
+    d_ConsumerPrice: {type: Number, default: 0},
+    d_RepriceFactoryStocks: {type: Boolean, default: 0},
+    d_IngredientsQuality: {type: Number, default: 0},
+    d_PackSize: {type: Number, default: 0},
+    d_ProductionVolume: {type: Number, default: 0}, 
+    d_PromotionalBudget: {type: Number, default: 0}, //consumer promotions
+    d_PromotionalEpisodes: {type: [Boolean], default: [false, false,false,false,false,false,false,false,false,false,false,false,false]}, //consumer promotions schedule
+    d_TargetConsumerSegment: {type: Number, default: 0},
+    d_Technology: {type: Number, default: 0},
+    d_ToDrop: {type: Boolean, default: 0},
+    d_TradeExpenses: {type: Number, default: 0},
+    d_WholesalesBonusMinVolume: {type: Number, default: 0},
+    d_WholesalesBonusRate: {type: Number, default: 0},
+    d_WarrantyLength: {type: Number, default: 0}
 }); 
 
 var SKUDecision = mongoose.model('SKUDecision', tOneSKUDecisionSchema);
 
-exports.remove =  function(seminarId){
+exports.remove =  function(seminarId, period, companyId, brandId, SKUID){
+    var deferred = Q.defer();
+    SKUDecision.remove({
+        seminarId: seminarId,
+        period: period,
+        d_CID: companyId,
+        d_BrandID: brandId,
+        d_SKUID: SKUID
+    }, function(err){
+        if(err){
+            return deferred.reject(err);
+        }else{
+            return deferred.resolve(undefined);
+        }
+    });
+    return deferred.promise;
+}
+
+exports.removeAll =  function(seminarId){
     var deferred = Q.defer();
     SKUDecision.remove({seminarId: seminarId}, function(err){
         if(err){
             return deferred.reject(err);
         }else{
-            return deferred.resolve(null);
+            return deferred.resolve(undefined);
+        }
+    });
+    return deferred.promise;
+}
+
+exports.removeAllInBrand = function(seminarId, period, companyId){
+    var deferred = Q.defer();
+    SKUDecision.remove({
+        seminarId: seminarId,
+        d_CID: companyId
+    }, 
+    function(err){
+        if(err){
+            return deferred.reject(err);
+        }else{
+            return deferred.resolve(undefined);
         }
     });
     return deferred.promise;
@@ -45,12 +79,15 @@ exports.remove =  function(seminarId){
 
 exports.save = function(decision){
     var deferred = Q.defer();
-    var decision = new SKUDecision(decision);
-    decision.save(function(err){
+    var d = new SKUDecision(decision);
+
+    d.save(function(err, result, numAffected){
         if(err){
             deferred.reject(err);
+        }else if(numAffected!==1){
+            deferred.reject(new Error("no result found in db"))
         }else{
-            deferred.resolve(null);
+            deferred.resolve(undefined);
         }
     });
     return deferred.promise;
@@ -75,7 +112,7 @@ exports.findOne = function(seminarId, period, companyId, brandId, SKUID){
     return deferred.promise;
 };
 
-exports.findAll = function(seminarId, period, companyId, brandId){
+exports.findAllInBrand = function(seminarId, period, companyId, brandId){
     var deferred = Q.defer();
     SKUDecision.find({
         seminarId: seminarId,
@@ -113,6 +150,23 @@ exports.findAllInCompany = function(seminarId, period, companyId){
     return deferred.promise;
 };
 
+exports.findAllInPeriod = function(seminarId, period){
+    var deferred = Q.defer();
+
+    SKUDecision.find({
+        seminarId: seminarId,
+        period: period
+    })
+    .exec(function(err, result){
+        if(err){
+            deferred.reject(err);
+        }else{
+            deferred.resolve(result);
+        }
+    });
+    return deferred.promise;
+}
+
 exports.updateSKU = function(seminarId, period, companyId, brandId, SKUID, SKU){
     var deferred = Q.defer();
 
@@ -147,6 +201,31 @@ exports.updateSKU = function(seminarId, period, companyId, brandId, SKUID, SKU){
     }
     return deferred.promise;
 };
+
+
+
+/**
+ * Insert empty SKU decisions for all SKUs in the next period
+ */
+exports.insertEmptySKUDecision = function(seminarId, period){
+    return exports.findAllInPeriod(seminarId, period-1)
+    .then(function(allSKUDecisions){
+        var p = Q();
+        allSKUDecisions.forEach(function(SKUDecision){
+            p = p.then(function(){
+                return exports.save({
+                    seminarId: seminarId,
+                    period: period,
+                    d_CID: SKUDecision.d_CID,  
+                    d_BrandID: SKUDecision.d_BrandID, 
+                    d_SKUID: SKUDecision.d_SKUID,
+                    d_SKUName: SKUDecision.d_SKUName
+                })
+            })
+        })
+        return p;
+    })
+}
 
 
 

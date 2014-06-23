@@ -4,6 +4,7 @@ var consts = require('../consts.js');
 var seminarModel = require('../models/seminar.js');
 var decisionAssembler = require('./decision.js');
 var Q = require('q');
+var simulationResultModel = require('../models/simulationResult.js');
 
 /**
  * Assemble product portfolio data
@@ -13,25 +14,23 @@ var Q = require('q');
  */
 exports.getProductPortfolioForOneCompany = function(seminarId, period, companyId){
     return Q.all([
-        seminarModel.findOne(seminarId),
+        simulationResultModel.findOne(seminarId, period),
         decisionAssembler.getDecision(seminarId, period, companyId)
     ])
-    .spread(function(seminar, decision){
-        allResults = seminar.allResults;
+    .spread(function(lastPeriodResult, decision){
 
         var productPortfolioForOneCompany = [];
-        var lastPeriodResult = allResults[allResults.length-1];
-
+        
         for(var i=0; i<decision.d_BrandsDecisions.length; i++){
             var brandDecision = decision.d_BrandsDecisions[i];
 
             for(var j=0; j<brandDecision.d_SKUsDecisions.length; j++){
                 var SKUDecision = brandDecision.d_SKUsDecisions[j];
-
+                
                 var productPortfolioForSKU = {};
                 
                 productPortfolioForSKU.SKUName = brandDecision.d_BrandName + SKUDecision.d_SKUName;
-                productPortfolioForSKU.targetSegment = config.segmentNamesOnProductPortfolio[SKUDecision.d_TargetConsumerSegment-1];
+                productPortfolioForSKU.targetSegment = config.segmentNamesOnProductPortfolio[SKUDecision.d_TargetConsumerSegment];
 
                 productPortfolioForSKU.factoryPrice = SKUDecision.d_FactoryPrice[0].toFixed(2) + ' / (' 
                     + (SKUDecision.d_FactoryPrice[0]/consts.ActualSize[SKUDecision.d_PackSize]).toFixed(2)

@@ -119,18 +119,23 @@
 
 
 ## /api/register
-### POST
-### parameter
-####:email
-####:password
-### response
-
-## /api/decision/sku/discontinue
-### POST
+### Method
+POST
 ### Parameters
-####: brand_id
-####: sku_id
-####: is_continue
+* email
+* password
+* response
+
+## /api/sku/decision
+
+### Method
+PUT
+
+### Parameters
+* brand_id
+* sku_id
+* sku_data
+
 ### response
 失败的Response
 
@@ -141,16 +146,114 @@
 
     HTTP Status: 200, {status: 1, message: 'update success.'}
 
+## /api/sku/decision
+Add a SKU
 
-## /api/decision/sku/discontinue
-### POST
+### Method
+POST
+
 ### Parameters
-####: sku
-{
+* brand_id
+* sku_name
 
-}
-### response
+## /api/sku/decision
+Delete a SKU
 
+### Method
+DELETE
+
+### Parameters
+* brand_id
+* sku_id
+
+## /api/brand/decision
+Update a brand decision
+
+### Method
+PUT
+
+### Parameters
+* brand_id
+* brand_data
+
+
+## /api/brand/decision
+Add a brand
+
+### Method
+POST
+
+### Parameters
+* brand_name
+* sku_name
+
+
+## /api/brand/decision
+Delete a brand
+
+### Method
+DELETE
+
+### Parameters
+* brand_id
+
+## /api/company/decision
+Update a company decision
+
+### Method
+PUT
+
+### Parameters
+* company_data
+
+### Request
+
+    {
+      "company_data": {
+        "d_IsAdditionalBudgetAccepted": true
+      }
+    }
+
+### Response
+
+    {message: 'update success.'}
+
+## /api/decision
+Get all decisions of all brands in one company in the last period
+
+### Method
+GET
+
+### Parameters
+no parameters
+
+## /api/product_portfolio
+Get production portfolio information
+
+### Method
+GET
+
+### Parameters
+no parameters
+
+## /api/spending_details
+Get spending details
+
+### Method
+GET
+
+### Parameters
+no parameters
+
+
+## /api/future_projection_calculator/:sku_id
+Get future projection calculator
+
+### Method
+GET
+
+### Parameters
+* sku_id
 
 
 ## url

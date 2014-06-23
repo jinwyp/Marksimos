@@ -11,13 +11,12 @@ var marksimosapp = angular.module('marksimos', ['angularCharts', 'nvd3ChartDirec
 marksimosapp.controller('chartController', function AppCtrl ($scope,  $timeout, $http, report, company) {
 
     $scope.css = {
-        menu : 'Report',
+        menu : 'Decision',
         chartMenu : 'A3',
         additionalBudget : true,
         currentBrandId : 0,
-        investmentInfo : false
+        currentDecisionRightMenu : 2
     };
-
 
     $scope.dataChartSimple = {
         series: ['A', 'B', 'C'],
@@ -30,30 +29,14 @@ marksimosapp.controller('chartController', function AppCtrl ($scope,  $timeout, 
         ]
     };
 
-
-        $scope.exampleData = [
-              {
-                  "key": "Series 1",
-                   "values": [ [ 1025409600000 , 0] , [ 1028088000000 , -6.3382185140371] , [ 1030766400000 , -5.9507873460847] , [ 1033358400000 , -11.569146943813] , [ 1036040400000 , -5.4767332317425] , [ 1038632400000 , 0.50794682203014] , [ 1041310800000 , -5.5310285460542] , [ 1043989200000 , -5.7838296963382] , [ 1046408400000 , -7.3249341615649] , [ 1049086800000 , -6.7078630712489] , [ 1051675200000 , 0.44227126150934] , [ 1054353600000 , 7.2481659343222] , [ 1056945600000 , 9.2512381306992] ]
-             },
-            {
-                 "key": "Series 2",
-                    "values": [ [ 1025409600000 , 0] , [ 1028088000000 , 0] , [ 1030766400000 , 0] , [ 1033358400000 , 0] , [ 1036040400000 , 0] , [ 1038632400000 , 0] , [ 1041310800000 , 0] , [ 1043989200000 , 0] , [ 1046408400000 , 0] , [ 1049086800000 , 0] , [ 1051675200000 , 0] , [ 1054353600000 , 0] , [ 1056945600000 , 0] , [ 1059624000000 , 0] , [ 1062302400000 , 0] , [ 1064894400000 , 0] , [ 1067576400000 , 0] , [ 1070168400000 , 0] , [ 1072846800000 , 0] , [ 1075525200000 , -0.049184266875945] ]
-                },
-              {
-                   "key": "Series 3",
-                   "values": [ [ 1025409600000 , 0] , [ 1028088000000 , -6.3382185140371] , [ 1030766400000 , -5.9507873460847] , [ 1033358400000 , -11.569146943813] , [ 1036040400000 , -5.4767332317425] , [ 1038632400000 , 0.50794682203014] , [ 1041310800000 , -5.5310285460542] , [ 1043989200000 , -5.7838296963382] , [ 1046408400000 , -7.3249341615649] , [ 1049086800000 , -6.7078630712489] , [ 1051675200000 , 0.44227126150934] , [ 1054353600000 , 7.2481659343222] , [ 1056945600000 , 9.2512381306992] ]
-              },
-           {
-               "key": "Series 4",
-                 "values": [ [ 1025409600000 , -7.0674410638835] , [ 1028088000000 , -14.663359292964] , [ 1030766400000 , -14.104393060540] , [ 1033358400000 , -23.114477037218] , [ 1036040400000 , -16.774256687841] , [ 1038632400000 , -11.902028464000] , [ 1041310800000 , -16.883038668422] , [ 1043989200000 , -19.104223676831] , [ 1046408400000 , -20.420523282736] , [ 1049086800000 , -19.660555051587] , [ 1051675200000 , -13.106911231646] , [ 1054353600000 , -8.2448460302143] , [ 1056945600000 , -7.0313058730976] ]
-             }
-];
-
     $scope.data = {
         currentCompany : {},
+        currentCompanyOtherInfo : {},
+        currentCompanyProductPortfolio : {},
+        currentCompanySpendingDetails : {},
+        currentCompanyFutureProjectionCalculator : [],
         currentBrand : {},
-        updateSku : {},
+        currentModifiedSku : {},
         userSegment : [
             {id:1, name:'1 Price Sensitive'},
             {id:2, name:'2 Pretenders'},
@@ -62,6 +45,7 @@ marksimosapp.controller('chartController', function AppCtrl ($scope,  $timeout, 
             {id:5, name:'5 Ultimate'},
             {id:6, name:'6 Pragmatic'}
         ],
+
         chartA11MarketShareInValue : {
             type : report.getChartType1(),
             config : report.getChartConfig1(),
@@ -81,6 +65,11 @@ marksimosapp.controller('chartController', function AppCtrl ($scope,  $timeout, 
             type : report.getChartType1(),
             config : report.getChartConfig1(),
             data : $scope.dataChartSimple
+        },
+        chartA31InventoryReport : {
+            data : [],
+            title : 'Inventory Report',
+            color : ['#39b54a', '#ff983d', '#0087f0', '#8781bd', '#f26c4f', '#bd8cbf', '#000000']
         },
 
         chartB31TotalInvestment : {
@@ -103,7 +92,6 @@ marksimosapp.controller('chartController', function AppCtrl ($scope,  $timeout, 
             config : report.getChartConfig1(),
             data : $scope.dataChartSimple
         },
-
         chartB41MarketSalesValue : {
             type : report.getChartType1(),
             config : report.getChartConfig1(),
@@ -155,7 +143,12 @@ marksimosapp.controller('chartController', function AppCtrl ($scope,  $timeout, 
             config : report.getChartConfig2(),
             data : $scope.dataChartSimple
         },
-
+        chartC21PerceptionMap : {
+            data : [],
+            dataChart : [],
+            title : 'Perception Maps',
+            color : ['#39b54a', '#ff983d', '#0087f0', '#8781bd', '#f26c4f', '#bd8cbf', '#000000']
+        },
         chartC41GrowthRateInVolume : {
             type : report.getChartType1(),
             config : report.getChartConfig1(),
@@ -180,40 +173,120 @@ marksimosapp.controller('chartController', function AppCtrl ($scope,  $timeout, 
     };
 
 
-    company.getCompany().then(function(data, status, headers, config){
-        console.log(data);
-        $scope.data.currentCompany = data;
-        $scope.css.currentBrandId = $scope.data.currentCompany.d_BrandsDecisions[0]._id;
-        $scope.data.currentBrand = $scope.data.currentCompany.d_BrandsDecisions[0];
-
-    });
-
-    $scope.clickBrand = function(brand){
-        $scope.css.currentBrandId = brand._id;
-        $scope.data.currentBrand = brand;
-    };
-
-    $scope.leaveSkuInput = function(sku, fieldname, fielddata, week, weekindex){
-        $scope.data.updateSku = {
-            brand_id : sku.d_BrandID,
-            sku_id : sku.d_SKUID,
-            sku_data : {}
+    $scope.A31ColorFunction = function(){
+        return function(d, i){
+            return $scope.data.chartA31InventoryReport.color[i];
         };
-        $scope.data.updateSku.sku_data[fieldname] = fielddata;
-        if(!angular.isUndefined(weekindex)){
-            // 针对d_PromotionalEpisodes 字段需要特殊处理
-            $scope.data.updateSku.sku_data[fieldname][weekindex] = week;
-        }
-        console.log($scope.data.updateSku, sku);
+    };
 
-        company.updateSku($scope.data.updateSku).success(function(data, status, headers, config){
-            console.log(data);
-        });
+    $scope.A31ToolTipContent = function(){
+        return function(key, x, y, e, graph) {
+            return  '<h5>' + y + '</h5>';
+        };
     };
 
 
+    $scope.C31shapeFunction = function(){
+        return function(d) {
+            return d.shape;
+        };
+    };
 
-    // Chart A1
+    $scope.C31TooltipContent = function(){
+        return function(key, x, y, e, graph) {
+
+            var iconColor = $scope.data.chartC21PerceptionMap.color[e.seriesIndex];
+            var htmlResult = '';
+
+            var arrow0 = 'glyphicon-arrow-right';
+            var arrow1 = 'glyphicon-arrow-right';
+            var arrow2 = 'glyphicon-arrow-right';
+            var arrow3 = 'glyphicon-arrow-right';
+            var arrow4 = 'glyphicon-arrow-right';
+            var arrow5 = 'glyphicon-arrow-right';
+            var arrow6 = 'glyphicon-arrow-right';
+            var arrow7 = 'glyphicon-arrow-right';
+
+            if(e.point.tooltips.length > 0){
+                if(e.point.tooltips[0].compareWithPreviousPeriod === 1){
+                    arrow0 = 'glyphicon-arrow-up';
+                }else if(e.point.tooltips[0].compareWithPreviousPeriod === -1){
+                    arrow0 = 'glyphicon-arrow-down';
+                }
+
+                if(e.point.tooltips[1].compareWithPreviousPeriod === 1){
+                    arrow1 = 'glyphicon-arrow-up';
+                }else if(e.point.tooltips[1].compareWithPreviousPeriod === -1){
+                    arrow1 = 'glyphicon-arrow-down';
+                }
+
+                if(e.point.tooltips[2].compareWithPreviousPeriod === 1){
+                    arrow2 = 'glyphicon-arrow-up';
+                }else if(e.point.tooltips[2].compareWithPreviousPeriod === -1){
+                    arrow2 = 'glyphicon-arrow-down';
+                }
+
+                if(e.point.tooltips[3].compareWithPreviousPeriod === 1){
+                    arrow3 = 'glyphicon-arrow-up';
+                }else if(e.point.tooltips[3].compareWithPreviousPeriod === -1){
+                    arrow3 = 'glyphicon-arrow-down';
+                }
+
+                if(e.point.tooltips[4].compareWithPreviousPeriod === 1){
+                    arrow4 = 'glyphicon-arrow-up';
+                }else if(e.point.tooltips[4].compareWithPreviousPeriod === -1){
+                    arrow4 = 'glyphicon-arrow-down';
+                }
+
+                if(e.point.tooltips[5].compareWithPreviousPeriod === 1){
+                    arrow5 = 'glyphicon-arrow-up';
+                }else if(e.point.tooltips[5].compareWithPreviousPeriod === -1){
+                    arrow5 = 'glyphicon-arrow-down';
+                }
+
+                if(e.point.tooltips[6].compareWithPreviousPeriod === 1){
+                    arrow6 = 'glyphicon-arrow-up';
+                }else if(e.point.tooltips[6].compareWithPreviousPeriod === -1){
+                    arrow6 = 'glyphicon-arrow-down';
+                }
+
+                if(e.point.tooltips[7].compareWithPreviousPeriod === 1){
+                    arrow7 = 'glyphicon-arrow-up';
+                }else if(e.point.tooltips[7].compareWithPreviousPeriod === -1){
+                    arrow7 = 'glyphicon-arrow-down';
+                }
+
+                htmlResult = '<div class="panel panel-default perception_panel"> <div class="panel-heading"><span class="perception_logo" style="background-color:' + iconColor + '"></span>' + key + ' - ' + e.point.name + '</div>' +
+                    '<ul class="list-group">' +
+                    '<li class="list-group-item perception_list"><span class="perception_info">Market Share (Value %)  </span><span class="perception_info_number">' + Math.round(e.point.tooltips[0].value * 10000) / 100 +
+                    '</span><span class="glyphicon ' + arrow0 + ' "></span></li>' +
+                    '<li class="list-group-item perception_list perception_list_bg"><span class="perception_info">Average Display Price   </span><span class="perception_info_number">' + Math.round(e.point.tooltips[1].value * 100) / 100 +
+                    '</span><span class="glyphicon ' + arrow1 + ' "></span></li>' +
+                    '<li class="list-group-item perception_list"><span class="perception_info">Applied Technology Index </span><span class="perception_info_number">' + e.point.tooltips[2].value +
+                    '</span><span class="glyphicon ' + arrow2 + ' "></span></li>' +
+                    '<li class="list-group-item perception_list perception_list_bg"><span class="perception_info">Ingredients Quality Index</span><span class="perception_info_number">' + e.point.tooltips[3].value +
+                    '</span><span class="glyphicon ' + arrow3 + ' "></span></li>' +
+                    '<li class="list-group-item perception_list"><span class="perception_info">Awareness (%)            </span><span class="perception_info_number">' + Math.round(e.point.tooltips[4].value * 10000) / 100 +
+                    '</span><span class="glyphicon ' + arrow4 + ' "></span></li>' +
+                    '<li class="list-group-item perception_list perception_list_bg"><span class="perception_info">Shelf Space (%)          </span><span class="perception_info_number">' + Math.round(e.point.tooltips[5].value * 10000) / 100 +
+                    '</span><span class="glyphicon ' + arrow5 + ' "></span></li>' +
+                    '<li class="list-group-item perception_list"><span class="perception_info">Value Perception Change </span><span class="perception_info_number">' + Math.round(e.point.tooltips[6].value * 100) / 100 +
+                    '</span><span class="glyphicon ' + arrow6 + ' "></span></li>' +
+                    '<li class="list-group-item perception_list perception_list_bg"><span class="perception_info">Image Perception Change </span><span class="perception_info_number">' + Math.round(e.point.tooltips[7].value * 100) / 100 +
+                    '</span><span class="glyphicon ' + arrow7 + ' "></span></li>' +
+                    '</ul></div>' ;
+
+            }else {
+                htmlResult = '<h5><span class="perception_logo" style="background-color:' + iconColor + '"></span>' + key + ' ' + e.point.name + '</h5>';
+            }
+
+
+            return htmlResult;
+        };
+    };
+
+
+    /********************  Chart A1  ********************/
     $scope.data.chartA11MarketShareInValue.config.title = 'Market Share in Value (%)';
     $scope.data.chartA12MarketShareInVolume.config.title = 'Market Share in Volume (%)';
     $scope.data.chartA13MindSpaceShare.config.title = 'Mind Space Share (%)';
@@ -237,14 +310,15 @@ marksimosapp.controller('chartController', function AppCtrl ($scope,  $timeout, 
     });
 
 
-    // Chart A3
+    /********************  Chart A3  ********************/
     report.inventoryReport().then(function(data, status, headers, config){
-        console.log(data);
-//        $scope.data.chartA14ShelfSpaceShare.data = data;
+        $scope.data.chartA31InventoryReport.data = data;
+//        console.log($scope.data.chartA31InventoryReport.data);
     });
 
 
-    // Chart B3
+
+    /********************  Chart B3  ********************/
     $scope.data.chartB31TotalInvestment.config.title = 'Total Investment (mln RMB)';
     $scope.data.chartB32NetProfitByCompanies.config.title = 'Net Profit By Companies (mln RMB)';
     $scope.data.chartB33ReturnOnInvestment.config.title = 'Return On Investment (%)';
@@ -268,7 +342,7 @@ marksimosapp.controller('chartController', function AppCtrl ($scope,  $timeout, 
     });
 
 
-    // Chart B4
+    /********************  Chart B4  ********************/
     $scope.data.chartB41MarketSalesValue.config.title = 'Market Sales Value (mln RMB)';
     $scope.data.chartB42MarketSalesVolume.config.title = 'Market Sales Volume (std pack)';
     $scope.data.chartB43TotalInventoryAtFactory.config.title = 'Total Inventory At Factory (std pack)';
@@ -292,7 +366,7 @@ marksimosapp.controller('chartController', function AppCtrl ($scope,  $timeout, 
     });
 
 
-    // Chart C1
+    /********************  Chart C1  ********************/
     $scope.data.chartC11SegmentsLeadersByValuePriceSensitive.config.title = 'Price Sensitive (%)';
     $scope.data.chartC12SegmentsLeadersByValuePretenders.config.title = 'Pretenders (%)';
     $scope.data.chartC13SegmentsLeadersByValueModerate.config.title = 'Moderate (%)';
@@ -326,7 +400,23 @@ marksimosapp.controller('chartController', function AppCtrl ($scope,  $timeout, 
     });
 
 
-    // Chart C4
+    /********************  Chart C2  ********************/
+    report.perceptionMap().then(function(data, status, headers, config){
+//        console.log(data);
+        $scope.data.chartC21PerceptionMap.data = data;
+        $scope.data.chartC21PerceptionMap.dataChart = data.dataSKU;
+    });
+
+    $scope.switchPerceptionMapsData = function(flag){
+        if(flag === 'sku'){
+            $scope.data.chartC21PerceptionMap.dataChart = $scope.data.chartC21PerceptionMap.data.dataSKU;
+        }else{
+            $scope.data.chartC21PerceptionMap.dataChart = $scope.data.chartC21PerceptionMap.data.dataBrand;
+        }
+    };
+
+
+    /********************  Chart C4  ********************/
     $scope.data.chartC41GrowthRateInVolume.config.title = 'Growth Rate In Volume (Period 3 = 100)';
     $scope.data.chartC42GrowthRateInValue.config.title = 'Growth Rate In Value (Period 3 = 100)';
     $scope.data.chartC43NetMarketPrice.config.title = 'Net Market Price (Period 3 = 100)';
@@ -365,6 +455,76 @@ marksimosapp.controller('chartController', function AppCtrl ($scope,  $timeout, 
         $scope.css.menu = menu;
     };
 
+
+
+
+    /********************  获取Decision信息  ********************/
+    company.getCompany().then(function(data, status, headers, config){
+//        console.log(data);
+        $scope.data.currentCompany = data;
+        $scope.css.currentBrandId = $scope.data.currentCompany.d_BrandsDecisions[0]._id;
+        $scope.data.currentBrand = $scope.data.currentCompany.d_BrandsDecisions[0];
+
+        angular.forEach($scope.data.currentBrand.d_SKUsDecisions, function(value, key){
+            company.getCompanyFutureProjectionCalculator(value.d_SKUID).then(function(data, status, headers, config){
+                console.log(data);
+                $scope.data.currentCompanyFutureProjectionCalculator.push(data);
+
+            });
+        });
+
+
+    });
+
+    company.getCompanyOtherInfo().then(function(data, status, headers, config){
+        $scope.data.currentCompanyOtherInfo = {
+            totalAvailableBudget : data.totalAvailableBudget * 100,
+            totalAvailableBudgetCSS : data.totalAvailableBudget * 100 + '%',
+            normalCapacity : data.normalCapacity * 100,
+            normalCapacityCSS : data.normalCapacity * 100 + '%',
+            overtimeCapacity : data.overtimeCapacity * 100,
+            overtimeCapacityCSS : data.overtimeCapacity * 100 + '%'
+        };
+
+        console.log($scope.data.currentCompanyOtherInfo);
+
+    });
+
+
+
+    company.getCompanyProductPortfolio().then(function(data, status, headers, config){
+        console.log(data);
+        $scope.data.currentCompanyProductPortfolio = data;
+    });
+
+    company.getCompanySpendingDetails().then(function(data, status, headers, config){
+        console.log(data);
+        $scope.data.currentCompanySpendingDetails = data;
+    });
+
+
+    $scope.clickBrand = function(brand){
+        $scope.css.currentBrandId = brand._id;
+        $scope.data.currentBrand = brand;
+    };
+
+    $scope.leaveSkuInput = function(sku, fieldname, fielddata, week, weekindex){
+        $scope.data.currentModifiedSku = {
+            brand_id : sku.d_BrandID,
+            sku_id : sku.d_SKUID,
+            sku_data : {}
+        };
+        $scope.data.currentModifiedSku.sku_data[fieldname] = fielddata;
+        if(!angular.isUndefined(weekindex)){
+            // 针对d_PromotionalEpisodes 字段需要特殊处理
+            $scope.data.currentModifiedSku.sku_data[fieldname][weekindex] = week;
+        }
+        console.log($scope.data.currentModifiedSku, sku);
+
+        company.updateSku($scope.data.currentModifiedSku).success(function(data, status, headers, config){
+            console.log(data);
+        });
+    };
 
 
 });

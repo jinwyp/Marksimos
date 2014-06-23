@@ -4,13 +4,15 @@ var Q = require('q');
 var utility = require('../utility.js');
 var consts = require('../consts.js');
 var gameParameters = require('../gameParameters.js').parameters;
+var simulationResultModel = require('../models/simulationResult.js');
 
 exports.getSpendingDetails = function(seminarId, period, companyId){
     return Q.all([
         decisionAssembler.getDecision(seminarId, period, companyId),
-        seminarModel.findOne(seminarId)
+        seminarModel.findOne(seminarId),
+        simulationResultModel.findOne(seminarId, period)
     ])
-    .spread(function(decision, seminar){
+    .spread(function(decision, seminar, lastPeriodResult){
         var brandData = [];
         var companyData = {}
 
@@ -71,7 +73,7 @@ exports.getSpendingDetails = function(seminarId, period, companyId){
         companyData.totalInvestment = (total.salesForce + total.consumerCommunication + total.consumerPromotion
         + total.tradeExpenses + total.estimatedAdditionalTradeMarginCost + total.estimatedWholesaleBonusCost).toFixed(2);
 
-        var companyDataInAllResults = utility.findCompany(seminar.allResults[seminar.allResults.length-1], companyId)
+        var companyDataInAllResults = utility.findCompany(lastPeriodResult, companyId)
         
         //average budget per period
         companyData.averageBudgetPerPeriod = (companyDataInAllResults.c_TotalInvestmentBudget / seminar.simulationSpan).toFixed(2);
@@ -84,13 +86,13 @@ exports.getSpendingDetails = function(seminarId, period, companyId){
             - companyData.totalInvestment).toFixed(2);
 
         //normal capacity
-        companyData.normalCapacity = companyDataInAllResults.c_Capacity - calculateTotalVolume(decision)
+        companyData.normalCapacity = companyDataInAllResults.c_Capacity - utility.calculateTotalVolume(decision)
         if(companyData.normalCapacity < -1){
             companyData.normalCapacity = 0;
         }
 
         //company data in all results
-        if(companyDataInAllResults.c_Capacity - calculateTotalVolume(decision) < 0){
+        if(companyDataInAllResults.c_Capacity - utility.calculateTotalVolume(decision) < 0){
             companyData.availableOvertimeCapacityExtension = companyDataInAllResults.c_Capacity - calculateTotalVolume(decision) 
                 + companyDataInAllResults.c_Capacity * gameParameters.pgen.firm_OvertimeCapacity;
         }else{
@@ -114,15 +116,6 @@ exports.getSpendingDetails = function(seminarId, period, companyId){
     });
 }
 
-function calculateTotalVolume(currentDecision){
-    var totalVolume = 0;
-    currentDecision.d_BrandsDecisions.forEach(function(brandDecision){
-        brandDecision.d_SKUsDecisions.forEach(function(SKUDecision){
-            totalVolume += SKUDecision.d_ProductionVolume * consts.ActualSize[SKUDecision.d_PackSize];
-        })
-    })
-    return totalVolume;
-}
 
 
 

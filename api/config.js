@@ -1,7 +1,7 @@
 module.exports = {
     cgiService: 'http://10.20.30.97/cgi-bin/',
 
-    initPeriods: [-3, -2, -1, 0, 1],  //Periods at the start of the game
+    initPeriods: [-3, -2, -1, 0],  //Periods at the start of the game
     initCompanies: [1, 2], //Teams at the start of the game
 
     segmentNameAndIndex: {
