@@ -30,7 +30,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 //initialize session data
 app.use(function(req, res, next){
     req.session.userId = 'testid';
-    req.session.userRole = 1; //1: player, 2: facilitator, 3: distributor, 4: admin
+    req.session.userRole = 2; //1: player, 2: facilitator, 3: distributor, 4: admin
     req.session.seminarId = 'TTT';
     req.session.companyId = 1;
     req.session.period = 1;

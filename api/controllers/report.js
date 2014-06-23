@@ -18,6 +18,10 @@ exports.getReport = function(req, res, next){
             return res.send(400, {message: "Report doesn't exist."})
         }
 
+        if(userRole!==1){
+            return res.send(filterReport(report, companyId));
+        }
+
         res.send(report.reportData);
     })
     .fail(function(err){
@@ -26,7 +30,7 @@ exports.getReport = function(req, res, next){
     })
     .done();
 
-    function filterReportByRole(report, companyId){
+    function filterReport(report, companyId){
         if(report === undefined){
             throw new Error("Invalid parameter report.");
         }
@@ -35,11 +39,31 @@ exports.getReport = function(req, res, next){
             throw new Error("Invalid parameter companyId.");
         }
 
+        var tempReport = {
+            company: [],
+            SKU: [],
+            brand: []
+        };
+
         for(var i = 0; i < report.reportData.company.length; i++){
             var companyReport = report.reportData.company[i];
             if(companyReport.companyId === companyId){
-                return companyReport;
+                tempReport.company.push(companyReport);
             }
         }
+
+        report.reportData.brand.forEach(function(brandReport){
+            if(brandReport.companyId === companyId){
+                tempReport.brand.push(brandReport);
+            }
+        })
+
+        report.reportData.SKU.forEach(function(SKUReport){
+            if(SKUReport.companyId === companyId){
+                tempReport.SKU.push(SKUReport);
+            }
+        })
+
+        return tempReport;
     }
 }

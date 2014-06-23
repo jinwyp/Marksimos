@@ -42,6 +42,7 @@ function generateSKUReport(allResults, allExogenous){
                 if(SKU.u_SKUID === SKUReport.SKUID){
                     var brandName = utility.findBrand(onePeriodResult, SKU.u_ParentBrandID).b_BrandName;
                     SKUReport.SKUName = brandName + SKU.u_SKUName + ' ' + config.packsizeDescription[SKU.u_PackSize];
+                    SKUReport.companyId = SKU.u_ParentCompanyID;
 
                     var onePeriodReport = {};
                     onePeriodReport.marketShareValue = SKU.u_ValueSegmentShare[consts.ConsumerSegmentsMaxTotal-1] * 100.0;
