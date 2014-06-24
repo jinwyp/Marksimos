@@ -469,7 +469,7 @@ marksimosapp.controller('chartController', function AppCtrl ($scope,  $timeout, 
         $scope.data.currentSku = $scope.data.currentCompany.d_BrandsDecisions[0].d_SKUsDecisions[0];
 
         company.getCompanyFutureProjectionCalculator($scope.data.currentSku.d_SKUID).then(function(data, status, headers, config){
-            console.log(data);
+//            console.log(data);
             $scope.data.currentCompanyFutureProjectionCalculator = data;
 
         });
