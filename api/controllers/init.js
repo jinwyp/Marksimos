@@ -20,6 +20,7 @@ var cgiapi = require('../cgiapi.js');
 
 var decisionAssembler = require('../dataAssemblers/decision.js');
 var companyStatusReportAssembler = require('../dataAssemblers/companyStatusReport.js');
+var financialReportAssembler = require('../dataAssemblers/financialReport.js');
 var chartAssembler = require('../dataAssemblers/chart.js');
 
 /**
@@ -66,7 +67,8 @@ exports.init = function(req, res, next) {
         .spread(function(allResults){
             return Q.all([
                 initChartData(seminarId, allResults),
-                reportModel.initReport(seminarId, allResults)
+                initCompanyStatusReport(seminarId, allResults),
+                initFinancialReport(seminarId, allResults)
             ]);
         });
     })
@@ -171,6 +173,32 @@ function cleanAllResults(allResults){
         allResultsCleaner.clean(onePeriodResult);
     })
 }
+
+function initCompanyStatusReport(seminarId, allResults){
+    var queries = [];
+    allResults.forEach(function(onePeriodResult){
+        queries.push(cgiapi.getExogenous(onePeriodResult.period));
+    })
+    return Q.all(queries)
+    .then(function(allExogenous){
+        return reportModel.insert({
+            seminarId: seminarId,
+            reportName: "company_status",
+            reportData: companyStatusReportAssembler.getCompanyStatusReport(allResults, allExogenous)
+        })
+    });
+};
+
+function initFinancialReport(seminarId, allResults){
+    return reportModel.insert({
+        seminarId: seminarId,
+        reportName: "financial_report",
+        reportData: financialReportAssembler.getFinancialReport(allResults)
+    })
+}
+
+
+
 
 
 

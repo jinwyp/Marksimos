@@ -31,39 +31,6 @@ exports.getReport = function(req, res, next){
     .done();
 
     function filterReport(report, companyId){
-        if(report === undefined){
-            throw new Error("Invalid parameter report.");
-        }
-
-        if(companyId === undefined){
-            throw new Error("Invalid parameter companyId.");
-        }
-
-        var tempReport = {
-            company: [],
-            SKU: [],
-            brand: []
-        };
-
-        for(var i = 0; i < report.reportData.company.length; i++){
-            var companyReport = report.reportData.company[i];
-            if(companyReport.companyId === companyId){
-                tempReport.company.push(companyReport);
-            }
-        }
-
-        report.reportData.brand.forEach(function(brandReport){
-            if(brandReport.companyId === companyId){
-                tempReport.brand.push(brandReport);
-            }
-        })
-
-        report.reportData.SKU.forEach(function(SKUReport){
-            if(SKUReport.companyId === companyId){
-                tempReport.SKU.push(SKUReport);
-            }
-        })
-
-        return tempReport;
+        return "filterd report."
     }
 }
