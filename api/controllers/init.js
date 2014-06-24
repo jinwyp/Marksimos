@@ -66,7 +66,7 @@ exports.init = function(req, res, next) {
         .spread(function(allResults){
             return Q.all([
                 initChartData(seminarId, allResults),
-                //reportModel.initReport(seminarId, allResults)
+                reportModel.initReport(seminarId, allResults)
             ]);
         });
     })

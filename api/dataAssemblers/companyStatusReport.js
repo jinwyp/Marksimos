@@ -10,6 +10,7 @@ exports.getCompanyStatusReport = function(allResults, allExogenous){
         if(!isCompanyExist(company.c_CompanyID, allCompanyReport)){
             allCompanyReport.push({
                 companyId: company.c_CompanyID,
+                companyName: company.c_CompanyName,
                 global: {},
                 brand: [],
                 SKU: []
@@ -17,11 +18,13 @@ exports.getCompanyStatusReport = function(allResults, allExogenous){
         }
     })
 
-    result.global = generateCompanyReport(allResults);
-    result.brand = generateBrandReport(allResults);
-    result.SKU = generateSKUReport(allResults, allExogenous);
+    allCompanyReport.forEach(function(companyReport){
+        companyReport.SKU = generateSKUReport(companyReport.companyId, allResults, allExogenous);
+        companyReport.brand = generateBrandReport(companyReport.companyId, allResults);
+        companyReport.global = generateGlobalReport(companyReport.companyId, allResults);
+    })
 
-    return result;
+    return allCompanyReport;
 }
 
 function generateSKUReport(companyId, allResults, allExogenous){
@@ -30,14 +33,16 @@ function generateSKUReport(companyId, allResults, allExogenous){
 
     var allSKUReport = [];
 
-    allResults[0].p_SKUs.forEach(function(SKU){
-        if(!isSKUExist(SKU.u_SKUID, allSKUReport)){
-            allSKUReport.push({
-                SKUID: SKU.u_SKUID,
-                data: []
-            })
+    allResults[0].p_SKUs.forEach(function(SKUResult){
+        if(SKUResult.u_ParentCompanyID === companyId){
+            if(!isSKUExist(SKUResult.u_SKUID, allSKUReport)){
+                allSKUReport.push({
+                    SKUID: SKUResult.u_SKUID,
+                    data: []
+                });
+            }
         }
-    });
+    })
 
     allSKUReport.forEach(function(SKUReport){
         var index = 0;
@@ -49,9 +54,9 @@ function generateSKUReport(companyId, allResults, allExogenous){
                 if(SKU.u_SKUID === SKUReport.SKUID){
                     var brandName = utility.findBrand(onePeriodResult, SKU.u_ParentBrandID).b_BrandName;
                     SKUReport.SKUName = brandName + SKU.u_SKUName + ' ' + config.packsizeDescription[SKU.u_PackSize];
-                    SKUReport.companyId = SKU.u_ParentCompanyID;
 
                     var onePeriodReport = {};
+                    onePeriodReport.period = "Quarter " + onePeriodResult.period;
                     onePeriodReport.marketShareValue = SKU.u_ValueSegmentShare[consts.ConsumerSegmentsMaxTotal-1] * 100.0;
                     onePeriodReport.marketShareVolume = SKU.u_VolumeSegmentShare[consts.ConsumerSegmentsMaxTotal-1] * 100.0;
                     onePeriodReport.marketSalesVolumeStdPack = SKU.u_MarketSalesVolume[consts.ConsumerSegmentsMaxTotal-1];
@@ -87,9 +92,10 @@ function generateSKUReport(companyId, allResults, allExogenous){
                     SKUReport.data.push(onePeriodReport);
                 }
             })
+            index++;
         })
-        index++;
     })
+    
 
     return allSKUReport;
 
@@ -100,15 +106,17 @@ function generateSKUReport(companyId, allResults, allExogenous){
     }
 }
 
-function generateBrandReport(allResults){
+function generateBrandReport(companyId, allResults){
     var allBrandReport = [];
 
     allResults[0].p_Brands.forEach(function(brand){
-        if(!isBrandExist(brand.b_BrandID, allBrandReport)){
-            allBrandReport.push({
-               brandId: brand.b_BrandID,
-               data: [] 
-            });
+        if(brand.b_ParentCompanyID === companyId){
+            if(!isBrandExist(brand.b_BrandID, allBrandReport)){
+                allBrandReport.push({
+                   brandId: brand.b_BrandID,
+                   data: [] 
+                });
+            }
         }
     })
 
@@ -119,7 +127,6 @@ function generateBrandReport(allResults){
 
                 if(brandResult.b_BrandID === brandReport.brandId){
                     brandReport.brandName = brandResult.b_BrandName;
-                    brandReport.companyId = brandResult.b_ParentCompanyID;
 
                     var onePeriodReport = {};
                     onePeriodReport.period = "Quarter " + onePeriodResult.period;
@@ -171,57 +178,45 @@ function generateBrandReport(allResults){
 /**
  * @param {Object} allResults allResults of all periods
  */
-function generateCompanyReport(allResults){
-    var allCompanyReport = [];
+function generateGlobalReport(companyId, allResults){
+    var globalReport = [];
 
-    allResults[0].p_Companies.forEach(function(company){
-        if(!isCompanyExist(company.c_CompanyID, allCompanyReport)){
-            allCompanyReport.push({
-                companyId: company.c_CompanyID,
-                data: []
-            })
+    allResults.forEach(function(onePeriodResult){
+        for(var i=0; i<onePeriodResult.p_Companies.length; i++){
+            var companyResult = onePeriodResult.p_Companies[i];
+
+            if(companyResult.c_CompanyID === companyId){
+                var onePeriodReport = {};
+                onePeriodReport.marketShareValue = companyResult.c_ValueSegmentShare[consts.ConsumerSegmentsMaxTotal-1] * 100;
+                onePeriodReport.marketShareVolume = companyResult.c_VolumeSegmentShare[consts.ConsumerSegmentsMaxTotal -1] * 100;
+                onePeriodReport.marketSalesVolume = companyResult.c_MarketSalesVolume[consts.ConsumerSegmentsMaxTotal-1] * 100;
+                onePeriodReport.lostSalesVolumeDueToOOS = companyResult.c_TotalStockOutVolume;
+                onePeriodReport.numbericalDistribution = companyResult.c_AverageDistributionNum * 100;
+                onePeriodReport.volumeWeightedDistribution = companyResult.c_AverageDistributionVol * 100;
+                onePeriodReport.shelfSpace = companyResult.c_ShelfSpace * 100;
+                onePeriodReport.mindSpaceShare = companyResult.c_MindSpaceShare * 100;
+                onePeriodReport.averageNetMarketPrice = companyResult.c_AverageNetMarketPrice;
+                onePeriodReport.averageDisplayPrice = companyResult.c_AverageDisplayPrice;
+                onePeriodReport.ingredientsQualityIndex = companyResult.c_AverageIngredientsQuality;
+                onePeriodReport.appliedTechnologyIndex = companyResult.c_AverageIngredientsQuality;
+                onePeriodReport.marketSalesValue = companyResult.c_MarketSalesValue[consts.ConsumerSegmentsMaxTotal-1];
+                onePeriodReport.consumerPricePromotions = -companyResult.c_PricePromotionsCost;
+                onePeriodReport.marketNetSalesValue = companyResult.c_MarketNetSalesValue[consts.ConsumerSegmentsMaxTotal-1];
+                onePeriodReport.retailersPurchasesVolume = companyResult.c_WholesalesVolume;
+                onePeriodReport.shippmentsToWholesalers = companyResult.c_FactorySalesVolume;
+                onePeriodReport.productionVolume = companyResult.c_ActualProductionVolume;
+                onePeriodReport.inventoryVolumeAtManufacturer = companyResult.c_FactoryStocks[consts.StocksMaxTotal].s_Volume;
+                onePeriodReport.inventoryVolumeAtWholesalers = companyResult.c_WholesalesStocks[consts.StocksMaxTotal].s_Volume;
+                onePeriodReport.inventoryVolumeAtRetailers = companyResult.c_RetailStocks[consts.StocksMaxTotal].s_Volume;
+                onePeriodReport.stocksCoverAtRetailers = companyResult.c_StockCoverAtRetailers;
+                onePeriodReport.stocksCoverAtWholesalers = companyResult.c_StockCoverAtWholesalers;
+                globalReport.push(onePeriodReport);
+                break;
+            }
         }
     })
 
-    allCompanyReport.forEach(function(companyReport){
-        allResults.forEach(function(onePeriodResult){
-            for(var i=0; i<onePeriodResult.p_Companies.length; i++){
-                var companyResult = onePeriodResult.p_Companies[i];
-
-                if(companyResult.c_CompanyID === companyReport.companyId){
-                    companyReport.companyName = companyResult.c_CompanyName;
-                    var onePeriodReport = {};
-                    onePeriodReport.marketShareValue = companyResult.c_ValueSegmentShare[consts.ConsumerSegmentsMaxTotal-1] * 100;
-                    onePeriodReport.marketShareVolume = companyResult.c_VolumeSegmentShare[consts.ConsumerSegmentsMaxTotal -1] * 100;
-                    onePeriodReport.marketSalesVolume = companyResult.c_MarketSalesVolume[consts.ConsumerSegmentsMaxTotal-1] * 100;
-                    onePeriodReport.lostSalesVolumeDueToOOS = companyResult.c_TotalStockOutVolume;
-                    onePeriodReport.numbericalDistribution = companyResult.c_AverageDistributionNum * 100;
-                    onePeriodReport.volumeWeightedDistribution = companyResult.c_AverageDistributionVol * 100;
-                    onePeriodReport.shelfSpace = companyResult.c_ShelfSpace * 100;
-                    onePeriodReport.mindSpaceShare = companyResult.c_MindSpaceShare * 100;
-                    onePeriodReport.averageNetMarketPrice = companyResult.c_AverageNetMarketPrice;
-                    onePeriodReport.averageDisplayPrice = companyResult.c_AverageDisplayPrice;
-                    onePeriodReport.ingredientsQualityIndex = companyResult.c_AverageIngredientsQuality;
-                    onePeriodReport.appliedTechnologyIndex = companyResult.c_AverageIngredientsQuality;
-                    onePeriodReport.marketSalesValue = companyResult.c_MarketSalesValue[consts.ConsumerSegmentsMaxTotal-1];
-                    onePeriodReport.consumerPricePromotions = -companyResult.c_PricePromotionsCost;
-                    onePeriodReport.marketNetSalesValue = companyResult.c_MarketNetSalesValue[consts.ConsumerSegmentsMaxTotal-1];
-                    onePeriodReport.retailersPurchasesVolume = companyResult.c_WholesalesVolume;
-                    onePeriodReport.shippmentsToWholesalers = companyResult.c_FactorySalesVolume;
-                    onePeriodReport.productionVolume = companyResult.c_ActualProductionVolume;
-                    onePeriodReport.inventoryVolumeAtManufacturer = companyResult.c_FactoryStocks[consts.StocksMaxTotal].s_Volume;
-                    onePeriodReport.inventoryVolumeAtWholesalers = companyResult.c_WholesalesStocks[consts.StocksMaxTotal].s_Volume;
-                    onePeriodReport.inventoryVolumeAtRetailers = companyResult.c_RetailStocks[consts.StocksMaxTotal].s_Volume;
-                    onePeriodReport.stocksCoverAtRetailers = companyResult.c_StockCoverAtRetailers;
-                    onePeriodReport.stocksCoverAtWholesalers = companyResult.c_StockCoverAtWholesalers;
-                    companyReport.data.push(onePeriodReport);
-                    break;
-                }
-            }
-        })
-    })
-
-    return allCompanyReport;
+    return globalReport;
 }
 
 function isCompanyExist(companyId, allCompanyReport){
