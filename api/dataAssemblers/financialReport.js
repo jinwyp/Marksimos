@@ -20,6 +20,8 @@ exports.getFinancialReport = function(allResults){
                 period: onePeriodResult.period,
                 brands: []
             };
+
+            //generate report for each brand
             onePeriodResult.p_Brands.forEach(function(brandResult){
                 var brandReport = {
                     brandId: brandResult.b_BrandID,
@@ -76,6 +78,61 @@ exports.getFinancialReport = function(allResults){
 
                 periodReport.brands.push(brandReport);
             })
+            
+            var reportByBrand = {
+                brandName: "All Brands",
+                data: []
+            };
+
+            onePeriodResult.p_Brands.forEach(function(brandResult){
+                var tempReportByBrand = {
+                    brandName: brandResult.b_BrandName,
+                    salesValue: brandResult.b_FactorySalesValue,
+                    changeVersusPreviousPeriodSalesValue: brandResult.b_FactorySalesValueChange * 100,
+                    shareInCompanyTotalSalesValue: brandResult.b_ShareInCompanySalesValue,
+                    costOfGoodsSold: -brandResult.b_CostOfGoodsSold,
+                    obsoleteGoodsCost: -brandResult.b_ObsoleteGoodsCost,
+                    discontinuedGoodsCost: -brandResult.b_DroppedGoodsCost,
+                    inventoryHoldingCost: -brandResult.b_InventoryHoldingCost,
+                    totalMaterialCosts: -brandResult.b_MaterialCosts,
+
+                    grossProfit: brandResult.b_GrossProfit,
+                    changeVersusPreviousPeriodGrossProfit: brandResult.b_GrossProfitChange * 100,
+                    grossProfitMargin: brandResult.b_GrossProfitMargin * 100,
+                    shareInCompanyGrossProfitLosses: brandResult.b_ShareInCompanyGrossProfit * 100,
+                    advertising: -brandResult.b_Advertising,
+                    consumerPromotionsCost: -brandResult.b_ConsumerPromotions,
+                    tradeInvestment: -brandResult.b_TradeExpenses,
+                    salesForceCost: -brandResult.b_SalesForceCost,
+                    additionalTradeMarginCost: -brandResult.b_AdditionalMarginValue,
+                    volumeDiscountCost: -brandResult.b_VolumeDiscountCost,
+                    totalTradeAndMarketingExpenses: -brandResult.b_TotalTradeAndMarketing,
+                    tradeAndMarketingExpensesAsAPercentageOfSales: brandResult.b_TradeAndMrktngSalesRatio * 100,
+                    shareOfTradeAndMarketingExpensesInBrandTotal: brandResult.b_ShareInCompanyTradeAndMrktng * 100,
+                    generalExpenses: -brandResult.b_GeneralExpenses,
+                    amortisation: -brandResult.b_Amortisation,
+
+                    operatingProfit: brandResult.b_OperatingProfit,
+                    changeVersusPreviousPeriodOperatingProfit: brandResult.b_OperatingProfitChange * 100,
+                    operatingProfitMargin: brandResult.b_OperatingProfitMargin * 100,
+                    shareInBrandOperatingProfitLosses: brandResult.b_ShareInCompanyOperatingProfit * 100,
+                    interests: brandResult.b_Interests,
+                    taxes: -brandResult.b_Taxes,
+                    exceptionalCostsProfits: brandResult.b_CurrentExceptionalCostProfit,
+
+                    netProfit: brandResult.b_NetProfit,
+                    changeVersusPreviousPeriodNetProfit: brandResult.b_NetProfitChange * 100,
+                    netProfitMargin: brandResult.b_NetProfitMargin * 100,
+                    shareInBrandNetProfitLosses: brandResult.b_ShareInCompanyNetProfit * 100,
+                    productionCost: brandResult.b_ProductionCost,
+                    inventoryValue: brandResult.b_FactoryStocks[consts.StocksMaxTotal].s_Volume * brandResult.b_FactoryStocks[consts.StocksMaxTotal].s_UnitCost
+                };
+
+                reportByBrand.data.push(tempReportByBrand);
+            })
+
+            periodReport.brands.push(reportByBrand);
+            
             companyReport.periods.push(periodReport);
         })
     })
