@@ -4,20 +4,27 @@ var consts = require('../consts.js');
 var config = require('../config.js');
 
 exports.getCompanyStatusReport = function(allResults, allExogenous){
-    var result = {
-        company: {},
-        brand: {},
-        SKU: {}
-    };
+    var allCompanyReport = [];
 
-    result.company = generateCompanyReport(allResults);
+    allResults[0].p_Companies.forEach(function(company){
+        if(!isCompanyExist(company.c_CompanyID, allCompanyReport)){
+            allCompanyReport.push({
+                companyId: company.c_CompanyID,
+                global: {},
+                brand: [],
+                SKU: []
+            });
+        }
+    })
+
+    result.global = generateCompanyReport(allResults);
     result.brand = generateBrandReport(allResults);
     result.SKU = generateSKUReport(allResults, allExogenous);
 
     return result;
 }
 
-function generateSKUReport(allResults, allExogenous){
+function generateSKUReport(companyId, allResults, allExogenous){
     if(allResults === undefined) throw new Error("Invalid parameter allResult.");
     if(allExogenous === undefined) throw new Error("Invalid parameter allExogenous.");
 
@@ -215,12 +222,12 @@ function generateCompanyReport(allResults){
     })
 
     return allCompanyReport;
+}
 
-    function isCompanyExist(companyId, allCompanyReport){
-        return allCompanyReport.some(function(companyReport){
-            return companyReport.companyId === companyId;
-        })
-    }
+function isCompanyExist(companyId, allCompanyReport){
+    return allCompanyReport.some(function(companyReport){
+        return companyReport.companyId === companyId;
+    })
 }
 
 
