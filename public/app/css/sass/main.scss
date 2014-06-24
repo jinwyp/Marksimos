@@ -818,6 +818,11 @@ body{
             border:1px solid $color_main_body_decision_sku_border;
             margin : 0px -10px 10px -10px;
             @include border-radius(4px);
+
+            .input-sm{
+                height: 25px;
+                width: 50px;
+            }
         }
 
         .table > thead > tr > th {

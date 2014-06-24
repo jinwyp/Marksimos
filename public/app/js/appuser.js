@@ -47,6 +47,7 @@ marksimosapp.controller('chartController', function AppCtrl ($scope,  $timeout, 
             {id:6, name:'6 Pragmatic'}
         ],
 
+
         chartA11MarketShareInValue : {
             type : report.getChartType1(),
             config : report.getChartConfig1(),
