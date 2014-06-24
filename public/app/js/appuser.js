@@ -510,17 +510,26 @@ marksimosapp.controller('chartController', function AppCtrl ($scope,  $timeout, 
         $scope.data.currentBrand = brand;
     };
 
-    $scope.leaveSkuInput = function(sku, fieldname, fielddata, week, weekindex){
+    $scope.leaveSkuInput = function(sku, fieldname, fielddata, segmentOrWeek, weekindex){
         $scope.data.currentModifiedSku = {
             brand_id : sku.d_BrandID,
             sku_id : sku.d_SKUID,
             sku_data : {}
         };
         $scope.data.currentModifiedSku.sku_data[fieldname] = fielddata;
-        if(!angular.isUndefined(weekindex)){
-            // 针对d_PromotionalEpisodes 字段需要特殊处理
-            $scope.data.currentModifiedSku.sku_data[fieldname][weekindex] = week;
+
+        if(fieldname === 'd_TargetConsumerSegment'){
+            sku.d_TargetConsumerSegment = segmentOrWeek.id;
+            $scope.data.currentModifiedSku.sku_data[fieldname] = segmentOrWeek.id;
+
+        }else if(fieldname === 'd_PromotionalEpisodes'){
+            if(!angular.isUndefined(weekindex)){
+                // 针对d_PromotionalEpisodes 字段需要特殊处理
+                $scope.data.currentModifiedSku.sku_data[fieldname][weekindex] = segmentOrWeek;
+            }
         }
+        
+
         console.log($scope.data.currentModifiedSku, sku);
 
         company.updateSku($scope.data.currentModifiedSku).success(function(data, status, headers, config){

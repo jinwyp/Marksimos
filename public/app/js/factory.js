@@ -76,9 +76,8 @@ app.factory('company',function($http){
             });
         },
 
-
         updateSku : function(postdata){
-            return $http.post(apiPath + 'sku/decision/', postdata);
+            return $http.put(apiPath + 'sku/decision/', postdata);
         }
 
     };
