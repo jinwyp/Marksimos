@@ -21,6 +21,7 @@ var cgiapi = require('../cgiapi.js');
 var decisionAssembler = require('../dataAssemblers/decision.js');
 var companyStatusReportAssembler = require('../dataAssemblers/companyStatusReport.js');
 var financialReportAssembler = require('../dataAssemblers/financialReport.js');
+var profitabilityEvolutionReportAssembler = require('../dataAssemblers/profitabilityEvolutionReport.js');
 var chartAssembler = require('../dataAssemblers/chart.js');
 
 /**
@@ -68,7 +69,8 @@ exports.init = function(req, res, next) {
             return Q.all([
                 initChartData(seminarId, allResults),
                 initCompanyStatusReport(seminarId, allResults),
-                initFinancialReport(seminarId, allResults)
+                initFinancialReport(seminarId, allResults),
+                initProfitabilityEvolutionReport(seminarId, allResults)
             ]);
         });
     })
@@ -194,6 +196,14 @@ function initFinancialReport(seminarId, allResults){
         seminarId: seminarId,
         reportName: "financial_report",
         reportData: financialReportAssembler.getFinancialReport(allResults)
+    })
+}
+
+function initProfitabilityEvolutionReport(seminarId, allResults){
+    return reportModel.insert({
+        seminarId: seminarId,
+        reportName: "profitability_evolution",
+        reportData: profitabilityEvolutionReportAssembler.getProfitabilityEvolutionReport(allResults)
     })
 }
 
