@@ -49,30 +49,32 @@ marksimosapp.controller('chartController', function AppCtrl ($scope,  $timeout, 
         ],
 
 
-        chartA11MarketShareInValue : {
-            type : report.getChartType1(),
-            config : report.getChartConfig1(),
-            data : $scope.dataChartSimple
-        },
-        chartA12MarketShareInVolume : {
-            type : report.getChartType1(),
-            config : report.getChartConfig1(),
-            data : $scope.dataChartSimple
-        },
-        chartA13MindSpaceShare : {
-            type : report.getChartType1(),
-            config : report.getChartConfig1(),
-            data : $scope.dataChartSimple
-        },
-        chartA14ShelfSpaceShare : {
-            type : report.getChartType1(),
-            config : report.getChartConfig1(),
-            data : $scope.dataChartSimple
-        },
+
         chartA31InventoryReport : {
             data : [],
             title : 'Inventory Report',
             color : ['#39b54a', '#ff983d', '#0087f0', '#8781bd', '#f26c4f', '#bd8cbf', '#000000']
+        },
+
+        chartB11MarketShareInValue : {
+            type : report.getChartType1(),
+            config : report.getChartConfig1(),
+            data : $scope.dataChartSimple
+        },
+        chartB12MarketShareInVolume : {
+            type : report.getChartType1(),
+            config : report.getChartConfig1(),
+            data : $scope.dataChartSimple
+        },
+        chartB13MindSpaceShare : {
+            type : report.getChartType1(),
+            config : report.getChartConfig1(),
+            data : $scope.dataChartSimple
+        },
+        chartB14ShelfSpaceShare : {
+            type : report.getChartType1(),
+            config : report.getChartConfig1(),
+            data : $scope.dataChartSimple
         },
 
         chartB31TotalInvestment : {
@@ -289,28 +291,7 @@ marksimosapp.controller('chartController', function AppCtrl ($scope,  $timeout, 
     };
 
 
-    /********************  Chart A1  ********************/
-    $scope.data.chartA11MarketShareInValue.config.title = 'Market Share in Value (%)';
-    $scope.data.chartA12MarketShareInVolume.config.title = 'Market Share in Volume (%)';
-    $scope.data.chartA13MindSpaceShare.config.title = 'Mind Space Share (%)';
-    $scope.data.chartA14ShelfSpaceShare.config.title = 'Shelf Space Share(%)';
 
-    report.marketShareInValue().then(function(data, status, headers, config){
-//        console.log(data);
-        $scope.data.chartA11MarketShareInValue.data = data;
-    });
-    report.marketShareInVolume().then(function(data, status, headers, config){
-//        console.log(data);
-        $scope.data.chartA12MarketShareInVolume.data = data;
-    });
-    report.mindSpaceShare().then(function(data, status, headers, config){
-//        console.log(data);
-        $scope.data.chartA13MindSpaceShare.data = data;
-    });
-    report.shelfSpaceShare().then(function(data, status, headers, config){
-//        console.log(data);
-        $scope.data.chartA14ShelfSpaceShare.data = data;
-    });
 
 
     /********************  Chart A3  ********************/
@@ -319,6 +300,29 @@ marksimosapp.controller('chartController', function AppCtrl ($scope,  $timeout, 
 //        console.log($scope.data.chartA31InventoryReport.data);
     });
 
+
+    /********************  Chart B1  ********************/
+    $scope.data.chartB11MarketShareInValue.config.title = 'Market Share in Value (%)';
+    $scope.data.chartB12MarketShareInVolume.config.title = 'Market Share in Volume (%)';
+    $scope.data.chartB13MindSpaceShare.config.title = 'Mind Space Share (%)';
+    $scope.data.chartB14ShelfSpaceShare.config.title = 'Shelf Space Share(%)';
+
+    report.marketShareInValue().then(function(data, status, headers, config){
+//        console.log(data);
+        $scope.data.chartB11MarketShareInValue.data = data;
+    });
+    report.marketShareInVolume().then(function(data, status, headers, config){
+//        console.log(data);
+        $scope.data.chartB12MarketShareInVolume.data = data;
+    });
+    report.mindSpaceShare().then(function(data, status, headers, config){
+//        console.log(data);
+        $scope.data.chartB13MindSpaceShare.data = data;
+    });
+    report.shelfSpaceShare().then(function(data, status, headers, config){
+//        console.log(data);
+        $scope.data.chartB14ShelfSpaceShare.data = data;
+    });
 
 
     /********************  Chart B3  ********************/

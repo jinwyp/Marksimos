@@ -217,7 +217,7 @@
 
                 <!-- List group -->
                 <ul class="list-group">
-                    <li class="list-group-item" ng-class="{'list-group-item-active': css.chartMenu=='A1'}" ng-click="clickChartMenu('A1')">Company Status(F)</li>
+                    <li class="list-group-item" ng-class="{'list-group-item-active': css.chartMenu=='A1'}" ng-click="clickChartMenu('A1')">Company Status</li>
                     <li class="list-group-item" ng-class="{'list-group-item-active': css.chartMenu=='A2'}" ng-click="clickChartMenu('A2')">Financial Data</li>
                     <li class="list-group-item" ng-class="{'list-group-item-active': css.chartMenu=='A3'}" ng-click="clickChartMenu('A3')">Inventory Report(F)</li>
                 </ul>
@@ -228,7 +228,7 @@
 
                 <!-- List group -->
                 <ul class="list-group">
-                    <li class="list-group-item" ng-class="{'list-group-item-active': css.chartMenu=='B1'}" ng-click="clickChartMenu('B1')">Market Share</li>
+                    <li class="list-group-item" ng-class="{'list-group-item-active': css.chartMenu=='B1'}" ng-click="clickChartMenu('B1')">Market Share(F)</li>
                     <li class="list-group-item" ng-class="{'list-group-item-active': css.chartMenu=='B2'}" ng-click="clickChartMenu('B2')">Competitor Information</li>
                     <li class="list-group-item" ng-class="{'list-group-item-active': css.chartMenu=='B3'}" ng-click="clickChartMenu('B3')">Investment & Profits(F)</li>
                     <li class="list-group-item" ng-class="{'list-group-item-active': css.chartMenu=='B4'}" ng-click="clickChartMenu('B4')">Market Sales & Inventory(F)</li>
@@ -251,45 +251,7 @@
         </div>
 
 
-        <div class="col-md-10 user_chart_right" ng-if="css.chartMenu=='A1'">
-            <div class="row">
-                <div class="col-md-6 user_chart_single chart_2">
-                    <h5>{{data.chartA11MarketShareInValue.config.title}}
-                        <span class="glyphicon glyphicon-info-sign"></span>
-                        <!--<span class="glyphicon glyphicon-resize-full chart_icon"></span>-->
-                        <span class="glyphicon glyphicon-save chart_icon"></span>
-                    </h5>
-                    <div ac-chart="data.chartA11MarketShareInValue.type" ac-data="data.chartA11MarketShareInValue.data" ac-config="data.chartA11MarketShareInValue.config" class="chartBox"></div>
-                </div>
-                <div class="col-md-6 user_chart_single chart_2">
-                    <h5>{{data.chartA12MarketShareInVolume.config.title}}
-                        <span class="glyphicon glyphicon-info-sign"></span>
-                        <!--<span class="glyphicon glyphicon-resize-full chart_icon"></span>-->
-                        <span class="glyphicon glyphicon-save chart_icon"></span>
-                    </h5>
-                    <div ac-chart="data.chartA12MarketShareInVolume.type" ac-data="data.chartA12MarketShareInVolume.data" ac-config="data.chartA12MarketShareInVolume.config" class="chartBox"></div>
-                </div>
-            </div>
 
-            <div class="row">
-                <div class="col-md-6 user_chart_single chart_2">
-                    <h5>{{data.chartA13MindSpaceShare.config.title}}
-                        <span class="glyphicon glyphicon-info-sign"></span>
-                        <!--<span class="glyphicon glyphicon-resize-full chart_icon"></span>-->
-                        <span class="glyphicon glyphicon-save chart_icon"></span>
-                    </h5>
-                    <div ac-chart="data.chartA13MindSpaceShare.type" ac-data="data.chartA13MindSpaceShare.data" ac-config="data.chartA13MindSpaceShare.config" class="chartBox"></div>
-                </div>
-                <div class="col-md-6 user_chart_single chart_2">
-                    <h5>{{data.chartA14ShelfSpaceShare.config.title}}
-                        <span class="glyphicon glyphicon-info-sign"></span>
-                        <!--<span class="glyphicon glyphicon-resize-full chart_icon"></span>-->
-                        <span class="glyphicon glyphicon-save chart_icon"></span>
-                    </h5>
-                    <div ac-chart="data.chartA14ShelfSpaceShare.type" ac-data="data.chartA14ShelfSpaceShare.data" ac-config="data.chartA14ShelfSpaceShare.config" class="chartBox"></div>
-                </div>
-            </div>
-        </div>
 
 
         <div class="col-md-10 user_chart_right" ng-if="css.chartMenu=='A3'">
@@ -309,6 +271,47 @@
                     <p class="text-center">Total Stock (milions of standard pack) = Factory Stock + Trade Stock + Retailer Stock</p>
                 </div>
 
+            </div>
+        </div>
+
+
+        <div class="col-md-10 user_chart_right" ng-if="css.chartMenu=='B1'">
+            <div class="row">
+                <div class="col-md-6 user_chart_single chart_2">
+                    <h5>{{data.chartB11MarketShareInValue.config.title}}
+                        <span class="glyphicon glyphicon-info-sign"></span>
+                        <!--<span class="glyphicon glyphicon-resize-full chart_icon"></span>-->
+                        <span class="glyphicon glyphicon-save chart_icon"></span>
+                    </h5>
+                    <div ac-chart="data.chartB11MarketShareInValue.type" ac-data="data.chartB11MarketShareInValue.data" ac-config="data.chartB11MarketShareInValue.config" class="chartBox"></div>
+                </div>
+                <div class="col-md-6 user_chart_single chart_2">
+                    <h5>{{data.chartB12MarketShareInVolume.config.title}}
+                        <span class="glyphicon glyphicon-info-sign"></span>
+                        <!--<span class="glyphicon glyphicon-resize-full chart_icon"></span>-->
+                        <span class="glyphicon glyphicon-save chart_icon"></span>
+                    </h5>
+                    <div ac-chart="data.chartB12MarketShareInVolume.type" ac-data="data.chartB12MarketShareInVolume.data" ac-config="data.chartB12MarketShareInVolume.config" class="chartBox"></div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-6 user_chart_single chart_2">
+                    <h5>{{data.chartB13MindSpaceShare.config.title}}
+                        <span class="glyphicon glyphicon-info-sign"></span>
+                        <!--<span class="glyphicon glyphicon-resize-full chart_icon"></span>-->
+                        <span class="glyphicon glyphicon-save chart_icon"></span>
+                    </h5>
+                    <div ac-chart="data.chartB13MindSpaceShare.type" ac-data="data.chartB13MindSpaceShare.data" ac-config="data.chartB13MindSpaceShare.config" class="chartBox"></div>
+                </div>
+                <div class="col-md-6 user_chart_single chart_2">
+                    <h5>{{data.chartB14ShelfSpaceShare.config.title}}
+                        <span class="glyphicon glyphicon-info-sign"></span>
+                        <!--<span class="glyphicon glyphicon-resize-full chart_icon"></span>-->
+                        <span class="glyphicon glyphicon-save chart_icon"></span>
+                    </h5>
+                    <div ac-chart="data.chartB14ShelfSpaceShare.type" ac-data="data.chartB14ShelfSpaceShare.data" ac-config="data.chartB14ShelfSpaceShare.config" class="chartBox"></div>
+                </div>
             </div>
         </div>
 

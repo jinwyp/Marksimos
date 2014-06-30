@@ -7,10 +7,10 @@ module.exports = function(config){
 
         files : [
             'libs/angular/angular.js',
-            'libs/angular-route/angular-route.js',
+//            'libs/angular-route/angular-route.js',
             'libs/angular-mocks/angular-mocks.js',
             'app/js/**/*.js',
-            'test/unit/**/*.js'
+            'apptest/unit/**/*.js'
         ],
 
         autoWatch : true,
