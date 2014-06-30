@@ -23,6 +23,7 @@ var companyStatusReportAssembler = require('../dataAssemblers/companyStatusRepor
 var financialReportAssembler = require('../dataAssemblers/financialReport.js');
 var profitabilityEvolutionReportAssembler = require('../dataAssemblers/profitabilityEvolutionReport.js');
 var segmentDistributionReportAssembler = require('../dataAssemblers/segmentDistributionReport.js');
+var competitorIntelligenceReportAssembler = require('../dataAssemblers/competitorIntelligence.js');
 var chartAssembler = require('../dataAssemblers/chart.js');
 
 
@@ -73,7 +74,8 @@ exports.init = function(req, res, next) {
                 initCompanyStatusReport(seminarId, allResults),
                 initFinancialReport(seminarId, allResults),
                 initProfitabilityEvolutionReport(seminarId, allResults),
-                initSegmentDistribution(seminarId, allResults)
+                initSegmentDistribution(seminarId, allResults),
+                initCompetitorIntelligence(seminarId, allResults)
             ]);
         });
     })
@@ -223,6 +225,14 @@ function initSegmentDistribution(seminarId, allResults){
             reportData: segmentDistributionReportAssembler.getSegmentDistributionReport(allResults, allExogenous)
         })
     });
+}
+
+function initCompetitorIntelligence(seminarId, allResults){
+    return reportModel.insert({
+        seminarId: seminarId,
+        reportName: 'competitor_intelligence',
+        reportData: competitorIntelligenceReportAssembler.getCompetitorIntelligenceReport(allResults)
+    })
 }
 
 
