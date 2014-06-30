@@ -5,7 +5,7 @@
 
 var app = angular.module('marksimos.factory', []);
 
-app.factory('currentUser',function(){
+app.factory('currentUser', function(){
 
     var factory = {};
 

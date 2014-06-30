@@ -2,8 +2,9 @@
  * Created by jinwyp on 4/28/14.
  */
 
+
 // create module for custom directives
-var marksimosapp = angular.module('marksimos', ['angularCharts', 'nvd3ChartDirectives', 'marksimos.component', 'marksimos.factory' ]);
+var marksimosapp = angular.module('marksimos', ['angularCharts', 'nvd3ChartDirectives', 'marksimos.component', 'marksimos.factory', 'marksimos.filters' ]);
 
 
 
