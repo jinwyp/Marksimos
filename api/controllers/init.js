@@ -22,7 +22,9 @@ var decisionAssembler = require('../dataAssemblers/decision.js');
 var companyStatusReportAssembler = require('../dataAssemblers/companyStatusReport.js');
 var financialReportAssembler = require('../dataAssemblers/financialReport.js');
 var profitabilityEvolutionReportAssembler = require('../dataAssemblers/profitabilityEvolutionReport.js');
+var segmentDistributionReportAssembler = require('../dataAssemblers/segmentDistributionReport.js');
 var chartAssembler = require('../dataAssemblers/chart.js');
+
 
 /**
  * Initialize game data, only certain perople can call this method
@@ -70,7 +72,8 @@ exports.init = function(req, res, next) {
                 initChartData(seminarId, allResults),
                 initCompanyStatusReport(seminarId, allResults),
                 initFinancialReport(seminarId, allResults),
-                initProfitabilityEvolutionReport(seminarId, allResults)
+                initProfitabilityEvolutionReport(seminarId, allResults),
+                initSegmentDistribution(seminarId, allResults)
             ]);
         });
     })
@@ -205,6 +208,21 @@ function initProfitabilityEvolutionReport(seminarId, allResults){
         reportName: "profitability_evolution",
         reportData: profitabilityEvolutionReportAssembler.getProfitabilityEvolutionReport(allResults)
     })
+}
+
+function initSegmentDistribution(seminarId, allResults){
+    var queries = [];
+    allResults.forEach(function(onePeriodResult){
+        queries.push(cgiapi.getExogenous(onePeriodResult.period));
+    })
+    return Q.all(queries)
+    .then(function(allExogenous){
+        return reportModel.insert({
+            seminarId: seminarId,
+            reportName: "segment_distribution",
+            reportData: segmentDistributionReportAssembler.getSegmentDistributionReport(allResults, allExogenous)
+        })
+    });
 }
 
 
