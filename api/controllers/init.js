@@ -24,6 +24,7 @@ var financialReportAssembler = require('../dataAssemblers/financialReport.js');
 var profitabilityEvolutionReportAssembler = require('../dataAssemblers/profitabilityEvolutionReport.js');
 var segmentDistributionReportAssembler = require('../dataAssemblers/segmentDistributionReport.js');
 var competitorIntelligenceReportAssembler = require('../dataAssemblers/competitorIntelligence.js');
+var marketTrendsReportAssembler = require('../dataAssemblers/marketTrendsReport.js');
 var chartAssembler = require('../dataAssemblers/chart.js');
 
 
@@ -71,11 +72,13 @@ exports.init = function(req, res, next) {
         .spread(function(allResults){
             return Q.all([
                 initChartData(seminarId, allResults),
+                
                 initCompanyStatusReport(seminarId, allResults),
                 initFinancialReport(seminarId, allResults),
                 initProfitabilityEvolutionReport(seminarId, allResults),
-                initSegmentDistribution(seminarId, allResults),
-                initCompetitorIntelligence(seminarId, allResults)
+                initSegmentDistributionReport(seminarId, allResults),
+                initCompetitorIntelligenceReport(seminarId, allResults),
+                initMarketTrendsReport(seminarId, allResults)
             ]);
         });
     })
@@ -212,7 +215,7 @@ function initProfitabilityEvolutionReport(seminarId, allResults){
     })
 }
 
-function initSegmentDistribution(seminarId, allResults){
+function initSegmentDistributionReport(seminarId, allResults){
     var queries = [];
     allResults.forEach(function(onePeriodResult){
         queries.push(cgiapi.getExogenous(onePeriodResult.period));
@@ -227,7 +230,7 @@ function initSegmentDistribution(seminarId, allResults){
     });
 }
 
-function initCompetitorIntelligence(seminarId, allResults){
+function initCompetitorIntelligenceReport(seminarId, allResults){
     return reportModel.insert({
         seminarId: seminarId,
         reportName: 'competitor_intelligence',
@@ -235,6 +238,13 @@ function initCompetitorIntelligence(seminarId, allResults){
     })
 }
 
+function initMarketTrendsReport(seminarId, allResults){
+    return reportModel.insert({
+        seminarId: seminarId,
+        reportName: 'market_trends',
+        reportData: marketTrendsReportAssembler.getMarketTrendsReport(allResults)
+    })
+}
 
 
 

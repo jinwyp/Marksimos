@@ -24,6 +24,9 @@ exports.getCompetitorIntelligenceReport = function(allResults){
     }
 }
 
+/**
+ * @param {Function} getField a function which gets a field from companyResult
+ */
 function companyReport(allResults, getField){
     var result = [];
 
