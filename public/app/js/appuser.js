@@ -9,7 +9,7 @@ var marksimosapp = angular.module('marksimos', ['angularCharts', 'nvd3ChartDirec
 
 
 // controller business logic
-marksimosapp.controller('chartController', function AppCtrl ($scope,  $timeout, $http, report, company) {
+marksimosapp.controller('chartController', function($scope,  $timeout, $http, report, company) {
 
     $scope.css = {
         menu : 'Decision',

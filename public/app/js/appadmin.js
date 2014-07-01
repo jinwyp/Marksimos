@@ -3,7 +3,7 @@
  */
 
 // create module for custom directives
-var marksimosapp = angular.module('marksimos', ['angularCharts']);
+var marksimosapp = angular.module('marksimosadmin', ['angularCharts']);
 
 marksimosapp.directive('adminHeader', function() {
     return {
