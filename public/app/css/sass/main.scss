@@ -46,6 +46,9 @@ $color_main_body_user_chart_leftmenu_title: #6f6f6f;
 $color_main_body_user_chart_leftmenu_active_bg: #eef3ff;
 $color_main_body_user_chart_leftmenu_active_bgbefore: #236ac7;
 $color_main_body_user_chart_leftmenu_border: #e7e9ed;
+$color_main_body_user_chart_single_border: #d9dce3;
+$color_main_body_user_chart_perception_map_bg: #f9f9f9;
+$color_main_body_user_chart_perception_map_border: #bdbdbd;
 
 
 $color_main_body_progress_bar_budget: #6071b9;
@@ -54,6 +57,8 @@ $color_main_body_progress_bar_overtime: #ad5ab3;
 
 $color_main_body_decision_subtitle: #bdbdbd;
 $color_main_body_decision_brand_border: #c2c2d3;
+$color_main_body_decision_sku_border: #ebebeb;
+$color_main_body_decision_table_hover: #feeaff;
 
 
 
@@ -611,6 +616,7 @@ body{
         padding-left: 0px;
         padding-right: 0px;
     }
+
     .user_chart_leftmenu{
 
         background-color: $color_main_body_background_brand;
@@ -656,6 +662,94 @@ body{
 
     }
 
+    .user_chart_right{
+        background-color: $color_login_background;
+
+        .user_chart_single{
+            border: 1px solid $color_main_body_user_chart_single_border;
+            background-color: $color_login_panel_background;
+            margin: 10px 5px 10px 10px;
+            padding: 0px 0px 0px 0px;
+
+            h5 {
+                text-align: center;
+                font-size: 14px;
+                color: $color_main_body_company;
+                background-color: $color_login_content_background;
+                margin: 0px 0px 0px 0px;
+                padding: 13px 0px;
+
+                .chart_icon{
+                    float: right;
+                    padding-right: 10px;
+                }
+
+                .perception_map_button{
+                    font-size: 11px;
+                    font-family: $font_main_header2;
+                }
+                .perception_map_group{
+                    float: right;
+                    margin-right: 60px;
+                }
+            }
+
+            .nvtooltip{
+                border: 0 none;
+
+                h5{
+                    border: 1px solid $color_main_body_user_chart_perception_map_border;
+                    @include border-radius(4px);
+                    padding: 8px 10px;
+
+                }
+            }
+            .perception_panel{
+                margin-bottom: 0px;
+                .panel-heading{
+                    font-size: 12px;
+                    font-weight: bold;
+                    font-family: $font_main_header2;
+                    color: $color_main_body_user_chart_leftmenu_title;
+                }
+            }
+            .perception_list{
+                padding: 5px 10px;
+                font-size: 12px;
+                font-family: $font_main_header2;
+                color: $color_main_body_company;
+            }
+            .perception_list_bg{
+                background-color: $color_main_body_user_chart_perception_map_bg;
+            }
+            .perception_info{
+                width: 180px;
+                display: inline-block;
+            }
+            .perception_info_number{
+                width: 40px;
+                display: inline-block;
+            }
+            .perception_logo{
+                padding: 6px 6px;
+                margin: 0px 5px 0px 0px ;
+                background-color: #0000FF;
+                display: inline-block;
+            }
+        }
+
+        .chart_1{
+            width: 98%;
+        }
+
+        .chart_2{
+            width: 48%;
+        }
+        .chart_3{
+            width: 31%;
+        }
+
+    }
 
 
     /***** Decision 页面开始 *****/
@@ -696,7 +790,7 @@ body{
     }
 
     .decision_box{
-        margin : 10px 15px;
+        margin : 10px 0px 0px 15px;
         border:1px solid $color_login_panel_border;
         background-color: $color_login_panel_background;
 
@@ -705,7 +799,7 @@ body{
             font-size: 18px;
             font-weight: normal;
             font-family: $font_main_header2;
-            margin:30px 0 5px 0;
+            margin:25px 0 5px 0;
         }
         h6{
             color: $color_main_body_decision_subtitle;
@@ -716,8 +810,41 @@ body{
 
         .brand_box{
             border:1px solid $color_main_body_decision_brand_border;
-            margin : 0px -10px;
+            margin : 0px -10px 20px -10px;
             @include border-radius(4px);
+        }
+
+        .sku_box{
+            border:1px solid $color_main_body_decision_sku_border;
+            margin : 0px -10px 10px -10px;
+            @include border-radius(4px);
+
+            .input-sm{
+                height: 25px;
+                width: 50px;
+            }
+        }
+
+        .table > thead > tr > th {
+            font-weight: bold;
+        }
+
+        .table > thead > tr > td,
+        .table > tbody > tr > td,
+        .table > tfoot > tr > td {
+            vertical-align: middle;
+            border-top: 1px none #ddd;
+            font-family: $font_main_header2;
+            font-size: 12px;
+            color:$color_main_body_company;
+        }
+
+        .table .tdgroup{
+            padding-top: 20px;
+        }
+
+        .sku_table {
+            width : 125px;
         }
 
         .nav li {
@@ -753,9 +880,105 @@ body{
             margin: 30px 0px;
         }
 
+        h5{
+            color: $color_login_input_label;
+            font-family: $font_main_header2;
+            font-weight: normal;
+            font-size: 16px;
+            padding: 10px 0px 0px 10px;
+        }
+
+        .investment_form{
+            margin-top: 20px;
+            margin-left: 10px;
+            label {
+                text-align: left;
+                color: $color_main_body_company;
+                font-family: $font_main_header2;
+                font-weight: normal;
+                font-size: 13px;
+            }
+        }
+
+
+        .decision_button{
+            @include user_decision_button;
+            margin: 0px 0px 20px 0px;
+        }
+
     }
 
+    .decision_right_box{
+        width: 47%;
 
+        .right_menu{
+            border-width: 1px 0px 0px 0px;
+            @include border-radius(0px);
+
+            padding: 20px 0px 0px 0px;
+
+            .product_portfolio{
+
+                h4{
+                    font-size: 13px;
+                    font-family: $font_main_header2;
+                    color: $color_main_body_company;
+                    padding: 5px 0px 8px 25px;
+                    background-image: url(../images/userbrand.png);
+                    background-repeat: no-repeat;
+                    background-position: 4px 2px;
+                }
+                .sku_bg{
+                    background-image: url(../images/userproduct.png);
+                    background-repeat: no-repeat;
+                    background-position: 4px 5px;
+                }
+
+                .panel-heading{
+                    font-size: 13px;
+                    font-family: $font_main_header2;
+                    font-weight: bold;
+                    color: $color_main_body_user_chart_leftmenu_title;
+                    background-color: #f1f1f1;
+                }
+                .table > thead > tr > th{
+                    font-size: 12px;
+                    font-family: $font_main_header2;
+                    font-weight: normal;
+                    color: $color_login_input_label;
+                    background-color: $color_login_background;
+                }
+
+                .table > thead > tr > td,
+                .table > tbody > tr > td,
+                .table > tfoot > tr > td {
+                    vertical-align: middle;
+                    border-top: 1px solid #ddd;
+                    font-family: "Helvetica", "Arial, sans-serif";
+                    font-size: 12px;
+                    color: $color_login_input_label;
+                }
+
+                .table-striped > tbody > tr:nth-child(odd) > td,
+                .table-striped > tbody > tr:nth-child(odd) > th {
+                    background-color: $color_login_panel_background;
+                }
+
+                .table-striped > tbody > tr:nth-child(even) > td,
+                .table-striped > tbody > tr:nth-child(even) > th {
+                    background-color: $color_main_body_background;
+                }
+
+                .table-striped tbody tr:nth-child(odd):hover td,
+                .table-striped tbody tr:nth-child(odd):hover th,
+                .table-striped tbody tr:nth-child(even):hover td,
+                .table-striped tbody tr:nth-child(even):hover th{
+                    background-color: $color_main_body_decision_table_hover;
+                }
+
+            }
+        }
+    }
 
 
 }
@@ -765,11 +988,12 @@ body{
 }
 
 .chartBox {
-    width: 96%;
+    width: 99%;
     height:350px;
-    margin: 20px 0px;
+    margin: 0px 0px;
     .ac-title {
         text-align: center;
+        display: none;
     }
 
     .bar_chart_label{

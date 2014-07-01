@@ -5,18 +5,18 @@ exports.get = function(reqUrl){
     var deferred = Q.defer();
     request(reqUrl, function(err, response, body){
         if(err){
-            deferred.reject(err);
+            return deferred.reject(err);
         }
 
         if(response.statusCode!==200){
-            deferred.reject(new Error(response.statusCode.toString()));
+            return deferred.reject(new Error(response.statusCode.toString()));
         }
 
         var jsonData;
         try{
             jsonData = JSON.parse(body);
         }catch(parseError){
-            deferred.reject(parseError);
+            return deferred.reject(parseError);
         }
 
         deferred.resolve(jsonData);
@@ -29,11 +29,11 @@ exports.post = function(reqUrl, data){
     var deferred = Q.defer();
     request.post(reqUrl, {form: data},function(err, response, body){
         if(err){
-            deferred.reject(err);
+            return deferred.reject(err);
         }
 
         if(response.statusCode!==200){
-            deferred.reject(new Error(response.statusCode.toString()));
+            return deferred.reject(new Error(response.statusCode.toString()));
         }
 
         var jsonData;
@@ -41,7 +41,7 @@ exports.post = function(reqUrl, data){
             //console.log("............"+body);
             jsonData = JSON.parse(body);          
         }catch(parseError){
-            deferred.reject(parseError);
+            return deferred.reject(parseError);
         }
 
         deferred.resolve(jsonData);

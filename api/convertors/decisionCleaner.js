@@ -4,8 +4,13 @@
  *   remove empty SKU
  *   change array of char to string
  * 
- * @method toJSON
- * @return {Object} Copy of ...
+ * @method clean
+ * @param {Object} decision
+ {
+    d_BrandsDecisions : [],
+    d_CompanyName: '',
+    d_CID: 1
+ }
  */
 exports.clean = function(decision) {
     if (!decision) return;

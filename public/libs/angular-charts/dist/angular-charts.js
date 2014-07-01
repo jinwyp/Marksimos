@@ -59,6 +59,12 @@ angular.module('angularCharts').directive('acChart', [
             position: 'left'
           },
           colors: [
+              'rgb(57,181,74)',
+              'rgb(255,152,61)',
+              'rgb(0,135,240)',
+              'rgb(135,129,189)',
+              'rgb(242,108,79)',
+              'rgb(189,140,191)',
             'steelBlue',
             'rgb(255,153,0)',
             'rgb(220,57,18)',

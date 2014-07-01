@@ -140,51 +140,6 @@ trunk
 ├── Parameters
 └── ...
 ```
-##Marksimos charts implementation : where to find related field?##
-
-**Unit location**
-```
-trunk/AdminCockpit/uTeamMainForm.pas
-```
-
-Company info series line chart:
-```
-procedure FillChartWithCompany(...);
-```
-
-Market/Segment info series line chart:
-```
-procedure FillChartMarketEvolution(…);
-```
-
-Segment share series pie chart:
-```
-procedure FillChartSegmentShare(…);
-```
-
-SKU leader series bar chart:
-```
-procedure FillChartSegmentLeader(…);
-```
-
-SKU/Brand perception map:
-```
-procedure CreateTreeBrands(…);
-procedure CreateMapBrands(…);
-procedure CreateTreeSkus(…);
-procedure CreateMapSkus(…);
-```
-
-SKU perception map pop info:
-```
-chartSKUMouseMove
-```
-
-SKU/Brand inventory map:
-```
-procedure CreateTreeInventorySkus(…);
-procedure CreateMapInventorySkus(…);
-```
 
 ##Marksimos reports implementation : where to find related field?##
 

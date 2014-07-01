@@ -62,7 +62,11 @@
   * net_market_price
   * segment_value_share_total_market
 
-### Response
+  * perception_map
+  * inventory_report
+
+
+### Response Format
  
     {
         "chartData": [
@@ -95,19 +99,43 @@
         ]
     }
 
-## /api/register
-### POST
-### parameter
-####:email
-####:password
-### response
 
-## /api/decision/sku/discontinue
-### POST
+    {
+        "chartData": [
+            {
+                SKUName : "APONE_1",
+                valueSegmentShare : 0.480229258537292
+            },
+            {
+                SKUName : "APONE_2",
+                valueSegmentShare : 0.160229258537292
+            },
+            {
+                SKUName : "BOBOB_2",
+                valueSegmentShare : 0.138133261203766
+            }
+        ]
+    }
+
+
+## /api/register
+### Method
+POST
 ### Parameters
-####: brand_id
-####: sku_id
-####: is_continue
+* email
+* password
+* response
+
+## /api/sku/decision
+
+### Method
+PUT
+
+### Parameters
+* brand_id
+* sku_id
+* sku_data
+
 ### response
 失败的Response
 
@@ -118,19 +146,121 @@
 
     HTTP Status: 200, {status: 1, message: 'update success.'}
 
+## /api/sku/decision
+Add a SKU
 
-## /api/decision/sku/discontinue
-### POST
+### Method
+POST
+
 ### Parameters
-####: sku
-{
+* brand_id
+* sku_name
 
-}
-### response
+## /api/sku/decision
+Delete a SKU
 
+### Method
+DELETE
 
-
-## url
-### method
 ### Parameters
+* brand_id
+* sku_id
+
+## /api/brand/decision
+Update a brand decision
+
+### Method
+PUT
+
+### Parameters
+* brand_id
+* brand_data
+
+
+## /api/brand/decision
+Add a brand
+
+### Method
+POST
+
+### Parameters
+* brand_name
+* sku_name
+
+
+## /api/brand/decision
+Delete a brand
+
+### Method
+DELETE
+
+### Parameters
+* brand_id
+
+## /api/company/decision
+Update a company decision
+
+### Method
+PUT
+
+### Parameters
+* company_data
+
+### Request
+
+    {
+      "company_data": {
+        "d_IsAdditionalBudgetAccepted": true
+      }
+    }
+
+### Response
+
+    {message: 'update success.'}
+
+## /api/decision
+Get all decisions of all brands in one company in the last period
+
+### Method
+GET
+
+### Parameters
+no parameters
+
+## /api/product_portfolio
+Get production portfolio information
+
+### Method
+GET
+
+### Parameters
+no parameters
+
+## /api/spending_details
+Get spending details
+
+### Method
+GET
+
+### Parameters
+no parameters
+
+
+## /api/future_projection_calculator/:sku_id
+Get future projection calculator
+
+### Method
+GET
+
+### Parameters
+* sku_id
+
+
+## /api/report/:report_name
+### Method
+GET
+### Parameters
+#### report_name
+* company_status
+* financial_report
 ### response

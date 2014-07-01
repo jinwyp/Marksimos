@@ -1,5 +1,13 @@
 var consts = require('../consts.js');
 
+/**
+ * @param {Object} onePeriodResult
+ {
+    p_Market: [],
+    p_SKUs: [],
+    p_Brands: []
+ }
+ */
 exports.clean = function(onePeriodResult) {
     if (!onePeriodResult) return;
 

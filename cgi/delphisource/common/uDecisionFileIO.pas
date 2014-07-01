@@ -27,7 +27,14 @@ var
   vFile    : file of TDecision;
   vFileName   : String;
   vTempResult : integer;
+  lastChar: String;
 begin
+  lastChar :=  Copy(DataDirectory, Length(DataDirectory), 1);
+  if lastChar <> '\' then
+  begin
+     DataDirectory := DataDirectory + '\';
+  end;
+
   vFileName := DataDirectory + 'Decisions_Team' + IntToStr(pTeamNumber) + '.' + seminar;
   try
     AssignFile( vFile, vFileName );

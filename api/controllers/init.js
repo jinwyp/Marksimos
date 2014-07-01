@@ -3,424 +3,242 @@ var util = require('util');
 var url = require('url');
 var config = require('../config.js');
 var Q = require('q');
+
 var decisionCleaner = require('../convertors/decisionCleaner.js');
-var allResultsConvertor = require('../convertors/allResults.js');
 var allResultsCleaner = require('../convertors/allResultsCleaner.js');
+
 var companyDecisionModel = require('../models/companyDecision.js');
 var brandDecisionModel = require('../models/brandDecision.js');
 var SKUDecisionModel = require('../models/SKUDecision.js');
-var allResultsModel = require('../models/allResults.js');
-var chartDataModel = require('../models/chartData.js');
 var seminarModel = require('../models/seminar.js');
+var reportModel = require('../models/report.js');
+var simulationResultModel = require('../models/simulationResult.js');
+var chartModel = require('../models/chart.js');
+var dbutility = require('../models/dbutility.js');
+
+var cgiapi = require('../cgiapi.js');
+
+var decisionAssembler = require('../dataAssemblers/decision.js');
+var companyStatusReportAssembler = require('../dataAssemblers/companyStatusReport.js');
+var financialReportAssembler = require('../dataAssemblers/financialReport.js');
+var profitabilityEvolutionReportAssembler = require('../dataAssemblers/profitabilityEvolutionReport.js');
+var segmentDistributionReportAssembler = require('../dataAssemblers/segmentDistributionReport.js');
+var competitorIntelligenceReportAssembler = require('../dataAssemblers/competitorIntelligence.js');
+var chartAssembler = require('../dataAssemblers/chart.js');
+
 
 /**
- * Initialize game data
+ * Initialize game data, only certain perople can call this method
  *
  * @method init
  *
  */
 exports.init = function(req, res, next) {
-    var seminarId = req.session.seminarId;
+    var seminarId = 'TTT'; //this parameter should be posted from client
+    var simulationSpan = 6; //should be posted from client
 
     if(!seminarId){
         return next(new Error("seminarId cannot be empty."));
     }
 
-    initDecision(seminarId)
+    Q.all([
+        simulationResultModel.removeAll(seminarId),
+        dbutility.removeExistedDecisions(seminarId),
+        seminarModel.remove(seminarId),
+        chartModel.remove(seminarId),
+        reportModel.remove(seminarId)
+    ])
     .then(function(){
-        return initAllResult(seminarId);
+        //insert empty data into mongo, so that we can update them
+        return Q.all([
+            //add a new seminar
+            seminarModel.insert(seminarId, {
+                seminarId: seminarId,
+                simulationSpan: simulationSpan
+            })
+        ]);
+    })
+    .then(function(){
+        return Q.all([
+            initSimulationResult(seminarId),
+            initDecision(seminarId)
+        ])
+    })
+    .then(function(){
+        return Q.all([
+            simulationResultModel.findAll(seminarId)
+        ])
+        .spread(function(allResults){
+            return Q.all([
+                initChartData(seminarId, allResults),
+                initCompanyStatusReport(seminarId, allResults),
+                initFinancialReport(seminarId, allResults),
+                initProfitabilityEvolutionReport(seminarId, allResults),
+                initSegmentDistribution(seminarId, allResults),
+                initCompetitorIntelligence(seminarId, allResults)
+            ]);
+        });
+    })
+    .then(function(){
+        //when init is called, current period is 1
+        return dbutility.insertEmptyDecision(seminarId, 1);
     })
     .then(function(){
         res.send('initialize success');
     })
     .fail(function(err){
         next(err);
-    }).done();
+    })
+    .done();
 };
 
 
+function initDecision(seminarId){
+    var periods = config.initPeriods
+
+    var queries = [];
+    periods.forEach(function(period) {
+        queries.push(cgiapi.queryDecisionsInOnePeriod(seminarId, period));
+    });
+
+    return Q.all(queries)
+    .then(function(decisions){
+        //decisions: [[decision1, decision2], [decision3, decision4]]
+        //tempDecisions: [decisoon1, decison2, decision3, decision4]
+        var tempDecisions = [];
+        decisions.forEach(function(a){
+            a.forEach(function(b){
+                tempDecisions.push(b);
+            })
+        })
+
+        //this function modify allDecisions directly
+        cleanDecisions(tempDecisions);
+
+        return dbutility.saveDecision(seminarId, tempDecisions);
+    });
+}
+
+function cleanDecisions(allDecisions){
+    allDecisions.forEach(function(decision){
+        decisionCleaner.clean(decision);
+    })
+}
+
 /**
- * Get allResults from CGI service, remove useless data,
- * and save charts and reports to db
- * 
- * @method initAllResult
- *
+ * @param {Object} allResults allResults of all periods
  */
-function initAllResult(seminarId) {
+function initChartData(seminarId, allResults){
+    var period = allResults[allResults.length-1].period;
+
+    return Q.all([
+        seminarModel.findOne(seminarId),
+        //get exogenous of period:0, FMCG and GENERIC market
+        cgiapi.getExogenous(period)
+    ])
+    .spread(function(seminar, exogenous){
+        //generate charts from allResults
+        var chartData = chartAssembler.extractChartData(allResults, {
+            simulationSpan: seminar.simulationSpan,
+            exogenous: exogenous
+        });
+
+        return chartModel.insert({
+            seminarId: seminarId,
+            charts: chartData
+        })
+    });
+}
+
+
+function initSimulationResult(seminarId){
     var periods = config.initPeriods;
 
     //allResults contains data of several periods
     var queries = [];
     periods.forEach(function(period) {
-        queries.push(initOnePeriodResult(seminarId, period));
+        queries.push(cgiapi.queryOnePeriodResult(seminarId, period));
     });
 
-    var p = Q.all(queries)
-        .then(function(results){
-            var tempResults = [];
-            for(var i=0; i<results.length; i++){
-                //remove useless data like empty SKU, company
-                allResultsCleaner.clean(results[i]);
-                tempResults.push({
-                    periodId: periods[i],
-                    onePeriodResult: results[i]
-                });
-            }
+    return Q.all(queries)
+    .then(function(allResults){
+        cleanAllResults(allResults);
 
-            //save allResults to db, for debug purpose, we don't have to do this
-            return allResultsModel.updateAllResults(seminarId, tempResults);
+        var saveOperations = []
+        for(var i=0; i<allResults.length; i++){
+            allResults[i].seminarId = seminarId;
+            allResults[i].period = periods[i];
+            saveOperations.push(simulationResultModel.insert(allResults[i]))
+        }
+        return Q.all(saveOperations);
+    });
+}
+
+function cleanAllResults(allResults){
+    allResults.forEach(function(onePeriodResult){
+        //remove useless data like empty SKU, company
+        allResultsCleaner.clean(onePeriodResult);
+    })
+}
+
+function initCompanyStatusReport(seminarId, allResults){
+    var queries = [];
+    allResults.forEach(function(onePeriodResult){
+        queries.push(cgiapi.getExogenous(onePeriodResult.period));
+    })
+    return Q.all(queries)
+    .then(function(allExogenous){
+        return reportModel.insert({
+            seminarId: seminarId,
+            reportName: "company_status",
+            reportData: companyStatusReportAssembler.getCompanyStatusReport(allResults, allExogenous)
         })
-        .then(function(results) {
-            return seminarModel.getSeminarSetting(seminarId)
-            .then(function(seminarSetting){
-                return getExogenous(seminarSetting)
-                .then(function(exogenous){
-                    //generate charts from allResults
-                    return extractChartData(results, {
-                        seminarSetting: seminarSetting,
-                        exogenous: exogenous
-                    });
-                })
-            })
+    });
+};
+
+function initFinancialReport(seminarId, allResults){
+    return reportModel.insert({
+        seminarId: seminarId,
+        reportName: "financial_report",
+        reportData: financialReportAssembler.getFinancialReport(allResults)
+    })
+}
+
+function initProfitabilityEvolutionReport(seminarId, allResults){
+    return reportModel.insert({
+        seminarId: seminarId,
+        reportName: "profitability_evolution",
+        reportData: profitabilityEvolutionReportAssembler.getProfitabilityEvolutionReport(allResults)
+    })
+}
+
+function initSegmentDistribution(seminarId, allResults){
+    var queries = [];
+    allResults.forEach(function(onePeriodResult){
+        queries.push(cgiapi.getExogenous(onePeriodResult.period));
+    })
+    return Q.all(queries)
+    .then(function(allExogenous){
+        return reportModel.insert({
+            seminarId: seminarId,
+            reportName: "segment_distribution",
+            reportData: segmentDistributionReportAssembler.getSegmentDistributionReport(allResults, allExogenous)
         })
-        .then(function(chartData) {
-            //before save new chart data, remove the existed one
-            return chartDataModel.removeChartData(seminarId)
-            .then(function(){
-                return chartDataModel.saveChartData({
-                    seminarId: seminarId,
-                    charts: chartData
-                });
-            })
-        });
-
-    return p;
-}
-
-/**
- * Get exogenous, exogenous are some parameters of the game
- * 
- * @method getExogenous
- * @param {Object} seminarSetting {simulationVariant, targetMarket}
- *
- */
-function getExogenous(seminarSetting){
-    var reqUrl = url.resolve(config.cgiService,
-        util.format('exogenous.exe?period=%s&simulationVariant=%s&targetMarket=%s',
-            0,seminarSetting.simulationVariant, seminarSetting.targetMarket));
-    return request.get(reqUrl);
-}
-
-/**
- * Query allResults CGI service
- * 
- * @method initOnePeriodResult
- * @param {String} seminarId
- * @param {Number} period [-3, -2, -1]
- */
-function initOnePeriodResult(seminarId, period) {
-    var reqUrl = config.cgiService + util.format('allresults.exe?seminar=%s&period=%s', seminarId, period);
-    return request.get(reqUrl);
-}
-
-function extractChartData(results, settings){
-    //生成chart数据
-    var marketShareInValue = allResultsConvertor.marketShareInValue(results);
-    var marketShareInVolume = allResultsConvertor.marketShareInVolume(results);
-    var mindSpaceShare = allResultsConvertor.mindSpaceShare(results);
-    var shelfSpaceShare = allResultsConvertor.shelfSpaceShare(results);
-
-    //investment and profit
-    var totalInvestment = allResultsConvertor.totalInvestment(results);
-    var netProfitByCompanies = allResultsConvertor.netProfitByCompanies(results);
-    var returnOnInvestment = allResultsConvertor.returnOnInvestment(results);
-    var investmentsVersusBudget = allResultsConvertor.investmentsVersusBudget(results, settings.seminarSetting);
-    
-    //market sales and inventory
-    var marketSalesValue = allResultsConvertor.marketSalesValue(results);
-    var marketSalesVolume = allResultsConvertor.marketSalesVolume(results);
-    var totalInventoryAtFactory = allResultsConvertor.totalInventoryAtFactory(results);
-    var totalInventoryAtTrade = allResultsConvertor.totalInventoryAtTrade(results);
-
-    //segment leaders top 5
-    var segmentsLeadersByValuePriceSensitive = allResultsConvertor.segmentsLeadersByValue(results, 'priceSensitive');    
-    var segmentsLeadersByValuePretenders = allResultsConvertor.segmentsLeadersByValue(results, 'pretenders');
-    var segmentsLeadersByValueModerate = allResultsConvertor.segmentsLeadersByValue(results, 'moderate');
-    var segmentsLeadersByValueGoodLife = allResultsConvertor.segmentsLeadersByValue(results, 'goodLife');
-    var segmentsLeadersByValueUltimate = allResultsConvertor.segmentsLeadersByValue(results, 'ultimate');
-    var segmentsLeadersByValuePragmatic = allResultsConvertor.segmentsLeadersByValue(results, 'pragmatic');
-
-    //Market evolution
-    var growthRateInVolume = allResultsConvertor.growthRateInVolume(results);
-    var growthRateInValue = allResultsConvertor.growthRateInValue(results);
-    var netMarketPrice = allResultsConvertor.netMarketPrice(results);
-    var segmentValueShareTotalMarket = allResultsConvertor.segmentValueShareTotalMarket(results);
-
-    var perceptionMap = allResultsConvertor.perceptionMap(results, settings.exogenous);
-
-    var inventoryReport = allResultsConvertor.inventoryReport(results, settings.seminarSetting);
-
-    return [
-        {
-            chartName: 'marketShareInValue',
-            chartData: marketShareInValue
-        },
-        {
-            chartName: 'marketShareInVolume',
-            chartData: marketShareInVolume
-        },
-        {
-            chartName: 'mindSpaceShare',
-            chartData: mindSpaceShare
-        },
-        {
-            chartName: 'shelfSpaceShare',
-            chartData: shelfSpaceShare
-        },
-        {
-            chartName: 'totalInvestment',
-            chartData: totalInvestment
-        },
-        {
-            chartName: 'netProfitByCompanies',
-            chartData: netProfitByCompanies
-        },
-        {
-            chartName: 'returnOnInvestment',
-            chartData: returnOnInvestment
-        },
-        {
-            chartName: 'investmentsVersusBudget',
-            chartData: investmentsVersusBudget
-        },
-        {
-            chartName: 'marketSalesValue',
-            chartData: marketSalesValue
-        },
-        {
-            chartName: 'marketSalesVolume',
-            chartData: marketSalesVolume
-        },
-        {
-            chartName: 'totalInventoryAtFactory',
-            chartData: totalInventoryAtFactory
-        },
-        {
-            chartName: 'totalInventoryAtTrade',
-            chartData: totalInventoryAtTrade
-        },
-        {
-            chartName: 'segmentsLeadersByValuePriceSensitive',
-            chartData: segmentsLeadersByValuePriceSensitive
-        },
-        {
-            chartName: 'segmentsLeadersByValuePretenders',
-            chartData: segmentsLeadersByValuePretenders
-        },
-        {
-            chartName: 'segmentsLeadersByValueModerate',
-            chartData: segmentsLeadersByValueModerate
-        },
-        {
-            chartName: 'segmentsLeadersByValueGoodLife',
-            chartData: segmentsLeadersByValueGoodLife
-        },
-        {
-            chartName: 'segmentsLeadersByValueUltimate',
-            chartData: segmentsLeadersByValueUltimate
-        },
-        {
-            chartName: 'segmentsLeadersByValuePragmatic',
-            chartData: segmentsLeadersByValuePragmatic
-        },
-        {
-            chartName: 'growthRateInVolume',
-            chartData: growthRateInVolume
-        },
-        {
-            chartName: 'growthRateInValue',
-            chartData: growthRateInValue
-        },
-        {
-            chartName: 'netMarketPrice',
-            chartData: netMarketPrice
-        },
-        {
-            chartName: 'segmentValueShareTotalMarket',
-            chartData: segmentValueShareTotalMarket
-        },
-        {
-            chartName: 'perceptionMap',
-            chartData: perceptionMap
-        },
-        {
-            chartName: 'inventoryReport',
-            chartData: inventoryReport
-        }
-    ];
-}
-
-/**
- * Initialize decision
- *
- * @method initDecision
- * @param {Number} seminar
- * @return {Object} a promise
- */
-function initDecision(seminarId) {
-    var periods = config.initPeriods
-    var companies = config.initCompanies;
-
-    var d = removeExistedData(seminarId);
-    d = d.then(function(){
-        var queries = [];
-        periods.forEach(function(period) {
-            companies.forEach(function(company) {
-                queries.push(initOnePeriodDecison(seminarId, company, period));
-            })
-        });
-        return Q.all(queries);
     });
-
-    return d;
-
-    function removeExistedData(seminarId){
-        return Q.all([
-                companyDecisionModel.remove(seminarId),
-                brandDecisionModel.remove(seminarId),
-                SKUDecisionModel.remove(seminarId)
-            ]);
-    }
 }
 
-/**
- * Get decision from CGI service, save it to mongo
- * return a promise
- *
- * @method initOnePeriodDecison
- * @param {Number} period
- * @param {team} team
- * @return {Object} a promise
- */
-function initOnePeriodDecison(seminarId, team, period) {
-    var reqUrl = config.cgiService + util.format('decisions.exe?period=%s&team=%s&seminar=%s', period, team, seminarId);
-    return request.get(reqUrl).then(function(result) {
-        decisionCleaner.clean(result);
-
-        var decision = getDecision(result);
-        decision.seminarId = seminarId;
-        decision.period = period;
-
-        var d = companyDecisionModel.save(decision);
-
-        var brandDecisions = getBrandDecisions(result);
-
-        brandDecisions.forEach(function(brandDecision){
-            brandDecision.seminarId = seminarId;
-            brandDecision.period = period;
-            d = d.then(function(){
-                return brandDecisionModel.save(brandDecision)
-            });
-        });
-
-        var SKUDecisions = getSKUDecisions(result);
-        SKUDecisions.forEach(function(SKUDecision){
-            SKUDecision.seminarId = seminarId;
-            SKUDecision.period = period;
-            d = d.then(function(){
-                return SKUDecisionModel.save(SKUDecision)
-            })
-        });
-        
-        return d;
-    });
-
-    /**
-     * Convert onePeriodResult to a decision object which can be saved to db
-     * @param {Object} onePeriodResult decision of one company in one period
-     */
-    function getDecision(onePeriodResult){
-        var brandIds = onePeriodResult.d_BrandsDecisions.map(function(brand){
-            return brand.d_BrandID;
-        });
-
-        return {
-            d_CID                        : onePeriodResult.d_CID,
-            d_CompanyName                : onePeriodResult.d_CompanyName,
-            d_BrandsDecisions            : brandIds,
-            d_IsAdditionalBudgetAccepted : onePeriodResult.d_IsAdditionalBudgetAccepted,
-            d_RequestedAdditionalBudget  : onePeriodResult.d_RequestedAdditionalBudget,
-            d_InvestmentInEfficiency     : onePeriodResult.d_InvestmentInEfficiency,
-            d_InvestmentInTechnology     : onePeriodResult.d_InvestmentInTechnology,
-            d_InvestmentInServicing      : onePeriodResult.d_InvestmentInServicing
-        }
-    }
-
-    /**
-     * Convert onePeriodResult to an array of brandDecision objects which can be saved to db
-     * @param {Object} onePeriodResult decision of one company in one period
-     */
-    function getBrandDecisions(onePeriodResult){
-        var results = [];
-
-        for(var i=0; i<onePeriodResult.d_BrandsDecisions.length; i++){
-            var brandDecision = onePeriodResult.d_BrandsDecisions[i];
-            var SKUIDs = brandDecision.d_SKUsDecisions.map(function(SKUDecision){
-                return SKUDecision.d_SKUID;
-            })
-            results.push({
-                d_CID: onePeriodResult.d_CID,
-                d_BrandID       : brandDecision.d_BrandID,
-                d_BrandName     : brandDecision.d_BrandName,
-                d_SalesForce    : brandDecision.d_SalesForce,
-                d_SKUsDecisions : SKUIDs
-            });
-        }
-
-        return results;
-    }
-
-    /**
-     * Convert onePeriodResult to an array of SKUDecision objects which can be saved to db
-     * @param {Object} onePeriodResult decision of one company in one period
-     */
-    function getSKUDecisions(onePeriodResult){
-        var results = [];
-
-        for(var i=0; i<onePeriodResult.d_BrandsDecisions.length; i++){
-            var brandDecision = onePeriodResult.d_BrandsDecisions[i];
-            for(var j=0; j<brandDecision.d_SKUsDecisions.length; j++){
-                var SKUDecision = brandDecision.d_SKUsDecisions[j];
-                results.push({
-                    d_CID: onePeriodResult.d_CID,
-                    d_BrandID: brandDecision.d_BrandID,
-                    d_SKUID: SKUDecision.d_SKUID,
-                    d_SKUName: SKUDecision.d_SKUName,
-                    d_Advertising: SKUDecision.d_Advertising,
-                    d_AdditionalTradeMargin: SKUDecision.d_AdditionalTradeMargin,
-                    d_FactoryPrice: SKUDecision.d_FactoryPrice,
-                    d_ConsumerPrice: SKUDecision.d_ConsumerPrice,
-                    d_RepriceFactoryStocks: SKUDecision.d_RepriceFactoryStocks,
-                    d_IngredientsQuality: SKUDecision.d_IngredientsQuality,
-                    d_PackSize: SKUDecision.d_PackSize,
-                    d_ProductionVolume: SKUDecision.d_ProductionVolume,
-                    d_PromotionalBudget: SKUDecision.d_PromotionalBudget,
-
-                    d_PromotionalEpisodes: SKUDecision.d_PromotionalEpisodes,
-                    d_TargetConsumerSegment: SKUDecision.d_TargetConsumerSegment,
-                    d_Technology: SKUDecision.d_Technology,
-                    d_ToDrop: SKUDecision.d_ToDrop,
-                    d_TradeExpenses: SKUDecision.d_TradeExpenses,
-                    d_WholesalesBonusMinVolume: SKUDecision.d_WholesalesBonusMinVolume,
-                    d_WholesalesBonusRate: SKUDecision.d_WholesalesBonusRate,
-                    d_WarrantyLength: SKUDecision.d_WarrantyLength,
-                })
-            }
-        }
-
-        return results;
-    }
+function initCompetitorIntelligence(seminarId, allResults){
+    return reportModel.insert({
+        seminarId: seminarId,
+        reportName: 'competitor_intelligence',
+        reportData: competitorIntelligenceReportAssembler.getCompetitorIntelligenceReport(allResults)
+    })
 }
+
+
+
+
+
 
 
 

@@ -23,6 +23,15 @@ module.exports = {
         'allSegments'
     ],
 
+    segmentNamesOnProductPortfolio: [
+        '1. Price Sensitive',
+        '2. Pretenders',
+        '3. Moderate',
+        '4. Good Life',
+        '5. Ultimate',
+        '6. Pragmatic'
+    ],
+
     inventoryNames: {
         'FMCG': [
             'FreshInventory',
@@ -36,5 +45,11 @@ module.exports = {
             'Three-year old Stock',
             'Oldest Stock'
         ]
-    }
+    },
+
+    packsizeDescription: [
+        "Small Pack", 
+        "Normal Pack", 
+        "Large Pack" 
+    ]
 };
