@@ -8,7 +8,7 @@ var app = angular.module('marksimos.filters', []);
 app.filter('usersegment', function() {
     return function(input) {
         var userSegment = [
-            {id:0, name:'none'},
+            {id:0, name:'3 Moderate'},
             {id:1, name:'1 Price Sensitive'},
             {id:2, name:'2 Pretenders'},
             {id:3, name:'3 Moderate'},

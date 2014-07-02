@@ -23,15 +23,15 @@ app.directive('headerUser', function() {
             scope.clickMenu = function(currentmenu){
                 scope.currentMenu = currentmenu;
 
-                if (currentmenu == 'Home'){
-                    scope.menuhome();
-                }else if (currentmenu == 'Report'){
-                    scope.menureport();
-                }else if (currentmenu == 'Score'){
-                    scope.menuscore();
-                }else if (currentmenu == 'Decision'){
-                    scope.menudecision();
-                }
+//                if (currentmenu == 'Home'){
+//                    scope.menuhome();
+//                }else if (currentmenu == 'Report'){
+//                    scope.menureport();
+//                }else if (currentmenu == 'Score'){
+//                    scope.menuscore();
+//                }else if (currentmenu == 'Decision'){
+//                    scope.menudecision();
+//                }
             };
 
 

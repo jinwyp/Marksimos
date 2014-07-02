@@ -12,7 +12,7 @@ var marksimosapp = angular.module('marksimos', ['angularCharts', 'nvd3ChartDirec
 marksimosapp.controller('chartController', function($scope,  $timeout, $http, report, company) {
 
     $scope.css = {
-        menu : 'Decision',
+        menu : 'Home',
         chartMenu : 'A3',
         additionalBudget : true,
         currentBrandId : 0,
@@ -514,6 +514,12 @@ marksimosapp.controller('chartController', function($scope,  $timeout, $http, re
         $scope.css.currentBrandId = brand._id;
         $scope.data.currentBrand = brand;
     };
+
+    $scope.clickCurrentSku = function(sku){
+        $scope.data.currentSku = sku;
+    };
+
+
 
     $scope.leaveSkuInput = function(sku, fieldname, fielddata, segmentOrWeek, weekindex){
         $scope.data.currentModifiedSku = {

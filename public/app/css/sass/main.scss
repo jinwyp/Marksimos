@@ -827,6 +827,11 @@ body{
 
         .table > thead > tr > th {
             font-weight: bold;
+            color: $color_main_body_user_chart_leftmenu_title;
+            a {
+                font-weight: bold;
+                color: $color_main_body_user_chart_leftmenu_title;
+            }
         }
 
         .table > thead > tr > td,

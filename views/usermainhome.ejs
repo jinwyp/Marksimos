@@ -5,7 +5,7 @@
 
 <div class="container-fluid width_big_screen" ng-controller="chartController">
 
-    <header-user login="true" click-home="switchHeaderMenu('Home')" click-report="switchHeaderMenu('Report')" current-menu="css.menu"></header-user>
+    <header-user login="true"  current-menu="css.menu"></header-user>
 
 
 
@@ -57,7 +57,7 @@
             </div>
             <div class="row">
                 <span class="user_makedecision">Mission: Market Share + Profit</span>
-                <button type="button" class="btn user_decisionbutton">Make Decision</button>
+                <button type="button" class="btn user_decisionbutton" ng-click="switchHeaderMenu('Decision')">Make Decision</button>
             </div>
         </div>
 
@@ -201,7 +201,7 @@
             <div class="row">
                 <div class="col-md-12 ">
                     <span class="user_chart_make_decision">Mission: Market Share + Profit</span>
-                    <button type="button" class="btn user_chart_decision_button">Make Decision</button>
+                    <button type="button" class="btn user_chart_decision_button" ng-click="switchHeaderMenu('Decision')">Make Decision</button>
                 </div>
             </div>
 
@@ -643,7 +643,8 @@
                                         <thead>
                                             <tr>
                                                 <th class="sku_table">Name <button class="btn btn-default btn-xs">+</button></th>
-                                                <th ng-repeat="sku in data.currentBrand.d_SKUsDecisions">{{sku.d_SKUName}}</th>
+                                                <th ng-repeat="sku in data.currentBrand.d_SKUsDecisions" ng-click="clickCurrentSku(sku)">
+                                                    <a href="">{{sku.d_SKUName}}</a></th>
                                             </tr>
                                         </thead>
 

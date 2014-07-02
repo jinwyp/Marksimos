@@ -8,7 +8,7 @@
 
 describe('chartController', function(){
 
-    // load the controller's module
+    /********************  load the controller's module  ********************/
     beforeEach(module('marksimos'), ['angularCharts', 'nvd3ChartDirectives', 'marksimos.component', 'marksimos.factory', 'marksimos.filters' ]);
 
     var controller;
@@ -16,8 +16,7 @@ describe('chartController', function(){
     var serviceApi;
 
 
-
-    // Initialize the controller and a mock scope
+    /********************  Initialize the controller and a mock scope  ********************/
     beforeEach(inject(function ($controller, $rootScope) {
         scope = $rootScope.$new();
         controller = $controller('chartController', {
@@ -26,15 +25,32 @@ describe('chartController', function(){
     }));
 
 
-
-    // critical
+    /********************  Initially critical  ********************/
     it('Initially scope.css.menu has default value ', function() {
-        expect(scope.css.menu).toBe("Decision");
+        expect(scope.css.menu).toEqual("Home");
     });
 
     it('Initially scope.css.chartMenu has default value ', function() {
-        expect(scope.css.chartMenu).toBe("A3");
+        expect(scope.css.chartMenu).toEqual("A3");
     });
+
+//    it('Initially scope.data.currentSku has default value ', function() {
+//        expect(scope.data.currentSku.d_SKUName).toBe("_1");
+//    });
+
+
+
+    /********************  Function critical  ********************/
+    it('Should switch menu and scope.css.menu to "Decision"', function() {
+        scope.switchHeaderMenu('Decision');
+        expect(scope.css.menu).toEqual("Decision");
+    });
+
+    it('Should switch currentSku and scope.data.currentSku to simple sku' , function() {
+        scope.clickCurrentSku({});
+        expect(scope.data.currentSku).toEqual({});
+    });
+
 
 //    it('should ....', inject(function($controller) {
 //        //spec body
@@ -44,7 +60,7 @@ describe('chartController', function(){
 //
 
 
-    // nice-to-haves
+    /********************  nice-to-haves  ********************/
     it('ensure client-side helper shown for empty fields', function() { });
 
 
