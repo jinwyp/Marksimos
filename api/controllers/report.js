@@ -18,8 +18,8 @@ exports.getReport = function(req, res, next){
             return res.send(400, {message: "Report doesn't exist."})
         }
 
-        if(userRole!==1){
-            return res.send(filterReport(report, companyId));
+        if(userRole!==1 && isReportNeedFilter(reportName)){
+            return res.send(extractReportOfOneCompany(report, companyId));
         }
 
         res.send(report.reportData);
@@ -30,7 +30,24 @@ exports.getReport = function(req, res, next){
     })
     .done();
 
-    function filterReport(report, companyId){
-        return "filterd report."
+}
+
+function isReportNeedFilter(report_name){
+    return report_name==='financial_report' || report_name==='profitability_evolution';
+}
+
+/**
+ * Filter out data of other companies
+ */
+function extractReportOfOneCompany(report, companyId){
+    if(!report || !report.reportData) return;
+
+    var tempReportData = [];
+    for(var i=0; i<report.reportData.length; i++){
+        if(report.reportData[i].companyId === companyId){
+            tempReportData.push(report.reportData[i]); 
+        }
     }
+    
+    return tempReportData;
 }
