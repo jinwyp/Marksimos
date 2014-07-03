@@ -21,9 +21,9 @@ begin
 
   try
     WriteLn('Content-type: application/json');
-
+    Writeln();
     sValue := getVariable('QUERY_STRING');
-    sValue := 'seminar=TTT&simulation_span=3&team1=companyA&team2=companyB';
+    //sValue := 'seminar=TTT&simulation_span=3&team1=companyA&team2=companyB';
     params := Explode(sValue);
 
     config.cr_AdministratorFilesLocation := ConvertStringToPathArray('C:\Program Files\Apache Software Foundation\Apache2.2\cgi-bin\');
