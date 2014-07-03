@@ -69,4 +69,49 @@ exports.queryDecisionsInOnePeriod = function(seminarId, period){
     });
 }
 
+/**
+ * @param {Object} initConfig
+ {
+    seminar:'',
+    simulation_span: '',
+    teams: []
+ }
+ */
+exports.init = function(initConfig){
+    //seminar=TTT&simulation_span=3&team1=companyA&team2=companyB
+
+    var reqUrl = config.cgiService + util.format('initialize.exe?seminar=%s&simulation_span=%s'
+        , initConfig.seminarId, initConfig.simulation_span);
+    for(var i=0; i<initConfig.teams.length; i++){
+        reqUrl += '&team' + (i+1) + '=' + initConfig.teams[i];
+    }
+
+    return request.get(reqUrl);
+}
+
+/**
+ * @param {Object} simulationConfig
+ {
+    seminar:'',
+    simulation_span: '',
+    teams: [],
+    period: ''
+ }
+ */
+export.runSimulation = function(simulationConfig){
+    var reqUrl = config.cgiService + util.format('runsimulation.exe?seminar=%s&simulation_span=%s'
+        , simulationConfig.seminarId, simulationConfig.simulation_span);
+    
+    for(var i=0; i<simulationConfig.teams.length; i++){
+        reqUrl += '&team' + (i+1) + '=' + simulationConfig.teams[i];
+    }
+
+    reqUrl += 'period=' + simulationConfig.period;
+
+    return request.get(reqUrl);
+}
+
+
+
+
 

@@ -42,20 +42,26 @@ exports.init = function(req, res, next) {
         return next(new Error("seminarId cannot be empty."));
     }
 
-    Q.all([
-        simulationResultModel.removeAll(seminarId),
-        dbutility.removeExistedDecisions(seminarId),
-        seminarModel.remove(seminarId),
-        chartModel.remove(seminarId),
-        reportModel.remove(seminarId)
-    ])
+    initBinaryFile(seminarId)
+    .then(function(initResult){
+        if(initResult === 'init_success'){
+            return res.send({message: 'init binary file failed.'});
+        }
+        Q.all([
+            simulationResultModel.removeAll(seminarId),
+            dbutility.removeExistedDecisions(seminarId),
+            seminarModel.remove(seminarId),
+            chartModel.remove(seminarId),
+            reportModel.remove(seminarId)
+        ])
+    })
     .then(function(){
         //insert empty data into mongo, so that we can update them
         return Q.all([
             //add a new seminar
             seminarModel.insert(seminarId, {
                 seminarId: seminarId,
-                simulationSpan: simulationSpan
+                simulation_span: simulationSpan
             })
         ]);
     })
@@ -87,13 +93,23 @@ exports.init = function(req, res, next) {
         return dbutility.insertEmptyDecision(seminarId, 1);
     })
     .then(function(){
-        res.send('initialize success');
+        res.send({message: 'initialize success'});
     })
     .fail(function(err){
         next(err);
     })
     .done();
 };
+
+function initBinaryFile(seminarId){
+    var simulation_span = 4;
+
+    return cgiapi.init({
+        seminarId: seminarId,
+        simulation_span: simulation_span,
+        teams: ['companyA', 'companyB']
+    });
+}
 
 
 function initDecision(seminarId){
