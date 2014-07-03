@@ -49,6 +49,7 @@ $color_main_body_user_chart_leftmenu_border: #e7e9ed;
 $color_main_body_user_chart_single_border: #d9dce3;
 $color_main_body_user_chart_perception_map_bg: #f9f9f9;
 $color_main_body_user_chart_perception_map_border: #bdbdbd;
+$color_main_body_user_table_title_border: #e1e1e1;
 
 
 $color_main_body_progress_bar_budget: #6071b9;
@@ -95,7 +96,8 @@ $color_main_body_decision_table_hover: #feeaff;
 
 }
 
-@mixin user_brand {
+
+@mixin icon_user_brand {
     color: $color_main_body_brand;
     font-size: 14px;
     background-image: url(../images/userbrand.png);
@@ -106,7 +108,8 @@ $color_main_body_decision_table_hover: #feeaff;
     display: block;
 }
 
-@mixin user_product{
+
+@mixin icon_user_product{
     color: $color_main_body_product;
     font-size: 11px;
     background-image: url(../images/userproduct.png);
@@ -118,6 +121,54 @@ $color_main_body_decision_table_hover: #feeaff;
 
     span{
         color: $color_main_body_product_target;
+    }
+}
+
+
+@mixin table_report{
+
+    .table > thead > tr > th{
+        font-size: 12px;
+        font-family: $font_main_header2;
+        font-weight: normal;
+        color: $color_main_body_user_chart_leftmenu_title;
+        background-color: $color_login_background;
+    }
+
+    .table > thead > tr > td,
+    .table > tbody > tr > td,
+    .table > tfoot > tr > td {
+        vertical-align: middle;
+        border-top: 1px solid #ddd;
+        font-family: $font_main_header2;
+        font-size: 12px;
+        color: $color_main_body_user_chart_leftmenu_title;
+    }
+
+    .table-striped > tbody > tr:nth-child(odd) > td,
+    .table-striped > tbody > tr:nth-child(odd) > th {
+        background-color: $color_login_panel_background;
+    }
+
+    .table-striped > tbody > tr:nth-child(even) > td,
+    .table-striped > tbody > tr:nth-child(even) > th {
+        background-color: $color_main_body_background;
+    }
+
+    .table-striped tbody tr:nth-child(odd):hover td,
+    .table-striped tbody tr:nth-child(odd):hover th,
+    .table-striped tbody tr:nth-child(even):hover td,
+    .table-striped tbody tr:nth-child(even):hover th{
+        background-color: $color_main_body_decision_table_hover;
+    }
+
+}
+
+@mixin divider_horizontal{
+    .divider_horizontal{
+        width: 100%;
+        border-top: 1px solid $color_login_title;
+        margin-bottom: 10px;
     }
 }
 
@@ -303,11 +354,11 @@ body{
             background-color: $color_login_content_background;
 
             .user_brand{
-                @include user_brand;
+                @include icon_user_brand;
             }
 
             .user_product{
-                @include user_product;
+                @include icon_user_product;
             }
         }
 
@@ -461,11 +512,11 @@ body{
     }
 
     .user_brand{
-        @include user_brand;
+        @include icon_user_brand;
     }
 
     .user_product{
-        @include user_product;
+        @include icon_user_product;
     }
 
     .user_competitorsnum{
@@ -563,7 +614,11 @@ body{
 
 
 
-    /***** Report 页面开始 *****/
+
+
+
+
+    /**********  Report 页面开始 **********/
 
     .user_chart_box{
         height: 70px;
@@ -749,10 +804,66 @@ body{
             width: 31%;
         }
 
+
+        .user_table_single{
+
+            h5 {
+                font-size: 14px;
+                color: $color_main_body_company;
+                margin: 0px 0px 0px 0px;
+                padding: 20px 0px;
+                border-bottom: 1px solid $color_main_body_user_table_title_border;
+            }
+
+            .table_report{
+                border: 1px solid $color_main_body_user_chart_single_border;
+                background-color: $color_login_panel_background;
+                margin: 20px 0px 20px 0px;
+                padding: 50px 40px 0px 40px;
+
+                .nav-pills li{
+                    a{
+                        background-color: $color_login_background;
+                        color: $color_main_body_user_chart_leftmenu_title;
+                        font-family: $font_main_header2;
+                        @include border-top-radius(4px);
+                        @include border-bottom-radius(0px);
+
+                        &:hover,
+                        &:focus{
+                            background-color: $color_main_body_background_chart;
+                        }
+                    }
+                }
+                .nav-pills li.active{
+                    a,
+                    a:hover,
+                    a:focus{
+                        color: $color_main_body_company_a;
+                        font-family: $font_main_header2;
+                        background-color: $color_login_title;
+                    }
+                }
+
+                @include divider_horizontal;
+
+            }
+
+            @include table_report;
+
+            .table > thead > tr > th{
+                font-weight: bold;
+            }
+
+
+        }
     }
 
 
-    /***** Decision 页面开始 *****/
+
+
+
+    /**********  Decision 页面开始  **********/
 
     .progress_title{
         color : $color_main_body_product_target;
@@ -946,40 +1057,8 @@ body{
                     color: $color_main_body_user_chart_leftmenu_title;
                     background-color: #f1f1f1;
                 }
-                .table > thead > tr > th{
-                    font-size: 12px;
-                    font-family: $font_main_header2;
-                    font-weight: normal;
-                    color: $color_login_input_label;
-                    background-color: $color_login_background;
-                }
 
-                .table > thead > tr > td,
-                .table > tbody > tr > td,
-                .table > tfoot > tr > td {
-                    vertical-align: middle;
-                    border-top: 1px solid #ddd;
-                    font-family: "Helvetica", "Arial, sans-serif";
-                    font-size: 12px;
-                    color: $color_login_input_label;
-                }
-
-                .table-striped > tbody > tr:nth-child(odd) > td,
-                .table-striped > tbody > tr:nth-child(odd) > th {
-                    background-color: $color_login_panel_background;
-                }
-
-                .table-striped > tbody > tr:nth-child(even) > td,
-                .table-striped > tbody > tr:nth-child(even) > th {
-                    background-color: $color_main_body_background;
-                }
-
-                .table-striped tbody tr:nth-child(odd):hover td,
-                .table-striped tbody tr:nth-child(odd):hover th,
-                .table-striped tbody tr:nth-child(even):hover td,
-                .table-striped tbody tr:nth-child(even):hover th{
-                    background-color: $color_main_body_decision_table_hover;
-                }
+                @include table_report;
 
             }
         }
