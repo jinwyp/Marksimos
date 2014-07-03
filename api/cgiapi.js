@@ -98,10 +98,10 @@ exports.init = function(initConfig){
     period: ''
  }
  */
-export.runSimulation = function(simulationConfig){
+exports.runSimulation = function(simulationConfig){
     var reqUrl = config.cgiService + util.format('runsimulation.exe?seminar=%s&simulation_span=%s'
         , simulationConfig.seminarId, simulationConfig.simulation_span);
-    
+
     for(var i=0; i<simulationConfig.teams.length; i++){
         reqUrl += '&team' + (i+1) + '=' + simulationConfig.teams[i];
     }
