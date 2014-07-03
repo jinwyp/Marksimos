@@ -45,5 +45,11 @@ module.exports = {
             'Three-year old Stock',
             'Oldest Stock'
         ]
-    }
+    },
+
+    packsizeDescription: [
+        "Small Pack", 
+        "Normal Pack", 
+        "Large Pack" 
+    ]
 };

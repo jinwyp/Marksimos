@@ -256,7 +256,20 @@ GET
 * sku_id
 
 
-## url
-### method
+## /api/report/:report_name
+### Method
+GET
 ### Parameters
+#### report_name
+* company_status
+* financial_report
+* profitability_evolution
+* segment_distribution
+* competitor_intelligence
+* market_trends
 ### response
+
+## /api/adminreport/:report_name
+This API is the same as /api/report/:report_name
+
+

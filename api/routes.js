@@ -19,6 +19,7 @@ module.exports = function(app){
 
     //report
     app.get('/api/report/:report_name', reportController.getReport);
+    app.get('/api/adminreport/:report_name', reportController.getReport);
 
     //make decision page
     app.put('/api/sku/decision', decisionController.updateSKUDecision);

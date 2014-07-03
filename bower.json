@@ -26,6 +26,8 @@
     "d3": "~3.4.6",
     "angular-charts": "~0.1.1",
     "nvd3": "~1.1.15-beta",
-    "angularjs-nvd3-directives": "~0.0.7"
+    "angularjs-nvd3-directives": "~0.0.7",
+    "angular-mocks": "~1.2.18",
+    "angular-animate": "~1.2.18"
   }
 }

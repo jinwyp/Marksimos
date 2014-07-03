@@ -20,7 +20,13 @@ var cgiapi = require('../cgiapi.js');
 
 var decisionAssembler = require('../dataAssemblers/decision.js');
 var companyStatusReportAssembler = require('../dataAssemblers/companyStatusReport.js');
+var financialReportAssembler = require('../dataAssemblers/financialReport.js');
+var profitabilityEvolutionReportAssembler = require('../dataAssemblers/profitabilityEvolutionReport.js');
+var segmentDistributionReportAssembler = require('../dataAssemblers/segmentDistributionReport.js');
+var competitorIntelligenceReportAssembler = require('../dataAssemblers/competitorIntelligence.js');
+var marketTrendsReportAssembler = require('../dataAssemblers/marketTrendsReport.js');
 var chartAssembler = require('../dataAssemblers/chart.js');
+
 
 /**
  * Initialize game data, only certain perople can call this method
@@ -66,7 +72,13 @@ exports.init = function(req, res, next) {
         .spread(function(allResults){
             return Q.all([
                 initChartData(seminarId, allResults),
-                reportModel.initReport(seminarId, allResults)
+                
+                initCompanyStatusReport(seminarId, allResults),
+                initFinancialReport(seminarId, allResults),
+                initProfitabilityEvolutionReport(seminarId, allResults),
+                initSegmentDistributionReport(seminarId, allResults),
+                initCompetitorIntelligenceReport(seminarId, allResults),
+                initMarketTrendsReport(seminarId, allResults)
             ]);
         });
     })
@@ -171,6 +183,70 @@ function cleanAllResults(allResults){
         allResultsCleaner.clean(onePeriodResult);
     })
 }
+
+function initCompanyStatusReport(seminarId, allResults){
+    var queries = [];
+    allResults.forEach(function(onePeriodResult){
+        queries.push(cgiapi.getExogenous(onePeriodResult.period));
+    })
+    return Q.all(queries)
+    .then(function(allExogenous){
+        return reportModel.insert({
+            seminarId: seminarId,
+            reportName: "company_status",
+            reportData: companyStatusReportAssembler.getCompanyStatusReport(allResults, allExogenous)
+        })
+    });
+};
+
+function initFinancialReport(seminarId, allResults){
+    return reportModel.insert({
+        seminarId: seminarId,
+        reportName: "financial_report",
+        reportData: financialReportAssembler.getFinancialReport(allResults)
+    })
+}
+
+function initProfitabilityEvolutionReport(seminarId, allResults){
+    return reportModel.insert({
+        seminarId: seminarId,
+        reportName: "profitability_evolution",
+        reportData: profitabilityEvolutionReportAssembler.getProfitabilityEvolutionReport(allResults)
+    })
+}
+
+function initSegmentDistributionReport(seminarId, allResults){
+    var queries = [];
+    allResults.forEach(function(onePeriodResult){
+        queries.push(cgiapi.getExogenous(onePeriodResult.period));
+    })
+    return Q.all(queries)
+    .then(function(allExogenous){
+        return reportModel.insert({
+            seminarId: seminarId,
+            reportName: "segment_distribution",
+            reportData: segmentDistributionReportAssembler.getSegmentDistributionReport(allResults, allExogenous)
+        })
+    });
+}
+
+function initCompetitorIntelligenceReport(seminarId, allResults){
+    return reportModel.insert({
+        seminarId: seminarId,
+        reportName: 'competitor_intelligence',
+        reportData: competitorIntelligenceReportAssembler.getCompetitorIntelligenceReport(allResults)
+    })
+}
+
+function initMarketTrendsReport(seminarId, allResults){
+    return reportModel.insert({
+        seminarId: seminarId,
+        reportName: 'market_trends',
+        reportData: marketTrendsReportAssembler.getMarketTrendsReport(allResults)
+    })
+}
+
+
 
 
 

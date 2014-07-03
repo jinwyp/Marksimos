@@ -1,7 +1,7 @@
 var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
 var Q = require('q');
-var companyStatusReportAssembler = require('../dataAssemblers/companyStatusReport.js');
+
 
 var reportSchema = new Schema({
     seminarId: String,
@@ -72,14 +72,3 @@ exports.update = function(seminarId, report){
 
     return deferred.promise;
 };
-
-exports.initReport = function(seminarId, allResults){
-    return exports.insert({
-        seminarId: seminarId,
-        reportName: "company_status",
-        reportData: companyStatusReportAssembler.getCompanyStatusReport(allResults)
-    })
-};
-
-
-

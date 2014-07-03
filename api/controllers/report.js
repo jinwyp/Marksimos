@@ -18,6 +18,10 @@ exports.getReport = function(req, res, next){
             return res.send(400, {message: "Report doesn't exist."})
         }
 
+        if(userRole!==1 && isReportNeedFilter(reportName)){
+            return res.send(extractReportOfOneCompany(report, companyId));
+        }
+
         res.send(report.reportData);
     })
     .fail(function(err){
@@ -26,20 +30,24 @@ exports.getReport = function(req, res, next){
     })
     .done();
 
-    function filterReportByRole(report, companyId){
-        if(report === undefined){
-            throw new Error("Invalid parameter report.");
-        }
+}
 
-        if(companyId === undefined){
-            throw new Error("Invalid parameter companyId.");
-        }
+function isReportNeedFilter(report_name){
+    return report_name==='financial_report' || report_name==='profitability_evolution';
+}
 
-        for(var i = 0; i < report.reportData.company.length; i++){
-            var companyReport = report.reportData.company[i];
-            if(companyReport.companyId === companyId){
-                return companyReport;
-            }
+/**
+ * Filter out data of other companies
+ */
+function extractReportOfOneCompany(report, companyId){
+    if(!report || !report.reportData) return;
+
+    var tempReportData = [];
+    for(var i=0; i<report.reportData.length; i++){
+        if(report.reportData[i].companyId === companyId){
+            tempReportData.push(report.reportData[i]); 
         }
     }
+    
+    return tempReportData;
 }

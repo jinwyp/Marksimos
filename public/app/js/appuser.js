@@ -2,20 +2,21 @@
  * Created by jinwyp on 4/28/14.
  */
 
+
 // create module for custom directives
-var marksimosapp = angular.module('marksimos', ['angularCharts', 'nvd3ChartDirectives', 'marksimos.component', 'marksimos.factory' ]);
+var marksimosapp = angular.module('marksimos', ['angularCharts', 'nvd3ChartDirectives', 'marksimos.component', 'marksimos.factory', 'marksimos.filters' ]);
 
 
 
 // controller business logic
-marksimosapp.controller('chartController', function AppCtrl ($scope,  $timeout, $http, report, company) {
+marksimosapp.controller('chartController', function($scope,  $timeout, $http, report, company) {
 
     $scope.css = {
-        menu : 'Decision',
+        menu : 'Home',
         chartMenu : 'A3',
         additionalBudget : true,
         currentBrandId : 0,
-        currentDecisionRightMenu : 2
+        currentDecisionRightMenu : 1
     };
 
     $scope.dataChartSimple = {
@@ -37,6 +38,7 @@ marksimosapp.controller('chartController', function AppCtrl ($scope,  $timeout, 
         currentCompanyFutureProjectionCalculator : [],
         currentBrand : {},
         currentModifiedSku : {},
+        currentSku : {},
         userSegment : [
             {id:1, name:'1 Price Sensitive'},
             {id:2, name:'2 Pretenders'},
@@ -46,30 +48,33 @@ marksimosapp.controller('chartController', function AppCtrl ($scope,  $timeout, 
             {id:6, name:'6 Pragmatic'}
         ],
 
-        chartA11MarketShareInValue : {
-            type : report.getChartType1(),
-            config : report.getChartConfig1(),
-            data : $scope.dataChartSimple
-        },
-        chartA12MarketShareInVolume : {
-            type : report.getChartType1(),
-            config : report.getChartConfig1(),
-            data : $scope.dataChartSimple
-        },
-        chartA13MindSpaceShare : {
-            type : report.getChartType1(),
-            config : report.getChartConfig1(),
-            data : $scope.dataChartSimple
-        },
-        chartA14ShelfSpaceShare : {
-            type : report.getChartType1(),
-            config : report.getChartConfig1(),
-            data : $scope.dataChartSimple
-        },
+
+
         chartA31InventoryReport : {
             data : [],
             title : 'Inventory Report',
             color : ['#39b54a', '#ff983d', '#0087f0', '#8781bd', '#f26c4f', '#bd8cbf', '#000000']
+        },
+
+        chartB11MarketShareInValue : {
+            type : report.getChartType1(),
+            config : report.getChartConfig1(),
+            data : $scope.dataChartSimple
+        },
+        chartB12MarketShareInVolume : {
+            type : report.getChartType1(),
+            config : report.getChartConfig1(),
+            data : $scope.dataChartSimple
+        },
+        chartB13MindSpaceShare : {
+            type : report.getChartType1(),
+            config : report.getChartConfig1(),
+            data : $scope.dataChartSimple
+        },
+        chartB14ShelfSpaceShare : {
+            type : report.getChartType1(),
+            config : report.getChartConfig1(),
+            data : $scope.dataChartSimple
         },
 
         chartB31TotalInvestment : {
@@ -286,28 +291,7 @@ marksimosapp.controller('chartController', function AppCtrl ($scope,  $timeout, 
     };
 
 
-    /********************  Chart A1  ********************/
-    $scope.data.chartA11MarketShareInValue.config.title = 'Market Share in Value (%)';
-    $scope.data.chartA12MarketShareInVolume.config.title = 'Market Share in Volume (%)';
-    $scope.data.chartA13MindSpaceShare.config.title = 'Mind Space Share (%)';
-    $scope.data.chartA14ShelfSpaceShare.config.title = 'Shelf Space Share(%)';
 
-    report.marketShareInValue().then(function(data, status, headers, config){
-//        console.log(data);
-        $scope.data.chartA11MarketShareInValue.data = data;
-    });
-    report.marketShareInVolume().then(function(data, status, headers, config){
-//        console.log(data);
-        $scope.data.chartA12MarketShareInVolume.data = data;
-    });
-    report.mindSpaceShare().then(function(data, status, headers, config){
-//        console.log(data);
-        $scope.data.chartA13MindSpaceShare.data = data;
-    });
-    report.shelfSpaceShare().then(function(data, status, headers, config){
-//        console.log(data);
-        $scope.data.chartA14ShelfSpaceShare.data = data;
-    });
 
 
     /********************  Chart A3  ********************/
@@ -316,6 +300,29 @@ marksimosapp.controller('chartController', function AppCtrl ($scope,  $timeout, 
 //        console.log($scope.data.chartA31InventoryReport.data);
     });
 
+
+    /********************  Chart B1  ********************/
+    $scope.data.chartB11MarketShareInValue.config.title = 'Market Share in Value (%)';
+    $scope.data.chartB12MarketShareInVolume.config.title = 'Market Share in Volume (%)';
+    $scope.data.chartB13MindSpaceShare.config.title = 'Mind Space Share (%)';
+    $scope.data.chartB14ShelfSpaceShare.config.title = 'Shelf Space Share(%)';
+
+    report.marketShareInValue().then(function(data, status, headers, config){
+//        console.log(data);
+        $scope.data.chartB11MarketShareInValue.data = data;
+    });
+    report.marketShareInVolume().then(function(data, status, headers, config){
+//        console.log(data);
+        $scope.data.chartB12MarketShareInVolume.data = data;
+    });
+    report.mindSpaceShare().then(function(data, status, headers, config){
+//        console.log(data);
+        $scope.data.chartB13MindSpaceShare.data = data;
+    });
+    report.shelfSpaceShare().then(function(data, status, headers, config){
+//        console.log(data);
+        $scope.data.chartB14ShelfSpaceShare.data = data;
+    });
 
 
     /********************  Chart B3  ********************/
@@ -464,15 +471,13 @@ marksimosapp.controller('chartController', function AppCtrl ($scope,  $timeout, 
         $scope.data.currentCompany = data;
         $scope.css.currentBrandId = $scope.data.currentCompany.d_BrandsDecisions[0]._id;
         $scope.data.currentBrand = $scope.data.currentCompany.d_BrandsDecisions[0];
+        $scope.data.currentSku = $scope.data.currentCompany.d_BrandsDecisions[0].d_SKUsDecisions[0];
 
-        angular.forEach($scope.data.currentBrand.d_SKUsDecisions, function(value, key){
-            company.getCompanyFutureProjectionCalculator(value.d_SKUID).then(function(data, status, headers, config){
-                console.log(data);
-                $scope.data.currentCompanyFutureProjectionCalculator.push(data);
+        company.getCompanyFutureProjectionCalculator($scope.data.currentSku.d_SKUID).then(function(data, status, headers, config){
+//            console.log(data);
+            $scope.data.currentCompanyFutureProjectionCalculator = data;
 
-            });
         });
-
 
     });
 
@@ -486,21 +491,23 @@ marksimosapp.controller('chartController', function AppCtrl ($scope,  $timeout, 
             overtimeCapacityCSS : data.overtimeCapacity * 100 + '%'
         };
 
-        console.log($scope.data.currentCompanyOtherInfo);
+//        console.log($scope.data.currentCompanyOtherInfo);
 
     });
 
 
 
     company.getCompanyProductPortfolio().then(function(data, status, headers, config){
-        console.log(data);
+//        console.log(data);
         $scope.data.currentCompanyProductPortfolio = data;
     });
 
     company.getCompanySpendingDetails().then(function(data, status, headers, config){
-        console.log(data);
+//        console.log(data);
         $scope.data.currentCompanySpendingDetails = data;
     });
+
+
 
 
     $scope.clickBrand = function(brand){
@@ -508,17 +515,32 @@ marksimosapp.controller('chartController', function AppCtrl ($scope,  $timeout, 
         $scope.data.currentBrand = brand;
     };
 
-    $scope.leaveSkuInput = function(sku, fieldname, fielddata, week, weekindex){
+    $scope.clickCurrentSku = function(sku){
+        $scope.data.currentSku = sku;
+    };
+
+
+
+    $scope.leaveSkuInput = function(sku, fieldname, fielddata, segmentOrWeek, weekindex){
         $scope.data.currentModifiedSku = {
             brand_id : sku.d_BrandID,
             sku_id : sku.d_SKUID,
             sku_data : {}
         };
         $scope.data.currentModifiedSku.sku_data[fieldname] = fielddata;
-        if(!angular.isUndefined(weekindex)){
-            // 针对d_PromotionalEpisodes 字段需要特殊处理
-            $scope.data.currentModifiedSku.sku_data[fieldname][weekindex] = week;
+
+        if(fieldname === 'd_TargetConsumerSegment'){
+            sku.d_TargetConsumerSegment = segmentOrWeek.id;
+            $scope.data.currentModifiedSku.sku_data[fieldname] = segmentOrWeek.id;
+
+        }else if(fieldname === 'd_PromotionalEpisodes'){
+            if(!angular.isUndefined(weekindex)){
+                // 针对d_PromotionalEpisodes 字段需要特殊处理
+                $scope.data.currentModifiedSku.sku_data[fieldname][weekindex] = segmentOrWeek;
+            }
         }
+        
+
         console.log($scope.data.currentModifiedSku, sku);
 
         company.updateSku($scope.data.currentModifiedSku).success(function(data, status, headers, config){

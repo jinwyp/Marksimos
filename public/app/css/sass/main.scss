@@ -58,6 +58,7 @@ $color_main_body_progress_bar_overtime: #ad5ab3;
 $color_main_body_decision_subtitle: #bdbdbd;
 $color_main_body_decision_brand_border: #c2c2d3;
 $color_main_body_decision_sku_border: #ebebeb;
+$color_main_body_decision_table_hover: #feeaff;
 
 
 
@@ -817,10 +818,20 @@ body{
             border:1px solid $color_main_body_decision_sku_border;
             margin : 0px -10px 10px -10px;
             @include border-radius(4px);
+
+            .input-sm{
+                height: 25px;
+                width: 50px;
+            }
         }
 
         .table > thead > tr > th {
             font-weight: bold;
+            color: $color_main_body_user_chart_leftmenu_title;
+            a {
+                font-weight: bold;
+                color: $color_main_body_user_chart_leftmenu_title;
+            }
         }
 
         .table > thead > tr > td,
@@ -903,7 +914,7 @@ body{
     }
 
     .decision_right_box{
-        width: 55%;
+        width: 47%;
 
         .right_menu{
             border-width: 1px 0px 0px 0px;
@@ -912,6 +923,22 @@ body{
             padding: 20px 0px 0px 0px;
 
             .product_portfolio{
+
+                h4{
+                    font-size: 13px;
+                    font-family: $font_main_header2;
+                    color: $color_main_body_company;
+                    padding: 5px 0px 8px 25px;
+                    background-image: url(../images/userbrand.png);
+                    background-repeat: no-repeat;
+                    background-position: 4px 2px;
+                }
+                .sku_bg{
+                    background-image: url(../images/userproduct.png);
+                    background-repeat: no-repeat;
+                    background-position: 4px 5px;
+                }
+
                 .panel-heading{
                     font-size: 13px;
                     font-family: $font_main_header2;
@@ -935,6 +962,23 @@ body{
                     font-family: "Helvetica", "Arial, sans-serif";
                     font-size: 12px;
                     color: $color_login_input_label;
+                }
+
+                .table-striped > tbody > tr:nth-child(odd) > td,
+                .table-striped > tbody > tr:nth-child(odd) > th {
+                    background-color: $color_login_panel_background;
+                }
+
+                .table-striped > tbody > tr:nth-child(even) > td,
+                .table-striped > tbody > tr:nth-child(even) > th {
+                    background-color: $color_main_body_background;
+                }
+
+                .table-striped tbody tr:nth-child(odd):hover td,
+                .table-striped tbody tr:nth-child(odd):hover th,
+                .table-striped tbody tr:nth-child(even):hover td,
+                .table-striped tbody tr:nth-child(even):hover th{
+                    background-color: $color_main_body_decision_table_hover;
                 }
 
             }
