@@ -86,7 +86,28 @@ exports.init = function(initConfig){
         reqUrl += '&team' + (i+1) + '=' + initConfig.teams[i];
     }
 
-    console.log(reqUrl);
+    return request.get(reqUrl);
+}
+
+/**
+ * @param {Object} simulationConfig
+ {
+    seminar:'',
+    simulation_span: '',
+    teams: [],
+    period: ''
+ }
+ */
+export.runSimulation = function(simulationConfig){
+    var reqUrl = config.cgiService + util.format('runsimulation.exe?seminar=%s&simulation_span=%s'
+        , simulationConfig.seminarId, simulationConfig.simulation_span);
+    
+    for(var i=0; i<simulationConfig.teams.length; i++){
+        reqUrl += '&team' + (i+1) + '=' + simulationConfig.teams[i];
+    }
+
+    reqUrl += 'period=' + simulationConfig.period;
+
     return request.get(reqUrl);
 }
 
