@@ -82,7 +82,7 @@ function generateSKUReport(companyId, allResults, allExogenous){
                     onePeriodReport.numberOfOutOfStockEpisodes = utility.setSize(SKU.u_OOSEpisodesNumbers);
                     onePeriodReport.marketSalesVolume = SKU.u_MarketSalesVolume[consts.ConsumerSegmentsMaxTotal-1] / consts.ActualSize[SKU.u_PackSize];
                     onePeriodReport.retailersPurchasesVolume = SKU.u_WholesalesVolume / consts.ActualSize[SKU.u_PackSize];
-                    onePeriodReport.shippmentsToWholesalers = SKU.u_FactorySalesVolume / consts.ActualSize[SKU.u_PackSize];
+                    onePeriodReport.shipmentsToWholesalers = SKU.u_FactorySalesVolume / consts.ActualSize[SKU.u_PackSize];
                     onePeriodReport.productionVolume = SKU.u_ps_ActualProductionVolume;
                     onePeriodReport.inventoryVolumeAtManufacturer = SKU.u_ps_FactoryStocks[consts.StocksMaxTotal].s_ps_Volume;;
                     onePeriodReport.inventoryVolumeAtWholesalers = SKU.u_ps_WholesaleStocks[consts.StocksMaxTotal].s_ps_Volume;
@@ -150,7 +150,7 @@ function generateBrandReport(companyId, allResults){
                     onePeriodReport.marketNetSalesValue = brandResult.b_MarketNetSalesValue[consts.ConsumerSegmentsMaxTotal - 1];
                     onePeriodReport.numberOfOutOfStockEpisodes = utility.setSize(brandResult.b_CompleteOOSEpisodesNumbers);
                     onePeriodReport.retailersPurchasesVolumeStdPack = brandResult.b_WholesalesVolume;
-                    onePeriodReport.shippmentsToWholesalersStdPack = brandResult.b_FactorySalesVolume;
+                    onePeriodReport.shipmentsToWholesalersStdPack = brandResult.b_FactorySalesVolume;
                     onePeriodReport.productionVolumeStdPack = brandResult.b_ActualProductionVolume;
                     onePeriodReport.inventoryVolumeAtManufacturerStdPack = brandResult.b_FactoryStocks[consts.StocksMaxTotal].s_Volume;
                     onePeriodReport.inventoryVolumeAtWholesalersStdPack = brandResult.b_WholesalesStocks[consts.StocksMaxTotal].s_Volume;
@@ -204,7 +204,7 @@ function generateGlobalReport(companyId, allResults){
                 onePeriodReport.consumerPricePromotions = -companyResult.c_PricePromotionsCost;
                 onePeriodReport.marketNetSalesValue = companyResult.c_MarketNetSalesValue[consts.ConsumerSegmentsMaxTotal-1];
                 onePeriodReport.retailersPurchasesVolume = companyResult.c_WholesalesVolume;
-                onePeriodReport.shippmentsToWholesalers = companyResult.c_FactorySalesVolume;
+                onePeriodReport.shipmentsToWholesalers = companyResult.c_FactorySalesVolume;
                 onePeriodReport.productionVolume = companyResult.c_ActualProductionVolume;
                 onePeriodReport.inventoryVolumeAtManufacturer = companyResult.c_FactoryStocks[consts.StocksMaxTotal].s_Volume;
                 onePeriodReport.inventoryVolumeAtWholesalers = companyResult.c_WholesalesStocks[consts.StocksMaxTotal].s_Volume;
