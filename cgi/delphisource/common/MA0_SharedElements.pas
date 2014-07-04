@@ -21,7 +21,7 @@ Function ReadParameters( var GenPar : TGeneralParameters; ConfigRecord : TConfig
 //Function ReadParameters( var GenPar : TGeneralParameters; vSimulationVariant : TSimulationVariant; var SegPar : TSegmentsParameters ) : Integer;overload;
 
 
-Function ReadResults( PeriodNumber : TPeriodNumber; var OnePeriodResults : POnePeriodInfo ) : Integer;
+Function ReadResults(DataDirectory:string;  SeminarCode: string; PeriodNumber : TPeriodNumber; var OnePeriodResults : POnePeriodInfo ) : Integer;
 //Function ReadResults( PeriodNumber : TPeriodNumber; var OnePeriodResults : TOnePeriodInfo ) : Integer;
 procedure WriteToLogfile(messa : string);
 
@@ -212,7 +212,7 @@ begin
 
 end;
 
-Function ReadResults( PeriodNumber : TPeriodNumber; var OnePeriodResults : POnePeriodInfo ) : Integer;
+Function ReadResults(DataDirectory:string; SeminarCode:string; PeriodNumber : TPeriodNumber; var OnePeriodResults : POnePeriodInfo ) : Integer;
 var
   ResultsFile : file of TOnePeriodInfo;
   FileName    :  String;

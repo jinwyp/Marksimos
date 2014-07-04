@@ -16,6 +16,7 @@ var
   period: integer;
   params: TDictionary<String, String>;
   resultCode: Integer;
+  DataDirectory: string;
 
 begin
   SetMultiByteConversionCodePage(CP_UTF8);
@@ -24,21 +25,21 @@ begin
     WriteLn('Content-type: application/json');
     WriteLn;
 
-    sValue := getVariable('REQUEST_METHOD');
-    if sValue='GET' then
-    begin
-      sValue := getVariable('QUERY_STRING');
-      params := Explode(sValue);
+    sValue := getVariable('QUERY_STRING');
+    sValue := 'seminar=TTT&period=-1';
+    params := Explode(sValue);
 
-      ctx := TSuperRttiContext.Create;
-      onePeriod := AllocMem(SizeOf(TOnePeriodInfo));
-      resultCode := ReadResults(StrToInt(params['period']), onePeriod);
+    LoadConfigIni(DataDirectory, params['seminar']);
 
-      if(resultCode<>ReadResultsOK) then raise Exception.Create('Read allResults failed, code: '+IntToStr(resultCode));
+    ctx := TSuperRttiContext.Create;
+    onePeriod := AllocMem(SizeOf(TOnePeriodInfo));
+    resultCode := ReadResults(DataDirectory, params['seminar'],StrToInt(params['period']), onePeriod);
 
-      jo := ctx.AsJson<TOnePeriodInfo>(onePeriod^);
-      Writeln(jo.AsJSon());
-    end;
+    if(resultCode<>ReadResultsOK) then raise Exception.Create('Read allResults failed, code: '+IntToStr(resultCode));
+
+    jo := ctx.AsJson<TOnePeriodInfo>(onePeriod^);
+    Writeln(jo.AsJSon());
+
   except
     on E: Exception do
       Writeln(E.ClassName, ': ', E.Message);
