@@ -44,7 +44,7 @@ exports.init = function(req, res, next) {
 
     initBinaryFile(seminarId)
     .then(function(initResult){
-        if(initResult === 'init_success'){
+        if(initResult !== 'init_success'){
             return res.send({message: 'init binary file failed.'});
         }
         Q.all([
@@ -56,6 +56,7 @@ exports.init = function(req, res, next) {
         ])
     })
     .then(function(){
+        console.log('------------')
         //insert empty data into mongo, so that we can update them
         return Q.all([
             //add a new seminar
