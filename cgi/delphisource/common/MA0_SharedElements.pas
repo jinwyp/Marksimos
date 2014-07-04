@@ -222,7 +222,7 @@ var
 begin
   RecNo := PeriodNumber - History_3;
   FileName := IncludeTrailingPathDelimiter(DataDirectory) +  AllResultsFileName + SeminarCode;
-  FileName := 'D:\\myfiles\\marksimons-data\\AllResults.TTT';
+  //FileName := 'D:\\myfiles\\marksimons-data\\AllResults.TTT';
   if FileExists(FileName) = false then
   begin
       //MessageDlg('result file does not exist:' + FileName,mtWarning,[mbOK], 0);

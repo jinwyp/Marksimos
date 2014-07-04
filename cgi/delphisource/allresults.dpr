@@ -15,6 +15,7 @@ var
   sValue: string;
   period: integer;
   params: TDictionary<String, String>;
+  resultCode: Integer;
 
 begin
   SetMultiByteConversionCodePage(CP_UTF8);
@@ -31,7 +32,10 @@ begin
 
       ctx := TSuperRttiContext.Create;
       onePeriod := AllocMem(SizeOf(TOnePeriodInfo));
-      ReadResults(StrToInt(params['period']), onePeriod);
+      resultCode := ReadResults(StrToInt(params['period']), onePeriod);
+
+      if(resultCode<>ReadResultsOK) then raise Exception.Create('Read allResults failed, code: '+IntToStr(resultCode));
+
       jo := ctx.AsJson<TOnePeriodInfo>(onePeriod^);
       Writeln(jo.AsJSon());
     end;

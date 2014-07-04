@@ -45,7 +45,7 @@ begin
         LoadConfigIni(DataDirectory, params['seminar']);
 
         resultCode := ReadDecisionRecord(DataDirectory, params['seminar'], StrToInt(params['period']), StrToInt(params['team']), decision);
-        if (resultCode<>0) then raise Exception.Create('read decision failed.');
+        if (resultCode<>0) then raise Exception.Create('read decision failed, code:'+IntToStr(resultCode));
 
         jo := ctx.AsJson<TDecision>(decision);
         Writeln(jo.AsJSon(False, True));
@@ -75,7 +75,7 @@ begin
           StrToInt(params['period']),
           StrToInt(params['team']),
           decision);
-        if(resultCode<>0) then raise Exception.Create('Write decision failed.');
+        if(resultCode<>0) then raise Exception.Create('Write decision failed, code:' + IntToStr(resultCode));
         Writeln('{"status": 1, "message": "submit decision success."}');
         //Writeln(urlDecode(sDati));
         //Writeln('{"data": "' + params['decision'] + '"}');
