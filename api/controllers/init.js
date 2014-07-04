@@ -56,7 +56,6 @@ exports.init = function(req, res, next) {
         ])
     })
     .then(function(){
-        console.log('------------')
         //insert empty data into mongo, so that we can update them
         return Q.all([
             //add a new seminar
