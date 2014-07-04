@@ -42,58 +42,59 @@ exports.init = function(req, res, next) {
         return next(new Error("seminarId cannot be empty."));
     }
 
-    initBinaryFile(seminarId)
+    initBinaryFile(seminarId, simulationSpan)
     .then(function(initResult){
-        if(initResult === 'init_success'){
-            return res.send({message: 'init binary file failed.'});
+        if(initResult.message !== 'init_success'){
+            return res.send({message: 'init binary file failed. initResult = ' + initResult.message});
         }
-        Q.all([
+
+        return Q.all([
             simulationResultModel.removeAll(seminarId),
             dbutility.removeExistedDecisions(seminarId),
             seminarModel.remove(seminarId),
             chartModel.remove(seminarId),
             reportModel.remove(seminarId)
         ])
-    })
-    .then(function(){
-        //insert empty data into mongo, so that we can update them
-        return Q.all([
-            //add a new seminar
-            seminarModel.insert(seminarId, {
-                seminarId: seminarId,
-                simulation_span: simulationSpan
-            })
-        ]);
-    })
-    .then(function(){
-        return Q.all([
-            initSimulationResult(seminarId),
-            initDecision(seminarId)
-        ])
-    })
-    .then(function(){
-        return Q.all([
-            simulationResultModel.findAll(seminarId)
-        ])
-        .spread(function(allResults){
+        .then(function(){
+            //insert empty data into mongo, so that we can update them
             return Q.all([
-                initChartData(seminarId, allResults),
-                
-                initCompanyStatusReport(seminarId, allResults),
-                initFinancialReport(seminarId, allResults),
-                initProfitabilityEvolutionReport(seminarId, allResults),
-                initSegmentDistributionReport(seminarId, allResults),
-                initCompetitorIntelligenceReport(seminarId, allResults),
-                initMarketTrendsReport(seminarId, allResults)
+                //add a new seminar
+                seminarModel.insert(seminarId, {
+                    seminarId: seminarId,
+                    simulation_span: simulationSpan
+                })
             ]);
-        });
-    })
-    .then(function(){
-        //when init is called, current period is 1
-        return dbutility.insertEmptyDecision(seminarId, 1);
-    })
-    .then(function(){
-        res.send({message: 'initialize success'});
+        })
+        .then(function(){
+            return Q.all([
+                initSimulationResult(seminarId),
+                initDecision(seminarId)
+            ])
+        })
+        .then(function(){
+            return Q.all([
+                simulationResultModel.findAll(seminarId)
+            ])
+            .spread(function(allResults){
+                return Q.all([
+                    initChartData(seminarId, allResults),
+                    
+                    initCompanyStatusReport(seminarId, allResults),
+                    initFinancialReport(seminarId, allResults),
+                    initProfitabilityEvolutionReport(seminarId, allResults),
+                    initSegmentDistributionReport(seminarId, allResults),
+                    initCompetitorIntelligenceReport(seminarId, allResults),
+                    initMarketTrendsReport(seminarId, allResults)
+                ]);
+            });
+        })
+        .then(function(){
+            //when init is called, current period is 1
+            return dbutility.insertEmptyDecision(seminarId, 1);
+        })
+        .then(function(){
+            res.send({message: 'initialize success'});
+        })
     })
     .fail(function(err){
         next(err);
@@ -101,9 +102,7 @@ exports.init = function(req, res, next) {
     .done();
 };
 
-function initBinaryFile(seminarId){
-    var simulation_span = 4;
-
+function initBinaryFile(seminarId, simulation_span){
     return cgiapi.init({
         seminarId: seminarId,
         simulation_span: simulation_span,
