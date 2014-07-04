@@ -12,8 +12,7 @@ var simulationResultModel = require('../models/simulationResult.js');
 
 exports.getDecision = function(req, res, next){
     var seminarId = req.session.seminarId;
-    //Get last period decision to fill the form
-    var period = req.session.period - 1;
+    var period = req.session.period;
     var companyId = req.session.companyId;
 
     decisionAssembler.getDecision(seminarId, period, companyId)
