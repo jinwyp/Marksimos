@@ -98,6 +98,8 @@ exports.submitDecision = function(req, res, next){
         insertEmptyBrandsAndSKUs(result);
         //convert result to data format that can be accepted by CGI service
         decisionConvertor.convert(result);
+
+        //return res.send(result);
         //return result;
         var reqUrl = url.resolve(config.cgiService, '/cgi-bin/decisions.exe');
         return request.post(reqUrl, {
@@ -105,11 +107,11 @@ exports.submitDecision = function(req, res, next){
             seminarId: seminarId,
             period: period,
             team: companyId
+        })
+        .then(function(postDecisionResult){
+            //console.log(!postDecisionResult);
+            res.send(postDecisionResult);
         });
-    })
-    .then(function(postDecisionResult){
-        //console.log(!postDecisionResult);
-        res.send(postDecisionResult);
     })
     .fail(function(err){
         next(err);

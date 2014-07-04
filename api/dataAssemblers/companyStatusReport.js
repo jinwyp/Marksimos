@@ -187,6 +187,7 @@ function generateGlobalReport(companyId, allResults){
 
             if(companyResult.c_CompanyID === companyId){
                 var onePeriodReport = {};
+                onePeriodReport.period = "Quarter " + onePeriodResult.period;
                 onePeriodReport.marketShareValue = companyResult.c_ValueSegmentShare[consts.ConsumerSegmentsMaxTotal-1] * 100;
                 onePeriodReport.marketShareVolume = companyResult.c_VolumeSegmentShare[consts.ConsumerSegmentsMaxTotal -1] * 100;
                 onePeriodReport.marketSalesVolume = companyResult.c_MarketSalesVolume[consts.ConsumerSegmentsMaxTotal-1] * 100;
