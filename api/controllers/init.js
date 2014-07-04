@@ -44,7 +44,7 @@ exports.init = function(req, res, next) {
 
     initBinaryFile(seminarId)
     .then(function(initResult){
-        if(initResult !== 'init_success'){
+        if(initResult === 'init_success'){
             return res.send({message: 'init binary file failed.'});
         }
         Q.all([
