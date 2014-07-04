@@ -57,6 +57,7 @@ marksimosapp.controller('chartController', function($scope,  $timeout, $http, ch
             },
             currentSKU : {},
             currentBrand : {},
+            currentGlobal : {},
             title : 'Company Status'
         },
         chartA31InventoryReport : {
@@ -463,6 +464,7 @@ marksimosapp.controller('chartController', function($scope,  $timeout, $http, ch
         $scope.data.tableA1CompanyStatus.currentCompany = data[0];
         $scope.data.tableA1CompanyStatus.currentSKU = $scope.data.tableA1CompanyStatus.currentCompany.SKU[0];
         $scope.data.tableA1CompanyStatus.currentBrand = $scope.data.tableA1CompanyStatus.currentCompany.brand[0];
+        $scope.data.tableA1CompanyStatus.currentGlobal = $scope.data.tableA1CompanyStatus.currentCompany.global;
     });
 
     $scope.switchTableReportCompany = function(company){
