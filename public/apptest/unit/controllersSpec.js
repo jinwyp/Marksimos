@@ -31,12 +31,23 @@ describe('chartController', function(){
     });
 
     it('Initially scope.css.chartMenu has default value ', function() {
-        expect(scope.css.chartMenu).toEqual("A3");
+        expect(scope.css.chartMenu).toEqual("A1");
+    });
+
+    it('Initially scope.css.tableReportTab has default value ', function() {
+        expect(scope.css.tableReportTab).toEqual("SKU");
     });
 
 //    it('Initially scope.data.currentSku has default value ', function() {
 //        expect(scope.data.currentSku.d_SKUName).toBe("_1");
 //    });
+
+
+    it('Initially scope.data.tableA1CompanyStatus has default value ', function() {
+        expect(scope.data.tableA1CompanyStatus.currentCompany.companyName).toEqual("Company List");
+    });
+
+
 
 
 
