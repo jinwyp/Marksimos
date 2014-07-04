@@ -459,7 +459,7 @@ marksimosapp.controller('chartController', function($scope,  $timeout, $http, ch
 
     /********************  Table Report A1  ********************/
     tableReport.companyStatus().then(function(data, status, headers, config){
-        console.log(data);
+//        console.log(data);
         $scope.data.tableA1CompanyStatus.allCompanyData = data;
         $scope.data.tableA1CompanyStatus.currentCompany = data[0];
         $scope.data.tableA1CompanyStatus.currentSKU = $scope.data.tableA1CompanyStatus.currentCompany.SKU[0];
@@ -469,6 +469,9 @@ marksimosapp.controller('chartController', function($scope,  $timeout, $http, ch
 
     $scope.switchTableReportCompany = function(company){
         $scope.data.tableA1CompanyStatus.currentCompany = company;
+        $scope.data.tableA1CompanyStatus.currentSKU = $scope.data.tableA1CompanyStatus.currentCompany.SKU[0];
+        $scope.data.tableA1CompanyStatus.currentBrand = $scope.data.tableA1CompanyStatus.currentCompany.brand[0];
+        $scope.data.tableA1CompanyStatus.currentGlobal = $scope.data.tableA1CompanyStatus.currentCompany.global;
     };
     $scope.switchTableReportSKU = function(SKU){
         $scope.data.tableA1CompanyStatus.currentSKU = SKU;
