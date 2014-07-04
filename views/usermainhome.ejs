@@ -271,9 +271,9 @@
 
 
                             <div class="btn-group btn-group-sm">
-                                <button type="button" class="btn btn-default" ng-click="css.tableReportTab='SKU' ">SKU</button>
-                                <button type="button" class="btn btn-default" ng-click="css.tableReportTab='Brand' ">Brand</button>
-                                <button type="button" class="btn btn-default" ng-click="css.tableReportTab='Global' ">Global</button>
+                                <button type="button" class="btn btn-default" ng-class="{'active': css.tableReportTab=='SKU'}" ng-click="css.tableReportTab='SKU' ">SKU</button>
+                                <button type="button" class="btn btn-default" ng-class="{'active': css.tableReportTab=='Brand'}" ng-click="css.tableReportTab='Brand' ">Brand</button>
+                                <button type="button" class="btn btn-default" ng-class="{'active': css.tableReportTab=='Global'}" ng-click="css.tableReportTab='Global' ">Global</button>
                             </div>
                         </div>
                     </h5>
@@ -510,28 +510,12 @@
                                 <td ng-repeat="quarter in data.tableA1CompanyStatus.currentBrand.data">{{quarter.priceRankingIndex | number : 2}}</td>
                             </tr>
                             <tr>
-                                <td>Target Consumer Segment</td>
-                                <td ng-repeat="quarter in data.tableA1CompanyStatus.currentBrand.data">{{quarter.targetConsumerSegment }}</td>
-                            </tr>
-                            <tr>
-                                <td>Target Consumer Segment Expected Value Perception</td>
-                                <td ng-repeat="quarter in data.tableA1CompanyStatus.currentBrand.data">{{quarter.targetConsumerSegmentExpectedValuePerception | number : 2}}</td>
-                            </tr>
-                            <tr>
                                 <td>Value Perception</td>
                                 <td ng-repeat="quarter in data.tableA1CompanyStatus.currentBrand.data">{{quarter.valuePerception | number : 2}}</td>
                             </tr>
                             <tr>
-                                <td>Target Consumer Segment Expected Image Perception</td>
-                                <td ng-repeat="quarter in data.tableA1CompanyStatus.currentBrand.data">{{quarter.targetConsumerSegmentExpectedImagePerception | number : 2}}</td>
-                            </tr>
-                            <tr>
                                 <td>Image Perception</td>
                                 <td ng-repeat="quarter in data.tableA1CompanyStatus.currentBrand.data">{{quarter.imagePerception | number : 2}}</td>
-                            </tr>
-                            <tr>
-                                <td></td>
-                                <td ng-repeat="quarter in data.tableA1CompanyStatus.currentBrand.data"></td>
                             </tr>
                             <tr>
                                 <td>Ingredients Quality Index</td>
@@ -562,8 +546,8 @@
                                 <td ng-repeat="quarter in data.tableA1CompanyStatus.currentBrand.data"></td>
                             </tr>
                             <tr>
-                                <td>Lost Sales Volume due to OOS (mln packs)</td>
-                                <td ng-repeat="quarter in data.tableA1CompanyStatus.currentBrand.data">{{quarter.lostSalesVolumeDueToOOS | number : 2}}</td>
+                                <td>Lost Sales Volume due to OOS (mln std. packs)</td>
+                                <td ng-repeat="quarter in data.tableA1CompanyStatus.currentBrand.data">{{quarter.lostSalesVolumeDueToOOSStdPack | number : 2}}</td>
                             </tr>
                             <tr>
                                 <td>Numer of Out-of-stock Episodes</td>
@@ -574,32 +558,32 @@
                                 <td ng-repeat="quarter in data.tableA1CompanyStatus.currentBrand.data"></td>
                             </tr>
                             <tr>
-                                <td>Market Sales Volume (mln packs)</td>
-                                <td ng-repeat="quarter in data.tableA1CompanyStatus.currentBrand.data">{{quarter.marketSalesVolume | number : 2}}</td>
+                                <td>Market Sales Volume (mln std. packs)</td>
+                                <td ng-repeat="quarter in data.tableA1CompanyStatus.currentBrand.data">{{quarter.marketSalesVolumeStdPack | number : 2}}</td>
                             </tr>
                             <tr>
-                                <td>Retailers Purchases Volume (mln packs)</td>
-                                <td ng-repeat="quarter in data.tableA1CompanyStatus.currentBrand.data">{{quarter.retailersPurchasesVolume | number : 2}}</td>
+                                <td>Retailers Purchases Volume (mln std. packs)</td>
+                                <td ng-repeat="quarter in data.tableA1CompanyStatus.currentBrand.data">{{quarter.retailersPurchasesVolumeStdPack | number : 2}}</td>
                             </tr>
                             <tr>
-                                <td>Shippments to Wholesalers (mln packs)</td>
-                                <td ng-repeat="quarter in data.tableA1CompanyStatus.currentBrand.data">{{quarter.shippmentsToWholesalers | number : 2}}</td>
+                                <td>Shippments to Wholesalers (mln std. packs)</td>
+                                <td ng-repeat="quarter in data.tableA1CompanyStatus.currentBrand.data">{{quarter.shippmentsToWholesalersStdPack | number : 2}}</td>
                             </tr>
                             <tr>
-                                <td>Production Volume (mln packs)</td>
-                                <td ng-repeat="quarter in data.tableA1CompanyStatus.currentBrand.data">{{quarter.productionVolume | number : 2}}</td>
+                                <td>Production Volume (mln std. packs)</td>
+                                <td ng-repeat="quarter in data.tableA1CompanyStatus.currentBrand.data">{{quarter.productionVolumeStdPack | number : 2}}</td>
                             </tr>
                             <tr>
-                                <td>Inventory Volume At Manufacturer (mln packs)</td>
-                                <td ng-repeat="quarter in data.tableA1CompanyStatus.currentBrand.data">{{quarter.inventoryVolumeAtManufacturer | number : 2}}</td>
+                                <td>Inventory Volume At Manufacturer (mln std. packs)</td>
+                                <td ng-repeat="quarter in data.tableA1CompanyStatus.currentBrand.data">{{quarter.inventoryVolumeAtManufacturerStdPack | number : 2}}</td>
                             </tr>
                             <tr>
-                                <td>Inventory Volume At Wholesalers (mln packs)</td>
-                                <td ng-repeat="quarter in data.tableA1CompanyStatus.currentBrand.data">{{quarter.inventoryVolumeAtWholesalers | number : 2}}</td>
+                                <td>Inventory Volume At Wholesalers (mln std. packs)</td>
+                                <td ng-repeat="quarter in data.tableA1CompanyStatus.currentBrand.data">{{quarter.inventoryVolumeAtWholesalersStdPack | number : 2}}</td>
                             </tr>
                             <tr>
-                                <td>Inventory Volume At Retailers (mln packs)</td>
-                                <td ng-repeat="quarter in data.tableA1CompanyStatus.currentBrand.data">{{quarter.inventoryVolumeAtRetailers | number : 2}}</td>
+                                <td>Inventory Volume At Retailers (mln std. packs)</td>
+                                <td ng-repeat="quarter in data.tableA1CompanyStatus.currentBrand.data">{{quarter.inventoryVolumeAtRetailersStdPack | number : 2}}</td>
                             </tr>
                             <tr>
                                 <td></td>
@@ -607,11 +591,11 @@
                             </tr>
                             <tr>
                                 <td>Stocks Cover At Retailers (weeks)</td>
-                                <td ng-repeat="quarter in data.tableA1CompanyStatus.currentBrand.data">{{quarter.stocksCoverAtRetailers | number : 2}}</td>
+                                <td ng-repeat="quarter in data.tableA1CompanyStatus.currentBrand.data">{{quarter.stocksCoverAtRetailersWeeks | number : 2}}</td>
                             </tr>
                             <tr>
                                 <td>Stocks Cover At Wholesalers (weeks)</td>
-                                <td ng-repeat="quarter in data.tableA1CompanyStatus.currentBrand.data">{{quarter.stocksCoverAtWholesalers | number : 2}}</td>
+                                <td ng-repeat="quarter in data.tableA1CompanyStatus.currentBrand.data">{{quarter.stocksCoverAtWholesalersWeeks | number : 2}}</td>
                             </tr>
 
                             </tbody>
