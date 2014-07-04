@@ -87,8 +87,8 @@ function generateSKUReport(companyId, allResults, allExogenous){
                     onePeriodReport.inventoryVolumeAtManufacturer = SKU.u_ps_FactoryStocks[consts.StocksMaxTotal].s_ps_Volume;;
                     onePeriodReport.inventoryVolumeAtWholesalers = SKU.u_ps_WholesaleStocks[consts.StocksMaxTotal].s_ps_Volume;
                     onePeriodReport.inventoryVolumeAtRetailers = SKU.u_ps_RetailStocks[consts.StocksMaxTotal].s_ps_Volume;
-                    onePeriodReport.stocksCoverAtRetailers = SKU.u_StockCoverAtRetailers;
-                    onePeriodReport.stocksCoverAtWholesalers = SKU.u_StockCoverAtWholesalers;
+                    onePeriodReport.stocksCoverAtRetailersWeeks = SKU.u_StockCoverAtRetailers;
+                    onePeriodReport.stocksCoverAtWholesalersWeeks = SKU.u_StockCoverAtWholesalers;
                     SKUReport.data.push(onePeriodReport);
                 }
             })

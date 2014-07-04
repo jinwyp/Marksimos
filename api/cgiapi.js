@@ -63,6 +63,9 @@ exports.queryDecisionsInOnePeriod = function(seminarId, period){
     return Q.all(queries)
     .then(function(decisions){
         for(var i=0; i<decisions.length; i++){
+            if(decisions[i].message){
+                throw new Error('Get decision failed, period: ' + period);
+            }
             decisions[i].period = period;
         }
         return decisions;

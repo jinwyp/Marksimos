@@ -37,6 +37,7 @@ var chartAssembler = require('../dataAssemblers/chart.js');
 exports.init = function(req, res, next) {
     var seminarId = 'TTT'; //this parameter should be posted from client
     var simulationSpan = 6; //should be posted from client
+    var currentPeriod = req.session.period;
 
     if(!seminarId){
         return next(new Error("seminarId cannot be empty."));
@@ -90,7 +91,8 @@ exports.init = function(req, res, next) {
         })
         .then(function(){
             //when init is called, current period is 1
-            return dbutility.insertEmptyDecision(seminarId, 1);
+            //return dbutility.insertEmptyDecision(seminarId, 1);
+            return duplicateLastPeriodDecision(seminarId, currentPeriod);
         })
         .then(function(){
             res.send({message: 'initialize success'});
@@ -261,6 +263,58 @@ function initMarketTrendsReport(seminarId, allResults){
     })
 }
 
+
+function duplicateLastPeriodDecision(seminarId, currentPeriod){
+    return companyDecisionModel.findAllInPeriod(seminarId, currentPeriod-1)
+    .then(function(allCompanyDecision){
+        var p = Q();
+        allCompanyDecision.forEach(function(companyDecision){
+            var tempCompanyDecision = JSON.parse(JSON.stringify(companyDecision));
+
+            delete tempCompanyDecision._id;
+            delete tempCompanyDecision.__v;
+            tempCompanyDecision.period = tempCompanyDecision.period + 1;
+            p = p.then(function(){
+                return companyDecisionModel.save(tempCompanyDecision);
+            })
+        })
+        return p;
+    })
+    .then(function(){
+        return brandDecisionModel.findAllInPeriod(seminarId, currentPeriod-1)
+        .then(function(allBrandDecision){
+            var p = Q();
+            allBrandDecision.forEach(function(brandDecision){
+                var tempBrandDecision = JSON.parse(JSON.stringify(brandDecision));
+
+                delete tempBrandDecision._id;
+                delete tempBrandDecision.__v;
+                tempBrandDecision.period = tempBrandDecision.period + 1;
+                p = p.then(function(){
+                    return brandDecisionModel.save(tempBrandDecision);
+                })
+            })
+            return p;
+        })
+    })
+    .then(function(){
+        return SKUDecisionModel.findAllInPeriod(seminarId, currentPeriod-1)
+        .then(function(allSKUDecision){
+            var p = Q();
+            allSKUDecision.forEach(function(SKUDecision){
+                var tempSKUDecision = JSON.parse(JSON.stringify(SKUDecision));
+
+                delete tempSKUDecision._id;
+                delete tempSKUDecision.__v;
+                tempSKUDecision.period = tempSKUDecision.period + 1;
+                p = p.then(function(){
+                    return SKUDecisionModel.save(tempSKUDecision);
+                })
+            })
+            return p;
+        })
+    })
+}
 
 
 
