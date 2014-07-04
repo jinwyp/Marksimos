@@ -640,52 +640,24 @@
                                 <td ng-repeat="quarter in data.tableA1CompanyStatus.currentGlobal">{{quarter.shelfSpace | number : 2}}%</td>
                             </tr>
                             <tr>
-                                <td>Awareness (%)</td>
-                                <td ng-repeat="quarter in data.tableA1CompanyStatus.currentGlobal">{{quarter.awareness | number : 2}}%</td>
+                                <td>Mind Space Share (%)</td>
+                                <td ng-repeat="quarter in data.tableA1CompanyStatus.currentGlobal">{{quarter.mindSpaceShare | number : 2}}%</td>
                             </tr>
                             <tr>
                                 <td>Average Net Market Price ($/std. pack)</td>
-                                <td ng-repeat="quarter in data.tableA1CompanyStatus.currentGlobal">{{quarter.averageNetMarketPriceStdPack | number : 2}}</td>
+                                <td ng-repeat="quarter in data.tableA1CompanyStatus.currentGlobal">{{quarter.averageNetMarketPrice | number : 2}}</td>
                             </tr>
                             <tr>
                                 <td>Average Display Price ($/std. pack)</td>
-                                <td ng-repeat="quarter in data.tableA1CompanyStatus.currentGlobal">{{quarter.averageDisplayPriceStdPack | number : 2}}</td>
-                            </tr>
-                            <tr>
-                                <td>Price Ranking Index</td>
-                                <td ng-repeat="quarter in data.tableA1CompanyStatus.currentGlobal">{{quarter.priceRankingIndex | number : 2}}</td>
-                            </tr>
-                            <tr>
-                                <td>Target Consumer Segment</td>
-                                <td ng-repeat="quarter in data.tableA1CompanyStatus.currentGlobal">{{quarter.targetConsumerSegment }}</td>
-                            </tr>
-                            <tr>
-                                <td>Target Consumer Segment Expected Value Perception</td>
-                                <td ng-repeat="quarter in data.tableA1CompanyStatus.currentGlobal">{{quarter.targetConsumerSegmentExpectedValuePerception | number : 2}}</td>
-                            </tr>
-                            <tr>
-                                <td>Value Perception</td>
-                                <td ng-repeat="quarter in data.tableA1CompanyStatus.currentGlobal">{{quarter.valuePerception | number : 2}}</td>
-                            </tr>
-                            <tr>
-                                <td>Target Consumer Segment Expected Image Perception</td>
-                                <td ng-repeat="quarter in data.tableA1CompanyStatus.currentGlobal">{{quarter.targetConsumerSegmentExpectedImagePerception | number : 2}}</td>
-                            </tr>
-                            <tr>
-                                <td>Image Perception</td>
-                                <td ng-repeat="quarter in data.tableA1CompanyStatus.currentGlobal">{{quarter.imagePerception | number : 2}}</td>
-                            </tr>
-                            <tr>
-                                <td></td>
-                                <td ng-repeat="quarter in data.tableA1CompanyStatus.currentGlobal"></td>
+                                <td ng-repeat="quarter in data.tableA1CompanyStatus.currentGlobal">{{quarter.averageDisplayPrice | number : 2}}</td>
                             </tr>
                             <tr>
                                 <td>Ingredients Quality Index</td>
-                                <td ng-repeat="quarter in data.tableA1CompanyStatus.currentGlobal">{{quarter.ingredientsQualityIndex}}</td>
+                                <td ng-repeat="quarter in data.tableA1CompanyStatus.currentGlobal">{{quarter.ingredientsQualityIndex | number : 2}}</td>
                             </tr>
                             <tr>
                                 <td>Applied Technology Index</td>
-                                <td ng-repeat="quarter in data.tableA1CompanyStatus.currentGlobal">{{quarter.appliedTechnologyIndex}}</td>
+                                <td ng-repeat="quarter in data.tableA1CompanyStatus.currentGlobal">{{quarter.appliedTechnologyIndex | number : 2}}</td>
                             </tr>
                             <tr>
                                 <td></td>
