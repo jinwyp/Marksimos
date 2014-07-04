@@ -625,7 +625,7 @@ app.factory('tableReport',function($http){
         // Chart A1
         companyStatus : function(){
             return $http.get(apiPath + 'report/company_status').then(function(result){
-                console.log(result.data);
+//                console.log(result.data);
 
                 return result.data;
             }).catch(function(err){
