@@ -21,7 +21,7 @@ Function ReadParameters( var GenPar : TGeneralParameters; ConfigRecord : TConfig
 //Function ReadParameters( var GenPar : TGeneralParameters; vSimulationVariant : TSimulationVariant; var SegPar : TSegmentsParameters ) : Integer;overload;
 
 
-Function ReadResults( PeriodNumber : TPeriodNumber; var OnePeriodResults : POnePeriodInfo ) : Integer;
+Function ReadResults(DataDirectory:string;  SeminarCode: string; PeriodNumber : TPeriodNumber; var OnePeriodResults : POnePeriodInfo ) : Integer;
 //Function ReadResults( PeriodNumber : TPeriodNumber; var OnePeriodResults : TOnePeriodInfo ) : Integer;
 procedure WriteToLogfile(messa : string);
 
@@ -212,7 +212,7 @@ begin
 
 end;
 
-Function ReadResults( PeriodNumber : TPeriodNumber; var OnePeriodResults : POnePeriodInfo ) : Integer;
+Function ReadResults(DataDirectory:string; SeminarCode:string; PeriodNumber : TPeriodNumber; var OnePeriodResults : POnePeriodInfo ) : Integer;
 var
   ResultsFile : file of TOnePeriodInfo;
   FileName    :  String;
@@ -222,7 +222,7 @@ var
 begin
   RecNo := PeriodNumber - History_3;
   FileName := IncludeTrailingPathDelimiter(DataDirectory) +  AllResultsFileName + SeminarCode;
-  FileName := 'D:\\myfiles\\marksimons-data\\AllResults.TTT';
+  //FileName := 'D:\\myfiles\\marksimons-data\\AllResults.TTT';
   if FileExists(FileName) = false then
   begin
       //MessageDlg('result file does not exist:' + FileName,mtWarning,[mbOK], 0);

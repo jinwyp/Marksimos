@@ -17,6 +17,7 @@ var
   params: TDictionary<String, String>;
   GConfigureRecord: TConfigurationRecord;
   jsonResult: string;
+  resultCode: Integer;
 
 function parseSimulationVariant(p: String): TSimulationVariant;
 begin
@@ -59,8 +60,10 @@ begin
       FExogenous := AllocMem(sizeof(TExogenous));
 
       WriteLn;
-      ReadExogenous(StrToInt(params['period']), GConfigureRecord, FExogenous^);
 
+      resultCode := ReadExogenous(StrToInt(params['period']), GConfigureRecord, FExogenous^);
+
+      if(resultCode<>ReadExogenousOK) then raise Exception.Create('Read exogenous failed, code:' + IntToStr(resultCode));
       jo := ctx.AsJson<TExogenous>(FExogenous^);
 
       jsonResult := jo.AsJSon(False, True);
