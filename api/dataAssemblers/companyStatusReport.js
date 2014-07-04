@@ -196,8 +196,8 @@ function generateGlobalReport(companyId, allResults){
                 onePeriodReport.volumeWeightedDistribution = companyResult.c_AverageDistributionVol * 100;
                 onePeriodReport.shelfSpace = companyResult.c_ShelfSpace * 100;
                 onePeriodReport.mindSpaceShare = companyResult.c_MindSpaceShare * 100;
-                onePeriodReport.averageNetMarketPrice = companyResult.c_AverageNetMarketPrice;
-                onePeriodReport.averageDisplayPrice = companyResult.c_AverageDisplayPrice;
+                onePeriodReport.averageNetMarketPriceStdPack = companyResult.c_AverageNetMarketPrice;
+                onePeriodReport.averageDisplayPriceStdPack = companyResult.c_AverageDisplayPrice;
                 onePeriodReport.ingredientsQualityIndex = companyResult.c_AverageIngredientsQuality;
                 onePeriodReport.appliedTechnologyIndex = companyResult.c_AverageIngredientsQuality;
                 onePeriodReport.marketSalesValue = companyResult.c_MarketSalesValue[consts.ConsumerSegmentsMaxTotal-1];
@@ -209,8 +209,8 @@ function generateGlobalReport(companyId, allResults){
                 onePeriodReport.inventoryVolumeAtManufacturer = companyResult.c_FactoryStocks[consts.StocksMaxTotal].s_Volume;
                 onePeriodReport.inventoryVolumeAtWholesalers = companyResult.c_WholesalesStocks[consts.StocksMaxTotal].s_Volume;
                 onePeriodReport.inventoryVolumeAtRetailers = companyResult.c_RetailStocks[consts.StocksMaxTotal].s_Volume;
-                onePeriodReport.stocksCoverAtRetailers = companyResult.c_StockCoverAtRetailers;
-                onePeriodReport.stocksCoverAtWholesalers = companyResult.c_StockCoverAtWholesalers;
+                onePeriodReport.stocksCoverAtRetailersWeeks = companyResult.c_StockCoverAtRetailers;
+                onePeriodReport.stocksCoverAtWholesalersWeeks = companyResult.c_StockCoverAtWholesalers;
                 globalReport.push(onePeriodReport);
                 break;
             }
