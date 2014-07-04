@@ -20,12 +20,14 @@ var
   sDati: string;
   i: Integer;
   sTemp: string;
+  resultCode: Integer;
 
 begin
   SetMultiByteConversionCodePage(CP_UTF8);
 
   try
     WriteLn('Content-type: application/json');
+    WriteLn;
 
     ctx := TSuperRttiContext.Create;
 
@@ -37,13 +39,14 @@ begin
     if sValue='GET' then
     begin
         sValue := getVariable('QUERY_STRING');
-        //sValue := 'period=0&team=1&seminar=TTT';
+        //sValue := 'period=1&team=1&seminar=TTT';
         params := Explode(sValue);
 
         LoadConfigIni(DataDirectory, params['seminar']);
 
-        WriteLn;
-        ReadDecisionRecord(DataDirectory, params['seminar'], StrToInt(params['period']), StrToInt(params['team']), decision);
+        resultCode := ReadDecisionRecord(DataDirectory, params['seminar'], StrToInt(params['period']), StrToInt(params['team']), decision);
+        if (resultCode<>0) then raise Exception.Create('read decision failed.');
+
         jo := ctx.AsJson<TDecision>(decision);
         Writeln(jo.AsJSon(False, True));
     end
@@ -60,8 +63,6 @@ begin
 
         params := Explode(sDati);
 
-        WriteLn;
-
         sTemp := urlDecode(params['decision']);
 
         jo := SO(sTemp);
@@ -69,11 +70,12 @@ begin
 
         LoadConfigIni(DataDirectory, params['seminarId']);
 
-        WriteDecisionRecord(DataDirectory,
+        resultCode := WriteDecisionRecord(DataDirectory,
           params['seminarId'],
           StrToInt(params['period']),
           StrToInt(params['team']),
           decision);
+        if(resultCode<>0) then raise Exception.Create('Write decision failed.');
         Writeln('{"status": 1, "message": "submit decision success."}');
         //Writeln(urlDecode(sDati));
         //Writeln('{"data": "' + params['decision'] + '"}');
