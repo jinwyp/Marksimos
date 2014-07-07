@@ -622,7 +622,7 @@ app.factory('tableReport',function($http){
     var factory = {
 
 
-        // Chart A1
+        // Table Report A1
         companyStatus : function(){
             return $http.get(apiPath + 'report/company_status').then(function(result){
 //                console.log(result.data);
@@ -633,7 +633,7 @@ app.factory('tableReport',function($http){
             });
         },
 
-        // Chart A2
+        // Table Report A2
         financialReport : function(){
             return $http.get(apiPath + 'report/financial_report').then(function(result){
                 console.log(result.data);
@@ -644,7 +644,7 @@ app.factory('tableReport',function($http){
             });
         },
 
-        // Chart B2
+        // Table Report B2
         profitabilityEvolution : function(){
             return $http.get(apiPath + 'report/profitability_evolution').then(function(result){
                 console.log(result.data);

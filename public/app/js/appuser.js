@@ -60,6 +60,16 @@ marksimosapp.controller('chartController', function($scope,  $timeout, $http, ch
             currentGlobal : {},
             title : 'Company Status'
         },
+        tableA2FinancialData : {
+            allData : [],
+            currentCompany : {},
+            currentPeriod : {
+                period : 'Select Period'
+            },
+            currentBrand : {},
+            title : 'Financial Report'
+        },
+
         chartA31InventoryReport : {
             data : [],
             title : 'Inventory Report',
@@ -481,8 +491,14 @@ marksimosapp.controller('chartController', function($scope,  $timeout, $http, ch
     };
 
 
-
-
+    /********************  Table Report A2  ********************/
+    tableReport.financialReport().then(function(data, status, headers, config){
+//        console.log(data);
+        $scope.data.tableA2FinancialData.allData = data;
+        $scope.data.tableA2FinancialData.currentCompany = data[0];
+        $scope.data.tableA2FinancialData.currentPeriod = $scope.data.tableA2FinancialData.currentCompany.periods[0];
+        $scope.data.tableA2FinancialData.currentBrand = $scope.data.tableA2FinancialData.currentCompany.currentPeriod.brands[0];
+    });
 
 
 
