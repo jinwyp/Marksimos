@@ -13,7 +13,7 @@ marksimosapp.controller('chartController', function($scope,  $timeout, $http, ch
 
     $scope.css = {
         menu : 'Report',
-        chartMenu : 'A1',
+        chartMenu : 'A2',
         tableReportTab : 'SKU',
         additionalBudget : true,
         currentBrandId : 0,
@@ -488,6 +488,7 @@ marksimosapp.controller('chartController', function($scope,  $timeout, $http, ch
     };
     $scope.switchTableReportBrand = function(brand){
         $scope.data.tableA1CompanyStatus.currentBrand = brand;
+        $scope.data.tableA2FinancialData.currentBrand = brand;
     };
 
 
@@ -497,7 +498,7 @@ marksimosapp.controller('chartController', function($scope,  $timeout, $http, ch
         $scope.data.tableA2FinancialData.allData = data;
         $scope.data.tableA2FinancialData.currentCompany = data[0];
         $scope.data.tableA2FinancialData.currentPeriod = $scope.data.tableA2FinancialData.currentCompany.periods[0];
-        $scope.data.tableA2FinancialData.currentBrand = $scope.data.tableA2FinancialData.currentCompany.currentPeriod.brands[0];
+        $scope.data.tableA2FinancialData.currentBrand = $scope.data.tableA2FinancialData.currentPeriod.brands[0];
     });
 
 

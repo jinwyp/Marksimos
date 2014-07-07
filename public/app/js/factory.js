@@ -636,7 +636,7 @@ app.factory('tableReport',function($http){
         // Table Report A2
         financialReport : function(){
             return $http.get(apiPath + 'report/financial_report').then(function(result){
-                console.log(result.data);
+//                console.log(result.data);
 
                 return result.data;
             }).catch(function(err){
