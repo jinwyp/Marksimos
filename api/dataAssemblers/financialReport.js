@@ -131,7 +131,7 @@ exports.getFinancialReport = function(allResults){
                 reportByBrand.data.push(tempReportByBrand);
             })
 
-            periodReport.brands.push(reportByBrand);
+            periodReport.allBrands = reportByBrand;
             
             companyReport.periods.push(periodReport);
         })
