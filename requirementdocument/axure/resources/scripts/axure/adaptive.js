@@ -1,5 +1,5 @@
 ﻿$axure.internal(function($ax) {
-    var _adaptive = $ax.adaptive = {};
+    $ax.adaptive = {};
 
     $axure.utils.makeBindable($ax.adaptive, ["viewChanged"]);
 
@@ -7,6 +7,8 @@
     var _views;
     var _idToView;
     var _enabledViews = [];
+
+    var _initialViewToLoad;
 
     var _loadFinished = false;
     $ax.adaptive.loadFinished = function() {
@@ -26,15 +28,12 @@
         var toView = _getAdaptiveView(width, height);
         var toViewId = toView && toView.id;
 
-        if(toViewId == $ax.adaptive.currentViewId) return;
-
         _switchView(toViewId);
     };
 
     var _setAuto = $ax.adaptive.setAuto = function(val) {
         if(_auto != val) {
             _auto = Boolean(val);
-            if(val) _handleResize();
         }
     };
 
@@ -43,7 +42,22 @@
         if(imageUrl.indexOf(".png") > -1) $ax.utils.fixPng(imageQuery[0]);
     };
 
-    var _switchView = $ax.adaptive.switchView = function(viewId) {
+    var _switchView = function(viewId) {
+        var previousViewId = $ax.adaptive.currentViewId;
+        if(typeof previousViewId == 'undefined') previousViewId = '';
+        if(typeof viewId == 'undefined') viewId = '';
+        if(viewId == previousViewId) return;
+
+        $ax('*').each(function(obj, elementId) {
+            if(obj.type != 'treeNodeObject') return;
+            if(!obj.hasOwnProperty('isExpanded')) return;
+
+            var query = $ax('#' + elementId);
+            var defaultExpanded = obj.isExpanded;
+
+            query.expanded(defaultExpanded);
+        });
+
         // reset all the positioning on the style tags
         $axure('*').each(function(diagramObject, elementId) {
             var element = document.getElementById(elementId);
@@ -56,7 +70,6 @@
             }
         });
 
-        var previousViewId = $ax.adaptive.currentViewId;
         $ax.adaptive.currentViewId = viewId; // we need to set this so the enabled and selected styles will apply properly
         if(previousViewId) {
             $ax.style.clearAdaptiveStyles();
@@ -336,6 +349,28 @@
         return less || greater;
     };
 
+    var _isAdaptiveInitialized = function() {
+        return typeof _idToView != 'undefined';
+    };
+
+    $ax.messageCenter.addMessageListener(function(message, data) {
+        //If the adaptive plugin hasn't been initialized yet then 
+        //save the view to load so that it can get set when initialize occurs
+        if(message == 'switchAdaptiveView') {
+            var href = window.location.href.split('#')[0];
+            var lastSlash = href.lastIndexOf('/');
+            href = href.substring(lastSlash + 1);
+            if(href != data.src) return;
+
+            var view = data.view == 'auto' ? undefined : (data.view == 'default' ? '' : data.view);
+
+            if(!_isAdaptiveInitialized()) {
+                _initialViewToLoad = view;
+            } else _handleLoadViewId(view);
+        }
+    });
+
+
     $ax.adaptive.initialize = function() {
         _views = $ax.document.adaptiveViews;
         _idToView = {};
@@ -351,14 +386,22 @@
                 _enabledViews[_enabledViews.length] = _idToView[enabledViewIds[i]];
             }
 
-            var loadViewId = $ax.globalVariableProvider.viewIdOverride;
-            if(loadViewId) {
-                _setAuto(false);
-                _switchView(loadViewId != 'default' ? loadViewId : '');
-            } else {
-                $axure.resize(_handleResize);
-                _handleResize();
-            }
+            _handleLoadViewId(_initialViewToLoad);
+        }
+
+        $axure.resize(function(e) {
+            _handleResize();
+            $ax.postResize(e); //window resize fires after view changed
+        });
+    };
+
+    var _handleLoadViewId = function(loadViewId) {
+        if(typeof loadViewId != 'undefined') {
+            _setAuto(false);
+            _switchView(loadViewId != 'default' ? loadViewId : '');
+        } else {
+            _setAuto(true);
+            _handleResize();
         }
     };
 });

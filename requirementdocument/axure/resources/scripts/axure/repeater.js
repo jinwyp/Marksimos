@@ -102,8 +102,8 @@ $axure.internal(function($ax) {
         var xOffset = offset.width + _getAdaptiveProp(propMap, 'horizontalSpacing', viewId);
         var yOffset = offset.height + _getAdaptiveProp(propMap, 'verticalSpacing', viewId);
         div.css({
-            width: xOffset,
-            height: yOffset
+            width: offset.width,
+            height: offset.height
         });
 
         var background = _getAdaptiveProp(propMap, 'backColor', viewId);
@@ -118,23 +118,9 @@ $axure.internal(function($ax) {
         var shown = $ax.visibility.IsIdVisible(repeaterId);
         if(shown) document.getElementById(repeaterId).style.visibility = 'hidden';
 
-        var start = 0;
-        var end = orderedIds.length;
-        var pageInfo = repeaterToPageInfo[repeaterId];
-        if(!pageInfo.noLimit) {
-            end = pageInfo.itemsPerPage * pageInfo.currPage;
-            start = end - pageInfo.itemsPerPage;
-
-            // If past the end, move to last page
-            if(start >= orderedIds.length) {
-                pageInfo.currPage = Math.floor((orderedIds.length - 1) / pageInfo.itemsPerPage) + 1;
-                if(pageInfo.currPage <= 0) pageInfo.currPage = 1;
-
-                end = pageInfo.itemsPerPage * pageInfo.currPage;
-                start = end - pageInfo.itemsPerPage;
-            }
-            end = Math.min(end, orderedIds.length);
-        }
+        var bounds = _getVisibleDataBounds(repeaterToPageInfo[repeaterId], orderedIds.length);
+        var start = bounds[0];
+        var end = bounds[1];
         var useAlt = false;
 
         var resized = $ax.getItemIdsForRepeater(repeaterId).length != (end - start);
@@ -221,6 +207,7 @@ $axure.internal(function($ax) {
             $ax.initializeObjectEvents($ax('#' + id));
             $ax.dynamicPanelManager.initFitPanels($ax('#' + id));
             $ax.style.initializeObjectTextAlignment($ax('#' + id));
+            $ax.applyHighlight($ax('#' + id), true);
         }
 
         //$ax.event.raiseSyntheticEvent(itemElementId, 'onLoad', true);
@@ -349,6 +336,32 @@ $axure.internal(function($ax) {
         obj.isodd = index % 2 == 1;
     };
 
+    var _getVisibleDataBounds = function(pageInfo, count) {
+        var retval = [0, count];
+        if(!pageInfo.noLimit) {
+            var end = pageInfo.itemsPerPage * pageInfo.currPage;
+            var start = end - pageInfo.itemsPerPage;
+
+            // If past the end, move to last page
+            if(start >= count) {
+                pageInfo.currPage = Math.floor((count - 1) / pageInfo.itemsPerPage) + 1;
+                if(pageInfo.currPage <= 0) pageInfo.currPage = 1;
+
+                end = pageInfo.itemsPerPage * pageInfo.currPage;
+                start = end - pageInfo.itemsPerPage;
+            }
+            end = Math.min(end, count);
+            retval[0] = start;
+            retval[1] = end;
+        }
+        return retval;
+    };
+
+    _repeaterManager.getVisibleDataCount = function(repeaterId) {
+        var bounds = _getVisibleDataBounds(repeaterToPageInfo[repeaterId], repeaterToActiveDataSet[repeaterId].length);
+        return bounds[1] - bounds[0];
+    };
+
     _repeaterManager.getDataCount = function(repeaterId) {
         return repeaterToCurrentDataSet[repeaterId].length;
     };
@@ -420,7 +433,7 @@ $axure.internal(function($ax) {
 
                     //If tied, go to tie breaker
                     if(text1 == text2) {
-                        if(compare) return compare(row1.index, row2.index);
+                        if(compare) return compare(row1, row2); 
                         // Actually a tie.
                         return 0;
                     }
@@ -902,7 +915,6 @@ $axure.internal(function($ax) {
         _dynamicPanelManager.initFitPanels($ax('*'));
 
         $axure.resize(_handleResize);
-        _handleResize();
     };
 
     _dynamicPanelManager.initFitPanels = function(query) {
@@ -1186,7 +1198,8 @@ $axure.internal(function($ax) {
         return true;
     };
 
-    var getParentPanel = function(widgetId, path) {
+    // widgetId is the one that crawls up masters until it finds a parent panel, targetId is the original widgetId (not the crawling master)
+    var getParentPanel = function(widgetId, path, targetId) {
         path = path || $ax.getPathFromScriptId($ax.repeater.getScriptIdFromElementId(widgetId));
 
         var obj = $obj(widgetId);
@@ -1199,7 +1212,7 @@ $axure.internal(function($ax) {
             for(var i = 0; i < parentObj.diagrams.length; i++) {
                 var stateId = $ax.repeater.applySuffixToElementId(parentId, '_state' + i);
                 var stateQuery = $jobj(stateId);
-                if(stateQuery.find('#' + widgetId).length != 0) {
+                if(stateQuery.find('#' + (targetId || widgetId)).length != 0) {
                     retVal.state = i;
                     break;
                 }
@@ -1213,7 +1226,7 @@ $axure.internal(function($ax) {
         var parentMaster = $ax.getScriptIdFromPath(path);
         parentMaster = $ax.repeater.getElementId(parentMaster, widgetId);
 
-        return getParentPanel(parentMaster, path);
+        return getParentPanel(parentMaster, path, targetId || widgetId);
     };
 
     // TODO: May be a better location for this. Used currently for rdo and panel state containers
@@ -1412,12 +1425,13 @@ $axure.internal(function($ax) {
             if(isNaN(marker) || isNaN(childClamp[0]) || isNaN(childClamp[1]) ||
                marker < threshold || childClamp[1] <= clamp[0] || childClamp[0] >= clamp[1]) continue;
 
-            marker += delta;
+            //marker += delta;
 
-            var props = {};
-            props[markerProp] = marker;
-            if(easing == 'none') child.css(props);
-            else child.animate(props, duration, easing);
+            //var props = {};
+            //props[markerProp] = marker;
+            $ax('#' + childId).moveBy(vert ? 0 : delta, vert ? delta : 0, easing == 'none' ? {} : { duration: duration, easing: easing });
+            //if(easing == 'none') child.css(props);
+            //else child.animate(props, duration, easing);
         }
     };
 

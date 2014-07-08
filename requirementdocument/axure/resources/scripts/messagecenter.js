@@ -7,6 +7,8 @@ var CHROME_5_LOCAL = false;
 var CHROME = false;
 var WEBKIT = false;
 var OS_MAC = false;
+var IOS = false;
+
 (function () {
     var chromeRegex = /Chrome\/([0-9]+).([0-9]+)/g ;
     var chromeMatch = chromeRegex.exec(window.navigator.userAgent);
@@ -20,6 +22,8 @@ var OS_MAC = false;
     
     var macRegex = /Mac/g ;
     OS_MAC = Boolean(macRegex.exec(window.navigator.platform));
+
+    IOS = navigator.userAgent.match( /iPhone/i ) || navigator.userAgent.match( /iPad/i ) || navigator.userAgent.match( /iPod/i );
 })();
 
 (function() {

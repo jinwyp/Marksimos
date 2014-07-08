@@ -52,6 +52,7 @@
         var repeaterIdToScriptIds = {};
         var repeaterIdToItemIds = {};
         var scriptIdToPath = {};
+        var _scriptIds = [];
         var elementIdToText = {};
         var radioGroupToSelectedElementId = {};
         _initializePageData = function() {
@@ -83,6 +84,7 @@
                 diagramObject.scriptIds[diagramObject.scriptIds.length] = scriptId;
 
                 scriptIdToObject[scriptId] = diagramObject;
+                _scriptIds[_scriptIds.length] = scriptId;
             }
 
             // Now map scriptIds to repeaters
@@ -326,7 +328,7 @@
 
             // repeater only props
             if(obj.type == 'repeater') {
-                widget.visibleitemcount = repeaterIdToItemIds[scriptId] ? repeaterIdToItemIds[scriptId].length : 0;
+                widget.visibleitemcount = repeaterIdToItemIds[scriptId] ? repeaterIdToItemIds[scriptId].length : $ax.repeater.getVisibleDataCount(scriptId);
                 widget.itemcount = $ax.repeater.getFilteredDataCount(scriptId);
                 widget.datacount = $ax.repeater.getDataCount(scriptId);
                 widget.pagecount = $ax.repeater.getPageCount(scriptId);
@@ -366,20 +368,19 @@
 
         $ax.getAllElementIds = function() {
             var elementIds = [];
-            for(var scriptId in scriptIdToObject) {
+            for(var i = 0; i < _scriptIds.length; i++) {
+                var scriptId = _scriptIds[i];
                 var repeaterId = scriptIdToRepeaterId[scriptId];
                 if(repeaterId && repeaterId != scriptId) {
                     var itemIds = repeaterIdToItemIds[repeaterId] || [];
-                    for(var i = 0; i < itemIds.length; i++) elementIds[elementIds.length] = $ax.repeater.createElementId(scriptId, itemIds[i]);
+                    for(var j = 0; j < itemIds.length; j++) elementIds[elementIds.length] = $ax.repeater.createElementId(scriptId, itemIds[j]);
                 } else elementIds[elementIds.length] = scriptId;
             }
             return elementIds;
         };
 
         $ax.getAllScriptIds = function() {
-            var scriptIds = [];
-            for(var scriptId in scriptIdToObject) scriptIds.push(scriptId);
-            return scriptIds;
+            return _scriptIds;
         };
 
         $ax.getObjectFromElementId = function(elementId) {
@@ -520,18 +521,6 @@
                 includeVariables: arguments[1]
             });
         }
-    };
-
-    $ax.public.getArgs = $ax.getArgs = function() {
-        var args = {};
-        if(window.location.search) {
-            var pairs = window.location.search.slice(1).split('&');
-            pairs.forEach(function(pair) {
-                pair = pair.split('=');
-                args[pair[0]] = decodeURIComponent(pair[1] || '');
-            });
-        }
-        return args;
     };
 
     var _needsReload = function(oldLocation, newBaseUrl) {

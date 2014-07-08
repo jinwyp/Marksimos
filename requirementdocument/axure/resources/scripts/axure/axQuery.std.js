@@ -160,8 +160,8 @@ $axure.internal(function($ax) {
                     for(var j = 0; j < parents.length; j++) {
                         var parentId = parents[j].split('_')[0];
                         var parentObj = $obj(parentId);
-                        if(parentObj.type == 'dynamicPanel' && $jobj(parentId).css('z-index') != 'auto') {
-                            fixedParentPanelId = parentId;
+                        if(parentObj.type == 'dynamicPanel' && ($jobj(parentId).css('z-index') != 'auto' || $ax.features.supports.mobile)) {
+                            fixedParentPanelId = parents[j];
                             break;
                         }
                     }
@@ -402,7 +402,9 @@ $axure.internal(function($ax) {
     };
 
     var getWidgetText = function(id) {
-        var idQuery = $('#' + id);
+        var idQuery = $jobj(id);
+        var inputQuery = $jobj($ax.INPUT(id));
+        if(inputQuery.length) idQuery = inputQuery;
 
         if(idQuery.is('input') && (idQuery.attr('type') == 'checkbox' || idQuery.attr('type') == 'radio')) {
             idQuery = idQuery.parent().find('label').find('div');
@@ -423,7 +425,8 @@ $axure.internal(function($ax) {
 
             return textOut;
         } else {
-            return idQuery.val();
+            var val = idQuery.val();
+            return val == undefined ? '' : val;
         }
     };
 
@@ -625,6 +628,8 @@ $axure.internal(function($ax) {
                 var jobj = $jobj(elementId);
                 var input = $jobj($ax.INPUT(elementId));
                 if(input.length) jobj = input;
+
+                if(OS_MAC && WEBKIT && widgetType == 'comboBox') jobj.css('color', enabled ? '' : 'grayText');
 
                 if(enabled) jobj.removeAttr('disabled');
                 else jobj.attr('disabled', 'disabled');

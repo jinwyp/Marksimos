@@ -1,6 +1,7 @@
 ﻿body {
   margin:0px;
   background-image:none;
+  touch-action:none;
   position:static;
   left:auto;
   width:1301px;
@@ -36,12 +37,13 @@
 }
 #u3 {
   position:absolute;
-  left:1169px;
+  left:1168px;
   top:17px;
-  width:111px;
+  width:114px;
   height:13px;
-  font-family:'Verdana-Bold', 'Verdana Bold', 'Verdana';
+  font-family:'Verdana Bold', 'Verdana';
   font-weight:700;
+  font-style:normal;
   font-size:11px;
   color:#CFD9F3;
   text-align:center;
@@ -50,14 +52,14 @@
   position:absolute;
   left:0px;
   top:0px;
-  width:111px;
+  width:114px;
   height:13px;
 }
 #u4 {
   position:absolute;
   left:0px;
   top:0px;
-  width:111px;
+  width:114px;
   white-space:nowrap;
 }
 #u5 {
@@ -73,14 +75,16 @@
   top:0px;
   width:60px;
   height:22px;
-  background-image:none;
   background-color:#294590;
-  font-family:'Verdana-Bold', 'Verdana Bold', 'Verdana';
+  font-family:'Verdana Bold', 'Verdana';
   font-weight:700;
   font-style:normal;
   font-size:11px;
   text-decoration:none;
   color:#CFD9F3;
+}
+#u5_input:disabled {
+  color:grayText;
 }
 #u6 {
   position:absolute;
@@ -95,14 +99,16 @@
   top:0px;
   width:100px;
   height:22px;
-  background-image:none;
   background-color:#294590;
-  font-family:'Verdana-Bold', 'Verdana Bold', 'Verdana';
+  font-family:'Verdana Bold', 'Verdana';
   font-weight:700;
   font-style:normal;
   font-size:11px;
   text-decoration:none;
   color:#CFD9F3;
+}
+#u6_input:disabled {
+  color:grayText;
 }
 #u7 {
   position:absolute;
@@ -130,10 +136,11 @@
   position:absolute;
   left:72px;
   top:16px;
-  width:75px;
+  width:74px;
   height:19px;
-  font-family:'Verdana-Bold', 'Verdana Bold', 'Verdana';
+  font-family:'Verdana Bold', 'Verdana';
   font-weight:700;
+  font-style:normal;
   font-size:12px;
   color:#FFFFFF;
 }
@@ -141,14 +148,14 @@
   position:absolute;
   left:0px;
   top:0px;
-  width:75px;
+  width:74px;
   height:19px;
 }
 #u10 {
   position:absolute;
   left:0px;
   top:0px;
-  width:75px;
+  width:74px;
   white-space:nowrap;
 }
 #u11 {
@@ -197,12 +204,13 @@
 }
 #u15 {
   position:absolute;
-  left:221px;
+  left:220px;
   top:17px;
-  width:37px;
+  width:38px;
   height:13px;
-  font-family:'Verdana-Bold', 'Verdana Bold', 'Verdana';
+  font-family:'Verdana Bold', 'Verdana';
   font-weight:700;
+  font-style:normal;
   font-size:11px;
   color:#CFD9F3;
   text-align:center;
@@ -211,24 +219,25 @@
   position:absolute;
   left:0px;
   top:0px;
-  width:37px;
+  width:38px;
   height:13px;
 }
 #u16 {
   position:absolute;
   left:0px;
   top:0px;
-  width:37px;
+  width:38px;
   white-space:nowrap;
 }
 #u17 {
   position:absolute;
   left:304px;
   top:17px;
-  width:43px;
+  width:44px;
   height:13px;
-  font-family:'Verdana-Bold', 'Verdana Bold', 'Verdana';
+  font-family:'Verdana Bold', 'Verdana';
   font-weight:700;
+  font-style:normal;
   font-size:11px;
   color:#CFD9F3;
   text-align:center;
@@ -237,24 +246,25 @@
   position:absolute;
   left:0px;
   top:0px;
-  width:43px;
+  width:44px;
   height:13px;
 }
 #u18 {
   position:absolute;
   left:0px;
   top:0px;
-  width:43px;
+  width:44px;
   white-space:nowrap;
 }
 #u19 {
   position:absolute;
-  left:393px;
+  left:392px;
   top:17px;
-  width:35px;
+  width:38px;
   height:1px;
-  font-family:'Verdana-Bold', 'Verdana Bold', 'Verdana';
+  font-family:'Verdana Bold', 'Verdana';
   font-weight:700;
+  font-style:normal;
   font-size:11px;
   color:#CFD9F3;
   text-align:center;
@@ -263,24 +273,25 @@
   position:absolute;
   left:0px;
   top:0px;
-  width:35px;
+  width:38px;
   height:1px;
 }
 #u20 {
   position:absolute;
   left:0px;
   top:0px;
-  width:35px;
+  width:38px;
   white-space:nowrap;
 }
 #u21 {
   position:absolute;
-  left:474px;
+  left:473px;
   top:17px;
-  width:54px;
+  width:56px;
   height:13px;
-  font-family:'Verdana-Bold', 'Verdana Bold', 'Verdana';
+  font-family:'Verdana Bold', 'Verdana';
   font-weight:700;
+  font-style:normal;
   font-size:11px;
   color:#CFD9F3;
   text-align:center;
@@ -289,14 +300,14 @@
   position:absolute;
   left:0px;
   top:0px;
-  width:54px;
+  width:56px;
   height:13px;
 }
 #u22 {
   position:absolute;
   left:0px;
   top:0px;
-  width:54px;
+  width:56px;
   white-space:nowrap;
 }
 #u23 {
@@ -305,8 +316,9 @@
   top:12px;
   width:30px;
   height:26px;
-  font-family:'Verdana-Bold', 'Verdana Bold', 'Verdana';
+  font-family:'Verdana Bold', 'Verdana';
   font-weight:700;
+  font-style:normal;
   font-size:9px;
   color:#FFFFFF;
 }
@@ -570,8 +582,7 @@
   top:0px;
   width:100px;
   height:25px;
-  background-image:url(../../resources/images/transparent.gif);
-  font-family:'ArialMT', 'Arial';
+  font-family:'Arial';
   font-weight:400;
   font-style:normal;
   font-size:13px;
@@ -608,7 +619,9 @@
   top:120px;
   width:91px;
   height:25px;
-  font-family:'Verdana', 'Verdana';
+  font-family:'Verdana';
+  font-weight:400;
+  font-style:normal;
   font-size:14px;
   color:#373737;
 }
@@ -632,7 +645,9 @@
   top:148px;
   width:118px;
   height:22px;
-  font-family:'Verdana', 'Verdana';
+  font-family:'Verdana';
+  font-weight:400;
+  font-style:normal;
   font-size:11px;
   color:#373737;
 }
@@ -712,7 +727,9 @@
   top:149px;
   width:190px;
   height:15px;
-  font-family:'Verdana', 'Verdana';
+  font-family:'Verdana';
+  font-weight:400;
+  font-style:normal;
   font-size:12px;
   color:#373737;
 }
@@ -759,7 +776,9 @@
   top:95px;
   width:106px;
   height:80px;
-  font-family:'Verdana', 'Verdana';
+  font-family:'Verdana';
+  font-weight:400;
+  font-style:normal;
   text-align:center;
 }
 #u59_img {
@@ -782,7 +801,9 @@
   top:80px;
   width:100px;
   height:20px;
-  font-family:'Verdana', 'Verdana';
+  font-family:'Verdana';
+  font-weight:400;
+  font-style:normal;
   font-size:14px;
   color:#2F4E9B;
 }
@@ -806,7 +827,9 @@
   top:112px;
   width:100px;
   height:20px;
-  font-family:'Verdana', 'Verdana';
+  font-family:'Verdana';
+  font-weight:400;
+  font-style:normal;
   font-size:11px;
 }
 #u63_img {
@@ -851,8 +874,9 @@
   top:70px;
   width:120px;
   height:31px;
-  font-family:'Helvetica-Light', 'Helvetica Light', 'Helvetica';
+  font-family:'Helvetica Light', 'Helvetica';
   font-weight:200;
+  font-style:normal;
   font-size:24px;
   color:#717171;
 }
@@ -943,7 +967,9 @@
   top:80px;
   width:100px;
   height:20px;
-  font-family:'Verdana', 'Verdana';
+  font-family:'Verdana';
+  font-weight:400;
+  font-style:normal;
   font-size:14px;
   color:#2F4E9B;
 }
@@ -989,7 +1015,9 @@
   top:80px;
   width:100px;
   height:20px;
-  font-family:'Verdana', 'Verdana';
+  font-family:'Verdana';
+  font-weight:400;
+  font-style:normal;
   font-size:14px;
   color:#2F4E9B;
 }
@@ -1035,7 +1063,9 @@
   top:80px;
   width:100px;
   height:20px;
-  font-family:'Verdana', 'Verdana';
+  font-family:'Verdana';
+  font-weight:400;
+  font-style:normal;
   font-size:14px;
   color:#2F4E9B;
 }
@@ -1081,7 +1111,9 @@
   top:80px;
   width:100px;
   height:20px;
-  font-family:'Verdana', 'Verdana';
+  font-family:'Verdana';
+  font-weight:400;
+  font-style:normal;
   font-size:14px;
   color:#2F4E9B;
 }
@@ -1199,7 +1231,9 @@
   top:134px;
   width:100px;
   height:20px;
-  font-family:'Verdana', 'Verdana';
+  font-family:'Verdana';
+  font-weight:400;
+  font-style:normal;
   font-size:11px;
 }
 #u96_img {
@@ -1244,7 +1278,9 @@
   top:157px;
   width:100px;
   height:20px;
-  font-family:'Verdana', 'Verdana';
+  font-family:'Verdana';
+  font-weight:400;
+  font-style:normal;
   font-size:11px;
 }
 #u100_img {
@@ -1289,7 +1325,9 @@
   top:179px;
   width:100px;
   height:20px;
-  font-family:'Verdana', 'Verdana';
+  font-family:'Verdana';
+  font-weight:400;
+  font-style:normal;
   font-size:11px;
 }
 #u104_img {
@@ -1334,7 +1372,9 @@
   top:201px;
   width:100px;
   height:20px;
-  font-family:'Verdana', 'Verdana';
+  font-family:'Verdana';
+  font-weight:400;
+  font-style:normal;
   font-size:11px;
 }
 #u108_img {
@@ -1407,7 +1447,9 @@
   top:112px;
   width:100px;
   height:20px;
-  font-family:'Verdana', 'Verdana';
+  font-family:'Verdana';
+  font-weight:400;
+  font-style:normal;
   font-size:11px;
 }
 #u113_img {
@@ -1452,7 +1494,9 @@
   top:134px;
   width:100px;
   height:20px;
-  font-family:'Verdana', 'Verdana';
+  font-family:'Verdana';
+  font-weight:400;
+  font-style:normal;
   font-size:11px;
 }
 #u117_img {
@@ -1497,7 +1541,9 @@
   top:157px;
   width:100px;
   height:20px;
-  font-family:'Verdana', 'Verdana';
+  font-family:'Verdana';
+  font-weight:400;
+  font-style:normal;
   font-size:11px;
 }
 #u121_img {
@@ -1542,7 +1588,9 @@
   top:179px;
   width:100px;
   height:20px;
-  font-family:'Verdana', 'Verdana';
+  font-family:'Verdana';
+  font-weight:400;
+  font-style:normal;
   font-size:11px;
 }
 #u125_img {
@@ -1587,7 +1635,9 @@
   top:201px;
   width:100px;
   height:20px;
-  font-family:'Verdana', 'Verdana';
+  font-family:'Verdana';
+  font-weight:400;
+  font-style:normal;
   font-size:11px;
 }
 #u129_img {
@@ -1632,7 +1682,9 @@
   top:111px;
   width:100px;
   height:20px;
-  font-family:'Verdana', 'Verdana';
+  font-family:'Verdana';
+  font-weight:400;
+  font-style:normal;
   font-size:11px;
 }
 #u133_img {
@@ -1677,7 +1729,9 @@
   top:133px;
   width:100px;
   height:20px;
-  font-family:'Verdana', 'Verdana';
+  font-family:'Verdana';
+  font-weight:400;
+  font-style:normal;
   font-size:11px;
 }
 #u137_img {
@@ -1722,7 +1776,9 @@
   top:156px;
   width:100px;
   height:20px;
-  font-family:'Verdana', 'Verdana';
+  font-family:'Verdana';
+  font-weight:400;
+  font-style:normal;
   font-size:11px;
 }
 #u141_img {
@@ -1767,7 +1823,9 @@
   top:178px;
   width:100px;
   height:20px;
-  font-family:'Verdana', 'Verdana';
+  font-family:'Verdana';
+  font-weight:400;
+  font-style:normal;
   font-size:11px;
 }
 #u145_img {
@@ -1812,7 +1870,9 @@
   top:200px;
   width:100px;
   height:20px;
-  font-family:'Verdana', 'Verdana';
+  font-family:'Verdana';
+  font-weight:400;
+  font-style:normal;
   font-size:11px;
 }
 #u149_img {
@@ -1857,7 +1917,9 @@
   top:111px;
   width:100px;
   height:20px;
-  font-family:'Verdana', 'Verdana';
+  font-family:'Verdana';
+  font-weight:400;
+  font-style:normal;
   font-size:11px;
 }
 #u153_img {
@@ -1902,7 +1964,9 @@
   top:133px;
   width:100px;
   height:20px;
-  font-family:'Verdana', 'Verdana';
+  font-family:'Verdana';
+  font-weight:400;
+  font-style:normal;
   font-size:11px;
 }
 #u157_img {
@@ -1947,7 +2011,9 @@
   top:156px;
   width:100px;
   height:20px;
-  font-family:'Verdana', 'Verdana';
+  font-family:'Verdana';
+  font-weight:400;
+  font-style:normal;
   font-size:11px;
 }
 #u161_img {
@@ -1992,7 +2058,9 @@
   top:178px;
   width:100px;
   height:20px;
-  font-family:'Verdana', 'Verdana';
+  font-family:'Verdana';
+  font-weight:400;
+  font-style:normal;
   font-size:11px;
 }
 #u165_img {
@@ -2037,7 +2105,9 @@
   top:200px;
   width:100px;
   height:20px;
-  font-family:'Verdana', 'Verdana';
+  font-family:'Verdana';
+  font-weight:400;
+  font-style:normal;
   font-size:11px;
 }
 #u169_img {
@@ -2082,7 +2152,9 @@
   top:111px;
   width:100px;
   height:20px;
-  font-family:'Verdana', 'Verdana';
+  font-family:'Verdana';
+  font-weight:400;
+  font-style:normal;
   font-size:11px;
 }
 #u173_img {
@@ -2127,7 +2199,9 @@
   top:133px;
   width:100px;
   height:20px;
-  font-family:'Verdana', 'Verdana';
+  font-family:'Verdana';
+  font-weight:400;
+  font-style:normal;
   font-size:11px;
 }
 #u177_img {
@@ -2172,7 +2246,9 @@
   top:156px;
   width:100px;
   height:20px;
-  font-family:'Verdana', 'Verdana';
+  font-family:'Verdana';
+  font-weight:400;
+  font-style:normal;
   font-size:11px;
 }
 #u181_img {
@@ -2217,7 +2293,9 @@
   top:178px;
   width:100px;
   height:20px;
-  font-family:'Verdana', 'Verdana';
+  font-family:'Verdana';
+  font-weight:400;
+  font-style:normal;
   font-size:11px;
 }
 #u185_img {
@@ -2262,7 +2340,9 @@
   top:200px;
   width:100px;
   height:20px;
-  font-family:'Verdana', 'Verdana';
+  font-family:'Verdana';
+  font-weight:400;
+  font-style:normal;
   font-size:11px;
 }
 #u189_img {

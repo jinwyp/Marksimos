@@ -288,7 +288,7 @@ $axure.internal(function($ax) {
     };
 
     var _fixInputSize = function() {
-        if(Number($.browser.version) >= 8) return;
+        if(Number($.browser.version) >= 8 || window.navigator.userAgent.indexOf("Trident/4.0") > -1) return;
         var inputs = $('input').not(':input[type=button], :input[type=submit], :input[type=radio], :input[type=checkbox]');
         inputs.each(function() {
             var $input = $(this);
@@ -302,6 +302,19 @@ $axure.internal(function($ax) {
         });
     };
 
+    var _fixInputBackground = function() {
+        var inputs = $('input').not(':input[type=button], :input[type=submit], :input[type=radio], :input[type=checkbox]');
+        inputs = inputs.add($('textarea'));
+        inputs.each(function() {
+            var $input = $(this);
+            if($input.css('background-color') == 'transparent') {
+                $input.css('background-image', 'url(../../transparent.gif)');
+            } else {
+                $input.css('background-image', '');
+            }
+        });
+    };
+
     $(document).ready(function() {
         _fixIEStretchBackground();
         _applyIEFixedPosition();
@@ -311,6 +324,7 @@ $axure.internal(function($ax) {
         $ax.adaptive.bind('viewChanged', function() {
             _fixIEStretchBackground();
             _applyBackground();
+            _fixInputBackground();
         });
 
 
@@ -318,6 +332,7 @@ $axure.internal(function($ax) {
         _applyIERotation();
         _applyBackground();
         _fixInputSize();
+        _fixInputBackground();
     });
 
 

@@ -49,13 +49,8 @@
             currentPageLoc = $axure.page.location.split("#")[0];
             var decodedPageLoc = decodeURI(currentPageLoc);
             var nodeUrl = decodedPageLoc.substr(decodedPageLoc.lastIndexOf('/') ? decodedPageLoc.lastIndexOf('/') + 1 : 0);
-
-            var nextPlayerLoc = $(location).attr('href').split("#")[0].split("?")[0];
-            var nextPageHashString = '#p=' + nodeUrl.substr(0, nodeUrl.lastIndexOf('.'));
-            if(nextPlayerLoc == currentPlayerLoc && nextPageHashString == currentPageHashString) return;
-
-            currentPlayerLoc = nextPlayerLoc;
-            currentPageHashString = nextPageHashString;
+            currentPlayerLoc = $(location).attr('href').split("#")[0].split("?")[0];
+            currentPageHashString = '#p=' + nodeUrl.substr(0, nodeUrl.lastIndexOf('.'));
 
             setVarInCurrentUrlHash('p', nodeUrl.substring(0, nodeUrl.lastIndexOf('.html')));
 
@@ -100,20 +95,14 @@
             var viewStr = getHashStringVar(ADAPTIVE_VIEW_VAR_NAME);
             if(viewStr.length > 0) {
                 var $view = $('.adaptiveViewOption[val="' + viewStr + '"]');
-                if($view.length > 0) {
-                    $view.click();
-                } else {
-                    setVarInCurrentUrlHash(ADAPTIVE_VIEW_VAR_NAME, 'auto');
-                }
+                if($view.length > 0) $view.click();
+                else $('.adaptiveViewOption[val="auto"]').click();
             } else if($('.checkedAdaptive').length > 0) {
                 var $viewOption = $('.checkedAdaptive').parents('.adaptiveViewOption');
-                if($viewOption.attr('val') != 'auto') {
-                    $viewOption.click();
-                }
+                if($viewOption.attr('val') != 'auto') $viewOption.click();
             }
 
-            var main = $('#mainFrame');
-            if(document.activeElement != main[0]) main.focus();
+            $axure.messageCenter.postMessage('finishInit');
 
             return false;
         });
@@ -237,11 +226,7 @@
     }
 
     function node_click(event) {
-        navigate(this.getAttribute('nodeUrl'), getHashStringVar(ADAPTIVE_VIEW_VAR_NAME));
-    }
-
-    function navigate(url, viewId) {
-        $axure.page.navigate(url, true, viewId);
+        $axure.page.navigate(this.getAttribute('nodeUrl'), true);
     }
 
     function links_click(event) {
@@ -344,7 +329,15 @@
         $('.checkedAdaptive').removeClass('checkedAdaptive');
         $(this).find('.adaptiveCheckboxDiv').addClass('checkedAdaptive');
 
-        navigate($axure.page.location.split('#')[0], currVal != 'auto' ? currVal : undefined);
+        currentPageLoc = $axure.page.location.split("#")[0];
+        var decodedPageLoc = decodeURI(currentPageLoc);
+        var nodeUrl = decodedPageLoc.substr(decodedPageLoc.lastIndexOf('/') ? decodedPageLoc.lastIndexOf('/') + 1 : 0);
+        var adaptiveData = {
+            src: nodeUrl
+        };
+
+        adaptiveData.view = currVal;
+        $axure.messageCenter.postMessage('switchAdaptiveView', adaptiveData);
 
         if(currVal == 'auto') {
             //Remove view in hash string if one is set

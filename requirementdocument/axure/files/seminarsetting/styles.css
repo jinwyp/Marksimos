@@ -1,6 +1,7 @@
 ﻿body {
   margin:0px;
   background-image:none;
+  touch-action:none;
   position:static;
   left:auto;
   width:1260px;
@@ -61,7 +62,7 @@
   left:310px;
   top:385px;
   width:100px;
-  height:15px;
+  height:16px;
 }
 #u5 {
   position:absolute;
@@ -80,7 +81,7 @@
   left:430px;
   top:385px;
   width:100px;
-  height:15px;
+  height:16px;
 }
 #u7 {
   position:absolute;

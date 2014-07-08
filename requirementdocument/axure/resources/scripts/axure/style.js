@@ -155,6 +155,7 @@
             var viewChain = $ax.adaptive.getAdaptiveIdChain($ax.adaptive.currentViewId);
             viewChain[viewChain.length] = '';
             var obj = $obj(id);
+            if(obj.type == "dynamicPanel") return SELECTED;
 
             var any = function(dict) {
                 for(var key in dict) return true;
@@ -164,7 +165,8 @@
             for(var i = 0; i < viewChain.length; i++) {
                 var viewId = viewChain[i];
                 // Need to check seperately for images.
-                if((obj.adaptiveStyles && obj.adaptiveStyles[viewId] && any(obj.adaptiveStyles[viewId])) || obj.images['selected~' + viewId]) return SELECTED;
+                if(obj.adaptiveStyles && obj.adaptiveStyles[viewId] && any(obj.adaptiveStyles[viewId])
+                 || obj.images && obj.images['selected~' + viewId]) return SELECTED;
             }
             var selectedStyle = obj.style && obj.style.stateStyles && obj.style.stateStyles.selected;
             if(selectedStyle && any(selectedStyle)) return SELECTED;
@@ -249,7 +251,9 @@
         var obj = $jobj(inputId);
         if(!value) {
             obj.attr('style', '');
-            if(password) document.getElementById(inputId).type = 'password';
+            try { //ie8 and below error
+                if(password) document.getElementById(inputId).type = 'password';
+            } catch(e) { }
         } else {
             var style = _computeAllOverrides(id, undefined, HINT, $ax.adaptive.currentViewId);
             var styleProperties = _getCssStyleProperties(style);
@@ -258,7 +262,9 @@
             if(style.fill) styleProperties.runProps.backgroundColor = _getColorFromFill(style.fill);
 
             _applyCssProps($('#' + inputId)[0], styleProperties);
-            if(password) document.getElementById(inputId).type = 'text';
+            try { //ie8 and below error
+                if(password) document.getElementById(inputId).type = 'text';
+            } catch(e) { }
         }
         obj.val(text);
     };
@@ -314,7 +320,7 @@
             state = _progessState(state);
             if(state) _updateElementIdImageStyle(elementId, state);
             return;
-        } 
+        }
 
         var computedStyle = _style.computeAllOverrides(elementId, undefined, state, $ax.adaptive.currentViewId);
         var defaultStyle = $ax.document.stylesheet.defaultStyles[obj.type];
@@ -392,6 +398,11 @@
     //        $('#' + id).children().map(function (i, obj) { return obj.id; }), // all the child ids
     //        function (item) { return item.indexOf(id) < 0; })[0]; // that are not similar to the parent
     //}
+
+    var _getButtonShapeId = function (id) {
+        var obj = $obj(id);
+        return obj.type == 'treeNodeObject' ? $ax.getElementIdFromPath([obj.buttonShapeId], { relativeTo: id }) : id;
+    };
 
     var _getButtonShape = function(id) {
         var obj = $obj(id);
@@ -584,7 +595,8 @@
     };
 
     var _initialize = function() {
-        $ax.style.initializeObjectTextAlignment($ax('*'));
+        //being handled at on window.load
+        //$ax.style.initializeObjectTextAlignment($ax('*'));
     };
     $ax.style.initialize = _initialize;
 
@@ -713,7 +725,8 @@
     };
 
     var _getObjVisible = _style.getObjVisible = function(id) {
-        return $('#' + id + ':visible').length != 0;
+        var element = document.getElementById(id);
+        return element && element.offsetWidth && element.offsetHeight;
     };
 
     var _setTextAlignment = function(textId, alignProps, updateProps) {
@@ -775,10 +788,12 @@
                 for(var i = 0; i < itemIds; i++) elementIds.push($ax.repeater.createElementId(shapeId, itemIds[i]));
             }
             for(var index = 0; index < elementIds.length; index++) {
-                var elementId = elementIds[index];
-                var textId = $ax.style.GetTextIdFromShape(elementId);
-                _resetTextJson(elementId, textId);
-                _applyImageAndTextJson(elementId, $ax.style.generateState(elementId));
+                var elementId = _getButtonShapeId(elementIds[index]);
+                if(elementId) {
+                    var textId = $ax.style.GetTextIdFromShape(elementId);
+                    _resetTextJson(elementId, textId);
+                    _applyImageAndTextJson(elementId, $ax.style.generateState(elementId));
+                }
             }
         }
 

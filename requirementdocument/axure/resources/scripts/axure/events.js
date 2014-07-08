@@ -79,7 +79,7 @@ $axure.internal(function($ax) {
                 if(elementIdQuery.is('a')) _attachCustomObjectEvent(elementId, event_Name, fn);
                 //see notes below
                 else if($ax.IsTreeNodeObject(type)) _attachTreeNodeEvent(elementId, event_Name, fn);
-                else if($ax.IsButtonShape(type) && (event_Name == 'focus' || event_Name == 'blur')) {
+                else if($ax.IsImageFocusable(type) && (event_Name == 'focus' || event_Name == 'blur')) {
                     _attachDefaultObjectEvent($jobj($ax.repeater.applySuffixToElementId(elementId, '_img')), elementId, event_Name, fn);
                 } else {
                     var inputId = $ax.INPUT(elementId);
@@ -139,11 +139,23 @@ $axure.internal(function($ax) {
 
     var preventDefaultEvents = ['OnContextMenu', 'OnKeyUp', 'OnKeyDown'];
     var allowBubble = ['OnFocus', 'OnResize', 'OnMouseOut', 'OnMouseOver'];
-    var canClick = true;
+
+    var _canClick = true;
+    var _startScroll = [];
+    var _setCanClick = function(canClick) {
+        _canClick = canClick;
+        if(_canClick) _startScroll = [$(window).scrollLeft(), $(window).scrollTop()];
+    };
+
+    var _getCanClick = function() {
+        if(!$ax.features.supports.mobile) return true;
+        var endScroll = [$(window).scrollLeft(), $(window).scrollTop()];
+        return _canClick && _startScroll[0] == endScroll[0] && _startScroll[1] == endScroll[1];
+    };
 
     var _handleEvent = $ax.event.handleEvent = function(elementId, eventInfo, axEventObject, skipShowDescriptions, synthetic) {
         var eventDescription = axEventObject.description;
-        if(!canClick && eventDescription == 'OnClick') return;
+        if(!_getCanClick() && eventDescription == 'OnClick') return;
         // If you are supposed to suppress, do that right away.
         if(suppressedEventStatus[eventDescription]) {
             return;
@@ -228,11 +240,12 @@ $axure.internal(function($ax) {
         var $container = $("<div class='intcases' id='" + linksId + "'></div>");
 
         if(!_isEventSimulating(axEventObject)) {
+            var copy = $ax.deepCopy(eventInfo);
             for(var i = 0; i < axEventObject.cases.length; i++) {
                 var $link = $("<div class='intcaselink'>" + axEventObject.cases[i].description + "</div>");
                 $link.click(function(j) {
                     return function() {
-                        var bubble = $ax.action.dispatchAction(eventInfo, axEventObject.cases[j].actions);
+                        var bubble = $ax.action.dispatchAction(copy, axEventObject.cases[j].actions);
                         $('#' + linksId).remove();
                         return bubble;
                     };
@@ -375,7 +388,7 @@ $axure.internal(function($ax) {
         var inputId = $ax.repeater.applySuffixToElementId(elementId, '_input');
         var inputQuery = $jobj(inputId);
 
-        return imgQuery.length > 0 ? imgId : inputQuery.length > 0 ? inputId : elementId;
+        return inputQuery.length > 0 ? inputId : imgQuery.length > 0 ? imgId : elementId;
     };
 
     // key is the suppressing event, and the value is the event that is supressed
@@ -409,6 +422,19 @@ $axure.internal(function($ax) {
 
     // TODO: It may be a good idea to split this into multiple functions, or at least pull out more similar functions into private methods
     var _initializeObjectEvents = function(query) {
+        // Focus has to be done before on focus fires
+        // Set up focus
+        query.filter(function(dObj) {
+            return dObj.type == 'textArea' || dObj.type == 'textBox' || dObj.type == 'checkBox' || dObj.type == 'radioButton' ||
+                dObj.type == 'listBox' || dObj.type == 'comboBox' || dObj.type == 'button' || dObj.type == 'imageBox' ||
+                dObj.type == 'buttonShape' || dObj.type == 'flowShape' || dObj.type == 'treeNodeObject' || dObj.type == 'tableCell';
+        }).each(function(dObj, elementId) {
+            var focusObj = $jobj($ax.event.getFocusableWidgetOrChildId(elementId));
+            focusObj.focus(function() {
+                window.lastFocusedControl = elementId;
+            });
+        });
+
         // Must init the supressing eventing before the handlers, so that it has the ability to supress those events.
         initSuppressingEvents(query);
         _initilizeEventHandlers(query);
@@ -488,6 +514,12 @@ $axure.internal(function($ax) {
         query.filter(function(obj) {
             return (obj.type == 'flowShape' || obj.type == 'buttonShape' || obj.type == 'imageBox' || obj.type == 'dynamicPanel') && obj.disabled;
         }).enabled(false);
+
+        if(OS_MAC && WEBKIT) {
+            query.filter(function(obj) { return obj.type == 'comboBox' && obj.disabled; }).each(function(obj, elementId) {
+                $jobj($ax.INPUT(elementId)).css('color', 'grayText');
+            });
+        };
 
         // Initialize Placeholders. Right now this is text boxes and text areas.
         // Also, the assuption is being made that these widgets with the placeholder, have no other styles (this may change...)
@@ -569,11 +601,11 @@ $axure.internal(function($ax) {
         });
 
         if($ax.features.supports.mobile) {
-            query.bind($ax.features.eventNames.mouseDownName, function(event) { canClick = true; });
+            query.bind($ax.features.eventNames.mouseDownName, function() { _setCanClick(true); });
 
             query.filter(function(obj) {
                 return obj.type == 'dynamicPanel';
-            }).scroll(function() { canClick = false; });
+            }).$().scroll(function() { _setCanClick(false); });
         }
 
         //initialize tree node cursors to default so they will override their parent
@@ -824,16 +856,8 @@ $axure.internal(function($ax) {
         });
 
         // Highjack key up and key down to keep track of state of keyboard.
-        _event.initKeyEvents(function(initKeydown) {
-            query.filter('*').each(function(diagramObject, elementId) {
-                initKeydown('#' + elementId, elementId);
-            });
-        }, function(initKeyup) {
-            query.filter('*').each(function(diagramObject, elementId) {
-                initKeyup('#' + elementId, elementId);
-            });
-        });
-
+        _event.initKeyEvents(query.$());
+        
         // Attach synthetic onTextChange event to textbox and textarea elements
         query.filter(function(diagramObject) {
             return $ax.event.HasTextChanged(diagramObject);
@@ -854,7 +878,7 @@ $axure.internal(function($ax) {
 
         // Attach synthetic onCheckedChange event to radiobutton and checkbox elements
         query.filter(function(diagramObject) {
-            return $ax.event.HasCheckedChanged(diagramObject);
+            return diagramObject.type == 'checkbox' || diagramObject.type == 'radioButton';
         }).each(function(diagramObject, elementId) {
             var input = $jobj($ax.INPUT(elementId));
             if(diagramObject.type == 'radioButton' && input.prop('checked')) {
@@ -954,7 +978,7 @@ $axure.internal(function($ax) {
             } else if(target.urlLiteral) {
                 url = $ax.expr.evaluateExpr(target.urlLiteral, $ax.getEventInfoFromEvent(undefined, true, elementId), true);
             }
-            if(url) $jobj(elementId).attr('src', url);
+            if(url) $jobj($ax.INPUT(elementId)).attr('src', url);
         });
     };
     $ax.initializeObjectEvents = _initializeObjectEvents;
@@ -971,39 +995,39 @@ $axure.internal(function($ax) {
         };
 
         var modifierCodes = [16, 17, 18];
-        $ax.event.initKeyEvents = function(handleKeydown, handleKeyup) {
-            handleKeydown(function(query, elementId) {
-                $(query).keydown(function(e) {
-                    _keyState.ctrl = e.ctrlKey;
+        $ax.event.initKeyEvents = function($query) {
+            $query.keydown(function(e) {
+                var elementId = this.id;
 
-                    _keyState.alt = e.altKey;
+                _keyState.ctrl = e.ctrlKey;
 
-                    _keyState.shift = e.shiftKey;
+                _keyState.alt = e.altKey;
 
-                    // If a modifier was pressed, then don't set the keyCode;
-                    if(modifierCodes.indexOf(e.keyCode) == -1) _keyState.keyCode = e.keyCode;
+                _keyState.shift = e.shiftKey;
 
-                    $ax.setjBrowserEvent(e);
-                    if(!elementId) fireEventThroughContainers('onKeyDown', undefined, false, ['page', 'referenceDiagramObject', 'dynamicPanel', 'repeater'], ['page', 'referenceDiagramObject']);
-                    else _raiseSyntheticEvent(elementId, 'onKeyDown', false, undefined, true);
-                });
+                // If a modifier was pressed, then don't set the keyCode;
+                if(modifierCodes.indexOf(e.keyCode) == -1) _keyState.keyCode = e.keyCode;
+
+                $ax.setjBrowserEvent(e);
+                if(!elementId) fireEventThroughContainers('onKeyDown', undefined, false, ['page', 'referenceDiagramObject', 'dynamicPanel', 'repeater'], ['page', 'referenceDiagramObject']);
+                else _raiseSyntheticEvent(elementId, 'onKeyDown', false, undefined, true);
             });
-            handleKeyup(function(query, elementId) {
-                $(query).keyup(function(e) {
-                    $ax.setjBrowserEvent(e);
-                    // Fire event before updating modifiers.
-                    if(!elementId) fireEventThroughContainers('onKeyUp', undefined, false, ['page', 'referenceDiagramObject', 'dynamicPanel', 'repeater'], ['page', 'referenceDiagramObject']);
-                    else _raiseSyntheticEvent(elementId, 'onKeyUp', false, undefined, true);
+            $query.keyup(function(e) {
+                var elementId = this.id;
 
-                    _keyState.ctrl = e.ctrlKey;
+                $ax.setjBrowserEvent(e);
+                // Fire event before updating modifiers.
+                if(!elementId) fireEventThroughContainers('onKeyUp', undefined, false, ['page', 'referenceDiagramObject', 'dynamicPanel', 'repeater'], ['page', 'referenceDiagramObject']);
+                else _raiseSyntheticEvent(elementId, 'onKeyUp', false, undefined, true);
 
-                    _keyState.alt = e.altKey;
+                _keyState.ctrl = e.ctrlKey;
 
-                    _keyState.shift = e.shiftKey;
+                _keyState.alt = e.altKey;
 
-                    // If a non-modifier was lifted, clear the keycode
-                    if(modifierCodes.indexOf(e.keyCode) == -1) _keyState.keyCode = 0;
-                });
+                _keyState.shift = e.shiftKey;
+
+                // If a non-modifier was lifted, clear the keycode
+                if(modifierCodes.indexOf(e.keyCode) == -1) _keyState.keyCode = 0;
             });
         };
     })();
@@ -1190,7 +1214,7 @@ $axure.internal(function($ax) {
         $ax.repeater.load();
 
         // Make sure key events for page are initialized first. That way they will update the value of key pressed before any other events occur.
-        _event.initKeyEvents(function(initKeydown) { initKeydown(window, ''); }, function(initKeyup) { initKeyup(window, ''); });
+        _event.initKeyEvents($(window));
         _initializeObjectEvents($ax('*'));
 
         //finally, process the pageload
@@ -1272,6 +1296,11 @@ $axure.internal(function($ax) {
     };
     $ax.postAdaptiveViewChanged = _postAdaptiveViewChanged;
 
+    var _postResize = $ax.postResize = function(e) {
+        $ax.setjBrowserEvent(e);
+        return fireEventThroughContainers('onResize', undefined, false, ['page', 'referenceDiagramObject', 'dynamicPanel', 'repeater'], ['page', 'referenceDiagramObject']);
+    };
+
     // Filters include page, referenceDiagramObject, dynamicPanel, and repeater.
     var fireEventThroughContainers = function(eventName, objects, synthetic, searchFilter, callFilter, path, itemId) {
         // TODO: may want to pass in this as a parameter. At that point, may want to convert some of them to an option parameter. For now this is the only case
@@ -1304,10 +1333,12 @@ $axure.internal(function($ax) {
 
             if(obj.type == 'referenceDiagramObject') {
                 if(callFilter.indexOf('referenceDiagramObject') != -1) {
-                    var eventInfo = $ax.getEventInfoFromEvent($ax.getjBrowserEvent(), skipShowDescription, objId);
-                    eventInfo.isMasterEvent = true;
                     var axEvent = $ax.pageData.masters[obj.masterId].interactionMap[eventName];
-                    if(axEvent) _handleEvent(objId, eventInfo, axEvent, skipShowDescription, synthetic);
+                    if(axEvent) {
+                        var eventInfo = $ax.getEventInfoFromEvent($ax.getjBrowserEvent(), skipShowDescription, objId);
+                        eventInfo.isMasterEvent = true;
+                        _handleEvent(objId, eventInfo, axEvent, skipShowDescription, synthetic);
+                    }
                 }
                 if(searchFilter.indexOf('referenceDiagramObject') != -1) fireEventThroughContainers(eventName, $ax.pageData.masters[obj.masterId].diagram.objects, synthetic, searchFilter, callFilter, pathCopy, itemId);
             } else if(obj.type == 'dynamicPanel') {
@@ -1355,8 +1386,10 @@ $axure.internal(function($ax) {
             $(window).bind($ax.features.eventNames.mouseDownName, _updateMouseLocation);
             $(window).bind($ax.features.eventNames.mouseUpName, function(e) { _updateMouseLocation(e, true); });
 
-            $(window).scroll(function() { canClick = false; });
-            $(window).mousedown(function() { canClick = true; });
+            $(window).scroll(function() { _setCanClick(false); });
+            $(window).bind($ax.features.eventNames.mouseDownName, (function() {
+                _setCanClick(true);
+            }));
         }
         $(window).bind($ax.features.eventNames.mouseMoveName, _updateMouseLocation);
         $(window).scroll($ax.flyoutManager.reregisterAllFlyouts);
@@ -1371,11 +1404,6 @@ $axure.internal(function($ax) {
                 });
             })(key);
         }
-
-        $axure.resize(function(e) {
-            $ax.setjBrowserEvent(e);
-            return fireEventThroughContainers('onResize', undefined, false, ['page', 'referenceDiagramObject', 'dynamicPanel', 'repeater'], ['page', 'referenceDiagramObject']);
-        });
     };
     _event.pageLoad = _pageLoad;
 

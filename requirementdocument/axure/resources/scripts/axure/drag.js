@@ -43,13 +43,11 @@
         widgetDragInfo.targetWidget = tg;
 
         if($.browser.msie) {
-            window.document.attachEvent("onmousemove", _dragWidget);
-            window.document.attachEvent("onmouseup", _stopDragWidget);
+            window.document.attachEvent($ax.features.eventNames.mouseDownName, _dragWidget);
+            window.document.attachEvent($ax.features.eventNames.mouseUpName, _stopDragWidget);
         } else {
-            window.document.addEventListener("mousemove", _dragWidget, true);
-            window.document.addEventListener("mouseup", _stopDragWidget, true);
-            window.document.addEventListener("touchmove", _dragWidget, true);
-            window.document.addEventListener("touchend", _stopDragWidget, true);
+            window.document.addEventListener($ax.features.eventNames.mouseMoveName, _dragWidget, true);
+            window.document.addEventListener($ax.features.eventNames.mouseUpName, _stopDragWidget, true);
         }
         $ax.legacy.SuppressBubble(event);
     };
@@ -124,14 +122,12 @@
 
         var tg;
         if($.browser.msie) {
-            window.document.detachEvent("onmousemove", _dragWidget);
-            window.document.detachEvent("onmouseup", _stopDragWidget);
+            window.document.detachEvent($ax.features.eventNames.mouseDownName, _dragWidget);
+            window.document.detachEvent($ax.features.eventNames.mouseUpName, _stopDragWidget);
             tg = window.event.srcElement;
         } else {
-            window.document.removeEventListener("mousemove", _dragWidget, true);
-            window.document.removeEventListener("mouseup", _stopDragWidget, true);
-            window.document.removeEventListener("touchmove", _dragWidget, true);
-            window.document.removeEventListener("touchend", _stopDragWidget, true);
+            window.document.removeEventListener($ax.features.eventNames.mouseMoveName, _dragWidget, true);
+            window.document.removeEventListener($ax.features.eventNames.mouseUpName, _stopDragWidget, true);
             tg = event.target;
         }
 

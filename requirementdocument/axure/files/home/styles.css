@@ -1,6 +1,7 @@
 ﻿body {
   margin:0px;
   background-image:none;
+  touch-action:none;
   position:static;
   left:auto;
   width:1180px;
@@ -68,8 +69,9 @@
   top:0px;
   width:203px;
   height:30px;
-  font-family:'Arial-BoldMT', 'Arial Bold', 'Arial';
+  font-family:'Arial Bold', 'Arial';
   font-weight:700;
+  font-style:normal;
   text-align:center;
 }
 #u5_img {
@@ -82,7 +84,7 @@
 #u6 {
   position:absolute;
   left:2px;
-  top:8px;
+  top:7px;
   width:199px;
   word-wrap:break-word;
 }
@@ -92,8 +94,9 @@
   top:0px;
   width:203px;
   height:30px;
-  font-family:'Arial-BoldMT', 'Arial Bold', 'Arial';
+  font-family:'Arial Bold', 'Arial';
   font-weight:700;
+  font-style:normal;
   text-align:center;
 }
 #u7_img {
@@ -106,7 +109,7 @@
 #u8 {
   position:absolute;
   left:2px;
-  top:8px;
+  top:7px;
   width:199px;
   word-wrap:break-word;
 }
@@ -116,8 +119,9 @@
   top:0px;
   width:203px;
   height:30px;
-  font-family:'Arial-BoldMT', 'Arial Bold', 'Arial';
+  font-family:'Arial Bold', 'Arial';
   font-weight:700;
+  font-style:normal;
   text-align:center;
 }
 #u9_img {
@@ -130,7 +134,7 @@
 #u10 {
   position:absolute;
   left:2px;
-  top:8px;
+  top:7px;
   width:199px;
   word-wrap:break-word;
 }
@@ -140,8 +144,9 @@
   top:0px;
   width:204px;
   height:30px;
-  font-family:'Arial-BoldMT', 'Arial Bold', 'Arial';
+  font-family:'Arial Bold', 'Arial';
   font-weight:700;
+  font-style:normal;
   text-align:center;
 }
 #u11_img {
@@ -154,7 +159,7 @@
 #u12 {
   position:absolute;
   left:2px;
-  top:8px;
+  top:7px;
   width:200px;
   word-wrap:break-word;
 }
@@ -176,7 +181,7 @@
 #u14 {
   position:absolute;
   left:2px;
-  top:8px;
+  top:7px;
   width:199px;
   word-wrap:break-word;
 }
@@ -198,7 +203,7 @@
 #u16 {
   position:absolute;
   left:2px;
-  top:8px;
+  top:7px;
   width:199px;
   word-wrap:break-word;
 }
@@ -220,7 +225,7 @@
 #u18 {
   position:absolute;
   left:2px;
-  top:8px;
+  top:7px;
   width:199px;
   word-wrap:break-word;
 }
@@ -242,7 +247,7 @@
 #u20 {
   position:absolute;
   left:2px;
-  top:8px;
+  top:7px;
   width:200px;
   word-wrap:break-word;
 }
@@ -264,7 +269,7 @@
 #u22 {
   position:absolute;
   left:2px;
-  top:8px;
+  top:7px;
   width:199px;
   word-wrap:break-word;
 }
@@ -286,7 +291,7 @@
 #u24 {
   position:absolute;
   left:2px;
-  top:8px;
+  top:7px;
   width:199px;
   word-wrap:break-word;
 }
@@ -308,7 +313,7 @@
 #u26 {
   position:absolute;
   left:2px;
-  top:8px;
+  top:7px;
   width:199px;
   word-wrap:break-word;
 }
@@ -330,7 +335,7 @@
 #u28 {
   position:absolute;
   left:2px;
-  top:8px;
+  top:7px;
   width:200px;
   word-wrap:break-word;
 }
@@ -352,7 +357,7 @@
 #u30 {
   position:absolute;
   left:2px;
-  top:8px;
+  top:7px;
   width:199px;
   word-wrap:break-word;
 }
@@ -374,7 +379,7 @@
 #u32 {
   position:absolute;
   left:2px;
-  top:8px;
+  top:7px;
   width:199px;
   word-wrap:break-word;
 }
@@ -396,7 +401,7 @@
 #u34 {
   position:absolute;
   left:2px;
-  top:8px;
+  top:7px;
   width:199px;
   word-wrap:break-word;
 }
@@ -418,7 +423,7 @@
 #u36 {
   position:absolute;
   left:2px;
-  top:8px;
+  top:7px;
   width:200px;
   word-wrap:break-word;
 }
@@ -440,7 +445,7 @@
 #u38 {
   position:absolute;
   left:2px;
-  top:8px;
+  top:7px;
   width:199px;
   word-wrap:break-word;
 }
@@ -462,7 +467,7 @@
 #u40 {
   position:absolute;
   left:2px;
-  top:8px;
+  top:7px;
   width:199px;
   word-wrap:break-word;
 }
@@ -484,7 +489,7 @@
 #u42 {
   position:absolute;
   left:2px;
-  top:8px;
+  top:7px;
   width:199px;
   word-wrap:break-word;
 }
@@ -506,7 +511,7 @@
 #u44 {
   position:absolute;
   left:2px;
-  top:8px;
+  top:7px;
   width:200px;
   word-wrap:break-word;
 }
@@ -528,7 +533,7 @@
 #u46 {
   position:absolute;
   left:2px;
-  top:8px;
+  top:7px;
   width:199px;
   word-wrap:break-word;
 }
@@ -550,7 +555,7 @@
 #u48 {
   position:absolute;
   left:2px;
-  top:8px;
+  top:7px;
   width:199px;
   word-wrap:break-word;
 }
@@ -572,7 +577,7 @@
 #u50 {
   position:absolute;
   left:2px;
-  top:8px;
+  top:7px;
   width:199px;
   word-wrap:break-word;
 }
@@ -594,7 +599,7 @@
 #u52 {
   position:absolute;
   left:2px;
-  top:8px;
+  top:7px;
   width:200px;
   word-wrap:break-word;
 }
@@ -616,7 +621,7 @@
 #u54 {
   position:absolute;
   left:2px;
-  top:8px;
+  top:7px;
   width:199px;
   word-wrap:break-word;
 }
@@ -638,7 +643,7 @@
 #u56 {
   position:absolute;
   left:2px;
-  top:8px;
+  top:7px;
   width:199px;
   word-wrap:break-word;
 }
@@ -660,7 +665,7 @@
 #u58 {
   position:absolute;
   left:2px;
-  top:8px;
+  top:7px;
   width:199px;
   word-wrap:break-word;
 }
@@ -682,7 +687,7 @@
 #u60 {
   position:absolute;
   left:2px;
-  top:8px;
+  top:7px;
   width:200px;
   word-wrap:break-word;
 }
@@ -704,7 +709,7 @@
 #u62 {
   position:absolute;
   left:2px;
-  top:8px;
+  top:7px;
   width:199px;
   word-wrap:break-word;
 }
@@ -726,7 +731,7 @@
 #u64 {
   position:absolute;
   left:2px;
-  top:8px;
+  top:7px;
   width:199px;
   word-wrap:break-word;
 }
@@ -748,7 +753,7 @@
 #u66 {
   position:absolute;
   left:2px;
-  top:8px;
+  top:7px;
   width:199px;
   word-wrap:break-word;
 }
@@ -770,7 +775,7 @@
 #u68 {
   position:absolute;
   left:2px;
-  top:8px;
+  top:7px;
   width:200px;
   word-wrap:break-word;
 }
@@ -792,7 +797,7 @@
 #u70 {
   position:absolute;
   left:2px;
-  top:8px;
+  top:7px;
   width:199px;
   word-wrap:break-word;
 }
@@ -814,7 +819,7 @@
 #u72 {
   position:absolute;
   left:2px;
-  top:8px;
+  top:7px;
   width:199px;
   word-wrap:break-word;
 }
@@ -836,7 +841,7 @@
 #u74 {
   position:absolute;
   left:2px;
-  top:8px;
+  top:7px;
   width:199px;
   word-wrap:break-word;
 }
@@ -858,7 +863,7 @@
 #u76 {
   position:absolute;
   left:2px;
-  top:8px;
+  top:7px;
   width:200px;
   word-wrap:break-word;
 }
@@ -880,7 +885,7 @@
 #u78 {
   position:absolute;
   left:2px;
-  top:8px;
+  top:7px;
   width:199px;
   word-wrap:break-word;
 }
@@ -902,7 +907,7 @@
 #u80 {
   position:absolute;
   left:2px;
-  top:8px;
+  top:7px;
   width:199px;
   word-wrap:break-word;
 }
@@ -924,7 +929,7 @@
 #u82 {
   position:absolute;
   left:2px;
-  top:8px;
+  top:7px;
   width:199px;
   word-wrap:break-word;
 }
@@ -946,7 +951,7 @@
 #u84 {
   position:absolute;
   left:2px;
-  top:8px;
+  top:7px;
   width:200px;
   word-wrap:break-word;
 }
@@ -968,7 +973,7 @@
 #u86 {
   position:absolute;
   left:2px;
-  top:8px;
+  top:7px;
   width:199px;
   word-wrap:break-word;
 }
@@ -990,7 +995,7 @@
 #u88 {
   position:absolute;
   left:2px;
-  top:8px;
+  top:7px;
   width:199px;
   word-wrap:break-word;
 }
@@ -1012,7 +1017,7 @@
 #u90 {
   position:absolute;
   left:2px;
-  top:8px;
+  top:7px;
   width:199px;
   word-wrap:break-word;
 }
@@ -1034,7 +1039,7 @@
 #u92 {
   position:absolute;
   left:2px;
-  top:8px;
+  top:7px;
   width:200px;
   word-wrap:break-word;
 }
@@ -1051,8 +1056,9 @@
   top:0px;
   width:203px;
   height:30px;
-  font-family:'Arial-BoldMT', 'Arial Bold', 'Arial';
+  font-family:'Arial Bold', 'Arial';
   font-weight:700;
+  font-style:normal;
   text-align:center;
 }
 #u94_img {
@@ -1065,7 +1071,7 @@
 #u95 {
   position:absolute;
   left:2px;
-  top:8px;
+  top:7px;
   width:199px;
   word-wrap:break-word;
 }
@@ -1082,8 +1088,9 @@
   top:0px;
   width:203px;
   height:30px;
-  font-family:'Arial-BoldMT', 'Arial Bold', 'Arial';
+  font-family:'Arial Bold', 'Arial';
   font-weight:700;
+  font-style:normal;
   text-align:center;
 }
 #u97_img {
@@ -1096,7 +1103,7 @@
 #u98 {
   position:absolute;
   left:2px;
-  top:8px;
+  top:7px;
   width:199px;
   word-wrap:break-word;
 }
@@ -1106,8 +1113,9 @@
   top:0px;
   width:203px;
   height:30px;
-  font-family:'Arial-BoldMT', 'Arial Bold', 'Arial';
+  font-family:'Arial Bold', 'Arial';
   font-weight:700;
+  font-style:normal;
   text-align:center;
 }
 #u99_img {
@@ -1120,7 +1128,7 @@
 #u100 {
   position:absolute;
   left:2px;
-  top:8px;
+  top:7px;
   width:199px;
   word-wrap:break-word;
 }
@@ -1130,8 +1138,9 @@
   top:0px;
   width:203px;
   height:30px;
-  font-family:'Arial-BoldMT', 'Arial Bold', 'Arial';
+  font-family:'Arial Bold', 'Arial';
   font-weight:700;
+  font-style:normal;
   text-align:center;
 }
 #u101_img {
@@ -1144,7 +1153,7 @@
 #u102 {
   position:absolute;
   left:2px;
-  top:8px;
+  top:7px;
   width:199px;
   word-wrap:break-word;
 }
@@ -1154,8 +1163,9 @@
   top:0px;
   width:204px;
   height:30px;
-  font-family:'Arial-BoldMT', 'Arial Bold', 'Arial';
+  font-family:'Arial Bold', 'Arial';
   font-weight:700;
+  font-style:normal;
   text-align:center;
 }
 #u103_img {
@@ -1168,7 +1178,7 @@
 #u104 {
   position:absolute;
   left:2px;
-  top:8px;
+  top:7px;
   width:200px;
   word-wrap:break-word;
 }
@@ -1190,7 +1200,7 @@
 #u106 {
   position:absolute;
   left:2px;
-  top:8px;
+  top:7px;
   width:199px;
   word-wrap:break-word;
 }
@@ -1212,7 +1222,7 @@
 #u108 {
   position:absolute;
   left:2px;
-  top:8px;
+  top:7px;
   width:199px;
   word-wrap:break-word;
 }
@@ -1234,7 +1244,7 @@
 #u110 {
   position:absolute;
   left:2px;
-  top:8px;
+  top:7px;
   width:199px;
   word-wrap:break-word;
 }
@@ -1256,7 +1266,7 @@
 #u112 {
   position:absolute;
   left:2px;
-  top:8px;
+  top:7px;
   width:200px;
   word-wrap:break-word;
 }
@@ -1278,7 +1288,7 @@
 #u114 {
   position:absolute;
   left:2px;
-  top:8px;
+  top:7px;
   width:199px;
   word-wrap:break-word;
 }
@@ -1300,7 +1310,7 @@
 #u116 {
   position:absolute;
   left:2px;
-  top:8px;
+  top:7px;
   width:199px;
   word-wrap:break-word;
 }
@@ -1322,7 +1332,7 @@
 #u118 {
   position:absolute;
   left:2px;
-  top:8px;
+  top:7px;
   width:199px;
   word-wrap:break-word;
 }
@@ -1344,7 +1354,7 @@
 #u120 {
   position:absolute;
   left:2px;
-  top:8px;
+  top:7px;
   width:200px;
   word-wrap:break-word;
 }
@@ -1366,7 +1376,7 @@
 #u122 {
   position:absolute;
   left:2px;
-  top:8px;
+  top:7px;
   width:199px;
   word-wrap:break-word;
 }
@@ -1388,7 +1398,7 @@
 #u124 {
   position:absolute;
   left:2px;
-  top:8px;
+  top:7px;
   width:199px;
   word-wrap:break-word;
 }
@@ -1410,7 +1420,7 @@
 #u126 {
   position:absolute;
   left:2px;
-  top:8px;
+  top:7px;
   width:199px;
   word-wrap:break-word;
 }
@@ -1432,7 +1442,7 @@
 #u128 {
   position:absolute;
   left:2px;
-  top:8px;
+  top:7px;
   width:200px;
   word-wrap:break-word;
 }
@@ -1454,7 +1464,7 @@
 #u130 {
   position:absolute;
   left:2px;
-  top:8px;
+  top:7px;
   width:199px;
   word-wrap:break-word;
 }
@@ -1476,7 +1486,7 @@
 #u132 {
   position:absolute;
   left:2px;
-  top:8px;
+  top:7px;
   width:199px;
   word-wrap:break-word;
 }
@@ -1498,7 +1508,7 @@
 #u134 {
   position:absolute;
   left:2px;
-  top:8px;
+  top:7px;
   width:199px;
   word-wrap:break-word;
 }
@@ -1520,7 +1530,7 @@
 #u136 {
   position:absolute;
   left:2px;
-  top:8px;
+  top:7px;
   width:200px;
   word-wrap:break-word;
 }
@@ -1537,8 +1547,9 @@
   top:0px;
   width:203px;
   height:30px;
-  font-family:'Arial-BoldMT', 'Arial Bold', 'Arial';
+  font-family:'Arial Bold', 'Arial';
   font-weight:700;
+  font-style:normal;
   text-align:center;
 }
 #u138_img {
@@ -1551,7 +1562,7 @@
 #u139 {
   position:absolute;
   left:2px;
-  top:8px;
+  top:7px;
   width:199px;
   word-wrap:break-word;
 }
@@ -1561,8 +1572,9 @@
   top:0px;
   width:203px;
   height:30px;
-  font-family:'Arial-BoldMT', 'Arial Bold', 'Arial';
+  font-family:'Arial Bold', 'Arial';
   font-weight:700;
+  font-style:normal;
   text-align:center;
 }
 #u140_img {
@@ -1575,7 +1587,7 @@
 #u141 {
   position:absolute;
   left:2px;
-  top:8px;
+  top:7px;
   width:199px;
   word-wrap:break-word;
 }
@@ -1585,8 +1597,9 @@
   top:0px;
   width:203px;
   height:30px;
-  font-family:'Arial-BoldMT', 'Arial Bold', 'Arial';
+  font-family:'Arial Bold', 'Arial';
   font-weight:700;
+  font-style:normal;
   text-align:center;
 }
 #u142_img {
@@ -1599,7 +1612,7 @@
 #u143 {
   position:absolute;
   left:2px;
-  top:8px;
+  top:7px;
   width:199px;
   word-wrap:break-word;
 }
@@ -1609,8 +1622,9 @@
   top:0px;
   width:204px;
   height:30px;
-  font-family:'Arial-BoldMT', 'Arial Bold', 'Arial';
+  font-family:'Arial Bold', 'Arial';
   font-weight:700;
+  font-style:normal;
   text-align:center;
 }
 #u144_img {
@@ -1623,7 +1637,7 @@
 #u145 {
   position:absolute;
   left:2px;
-  top:8px;
+  top:7px;
   width:200px;
   word-wrap:break-word;
 }
@@ -1645,7 +1659,7 @@
 #u147 {
   position:absolute;
   left:2px;
-  top:8px;
+  top:7px;
   width:199px;
   word-wrap:break-word;
 }
@@ -1667,7 +1681,7 @@
 #u149 {
   position:absolute;
   left:2px;
-  top:8px;
+  top:7px;
   width:199px;
   word-wrap:break-word;
 }
@@ -1689,7 +1703,7 @@
 #u151 {
   position:absolute;
   left:2px;
-  top:8px;
+  top:7px;
   width:199px;
   word-wrap:break-word;
 }
@@ -1711,7 +1725,7 @@
 #u153 {
   position:absolute;
   left:2px;
-  top:8px;
+  top:7px;
   width:200px;
   word-wrap:break-word;
 }
@@ -1733,7 +1747,7 @@
 #u155 {
   position:absolute;
   left:2px;
-  top:8px;
+  top:7px;
   width:199px;
   word-wrap:break-word;
 }
@@ -1755,7 +1769,7 @@
 #u157 {
   position:absolute;
   left:2px;
-  top:8px;
+  top:7px;
   width:199px;
   word-wrap:break-word;
 }
@@ -1777,7 +1791,7 @@
 #u159 {
   position:absolute;
   left:2px;
-  top:8px;
+  top:7px;
   width:199px;
   word-wrap:break-word;
 }
@@ -1799,7 +1813,7 @@
 #u161 {
   position:absolute;
   left:2px;
-  top:8px;
+  top:7px;
   width:200px;
   word-wrap:break-word;
 }
@@ -1821,7 +1835,7 @@
 #u163 {
   position:absolute;
   left:2px;
-  top:8px;
+  top:7px;
   width:199px;
   word-wrap:break-word;
 }
@@ -1843,7 +1857,7 @@
 #u165 {
   position:absolute;
   left:2px;
-  top:8px;
+  top:7px;
   width:199px;
   word-wrap:break-word;
 }
@@ -1865,7 +1879,7 @@
 #u167 {
   position:absolute;
   left:2px;
-  top:8px;
+  top:7px;
   width:199px;
   word-wrap:break-word;
 }
@@ -1887,7 +1901,7 @@
 #u169 {
   position:absolute;
   left:2px;
-  top:8px;
+  top:7px;
   width:200px;
   word-wrap:break-word;
 }
@@ -1909,7 +1923,7 @@
 #u171 {
   position:absolute;
   left:2px;
-  top:8px;
+  top:7px;
   width:199px;
   word-wrap:break-word;
 }
@@ -1931,7 +1945,7 @@
 #u173 {
   position:absolute;
   left:2px;
-  top:8px;
+  top:7px;
   width:199px;
   word-wrap:break-word;
 }
@@ -1953,7 +1967,7 @@
 #u175 {
   position:absolute;
   left:2px;
-  top:8px;
+  top:7px;
   width:199px;
   word-wrap:break-word;
 }
@@ -1975,7 +1989,7 @@
 #u177 {
   position:absolute;
   left:2px;
-  top:8px;
+  top:7px;
   width:200px;
   word-wrap:break-word;
 }
@@ -1997,7 +2011,7 @@
 #u179 {
   position:absolute;
   left:2px;
-  top:8px;
+  top:7px;
   width:199px;
   word-wrap:break-word;
 }
@@ -2019,7 +2033,7 @@
 #u181 {
   position:absolute;
   left:2px;
-  top:8px;
+  top:7px;
   width:199px;
   word-wrap:break-word;
 }
@@ -2041,7 +2055,7 @@
 #u183 {
   position:absolute;
   left:2px;
-  top:8px;
+  top:7px;
   width:199px;
   word-wrap:break-word;
 }
@@ -2063,7 +2077,7 @@
 #u185 {
   position:absolute;
   left:2px;
-  top:8px;
+  top:7px;
   width:200px;
   word-wrap:break-word;
 }

@@ -63,6 +63,7 @@
             _settings.isAxshare = configuration.isAxshare;
             _settings.loadFeedbackPlugin = configuration.loadFeedbackPlugin;
             _settings.startCollapsed = HashString("c") == "1";
+            if(HashString("c") == "2") closePlayer();
 
             $axure.player.settings = _settings;
 
@@ -339,7 +340,7 @@
             </div>
         </div>
         <div id="rightPanel">
-            <iframe id="mainFrame" width="100%" height="100%" src="" frameborder="0" style="display: block;"></iframe>
+            <iframe id="mainFrame" name="mainFrame" width="100%" height="100%" src="" frameborder="0" style="display: block;"></iframe>
         </div>
 
     </div>

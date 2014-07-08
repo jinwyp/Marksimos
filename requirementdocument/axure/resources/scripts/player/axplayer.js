@@ -28,7 +28,7 @@ function setUpController() {
     //-----------------------------------------
     var _globalVars = {};
 
-    var _getLinkUrl = function(baseUrl, viewId) {
+    var _getLinkUrl = function(baseUrl) {
         var toAdd = '';
         for(var globalVarName in _globalVars) {
             var val = _globalVars[globalVarName];
@@ -37,8 +37,7 @@ function setUpController() {
                 toAdd += globalVarName + '=' + encodeURIComponent(val);
             }
         }
-        var viewOverride = viewId ? '&AXVIEWIDOVERRIDE=' + viewId : '';
-        return toAdd.length > 0 || viewId ? baseUrl + '#' + toAdd + viewOverride + '&CSUM=1' : baseUrl;
+        return toAdd.length > 0 ? baseUrl + '#' + toAdd + "&CSUM=1" : baseUrl;
     };
     $axure.getLinkUrlWithVars = _getLinkUrl;
 
@@ -60,7 +59,7 @@ function setUpController() {
     // this method should test if it is actually a axure rp page being loaded and properly set
     // up all the controller for the page if it is
     // ---------------------------------------------
-    _page.navigate = function (url, includeVariables, viewId) {
+    _page.navigate = function (url, includeVariables) {
         var mainFrame = document.getElementById("mainFrame");
         //var mainFrame = window.parent.mainFrame;
         // if this is a relative url...
@@ -76,7 +75,7 @@ function setUpController() {
             mainFrame.contentWindow.location.href = urlToLoad;
             return;
         }
-        var urlWithVars = $axure.getLinkUrlWithVars(urlToLoad, viewId);
+        var urlWithVars = $axure.getLinkUrlWithVars(urlToLoad);
         var currentData = $axure.messageCenter.getState('page.data');
         var currentUrl = currentData && currentData.location;
         if(currentUrl && currentUrl.indexOf('#') != -1) currentUrl = currentUrl.substring(0, currentUrl.indexOf('#'))

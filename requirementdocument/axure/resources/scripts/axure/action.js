@@ -147,7 +147,7 @@
                 url = $ax.expr.evaluateExpr(target.urlLiteral, eventInfo, true);
             }
 
-            $ax('#' + $ax.getElementIdsFromPath(framePath, eventInfo)[0]).openLink(url, includeVars);
+            $ax('#' + $ax.INPUT($ax.getElementIdsFromPath(framePath, eventInfo)[0])).openLink(url, includeVars);
         }
     };
 
@@ -408,7 +408,7 @@
                         // This does the resize animation. Moving is handled elsewhere.
                         if(easing == 'none') {
                             query.animate(css, 0);
-                            query.children().animate(css, 0);
+                            query.children().animate(stateCss, 0);
                             onComplete();
                         } else {
                             query.children().animate(stateCss, duration, easing);

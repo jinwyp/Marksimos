@@ -80,7 +80,6 @@ $axure.internal(function($ax) {
     };
     _globalVariableProvider.getVariableValue = getVariableValue;
 
-    _globalVariableProvider.viewIdOverride = undefined;
     var load = function() {
         var csum = false;
 
@@ -94,8 +93,6 @@ $axure.internal(function($ax) {
                 if(varName) {
                     if(varName == 'CSUM') {
                         csum = true;
-                    } else if(varName == 'AXVIEWIDOVERRIDE') {
-                        _globalVariableProvider.viewIdOverride = decodeURIComponent(varValue);
                     } else setVariableValue(varName, decodeURIComponent(varValue), true);
                 }
             }
