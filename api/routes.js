@@ -3,12 +3,13 @@ var chartController = require('./controllers/chart.js');
 var reportController = require('./controllers/report.js');
 var initController = require('./controllers/init.js');
 var decisionPageController = require('./controllers/decisionPage.js');
+var userController = require('./controllers/user.js');
 var util = require('util');
 
 
 module.exports = function(app){
-    app.post('/api/register', require('./controllers/user.js').register);
-    app.post('/api/login', require('./controllers/user.js').login);
+    app.post('/api/register', userController.register);
+    app.post('/api/login', userController.login);
 
     app.get('/api/init', initController.init);
 

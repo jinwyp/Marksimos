@@ -1,86 +1,104 @@
+var express = require('express');
 var userModel = require('../models/user.js');
+var utility = require('../utility.js');
 var logger = require('../../logger.js');
 
 exports.register = function(req, res, next){
     var email = req.body.email;
-    var userName = req.body.user_name;
     var password = req.body.password;
 
     if(!email){
-        return res.json({status: 0, message: "email can't be empty."});
+        return res.send(400, {message: 'email is required.'});
     }
 
     if(!password){
-        return res.json({status: 0, message: "password can't be empty."});
+        return res.send(400, {message: 'password is required.'})
     }
 
-    email = email.trim();
-    password = password.trim();
-    if(userName) userName = userName.trim();
+    var phoneNum = req.body.phoneNum || '';
+    var country = req.body.country || '';
+    var state = req.body.state || '';
+    var city = req.body.city || '';
 
-    userModel.isUserExisted(email)
-    .then(function(result){
-        if(result===false){
-            return userModel.addUser({
-                email: email,
-                userName: userName,
-                password: encryptPassword(password),
-                role: 4
-            }).then(function(){
-                return res.json({status: 1, message: "register success."});
-            }).fail(function(err){
-                logger.error('failed to save user to db');
-                throw err;
-            })
-        }else{
-            return res.json({status: 1, message: "User is existed."});
-        }
-    }).fail(function(err){
-        if(err){
-            logger.error(JSON.stringify(err.message));
-        }
-        return res.json({status: 0, message: "register failed."});
-    }).done();
-};
-
-exports.login = function(req, res, next){
-    var email = req.body.email;
-    var password = req.body.password;
-
-    if(!email){
-        return res.json({status: 409, message: "email can't be empty."});
+    var user = {
+        email: email,
+        password: password
     }
 
-    if(!password){
-        return res.json({status: 409, message: "password can't be empty."})
-    }
+    if(phoneNum) user.phoneNum = phoneNum;
+    if(country) user.country = country;
+    if(state) user.state = state;
+    if(city) user.city = city;
 
-    email = email.trim();
-    password = encryptPassword(password.trim());
+    var activateToken = utility.generateAcivateToken(email);
+    user.activateToken = activateToken;
 
-    userModel.login(email, password)
-    .then(function(result){
-        req.session.user = {
-            email: email
-        };
-//        res.cookie('clientToken', clientToken);
-        res.json({status: 303, message: "login success."});
-
-    }).fail(function(err){
-        if(err){
-            logger.error(err.message);
-            return res.json({status: 401, message: "login failed."})
+    userModel.findByEmail(email)
+    .then(function(findResult){
+        if(findResult){
+            return res.send({status:2, message: 'User is existed.'});
         }
-    }).done();
-};
-
-
-function encryptPassword(password){
-    return password;
+        return userModel.register(user)
+        .then(function(result){
+            if(result === 1){
+                return utility.sendActivateEmail(email, activateToken)
+                .then(function(sendEmailResult){
+                    if(sendEmailResult){
+                        return res.send({message: 'Register success'});
+                    }else{
+                        throw new Error('Send activate email failed.');
+                    }
+                })
+            }else{
+                throw new Error('Save user to db failed.');
+            }
+        })
+    })
+    .fail(function(err){
+        logger.error(err);
+        res.send(500, {message: 'register failed.'});
+    })
+    .done();
 }
 
+exports.activate = function(req, res, next){
+    var email = req.query.email;
+    var token = req.query.token;
 
+    if(!email){
+        return res.send(400, {message: 'email is required.'})
+    }
 
+    if(!token){
+        return res.send(400, {message: 'token is required.'})
+    }
+
+    userModel.findByEmailAndToken(email, token)
+    .then(function(result){
+        if(result){
+            return userModel.updateByEmail(email, {
+                isActive: true
+            })
+            .then(function(numAffected){
+                if(numAffected === 1){
+                    return res.send({message: 'activate success'});
+                }
+                return res.send(500, {message: 'more or less than 1 record is updated. it should be only one.'})
+            });
+        }else{
+            throw new Error('User does not exist.');
+        }
+    })
+    .fail(function(err){
+        logger.error(err);
+        res.send(500, {message: 'activate failed.'})
+    })
+    .done();
+}
+
+exports.login = function(req, res, next){
+
+}
 
 
 
