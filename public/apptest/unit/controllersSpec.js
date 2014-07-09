@@ -27,7 +27,7 @@ describe('chartController', function(){
 
     /********************  Initially critical  ********************/
     it('Initially scope.css.menu has default value ', function() {
-        expect(scope.css.menu).toEqual("Home");
+        expect(scope.css.menu).toEqual("Report");
     });
 
     it('Initially scope.css.chartMenu has default value ', function() {
@@ -46,7 +46,9 @@ describe('chartController', function(){
     it('Initially scope.data.tableA1CompanyStatus has default value ', function() {
         expect(scope.data.tableA1CompanyStatus.currentCompany.companyName).toEqual("Company List");
     });
-
+    it('Initially scope.data.tableA2FinancialData has default value ', function() {
+        expect(scope.data.tableA2FinancialData.currentPeriod.period).toEqual("Select Period");
+    });
 
 
 

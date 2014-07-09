@@ -5,7 +5,7 @@
 
 var app = angular.module('marksimos.component', []);
 
-app.directive('headerUser', function() {
+app.directive('headerUser', function($translate) {
     return {
         scope: {
             login : '=',
@@ -34,6 +34,9 @@ app.directive('headerUser', function() {
 //                }
             };
 
+            scope.changeLanguage = function (langKey) {
+                $translate.use(langKey);
+            };
 
 
 

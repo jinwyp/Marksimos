@@ -4,15 +4,14 @@
 
 
 // create module for custom directives
-var marksimosapp = angular.module('marksimos', ['angularCharts', 'nvd3ChartDirectives', 'marksimos.component', 'marksimos.factory', 'marksimos.filters' ]);
-
+var marksimosapp = angular.module('marksimos', ['pascalprecht.translate', 'angularCharts', 'nvd3ChartDirectives', 'marksimos.component', 'marksimos.factory', 'marksimos.filters', 'marksimos.translation' ]);
 
 
 // controller business logic
 marksimosapp.controller('chartController', function($scope,  $timeout, $http, chartReport, tableReport, company) {
 
     $scope.css = {
-        menu : 'Report',
+        menu : 'Home',
         chartMenu : 'A1',
         tableReportTab : 'SKU',
         additionalBudget : true,
@@ -60,6 +59,16 @@ marksimosapp.controller('chartController', function($scope,  $timeout, $http, ch
             currentGlobal : {},
             title : 'Company Status'
         },
+        tableA2FinancialData : {
+            allData : [],
+            currentCompany : {},
+            currentPeriod : {
+                period : 'Select Period'
+            },
+            currentBrand : {},
+            title : 'Financial Report'
+        },
+
         chartA31InventoryReport : {
             data : [],
             title : 'Inventory Report',
@@ -478,11 +487,18 @@ marksimosapp.controller('chartController', function($scope,  $timeout, $http, ch
     };
     $scope.switchTableReportBrand = function(brand){
         $scope.data.tableA1CompanyStatus.currentBrand = brand;
+        $scope.data.tableA2FinancialData.currentBrand = brand;
     };
 
 
-
-
+    /********************  Table Report A2  ********************/
+    tableReport.financialReport().then(function(data, status, headers, config){
+//        console.log(data);
+        $scope.data.tableA2FinancialData.allData = data;
+        $scope.data.tableA2FinancialData.currentCompany = data[0];
+        $scope.data.tableA2FinancialData.currentPeriod = $scope.data.tableA2FinancialData.currentCompany.periods[0];
+        $scope.data.tableA2FinancialData.currentBrand = $scope.data.tableA2FinancialData.currentPeriod.brands[0];
+    });
 
 
 
