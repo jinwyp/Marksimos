@@ -321,7 +321,7 @@
                     <div class="table_report" ng-if="css.tableReportTab=='SKU'">
 
                         <ul class="nav nav-pills">
-                            <li ng-class="{'active': data.tableA1CompanyStatus.currentBrand.SKUID==sku.SKUID}" ng-repeat="sku in data.tableA1CompanyStatus.currentCompany.SKU"><a href="" ng-click="switchTableReportSKU(sku)">{{sku.SKUName}}</a></li>
+                            <li ng-class="{'active': data.tableA1CompanyStatus.currentSKU.SKUID==sku.SKUID}" ng-repeat="sku in data.tableA1CompanyStatus.currentCompany.SKU"><a href="" ng-click="switchTableReportSKU(sku)">{{sku.SKUName}}</a></li>
                         </ul>
 
                         <div class="divider_horizontal"></div>
@@ -330,7 +330,7 @@
                             <thead>
                             <tr>
                                 <th>Quarters</th>
-                                <th ng-repeat="quarter in data.tableA1CompanyStatus.currentBrand.data">{{quarter.period}}</th>
+                                <th ng-repeat="quarter in data.tableA1CompanyStatus.currentSKU.data">{{quarter.period}}</th>
                             </tr>
                             </thead>
                             <tbody>
