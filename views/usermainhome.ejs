@@ -1927,6 +1927,55 @@
                                 <td>Next Period Available Prod. Capacity (mln std. packs)</td>
                                 <td ng-repeat="quarter in data.tableA4ProfitabilityEvolution.currentGlobal">{{quarter.nextPeriodAvailableProdCapacity | number : 2}}</td>
                             </tr>
+                            <tr>
+                                <td></td>
+                                <td ng-repeat="quarter in data.tableA4ProfitabilityEvolution.currentGlobal"></td>
+                            </tr>
+                            <tr>
+                                <td>Available Technology Level</td>
+                                <td ng-repeat="quarter in data.tableA4ProfitabilityEvolution.currentGlobal">{{quarter.availableTechnologyLevel | number : 2}}</td>
+                            </tr>
+                            <tr>
+                                <td>Extra Budget Required to Increase Technology Level by 1 Step</td>
+                                <td ng-repeat="quarter in data.tableA4ProfitabilityEvolution.currentGlobal">{{quarter.extraBudgetRequiredToIncreaseTechnologyLevelBy1Step | number : 2}}</td>
+                            </tr>
+                            <tr>
+                                <td>Extra Budget Required to Increase Technology Level by 2 Steps</td>
+                                <td ng-repeat="quarter in data.tableA4ProfitabilityEvolution.currentGlobal">{{quarter.extraBudgetRequiredToIncreaseTechnologyLevelBy2Step | number : 2}}</td>
+                            </tr>
+                            <tr>
+                                <td></td>
+                                <td ng-repeat="quarter in data.tableA4ProfitabilityEvolution.currentGlobal"></td>
+                            </tr>
+                            <tr>
+                                <td>Acquired Production and Logistics Efficiency (%)</td>
+                                <td ng-repeat="quarter in data.tableA4ProfitabilityEvolution.currentGlobal">{{quarter.acquiredProductionAndLogisticsEfficiency | number : 2}}%</td>
+                            </tr>
+                            <tr>
+                                <td>Extra Budget Required to Increase Efficiency by 2% points</td>
+                                <td ng-repeat="quarter in data.tableA4ProfitabilityEvolution.currentGlobal">{{quarter.extraBudgetRequiredToIncreaseEfficiencyBy2Points | number : 2}}</td>
+                            </tr>
+                            <tr>
+                                <td>Extra Budget Required to Increase Efficiency by 5% points</td>
+                                <td ng-repeat="quarter in data.tableA4ProfitabilityEvolution.currentGlobal">{{quarter.extraBudgetRequiredToIncreaseEfficiencyBy5Points | number : 2}}</td>
+                            </tr>
+                            <tr>
+                                <td></td>
+                                <td ng-repeat="quarter in data.tableA4ProfitabilityEvolution.currentGlobal"></td>
+                            </tr>
+                            <tr>
+                                <td>Acquired Production Planning Flexibility (%)</td>
+                                <td ng-repeat="quarter in data.tableA4ProfitabilityEvolution.currentGlobal">{{quarter.acquiredProductionPlanningFlexibility | number : 2}}%</td>
+                            </tr>
+                            <tr>
+                                <td>Extra Budget Required to Increase Flexibility by 2% points</td>
+                                <td ng-repeat="quarter in data.tableA4ProfitabilityEvolution.currentGlobal">{{quarter.extraBudgetRequiredToIncreaseFlexibilityBy2Points | number : 2}}</td>
+                            </tr>
+                            <tr>
+                                <td>Extra Budget Required to Increase Flexibility by 5% points</td>
+                                <td ng-repeat="quarter in data.tableA4ProfitabilityEvolution.currentGlobal">{{quarter.extraBudgetRequiredToIncreaseFlexibilityBy5Points | number : 2}}</td>
+                            </tr>
+
                             </tbody>
                         </table>
                     </div>
