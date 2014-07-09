@@ -180,10 +180,10 @@ function generateBrandReport(companyId, allResults){
                     onePeriodReport.netProfitMargin = brandResult.b_NetProfitMargin * 100;
                     onePeriodReport.returnOnInvestment = brandResult.b_ReturnOnInvestment;
 
-                    onePeriodReport.averageNetMarketPrice = brandResult.b_AverageNetMarketPrice * consts.ActualSize[brandResult.b_PackSize];
-                    onePeriodReport.averageWholesalesPrice = brandResult.b_AverageWholesalesPrice * consts.ActualSize[brandResult.b_PackSize];
-                    onePeriodReport.averageManufacturerPrice = brandResult.b_AverageManufacturerPrice * consts.ActualSize[brandResult.b_PackSize];
-                    onePeriodReport.averageProductionCost = brandResult.b_AverageProductionCost * consts.ActualSize[brandResult.b_PackSize];
+                    onePeriodReport.averageNetMarketPrice = brandResult.b_AverageNetMarketPrice;
+                    onePeriodReport.averageWholesalesPrice = brandResult.b_WholesalesPrice;
+                    onePeriodReport.averageManufacturerPrice = brandResult.b_FactoryPrice;
+                    onePeriodReport.averageProductionCost = brandResult.b_AverageProductionCost;
 
                     onePeriodReport.marketSalesValue = brandResult.b_MarketSalesValue[consts.ConsumerSegmentsMaxTotal-1];
                     onePeriodReport.consumerProcePromotion = -brandResult.b_PricePromotionsCost;
@@ -225,6 +225,7 @@ function generateGlobalReport(companyId, allResults){
             if(companyResult.c_CompanyID === companyId){
                 var onePeriodReport = {};
                 
+                onePeriodReport.period = 'Quarter ' + onePeriodResult.period;
                 onePeriodReport.manufacturerSalesValue = companyResult.c_FactorySalesValue;
                 onePeriodReport.costOfGoodsSold = -companyResult.c_CostOfGoodsSold;
                 onePeriodReport.inventoryHoldingCost = -companyResult.c_InventoryHoldingCost;

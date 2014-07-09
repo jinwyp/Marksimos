@@ -2,6 +2,12 @@ var gameParameters = require('./gameParameters.js').parameters;
 var cgiapi = require('./cgiapi.js');
 var consts = require('./consts.js');
 var config = require('./config.js');
+var appconfig = require('../appconfig.js');
+var nodemailer = require('nodemailer');
+var uuid = require('node-uuid');
+var Q = require('q');
+var bcrypt = require('bcrypt-nodejs');
+
 
 exports.setSize = function(num){
     return num;
@@ -151,6 +157,60 @@ exports.calculateIngredientsQuality = function(SKUResult){
         return SKUResult.u_ps_FactoryStocks[0].s_IngredientsQuality;
     }
 }
+
+exports.generateAcivateToken = function(email){
+    return uuid.v4();
+}
+
+exports.sendActivateEmail = function(toEmail, activateToken){
+    var body = "Please click this link, blablabla"
+    var linkText =  appconfig.host + 'activate?email=' + toEmail + '&token=' + activateToken;
+    body += "<a href='" + linkText + "'>"+ linkText +"</a>";
+
+    return sendMail(toEmail,'HCD activate email', body);
+}
+
+/**
+ * @param {String} subject：发送的主题
+ * @param {String} html：发送的 html 内容
+ */
+function sendMail(toEmail, subject, html) {
+     var deferred = Q.defer();
+    var smtpTransport = nodemailer.createTransport('SMTP', {
+        host: config.mail.host,
+        auth: {user: config.mail.user, pass: config.mail.password},
+    });
+
+    console.log(config.mail.host);
+   
+    var mailOptions = {
+        from: [config.mail.name, config.mail.user].join(' '),
+        to: toEmail,
+        subject: subject,
+        html: html
+    };
+
+    smtpTransport.sendMail(mailOptions, function(error, response){
+        if (error) {
+            deferred.reject(error);
+        } else {
+            deferred.resolve({message: 'Message sent: ' + response.message});
+        }
+        smtpTransport.close();
+    });
+
+    return deferred.promise;
+};
+
+exports.hashPassword = function(password){
+    return bcrypt.hashSync(password);
+};
+
+exports.comparePassword = function(password, hashedPassword){
+    return bcrypt.compareSync(password, hashedPassword);
+};
+
+
 
 
 

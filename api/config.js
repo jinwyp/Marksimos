@@ -1,6 +1,15 @@
 module.exports = {
     cgiService: 'http://10.20.30.97/cgi-bin/',
 
+    passwordSalt: 'hcd',
+
+    mail: {
+        host: 'mail.hcdglobal.com',
+        user: 'test@hcdglobal.com',
+        password: 'hcd1234##',
+        name: 'HCD'
+    },
+
     initPeriods: [-3, -2, -1, 0],  //Periods at the start of the game
     initCompanies: [1, 2], //Teams at the start of the game
 
