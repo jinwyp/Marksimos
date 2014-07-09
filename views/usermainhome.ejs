@@ -1700,8 +1700,232 @@
                             </thead>
                             <tbody>
                             <tr>
-                                <td>Market Share (value %)</td>
-                                <td ng-repeat="quarter in data.tableA4ProfitabilityEvolution.currentGlobal">{{quarter.marketShareValue | number : 2}}%</td>
+                                <td>Manufacturer Sales Value ($ mln)</td>
+                                <td ng-repeat="quarter in data.tableA4ProfitabilityEvolution.currentGlobal">{{quarter.manufacturerSalesValue | number : 2}}</td>
+                            </tr>
+                            <tr>
+                                <td></td>
+                                <td ng-repeat="quarter in data.tableA4ProfitabilityEvolution.currentGlobal"></td>
+                            </tr>
+                            <tr>
+                                <td>Cost of Goods Sold ($ mln)</td>
+                                <td ng-repeat="quarter in data.tableA4ProfitabilityEvolution.currentGlobal">{{quarter.costOfGoodsSold | number : 2}}</td>
+                            </tr>
+                            <tr>
+                                <td>Inventory Holding ($ mln)</td>
+                                <td ng-repeat="quarter in data.tableA4ProfitabilityEvolution.currentGlobal">{{quarter.inventoryHoldingCost | number : 2}}</td>
+                            </tr>
+                            <tr>
+                                <td>Obsolete Goods ($ mln)</td>
+                                <td ng-repeat="quarter in data.tableA4ProfitabilityEvolution.currentGlobal">{{quarter.obsoleteGoodsCost | number : 2}}</td>
+                            </tr>
+                            <tr>
+                                <td>Discontinued Goods Cost ($ mln)</td>
+                                <td ng-repeat="quarter in data.tableA4ProfitabilityEvolution.currentGlobal">{{quarter.discontinuedGoodsCost | number : 2}}</td>
+                            </tr>
+                            <tr>
+                                <td>Gross Profit ($ mln)</td>
+                                <td ng-repeat="quarter in data.tableA4ProfitabilityEvolution.currentGlobal">{{quarter.grossProfit | number : 2}}</td>
+                            </tr>
+                            <tr>
+                                <td></td>
+                                <td ng-repeat="quarter in data.tableA4ProfitabilityEvolution.currentGlobal"></td>
+                            </tr>
+                            <tr>
+                                <td>Advertising ($ mln)</td>
+                                <td ng-repeat="quarter in data.tableA4ProfitabilityEvolution.currentGlobal">{{quarter.advertising | number : 2}}</td>
+                            </tr>
+                            <tr>
+                                <td>Consumer Promotions Cost ($ mln)</td>
+                                <td ng-repeat="quarter in data.tableA4ProfitabilityEvolution.currentGlobal">{{quarter.consumerPromotionsCost | number : 2}}</td>
+                            </tr>
+                            <tr>
+                                <td>Trade Investment ($ mln)</td>
+                                <td ng-repeat="quarter in data.tableA4ProfitabilityEvolution.currentGlobal">{{quarter.tradeInvestment | number : 2}}</td>
+                            </tr>
+                            <tr>
+                                <td>Sales Force Cost ($ mln)</td>
+                                <td ng-repeat="quarter in data.tableA4ProfitabilityEvolution.currentGlobal">{{quarter.salesForceCost | number : 2}}</td>
+                            </tr>
+                            <tr>
+                                <td>Volume Discount Cost ($ mln)</td>
+                                <td ng-repeat="quarter in data.tableA4ProfitabilityEvolution.currentGlobal">{{quarter.volumeDiscountCost | number : 2}}</td>
+                            </tr>
+                            <tr>
+                                <td>Additional Trade Margin Cost ($ mln)</td>
+                                <td ng-repeat="quarter in data.tableA4ProfitabilityEvolution.currentGlobal">{{quarter.additionalTradeMarginCost | number : 2}}</td>
+                            </tr>
+                            <tr>
+                                <td>Total Trade and Marketing Expenses ($ mln)</td>
+                                <td ng-repeat="quarter in data.tableA4ProfitabilityEvolution.currentGlobal">{{quarter.totalTradeAndMarketingExpenses | number : 2}}</td>
+                            </tr>
+                            <tr>
+                                <td></td>
+                                <td ng-repeat="quarter in data.tableA4ProfitabilityEvolution.currentGlobal"></td>
+                            </tr>
+                            <tr>
+                                <td>Overhead ($ mln)</td>
+                                <td ng-repeat="quarter in data.tableA4ProfitabilityEvolution.currentGlobal">{{quarter.overhead | number : 2}}</td>
+                            </tr>
+                            <tr>
+                                <td>Investment to Improve Technology Level ($ mln)</td>
+                                <td ng-repeat="quarter in data.tableA4ProfitabilityEvolution.currentGlobal">{{quarter.investmentToImproveTechnologyLevel | number : 2}}</td>
+                            </tr>
+                            <tr>
+                                <td>Investment to Increase Production Efficiency ($ mln)</td>
+                                <td ng-repeat="quarter in data.tableA4ProfitabilityEvolution.currentGlobal">{{quarter.investmentToIncreaseProductionEfficiency | number : 2}}</td>
+                            </tr>
+                            <tr>
+                                <td></td>
+                                <td ng-repeat="quarter in data.tableA4ProfitabilityEvolution.currentGlobal"></td>
+                            </tr>
+                            <tr>
+                                <td>Production Capacity Disposal Cost ($ mln)</td>
+                                <td ng-repeat="quarter in data.tableA4ProfitabilityEvolution.currentGlobal">{{quarter.productionCapacityDisposalCosts | number : 2}}</td>
+                            </tr>
+                            <tr>
+                                <td>Overtime Shifts Cost ($ mln)</td>
+                                <td ng-repeat="quarter in data.tableA4ProfitabilityEvolution.currentGlobal">{{quarter.overtimeShiftsCosts | number : 2}}</td>
+                            </tr>
+                            <tr>
+                                <td>Total General Expenses ($ mln)</td>
+                                <td ng-repeat="quarter in data.tableA4ProfitabilityEvolution.currentGlobal">{{quarter.generalExpenses | number : 2}}</td>
+                            </tr>
+                            <tr>
+                                <td>Amortisation ($ mln)</td>
+                                <td ng-repeat="quarter in data.tableA4ProfitabilityEvolution.currentGlobal">{{quarter.amortisation | number : 2}}</td>
+                            </tr>
+                            <tr>
+                                <td>Operating Profit ($ mln)</td>
+                                <td ng-repeat="quarter in data.tableA4ProfitabilityEvolution.currentGlobal">{{quarter.operatingProfit | number : 2}}</td>
+                            </tr>
+                            <tr>
+                                <td></td>
+                                <td ng-repeat="quarter in data.tableA4ProfitabilityEvolution.currentGlobal"></td>
+                            </tr>
+                            <tr>
+                                <td>Interests ($ mln)</td>
+                                <td ng-repeat="quarter in data.tableA4ProfitabilityEvolution.currentGlobal">{{quarter.interests | number : 2}}</td>
+                            </tr>
+                            <tr>
+                                <td>Exceptional Cost/Profit ($ mln)</td>
+                                <td ng-repeat="quarter in data.tableA4ProfitabilityEvolution.currentGlobal">{{quarter.exceptionalCostsProfits | number : 2}}</td>
+                            </tr>
+                            <tr>
+                                <td>Taxes ($ mln)</td>
+                                <td ng-repeat="quarter in data.tableA4ProfitabilityEvolution.currentGlobal">{{quarter.taxes | number : 2}}</td>
+                            </tr>
+                            <tr>
+                                <td>Net Profit ($ mln)</td>
+                                <td ng-repeat="quarter in data.tableA4ProfitabilityEvolution.currentGlobal">{{quarter.netProfit | number : 2}}</td>
+                            </tr>
+                            <tr>
+                                <td></td>
+                                <td ng-repeat="quarter in data.tableA4ProfitabilityEvolution.currentGlobal"></td>
+                            </tr>
+                            <tr>
+                                <td>Surcharge for upplementary InvestmentBudget ($ mln)</td>
+                                <td ng-repeat="quarter in data.tableA4ProfitabilityEvolution.currentGlobal">{{quarter.surchargeForSupplementaryInvestmentBudget | number : 2}}</td>
+                            </tr>
+                            <tr>
+                                <td>Net Result ($ mln)</td>
+                                <td ng-repeat="quarter in data.tableA4ProfitabilityEvolution.currentGlobal">{{quarter.netResult | number : 2}}</td>
+                            </tr>
+                            <tr>
+                                <td></td>
+                                <td ng-repeat="quarter in data.tableA4ProfitabilityEvolution.currentGlobal"></td>
+                            </tr>
+                            <tr>
+                                <td>Gross Profit Margin (%)</td>
+                                <td ng-repeat="quarter in data.tableA4ProfitabilityEvolution.currentGlobal">{{quarter.grossProfitMargin | number : 2}}%</td>
+                            </tr>
+                            <tr>
+                                <td>Trade and Marketing Expenses as a(%) of Sales</td>
+                                <td ng-repeat="quarter in data.tableA4ProfitabilityEvolution.currentGlobal">{{quarter.tradeAndMarketingExpensesAsAPercentageOfSales | number : 2}}%</td>
+                            </tr>
+                            <tr>
+                                <td>General Expenses as a(%) of Sales</td>
+                                <td ng-repeat="quarter in data.tableA4ProfitabilityEvolution.currentGlobal">{{quarter.generalExpensesAsAPercentageOfSales | number : 2}}%</td>
+                            </tr>
+                            <tr>
+                                <td>Operating Profit Margin (%)</td>
+                                <td ng-repeat="quarter in data.tableA4ProfitabilityEvolution.currentGlobal">{{quarter.operatingProfitMargin | number : 2}}%</td>
+                            </tr>
+                            <tr>
+                                <td>Net Profit Margin (%)</td>
+                                <td ng-repeat="quarter in data.tableA4ProfitabilityEvolution.currentGlobal">{{quarter.netProfitMargin | number : 2}}%</td>
+                            </tr>
+                            <tr>
+                                <td></td>
+                                <td ng-repeat="quarter in data.tableA4ProfitabilityEvolution.currentGlobal"></td>
+                            </tr>
+                            <tr>
+                                <td>Return on Investment (%)</td>
+                                <td ng-repeat="quarter in data.tableA4ProfitabilityEvolution.currentGlobal">{{quarter.returnOnInvestment | number : 2}}%</td>
+                            </tr>
+                            <tr>
+                                <td></td>
+                                <td ng-repeat="quarter in data.tableA4ProfitabilityEvolution.currentGlobal"></td>
+                            </tr>
+                            <tr>
+                                <td>Average Net Market Price ($/pack)</td>
+                                <td ng-repeat="quarter in data.tableA4ProfitabilityEvolution.currentGlobal">{{quarter.averageNetMarketPrice | number : 2}}</td>
+                            </tr>
+                            <tr>
+                                <td>Average Wholesales Price ($/pack)</td>
+                                <td ng-repeat="quarter in data.tableA4ProfitabilityEvolution.currentGlobal">{{quarter.averageWholesalesPrice | number : 2}}</td>
+                            </tr>
+                            <tr>
+                                <td>Average Manufacturer Price ($/pack)</td>
+                                <td ng-repeat="quarter in data.tableA4ProfitabilityEvolution.currentGlobal">{{quarter.averageManufacturerPrice | number : 2}}</td>
+                            </tr>
+                            <tr>
+                                <td>Average Production Cost ($/pack)</td>
+                                <td ng-repeat="quarter in data.tableA4ProfitabilityEvolution.currentGlobal">{{quarter.averageProductionCost | number : 2}}</td>
+                            </tr>
+                            <tr>
+                                <td></td>
+                                <td ng-repeat="quarter in data.tableA4ProfitabilityEvolution.currentGlobal"></td>
+                            </tr>
+                            <tr>
+                                <td>Market Sales Value ($ mln)</td>
+                                <td ng-repeat="quarter in data.tableA4ProfitabilityEvolution.currentGlobal">{{quarter.marketSalesValue | number : 2}}</td>
+                            </tr>
+                            <tr>
+                                <td>Consumer Price Promotions ($ mln)</td>
+                                <td ng-repeat="quarter in data.tableA4ProfitabilityEvolution.currentGlobal">{{quarter.consumerProcePromotion | number : 2}}</td>
+                            </tr>
+                            <tr>
+                                <td>Market Net Sales Value ($ mln)</td>
+                                <td ng-repeat="quarter in data.tableA4ProfitabilityEvolution.currentGlobal">{{quarter.marketNetSalesValue | number : 2}}</td>
+                            </tr>
+                            <tr>
+                                <td></td>
+                                <td ng-repeat="quarter in data.tableA4ProfitabilityEvolution.currentGlobal"></td>
+                            </tr>
+                            <tr>
+                                <td>Production Cost ($ mln)</td>
+                                <td ng-repeat="quarter in data.tableA4ProfitabilityEvolution.currentGlobal">{{quarter.productionCost | number : 2}}</td>
+                            </tr>
+                            <tr>
+                                <td>Inventory Value ($ mln)</td>
+                                <td ng-repeat="quarter in data.tableA4ProfitabilityEvolution.currentGlobal">{{quarter.inventoryValue | number : 2}}</td>
+                            </tr>
+                            <tr>
+                                <td></td>
+                                <td ng-repeat="quarter in data.tableA4ProfitabilityEvolution.currentGlobal"></td>
+                            </tr>
+                            <tr>
+                                <td>Capacity Utilisation Rate (%)</td>
+                                <td ng-repeat="quarter in data.tableA4ProfitabilityEvolution.currentGlobal">{{quarter.capacityUtilisationRate | number : 2}}%</td>
+                            </tr>
+                            <tr>
+                                <td>Change In Production Capacity (mln std. packs)</td>
+                                <td ng-repeat="quarter in data.tableA4ProfitabilityEvolution.currentGlobal">{{quarter.changeInProductionCapacityStdPack | number : 2}}</td>
+                            </tr>
+                            <tr>
+                                <td>Next Period Available Prod. Capacity (mln std. packs)</td>
+                                <td ng-repeat="quarter in data.tableA4ProfitabilityEvolution.currentGlobal">{{quarter.nextPeriodAvailableProdCapacity | number : 2}}</td>
                             </tr>
                             </tbody>
                         </table>
