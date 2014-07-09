@@ -224,6 +224,7 @@ function generateGlobalReport(companyId, allResults){
             if(companyResult.c_CompanyID === companyId){
                 var onePeriodReport = {};
                 
+                onePeriodReport.period = 'Quarter ' + onePeriodResult.period;
                 onePeriodReport.manufacturerSalesValue = companyResult.c_FactorySalesValue;
                 onePeriodReport.costOfGoodsSold = -companyResult.c_CostOfGoodsSold;
                 onePeriodReport.inventoryHoldingCost = -companyResult.c_InventoryHoldingCost;
