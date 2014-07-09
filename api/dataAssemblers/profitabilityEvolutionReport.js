@@ -16,16 +16,17 @@ exports.getProfitabilityEvolutionReport = function(allResults){
                 SKU: []
             });
         }
-    })
+    });
 
     allCompanyReport.forEach(function(companyReport){
         companyReport.SKU = generateSKUReport(companyReport.companyId, allResults);
         companyReport.brand = generateBrandReport(companyReport.companyId, allResults);
         companyReport.global = generateGlobalReport(companyReport.companyId, allResults);
-    })
+    });
 
     return allCompanyReport;
-}
+
+};
 
 function generateSKUReport(companyId, allResults){
     if(allResults === undefined) throw new Error("Invalid parameter allResult.");
@@ -41,7 +42,7 @@ function generateSKUReport(companyId, allResults){
                 });
             }
         }
-    })
+    });
 
     allSKUReport.forEach(function(SKUReport){
         allResults.forEach(function(onePeriodResult){
@@ -76,7 +77,7 @@ function generateSKUReport(companyId, allResults){
                     onePeriodReport.exceptionalCostsProfits = SKU.u_CurrentExceptionalCostProfit;
                     onePeriodReport.taxes = -SKU.u_Taxes;
                     onePeriodReport.netProfit = SKU.u_NetProfit;
-                    onePeriodReport.surchargeForSuplementaryInvestmentBudget = -SKU.u_CurrentSurcharge;
+                    onePeriodReport.surchargeForSupplementaryInvestmentBudget = -SKU.u_CurrentSurcharge;
                     onePeriodReport.netResult = -SKU.u_NetResult;
                     onePeriodReport.shareInBrandTotalSalesValue = SKU.u_ShareInBrandSalesValue * 100;
                     onePeriodReport.shareInBrandGrossProfitLosses = SKU.u_ShareInBrandGrossProfit * 100;
@@ -163,7 +164,7 @@ function generateBrandReport(companyId, allResults){
                     onePeriodReport.exceptionalCostsProfits = brandResult.b_CurrentExceptionalCostProfit;
                     onePeriodReport.taxes = -brandResult.b_Taxes;
                     onePeriodReport.netProfit = brandResult.b_NetProfit;
-                    onePeriodReport.surchargeForSuplementaryInvestmentBudget = -brandResult.b_CurrentSurcharge;
+                    onePeriodReport.surchargeForSupplementaryInvestmentBudget = -brandResult.b_CurrentSurcharge;
                     onePeriodReport.netResult = -brandResult.b_NetResult;
 
                     onePeriodReport.shareInCompanyTotalSalesValue = brandResult.b_ShareInCompanySalesValue * 100;
@@ -252,7 +253,7 @@ function generateGlobalReport(companyId, allResults){
                 onePeriodReport.exceptionalCostsProfits = companyResult.c_CurrentExceptionalCostProfit;
                 onePeriodReport.taxes = -companyResult.c_Taxes;
                 onePeriodReport.netProfit = companyResult.c_NetProfit;
-                onePeriodReport.surchargeForSuplementaryInvestmentBudget = -companyResult.c_CurrentSurcharge;
+                onePeriodReport.surchargeForSupplementaryInvestmentBudget = -companyResult.c_CurrentSurcharge;
                 onePeriodReport.netResult = -companyResult.c_NetResult;
 
                 onePeriodReport.grossProfitMargin = companyResult.c_GrossProfitMargin * 100;

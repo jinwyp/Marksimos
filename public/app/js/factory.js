@@ -647,7 +647,7 @@ app.factory('tableReport',function($http){
         // Table Report B2
         profitabilityEvolution : function(){
             return $http.get(apiPath + 'report/profitability_evolution').then(function(result){
-                console.log(result.data);
+//                console.log(result.data);
 
                 return result.data;
             }).catch(function(err){
