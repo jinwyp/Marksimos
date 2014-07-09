@@ -2,18 +2,20 @@ var express = require('express');
 var userModel = require('../models/user.js');
 var utility = require('../utility.js');
 var logger = require('../../logger.js');
+var util = require('util');
 
 exports.register = function(req, res, next){
+    req.checkBody('email', 'Invalid email').notEmpty().isEmail();
+    req.assert('password', '6 to 20 characters required').len(6, 20);
+
+    var errors = req.validationErrors();
+    if(errors){
+        return res.send(400, {message: util.inspect(errors)});
+    }
+
     var email = req.body.email;
     var password = req.body.password;
-
-    if(!email){
-        return res.send(400, {message: 'email is required.'});
-    }
-
-    if(!password){
-        return res.send(400, {message: 'password is required.'})
-    }
+    password = utility.hashPassword(password);
 
     var phoneNum = req.body.phoneNum || '';
     var country = req.body.country || '';
@@ -97,7 +99,37 @@ exports.activate = function(req, res, next){
 }
 
 exports.login = function(req, res, next){
+    req.checkBody('email', 'Invalid email.').notEmpty().isEmail();
+    req.assert('password', '6 to 20 characters required').len(6, 20);
 
+    var errors = req.validationErrors();
+    if(errors){
+        return res.send(400, {message: util.inspect(errors)});
+    }
+
+    var email = req.body.email;
+    var password = req.body.password;
+
+    userModel.findByEmail(email)
+    .then(function(user){
+        if(!user){
+            return res.send(400, {message: 'User does not exist.'});
+        }
+
+        if(!user.isActive){
+            return res.send(400, {message: 'User is not activated.'})
+        }
+
+        if(!utility.comparePassword(password, user.password)){
+            return res.send(400, {message: 'Email or password is wrong.'})
+        }
+
+        return res.send({message: 'Login success.'});
+    })
+    .fail(function(err){
+        logger.error(err);
+        return res.send(500, {message: 'Login failed.'});
+    })
 }
 
 

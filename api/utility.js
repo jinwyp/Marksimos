@@ -6,6 +6,8 @@ var appconfig = require('../appconfig.js');
 var nodemailer = require('nodemailer');
 var uuid = require('node-uuid');
 var Q = require('q');
+var bcrypt = require('bcrypt-nodejs');
+
 
 exports.setSize = function(num){
     return num;
@@ -166,6 +168,14 @@ exports.sendActivateEmail = function(toEmail, activateToken){
     body += "<a href='" + linkText + "'>"+ linkText +"</a>";
 
     return sendMail(toEmail,'HCD activate email', body);
+}
+
+exports.hashPassword = function(password){
+    return bcrypt.hashSync(password);
+}
+
+exports.comparePassword = function(password, hashedPassword){
+    return bcrypt.compareSync(password, hashedPassword);
 }
 
 /**
