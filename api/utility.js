@@ -170,14 +170,6 @@ exports.sendActivateEmail = function(toEmail, activateToken){
     return sendMail(toEmail,'HCD activate email', body);
 }
 
-exports.hashPassword = function(password){
-    return bcrypt.hashSync(password);
-}
-
-exports.comparePassword = function(password, hashedPassword){
-    return bcrypt.compareSync(password, hashedPassword);
-}
-
 /**
  * @param {String} subject：发送的主题
  * @param {String} html：发送的 html 内容
@@ -209,6 +201,16 @@ function sendMail(toEmail, subject, html) {
 
     return deferred.promise;
 };
+
+exports.hashPassword = function(password){
+    return bcrypt.hashSync(password);
+};
+
+exports.comparePassword = function(password, hashedPassword){
+    return bcrypt.compareSync(password, hashedPassword);
+};
+
+
 
 
 
