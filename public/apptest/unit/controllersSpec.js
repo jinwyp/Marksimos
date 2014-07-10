@@ -49,7 +49,9 @@ describe('chartController', function(){
     it('Initially scope.data.tableA2FinancialData has default value ', function() {
         expect(scope.data.tableA2FinancialData.currentPeriod.period).toEqual("Select Period");
     });
-
+    it('Initially scope.data.tableA4ProfitabilityEvolution has default value ', function() {
+        expect(scope.data.tableA4ProfitabilityEvolution.title).toEqual("Profitability Evolution");
+    });
 
 
 

@@ -11,8 +11,8 @@ var marksimosapp = angular.module('marksimos', ['pascalprecht.translate', 'angul
 marksimosapp.controller('chartController', function($scope,  $timeout, $http, chartReport, tableReport, company) {
 
     $scope.css = {
-        menu : 'Home',
-        chartMenu : 'A1',
+        menu : 'Report',
+        chartMenu : 'A4',
         tableReportTab : 'SKU',
         additionalBudget : true,
         currentBrandId : 0,
@@ -67,6 +67,13 @@ marksimosapp.controller('chartController', function($scope,  $timeout, $http, ch
             },
             currentBrand : {},
             title : 'Financial Report'
+        },
+        tableA4ProfitabilityEvolution : {
+            allData : [],
+            currentSKU : {},
+            currentBrand : {},
+            currentGlobal : {},
+            title : 'Profitability Evolution'
         },
 
         chartA31InventoryReport : {
@@ -484,10 +491,12 @@ marksimosapp.controller('chartController', function($scope,  $timeout, $http, ch
     };
     $scope.switchTableReportSKU = function(SKU){
         $scope.data.tableA1CompanyStatus.currentSKU = SKU;
+        $scope.data.tableA4ProfitabilityEvolution.currentSKU = SKU;
     };
     $scope.switchTableReportBrand = function(brand){
         $scope.data.tableA1CompanyStatus.currentBrand = brand;
         $scope.data.tableA2FinancialData.currentBrand = brand;
+        $scope.data.tableA4ProfitabilityEvolution.currentBrand = brand;
     };
 
 
@@ -500,6 +509,14 @@ marksimosapp.controller('chartController', function($scope,  $timeout, $http, ch
         $scope.data.tableA2FinancialData.currentBrand = $scope.data.tableA2FinancialData.currentPeriod.brands[0];
     });
 
+    /********************  Table Report A4  ********************/
+    tableReport.profitabilityEvolution().then(function(data, status, headers, config){
+//        console.log(data);
+        $scope.data.tableA4ProfitabilityEvolution.allData = data[0];
+        $scope.data.tableA4ProfitabilityEvolution.currentSKU = $scope.data.tableA4ProfitabilityEvolution.allData.SKU[0];
+        $scope.data.tableA4ProfitabilityEvolution.currentBrand = $scope.data.tableA4ProfitabilityEvolution.allData.brand[0];
+        $scope.data.tableA4ProfitabilityEvolution.currentGlobal = $scope.data.tableA4ProfitabilityEvolution.allData.global;
+    });
 
 
 

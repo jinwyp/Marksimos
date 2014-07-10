@@ -10,6 +10,7 @@ module.exports = function(config){
 //            'libs/angular-route/angular-route.js',
             'libs/angular-mocks/angular-mocks.js',
             'libs/angular-charts/dist/angular-charts.js',
+            'libs/angular-translate/angular-translate.js',
             'libs/angularjs-nvd3-directives/dist/angularjs-nvd3-directives.js',
             'app/js/**/*.js',
             'apptest/unit/**/*.js'
