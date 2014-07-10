@@ -96,16 +96,17 @@
 
             <div class="row">
                 <div class="col-md-3 col-md-offset-1">
-                    <div class="panel panel-primary user_chart_list">
+                    <div class="panel panel-primary user_chart_list user_chart_list_bg2">
                         <div class="panel-heading">
                             <h3 class="panel-title">Your Company</h3>
                         </div>
 
                         <!-- List group -->
                         <ul class="list-group">
-                            <li class="list-group-item" ng-click="clickChartMenu('A1')">Company Status</li>
-                            <li class="list-group-item list-group-item-active" ng-click="clickChartMenu('A2')">Financial Data</li>
-                            <li class="list-group-item" ng-click="clickChartMenu('A3')">Inventory Report</li>
+                            <li class="list-group-item" ng-click="clickChartMenu('A1')">{{'ReportMenuCompanyStatus' | translate}}</li>
+                            <li class="list-group-item list-group-item-active" ng-click="clickChartMenu('A2')">{{'ReportMenuFinancialData' | translate}}</li>
+                            <li class="list-group-item" ng-click="clickChartMenu('A3')">{{'ReportMenuInventoryReport' | translate}}</li>
+                            <li class="list-group-item list-group-item-active" ng-click="clickChartMenu('A4')">{{'ReportMenuProfitabilityEvolution' | translate}}</li>
                         </ul>
                     </div>
                 </div>
@@ -118,11 +119,10 @@
 
                         <!-- List group -->
                         <ul class="list-group">
-                            <li class="list-group-item" ng-click="clickChartMenu('B1')">Market Share</li>
-                            <li class="list-group-item list-group-item-active" ng-click="clickChartMenu('B2')">Competitor Information</li>
-                            <li class="list-group-item" ng-click="clickChartMenu('B3')">Investment & Profits</li>
-                            <li class="list-group-item list-group-item-active" ng-click="clickChartMenu('B4')">Market Sales & Inventory</li>
-
+                            <li class="list-group-item" ng-click="clickChartMenu('B1')">{{'ReportMenuMarketShare' | translate}}</li>
+                            <li class="list-group-item list-group-item-active" ng-click="clickChartMenu('B2')">{{'ReportMenuCompetitorInformation' | translate}}</li>
+                            <li class="list-group-item" ng-click="clickChartMenu('B3')">{{'ReportMenuInvestmentProfits' | translate}}</li>
+                            <li class="list-group-item list-group-item-active" ng-click="clickChartMenu('B4')">{{'ReportMenuMarketSalesInventory' | translate}}</li>
                         </ul>
                     </div>
                 </div>
@@ -135,11 +135,12 @@
 
                         <!-- List group -->
                         <ul class="list-group">
-                            <li class="list-group-item" ng-click="clickChartMenu('C1')">Segment Leader Top5</li>
-                            <li class="list-group-item list-group-item-active" ng-click="clickChartMenu('C2')">Perception Map</li>
-                            <li class="list-group-item" ng-click="clickChartMenu('C3')">Segment Distributions</li>
-                            <li class="list-group-item list-group-item-active" ng-click="clickChartMenu('C4')">Market Evolution</li>
-                            <li class="list-group-item" ng-click="clickChartMenu('C5')">Market Indicator</li>
+                            <li class="list-group-item" ng-click="clickChartMenu('C1')">{{'ReportMenuSegmentLeaderTop5' | translate}}</li>
+                            <li class="list-group-item list-group-item-active" ng-click="clickChartMenu('C2')">{{'ReportMenuPerceptionMap' | translate}}</li>
+                            <li class="list-group-item" ng-click="clickChartMenu('C3')">{{'ReportMenuSegmentDistributions' | translate}}</li>
+                            <li class="list-group-item list-group-item-active" ng-click="clickChartMenu('C4')">{{'ReportMenuMarketEvolution' | translate}}</li>
+                            <li class="list-group-item" ng-click="clickChartMenu('C5')">{{'ReportMenuMarketTrends' | translate}}</li>
+                            <li class="list-group-item list-group-item-active" ng-click="clickChartMenu('C6')">{{'ReportMenuMarketIndicator' | translate}}</li>
                         </ul>
                     </div>
                 </div>
