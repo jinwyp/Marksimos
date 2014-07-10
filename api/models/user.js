@@ -10,7 +10,24 @@ var userSchema = new Schema({
     city: String,
     activateToken: String,
     isActive: {type: Boolean, default: false},
-    password: String
+    isDisabled: {type: Boolean, default: false},
+    password: String,
+    
+    role: {type: Number, default: 4}, //1 admin, 2 distributor, 3 facilitator, 4 students
+    numOfLicense: {type: Number, default: 0},
+    distributorId: String,
+    
+    //student fileds
+    gender: Number,
+    occupation: Number,
+    name: String,
+    firstName: String,
+    lastName: String,
+    univercity: String,
+    organization: String,
+    highestEducationalDegree: String,
+
+    facilitatorId: String
 });
 
 var User = mongoose.model("User", userSchema);

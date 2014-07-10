@@ -3,6 +3,7 @@ var userModel = require('../models/user.js');
 var utility = require('../utility.js');
 var logger = require('../../logger.js');
 var util = require('util');
+var sessionOperation = require('../../common/sessionOperation.js');
 
 exports.register = function(req, res, next){
     req.checkBody('email', 'Invalid email').notEmpty().isEmail();
@@ -124,6 +125,8 @@ exports.login = function(req, res, next){
             return res.send(400, {message: 'Email or password is wrong.'})
         }
 
+        sessionOperation.setLoginStatus(req, true);
+
         return res.send({message: 'Login success.'});
     })
     .fail(function(err){
@@ -131,6 +134,8 @@ exports.login = function(req, res, next){
         return res.send(500, {message: 'Login failed.'});
     })
 }
+
+
 
 
 

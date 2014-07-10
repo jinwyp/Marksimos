@@ -7,6 +7,7 @@ var bodyParser = require('body-parser');
 var mongoose = require('mongoose');
 var session = require('cookie-session');
 var expressValidator = require('express-validator');
+var sessionOperation = require('./common/sessionOperation.js');
 
 
 var app = express();
@@ -14,7 +15,6 @@ var app = express();
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
-
 
 
 app.use(favicon());
@@ -31,6 +31,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 //initialize session data
 app.use(function(req, res, next){
+    sessionOperation.setLoginStatus(req, true);
     req.session.userId = 'testid';
     req.session.userRole = 2; //1: player, 2: facilitator, 3: distributor, 4: admin
     req.session.seminarId = 'TTT';
@@ -47,25 +48,12 @@ app.use(function(req, res, next){
     next();
 });
 
-app.get('/test', function(req, res, next){
-    var chartDataModel = require('./api/models/chartData.js');
-    chartDataModel.getChartData('TTT')
-    .then(function(allCharts){
-        test1(allCharts);
-        console.log(allCharts);
-    })
-    .fail(function(err){
-        console.log(err);
-    }).done();
-    res.send('123');
+// app.get('/test', function(req, res, next){
+//     res.send('/test');
+// });
 
-    function test1(allCharts){
-        delete allCharts.seminarId;
-        allCharts.seminarId = allCharts;
-    }
-});
-
-require('./api/routes.js')(app);
+//require('./api/routes.js')(app);
+app.use(require('./api/routes.js'));
 require('./routes.js')(app);
 
 /// catch 404 and forwarding to error handler
