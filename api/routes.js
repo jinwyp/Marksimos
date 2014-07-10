@@ -4,11 +4,14 @@ var reportController = require('./controllers/report.js');
 var initController = require('./controllers/init.js');
 var decisionPageController = require('./controllers/decisionPage.js');
 var userController = require('./controllers/user.js');
+var adimnController = require('./controllers/admin.js');
+
 var util = require('util');
 var express = require('express');
 var sessionOperation = require('../common/sessionOperation.js');
 var authMiddleware = require('../middleware/auth.js');
 
+var config = require('./config.js');
 
 var apiRouter = express.Router();
 
@@ -56,6 +59,17 @@ apiRouter.get('/api/spending_details', decisionPageController.getSpendingDetails
 apiRouter.get('/api/future_projection_calculator/:sku_id', decisionPageController.getSKUInfo);
 apiRouter.get('/api/company/otherinfo', decisionPageController.getOtherinfo);
 
+
+apiRouter.post('/api/distributor', needAdmin, adimnController.addDistributor);
+
+
+function needAdmin(req, res, next){
+    if(sessionOperation.getUserRole(req) === config.role.admin){
+        next();
+    }else{
+        res.send(400, {message: 'Only admin can perform this action.'});
+    }
+}
 
 module.exports = apiRouter;
    

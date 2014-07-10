@@ -3,6 +3,13 @@ module.exports = {
 
     passwordSalt: 'hcd',
 
+    role: {
+        admin: 1,
+        distributor: 2,
+        facilitator: 3,
+        student: 4
+    },
+
     mail: {
         host: 'mail.hcdglobal.com',
         user: 'test@hcdglobal.com',
