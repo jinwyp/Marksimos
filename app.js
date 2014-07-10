@@ -47,23 +47,9 @@ app.use(function(req, res, next){
     next();
 });
 
-app.get('/test', function(req, res, next){
-    var chartDataModel = require('./api/models/chartData.js');
-    chartDataModel.getChartData('TTT')
-    .then(function(allCharts){
-        test1(allCharts);
-        console.log(allCharts);
-    })
-    .fail(function(err){
-        console.log(err);
-    }).done();
-    res.send('123');
-
-    function test1(allCharts){
-        delete allCharts.seminarId;
-        allCharts.seminarId = allCharts;
-    }
-});
+// app.get('/test', function(req, res, next){
+//     res.send('/test');
+// });
 
 require('./api/routes.js')(app);
 require('./routes.js')(app);
