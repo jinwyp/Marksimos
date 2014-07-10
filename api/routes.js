@@ -7,6 +7,7 @@ var userController = require('./controllers/user.js');
 var util = require('util');
 var express = require('express');
 var sessionOperation = require('../common/sessionOperation.js');
+var authMiddleware = require('../middleware/auth.js');
 
 
 var apiRouter = express.Router();
