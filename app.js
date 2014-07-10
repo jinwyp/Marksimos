@@ -31,7 +31,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 //initialize session data
 app.use(function(req, res, next){
-    sessionOperation.setLoginStatus(req, false);
+    sessionOperation.setLoginStatus(req, true);
     req.session.userId = 'testid';
     req.session.userRole = 2; //1: player, 2: facilitator, 3: distributor, 4: admin
     req.session.seminarId = 'TTT';

@@ -14,6 +14,7 @@ var apiRouter = express.Router();
 apiRouter.post('/api/register', userController.register);
 apiRouter.post('/api/login', userController.login);
 
+//all the API below need req.session.loginStatus to be true
 apiRouter.use(function(req, res, next){
     if(sessionOperation.getLoginStatus(req)){
         next();

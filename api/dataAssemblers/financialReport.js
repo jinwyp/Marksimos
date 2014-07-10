@@ -80,7 +80,7 @@ exports.getFinancialReport = function(allResults){
                     SKUName: 'Brand Total',
                     salesValue: brandResult.b_FactorySalesValue,
                     changeVersusPreviousPeriodSalesValue: brandResult.b_FactorySalesValueChange * 100,
-                    shareInBrandTotalSalesValue: brandResult.b_ShareInBrandSalesValue,
+                    shareInBrandTotalSalesValue: 0,
                     costOfGoodsSold: -brandResult.b_CostOfGoodsSold,
                     obsoleteGoodsCost: -brandResult.b_ObsoleteGoodsCost,
                     discontinuedGoodsCost: -brandResult.b_DroppedGoodsCost,
@@ -90,7 +90,7 @@ exports.getFinancialReport = function(allResults){
                     grossProfit: brandResult.b_GrossProfit,
                     changeVersusPreviousPeriodGrossProfit: brandResult.b_GrossProfitChange * 100,
                     grossProfitMargin: brandResult.b_GrossProfitMargin * 100,
-                    shareInBrandGrossProfitLosses: brandResult.b_ShareInBrandGrossProfit * 100,
+                    shareInBrandGrossProfitLosses: 0,
                     advertising: -brandResult.b_Advertising,
                     consumerPromotionsCost: -brandResult.b_ConsumerPromotions,
                     tradeInvestment: -brandResult.b_TradeExpenses,
@@ -106,7 +106,7 @@ exports.getFinancialReport = function(allResults){
                     operatingProfit: brandResult.b_OperatingProfit,
                     changeVersusPreviousPeriodOperatingProfit: brandResult.b_OperatingProfitChange * 100,
                     operatingProfitMargin: brandResult.b_OperatingProfitMargin * 100,
-                    shareInBrandOperatingProfitLosses: brandResult.b_ShareInBrandOperatingProfit * 100,
+                    shareInBrandOperatingProfitLosses: 0,
                     interests: brandResult.b_Interests,
                     taxes: -brandResult.b_Taxes,
                     exceptionalCostsProfits: brandResult.b_CurrentExceptionalCostProfit,
@@ -114,7 +114,7 @@ exports.getFinancialReport = function(allResults){
                     netProfit: brandResult.b_NetProfit,
                     changeVersusPreviousPeriodNetProfit: brandResult.b_NetProfitChange * 100,
                     netProfitMargin: brandResult.b_NetProfitMargin * 100,
-                    shareInBrandNetProfitLosses: brandResult.b_ShareInBrandNetProfit * 100,
+                    shareInBrandNetProfitLosses: 0,
                     productionCost: brandResult.b_ProductionCost,
                     inventoryValue: brandResult.b_FactoryStocks[consts.StocksMaxTotal].s_Volume * brandResult.b_FactoryStocks[consts.StocksMaxTotal].s_UnitCost
                 })
@@ -176,53 +176,55 @@ exports.getFinancialReport = function(allResults){
             })
             
             onePeriodResult.p_Companies.forEach(function(companyResult){
-                reportByBrand.data.push({
-                    brandName: 'Company Total',
-                    salesValue: companyResult.c_FactorySalesValue,
-                    changeVersusPreviousPeriodSalesValue: companyResult.c_FactorySalesValueChange * 100,
-                    shareInCompanyTotalSalesValue: 0,
+                if(companyReport.companyId === companyResult.c_CompanyID){
+                    reportByBrand.data.push({
+                        brandName: 'Company Total',
+                        salesValue: companyResult.c_FactorySalesValue,
+                        changeVersusPreviousPeriodSalesValue: companyResult.c_FactorySalesValueChange * 100,
+                        shareInCompanyTotalSalesValue: 0,
 
-                    costOfGoodsSold: -companyResult.c_CostOfGoodsSold,
-                    obsoleteGoodsCost: -companyResult.c_ObsoleteGoodsCost,
-                    discontinuedGoodsCost: -companyResult.c_DroppedGoodsCost,
-                    inventoryHoldingCost: -companyResult.c_InventoryHoldingCost,
-                    totalMaterialCosts: -companyResult.c_MaterialCosts,
+                        costOfGoodsSold: -companyResult.c_CostOfGoodsSold,
+                        obsoleteGoodsCost: -companyResult.c_ObsoleteGoodsCost,
+                        discontinuedGoodsCost: -companyResult.c_DroppedGoodsCost,
+                        inventoryHoldingCost: -companyResult.c_InventoryHoldingCost,
+                        totalMaterialCosts: -companyResult.c_MaterialCosts,
 
-                    grossProfit: companyResult.c_GrossProfit,
-                    changeVersusPreviousPeriodGrossProfit: companyResult.c_GrossProfitChange * 100,
-                    grossProfitMargin: companyResult.c_GrossProfitMargin * 100,
-                    shareInCompanyGrossProfitLosses: 0,
+                        grossProfit: companyResult.c_GrossProfit,
+                        changeVersusPreviousPeriodGrossProfit: companyResult.c_GrossProfitChange * 100,
+                        grossProfitMargin: companyResult.c_GrossProfitMargin * 100,
+                        shareInCompanyGrossProfitLosses: 0,
 
-                    advertising: -companyResult.c_Advertising,
-                    consumerPromotionsCost: -companyResult.c_ConsumerPromotions,
-                    tradeInvestment: -companyResult.c_TradeExpenses,
-                    salesForceCost: -companyResult.c_SalesForceCost,
-                    additionalTradeMarginCost: -companyResult.c_AdditionalMarginValue,
-                    volumeDiscountCost: -companyResult.c_VolumeDiscountCost,
-                    totalTradeAndMarketingExpenses: -companyResult.c_TotalTradeAndMarketing,
-                    tradeAndMarketingExpensesAsAPercentageOfSales: companyResult.c_TradeAndMrktngSalesRatio * 100,
-                    shareOfTradeAndMarketingExpensesInBrandTotal: 0,
+                        advertising: -companyResult.c_Advertising,
+                        consumerPromotionsCost: -companyResult.c_ConsumerPromotions,
+                        tradeInvestment: -companyResult.c_TradeExpenses,
+                        salesForceCost: -companyResult.c_SalesForceCost,
+                        additionalTradeMarginCost: -companyResult.c_AdditionalMarginValue,
+                        volumeDiscountCost: -companyResult.c_VolumeDiscountCost,
+                        totalTradeAndMarketingExpenses: -companyResult.c_TotalTradeAndMarketing,
+                        tradeAndMarketingExpensesAsAPercentageOfSales: companyResult.c_TradeAndMrktngSalesRatio * 100,
+                        shareOfTradeAndMarketingExpensesInBrandTotal: 0,
 
-                    generalExpenses: -companyResult.c_GeneralExpenses,
-                    amortisation: -companyResult.c_Amortisation,
+                        generalExpenses: -companyResult.c_GeneralExpenses,
+                        amortisation: -companyResult.c_Amortisation,
 
-                    operatingProfit: companyResult.c_OperatingProfit,
-                    changeVersusPreviousPeriodOperatingProfit: companyResult.c_OperatingProfitChange * 100,
-                    operatingProfitMargin: companyResult.c_OperatingProfitMargin * 100,
-                    shareInBrandOperatingProfitLosses: 0,
+                        operatingProfit: companyResult.c_OperatingProfit,
+                        changeVersusPreviousPeriodOperatingProfit: companyResult.c_OperatingProfitChange * 100,
+                        operatingProfitMargin: companyResult.c_OperatingProfitMargin * 100,
+                        shareInBrandOperatingProfitLosses: 0,
 
-                    interests: companyResult.c_Interests,
-                    taxes: -companyResult.c_Taxes,
-                    exceptionalCostsProfits: companyResult.c_CurrentExceptionalCostProfit,
+                        interests: companyResult.c_Interests,
+                        taxes: -companyResult.c_Taxes,
+                        exceptionalCostsProfits: companyResult.c_CurrentExceptionalCostProfit,
 
-                    netProfit: companyResult.c_NetProfit,
-                    
-                    changeVersusPreviousPeriodNetProfit: companyResult.c_NetProfitChange * 100,
-                    netProfitMargin: companyResult.c_NetProfitMargin * 100,
-                    shareInBrandNetProfitLosses: companyResult.c_ShareInCompanyNetProfit * 100,
-                    productionCost: companyResult.c_ProductionCost,
-                    inventoryValue: companyResult.c_FactoryStocks[consts.StocksMaxTotal].s_Volume * companyResult.c_FactoryStocks[consts.StocksMaxTotal].s_UnitCost
-                });
+                        netProfit: companyResult.c_NetProfit,
+                        
+                        changeVersusPreviousPeriodNetProfit: companyResult.c_NetProfitChange * 100,
+                        netProfitMargin: companyResult.c_NetProfitMargin * 100,
+                        shareInBrandNetProfitLosses: 0,
+                        productionCost: companyResult.c_ProductionCost,
+                        inventoryValue: companyResult.c_FactoryStocks[consts.StocksMaxTotal].s_Volume * companyResult.c_FactoryStocks[consts.StocksMaxTotal].s_UnitCost
+                    });
+                }
             })
 
             periodReport.allBrands = reportByBrand;
