@@ -5,43 +5,55 @@ var initController = require('./controllers/init.js');
 var decisionPageController = require('./controllers/decisionPage.js');
 var userController = require('./controllers/user.js');
 var util = require('util');
+var express = require('express');
+var sessionOperation = require('../common/sessionOperation.js');
 
 
-module.exports = function(app){
-    app.post('/api/register', userController.register);
-    app.post('/api/login', userController.login);
+var apiRouter = express.Router();
 
-    app.get('/api/init', initController.init);
+apiRouter.post('/api/register', userController.register);
+apiRouter.post('/api/login', userController.login);
 
-    app.get('/api/submitdecision', decisionController.submitDecision);
+apiRouter.use(function(req, res, next){
+    if(sessionOperation.getLoginStatus(req)){
+        next();
+    }else{
+        res.send(400, {message: 'Login required.'});
+    }
+})
 
-    //chart
-    app.get('/api/chart/:chart_name', chartController.getChart);
-
-    //report
-    app.get('/api/report/:report_name', reportController.getReport);
-    app.get('/api/adminreport/:report_name', reportController.getReport);
-
-    //make decision page
-    app.put('/api/sku/decision', decisionController.updateSKUDecision);
-    app.post('/api/sku/decision', decisionController.addSKU);
-    app.delete('/api/sku/decision', decisionController.deleteSKU);
-
-    app.put('/api/brand/decision', decisionController.updateBrandDecision);
-    app.post('/api/brand/decision', decisionController.addBrand);
-    app.delete('/api/brand/decision', decisionController.deleteBrand);
-
-    app.put('/api/company/decision', decisionController.updateCompanyDecision);
+//report
+apiRouter.get('/api/report/:report_name', reportController.getReport);
+apiRouter.get('/api/adminreport/:report_name', reportController.getReport);
 
 
-    app.get('/api/company', decisionPageController.getDecision);
-    app.get('/api/product_portfolio', decisionPageController.getProductPortfolio);
-    app.get('/api/spending_details', decisionPageController.getSpendingDetails);
-    app.get('/api/future_projection_calculator/:sku_id', decisionPageController.getSKUInfo);
-    app.get('/api/company/otherinfo', decisionPageController.getOtherinfo);
+apiRouter.get('/api/init', initController.init);
 
-    //app.get('/api/');
-    // app.get('*', function(req, res){
-    //     res.send("404 page");
-    // }) 
-};
+apiRouter.get('/api/submitdecision', decisionController.submitDecision);
+
+//chart
+apiRouter.get('/api/chart/:chart_name', chartController.getChart);
+
+
+
+//make decision page
+apiRouter.put('/api/sku/decision', decisionController.updateSKUDecision);
+apiRouter.post('/api/sku/decision', decisionController.addSKU);
+apiRouter.delete('/api/sku/decision', decisionController.deleteSKU);
+
+apiRouter.put('/api/brand/decision', decisionController.updateBrandDecision);
+apiRouter.post('/api/brand/decision', decisionController.addBrand);
+apiRouter.delete('/api/brand/decision', decisionController.deleteBrand);
+
+apiRouter.put('/api/company/decision', decisionController.updateCompanyDecision);
+
+
+apiRouter.get('/api/company', decisionPageController.getDecision);
+apiRouter.get('/api/product_portfolio', decisionPageController.getProductPortfolio);
+apiRouter.get('/api/spending_details', decisionPageController.getSpendingDetails);
+apiRouter.get('/api/future_projection_calculator/:sku_id', decisionPageController.getSKUInfo);
+apiRouter.get('/api/company/otherinfo', decisionPageController.getOtherinfo);
+
+
+module.exports = apiRouter;
+   

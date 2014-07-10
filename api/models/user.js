@@ -27,7 +27,7 @@ var userSchema = new Schema({
     organization: String,
     highestEducationalDegree: String,
 
-    facilitatorId, String,
+    facilitatorId: String
 });
 
 var User = mongoose.model("User", userSchema);

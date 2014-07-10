@@ -7,6 +7,7 @@ var bodyParser = require('body-parser');
 var mongoose = require('mongoose');
 var session = require('cookie-session');
 var expressValidator = require('express-validator');
+var sessionOperation = require('./common/sessionOperation.js');
 
 
 var app = express();
@@ -14,7 +15,6 @@ var app = express();
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
-
 
 
 app.use(favicon());
@@ -31,6 +31,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 //initialize session data
 app.use(function(req, res, next){
+    sessionOperation.setLoginStatus(req, false);
     req.session.userId = 'testid';
     req.session.userRole = 2; //1: player, 2: facilitator, 3: distributor, 4: admin
     req.session.seminarId = 'TTT';
@@ -51,7 +52,8 @@ app.use(function(req, res, next){
 //     res.send('/test');
 // });
 
-require('./api/routes.js')(app);
+//require('./api/routes.js')(app);
+app.use(require('./api/routes.js'));
 require('./routes.js')(app);
 
 /// catch 404 and forwarding to error handler
