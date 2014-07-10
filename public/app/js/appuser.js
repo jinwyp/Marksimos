@@ -12,7 +12,7 @@ marksimosapp.controller('chartController', function($scope,  $timeout, $http, ch
 
     $scope.css = {
         menu : 'Report',
-        chartMenu : 'A4',
+        chartMenu : 'C3',
         tableReportTab : 'SKU',
         additionalBudget : true,
         currentBrandId : 0,
@@ -75,6 +75,21 @@ marksimosapp.controller('chartController', function($scope,  $timeout, $http, ch
             currentGlobal : {},
             title : 'Profitability Evolution'
         },
+
+        tableC3SegmentDistribution : {
+            allData : [],
+            title : 'Segment Distribution',
+            currentTable : 1
+//            marketShareVolume : [],
+//            marketShareValue : [],
+//            marketSaleVolume : [],
+//            marketSaleValue : [],
+//            averageNetMarketPriceStdPack : [],
+//            valuePerception : [],
+//            imagePerception : []
+        },
+
+
 
         chartA31InventoryReport : {
             data : [],
@@ -518,10 +533,14 @@ marksimosapp.controller('chartController', function($scope,  $timeout, $http, ch
         $scope.data.tableA4ProfitabilityEvolution.currentGlobal = $scope.data.tableA4ProfitabilityEvolution.allData.global;
     });
 
-
-
-
-
+    /********************  Table Report C3  ********************/
+    tableReport.segmentDistribution().then(function(data, status, headers, config){
+//        console.log(data);
+        $scope.data.tableC3SegmentDistribution.allData = data;
+    });
+    $scope.switchTableReport = function(report){
+        $scope.data.tableC3SegmentDistribution.currentTable = report;
+    };
 
 
 

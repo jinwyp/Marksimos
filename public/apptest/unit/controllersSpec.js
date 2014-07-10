@@ -52,6 +52,9 @@ describe('chartController', function(){
     it('Initially scope.data.tableA4ProfitabilityEvolution has default value ', function() {
         expect(scope.data.tableA4ProfitabilityEvolution.title).toEqual("Profitability Evolution");
     });
+    it('Initially scope.data.tableC3SegmentDistribution has default value ', function() {
+        expect(scope.data.tableC3SegmentDistribution.currentTable).toEqual(1);
+    });
 
 
 

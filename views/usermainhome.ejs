@@ -2189,6 +2189,41 @@
         </div>
 
 
+        <div class="col-md-10 user_chart_right" ng-if="css.chartMenu=='C3'">
+            <div class="row">
+                <div class="col-md-12 user_table_single">
+                    <h5>{{data.tableC3SegmentDistribution.title}}
+                    </h5>
+
+                    <div class="table_report" ng-if="css.tableReportTab=='SKU'">
+
+                        <ul class="nav nav-pills">
+                            <li ng-class="{'active': data.tableC3SegmentDistribution.currentTable==1}"><a href="" ng-click="switchTableReport(1)">Market Share (value %)</a></li>
+                            <li ng-class="{'active': data.tableC3SegmentDistribution.currentTable==2}"><a href="" ng-click="switchTableReport(2)">Market Share (volume %)</a></li>
+                            <li ng-class="{'active': data.tableC3SegmentDistribution.currentTable==3}"><a href="" ng-click="switchTableReport(3)">Market Sales Value ($ mln)</a></li>
+                            <li ng-class="{'active': data.tableC3SegmentDistribution.currentTable==4}"><a href="" ng-click="switchTableReport(4)">Market Sales Volume (mln std. packs)</a></li>
+                            <li ng-class="{'active': data.tableC3SegmentDistribution.currentTable==5}"><a href="" ng-click="switchTableReport(5)">Average Net Market Price ($/std. packs)</a></li>
+                            <li ng-class="{'active': data.tableC3SegmentDistribution.currentTable==6}"><a href="" ng-click="switchTableReport(6)">Value Perception</a></li>
+                            <li ng-class="{'active': data.tableC3SegmentDistribution.currentTable==7}"><a href="" ng-click="switchTableReport(7)">Image Perception</a></li>
+                        </ul>
+
+                        <div class="divider_horizontal"></div>
+
+                        <div table-report data="data.tableC3SegmentDistribution.allData.marketShareVolume" unit="%" ng-if="data.tableC3SegmentDistribution.currentTable==1"></div>
+                        <div table-report data="data.tableC3SegmentDistribution.allData.marketShareValue" unit="%" ng-if="data.tableC3SegmentDistribution.currentTable==2"></div>
+                        <div table-report data="data.tableC3SegmentDistribution.allData.marketSaleVolume" unit="" ng-if="data.tableC3SegmentDistribution.currentTable==3"></div>
+                        <div table-report data="data.tableC3SegmentDistribution.allData.marketSaleValue" unit="" ng-if="data.tableC3SegmentDistribution.currentTable==4"></div>
+                        <div table-report data="data.tableC3SegmentDistribution.allData.averageNetMarketPriceStdPack" unit="" ng-if="data.tableC3SegmentDistribution.currentTable==5"></div>
+                        <div table-report data="data.tableC3SegmentDistribution.allData.valuePerception" unit="" ng-if="data.tableC3SegmentDistribution.currentTable==6"></div>
+                        <div table-report data="data.tableC3SegmentDistribution.allData.imagePerception" unit="" ng-if="data.tableC3SegmentDistribution.currentTable==7"></div>
+
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+
         <div class="col-md-10 user_chart_right" ng-if="css.chartMenu=='C4'">
             <div class="row">
                 <div class="col-md-6 user_chart_single chart_2">

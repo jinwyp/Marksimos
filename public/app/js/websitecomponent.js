@@ -38,10 +38,40 @@ app.directive('headerUser', function($translate) {
                 $translate.use(langKey);
             };
 
-
-
         }
     };
 });
 
 
+
+
+
+
+
+
+
+
+app.directive('tableReport', function() {
+    return {
+        scope: {
+            data : '=',
+            unit : '@'
+        },
+        restrict: 'AE',
+        templateUrl: 'app/js/directive/tablereport.html',
+        link: function (scope, element, attrs) {
+            scope.plus = 1;
+
+            if(angular.isUndefined(scope.unit)) {
+                scope.unit = '';
+            }else if (scope.unit === "%"){
+                scope.plus = 100;
+            }
+
+            scope.changeLanguage = function (langKey) {
+                $translate.use(langKey);
+            };
+
+        }
+    };
+});

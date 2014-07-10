@@ -653,6 +653,17 @@ app.factory('tableReport',function($http){
             }).catch(function(err){
                 console.log(err);
             });
+        },
+
+        // Table Report C3
+        segmentDistribution : function(){
+            return $http.get(apiPath + 'report/segment_distribution').then(function(result){
+//                console.log(result.data);
+
+                return result.data;
+            }).catch(function(err){
+                console.log(err);
+            });
         }
     };
 
