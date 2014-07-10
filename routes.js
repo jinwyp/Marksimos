@@ -15,7 +15,7 @@ module.exports = function(app){
         res.render('userintroduction.ejs', { title : 'MarkSimos - Introduction Videos'});
     });
 
-    app.get('/mainhome', authMiddleware.needLogin, function(req, res, next){
+    app.get('/home', authMiddleware.needLogin, function(req, res, next){
         res.render('usermainhome.ejs', { title : 'MarkSimos - User Home'});
     });
 
