@@ -14,7 +14,7 @@ app.config(['$translateProvider', function($translateProvider){
         "ReportMenuInventoryReport"    :  "Inventory Report",
         "ReportMenuProfitabilityEvolution"    :  "Profitability Evolution",
         "ReportMenuMarketShare"    :  "Market Share",
-        "ReportMenuCompetitorInformation"    :  "Competitor Information",
+        "ReportMenuCompetitorInformation"    :  "Competitor Intelligence",
         "ReportMenuInvestmentProfits"    :  "Investment & Profits",
         "ReportMenuMarketSalesInventory"    :  "Market Sales & Inventory",
         "ReportMenuSegmentLeaderTop5"    :  "Segment Leader Top5",
