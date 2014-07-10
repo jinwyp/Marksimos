@@ -126,8 +126,11 @@ exports.login = function(req, res, next){
         }
 
         sessionOperation.setLoginStatus(req, true);
+        sessionOperation.setUserRole(req, user.role);
 
-        return res.send({message: 'Login success.'});
+        return res.send({
+            userId: user._id
+        });
     })
     .fail(function(err){
         logger.error(err);

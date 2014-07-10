@@ -1,5 +1,6 @@
 var userModel = require('./api/models/user.js');
 var logger = require('./logger.js');
+var authMiddleware = require('./middleware/auth.js');
 
 module.exports = function(app){
      app.get('/', function(req, res, next){
@@ -14,11 +15,11 @@ module.exports = function(app){
         res.render('userintroduction.ejs', { title : 'MarkSimos - Introduction Videos'});
     });
 
-    app.get('/mainhome', function(req, res, next){
+    app.get('/home', authMiddleware.needLogin, function(req, res, next){
         res.render('usermainhome.ejs', { title : 'MarkSimos - User Home'});
     });
 
-    app.get('/admin', function(req, res, next){
+    app.get('/admin', authMiddleware.needLogin, function(req, res, next){
         res.render('adminhome.ejs', {});
     });
 

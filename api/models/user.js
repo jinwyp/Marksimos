@@ -4,7 +4,7 @@ var Q = require('q');
 
 var userSchema = new Schema({
     email: String,
-    phoneNum: String,
+    phone: String,
     country: String,
     state: String,
     city: String,
@@ -35,11 +35,11 @@ var User = mongoose.model("User", userSchema);
 exports.register = function(user){
     var deferred = Q.defer();
 
-    User.create(user, function(err){
+    User.create(user, function(err, result){
         if(err){
             deferred.reject(err);
         }else{
-            deferred.resolve(1);
+            deferred.resolve(result);
         }
     })
 
