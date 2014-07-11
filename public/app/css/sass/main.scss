@@ -50,6 +50,7 @@ $color_main_body_user_chart_single_border: #d9dce3;
 $color_main_body_user_chart_perception_map_bg: #f9f9f9;
 $color_main_body_user_chart_perception_map_border: #bdbdbd;
 $color_main_body_user_table_title_border: #e1e1e1;
+$color_main_body_user_table_menu_bg_active: #4b67ae;
 
 
 $color_main_body_progress_bar_budget: #6071b9;
@@ -814,6 +815,43 @@ body{
                 padding: 20px 0px;
                 border-bottom: 1px solid $color_main_body_user_table_title_border;
             }
+
+            .table_multimenu{
+                margin: 20px 0px 0px 0px;
+            }
+
+            .table_multimenu li{
+                a{
+                    background-color: $color_main_body_background_brand;
+                    color: $color_main_body_company;
+                    font-family: $font_main_header2;
+                    @include border-radius(4px);
+
+                    border: 1px solid $color_main_body_decision_brand_border;
+                    background-image: url(../images/userchartlist.png);
+                    background-repeat: no-repeat;
+                    background-position: 10px 8px;
+                    padding: 7px 15px 7px 27px;
+                    margin-left: 5px;
+
+
+                    &:hover,
+                    &:focus{
+                        background-color: $color_main_body_background_chart;
+                    }
+                }
+            }
+            .table_multimenu li.active{
+                a,
+                a:hover,
+                a:focus{
+                    color: $color_main_body_company_a;
+                    background-color: $color_main_body_user_table_menu_bg_active;
+                    background-image: url(../images/userchartlist2.png);
+                    border: 1px solid $color_main_body_user_table_menu_bg_active;
+                }
+            }
+
 
             .table_report{
                 border: 1px solid $color_main_body_user_chart_single_border;

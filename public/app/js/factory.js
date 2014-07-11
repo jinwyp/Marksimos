@@ -655,9 +655,31 @@ app.factory('tableReport',function($http){
             });
         },
 
+        // Table Report B2
+        competitorIntelligence : function(){
+            return $http.get(apiPath + 'report/competitor_intelligence').then(function(result){
+//                console.log(result.data);
+
+                return result.data;
+            }).catch(function(err){
+                console.log(err);
+            });
+        },
+
         // Table Report C3
         segmentDistribution : function(){
             return $http.get(apiPath + 'report/segment_distribution').then(function(result){
+//                console.log(result.data);
+
+                return result.data;
+            }).catch(function(err){
+                console.log(err);
+            });
+        },
+
+        // Table Report C5
+        marketTrends : function(){
+            return $http.get(apiPath + 'report/market_trends').then(function(result){
 //                console.log(result.data);
 
                 return result.data;

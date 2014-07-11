@@ -452,8 +452,8 @@
                                 <td ng-repeat="quarter in data.tableA1CompanyStatus.currentSKU.data">{{quarter.retailersPurchasesVolume | number : 2}}</td>
                             </tr>
                             <tr>
-                                <td>Shippments to Wholesalers (mln packs)</td>
-                                <td ng-repeat="quarter in data.tableA1CompanyStatus.currentSKU.data">{{quarter.shippmentsToWholesalers | number : 2}}</td>
+                                <td>Shipments to Wholesalers (mln packs)</td>
+                                <td ng-repeat="quarter in data.tableA1CompanyStatus.currentSKU.data">{{quarter.shipmentsToWholesalers | number : 2}}</td>
                             </tr>
                             <tr>
                                 <td>Production Volume (mln packs)</td>
@@ -606,7 +606,7 @@
                             </tr>
                             <tr>
                                 <td>Shipments to Wholesalers (mln std. packs)</td>
-                                <td ng-repeat="quarter in data.tableA1CompanyStatus.currentBrand.data">{{quarter.shippmentsToWholesalersStdPack | number : 2}}</td>
+                                <td ng-repeat="quarter in data.tableA1CompanyStatus.currentBrand.data">{{quarter.shipmentsToWholesalersStdPack | number : 2}}</td>
                             </tr>
                             <tr>
                                 <td>Production Volume (mln std. packs)</td>
@@ -2028,6 +2028,93 @@
         </div>
 
 
+        <div class="col-md-10 user_chart_right" ng-if="css.chartMenu=='B2'">
+            <div class="row">
+                <div class="col-md-12 user_table_single">
+                    <h5>{{data.tableB2CompetitorIntelligence.title}}</h5>
+
+                    <ul class="nav nav-pills table_multimenu">
+                        <li ng-class="{'active': css.tableReportMenu == 1}"><a href="" ng-click="css.tableReportMenu=1">Technology</a></li>
+                        <li ng-class="{'active': css.tableReportMenu == 2}"><a href="" ng-click="css.tableReportMenu=2">Marketing & Sales</a></li>
+                        <li ng-class="{'active': css.tableReportMenu == 3}"><a href="" ng-click="css.tableReportMenu=3">Operations</a></li>
+                        <li ng-class="{'active': css.tableReportMenu == 4}"><a href="" ng-click="css.tableReportMenu=4">Investment</a></li>
+                    </ul>
+
+                    <div class="table_report" ng-if="css.tableReportMenu == 1">
+                        <ul class="nav nav-pills">
+                            <li ng-class="{'active': data.tableB2CompetitorIntelligence.currentTable==1}"><a href="" ng-click="switchTableReport(1)">Acquired Production and Logistics Efficiency (%)</a></li>
+                            <li ng-class="{'active': data.tableB2CompetitorIntelligence.currentTable==2}"><a href="" ng-click="switchTableReport(2)">Acquired Production Planning Flexibility (%)</a></li>
+                            <li ng-class="{'active': data.tableB2CompetitorIntelligence.currentTable==3}"><a href="" ng-click="switchTableReport(3)">Available Technology Level</a></li>
+                        </ul>
+
+                        <div class="divider_horizontal"></div>
+
+                        <div table-report-competitor-intelligence data="data.tableB2CompetitorIntelligence.allData.acquiredProductionAndLogisticsEfficiency" unit="%" ng-if="data.tableB2CompetitorIntelligence.currentTable==1"></div>
+                        <div table-report-competitor-intelligence data="data.tableB2CompetitorIntelligence.allData.acquiredProductionPlanningFlexibility" unit="%" ng-if="data.tableB2CompetitorIntelligence.currentTable==2"></div>
+                        <div table-report-competitor-intelligence data="data.tableB2CompetitorIntelligence.allData.availableTechnologyLevel" unit="" ng-if="data.tableB2CompetitorIntelligence.currentTable==3"></div>
+                    </div>
+
+                    <div class="table_report" ng-if="css.tableReportMenu == 2">
+                        <ul class="nav nav-pills">
+                            <li ng-class="{'active': data.tableB2CompetitorIntelligence.currentTable==1}"><a href="" ng-click="switchTableReport(1)">Additional Trade Margin Cost ($ min)</a></li>
+                            <li ng-class="{'active': data.tableB2CompetitorIntelligence.currentTable==2}"><a href="" ng-click="switchTableReport(2)">Advertising ($ min)</a></li>
+                            <li ng-class="{'active': data.tableB2CompetitorIntelligence.currentTable==3}"><a href="" ng-click="switchTableReport(3)">Consumer Promotions Cost ($ min)</a></li>
+                            <li ng-class="{'active': data.tableB2CompetitorIntelligence.currentTable==4}"><a href="" ng-click="switchTableReport(4)">Retailers Purchase Volume (mln std. packs)</a></li>
+                            <li ng-class="{'active': data.tableB2CompetitorIntelligence.currentTable==5}"><a href="" ng-click="switchTableReport(5)">Sales Force Cost ($ mln)</a></li>
+                            <li ng-class="{'active': data.tableB2CompetitorIntelligence.currentTable==6}"><a href="" ng-click="switchTableReport(6)">Shipments to Wholesalers (mln std. packs)</a></li>
+                            <li ng-class="{'active': data.tableB2CompetitorIntelligence.currentTable==7}"><a href="" ng-click="switchTableReport(7)">Trade Investment ($ mln)</a></li>
+                            <li ng-class="{'active': data.tableB2CompetitorIntelligence.currentTable==8}"><a href="" ng-click="switchTableReport(8)">Volume Discount Cost ($ mln)</a></li>
+                        </ul>
+
+                        <div class="divider_horizontal"></div>
+
+                        <div table-report-competitor-intelligence data="data.tableB2CompetitorIntelligence.allData.additionalTradeMarginCost" unit="" ng-if="data.tableB2CompetitorIntelligence.currentTable==1"></div>
+                        <div table-report-competitor-intelligence data="data.tableB2CompetitorIntelligence.allData.advertising" unit="" ng-if="data.tableB2CompetitorIntelligence.currentTable==2"></div>
+                        <div table-report-competitor-intelligence data="data.tableB2CompetitorIntelligence.allData.consumerPromotionsCost" unit="" ng-if="data.tableB2CompetitorIntelligence.currentTable==3"></div>
+                        <div table-report-competitor-intelligence data="data.tableB2CompetitorIntelligence.allData.retailersPurchasesVolumeStdPack" unit="%" ng-if="data.tableB2CompetitorIntelligence.currentTable==4"></div>
+                        <div table-report-competitor-intelligence data="data.tableB2CompetitorIntelligence.allData.salesForceCost" unit="" ng-if="data.tableB2CompetitorIntelligence.currentTable==5"></div>
+                        <div table-report-competitor-intelligence data="data.tableB2CompetitorIntelligence.allData.shipmentsToWholesalers" unit="" ng-if="data.tableB2CompetitorIntelligence.currentTable==6"></div>
+                        <div table-report-competitor-intelligence data="data.tableB2CompetitorIntelligence.allData.tradeInvestment" unit="" ng-if="data.tableB2CompetitorIntelligence.currentTable==7"></div>
+                        <div table-report-competitor-intelligence data="data.tableB2CompetitorIntelligence.allData.volumeDiscountCost" unit="" ng-if="data.tableB2CompetitorIntelligence.currentTable==8"></div>
+                    </div>
+
+                    <div class="table_report" ng-if="css.tableReportMenu == 3">
+                        <ul class="nav nav-pills">
+                            <li ng-class="{'active': data.tableB2CompetitorIntelligence.currentTable==1}"><a href="" ng-click="switchTableReport(1)">Capacity Utilisation Rate (%)</a></li>
+                            <li ng-class="{'active': data.tableB2CompetitorIntelligence.currentTable==2}"><a href="" ng-click="switchTableReport(2)">Inventory Volume at Manufacturer (mln std. packs)</a></li>
+                            <li ng-class="{'active': data.tableB2CompetitorIntelligence.currentTable==3}"><a href="" ng-click="switchTableReport(3)">Inventory Volume at Retailers (mln std. packs)</a></li>
+                            <li ng-class="{'active': data.tableB2CompetitorIntelligence.currentTable==4}"><a href="" ng-click="switchTableReport(4)">Inventory Volume at Wholesalers (mln std. packs)</a></li>
+                            <li ng-class="{'active': data.tableB2CompetitorIntelligence.currentTable==5}"><a href="" ng-click="switchTableReport(5)">Next Period Available Prod. Capacity (mln std. packs)</a></li>
+                            <li ng-class="{'active': data.tableB2CompetitorIntelligence.currentTable==6}"><a href="" ng-click="switchTableReport(6)">Production Volume (mln std. packs)</a></li>
+                        </ul>
+
+                        <div class="divider_horizontal"></div>
+
+                        <div table-report-competitor-intelligence data="data.tableB2CompetitorIntelligence.allData.capacityUtilisationRate" unit="%" ng-if="data.tableB2CompetitorIntelligence.currentTable==1"></div>
+                        <div table-report-competitor-intelligence data="data.tableB2CompetitorIntelligence.allData.inventoryVolumeAtManufactuerStdPack" unit="" ng-if="data.tableB2CompetitorIntelligence.currentTable==2"></div>
+                        <div table-report-competitor-intelligence data="data.tableB2CompetitorIntelligence.allData.inventoryVolumeAtRetailersStdPack" unit="" ng-if="data.tableB2CompetitorIntelligence.currentTable==3"></div>
+                        <div table-report-competitor-intelligence data="data.tableB2CompetitorIntelligence.allData.inventoryVolumeAtWholesalersStdPack" unit="" ng-if="data.tableB2CompetitorIntelligence.currentTable==4"></div>
+                        <div table-report-competitor-intelligence data="data.tableB2CompetitorIntelligence.allData.nextPeriodAvailableProdCapacityStdPack" unit="" ng-if="data.tableB2CompetitorIntelligence.currentTable==5"></div>
+                        <div table-report-competitor-intelligence data="data.tableB2CompetitorIntelligence.allData.productionVolumeStdPack" unit="" ng-if="data.tableB2CompetitorIntelligence.currentTable==6"></div>
+                    </div>
+
+                    <div class="table_report" ng-if="css.tableReportMenu == 4">
+                        <ul class="nav nav-pills">
+                            <li ng-class="{'active': data.tableB2CompetitorIntelligence.currentTable==1}"><a href="" ng-click="switchTableReport(1)">Investment to Improve Technology Level ($ min)</a></li>
+                            <li ng-class="{'active': data.tableB2CompetitorIntelligence.currentTable==2}"><a href="" ng-click="switchTableReport(2)">Investment to Increase Production Efficiency ($ min)</a></li>
+                        </ul>
+
+                        <div class="divider_horizontal"></div>
+
+                        <div table-report-competitor-intelligence data="data.tableB2CompetitorIntelligence.allData.investmentToImproveTechnologyLevel" unit="" ng-if="data.tableB2CompetitorIntelligence.currentTable==1"></div>
+                        <div table-report-competitor-intelligence data="data.tableB2CompetitorIntelligence.allData.investmentToIncreaseProductionEfficiency" unit="" ng-if="data.tableB2CompetitorIntelligence.currentTable==2"></div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+
         <div class="col-md-10 user_chart_right" ng-if="css.chartMenu=='B3'">
             <div class="row">
                 <div class="col-md-6 user_chart_single chart_2">
@@ -2196,7 +2283,7 @@
                     <h5>{{data.tableC3SegmentDistribution.title}}
                     </h5>
 
-                    <div class="table_report" ng-if="css.tableReportTab=='SKU'">
+                    <div class="table_report">
 
                         <ul class="nav nav-pills">
                             <li ng-class="{'active': data.tableC3SegmentDistribution.currentTable==1}"><a href="" ng-click="switchTableReport(1)">Market Share (value %)</a></li>
@@ -2210,13 +2297,13 @@
 
                         <div class="divider_horizontal"></div>
 
-                        <div table-report data="data.tableC3SegmentDistribution.allData.marketShareVolume" unit="%" ng-if="data.tableC3SegmentDistribution.currentTable==1"></div>
-                        <div table-report data="data.tableC3SegmentDistribution.allData.marketShareValue" unit="%" ng-if="data.tableC3SegmentDistribution.currentTable==2"></div>
-                        <div table-report data="data.tableC3SegmentDistribution.allData.marketSaleVolume" unit="" ng-if="data.tableC3SegmentDistribution.currentTable==3"></div>
-                        <div table-report data="data.tableC3SegmentDistribution.allData.marketSaleValue" unit="" ng-if="data.tableC3SegmentDistribution.currentTable==4"></div>
-                        <div table-report data="data.tableC3SegmentDistribution.allData.averageNetMarketPriceStdPack" unit="" ng-if="data.tableC3SegmentDistribution.currentTable==5"></div>
-                        <div table-report data="data.tableC3SegmentDistribution.allData.valuePerception" unit="" ng-if="data.tableC3SegmentDistribution.currentTable==6"></div>
-                        <div table-report data="data.tableC3SegmentDistribution.allData.imagePerception" unit="" ng-if="data.tableC3SegmentDistribution.currentTable==7"></div>
+                        <div table-report-segment-distribution data="data.tableC3SegmentDistribution.allData.marketShareVolume" unit="%" ng-if="data.tableC3SegmentDistribution.currentTable==1"></div>
+                        <div table-report-segment-distribution data="data.tableC3SegmentDistribution.allData.marketShareValue" unit="%" ng-if="data.tableC3SegmentDistribution.currentTable==2"></div>
+                        <div table-report-segment-distribution data="data.tableC3SegmentDistribution.allData.marketSaleVolume" unit="" ng-if="data.tableC3SegmentDistribution.currentTable==3"></div>
+                        <div table-report-segment-distribution data="data.tableC3SegmentDistribution.allData.marketSaleValue" unit="" ng-if="data.tableC3SegmentDistribution.currentTable==4"></div>
+                        <div table-report-segment-distribution data="data.tableC3SegmentDistribution.allData.averageNetMarketPriceStdPack" unit="" ng-if="data.tableC3SegmentDistribution.currentTable==5"></div>
+                        <div table-report-segment-distribution data="data.tableC3SegmentDistribution.allData.valuePerception" unit="" ng-if="data.tableC3SegmentDistribution.currentTable==6"></div>
+                        <div table-report-segment-distribution data="data.tableC3SegmentDistribution.allData.imagePerception" unit="" ng-if="data.tableC3SegmentDistribution.currentTable==7"></div>
 
                     </div>
 
