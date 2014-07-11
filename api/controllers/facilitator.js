@@ -4,7 +4,7 @@ var userModel = require('../models/user.js');
 var logger = require('../../logger.js');
 var util = require('util');
 
-exports.addDistributor = function(req, res, next){
+exports.addFacilitator = function(req, res, next){
     req.checkBody('email', 'Invalid email').notEmpty().isEmail();
     req.assert('password', '6 to 20 characters required').len(6, 20);
     req.checkBody('name', '6 to 100 characters required.').notEmpty().len(6, 100);
