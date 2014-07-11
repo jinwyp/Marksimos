@@ -59,7 +59,7 @@ exports.addDistributor = function(req, res, next){
 };
 
 exports.updateDistributor = function(req, res, next){
-    req.checkParams('user_id', 'Invalid user_id').notEmpty();
+    req.checkParams('distributor_id', 'Invalid distributor_id').notEmpty();
     req.checkBody('email', 'Invalid email').notEmpty().isEmail();
     req.assert('password', '6 to 20 characters required').len(6, 20);
     req.checkBody('name', '6 to 100 characters required.').notEmpty().len(6, 100);
@@ -80,6 +80,7 @@ exports.updateDistributor = function(req, res, next){
     }
 
     var distributor = {
+        name: req.body.name,
         email: req.body.email,
         phone: req.body.phone,
         country: req.body.country,
@@ -94,7 +95,7 @@ exports.updateDistributor = function(req, res, next){
         pincode: req.body.pincode || ''
     }
 
-    userModel.update({_id: req.params.user_id}, distributor)
+    userModel.update({_id: req.params.distributor_id}, distributor)
     .then(function(numAffected){
         if(numAffected===1){
             return res.send({message: 'update success.'});
@@ -112,12 +113,16 @@ exports.searchDistributor = function(req, res, next){
     var name = req.query.name;
     var email = req.query.email;
     var country = req.query.country;
+    var state = req.query.state;
+    var city = req.query.city;
     var isDisabled = req.query.user_status;
 
     var query = {};
     if(name) query.name = name;
     if(email) query.email = email;
     if(country) query.country = country;
+    if(state) query.state = state;
+    if(city) query.city = city;
     if(isDisabled) query.isDisabled = isDisabled;
 
     userModel.find(query)
@@ -128,7 +133,9 @@ exports.searchDistributor = function(req, res, next){
         logger.error(err);
         res.send(500, {message: 'search failed'})
     })
-}
+};
+
+
 
 
 

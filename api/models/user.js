@@ -23,7 +23,7 @@ var userSchema = new Schema({
     role: {type: Number, default: 4}, //1 admin, 2 distributor, 3 facilitator, 4 students
 
     numOfLicense: {type: Number, default: 0},
-    leftLicense: Number,
+    numOfUsedLicense: {type: Number, default: 0},
 
     //facilitator field
     distributorId: String,
