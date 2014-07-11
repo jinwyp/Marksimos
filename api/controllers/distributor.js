@@ -25,6 +25,7 @@ exports.addDistributor = function(req, res, next){
     }
 
     var distributor = {
+        name: req.body.name,
         email: req.body.email,
         phone: req.body.phone,
         country: req.body.country,
@@ -33,7 +34,10 @@ exports.addDistributor = function(req, res, next){
         password: req.body.password,
         role: config.role.distributor,
         numOfLicense: req.body.num_of_license,
-        isActive: true
+        isActive: true,
+        district: req.body.district || '',
+        street: req.body.street || '',
+        pincode: req.body.pincode || ''
     }
 
     userModel.findByEmail(req.body.email)
@@ -103,6 +107,28 @@ exports.updateDistributor = function(req, res, next){
         return res.send(500, {message: 'update distributor failed.'});
     })
 };
+
+exports.searchDistributor = function(req, res, next){
+    var name = req.query.name;
+    var email = req.query.email;
+    var country = req.query.country;
+    var isDisabled = req.query.user_status;
+
+    var query = {};
+    if(name) query.name = name;
+    if(email) query.email = email;
+    if(country) query.country = country;
+    if(isDisabled) query.isDisabled = isDisabled;
+
+    userModel.find(query)
+    .then(function(result){
+        res.send(result);
+    })
+    .fail(function(err){
+        logger.error(err);
+        res.send(500, {message: 'search failed'})
+    })
+}
 
 
 

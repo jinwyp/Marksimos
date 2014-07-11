@@ -4,7 +4,7 @@ var reportController = require('./controllers/report.js');
 var initController = require('./controllers/init.js');
 var decisionPageController = require('./controllers/decisionPage.js');
 var userController = require('./controllers/user.js');
-var adimnController = require('./controllers/distributor.js');
+var distributorController = require('./controllers/distributor.js');
 
 var util = require('util');
 var express = require('express');
@@ -60,26 +60,28 @@ apiRouter.get('/api/future_projection_calculator/:sku_id', decisionPageControlle
 apiRouter.get('/api/company/otherinfo', decisionPageController.getOtherinfo);
 
 
-apiRouter.post('/api/distributor', authorize('addDistributor'), adimnController.addDistributor);
-apiRouter.put('/api/distributor/:user_id', authorize('updateDistributor'), adimnController.updateDistributor);
+apiRouter.post('/api/distributor', authorize('addDistributor'), distributorController.addDistributor);
+apiRouter.put('/api/distributor/:user_id', authorize('updateDistributor'), distributorController.updateDistributor);
+apiRouter.get('/api/distributor/search', authorize('searchDistributor'), distributorController.searchDistributor);
+
 
 /**
 * @param {String} resource identifier of url
 */
 function authorize(resource){
     var authDefinition = {};
-    authDefinition[config.role.admin] = [
-        'addDistributor', 
-        'updateDistributor', 
-        'addFacilitator',
-        'updateFacilitator'
-    ];
     authDefinition[config.role.distributor] = [];
     authDefinition[config.role.facilitator] = [];
     authDefinition[config.role.student] = [];
     
     return function authorize(req, res, next){
         var role = sessionOperation.getUserRole(req);
+
+        //admin can do anythin
+        if(role === config.role.admin){
+            return next();
+        }
+
         if(authDefinition[role].indexOf(resource) > -1){
             next();
         }else{

@@ -273,3 +273,51 @@ GET
 This API is the same as /api/report/:report_name
 
 
+##  POST /api/distributor
+### Parameters
+* name
+* email
+* password
+* phone
+* country
+* state
+* city
+* num_of_license
+* district  (optional)
+* street    (optional)
+* pincode   (optional)
+
+## PUT /api/distributor/:user_id
+### Parameters
+* user_id
+* name
+* email
+* password
+* phone
+* country
+* state
+* city
+* num_of_license
+* district  (optional)
+* street    (optional)
+* pincode   (optional)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

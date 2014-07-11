@@ -3,6 +3,7 @@ var Schema = mongoose.Schema;
 var Q = require('q');
 
 var userSchema = new Schema({
+    name: String,
     email: String,
     phone: String,
 
@@ -31,7 +32,6 @@ var userSchema = new Schema({
     pincode: String,
     gender: Number,
     occupation: Number,
-    name: String,
     firstName: String,
     lastName: String,
     univercity: String,
@@ -125,3 +125,29 @@ exports.findByEmailAndToken = function(email, token){
 
     return deferred.promise;
 }
+
+exports.find = function(query){
+    var deferred = Q.defer();
+
+    User.find(query, 
+    function(err, result){
+        if(err){
+            deferred.reject(err);
+        }else{
+            deferred.resolve(result);
+        }
+    })
+
+    return deferred.promise;
+}
+
+
+
+
+
+
+
+
+
+
+
