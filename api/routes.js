@@ -60,16 +60,34 @@ apiRouter.get('/api/future_projection_calculator/:sku_id', decisionPageControlle
 apiRouter.get('/api/company/otherinfo', decisionPageController.getOtherinfo);
 
 
-apiRouter.post('/api/distributor', needAdmin, adimnController.addDistributor);
+apiRouter.post('/api/distributor', authorize('addDistributor'), adimnController.addDistributor);
+apiRouter.put('/api/distributor/:user_id', authorize('updateDistributor'), adimnController.updateDistributor);
 
-
-function needAdmin(req, res, next){
-    if(sessionOperation.getUserRole(req) === config.role.admin){
-        next();
-    }else{
-        res.send(400, {message: 'Only admin can perform this action.'});
+/**
+* @param {String} resource identifier of url
+*/
+function authorize(resource){
+    var authDefinition = {};
+    authDefinition[config.role.admin] = [
+        'addDistributor', 
+        'updateDistributor', 
+        'addFacilitator',
+        'updateFacilitator'
+    ];
+    authDefinition[config.role.distributor] = [];
+    authDefinition[config.role.facilitator] = [];
+    authDefinition[config.role.student] = [];
+    
+    return function authorize(req, res, next){
+        var role = sessionOperation.getUserRole(req);
+        if(authDefinition[role].indexOf(resource) > -1){
+            next();
+        }else{
+            res.send(403, {message: 'You are not authorized.'});
+        }
     }
 }
+
 
 module.exports = apiRouter;
    

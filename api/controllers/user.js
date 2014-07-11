@@ -43,7 +43,7 @@ exports.register = function(req, res, next){
         }
         return userModel.register(user)
         .then(function(result){
-            if(result === 1){
+            if(result){
                 return utility.sendActivateEmail(email, activateToken)
                 .then(function(sendEmailResult){
                     if(sendEmailResult){
@@ -136,6 +136,7 @@ exports.login = function(req, res, next){
         logger.error(err);
         return res.send(500, {message: 'Login failed.'});
     })
+    .done();
 }
 
 

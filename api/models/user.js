@@ -5,19 +5,30 @@ var Q = require('q');
 var userSchema = new Schema({
     email: String,
     phone: String,
+
+    //address
     country: String,
     state: String,
     city: String,
+    district: String,
+    street: String,
+
+
     activateToken: String,
     isActive: {type: Boolean, default: false},
     isDisabled: {type: Boolean, default: false},
     password: String,
     
     role: {type: Number, default: 4}, //1 admin, 2 distributor, 3 facilitator, 4 students
+
     numOfLicense: {type: Number, default: 0},
+    leftLicense: Number,
+
+    //facilitator field
     distributorId: String,
     
     //student fileds
+    pincode: String,
     gender: Number,
     occupation: Number,
     name: String,
@@ -53,6 +64,22 @@ exports.updateByEmail = function(email, user){
         email: email
     }
     ,user
+    , function(err, numAffected){
+        if(err){
+            deferred.reject(err);
+        }else{
+            deferred.resolve(numAffected);
+        }
+    });
+
+    return deferred.promise; 
+}
+
+exports.update = function(query, user){
+    var deferred = Q.defer();
+
+    User.update(query
+    , user
     , function(err, numAffected){
         if(err){
             deferred.reject(err);
