@@ -1,5 +1,5 @@
 var userModel = require('./api/models/user.js');
-var logger = require('./logger.js');
+var logger = require('./common/logger.js');
 var authMiddleware = require('./middleware/auth.js');
 
 module.exports = function(app){

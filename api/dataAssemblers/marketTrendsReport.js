@@ -1,6 +1,6 @@
 var consts = require('../consts.js');
-var utility = require('../utility.js');
-var config = require('../config.js');
+var utility = require('../../common/utility.js');
+var config = require('../../common/config.js');
 
 exports.getMarketTrendsReport = function(allResults){
     var result = {

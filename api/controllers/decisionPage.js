@@ -3,9 +3,9 @@ var productPortfolioAssembler = require('../dataAssemblers/productPortfolio.js')
 var spendingDetailsAssembler = require('../dataAssemblers/spendingDetails.js');
 var SKUInfoAssembler = require('../dataAssemblers/SKUinfo.js');
 var Q = require('q');
-var logger = require('../../logger.js');
+var logger = require('../../common/logger.js');
 var seminarModel = require('../models/seminar.js');
-var utility = require('../utility.js');
+var utility = require('../../common/utility.js');
 var gameParameters = require('../gameParameters.js').parameters;
 var simulationResultModel = require('../models/simulationResult.js');
 

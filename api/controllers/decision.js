@@ -1,5 +1,5 @@
 var request = require('../promises/request.js');
-var config = require('../config.js');
+var config = require('../../common/config.js');
 var url = require('url');
 var util = require('util');
 var companyDecisionModel = require('../models/companyDecision.js');
@@ -8,7 +8,7 @@ var SKUDecisionModel = require('../models/SKUDecision.js');
 var decisionCleaner = require('../convertors/decisionCleaner.js');
 var decisionConvertor = require('../convertors/decision.js');
 var Q = require('q');
-var logger = require('../../logger.js');
+var logger = require('../../common/logger.js');
 var gameParameters = require('../gameParameters.js').parameters;
 
 /**

@@ -1,7 +1,7 @@
 var express = require('express');
 var userModel = require('../models/user.js');
-var utility = require('../utility.js');
-var logger = require('../../logger.js');
+var utility = require('../../common/utility.js');
+var logger = require('../../common/logger.js');
 var util = require('util');
 var sessionOperation = require('../../common/sessionOperation.js');
 
@@ -43,7 +43,7 @@ exports.register = function(req, res, next){
         }
         return userModel.register(user)
         .then(function(result){
-            if(result === 1){
+            if(result){
                 return utility.sendActivateEmail(email, activateToken)
                 .then(function(sendEmailResult){
                     if(sendEmailResult){
@@ -136,6 +136,7 @@ exports.login = function(req, res, next){
         logger.error(err);
         return res.send(500, {message: 'Login failed.'});
     })
+    .done();
 }
 
 

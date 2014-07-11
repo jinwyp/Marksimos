@@ -18,3 +18,11 @@ exports.setUserRole = function(req, userRole){
 exports.getUserRole = function(req){
     return req.session.userRole;
 }
+
+exports.setUserId = function(req, userId){
+    req.session.userId = userId;
+}
+
+exports.getUserId = function(req){
+    return req.session.userId;
+}

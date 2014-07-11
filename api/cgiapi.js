@@ -1,6 +1,6 @@
 var request = require('./promises/request.js');
 var url = require('url');
-var config = require('./config.js');
+var config = require('../common/config.js');
 var util = require('util');
 var Q = require('q');
 

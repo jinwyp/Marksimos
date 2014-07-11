@@ -1,4 +1,5 @@
 module.exports = {
+    host: 'http://localhost:3000/',
     cgiService: 'http://10.20.30.97/cgi-bin/',
 
     passwordSalt: 'hcd',

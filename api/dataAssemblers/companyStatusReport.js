@@ -1,7 +1,7 @@
 var Q = require('q');
-var utility = require('../utility.js');
+var utility = require('../../common/utility.js');
 var consts = require('../consts.js');
-var config = require('../config.js');
+var config = require('../../common/config.js');
 
 exports.getCompanyStatusReport = function(allResults, allExogenous){
     var allCompanyReport = [];

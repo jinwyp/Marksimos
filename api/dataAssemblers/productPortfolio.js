@@ -1,5 +1,5 @@
-var utility = require('../utility.js');
-var config = require('../config.js');
+var utility = require('../../common/utility.js');
+var config = require('../../common/config.js');
 var consts = require('../consts.js');
 var seminarModel = require('../models/seminar.js');
 var decisionAssembler = require('./decision.js');

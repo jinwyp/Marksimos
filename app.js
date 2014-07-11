@@ -8,7 +8,7 @@ var mongoose = require('mongoose');
 var session = require('cookie-session');
 var expressValidator = require('express-validator');
 var sessionOperation = require('./common/sessionOperation.js');
-var config = require('./api/config.js');
+var config = require('./common/config.js');
 
 
 var app = express();
@@ -33,9 +33,9 @@ app.use(express.static(path.join(__dirname, 'public')));
 //initialize session data
 app.use(function(req, res, next){
     sessionOperation.setLoginStatus(req, true);
-    sessionOperation.setUserRole(req, config.role.admin);
+    sessionOperation.setUserRole(req, config.role.distributor);
+    sessionOperation.setUserId(req, '53bf43054efec60000e1e3de');
 
-    req.session.userId = 'testid';
     req.session.seminarId = 'TTT';
     req.session.companyId = 2;
     req.session.period = 1;
