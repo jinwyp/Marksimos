@@ -2,8 +2,8 @@
 所有chart
 */
 var consts = require('../consts.js');
-var config = require('../config.js');
-var utility = require('../utility.js');
+var config = require('../../common/config.js');
+var utility = require('../../common/utility.js');
 
 exports.extractChartData = function(results, settings){
     //生成chart数据

@@ -1,8 +1,7 @@
-var gameParameters = require('./gameParameters.js').parameters;
-var cgiapi = require('./cgiapi.js');
-var consts = require('./consts.js');
+var gameParameters = require('../api/gameParameters.js').parameters;
+var cgiapi = require('../api/cgiapi.js');
+var consts = require('../api/consts.js');
 var config = require('./config.js');
-var appconfig = require('../appconfig.js');
 var nodemailer = require('nodemailer');
 var uuid = require('node-uuid');
 var Q = require('q');
@@ -164,7 +163,7 @@ exports.generateAcivateToken = function(email){
 
 exports.sendActivateEmail = function(toEmail, activateToken){
     var body = "Please click this link, blablabla"
-    var linkText =  appconfig.host + 'activate?email=' + toEmail + '&token=' + activateToken;
+    var linkText =  config.host + 'activate?email=' + toEmail + '&token=' + activateToken;
     body += "<a href='" + linkText + "'>"+ linkText +"</a>";
 
     return sendMail(toEmail,'HCD activate email', body);

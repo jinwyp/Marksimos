@@ -1,5 +1,5 @@
 var reportModel = require('../models/report.js');
-var logger = require('../../logger.js');
+var logger = require('../../common/logger.js');
 
 exports.getReport = function(req, res, next){
     var seminarId = req.session.seminarId;

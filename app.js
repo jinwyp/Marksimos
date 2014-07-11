@@ -8,7 +8,7 @@ var mongoose = require('mongoose');
 var session = require('cookie-session');
 var expressValidator = require('express-validator');
 var sessionOperation = require('./common/sessionOperation.js');
-var config = require('./api/config.js');
+var config = require('./common/config.js');
 
 
 var app = express();

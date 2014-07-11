@@ -1,7 +1,7 @@
 var validator = require('validator');
-var config = require('../config.js');
+var config = require('../../common/config.js');
 var userModel = require('../models/user.js');
-var logger = require('../../logger.js');
+var logger = require('../../common/logger.js');
 var util = require('util');
 
 exports.addFacilitator = function(req, res, next){

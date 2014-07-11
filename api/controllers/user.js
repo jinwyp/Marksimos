@@ -1,7 +1,7 @@
 var express = require('express');
 var userModel = require('../models/user.js');
-var utility = require('../utility.js');
-var logger = require('../../logger.js');
+var utility = require('../../common/utility.js');
+var logger = require('../../common/logger.js');
 var util = require('util');
 var sessionOperation = require('../../common/sessionOperation.js');
 

@@ -4,14 +4,14 @@ var reportController = require('./controllers/report.js');
 var initController = require('./controllers/init.js');
 var decisionPageController = require('./controllers/decisionPage.js');
 var userController = require('./controllers/user.js');
-var adimnController = require('./controllers/admin.js');
+var adimnController = require('./controllers/distributor.js');
 
 var util = require('util');
 var express = require('express');
 var sessionOperation = require('../common/sessionOperation.js');
 var authMiddleware = require('../middleware/auth.js');
 
-var config = require('./config.js');
+var config = require('../common/config.js');
 
 var apiRouter = express.Router();
 

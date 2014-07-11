@@ -1,7 +1,7 @@
 var request = require('../promises/request.js');
 var util = require('util');
 var url = require('url');
-var config = require('../config.js');
+var config = require('../../common/config.js');
 var Q = require('q');
 
 var decisionCleaner = require('../convertors/decisionCleaner.js');

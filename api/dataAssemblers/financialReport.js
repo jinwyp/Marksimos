@@ -1,4 +1,4 @@
-var config = require('../config.js');
+var config = require('../../common/config.js');
 var consts = require('../consts.js');
 
 exports.getFinancialReport = function(allResults){

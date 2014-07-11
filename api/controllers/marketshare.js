@@ -1,5 +1,5 @@
 var request = require('request');
-var config = require('../config.js');
+var config = require('../../common/config.js');
 var url = require('url');
 var util = require('util');
 
