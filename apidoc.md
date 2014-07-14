@@ -308,52 +308,5 @@ This API is the same as /api/report/:report_name
 
 
 
- <div class="panel user_chart_leftmenu">
-                <div class="panel-heading">Your Company</div>
-
-                <!-- List group -->
-                <ul class="list-group">
-                    <li class="list-group-item" ng-class="{'list-group-item-active': css.chartMenu=='A1'}" ng-click="clickChartMenu('A1')">{{'ReportMenuCompanyStatus' | translate}}</li>
-                    <li class="list-group-item" ng-class="{'list-group-item-active': css.chartMenu=='A2'}" ng-click="clickChartMenu('A2')">{{'ReportMenuFinancialData' | translate}}</li>
-                    <li class="list-group-item" ng-class="{'list-group-item-active': css.chartMenu=='A3'}" ng-click="clickChartMenu('A3')">{{'ReportMenuInventoryReport' | translate}}</li>
-                    <li class="list-group-item" ng-class="{'list-group-item-active': css.chartMenu=='A4'}" ng-click="clickChartMenu('A4')">{{'ReportMenuProfitabilityEvolution' | translate}}</li>
-                </ul>
-            </div>
-
-            <div class="panel user_chart_leftmenu">
-                <div class="panel-heading">Your Competitor</div>
-
-                <!-- List group -->
-                <ul class="list-group">
-                    <li class="list-group-item" ng-class="{'list-group-item-active': css.chartMenu=='B1'}" ng-click="clickChartMenu('B1')">{{'ReportMenuMarketShare' | translate}}</li>
-                    <li class="list-group-item" ng-class="{'list-group-item-active': css.chartMenu=='B2'}" ng-click="clickChartMenu('B2')">{{'ReportMenuCompetitorInformation' | translate}}</li>
-                    <li class="list-group-item" ng-class="{'list-group-item-active': css.chartMenu=='B3'}" ng-click="clickChartMenu('B3')">{{'ReportMenuInvestmentProfits' | translate}}</li>
-                    <li class="list-group-item" ng-class="{'list-group-item-active': css.chartMenu=='B4'}" ng-click="clickChartMenu('B4')">{{'ReportMenuMarketSalesInventory' | translate}}</li>
-                </ul>
-            </div>
-
-            <div class="panel user_chart_leftmenu">
-                <div class="panel-heading">Market Landscape</div>
-
-                <!-- List group -->
-                <ul class="list-group">
-                    <li class="list-group-item" ng-class="{'list-group-item-active': css.chartMenu=='C1'}" ng-click="clickChartMenu('C1')">{{'ReportMenuSegmentLeaderTop5' | translate}}</li>
-                    <li class="list-group-item" ng-class="{'list-group-item-active': css.chartMenu=='C2'}" ng-click="clickChartMenu('C2')">{{'ReportMenuPerceptionMap' | translate}}</li>
-                    <li class="list-group-item" ng-class="{'list-group-item-active': css.chartMenu=='C3'}" ng-click="clickChartMenu('C3')">{{'ReportMenuSegmentDistributions' | translate}}</li>
-                    <li class="list-group-item" ng-class="{'list-group-item-active': css.chartMenu=='C4'}" ng-click="clickChartMenu('C4')">{{'ReportMenuMarketEvolution' | translate}}</li>
-                    <li class="list-group-item" ng-class="{'list-group-item-active': css.chartMenu=='C5'}" ng-click="clickChartMenu('C5')">{{'ReportMenuMarketTrends' | translate}}</li>
-                    <li class="list-group-item" ng-class="{'list-group-item-active': css.chartMenu=='C6'}" ng-click="clickChartMenu('C6')">{{'ReportMenuMarketIndicator' | translate}}</li>
-                </ul>
-            </div>
-
-
-
-
-
-
-
-
-
-
 
 
