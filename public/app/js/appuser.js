@@ -12,8 +12,9 @@ marksimosapp.controller('chartController', function($scope,  $timeout, $http, ch
 
     $scope.css = {
         menu : 'Report',
-        chartMenu : 'C3',
+        chartMenu : 'B2',
         tableReportTab : 'SKU',
+        tableReportMenu : 1,
         additionalBudget : true,
         currentBrandId : 0,
         currentDecisionRightMenu : 1
@@ -75,7 +76,11 @@ marksimosapp.controller('chartController', function($scope,  $timeout, $http, ch
             currentGlobal : {},
             title : 'Profitability Evolution'
         },
-
+        tableB2CompetitorIntelligence : {
+            allData : [],
+            title : 'Competitor Intelligence',
+            currentTable : 1
+        },
         tableC3SegmentDistribution : {
             allData : [],
             title : 'Segment Distribution',
@@ -533,6 +538,12 @@ marksimosapp.controller('chartController', function($scope,  $timeout, $http, ch
         $scope.data.tableA4ProfitabilityEvolution.currentGlobal = $scope.data.tableA4ProfitabilityEvolution.allData.global;
     });
 
+    /********************  Table Report B2  ********************/
+    tableReport.competitorIntelligence().then(function(data, status, headers, config){
+//        console.log(data);
+        $scope.data.tableB2CompetitorIntelligence.allData = data;
+    });
+
     /********************  Table Report C3  ********************/
     tableReport.segmentDistribution().then(function(data, status, headers, config){
 //        console.log(data);
@@ -540,6 +551,7 @@ marksimosapp.controller('chartController', function($scope,  $timeout, $http, ch
     });
     $scope.switchTableReport = function(report){
         $scope.data.tableC3SegmentDistribution.currentTable = report;
+        $scope.data.tableB2CompetitorIntelligence.currentTable = report;
     };
 
 

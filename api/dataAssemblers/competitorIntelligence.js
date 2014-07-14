@@ -18,7 +18,7 @@ exports.getCompetitorIntelligenceReport = function(allResults){
         productionVolumeStdPack: companyReport(allResults, function(companyResult){return companyResult.c_ActualProductionVolume}),
         retailersPurchasesVolumeStdPack: companyReport(allResults, function(companyResult){return companyResult.c_WholesalesVolume}),
         salesForceCost: companyReport(allResults, function(companyResult){return companyResult.c_SalesForceCost}),
-        shippmentsToWholesalers: companyReport(allResults, function(companyResult){return companyResult.c_FactorySalesVolume}),
+        shipmentsToWholesalers: companyReport(allResults, function(companyResult){return companyResult.c_FactorySalesVolume}),
         tradeInvestment: companyReport(allResults, function(companyResult){return companyResult.c_TradeExpenses}),
         volumeDiscountCost: companyReport(allResults, function(companyResult){return companyResult.c_VolumeDiscountCost})
     }

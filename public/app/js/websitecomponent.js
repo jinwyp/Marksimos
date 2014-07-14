@@ -51,14 +51,14 @@ app.directive('headerUser', function($translate) {
 
 
 
-app.directive('tableReport', function() {
+app.directive('tableReportSegmentDistribution', function() {
     return {
         scope: {
             data : '=',
             unit : '@'
         },
         restrict: 'AE',
-        templateUrl: 'app/js/directive/tablereport.html',
+        templateUrl: 'app/js/directive/tablereportsegmentdistribution.html',
         link: function (scope, element, attrs) {
             scope.plus = 1;
 
@@ -68,9 +68,29 @@ app.directive('tableReport', function() {
                 scope.plus = 100;
             }
 
-            scope.changeLanguage = function (langKey) {
-                $translate.use(langKey);
-            };
+        }
+    };
+});
+
+
+
+app.directive('tableReportCompetitorIntelligence', function() {
+    return {
+        scope: {
+            data : '=',
+            unit : '@'
+        },
+        restrict: 'AE',
+        templateUrl: 'app/js/directive/tablereportcompetitorintelligence.html',
+        link: function (scope, element, attrs) {
+
+            scope.plus = 1;
+
+            if(angular.isUndefined(scope.unit)) {
+                scope.unit = '';
+            }else if (scope.unit === "%"){
+                scope.plus = 1;
+            }
 
         }
     };
