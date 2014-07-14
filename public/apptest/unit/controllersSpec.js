@@ -27,11 +27,11 @@ describe('chartController', function(){
 
     /********************  Initially critical  ********************/
     it('Initially scope.css.menu has default value ', function() {
-        expect(scope.css.menu).toEqual("Report");
+        expect(scope.css.menu).toEqual("Home");
     });
 
     it('Initially scope.css.chartMenu has default value ', function() {
-        expect(scope.css.chartMenu).toEqual("C5");
+        expect(scope.css.chartMenu).toEqual("A1");
     });
 
     it('Initially scope.css.tableReportTab has default value ', function() {
@@ -50,7 +50,7 @@ describe('chartController', function(){
         expect(scope.data.tableA2FinancialData.currentPeriod.period).toEqual("Select Period");
     });
     it('Initially scope.data.tableA4ProfitabilityEvolution has default value ', function() {
-        expect(scope.data.tableA4ProfitabilityEvolution.title).toEqual("Profitability Evolution");
+        expect(scope.data.tableA4ProfitabilityEvolution.currentSKU).toEqual({});
     });
     it('Initially scope.data.tableC3SegmentDistribution has default value ', function() {
         expect(scope.data.tableC3SegmentDistribution.currentTable).toEqual(1);
