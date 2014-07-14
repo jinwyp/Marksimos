@@ -103,7 +103,8 @@ function updateFacilitator(){
     });
 }
 
-updateFacilitator();
+//addDistributor();
+addFacilitator();
 
 
 

@@ -35,7 +35,7 @@ exports.addFacilitator = function(req, res, next){
         state: req.body.state,
         city: req.body.city,
         password: req.body.password,
-        role: config.role.distributor,
+        role: config.role.facilitator,
         numOfLicense: req.body.num_of_license,
         isActive: true,
         distributorId: distributorId
@@ -111,7 +111,7 @@ exports.updateFacilitator = function(req, res, next){
         state: req.body.state,
         city: req.body.city,
         password: req.body.password,
-        role: config.role.distributor,
+        role: config.role.facilitator,
         numOfLicense: parseInt(req.body.num_of_license),
         isActive: true,
         district: req.body.district || '',
@@ -123,7 +123,7 @@ exports.updateFacilitator = function(req, res, next){
 
     var p;
 
-    //if the num_of_license is updated, we need to add or remove certain licenses
+    //if the num_of_license is changed, we need to add or remove certain licenses
     //from the distributor
     if(req.body.num_of_license > 0){
         //find the facilitor to be updated.
@@ -131,6 +131,7 @@ exports.updateFacilitator = function(req, res, next){
             _id: req.params.facilitator_id
         })
         .then(function(dbFacilitator){
+            console.log('---------------');
             //if this facilitator belongs to the current distributor
             if(dbFacilitator.distributorId === distributorId){
                 var addedLicense = parseInt(req.body.num_of_license) - dbFacilitator.numOfLicense;
@@ -189,12 +190,14 @@ exports.searchFacilitator = function(req, res, next){
     var city = req.query.city;
     var isDisabled = req.query.user_status;
 
-    var query = {};
+    var query = {
+        role: config.role.facilitator
+    };
 
     //only distributor and admin can search facilitators
     //distributor can only view its own facilitators
     if(sessionOperation.getUserRole(req) !== config.role.admin){
-        query._id = sessionOperation.getUserId(req);
+        query.distributorId = sessionOperation.getUserId(req);
     }
 
     if(name) query.name = name;
@@ -204,6 +207,7 @@ exports.searchFacilitator = function(req, res, next){
     if(city) query.city = city;
     if(isDisabled) query.isDisabled = isDisabled;
 
+    console.log(query);
     userModel.find(query)
     .then(function(result){
         res.send(result);

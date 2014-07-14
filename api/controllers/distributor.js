@@ -117,7 +117,9 @@ exports.searchDistributor = function(req, res, next){
     var city = req.query.city;
     var isDisabled = req.query.user_status;
 
-    var query = {};
+    var query = {
+        role: config.role.distributor
+    };
     if(name) query.name = name;
     if(email) query.email = email;
     if(country) query.country = country;
