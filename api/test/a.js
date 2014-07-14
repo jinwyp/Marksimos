@@ -103,8 +103,29 @@ function updateFacilitator(){
     });
 }
 
+function addStudent(){
+    request.post('http://localhost:3000/api/students', function(err, res, body){
+        if(err){
+            console.log(JSON.stringify(err));
+        }else{
+            console.log(body);
+        }
+    }).form({
+        email: 'student1@hcdglobal.com',
+        password: '123456',
+        first_name: 'Bruce',
+        last_name: 'Lee',
+        phone: '631122021',
+        country: 'china',
+        state: 'shanghai',
+        city: 'shanghai',
+        num_of_license: 1,
+        pincode: '13911123971123821X'
+    });
+}
+
 //addDistributor();
-addFacilitator();
+addStudent();
 
 
 

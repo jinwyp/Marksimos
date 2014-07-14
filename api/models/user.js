@@ -31,13 +31,12 @@ var userSchema = new Schema({
     //student fileds
     pincode: String,
     gender: Number,
-    occupation: Number,
+    occupation: String,
     firstName: String,
     lastName: String,
     univercity: String,
     organization: String,
     highestEducationalDegree: String,
-
     facilitatorId: String
 });
 

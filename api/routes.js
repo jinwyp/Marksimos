@@ -6,6 +6,7 @@ var decisionPageController = require('./controllers/decisionPage.js');
 var userController = require('./controllers/user.js');
 var distributorController = require('./controllers/distributor.js');
 var facilitatorController = require('./controllers/facilitator.js');
+var studentController = require('./controllers/student.js');
 
 var util = require('util');
 var express = require('express');
@@ -61,13 +62,15 @@ apiRouter.get('/api/future_projection_calculator/:sku_id', decisionPageControlle
 apiRouter.get('/api/company/otherinfo', decisionPageController.getOtherinfo);
 
 
-apiRouter.post('/api/distributor', authorize('addDistributor'), distributorController.addDistributor);
-apiRouter.put('/api/distributor/:distributor_id', authorize('updateDistributor'), distributorController.updateDistributor);
-apiRouter.get('/api/distributor/search', authorize('searchDistributor'), distributorController.searchDistributor);
+apiRouter.post('/api/distributors', authorize('addDistributor'), distributorController.addDistributor);
+apiRouter.put('/api/distributors/:distributor_id', authorize('updateDistributor'), distributorController.updateDistributor);
+apiRouter.get('/api/distributors', authorize('searchDistributor'), distributorController.searchDistributor);
 
-apiRouter.post('/api/facilitator', authorize('addFacilitator'), facilitatorController.addFacilitator);
-apiRouter.put('/api/facilitator/:facilitator_id', authorize('updateFacilitator'), facilitatorController.updateFacilitator);
-apiRouter.get('/api/facilitator/search', authorize('searchFacilitator'), facilitatorController.searchFacilitator);
+apiRouter.post('/api/facilitators', authorize('addFacilitator'), facilitatorController.addFacilitator);
+apiRouter.put('/api/facilitators/:facilitator_id', authorize('updateFacilitator'), facilitatorController.updateFacilitator);
+apiRouter.get('/api/facilitators', authorize('searchFacilitator'), facilitatorController.searchFacilitator);
+
+apiRouter.post('/api/students', authorize('addFacilitator'), studentController.addStudent);
 
 /**
 * @param {String} resource identifier of url

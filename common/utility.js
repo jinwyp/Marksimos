@@ -209,6 +209,14 @@ exports.comparePassword = function(password, hashedPassword){
     return bcrypt.compareSync(password, hashedPassword);
 };
 
+exports.validatePincode = function(pincode){
+    return pincode && /^\d{17}([0-9]|X)$/.test(pincode);
+};
+
+exports.validateGender = function(gender){
+    return gender && [1, 2].indexOf(gender) > 0;
+};
+
 
 
 
