@@ -1,0 +1,14 @@
+<table class="table table-striped table-bordered table-hover" >
+    <thead>
+        <tr>
+            <th>Quarters</th>
+            <th ng-repeat="quarter in data[0].data">{{quarter.name}}</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr ng-repeat="brand in data">
+            <td>{{brand.brandName}}</td>
+            <td ng-repeat="quarter in brand.data">{{quarter.value * plus | number : 2}}{{unit}}</td>
+        </tr>
+    </tbody>
+</table>

@@ -31,7 +31,7 @@ describe('chartController', function(){
     });
 
     it('Initially scope.css.chartMenu has default value ', function() {
-        expect(scope.css.chartMenu).toEqual("A1");
+        expect(scope.css.chartMenu).toEqual("C5");
     });
 
     it('Initially scope.css.tableReportTab has default value ', function() {
@@ -56,6 +56,9 @@ describe('chartController', function(){
         expect(scope.data.tableC3SegmentDistribution.currentTable).toEqual(1);
     });
 
+    it('Initially scope.css.tableReportMenu has default value ', function() {
+        expect(scope.css.tableReportMenu).toEqual(1);
+    });
 
 
     /********************  Function critical  ********************/
