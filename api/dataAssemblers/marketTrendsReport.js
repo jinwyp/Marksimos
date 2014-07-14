@@ -14,7 +14,7 @@ exports.getMarketTrendsReport = function(allResults){
 function generateSKUReport(allResults){
     return {
         averageDisplayPriceStdPack: generateSKUFieldReport(allResults, function(SKUResult){return SKUResult.u_AverageDisplayPrice}),
-        averageNetMarketPrice: generateSKUFieldReport(allResults, function(SKUResult){return SKUResult.u_AverageNetMarketPrice}),
+        averageNetMarketPriceStdPack: generateSKUFieldReport(allResults, function(SKUResult){return SKUResult.u_AverageNetMarketPrice}),
         brandAwareness: generateSKUFieldReport(allResults, function(SKUResult){return SKUResult.u_Awareness * 100}),
         imagePerception: generateSKUFieldReport(allResults, function(SKUResult){return SKUResult.u_Perception[1]}),
         lostSalesVolumeDueToOOSStdPack: generateSKUFieldReport(allResults, function(SKUResult){return SKUResult.u_StockOutVolume}),
@@ -92,7 +92,7 @@ function generateSKUFieldReport(allResults, getField){
 function generateBrandReport(allResults){
     return {
         averageDisplayPriceStdPack: generateBrandFieldReport(allResults, function(brandResult){return brandResult.b_AverageDisplayPrice}),
-        averageNetMarketPrice: generateBrandFieldReport(allResults, function(brandResult){return brandResult.b_AverageNetMarketPrice}),
+        averageNetMarketPriceStdPack: generateBrandFieldReport(allResults, function(brandResult){return brandResult.b_AverageNetMarketPrice}),
         brandAwareness: generateBrandFieldReport(allResults, function(brandResult){return brandResult.b_Awareness * 100}),
         imagePerception: generateBrandFieldReport(allResults, function(brandResult){return brandResult.b_Perception[1]}),
         lostSalesVolumeDueToOOSStdPack: generateBrandFieldReport(allResults, function(brandResult){return brandResult.b_StockOutVolume}),
@@ -160,7 +160,7 @@ function genereateCompanyReport(allResults){
         averageNetMarketPriceStdPack: generateCompanyFieldReport(allResults, function(companyResult){return companyResult.c_AverageNetMarketPrice}),
         lostSalesVolumeDueToOOSStdPack: generateCompanyFieldReport(allResults, function(companyResult){return companyResult.c_TotalStockOutVolume;}),
         marketNetSalesValue: generateCompanyFieldReport(allResults, function(companyResult){return companyResult.c_MarketNetSalesValue[consts.ConsumerSegmentsMaxTotal-1];}),
-        marketSalesVolume: generateCompanyFieldReport(allResults, function(companyResult){return companyResult.c_MarketSalesVolume[consts.ConsumerSegmentsMaxTotal-1];}),
+        marketSalesVolumeStdPack: generateCompanyFieldReport(allResults, function(companyResult){return companyResult.c_MarketSalesVolume[consts.ConsumerSegmentsMaxTotal-1];}),
         marketShareValue: generateCompanyFieldReport(allResults, function(companyResult){return companyResult.c_ValueSegmentShare[consts.ConsumerSegmentsMaxTotal-1] * 100;}),
         marketShareVolume: generateCompanyFieldReport(allResults, function(companyResult){return companyResult.c_VolumeSegmentShare[consts.ConsumerSegmentsMaxTotal-1] * 100;}),
         mindSpaceShare: generateCompanyFieldReport(allResults, function(companyResult){return companyResult.c_MindSpaceShare * 100;}),
