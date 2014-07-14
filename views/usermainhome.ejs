@@ -2034,10 +2034,10 @@
                     <h5>{{data.tableB2CompetitorIntelligence.title}}</h5>
 
                     <ul class="nav nav-pills table_multimenu">
-                        <li ng-class="{'active': css.tableReportMenu == 1}"><a href="" ng-click="css.tableReportMenu=1">Technology</a></li>
-                        <li ng-class="{'active': css.tableReportMenu == 2}"><a href="" ng-click="css.tableReportMenu=2">Marketing & Sales</a></li>
-                        <li ng-class="{'active': css.tableReportMenu == 3}"><a href="" ng-click="css.tableReportMenu=3">Operations</a></li>
-                        <li ng-class="{'active': css.tableReportMenu == 4}"><a href="" ng-click="css.tableReportMenu=4">Investment</a></li>
+                        <li ng-class="{'active': css.tableReportMenu == 1}"><a href="" ng-click="switchTableMenuLevel1(1)">Technology</a></li>
+                        <li ng-class="{'active': css.tableReportMenu == 2}"><a href="" ng-click="switchTableMenuLevel1(2)">Marketing & Sales</a></li>
+                        <li ng-class="{'active': css.tableReportMenu == 3}"><a href="" ng-click="switchTableMenuLevel1(3)">Operations</a></li>
+                        <li ng-class="{'active': css.tableReportMenu == 4}"><a href="" ng-click="switchTableMenuLevel1(4)">Investment</a></li>
                     </ul>
 
                     <div class="table_report" ng-if="css.tableReportMenu == 1">

@@ -549,6 +549,10 @@ marksimosapp.controller('chartController', function($scope,  $timeout, $http, ch
 //        console.log(data);
         $scope.data.tableC3SegmentDistribution.allData = data;
     });
+    $scope.switchTableMenuLevel1 = function(menu){
+        $scope.css.tableReportMenu = menu;
+        $scope.data.tableB2CompetitorIntelligence.currentTable = 1;
+    };
     $scope.switchTableReport = function(report){
         $scope.data.tableC3SegmentDistribution.currentTable = report;
         $scope.data.tableB2CompetitorIntelligence.currentTable = report;
