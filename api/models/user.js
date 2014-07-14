@@ -141,6 +141,21 @@ exports.find = function(query){
     return deferred.promise;
 }
 
+exports.findOne = function(query){
+    var deferred = Q.defer();
+
+    User.findOne(query, 
+    function(err, result){
+        if(err){
+            deferred.reject(err);
+        }else{
+            deferred.resolve(result);
+        }
+    })
+
+    return deferred.promise;
+}
+
 
 
 
