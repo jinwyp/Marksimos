@@ -89,7 +89,7 @@ app.factory('company',function($http){
 
 
 
-app.factory('report',function($http){
+app.factory('chartReport',function($http){
 
     var apiPath = '/api/';
 
@@ -249,7 +249,6 @@ app.factory('report',function($http){
             return '';
         }
     };
-
 
     var chartFormatTool2 = function(chartHttpData) {
         // 使用angular-nvd3 插件的数据格式 Stacked Multi Bar Chart
@@ -600,6 +599,94 @@ app.factory('report',function($http){
 
 
 
+    };
+
+    return factory;
+
+
+});
+
+
+
+
+app.factory('tableReport',function($http){
+
+    var apiPath = '/api/';
+
+    var tableResult = {
+        series: [],
+        data: []
+    };
+
+
+    var factory = {
+
+
+        // Table Report A1
+        companyStatus : function(){
+            return $http.get(apiPath + 'report/company_status').then(function(result){
+//                console.log(result.data);
+
+                return result.data;
+            }).catch(function(err){
+                console.log(err);
+            });
+        },
+
+        // Table Report A2
+        financialReport : function(){
+            return $http.get(apiPath + 'report/financial_report').then(function(result){
+//                console.log(result.data);
+
+                return result.data;
+            }).catch(function(err){
+                console.log(err);
+            });
+        },
+
+        // Table Report B2
+        profitabilityEvolution : function(){
+            return $http.get(apiPath + 'report/profitability_evolution').then(function(result){
+//                console.log(result.data);
+
+                return result.data;
+            }).catch(function(err){
+                console.log(err);
+            });
+        },
+
+        // Table Report B2
+        competitorIntelligence : function(){
+            return $http.get(apiPath + 'report/competitor_intelligence').then(function(result){
+//                console.log(result.data);
+
+                return result.data;
+            }).catch(function(err){
+                console.log(err);
+            });
+        },
+
+        // Table Report C3
+        segmentDistribution : function(){
+            return $http.get(apiPath + 'report/segment_distribution').then(function(result){
+//                console.log(result.data);
+
+                return result.data;
+            }).catch(function(err){
+                console.log(err);
+            });
+        },
+
+        // Table Report C5
+        marketTrends : function(){
+            return $http.get(apiPath + 'report/market_trends').then(function(result){
+//                console.log(result.data);
+
+                return result.data;
+            }).catch(function(err){
+                console.log(err);
+            });
+        }
     };
 
     return factory;

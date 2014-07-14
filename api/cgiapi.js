@@ -1,6 +1,6 @@
 var request = require('./promises/request.js');
 var url = require('url');
-var config = require('./config.js');
+var config = require('../common/config.js');
 var util = require('util');
 var Q = require('q');
 
@@ -63,10 +63,58 @@ exports.queryDecisionsInOnePeriod = function(seminarId, period){
     return Q.all(queries)
     .then(function(decisions){
         for(var i=0; i<decisions.length; i++){
+            if(decisions[i].message){
+                throw new Error('Get decision failed, period: ' + period);
+            }
             decisions[i].period = period;
         }
         return decisions;
     });
 }
+
+/**
+ * @param {Object} initConfig
+ {
+    seminar:'',
+    simulation_span: '',
+    teams: []
+ }
+ */
+exports.init = function(initConfig){
+    //seminar=TTT&simulation_span=3&team1=companyA&team2=companyB
+
+    var reqUrl = config.cgiService + util.format('initialize.exe?seminar=%s&simulation_span=%s'
+        , initConfig.seminarId, initConfig.simulation_span);
+    for(var i=0; i<initConfig.teams.length; i++){
+        reqUrl += '&team' + (i+1) + '=' + initConfig.teams[i];
+    }
+
+    return request.get(reqUrl);
+}
+
+/**
+ * @param {Object} simulationConfig
+ {
+    seminar:'',
+    simulation_span: '',
+    teams: [],
+    period: ''
+ }
+ */
+exports.runSimulation = function(simulationConfig){
+    var reqUrl = config.cgiService + util.format('runsimulation.exe?seminar=%s&simulation_span=%s'
+        , simulationConfig.seminarId, simulationConfig.simulation_span);
+
+    for(var i=0; i<simulationConfig.teams.length; i++){
+        reqUrl += '&team' + (i+1) + '=' + simulationConfig.teams[i];
+    }
+
+    reqUrl += 'period=' + simulationConfig.period;
+
+    return request.get(reqUrl);
+}
+
+
+
 
 

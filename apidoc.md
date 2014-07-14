@@ -263,4 +263,61 @@ GET
 #### report_name
 * company_status
 * financial_report
+* profitability_evolution
+* segment_distribution
+* competitor_intelligence
+* market_trends
 ### response
+
+## /api/adminreport/:report_name
+This API is the same as /api/report/:report_name
+
+
+##  POST /api/distributor
+### Parameters
+* name
+* email
+* password
+* phone
+* country
+* state
+* city
+* num_of_license
+* district  (optional)
+* street    (optional)
+* pincode   (optional)
+
+## PUT /api/distributor/:user_id
+### Parameters
+* user_id
+* name
+* email
+* password
+* phone
+* country
+* state
+* city
+* num_of_license
+* district  (optional)
+* street    (optional)
+* pincode   (optional)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

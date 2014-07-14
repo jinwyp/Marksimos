@@ -2,16 +2,16 @@ var Q = require('q');
 var seminarModel = require('../models/seminar.js');
 var SKUDecisionModel = require('../models/SKUDecision.js');
 var brandDecisionModel = require('../models/brandDecision.js');
-var utility = require('../utility.js');
+var utility = require('../../common/utility.js');
 var consts = require('../consts.js');
 var gameParameters = require('../gameParameters.js').parameters;
 var simulationResultModel = require('../models/simulationResult.js');
 
-exports.getSKUInfo = function(seminarId, period, companyId, SKUID){
+exports.getSKUInfo = function(seminarId, currentPeriod, companyId, SKUID){
     return Q.all([
-        simulationResultModel.findOne(seminarId, period),
-        SKUDecisionModel.findOne(seminarId, period, companyId, SKUID.slice(0, 2), SKUID),
-        brandDecisionModel.findOne(seminarId, period, companyId, SKUID.slice(0, 2))
+        simulationResultModel.findOne(seminarId, currentPeriod-1),
+        SKUDecisionModel.findOne(seminarId, currentPeriod, companyId, SKUID.slice(0, 2), SKUID),
+        brandDecisionModel.findOne(seminarId, currentPeriod, companyId, SKUID.slice(0, 2))
     ]).spread(function(lastPeriodResult, decision, brandDecision){
         var result = {
             currentPeriodInfo: {
@@ -47,7 +47,7 @@ exports.getSKUInfo = function(seminarId, period, companyId, SKUID){
 
         //not sure if the last parameter is decision.d_ProductionVolume 
         return utility.unitCost(
-                period,
+                currentPeriod,
                 SKUResult.u_PackSize,
                 decision.d_IngredientsQuality,
                 decision.d_Technology,
@@ -65,7 +65,7 @@ exports.getSKUInfo = function(seminarId, period, companyId, SKUID){
                 * (1+ gameParameters.pgen.retail_Markup);
             currentPeriodInfo.recommendedConsumer = [parseFloat(recommendedConsumer.toFixed(2)), parseFloat((recommendedConsumer / consts.ActualSize[SKUResult.u_PackSize]).toFixed(2))];
 
-            currentPeriodInfo.period = period;
+            currentPeriodInfo.period = currentPeriod;
 
             result.currentPeriodInfo = currentPeriodInfo;
 
@@ -93,7 +93,7 @@ exports.getSKUInfo = function(seminarId, period, companyId, SKUID){
 
             previousPeriodInfo.consumerCommunication = SKUResult.u_Advertising;
             previousPeriodInfo.consumerPromotions = SKUResult.u_ConsumerPromotions;
-            previousPeriodInfo.period = period - 1;
+            previousPeriodInfo.period = currentPeriod - 1;
 
             result.previousPeriodInfo = previousPeriodInfo;
 

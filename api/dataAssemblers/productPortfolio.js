@@ -1,5 +1,5 @@
-var utility = require('../utility.js');
-var config = require('../config.js');
+var utility = require('../../common/utility.js');
+var config = require('../../common/config.js');
 var consts = require('../consts.js');
 var seminarModel = require('../models/seminar.js');
 var decisionAssembler = require('./decision.js');
@@ -9,13 +9,13 @@ var simulationResultModel = require('../models/simulationResult.js');
 /**
  * Assemble product portfolio data
  * 
- * @param {Object} decision current decision in mongo
- * @param {Object} allResults allResults in mongo
+ * @param {Number} currentPeriod the current period
+ * @param {Number} companyId
  */
-exports.getProductPortfolioForOneCompany = function(seminarId, period, companyId){
+exports.getProductPortfolioForOneCompany = function(seminarId, currentPeriod, companyId){
     return Q.all([
-        simulationResultModel.findOne(seminarId, period),
-        decisionAssembler.getDecision(seminarId, period, companyId)
+        simulationResultModel.findOne(seminarId, currentPeriod-1),
+        decisionAssembler.getDecision(seminarId, currentPeriod, companyId)
     ])
     .spread(function(lastPeriodResult, decision){
 

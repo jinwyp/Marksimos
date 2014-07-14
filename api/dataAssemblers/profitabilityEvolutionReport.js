@@ -1,7 +1,7 @@
 var Q = require('q');
-var utility = require('../utility.js');
+var utility = require('../../common/utility.js');
 var consts = require('../consts.js');
-var config = require('../config.js');
+var config = require('../../common/config.js');
 
 exports.getProfitabilityEvolutionReport = function(allResults){
     var allCompanyReport = [];
@@ -16,16 +16,17 @@ exports.getProfitabilityEvolutionReport = function(allResults){
                 SKU: []
             });
         }
-    })
+    });
 
     allCompanyReport.forEach(function(companyReport){
         companyReport.SKU = generateSKUReport(companyReport.companyId, allResults);
         companyReport.brand = generateBrandReport(companyReport.companyId, allResults);
         companyReport.global = generateGlobalReport(companyReport.companyId, allResults);
-    })
+    });
 
     return allCompanyReport;
-}
+
+};
 
 function generateSKUReport(companyId, allResults){
     if(allResults === undefined) throw new Error("Invalid parameter allResult.");
@@ -41,7 +42,7 @@ function generateSKUReport(companyId, allResults){
                 });
             }
         }
-    })
+    });
 
     allSKUReport.forEach(function(SKUReport){
         allResults.forEach(function(onePeriodResult){
@@ -76,7 +77,7 @@ function generateSKUReport(companyId, allResults){
                     onePeriodReport.exceptionalCostsProfits = SKU.u_CurrentExceptionalCostProfit;
                     onePeriodReport.taxes = -SKU.u_Taxes;
                     onePeriodReport.netProfit = SKU.u_NetProfit;
-                    onePeriodReport.surchargeForSuplementaryInvestmentBudget = -SKU.u_CurrentSurcharge;
+                    onePeriodReport.surchargeForSupplementaryInvestmentBudget = -SKU.u_CurrentSurcharge;
                     onePeriodReport.netResult = -SKU.u_NetResult;
                     onePeriodReport.shareInBrandTotalSalesValue = SKU.u_ShareInBrandSalesValue * 100;
                     onePeriodReport.shareInBrandGrossProfitLosses = SKU.u_ShareInBrandGrossProfit * 100;
@@ -163,7 +164,7 @@ function generateBrandReport(companyId, allResults){
                     onePeriodReport.exceptionalCostsProfits = brandResult.b_CurrentExceptionalCostProfit;
                     onePeriodReport.taxes = -brandResult.b_Taxes;
                     onePeriodReport.netProfit = brandResult.b_NetProfit;
-                    onePeriodReport.surchargeForSuplementaryInvestmentBudget = -brandResult.b_CurrentSurcharge;
+                    onePeriodReport.surchargeForSupplementaryInvestmentBudget = -brandResult.b_CurrentSurcharge;
                     onePeriodReport.netResult = -brandResult.b_NetResult;
 
                     onePeriodReport.shareInCompanyTotalSalesValue = brandResult.b_ShareInCompanySalesValue * 100;
@@ -179,10 +180,10 @@ function generateBrandReport(companyId, allResults){
                     onePeriodReport.netProfitMargin = brandResult.b_NetProfitMargin * 100;
                     onePeriodReport.returnOnInvestment = brandResult.b_ReturnOnInvestment;
 
-                    onePeriodReport.averageNetMarketPrice = brandResult.b_AverageNetMarketPrice * consts.ActualSize[brandResult.b_PackSize];
-                    onePeriodReport.averageWholesalesPrice = brandResult.b_AverageWholesalesPrice * consts.ActualSize[brandResult.b_PackSize];
-                    onePeriodReport.averageManufacturerPrice = brandResult.b_AverageManufacturerPrice * consts.ActualSize[brandResult.b_PackSize];
-                    onePeriodReport.averageProductionCost = brandResult.b_AverageProductionCost * consts.ActualSize[brandResult.b_PackSize];
+                    onePeriodReport.averageNetMarketPrice = brandResult.b_AverageNetMarketPrice;
+                    onePeriodReport.averageWholesalesPrice = brandResult.b_WholesalesPrice;
+                    onePeriodReport.averageManufacturerPrice = brandResult.b_FactoryPrice;
+                    onePeriodReport.averageProductionCost = brandResult.b_AverageProductionCost;
 
                     onePeriodReport.marketSalesValue = brandResult.b_MarketSalesValue[consts.ConsumerSegmentsMaxTotal-1];
                     onePeriodReport.consumerProcePromotion = -brandResult.b_PricePromotionsCost;
@@ -224,6 +225,7 @@ function generateGlobalReport(companyId, allResults){
             if(companyResult.c_CompanyID === companyId){
                 var onePeriodReport = {};
                 
+                onePeriodReport.period = 'Quarter ' + onePeriodResult.period;
                 onePeriodReport.manufacturerSalesValue = companyResult.c_FactorySalesValue;
                 onePeriodReport.costOfGoodsSold = -companyResult.c_CostOfGoodsSold;
                 onePeriodReport.inventoryHoldingCost = -companyResult.c_InventoryHoldingCost;
@@ -252,7 +254,7 @@ function generateGlobalReport(companyId, allResults){
                 onePeriodReport.exceptionalCostsProfits = companyResult.c_CurrentExceptionalCostProfit;
                 onePeriodReport.taxes = -companyResult.c_Taxes;
                 onePeriodReport.netProfit = companyResult.c_NetProfit;
-                onePeriodReport.surchargeForSuplementaryInvestmentBudget = -companyResult.c_CurrentSurcharge;
+                onePeriodReport.surchargeForSupplementaryInvestmentBudget = -companyResult.c_CurrentSurcharge;
                 onePeriodReport.netResult = -companyResult.c_NetResult;
 
                 onePeriodReport.grossProfitMargin = companyResult.c_GrossProfitMargin * 100;

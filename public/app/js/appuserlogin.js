@@ -4,13 +4,13 @@
 
 // create module for custom directives
 
-var marksimosapp = angular.module('marksimos', [ 'marksimos.component', 'marksimos.factory']);
+var marksimosapp = angular.module('marksimoslogin', [ 'marksimos.component', 'marksimos.factory']);
 
 
 
 
 // controller business logic
-marksimosapp.controller('userLoginController', function AppCtrl ($scope,  $timeout, $http, $window) {
+marksimosapp.controller('userLoginController', function  ($scope,  $timeout, $http, $window) {
     $scope.css = {
         newUser : {
             passwordPrompt : false
@@ -49,7 +49,7 @@ marksimosapp.controller('userLoginController', function AppCtrl ($scope,  $timeo
 
 
 
-marksimosapp.controller('userIntroController', function AppCtrl ($scope,  $timeout, $http, $window) {
+marksimosapp.controller('userIntroController', function  ($scope,  $timeout, $http, $window) {
 
     $scope.css = {
         intro : true

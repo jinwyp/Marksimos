@@ -41,6 +41,8 @@ begin
     //add by Michael
    // FileMode := fmOpenRead;
     Reset( vFile );
+
+    //-3, -2, -1 decision are the same
     if ( pPeriodNumber < Period_0 ) then pPeriodNumber := Period_0;
     Seek( vFile, pPeriodNumber );
     //be sure periodNumber is in the decision file

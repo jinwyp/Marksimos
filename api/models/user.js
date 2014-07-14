@@ -3,92 +3,143 @@ var Schema = mongoose.Schema;
 var Q = require('q');
 
 var userSchema = new Schema({
+    name: String,
     email: String,
-    userName: String,
+    phone: String,
+
+    //address
+    country: String,
+    state: String,
+    city: String,
+    district: String,
+    street: String,
+
+
+    activateToken: String,
+    isActive: {type: Boolean, default: false},
+    isDisabled: {type: Boolean, default: false},
     password: String,
-    role: Number   //1: Admin, 2:Distributor, 3: Facilitator, 4:Students
+    
+    role: {type: Number, default: 4}, //1 admin, 2 distributor, 3 facilitator, 4 students
+
+    numOfLicense: {type: Number, default: 0},
+    numOfUsedLicense: {type: Number, default: 0},
+
+    //facilitator field
+    distributorId: String,
+    
+    //student fileds
+    pincode: String,
+    gender: Number,
+    occupation: Number,
+    firstName: String,
+    lastName: String,
+    univercity: String,
+    organization: String,
+    highestEducationalDegree: String,
+
+    facilitatorId: String
 });
 
-var User = mongoose.model('Useraccount', userSchema);
+var User = mongoose.model("User", userSchema);
 
-
-exports.isUserExisted = function(email){
+exports.register = function(user){
     var deferred = Q.defer();
 
-    if(!email){
-        deferred.resolve(false);
-    }else{
-        User.find({email: email}, function(err, userData){
-            if(err) return deferred.reject(err);
-
-            if(userData && userData.length === 1){
-                return deferred.resolve(true);
-            }else{
-                return deferred.resolve(false);
-            }
-        })
-    }
+    User.create(user, function(err, result){
+        if(err){
+            deferred.reject(err);
+        }else{
+            deferred.resolve(result);
+        }
+    })
 
     return deferred.promise;
-};
+}
 
-exports.addUser = function(user){
+exports.updateByEmail = function(email, user){
     var deferred = Q.defer();
 
-    if(!user){
-        deferred.reject(new Error('user can not be empty.'));
-    }else{
-        var u = new User(user);
-        u.save(function(err){
-            if(err) return deferred.reject(err);
-
-            return deferred.resolve(true);
-        })
+    User.update({
+        email: email
     }
+    ,user
+    , function(err, numAffected){
+        if(err){
+            deferred.reject(err);
+        }else{
+            deferred.resolve(numAffected);
+        }
+    });
 
-    return deferred.promise;
-};
+    return deferred.promise; 
+}
 
-exports.login = function(email, password){
+exports.update = function(query, user){
     var deferred = Q.defer();
 
-    var errorMessage = null;
-    if(!email){
-        errorMessage = "email can't be empty.";
-    }
+    User.update(query
+    , user
+    , function(err, numAffected){
+        if(err){
+            deferred.reject(err);
+        }else{
+            deferred.resolve(numAffected);
+        }
+    });
 
-    if(!password){
-        errorMessage = "password can't be empty.";
-    }
+    return deferred.promise; 
+}
 
-    if(errorMessage){
-        deferred.reject(new Error(errorMessage));
-    }else{
-        User.findOne({
-            email: email,
-            password: password
-        }, function(err, result){
+exports.findByEmail = function(email){
+    var deferred = Q.defer();
 
-            if(err) deferred.reject(err);
-
-            if(result){
-                deferred.resolve(result);
-            } else {
-                deferred.reject(new Error('user not exist'));
-            }
-        })
-    }
+    User.findOne({
+        email: email
+    }, 
+    function(err, result){
+        if(err){
+            deferred.reject(err);
+        }else{
+            deferred.resolve(result);
+        }
+    })
 
     return deferred.promise;
-};
+}
 
+exports.findByEmailAndToken = function(email, token){
+    var deferred = Q.defer();
 
+    User.findOne({
+        email: email,
+        activateToken: token
+    }, 
+    function(err, result){
+        if(err){
+            deferred.reject(err);
+        }else{
+            deferred.resolve(result);
+        }
+    })
 
+    return deferred.promise;
+}
 
+exports.find = function(query){
+    var deferred = Q.defer();
 
+    User.find(query, 
+    function(err, result){
+        if(err){
+            deferred.reject(err);
+        }else{
+            deferred.resolve(result);
+        }
+    })
 
-
-
+    return deferred.promise;
+}
 
 
 

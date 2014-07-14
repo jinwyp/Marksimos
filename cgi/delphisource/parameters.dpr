@@ -18,6 +18,7 @@ var
   GenPar : TGeneralParameters;
   SegPar : TSegmentsParameters;
   jsonResult: String;
+  resultCode: Integer;
 
 function parseSimulationVariant(p: String): TSimulationVariant;
 begin
@@ -58,7 +59,9 @@ begin
       GConfigureRecord.cr_TargetMarket := parseTargetMarket(params['targetMarket']);
 
       WriteLn;
-      ReadParameters(GenPar, GConfigureRecord, SegPar);
+      resultCode := ReadParameters(GenPar, GConfigureRecord, SegPar);
+
+      if(resultCode<>ReadParametersOK) then raise Exception.Create('Read parameter failed, code: '+IntToStr(resultCode));
 
       jo := ctx.AsJson<TGeneralParameters>(GenPar);
 

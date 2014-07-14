@@ -6,6 +6,9 @@ var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 var mongoose = require('mongoose');
 var session = require('cookie-session');
+var expressValidator = require('express-validator');
+var sessionOperation = require('./common/sessionOperation.js');
+var config = require('./common/config.js');
 
 
 var app = express();
@@ -15,11 +18,11 @@ app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
 
 
-
 app.use(favicon());
 app.use(logger('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded());
+app.use(expressValidator());
 app.use(cookieParser());
 app.use(session({
     secret: 'marksimos',
@@ -29,10 +32,12 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 //initialize session data
 app.use(function(req, res, next){
-    req.session.userId = 'testid';
-    req.session.userRole = 1; //1: player, 2: facilitator, 3: distributor, 4: admin
+    sessionOperation.setLoginStatus(req, true);
+    sessionOperation.setUserRole(req, config.role.distributor);
+    sessionOperation.setUserId(req, '53bf43054efec60000e1e3de');
+
     req.session.seminarId = 'TTT';
-    req.session.companyId = 1;
+    req.session.companyId = 2;
     req.session.period = 1;
     next();
 });
@@ -45,25 +50,12 @@ app.use(function(req, res, next){
     next();
 });
 
-app.get('/test', function(req, res, next){
-    var chartDataModel = require('./api/models/chartData.js');
-    chartDataModel.getChartData('TTT')
-    .then(function(allCharts){
-        test1(allCharts);
-        console.log(allCharts);
-    })
-    .fail(function(err){
-        console.log(err);
-    }).done();
-    res.send('123');
+// app.get('/test', function(req, res, next){
+//     res.send('/test');
+// });
 
-    function test1(allCharts){
-        delete allCharts.seminarId;
-        allCharts.seminarId = allCharts;
-    }
-});
-
-require('./api/routes.js')(app);
+//require('./api/routes.js')(app);
+app.use(require('./api/routes.js'));
 require('./routes.js')(app);
 
 /// catch 404 and forwarding to error handler

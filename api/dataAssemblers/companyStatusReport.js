@@ -1,7 +1,7 @@
 var Q = require('q');
-var utility = require('../utility.js');
+var utility = require('../../common/utility.js');
 var consts = require('../consts.js');
-var config = require('../config.js');
+var config = require('../../common/config.js');
 
 exports.getCompanyStatusReport = function(allResults, allExogenous){
     var allCompanyReport = [];
@@ -82,13 +82,13 @@ function generateSKUReport(companyId, allResults, allExogenous){
                     onePeriodReport.numberOfOutOfStockEpisodes = utility.setSize(SKU.u_OOSEpisodesNumbers);
                     onePeriodReport.marketSalesVolume = SKU.u_MarketSalesVolume[consts.ConsumerSegmentsMaxTotal-1] / consts.ActualSize[SKU.u_PackSize];
                     onePeriodReport.retailersPurchasesVolume = SKU.u_WholesalesVolume / consts.ActualSize[SKU.u_PackSize];
-                    onePeriodReport.shippmentsToWholesalers = SKU.u_FactorySalesVolume / consts.ActualSize[SKU.u_PackSize];
+                    onePeriodReport.shipmentsToWholesalers = SKU.u_FactorySalesVolume / consts.ActualSize[SKU.u_PackSize];
                     onePeriodReport.productionVolume = SKU.u_ps_ActualProductionVolume;
                     onePeriodReport.inventoryVolumeAtManufacturer = SKU.u_ps_FactoryStocks[consts.StocksMaxTotal].s_ps_Volume;;
                     onePeriodReport.inventoryVolumeAtWholesalers = SKU.u_ps_WholesaleStocks[consts.StocksMaxTotal].s_ps_Volume;
                     onePeriodReport.inventoryVolumeAtRetailers = SKU.u_ps_RetailStocks[consts.StocksMaxTotal].s_ps_Volume;
-                    onePeriodReport.stocksCoverAtRetailers = SKU.u_StockCoverAtRetailers;
-                    onePeriodReport.stocksCoverAtWholesalers = SKU.u_StockCoverAtWholesalers;
+                    onePeriodReport.stocksCoverAtRetailersWeeks = SKU.u_StockCoverAtRetailers;
+                    onePeriodReport.stocksCoverAtWholesalersWeeks = SKU.u_StockCoverAtWholesalers;
                     SKUReport.data.push(onePeriodReport);
                 }
             })
@@ -150,7 +150,7 @@ function generateBrandReport(companyId, allResults){
                     onePeriodReport.marketNetSalesValue = brandResult.b_MarketNetSalesValue[consts.ConsumerSegmentsMaxTotal - 1];
                     onePeriodReport.numberOfOutOfStockEpisodes = utility.setSize(brandResult.b_CompleteOOSEpisodesNumbers);
                     onePeriodReport.retailersPurchasesVolumeStdPack = brandResult.b_WholesalesVolume;
-                    onePeriodReport.shippmentsToWholesalersStdPack = brandResult.b_FactorySalesVolume;
+                    onePeriodReport.shipmentsToWholesalersStdPack = brandResult.b_FactorySalesVolume;
                     onePeriodReport.productionVolumeStdPack = brandResult.b_ActualProductionVolume;
                     onePeriodReport.inventoryVolumeAtManufacturerStdPack = brandResult.b_FactoryStocks[consts.StocksMaxTotal].s_Volume;
                     onePeriodReport.inventoryVolumeAtWholesalersStdPack = brandResult.b_WholesalesStocks[consts.StocksMaxTotal].s_Volume;
@@ -187,29 +187,30 @@ function generateGlobalReport(companyId, allResults){
 
             if(companyResult.c_CompanyID === companyId){
                 var onePeriodReport = {};
+                onePeriodReport.period = "Quarter " + onePeriodResult.period;
                 onePeriodReport.marketShareValue = companyResult.c_ValueSegmentShare[consts.ConsumerSegmentsMaxTotal-1] * 100;
                 onePeriodReport.marketShareVolume = companyResult.c_VolumeSegmentShare[consts.ConsumerSegmentsMaxTotal -1] * 100;
-                onePeriodReport.marketSalesVolume = companyResult.c_MarketSalesVolume[consts.ConsumerSegmentsMaxTotal-1] * 100;
-                onePeriodReport.lostSalesVolumeDueToOOS = companyResult.c_TotalStockOutVolume;
+                onePeriodReport.marketSalesVolumeStdPack = companyResult.c_MarketSalesVolume[consts.ConsumerSegmentsMaxTotal-1] * 100;
+                onePeriodReport.lostSalesVolumeDueToOOSStdPack = companyResult.c_TotalStockOutVolume;
                 onePeriodReport.numbericalDistribution = companyResult.c_AverageDistributionNum * 100;
                 onePeriodReport.volumeWeightedDistribution = companyResult.c_AverageDistributionVol * 100;
                 onePeriodReport.shelfSpace = companyResult.c_ShelfSpace * 100;
                 onePeriodReport.mindSpaceShare = companyResult.c_MindSpaceShare * 100;
-                onePeriodReport.averageNetMarketPrice = companyResult.c_AverageNetMarketPrice;
-                onePeriodReport.averageDisplayPrice = companyResult.c_AverageDisplayPrice;
+                onePeriodReport.averageNetMarketPriceStdPack = companyResult.c_AverageNetMarketPrice;
+                onePeriodReport.averageDisplayPriceStdPack = companyResult.c_AverageDisplayPrice;
                 onePeriodReport.ingredientsQualityIndex = companyResult.c_AverageIngredientsQuality;
                 onePeriodReport.appliedTechnologyIndex = companyResult.c_AverageIngredientsQuality;
                 onePeriodReport.marketSalesValue = companyResult.c_MarketSalesValue[consts.ConsumerSegmentsMaxTotal-1];
                 onePeriodReport.consumerPricePromotions = -companyResult.c_PricePromotionsCost;
                 onePeriodReport.marketNetSalesValue = companyResult.c_MarketNetSalesValue[consts.ConsumerSegmentsMaxTotal-1];
                 onePeriodReport.retailersPurchasesVolume = companyResult.c_WholesalesVolume;
-                onePeriodReport.shippmentsToWholesalers = companyResult.c_FactorySalesVolume;
+                onePeriodReport.shipmentsToWholesalers = companyResult.c_FactorySalesVolume;
                 onePeriodReport.productionVolume = companyResult.c_ActualProductionVolume;
                 onePeriodReport.inventoryVolumeAtManufacturer = companyResult.c_FactoryStocks[consts.StocksMaxTotal].s_Volume;
                 onePeriodReport.inventoryVolumeAtWholesalers = companyResult.c_WholesalesStocks[consts.StocksMaxTotal].s_Volume;
                 onePeriodReport.inventoryVolumeAtRetailers = companyResult.c_RetailStocks[consts.StocksMaxTotal].s_Volume;
-                onePeriodReport.stocksCoverAtRetailers = companyResult.c_StockCoverAtRetailers;
-                onePeriodReport.stocksCoverAtWholesalers = companyResult.c_StockCoverAtWholesalers;
+                onePeriodReport.stocksCoverAtRetailersWeeks = companyResult.c_StockCoverAtRetailers;
+                onePeriodReport.stocksCoverAtWholesalersWeeks = companyResult.c_StockCoverAtWholesalers;
                 globalReport.push(onePeriodReport);
                 break;
             }

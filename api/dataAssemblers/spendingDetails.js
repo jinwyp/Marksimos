@@ -1,16 +1,19 @@
 var decisionAssembler = require('../dataAssemblers/decision.js');
 var seminarModel = require('../models/seminar.js');
 var Q = require('q');
-var utility = require('../utility.js');
+var utility = require('../../common/utility.js');
 var consts = require('../consts.js');
 var gameParameters = require('../gameParameters.js').parameters;
 var simulationResultModel = require('../models/simulationResult.js');
 
-exports.getSpendingDetails = function(seminarId, period, companyId){
+/**
+* @param {Number} currentPeriod 
+*/
+exports.getSpendingDetails = function(seminarId, currentPeriod, companyId){
     return Q.all([
-        decisionAssembler.getDecision(seminarId, period, companyId),
+        decisionAssembler.getDecision(seminarId, currentPeriod, companyId),
         seminarModel.findOne(seminarId),
-        simulationResultModel.findOne(seminarId, period)
+        simulationResultModel.findOne(seminarId, currentPeriod - 1)
     ])
     .spread(function(decision, seminar, lastPeriodResult){
         var brandData = [];

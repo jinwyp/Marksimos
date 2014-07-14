@@ -5,7 +5,7 @@
 
 var app = angular.module('marksimos.component', []);
 
-app.directive('headerUser', function() {
+app.directive('headerUser', function($translate) {
     return {
         scope: {
             login : '=',
@@ -23,22 +23,75 @@ app.directive('headerUser', function() {
             scope.clickMenu = function(currentmenu){
                 scope.currentMenu = currentmenu;
 
-                if (currentmenu == 'Home'){
-                    scope.menuhome();
-                }else if (currentmenu == 'Report'){
-                    scope.menureport();
-                }else if (currentmenu == 'Score'){
-                    scope.menuscore();
-                }else if (currentmenu == 'Decision'){
-                    scope.menudecision();
-                }
+//                if (currentmenu == 'Home'){
+//                    scope.menuhome();
+//                }else if (currentmenu == 'Report'){
+//                    scope.menureport();
+//                }else if (currentmenu == 'Score'){
+//                    scope.menuscore();
+//                }else if (currentmenu == 'Decision'){
+//                    scope.menudecision();
+//                }
             };
 
-
-
+            scope.changeLanguage = function (langKey) {
+                $translate.use(langKey);
+            };
 
         }
     };
 });
 
 
+
+
+
+
+
+
+
+
+app.directive('tableReportSegmentDistribution', function() {
+    return {
+        scope: {
+            data : '=',
+            unit : '@'
+        },
+        restrict: 'AE',
+        templateUrl: 'app/js/directive/tablereportsegmentdistribution.html',
+        link: function (scope, element, attrs) {
+            scope.plus = 1;
+
+            if(angular.isUndefined(scope.unit)) {
+                scope.unit = '';
+            }else if (scope.unit === "%"){
+                scope.plus = 100;
+            }
+
+        }
+    };
+});
+
+
+
+app.directive('tableReportCompetitorIntelligence', function() {
+    return {
+        scope: {
+            data : '=',
+            unit : '@'
+        },
+        restrict: 'AE',
+        templateUrl: 'app/js/directive/tablereportcompetitorintelligence.html',
+        link: function (scope, element, attrs) {
+
+            scope.plus = 1;
+
+            if(angular.isUndefined(scope.unit)) {
+                scope.unit = '';
+            }else if (scope.unit === "%"){
+                scope.plus = 1;
+            }
+
+        }
+    };
+});

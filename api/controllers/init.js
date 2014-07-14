@@ -1,7 +1,7 @@
 var request = require('../promises/request.js');
 var util = require('util');
 var url = require('url');
-var config = require('../config.js');
+var config = require('../../common/config.js');
 var Q = require('q');
 
 var decisionCleaner = require('../convertors/decisionCleaner.js');
@@ -24,6 +24,7 @@ var financialReportAssembler = require('../dataAssemblers/financialReport.js');
 var profitabilityEvolutionReportAssembler = require('../dataAssemblers/profitabilityEvolutionReport.js');
 var segmentDistributionReportAssembler = require('../dataAssemblers/segmentDistributionReport.js');
 var competitorIntelligenceReportAssembler = require('../dataAssemblers/competitorIntelligence.js');
+var marketTrendsReportAssembler = require('../dataAssemblers/marketTrendsReport.js');
 var chartAssembler = require('../dataAssemblers/chart.js');
 
 
@@ -36,61 +37,80 @@ var chartAssembler = require('../dataAssemblers/chart.js');
 exports.init = function(req, res, next) {
     var seminarId = 'TTT'; //this parameter should be posted from client
     var simulationSpan = 6; //should be posted from client
+    var currentPeriod = req.session.period;
 
     if(!seminarId){
         return next(new Error("seminarId cannot be empty."));
     }
 
-    Q.all([
-        simulationResultModel.removeAll(seminarId),
-        dbutility.removeExistedDecisions(seminarId),
-        seminarModel.remove(seminarId),
-        chartModel.remove(seminarId),
-        reportModel.remove(seminarId)
-    ])
-    .then(function(){
-        //insert empty data into mongo, so that we can update them
+    initBinaryFile(seminarId, simulationSpan)
+    .then(function(initResult){
+        if(initResult.message !== 'init_success'){
+            return res.send({message: 'init binary file failed. initResult = ' + initResult.message});
+        }
+
         return Q.all([
-            //add a new seminar
-            seminarModel.insert(seminarId, {
-                seminarId: seminarId,
-                simulationSpan: simulationSpan
-            })
-        ]);
-    })
-    .then(function(){
-        return Q.all([
-            initSimulationResult(seminarId),
-            initDecision(seminarId)
+            simulationResultModel.removeAll(seminarId),
+            dbutility.removeExistedDecisions(seminarId),
+            seminarModel.remove(seminarId),
+            chartModel.remove(seminarId),
+            reportModel.remove(seminarId)
         ])
-    })
-    .then(function(){
-        return Q.all([
-            simulationResultModel.findAll(seminarId)
-        ])
-        .spread(function(allResults){
+        .then(function(){
+            //insert empty data into mongo, so that we can update them
             return Q.all([
-                initChartData(seminarId, allResults),
-                initCompanyStatusReport(seminarId, allResults),
-                initFinancialReport(seminarId, allResults),
-                initProfitabilityEvolutionReport(seminarId, allResults),
-                initSegmentDistribution(seminarId, allResults),
-                initCompetitorIntelligence(seminarId, allResults)
+                //add a new seminar
+                seminarModel.insert(seminarId, {
+                    seminarId: seminarId,
+                    simulation_span: simulationSpan
+                })
             ]);
-        });
-    })
-    .then(function(){
-        //when init is called, current period is 1
-        return dbutility.insertEmptyDecision(seminarId, 1);
-    })
-    .then(function(){
-        res.send('initialize success');
+        })
+        .then(function(){
+            return Q.all([
+                initSimulationResult(seminarId),
+                initDecision(seminarId)
+            ])
+        })
+        .then(function(){
+            return Q.all([
+                simulationResultModel.findAll(seminarId)
+            ])
+            .spread(function(allResults){
+                return Q.all([
+                    initChartData(seminarId, allResults),
+                    
+                    initCompanyStatusReport(seminarId, allResults),
+                    initFinancialReport(seminarId, allResults),
+                    initProfitabilityEvolutionReport(seminarId, allResults),
+                    initSegmentDistributionReport(seminarId, allResults),
+                    initCompetitorIntelligenceReport(seminarId, allResults),
+                    initMarketTrendsReport(seminarId, allResults)
+                ]);
+            });
+        })
+        .then(function(){
+            //when init is called, current period is 1
+            //return dbutility.insertEmptyDecision(seminarId, 1);
+            return duplicateLastPeriodDecision(seminarId, currentPeriod);
+        })
+        .then(function(){
+            res.send({message: 'initialize success'});
+        })
     })
     .fail(function(err){
         next(err);
     })
     .done();
 };
+
+function initBinaryFile(seminarId, simulation_span){
+    return cgiapi.init({
+        seminarId: seminarId,
+        simulation_span: simulation_span,
+        teams: ['companyA', 'companyB']
+    });
+}
 
 
 function initDecision(seminarId){
@@ -212,7 +232,7 @@ function initProfitabilityEvolutionReport(seminarId, allResults){
     })
 }
 
-function initSegmentDistribution(seminarId, allResults){
+function initSegmentDistributionReport(seminarId, allResults){
     var queries = [];
     allResults.forEach(function(onePeriodResult){
         queries.push(cgiapi.getExogenous(onePeriodResult.period));
@@ -227,7 +247,7 @@ function initSegmentDistribution(seminarId, allResults){
     });
 }
 
-function initCompetitorIntelligence(seminarId, allResults){
+function initCompetitorIntelligenceReport(seminarId, allResults){
     return reportModel.insert({
         seminarId: seminarId,
         reportName: 'competitor_intelligence',
@@ -235,7 +255,66 @@ function initCompetitorIntelligence(seminarId, allResults){
     })
 }
 
+function initMarketTrendsReport(seminarId, allResults){
+    return reportModel.insert({
+        seminarId: seminarId,
+        reportName: 'market_trends',
+        reportData: marketTrendsReportAssembler.getMarketTrendsReport(allResults)
+    })
+}
 
+
+function duplicateLastPeriodDecision(seminarId, currentPeriod){
+    return companyDecisionModel.findAllInPeriod(seminarId, currentPeriod-1)
+    .then(function(allCompanyDecision){
+        var p = Q();
+        allCompanyDecision.forEach(function(companyDecision){
+            var tempCompanyDecision = JSON.parse(JSON.stringify(companyDecision));
+
+            delete tempCompanyDecision._id;
+            delete tempCompanyDecision.__v;
+            tempCompanyDecision.period = tempCompanyDecision.period + 1;
+            p = p.then(function(){
+                return companyDecisionModel.save(tempCompanyDecision);
+            })
+        })
+        return p;
+    })
+    .then(function(){
+        return brandDecisionModel.findAllInPeriod(seminarId, currentPeriod-1)
+        .then(function(allBrandDecision){
+            var p = Q();
+            allBrandDecision.forEach(function(brandDecision){
+                var tempBrandDecision = JSON.parse(JSON.stringify(brandDecision));
+
+                delete tempBrandDecision._id;
+                delete tempBrandDecision.__v;
+                tempBrandDecision.period = tempBrandDecision.period + 1;
+                p = p.then(function(){
+                    return brandDecisionModel.save(tempBrandDecision);
+                })
+            })
+            return p;
+        })
+    })
+    .then(function(){
+        return SKUDecisionModel.findAllInPeriod(seminarId, currentPeriod-1)
+        .then(function(allSKUDecision){
+            var p = Q();
+            allSKUDecision.forEach(function(SKUDecision){
+                var tempSKUDecision = JSON.parse(JSON.stringify(SKUDecision));
+
+                delete tempSKUDecision._id;
+                delete tempSKUDecision.__v;
+                tempSKUDecision.period = tempSKUDecision.period + 1;
+                p = p.then(function(){
+                    return SKUDecisionModel.save(tempSKUDecision);
+                })
+            })
+            return p;
+        })
+    })
+}
 
 
 

@@ -1,5 +1,5 @@
 var request = require('../promises/request.js');
-var config = require('../config.js');
+var config = require('../../common/config.js');
 var url = require('url');
 var util = require('util');
 var companyDecisionModel = require('../models/companyDecision.js');
@@ -8,7 +8,7 @@ var SKUDecisionModel = require('../models/SKUDecision.js');
 var decisionCleaner = require('../convertors/decisionCleaner.js');
 var decisionConvertor = require('../convertors/decision.js');
 var Q = require('q');
-var logger = require('../../logger.js');
+var logger = require('../../common/logger.js');
 var gameParameters = require('../gameParameters.js').parameters;
 
 /**
@@ -98,6 +98,8 @@ exports.submitDecision = function(req, res, next){
         insertEmptyBrandsAndSKUs(result);
         //convert result to data format that can be accepted by CGI service
         decisionConvertor.convert(result);
+
+        //return res.send(result);
         //return result;
         var reqUrl = url.resolve(config.cgiService, '/cgi-bin/decisions.exe');
         return request.post(reqUrl, {
@@ -105,11 +107,11 @@ exports.submitDecision = function(req, res, next){
             seminarId: seminarId,
             period: period,
             team: companyId
+        })
+        .then(function(postDecisionResult){
+            //console.log(!postDecisionResult);
+            res.send(postDecisionResult);
         });
-    })
-    .then(function(postDecisionResult){
-        //console.log(!postDecisionResult);
-        res.send(postDecisionResult);
     })
     .fail(function(err){
         next(err);
