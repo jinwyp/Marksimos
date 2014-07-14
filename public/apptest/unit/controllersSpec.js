@@ -55,6 +55,9 @@ describe('chartController', function(){
     it('Initially scope.data.tableC3SegmentDistribution has default value ', function() {
         expect(scope.data.tableC3SegmentDistribution.currentTable).toEqual(1);
     });
+    it('Initially scope.data.tableC5MarketTrends has default value ', function() {
+        expect(scope.data.tableC5MarketTrends.currentTable).toEqual(1);
+    });
 
     it('Initially scope.css.tableReportMenu has default value ', function() {
         expect(scope.css.tableReportMenu).toEqual(1);
