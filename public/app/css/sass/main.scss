@@ -595,15 +595,19 @@ body{
         }
 
         ul .list-group-item{
-            font-size: 13px;
-            font-family: $font_main_header2;
-            color: $color_main_body_user_chart_list;
-            font-weight: bold;
-            background-color: #ffffff;
+
+            background-color: $color_login_panel_background;
             background-image: url(../images/userchartlist.png);
             background-repeat: no-repeat;
             background-position: 75px 20px;
             padding: 18px 1px 18px 95px;
+
+            a {
+                font-size: 13px;
+                font-family: $font_main_header2;
+                color: $color_main_body_user_chart_list;
+                font-weight: bold;
+            }
         }
         ul .list-group-item-active{
             background-color: $color_main_body_background;
@@ -690,19 +694,25 @@ body{
 
 
         ul .list-group-item{
-            font-size: 11px;
-            color: $color_main_body_user_chart_list;
             border: 0px none #000000;
             background-color: $color_main_body_background_brand;
             background-image: url(../images/userchartlist.png);
             background-repeat: no-repeat;
             background-position: 30px 12px;
             padding: 11px 1px 13px 50px;
+
+            a{
+                font-size: 11px;
+                color: $color_main_body_user_chart_list;
+            }
         }
         ul .list-group-item-active{
-            font-weight: bold;
-            color: $color_main_body_user_chart_title;
             background-color: $color_main_body_user_chart_leftmenu_active_bg;
+
+            a{
+                font-weight: bold;
+                color: $color_main_body_user_chart_title;
+            }
 
             &:before{
                 border: 3px solid $color_main_body_user_chart_leftmenu_active_bgbefore;

@@ -529,7 +529,10 @@ marksimosapp.controller('chartController', function($scope,  $timeout, $http, ch
         $scope.data.tableA2FinancialData.currentPeriod = $scope.data.tableA2FinancialData.currentCompany.periods[0];
         $scope.data.tableA2FinancialData.currentBrand = $scope.data.tableA2FinancialData.currentPeriod.brands[0];
     });
-
+    $scope.switchTableReportPeriod = function(period){
+        $scope.data.tableA2FinancialData.currentPeriod = period;
+        $scope.data.tableA2FinancialData.currentBrand = $scope.data.tableA2FinancialData.currentPeriod.brands[0];
+    };
     /********************  Table Report A4  ********************/
     tableReport.profitabilityEvolution().then(function(data, status, headers, config){
 //        console.log(data);
