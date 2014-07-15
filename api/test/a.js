@@ -46,7 +46,7 @@ function addDistributor(){
 }
 
 function updateDistributor(){
-    request.put('http://localhost:3000/api/distributor/53bf43054efec60000e1e3de', function(err, res, body){
+    request.put('http://localhost:3000/api/distributor/53c38da49f7576ef26b867e9', function(err, res, body){
         if(err){
             console.log(JSON.stringify(err));
         }else{
@@ -85,7 +85,7 @@ function addFacilitator(){
 }
 
 function updateFacilitator(){
-    request.put('http://localhost:3000/api/facilitator/53c35231b91b850000657560', function(err, res, body){
+    request.put('http://localhost:3000/api/facilitator/53c38dcb4acf1d1627290928', function(err, res, body){
         if(err){
             console.log(JSON.stringify(err));
         }else{
@@ -124,8 +124,27 @@ function addStudent(){
     });
 }
 
-//addDistributor();
-addStudent();
+function updateStudent(){
+    request.put('http://localhost:3000/api/students/53c4ed59ea13feae915eaa4c', function(err, res, body){
+        if(err){
+            console.log(JSON.stringify(err));
+        }else{
+            console.log(body);
+        }
+    }).form({
+        email: 'student2@hcdglobal.com',
+        password: '123456',
+        first_name: 'Bruce',
+        last_name: 'Lee',
+        phone: '631122021',
+        country: 'china',
+        state: 'shanghai',
+        city: 'hangzhou',
+        pincode: '13911123971123821X'
+    });
+}
+
+updateStudent();
 
 
 

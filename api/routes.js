@@ -66,11 +66,13 @@ apiRouter.post('/api/distributors', authorize('addDistributor'), distributorCont
 apiRouter.put('/api/distributors/:distributor_id', authorize('updateDistributor'), distributorController.updateDistributor);
 apiRouter.get('/api/distributors', authorize('searchDistributor'), distributorController.searchDistributor);
 
+
 apiRouter.post('/api/facilitators', authorize('addFacilitator'), facilitatorController.addFacilitator);
 apiRouter.put('/api/facilitators/:facilitator_id', authorize('updateFacilitator'), facilitatorController.updateFacilitator);
 apiRouter.get('/api/facilitators', authorize('searchFacilitator'), facilitatorController.searchFacilitator);
 
-apiRouter.post('/api/students', authorize('addFacilitator'), studentController.addStudent);
+apiRouter.post('/api/students', authorize('addStudent'), studentController.addStudent);
+apiRouter.put('/api/students/:student_id', authorize('updateStudent'), studentController.updateStudent);
 
 /**
 * @param {String} resource identifier of url
@@ -88,8 +90,14 @@ function authorize(resource){
         'updateFacilitator',
         'searchFacilitator'
     ];
-    authDefinition[config.role.facilitator] = [];
-    authDefinition[config.role.student] = [];
+    authDefinition[config.role.facilitator] = [
+        'addStudent',
+        'updateStudent',
+        'searchStudent'
+    ];
+    authDefinition[config.role.student] = [
+        'updateStudent'
+    ];
     
     return function authorize(req, res, next){
         var role = sessionOperation.getUserRole(req);

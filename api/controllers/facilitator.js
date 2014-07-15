@@ -84,7 +84,6 @@ exports.addFacilitator = function(req, res, next){
 
 exports.updateFacilitator = function(req, res, next){
     req.checkParams('facilitator_id', 'Invalid facilitator_id').notEmpty();
-    req.checkBody('email', 'Invalid email').notEmpty().isEmail();
     req.assert('password', '6 to 20 characters required').len(6, 20);
     req.checkBody('name', '6 to 100 characters required.').notEmpty().len(6, 100);
     req.checkBody('phone', 'phone is empty.').notEmpty();
@@ -105,15 +104,13 @@ exports.updateFacilitator = function(req, res, next){
 
     var facilitator = {
         name: req.body.name,
-        email: req.body.email,
         phone: req.body.phone,
         country: req.body.country,
         state: req.body.state,
         city: req.body.city,
         password: req.body.password,
-        role: config.role.facilitator,
         numOfLicense: parseInt(req.body.num_of_license),
-        isActive: true,
+        isActive: req.body.is_active,
         district: req.body.district || '',
         street: req.body.street || '',
         pincode: req.body.pincode || ''
@@ -179,6 +176,7 @@ exports.updateFacilitator = function(req, res, next){
         logger.error(err);
         return res.send(500, {message: 'update facilitator failed.'});
     })
+    .done();
 };
 
 
@@ -216,6 +214,7 @@ exports.searchFacilitator = function(req, res, next){
         logger.error(err);
         res.send(500, {message: 'search failed'})
     })
+    .done();
 };
 
 
