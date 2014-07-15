@@ -104,7 +104,7 @@
                         <!-- List group -->
                         <ul class="list-group">
                             <li class="list-group-item" ng-click="clickChartMenu('A1')">{{'ReportMenuCompanyStatus' | translate}}</li>
-                            <li class="list-group-item list-group-item-active" ng-click="clickChartMenu('A2')">{{'ReportMenuFinancialData' | translate}}</li>
+                            <li class="list-group-item list-group-item-active" ng-click="clickChartMenu('A2')">{{'ReportMenuFinancialReport' | translate}}</li>
                             <li class="list-group-item" ng-click="clickChartMenu('A3')">{{'ReportMenuInventoryReport' | translate}}</li>
                             <li class="list-group-item list-group-item-active" ng-click="clickChartMenu('A4')">{{'ReportMenuProfitabilityEvolution' | translate}}</li>
                         </ul>
@@ -120,7 +120,7 @@
                         <!-- List group -->
                         <ul class="list-group">
                             <li class="list-group-item" ng-click="clickChartMenu('B1')">{{'ReportMenuMarketShare' | translate}}</li>
-                            <li class="list-group-item list-group-item-active" ng-click="clickChartMenu('B2')">{{'ReportMenuCompetitorInformation' | translate}}</li>
+                            <li class="list-group-item list-group-item-active" ng-click="clickChartMenu('B2')">{{'ReportMenuCompetitorIntelligence' | translate}}</li>
                             <li class="list-group-item" ng-click="clickChartMenu('B3')">{{'ReportMenuInvestmentProfits' | translate}}</li>
                             <li class="list-group-item list-group-item-active" ng-click="clickChartMenu('B4')">{{'ReportMenuMarketSalesInventory' | translate}}</li>
                         </ul>
@@ -219,7 +219,7 @@
                 <!-- List group -->
                 <ul class="list-group">
                     <li class="list-group-item" ng-class="{'list-group-item-active': css.chartMenu=='A1'}" ng-click="clickChartMenu('A1')">{{'ReportMenuCompanyStatus' | translate}}</li>
-                    <li class="list-group-item" ng-class="{'list-group-item-active': css.chartMenu=='A2'}" ng-click="clickChartMenu('A2')">{{'ReportMenuFinancialData' | translate}}</li>
+                    <li class="list-group-item" ng-class="{'list-group-item-active': css.chartMenu=='A2'}" ng-click="clickChartMenu('A2')">{{'ReportMenuFinancialReport' | translate}}</li>
                     <li class="list-group-item" ng-class="{'list-group-item-active': css.chartMenu=='A3'}" ng-click="clickChartMenu('A3')">{{'ReportMenuInventoryReport' | translate}}</li>
                     <li class="list-group-item" ng-class="{'list-group-item-active': css.chartMenu=='A4'}" ng-click="clickChartMenu('A4')">{{'ReportMenuProfitabilityEvolution' | translate}}</li>
                 </ul>
@@ -231,7 +231,7 @@
                 <!-- List group -->
                 <ul class="list-group">
                     <li class="list-group-item" ng-class="{'list-group-item-active': css.chartMenu=='B1'}" ng-click="clickChartMenu('B1')">{{'ReportMenuMarketShare' | translate}}</li>
-                    <li class="list-group-item" ng-class="{'list-group-item-active': css.chartMenu=='B2'}" ng-click="clickChartMenu('B2')">{{'ReportMenuCompetitorInformation' | translate}}</li>
+                    <li class="list-group-item" ng-class="{'list-group-item-active': css.chartMenu=='B2'}" ng-click="clickChartMenu('B2')">{{'ReportMenuCompetitorIntelligence' | translate}}</li>
                     <li class="list-group-item" ng-class="{'list-group-item-active': css.chartMenu=='B3'}" ng-click="clickChartMenu('B3')">{{'ReportMenuInvestmentProfits' | translate}}</li>
                     <li class="list-group-item" ng-class="{'list-group-item-active': css.chartMenu=='B4'}" ng-click="clickChartMenu('B4')">{{'ReportMenuMarketSalesInventory' | translate}}</li>
                 </ul>
@@ -298,7 +298,7 @@
         <div class="col-md-10 user_chart_right" ng-if="css.chartMenu=='A1'">
             <div class="row">
                 <div class="col-md-12 user_table_single">
-                    <h5>{{data.tableA1CompanyStatus.title}}
+                    <h5>{{'ReportMenuCompanyStatus' | translate}}
 
                         <div class="pull-right">
                             <div class="btn-group">
@@ -779,7 +779,7 @@
         <div class="col-md-10 user_chart_right" ng-if="css.chartMenu=='A2'">
             <div class="row">
                 <div class="col-md-12 user_table_single">
-                    <h5>{{data.tableA2FinancialData.title}}
+                    <h5>{{'ReportMenuFinancialReport' | translate}}
                         <div class="pull-right">
                             <div class="btn-group">
                                 <button type="button" class="btn btn-default btn-sm dropdown-toggle" data-toggle="dropdown">
@@ -1179,7 +1179,7 @@
         <div class="col-md-10 user_chart_right" ng-if="css.chartMenu=='A3'">
             <div class="row">
                 <div class="col-md-12 user_chart_single chart_1">
-                    <h5>{{data.chartA31InventoryReport.title}}
+                    <h5>{{'ReportMenuInventoryReport' | translate}}
                         <span class="glyphicon glyphicon-info-sign"></span>
                         <!--<span class="glyphicon glyphicon-resize-full chart_icon"></span>-->
                         <span class="glyphicon glyphicon-save chart_icon"></span>
@@ -1192,7 +1192,6 @@
 
                     <p class="text-center">Total Stock (milions of standard pack) = Factory Stock + Trade Stock + Retailer Stock</p>
                 </div>
-
             </div>
         </div>
 
@@ -1200,8 +1199,7 @@
         <div class="col-md-10 user_chart_right" ng-if="css.chartMenu=='A4'">
             <div class="row">
                 <div class="col-md-12 user_table_single">
-                    <h5>{{data.tableA4ProfitabilityEvolution.title}}
-
+                    <h5>{{'ReportMenuProfitabilityEvolution' | translate}}
                         <div class="pull-right">
                             <div class="btn-group btn-group-sm">
                                 <button type="button" class="btn btn-default" ng-class="{'active': css.tableReportTab=='SKU'}" ng-click="css.tableReportTab='SKU' ">SKU</button>
@@ -2031,13 +2029,13 @@
         <div class="col-md-10 user_chart_right" ng-if="css.chartMenu=='B2'">
             <div class="row">
                 <div class="col-md-12 user_table_single">
-                    <h5>{{data.tableB2CompetitorIntelligence.title}}</h5>
+                    <h5>{{'ReportMenuCompetitorIntelligence' | translate}}</h5>
 
                     <ul class="nav nav-pills table_multimenu">
-                        <li ng-class="{'active': css.tableReportMenu == 1}"><a href="" ng-click="css.tableReportMenu=1">Technology</a></li>
-                        <li ng-class="{'active': css.tableReportMenu == 2}"><a href="" ng-click="css.tableReportMenu=2">Marketing & Sales</a></li>
-                        <li ng-class="{'active': css.tableReportMenu == 3}"><a href="" ng-click="css.tableReportMenu=3">Operations</a></li>
-                        <li ng-class="{'active': css.tableReportMenu == 4}"><a href="" ng-click="css.tableReportMenu=4">Investment</a></li>
+                        <li ng-class="{'active': css.tableReportMenu == 1}"><a href="" ng-click="switchTableMenuLevel1(1)">Technology</a></li>
+                        <li ng-class="{'active': css.tableReportMenu == 2}"><a href="" ng-click="switchTableMenuLevel1(2)">Marketing & Sales</a></li>
+                        <li ng-class="{'active': css.tableReportMenu == 3}"><a href="" ng-click="switchTableMenuLevel1(3)">Operations</a></li>
+                        <li ng-class="{'active': css.tableReportMenu == 4}"><a href="" ng-click="switchTableMenuLevel1(4)">Investment</a></li>
                     </ul>
 
                     <div class="table_report" ng-if="css.tableReportMenu == 1">
@@ -2280,8 +2278,7 @@
         <div class="col-md-10 user_chart_right" ng-if="css.chartMenu=='C3'">
             <div class="row">
                 <div class="col-md-12 user_table_single">
-                    <h5>{{data.tableC3SegmentDistribution.title}}
-                    </h5>
+                    <h5>{{'ReportMenuSegmentDistributions' | translate}}</h5>
 
                     <div class="table_report">
 
@@ -2290,7 +2287,7 @@
                             <li ng-class="{'active': data.tableC3SegmentDistribution.currentTable==2}"><a href="" ng-click="switchTableReport(2)">Market Share (volume %)</a></li>
                             <li ng-class="{'active': data.tableC3SegmentDistribution.currentTable==3}"><a href="" ng-click="switchTableReport(3)">Market Sales Value ($ mln)</a></li>
                             <li ng-class="{'active': data.tableC3SegmentDistribution.currentTable==4}"><a href="" ng-click="switchTableReport(4)">Market Sales Volume (mln std. packs)</a></li>
-                            <li ng-class="{'active': data.tableC3SegmentDistribution.currentTable==5}"><a href="" ng-click="switchTableReport(5)">Average Net Market Price ($/std. packs)</a></li>
+                            <li ng-class="{'active': data.tableC3SegmentDistribution.currentTable==5}"><a href="" ng-click="switchTableReport(5)">Average Net Market Price ($/std. pack)</a></li>
                             <li ng-class="{'active': data.tableC3SegmentDistribution.currentTable==6}"><a href="" ng-click="switchTableReport(6)">Value Perception</a></li>
                             <li ng-class="{'active': data.tableC3SegmentDistribution.currentTable==7}"><a href="" ng-click="switchTableReport(7)">Image Perception</a></li>
                         </ul>
@@ -2353,6 +2350,303 @@
         </div>
 
 
+        <div class="col-md-10 user_chart_right" ng-if="css.chartMenu=='C5'">
+            <div class="row">
+                <div class="col-md-12 user_table_single">
+                    <h5>{{'ReportMenuMarketTrends' | translate}}
+
+                        <div class="pull-right">
+                            <div class="btn-group btn-group-sm">
+                                <button type="button" class="btn btn-default" ng-class="{'active': css.tableReportTab=='SKU'}" ng-click="css.tableReportTab='SKU' ">SKU</button>
+                                <button type="button" class="btn btn-default" ng-class="{'active': css.tableReportTab=='Brand'}" ng-click="css.tableReportTab='Brand' ">Brand</button>
+                                <button type="button" class="btn btn-default" ng-class="{'active': css.tableReportTab=='Global'}" ng-click="css.tableReportTab='Global' ">Global</button>
+                            </div>
+                        </div>
+                    </h5>
+
+                    <ul class="nav nav-pills table_multimenu">
+                        <li ng-class="{'active': css.tableReportMenu == 1}"><a href="" ng-click="switchTableMenuLevel1(1)">Market Figures</a></li>
+                        <li ng-class="{'active': css.tableReportMenu == 2}"><a href="" ng-click="switchTableMenuLevel1(2)">Miscellaneous</a></li>
+                        <li ng-class="{'active': css.tableReportMenu == 3}"><a href="" ng-click="switchTableMenuLevel1(3)">Segment-wise Value Share</a></li>
+                        <li ng-class="{'active': css.tableReportMenu == 4}"><a href="" ng-click="switchTableMenuLevel1(4)">Segment-wise Volume Share</a></li>
+                    </ul>
+
+                    <!--  SKU  -->
+                    <div class="table_report" ng-if="css.tableReportTab=='SKU' && css.tableReportMenu == 1">
+
+                        <ul class="nav nav-pills">
+                            <li ng-class="{'active': data.tableC5MarketTrends.currentTable==1}"><a href="" ng-click="switchTableReport(1)">Average Display Price ($/std. pack)</a></li>
+                            <li ng-class="{'active': data.tableC5MarketTrends.currentTable==2}"><a href="" ng-click="switchTableReport(2)">Average Net Market Price ($/std. pack)</a></li>
+                            <li ng-class="{'active': data.tableC5MarketTrends.currentTable==3}"><a href="" ng-click="switchTableReport(3)">Brand Awareness (%)</a></li>
+                            <li ng-class="{'active': data.tableC5MarketTrends.currentTable==4}"><a href="" ng-click="switchTableReport(4)">Image Perception</a></li>
+                            <li ng-class="{'active': data.tableC5MarketTrends.currentTable==5}"><a href="" ng-click="switchTableReport(5)">Market Net Sales Value ($ min)</a></li>
+                            <li ng-class="{'active': data.tableC5MarketTrends.currentTable==6}"><a href="" ng-click="switchTableReport(6)">Market Sales Volume (mln std. packs)</a></li>
+                            <li ng-class="{'active': data.tableC5MarketTrends.currentTable==7}"><a href="" ng-click="switchTableReport(7)">Market Share (value %)</a></li>
+                            <li ng-class="{'active': data.tableC5MarketTrends.currentTable==8}"><a href="" ng-click="switchTableReport(8)">Market Share (volume %)</a></li>
+                        </ul>
+
+                        <div class="divider_horizontal"></div>
+
+                        <div table-report-market-trends-sku data="data.tableC5MarketTrends.dataSKU.averageDisplayPriceStdPack" unit="" ng-if="data.tableC5MarketTrends.currentTable==1"></div>
+                        <div table-report-market-trends-sku data="data.tableC5MarketTrends.dataSKU.averageNetMarketPriceStdPack" unit="" ng-if="data.tableC5MarketTrends.currentTable==2"></div>
+                        <div table-report-market-trends-sku data="data.tableC5MarketTrends.dataSKU.brandAwareness" unit="%" ng-if="data.tableC5MarketTrends.currentTable==3"></div>
+                        <div table-report-market-trends-sku data="data.tableC5MarketTrends.dataSKU.imagePerception" unit="" ng-if="data.tableC5MarketTrends.currentTable==4"></div>
+                        <div table-report-market-trends-sku data="data.tableC5MarketTrends.dataSKU.marketNetSalesValue" unit="" ng-if="data.tableC5MarketTrends.currentTable==5"></div>
+                        <div table-report-market-trends-sku data="data.tableC5MarketTrends.dataSKU.marketSalesVolumeStdPack" unit="" ng-if="data.tableC5MarketTrends.currentTable==6"></div>
+                        <div table-report-market-trends-sku data="data.tableC5MarketTrends.dataSKU.marketShareValue" unit="%" ng-if="data.tableC5MarketTrends.currentTable==7"></div>
+                        <div table-report-market-trends-sku data="data.tableC5MarketTrends.dataSKU.marketShareVolume" unit="%" ng-if="data.tableC5MarketTrends.currentTable==8"></div>
+
+                    </div>
+
+                    <div class="table_report" ng-if="css.tableReportTab=='SKU' && css.tableReportMenu == 2">
+
+                        <ul class="nav nav-pills">
+                            <li ng-class="{'active': data.tableC5MarketTrends.currentTable==1}"><a href="" ng-click="switchTableReport(1)">Lost Sales Volume due to OOS (mln std. packs)</a></li>
+                            <li ng-class="{'active': data.tableC5MarketTrends.currentTable==2}"><a href="" ng-click="switchTableReport(2)">Numerical Distribution (%)</a></li>
+                            <li ng-class="{'active': data.tableC5MarketTrends.currentTable==3}"><a href="" ng-click="switchTableReport(3)">Total Inventory at Trade (mln std. packs)</a></li>
+                            <li ng-class="{'active': data.tableC5MarketTrends.currentTable==4}"><a href="" ng-click="switchTableReport(4)">Price Ranking Index</a></li>
+                            <li ng-class="{'active': data.tableC5MarketTrends.currentTable==5}"><a href="" ng-click="switchTableReport(5)">Shelf Space (%)</a></li>
+                        </ul>
+
+                        <div class="divider_horizontal"></div>
+
+                        <div table-report-market-trends-sku data="data.tableC5MarketTrends.dataSKU.lostSalesVolumeDueToOOSStdPack" unit="" ng-if="data.tableC5MarketTrends.currentTable==1"></div>
+                        <div table-report-market-trends-sku data="data.tableC5MarketTrends.dataSKU.numericalDistribution" unit="%" ng-if="data.tableC5MarketTrends.currentTable==2"></div>
+                        <div table-report-market-trends-sku data="data.tableC5MarketTrends.dataSKU.totalInventoryAtTradeStdPack" unit="%" ng-if="data.tableC5MarketTrends.currentTable==3"></div>
+                        <div table-report-market-trends-sku data="data.tableC5MarketTrends.dataSKU.priceRankingIndex" unit="" ng-if="data.tableC5MarketTrends.currentTable==4"></div>
+                        <div table-report-market-trends-sku data="data.tableC5MarketTrends.dataSKU.shelfSpace" unit="%" ng-if="data.tableC5MarketTrends.currentTable==5"></div>
+
+                    </div>
+
+                    <div class="table_report" ng-if="css.tableReportTab=='SKU' && css.tableReportMenu == 3">
+
+                        <ul class="nav nav-pills">
+                            <li ng-class="{'active': data.tableC5MarketTrends.currentTable==1}"><a href="" ng-click="switchTableReport(1)">Value share (%) in 1. Price Sensitive Segment</a></li>
+                            <li ng-class="{'active': data.tableC5MarketTrends.currentTable==2}"><a href="" ng-click="switchTableReport(2)">Value share (%) in 2. Pretenders Segment</a></li>
+                            <li ng-class="{'active': data.tableC5MarketTrends.currentTable==3}"><a href="" ng-click="switchTableReport(3)">Value share (%) in 3. Moderate Segment</a></li>
+                            <li ng-class="{'active': data.tableC5MarketTrends.currentTable==4}"><a href="" ng-click="switchTableReport(4)">Value share (%) in 4. Good Life Segment</a></li>
+                            <li ng-class="{'active': data.tableC5MarketTrends.currentTable==5}"><a href="" ng-click="switchTableReport(5)">Value share (%) in 5. Ultimate Segment</a></li>
+                            <li ng-class="{'active': data.tableC5MarketTrends.currentTable==6}"><a href="" ng-click="switchTableReport(6)">Value share (%) in 6. Pragmatic Segment</a></li>
+                        </ul>
+
+                        <div class="divider_horizontal"></div>
+
+                        <div table-report-market-trends-sku data="data.tableC5MarketTrends.dataSKU.valueShareInPriceSensitiveSegment" unit="%" ng-if="data.tableC5MarketTrends.currentTable==1"></div>
+                        <div table-report-market-trends-sku data="data.tableC5MarketTrends.dataSKU.valueShareInPretendersSegment" unit="%" ng-if="data.tableC5MarketTrends.currentTable==2"></div>
+                        <div table-report-market-trends-sku data="data.tableC5MarketTrends.dataSKU.valueShareInModerateSegment" unit="%" ng-if="data.tableC5MarketTrends.currentTable==3"></div>
+                        <div table-report-market-trends-sku data="data.tableC5MarketTrends.dataSKU.valueShareInGoodLifeSegment" unit="%" ng-if="data.tableC5MarketTrends.currentTable==4"></div>
+                        <div table-report-market-trends-sku data="data.tableC5MarketTrends.dataSKU.valueShareInUltimateSegment" unit="%" ng-if="data.tableC5MarketTrends.currentTable==5"></div>
+                        <div table-report-market-trends-sku data="data.tableC5MarketTrends.dataSKU.valueShareInPragmaticSegment" unit="%" ng-if="data.tableC5MarketTrends.currentTable==6"></div>
+
+                    </div>
+
+                    <div class="table_report" ng-if="css.tableReportTab=='SKU' && css.tableReportMenu == 4">
+
+                        <ul class="nav nav-pills">
+                            <li ng-class="{'active': data.tableC5MarketTrends.currentTable==1}"><a href="" ng-click="switchTableReport(1)">Volume share (%) in 1. Price Sensitive Segment</a></li>
+                            <li ng-class="{'active': data.tableC5MarketTrends.currentTable==2}"><a href="" ng-click="switchTableReport(2)">Volume share (%) in 2. Pretenders Segment</a></li>
+                            <li ng-class="{'active': data.tableC5MarketTrends.currentTable==3}"><a href="" ng-click="switchTableReport(3)">Volume share (%) in 3. Moderate Segment</a></li>
+                            <li ng-class="{'active': data.tableC5MarketTrends.currentTable==4}"><a href="" ng-click="switchTableReport(4)">Volume share (%) in 4. Good Life Segment</a></li>
+                            <li ng-class="{'active': data.tableC5MarketTrends.currentTable==5}"><a href="" ng-click="switchTableReport(5)">Volume share (%) in 5. Ultimate Segment</a></li>
+                            <li ng-class="{'active': data.tableC5MarketTrends.currentTable==6}"><a href="" ng-click="switchTableReport(6)">Volume share (%) in 6. Pragmatic Segment</a></li>
+                            <li ng-class="{'active': data.tableC5MarketTrends.currentTable==7}"><a href="" ng-click="switchTableReport(7)">Volume-weighted Distribution (%)</a></li>
+                        </ul>
+
+                        <div class="divider_horizontal"></div>
+
+                        <div table-report-market-trends-sku data="data.tableC5MarketTrends.dataSKU.volumeShareInPriceSensitiveSegment" unit="%" ng-if="data.tableC5MarketTrends.currentTable==1"></div>
+                        <div table-report-market-trends-sku data="data.tableC5MarketTrends.dataSKU.volumeShareInPretendersSegment" unit="%" ng-if="data.tableC5MarketTrends.currentTable==2"></div>
+                        <div table-report-market-trends-sku data="data.tableC5MarketTrends.dataSKU.volumeShareInModerateSegment" unit="%" ng-if="data.tableC5MarketTrends.currentTable==3"></div>
+                        <div table-report-market-trends-sku data="data.tableC5MarketTrends.dataSKU.volumeShareInGoodLifeSegment" unit="%" ng-if="data.tableC5MarketTrends.currentTable==4"></div>
+                        <div table-report-market-trends-sku data="data.tableC5MarketTrends.dataSKU.volumeShareInUltimateSegment" unit="%" ng-if="data.tableC5MarketTrends.currentTable==5"></div>
+                        <div table-report-market-trends-sku data="data.tableC5MarketTrends.dataSKU.volumeShareInPragmaticSegment" unit="%" ng-if="data.tableC5MarketTrends.currentTable==6"></div>
+                        <div table-report-market-trends-sku data="data.tableC5MarketTrends.dataSKU.volumeWeightedDistribution" unit="%" ng-if="data.tableC5MarketTrends.currentTable==7"></div>
+
+                    </div>
+
+                    <!--  Brand  -->
+                    <div class="table_report" ng-if="css.tableReportTab=='Brand' && css.tableReportMenu == 1">
+
+                        <ul class="nav nav-pills">
+                            <li ng-class="{'active': data.tableC5MarketTrends.currentTable==1}"><a href="" ng-click="switchTableReport(1)">Average Display Price ($/std. pack)</a></li>
+                            <li ng-class="{'active': data.tableC5MarketTrends.currentTable==2}"><a href="" ng-click="switchTableReport(2)">Average Net Market Price ($/std. pack)</a></li>
+                            <li ng-class="{'active': data.tableC5MarketTrends.currentTable==3}"><a href="" ng-click="switchTableReport(3)">Brand Awareness (%)</a></li>
+                            <li ng-class="{'active': data.tableC5MarketTrends.currentTable==4}"><a href="" ng-click="switchTableReport(4)">Image Perception</a></li>
+                            <li ng-class="{'active': data.tableC5MarketTrends.currentTable==5}"><a href="" ng-click="switchTableReport(5)">Market Net Sales Value ($ min)</a></li>
+                            <li ng-class="{'active': data.tableC5MarketTrends.currentTable==6}"><a href="" ng-click="switchTableReport(6)">Market Sales Volume (mln std. packs)</a></li>
+                            <li ng-class="{'active': data.tableC5MarketTrends.currentTable==7}"><a href="" ng-click="switchTableReport(7)">Market Share (value %)</a></li>
+                            <li ng-class="{'active': data.tableC5MarketTrends.currentTable==8}"><a href="" ng-click="switchTableReport(8)">Market Share (volume %)</a></li>
+                        </ul>
+
+                        <div class="divider_horizontal"></div>
+
+                        <div table-report-market-trends-brand data="data.tableC5MarketTrends.dataBrand.averageDisplayPriceStdPack" unit="" ng-if="data.tableC5MarketTrends.currentTable==1"></div>
+                        <div table-report-market-trends-brand data="data.tableC5MarketTrends.dataBrand.averageNetMarketPriceStdPack" unit="" ng-if="data.tableC5MarketTrends.currentTable==2"></div>
+                        <div table-report-market-trends-brand data="data.tableC5MarketTrends.dataBrand.brandAwareness" unit="%" ng-if="data.tableC5MarketTrends.currentTable==3"></div>
+                        <div table-report-market-trends-brand data="data.tableC5MarketTrends.dataBrand.imagePerception" unit="" ng-if="data.tableC5MarketTrends.currentTable==4"></div>
+                        <div table-report-market-trends-brand data="data.tableC5MarketTrends.dataBrand.marketNetSalesValue" unit="" ng-if="data.tableC5MarketTrends.currentTable==5"></div>
+                        <div table-report-market-trends-brand data="data.tableC5MarketTrends.dataBrand.marketSalesVolumeStdPack" unit="" ng-if="data.tableC5MarketTrends.currentTable==6"></div>
+                        <div table-report-market-trends-brand data="data.tableC5MarketTrends.dataBrand.marketShareValue" unit="%" ng-if="data.tableC5MarketTrends.currentTable==7"></div>
+                        <div table-report-market-trends-brand data="data.tableC5MarketTrends.dataBrand.marketShareVolume" unit="%" ng-if="data.tableC5MarketTrends.currentTable==8"></div>
+
+                    </div>
+
+                    <div class="table_report" ng-if="css.tableReportTab=='Brand' && css.tableReportMenu == 2">
+
+                        <ul class="nav nav-pills">
+                            <li ng-class="{'active': data.tableC5MarketTrends.currentTable==1}"><a href="" ng-click="switchTableReport(1)">Lost Sales Volume due to OOS (mln std. packs)</a></li>
+                            <li ng-class="{'active': data.tableC5MarketTrends.currentTable==2}"><a href="" ng-click="switchTableReport(2)">Numerical Distribution (%)</a></li>
+                            <li ng-class="{'active': data.tableC5MarketTrends.currentTable==3}"><a href="" ng-click="switchTableReport(3)">Total Inventory at Trade (mln std. packs)</a></li>
+                            <li ng-class="{'active': data.tableC5MarketTrends.currentTable==4}"><a href="" ng-click="switchTableReport(4)">Price Ranking Index</a></li>
+                            <li ng-class="{'active': data.tableC5MarketTrends.currentTable==5}"><a href="" ng-click="switchTableReport(5)">Shelf Space (%)</a></li>
+                        </ul>
+
+                        <div class="divider_horizontal"></div>
+
+                        <div table-report-market-trends-brand data="data.tableC5MarketTrends.dataBrand.lostSalesVolumeDueToOOSStdPack" unit="" ng-if="data.tableC5MarketTrends.currentTable==1"></div>
+                        <div table-report-market-trends-brand data="data.tableC5MarketTrends.dataBrand.numericalDistribution" unit="%" ng-if="data.tableC5MarketTrends.currentTable==2"></div>
+                        <div table-report-market-trends-brand data="data.tableC5MarketTrends.dataBrand.totalInventoryAtTradeStdPack" unit="%" ng-if="data.tableC5MarketTrends.currentTable==3"></div>
+                        <div table-report-market-trends-brand data="data.tableC5MarketTrends.dataBrand.priceRankingIndex" unit="" ng-if="data.tableC5MarketTrends.currentTable==4"></div>
+                        <div table-report-market-trends-brand data="data.tableC5MarketTrends.dataBrand.shelfSpace" unit="%" ng-if="data.tableC5MarketTrends.currentTable==5"></div>
+
+                    </div>
+
+                    <div class="table_report" ng-if="css.tableReportTab=='Brand' && css.tableReportMenu == 3">
+
+                        <ul class="nav nav-pills">
+                            <li ng-class="{'active': data.tableC5MarketTrends.currentTable==1}"><a href="" ng-click="switchTableReport(1)">Value share (%) in 1. Price Sensitive Segment</a></li>
+                            <li ng-class="{'active': data.tableC5MarketTrends.currentTable==2}"><a href="" ng-click="switchTableReport(2)">Value share (%) in 2. Pretenders Segment</a></li>
+                            <li ng-class="{'active': data.tableC5MarketTrends.currentTable==3}"><a href="" ng-click="switchTableReport(3)">Value share (%) in 3. Moderate Segment</a></li>
+                            <li ng-class="{'active': data.tableC5MarketTrends.currentTable==4}"><a href="" ng-click="switchTableReport(4)">Value share (%) in 4. Good Life Segment</a></li>
+                            <li ng-class="{'active': data.tableC5MarketTrends.currentTable==5}"><a href="" ng-click="switchTableReport(5)">Value share (%) in 5. Ultimate Segment</a></li>
+                            <li ng-class="{'active': data.tableC5MarketTrends.currentTable==6}"><a href="" ng-click="switchTableReport(6)">Value share (%) in 6. Pragmatic Segment</a></li>
+                        </ul>
+
+                        <div class="divider_horizontal"></div>
+
+                        <div table-report-market-trends-brand data="data.tableC5MarketTrends.dataBrand.valueShareInPriceSensitiveSegment" unit="%" ng-if="data.tableC5MarketTrends.currentTable==1"></div>
+                        <div table-report-market-trends-brand data="data.tableC5MarketTrends.dataBrand.valueShareInPretendersSegment" unit="%" ng-if="data.tableC5MarketTrends.currentTable==2"></div>
+                        <div table-report-market-trends-brand data="data.tableC5MarketTrends.dataBrand.valueShareInModerateSegment" unit="%" ng-if="data.tableC5MarketTrends.currentTable==3"></div>
+                        <div table-report-market-trends-brand data="data.tableC5MarketTrends.dataBrand.valueShareInGoodLifeSegment" unit="%" ng-if="data.tableC5MarketTrends.currentTable==4"></div>
+                        <div table-report-market-trends-brand data="data.tableC5MarketTrends.dataBrand.valueShareInUltimateSegment" unit="%" ng-if="data.tableC5MarketTrends.currentTable==5"></div>
+                        <div table-report-market-trends-brand data="data.tableC5MarketTrends.dataBrand.valueShareInPragmaticSegment" unit="%" ng-if="data.tableC5MarketTrends.currentTable==6"></div>
+
+                    </div>
+
+                    <div class="table_report" ng-if="css.tableReportTab=='Brand' && css.tableReportMenu == 4">
+
+                        <ul class="nav nav-pills">
+                            <li ng-class="{'active': data.tableC5MarketTrends.currentTable==1}"><a href="" ng-click="switchTableReport(1)">Volume share (%) in 1. Price Sensitive Segment</a></li>
+                            <li ng-class="{'active': data.tableC5MarketTrends.currentTable==2}"><a href="" ng-click="switchTableReport(2)">Volume share (%) in 2. Pretenders Segment</a></li>
+                            <li ng-class="{'active': data.tableC5MarketTrends.currentTable==3}"><a href="" ng-click="switchTableReport(3)">Volume share (%) in 3. Moderate Segment</a></li>
+                            <li ng-class="{'active': data.tableC5MarketTrends.currentTable==4}"><a href="" ng-click="switchTableReport(4)">Volume share (%) in 4. Good Life Segment</a></li>
+                            <li ng-class="{'active': data.tableC5MarketTrends.currentTable==5}"><a href="" ng-click="switchTableReport(5)">Volume share (%) in 5. Ultimate Segment</a></li>
+                            <li ng-class="{'active': data.tableC5MarketTrends.currentTable==6}"><a href="" ng-click="switchTableReport(6)">Volume share (%) in 6. Pragmatic Segment</a></li>
+                            <li ng-class="{'active': data.tableC5MarketTrends.currentTable==7}"><a href="" ng-click="switchTableReport(7)">Volume-weighted Distribution (%)</a></li>
+                        </ul>
+
+                        <div class="divider_horizontal"></div>
+
+                        <div table-report-market-trends-brand data="data.tableC5MarketTrends.dataBrand.volumeShareInPriceSensitiveSegment" unit="%" ng-if="data.tableC5MarketTrends.currentTable==1"></div>
+                        <div table-report-market-trends-brand data="data.tableC5MarketTrends.dataBrand.volumeShareInPretendersSegment" unit="%" ng-if="data.tableC5MarketTrends.currentTable==2"></div>
+                        <div table-report-market-trends-brand data="data.tableC5MarketTrends.dataBrand.volumeShareInModerateSegment" unit="%" ng-if="data.tableC5MarketTrends.currentTable==3"></div>
+                        <div table-report-market-trends-brand data="data.tableC5MarketTrends.dataBrand.volumeShareInGoodLifeSegment" unit="%" ng-if="data.tableC5MarketTrends.currentTable==4"></div>
+                        <div table-report-market-trends-brand data="data.tableC5MarketTrends.dataBrand.volumeShareInUltimateSegment" unit="%" ng-if="data.tableC5MarketTrends.currentTable==5"></div>
+                        <div table-report-market-trends-brand data="data.tableC5MarketTrends.dataBrand.volumeShareInPragmaticSegment" unit="%" ng-if="data.tableC5MarketTrends.currentTable==6"></div>
+                        <div table-report-market-trends-brand data="data.tableC5MarketTrends.dataBrand.volumeWeightedDistribution" unit="%" ng-if="data.tableC5MarketTrends.currentTable==7"></div>
+
+                    </div>
+
+                    <!--  Global  -->
+                    <div class="table_report" ng-if="css.tableReportTab=='Global' && css.tableReportMenu == 1">
+
+                        <ul class="nav nav-pills">
+                            <li ng-class="{'active': data.tableC5MarketTrends.currentTable==1}"><a href="" ng-click="switchTableReport(1)">Average Net Market Price ($/std. pack)</a></li>
+                            <li ng-class="{'active': data.tableC5MarketTrends.currentTable==2}"><a href="" ng-click="switchTableReport(2)">Market Net Sales Value ($ min)</a></li>
+                            <li ng-class="{'active': data.tableC5MarketTrends.currentTable==3}"><a href="" ng-click="switchTableReport(3)">Market Sales Volume (mln std. packs)</a></li>
+                            <li ng-class="{'active': data.tableC5MarketTrends.currentTable==4}"><a href="" ng-click="switchTableReport(4)">Market Share (value %)</a></li>
+                            <li ng-class="{'active': data.tableC5MarketTrends.currentTable==5}"><a href="" ng-click="switchTableReport(5)">Market Share (volume %)</a></li>
+                        </ul>
+
+                        <div class="divider_horizontal"></div>
+
+                        <div table-report-market-trends-global data="data.tableC5MarketTrends.dataGlobal.averageNetMarketPriceStdPack" unit="" ng-if="data.tableC5MarketTrends.currentTable==1"></div>
+                        <div table-report-market-trends-global data="data.tableC5MarketTrends.dataGlobal.marketNetSalesValue" unit="" ng-if="data.tableC5MarketTrends.currentTable==2"></div>
+                        <div table-report-market-trends-global data="data.tableC5MarketTrends.dataGlobal.marketSalesVolumeStdPack" unit="" ng-if="data.tableC5MarketTrends.currentTable==3"></div>
+                        <div table-report-market-trends-global data="data.tableC5MarketTrends.dataGlobal.marketShareValue" unit="%" ng-if="data.tableC5MarketTrends.currentTable==4"></div>
+                        <div table-report-market-trends-global data="data.tableC5MarketTrends.dataGlobal.marketShareVolume" unit="%" ng-if="data.tableC5MarketTrends.currentTable==5"></div>
+
+                    </div>
+
+                    <div class="table_report" ng-if="css.tableReportTab=='Global' && css.tableReportMenu == 2">
+
+                        <ul class="nav nav-pills">
+                            <li ng-class="{'active': data.tableC5MarketTrends.currentTable==1}"><a href="" ng-click="switchTableReport(1)">Lost Sales Volume due to OOS (mln std. packs)</a></li>
+                            <li ng-class="{'active': data.tableC5MarketTrends.currentTable==2}"><a href="" ng-click="switchTableReport(2)">Numerical Distribution (%)</a></li>
+                            <li ng-class="{'active': data.tableC5MarketTrends.currentTable==3}"><a href="" ng-click="switchTableReport(3)">Total Inventory at Trade (mln std. packs)</a></li>
+                            <li ng-class="{'active': data.tableC5MarketTrends.currentTable==4}"><a href="" ng-click="switchTableReport(4)">Mind Space Share (%)</a></li>
+                            <li ng-class="{'active': data.tableC5MarketTrends.currentTable==5}"><a href="" ng-click="switchTableReport(5)">Shelf Space (%)</a></li>
+                        </ul>
+
+                        <div class="divider_horizontal"></div>
+
+                        <div table-report-market-trends-global data="data.tableC5MarketTrends.dataGlobal.lostSalesVolumeDueToOOSStdPack" unit="" ng-if="data.tableC5MarketTrends.currentTable==1"></div>
+                        <div table-report-market-trends-global data="data.tableC5MarketTrends.dataGlobal.numericalDistribution" unit="%" ng-if="data.tableC5MarketTrends.currentTable==2"></div>
+                        <div table-report-market-trends-global data="data.tableC5MarketTrends.dataGlobal.totalInventoryAtTradeStdPack" unit="%" ng-if="data.tableC5MarketTrends.currentTable==3"></div>
+                        <div table-report-market-trends-global data="data.tableC5MarketTrends.dataGlobal.mindSpaceShare" unit="%" ng-if="data.tableC5MarketTrends.currentTable==4"></div>
+                        <div table-report-market-trends-global data="data.tableC5MarketTrends.dataGlobal.shelfSpace" unit="%" ng-if="data.tableC5MarketTrends.currentTable==5"></div>
+
+                    </div>
+
+                    <div class="table_report" ng-if="css.tableReportTab=='Global' && css.tableReportMenu == 3">
+
+                        <ul class="nav nav-pills">
+                            <li ng-class="{'active': data.tableC5MarketTrends.currentTable==1}"><a href="" ng-click="switchTableReport(1)">Value share (%) in 1. Price Sensitive Segment</a></li>
+                            <li ng-class="{'active': data.tableC5MarketTrends.currentTable==2}"><a href="" ng-click="switchTableReport(2)">Value share (%) in 2. Pretenders Segment</a></li>
+                            <li ng-class="{'active': data.tableC5MarketTrends.currentTable==3}"><a href="" ng-click="switchTableReport(3)">Value share (%) in 3. Moderate Segment</a></li>
+                            <li ng-class="{'active': data.tableC5MarketTrends.currentTable==4}"><a href="" ng-click="switchTableReport(4)">Value share (%) in 4. Good Life Segment</a></li>
+                            <li ng-class="{'active': data.tableC5MarketTrends.currentTable==5}"><a href="" ng-click="switchTableReport(5)">Value share (%) in 5. Ultimate Segment</a></li>
+                            <li ng-class="{'active': data.tableC5MarketTrends.currentTable==6}"><a href="" ng-click="switchTableReport(6)">Value share (%) in 6. Pragmatic Segment</a></li>
+                        </ul>
+
+                        <div class="divider_horizontal"></div>
+
+                        <div table-report-market-trends-global data="data.tableC5MarketTrends.dataGlobal.valueShareInPriceSensitiveSegment" unit="%" ng-if="data.tableC5MarketTrends.currentTable==1"></div>
+                        <div table-report-market-trends-global data="data.tableC5MarketTrends.dataGlobal.valueShareInPretendersSegment" unit="%" ng-if="data.tableC5MarketTrends.currentTable==2"></div>
+                        <div table-report-market-trends-global data="data.tableC5MarketTrends.dataGlobal.valueShareInModerateSegment" unit="%" ng-if="data.tableC5MarketTrends.currentTable==3"></div>
+                        <div table-report-market-trends-global data="data.tableC5MarketTrends.dataGlobal.valueShareInGoodLifeSegment" unit="%" ng-if="data.tableC5MarketTrends.currentTable==4"></div>
+                        <div table-report-market-trends-global data="data.tableC5MarketTrends.dataGlobal.valueShareInUltimateSegment" unit="%" ng-if="data.tableC5MarketTrends.currentTable==5"></div>
+                        <div table-report-market-trends-global data="data.tableC5MarketTrends.dataGlobal.valueShareInPragmaticSegment" unit="%" ng-if="data.tableC5MarketTrends.currentTable==6"></div>
+
+                    </div>
+
+                    <div class="table_report" ng-if="css.tableReportTab=='Global' && css.tableReportMenu == 4">
+
+                        <ul class="nav nav-pills">
+                            <li ng-class="{'active': data.tableC5MarketTrends.currentTable==1}"><a href="" ng-click="switchTableReport(1)">Volume share (%) in 1. Price Sensitive Segment</a></li>
+                            <li ng-class="{'active': data.tableC5MarketTrends.currentTable==2}"><a href="" ng-click="switchTableReport(2)">Volume share (%) in 2. Pretenders Segment</a></li>
+                            <li ng-class="{'active': data.tableC5MarketTrends.currentTable==3}"><a href="" ng-click="switchTableReport(3)">Volume share (%) in 3. Moderate Segment</a></li>
+                            <li ng-class="{'active': data.tableC5MarketTrends.currentTable==4}"><a href="" ng-click="switchTableReport(4)">Volume share (%) in 4. Good Life Segment</a></li>
+                            <li ng-class="{'active': data.tableC5MarketTrends.currentTable==5}"><a href="" ng-click="switchTableReport(5)">Volume share (%) in 5. Ultimate Segment</a></li>
+                            <li ng-class="{'active': data.tableC5MarketTrends.currentTable==6}"><a href="" ng-click="switchTableReport(6)">Volume share (%) in 6. Pragmatic Segment</a></li>
+                            <li ng-class="{'active': data.tableC5MarketTrends.currentTable==7}"><a href="" ng-click="switchTableReport(7)">Volume-weighted Distribution (%)</a></li>
+                        </ul>
+
+                        <div class="divider_horizontal"></div>
+
+                        <div table-report-market-trends-global data="data.tableC5MarketTrends.dataGlobal.volumeShareInPriceSensitiveSegment" unit="%" ng-if="data.tableC5MarketTrends.currentTable==1"></div>
+                        <div table-report-market-trends-global data="data.tableC5MarketTrends.dataGlobal.volumeShareInPretendersSegment" unit="%" ng-if="data.tableC5MarketTrends.currentTable==2"></div>
+                        <div table-report-market-trends-global data="data.tableC5MarketTrends.dataGlobal.volumeShareInModerateSegment" unit="%" ng-if="data.tableC5MarketTrends.currentTable==3"></div>
+                        <div table-report-market-trends-global data="data.tableC5MarketTrends.dataGlobal.volumeShareInGoodLifeSegment" unit="%" ng-if="data.tableC5MarketTrends.currentTable==4"></div>
+                        <div table-report-market-trends-global data="data.tableC5MarketTrends.dataGlobal.volumeShareInUltimateSegment" unit="%" ng-if="data.tableC5MarketTrends.currentTable==5"></div>
+                        <div table-report-market-trends-global data="data.tableC5MarketTrends.dataGlobal.volumeShareInPragmaticSegment" unit="%" ng-if="data.tableC5MarketTrends.currentTable==6"></div>
+                        <div table-report-market-trends-global data="data.tableC5MarketTrends.dataGlobal.volumeWeightedDistribution" unit="%" ng-if="data.tableC5MarketTrends.currentTable==7"></div>
+
+                    </div>
+
+                </div>
+            </div>
+        </div>
     </div>
 
 

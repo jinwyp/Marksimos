@@ -310,14 +310,3 @@ This API is the same as /api/report/:report_name
 
 
 
-
-
-
-
-
-
-
-
-
-
-

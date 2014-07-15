@@ -73,7 +73,6 @@ app.directive('tableReportSegmentDistribution', function() {
 });
 
 
-
 app.directive('tableReportCompetitorIntelligence', function() {
     return {
         scope: {
@@ -82,6 +81,73 @@ app.directive('tableReportCompetitorIntelligence', function() {
         },
         restrict: 'AE',
         templateUrl: 'app/js/directive/tablereportcompetitorintelligence.html',
+        link: function (scope, element, attrs) {
+
+            scope.plus = 1;
+
+            if(angular.isUndefined(scope.unit)) {
+                scope.unit = '';
+            }else if (scope.unit === "%"){
+                scope.plus = 1;
+            }
+
+        }
+    };
+});
+
+
+app.directive('tableReportMarketTrendsSku', function() {
+    return {
+        scope: {
+            data : '=',
+            unit : '@'
+        },
+        restrict: 'AE',
+        templateUrl: 'app/js/directive/tablereportmarkettrendssku.html',
+        link: function (scope, element, attrs) {
+
+            scope.plus = 1;
+
+            if(angular.isUndefined(scope.unit)) {
+                scope.unit = '';
+            }else if (scope.unit === "%"){
+                scope.plus = 1;
+            }
+
+        }
+    };
+});
+
+app.directive('tableReportMarketTrendsBrand', function() {
+    return {
+        scope: {
+            data : '=',
+            unit : '@'
+        },
+        restrict: 'AE',
+        templateUrl: 'app/js/directive/tablereportmarkettrendsbrand.html',
+        link: function (scope, element, attrs) {
+
+            scope.plus = 1;
+
+            if(angular.isUndefined(scope.unit)) {
+                scope.unit = '';
+            }else if (scope.unit === "%"){
+                scope.plus = 1;
+            }
+
+        }
+    };
+});
+
+app.directive('tableReportMarketTrendsGlobal', function() {
+    return {
+        scope: {
+            data : '=',
+            unit : '@'
+        },
+        restrict: 'AE',
+        templateUrl: 'app/js/directive/tablereportmarkettrendsglobal.html',
         link: function (scope, element, attrs) {
 
             scope.plus = 1;

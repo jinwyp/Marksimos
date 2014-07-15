@@ -34,7 +34,10 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use(function(req, res, next){
     sessionOperation.setLoginStatus(req, true);
     sessionOperation.setUserRole(req, config.role.distributor);
-    sessionOperation.setUserId(req, '53bf43054efec60000e1e3de');
+    sessionOperation.setUserId(req, '53c38da49f7576ef26b867e9');
+
+    // sessionOperation.setUserRole(req, config.role.admin);
+    // sessionOperation.setUserId(req, 'testid');
 
     req.session.seminarId = 'TTT';
     req.session.companyId = 2;

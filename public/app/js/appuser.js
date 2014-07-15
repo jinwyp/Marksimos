@@ -11,8 +11,8 @@ var marksimosapp = angular.module('marksimos', ['pascalprecht.translate', 'angul
 marksimosapp.controller('chartController', function($scope,  $timeout, $http, chartReport, tableReport, company) {
 
     $scope.css = {
-        menu : 'Report',
-        chartMenu : 'B2',
+        menu : 'Home',
+        chartMenu : 'A1',
         tableReportTab : 'SKU',
         tableReportMenu : 1,
         additionalBudget : true,
@@ -57,8 +57,7 @@ marksimosapp.controller('chartController', function($scope,  $timeout, $http, ch
             },
             currentSKU : {},
             currentBrand : {},
-            currentGlobal : {},
-            title : 'Company Status'
+            currentGlobal : {}
         },
         tableA2FinancialData : {
             allData : [],
@@ -66,24 +65,20 @@ marksimosapp.controller('chartController', function($scope,  $timeout, $http, ch
             currentPeriod : {
                 period : 'Select Period'
             },
-            currentBrand : {},
-            title : 'Financial Report'
+            currentBrand : {}
         },
         tableA4ProfitabilityEvolution : {
             allData : [],
             currentSKU : {},
             currentBrand : {},
-            currentGlobal : {},
-            title : 'Profitability Evolution'
+            currentGlobal : {}
         },
         tableB2CompetitorIntelligence : {
             allData : [],
-            title : 'Competitor Intelligence',
             currentTable : 1
         },
         tableC3SegmentDistribution : {
             allData : [],
-            title : 'Segment Distribution',
             currentTable : 1
 //            marketShareVolume : [],
 //            marketShareValue : [],
@@ -93,12 +88,18 @@ marksimosapp.controller('chartController', function($scope,  $timeout, $http, ch
 //            valuePerception : [],
 //            imagePerception : []
         },
+        tableC5MarketTrends : {
+            allData : [],
+            dataSKU : {},
+            dataBrand : {},
+            dataGlobal : {},
+            currentTable : 1
+        },
 
 
 
         chartA31InventoryReport : {
             data : [],
-            title : 'Inventory Report',
             color : ['#39b54a', '#ff983d', '#0087f0', '#8781bd', '#f26c4f', '#bd8cbf', '#000000']
         },
 
@@ -549,10 +550,31 @@ marksimosapp.controller('chartController', function($scope,  $timeout, $http, ch
 //        console.log(data);
         $scope.data.tableC3SegmentDistribution.allData = data;
     });
+    $scope.switchTableMenuLevel1 = function(menu){
+        $scope.css.tableReportMenu = menu;
+        $scope.data.tableB2CompetitorIntelligence.currentTable = 1;
+        $scope.data.tableC5MarketTrends.currentTable = 1;
+    };
     $scope.switchTableReport = function(report){
         $scope.data.tableC3SegmentDistribution.currentTable = report;
         $scope.data.tableB2CompetitorIntelligence.currentTable = report;
+        $scope.data.tableC5MarketTrends.currentTable = report;
     };
+
+    /********************  Table Report C5  ********************/
+    tableReport.marketTrends().then(function(data, status, headers, config){
+//        console.log(data);
+        $scope.data.tableC5MarketTrends.allData = data;
+        $scope.data.tableC5MarketTrends.dataSKU = data.SKU;
+        $scope.data.tableC5MarketTrends.dataBrand = data.brand;
+        $scope.data.tableC5MarketTrends.dataGlobal = data.global;
+
+    });
+
+
+
+
+
 
 
 

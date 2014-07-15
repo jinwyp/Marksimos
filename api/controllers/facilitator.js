@@ -35,7 +35,7 @@ exports.addFacilitator = function(req, res, next){
         state: req.body.state,
         city: req.body.city,
         password: req.body.password,
-        role: config.role.distributor,
+        role: config.role.facilitator,
         numOfLicense: req.body.num_of_license,
         isActive: true,
         distributorId: distributorId
@@ -46,7 +46,7 @@ exports.addFacilitator = function(req, res, next){
         if(result){
             throw {httpStatus: 400, message: 'Email has been used, please choose another email.'};
         }else{
-            return userModel.find({_id: distributorId})
+            return userModel.findOne({_id: distributorId})
         }
     })
     .then(function(distributor){
@@ -54,13 +54,13 @@ exports.addFacilitator = function(req, res, next){
             throw {message: "Can't find distributor in database: distributorId: " + distributorId};
         }
 
-        if(distributor.numOfLicense - req.body.num_of_license <= 0){
+        if(distributor.numOfLicense - parseInt(req.body.num_of_license) <= 0){
             throw {httpStatus: 400, message: "You don't have enought license."};
         }
 
         return userModel.update({_id: distributorId}, {
-            numOfLicense: distributor.numOfLicense - req.body.num_of_license,
-            numOfUsedLicense: distributor.numOfUsedLicense + req.body.num_of_license
+            numOfLicense: distributor.numOfLicense - parseInt(req.body.num_of_license),
+            numOfUsedLicense: distributor.numOfUsedLicense + parseInt(req.body.num_of_license)
         });
     })
     .then(function(numAffected){
@@ -111,16 +111,64 @@ exports.updateFacilitator = function(req, res, next){
         state: req.body.state,
         city: req.body.city,
         password: req.body.password,
-        role: config.role.distributor,
-        numOfLicense: req.body.num_of_license,
+        role: config.role.facilitator,
+        numOfLicense: parseInt(req.body.num_of_license),
         isActive: true,
         district: req.body.district || '',
         street: req.body.street || '',
         pincode: req.body.pincode || ''
     }
 
-    userModel.update({_id: req.params.facilitator_id}, facilitator)
-    .then(function(numAffected){
+    var distributorId = sessionOperation.getUserId(req);
+
+    var p;
+
+    //if the num_of_license is changed, we need to add or remove certain licenses
+    //from the distributor
+    if(req.body.num_of_license > 0){
+        //find the facilitor to be updated.
+        p = userModel.findOne({
+            _id: req.params.facilitator_id
+        })
+        .then(function(dbFacilitator){
+            console.log('---------------');
+            //if this facilitator belongs to the current distributor
+            if(dbFacilitator.distributorId === distributorId){
+                var addedLicense = parseInt(req.body.num_of_license) - dbFacilitator.numOfLicense;
+                return userModel.findOne({
+                    _id: distributorId
+                })
+                .then(function(dbDistributor){
+                    //if the distributor has enough license
+                    if(dbDistributor.numOfLicense > addedLicense){
+                        return userModel.update({
+                            _id: distributorId
+                        }, {
+                            numOfUsedLicense: dbDistributor.numOfUsedLicense + addedLicense,
+                            numOfLicense: dbDistributor.numOfLicense - addedLicense
+                        })
+                        .then(function(numAffected){
+                            if(numAffected!==1){
+                                throw {httpStatus: 400, message: 'failed to update distributor ' 
+                                + distributorId + ' during updating facilitator ' + req.params.facilitator_id}
+                            }else{
+                                return userModel.update({_id: req.params.facilitator_id}, facilitator);
+                            }
+                        })
+                    }else{
+                        throw {httpStatus: 400, message: "you don't have enought license, you need " + addedLicense
+                        + " more licenses, but you only have " + dbDistributor.numOfUsedLicense}
+                    }
+                })
+            }else{
+                throw {httpStatus: 400, message: "You are not authorized to update this facilitator."}
+            }
+        })
+    }else{
+        p = userModel.update({_id: req.params.facilitator_id}, facilitator);
+    }
+
+    p.then(function(numAffected){
         if(numAffected===1){
             return res.send({message: 'update success.'});
         }else{
@@ -142,12 +190,14 @@ exports.searchFacilitator = function(req, res, next){
     var city = req.query.city;
     var isDisabled = req.query.user_status;
 
-    var query = {};
+    var query = {
+        role: config.role.facilitator
+    };
 
     //only distributor and admin can search facilitators
     //distributor can only view its own facilitators
     if(sessionOperation.getUserRole(req) !== config.role.admin){
-        query._id = sessionOperation.getUserId(req);
+        query.distributorId = sessionOperation.getUserId(req);
     }
 
     if(name) query.name = name;
@@ -157,6 +207,7 @@ exports.searchFacilitator = function(req, res, next){
     if(city) query.city = city;
     if(isDisabled) query.isDisabled = isDisabled;
 
+    console.log(query);
     userModel.find(query)
     .then(function(result){
         res.send(result);

@@ -80,11 +80,52 @@ function addFacilitator(){
         country: 'china',
         state: 'shanghai',
         city: 'shanghai',
-        num_of_license: 10
+        num_of_license: 1
     });
 }
 
-addFacilitator();
+function updateFacilitator(){
+    request.put('http://localhost:3000/api/facilitator/53c35231b91b850000657560', function(err, res, body){
+        if(err){
+            console.log(JSON.stringify(err));
+        }else{
+            console.log(body);
+        }
+    }).form({
+        email: 'distributor@hcdglobal.com',
+        password: '123456789',
+        name: 'hcd global',
+        phone: '631122021',
+        country: 'japan',
+        state: 'shanghai',
+        city: 'shanghai',
+        num_of_license: 2
+    });
+}
+
+function addStudent(){
+    request.post('http://localhost:3000/api/students', function(err, res, body){
+        if(err){
+            console.log(JSON.stringify(err));
+        }else{
+            console.log(body);
+        }
+    }).form({
+        email: 'student1@hcdglobal.com',
+        password: '123456',
+        first_name: 'Bruce',
+        last_name: 'Lee',
+        phone: '631122021',
+        country: 'china',
+        state: 'shanghai',
+        city: 'shanghai',
+        num_of_license: 1,
+        pincode: '13911123971123821X'
+    });
+}
+
+//addDistributor();
+addStudent();
 
 
 

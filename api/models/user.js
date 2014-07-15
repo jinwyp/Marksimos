@@ -31,13 +31,12 @@ var userSchema = new Schema({
     //student fileds
     pincode: String,
     gender: Number,
-    occupation: Number,
+    occupation: String,
     firstName: String,
     lastName: String,
     univercity: String,
     organization: String,
     highestEducationalDegree: String,
-
     facilitatorId: String
 });
 
@@ -130,6 +129,21 @@ exports.find = function(query){
     var deferred = Q.defer();
 
     User.find(query, 
+    function(err, result){
+        if(err){
+            deferred.reject(err);
+        }else{
+            deferred.resolve(result);
+        }
+    })
+
+    return deferred.promise;
+}
+
+exports.findOne = function(query){
+    var deferred = Q.defer();
+
+    User.findOne(query, 
     function(err, result){
         if(err){
             deferred.reject(err);

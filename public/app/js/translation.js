@@ -10,11 +10,11 @@ app.config(['$translateProvider', function($translateProvider){
 // Adding a translation table for the English language
     $translateProvider.translations('en_US', {
         "ReportMenuCompanyStatus"     : "Company Status",
-        "ReportMenuFinancialData"    :  "Financial Data",
+        "ReportMenuFinancialReport"    :  "Financial Report",
         "ReportMenuInventoryReport"    :  "Inventory Report",
         "ReportMenuProfitabilityEvolution"    :  "Profitability Evolution",
         "ReportMenuMarketShare"    :  "Market Share",
-        "ReportMenuCompetitorInformation"    :  "Competitor Intelligence",
+        "ReportMenuCompetitorIntelligence"    :  "Competitor Intelligence",
         "ReportMenuInvestmentProfits"    :  "Investment & Profits",
         "ReportMenuMarketSalesInventory"    :  "Market Sales & Inventory",
         "ReportMenuSegmentLeaderTop5"    :  "Segment Leader Top5",
@@ -28,11 +28,11 @@ app.config(['$translateProvider', function($translateProvider){
     // Adding a translation table for the Russian language
     $translateProvider.translations('zh_CN', {
         "ReportMenuCompanyStatus"     : "公司基本信息",
-        "ReportMenuFinancialData"    :  "财务报告",
+        "ReportMenuFinancialReport"    :  "财务报告",
         "ReportMenuInventoryReport"    :  "库存报告",
         "ReportMenuProfitabilityEvolution"    :  "盈利变化",
         "ReportMenuMarketShare"    :  "市场份额",
-        "ReportMenuCompetitorInformation"    :  "竞争对手情报",
+        "ReportMenuCompetitorIntelligence"    :  "竞争对手情报",
         "ReportMenuInvestmentProfits"    :  "投资与利润",
         "ReportMenuMarketSalesInventory"    :  "销售与库存状况",
         "ReportMenuSegmentLeaderTop5"    :  "细分市场领导者",
