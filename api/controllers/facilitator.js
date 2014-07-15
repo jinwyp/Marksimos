@@ -83,39 +83,32 @@ exports.addFacilitator = function(req, res, next){
 };
 
 exports.updateFacilitator = function(req, res, next){
-    req.checkParams('facilitator_id', 'Invalid facilitator_id').notEmpty();
-    req.assert('password', '6 to 20 characters required').len(6, 20);
-    req.checkBody('name', '6 to 100 characters required.').notEmpty().len(6, 100);
-    req.checkBody('phone', 'phone is empty.').notEmpty();
-    req.checkBody('country', 'country is empty').notEmpty();
-    req.checkBody('state', 'state is empty').notEmpty();
-    req.checkBody('city', 'city is empty').notEmpty();
-    req.checkBody('num_of_license', 'Invalid num of license').isInt();
-
-    var errors = req.validationErrors();
-    if(errors){
-        return res.send(400, {message: util.inspect(errors)});
+    var validateResult = validateFacilitator(req);
+    if(validateResult){
+        return res.send(400, {message: validateResult});
     }
 
-    //if phone contains characters other than number
-    if(!validator.isNumeric(req.body.phone)){
-        return res.send(400, {message: "Invalid phone."});
-    }
+    var facilitator = {};
 
-    var facilitator = {
-        name: req.body.name,
-        phone: req.body.phone,
-        country: req.body.country,
-        state: req.body.state,
-        city: req.body.city,
-        password: req.body.password,
-        numOfLicense: parseInt(req.body.num_of_license),
-        isActive: req.body.is_active,
-        district: req.body.district || '',
-        street: req.body.street || '',
-        pincode: req.body.pincode || ''
-    }
+    if(req.body.name) facilitator.name = req.body.name;
+    if(req.body.phone) facilitator.phone = req.body.phone;
+    if(req.body.country) facilitator.country = req.body.country;
+    if(req.body.state) facilitator.state = req.body.state;
+    if(req.body.city) facilitator.city = req.body.city;
+    if(req.body.password) facilitator.password = req.body.password;
 
+    var userRole = sessionOperation.getUserRole(req);
+    if(req.body.num_of_license && (userRole === config.role.admin || userRole === config.role.distributor)){
+        facilitator.numOfLicense = req.body.num_of_license;
+    }
+    if(req.body.district) facilitator.district = req.body.district;
+    if(req.body.street) facilitator.street = req.body.street;
+    if(req.body.pincode) facilitator.pincode = req.body.pincode;
+
+    if(Object.keys(facilitator).length === 0{
+        return res.send(400, {message: "you have to provide at least one field to update."});
+    }
+    
     var distributorId = sessionOperation.getUserId(req);
 
     var p;
@@ -128,7 +121,6 @@ exports.updateFacilitator = function(req, res, next){
             _id: req.params.facilitator_id
         })
         .then(function(dbFacilitator){
-            console.log('---------------');
             //if this facilitator belongs to the current distributor
             if(dbFacilitator.distributorId === distributorId){
                 var addedLicense = parseInt(req.body.num_of_license) - dbFacilitator.numOfLicense;
@@ -216,6 +208,27 @@ exports.searchFacilitator = function(req, res, next){
     })
     .done();
 };
+
+function validateFacilitator(req){
+    if(req.body.email) req.checkBody('email', 'Invalid email').notEmpty().isEmail();
+    if(req.body.password) req.assert('password', '6 to 20 characters required').len(6, 20);
+    if(req.body.name) req.checkBody('name', '6 to 100 characters required.').notEmpty().len(6, 100);
+    if(req.body.phone) req.checkBody('phone', 'phone is empty.').notEmpty();
+    if(req.body.country) req.checkBody('country', 'country is empty').notEmpty();
+    if(req.body.state) req.checkBody('state', 'state is empty').notEmpty();
+    if(req.body.city) req.checkBody('city', 'city is empty').notEmpty();
+    if(req.body.num_of_license) req.checkBody('num_of_license', 'Invalid num of license').isInt();
+
+    var errors = req.validationErrors();
+    if(errors){
+        return util.inspect(errors);
+    }
+
+    //if phone contains characters other than number
+    if(!validator.isNumeric(req.body.phone)){
+        return "Invalid phone.";
+    }
+}
 
 
 

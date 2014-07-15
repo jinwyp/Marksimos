@@ -33,7 +33,7 @@ exports.addStudent = function(req, res, next){
         lastName: req.body.last_name,
         univercity: req.body.univercity || '',
         organization: req.body.organization || '',
-        highestEducationalDegree: req.body.highestEducationalDegree ||''
+        highestEducationalDegree: req.body.highest_educational_degree ||''
     }
 
     userModel.findOne({
@@ -81,16 +81,6 @@ exports.addStudent = function(req, res, next){
 };
 
 exports.updateStudent = function(req, res, next){
-    if(sessionOperation.getUserRole(req) === config.role.facilitator){
-        updateStudentByFacilitator(req, res, next);
-    }else if(sessionOperation.getUserRole(req) === config.role.student){
-        //updateStudentByFacilitator(req, res, next);
-    }else{
-        res.send(500, {message: "Invalid user role."});
-    }
-}
-
-function updateStudentByFacilitator(req, res, next){
     var validateResult = validateStudent(req);
 
     if(validateResult){
@@ -108,8 +98,8 @@ function updateStudentByFacilitator(req, res, next){
     if(req.body.pincode) student.pincode = req.body.pincode;
     if(req.body.gender) student.gender = req.body.gender;
     if(req.body.occupation) student.occupation = req.body.occupation;
-    if(req.body.firstName) student.firstName = req.body.firstName;
-    if(req.body.lastName) student.lastName = req.body.lastName;
+    if(req.body.first_name) student.firstName = req.body.first_name;
+    if(req.body.last_name) student.lastName = req.body.last_name;
     if(req.body.univercity) student.univercity = req.body.univercity;
     if(req.body.organization) student.organization = req.body.organization;
     if(req.body.highestEducationalDegree) student.highestEducationalDegree = req.body.highestEducationalDegree;
@@ -145,7 +135,6 @@ function updateStudentByFacilitator(req, res, next){
                 throw {httpStatus:400, message: "no student is updated." + student_id};
             }
         }
-
         res.send({message: "update student success."});
     })
     .fail(function(err){
@@ -186,10 +175,6 @@ function validateStudent(req){
 
     if(req.body.city){
         req.checkBody('city', 'city is empty').notEmpty();
-    }
-    
-    if(req.body.num_of_license){
-        req.checkBody('num_of_license', 'Invalid num of license').isInt();
     }
     
 
