@@ -78,6 +78,14 @@ app.factory('company',function($http){
 
         updateSku : function(postdata){
             return $http.put(apiPath + 'sku/decision/', postdata);
+        },
+
+        updateBrand : function(postdata){
+            return $http.put(apiPath + 'brand/decision', postdata);
+        },
+
+        updateCompany : function(postdata){
+            return $http.put(apiPath + 'company/decision', postdata);
         }
 
     };

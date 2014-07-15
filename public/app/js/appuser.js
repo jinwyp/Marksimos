@@ -39,6 +39,8 @@ marksimosapp.controller('chartController', function($scope,  $timeout, $http, ch
         currentCompanyFutureProjectionCalculator : [],
         currentBrand : {},
         currentModifiedSku : {},
+        currentModifiedBrand : {},
+        currentModifiedCompany : {},
         currentSku : {},
         userSegment : [
             {id:1, name:'1 Price Sensitive'},
@@ -333,7 +335,7 @@ marksimosapp.controller('chartController', function($scope,  $timeout, $http, ch
     $scope.data.chartB14ShelfSpaceShare.config.title = 'Shelf Space Share(%)';
 
     chartReport.marketShareInValue().then(function(data, status, headers, config){
-        console.log(data);
+//        console.log(data);
         $scope.data.chartB11MarketShareInValue.data = data;
     });
     chartReport.marketShareInVolume().then(function(data, status, headers, config){
@@ -657,6 +659,30 @@ marksimosapp.controller('chartController', function($scope,  $timeout, $http, ch
         });
     };
 
+    $scope.updateBrand = function(){
+        $scope.data.currentModifiedBrand = {
+            brand_id : $scope.data.currentBrand.d_BrandID,
+            brand_data : {
+                d_SalesForce : $scope.data.currentBrand.d_SalesForce
+            }
+        };
 
+        company.updateBrand($scope.data.currentModifiedBrand).success(function(data, status, headers, config){
+            console.log(data);
+        });
+    };
+
+    $scope.updateCompany = function(){
+        $scope.data.currentModifiedCompany = {
+            company_data : {
+                d_InvestmentInEfficiency : $scope.data.currentCompany.d_InvestmentInEfficiency,
+                d_InvestmentInTechnology : $scope.data.currentCompany.d_InvestmentInTechnology
+            }
+        };
+
+        company.updateCompany($scope.data.currentModifiedCompany).success(function(data, status, headers, config){
+            console.log(data);
+        });
+    }
 });
 

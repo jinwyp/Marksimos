@@ -2726,7 +2726,6 @@
             <div class="row">
                 <div class="col-md-12">
 
-
                     <ul class="nav nav-pills">
                         <li ng-class="{'active': css.currentBrandId==brand._id}" ng-repeat="brand in data.currentCompany.d_BrandsDecisions" ng-click="clickBrand(brand)">
                             <a href="" >{{brand.d_BrandName}}</a>
@@ -2741,12 +2740,12 @@
                             <form class="form-horizontal brand_form" role="form">
                                 <div class="form-group">
                                     <label class="col-sm-4 control-label" for="brandSalesForce">Sales Force($min)</label>
-                                    <div class="col-sm-5">
-                                        <input type="text" class="form-control" id="brandSalesForce" placeholder="">
+                                    <div class="col-sm-3">
+                                        <input type="number" class="form-control" id="brandSalesForce" ng-model="data.currentBrand.d_SalesForce">
                                     </div>
-                                    <!--<div class="col-sm-2">-->
-                                        <!--<button type="submit" class="btn btn-default">Save</button>-->
-                                    <!--</div>-->
+                                    <div class="col-sm-2">
+                                        <button type="submit" class="btn btn-default" ng-click="updateBrand()">Save</button>
+                                    </div>
                                 </div>
                             </form>
 
@@ -2886,7 +2885,6 @@
                             </div>
 
                         </div>
-
                     </div>
 
 
@@ -2895,16 +2893,16 @@
                             <h5>New Product Development Investment  <span class="glyphicon glyphicon-info-sign" ng-mouseenter="css.investmentInfo='true'" ></span></h5>
                             <form class="form-horizontal investment_form" role="form">
                                 <div class="form-group">
-                                    <label class="col-sm-8 control-label text-left" for="brandInvestmentProductionEfficiency">Investment in Production Efficiency ($mln)</label>
+                                    <label class="col-sm-8 control-label text-left" for="InvestmentProductionEfficiency">Investment in Production Efficiency ($mln)</label>
                                     <div class="col-sm-3">
-                                        <input type="text" class="form-control" id="brandInvestmentProductionEfficiency" placeholder="">
+                                        <input type="number" class="form-control" id="InvestmentProductionEfficiency" ng-model="data.currentCompany.d_InvestmentInEfficiency">
                                     </div>
                                 </div>
 
                                 <div class="form-group">
-                                    <label class="col-sm-8 control-label text-left"  for="brandInvestmentProcessingTechnology">Investment in Processing Technology ($mln)</label>
+                                    <label class="col-sm-8 control-label text-left"  for="InvestmentProcessingTechnology">Investment in Processing Technology ($mln)</label>
                                     <div class="col-sm-3">
-                                        <input type="text" class="form-control" id="brandInvestmentProcessingTechnology" placeholder="">
+                                        <input type="number" class="form-control" id="InvestmentProcessingTechnology" ng-model="data.currentCompany.d_InvestmentInTechnology" >
                                     </div>
                                 </div>
 
@@ -2942,9 +2940,10 @@
 
                     <div class="row ">
                         <div class="col-md-offset-7 col-sm-4">
-                            <button type="submit" class="btn btn-primary decision_button">Submit Decision</button>
+                            <button type="submit" class="btn btn-primary decision_button" ng-click="updateCompany()">Submit Decision</button>
                         </div>
                     </div>
+
                 </div>
             </div>
 
@@ -2973,7 +2972,6 @@
                     <div class="row brand_box right_menu">
 
                         <div class="col-md-12 " ng-if="css.currentDecisionRightMenu==1">
-
                             <div class="row ">
                                 <div class="col-md-8 col-md-offset-2 product_portfolio ">
                                     <h4>{{data.currentBrand.d_BrandName}}{{data.currentSku.d_SKUName}} (Period {{data.currentCompanyFutureProjectionCalculator.currentPeriodInfo.period}})</h4>
@@ -3082,9 +3080,6 @@
                             </div>
 
                         </div>
-
-
-
 
 
                         <div class="col-md-12 " ng-if="css.currentDecisionRightMenu==2">
@@ -3266,8 +3261,6 @@
                                         </tr>
 
                                     </tbody>
-
-
                                 </table>
                             </div>
 

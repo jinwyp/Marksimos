@@ -310,7 +310,7 @@ angular.module('angularCharts').directive('acChart', [
       function lineChart() {
         var margin = {
             top: 0,
-            right: 10,
+            right: 20,
             bottom: 20,
             left: 40
           };
