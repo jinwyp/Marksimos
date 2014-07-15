@@ -11,7 +11,7 @@ var marksimosapp = angular.module('marksimos', ['pascalprecht.translate', 'angul
 marksimosapp.controller('chartController', function($scope,  $timeout, $http, chartReport, tableReport, company) {
 
     $scope.css = {
-        menu : 'Home',
+        menu : 'Report',
         chartMenu : 'A1',
         tableReportTab : 'SKU',
         tableReportMenu : 1,
@@ -104,94 +104,76 @@ marksimosapp.controller('chartController', function($scope,  $timeout, $http, ch
         },
 
         chartB11MarketShareInValue : {
-            type : chartReport.getChartType1(),
             config : chartReport.getChartConfig1(),
             data : $scope.dataChartSimple
         },
         chartB12MarketShareInVolume : {
-            type : chartReport.getChartType1(),
             config : chartReport.getChartConfig1(),
             data : $scope.dataChartSimple
         },
         chartB13MindSpaceShare : {
-            type : chartReport.getChartType1(),
             config : chartReport.getChartConfig1(),
             data : $scope.dataChartSimple
         },
         chartB14ShelfSpaceShare : {
-            type : chartReport.getChartType1(),
             config : chartReport.getChartConfig1(),
             data : $scope.dataChartSimple
         },
 
         chartB31TotalInvestment : {
-            type : chartReport.getChartType1(),
             config : chartReport.getChartConfig1(),
             data : $scope.dataChartSimple
         },
         chartB32NetProfitByCompanies : {
-            type : chartReport.getChartType1(),
             config : chartReport.getChartConfig1(),
             data : $scope.dataChartSimple
         },
         chartB33ReturnOnInvestment : {
-            type : chartReport.getChartType1(),
             config : chartReport.getChartConfig1(),
             data : $scope.dataChartSimple
         },
         chartB34InvestmentsVersusBudget : {
-            type : chartReport.getChartType1(),
             config : chartReport.getChartConfig1(),
             data : $scope.dataChartSimple
         },
         chartB41MarketSalesValue : {
-            type : chartReport.getChartType1(),
             config : chartReport.getChartConfig1(),
             data : $scope.dataChartSimple
         },
         chartB42MarketSalesVolume : {
-            type : chartReport.getChartType1(),
             config : chartReport.getChartConfig1(),
             data : $scope.dataChartSimple
         },
         chartB43TotalInventoryAtFactory : {
-            type : chartReport.getChartType1(),
             config : chartReport.getChartConfig1(),
             data : $scope.dataChartSimple
         },
         chartB44TotalInventoryAtTrade : {
-            type : chartReport.getChartType1(),
             config : chartReport.getChartConfig1(),
             data : $scope.dataChartSimple
         },
 
         chartC11SegmentsLeadersByValuePriceSensitive : {
-            type : chartReport.getChartType2(),
             config : chartReport.getChartConfig2(),
             data : $scope.dataChartSimple
         },
         chartC12SegmentsLeadersByValuePretenders : {
-            type : chartReport.getChartType2(),
             config : chartReport.getChartConfig2(),
             data : $scope.dataChartSimple
         },
         chartC13SegmentsLeadersByValueModerate : {
-            type : chartReport.getChartType2(),
             config : chartReport.getChartConfig2(),
             data : $scope.dataChartSimple
         },
         chartC14SegmentsLeadersByValueGoodLife : {
-            type : chartReport.getChartType2(),
             config : chartReport.getChartConfig2(),
             data : $scope.dataChartSimple
         },
         chartC15SegmentsLeadersByValueUltimate : {
-            type : chartReport.getChartType2(),
             config : chartReport.getChartConfig2(),
             data : $scope.dataChartSimple
         },
         chartC16SegmentsLeadersByValuePragmatic : {
-            type : chartReport.getChartType2(),
             config : chartReport.getChartConfig2(),
             data : $scope.dataChartSimple
         },
@@ -202,22 +184,18 @@ marksimosapp.controller('chartController', function($scope,  $timeout, $http, ch
             color : ['#39b54a', '#ff983d', '#0087f0', '#8781bd', '#f26c4f', '#bd8cbf', '#000000']
         },
         chartC41GrowthRateInVolume : {
-            type : chartReport.getChartType1(),
             config : chartReport.getChartConfig1(),
             data : $scope.dataChartSimple
         },
         chartC42GrowthRateInValue : {
-            type : chartReport.getChartType1(),
             config : chartReport.getChartConfig1(),
             data : $scope.dataChartSimple
         },
         chartC43NetMarketPrice : {
-            type : chartReport.getChartType1(),
             config : chartReport.getChartConfig1(),
             data : $scope.dataChartSimple
         },
         chartC44SegmentValueShareTotalMarket : {
-            type : chartReport.getChartType3(),
             config : chartReport.getChartConfig3(),
             data : $scope.dataChartSimple
         }
@@ -355,7 +333,7 @@ marksimosapp.controller('chartController', function($scope,  $timeout, $http, ch
     $scope.data.chartB14ShelfSpaceShare.config.title = 'Shelf Space Share(%)';
 
     chartReport.marketShareInValue().then(function(data, status, headers, config){
-//        console.log(data);
+        console.log(data);
         $scope.data.chartB11MarketShareInValue.data = data;
     });
     chartReport.marketShareInVolume().then(function(data, status, headers, config){

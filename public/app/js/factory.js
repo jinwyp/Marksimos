@@ -98,9 +98,6 @@ app.factory('chartReport',function($http){
         data: []
     };
 
-    var chartType1 = 'line';  //'pie', 'bar', 'line', 'point', 'area'
-    var chartType2 = 'bar';  //'pie', 'bar', 'line', 'point', 'area'
-    var chartType3 = 'pie';  //'pie', 'bar', 'line', 'point', 'area'
 
     var chartConfig1 = {
         title: '',
@@ -122,11 +119,11 @@ app.factory('chartReport',function($http){
         tooltips: true,
         labels: false,
         legend: {
-            display: false,
-            position: 'left' //could be 'left, right'
+            display: true,
+            position: 'right' //could be 'left, right'
         },
         innerRadius: 0, // applicable on pieCharts, can be a percentage like '50%'
-        lineLegend: 'lineEnd' // can be also 'lineEnd' or 'traditional', defaults to 'lineEnd'
+        lineLegend: 'traditional' // can be also 'lineEnd' or 'traditional', defaults to 'lineEnd'
 //        mouseover: function() {},
 //        mouseout: function() {},
 //        click: function() {}
@@ -219,7 +216,7 @@ app.factory('chartReport',function($http){
             angular.forEach(chartHttpData.periods, function(value, key) {
 
                 var oneLineData = {
-                    x : value.toString(), //Round Name
+                    x : "period" + value.toString(), //Round Name
                     y : angular.copy(chartHttpData.chartData[key])
                 };
 
@@ -371,15 +368,6 @@ app.factory('chartReport',function($http){
 
     var factory = {
 
-        getChartType1 : function(){
-            return angular.copy(chartType1);
-        },
-        getChartType2 : function(){
-            return angular.copy(chartType2);
-        },
-        getChartType3 : function(){
-            return angular.copy(chartType3);
-        },
         getChartConfig1 : function(){
             return angular.copy(chartConfig1);
         },
@@ -457,7 +445,7 @@ app.factory('chartReport',function($http){
             return $http.get(apiPath + 'chart/return_on_investment').then(function(result){
 //                console.log(result.data);
 
-                return chartFormatTool1(result.data, 2);
+                return chartFormatTool1(result.data, 0);
             });
         },
 
@@ -465,7 +453,7 @@ app.factory('chartReport',function($http){
             return $http.get(apiPath + 'chart/investments_versus_budget').then(function(result){
 //                console.log(result.data);
 
-                return chartFormatTool1(result.data, 2);
+                return chartFormatTool1(result.data, 0);
             });
         },
 
