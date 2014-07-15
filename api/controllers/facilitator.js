@@ -105,7 +105,7 @@ exports.updateFacilitator = function(req, res, next){
     if(req.body.street) facilitator.street = req.body.street;
     if(req.body.pincode) facilitator.pincode = req.body.pincode;
 
-    if(Object.keys(facilitator).length === 0{
+    if(Object.keys(facilitator).length === 0){
         return res.send(400, {message: "you have to provide at least one field to update."});
     }
     
