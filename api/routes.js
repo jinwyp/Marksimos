@@ -17,6 +17,25 @@ var config = require('../common/config.js');
 
 var apiRouter = express.Router();
 
+apiRouter.get('/api/create_admin', function(req, res, next){
+    var userModel = require('./models/user.js');
+    userModel.register({
+        name: 'hcdadmin',
+        password: require('../common/utility.js').hashPassword('123456'),
+        email: 'yuansu@hcdglobal.com',
+        role: config.role.admin
+    })
+    .then(function(result){
+        if(!result){
+            return res.send(400, {message: "add admin failed."});
+        }
+        return res.send(result);
+    })
+    .fail(function(err){
+        res.send(500, err);
+    })
+    .done();
+})
 apiRouter.post('/api/register', userController.register);
 apiRouter.post('/api/login', userController.login);
 
@@ -100,7 +119,7 @@ function authorize(resource){
     ];
     authDefinition[config.role.facilitator] = [
         'updateFacilitator',
-        
+
         'addStudent',
         'updateStudent',
         'searchStudent'

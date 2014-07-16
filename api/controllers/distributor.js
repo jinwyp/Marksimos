@@ -27,7 +27,7 @@ exports.addDistributor = function(req, res, next){
         password: utility.hashPassword(req.body.password),
         role: config.role.distributor,
         numOfLicense: req.body.num_of_license,
-        isActive: true,
+        isActivated: true,
         district: req.body.district || '',
         street: req.body.street || '',
         pincode: req.body.pincode || ''

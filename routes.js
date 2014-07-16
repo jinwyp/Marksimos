@@ -39,7 +39,7 @@ module.exports = function(app){
         .then(function(result){
             if(result){
                 return userModel.updateByEmail(email, {
-                    isActive: true
+                    isActivated: true
                 })
                 .then(function(numAffected){
                     if(numAffected === 1){
