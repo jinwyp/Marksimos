@@ -7,7 +7,7 @@ var sessionOperation = require('../../common/sessionOperation.js');
 var utility = require('../../common/utility.js');
 
 exports.addStudent = function(req, res, next){
-    var validateResult = validateStudent(req);
+    var validateResult = utility.validateUser(req);
 
     if(validateResult){
         return res.send(400, {message: validateResult});
@@ -86,7 +86,7 @@ exports.addStudent = function(req, res, next){
 };
 
 exports.updateStudent = function(req, res, next){
-    var validateResult = utility.validateStudent(req);
+    var validateResult = utility.validateUser(req);
 
     if(validateResult){
         return res.send(400, {message: validateResult});

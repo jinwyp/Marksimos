@@ -34,7 +34,7 @@ function addDistributor(){
             console.log(body);
         }
     }).form({
-        email: 'distributor@hcdglobal.com',
+        email: 'distributor1@hcdglobal.com',
         password: '123456',
         name: 'hcd global',
         phone: '631122021',
@@ -73,7 +73,7 @@ function addFacilitator(){
             console.log(body);
         }
     }).form({
-        email: 'facilitator@hcdglobal.com',
+        email: 'facilitator1@hcdglobal.com',
         password: '123456',
         name: 'hcd global',
         phone: '631122021',
@@ -111,7 +111,7 @@ function addStudent(){
             console.log(body);
         }
     }).form({
-        email: 'student1@hcdglobal.com',
+        email: 'student2@hcdglobal.com',
         password: '123456',
         first_name: 'Bruce',
         last_name: 'Lee',
@@ -144,7 +144,7 @@ function updateStudent(){
     });
 }
 
-updateDistributor();
+updateStudent();
 
 
 

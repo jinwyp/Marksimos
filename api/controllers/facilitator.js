@@ -76,7 +76,7 @@ exports.addFacilitator = function(req, res, next){
 };
 
 exports.updateFacilitator = function(req, res, next){
-    var validateResult = utility.validateFacilitator(req);
+    var validateResult = utility.validateUser(req);
     if(validateResult){
         return res.send(400, {message: validateResult});
     }

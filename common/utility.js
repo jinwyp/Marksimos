@@ -6,6 +6,8 @@ var nodemailer = require('nodemailer');
 var uuid = require('node-uuid');
 var Q = require('q');
 var bcrypt = require('bcrypt-nodejs');
+var validator = require('validator');
+var util = require('util');
 
 
 exports.setSize = function(num){
@@ -243,11 +245,11 @@ exports.validateUser = function(req){
         return "Invalid phone.";
     }
 
-    if(req.body.pincode && !utility.validatePincode(req.body.pincode)){
+    if(req.body.pincode && !exports.validatePincode(req.body.pincode)){
         return 'Invalid pincode';
     }
 
-    if(req.body.gender && !utility.validateGender(req.body.gender)){
+    if(req.body.gender && !exports.validateGender(req.body.gender)){
         return 'Invalid gender';
     }
 };
@@ -268,7 +270,7 @@ exports.checkRequiredFieldForAllUsers = function(req){
 * Check all fileds which are needed when adding a new student
 */
 exports.checkRequiredFieldForStudent = function(req){
-    var checkUserResult = checkRequiredFieldForAllUsers(req);
+    var checkUserResult = exports.checkRequiredFieldForAllUsers(req);
     if(checkUserResult) return checkUserResult;
 
     if(!req.body.first_name) return {message: "first_name can't be empty."}
@@ -279,7 +281,7 @@ exports.checkRequiredFieldForStudent = function(req){
 * Check all fileds which are needed when adding a new facilitator
 */
 exports.checkRequiredFieldForFacilitator = function(req){
-    var checkUserResult = checkRequiredFieldForStudent(req);
+    var checkUserResult = exports.checkRequiredFieldForAllUsers(req);
     if(checkUserResult) return checkUserResult;
 
     if(!req.body.name) return {message: "name can't be empty."}
@@ -290,7 +292,7 @@ exports.checkRequiredFieldForFacilitator = function(req){
 * Check all fileds which are needed when adding a new facilitator
 */
 exports.checkRequiredFieldForDistributor = function(req){
-    var checkUserResult = checkRequiredFieldForStudent(req);
+    var checkUserResult = exports.checkRequiredFieldForAllUsers(req);
     if(checkUserResult) return checkUserResult;
 
     if(!req.body.name) return {message: "name can't be empty."}
