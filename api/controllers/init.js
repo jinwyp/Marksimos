@@ -40,7 +40,11 @@ exports.init = function(req, res, next) {
     //var seminarId = 'TTT'; //this parameter should be posted from client
     var seminarId = req.query.seminar_id;
     var simulationSpan; //should be posted from client
+    var companyNum;
     var currentPeriod = req.session.period;
+
+    var companies = [];
+    var periods = [];
 
     if(!seminarId){
         return next(new Error("seminarId cannot be empty."));
@@ -52,8 +56,23 @@ exports.init = function(req, res, next) {
             throw {message: "seminar doesn't exist."}
         }
 
+        //create periods array
+        var startPeriod = -3;
+        for(var i=0; i<dbSeminar.simulationSpan; i++){
+            periods.push(startPeriod);
+            startPeriod+=1;
+        }
+
+        //create company array
+        var letters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+        for(var j=0; j<dbSeminar.companyNum; j++){
+            companies.push('Company'+letters[j]);
+        }
+
         simulationSpan = dbSeminar.simulationSpan;
-        return initBinaryFile(seminarId, simulationSpan);
+        companyNum = dbSeminar.companyNum;
+
+        return initBinaryFile(seminarId, simulationSpan, companies);
         //return initBinaryFile('TTT', 3);
     })
     .then(function(initResult){
@@ -64,24 +83,13 @@ exports.init = function(req, res, next) {
         return Q.all([
             simulationResultModel.removeAll(seminarId),
             dbutility.removeExistedDecisions(seminarId),
-            seminarModel.remove(seminarId),
             chartModel.remove(seminarId),
             reportModel.remove(seminarId)
         ])
         .then(function(){
-            //insert empty data into mongo, so that we can update them
             return Q.all([
-                //add a new seminar
-                seminarModel.insert({
-                    seminarId: seminarId,
-                    simulation_span: simulationSpan
-                })
-            ]);
-        })
-        .then(function(){
-            return Q.all([
-                initSimulationResult(seminarId),
-                initDecision(seminarId)
+                initSimulationResult(seminarId, periods),
+                initDecision(seminarId, periods, companyNum)
             ])
         })
         .then(function(){
@@ -117,21 +125,21 @@ exports.init = function(req, res, next) {
     .done();
 };
 
-function initBinaryFile(seminarId, simulation_span){
+function initBinaryFile(seminarId, simulation_span, companies){
     return cgiapi.init({
         seminarId: seminarId,
         simulation_span: simulation_span,
-        teams: ['companyA', 'companyB']
+        teams: companies
     });
 }
 
-
-function initDecision(seminarId){
-    var periods = config.initPeriods
-
+/**
+* @param {Array} periods array of periods
+*/
+function initDecision(seminarId, periods, companyNum){
     var queries = [];
     periods.forEach(function(period) {
-        queries.push(cgiapi.queryDecisionsInOnePeriod(seminarId, period));
+        queries.push(cgiapi.queryDecisionsInOnePeriod(seminarId, period, companyNum));
     });
 
     return Q.all(queries)
@@ -184,9 +192,7 @@ function initChartData(seminarId, allResults){
 }
 
 
-function initSimulationResult(seminarId){
-    var periods = config.initPeriods;
-
+function initSimulationResult(seminarId, periods){
     //allResults contains data of several periods
     var queries = [];
     periods.forEach(function(period) {

@@ -18,7 +18,6 @@ module.exports = {
         name: 'HCD'
     },
 
-    initPeriods: [-3, -2, -1, 0],  //Periods at the start of the game
     initCompanies: [1, 2], //Teams at the start of the game
 
     segmentNameAndIndex: {
