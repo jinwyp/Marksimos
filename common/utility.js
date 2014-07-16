@@ -258,12 +258,12 @@ exports.validateUser = function(req){
 * Check all fileds which are needed when adding a new user
 */
 exports.checkRequiredFieldForAllUsers = function(req){
-    if(!req.body.email) return {message: "email can't be empty."};
-    if(!req.body.password) return {message: "password can't be empty."};
-    if(!req.body.phone) return {message: "phone can't be empty."};
-    if(!req.body.country) return {message: "country can't be empty."};
-    if(!req.body.state) return {message: "state can't be empty."};
-    if(!req.body.city) return {message: "city can't be empty."};
+    if(!req.body.email) return "email can't be empty.";
+    if(!req.body.password) return "password can't be empty.";
+    if(!req.body.phone) return "phone can't be empty.";
+    if(!req.body.country) return "country can't be empty.";
+    if(!req.body.state) return "state can't be empty.";
+    if(!req.body.city) return "city can't be empty.";
 };
 
 /**
@@ -273,8 +273,8 @@ exports.checkRequiredFieldForStudent = function(req){
     var checkUserResult = exports.checkRequiredFieldForAllUsers(req);
     if(checkUserResult) return checkUserResult;
 
-    if(!req.body.first_name) return {message: "first_name can't be empty."}
-    if(!req.body.last_name) return {message: "last_name can't be empty."}
+    if(!req.body.first_name) return "first_name can't be empty.";
+    if(!req.body.last_name) return "last_name can't be empty.";
 };
 
 /**
@@ -284,8 +284,8 @@ exports.checkRequiredFieldForFacilitator = function(req){
     var checkUserResult = exports.checkRequiredFieldForAllUsers(req);
     if(checkUserResult) return checkUserResult;
 
-    if(!req.body.name) return {message: "name can't be empty."}
-    if(!req.body.num_of_license) return {message: "num_of_license can't be empty."}
+    if(!req.body.name) return "name can't be empty.";
+    if(!req.body.num_of_license) return "num_of_license can't be empty.";
 };
 
 /**
@@ -295,8 +295,8 @@ exports.checkRequiredFieldForDistributor = function(req){
     var checkUserResult = exports.checkRequiredFieldForAllUsers(req);
     if(checkUserResult) return checkUserResult;
 
-    if(!req.body.name) return {message: "name can't be empty."}
-    if(!req.body.num_of_license) return {message: "num_of_license can't be empty."}
+    if(!req.body.name) return "name can't be empty.";
+    if(!req.body.num_of_license) return "num_of_license can't be empty.";
 };
 
 

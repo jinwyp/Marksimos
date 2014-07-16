@@ -60,7 +60,7 @@ exports.init = function(req, res, next) {
             //insert empty data into mongo, so that we can update them
             return Q.all([
                 //add a new seminar
-                seminarModel.insert(seminarId, {
+                seminarModel.insert({
                     seminarId: seminarId,
                     simulation_span: simulationSpan
                 })
@@ -152,7 +152,7 @@ function initChartData(seminarId, allResults){
     var period = allResults[allResults.length-1].period;
 
     return Q.all([
-        seminarModel.findOne(seminarId),
+        seminarModel.findOne({seminarId: seminarId}),
         //get exogenous of period:0, FMCG and GENERIC market
         cgiapi.getExogenous(period)
     ])

@@ -4,12 +4,21 @@ var Q = require('q');
 
 var seminarSchema = new Schema({
     seminarId: String,
+    description: String,
+    country: String,
+    state: String,
+    city: String,
+    venue: String,
+
+
     simulationSpan: Number,  //seminar有多少个round
-    simulationVariant: String,
-    targetMarket: String,
-    teams: [],
+    companyNum: [],  //team name list
+
     facilitatorId: String,
-    isFinished: Boolean, //if this seminar is finished
+
+    createDate: Date,
+
+    isFinished: {type: Boolean, default: false}, //if this seminar is finished
 });
 
 var teamSchema = new Schema({
@@ -33,13 +42,13 @@ exports.update = function(seminarId, seminar){
     return deferred.promise;
 }
 
-exports.insert = function(seminarId, seminar){
+exports.insert = function(seminar){
     var deferred = Q.defer();
-    Seminar.create(seminar, function(err){
+    Seminar.create(seminar, function(err, result){
         if(err){
             deferred.reject(err);
         }else{
-            deferred.resolve(undefined);
+            deferred.resolve(result);
         }
     });
     return deferred.promise;
@@ -57,9 +66,23 @@ exports.remove = function(seminarId){
     return deferred.promise;
 }
 
-exports.findOne = function(seminarId){
+exports.findOne = function(query){
     var deferred = Q.defer();
-    Seminar.findOne({seminarId: seminarId}, function(err, result){
+    Seminar.findOne(query, function(err, result){
+        if(err){
+            deferred.reject(err);
+        }else{
+            deferred.resolve(result);
+        }
+    });
+    return deferred.promise;
+}
+
+exports.find = function(query, sort){
+    var deferred = Q.defer();
+    Seminar.find(query)
+    .sort(sort)
+    .exec(function(err, result){
         if(err){
             deferred.reject(err);
         }else{

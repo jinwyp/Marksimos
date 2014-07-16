@@ -174,7 +174,6 @@ exports.searchStudent = function(req, res, next){
     if(city) query.city = city;
     if(isDisabled) query.isDisabled = isDisabled;
 
-    console.log(query);
     userModel.find(query)
     .then(function(result){
         res.send(result);
