@@ -21,7 +21,7 @@ var apiRouter = express.Router();
 apiRouter.get('/api/create_admin', function(req, res, next){
     var userModel = require('./models/user.js');
     userModel.register({
-        name: 'hcdadmin',
+        name: 'hcdadmin@hcdglobal.com',
         password: require('../common/utility.js').hashPassword('123456'),
         email: 'yuansu@hcdglobal.com',
         role: config.role.admin
