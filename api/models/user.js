@@ -16,7 +16,7 @@ var userSchema = new Schema({
 
 
     activateToken: String,
-    isActive: {type: Boolean, default: false},
+    isActivated: {type: Boolean, default: false},
     isDisabled: {type: Boolean, default: false},
     password: String,
     

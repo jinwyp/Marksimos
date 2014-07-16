@@ -7,10 +7,15 @@ var sessionOperation = require('../../common/sessionOperation.js');
 var utility = require('../../common/utility.js');
 
 exports.addStudent = function(req, res, next){
-    var validateResult = validateStudent(req);
+    var validateResult = utility.validateUser(req);
 
     if(validateResult){
         return res.send(400, {message: validateResult});
+    }
+
+    var checkRequiredFieldResult = utility.checkRequiredFieldForStudent(req);
+    if(checkRequiredFieldResult){
+        return res.send(400, {message: checkRequiredFieldResult});
     }
 
     var facilitatorId = sessionOperation.getUserId(req);
@@ -22,7 +27,7 @@ exports.addStudent = function(req, res, next){
         country: req.body.country,
         state: req.body.state,
         city: req.body.city,
-        password: req.body.password,
+        password: utility.hashPassword(req.body.password),
         role: config.role.student,
         facilitatorId: facilitatorId,
 
@@ -81,7 +86,7 @@ exports.addStudent = function(req, res, next){
 };
 
 exports.updateStudent = function(req, res, next){
-    var validateResult = validateStudent(req);
+    var validateResult = utility.validateUser(req);
 
     if(validateResult){
         return res.send(400, {message: validateResult});
@@ -94,7 +99,7 @@ exports.updateStudent = function(req, res, next){
     if(req.body.country) student.country = req.body.country;
     if(req.body.state) student.state = req.body.state;
     if(req.body.city) student.city = req.body.city;
-    if(req.body.password) student.password = req.body.password;
+    if(req.body.password) student.password = utility.hashPassword(req.body.password);
     if(req.body.pincode) student.pincode = req.body.pincode;
     if(req.body.gender) student.gender = req.body.gender;
     if(req.body.occupation) student.occupation = req.body.occupation;
@@ -142,60 +147,43 @@ exports.updateStudent = function(req, res, next){
         res.send(500, {message: "failed to update student."});
     })
     .done();
-}
+};
 
-function validateStudent(req){
-    if(req.body.email){
-        req.checkBody('email', 'Invalid email').notEmpty().isEmail();
-    }
-    
-    if(req.body.password){
-        req.assert('password', '6 to 20 characters required').len(6, 20);
-    }
-    
-    if(req.body.first_name){
-        req.checkBody('first_name', '2 to 20 characters required.').notEmpty().len(2, 20);
-    }
+exports.searchStudent = function(req, res, next){
+    var name = req.query.name;
+    var email = req.query.email;
+    var country = req.query.country;
+    var state = req.query.state;
+    var city = req.query.city;
+    var isDisabled = req.query.user_status;
 
-    if(req.body.last_name){
-        req.checkBody('last_name', '2 to 20 characters required.').notEmpty().len(2, 20);
-    }
-    
-    if(req.body.phone){
-        req.checkBody('phone', 'phone is empty.').notEmpty();
+    var query = {
+        role: config.role.student
+    };
+
+    //only facilitator and admin can search students
+    //facilitator can only view its own students
+    if(sessionOperation.getUserRole(req) !== config.role.admin){
+        query.facilitatorId = sessionOperation.getUserId(req);
     }
 
-    if(req.body.country){
-        req.checkBody('country', 'country is empty').notEmpty();
-    }
-    
-    if(req.body.state){
-        req.checkBody('state', 'state is empty').notEmpty();
-    }
+    if(name) query.name = name;
+    if(email) query.email = email;
+    if(country) query.country = country;
+    if(state) query.state = state;
+    if(city) query.city = city;
+    if(isDisabled) query.isDisabled = isDisabled;
 
-    if(req.body.city){
-        req.checkBody('city', 'city is empty').notEmpty();
-    }
-    
-
-    var errors = req.validationErrors();
-
-    if(errors){
-        return util.inspect(errors);
-    }
-    
-    if(req.body.pincode && !utility.validatePincode(req.body.pincode)){
-        return 'Invalid pincode';
-    }
-
-    if(req.body.gender && !utility.validateGender(req.body.gender)){
-        return 'Invalid gender';
-    }
-
-    //if phone contains characters other than number
-    if(!validator.isNumeric(req.body.phone)){
-        return "Invalid phone.";
-    }
+    console.log(query);
+    userModel.find(query)
+    .then(function(result){
+        res.send(result);
+    })
+    .fail(function(err){
+        logger.error(err);
+        res.send(500, {message: 'search failed'})
+    })
+    .done();
 }
 
 

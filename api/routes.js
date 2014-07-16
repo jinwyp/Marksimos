@@ -17,6 +17,25 @@ var config = require('../common/config.js');
 
 var apiRouter = express.Router();
 
+apiRouter.get('/api/create_admin', function(req, res, next){
+    var userModel = require('./models/user.js');
+    userModel.register({
+        name: 'hcdadmin',
+        password: require('../common/utility.js').hashPassword('123456'),
+        email: 'yuansu@hcdglobal.com',
+        role: config.role.admin
+    })
+    .then(function(result){
+        if(!result){
+            return res.send(400, {message: "add admin failed."});
+        }
+        return res.send(result);
+    })
+    .fail(function(err){
+        res.send(500, err);
+    })
+    .done();
+})
 apiRouter.post('/api/register', userController.register);
 apiRouter.post('/api/login', userController.login);
 
@@ -73,6 +92,7 @@ apiRouter.get('/api/facilitators', authorize('searchFacilitator'), facilitatorCo
 
 apiRouter.post('/api/students', authorize('addStudent'), studentController.addStudent);
 apiRouter.put('/api/students/:student_id', authorize('updateStudent'), studentController.updateStudent);
+apiRouter.get('/api/students', authorize('searchStudent'), studentController.searchStudent);
 
 /**
 * @param {String} resource identifier of url
@@ -83,14 +103,23 @@ function authorize(resource){
         'addDistributor',
         'updateDistributor',
         'searchDistributor',
-        'searchFacilitator'
+
+        'updateFacilitator',
+        'searchFacilitator',
+
+        'updateStudent',
+        'searchStudent'
     ];
     authDefinition[config.role.distributor] = [
+        'updateDistributor',
+
         'addFacilitator',
         'updateFacilitator',
         'searchFacilitator'
     ];
     authDefinition[config.role.facilitator] = [
+        'updateFacilitator',
+
         'addStudent',
         'updateStudent',
         'searchStudent'
