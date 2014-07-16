@@ -181,8 +181,6 @@ function sendMail(toEmail, subject, html) {
         host: config.mail.host,
         auth: {user: config.mail.user, pass: config.mail.password},
     });
-
-    console.log(config.mail.host);
    
     var mailOptions = {
         from: [config.mail.name, config.mail.user].join(' '),

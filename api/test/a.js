@@ -60,7 +60,7 @@ function updateDistributor(){
         country: 'china',
         state: 'shanghai',
         city: 'shanghai',
-        num_of_license: 10
+        num_of_license: 100
     });
 }
 
@@ -99,7 +99,7 @@ function updateFacilitator(){
         country: 'japan',
         state: 'shanghai',
         city: 'shanghai',
-        num_of_license: 2
+        num_of_license: 10
     });
 }
 

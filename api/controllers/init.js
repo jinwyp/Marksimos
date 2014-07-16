@@ -27,6 +27,8 @@ var competitorIntelligenceReportAssembler = require('../dataAssemblers/competito
 var marketTrendsReportAssembler = require('../dataAssemblers/marketTrendsReport.js');
 var chartAssembler = require('../dataAssemblers/chart.js');
 
+var logger = require('../../common/logger.js');
+
 
 /**
  * Initialize game data, only certain perople can call this method
@@ -35,15 +37,25 @@ var chartAssembler = require('../dataAssemblers/chart.js');
  *
  */
 exports.init = function(req, res, next) {
-    var seminarId = 'TTT'; //this parameter should be posted from client
-    var simulationSpan = 6; //should be posted from client
+    //var seminarId = 'TTT'; //this parameter should be posted from client
+    var seminarId = req.query.seminar_id;
+    var simulationSpan; //should be posted from client
     var currentPeriod = req.session.period;
 
     if(!seminarId){
         return next(new Error("seminarId cannot be empty."));
     }
 
-    initBinaryFile(seminarId, simulationSpan)
+    seminarModel.findOne({seminarId: seminarId})
+    .then(function(dbSeminar){
+        if(!dbSeminar){
+            throw {message: "seminar doesn't exist."}
+        }
+
+        simulationSpan = dbSeminar.simulationSpan;
+        return initBinaryFile(seminarId, simulationSpan);
+        //return initBinaryFile('TTT', 3);
+    })
     .then(function(initResult){
         if(initResult.message !== 'init_success'){
             return res.send({message: 'init binary file failed. initResult = ' + initResult.message});
@@ -99,7 +111,8 @@ exports.init = function(req, res, next) {
         })
     })
     .fail(function(err){
-        next(err);
+        logger.error(err);
+        res.send(500, {message: "failed to initialize game."})
     })
     .done();
 };

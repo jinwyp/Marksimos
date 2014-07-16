@@ -12,7 +12,7 @@ var seminarSchema = new Schema({
 
 
     simulationSpan: Number,  //seminar有多少个round
-    companyNum: [],  //team name list
+    companyNum: Number,  //team name list
 
     facilitatorId: String,
 
