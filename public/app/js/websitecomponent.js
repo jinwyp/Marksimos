@@ -3,9 +3,9 @@
  */
 
 
-var app = angular.module('marksimos.component', []);
+var app = angular.module('marksimos.component', ['pascalprecht.translate']);
 
-app.directive('headerUser', function($translate) {
+app.directive('headerUser', ['$translate', function($translate) {
     return {
         scope: {
             login : '=',
@@ -40,7 +40,7 @@ app.directive('headerUser', function($translate) {
 
         }
     };
-});
+}]);
 
 
 

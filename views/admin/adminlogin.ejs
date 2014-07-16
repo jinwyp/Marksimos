@@ -1,0 +1,61 @@
+<% include ./include/headcssadmin.html %>
+
+<body class="bg-black" ng-app="marksimosadmin">
+
+<div class="form-box" id="login-box" ng-controller="adminLoginController">
+    <div class="header">Sign In</div>
+
+    <form name="loginForm">
+        <div class="body bg-gray">
+
+            <div class="form-group" ng-class="{'has-success':loginForm.username.$dirty && loginForm.username.$valid, 'has-error': loginForm.username.$dirty && loginForm.username.$invalid}">
+                <label class="control-label" for="inputError" ng-show="loginForm.username.$dirty && loginForm.username.$invalid">
+                    <i class="fa fa-times-circle-o"></i> Input with error
+                </label>
+                <input type="text" name="username" class="form-control" placeholder="Admin User Name" ng-model="data.admin.username" required />
+            </div>
+
+            <div class="form-group" ng-class="{'has-success':loginForm.password.$dirty && loginForm.password.$valid, 'has-error': loginForm.password.$dirty && loginForm.password.$invalid}">
+                <label class="control-label" for="inputError" ng-show="loginForm.password.$dirty && loginForm.password.$invalid">
+                    <i class="fa fa-times-circle-o"></i> Input with error
+                </label>
+                <input type="password" name="password" class="form-control" placeholder="Password" ng-model="data.admin.password" required ng-minlength="5" ng-maxlength="12"/>
+            </div>
+            <!--<div class="form-group">-->
+                <!--<input type="checkbox" name="remember_me"/> Remember me-->
+            <!--</div>-->
+        </div>
+
+        <div class="footer">
+            <button type="submit" class="btn bg-olive btn-block" ng-click="login(loginForm)">Sign me in</button>
+
+            <!--<p><a href="#">I forgot my password</a></p>-->
+
+            <!--<a href="register.html" class="text-center">Register a new membership</a>-->
+        </div>
+    </form>
+
+
+
+    <!--<div class="margin text-center">-->
+        <!--<span>Sign in using social networks</span>-->
+        <!--<br/>-->
+        <!--<button class="btn bg-light-blue btn-circle"><i class="fa fa-facebook"></i></button>-->
+        <!--<button class="btn bg-aqua btn-circle"><i class="fa fa-twitter"></i></button>-->
+        <!--<button class="btn bg-red btn-circle"><i class="fa fa-google-plus"></i></button>-->
+
+    <!--</div>-->
+</div>
+
+
+<!-- jQuery 2.0.2 -->
+<script src="libs/jquery/dist/jquery.min.js"></script>
+
+<!-- Bootstrap -->
+<script src="libs/bootstrap/dist/js/bootstrap.min.js"></script>
+
+<script src="libs/angular/angular.js"></script>
+<script src="app/js/appadmin.js"></script>
+
+</body>
+</html>

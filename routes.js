@@ -7,19 +7,19 @@ module.exports = function(app){
     /**********   Routes for User/Student   **********/
 
      app.get('/', function(req, res, next){
-        res.render('login.ejs', { title : 'MarkSimos - Welcome to the MarkSimos Game'});
+        res.render('user/userlogin.ejs', { title : 'MarkSimos - Welcome to the MarkSimos Game'});
     });
      
     app.get('/login', function(req, res, next){
-        res.render('login.ejs', { title : 'MarkSimos - User Sign In'});
+        res.render('user/userlogin.ejs', { title : 'MarkSimos - User Sign In'});
     });
 
     app.get('/introduction', function(req, res, next){
-        res.render('userintroduction.ejs', { title : 'MarkSimos - Introduction Videos'});
+        res.render('user/userintroduction.ejs', { title : 'MarkSimos - Introduction Videos'});
     });
 
     app.get('/home', authMiddleware.needLogin, function(req, res, next){
-        res.render('userhome.ejs', { title : 'MarkSimos - User Home'});
+        res.render('user/userhome.ejs', { title : 'MarkSimos - User Home'});
     });
 
     app.get('/activate', function(req, res, next){
@@ -62,9 +62,13 @@ module.exports = function(app){
 
     /**********   Routes for Administrator   **********/
 
+
+
     app.get('/admin', authMiddleware.needLogin, function(req, res, next){
-        res.render('admin/adminhome.ejs', {});
+        res.render('admin/adminlogin.ejs', {});
     });
 
-
+    app.get('/adminhome', authMiddleware.needLogin, function(req, res, next){
+        res.render('admin/adminhome.ejs', {});
+    });
 };

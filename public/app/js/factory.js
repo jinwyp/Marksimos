@@ -25,7 +25,7 @@ app.factory('currentUser', function(){
 
 
 
-app.factory('company',function($http){
+app.factory('company',['$http', function($http){
 
     var apiPath = '/api/';
 
@@ -92,12 +92,12 @@ app.factory('company',function($http){
 
 
     return factory;
-});
+}]);
 
 
 
 
-app.factory('chartReport',function($http){
+app.factory('chartReport', ['$http', function($http){
 
     var apiPath = '/api/';
 
@@ -600,12 +600,12 @@ app.factory('chartReport',function($http){
     return factory;
 
 
-});
+}]);
 
 
 
 
-app.factory('tableReport',function($http){
+app.factory('tableReport', ['$http', function($http){
 
     var apiPath = '/api/';
 
@@ -688,4 +688,4 @@ app.factory('tableReport',function($http){
     return factory;
 
 
-});
+}]);
