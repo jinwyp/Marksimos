@@ -19,11 +19,11 @@ marksimosapp.directive('adminHeader', function() {
 
 
 // controller business logic
-marksimosapp.controller('adminLoginController', ['$scope', '$timeout', '$http', function($scope, $timeout, $http) {
+marksimosapp.controller('adminLoginController', ['$scope', '$timeout', '$http', '$window', function($scope, $timeout, $http, $window) {
 
     $scope.data = {
         admin : {
-            username : '',
+            email : '',
             password : ''
         }
     };
