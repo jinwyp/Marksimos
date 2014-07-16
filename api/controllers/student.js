@@ -48,29 +48,8 @@ exports.addStudent = function(req, res, next){
         if(result){
             throw {httpStatus: 400, message: 'Email has been used, please choose another email.'};
         }else{
-            return userModel.findOne({
-                _id: facilitatorId
-            })
+            return userModel.register(student);
         }
-    })
-    .then(function(facilitator){
-        if(!facilitator){
-            throw {httpStatus:400, message: "Can't find facilitator in database, facilitatorId: " + facilitatorId};
-        }
-
-        return userModel.update({
-            _id: facilitatorId
-        }, {
-            numOfLicense: facilitator.numOfLicense - 1,
-            numOfUsedLicense: facilitator.numOfUsedLicense + 1
-        });
-    })
-    .then(function(numAffected){
-        if(numAffected !== 1){
-            throw {message: "update facilitator failed during add student, numAffected: " + numAffected};
-        }
-
-        return userModel.register(student);
     })
     .then(function(result){
         if(!result){

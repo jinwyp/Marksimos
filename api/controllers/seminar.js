@@ -1,7 +1,10 @@
 var seminarModel = require('../models/seminar.js');
+var userModel = require('../models/user.js');
+
 var sessionOperation = require('../../common/sessionOperation.js');
 var logger = require('../../common/logger.js');
 var consts = require('../consts.js');
+
 
 exports.addSeminar = function(req, res, next){
     var checkRequiredFieldResult = checkRequiredField(req);
@@ -29,8 +32,33 @@ exports.addSeminar = function(req, res, next){
     seminar.simulationSpan = req.body.simulation_span;
     seminar.companyNum = req.body.company_num;
 
-    //get all seminar, create the next seminar id
-    seminarModel.find({}, {seminarId: "desc"})
+    userModel.findOne({_id: facilitatorId})
+    .then(function(dbFacilitator){
+        if(!dbFacilitator){
+            throw {message: "Can't find facilitator."};
+        }
+
+        if(dbFacilitator.numOfLicense <= 0){
+            throw {message: "You don't have enough licenses."}
+        } 
+
+        return userModel.update({_id: facilitatorId}, {
+            numOfLicense: dbFacilitator.numOfLicense - 1,
+            numOfUsedLicense: dbFacilitator.numOfUsedLicense + 1
+        })
+    })
+    .then(function(numAffected){
+        if(numAffected === 0){
+            throw {message: "update facilitator failed."}
+        }
+
+        if(numAffected > 1){
+            throw {message: "more than one row was updated."}
+        }
+
+        //get all seminar, create the next seminar id
+        return seminarModel.find({}, {seminarId: "desc"})
+    })
     .then(function(allSeminars){
         if(!allSeminars || allSeminars.length === 0){
             seminar.seminarId = "10000";
