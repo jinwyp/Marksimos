@@ -27,7 +27,7 @@ function login(){
 }
 
 function addDistributor(){
-    request.post('http://localhost:3000/api/distributor', function(err, res, body){
+    request.post('http://localhost:3000/api/distributors', function(err, res, body){
         if(err){
             console.log(JSON.stringify(err));
         }else{
@@ -46,7 +46,7 @@ function addDistributor(){
 }
 
 function updateDistributor(){
-    request.put('http://localhost:3000/api/distributor/53c38da49f7576ef26b867e9', function(err, res, body){
+    request.put('http://localhost:3000/api/distributors/53c38da49f7576ef26b867e9', function(err, res, body){
         if(err){
             console.log(JSON.stringify(err));
         }else{
@@ -66,7 +66,7 @@ function updateDistributor(){
 
 
 function addFacilitator(){
-    request.post('http://localhost:3000/api/facilitator', function(err, res, body){
+    request.post('http://localhost:3000/api/facilitators', function(err, res, body){
         if(err){
             console.log(JSON.stringify(err));
         }else{
@@ -85,7 +85,7 @@ function addFacilitator(){
 }
 
 function updateFacilitator(){
-    request.put('http://localhost:3000/api/facilitator/53c38dcb4acf1d1627290928', function(err, res, body){
+    request.put('http://localhost:3000/api/facilitators/53c38dcb4acf1d1627290928', function(err, res, body){
         if(err){
             console.log(JSON.stringify(err));
         }else{
@@ -144,7 +144,7 @@ function updateStudent(){
     });
 }
 
-updateStudent();
+updateDistributor();
 
 
 
