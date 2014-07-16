@@ -59,17 +59,6 @@ function generateSKUFieldReport(allResults, getField){
         })
     });
 
-    for(var i=0; i<allResults.length; i++){
-            var onePeriodResult = allResults[i];
-
-            for(var j=0; j<onePeriodResult.p_SKUs.length; j++){
-                var SKUResult = onePeriodResult.p_SKUs[j];
-                if(SKUResult.u_SKUID === 111){
-                    console.log(SKUResult.u_AverageDisplayPrice);
-                }
-            }
-        }
-
     result.forEach(function(SKU){
         for(var i=0; i<allResults.length; i++){
             var onePeriodResult = allResults[i];

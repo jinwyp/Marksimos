@@ -48,29 +48,8 @@ exports.addStudent = function(req, res, next){
         if(result){
             throw {httpStatus: 400, message: 'Email has been used, please choose another email.'};
         }else{
-            return userModel.findOne({
-                _id: facilitatorId
-            })
+            return userModel.register(student);
         }
-    })
-    .then(function(facilitator){
-        if(!facilitator){
-            throw {httpStatus:400, message: "Can't find facilitator in database, facilitatorId: " + facilitatorId};
-        }
-
-        return userModel.update({
-            _id: facilitatorId
-        }, {
-            numOfLicense: facilitator.numOfLicense - 1,
-            numOfUsedLicense: facilitator.numOfUsedLicense + 1
-        });
-    })
-    .then(function(numAffected){
-        if(numAffected !== 1){
-            throw {message: "update facilitator failed during add student, numAffected: " + numAffected};
-        }
-
-        return userModel.register(student);
     })
     .then(function(result){
         if(!result){
@@ -80,7 +59,10 @@ exports.addStudent = function(req, res, next){
     })
     .fail(function(err){
         logger.error(err);
-        res.send(err.httpStatus || 500, {message: "add student failed."})
+        if(err.httpStatus){
+            return res.send(err.httpStatus, {message: err.message});
+        }
+        res.send(500, {message: "add student failed."})
     })
     .done();
 };
@@ -144,6 +126,9 @@ exports.updateStudent = function(req, res, next){
     })
     .fail(function(err){
         logger.error(err);
+        if(err.httpStatus){
+            return res.send(err.httpStatus, {message: err.message});
+        }
         res.send(500, {message: "failed to update student."});
     })
     .done();
@@ -174,7 +159,6 @@ exports.searchStudent = function(req, res, next){
     if(city) query.city = city;
     if(isDisabled) query.isDisabled = isDisabled;
 
-    console.log(query);
     userModel.find(query)
     .then(function(result){
         res.send(result);

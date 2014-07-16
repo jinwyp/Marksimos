@@ -7,6 +7,7 @@ var userController = require('./controllers/user.js');
 var distributorController = require('./controllers/distributor.js');
 var facilitatorController = require('./controllers/facilitator.js');
 var studentController = require('./controllers/student.js');
+var seminarController = require('./controllers/seminar.js');
 
 var util = require('util');
 var express = require('express');
@@ -20,7 +21,7 @@ var apiRouter = express.Router();
 apiRouter.get('/api/create_admin', function(req, res, next){
     var userModel = require('./models/user.js');
     userModel.register({
-        name: 'hcdadmin',
+        name: 'hcdadmin@hcdglobal.com',
         password: require('../common/utility.js').hashPassword('123456'),
         email: 'yuansu@hcdglobal.com',
         role: config.role.admin
@@ -94,6 +95,9 @@ apiRouter.post('/api/students', authorize('addStudent'), studentController.addSt
 apiRouter.put('/api/students/:student_id', authorize('updateStudent'), studentController.updateStudent);
 apiRouter.get('/api/students', authorize('searchStudent'), studentController.searchStudent);
 
+apiRouter.post('/api/seminar', authorize('addSeminar'), seminarController.addSeminar);
+
+
 /**
 * @param {String} resource identifier of url
 */
@@ -122,7 +126,9 @@ function authorize(resource){
 
         'addStudent',
         'updateStudent',
-        'searchStudent'
+        'searchStudent',
+
+        'addSeminar'
     ];
     authDefinition[config.role.student] = [
         'updateStudent'

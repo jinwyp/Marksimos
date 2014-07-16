@@ -45,20 +45,24 @@ exports.queryOneDecision = function(seminarId, team, period){
     if(period === undefined) throw new Error('Invalid parameter period.');
 
     var reqUrl = config.cgiService + util.format('decisions.exe?period=%s&team=%s&seminar=%s', period, team, seminarId);
+
     return request.get(reqUrl);
 };
 
 /**
  * Query all decisions in one period
  */
-exports.queryDecisionsInOnePeriod = function(seminarId, period){
-    var companies = config.initCompanies;
-
+exports.queryDecisionsInOnePeriod = function(seminarId, period, companyNum){
     var queries = [];
 
-    companies.forEach(function(company) {
+    if(typeof companyNum !== 'number' || companyNum <= 0){
+        throw new Error("Invalid companyNum");
+    }
+
+    for(var i=1; i<=companyNum; i++){
+        var company = i;
         queries.push(exports.queryOneDecision(seminarId, company, period));
-    })
+    }
 
     return Q.all(queries)
     .then(function(decisions){

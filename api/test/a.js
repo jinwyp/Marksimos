@@ -60,7 +60,7 @@ function updateDistributor(){
         country: 'china',
         state: 'shanghai',
         city: 'shanghai',
-        num_of_license: 10
+        num_of_license: 100
     });
 }
 
@@ -99,7 +99,7 @@ function updateFacilitator(){
         country: 'japan',
         state: 'shanghai',
         city: 'shanghai',
-        num_of_license: 2
+        num_of_license: 10
     });
 }
 
@@ -144,7 +144,25 @@ function updateStudent(){
     });
 }
 
-updateStudent();
+function addSeminar(){
+    request.post('http://localhost:3000/api/seminar', function(err, res, body){
+        if(err){
+            console.log(JSON.stringify(err));
+        }else{
+            console.log(body);
+        }
+    }).form({
+        description: 'test seminar',
+        country: 'china',
+        state: 'shanghai',
+        city: 'hangzhou',
+        venue: 'HCD 301',
+        simulation_span: 4,
+        company_num: 3
+    });
+}
+
+addSeminar();
 
 
 
