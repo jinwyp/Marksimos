@@ -3,6 +3,9 @@ var logger = require('./common/logger.js');
 var authMiddleware = require('./middleware/auth.js');
 
 module.exports = function(app){
+
+    /**********   Routes for User/Student   **********/
+
      app.get('/', function(req, res, next){
         res.render('login.ejs', { title : 'MarkSimos - Welcome to the MarkSimos Game'});
     });
@@ -16,11 +19,7 @@ module.exports = function(app){
     });
 
     app.get('/home', authMiddleware.needLogin, function(req, res, next){
-        res.render('usermainhome.ejs', { title : 'MarkSimos - User Home'});
-    });
-
-    app.get('/admin', authMiddleware.needLogin, function(req, res, next){
-        res.render('adminhome.ejs', {});
+        res.render('userhome.ejs', { title : 'MarkSimos - User Home'});
     });
 
     app.get('/activate', function(req, res, next){
@@ -36,25 +35,36 @@ module.exports = function(app){
         }
 
         userModel.findByEmailAndToken(email, token)
-        .then(function(result){
-            if(result){
-                return userModel.updateByEmail(email, {
-                    isActivated: true
-                })
-                .then(function(numAffected){
-                    if(numAffected === 1){
-                        return res.redirect('/login');
-                    }
-                    throw new Error('more or less than 1 record is updated. it should be only one.')
-                });
-            }else{
-                throw new Error('User does not exist.');
-            }
-        })
-        .fail(function(err){
-            logger.error(err);
-            res.send(500, {message: 'activate failed.'})
-        })
-        .done();
-    })
+            .then(function(result){
+                if(result){
+                    return userModel.updateByEmail(email, {
+                        isActivated: true
+                    })
+                        .then(function(numAffected){
+                            if(numAffected === 1){
+                                return res.redirect('/login');
+                            }
+                            throw new Error('more or less than 1 record is updated. it should be only one.')
+                        });
+                }else{
+                    throw new Error('User does not exist.');
+                }
+            })
+            .fail(function(err){
+                logger.error(err);
+                res.send(500, {message: 'activate failed.'})
+            })
+            .done();
+    });
+
+
+
+
+    /**********   Routes for Administrator   **********/
+
+    app.get('/admin', authMiddleware.needLogin, function(req, res, next){
+        res.render('admin/adminhome.ejs', {});
+    });
+
+
 };
