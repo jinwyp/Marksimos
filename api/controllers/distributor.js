@@ -3,25 +3,18 @@ var config = require('../../common/config.js');
 var userModel = require('../models/user.js');
 var logger = require('../../common/logger.js');
 var util = require('util');
+var utility = require('../../common/utility.js');
 
 exports.addDistributor = function(req, res, next){
-    req.checkBody('email', 'Invalid email').notEmpty().isEmail();
-    req.assert('password', '6 to 20 characters required').len(6, 20);
-    req.checkBody('name', '6 to 100 characters required.').notEmpty().len(6, 100);
-    req.checkBody('phone', 'phone is empty.').notEmpty();
-    req.checkBody('country', 'country is empty').notEmpty();
-    req.checkBody('state', 'state is empty').notEmpty();
-    req.checkBody('city', 'city is empty').notEmpty();
-    req.checkBody('num_of_license', 'Invalid num of license').isInt();
+    var validateResult = utility.validateUser(req);
 
-    var errors = req.validationErrors();
-    if(errors){
-        return res.send(400, {message: util.inspect(errors)});
+    if(validateResult){
+        return res.send(400, {message: validateResult});
     }
 
-    //if phone contains characters other than number
-    if(!validator.isNumeric(req.body.phone)){
-        return res.send(400, {message: "Invalid phone."});
+    var checkRequiredFieldResult = utility.checkRequiredFieldForDistributor(req);
+    if(checkRequiredFieldResult){
+        return res.send(400, {message: checkRequiredFieldResult});
     }
 
     var distributor = {
@@ -31,7 +24,7 @@ exports.addDistributor = function(req, res, next){
         country: req.body.country,
         state: req.body.state,
         city: req.body.city,
-        password: req.body.password,
+        password: utility.hashPassword(req.body.password),
         role: config.role.distributor,
         numOfLicense: req.body.num_of_license,
         isActive: true,
@@ -59,34 +52,22 @@ exports.addDistributor = function(req, res, next){
 };
 
 exports.updateDistributor = function(req, res, next){
-    req.checkParams('distributor_id', 'Invalid distributor_id').notEmpty();
-    req.checkBody('email', 'Invalid email').notEmpty().isEmail();
-    req.assert('password', '6 to 20 characters required').len(6, 20);
-    req.checkBody('name', '6 to 100 characters required.').notEmpty().len(6, 100);
-    req.checkBody('phone', 'phone is empty.').notEmpty();
-    req.checkBody('country', 'country is empty').notEmpty();
-    req.checkBody('state', 'state is empty').notEmpty();
-    req.checkBody('city', 'city is empty').notEmpty();
-    req.checkBody('num_of_license', 'Invalid num of license').isInt();
-
-    var errors = req.validationErrors();
-    if(errors){
-        return res.send(400, {message: util.inspect(errors)});
+    if(!req.params.distributor_id){
+        return res.send(400, {message: "distributor_id can't be empty."})
     }
 
-    //if phone contains characters other than number
-    if(!validator.isNumeric(req.body.phone)){
-        return res.send(400, {message: "Invalid phone."});
+    var validateResult = utility.validateUser(req);
+    if(validateResult){
+        return res.send(400, {message: validateResult});
     }
 
     var distributor = {
         name: req.body.name,
-        email: req.body.email,
         phone: req.body.phone,
         country: req.body.country,
         state: req.body.state,
         city: req.body.city,
-        password: req.body.password,
+        password: utility.hashPassword(req.body.password),
         role: config.role.distributor,
         numOfLicense: req.body.num_of_license,
         isActive: true,
@@ -136,7 +117,6 @@ exports.searchDistributor = function(req, res, next){
         res.send(500, {message: 'search failed'})
     })
 };
-
 
 
 

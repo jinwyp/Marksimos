@@ -73,6 +73,7 @@ apiRouter.get('/api/facilitators', authorize('searchFacilitator'), facilitatorCo
 
 apiRouter.post('/api/students', authorize('addStudent'), studentController.addStudent);
 apiRouter.put('/api/students/:student_id', authorize('updateStudent'), studentController.updateStudent);
+apiRouter.get('/api/students', authorize('searchStudent'), studentController.searchStudent);
 
 /**
 * @param {String} resource identifier of url
@@ -83,14 +84,23 @@ function authorize(resource){
         'addDistributor',
         'updateDistributor',
         'searchDistributor',
-        'searchFacilitator'
+
+        'updateFacilitator',
+        'searchFacilitator',
+
+        'updateStudent',
+        'searchStudent'
     ];
     authDefinition[config.role.distributor] = [
+        'updateDistributor',
+
         'addFacilitator',
         'updateFacilitator',
         'searchFacilitator'
     ];
     authDefinition[config.role.facilitator] = [
+        'updateFacilitator',
+        
         'addStudent',
         'updateStudent',
         'searchStudent'
