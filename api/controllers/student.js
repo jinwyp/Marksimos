@@ -59,7 +59,10 @@ exports.addStudent = function(req, res, next){
     })
     .fail(function(err){
         logger.error(err);
-        res.send(err.httpStatus || 500, {message: "add student failed."})
+        if(err.httpStatus){
+            return res.send(err.httpStatus, {message: err.message});
+        }
+        res.send(500, {message: "add student failed."})
     })
     .done();
 };
@@ -123,6 +126,9 @@ exports.updateStudent = function(req, res, next){
     })
     .fail(function(err){
         logger.error(err);
+        if(err.httpStatus){
+            return res.send(err.httpStatus, {message: err.message});
+        }
         res.send(500, {message: "failed to update student."});
     })
     .done();

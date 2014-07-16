@@ -39,7 +39,7 @@ exports.addSeminar = function(req, res, next){
         }
 
         if(dbFacilitator.numOfLicense <= 0){
-            throw {message: "You don't have enough licenses."}
+            throw {httpStatus:400, message: "You don't have enough licenses."}
         } 
 
         return userModel.update({_id: facilitatorId}, {
@@ -76,7 +76,10 @@ exports.addSeminar = function(req, res, next){
     })
     .fail(function(err){
         logger.error(err);
-        return res.send(err.httpStatus || 500, {message: "add seminar failed."})
+        if(err.httpStatus){
+            return res.send(err.httpStatus, {message: err.message});
+        }
+        return res.send(500, {message: "add seminar failed."})
     })
     .done();
 }
