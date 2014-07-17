@@ -23,17 +23,47 @@ var apiRouter = express.Router();
 /**********  API For Student  **********/
 
 apiRouter.post('/api/register', userController.register);
-apiRouter.post('/api/login', userController.login);
+apiRouter.get('/api/login', userController.login);
+
+
+apiRouter.get('/api/create_admin', function(req, res, next){
+    var userModel = require('./models/user.js');
+
+    userModel.remove({role: config.role.admin})
+        .then(function(){
+            return userModel.register({
+                name: 'hcdadmin',
+                password: require('../common/utility.js').hashPassword('123456'),
+                email: 'admin@hcdglobal.com',
+                role: config.role.admin,
+                isActivated: true
+            });
+        })
+        .then(function(result){
+            if(!result){
+                return res.send(400, {message: "add admin failed."});
+            }
+            return res.send(result);
+        })
+        .fail(function(err){
+            res.send(500, err);
+        })
+        .done();
+});
+
 
 
 //all the API below need req.session.loginStatus to be true
-apiRouter.use(function(req, res, next){
+
+apiRouter.all("/api/*", function(req, res, next){
     if(sessionOperation.getLoginStatus(req)){
         next();
     }else{
         res.send(400, {message: 'Login required.'});
     }
 });
+
+
 
 //report
 apiRouter.get('/api/report/:report_name', reportController.getReport);
@@ -79,30 +109,7 @@ apiRouter.get('/api/company/otherinfo', decisionPageController.getOtherinfo);
 /**********  API For Admin  **********/
 
 
-apiRouter.get('/api/create_admin', function(req, res, next){
-    var userModel = require('./models/user.js');
 
-    userModel.remove({role: config.role.admin})
-        .then(function(){
-            return userModel.register({
-                name: 'hcdadmin',
-                password: require('../common/utility.js').hashPassword('123456'),
-                email: 'admin@hcdglobal.com',
-                role: config.role.admin,
-                isActivated: true
-            });
-        })
-        .then(function(result){
-            if(!result){
-                return res.send(400, {message: "add admin failed."});
-            }
-            return res.send(result);
-        })
-        .fail(function(err){
-            res.send(500, err);
-        })
-        .done();
-});
 
 
 

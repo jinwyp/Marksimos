@@ -60,7 +60,7 @@ app.all("/api/*", function(req, res, next){
 
 
 //require('./api/routes.js')(app);
-app.use('/api', require('./api/routes.js'));
+app.use( require('./api/routes.js'));
 require('./routes.js')(app);
 
 /// catch 404 and forwarding to error handler
