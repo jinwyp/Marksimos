@@ -23,7 +23,7 @@ var apiRouter = express.Router();
 /**********  API For Student  **********/
 
 apiRouter.post('/api/register', userController.register);
-apiRouter.get('/api/login', userController.login);
+apiRouter.post('/api/login', userController.login);
 
 
 apiRouter.get('/api/create_admin', function(req, res, next){
@@ -52,92 +52,74 @@ apiRouter.get('/api/create_admin', function(req, res, next){
 });
 
 
+//report
+apiRouter.get('/api/report/:report_name', requireLogin, reportController.getReport);
+apiRouter.get('/api/adminreport/:report_name', requireLogin, reportController.getReport);
 
-//all the API below need req.session.loginStatus to be true
 
-apiRouter.all("/api/*", function(req, res, next){
+apiRouter.get('/api/init', requireLogin, initController.init);
+apiRouter.get('/api/runsimulation',  requireLogin, authorize('runSimulation'), initController.runSimulation);
+apiRouter.get('/api/choose_seminar', requireLogin, authorize('chooseSeminar'), seminarController.chooseSeminar);
+apiRouter.post('/api/assign_student_to_seminar', requireLogin, authorize('assignStudentToSeminar'), seminarController.assignStudentToSeminar);
+apiRouter.post('/api/remove_student_from_seminar', requireLogin, authorize('removeStudentFromSeminar'), seminarController.removeStudentFromSeminar);
+
+
+apiRouter.get('/api/submitdecision', requireLogin, decisionController.submitDecision);
+
+//chart
+apiRouter.get('/api/chart/:chart_name', requireLogin, chartController.getChart);
+
+
+
+//make decision page
+apiRouter.put('/api/sku/decision', requireLogin, decisionController.updateSKUDecision);
+apiRouter.post('/api/sku/decision', requireLogin, decisionController.addSKU);
+apiRouter.delete('/api/sku/decision', requireLogin, decisionController.deleteSKU);
+
+apiRouter.put('/api/brand/decision', requireLogin, decisionController.updateBrandDecision);
+apiRouter.post('/api/brand/decision', requireLogin, decisionController.addBrand);
+apiRouter.delete('/api/brand/decision', requireLogin, decisionController.deleteBrand);
+
+apiRouter.put('/api/company/decision', requireLogin, decisionController.updateCompanyDecision);
+
+
+apiRouter.get('/api/company', requireLogin, decisionPageController.getDecision);
+apiRouter.get('/api/product_portfolio', requireLogin, decisionPageController.getProductPortfolio);
+apiRouter.get('/api/spending_details', requireLogin, decisionPageController.getSpendingDetails);
+apiRouter.get('/api/future_projection_calculator/:sku_id', requireLogin, decisionPageController.getSKUInfo);
+apiRouter.get('/api/company/otherinfo', requireLogin, decisionPageController.getOtherinfo);
+
+
+
+apiRouter.post('/api/distributors', requireLogin, authorize('addDistributor'), distributorController.addDistributor);
+apiRouter.put('/api/distributors/:distributor_id', requireLogin, authorize('updateDistributor'), distributorController.updateDistributor);
+apiRouter.get('/api/distributors', requireLogin, authorize('searchDistributor'), distributorController.searchDistributor);
+
+
+apiRouter.post('/api/facilitators', requireLogin, authorize('addFacilitator'), facilitatorController.addFacilitator);
+apiRouter.put('/api/facilitators/:facilitator_id', requireLogin, authorize('updateFacilitator'), facilitatorController.updateFacilitator);
+apiRouter.get('/api/facilitators', requireLogin, authorize('searchFacilitator'), facilitatorController.searchFacilitator);
+
+apiRouter.get('/api/facilitator/seminar', requireLogin, authorize('getSeminarOfFacilitator'), facilitatorController.getSeminarOfFacilitator);
+
+apiRouter.post('/api/students', requireLogin, authorize('addStudent'), studentController.addStudent);
+apiRouter.put('/api/students/:student_id', requireLogin, authorize('updateStudent'), studentController.updateStudent);
+apiRouter.get('/api/students', requireLogin, authorize('searchStudent'), studentController.searchStudent);
+
+//get all seminars of the current student
+apiRouter.get('/api/student/seminar', requireLogin, authorize('getSeminarOfStudent'), studentController.getSeminarOfStudent);
+
+apiRouter.post('/api/seminar', requireLogin, authorize('addSeminar'), seminarController.addSeminar);
+
+
+
+function requireLogin(req, res, next){
     if(sessionOperation.getLoginStatus(req)){
         next();
     }else{
         res.send(400, {message: 'Login required.'});
     }
-});
-
-
-
-//report
-apiRouter.get('/api/report/:report_name', reportController.getReport);
-apiRouter.get('/api/adminreport/:report_name', reportController.getReport);
-
-
-apiRouter.get('/api/init', initController.init);
-apiRouter.get('/api/runsimulation',  authorize('runSimulation'), initController.runSimulation);
-apiRouter.get('/api/choose_seminar', authorize('chooseSeminar'), seminarController.chooseSeminar);
-apiRouter.post('/api/assign_student_to_seminar', authorize('assignStudentToSeminar'), seminarController.assignStudentToSeminar);
-apiRouter.post('/api/remove_student_from_seminar', authorize('removeStudentFromSeminar'), seminarController.removeStudentFromSeminar);
-
-
-apiRouter.get('/api/submitdecision', decisionController.submitDecision);
-
-//chart
-apiRouter.get('/api/chart/:chart_name', chartController.getChart);
-
-
-
-//make decision page
-apiRouter.put('/api/sku/decision', decisionController.updateSKUDecision);
-apiRouter.post('/api/sku/decision', decisionController.addSKU);
-apiRouter.delete('/api/sku/decision', decisionController.deleteSKU);
-
-apiRouter.put('/api/brand/decision', decisionController.updateBrandDecision);
-apiRouter.post('/api/brand/decision', decisionController.addBrand);
-apiRouter.delete('/api/brand/decision', decisionController.deleteBrand);
-
-apiRouter.put('/api/company/decision', decisionController.updateCompanyDecision);
-
-
-apiRouter.get('/api/company', decisionPageController.getDecision);
-apiRouter.get('/api/product_portfolio', decisionPageController.getProductPortfolio);
-apiRouter.get('/api/spending_details', decisionPageController.getSpendingDetails);
-apiRouter.get('/api/future_projection_calculator/:sku_id', decisionPageController.getSKUInfo);
-apiRouter.get('/api/company/otherinfo', decisionPageController.getOtherinfo);
-
-
-
-
-
-/**********  API For Admin  **********/
-
-
-
-
-
-
-apiRouter.post('/api/admin/distributors', authorize('addDistributor'), distributorController.addDistributor);
-apiRouter.put('/api/admin/distributors/:distributor_id', authorize('updateDistributor'), distributorController.updateDistributor);
-apiRouter.get('/api/admin/distributors', authorize('searchDistributor'), distributorController.searchDistributor);
-
-
-apiRouter.post('/api/admin/facilitators', authorize('addFacilitator'), facilitatorController.addFacilitator);
-apiRouter.put('/api/admin/facilitators/:facilitator_id', authorize('updateFacilitator'), facilitatorController.updateFacilitator);
-apiRouter.get('/api/admin/facilitators', authorize('searchFacilitator'), facilitatorController.searchFacilitator);
-
-apiRouter.get('/api/admin/facilitator/seminar', authorize('getSeminarOfFacilitator'), facilitatorController.getSeminarOfFacilitator);
-
-apiRouter.post('/api/admin/students', authorize('addStudent'), studentController.addStudent);
-apiRouter.put('/api/admin/students/:student_id', authorize('updateStudent'), studentController.updateStudent);
-apiRouter.get('/api/admin/students', authorize('searchStudent'), studentController.searchStudent);
-
-
-
-
-
-//get all seminars of the current student
-apiRouter.get('/api/admin/student/seminar', authorize('getSeminarOfStudent'), studentController.getSeminarOfStudent);
-
-apiRouter.post('/api/admin/seminar', authorize('addSeminar'), seminarController.addSeminar);
-
-
+}
 
 /**
 * @param {String} resource identifier of url
