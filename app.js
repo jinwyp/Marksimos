@@ -32,7 +32,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 //initialize session data
 app.use(function(req, res, next){
-    sessionOperation.setLoginStatus(req, false);
+    sessionOperation.setLoginStatus(req, true);
 
     // sessionOperation.setUserRole(req, config.role.student);
     // sessionOperation.setUserId(req, '53c5f2c4c71f7f3fb6e6edb4');
