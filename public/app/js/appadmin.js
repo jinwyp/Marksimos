@@ -5,7 +5,7 @@
 // create module for custom directives
 var marksimosapp = angular.module('marksimosadmin', []);
 
-marksimosapp.directive('adminHeader', function() {
+marksimosapp.directive('headerAdmin', function() {
     return {
         scope: {},
         restrict: 'AE',

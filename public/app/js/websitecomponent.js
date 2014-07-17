@@ -5,6 +5,8 @@
 
 var app = angular.module('marksimos.component', ['pascalprecht.translate']);
 
+
+
 app.directive('headerUser', ['$translate', function($translate) {
     return {
         scope: {
@@ -41,10 +43,6 @@ app.directive('headerUser', ['$translate', function($translate) {
         }
     };
 }]);
-
-
-
-
 
 
 
@@ -161,3 +159,5 @@ app.directive('tableReportMarketTrendsGlobal', function() {
         }
     };
 });
+
+
