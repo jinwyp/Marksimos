@@ -20,6 +20,6 @@ exports.adminNeedLogin = function(req, res, next){
     if(sessionOperation.getLoginStatus(req)){
         next();
     }else{
-        res.redirect('/adminlogin');
+        res.redirect('/admin');
     }
 };
