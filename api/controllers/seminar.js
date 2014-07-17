@@ -122,7 +122,7 @@ exports.assignStudentToSeminar = function(req, res, next){
         var isStudentAssignedToSeminar = false;
 
         for(var i=0; i < companyAssignment.length; i++){
-            if(companyAssignment[i].indexOf(studentId)>0){
+            if(companyAssignment[i].indexOf(studentId) > -1){
                 isStudentAssignedToSeminar = true;
             }
         }
@@ -176,14 +176,17 @@ exports.removeStudentFromSeminar = function(req, res, next){
             throw {httpStatus: 400, message: "seminar "+ seminarId + " doesn't exist."}
         }
 
-        if(dbSeminar.companyAssignment[companyId-1].indexOf(studentId) > 0){
+        var companyAssignment = dbSeminar.companyAssignment;
+
+        //if this student is in this company
+        if(companyAssignment[companyId-1].indexOf(studentId) > -1){
             var companyMembers = [];
-            for(var i=0; i<dbSeminar.companyAssignment[companyId-1][i].length; i++){
-                if(dbSeminar.companyAssignment[companyId-1][i] !== studentId){
+            for(var i=0; i<companyAssignment[companyId-1].length; i++){
+                if(companyAssignment[companyId-1][i] !== studentId){
                     companyMembers.push(studentId);
                 }
             }
-            dbSeminar.companyAssignment[companyId-1] = companyMembers;
+            companyAssignment[companyId-1] = companyMembers;
         }
 
         return seminarModel.update({seminarId: seminarId}, {
@@ -194,14 +197,14 @@ exports.removeStudentFromSeminar = function(req, res, next){
         if(numAffected!==1){
             return res.send({message: "there's error during update seminar."});
         }
-        return res.send({message: "assign student to seminar success."})
+        return res.send({message: "remove student from seminar success."})
     })
     .fail(function(err){
         logger.error(err);
         if(err.httpStatus){
             return res.send(err.httpStatus, {message: err.message});
         }
-        return res.send(500, {message: "assign student to seminar failed."})
+        return res.send(500, {message: "remove student from seminar failed."})
     })
     .done();
 }
@@ -229,7 +232,7 @@ exports.chooseSeminar = function(req, res, next){
         if(sessionOperation.getUserRole(req) === config.role.student){
             var studentId = sessionOperation.getUserId(req);
             for(var i=0; i<dbSeminar.companyAssignment.length; i++){
-                if(dbSeminar.companyAssignment[i].indexOf(studentId) > 0){
+                if(dbSeminar.companyAssignment[i].indexOf(studentId) > -1){
                     sessionOperation.setCompanyId = i+1;
                     break;
                 }
@@ -252,8 +255,47 @@ exports.chooseSeminar = function(req, res, next){
     .done();
 }
 
-function updateSeminar(){
+exports.updateSeminar = function(req, res, next){
+    var validateResult = validateSeminar(req);
 
+    if(validateResult){
+        return res.send(400, {message: validateResult});
+    }
+
+    var seminar = {};
+
+    if(req.body.description) seminar.description = req.body.description;
+    if(req.body.country) seminar.country = req.body.country;
+    if(req.body.state) seminar.state = req.body.state;
+    if(req.body.city) seminar.city = req.body.city;
+    if(req.body.venue) seminar.venue = req.body.venue;
+
+    if(Object.keys(seminar).length === 0){
+        return res.send(400, {message: "You should at leaset provide one field to update."})
+    }
+
+    var facilitatorId = sessionOperation.getUserId(req);
+    var seminarId = sessionOperation.getSeminarId(req);
+
+    if(!seminarId){
+        return res.send(400, {message: "You have not choose a seminar."});
+    }
+
+    seminarModel.update({
+        facilitatorId: facilitatorId,
+        seminarId: seminarId
+    }, seminar)
+    .then(function(numAffected){
+        if(numAffected!==1){
+            return res.send(400, {message: "there's error during update seminar."})
+        }
+        return res.send({message: "update seminar success."})
+    })
+    .fail(function(err){
+        logger.error(err);
+        return res.send(500, {message: ""})
+    })
+    .done();
 }
 
 function checkRequiredField(req){
