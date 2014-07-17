@@ -14,4 +14,4 @@ exports.needLogin = function(req, res, next){
     }else{
         res.redirect('/login');
     }
-}
+};
