@@ -20,7 +20,7 @@ var seminarSchema = new Schema({
 
     isFinished: {type: Boolean, default: false}, //if this seminar is finished
 
-    teamAssignment: [],
+    companyAssignment: [],
     currentPeriod: {type: Number, default: 0}
 });
 
@@ -32,9 +32,9 @@ var teamSchema = new Schema({
 var Seminar = mongoose.model("Seminar", seminarSchema);
 
 
-exports.update = function(seminarId, seminar){
+exports.update = function(query, seminar){
     var deferred = Q.defer();
-    Seminar.update({seminarId: seminarId}, seminar)
+    Seminar.update(query, seminar)
     .exec(function(err, numAffected){
         if(err){
             deferred.reject(err);
