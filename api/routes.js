@@ -23,7 +23,7 @@ var apiRouter = express.Router();
 /**********  API For Student  **********/
 
 apiRouter.post('/api/register', userController.register);
-apiRouter.get('/api/login', userController.login);
+apiRouter.post('/api/login', userController.login);
 
 
 apiRouter.get('/api/create_admin', function(req, res, next){
