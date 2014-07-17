@@ -50,16 +50,20 @@ app.use(function(req, res, next){
 });
 
 //set Content-Type for all API JSON resppnse
-app.use(function(req, res, next){
-    if(req.path.indexOf('/api')===0){
-        res.set('Content-Type', 'application/json; charset=utf-8');
-    }
+//app.use(function(req, res, next){
+//    if(req.path.indexOf('/api')===0){
+//        res.set('Content-Type', 'application/json; charset=utf-8');
+//    }
+//    next();
+//});
+
+app.all("/api/*", function(req, res, next){
+    res.set('Content-Type', 'application/json; charset=utf-8');
     next();
 });
 
-// app.get('/test', function(req, res, next){
-//     res.send('/test');
-// });
+
+
 
 //require('./api/routes.js')(app);
 app.use(require('./api/routes.js'));

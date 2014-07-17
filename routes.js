@@ -65,10 +65,10 @@ module.exports = function(app){
 
 
     app.get('/admin', authMiddleware.needLogin, function(req, res, next){
-        res.render('admin/adminlogin.ejs', {});
+        res.render('admin/adminlogin.ejs', {title : 'Admin | Log in'});
     });
 
     app.get('/adminhome', authMiddleware.needLogin, function(req, res, next){
-        res.render('admin/adminhome.ejs', {});
+        res.render('admin/adminhome.ejs', {title : 'Admin | Dashboard'});
     });
 };

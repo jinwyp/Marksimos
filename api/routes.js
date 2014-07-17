@@ -96,7 +96,9 @@ apiRouter.post('/api/students', authorize('addStudent'), studentController.addSt
 apiRouter.put('/api/students/:student_id', authorize('updateStudent'), studentController.updateStudent);
 apiRouter.get('/api/students', authorize('searchStudent'), studentController.searchStudent);
 
-apiRouter.post('/api/seminar', authorize('addSeminar'), seminarController.addSeminar);
+apiRouter.post('/api/admin/seminar', authorize('addSeminar'), seminarController.addSeminar);
+
+
 
 
 /**

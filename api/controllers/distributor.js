@@ -74,7 +74,7 @@ exports.updateDistributor = function(req, res, next){
         district: req.body.district || '',
         street: req.body.street || '',
         pincode: req.body.pincode || ''
-    }
+    };
 
     userModel.update({_id: req.params.distributor_id}, distributor)
     .then(function(numAffected){
@@ -117,8 +117,6 @@ exports.searchDistributor = function(req, res, next){
         res.send(500, {message: 'search failed'})
     })
 };
-
-
 
 
 
