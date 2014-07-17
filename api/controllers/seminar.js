@@ -84,6 +84,25 @@ exports.addSeminar = function(req, res, next){
     .done();
 }
 
+/**
+* Populate seminar information to session
+*/
+exports.chooseSeminar = function(req, res, next){
+    var seminarId = req.bodyu.seminar_id;
+
+    if(!seminarId){
+        return res.send(400, {message: "Invalid seminar_id"});
+    }
+
+    seminarModel.findOne({seminarId: seminarId})
+    .then(function(dbSeminar){
+        if(!dbSeminar){
+            return res.send(400, {message: "seminar " + seminarId + " doesn't exist."});
+        }
+        return res.send(400, {});
+    })
+}
+
 function checkRequiredField(req){
     if(!req.body.description) return "description can't be empty.";
 

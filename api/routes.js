@@ -58,7 +58,7 @@ apiRouter.get('/api/adminreport/:report_name', reportController.getReport);
 
 
 apiRouter.get('/api/init', initController.init);
-apiRouter.get('/api/')
+apiRouter.get('/api/choose_seminar', seminarController.chooseSeminar);
 
 apiRouter.get('/api/submitdecision', decisionController.submitDecision);
 
