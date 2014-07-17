@@ -155,6 +155,8 @@ exports.runSimulation = function(req, res, next){
         if(simulationResult.message !== 'run_simulation_success'){
             throw {message: simulationResult.message};
         }
+
+        
         return res.send({message: "run simulation success."});
     })
     .fail(function(err){
