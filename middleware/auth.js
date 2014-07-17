@@ -14,12 +14,12 @@ exports.needLogin = function(req, res, next){
     }else{
         res.redirect('/login');
     }
-}
+};
 
-exports.adminpageLogin = function(req, res, next){
+exports.adminNeedLogin = function(req, res, next){
     if(sessionOperation.getLoginStatus(req)){
         next();
     }else{
-        res.redirect('/adminlogin');
+        res.redirect('/admin');
     }
-}
+};

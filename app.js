@@ -32,7 +32,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 //initialize session data
 app.use(function(req, res, next){
-    sessionOperation.setLoginStatus(req, true);
+    sessionOperation.setLoginStatus(req, false);
 
     // sessionOperation.setUserRole(req, config.role.student);
     // sessionOperation.setUserId(req, '53c5f2c4c71f7f3fb6e6edb4');
@@ -53,19 +53,14 @@ app.use(function(req, res, next){
 });
 
 //set Content-Type for all API JSON resppnse
-app.use(function(req, res, next){
-    if(req.path.indexOf('/api')===0){
-        res.set('Content-Type', 'application/json; charset=utf-8');
-    }
+app.all("/api/*", function(req, res, next){
+    res.set('Content-Type', 'application/json; charset=utf-8');
     next();
 });
 
-// app.get('/test', function(req, res, next){
-//     res.send('/test');
-// });
 
 //require('./api/routes.js')(app);
-app.use(require('./api/routes.js'));
+app.use( require('./api/routes.js'));
 require('./routes.js')(app);
 
 /// catch 404 and forwarding to error handler
