@@ -5,6 +5,7 @@ var logger = require('../../common/logger.js');
 var util = require('util');
 var sessionOperation = require('../../common/sessionOperation.js');
 
+
 exports.register = function(req, res, next){
     req.checkBody('email', 'Invalid email').notEmpty().isEmail();
     req.assert('password', '6 to 20 characters required').len(6, 20);

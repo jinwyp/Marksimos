@@ -64,6 +64,7 @@ apiRouter.get('/api/choose_seminar', authorize('chooseSeminar'), seminarControll
 apiRouter.post('/api/assign_student_to_seminar', authorize('assignStudentToSeminar'), seminarController.assignStudentToSeminar);
 apiRouter.post('/api/remove_student_from_seminar', authorize('removeStudentFromSeminar'), seminarController.removeStudentFromSeminar);
 
+
 apiRouter.get('/api/submitdecision', decisionController.submitDecision);
 
 //chart
@@ -102,6 +103,7 @@ apiRouter.get('/api/facilitators', authorize('searchFacilitator'), facilitatorCo
 apiRouter.post('/api/students', authorize('addStudent'), studentController.addStudent);
 apiRouter.put('/api/students/:student_id', authorize('updateStudent'), studentController.updateStudent);
 apiRouter.get('/api/students', authorize('searchStudent'), studentController.searchStudent);
+apiRouter.get('/api/student/:student_id/seminar', authorize('getSeminarOfStudent'), studentController.getSeminarOfStudent);
 
 apiRouter.post('/api/seminar', authorize('addSeminar'), seminarController.addSeminar);
 
@@ -144,7 +146,8 @@ function authorize(resource){
     ];
     authDefinition[config.role.student] = [
         'updateStudent',
-        'chooseSeminar'
+        'chooseSeminar',
+        'getSeminarOfStudent'
     ];
     
     return function authorize(req, res, next){
