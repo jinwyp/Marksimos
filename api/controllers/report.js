@@ -3,6 +3,11 @@ var logger = require('../../common/logger.js');
 
 exports.getReport = function(req, res, next){
     var seminarId = req.session.seminarId;
+
+    if(!seminarId){
+        return res.send(400, {message: "You don't choose a seminar."});
+    }
+    
     var companyId = req.session.companyId;
     var reportName = req.params.report_name;
 

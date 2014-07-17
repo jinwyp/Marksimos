@@ -1,6 +1,7 @@
 var validator = require('validator');
 var config = require('../../common/config.js');
 var userModel = require('../models/user.js');
+var seminarModel = require('../models/seminar.js');
 var logger = require('../../common/logger.js');
 var util = require('util');
 var sessionOperation = require('../../common/sessionOperation.js');
@@ -170,6 +171,30 @@ exports.searchStudent = function(req, res, next){
     .done();
 }
 
+exports.getSeminarOfStudent = function(req, res, next){
+    var studentId = sessionOperation.getUserId(req);
+
+    seminarModel.find({},{})
+    .then(function(allSeminars){
+        var assignedSeminars = [];
+        for(var i=0; i<allSeminars.length; i++){
+            var seminar = allSeminars[i];
+            for(var j=0; j<seminar.companyAssignment.length; j++){
+                if(seminar.companyAssignment[j].indexOf(studentId) > -1){
+                    assignedSeminars.push(seminar);
+                    break;
+                }
+            }
+        }
+
+        res.send(assignedSeminars);
+    })
+    .fail(function(err){
+        logger.error(err);
+        return res.send(500, {message: "get seminar list failed."})
+    })
+    .done();
+}
 
 
 

@@ -34,6 +34,9 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use(function(req, res, next){
     sessionOperation.setLoginStatus(req, true);
 
+    // sessionOperation.setUserRole(req, config.role.student);
+    // sessionOperation.setUserId(req, '53c5f2c4c71f7f3fb6e6edb4');
+
     sessionOperation.setUserRole(req, config.role.facilitator);
     sessionOperation.setUserId(req, '53c38dcb4acf1d1627290928');
 
@@ -43,9 +46,9 @@ app.use(function(req, res, next){
     // sessionOperation.setUserRole(req, config.role.admin);
     // sessionOperation.setUserId(req, 'testid');
 
-    req.session.seminarId = 'TTT';
-    req.session.companyId = 2;
-    req.session.period = 1;
+    req.session.seminarId = '10000';
+    //req.session.companyId = 2;
+    req.session.currentPeriod = 1;
     next();
 });
 

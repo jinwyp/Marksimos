@@ -4,6 +4,7 @@ var userModel = require('../models/user.js');
 var sessionOperation = require('../../common/sessionOperation.js');
 var logger = require('../../common/logger.js');
 var consts = require('../consts.js');
+var config = require('../../common/config.js');
 
 
 exports.addSeminar = function(req, res, next){
@@ -31,6 +32,11 @@ exports.addSeminar = function(req, res, next){
     seminar.facilitatorId = facilitatorId;
     seminar.simulationSpan = req.body.simulation_span;
     seminar.companyNum = req.body.company_num;
+    seminar.companyAssignment = [];
+
+    for(var i=0; i<seminar.companyNum; i++){
+        seminar.companyAssignment.push([]);
+    }
 
     userModel.findOne({_id: facilitatorId})
     .then(function(dbFacilitator){
@@ -80,6 +86,214 @@ exports.addSeminar = function(req, res, next){
             return res.send(err.httpStatus, {message: err.message});
         }
         return res.send(500, {message: "add seminar failed."})
+    })
+    .done();
+}
+
+/**
+* Facilitator can call this API
+*/
+exports.assignStudentToSeminar = function(req, res, next){
+    var studentId = req.body.student_id;
+
+    if(!studentId){
+        return res.send(400, {message: "Invalid student_id"});
+    }
+
+    var seminarId = sessionOperation.getSeminarId(req);
+
+    if(!seminarId){
+        return res.send(400, {message: "You don't choose a seminar."})
+    }
+
+    var companyId = req.body.company_id;
+    if(!companyId){
+        return res.send(400, {message: "Invalid company_id."})
+    }
+    
+    seminarModel.findOne({seminarId: seminarId})
+    .then(function(dbSeminar){
+        if(!dbSeminar){
+            throw {httpStatus: 400, message: "seminar "+ seminarId + " doesn't exist."}
+        }
+
+        var companyAssignment = dbSeminar.companyAssignment;
+
+        var isStudentAssignedToSeminar = false;
+
+        for(var i=0; i < companyAssignment.length; i++){
+            if(companyAssignment[i].indexOf(studentId) > -1){
+                isStudentAssignedToSeminar = true;
+            }
+        }
+
+        //if this student has not been added to this seminar, add it
+        if(!isStudentAssignedToSeminar){
+            companyAssignment[companyId-1].push(studentId);
+        }
+
+        return seminarModel.update({seminarId: seminarId}, {
+            companyAssignment: companyAssignment
+        });
+    })
+    .then(function(numAffected){
+        if(numAffected!==1){
+            return res.send({message: "there's error during update seminar."});
+        }
+        return res.send({message: "assign student to seminar success."})
+    })
+    .fail(function(err){
+        logger.error(err);
+        if(err.httpStatus){
+            return res.send(err.httpStatus, {message: err.message});
+        }
+        return res.send(500, {message: "assign student to seminar failed."})
+    })
+    .done();
+}
+
+exports.removeStudentFromSeminar = function(req, res, next){
+    var studentId = req.body.student_id;
+
+    if(!studentId){
+        return res.send(400, {message: "Invalid student_id"});
+    }
+
+    var seminarId = sessionOperation.getSeminarId(req);
+
+    if(!seminarId){
+        return res.send(400, {message: "You don't choose a seminar."})
+    }
+
+    var companyId = req.body.company_id;
+    if(!companyId){
+        return res.send(400, {message: "Invalid company_id."})
+    }
+    
+    seminarModel.findOne({seminarId: seminarId})
+    .then(function(dbSeminar){
+        if(!dbSeminar){
+            throw {httpStatus: 400, message: "seminar "+ seminarId + " doesn't exist."}
+        }
+
+        var companyAssignment = dbSeminar.companyAssignment;
+
+        //if this student is in this company
+        if(companyAssignment[companyId-1].indexOf(studentId) > -1){
+            var companyMembers = [];
+            for(var i=0; i<companyAssignment[companyId-1].length; i++){
+                if(companyAssignment[companyId-1][i] !== studentId){
+                    companyMembers.push(studentId);
+                }
+            }
+            companyAssignment[companyId-1] = companyMembers;
+        }
+
+        return seminarModel.update({seminarId: seminarId}, {
+            companyAssignment: companyAssignment
+        });
+    })
+    .then(function(numAffected){
+        if(numAffected!==1){
+            return res.send({message: "there's error during update seminar."});
+        }
+        return res.send({message: "remove student from seminar success."})
+    })
+    .fail(function(err){
+        logger.error(err);
+        if(err.httpStatus){
+            return res.send(err.httpStatus, {message: err.message});
+        }
+        return res.send(500, {message: "remove student from seminar failed."})
+    })
+    .done();
+}
+
+/**
+* Populate seminar information to session
+* facilitator and student can call this API
+*/
+exports.chooseSeminar = function(req, res, next){
+    var seminarId = req.query.seminar_id;
+
+    if(!seminarId){
+        return res.send(400, {message: "Invalid seminar_id"});
+    }
+
+    seminarModel.findOne({seminarId: seminarId})
+    .then(function(dbSeminar){
+        if(!dbSeminar){
+            return res.send(400, {message: "seminar " + seminarId + " doesn't exist."});
+        }
+
+        sessionOperation.setSeminarId(req, dbSeminar.seminarId);
+        sessionOperation.setCurrentPeriod(req, dbSeminar.currentPeriod);
+
+        if(sessionOperation.getUserRole(req) === config.role.student){
+            var studentId = sessionOperation.getUserId(req);
+            for(var i=0; i<dbSeminar.companyAssignment.length; i++){
+                if(dbSeminar.companyAssignment[i].indexOf(studentId) > -1){
+                    sessionOperation.setCompanyId = i+1;
+                    break;
+                }
+            }
+
+            //if companyId is not set, this student can't attend this seminar
+            if(!sessionOperation.setCompanyId){
+                sessionOperation.setSeminarId(req, undefined);
+                sessionOperation.setCurrentPeriod(req, undefined);
+                return res.send(400, {message: "You are not authorized to attend this seminar."});
+            }
+        }
+
+        return res.send({message: "choose seminar success."});
+    })
+    .fail(function(err){
+        logger.error(err);
+        return res.send(500, {message: "choose seminar faile."})
+    })
+    .done();
+}
+
+exports.updateSeminar = function(req, res, next){
+    var validateResult = validateSeminar(req);
+
+    if(validateResult){
+        return res.send(400, {message: validateResult});
+    }
+
+    var seminar = {};
+
+    if(req.body.description) seminar.description = req.body.description;
+    if(req.body.country) seminar.country = req.body.country;
+    if(req.body.state) seminar.state = req.body.state;
+    if(req.body.city) seminar.city = req.body.city;
+    if(req.body.venue) seminar.venue = req.body.venue;
+
+    if(Object.keys(seminar).length === 0){
+        return res.send(400, {message: "You should at leaset provide one field to update."})
+    }
+
+    var facilitatorId = sessionOperation.getUserId(req);
+    var seminarId = sessionOperation.getSeminarId(req);
+
+    if(!seminarId){
+        return res.send(400, {message: "You have not choose a seminar."});
+    }
+
+    seminarModel.update({
+        facilitatorId: facilitatorId,
+        seminarId: seminarId
+    }, seminar)
+    .then(function(numAffected){
+        if(numAffected!==1){
+            return res.send(400, {message: "there's error during update seminar."})
+        }
+        return res.send({message: "update seminar success."})
+    })
+    .fail(function(err){
+        logger.error(err);
+        return res.send(500, {message: ""})
     })
     .done();
 }

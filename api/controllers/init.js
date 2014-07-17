@@ -30,6 +30,9 @@ var chartAssembler = require('../dataAssemblers/chart.js');
 var logger = require('../../common/logger.js');
 
 
+var consts = require('../consts.js');
+
+
 /**
  * Initialize game data, only certain perople can call this method
  *
@@ -41,7 +44,7 @@ exports.init = function(req, res, next) {
     var seminarId = req.query.seminar_id;
     var simulationSpan; //should be posted from client
     var companyNum;
-    var currentPeriod = req.session.period;
+    var currentPeriod = req.session.currentPeriod;
 
     var companies = [];
     var periods = [];
@@ -57,7 +60,7 @@ exports.init = function(req, res, next) {
         }
 
         //create periods array
-        var startPeriod = -3;
+        var startPeriod = consts.History_3;
         for(var i=0; i<dbSeminar.simulationSpan; i++){
             periods.push(startPeriod);
             startPeriod+=1;

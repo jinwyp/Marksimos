@@ -18,8 +18,6 @@ module.exports = {
         name: 'HCD'
     },
 
-    initCompanies: [1, 2], //Teams at the start of the game
-
     segmentNameAndIndex: {
         'priceSensitive':0, 
         'pretenders': 1,

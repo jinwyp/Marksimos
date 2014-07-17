@@ -3,6 +3,11 @@ var util = require('util');
 
 exports.getChart = function(req, res, next){
     var seminarId = req.session.seminarId;
+
+    if(!seminarId){
+        return res.send(400, {message: "You don't choose a seminar."});
+    }
+
     var chartName = req.params.chart_name;
     var companyId = req.session.companyId;
 
