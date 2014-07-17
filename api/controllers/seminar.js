@@ -86,6 +86,7 @@ exports.addSeminar = function(req, res, next){
 
 /**
 * Populate seminar information to session
+* facilitator and student can call this API
 */
 exports.chooseSeminar = function(req, res, next){
     var seminarId = req.bodyu.seminar_id;
@@ -99,7 +100,16 @@ exports.chooseSeminar = function(req, res, next){
         if(!dbSeminar){
             return res.send(400, {message: "seminar " + seminarId + " doesn't exist."});
         }
-        return res.send(400, {});
+
+        sessionOperation.setSessionId(req, dbSeminar.seminarId);
+
+        if(sessionOperation.getUserRole(req) === config.role.student){
+            for(var i=0; i<dbSeminar.companyAssignment; i++){
+
+            }
+        }
+
+        return res.send(400, {message: ""});
     })
 }
 

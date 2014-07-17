@@ -683,6 +683,6 @@ marksimosapp.controller('chartController', function($scope,  $timeout, $http, ch
         company.updateCompany($scope.data.currentModifiedCompany).success(function(data, status, headers, config){
             console.log(data);
         });
-    }
+    };
 });
 

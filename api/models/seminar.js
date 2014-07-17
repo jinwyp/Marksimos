@@ -19,7 +19,9 @@ var seminarSchema = new Schema({
     createDate: Date,
 
     isFinished: {type: Boolean, default: false}, //if this seminar is finished
-    
+
+    teamAssignment: [],
+    currentPeriod: {type: Number, default: 0}
 });
 
 var teamSchema = new Schema({

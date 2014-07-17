@@ -20,14 +20,16 @@ var apiRouter = express.Router();
 
 apiRouter.get('/api/create_admin', function(req, res, next){
     var userModel = require('./models/user.js');
+
     userModel.remove({role: config.role.admin})
     .then(function(){
         return userModel.register({
             name: 'hcdadmin',
             password: require('../common/utility.js').hashPassword('123456'),
             email: 'admin@hcdglobal.com',
-            role: config.role.admin
-        })
+            role: config.role.admin,
+            isActivated: true
+        });
     })
     .then(function(result){
         if(!result){

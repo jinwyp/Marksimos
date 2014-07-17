@@ -22,7 +22,7 @@ exports.getExogenous = function(period){
             period, simulationVariant, targetMarket));
 
     return request.get(reqUrl);
-}
+};
 
 /**
  * Query allResults CGI service
@@ -37,7 +37,7 @@ exports.queryOnePeriodResult = function(seminarId, period) {
 
     var reqUrl = config.cgiService + util.format('allresults.exe?seminar=%s&period=%s', seminarId, period);
     return request.get(reqUrl);
-}
+};
 
 exports.queryOneDecision = function(seminarId, team, period){
     if(seminarId === undefined) throw new Error('Invalid parameter seminarId.');
@@ -47,7 +47,7 @@ exports.queryOneDecision = function(seminarId, team, period){
     var reqUrl = config.cgiService + util.format('decisions.exe?period=%s&team=%s&seminar=%s', period, team, seminarId);
 
     return request.get(reqUrl);
-}
+};
 
 /**
  * Query all decisions in one period

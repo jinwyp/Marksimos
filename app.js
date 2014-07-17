@@ -43,7 +43,7 @@ app.use(function(req, res, next){
     // sessionOperation.setUserRole(req, config.role.admin);
     // sessionOperation.setUserId(req, 'testid');
 
-    req.session.seminarId = 'TTT';
+    //req.session.seminarId = 'TTT';
     req.session.companyId = 2;
     req.session.period = 1;
     next();

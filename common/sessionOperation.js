@@ -26,3 +26,11 @@ exports.setUserId = function(req, userId){
 exports.getUserId = function(req){
     return req.session.userId;
 }
+
+exports.setSessionId = function(req, sessionId){
+    req.session.sessionId = sessionId;
+}
+
+exports.getSessionId = function(req){
+    return req.session.sessionId;
+}

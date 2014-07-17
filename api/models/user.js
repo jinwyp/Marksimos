@@ -88,7 +88,7 @@ exports.update = function(query, user){
     });
 
     return deferred.promise; 
-}
+};
 
 exports.findByEmail = function(email){
     var deferred = Q.defer();
@@ -102,10 +102,10 @@ exports.findByEmail = function(email){
         }else{
             deferred.resolve(result);
         }
-    })
+    });
 
     return deferred.promise;
-}
+};
 
 exports.findByEmailAndToken = function(email, token){
     var deferred = Q.defer();

@@ -3,7 +3,7 @@
  */
 
 // create module for custom directives
-var marksimosapp = angular.module('marksimosadmin', ['angularCharts']);
+var marksimosapp = angular.module('marksimosadmin', []);
 
 marksimosapp.directive('adminHeader', function() {
     return {
@@ -12,8 +12,45 @@ marksimosapp.directive('adminHeader', function() {
         templateUrl: 'app/js/websitecomponent/headeradmin.html'
     };
 });
+
+
+
+
+
+
 // controller business logic
-marksimosapp.controller('adminController', function AppCtrl ($scope, $timeout, $http) {
+marksimosapp.controller('adminLoginController', ['$scope', '$timeout', '$http', '$window', function($scope, $timeout, $http, $window) {
+
+    $scope.data = {
+        admin : {
+            email : '',
+            password : ''
+        }
+    };
+
+    $scope.login = function(form){
+        if(form.$valid){
+            $http.post('/api/login', $scope.data.admin).success(function(data, status, headers, config){
+
+                $window.location.href = "/adminhome" ;
+
+            }).error(function(data, status, headers, config){
+                if(status == 400){
+                    console.log(data, status);
+
+                    form.password.$valid = false;
+                    form.password.$invalid = true;
+                }
+            });
+        }
+    };
+}]);
+
+
+
+
+// controller business logic
+marksimosapp.controller('adminController', function($scope, $timeout, $http) {
 
     $scope.css = {
         leftmenu : "distributor",
