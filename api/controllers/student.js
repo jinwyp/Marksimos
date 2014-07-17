@@ -172,11 +172,7 @@ exports.searchStudent = function(req, res, next){
 }
 
 exports.getSeminarOfStudent = function(req, res, next){
-    var studentId = req.params.student_id;
-
-    if(!studentId){
-        return res.send(400, {message: "Invalid student_id"});
-    }
+    var studentId = sessionOperation.getUserId(req);
 
     seminarModel.find({},{})
     .then(function(allSeminars){
@@ -199,7 +195,6 @@ exports.getSeminarOfStudent = function(req, res, next){
     })
     .done();
 }
-
 
 
 

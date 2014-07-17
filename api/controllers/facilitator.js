@@ -1,6 +1,7 @@
 var validator = require('validator');
 var config = require('../../common/config.js');
 var userModel = require('../models/user.js');
+var seminarModel = require('../models/seminar.js');
 var logger = require('../../common/logger.js');
 var util = require('util');
 var sessionOperation = require('../../common/sessionOperation.js');
@@ -206,6 +207,20 @@ exports.searchFacilitator = function(req, res, next){
     })
     .done();
 };
+
+exports.getSeminarOfFacilitator = function(req, res, next){
+    var facilitatorId = sessionOperation.getUserId(req);
+
+    seminarModel.find({facilitatorId: facilitatorId}, {})
+    .then(function(allSeminars){
+        res.send(allSeminars);
+    })
+    .fail(function(err){
+        logger.error(err);
+        res.send(500, {message: "get seminar list faile."})
+    })
+    .done();
+}
 
 
 

@@ -100,10 +100,14 @@ apiRouter.post('/api/facilitators', authorize('addFacilitator'), facilitatorCont
 apiRouter.put('/api/facilitators/:facilitator_id', authorize('updateFacilitator'), facilitatorController.updateFacilitator);
 apiRouter.get('/api/facilitators', authorize('searchFacilitator'), facilitatorController.searchFacilitator);
 
+apiRouter.get('/api/facilitator/seminar', authorize('getSeminarOfFacilitator'), facilitatorController.getSeminarOfFacilitator);
+
 apiRouter.post('/api/students', authorize('addStudent'), studentController.addStudent);
 apiRouter.put('/api/students/:student_id', authorize('updateStudent'), studentController.updateStudent);
 apiRouter.get('/api/students', authorize('searchStudent'), studentController.searchStudent);
-apiRouter.get('/api/student/:student_id/seminar', authorize('getSeminarOfStudent'), studentController.getSeminarOfStudent);
+
+//get all seminars of the current student
+apiRouter.get('/api/student/seminar', authorize('getSeminarOfStudent'), studentController.getSeminarOfStudent);
 
 apiRouter.post('/api/seminar', authorize('addSeminar'), seminarController.addSeminar);
 
@@ -142,7 +146,9 @@ function authorize(resource){
         'chooseSeminar',
 
         'assignStudentToSeminar',
-        'removeStudentFromSeminar'
+        'removeStudentFromSeminar',
+
+        'getSeminarOfFacilitator'
     ];
     authDefinition[config.role.student] = [
         'updateStudent',
