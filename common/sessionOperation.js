@@ -34,3 +34,19 @@ exports.setSessionId = function(req, sessionId){
 exports.getSessionId = function(req){
     return req.session.sessionId;
 }
+
+exports.setCompanyId = function(req, companyId){
+    req.session.companyId = companyId;
+}
+
+exports.getCompanyId = function(req){
+    return res.session.companyId;
+}
+
+exports.setCurrentPeriod = function(req, currentPeriod){
+    req.session.currentPeriod = currentPeriod;
+}
+
+exports.getCurrentPeriod = function(req){
+    return res.session.currentPeriod;
+}

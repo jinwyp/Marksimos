@@ -4,6 +4,7 @@ var userModel = require('../models/user.js');
 var sessionOperation = require('../../common/sessionOperation.js');
 var logger = require('../../common/logger.js');
 var consts = require('../consts.js');
+var config = require('../../common/config.js');
 
 
 exports.addSeminar = function(req, res, next){
@@ -89,7 +90,7 @@ exports.addSeminar = function(req, res, next){
 * facilitator and student can call this API
 */
 exports.chooseSeminar = function(req, res, next){
-    var seminarId = req.bodyu.seminar_id;
+    var seminarId = req.query.seminar_id;
 
     if(!seminarId){
         return res.send(400, {message: "Invalid seminar_id"});
@@ -102,15 +103,25 @@ exports.chooseSeminar = function(req, res, next){
         }
 
         sessionOperation.setSessionId(req, dbSeminar.seminarId);
+        sessionOperation.setCurrentPeriod(req, dbSeminar.currentPeriod);
 
         if(sessionOperation.getUserRole(req) === config.role.student){
-            for(var i=0; i<dbSeminar.companyAssignment; i++){
-
+            var studentId = sessionOperation.getUserId(req);
+            for(var i=0; i<dbSeminar.companyAssignment.length; i++){
+                if(dbSeminar.companyAssignment[i].indexOf(studentId) > 0){
+                    sessionOperation.setCompanyId = i+1;
+                    break;
+                }
             }
         }
 
-        return res.send(400, {message: ""});
+        return res.send({message: "choose seminar success."});
     })
+    .fail(function(err){
+        logger.error(err);
+        return res.send(500, {message: "choose seminar faile."})
+    })
+    .done();
 }
 
 function checkRequiredField(req){
