@@ -12,6 +12,11 @@ var simulationResultModel = require('../models/simulationResult.js');
 
 exports.getDecision = function(req, res, next){
     var seminarId = req.session.seminarId;
+
+    if(!seminarId){
+        return res.send(400, {message: "You don't choose a seminar."});
+    }
+    
     var period = req.session.currentPeriod;
     var companyId = req.session.companyId;
 
@@ -28,6 +33,11 @@ exports.getDecision = function(req, res, next){
 
 exports.getProductPortfolio = function(req, res, next){
     var seminarId = req.session.seminarId;
+
+    if(!seminarId){
+        return res.send(400, {message: "You don't choose a seminar."});
+    }
+
     var period = req.session.currentPeriod;
     var companyId = req.session.companyId;
 
@@ -44,6 +54,11 @@ exports.getProductPortfolio = function(req, res, next){
 
 exports.getSpendingDetails = function(req, res, next){
     var seminarId = req.session.seminarId;
+
+    if(!seminarId){
+        return res.send(400, {message: "You don't choose a seminar."});
+    }
+
     var period = req.session.currentPeriod;
     var companyId = req.session.companyId;
 
@@ -61,6 +76,11 @@ exports.getSpendingDetails = function(req, res, next){
 
 exports.getSKUInfo = function(req, res, next){
     var seminarId = req.session.seminarId;
+
+    if(!seminarId){
+        return res.send(400, {message: "You don't choose a seminar."});
+    }
+
     var period = req.session.currentPeriod;
     var companyId = req.session.companyId;
 
@@ -84,6 +104,11 @@ exports.getSKUInfo = function(req, res, next){
 
 exports.getOtherinfo = function(req, res, next){
     var seminarId = req.session.seminarId;
+
+    if(!seminarId){
+        return res.send(400, {message: "You don't choose a seminar."});
+    }
+    
     var period = req.session.currentPeriod;
     var companyId = req.session.companyId;
 

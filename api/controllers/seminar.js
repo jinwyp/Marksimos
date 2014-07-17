@@ -102,7 +102,7 @@ exports.chooseSeminar = function(req, res, next){
             return res.send(400, {message: "seminar " + seminarId + " doesn't exist."});
         }
 
-        sessionOperation.setSessionId(req, dbSeminar.seminarId);
+        sessionOperation.setSeminarId(req, dbSeminar.seminarId);
         sessionOperation.setCurrentPeriod(req, dbSeminar.currentPeriod);
 
         if(sessionOperation.getUserRole(req) === config.role.student){

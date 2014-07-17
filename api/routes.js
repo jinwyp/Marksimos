@@ -60,7 +60,7 @@ apiRouter.get('/api/adminreport/:report_name', reportController.getReport);
 
 
 apiRouter.get('/api/init', initController.init);
-apiRouter.get('/api/choose_seminar', seminarController.chooseSeminar);
+apiRouter.get('/api/choose_seminar', authorize('chooseSeminar'), seminarController.chooseSeminar);
 
 apiRouter.get('/api/submitdecision', decisionController.submitDecision);
 
@@ -134,10 +134,12 @@ function authorize(resource){
         'updateStudent',
         'searchStudent',
 
-        'addSeminar'
+        'addSeminar',
+        'chooseSeminar'
     ];
     authDefinition[config.role.student] = [
-        'updateStudent'
+        'updateStudent',
+        'chooseSeminar'
     ];
     
     return function authorize(req, res, next){

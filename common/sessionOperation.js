@@ -27,12 +27,12 @@ exports.getUserId = function(req){
     return req.session.userId;
 }
 
-exports.setSessionId = function(req, sessionId){
-    req.session.sessionId = sessionId;
+exports.setSeminarId = function(req, seminarId){
+    req.session.seminarId = seminarId;
 }
 
-exports.getSessionId = function(req){
-    return req.session.sessionId;
+exports.getSeminarId = function(req){
+    return req.session.seminarId;
 }
 
 exports.setCompanyId = function(req, companyId){
