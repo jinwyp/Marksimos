@@ -40,7 +40,7 @@ exports.setCompanyId = function(req, companyId){
 }
 
 exports.getCompanyId = function(req){
-    return res.session.companyId;
+    return req.session.companyId;
 }
 
 exports.setCurrentPeriod = function(req, currentPeriod){
@@ -48,5 +48,5 @@ exports.setCurrentPeriod = function(req, currentPeriod){
 }
 
 exports.getCurrentPeriod = function(req){
-    return res.session.currentPeriod;
+    return req.session.currentPeriod;
 }

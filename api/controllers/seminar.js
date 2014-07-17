@@ -32,8 +32,8 @@ exports.addSeminar = function(req, res, next){
     seminar.facilitatorId = facilitatorId;
     seminar.simulationSpan = req.body.simulation_span;
     seminar.companyNum = req.body.company_num;
+    
     seminar.companyAssignment = [];
-
     for(var i=0; i<seminar.companyNum; i++){
         seminar.companyAssignment.push([]);
     }
