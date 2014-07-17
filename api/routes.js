@@ -60,6 +60,7 @@ apiRouter.get('/api/adminreport/:report_name', reportController.getReport);
 
 
 apiRouter.get('/api/init', initController.init);
+apiRouter.get('/api/runsimulation',  authorize('runSimulation'), initController.runSimulation);
 apiRouter.get('/api/choose_seminar', authorize('chooseSeminar'), seminarController.chooseSeminar);
 apiRouter.post('/api/assign_student_to_seminar', authorize('assignStudentToSeminar'), seminarController.assignStudentToSeminar);
 apiRouter.post('/api/remove_student_from_seminar', authorize('removeStudentFromSeminar'), seminarController.removeStudentFromSeminar);
@@ -148,7 +149,9 @@ function authorize(resource){
         'assignStudentToSeminar',
         'removeStudentFromSeminar',
 
-        'getSeminarOfFacilitator'
+        'getSeminarOfFacilitator',
+
+        'runSimulation'
     ];
     authDefinition[config.role.student] = [
         'updateStudent',

@@ -32,6 +32,8 @@ var logger = require('../../common/logger.js');
 
 var consts = require('../consts.js');
 
+var sessionOperation = require('../../common/sessionOperation.js');
+
 
 /**
  * Initialize game data, only certain perople can call this method
@@ -67,10 +69,7 @@ exports.init = function(req, res, next) {
         }
 
         //create company array
-        var letters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
-        for(var j=0; j<dbSeminar.companyNum; j++){
-            companies.push('Company'+letters[j]);
-        }
+        companies = createCompanyArray(dbSeminar.companyNum);
 
         simulationSpan = dbSeminar.simulationSpan;
         companyNum = dbSeminar.companyNum;
@@ -128,10 +127,58 @@ exports.init = function(req, res, next) {
     .done();
 };
 
+exports.runSimulation = function(req, res, next){
+    var seminarId = sessionOperation.getSeminarId(req);
+
+    if(!seminarId){
+        return res.send(400, {message: "You have not choose a seminar."})
+    }
+
+    var currentPeriod = sessionOperation.getCurrentPeriod(req);
+
+    seminarModel.findOne({
+        seminarId: seminarId
+    })
+    .then(function(dbSeminar){
+        if(!dbSeminar){
+            throw {message: "seminar doesn't exist."};
+        }
+
+        return cgiapi.runSimulation({
+            seminarId: seminarId,
+            simulationSpan: dbSeminar.simulationSpan,
+            teams: createCompanyArray(dbSeminar.companyNum),
+            period: currentPeriod
+        })
+    })
+    .then(function(simulationResult){
+        if(simulationResult.message !== 'run_simulation_success'){
+            throw {message: simulationResult.message};
+        }
+        return res.send({message: "run simulation success."});
+    })
+    .fail(function(err){
+        logger.error(err);
+        res.send(500, {message: "run simulation failed."})
+    })
+    .done();
+};
+
+function createCompanyArray(companyNum){
+    var companies = [];
+
+    var letters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+    for(var j=0; j<companyNum; j++){
+        companies.push('Company'+letters[j]);
+    } 
+
+    return companies;
+}
+
 function initBinaryFile(seminarId, simulation_span, companies){
     return cgiapi.init({
         seminarId: seminarId,
-        simulation_span: simulation_span,
+        simulationSpan: simulation_span,
         teams: companies
     });
 }

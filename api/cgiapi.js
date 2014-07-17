@@ -79,8 +79,8 @@ exports.queryDecisionsInOnePeriod = function(seminarId, period, companyNum){
 /**
  * @param {Object} initConfig
  {
-    seminar:'',
-    simulation_span: '',
+    seminarId:'',
+    simulationSpan: '',
     teams: []
  }
  */
@@ -88,7 +88,7 @@ exports.init = function(initConfig){
     //seminar=TTT&simulation_span=3&team1=companyA&team2=companyB
 
     var reqUrl = config.cgiService + util.format('initialize.exe?seminar=%s&simulation_span=%s'
-        , initConfig.seminarId, initConfig.simulation_span);
+        , initConfig.seminarId, initConfig.simulationSpan);
     for(var i=0; i<initConfig.teams.length; i++){
         reqUrl += '&team' + (i+1) + '=' + initConfig.teams[i];
     }
@@ -99,22 +99,23 @@ exports.init = function(initConfig){
 /**
  * @param {Object} simulationConfig
  {
-    seminar:'',
-    simulation_span: '',
+    seminarId:'',
+    simulationSpan: '',
     teams: [],
     period: ''
  }
+ * @return {message: "run_simulation_success"}
  */
 exports.runSimulation = function(simulationConfig){
     var reqUrl = config.cgiService + util.format('runsimulation.exe?seminar=%s&simulation_span=%s'
-        , simulationConfig.seminarId, simulationConfig.simulation_span);
+        , simulationConfig.seminarId, simulationConfig.simulationSpan);
 
     for(var i=0; i<simulationConfig.teams.length; i++){
         reqUrl += '&team' + (i+1) + '=' + simulationConfig.teams[i];
     }
 
-    reqUrl += 'period=' + simulationConfig.period;
-
+    reqUrl += '&period=' + simulationConfig.period;
+console.log(reqUrl);
     return request.get(reqUrl);
 }
 
