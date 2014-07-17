@@ -26,7 +26,7 @@ begin
     WriteLn;
 
     sValue := getVariable('QUERY_STRING');
-    sValue := 'seminar=TTT&period=-1';
+    //sValue := 'seminar=TTT&period=-1';
     params := Explode(sValue);
 
     LoadConfigIni(DataDirectory, params['seminar']);
@@ -42,6 +42,6 @@ begin
 
   except
     on E: Exception do
-      Writeln(E.ClassName, ': ', E.Message);
+      Writeln('{"message": "' + E.ClassName + ': ' + E.Message +'"}');
   end;
 end.
