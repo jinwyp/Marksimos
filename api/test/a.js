@@ -175,7 +175,21 @@ function assignStudent(){
     });
 }
 
+function removeStudentFromSeminar(){
+    request.post('http://localhost:3000/api/remove_student_from_seminar', function(err, res, body){
+        if(err){
+            console.log(JSON.stringify(err));
+        }else{
+            console.log(body);
+        }
+    }).form({
+        student_id: '53c5f2c4c71f7f3fb6e6edb4',
+        company_id: '2'
+    });
+}
+
 assignStudent();
+//removeStudentFromSeminar();
 
 
 
