@@ -47,7 +47,7 @@ app.use(function(req, res, next){
     // sessionOperation.setUserId(req, 'testid');
 
     req.session.seminarId = '10000';
-    //req.session.companyId = 2;
+    req.session.companyId = 2;
     req.session.currentPeriod = 1;
     next();
 });
