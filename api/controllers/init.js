@@ -114,7 +114,7 @@ exports.init = function(req, res, next) {
             });
         })
         .then(function(){
-            return duplicateLastPeriodDecision(seminarId, currentPeriod);
+            return duplicateLastPeriodDecision(seminarId, currentPeriod - 1);
         })
         .then(function(){
             res.send({message: 'initialize success'});
@@ -135,6 +135,8 @@ exports.runSimulation = function(req, res, next){
     }
 
     var currentPeriod = sessionOperation.getCurrentPeriod(req);
+
+    console.log(req.session.currentPeriod);
 
     var companyId = sessionOperation.getCompanyId(req);
     if(!companyId){
@@ -215,6 +217,11 @@ exports.runSimulation = function(req, res, next){
         if(numAffected!==1){
             throw {message: "there's error during update seminar."}
         }
+
+        //after simulation success, set currentPeriod to next period
+        console.log('---------', sessionOperation.getCurrentPeriod(req)+1);
+        sessionOperation.setCurrentPeriod(req, sessionOperation.getCurrentPeriod(req)+1);
+
         return res.send({message: "run simulation success."});
     })
     .fail(function(err){
@@ -531,8 +538,8 @@ function initMarketTrendsReport(seminarId, allResults){
 }
 
 
-function duplicateLastPeriodDecision(seminarId, currentPeriod){
-    return companyDecisionModel.findAllInPeriod(seminarId, currentPeriod-1)
+function duplicateLastPeriodDecision(seminarId, lastPeriod){
+    return companyDecisionModel.findAllInPeriod(seminarId, lastPeriod)
     .then(function(allCompanyDecision){
         var p = Q();
         allCompanyDecision.forEach(function(companyDecision){
@@ -548,7 +555,7 @@ function duplicateLastPeriodDecision(seminarId, currentPeriod){
         return p;
     })
     .then(function(){
-        return brandDecisionModel.findAllInPeriod(seminarId, currentPeriod-1)
+        return brandDecisionModel.findAllInPeriod(seminarId, lastPeriod)
         .then(function(allBrandDecision){
             var p = Q();
             allBrandDecision.forEach(function(brandDecision){
@@ -565,7 +572,7 @@ function duplicateLastPeriodDecision(seminarId, currentPeriod){
         })
     })
     .then(function(){
-        return SKUDecisionModel.findAllInPeriod(seminarId, currentPeriod-1)
+        return SKUDecisionModel.findAllInPeriod(seminarId, lastPeriod)
         .then(function(allSKUDecision){
             var p = Q();
             allSKUDecision.forEach(function(SKUDecision){

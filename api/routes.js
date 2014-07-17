@@ -25,6 +25,11 @@ var apiRouter = express.Router();
 apiRouter.post('/api/register', userController.register);
 apiRouter.post('/api/login', userController.login);
 
+apiRouter.get('/api/changesession', function(req, res){
+    req.session.currentPeriod = 3;
+    res.send('abc');
+})
+
 
 apiRouter.get('/api/create_admin', function(req, res, next){
     var userModel = require('./models/user.js');
