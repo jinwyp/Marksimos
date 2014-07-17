@@ -27,6 +27,8 @@ var competitorIntelligenceReportAssembler = require('../dataAssemblers/competito
 var marketTrendsReportAssembler = require('../dataAssemblers/marketTrendsReport.js');
 var chartAssembler = require('../dataAssemblers/chart.js');
 
+var decisionConvertor = require('../convertors/decision.js');
+
 var logger = require('../../common/logger.js');
 
 
@@ -136,6 +138,11 @@ exports.runSimulation = function(req, res, next){
 
     var currentPeriod = sessionOperation.getCurrentPeriod(req);
 
+    var companyId = sessionOperation.getCompanyId(req);
+    if(!companyId){
+        return res.send(400, {message: "Invalid companyId"});
+    }
+
     seminarModel.findOne({
         seminarId: seminarId
     })
@@ -144,18 +151,22 @@ exports.runSimulation = function(req, res, next){
             throw {message: "seminar doesn't exist."};
         }
 
-        return cgiapi.runSimulation({
-            seminarId: seminarId,
-            simulationSpan: dbSeminar.simulationSpan,
-            teams: createCompanyArray(dbSeminar.companyNum),
-            period: currentPeriod
+        return submitDecision(companyId, currentPeriod, seminarId)
+            .then(function(submitDecisionResult){
+            console.log(submitDecisionResult);
+            return cgiapi.runSimulation({
+                seminarId: seminarId,
+                simulationSpan: dbSeminar.simulationSpan,
+                teams: createCompanyArray(dbSeminar.companyNum),
+                period: currentPeriod
+            })
         })
     })
     .then(function(simulationResult){
         if(simulationResult.message !== 'run_simulation_success'){
             throw {message: simulationResult.message};
         }
-        
+
         return res.send({message: "run simulation success."});
     })
     .fail(function(err){
@@ -164,6 +175,121 @@ exports.runSimulation = function(req, res, next){
     })
     .done();
 };
+
+function submitDecision(companyId, period, seminarId){
+    var result = {};
+
+    return companyDecisionModel.findOne(seminarId, period, companyId)
+    .then(function(decision){
+        if(!decision){
+            throw new Error("decision doesn't exist.");
+        }
+
+        result.d_CID = decision.d_CID;
+        result.d_CompanyName = decision.d_CompanyName;
+        result.d_BrandsDecisions = [];
+        result.d_IsAdditionalBudgetAccepted = decision.d_IsAdditionalBudgetAccepted;
+        result.d_RequestedAdditionalBudget = decision.d_RequestedAdditionalBudget;
+        result.d_InvestmentInEfficiency = decision.d_InvestmentInEfficiency;
+        result.d_InvestmentInTechnology = decision.d_InvestmentInTechnology;
+        result.d_InvestmentInServicing = decision.d_InvestmentInServicing;
+
+        return brandDecisionModel.findAllInCompany(seminarId, period, companyId)
+                .then(function(brandDecisions){
+                    var p2 = Q();
+                    brandDecisions.forEach(function(brandDecision){
+                        var tempBrandDecision = {};
+                        tempBrandDecision.d_BrandID = brandDecision.d_BrandID;
+                        tempBrandDecision.d_BrandName = brandDecision.d_BrandName;
+                        tempBrandDecision.d_SalesForce = brandDecision.d_SalesForce;
+                        tempBrandDecision.d_SKUsDecisions = [];
+
+                        p2 = p2.then(function(){
+                            return SKUDecisionModel.findAllInBrand(seminarId, period, companyId, brandDecision.d_BrandID);
+                        }).then(function(SKUDecisions){
+                            SKUDecisions.forEach(function(SKUDecision){
+                                var tempSKUDecision = {};
+                                tempSKUDecision.d_SKUID = SKUDecision.d_SKUID;
+                                tempSKUDecision.d_SKUName = SKUDecision.d_SKUName;
+                                tempSKUDecision.d_Advertising = SKUDecision.d_Advertising;
+                                tempSKUDecision.d_AdditionalTradeMargin = SKUDecision.d_AdditionalTradeMargin;
+                                tempSKUDecision.d_FactoryPrice = SKUDecision.d_FactoryPrice;
+                                tempSKUDecision.d_ConsumerPrice = SKUDecision.d_ConsumerPrice;
+                                tempSKUDecision.d_RepriceFactoryStocks = SKUDecision.d_RepriceFactoryStocks;
+                                tempSKUDecision.d_IngredientsQuality = SKUDecision.d_IngredientsQuality;
+                                tempSKUDecision.d_PackSize = SKUDecision.d_PackSize;
+                                tempSKUDecision.d_ProductionVolume = SKUDecision.d_ProductionVolume;
+                                tempSKUDecision.d_PromotionalBudget = SKUDecision.d_PromotionalBudget;
+                                tempSKUDecision.d_PromotionalEpisodes = SKUDecision.d_PromotionalEpisodes;
+                                tempSKUDecision.d_TargetConsumerSegment = SKUDecision.d_TargetConsumerSegment;
+                                tempSKUDecision.d_Technology = SKUDecision.d_Technology;
+                                tempSKUDecision.d_ToDrop = SKUDecision.d_ToDrop;
+                                tempSKUDecision.d_TradeExpenses = SKUDecision.d_TradeExpenses;
+                                tempSKUDecision.d_WholesalesBonusMinVolume = SKUDecision.d_WholesalesBonusMinVolume;
+                                tempSKUDecision.d_WholesalesBonusRate = SKUDecision.d_WholesalesBonusRate;
+                                tempSKUDecision.d_WarrantyLength = SKUDecision.d_WarrantyLength;
+                                tempBrandDecision.d_SKUsDecisions.push(tempSKUDecision);
+                            })
+                            result.d_BrandsDecisions.push(tempBrandDecision);
+                        })
+                    })
+                    return p2;
+                })
+    })
+    .then(function(){
+        if(Object.keys(result).length===0){
+            return res.send(500, {message: "fail to get decisions"})
+        }
+
+        insertEmptyBrandsAndSKUs(result);
+        //convert result to data format that can be accepted by CGI service
+        decisionConvertor.convert(result);
+
+        //return res.send(result);
+        //return result;
+        var reqUrl = url.resolve(config.cgiService, '/cgi-bin/decisions.exe');
+        return request.post(reqUrl, {
+            decision: JSON.stringify(result),
+            seminarId: seminarId,
+            period: period,
+            team: companyId
+        })
+    });
+
+
+    /**
+     * CGI service can not convert JSON string to delphi object,
+     * if the number of SKUs or brnads is not the same as
+     * the length of correspond array in delphi data structure.
+     *
+     * @method insertEmptyBrands
+     */
+    function insertEmptyBrandsAndSKUs(decision){
+        for(var i=0; i< decision.d_BrandsDecisions.length; i++){
+            var brand = decision.d_BrandsDecisions[i];
+            var numOfSKUToInsert = 5 - brand.d_SKUsDecisions.length;
+            for(var j=0; j<numOfSKUToInsert; j++){
+                var emptySKU = JSON.parse(JSON.stringify(brand.d_SKUsDecisions[0]));
+                emptySKU.d_SKUID = 0;
+                emptySKU.d_SKUName = '\u0000\u0000\u0000';
+
+                brand.d_SKUsDecisions.push(emptySKU);
+            }
+        }
+
+        var numOfBrandToInsert = 5 - decision.d_BrandsDecisions.length;
+        for(var k=0; k<numOfBrandToInsert; k++){
+            var emptyBrand = JSON.parse(JSON.stringify(decision.d_BrandsDecisions[0]));
+            for(var p=0; p<emptyBrand.d_SKUsDecisions.length; p++){
+                emptyBrand.d_SKUsDecisions[p].d_SKUID = 0;
+                emptyBrand.d_SKUsDecisions[p].d_SKUName = '\u0000\u0000\u0000';
+            }
+            emptyBrand.d_BrandID = 0;
+            emptyBrand.d_BrandName = '\u0000\u0000\u0000\u0000\u0000\u0000';
+            decision.d_BrandsDecisions.push(emptyBrand);
+        }
+    }
+}
 
 function createCompanyArray(companyNum){
     var companies = [];

@@ -52,57 +52,65 @@ apiRouter.get('/api/create_admin', function(req, res, next){
 });
 
 
-
-//all the API below need req.session.loginStatus to be true
-
-apiRouter.all("/api/*", function(req, res, next){
-    if(sessionOperation.getLoginStatus(req)){
-        next();
-    }else{
-        res.send(400, {message: 'Login required.'});
-    }
-});
-
-
-
 //report
-apiRouter.get('/api/report/:report_name', reportController.getReport);
-apiRouter.get('/api/adminreport/:report_name', reportController.getReport);
+apiRouter.get('/api/report/:report_name', requireLogin, reportController.getReport);
+apiRouter.get('/api/adminreport/:report_name', requireLogin, reportController.getReport);
 
 
-apiRouter.get('/api/init', initController.init);
-apiRouter.get('/api/runsimulation',  authorize('runSimulation'), initController.runSimulation);
-apiRouter.get('/api/choose_seminar', authorize('chooseSeminar'), seminarController.chooseSeminar);
-apiRouter.post('/api/assign_student_to_seminar', authorize('assignStudentToSeminar'), seminarController.assignStudentToSeminar);
-apiRouter.post('/api/remove_student_from_seminar', authorize('removeStudentFromSeminar'), seminarController.removeStudentFromSeminar);
+apiRouter.get('/api/init', requireLogin, initController.init);
+apiRouter.get('/api/runsimulation',  requireLogin, authorize('runSimulation'), initController.runSimulation);
+apiRouter.get('/api/choose_seminar', requireLogin, authorize('chooseSeminar'), seminarController.chooseSeminar);
+apiRouter.post('/api/assign_student_to_seminar', requireLogin, authorize('assignStudentToSeminar'), seminarController.assignStudentToSeminar);
+apiRouter.post('/api/remove_student_from_seminar', requireLogin, authorize('removeStudentFromSeminar'), seminarController.removeStudentFromSeminar);
 
 
-apiRouter.get('/api/submitdecision', decisionController.submitDecision);
+apiRouter.get('/api/submitdecision', requireLogin, decisionController.submitDecision);
 
 //chart
-apiRouter.get('/api/chart/:chart_name', chartController.getChart);
+apiRouter.get('/api/chart/:chart_name', requireLogin, chartController.getChart);
 
 
 
 //make decision page
-apiRouter.put('/api/sku/decision', decisionController.updateSKUDecision);
-apiRouter.post('/api/sku/decision', decisionController.addSKU);
-apiRouter.delete('/api/sku/decision', decisionController.deleteSKU);
+apiRouter.put('/api/sku/decision', requireLogin, decisionController.updateSKUDecision);
+apiRouter.post('/api/sku/decision', requireLogin, decisionController.addSKU);
+apiRouter.delete('/api/sku/decision', requireLogin, decisionController.deleteSKU);
 
-apiRouter.put('/api/brand/decision', decisionController.updateBrandDecision);
-apiRouter.post('/api/brand/decision', decisionController.addBrand);
-apiRouter.delete('/api/brand/decision', decisionController.deleteBrand);
+apiRouter.put('/api/brand/decision', requireLogin, decisionController.updateBrandDecision);
+apiRouter.post('/api/brand/decision', requireLogin, decisionController.addBrand);
+apiRouter.delete('/api/brand/decision', requireLogin, decisionController.deleteBrand);
 
-apiRouter.put('/api/company/decision', decisionController.updateCompanyDecision);
-
-
-apiRouter.get('/api/company', decisionPageController.getDecision);
-apiRouter.get('/api/product_portfolio', decisionPageController.getProductPortfolio);
-apiRouter.get('/api/spending_details', decisionPageController.getSpendingDetails);
-apiRouter.get('/api/future_projection_calculator/:sku_id', decisionPageController.getSKUInfo);
-apiRouter.get('/api/company/otherinfo', decisionPageController.getOtherinfo);
+apiRouter.put('/api/company/decision', requireLogin, decisionController.updateCompanyDecision);
 
 
+apiRouter.get('/api/company', requireLogin, decisionPageController.getDecision);
+apiRouter.get('/api/product_portfolio', requireLogin, decisionPageController.getProductPortfolio);
+apiRouter.get('/api/spending_details', requireLogin, decisionPageController.getSpendingDetails);
+apiRouter.get('/api/future_projection_calculator/:sku_id', requireLogin, decisionPageController.getSKUInfo);
+apiRouter.get('/api/company/otherinfo', requireLogin, decisionPageController.getOtherinfo);
+
+
+<<<<<<< HEAD
+apiRouter.post('/api/distributors', requireLogin, authorize('addDistributor'), distributorController.addDistributor);
+apiRouter.put('/api/distributors/:distributor_id', requireLogin, authorize('updateDistributor'), distributorController.updateDistributor);
+apiRouter.get('/api/distributors', requireLogin, authorize('searchDistributor'), distributorController.searchDistributor);
+
+
+apiRouter.post('/api/facilitators', requireLogin, authorize('addFacilitator'), facilitatorController.addFacilitator);
+apiRouter.put('/api/facilitators/:facilitator_id', requireLogin, authorize('updateFacilitator'), facilitatorController.updateFacilitator);
+apiRouter.get('/api/facilitators', requireLogin, authorize('searchFacilitator'), facilitatorController.searchFacilitator);
+
+apiRouter.get('/api/facilitator/seminar', requireLogin, authorize('getSeminarOfFacilitator'), facilitatorController.getSeminarOfFacilitator);
+
+apiRouter.post('/api/students', requireLogin, authorize('addStudent'), studentController.addStudent);
+apiRouter.put('/api/students/:student_id', requireLogin, authorize('updateStudent'), studentController.updateStudent);
+apiRouter.get('/api/students', requireLogin, authorize('searchStudent'), studentController.searchStudent);
+
+//get all seminars of the current student
+apiRouter.get('/api/student/seminar', requireLogin, authorize('getSeminarOfStudent'), studentController.getSeminarOfStudent);
+
+apiRouter.post('/api/seminar', requireLogin, authorize('addSeminar'), seminarController.addSeminar);
+=======
 
 
 
@@ -137,7 +145,16 @@ apiRouter.get('/api/admin/student/seminar', authorize('getSeminarOfStudent'), st
 
 apiRouter.post('/api/admin/seminar', authorize('addSeminar'), seminarController.addSeminar);
 
+>>>>>>> fad2e586aec39c405654a3be39462c485ebfb378
 
+
+function requireLogin(req, res, next){
+    if(sessionOperation.getLoginStatus(req)){
+        next();
+    }else{
+        res.send(400, {message: 'Login required.'});
+    }
+}
 
 /**
 * @param {String} resource identifier of url
