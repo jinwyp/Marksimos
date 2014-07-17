@@ -20,11 +20,14 @@ var apiRouter = express.Router();
 
 apiRouter.get('/api/create_admin', function(req, res, next){
     var userModel = require('./models/user.js');
-    userModel.register({
-        name: 'hcdadmin@hcdglobal.com',
-        password: require('../common/utility.js').hashPassword('123456'),
-        email: 'yuansu@hcdglobal.com',
-        role: config.role.admin
+    userModel.remove({role: config.role.admin})
+    .then(function(){
+        return userModel.register({
+            name: 'hcdadmin',
+            password: require('../common/utility.js').hashPassword('123456'),
+            email: 'admin@hcdglobal.com',
+            role: config.role.admin
+        })
     })
     .then(function(result){
         if(!result){
@@ -55,6 +58,7 @@ apiRouter.get('/api/adminreport/:report_name', reportController.getReport);
 
 
 apiRouter.get('/api/init', initController.init);
+apiRouter.get('/api/')
 
 apiRouter.get('/api/submitdecision', decisionController.submitDecision);
 

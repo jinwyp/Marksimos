@@ -155,6 +155,20 @@ exports.findOne = function(query){
     return deferred.promise;
 }
 
+exports.remove = function(query){
+    var deferred = Q.defer();
+
+    User.remove(query, function(err){
+        if(err){
+            deferred.reject(err);
+        }else{
+            deferred.resolve(undefined);
+        }
+    })
+
+    return deferred.promise;
+}
+
 
 
 
