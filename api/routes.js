@@ -90,6 +90,7 @@ apiRouter.get('/api/future_projection_calculator/:sku_id', requireLogin, decisio
 apiRouter.get('/api/company/otherinfo', requireLogin, decisionPageController.getOtherinfo);
 
 
+
 apiRouter.post('/api/distributors', requireLogin, authorize('addDistributor'), distributorController.addDistributor);
 apiRouter.put('/api/distributors/:distributor_id', requireLogin, authorize('updateDistributor'), distributorController.updateDistributor);
 apiRouter.get('/api/distributors', requireLogin, authorize('searchDistributor'), distributorController.searchDistributor);
@@ -109,6 +110,7 @@ apiRouter.get('/api/students', requireLogin, authorize('searchStudent'), student
 apiRouter.get('/api/student/seminar', requireLogin, authorize('getSeminarOfStudent'), studentController.getSeminarOfStudent);
 
 apiRouter.post('/api/seminar', requireLogin, authorize('addSeminar'), seminarController.addSeminar);
+
 
 
 function requireLogin(req, res, next){
