@@ -114,8 +114,6 @@ exports.init = function(req, res, next) {
             });
         })
         .then(function(){
-            //when init is called, current period is 1
-            //return dbutility.insertEmptyDecision(seminarId, 1);
             return duplicateLastPeriodDecision(seminarId, currentPeriod);
         })
         .then(function(){
@@ -143,6 +141,7 @@ exports.runSimulation = function(req, res, next){
         return res.send(400, {message: "Invalid companyId"});
     }
 
+    //check if this seminar exists
     seminarModel.findOne({
         seminarId: seminarId
     })
@@ -151,22 +150,71 @@ exports.runSimulation = function(req, res, next){
             throw {message: "seminar doesn't exist."};
         }
 
+        //write decision to binary file
         return submitDecision(companyId, currentPeriod, seminarId)
             .then(function(submitDecisionResult){
-            console.log(submitDecisionResult);
-            return cgiapi.runSimulation({
-                seminarId: seminarId,
-                simulationSpan: dbSeminar.simulationSpan,
-                teams: createCompanyArray(dbSeminar.companyNum),
-                period: currentPeriod
-            })
-        })
-    })
-    .then(function(simulationResult){
-        if(simulationResult.message !== 'run_simulation_success'){
-            throw {message: simulationResult.message};
-        }
+                if(submitDecisionResult.message!=='submit_decision_success'){
+                    throw {message: submitDecisionResult.message};
+                }
 
+                //run simulation
+                return cgiapi.runSimulation({
+                    seminarId: seminarId,
+                    simulationSpan: dbSeminar.simulationSpan,
+                    teams: createCompanyArray(dbSeminar.companyNum),
+                    period: currentPeriod
+                })
+                .then(function(simulationResult){
+                    if(simulationResult.message !== 'run_simulation_success'){
+                        throw {message: simulationResult.message};
+                    }
+
+                    return Q.all[removeCurrentPeriodSimulationResult(seminarId, currentPeriod)
+                                , chartModel.remove(seminarId)
+                                , reportModel.remove(seminarId)
+                            ];
+                })
+                .then(function(){
+                    //once removeCurrentPeriodSimulationResult success, 
+                    //query and save the current period simulation result
+                    return initCurrentPeriodSimulationResult(seminarId, currentPeriod);
+                })
+                .then(function(){
+                    return Q.all([
+                        simulationResultModel.findAll(seminarId)
+                    ])
+                    .spread(function(allResults){
+                        return Q.all([
+                            initChartData(seminarId, allResults),
+                            
+                            initCompanyStatusReport(seminarId, allResults),
+                            initFinancialReport(seminarId, allResults),
+                            initProfitabilityEvolutionReport(seminarId, allResults),
+                            initSegmentDistributionReport(seminarId, allResults),
+                            initCompetitorIntelligenceReport(seminarId, allResults),
+                            initMarketTrendsReport(seminarId, allResults)
+                        ]);
+                    });
+                })
+                .then(function(){
+                    //for the last period, we don't create the next period decision automatically
+                    if(currentPeriod <= dbSeminar.simulationSpan){
+                        return duplicateLastPeriodDecision(seminarId, currentPeriod);
+                    }else{
+                        return undefined;
+                    }
+                })
+                .then(function(){
+                    return seminarModel.update({seminarId: seminarId}, {
+                        currentPeriod: dbSeminar.currentPeriod + 1
+                    })
+                })
+            });
+    })
+    .then(function(numAffected){
+        if(numAffected!==1){
+            throw {message: "there's error during update seminar."}
+        }
         return res.send({message: "run simulation success."});
     })
     .fail(function(err){
@@ -175,6 +223,29 @@ exports.runSimulation = function(req, res, next){
     })
     .done();
 };
+
+function initCurrentPeriodSimulationResult(seminarId, currentPeriod){
+    return cgiapi.queryOnePeriodResult(seminarId, currentPeriod)
+    .then(function(currentPeriodResult){
+        if(currentPeriodResult && currentPeriodResult.message){
+            throw currentPeriodResult;
+        }
+
+        allResultsCleaner.clean(currentPeriodResult);
+
+        currentPeriodResult.seminarId = seminarId;
+        currentPeriodResult.period = currentPeriod;
+
+        return simulationResultModel.insert(currentPeriodResult);
+    })
+}
+
+function removeCurrentPeriodSimulationResult(seminarId, currentPeriod){
+    return simulationResultModel.remove({
+        seminarId: seminarId,
+        period: currentPeriod
+    });
+}
 
 function submitDecision(companyId, period, seminarId){
     var result = {};

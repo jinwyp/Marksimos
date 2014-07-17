@@ -577,7 +577,6 @@ function generateChartData(allResults, dataExtractor){
         var periodChartData = [];
         for (var j = 0; j < companyNum; j++) {
             var company = onePeriodResult.p_Companies[j];
-
             var companyName = company.c_CompanyName;
             if(result.companyNames.indexOf(companyName) === -1){
                 result.companyNames.push(companyName);
