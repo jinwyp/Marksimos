@@ -188,8 +188,8 @@ function removeStudentFromSeminar(){
     });
 }
 
-//updateDistributor();
-//updateFacilitator();
+//addDistributor();
+//addFacilitator();
 addSeminar();
 
 
