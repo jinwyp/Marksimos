@@ -31,6 +31,7 @@ exports.getSKUInfo = function(seminarId, currentPeriod, companyId, SKUID){
 
         //current period data
         var currentPeriodInfo = {};
+        currentPeriodInfo.SKUName = brandResult.b_BrandName + SKUResult.u_SKUName;
         currentPeriodInfo.stocksAtFactory = [
             SKUResult.u_ps_FactoryStocks[consts.StocksMaxTotal].s_ps_Volume,
             SKUResult.u_ps_FactoryStocks[consts.StocksMaxTotal].s_ps_Volume * consts.ActualSize[SKUResult.u_PackSize]
