@@ -48,7 +48,7 @@ exports.init = function(req, res, next) {
     var seminarId = req.query.seminar_id;
     var simulationSpan; //should be posted from client
     var companyNum;
-    var currentPeriod = req.session.currentPeriod;
+    var currentPeriod;
 
     var companies = [];
     var periods = [];
@@ -62,6 +62,15 @@ exports.init = function(req, res, next) {
         if(!dbSeminar){
             throw {message: "seminar doesn't exist."}
         }
+
+        if(dbSeminar.currentPeriod !== consts.Period_0 + 1){
+            throw {message: "initialize a seminar that alreay starts."}
+        }
+
+        //before init, a new seminar should be created,
+        //and it's currentPeriod should be set correctly
+        currentPeriod = dbSeminar.currentPeriod;
+        sessionOperation.setCurrentPeriod(req, dbSeminar.currentPeriod);
 
         //create periods array
         var startPeriod = consts.History_3;
@@ -118,6 +127,14 @@ exports.init = function(req, res, next) {
             return duplicateLastPeriodDecision(seminarId, currentPeriod - 1);
         })
         .then(function(){
+            return seminarModel.update({seminarId: seminarId}, {
+                isInitialized: true
+            })
+        })
+        .then(function(numAffected){
+            if(numAffected!==1){
+                throw {message: "there's error during set isInitialized to true."};
+            }
             res.send({message: 'initialize success'});
         })
     })
@@ -158,7 +175,12 @@ exports.runSimulation = function(req, res, next){
             throw {message: "seminar doesn't exist."};
         }
 
-        if(currentPeriod > dbSeminar.simulationSpan){
+        if(!dbSeminar.isInitialized){
+            throw {httpStatus: 400, message: "you have not initialized this seminar."}
+        }
+
+        //if all rounds are executed
+        if(dbSeminar.isSimulationFinised){
             throw {httpStatus: 400, message: "the last round simulation has been executed."}
         }
 
@@ -210,7 +232,7 @@ exports.runSimulation = function(req, res, next){
                 })
                 .then(function(){
                     //for the last period, we don't create the next period decision automatically
-                    if(currentPeriod <= dbSeminar.simulationSpan){
+                    if(dbSeminar.currentPeriod < dbSeminar.simulationSpan){
                         return duplicateLastPeriodDecision(seminarId, currentPeriod);
                     }else{
                         return undefined;
@@ -218,6 +240,9 @@ exports.runSimulation = function(req, res, next){
                 })
                 .then(function(){
                     if(dbSeminar.currentPeriod < dbSeminar.simulationSpan){
+                        //after simulation success, set currentPeriod to next period
+                        sessionOperation.setCurrentPeriod(req, sessionOperation.getCurrentPeriod(req)+1);
+
                         return seminarModel.update({seminarId: seminarId}, {
                             currentPeriod: dbSeminar.currentPeriod + 1
                         })
@@ -229,15 +254,20 @@ exports.runSimulation = function(req, res, next){
                             }
                         })
                     }else{
-                        return undefined;
+                        return seminarModel.update({seminarId: seminarId}, {
+                            isSimulationFinised: true
+                        }).then(function(numAffected){
+                            if(numAffected!==1){
+                                throw {message: "there's error during update isSimulationFinised to true."}
+                            }else{
+                                return undefined;
+                            }
+                        });
                     }
                 })
             });
     })
     .then(function(){
-        //after simulation success, set currentPeriod to next period
-        sessionOperation.setCurrentPeriod(req, sessionOperation.getCurrentPeriod(req)+1);
-
         return res.send({message: "run simulation success."});
     })
     .fail(function(err){
@@ -276,6 +306,7 @@ function removeCurrentPeriodSimulationResult(seminarId, currentPeriod){
 function submitDecision(companyId, period, seminarId){
     var result = {};
 
+    console.log('$$$$$', companyId, period, seminarId)
     return companyDecisionModel.findOne(seminarId, period, companyId)
     .then(function(decision){
         if(!decision){

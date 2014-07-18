@@ -41,12 +41,12 @@ function addDistributor(){
         country: 'china',
         state: 'shanghai',
         city: 'shanghai',
-        num_of_license: 10
+        num_of_license: 100
     });
 }
 
 function updateDistributor(){
-    request.put('http://localhost:3000/api/distributors/53c38da49f7576ef26b867e9', function(err, res, body){
+    request.put('http://localhost:3000/api/distributors/53c88615d3691cca075a925f', function(err, res, body){
         if(err){
             console.log(JSON.stringify(err));
         }else{
@@ -80,12 +80,12 @@ function addFacilitator(){
         country: 'china',
         state: 'shanghai',
         city: 'shanghai',
-        num_of_license: 1
+        num_of_license: 50
     });
 }
 
 function updateFacilitator(){
-    request.put('http://localhost:3000/api/facilitators/53c38dcb4acf1d1627290928', function(err, res, body){
+    request.put('http://localhost:3000/api/facilitators/53c8863ebc6800ef078e8ac1', function(err, res, body){
         if(err){
             console.log(JSON.stringify(err));
         }else{
@@ -99,7 +99,7 @@ function updateFacilitator(){
         country: 'japan',
         state: 'shanghai',
         city: 'shanghai',
-        num_of_license: 10
+        num_of_license: 50
     });
 }
 
@@ -125,7 +125,7 @@ function addStudent(){
 }
 
 function updateStudent(){
-    request.put('http://localhost:3000/api/students/53c4ed59ea13feae915eaa4c', function(err, res, body){
+    request.put('http://localhost:3000/api/students/53c886642c320f1308904a0a', function(err, res, body){
         if(err){
             console.log(JSON.stringify(err));
         }else{
@@ -158,7 +158,7 @@ function addSeminar(){
         city: 'hangzhou',
         venue: 'HCD 301',
         simulation_span: 4,
-        company_num: 3
+        company_num: 5
     });
 }
 
@@ -188,6 +188,8 @@ function removeStudentFromSeminar(){
     });
 }
 
+//updateDistributor();
+//updateFacilitator();
 addSeminar();
 
 

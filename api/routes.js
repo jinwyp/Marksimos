@@ -18,6 +18,9 @@ var config = require('../common/config.js');
 
 var apiRouter = express.Router();
 
+apiRouter.get('/viewsession', function(req, res){
+    res.send({currentPeriod: req.session.currentPeriod});
+})
 
 /**********  API For Student  **********/
 

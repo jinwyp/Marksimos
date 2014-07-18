@@ -1,6 +1,7 @@
 var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
 var Q = require('q');
+var consts = require('../consts.js');
 
 var seminarSchema = new Schema({
     seminarId: String,
@@ -21,7 +22,10 @@ var seminarSchema = new Schema({
     isFinished: {type: Boolean, default: false}, //if this seminar is finished
 
     companyAssignment: [],
-    currentPeriod: {type: Number, default: 0}
+    currentPeriod: {type: Number, default: consts.Period_0 + 1},
+
+    isInitialized: {type: Boolean, default: false},
+    isSimulationFinised: {type: Boolean, default: false} //all simulation has been executed.
 });
 
 var teamSchema = new Schema({

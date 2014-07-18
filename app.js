@@ -36,20 +36,20 @@ app.use(function(req, res, next){
    sessionOperation.setLoginStatus(req, true);
 
     // sessionOperation.setUserRole(req, config.role.student);
-    // sessionOperation.setUserId(req, '53c5f2c4c71f7f3fb6e6edb4');
+    // sessionOperation.setUserId(req, '53c886642c320f1308904a0a');
 
    sessionOperation.setUserRole(req, config.role.facilitator);
-   sessionOperation.setUserId(req, '53c38dcb4acf1d1627290928');
+   sessionOperation.setUserId(req, '53c8863ebc6800ef078e8ac1');
 
     // sessionOperation.setUserRole(req, config.role.distributor);
-    // sessionOperation.setUserId(req, '53c38da49f7576ef26b867e9');
+    // sessionOperation.setUserId(req, '53c88615d3691cca075a925f');
 
     // sessionOperation.setUserRole(req, config.role.admin);
     // sessionOperation.setUserId(req, 'testid');
 
     req.session.seminarId = '10000';
     req.session.companyId = 2;
-    
+
     if(req.session.currentPeriod === undefined){
         req.session.currentPeriod = 1;
     }

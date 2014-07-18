@@ -69,9 +69,9 @@ function generateSKUReport(companyId, allResults, allExogenous){
                     onePeriodReport.averageDisplayPriceStdPack = SKU.u_AverageDisplayPrice;
                     onePeriodReport.priceRankingIndex = SKU.u_PriceIndex;
                     onePeriodReport.targetConsumerSegment = SKU.u_TargetConsumerSegment;
-                    onePeriodReport.targetConsumerSegmentExpectedValuePerception = exogenous.exo_SegmentsIdealPoints[SKU.u_TargetConsumerSegment][0];
+                    onePeriodReport.targetConsumerSegmentExpectedValuePerception = exogenous.exo_SegmentsIdealPoints[SKU.u_TargetConsumerSegment-1][0];
                     onePeriodReport.valuePerception = SKU.u_Perception[0];
-                    onePeriodReport.targetConsumerSegmentExpectedImagePerception = exogenous.exo_SegmentsIdealPoints[SKU.u_TargetConsumerSegment][1];
+                    onePeriodReport.targetConsumerSegmentExpectedImagePerception = exogenous.exo_SegmentsIdealPoints[SKU.u_TargetConsumerSegment-1][1];
                     onePeriodReport.imagePerception = SKU.u_Perception[1];
                     onePeriodReport.ingredientsQualityIndex = utility.calculateIngredientsQuality(SKU);
                     onePeriodReport.appliedTechnologyIndex = utility.calculateTechnology(SKU);
