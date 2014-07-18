@@ -474,7 +474,7 @@ function cleanDecisions(allDecisions){
  * @param {Object} allResults allResults of all periods
  */
 function initChartData(seminarId, allResults){
-    var period = allResults[allResults.length-1].period;
+    var period = allResults[allResults.length-1].period + 1;
 
     return Q.all([
         seminarModel.findOne({seminarId: seminarId}),

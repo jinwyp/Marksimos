@@ -320,6 +320,7 @@ exports.segmentValueShareTotalMarket = function(allResults){
  * @param {Object} exogenous parameters of the game
  */
 exports.perceptionMap = function(allResults, exogenous){
+    console.log(exogenous);
     var periodResult = allResults[allResults.length-1];
 
     var result = [];
