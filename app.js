@@ -26,7 +26,7 @@ app.use(expressValidator());
 app.use(cookieParser());
 app.use(session({
     secret: 'marksimos',
-    maxage: 24 * 60000
+    maxage: 24 * 60 * 60000
 }));
 app.use(express.static(path.join(__dirname, 'public')));
 
