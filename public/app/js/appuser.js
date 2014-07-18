@@ -4,7 +4,7 @@
 
 
 // create module for custom directives
-var marksimosapp = angular.module('marksimos', ['pascalprecht.translate', 'angularCharts', 'nvd3ChartDirectives', 'marksimos.component', 'marksimos.factory', 'marksimos.filters', 'marksimos.translation' ]);
+var marksimosapp = angular.module('marksimos', ['pascalprecht.translate', 'angularCharts', 'nvd3ChartDirectives', 'cgNotify', 'marksimos.component', 'marksimos.factory', 'marksimos.filters', 'marksimos.translation' ]);
 
 
 // controller business logic
@@ -451,9 +451,9 @@ marksimosapp.controller('chartController', function($scope,  $timeout, $http, ch
 
 
     /********************  Chart C4  ********************/
-    $scope.data.chartC41GrowthRateInVolume.config.title = 'Growth Rate In Volume (Period 3 = 100)';
-    $scope.data.chartC42GrowthRateInValue.config.title = 'Growth Rate In Value (Period 3 = 100)';
-    $scope.data.chartC43NetMarketPrice.config.title = 'Net Market Price (Period 3 = 100)';
+    $scope.data.chartC41GrowthRateInVolume.config.title = 'Growth Rate In Volume (Period -3 = 100)';
+    $scope.data.chartC42GrowthRateInValue.config.title = 'Growth Rate In Value (Period -3 = 100)';
+    $scope.data.chartC43NetMarketPrice.config.title = 'Net Market Price (Period -3 = 100)';
     $scope.data.chartC44SegmentValueShareTotalMarket.config.title = 'Segment Value Share In Total Market (%)';
 
     chartReport.growthRateInVolume().then(function(data, status, headers, config){
@@ -597,12 +597,12 @@ marksimosapp.controller('chartController', function($scope,  $timeout, $http, ch
 
         company.getCompanyOtherInfo().then(function(data, status, headers, config){
             $scope.data.currentCompanyOtherInfo = {
-                totalAvailableBudget : data.totalAvailableBudget * 100,
-                totalAvailableBudgetCSS : data.totalAvailableBudget * 100 + '%',
-                normalCapacity : data.normalCapacity * 100,
-                normalCapacityCSS : data.normalCapacity * 100 + '%',
-                overtimeCapacity : data.overtimeCapacity * 100,
-                overtimeCapacityCSS : data.overtimeCapacity * 100 + '%'
+                totalAvailableBudget : data.totalAvailableBudget.toFixed(4) * 100,
+                totalAvailableBudgetCSS : data.totalAvailableBudget.toFixed(4)  * 100 + '%',
+                normalCapacity : data.normalCapacity.toFixed(4)  * 100,
+                normalCapacityCSS : data.normalCapacity.toFixed(4)  * 100 + '%',
+                overtimeCapacity : data.overtimeCapacity.toFixed(4)  * 100,
+                overtimeCapacityCSS : data.overtimeCapacity.toFixed(4)  * 100 + '%'
             };
 
     //        console.log($scope.data.currentCompanyOtherInfo);
@@ -621,6 +621,7 @@ marksimosapp.controller('chartController', function($scope,  $timeout, $http, ch
 
     };
 
+    //
     $scope.companyInfoInit();
 
 
