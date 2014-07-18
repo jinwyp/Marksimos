@@ -113,10 +113,10 @@ app.factory('chartReport', ['$http', function($http){
         labels: false,
         legend: {
             display: true,
-            position: 'left' //could be 'left, right'
+            position: 'right' //could be 'left, right'
         },
         innerRadius: 0, // applicable on pieCharts, can be a percentage like '50%'
-        lineLegend: 'lineEnd' // can be also 'lineEnd' or 'traditional', defaults to 'lineEnd'
+        lineLegend: 'traditional' // can be also 'lineEnd' or 'traditional', defaults to 'lineEnd'
 //        mouseover: function() {},
 //        mouseout: function() {},
 //        click: function() {}
