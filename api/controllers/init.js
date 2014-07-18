@@ -114,6 +114,7 @@ exports.init = function(req, res, next) {
             });
         })
         .then(function(){
+            //copy decision of period (currentPeriod - 1 = 0)
             return duplicateLastPeriodDecision(seminarId, currentPeriod - 1);
         })
         .then(function(){
@@ -155,6 +156,10 @@ exports.runSimulation = function(req, res, next){
     .then(function(dbSeminar){
         if(!dbSeminar){
             throw {message: "seminar doesn't exist."};
+        }
+
+        if(currentPeriod > dbSeminar.simulationSpan){
+            throw {httpStatus: 400, message: "the last round simulation has been executed."}
         }
 
         //write decision to binary file
@@ -212,17 +217,24 @@ exports.runSimulation = function(req, res, next){
                     }
                 })
                 .then(function(){
-                    return seminarModel.update({seminarId: seminarId}, {
-                        currentPeriod: dbSeminar.currentPeriod + 1
-                    })
+                    if(dbSeminar.currentPeriod < dbSeminar.simulationSpan){
+                        return seminarModel.update({seminarId: seminarId}, {
+                            currentPeriod: dbSeminar.currentPeriod + 1
+                        })
+                        .then(function(numAffected){
+                            if(numAffected!==1){
+                                throw {message: "there's error during update seminar."}
+                            }else{
+                                return undefined;
+                            }
+                        })
+                    }else{
+                        return undefined;
+                    }
                 })
             });
     })
-    .then(function(numAffected){
-        if(numAffected!==1){
-            throw {message: "there's error during update seminar."}
-        }
-
+    .then(function(){
         //after simulation success, set currentPeriod to next period
         sessionOperation.setCurrentPeriod(req, sessionOperation.getCurrentPeriod(req)+1);
 
@@ -230,6 +242,9 @@ exports.runSimulation = function(req, res, next){
     })
     .fail(function(err){
         logger.error(err);
+        if(err.httpStatus){
+            return res.send(err.httpStatus, {message: err.message});
+        }
         res.send(500, {message: "run simulation failed."})
     })
     .done();
@@ -545,47 +560,62 @@ function initMarketTrendsReport(seminarId, allResults){
 function duplicateLastPeriodDecision(seminarId, lastPeriod){
     return companyDecisionModel.findAllInPeriod(seminarId, lastPeriod)
     .then(function(allCompanyDecision){
-        var p = Q();
+        var p = Q('init');
         allCompanyDecision.forEach(function(companyDecision){
             var tempCompanyDecision = JSON.parse(JSON.stringify(companyDecision));
 
             delete tempCompanyDecision._id;
             delete tempCompanyDecision.__v;
             tempCompanyDecision.period = tempCompanyDecision.period + 1;
-            p = p.then(function(){
+            p = p.then(function(result){
+                if(!result){
+                    throw new Error("save comanyDecision failed during create copy of last period decision.");
+                }
                 return companyDecisionModel.save(tempCompanyDecision);
             })
         })
         return p;
     })
-    .then(function(){
+    .then(function(result){
+        if(!result){
+            throw new Error("save comanyDecision failed during create copy of last period decision.");
+        }
         return brandDecisionModel.findAllInPeriod(seminarId, lastPeriod)
         .then(function(allBrandDecision){
-            var p = Q();
+            var p = Q('init');
             allBrandDecision.forEach(function(brandDecision){
                 var tempBrandDecision = JSON.parse(JSON.stringify(brandDecision));
 
                 delete tempBrandDecision._id;
                 delete tempBrandDecision.__v;
                 tempBrandDecision.period = tempBrandDecision.period + 1;
-                p = p.then(function(){
+                p = p.then(function(result){
+                    if(!result){
+                        throw new Error("save brandDecision failed during create copy of last period decision.");
+                    }
                     return brandDecisionModel.save(tempBrandDecision);
                 })
             })
             return p;
         })
     })
-    .then(function(){
+    .then(function(result){
+        if(!result){
+            throw new Error("save comanyDecision failed during create copy of last period decision.");
+        }
         return SKUDecisionModel.findAllInPeriod(seminarId, lastPeriod)
         .then(function(allSKUDecision){
-            var p = Q();
+            var p = Q('init');
             allSKUDecision.forEach(function(SKUDecision){
                 var tempSKUDecision = JSON.parse(JSON.stringify(SKUDecision));
 
                 delete tempSKUDecision._id;
                 delete tempSKUDecision.__v;
                 tempSKUDecision.period = tempSKUDecision.period + 1;
-                p = p.then(function(){
+                p = p.then(function(result){
+                    if(!result){
+                        throw new Error("save SKUDecision failed during create copy of last period decision.");
+                    }
                     return SKUDecisionModel.save(tempSKUDecision);
                 })
             })

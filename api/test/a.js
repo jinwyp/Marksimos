@@ -188,8 +188,7 @@ function removeStudentFromSeminar(){
     });
 }
 
-assignStudent();
-//removeStudentFromSeminar();
+addSeminar();
 
 
 
