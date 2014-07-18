@@ -127,6 +127,13 @@ exports.init = function(req, res, next) {
     .done();
 };
 
+/**
+* Write decision to binary file
+* Run simulation
+* Fetch current period allresults and save it to db
+* Generate current period reports and charts
+* Generate new period decision 
+*/
 exports.runSimulation = function(req, res, next){
     var seminarId = sessionOperation.getSeminarId(req);
 
