@@ -24,8 +24,8 @@ var seminarSchema = new Schema({
     companyAssignment: [],
     currentPeriod: {type: Number, default: consts.Period_0 + 1},
 
-    isInitialized: {type: Boolean, default: false},
-    isSimulationFinised: {type: Boolean, default: false} //all simulation has been executed.
+    isInitialized: {type: Boolean, default: false}, //if seminar is initialized
+    isSimulationFinised: {type: Boolean, default: false} //if all simulation has been executed.
 });
 
 var teamSchema = new Schema({
