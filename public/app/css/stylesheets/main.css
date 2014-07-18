@@ -1003,14 +1003,15 @@ body a, body button {
 /* line 945, ../sass/main.scss */
 .mainbody .budget_form input {
   width: 80px;
+  margin-top: 15px;
 }
-/* line 950, ../sass/main.scss */
+/* line 951, ../sass/main.scss */
 .mainbody .decision_box {
   margin: 10px 0px 0px 15px;
   border: 1px solid #e1e1e1;
   background-color: white;
 }
-/* line 955, ../sass/main.scss */
+/* line 956, ../sass/main.scss */
 .mainbody .decision_box h4 {
   color: #2f4e9b;
   font-size: 18px;
@@ -1018,14 +1019,14 @@ body a, body button {
   font-family: "Helvetica", "Arial, sans-serif";
   margin: 25px 0 5px 0;
 }
-/* line 962, ../sass/main.scss */
+/* line 963, ../sass/main.scss */
 .mainbody .decision_box h6 {
   color: #bdbdbd;
   font-family: "Helvetica", "Arial, sans-serif";
   font-weight: normal;
   margin-top: 0;
 }
-/* line 969, ../sass/main.scss */
+/* line 970, ../sass/main.scss */
 .mainbody .decision_box .brand_box {
   border: 1px solid #c2c2d3;
   margin: 0px -10px 20px -10px;
@@ -1035,7 +1036,7 @@ body a, body button {
   -o-border-radius: 4px;
   border-radius: 4px;
 }
-/* line 975, ../sass/main.scss */
+/* line 976, ../sass/main.scss */
 .mainbody .decision_box .sku_box {
   border: 1px solid #ebebeb;
   margin: 0px -10px 10px -10px;
@@ -1045,22 +1046,22 @@ body a, body button {
   -o-border-radius: 4px;
   border-radius: 4px;
 }
-/* line 980, ../sass/main.scss */
+/* line 981, ../sass/main.scss */
 .mainbody .decision_box .sku_box .input-sm {
   height: 25px;
   width: 50px;
 }
-/* line 986, ../sass/main.scss */
+/* line 987, ../sass/main.scss */
 .mainbody .decision_box .table > thead > tr > th {
   font-weight: bold;
   color: #6f6f6f;
 }
-/* line 989, ../sass/main.scss */
+/* line 990, ../sass/main.scss */
 .mainbody .decision_box .table > thead > tr > th a {
   font-weight: bold;
   color: #6f6f6f;
 }
-/* line 997, ../sass/main.scss */
+/* line 998, ../sass/main.scss */
 .mainbody .decision_box .table > thead > tr > td,
 .mainbody .decision_box .table > tbody > tr > td,
 .mainbody .decision_box .table > tfoot > tr > td {
@@ -1070,19 +1071,19 @@ body a, body button {
   font-size: 12px;
   color: #373737;
 }
-/* line 1005, ../sass/main.scss */
+/* line 1006, ../sass/main.scss */
 .mainbody .decision_box .table .tdgroup {
   padding-top: 20px;
 }
-/* line 1009, ../sass/main.scss */
+/* line 1010, ../sass/main.scss */
 .mainbody .decision_box .sku_table {
   width: 125px;
 }
-/* line 1014, ../sass/main.scss */
+/* line 1015, ../sass/main.scss */
 .mainbody .decision_box .nav li a {
   padding: 7px 15px;
 }
-/* line 1019, ../sass/main.scss */
+/* line 1020, ../sass/main.scss */
 .mainbody .decision_box .nav-pills li a {
   background-color: whitesmoke;
   color: #6f6f6f;
@@ -1100,11 +1101,11 @@ body a, body button {
   -webkit-border-bottom-right-radius: 0px;
   border-bottom-right-radius: 0px;
 }
-/* line 1027, ../sass/main.scss */
+/* line 1028, ../sass/main.scss */
 .mainbody .decision_box .nav-pills li a:hover, .mainbody .decision_box .nav-pills li a:focus {
   background-color: #dbe3f6;
 }
-/* line 1035, ../sass/main.scss */
+/* line 1036, ../sass/main.scss */
 .mainbody .decision_box .nav-pills li.active a,
 .mainbody .decision_box .nav-pills li.active a:hover,
 .mainbody .decision_box .nav-pills li.active a:focus {
@@ -1112,11 +1113,11 @@ body a, body button {
   font-family: "Helvetica", "Arial, sans-serif";
   background-color: #2f4e9b;
 }
-/* line 1042, ../sass/main.scss */
+/* line 1043, ../sass/main.scss */
 .mainbody .decision_box .brand_form {
   margin: 30px 0px;
 }
-/* line 1046, ../sass/main.scss */
+/* line 1047, ../sass/main.scss */
 .mainbody .decision_box h5 {
   color: #252525;
   font-family: "Helvetica", "Arial, sans-serif";
@@ -1124,12 +1125,12 @@ body a, body button {
   font-size: 16px;
   padding: 10px 0px 0px 10px;
 }
-/* line 1054, ../sass/main.scss */
+/* line 1055, ../sass/main.scss */
 .mainbody .decision_box .investment_form {
   margin-top: 20px;
   margin-left: 10px;
 }
-/* line 1057, ../sass/main.scss */
+/* line 1058, ../sass/main.scss */
 .mainbody .decision_box .investment_form label {
   text-align: left;
   color: #373737;
@@ -1137,7 +1138,7 @@ body a, body button {
   font-weight: normal;
   font-size: 13px;
 }
-/* line 1067, ../sass/main.scss */
+/* line 1068, ../sass/main.scss */
 .mainbody .decision_box .decision_button {
   color: #ffffff;
   font-family: "Helvetica", "Arial, sans-serif";
@@ -1172,11 +1173,11 @@ body a, body button {
   background: linear-gradient(top, #298ffe, #298ffe);
   border-color: #298FFE;
 }
-/* line 1074, ../sass/main.scss */
+/* line 1075, ../sass/main.scss */
 .mainbody .decision_right_box {
   width: 47%;
 }
-/* line 1077, ../sass/main.scss */
+/* line 1078, ../sass/main.scss */
 .mainbody .decision_right_box .right_menu {
   border-width: 1px 0px 0px 0px;
   -webkit-border-radius: 0px;
@@ -1186,7 +1187,7 @@ body a, body button {
   border-radius: 0px;
   padding: 20px 0px 0px 0px;
 }
-/* line 1085, ../sass/main.scss */
+/* line 1086, ../sass/main.scss */
 .mainbody .decision_right_box .right_menu .product_portfolio h4 {
   font-size: 13px;
   font-family: "Helvetica", "Arial, sans-serif";
@@ -1196,13 +1197,13 @@ body a, body button {
   background-repeat: no-repeat;
   background-position: 4px 2px;
 }
-/* line 1094, ../sass/main.scss */
+/* line 1095, ../sass/main.scss */
 .mainbody .decision_right_box .right_menu .product_portfolio .sku_bg {
   background-image: url(../images/userproduct.png);
   background-repeat: no-repeat;
   background-position: 4px 5px;
 }
-/* line 1100, ../sass/main.scss */
+/* line 1101, ../sass/main.scss */
 .mainbody .decision_right_box .right_menu .product_portfolio .panel-heading {
   font-size: 13px;
   font-family: "Helvetica", "Arial, sans-serif";
@@ -1246,23 +1247,23 @@ body a, body button {
   background-color: #feeaff;
 }
 
-/* line 1117, ../sass/main.scss */
+/* line 1118, ../sass/main.scss */
 .bgbrand {
   background-color: #fdfdfd;
 }
 
-/* line 1121, ../sass/main.scss */
+/* line 1122, ../sass/main.scss */
 .chartBox {
   width: 99%;
   height: 350px;
   margin: 0px 0px;
 }
-/* line 1125, ../sass/main.scss */
+/* line 1126, ../sass/main.scss */
 .chartBox .ac-title {
   text-align: center;
   display: none;
 }
-/* line 1130, ../sass/main.scss */
+/* line 1131, ../sass/main.scss */
 .chartBox .bar_chart_label {
   font-size: 10px;
 }
