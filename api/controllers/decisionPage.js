@@ -132,8 +132,16 @@ exports.getOtherinfo = function(req, res, next){
         var normalCapacityValue = spendingDetails.companyData.normalCapacity;
         
         var overtimeCapacity = parseFloat(((companyResult.c_Capacity * gameParameters.pgen.firm_OvertimeCapacity +  spendingDetails.companyData.normalCapacity
-            )/ companyResult.c_Capacity * gameParameters.pgen.firm_OvertimeCapacity).toFixed(2));
+            ) / (companyResult.c_Capacity * gameParameters.pgen.firm_OvertimeCapacity)).toFixed(2));
+
         var overtimeCapacityValue = companyResult.c_Capacity * gameParameters.pgen.firm_OvertimeCapacity +  spendingDetails.companyData.normalCapacity;
+
+        //if normal capacity is not totally used, set overtime capacity to 1
+        if(normalCapacityValue > 0){
+            overtimeCapacity = 1;
+            //overtimeCapacityValue = companyResult.c_Capacity * gameParameters.pgen.firm_OvertimeCapacity;
+            overtimeCapacityValue = companyResult.c_Capacity;
+        }
 
         res.send({
             totalAvailableBudget: totalAvailableBudget,
