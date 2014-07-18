@@ -27,7 +27,7 @@ app.use(expressValidator());
 app.use(cookieParser());
 app.use(session({
     secret: 'marksimos',
-    maxage: 24 * 60000
+    maxage: 24 * 60 * 60000
 }));
 app.use(express.static(path.join(__dirname, 'public')));
 
@@ -39,13 +39,17 @@ app.use(function(req, res, next){
     // sessionOperation.setUserId(req, '53c886642c320f1308904a0a');
 
    sessionOperation.setUserRole(req, config.role.facilitator);
+<<<<<<< HEAD
    sessionOperation.setUserId(req, '53c8b21fd484a5ab29656560');
+=======
+   sessionOperation.setUserId(req, '53c8aeadeef2e1624498d8b3');
+>>>>>>> f7c428e2cfd2f4e8a0c4c42ced210d025fa6aa3d
 
-    // sessionOperation.setUserRole(req, config.role.distributor);
-    // sessionOperation.setUserId(req, '53c88615d3691cca075a925f');
+//    sessionOperation.setUserRole(req, config.role.distributor);
+//    sessionOperation.setUserId(req, '53c8ae4dbf604cf543f7b639');
 
-    // sessionOperation.setUserRole(req, config.role.admin);
-    // sessionOperation.setUserId(req, 'testid');
+//    sessionOperation.setUserRole(req, config.role.admin);
+//    sessionOperation.setUserId(req, 'testid');
 
     req.session.seminarId = '10000';
     req.session.companyId = 2;

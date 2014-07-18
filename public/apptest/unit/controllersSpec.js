@@ -38,6 +38,11 @@ describe('chartController', function(){
         expect(scope.css.tableReportTab).toEqual("SKU");
     });
 
+    it('Initially scope.css.additionalBudget has default value ', function() {
+        expect(scope.css.additionalBudget).toEqual(true);
+    });
+
+
 //    it('Initially scope.data.currentSku has default value ', function() {
 //        expect(scope.data.currentSku.d_SKUName).toBe("_1");
 //    });

@@ -11,12 +11,12 @@ var marksimosapp = angular.module('marksimos', ['pascalprecht.translate', 'angul
 marksimosapp.controller('chartController', function($scope,  $timeout, $http, chartReport, tableReport, company) {
 
     $scope.css = {
-        menu : 'Report',
+        menu : 'Home',
         chartMenu : 'A1',
         tableReportTab : 'SKU',
         tableReportMenu : 1,
         additionalBudget : true,
-        currentBrandId : 0,
+        currentDecisionBrandId : 0,
         currentDecisionRightMenu : 1
     };
 
@@ -577,52 +577,57 @@ marksimosapp.controller('chartController', function($scope,  $timeout, $http, ch
 
 
     /********************  获取Decision信息  ********************/
-    company.getCompany().then(function(data, status, headers, config){
-//        console.log(data);
-        $scope.data.currentCompany = data;
-        $scope.css.currentBrandId = $scope.data.currentCompany.d_BrandsDecisions[0]._id;
-        $scope.data.currentBrand = $scope.data.currentCompany.d_BrandsDecisions[0];
-        $scope.data.currentSku = $scope.data.currentCompany.d_BrandsDecisions[0].d_SKUsDecisions[0];
 
-        company.getCompanyFutureProjectionCalculator($scope.data.currentSku.d_SKUID).then(function(data, status, headers, config){
-//            console.log(data);
-            $scope.data.currentCompanyFutureProjectionCalculator = data;
+    $scope.companyInfoInit = function(){
+
+        company.getCompany().then(function(data, status, headers, config){
+    //        console.log(data);
+            $scope.data.currentCompany = data;
+            $scope.css.currentDecisionBrandId = $scope.data.currentCompany.d_BrandsDecisions[0]._id;
+            $scope.data.currentBrand = $scope.data.currentCompany.d_BrandsDecisions[0];
+            $scope.data.currentSku = $scope.data.currentCompany.d_BrandsDecisions[0].d_SKUsDecisions[0];
+
+            company.getCompanyFutureProjectionCalculator($scope.data.currentSku.d_SKUID).then(function(data, status, headers, config){
+    //            console.log(data);
+                $scope.data.currentCompanyFutureProjectionCalculator = data;
+
+            });
 
         });
 
-    });
+        company.getCompanyOtherInfo().then(function(data, status, headers, config){
+            $scope.data.currentCompanyOtherInfo = {
+                totalAvailableBudget : data.totalAvailableBudget * 100,
+                totalAvailableBudgetCSS : data.totalAvailableBudget * 100 + '%',
+                normalCapacity : data.normalCapacity * 100,
+                normalCapacityCSS : data.normalCapacity * 100 + '%',
+                overtimeCapacity : data.overtimeCapacity * 100,
+                overtimeCapacityCSS : data.overtimeCapacity * 100 + '%'
+            };
 
-    company.getCompanyOtherInfo().then(function(data, status, headers, config){
-        $scope.data.currentCompanyOtherInfo = {
-            totalAvailableBudget : data.totalAvailableBudget * 100,
-            totalAvailableBudgetCSS : data.totalAvailableBudget * 100 + '%',
-            normalCapacity : data.normalCapacity * 100,
-            normalCapacityCSS : data.normalCapacity * 100 + '%',
-            overtimeCapacity : data.overtimeCapacity * 100,
-            overtimeCapacityCSS : data.overtimeCapacity * 100 + '%'
-        };
+    //        console.log($scope.data.currentCompanyOtherInfo);
 
-//        console.log($scope.data.currentCompanyOtherInfo);
+        });
 
-    });
+        company.getCompanyProductPortfolio().then(function(data, status, headers, config){
+    //        console.log(data);
+            $scope.data.currentCompanyProductPortfolio = data;
+        });
 
+        company.getCompanySpendingDetails().then(function(data, status, headers, config){
+    //        console.log(data);
+            $scope.data.currentCompanySpendingDetails = data;
+        });
 
+    };
 
-    company.getCompanyProductPortfolio().then(function(data, status, headers, config){
-//        console.log(data);
-        $scope.data.currentCompanyProductPortfolio = data;
-    });
-
-    company.getCompanySpendingDetails().then(function(data, status, headers, config){
-//        console.log(data);
-        $scope.data.currentCompanySpendingDetails = data;
-    });
+    $scope.companyInfoInit();
 
 
 
 
     $scope.clickBrand = function(brand){
-        $scope.css.currentBrandId = brand._id;
+        $scope.css.currentDecisionBrandId = brand._id;
         $scope.data.currentBrand = brand;
     };
 
@@ -656,6 +661,7 @@ marksimosapp.controller('chartController', function($scope,  $timeout, $http, ch
 
         company.updateSku($scope.data.currentModifiedSku).success(function(data, status, headers, config){
             console.log(data);
+            $scope.companyInfoInit();
         });
     };
 
@@ -669,19 +675,25 @@ marksimosapp.controller('chartController', function($scope,  $timeout, $http, ch
 
         company.updateBrand($scope.data.currentModifiedBrand).success(function(data, status, headers, config){
             console.log(data);
+            $scope.companyInfoInit();
         });
     };
 
     $scope.updateCompany = function(){
+
+        $scope.css.additionalBudget = true;
+
         $scope.data.currentModifiedCompany = {
             company_data : {
                 d_InvestmentInEfficiency : $scope.data.currentCompany.d_InvestmentInEfficiency,
-                d_InvestmentInTechnology : $scope.data.currentCompany.d_InvestmentInTechnology
+                d_InvestmentInTechnology : $scope.data.currentCompany.d_InvestmentInTechnology,
+                d_RequestedAdditionalBudget : $scope.data.currentCompany.d_RequestedAdditionalBudget
             }
         };
 
         company.updateCompany($scope.data.currentModifiedCompany).success(function(data, status, headers, config){
             console.log(data);
+            $scope.companyInfoInit();
         });
     };
 });

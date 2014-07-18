@@ -530,7 +530,7 @@ body > .header .logo .icon {
   width: 20px;
 }
 .sidebar .sidebar-menu .treeview-menu {
-  display: none;
+  /*display: none;*/
   list-style: none;
   padding: 0;
   margin: 0;
@@ -542,7 +542,7 @@ body > .header .logo .icon {
   padding: 5px 5px 5px 15px;
   display: block;
   font-size: 14px;
-  margin: 0px 0px;
+  margin: 0px 0px 0px 10px;
 }
 .sidebar .sidebar-menu .treeview-menu > li > a > .fa,
 .sidebar .sidebar-menu .treeview-menu > li > a > .glyphicon,

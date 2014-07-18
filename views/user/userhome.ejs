@@ -2694,11 +2694,11 @@
         <div class="col-md-1 user_home_divider user_chart_box">
 
             <form class=" budget_form" role="form">
-                <div class="form-group">
-                    <label class="budget_title" for="additionalBudget" ng-show="css.additionalBudget" ng-click="css.additionalBudget=false">$</label>
-                    <label class="text-center" for="additionalBudget" ng-show="css.additionalBudget" ng-click="css.additionalBudget=false">Additional Budget</label>
-                    <input type="number" class="form-control input-sm" id="additionalBudget"  ng-hide="css.additionalBudget" placeholder="Budget" >
-                    <button type="submit" class="btn btn-default btn-sm" ng-hide="css.additionalBudget" ng-click="css.additionalBudget=true">Save</button>
+                <div class="form-group text-center">
+                    <label class="budget_title" for="additionalBudget" ng-show="css.additionalBudget" ng-click="css.additionalBudget=false">${{data.currentCompany.d_RequestedAdditionalBudget}}</label>
+                    <label for="additionalBudget" ng-show="css.additionalBudget" ng-click="css.additionalBudget=false">Additional Budget</label>
+                    <input type="number" class="form-control input-sm" id="additionalBudget"  ng-hide="css.additionalBudget" ng-model="data.currentCompany.d_RequestedAdditionalBudget">
+                    <button type="submit" class="btn btn-default btn-sm" ng-hide="css.additionalBudget" ng-click="updateCompany()">Save</button>
                 </div>
             </form>
         </div>
@@ -2727,7 +2727,7 @@
                 <div class="col-md-12">
 
                     <ul class="nav nav-pills">
-                        <li ng-class="{'active': css.currentBrandId==brand._id}" ng-repeat="brand in data.currentCompany.d_BrandsDecisions" ng-click="clickBrand(brand)">
+                        <li ng-class="{'active': css.currentDecisionBrandId==brand._id}" ng-repeat="brand in data.currentCompany.d_BrandsDecisions" ng-click="clickBrand(brand)">
                             <a href="" >{{brand.d_BrandName}}</a>
                         </li>
 
