@@ -96,7 +96,7 @@ exports.getSpendingDetails = function(seminarId, currentPeriod, companyId){
 
         //company data in all results
         if(companyDataInAllResults.c_Capacity - utility.calculateTotalVolume(decision) < 0){
-            companyData.availableOvertimeCapacityExtension = companyDataInAllResults.c_Capacity - calculateTotalVolume(decision) 
+            companyData.availableOvertimeCapacityExtension = companyDataInAllResults.c_Capacity - utility.calculateTotalVolume(decision) 
                 + companyDataInAllResults.c_Capacity * gameParameters.pgen.firm_OvertimeCapacity;
         }else{
             companyData.availableOvertimeCapacityExtension = companyDataInAllResults.c_Capacity * gameParameters.pgen.firm_OvertimeCapacity;

@@ -48,7 +48,7 @@ exports.init = function(req, res, next) {
     var seminarId = req.query.seminar_id;
     var simulationSpan; //should be posted from client
     var companyNum;
-    var currentPeriod = req.session.currentPeriod;
+    var currentPeriod;
 
     var companies = [];
     var periods = [];
@@ -62,6 +62,15 @@ exports.init = function(req, res, next) {
         if(!dbSeminar){
             throw {message: "seminar doesn't exist."}
         }
+
+        if(dbSeminar.currentPeriod !== consts.Period_0 + 1){
+            throw {message: "initialize a seminar that alreay starts."}
+        }
+
+        //before init, a new seminar should be created,
+        //and it's currentPeriod should be set correctly
+        currentPeriod = dbSeminar.currentPeriod;
+        sessionOperation.setCurrentPeriod(req, dbSeminar.currentPeriod);
 
         //create periods array
         var startPeriod = consts.History_3;
@@ -114,11 +123,18 @@ exports.init = function(req, res, next) {
             });
         })
         .then(function(){
-            //when init is called, current period is 1
-            //return dbutility.insertEmptyDecision(seminarId, 1);
-            return duplicateLastPeriodDecision(seminarId, currentPeriod);
+            //copy decision of period (currentPeriod - 1 = 0)
+            return duplicateLastPeriodDecision(seminarId, currentPeriod - 1);
         })
         .then(function(){
+            return seminarModel.update({seminarId: seminarId}, {
+                isInitialized: true
+            })
+        })
+        .then(function(numAffected){
+            if(numAffected!==1){
+                throw {message: "there's error during set isInitialized to true."};
+            }
             res.send({message: 'initialize success'});
         })
     })
@@ -129,6 +145,13 @@ exports.init = function(req, res, next) {
     .done();
 };
 
+/**
+* Write decision to binary file
+* Run simulation
+* Fetch current period allresults and save it to db
+* Generate current period reports and charts
+* Generate new period decision 
+*/
 exports.runSimulation = function(req, res, next){
     var seminarId = sessionOperation.getSeminarId(req);
 
@@ -143,6 +166,7 @@ exports.runSimulation = function(req, res, next){
         return res.send(400, {message: "Invalid companyId"});
     }
 
+    //check if this seminar exists
     seminarModel.findOne({
         seminarId: seminarId
     })
@@ -151,34 +175,138 @@ exports.runSimulation = function(req, res, next){
             throw {message: "seminar doesn't exist."};
         }
 
-        return submitDecision(companyId, currentPeriod, seminarId)
-            .then(function(submitDecisionResult){
-            console.log(submitDecisionResult);
-            return cgiapi.runSimulation({
-                seminarId: seminarId,
-                simulationSpan: dbSeminar.simulationSpan,
-                teams: createCompanyArray(dbSeminar.companyNum),
-                period: currentPeriod
-            })
-        })
-    })
-    .then(function(simulationResult){
-        if(simulationResult.message !== 'run_simulation_success'){
-            throw {message: simulationResult.message};
+        if(!dbSeminar.isInitialized){
+            throw {httpStatus: 400, message: "you have not initialized this seminar."}
         }
 
+        //if all rounds are executed
+        if(dbSeminar.isSimulationFinised){
+            throw {httpStatus: 400, message: "the last round simulation has been executed."}
+        }
+
+        //write decision to binary file
+        return submitDecision(companyId, currentPeriod, seminarId)
+            .then(function(submitDecisionResult){
+                if(submitDecisionResult.message!=='submit_decision_success'){
+                    throw {message: submitDecisionResult.message};
+                }
+
+                //run simulation
+                return cgiapi.runSimulation({
+                    seminarId: seminarId,
+                    simulationSpan: dbSeminar.simulationSpan,
+                    teams: createCompanyArray(dbSeminar.companyNum),
+                    period: currentPeriod
+                })
+                .then(function(simulationResult){
+                    if(simulationResult.message !== 'run_simulation_success'){
+                        throw {message: simulationResult.message};
+                    }
+
+                    return Q.all[removeCurrentPeriodSimulationResult(seminarId, currentPeriod)
+                                , chartModel.remove(seminarId)
+                                , reportModel.remove(seminarId)
+                            ];
+                })
+                .then(function(){
+                    //once removeCurrentPeriodSimulationResult success, 
+                    //query and save the current period simulation result
+                    return initCurrentPeriodSimulationResult(seminarId, currentPeriod);
+                })
+                .then(function(){
+                    return Q.all([
+                        simulationResultModel.findAll(seminarId)
+                    ])
+                    .spread(function(allResults){
+                        return Q.all([
+                            initChartData(seminarId, allResults),
+                            
+                            initCompanyStatusReport(seminarId, allResults),
+                            initFinancialReport(seminarId, allResults),
+                            initProfitabilityEvolutionReport(seminarId, allResults),
+                            initSegmentDistributionReport(seminarId, allResults),
+                            initCompetitorIntelligenceReport(seminarId, allResults),
+                            initMarketTrendsReport(seminarId, allResults)
+                        ]);
+                    });
+                })
+                .then(function(){
+                    //for the last period, we don't create the next period decision automatically
+                    if(dbSeminar.currentPeriod < dbSeminar.simulationSpan){
+                        return duplicateLastPeriodDecision(seminarId, currentPeriod);
+                    }else{
+                        return undefined;
+                    }
+                })
+                .then(function(){
+                    if(dbSeminar.currentPeriod < dbSeminar.simulationSpan){
+                        //after simulation success, set currentPeriod to next period
+                        sessionOperation.setCurrentPeriod(req, sessionOperation.getCurrentPeriod(req)+1);
+
+                        return seminarModel.update({seminarId: seminarId}, {
+                            currentPeriod: dbSeminar.currentPeriod + 1
+                        })
+                        .then(function(numAffected){
+                            if(numAffected!==1){
+                                throw {message: "there's error during update seminar."}
+                            }else{
+                                return undefined;
+                            }
+                        })
+                    }else{
+                        return seminarModel.update({seminarId: seminarId}, {
+                            isSimulationFinised: true
+                        }).then(function(numAffected){
+                            if(numAffected!==1){
+                                throw {message: "there's error during update isSimulationFinised to true."}
+                            }else{
+                                return undefined;
+                            }
+                        });
+                    }
+                })
+            });
+    })
+    .then(function(){
         return res.send({message: "run simulation success."});
     })
     .fail(function(err){
         logger.error(err);
+        if(err.httpStatus){
+            return res.send(err.httpStatus, {message: err.message});
+        }
         res.send(500, {message: "run simulation failed."})
     })
     .done();
 };
 
+function initCurrentPeriodSimulationResult(seminarId, currentPeriod){
+    return cgiapi.queryOnePeriodResult(seminarId, currentPeriod)
+    .then(function(currentPeriodResult){
+        if(currentPeriodResult && currentPeriodResult.message){
+            throw currentPeriodResult;
+        }
+
+        allResultsCleaner.clean(currentPeriodResult);
+
+        currentPeriodResult.seminarId = seminarId;
+        currentPeriodResult.period = currentPeriod;
+
+        return simulationResultModel.insert(currentPeriodResult);
+    })
+}
+
+function removeCurrentPeriodSimulationResult(seminarId, currentPeriod){
+    return simulationResultModel.remove({
+        seminarId: seminarId,
+        period: currentPeriod
+    });
+}
+
 function submitDecision(companyId, period, seminarId){
     var result = {};
 
+    console.log('$$$$$', companyId, period, seminarId)
     return companyDecisionModel.findOne(seminarId, period, companyId)
     .then(function(decision){
         if(!decision){
@@ -460,50 +588,65 @@ function initMarketTrendsReport(seminarId, allResults){
 }
 
 
-function duplicateLastPeriodDecision(seminarId, currentPeriod){
-    return companyDecisionModel.findAllInPeriod(seminarId, currentPeriod-1)
+function duplicateLastPeriodDecision(seminarId, lastPeriod){
+    return companyDecisionModel.findAllInPeriod(seminarId, lastPeriod)
     .then(function(allCompanyDecision){
-        var p = Q();
+        var p = Q('init');
         allCompanyDecision.forEach(function(companyDecision){
             var tempCompanyDecision = JSON.parse(JSON.stringify(companyDecision));
 
             delete tempCompanyDecision._id;
             delete tempCompanyDecision.__v;
             tempCompanyDecision.period = tempCompanyDecision.period + 1;
-            p = p.then(function(){
+            p = p.then(function(result){
+                if(!result){
+                    throw new Error("save comanyDecision failed during create copy of last period decision.");
+                }
                 return companyDecisionModel.save(tempCompanyDecision);
             })
         })
         return p;
     })
-    .then(function(){
-        return brandDecisionModel.findAllInPeriod(seminarId, currentPeriod-1)
+    .then(function(result){
+        if(!result){
+            throw new Error("save comanyDecision failed during create copy of last period decision.");
+        }
+        return brandDecisionModel.findAllInPeriod(seminarId, lastPeriod)
         .then(function(allBrandDecision){
-            var p = Q();
+            var p = Q('init');
             allBrandDecision.forEach(function(brandDecision){
                 var tempBrandDecision = JSON.parse(JSON.stringify(brandDecision));
 
                 delete tempBrandDecision._id;
                 delete tempBrandDecision.__v;
                 tempBrandDecision.period = tempBrandDecision.period + 1;
-                p = p.then(function(){
+                p = p.then(function(result){
+                    if(!result){
+                        throw new Error("save brandDecision failed during create copy of last period decision.");
+                    }
                     return brandDecisionModel.save(tempBrandDecision);
                 })
             })
             return p;
         })
     })
-    .then(function(){
-        return SKUDecisionModel.findAllInPeriod(seminarId, currentPeriod-1)
+    .then(function(result){
+        if(!result){
+            throw new Error("save comanyDecision failed during create copy of last period decision.");
+        }
+        return SKUDecisionModel.findAllInPeriod(seminarId, lastPeriod)
         .then(function(allSKUDecision){
-            var p = Q();
+            var p = Q('init');
             allSKUDecision.forEach(function(SKUDecision){
                 var tempSKUDecision = JSON.parse(JSON.stringify(SKUDecision));
 
                 delete tempSKUDecision._id;
                 delete tempSKUDecision.__v;
                 tempSKUDecision.period = tempSKUDecision.period + 1;
-                p = p.then(function(){
+                p = p.then(function(result){
+                    if(!result){
+                        throw new Error("save SKUDecision failed during create copy of last period decision.");
+                    }
                     return SKUDecisionModel.save(tempSKUDecision);
                 })
             })

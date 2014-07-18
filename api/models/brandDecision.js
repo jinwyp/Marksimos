@@ -47,11 +47,11 @@ exports.removeAll =  function(seminarId){
 exports.save = function(decision){
     var deferred = Q.defer();
     var decision = new BrandDecision(decision);
-    decision.save(function(err){
+    decision.save(function(err, saveDecision, numAffected){
         if(err){
             deferred.reject(err);
         }else{
-            deferred.resolve(null);
+            deferred.resolve(saveDecision);
         }
     });
     return deferred.promise;

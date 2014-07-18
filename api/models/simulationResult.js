@@ -18,11 +18,11 @@ var SimulationResult = mongoose.model("SimulationResult", simulationResultSchema
 exports.insert = function(simulationResult){
     var deferred = Q.defer();
 
-    SimulationResult.create(simulationResult, function(err){
+    SimulationResult.create(simulationResult, function(err, result){
         if(err){
             return deferred.reject(err);
         }
-        return deferred.resolve(undefined);
+        return deferred.resolve(result);
     });
 
     return deferred.promise;
@@ -72,6 +72,19 @@ exports.findOne = function(seminarId, period){
     return deferred.promise;
 }
 
+exports.remove = function(query){
+    var deferred = Q.defer();
+
+    SimulationResult.remove(query, function(err){
+        if(err){
+            deferred.reject(err);
+        }else{
+            deferred.resolve();
+        }
+    });
+
+    return deferred.promise;
+}
 
 
 
