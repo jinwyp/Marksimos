@@ -165,7 +165,7 @@ function addSeminar(){
             city: 'hangzhou',
             venue: 'HCD 301',
             simulation_span: 4,
-            company_num: 5
+            company_num: 4
         });
     })
     .done();
