@@ -126,16 +126,22 @@ exports.getOtherinfo = function(req, res, next){
                     ) / (companyResult.c_TotalInvestmentBudget - companyResult.c_CumulatedInvestments)
                 ).toFixed(2)
             );
+        var totalAvailableBudgetValue = companyResult.c_TotalInvestmentBudget - companyResult.c_CumulatedInvestments - totalInvestment;
 
         var normalCapacity = parseFloat((spendingDetails.companyData.normalCapacity/companyResult.c_Capacity).toFixed(2));
+        var normalCapacityValue = spendingDetails.companyData.normalCapacity;
         
         var overtimeCapacity = parseFloat(((companyResult.c_Capacity * gameParameters.pgen.firm_OvertimeCapacity +  spendingDetails.companyData.normalCapacity
             )/ companyResult.c_Capacity * gameParameters.pgen.firm_OvertimeCapacity).toFixed(2));
+        var overtimeCapacityValue = companyResult.c_Capacity * gameParameters.pgen.firm_OvertimeCapacity +  spendingDetails.companyData.normalCapacity;
 
         res.send({
             totalAvailableBudget: totalAvailableBudget,
             normalCapacity: normalCapacity,
-            overtimeCapacity: overtimeCapacity
+            overtimeCapacity: overtimeCapacity,
+            totalAvailableBudgetValue: totalAvailableBudgetValue,
+            normalCapacityValue: normalCapacityValue,
+            overtimeCapacityValue: overtimeCapacityValue
         });
     })
     .fail(function(err){
