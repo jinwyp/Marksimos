@@ -99,6 +99,18 @@ exports.find = function(query, sort){
     return deferred.promise;
 }
 
+exports.delete = function(query){
+    var deferred = Q.defer();
+    Seminar.remove(query, function(err){
+        if(err){
+            deferred.reject(err);
+        }else{
+            deferred.resolve();
+        }
+    })
+    return deferred.promise;
+}
+
 
 
 

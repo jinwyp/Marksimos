@@ -39,7 +39,7 @@ app.use(function(req, res, next){
     // sessionOperation.setUserId(req, '53c886642c320f1308904a0a');
 
    sessionOperation.setUserRole(req, config.role.facilitator);
-   sessionOperation.setUserId(req, '53c8863ebc6800ef078e8ac1');
+   sessionOperation.setUserId(req, '53c8b21fd484a5ab29656560');
 
     // sessionOperation.setUserRole(req, config.role.distributor);
     // sessionOperation.setUserId(req, '53c88615d3691cca075a925f');

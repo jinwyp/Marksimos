@@ -42,6 +42,20 @@ var userSchema = new Schema({
 
 var User = mongoose.model("User", userSchema);
 
+exports.insert = function(user){
+    var deferred = Q.defer();
+
+    User.create(user, function(err, result){
+        if(err){
+            deferred.reject(err);
+        }else{
+            deferred.resolve(result);
+        }
+    })
+
+    return deferred.promise;
+}
+
 exports.register = function(user){
     var deferred = Q.defer();
 
