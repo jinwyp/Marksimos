@@ -306,7 +306,6 @@ function removeCurrentPeriodSimulationResult(seminarId, currentPeriod){
 function submitDecision(companyId, period, seminarId){
     var result = {};
 
-    console.log('$$$$$', companyId, period, seminarId)
     return companyDecisionModel.findOne(seminarId, period, companyId)
     .then(function(decision){
         if(!decision){

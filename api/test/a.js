@@ -1,4 +1,9 @@
 var request = require('request');
+var userModel = require('../models/user.js');
+var seminarModel = require('../models/seminar.js');
+var Q = require('q');
+var mongoose = require('mongoose');
+
 
 function register(){
     request.post('http://localhost:3000/api/register', function(err, res, body){
@@ -145,21 +150,25 @@ function updateStudent(){
 }
 
 function addSeminar(){
-    request.post('http://localhost:3000/api/seminar', function(err, res, body){
-        if(err){
-            console.log(JSON.stringify(err));
-        }else{
-            console.log(body);
-        }
-    }).form({
-        description: 'test seminar',
-        country: 'china',
-        state: 'shanghai',
-        city: 'hangzhou',
-        venue: 'HCD 301',
-        simulation_span: 4,
-        company_num: 5
-    });
+    seminarModel.delete({})
+    .then(function(){
+        request.post('http://localhost:3000/api/seminar', function(err, res, body){
+            if(err){
+                console.log(JSON.stringify(err));
+            }else{
+                console.log(body);
+            }
+        }).form({
+            description: 'test seminar',
+            country: 'china',
+            state: 'shanghai',
+            city: 'hangzhou',
+            venue: 'HCD 301',
+            simulation_span: 4,
+            company_num: 5
+        });
+    })
+    .done();
 }
 
 function assignStudent(){
@@ -188,9 +197,53 @@ function removeStudentFromSeminar(){
     });
 }
 
-//addDistributor();
-//addFacilitator();
-addSeminar();
+function createTestUsers(){
+    userModel.remove({})
+    .then(function(){
+        return userModel.insert({
+            email: 'distributor@hcdglobal.com',
+            password: '123456',
+            name: 'hcd global',
+            phone: '631122021',
+            country: 'china',
+            state: 'shanghai',
+            city: 'shanghai',
+            numOfLicense: 100,
+            role: 2
+        })
+    })
+    .then(function(){
+        return userModel.findOne({email: 'distributor@hcdglobal.com'})
+    })
+    .then(function(distributor){
+        return userModel.insert({
+            email: 'facilitator@hcdglobal.com',
+            password: '123456',
+            name: 'hcd global',
+            numOfLicense: 50,
+            role: 3,
+            distributorId: distributor._id
+        })
+    })
+    .then(function(){
+        console.log('finished.');
+    })
+    .fail(function(err){
+        console.log(err);
+    })
+    .done();
+}
+
+//updateDistributor();
+//updateFacilitator();
+
+mongoose.connect('mongodb://localhost/Marksimos');
+var db = mongoose.connection;
+db.on('error', console.error.bind(console, 'connection error:'));
+db.once('open', function(response,request) {
+    addSeminar();
+});
+
 
 
 
