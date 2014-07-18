@@ -136,8 +136,6 @@ exports.runSimulation = function(req, res, next){
 
     var currentPeriod = sessionOperation.getCurrentPeriod(req);
 
-    console.log(req.session.currentPeriod);
-
     var companyId = sessionOperation.getCompanyId(req);
     if(!companyId){
         return res.send(400, {message: "Invalid companyId"});
@@ -219,7 +217,6 @@ exports.runSimulation = function(req, res, next){
         }
 
         //after simulation success, set currentPeriod to next period
-        console.log('---------', sessionOperation.getCurrentPeriod(req)+1);
         sessionOperation.setCurrentPeriod(req, sessionOperation.getCurrentPeriod(req)+1);
 
         return res.send({message: "run simulation success."});

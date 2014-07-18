@@ -49,7 +49,10 @@ app.use(function(req, res, next){
 
     req.session.seminarId = '10000';
     req.session.companyId = 2;
-    req.session.currentPeriod = 1;
+    
+    if(req.session.currentPeriod === undefined){
+        req.session.currentPeriod = 1;
+    }
     next();
 });
 
