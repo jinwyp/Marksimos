@@ -38,10 +38,12 @@ marksimosapp.controller('chartController', ['$scope',  '$timeout', '$http', 'not
         currentCompanySpendingDetails : {},
         currentCompanyFutureProjectionCalculator : [],
         currentBrand : {},
+        currentBrandIndex : 0,
         currentModifiedSku : {},
         currentModifiedBrand : {},
         currentModifiedCompany : {},
         currentSku : {},
+        currentSkuIndex : 0,
         userSegment : [
             {id:1, name:'1 Price Sensitive'},
             {id:2, name:'2 Pretenders'},
@@ -580,12 +582,31 @@ marksimosapp.controller('chartController', ['$scope',  '$timeout', '$http', 'not
 
     $scope.companyInfoInit = function(){
 
+
+
         company.getCompany().then(function(data, status, headers, config){
+
+            //记录上一次选中的Brand 和SKU 并找到对应的Index 供本次查询使用
+
+            if($scope.data.currentBrand !== {} ){
+                angular.forEach(data.d_BrandsDecisions, function(brand){
+                    if(brand.d_BrandID === $scope.data.currentBrand.d_BrandID){
+                        $scope.data.currentBrandIndex = data.d_BrandsDecisions.indexOf(brand);
+
+                        if($scope.data.currentBrandIndex === -1 ){
+                            $scope.data.currentBrandIndex  = 0;
+                        }
+                        console.log($scope.data.currentBrandIndex);
+                    }
+                })
+            }
+
+
     //        console.log(data);
             $scope.data.currentCompany = data;
-            $scope.css.currentDecisionBrandId = $scope.data.currentCompany.d_BrandsDecisions[0]._id;
-            $scope.data.currentBrand = $scope.data.currentCompany.d_BrandsDecisions[0];
-            $scope.data.currentSku = $scope.data.currentCompany.d_BrandsDecisions[0].d_SKUsDecisions[0];
+            $scope.css.currentDecisionBrandId = $scope.data.currentCompany.d_BrandsDecisions[$scope.data.currentBrandIndex]._id;
+            $scope.data.currentBrand = $scope.data.currentCompany.d_BrandsDecisions[$scope.data.currentBrandIndex];
+            $scope.data.currentSku = $scope.data.currentCompany.d_BrandsDecisions[$scope.data.currentBrandIndex].d_SKUsDecisions[$scope.data.currentSkuIndex];
 
             company.getCompanyFutureProjectionCalculator($scope.data.currentSku.d_SKUID).then(function(data, status, headers, config){
     //            console.log(data);
