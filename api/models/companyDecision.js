@@ -65,11 +65,11 @@ exports.save = function(decision){
         deferred.reject(new Error("Invalid argument decision."));
     }else{
         var d = new CompanyDecision(decision);
-        d.save(function(err){
+        d.save(function(err, savedDecision, numAffected){
             if(err){
                 deferred.reject(err);
             }else{
-                deferred.resolve(null);
+                deferred.resolve(savedDecision);
             }
         });
     }

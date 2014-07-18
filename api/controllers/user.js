@@ -5,6 +5,7 @@ var logger = require('../../common/logger.js');
 var util = require('util');
 var sessionOperation = require('../../common/sessionOperation.js');
 
+
 exports.register = function(req, res, next){
     req.checkBody('email', 'Invalid email').notEmpty().isEmail();
     req.assert('password', '6 to 20 characters required').len(6, 20);
@@ -80,7 +81,7 @@ exports.activate = function(req, res, next){
     .then(function(result){
         if(result){
             return userModel.updateByEmail(email, {
-                isActive: true
+                isActivated: true
             })
             .then(function(numAffected){
                 if(numAffected === 1){
@@ -117,7 +118,7 @@ exports.login = function(req, res, next){
             return res.send(400, {message: 'User does not exist.'});
         }
 
-        if(!user.isActive){
+        if(!user.isActivated){
             return res.send(400, {message: 'User is not activated.'})
         }
 
@@ -127,7 +128,6 @@ exports.login = function(req, res, next){
 
         sessionOperation.setLoginStatus(req, true);
         sessionOperation.setUserRole(req, user.role);
-
         return res.send({
             userId: user._id
         });

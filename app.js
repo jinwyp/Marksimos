@@ -5,7 +5,8 @@ var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 var mongoose = require('mongoose');
-var session = require('cookie-session');
+//var session = require('cookie-session');
+var session = require('express-session')
 var expressValidator = require('express-validator');
 var sessionOperation = require('./common/sessionOperation.js');
 var config = require('./common/config.js');
@@ -26,39 +27,44 @@ app.use(expressValidator());
 app.use(cookieParser());
 app.use(session({
     secret: 'marksimos',
-    maxage: 24 * 60000
+    maxage: 24 * 60 * 60000
 }));
 app.use(express.static(path.join(__dirname, 'public')));
 
 //initialize session data
 app.use(function(req, res, next){
-    sessionOperation.setLoginStatus(req, true);
-    sessionOperation.setUserRole(req, config.role.distributor);
-    sessionOperation.setUserId(req, '53c38da49f7576ef26b867e9');
+   sessionOperation.setLoginStatus(req, true);
 
-    // sessionOperation.setUserRole(req, config.role.admin);
-    // sessionOperation.setUserId(req, 'testid');
+    // sessionOperation.setUserRole(req, config.role.student);
+    // sessionOperation.setUserId(req, '53c886642c320f1308904a0a');
 
-    req.session.seminarId = 'TTT';
+   sessionOperation.setUserRole(req, config.role.facilitator); //a
+   sessionOperation.setUserId(req, '53c8b21fd484a5ab29656560'); //a
+
+//    sessionOperation.setUserRole(req, config.role.distributor);
+//    sessionOperation.setUserId(req, '53c8ae4dbf604cf543f7b639');
+
+//    sessionOperation.setUserRole(req, config.role.admin);
+//    sessionOperation.setUserId(req, 'testid');
+
+    req.session.seminarId = '10000';
     req.session.companyId = 2;
-    req.session.period = 1;
-    next();
-});
 
-//set Content-Type for all API JSON resppnse
-app.use(function(req, res, next){
-    if(req.path.indexOf('/api')===0){
-        res.set('Content-Type', 'application/json; charset=utf-8');
+    if(req.session.currentPeriod === undefined){
+        req.session.currentPeriod = 1;
     }
     next();
 });
 
-// app.get('/test', function(req, res, next){
-//     res.send('/test');
-// });
+//set Content-Type for all API JSON resppnse
+app.all("/api/*", function(req, res, next){
+    res.set('Content-Type', 'application/json; charset=utf-8');
+    next();
+});
+
 
 //require('./api/routes.js')(app);
-app.use(require('./api/routes.js'));
+app.use( require('./api/routes.js'));
 require('./routes.js')(app);
 
 /// catch 404 and forwarding to error handler

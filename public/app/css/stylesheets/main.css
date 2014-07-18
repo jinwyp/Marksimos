@@ -999,11 +999,11 @@ body a, body button {
 /* line 941, ../sass/main.scss */
 .mainbody .budget_form .budget_title {
   font-size: 18px;
-  padding-left: 34px;
 }
-/* line 946, ../sass/main.scss */
+/* line 945, ../sass/main.scss */
 .mainbody .budget_form input {
   width: 80px;
+  margin-top: 15px;
 }
 /* line 951, ../sass/main.scss */
 .mainbody .decision_box {

@@ -1,28 +1,22 @@
 var validator = require('validator');
 var config = require('../../common/config.js');
 var userModel = require('../models/user.js');
+var seminarModel = require('../models/seminar.js');
 var logger = require('../../common/logger.js');
 var util = require('util');
 var sessionOperation = require('../../common/sessionOperation.js');
+var utility = require('../../common/utility.js');
 
 exports.addFacilitator = function(req, res, next){
-    req.checkBody('email', 'Invalid email').notEmpty().isEmail();
-    req.assert('password', '6 to 20 characters required').len(6, 20);
-    req.checkBody('name', '6 to 100 characters required.').notEmpty().len(6, 100);
-    req.checkBody('phone', 'phone is empty.').notEmpty();
-    req.checkBody('country', 'country is empty').notEmpty();
-    req.checkBody('state', 'state is empty').notEmpty();
-    req.checkBody('city', 'city is empty').notEmpty();
-    req.checkBody('num_of_license', 'Invalid num of license').isInt();
+    var validateResult = utility.validateUser(req);
 
-    var errors = req.validationErrors();
-    if(errors){
-        return res.send(400, {message: util.inspect(errors)});
+    if(validateResult){
+        return res.send(400, {message: validateResult});
     }
 
-    //if phone contains characters other than number
-    if(!validator.isNumeric(req.body.phone)){
-        return res.send(400, {message: "Invalid phone."});
+    var checkRequiredFieldResult = utility.checkRequiredFieldForFacilitator(req);
+    if(checkRequiredFieldResult){
+        return res.send(400, {message: checkRequiredFieldResult});
     }
 
     var distributorId = sessionOperation.getUserId(req);
@@ -34,7 +28,7 @@ exports.addFacilitator = function(req, res, next){
         country: req.body.country,
         state: req.body.state,
         city: req.body.city,
-        password: req.body.password,
+        password: utility.hashPassword(req.body.password),
         role: config.role.facilitator,
         numOfLicense: req.body.num_of_license,
         isActive: true,
@@ -77,48 +71,41 @@ exports.addFacilitator = function(req, res, next){
     })
     .fail(function(err){
         logger.error(err);
-        res.send(err.httpStatus || 500, {message: 'add facilitator failed.'});
+        if(err.httpStatus){
+            return res.send(err.httpStatus, {message: err.message});
+        }
+        res.send(500, {message: 'add facilitator failed.'});
     })
     .done();
 };
 
 exports.updateFacilitator = function(req, res, next){
-    req.checkParams('facilitator_id', 'Invalid facilitator_id').notEmpty();
-    req.checkBody('email', 'Invalid email').notEmpty().isEmail();
-    req.assert('password', '6 to 20 characters required').len(6, 20);
-    req.checkBody('name', '6 to 100 characters required.').notEmpty().len(6, 100);
-    req.checkBody('phone', 'phone is empty.').notEmpty();
-    req.checkBody('country', 'country is empty').notEmpty();
-    req.checkBody('state', 'state is empty').notEmpty();
-    req.checkBody('city', 'city is empty').notEmpty();
-    req.checkBody('num_of_license', 'Invalid num of license').isInt();
-
-    var errors = req.validationErrors();
-    if(errors){
-        return res.send(400, {message: util.inspect(errors)});
+    var validateResult = utility.validateUser(req);
+    if(validateResult){
+        return res.send(400, {message: validateResult});
     }
 
-    //if phone contains characters other than number
-    if(!validator.isNumeric(req.body.phone)){
-        return res.send(400, {message: "Invalid phone."});
-    }
+    var facilitator = {};
 
-    var facilitator = {
-        name: req.body.name,
-        email: req.body.email,
-        phone: req.body.phone,
-        country: req.body.country,
-        state: req.body.state,
-        city: req.body.city,
-        password: req.body.password,
-        role: config.role.facilitator,
-        numOfLicense: parseInt(req.body.num_of_license),
-        isActive: true,
-        district: req.body.district || '',
-        street: req.body.street || '',
-        pincode: req.body.pincode || ''
-    }
+    if(req.body.name) facilitator.name = req.body.name;
+    if(req.body.phone) facilitator.phone = req.body.phone;
+    if(req.body.country) facilitator.country = req.body.country;
+    if(req.body.state) facilitator.state = req.body.state;
+    if(req.body.city) facilitator.city = req.body.city;
+    if(req.body.password) facilitator.password = utility.hashPassword(req.body.password);
 
+    var userRole = sessionOperation.getUserRole(req);
+    if(req.body.num_of_license && (userRole === config.role.admin || userRole === config.role.distributor)){
+        facilitator.numOfLicense = req.body.num_of_license;
+    }
+    if(req.body.district) facilitator.district = req.body.district;
+    if(req.body.street) facilitator.street = req.body.street;
+    if(req.body.pincode) facilitator.pincode = req.body.pincode;
+
+    if(Object.keys(facilitator).length === 0){
+        return res.send(400, {message: "you have to provide at least one field to update."});
+    }
+    
     var distributorId = sessionOperation.getUserId(req);
 
     var p;
@@ -131,7 +118,6 @@ exports.updateFacilitator = function(req, res, next){
             _id: req.params.facilitator_id
         })
         .then(function(dbFacilitator){
-            console.log('---------------');
             //if this facilitator belongs to the current distributor
             if(dbFacilitator.distributorId === distributorId){
                 var addedLicense = parseInt(req.body.num_of_license) - dbFacilitator.numOfLicense;
@@ -177,8 +163,12 @@ exports.updateFacilitator = function(req, res, next){
     })
     .fail(function(err){
         logger.error(err);
+        if(err.httpStatus){
+            return res.send(err.httpStatus, {message: err.message});
+        }
         return res.send(500, {message: 'update facilitator failed.'});
     })
+    .done();
 };
 
 
@@ -207,7 +197,6 @@ exports.searchFacilitator = function(req, res, next){
     if(city) query.city = city;
     if(isDisabled) query.isDisabled = isDisabled;
 
-    console.log(query);
     userModel.find(query)
     .then(function(result){
         res.send(result);
@@ -216,8 +205,22 @@ exports.searchFacilitator = function(req, res, next){
         logger.error(err);
         res.send(500, {message: 'search failed'})
     })
+    .done();
 };
 
+exports.getSeminarOfFacilitator = function(req, res, next){
+    var facilitatorId = sessionOperation.getUserId(req);
+
+    seminarModel.find({facilitatorId: facilitatorId}, {})
+    .then(function(allSeminars){
+        res.send(allSeminars);
+    })
+    .fail(function(err){
+        logger.error(err);
+        res.send(500, {message: "get seminar list faile."})
+    })
+    .done();
+}
 
 
 

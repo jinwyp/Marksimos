@@ -1,15 +1,31 @@
 var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
 var Q = require('q');
+var consts = require('../consts.js');
 
 var seminarSchema = new Schema({
     seminarId: String,
+    description: String,
+    country: String,
+    state: String,
+    city: String,
+    venue: String,
+
+
     simulationSpan: Number,  //seminar有多少个round
-    simulationVariant: String,
-    targetMarket: String,
-    teams: [],
+    companyNum: Number,  //team name list
+
     facilitatorId: String,
-    isFinished: Boolean, //if this seminar is finished
+
+    createDate: Date,
+
+    isFinished: {type: Boolean, default: false}, //if this seminar is finished
+
+    companyAssignment: [],
+    currentPeriod: {type: Number, default: consts.Period_0 + 1},
+
+    isInitialized: {type: Boolean, default: false}, //if seminar is initialized
+    isSimulationFinised: {type: Boolean, default: false} //if all simulation has been executed.
 });
 
 var teamSchema = new Schema({
@@ -20,9 +36,9 @@ var teamSchema = new Schema({
 var Seminar = mongoose.model("Seminar", seminarSchema);
 
 
-exports.update = function(seminarId, seminar){
+exports.update = function(query, seminar){
     var deferred = Q.defer();
-    Seminar.update({seminarId: seminarId}, seminar)
+    Seminar.update(query, seminar)
     .exec(function(err, numAffected){
         if(err){
             deferred.reject(err);
@@ -33,13 +49,13 @@ exports.update = function(seminarId, seminar){
     return deferred.promise;
 }
 
-exports.insert = function(seminarId, seminar){
+exports.insert = function(seminar){
     var deferred = Q.defer();
-    Seminar.create(seminar, function(err){
+    Seminar.create(seminar, function(err, result){
         if(err){
             deferred.reject(err);
         }else{
-            deferred.resolve(undefined);
+            deferred.resolve(result);
         }
     });
     return deferred.promise;
@@ -57,15 +73,41 @@ exports.remove = function(seminarId){
     return deferred.promise;
 }
 
-exports.findOne = function(seminarId){
+exports.findOne = function(query){
     var deferred = Q.defer();
-    Seminar.findOne({seminarId: seminarId}, function(err, result){
+    Seminar.findOne(query, function(err, result){
         if(err){
             deferred.reject(err);
         }else{
             deferred.resolve(result);
         }
     });
+    return deferred.promise;
+}
+
+exports.find = function(query, sort){
+    var deferred = Q.defer();
+    Seminar.find(query)
+    .sort(sort)
+    .exec(function(err, result){
+        if(err){
+            deferred.reject(err);
+        }else{
+            deferred.resolve(result);
+        }
+    });
+    return deferred.promise;
+}
+
+exports.delete = function(query){
+    var deferred = Q.defer();
+    Seminar.remove(query, function(err){
+        if(err){
+            deferred.reject(err);
+        }else{
+            deferred.resolve();
+        }
+    })
     return deferred.promise;
 }
 

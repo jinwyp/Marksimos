@@ -12,7 +12,12 @@ var simulationResultModel = require('../models/simulationResult.js');
 
 exports.getDecision = function(req, res, next){
     var seminarId = req.session.seminarId;
-    var period = req.session.period;
+
+    if(!seminarId){
+        return res.send(400, {message: "You don't choose a seminar."});
+    }
+    
+    var period = req.session.currentPeriod;
     var companyId = req.session.companyId;
 
     decisionAssembler.getDecision(seminarId, period, companyId)
@@ -28,7 +33,12 @@ exports.getDecision = function(req, res, next){
 
 exports.getProductPortfolio = function(req, res, next){
     var seminarId = req.session.seminarId;
-    var period = req.session.period;
+
+    if(!seminarId){
+        return res.send(400, {message: "You don't choose a seminar."});
+    }
+
+    var period = req.session.currentPeriod;
     var companyId = req.session.companyId;
 
     productPortfolioAssembler.getProductPortfolioForOneCompany(seminarId, period, companyId)
@@ -44,7 +54,12 @@ exports.getProductPortfolio = function(req, res, next){
 
 exports.getSpendingDetails = function(req, res, next){
     var seminarId = req.session.seminarId;
-    var period = req.session.period;
+
+    if(!seminarId){
+        return res.send(400, {message: "You don't choose a seminar."});
+    }
+
+    var period = req.session.currentPeriod;
     var companyId = req.session.companyId;
 
     spendingDetailsAssembler.getSpendingDetails(seminarId, period, companyId)
@@ -61,7 +76,12 @@ exports.getSpendingDetails = function(req, res, next){
 
 exports.getSKUInfo = function(req, res, next){
     var seminarId = req.session.seminarId;
-    var period = req.session.period;
+
+    if(!seminarId){
+        return res.send(400, {message: "You don't choose a seminar."});
+    }
+
+    var period = req.session.currentPeriod;
     var companyId = req.session.companyId;
 
     var SKUID = req.params.sku_id;
@@ -84,7 +104,12 @@ exports.getSKUInfo = function(req, res, next){
 
 exports.getOtherinfo = function(req, res, next){
     var seminarId = req.session.seminarId;
-    var period = req.session.period;
+
+    if(!seminarId){
+        return res.send(400, {message: "You don't choose a seminar."});
+    }
+    
+    var period = req.session.currentPeriod;
     var companyId = req.session.companyId;
 
     Q.all([
@@ -101,16 +126,30 @@ exports.getOtherinfo = function(req, res, next){
                     ) / (companyResult.c_TotalInvestmentBudget - companyResult.c_CumulatedInvestments)
                 ).toFixed(2)
             );
+        var totalAvailableBudgetValue = companyResult.c_TotalInvestmentBudget - companyResult.c_CumulatedInvestments - totalInvestment;
 
         var normalCapacity = parseFloat((spendingDetails.companyData.normalCapacity/companyResult.c_Capacity).toFixed(2));
+        var normalCapacityValue = spendingDetails.companyData.normalCapacity;
         
         var overtimeCapacity = parseFloat(((companyResult.c_Capacity * gameParameters.pgen.firm_OvertimeCapacity +  spendingDetails.companyData.normalCapacity
-            )/ companyResult.c_Capacity * gameParameters.pgen.firm_OvertimeCapacity).toFixed(2));
+            ) / (companyResult.c_Capacity * gameParameters.pgen.firm_OvertimeCapacity)).toFixed(2));
+
+        var overtimeCapacityValue = companyResult.c_Capacity * gameParameters.pgen.firm_OvertimeCapacity +  spendingDetails.companyData.normalCapacity;
+
+        //if normal capacity is not totally used, set overtime capacity to 1
+        if(normalCapacityValue > 0){
+            overtimeCapacity = 1;
+            //overtimeCapacityValue = companyResult.c_Capacity * gameParameters.pgen.firm_OvertimeCapacity;
+            overtimeCapacityValue = companyResult.c_Capacity;
+        }
 
         res.send({
             totalAvailableBudget: totalAvailableBudget,
             normalCapacity: normalCapacity,
-            overtimeCapacity: overtimeCapacity
+            overtimeCapacity: overtimeCapacity,
+            totalAvailableBudgetValue: totalAvailableBudgetValue,
+            normalCapacityValue: normalCapacityValue,
+            overtimeCapacityValue: overtimeCapacityValue
         });
     })
     .fail(function(err){

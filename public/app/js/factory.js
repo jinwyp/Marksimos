@@ -25,7 +25,7 @@ app.factory('currentUser', function(){
 
 
 
-app.factory('company',function($http){
+app.factory('company',['$http', function($http){
 
     var apiPath = '/api/';
 
@@ -78,18 +78,26 @@ app.factory('company',function($http){
 
         updateSku : function(postdata){
             return $http.put(apiPath + 'sku/decision/', postdata);
+        },
+
+        updateBrand : function(postdata){
+            return $http.put(apiPath + 'brand/decision', postdata);
+        },
+
+        updateCompany : function(postdata){
+            return $http.put(apiPath + 'company/decision', postdata);
         }
 
     };
 
 
     return factory;
-});
+}]);
 
 
 
 
-app.factory('chartReport',function($http){
+app.factory('chartReport', ['$http', function($http){
 
     var apiPath = '/api/';
 
@@ -105,10 +113,10 @@ app.factory('chartReport',function($http){
         labels: false,
         legend: {
             display: true,
-            position: 'left' //could be 'left, right'
+            position: 'right' //could be 'left, right'
         },
         innerRadius: 0, // applicable on pieCharts, can be a percentage like '50%'
-        lineLegend: 'lineEnd' // can be also 'lineEnd' or 'traditional', defaults to 'lineEnd'
+        lineLegend: 'traditional' // can be also 'lineEnd' or 'traditional', defaults to 'lineEnd'
 //        mouseover: function() {},
 //        mouseout: function() {},
 //        click: function() {}
@@ -216,7 +224,8 @@ app.factory('chartReport',function($http){
             angular.forEach(chartHttpData.periods, function(value, key) {
 
                 var oneLineData = {
-                    x : "period" + value.toString(), //Round Name
+//                    x : "period" + value.toString(), //Round Name
+                    x : value.toString(), //Round Name
                     y : angular.copy(chartHttpData.chartData[key])
                 };
 
@@ -288,9 +297,9 @@ app.factory('chartReport',function($http){
     };
 
     var chartFormatTool3 = function(chartHttpData) {
-        // 使用angular-nvd3 插件的数据格式   Scatter Chart 散点图
-        chartResult.series = [];
-        chartResult.data = [];
+        // 使用angular-nvd3 插件的数据格式   only for C2 Perception Maps Scatter Chart 散点图
+//        chartResult.series = [];
+//        chartResult.data = [];
         chartResult.dataSKU = [];
         chartResult.dataBrand = [];
 
@@ -351,7 +360,7 @@ app.factory('chartReport',function($http){
                     'x' : Math.round(value.valuePerception * 100) / 100,
                     'y' : Math.round(value.imagePerception * 100) / 100,
                     'size' : 0.5,
-                    'name' : key + ' ' + value.segmentName,
+                    'name' : key + 1 + ' ' + value.segmentName,
                     'tooltips' : [],
                     'shape' : 'diamond'
                 };
@@ -378,7 +387,17 @@ app.factory('chartReport',function($http){
             return angular.copy(chartConfig3);
         },
 
-        // Chart A1
+
+        // Chart A3
+        inventoryReport : function(){
+            return $http.get(apiPath + 'chart/inventory_report').then(function(result){
+//                console.log(result.data);
+
+                return chartFormatTool2(result.data);
+            });
+        },
+
+        // Chart B1
         marketShareInValue : function(){
             return $http.get(apiPath + 'chart/market_share_in_value').then(function(result){
 //                console.log(result.data);
@@ -410,16 +429,6 @@ app.factory('chartReport',function($http){
 //                console.log(result.data);
 
                 return chartFormatTool1(result.data, 2);
-            });
-        },
-
-
-        // Chart A3
-        inventoryReport : function(){
-            return $http.get(apiPath + 'chart/inventory_report').then(function(result){
-//                console.log(result.data);
-
-                return chartFormatTool2(result.data);
             });
         },
 
@@ -592,12 +601,12 @@ app.factory('chartReport',function($http){
     return factory;
 
 
-});
+}]);
 
 
 
 
-app.factory('tableReport',function($http){
+app.factory('tableReport', ['$http', function($http){
 
     var apiPath = '/api/';
 
@@ -680,4 +689,4 @@ app.factory('tableReport',function($http){
     return factory;
 
 
-});
+}]);

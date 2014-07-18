@@ -6,6 +6,8 @@ var nodemailer = require('nodemailer');
 var uuid = require('node-uuid');
 var Q = require('q');
 var bcrypt = require('bcrypt-nodejs');
+var validator = require('validator');
+var util = require('util');
 
 
 exports.setSize = function(num){
@@ -179,8 +181,6 @@ function sendMail(toEmail, subject, html) {
         host: config.mail.host,
         auth: {user: config.mail.user, pass: config.mail.password},
     });
-
-    console.log(config.mail.host);
    
     var mailOptions = {
         from: [config.mail.name, config.mail.user].join(' '),
@@ -216,6 +216,87 @@ exports.validatePincode = function(pincode){
 exports.validateGender = function(gender){
     return gender && [1, 2].indexOf(gender) > 0;
 };
+
+/**
+* @param {Object} req the same object a controller gets
+*/
+exports.validateUser = function(req){
+    if(req.body.email) req.checkBody('email', 'Invalid email').notEmpty().isEmail();
+    if(req.body.password) req.assert('password', '6 to 20 characters required').len(6, 20);
+    if(req.body.name) req.checkBody('name', '6 to 100 characters required.').notEmpty().len(6, 100);
+    if(req.body.phone) req.checkBody('phone', 'phone is empty.').notEmpty();
+    if(req.body.country) req.checkBody('country', 'country is empty').notEmpty();
+    if(req.body.state) req.checkBody('state', 'state is empty').notEmpty();
+    if(req.body.city) req.checkBody('city', 'city is empty').notEmpty();
+    if(req.body.num_of_license) req.checkBody('num_of_license', 'Invalid num of license').isInt();
+
+    if(req.body.first_name) req.checkBody('first_name', '2 to 20 characters required.').notEmpty().len(2, 20);
+    if(req.body.last_name) req.checkBody('last_name', '2 to 20 characters required.').notEmpty().len(2, 20);
+
+    var errors = req.validationErrors();
+    if(errors){
+        return util.inspect(errors);
+    }
+
+    //if phone contains characters other than number
+    if(req.body.phone && !validator.isNumeric(req.body.phone)){
+        return "Invalid phone.";
+    }
+
+    if(req.body.pincode && !exports.validatePincode(req.body.pincode)){
+        return 'Invalid pincode';
+    }
+
+    if(req.body.gender && !exports.validateGender(req.body.gender)){
+        return 'Invalid gender';
+    }
+};
+
+/**
+* Check all fileds which are needed when adding a new user
+*/
+exports.checkRequiredFieldForAllUsers = function(req){
+    if(!req.body.email) return "email can't be empty.";
+    if(!req.body.password) return "password can't be empty.";
+    if(!req.body.phone) return "phone can't be empty.";
+    if(!req.body.country) return "country can't be empty.";
+    if(!req.body.state) return "state can't be empty.";
+    if(!req.body.city) return "city can't be empty.";
+};
+
+/**
+* Check all fileds which are needed when adding a new student
+*/
+exports.checkRequiredFieldForStudent = function(req){
+    var checkUserResult = exports.checkRequiredFieldForAllUsers(req);
+    if(checkUserResult) return checkUserResult;
+
+    if(!req.body.first_name) return "first_name can't be empty.";
+    if(!req.body.last_name) return "last_name can't be empty.";
+};
+
+/**
+* Check all fileds which are needed when adding a new facilitator
+*/
+exports.checkRequiredFieldForFacilitator = function(req){
+    var checkUserResult = exports.checkRequiredFieldForAllUsers(req);
+    if(checkUserResult) return checkUserResult;
+
+    if(!req.body.name) return "name can't be empty.";
+    if(!req.body.num_of_license) return "num_of_license can't be empty.";
+};
+
+/**
+* Check all fileds which are needed when adding a new facilitator
+*/
+exports.checkRequiredFieldForDistributor = function(req){
+    var checkUserResult = exports.checkRequiredFieldForAllUsers(req);
+    if(checkUserResult) return checkUserResult;
+
+    if(!req.body.name) return "name can't be empty.";
+    if(!req.body.num_of_license) return "num_of_license can't be empty.";
+};
+
 
 
 

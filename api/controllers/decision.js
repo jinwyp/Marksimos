@@ -16,8 +16,12 @@ var gameParameters = require('../gameParameters.js').parameters;
  */
 exports.submitDecision = function(req, res, next){
     var companyId = req.session.companyId;
-    var period = req.session.period;
+    var period = req.session.currentPeriod;
     var seminarId = req.session.seminarId;
+
+    if(!seminarId){
+        return res.send(400, {message: "You don't choose a seminar."});
+    }
 
     if(!companyId){
         return res.json({message: "Invalid companyId"});
@@ -158,8 +162,13 @@ exports.updateSKUDecision = function(req, res, next){
     var SKU = req.body.sku_data;
 
     var seminarId = req.session.seminarId;
+
+    if(!seminarId){
+        return res.send(400, {message: "You don't choose a seminar."});
+    }
+    
     var companyId = req.session.companyId;
-    var period = req.session.period;
+    var period = req.session.currentPeriod;
 
 
     if(!brandId){
@@ -237,8 +246,13 @@ exports.updateBrandDecision = function(req, res, next){
     var brand_data = req.body.brand_data;
 
     var seminarId = req.session.seminarId;
+
+    if(!seminarId){
+        return res.send(400, {message: "You don't choose a seminar."});
+    }
+    
     var companyId = req.session.companyId;
-    var period = req.session.period;
+    var period = req.session.currentPeriod;
 
 
     if(!brandId){
@@ -296,8 +310,13 @@ exports.updateCompanyDecision = function(req, res, next){
     var company_data = req.body.company_data;
 
     var seminarId = req.session.seminarId;
+
+    if(!seminarId){
+        return res.send(400, {message: "You don't choose a seminar."});
+    }
+    
     var companyId = req.session.companyId;
-    var period = req.session.period;
+    var period = req.session.currentPeriod;
 
 
     if(!company_data){
@@ -349,7 +368,12 @@ exports.updateCompanyDecision = function(req, res, next){
 
 exports.addBrand = function(req, res, next){
     var seminarId = req.session.seminarId;
-    var period = req.session.period;
+    
+    if(!seminarId){
+        return res.send(400, {message: "You don't choose a seminar."});
+    }
+
+    var period = req.session.currentPeriod;
     var companyId = req.session.companyId;
 
     var brand_name = req.body.brand_name;
@@ -410,7 +434,12 @@ exports.addBrand = function(req, res, next){
 
 exports.addSKU = function(req, res, next){
     var seminarId = req.session.seminarId;
-    var period = req.session.period;
+
+    if(!seminarId){
+        return res.send(400, {message: "You don't choose a seminar."});
+    }
+    
+    var period = req.session.currentPeriod;
     var companyId = req.session.companyId;
 
     var brand_id = req.body.brand_id;
@@ -458,7 +487,16 @@ exports.addSKU = function(req, res, next){
 
 exports.deleteSKU = function(req, res, next){
     var seminarId = req.session.seminarId;
-    var period = req.session.period;
+
+    if(!seminarId){
+        return res.send(400, {message: "You don't choose a seminar."});
+    }
+
+    if(!seminarId){
+        return res.send(400, {message: "You don't choose a seminar."});
+    }
+    
+    var period = req.session.currentPeriod;
     var companyId = req.session.companyId;
 
     var brand_id = req.body.brand_id;
@@ -485,7 +523,7 @@ exports.deleteSKU = function(req, res, next){
 
 exports.deleteBrand = function(req, res, next){
     var seminarId = req.session.seminarId;
-    var period = req.session.period;
+    var period = req.session.currentPeriod;
     var companyId = req.session.companyId;
 
     var brand_id = req.body.brand_id;

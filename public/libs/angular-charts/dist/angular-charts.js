@@ -310,7 +310,7 @@ angular.module('angularCharts').directive('acChart', [
       function lineChart() {
         var margin = {
             top: 0,
-            right: 40,
+            right: 20,
             bottom: 20,
             left: 40
           };
@@ -328,13 +328,13 @@ angular.module('angularCharts').directive('acChart', [
           ]);
         var xAxis = d3.svg.axis().scale(x).orient('bottom');
         filterXAxis(xAxis, x);
-        var yAxis = d3.svg.axis().scale(y).orient('left').ticks(5).tickFormat(d3.format('s'));
+        var yAxis = d3.svg.axis().scale(y).orient('left').ticks(6).tickFormat(d3.format('s'));
         var line = d3.svg.line().interpolate('cardinal').x(function (d) {
             return getX(d.x);
           }).y(function (d) {
             return y(d.y);
           });
-        var yData = [0];
+        var yData = [];
         var linedata = [];
         points.forEach(function (d) {
           d.y.map(function (e, i) {
@@ -362,9 +362,9 @@ angular.module('angularCharts').directive('acChart', [
           linedata.push(d);
         });
         var svg = d3.select(chartContainer[0]).append('svg').attr('width', width + margin.left + margin.right).attr('height', height + margin.top + margin.bottom).append('g').attr('transform', 'translate(' + margin.left + ',' + margin.top + ')');
-        var padding = d3.max(yData) * 0.2;
+        var padding = d3.max(yData) * 0.02;
         y.domain([
-          d3.min(yData),
+          d3.min(yData)- padding,
           d3.max(yData) + padding
         ]);
         svg.append('g').attr('class', 'x axis').attr('transform', 'translate(0,' + height + ')').call(xAxis);

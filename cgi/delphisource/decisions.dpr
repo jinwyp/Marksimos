@@ -76,7 +76,7 @@ begin
           StrToInt(params['team']),
           decision);
         if(resultCode<>0) then raise Exception.Create('Write decision failed, code:' + IntToStr(resultCode));
-        Writeln('{"status": 1, "message": "submit decision success."}');
+        Writeln('{"message": "submit_decision_success"}');
         //Writeln(urlDecode(sDati));
         //Writeln('{"data": "' + params['decision'] + '"}');
       end;

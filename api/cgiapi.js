@@ -22,7 +22,7 @@ exports.getExogenous = function(period){
             period, simulationVariant, targetMarket));
 
     return request.get(reqUrl);
-}
+};
 
 /**
  * Query allResults CGI service
@@ -37,7 +37,7 @@ exports.queryOnePeriodResult = function(seminarId, period) {
 
     var reqUrl = config.cgiService + util.format('allresults.exe?seminar=%s&period=%s', seminarId, period);
     return request.get(reqUrl);
-}
+};
 
 exports.queryOneDecision = function(seminarId, team, period){
     if(seminarId === undefined) throw new Error('Invalid parameter seminarId.');
@@ -45,20 +45,24 @@ exports.queryOneDecision = function(seminarId, team, period){
     if(period === undefined) throw new Error('Invalid parameter period.');
 
     var reqUrl = config.cgiService + util.format('decisions.exe?period=%s&team=%s&seminar=%s', period, team, seminarId);
+
     return request.get(reqUrl);
-}
+};
 
 /**
  * Query all decisions in one period
  */
-exports.queryDecisionsInOnePeriod = function(seminarId, period){
-    var companies = config.initCompanies;
-
+exports.queryDecisionsInOnePeriod = function(seminarId, period, companyNum){
     var queries = [];
 
-    companies.forEach(function(company) {
+    if(typeof companyNum !== 'number' || companyNum <= 0){
+        throw new Error("Invalid companyNum");
+    }
+
+    for(var i=1; i<=companyNum; i++){
+        var company = i;
         queries.push(exports.queryOneDecision(seminarId, company, period));
-    })
+    }
 
     return Q.all(queries)
     .then(function(decisions){
@@ -75,8 +79,8 @@ exports.queryDecisionsInOnePeriod = function(seminarId, period){
 /**
  * @param {Object} initConfig
  {
-    seminar:'',
-    simulation_span: '',
+    seminarId:'',
+    simulationSpan: '',
     teams: []
  }
  */
@@ -84,7 +88,7 @@ exports.init = function(initConfig){
     //seminar=TTT&simulation_span=3&team1=companyA&team2=companyB
 
     var reqUrl = config.cgiService + util.format('initialize.exe?seminar=%s&simulation_span=%s'
-        , initConfig.seminarId, initConfig.simulation_span);
+        , initConfig.seminarId, initConfig.simulationSpan);
     for(var i=0; i<initConfig.teams.length; i++){
         reqUrl += '&team' + (i+1) + '=' + initConfig.teams[i];
     }
@@ -95,21 +99,22 @@ exports.init = function(initConfig){
 /**
  * @param {Object} simulationConfig
  {
-    seminar:'',
-    simulation_span: '',
+    seminarId:'',
+    simulationSpan: '',
     teams: [],
     period: ''
  }
+ * @return {message: "run_simulation_success"}
  */
 exports.runSimulation = function(simulationConfig){
     var reqUrl = config.cgiService + util.format('runsimulation.exe?seminar=%s&simulation_span=%s'
-        , simulationConfig.seminarId, simulationConfig.simulation_span);
+        , simulationConfig.seminarId, simulationConfig.simulationSpan);
 
     for(var i=0; i<simulationConfig.teams.length; i++){
         reqUrl += '&team' + (i+1) + '=' + simulationConfig.teams[i];
     }
 
-    reqUrl += 'period=' + simulationConfig.period;
+    reqUrl += '&period=' + simulationConfig.period;
 
     return request.get(reqUrl);
 }

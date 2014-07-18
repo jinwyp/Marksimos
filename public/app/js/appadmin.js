@@ -3,17 +3,106 @@
  */
 
 // create module for custom directives
-var marksimosapp = angular.module('marksimosadmin', ['angularCharts']);
+var marksimosapp = angular.module('marksimosadmin', []);
 
-marksimosapp.directive('adminHeader', function() {
+marksimosapp.directive('headerAdmin', function() {
     return {
         scope: {},
         restrict: 'AE',
         templateUrl: 'app/js/websitecomponent/headeradmin.html'
     };
 });
+
+marksimosapp.directive('menuAdmin', function() {
+    return {
+        scope: {},
+        restrict: 'AE',
+        templateUrl: 'app/js/websitecomponent/menuadmin.html',
+        link : function(scope, element){
+            var btn = element.children("a").first();
+            var menu = element.children(".treeview-menu").first();
+            var isActive = element.hasClass('active');
+
+            console.log(btn);
+            console.log(menu);
+            console.log(isActive);
+
+            //initialize already active menus
+            if (isActive) {
+                menu.show();
+                btn.children(".fa-angle-left").first().removeClass("fa-angle-left").addClass("fa-angle-down");
+            }
+
+            //Slide open or close the menu on link click
+
+            scope.css = {
+                currentTab : 1,
+                currentSlideDownMenu : 1,
+                menuclose : true
+            };
+
+
+            scope.clickTab = function(event1){
+
+                scope.css.menuclose = !scope.css.menuclose;
+
+
+//                if (isActive) {
+//                    //Slide up to close menu
+//                    menu.slideUp();
+//                    isActive = false;
+//                    btn.children(".fa-angle-down").first().removeClass("fa-angle-down").addClass("fa-angle-left");
+//                    btn.parent("li").removeClass("active");
+//                } else {
+//                    //Slide down to open menu
+//                    menu.slideDown();
+//                    isActive = true;
+//                    btn.children(".fa-angle-left").first().removeClass("fa-angle-left").addClass("fa-angle-down");
+//                    btn.parent("li").addClass("active");
+//                }
+            };
+
+        }
+    };
+});
+
+
+
+
+
 // controller business logic
-marksimosapp.controller('adminController', function AppCtrl ($scope, $timeout, $http) {
+marksimosapp.controller('adminLoginController', ['$scope', '$timeout', '$http', '$window', function($scope, $timeout, $http, $window) {
+
+    $scope.data = {
+        admin : {
+            email : '',
+            password : ''
+        }
+    };
+
+    $scope.login = function(form){
+        if(form.$valid){
+            $http.post('/api/login', $scope.data.admin).success(function(data, status, headers, config){
+
+                $window.location.href = "/adminhome" ;
+
+            }).error(function(data, status, headers, config){
+                if(status == 400){
+                    console.log(data, status);
+
+                    form.password.$valid = false;
+                    form.password.$invalid = true;
+                }
+            });
+        }
+    };
+}]);
+
+
+
+
+// controller business logic
+marksimosapp.controller('adminController', function($scope, $timeout, $http) {
 
     $scope.css = {
         leftmenu : "distributor",

@@ -4,19 +4,19 @@
 
 
 // create module for custom directives
-var marksimosapp = angular.module('marksimos', ['pascalprecht.translate', 'angularCharts', 'nvd3ChartDirectives', 'marksimos.component', 'marksimos.factory', 'marksimos.filters', 'marksimos.translation' ]);
+var marksimosapp = angular.module('marksimos', ['pascalprecht.translate', 'angularCharts', 'nvd3ChartDirectives', 'cgNotify', 'marksimos.component', 'marksimos.factory', 'marksimos.filters', 'marksimos.translation' ]);
 
 
 // controller business logic
-marksimosapp.controller('chartController', function($scope,  $timeout, $http, chartReport, tableReport, company) {
+marksimosapp.controller('chartController', ['$scope',  '$timeout', '$http', 'notify', 'chartReport', 'tableReport', 'company', function($scope,  $timeout, $http, notify, chartReport, tableReport, company) {
 
     $scope.css = {
-        menu : 'Report',
+        menu : 'Home',
         chartMenu : 'A1',
         tableReportTab : 'SKU',
         tableReportMenu : 1,
         additionalBudget : true,
-        currentBrandId : 0,
+        currentDecisionBrandId : 0,
         currentDecisionRightMenu : 1
     };
 
@@ -37,9 +37,13 @@ marksimosapp.controller('chartController', function($scope,  $timeout, $http, ch
         currentCompanyProductPortfolio : {},
         currentCompanySpendingDetails : {},
         currentCompanyFutureProjectionCalculator : [],
-        currentBrand : {},
+        currentBrand : null,
+        currentBrandIndex : 0,
         currentModifiedSku : {},
-        currentSku : {},
+        currentModifiedBrand : {},
+        currentModifiedCompany : {},
+        currentSku : null,
+        currentSkuIndex : 0,
         userSegment : [
             {id:1, name:'1 Price Sensitive'},
             {id:2, name:'2 Pretenders'},
@@ -333,7 +337,7 @@ marksimosapp.controller('chartController', function($scope,  $timeout, $http, ch
     $scope.data.chartB14ShelfSpaceShare.config.title = 'Shelf Space Share(%)';
 
     chartReport.marketShareInValue().then(function(data, status, headers, config){
-        console.log(data);
+//        console.log(data);
         $scope.data.chartB11MarketShareInValue.data = data;
     });
     chartReport.marketShareInVolume().then(function(data, status, headers, config){
@@ -434,7 +438,7 @@ marksimosapp.controller('chartController', function($scope,  $timeout, $http, ch
 
     /********************  Chart C2  ********************/
     chartReport.perceptionMap().then(function(data, status, headers, config){
-//        console.log(data);
+        console.log(data);
         $scope.data.chartC21PerceptionMap.data = data;
         $scope.data.chartC21PerceptionMap.dataChart = data.dataSKU;
     });
@@ -449,9 +453,9 @@ marksimosapp.controller('chartController', function($scope,  $timeout, $http, ch
 
 
     /********************  Chart C4  ********************/
-    $scope.data.chartC41GrowthRateInVolume.config.title = 'Growth Rate In Volume (Period 3 = 100)';
-    $scope.data.chartC42GrowthRateInValue.config.title = 'Growth Rate In Value (Period 3 = 100)';
-    $scope.data.chartC43NetMarketPrice.config.title = 'Net Market Price (Period 3 = 100)';
+    $scope.data.chartC41GrowthRateInVolume.config.title = 'Growth Rate In Volume (Period -3 = 100)';
+    $scope.data.chartC42GrowthRateInValue.config.title = 'Growth Rate In Value (Period -3 = 100)';
+    $scope.data.chartC43NetMarketPrice.config.title = 'Net Market Price (Period -3 = 100)';
     $scope.data.chartC44SegmentValueShareTotalMarket.config.title = 'Segment Value Share In Total Market (%)';
 
     chartReport.growthRateInVolume().then(function(data, status, headers, config){
@@ -575,57 +579,102 @@ marksimosapp.controller('chartController', function($scope,  $timeout, $http, ch
 
 
     /********************  获取Decision信息  ********************/
-    company.getCompany().then(function(data, status, headers, config){
-//        console.log(data);
-        $scope.data.currentCompany = data;
-        $scope.css.currentBrandId = $scope.data.currentCompany.d_BrandsDecisions[0]._id;
-        $scope.data.currentBrand = $scope.data.currentCompany.d_BrandsDecisions[0];
-        $scope.data.currentSku = $scope.data.currentCompany.d_BrandsDecisions[0].d_SKUsDecisions[0];
 
-        company.getCompanyFutureProjectionCalculator($scope.data.currentSku.d_SKUID).then(function(data, status, headers, config){
-//            console.log(data);
-            $scope.data.currentCompanyFutureProjectionCalculator = data;
+    $scope.companyInfoInit = function(){
+
+
+
+        company.getCompany().then(function(data, status, headers, config){
+
+            //记录上一次选中的Brand 和SKU 并找到对应的Index 供本次查询使用
+
+            if($scope.data.currentBrand !== null ){
+                angular.forEach(data.d_BrandsDecisions, function(brand){
+                    if(brand.d_BrandID === $scope.data.currentBrand.d_BrandID){
+                        $scope.data.currentBrandIndex = data.d_BrandsDecisions.indexOf(brand);
+
+                        if($scope.data.currentBrandIndex === -1 ){
+                            $scope.data.currentBrandIndex  = 0;
+                        }
+                    }
+                });
+            }
+
+            $scope.data.currentCompany = data;
+            $scope.css.currentDecisionBrandId = $scope.data.currentCompany.d_BrandsDecisions[$scope.data.currentBrandIndex]._id;
+            $scope.data.currentBrand = $scope.data.currentCompany.d_BrandsDecisions[$scope.data.currentBrandIndex];
+
+
+            //记录上一次选中的Brand 和SKU 并找到对应的Index 供本次查询使用
+            if($scope.data.currentSku !== null ){
+                angular.forEach($scope.data.currentBrand.d_SKUsDecisions, function(sku){
+
+                    if(sku.d_SKUID === $scope.data.currentSku.d_SKUID){
+                        $scope.data.currentSkuIndex = $scope.data.currentBrand.d_SKUsDecisions.indexOf(sku);
+
+                        if($scope.data.currentSkuIndex === -1 ){
+                            $scope.data.currentSkuIndex  = 0;
+                        }
+                    }
+                });
+            }
+
+            $scope.data.currentSku = $scope.data.currentCompany.d_BrandsDecisions[$scope.data.currentBrandIndex].d_SKUsDecisions[$scope.data.currentSkuIndex];
+
+            company.getCompanyFutureProjectionCalculator($scope.data.currentSku.d_SKUID).then(function(data, status, headers, config){
+    //            console.log(data);
+                $scope.data.currentCompanyFutureProjectionCalculator = data;
+
+            });
 
         });
 
-    });
+        company.getCompanyOtherInfo().then(function(data, status, headers, config){
+            $scope.data.currentCompanyOtherInfo = {
+                totalAvailableBudget : data.totalAvailableBudget.toFixed(4) * 100,
+                totalAvailableBudgetCSS : data.totalAvailableBudget.toFixed(4)  * 100 + '%',
+                totalAvailableBudgetValue : data.totalAvailableBudgetValue.toFixed(0),
+                normalCapacity : data.normalCapacity.toFixed(4)  * 100,
+                normalCapacityCSS : data.normalCapacity.toFixed(4)  * 100 + '%',
+                normalCapacityValue : data.normalCapacityValue.toFixed(0),
+                overtimeCapacity : data.overtimeCapacity.toFixed(4)  * 100,
+                overtimeCapacityCSS : data.overtimeCapacity.toFixed(4)  * 100 + '%',
+                overtimeCapacityValue : data.overtimeCapacityValue.toFixed(0)
+            };
 
-    company.getCompanyOtherInfo().then(function(data, status, headers, config){
-        $scope.data.currentCompanyOtherInfo = {
-            totalAvailableBudget : data.totalAvailableBudget * 100,
-            totalAvailableBudgetCSS : data.totalAvailableBudget * 100 + '%',
-            normalCapacity : data.normalCapacity * 100,
-            normalCapacityCSS : data.normalCapacity * 100 + '%',
-            overtimeCapacity : data.overtimeCapacity * 100,
-            overtimeCapacityCSS : data.overtimeCapacity * 100 + '%'
-        };
+    //        console.log($scope.data.currentCompanyOtherInfo);
 
-//        console.log($scope.data.currentCompanyOtherInfo);
+        });
 
-    });
+        company.getCompanyProductPortfolio().then(function(data, status, headers, config){
+    //        console.log(data);
+            $scope.data.currentCompanyProductPortfolio = data;
+        });
 
+        company.getCompanySpendingDetails().then(function(data, status, headers, config){
+    //        console.log(data);
+            $scope.data.currentCompanySpendingDetails = data;
+        });
 
+    };
 
-    company.getCompanyProductPortfolio().then(function(data, status, headers, config){
-//        console.log(data);
-        $scope.data.currentCompanyProductPortfolio = data;
-    });
-
-    company.getCompanySpendingDetails().then(function(data, status, headers, config){
-//        console.log(data);
-        $scope.data.currentCompanySpendingDetails = data;
-    });
+    //
+    $scope.companyInfoInit();
 
 
 
 
     $scope.clickBrand = function(brand){
-        $scope.css.currentBrandId = brand._id;
+        $scope.css.currentDecisionBrandId = brand._id;
         $scope.data.currentBrand = brand;
     };
 
     $scope.clickCurrentSku = function(sku){
         $scope.data.currentSku = sku;
+        company.getCompanyFutureProjectionCalculator($scope.data.currentSku.d_SKUID).then(function(data, status, headers, config){
+            $scope.data.currentCompanyFutureProjectionCalculator = data;
+
+        });
     };
 
 
@@ -654,9 +703,62 @@ marksimosapp.controller('chartController', function($scope,  $timeout, $http, ch
 
         company.updateSku($scope.data.currentModifiedSku).success(function(data, status, headers, config){
             console.log(data);
+            $scope.companyInfoInit();
+
+            notify({
+                message : 'Save Success !',
+                template : './app/js/websitecomponent/notifysavesuccess.html',
+                position : 'center'
+            });
+        });
+    };
+
+    $scope.updateBrand = function(){
+        $scope.data.currentModifiedBrand = {
+            brand_id : $scope.data.currentBrand.d_BrandID,
+            brand_data : {
+                d_SalesForce : $scope.data.currentBrand.d_SalesForce
+            }
+        };
+
+        company.updateBrand($scope.data.currentModifiedBrand).success(function(data, status, headers, config){
+            console.log(data);
+            $scope.companyInfoInit();
+            notify({
+                message : 'Save Success !',
+                template : './app/js/websitecomponent/notifysavesuccess.html',
+                position : 'center'
+            });
+        });
+    };
+
+    $scope.updateCompany = function(){
+
+        $scope.css.additionalBudget = true;
+
+        $scope.data.currentModifiedCompany = {
+            company_data : {
+                d_InvestmentInEfficiency : $scope.data.currentCompany.d_InvestmentInEfficiency,
+                d_InvestmentInTechnology : $scope.data.currentCompany.d_InvestmentInTechnology,
+                d_RequestedAdditionalBudget : $scope.data.currentCompany.d_RequestedAdditionalBudget
+            }
+        };
+
+        company.updateCompany($scope.data.currentModifiedCompany).success(function(data, status, headers, config){
+            console.log(data);
+            $scope.companyInfoInit();
+            notify({
+                message : 'Save Success !',
+                template : './app/js/websitecomponent/notifysavesuccess.html',
+                position : 'center'
+            });
         });
     };
 
 
-});
+    $scope.closeAll = function(){
+        notify.closeAll();
+    };
+
+}]);
 

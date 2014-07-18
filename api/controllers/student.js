@@ -1,40 +1,22 @@
 var validator = require('validator');
 var config = require('../../common/config.js');
 var userModel = require('../models/user.js');
+var seminarModel = require('../models/seminar.js');
 var logger = require('../../common/logger.js');
 var util = require('util');
 var sessionOperation = require('../../common/sessionOperation.js');
 var utility = require('../../common/utility.js');
 
 exports.addStudent = function(req, res, next){
-    req.checkBody('email', 'Invalid email').notEmpty().isEmail();
-    req.assert('password', '6 to 20 characters required').len(6, 20);
-    req.checkBody('first_name', '2 to 20 characters required.').notEmpty().len(2, 20);
-    req.checkBody('last_name', '2 to 20 characters required.').notEmpty().len(2, 20);
-    req.checkBody('phone', 'phone is empty.').notEmpty();
-    req.checkBody('country', 'country is empty').notEmpty();
-    req.checkBody('state', 'state is empty').notEmpty();
-    req.checkBody('city', 'city is empty').notEmpty();
-    req.checkBody('num_of_license', 'Invalid num of license').isInt();
+    var validateResult = utility.validateUser(req);
 
-
-    var errors = req.validationErrors();
-    if(errors){
-        return res.send(400, {message: util.inspect(errors)});
+    if(validateResult){
+        return res.send(400, {message: validateResult});
     }
 
-    if(req.body.pincode && !utility.validatePincode(req.body.pincode)){
-        return res.send(400, {message: 'Invalid pincode'});
-    }
-
-    if(req.body.gender && !utility.validateGender(req.body.gender)){
-        return res.send(400, {message: 'Invalid gender'});
-    }
-
-
-    //if phone contains characters other than number
-    if(!validator.isNumeric(req.body.phone)){
-        return res.send(400, {message: "Invalid phone."});
+    var checkRequiredFieldResult = utility.checkRequiredFieldForStudent(req);
+    if(checkRequiredFieldResult){
+        return res.send(400, {message: checkRequiredFieldResult});
     }
 
     var facilitatorId = sessionOperation.getUserId(req);
@@ -46,19 +28,18 @@ exports.addStudent = function(req, res, next){
         country: req.body.country,
         state: req.body.state,
         city: req.body.city,
-        password: req.body.password,
+        password: utility.hashPassword(req.body.password),
         role: config.role.student,
-        isActive: true,
         facilitatorId: facilitatorId,
 
-        pincode: req.body.pincode,
-        gender: req.body.gender,
+        pincode: req.body.pincode || '',
+        gender: req.body.gender || '',
         occupation: req.body.occupation || '',
         firstName: req.body.first_name,
         lastName: req.body.last_name,
         univercity: req.body.univercity || '',
         organization: req.body.organization || '',
-        highestEducationalDegree: req.body.highestEducationalDegree ||''
+        highestEducationalDegree: req.body.highest_educational_degree ||''
     }
 
     userModel.findOne({
@@ -68,29 +49,8 @@ exports.addStudent = function(req, res, next){
         if(result){
             throw {httpStatus: 400, message: 'Email has been used, please choose another email.'};
         }else{
-            return userModel.findOne({
-                _id: facilitatorId
-            })
+            return userModel.register(student);
         }
-    })
-    .then(function(facilitator){
-        if(!facilitator){
-            throw {httpStatus:400, message: "Can't find facilitator in database, facilitatorId: " + facilitatorId};
-        }
-
-        return userModel.update({
-            _id: facilitatorId
-        }, {
-            numOfLicense: facilitator.numOfLicense - 1,
-            numOfUsedLicense: facilitator.numOfUsedLicense + 1
-        });
-    })
-    .then(function(numAffected){
-        if(numAffected !== 1){
-            throw {message: "update facilitator failed during add student, numAffected: " + numAffected};
-        }
-
-        return userModel.register(student);
     })
     .then(function(result){
         if(!result){
@@ -100,10 +60,141 @@ exports.addStudent = function(req, res, next){
     })
     .fail(function(err){
         logger.error(err);
-        res.send(err.httpStatus || 500, {message: "add student failed."})
+        if(err.httpStatus){
+            return res.send(err.httpStatus, {message: err.message});
+        }
+        res.send(500, {message: "add student failed."})
     })
+    .done();
 };
 
+exports.updateStudent = function(req, res, next){
+    var validateResult = utility.validateUser(req);
+
+    if(validateResult){
+        return res.send(400, {message: validateResult});
+    }
+
+    var student = {};
+
+    if(req.body.name) student.name = req.body.first_name + ' ' + req.body.last_name;
+    if(req.body.phone) student.phone = req.body.phone;
+    if(req.body.country) student.country = req.body.country;
+    if(req.body.state) student.state = req.body.state;
+    if(req.body.city) student.city = req.body.city;
+    if(req.body.password) student.password = utility.hashPassword(req.body.password);
+    if(req.body.pincode) student.pincode = req.body.pincode;
+    if(req.body.gender) student.gender = req.body.gender;
+    if(req.body.occupation) student.occupation = req.body.occupation;
+    if(req.body.first_name) student.firstName = req.body.first_name;
+    if(req.body.last_name) student.lastName = req.body.last_name;
+    if(req.body.univercity) student.univercity = req.body.univercity;
+    if(req.body.organization) student.organization = req.body.organization;
+    if(req.body.highestEducationalDegree) student.highestEducationalDegree = req.body.highestEducationalDegree;
+
+    if(Object.keys(student).length === 0){
+        return res.send(400, {message: "You should at least provide one field to update."})
+    }
+
+    var student_id = req.params.student_id;
+    if(!student_id){
+        return res.send(400, {message: "student_id can't be empty."})
+    }
+
+    userModel.findOne({
+        _id: student_id
+    })
+    .then(function(dbStudent){
+        if(!dbStudent){
+            throw {httpStatus: 400, message: "student doesn't exist."}
+        }
+
+        if(dbStudent.facilitatorId !== sessionOperation.getUserId(req)){
+            throw {httpStatus: 400, message: "You are not authorized to update this student."}
+        }
+
+        return userModel.update({_id: student_id}, student);
+    })
+    .then(function(numAffected){
+        if(numAffected !== 1){
+            if(numAffected > 1){
+                throw {httpStatus:400, message: "more than one row are updated."};
+            }else{
+                throw {httpStatus:400, message: "no student is updated." + student_id};
+            }
+        }
+        res.send({message: "update student success."});
+    })
+    .fail(function(err){
+        logger.error(err);
+        if(err.httpStatus){
+            return res.send(err.httpStatus, {message: err.message});
+        }
+        res.send(500, {message: "failed to update student."});
+    })
+    .done();
+};
+
+exports.searchStudent = function(req, res, next){
+    var name = req.query.name;
+    var email = req.query.email;
+    var country = req.query.country;
+    var state = req.query.state;
+    var city = req.query.city;
+    var isDisabled = req.query.user_status;
+
+    var query = {
+        role: config.role.student
+    };
+
+    //only facilitator and admin can search students
+    //facilitator can only view its own students
+    if(sessionOperation.getUserRole(req) !== config.role.admin){
+        query.facilitatorId = sessionOperation.getUserId(req);
+    }
+
+    if(name) query.name = name;
+    if(email) query.email = email;
+    if(country) query.country = country;
+    if(state) query.state = state;
+    if(city) query.city = city;
+    if(isDisabled) query.isDisabled = isDisabled;
+
+    userModel.find(query)
+    .then(function(result){
+        res.send(result);
+    })
+    .fail(function(err){
+        logger.error(err);
+        res.send(500, {message: 'search failed'})
+    })
+    .done();
+}
+
+exports.getSeminarOfStudent = function(req, res, next){
+    var studentId = sessionOperation.getUserId(req);
+
+    seminarModel.find({},{})
+    .then(function(allSeminars){
+        var assignedSeminars = [];
+        for(var i=0; i<allSeminars.length; i++){
+            var seminar = allSeminars[i];
+            for(var j=0; j<seminar.companyAssignment.length; j++){
+                if(seminar.companyAssignment[j].indexOf(studentId) > -1){
+                    assignedSeminars.push(seminar);
+                    break;
+                }
+            }
+        }
+
+        res.send(assignedSeminars);
+    })
+    .fail(function(err){
+        logger.error(err);
+        return res.send(500, {message: "get seminar list failed."})
+    })
+    .done();
+}
 
 
 

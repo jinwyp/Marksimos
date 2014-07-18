@@ -38,6 +38,11 @@ describe('chartController', function(){
         expect(scope.css.tableReportTab).toEqual("SKU");
     });
 
+    it('Initially scope.css.additionalBudget has default value ', function() {
+        expect(scope.css.additionalBudget).toEqual(true);
+    });
+
+
 //    it('Initially scope.data.currentSku has default value ', function() {
 //        expect(scope.data.currentSku.d_SKUName).toBe("_1");
 //    });
@@ -88,6 +93,21 @@ describe('chartController', function(){
     it('ensure client-side helper shown for empty fields', function() { });
 
 
+
+//    it('should get login success',
+//        inject(function(LoginService, $httpBackend) {
+//
+//            $httpBackend.expect('POST', 'https://api.mydomain.com/login')
+//                .respond(200, "[{ success : 'true', id : 123 }]");
+//
+//            LoginService.login('test@test.com', 'password')
+//                .then(function(data) {
+//                    expect(data.success).toBeTruthy();
+//                });
+//
+//            $httpBackend.flush();
+//        })
+//    );
 
 });
 

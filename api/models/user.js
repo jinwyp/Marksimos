@@ -16,7 +16,7 @@ var userSchema = new Schema({
 
 
     activateToken: String,
-    isActive: {type: Boolean, default: false},
+    isActivated: {type: Boolean, default: false},
     isDisabled: {type: Boolean, default: false},
     password: String,
     
@@ -41,6 +41,20 @@ var userSchema = new Schema({
 });
 
 var User = mongoose.model("User", userSchema);
+
+exports.insert = function(user){
+    var deferred = Q.defer();
+
+    User.create(user, function(err, result){
+        if(err){
+            deferred.reject(err);
+        }else{
+            deferred.resolve(result);
+        }
+    })
+
+    return deferred.promise;
+}
 
 exports.register = function(user){
     var deferred = Q.defer();
@@ -88,7 +102,7 @@ exports.update = function(query, user){
     });
 
     return deferred.promise; 
-}
+};
 
 exports.findByEmail = function(email){
     var deferred = Q.defer();
@@ -102,10 +116,10 @@ exports.findByEmail = function(email){
         }else{
             deferred.resolve(result);
         }
-    })
+    });
 
     return deferred.promise;
-}
+};
 
 exports.findByEmailAndToken = function(email, token){
     var deferred = Q.defer();
@@ -149,6 +163,20 @@ exports.findOne = function(query){
             deferred.reject(err);
         }else{
             deferred.resolve(result);
+        }
+    })
+
+    return deferred.promise;
+}
+
+exports.remove = function(query){
+    var deferred = Q.defer();
+
+    User.remove(query, function(err){
+        if(err){
+            deferred.reject(err);
+        }else{
+            deferred.resolve(undefined);
         }
     })
 

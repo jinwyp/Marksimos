@@ -87,7 +87,7 @@ exports.save = function(decision){
         }else if(numAffected!==1){
             deferred.reject(new Error("no result found in db"))
         }else{
-            deferred.resolve(undefined);
+            deferred.resolve(result);
         }
     });
     return deferred.promise;
