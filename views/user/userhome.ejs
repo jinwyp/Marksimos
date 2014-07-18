@@ -14,7 +14,6 @@
 
             <div class="row ">
                 <h4 class="user_maincompany">Company <span class="company_a">A</span> </h4>
-
             </div>
             <div class="row">
                 <div class="col-md-5">
@@ -31,9 +30,9 @@
         <div class="col-md-7 user_home_divider user_brand_box">
             <div class="row">
                 <div class="col-md-2 user_brandcolumn" ng-repeat="brand in data.currentCompany.d_BrandsDecisions">
-                    <span class="user_brand">{{brand.d_BrandName}}</span>
+                    <span class="user_brand" ng-cloak>{{brand.d_BrandName}}</span>
                     <ul>
-                        <li class="user_product" ng-repeat="sku in brand.d_SKUsDecisions">{{sku.d_SKUName}}-<span>{{sku.d_TargetConsumerSegment | usersegment}}</span></li>
+                        <li class="user_product" ng-cloak ng-repeat="sku in brand.d_SKUsDecisions">{{sku.d_SKUName}}-<span>{{sku.d_TargetConsumerSegment | usersegment}}</span></li>
                     </ul>
                 </div>
             </div>
@@ -46,7 +45,6 @@
                     <span class="user_competitors">Companies</span>
                 </div>
             </div>
-
         </div>
 
         <div class="col-md-2">
@@ -79,9 +77,9 @@
 
                             <button type="button" class="btn btn-default dropdown-toggle droplist_company" data-toggle="dropdown">Company A <span class="caret"></span></button>
                             <ul class="dropdown-menu">
-                                <li><a href="#">Company A</a></li>
-                                <li><a href="#">Company B</a></li>
-                                <li><a href="#">Company C</a></li>
+                                <li><a href="">Company Axxx</a></li>
+                                <li><a href="">Company B</a></li>
+                                <li><a href="">Company C</a></li>
                             </ul>
                         </div><!-- /btn-group -->
 
@@ -169,9 +167,9 @@
 
                             <button type="button" class="btn btn-default dropdown-toggle droplist_company" data-toggle="dropdown">Company A <span class="caret"></span></button>
                             <ul class="dropdown-menu">
-                                <li><a href="#">Company A</a></li>
-                                <li><a href="#">Company B</a></li>
-                                <li><a href="#">Company C</a></li>
+                                <li><a href="">Company A</a></li>
+                                <li><a href="">Company B</a></li>
+                                <li><a href="">Company C</a></li>
                             </ul>
                         </div><!-- /btn-group -->
 
@@ -2668,7 +2666,7 @@
                 <div class="col-md-4">
                     <h6 class="progress_title text-center">Total Available Budget</h6>
                     <div class="progress progress_radius">
-                        <div class="progress-bar progress_bar_budget" role="progressbar" aria-valuenow="data.currentCompanyOtherInfo.totalAvailableBudget" aria-valuemin="0" aria-valuemax="100" style="width: {{ data.currentCompanyOtherInfo.totalAvailableBudgetCSS}};">
+                        <div class="progress-bar progress_bar_budget" role="progressbar" aria-valuenow="{{data.currentCompanyOtherInfo.totalAvailableBudget}}" aria-valuemin="0" aria-valuemax="100" style="width: {{ data.currentCompanyOtherInfo.totalAvailableBudgetCSS}};">
                              {{data.currentCompanyOtherInfo.totalAvailableBudget}}%
                         </div>
                     </div>
@@ -2701,8 +2699,7 @@
                 <div class="form-group text-center">
                     <label class="budget_title" for="additionalBudget" ng-show="css.additionalBudget" ng-click="css.additionalBudget=false">${{data.currentCompany.d_RequestedAdditionalBudget}}</label>
                     <label for="additionalBudget" ng-show="css.additionalBudget" ng-click="css.additionalBudget=false">Additional Budget</label>
-                    <input type="number" class="form-control input-sm" id="additionalBudget"  ng-hide="css.additionalBudget" ng-model="data.currentCompany.d_RequestedAdditionalBudget">
-                    <button type="submit" class="btn btn-default btn-sm" ng-hide="css.additionalBudget" ng-click="updateCompany()">Save</button>
+                    <input type="number" class="form-control input-sm" id="additionalBudget"   ng-model="data.currentCompany.d_RequestedAdditionalBudget" ng-blur="updateCompany()">
                 </div>
             </form>
         </div>
@@ -2735,7 +2732,7 @@
                             <a href="" >{{brand.d_BrandName}}</a>
                         </li>
 
-                        <li><a href="#">+</a></li>
+                        <li><a href="">+</a></li>
                     </ul>
 
                     <div class="row brand_box">
@@ -2745,10 +2742,7 @@
                                 <div class="form-group">
                                     <label class="col-sm-4 control-label" for="brandSalesForce">Sales Force($min)</label>
                                     <div class="col-sm-3">
-                                        <input type="number" class="form-control" id="brandSalesForce" ng-model="data.currentBrand.d_SalesForce">
-                                    </div>
-                                    <div class="col-sm-2">
-                                        <button type="submit" class="btn btn-default" ng-click="updateBrand()">Save</button>
+                                        <input type="number" class="form-control" id="brandSalesForce" ng-model="data.currentBrand.d_SalesForce" ng-blur="updateBrand()">
                                     </div>
                                 </div>
                             </form>
@@ -2756,12 +2750,12 @@
                             <!--<div class="row">-->
                                 <!--<div class="col-md-12">-->
                                     <!--<ul class="nav nav-pills">-->
-                                        <!--<li class="active"><a href="#">SKU A</a></li>-->
-                                        <!--<li><a href="#">SKU B</a></li>-->
-                                        <!--<li><a href="#">SKU C</a></li>-->
-                                        <!--<li><a href="#">SKU D</a></li>-->
-                                        <!--<li><a href="#">SKU E</a></li>-->
-                                        <!--<li><a href="#">+</a></li>-->
+                                        <!--<li class="active"><a href="">SKU A</a></li>-->
+                                        <!--<li><a href="">SKU B</a></li>-->
+                                        <!--<li><a href="">SKU C</a></li>-->
+                                        <!--<li><a href="">SKU D</a></li>-->
+                                        <!--<li><a href="">SKU E</a></li>-->
+                                        <!--<li><a href="">+</a></li>-->
                                     <!--</ul>-->
                                 <!--</div>-->
                             <!--</div>-->
@@ -2773,7 +2767,7 @@
                                             <tr>
                                                 <th class="sku_table">Name <button class="btn btn-default btn-xs">+</button></th>
                                                 <th ng-repeat="sku in data.currentBrand.d_SKUsDecisions" ng-click="clickCurrentSku(sku)">
-                                                    <a href="">{{sku.d_SKUName}}</a></th>
+                                                    <a href="">{{data.currentBrand.d_BrandName}}{{sku.d_SKUName}}</a></th>
                                             </tr>
                                         </thead>
 
@@ -2899,14 +2893,14 @@
                                 <div class="form-group">
                                     <label class="col-sm-8 control-label text-left" for="InvestmentProductionEfficiency">Investment in Production Efficiency ($mln)</label>
                                     <div class="col-sm-3">
-                                        <input type="number" class="form-control" id="InvestmentProductionEfficiency" ng-model="data.currentCompany.d_InvestmentInEfficiency">
+                                        <input type="number" class="form-control" id="InvestmentProductionEfficiency" ng-model="data.currentCompany.d_InvestmentInEfficiency" ng-blur="updateCompany()">
                                     </div>
                                 </div>
 
                                 <div class="form-group">
                                     <label class="col-sm-8 control-label text-left"  for="InvestmentProcessingTechnology">Investment in Processing Technology ($mln)</label>
                                     <div class="col-sm-3">
-                                        <input type="number" class="form-control" id="InvestmentProcessingTechnology" ng-model="data.currentCompany.d_InvestmentInTechnology" >
+                                        <input type="number" class="form-control" id="InvestmentProcessingTechnology" ng-model="data.currentCompany.d_InvestmentInTechnology" ng-blur="updateCompany()">
                                     </div>
                                 </div>
 
@@ -2942,11 +2936,11 @@
                         </div>
                     </div>
 
-                    <div class="row ">
-                        <div class="col-md-offset-7 col-sm-4">
-                            <button type="submit" class="btn btn-primary decision_button" ng-click="updateCompany()">Submit Decision</button>
-                        </div>
-                    </div>
+                    <!--<div class="row ">-->
+                        <!--<div class="col-md-offset-7 col-sm-4">-->
+                            <!--<button type="submit" class="btn btn-primary decision_button" ng-click="updateCompany()">Submit Decision</button>-->
+                        <!--</div>-->
+                    <!--</div>-->
 
                 </div>
             </div>

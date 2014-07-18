@@ -8,7 +8,7 @@ var marksimosapp = angular.module('marksimos', ['pascalprecht.translate', 'angul
 
 
 // controller business logic
-marksimosapp.controller('chartController', function($scope,  $timeout, $http, chartReport, tableReport, company) {
+marksimosapp.controller('chartController', ['$scope',  '$timeout', '$http', 'notify', 'chartReport', 'tableReport', 'company', function($scope,  $timeout, $http, notify, chartReport, tableReport, company) {
 
     $scope.css = {
         menu : 'Home',
@@ -663,6 +663,12 @@ marksimosapp.controller('chartController', function($scope,  $timeout, $http, ch
         company.updateSku($scope.data.currentModifiedSku).success(function(data, status, headers, config){
             console.log(data);
             $scope.companyInfoInit();
+
+            notify({
+                message : 'Save Success !',
+                template : './app/js/websitecomponent/notifysavesuccess.html',
+                position : 'center'
+            });
         });
     };
 
@@ -677,6 +683,11 @@ marksimosapp.controller('chartController', function($scope,  $timeout, $http, ch
         company.updateBrand($scope.data.currentModifiedBrand).success(function(data, status, headers, config){
             console.log(data);
             $scope.companyInfoInit();
+            notify({
+                message : 'Save Success !',
+                template : './app/js/websitecomponent/notifysavesuccess.html',
+                position : 'center'
+            });
         });
     };
 
@@ -695,7 +706,18 @@ marksimosapp.controller('chartController', function($scope,  $timeout, $http, ch
         company.updateCompany($scope.data.currentModifiedCompany).success(function(data, status, headers, config){
             console.log(data);
             $scope.companyInfoInit();
+            notify({
+                message : 'Save Success !',
+                template : './app/js/websitecomponent/notifysavesuccess.html',
+                position : 'center'
+            });
         });
     };
-});
+
+
+    $scope.closeAll = function(){
+        notify.closeAll();
+    };
+
+}]);
 
