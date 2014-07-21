@@ -132,8 +132,8 @@ function requireLogin(req, res, next){
 }
 
 /**
-* @param {String} resource identifier of url
-*/
+ * @param {String} resource identifier of url
+ */
 function authorize(resource){
     var authDefinition = {};
     authDefinition[config.role.admin] = [
@@ -176,7 +176,7 @@ function authorize(resource){
         'chooseSeminar',
         'getSeminarOfStudent'
     ];
-    
+
     return function authorize(req, res, next){
         var role = sessionOperation.getUserRole(req);
         //admin can do anything

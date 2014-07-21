@@ -249,6 +249,7 @@ marksimosapp.controller('adminHomeController', ['$scope', '$http', function($sco
             $scope.data.distributors = data;
         }).error(function(data, status, headers, config) {
             console.log(data);
+
         });
     };
 
@@ -286,4 +287,3 @@ marksimosapp.controller('adminHomeController', ['$scope', '$http', function($sco
 
 
 }]);
-

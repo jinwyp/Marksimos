@@ -5,7 +5,7 @@ var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 var mongoose = require('mongoose');
 var session = require('cookie-session');
-//var session = require('express-session');
+//var session = require('express-session')
 var expressValidator = require('express-validator');
 var sessionOperation = require('./common/sessionOperation.js');
 var config = require('./common/config.js');
@@ -38,7 +38,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 //initialize session data
 app.use(function(req, res, next){
-   sessionOperation.setLoginStatus(req, true);
+//   sessionOperation.setLoginStatus(req, true);
 
     // sessionOperation.setUserRole(req, config.role.student);
     // sessionOperation.setUserId(req, '53c886642c320f1308904a0a');
@@ -52,12 +52,12 @@ app.use(function(req, res, next){
 //    sessionOperation.setUserRole(req, config.role.admin);
 //    sessionOperation.setUserId(req, 'testid');
 
-    req.session.seminarId = '10000';
-    req.session.companyId = 2;
+//    req.session.seminarId = '10000';
+//    req.session.companyId = 2;
 
-    if(req.session.currentPeriod === undefined){
-        req.session.currentPeriod = 1;
-    }
+//    if(req.session.currentPeriod === undefined){
+//        req.session.currentPeriod = 1;
+//    }
     next();
 });
 
