@@ -1,20 +1,21 @@
 var winston = require('winston');
+var config = require('./config.js');
 
-winston.add(winston.transports.File, { filename: 'somefile.log' });
-winston.remove(winston.transports.Console);
+winston.add(winston.transports.File, { filename: config.logDirectory + 'applog' });
+//winston.remove(winston.transports.Console);
 
 exports.error = function(err){
     if(!err) return;
 
     if(err.message){
-        console.log("Error: " + err.message);
+        winston.info("Error: " + err.message);
     }
     
     if(err.stack){
-        console.log(err.stack)
+        winston.info(err.stack)
     }
 }
 
 exports.log = function(message){
-    console.log(message);
+    winston.info(message);
 }
