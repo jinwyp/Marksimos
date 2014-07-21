@@ -43,8 +43,8 @@ app.use(function(req, res, next){
     // sessionOperation.setUserRole(req, config.role.student);
     // sessionOperation.setUserId(req, '53c886642c320f1308904a0a');
 
-   sessionOperation.setUserRole(req, config.role.facilitator); //a
-   sessionOperation.setUserId(req, '53c8b21fd484a5ab29656560'); //a
+//   sessionOperation.setUserRole(req, config.role.facilitator); //a
+//   sessionOperation.setUserId(req, '53c8b21fd484a5ab29656560'); //a
 
 //    sessionOperation.setUserRole(req, config.role.distributor);
 //    sessionOperation.setUserId(req, '53c8ae4dbf604cf543f7b639');

@@ -238,6 +238,8 @@ marksimosapp.controller('adminController', ['$scope', '$http', function($scope, 
     $http.get('/api/admin/distributors').success(function(data, status, headers, config){
         $scope.data.distributors = data;
         console.log($scope.data.distributors);
+    }).error(function(data, status, headers, config) {
+        console.log(data);
     });
 
 
