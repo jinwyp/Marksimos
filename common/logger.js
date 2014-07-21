@@ -1,3 +1,8 @@
+var winston = require('winston');
+
+winston.add(winston.transports.File, { filename: 'somefile.log' });
+winston.remove(winston.transports.Console);
+
 exports.error = function(err){
     if(!err) return;
 
