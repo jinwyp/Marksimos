@@ -109,12 +109,12 @@ exports.getOtherinfo = function(req, res, next){
         return res.send(400, {message: "You don't choose a seminar."});
     }
     
-    var period = req.session.currentPeriod;
+    var currentPeriod = req.session.currentPeriod;
     var companyId = req.session.companyId;
 
     Q.all([
-        spendingDetailsAssembler.getSpendingDetails(seminarId, period, companyId),
-        simulationResultModel.findOne(seminarId, period)
+        spendingDetailsAssembler.getSpendingDetails(seminarId, currentPeriod, companyId),
+        simulationResultModel.findOne(seminarId, currentPeriod - 1)
     ])
     .spread(function(spendingDetails, lastPeriodResult){
         var totalInvestment = spendingDetails.companyData.totalInvestment;
@@ -139,8 +139,8 @@ exports.getOtherinfo = function(req, res, next){
         //if normal capacity is not totally used, set overtime capacity to 1
         if(normalCapacityValue > 0){
             overtimeCapacity = 1;
-            //overtimeCapacityValue = companyResult.c_Capacity * gameParameters.pgen.firm_OvertimeCapacity;
-            overtimeCapacityValue = companyResult.c_Capacity;
+            overtimeCapacityValue = companyResult.c_Capacity * gameParameters.pgen.firm_OvertimeCapacity;
+            //overtimeCapacityValue = companyResult.c_Capacity;
         }
 
         res.send({

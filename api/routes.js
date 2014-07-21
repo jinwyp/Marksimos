@@ -91,6 +91,7 @@ apiRouter.get('/api/future_projection_calculator/:sku_id', requireLogin, decisio
 apiRouter.get('/api/company/otherinfo', requireLogin, decisionPageController.getOtherinfo);
 
 
+apiRouter.get('/api/user', requireLogin, userController.getUser);
 
 
 

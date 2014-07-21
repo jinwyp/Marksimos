@@ -30,7 +30,7 @@ exports.getProductPortfolioForOneCompany = function(seminarId, currentPeriod, co
                 var productPortfolioForSKU = {};
                 
                 productPortfolioForSKU.SKUName = brandDecision.d_BrandName + SKUDecision.d_SKUName;
-                productPortfolioForSKU.targetSegment = config.segmentNamesOnProductPortfolio[SKUDecision.d_TargetConsumerSegment];
+                productPortfolioForSKU.targetSegment = config.segmentNamesOnProductPortfolio[SKUDecision.d_TargetConsumerSegment - 1];
 
                 productPortfolioForSKU.factoryPrice = SKUDecision.d_FactoryPrice[0].toFixed(2) + ' / (' 
                     + (SKUDecision.d_FactoryPrice[0]/consts.ActualSize[SKUDecision.d_PackSize]).toFixed(2)

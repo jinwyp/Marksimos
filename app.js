@@ -1,7 +1,6 @@
 var express = require('express');
 var path = require('path');
 var favicon = require('static-favicon');
-var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 var mongoose = require('mongoose');
@@ -10,6 +9,9 @@ var session = require('express-session')
 var expressValidator = require('express-validator');
 var sessionOperation = require('./common/sessionOperation.js');
 var config = require('./common/config.js');
+
+var fs = require('fs');
+var morgan = require('morgan');
 
 
 var app = express();
@@ -20,7 +22,10 @@ app.set('view engine', 'ejs');
 
 
 app.use(favicon());
-app.use(logger('dev'));
+
+var morganFileStream = fs.createWriteStream(config.logDirectory + 'access.log');
+app.use(morgan('dev', {stream: morganFileStream}));
+
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded());
 app.use(expressValidator());
@@ -68,33 +73,33 @@ app.use( require('./api/routes.js'));
 require('./routes.js')(app);
 
 /// catch 404 and forwarding to error handler
-// app.use(function(req, res, next) {
-//     var err = new Error('Not Found');
-//     err.status = 404;
-//     next(err);
-// });
+app.use(function(req, res, next) {
+    var err = new Error('Not Found');
+    err.status = 404;
+    next(err);
+});
 
 /// error handlers
 
 // development error handler
 // will print stacktrace
-// if (app.get('env') === 'development') {
-//     app.use(function(err, req, res, next) {
-//         res.json(500, {
-//             message: err.message,
-//             error: err
-//         });
-//     });
-// }
+if (app.get('env') === 'development') {
+    app.use(function(err, req, res, next) {
+        res.json(500, {
+            message: err.message,
+            error: err
+        });
+    });
+}
 
 // production error handler
 // no stacktraces leaked to user
-// app.use(function(err, req, res, next) {
-//     res.json(500, {
-//         message: err.message,
-//         error: {}
-//     });
-// });
+app.use(function(err, req, res, next) {
+    res.json(500, {
+        message: err.message,
+        error: {}
+    });
+});
 
 
 app.set('port', process.env.PORT || 3000);

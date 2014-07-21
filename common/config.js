@@ -2,6 +2,8 @@ module.exports = {
     host: 'http://localhost:3000/',
     cgiService: 'http://10.20.30.97/cgi-bin/',
 
+    logDirectory: '/Users/ludwik/code/Marksimos/log/',
+
     passwordSalt: 'hcd',
 
     role: {

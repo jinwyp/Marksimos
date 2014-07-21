@@ -631,13 +631,13 @@ marksimosapp.controller('chartController', ['$scope',  '$timeout', '$http', 'not
 
         company.getCompanyOtherInfo().then(function(data, status, headers, config){
             $scope.data.currentCompanyOtherInfo = {
-                totalAvailableBudget : data.totalAvailableBudget.toFixed(4) * 100,
+                totalAvailableBudget : parseInt(data.totalAvailableBudget * 10000) / 100,
                 totalAvailableBudgetCSS : data.totalAvailableBudget.toFixed(4)  * 100 + '%',
                 totalAvailableBudgetValue : data.totalAvailableBudgetValue.toFixed(0),
-                normalCapacity : data.normalCapacity.toFixed(4)  * 100,
+                normalCapacity : parseInt(data.normalCapacity * 10000) / 100,
                 normalCapacityCSS : data.normalCapacity.toFixed(4)  * 100 + '%',
                 normalCapacityValue : data.normalCapacityValue.toFixed(0),
-                overtimeCapacity : data.overtimeCapacity.toFixed(4)  * 100,
+                overtimeCapacity : parseInt(data.overtimeCapacity * 10000 ) / 100,
                 overtimeCapacityCSS : data.overtimeCapacity.toFixed(4)  * 100 + '%',
                 overtimeCapacityValue : data.overtimeCapacityValue.toFixed(0)
             };

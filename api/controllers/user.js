@@ -5,6 +5,22 @@ var logger = require('../../common/logger.js');
 var util = require('util');
 var sessionOperation = require('../../common/sessionOperation.js');
 
+exports.getUser = function(req, res, next){
+    var userId = sessionOperation.getUserId(req);
+
+    userModel.findOne({_id: userId})
+    .then(function(user){
+        if(!user){
+            return res.send(500, {message: "user doesn't exist."});
+        }
+        res.send(user);
+    })
+    .fail(function(err){
+        logger.error(err);
+        res.send(500, {message: "get user failed."})
+    })
+    .done();
+}
 
 exports.register = function(req, res, next){
     req.checkBody('email', 'Invalid email').notEmpty().isEmail();
