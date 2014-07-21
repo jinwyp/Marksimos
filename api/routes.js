@@ -20,7 +20,7 @@ var apiRouter = express.Router();
 
 apiRouter.get('/viewsession', function(req, res){
     res.send({currentPeriod: req.session.currentPeriod});
-})
+});
 
 /**********  API For Student  **********/
 
@@ -179,7 +179,6 @@ function authorize(resource){
     
     return function authorize(req, res, next){
         var role = sessionOperation.getUserRole(req);
-
         //admin can do anything
         // if(role === config.role.admin){
         //     return next();
