@@ -118,7 +118,8 @@ exports.submitDecision = function(req, res, next){
         });
     })
     .fail(function(err){
-        next(err);
+        logger.error(err);
+        res.send(500, {message: "submit decision failed."})
     })
     .done();
 
