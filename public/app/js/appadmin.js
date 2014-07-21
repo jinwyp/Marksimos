@@ -249,7 +249,6 @@ marksimosapp.controller('adminHomeController', ['$scope', '$http', function($sco
             $scope.data.distributors = data;
         }).error(function(data, status, headers, config) {
             console.log(data);
-
         });
     };
 
@@ -277,7 +276,7 @@ marksimosapp.controller('adminHomeController', ['$scope', '$http', function($sco
             $http.post('/api/admin/distributors', $scope.data.newDistributor).success(function(data, status, headers, config){
 
                 $scope.adminInit();
-                $scope.css.leftmenu = 2;
+                $scope.css.leftmenu = 21;
 
             }).error(function(data, status, headers, config){
                 console.log(data);
