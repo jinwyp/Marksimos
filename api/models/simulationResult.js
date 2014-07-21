@@ -61,7 +61,10 @@ exports.removeAll = function(seminarId){
 exports.findOne = function(seminarId, period){
     var deferred = Q.defer();
 
-    SimulationResult.findOne({seminarId: seminarId}, function(err, result){
+    SimulationResult.findOne({
+        seminarId: seminarId,
+        period: period
+    }, function(err, result){
         if(err){
             deferred.reject(err);
         }else{

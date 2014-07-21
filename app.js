@@ -1,7 +1,6 @@
 var express = require('express');
 var path = require('path');
 var favicon = require('static-favicon');
-var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 var mongoose = require('mongoose');
@@ -10,6 +9,9 @@ var session = require('express-session')
 var expressValidator = require('express-validator');
 var sessionOperation = require('./common/sessionOperation.js');
 var config = require('./common/config.js');
+
+var fs = require('fs');
+var morgan = require('morgan');
 
 
 var app = express();
@@ -20,7 +22,10 @@ app.set('view engine', 'ejs');
 
 
 app.use(favicon());
-app.use(logger('dev'));
+
+var morganFileStream = fs.createWriteStream(config.logDirectory + 'access.log');
+app.use(morgan('dev', {stream: morganFileStream}));
+
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded());
 app.use(expressValidator());
