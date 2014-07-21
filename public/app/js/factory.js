@@ -224,7 +224,8 @@ app.factory('chartReport', ['$http', function($http){
             angular.forEach(chartHttpData.periods, function(value, key) {
 
                 var oneLineData = {
-                    x : "period" + value.toString(), //Round Name
+//                    x : "period" + value.toString(), //Round Name
+                    x : value.toString(), //Round Name
                     y : angular.copy(chartHttpData.chartData[key])
                 };
 
@@ -296,9 +297,9 @@ app.factory('chartReport', ['$http', function($http){
     };
 
     var chartFormatTool3 = function(chartHttpData) {
-        // 使用angular-nvd3 插件的数据格式   Scatter Chart 散点图
-        chartResult.series = [];
-        chartResult.data = [];
+        // 使用angular-nvd3 插件的数据格式   only for C2 Perception Maps Scatter Chart 散点图
+//        chartResult.series = [];
+//        chartResult.data = [];
         chartResult.dataSKU = [];
         chartResult.dataBrand = [];
 
@@ -359,7 +360,7 @@ app.factory('chartReport', ['$http', function($http){
                     'x' : Math.round(value.valuePerception * 100) / 100,
                     'y' : Math.round(value.imagePerception * 100) / 100,
                     'size' : 0.5,
-                    'name' : key + ' ' + value.segmentName,
+                    'name' : key + 1 + ' ' + value.segmentName,
                     'tooltips' : [],
                     'shape' : 'diamond'
                 };
@@ -386,7 +387,17 @@ app.factory('chartReport', ['$http', function($http){
             return angular.copy(chartConfig3);
         },
 
-        // Chart A1
+
+        // Chart A3
+        inventoryReport : function(){
+            return $http.get(apiPath + 'chart/inventory_report').then(function(result){
+//                console.log(result.data);
+
+                return chartFormatTool2(result.data);
+            });
+        },
+
+        // Chart B1
         marketShareInValue : function(){
             return $http.get(apiPath + 'chart/market_share_in_value').then(function(result){
 //                console.log(result.data);
@@ -418,16 +429,6 @@ app.factory('chartReport', ['$http', function($http){
 //                console.log(result.data);
 
                 return chartFormatTool1(result.data, 2);
-            });
-        },
-
-
-        // Chart A3
-        inventoryReport : function(){
-            return $http.get(apiPath + 'chart/inventory_report').then(function(result){
-//                console.log(result.data);
-
-                return chartFormatTool2(result.data);
             });
         },
 

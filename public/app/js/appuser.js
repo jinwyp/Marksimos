@@ -37,11 +37,13 @@ marksimosapp.controller('chartController', ['$scope',  '$timeout', '$http', 'not
         currentCompanyProductPortfolio : {},
         currentCompanySpendingDetails : {},
         currentCompanyFutureProjectionCalculator : [],
-        currentBrand : {},
+        currentBrand : null,
+        currentBrandIndex : 0,
         currentModifiedSku : {},
         currentModifiedBrand : {},
         currentModifiedCompany : {},
-        currentSku : {},
+        currentSku : null,
+        currentSkuIndex : 0,
         userSegment : [
             {id:1, name:'1 Price Sensitive'},
             {id:2, name:'2 Pretenders'},
@@ -436,7 +438,7 @@ marksimosapp.controller('chartController', ['$scope',  '$timeout', '$http', 'not
 
     /********************  Chart C2  ********************/
     chartReport.perceptionMap().then(function(data, status, headers, config){
-//        console.log(data);
+        console.log(data);
         $scope.data.chartC21PerceptionMap.data = data;
         $scope.data.chartC21PerceptionMap.dataChart = data.dataSKU;
     });
@@ -580,12 +582,44 @@ marksimosapp.controller('chartController', ['$scope',  '$timeout', '$http', 'not
 
     $scope.companyInfoInit = function(){
 
+
+
         company.getCompany().then(function(data, status, headers, config){
-    //        console.log(data);
+
+            //记录上一次选中的Brand 和SKU 并找到对应的Index 供本次查询使用
+
+            if($scope.data.currentBrand !== null ){
+                angular.forEach(data.d_BrandsDecisions, function(brand){
+                    if(brand.d_BrandID === $scope.data.currentBrand.d_BrandID){
+                        $scope.data.currentBrandIndex = data.d_BrandsDecisions.indexOf(brand);
+
+                        if($scope.data.currentBrandIndex === -1 ){
+                            $scope.data.currentBrandIndex  = 0;
+                        }
+                    }
+                });
+            }
+
             $scope.data.currentCompany = data;
-            $scope.css.currentDecisionBrandId = $scope.data.currentCompany.d_BrandsDecisions[0]._id;
-            $scope.data.currentBrand = $scope.data.currentCompany.d_BrandsDecisions[0];
-            $scope.data.currentSku = $scope.data.currentCompany.d_BrandsDecisions[0].d_SKUsDecisions[0];
+            $scope.css.currentDecisionBrandId = $scope.data.currentCompany.d_BrandsDecisions[$scope.data.currentBrandIndex]._id;
+            $scope.data.currentBrand = $scope.data.currentCompany.d_BrandsDecisions[$scope.data.currentBrandIndex];
+
+
+            //记录上一次选中的Brand 和SKU 并找到对应的Index 供本次查询使用
+            if($scope.data.currentSku !== null ){
+                angular.forEach($scope.data.currentBrand.d_SKUsDecisions, function(sku){
+
+                    if(sku.d_SKUID === $scope.data.currentSku.d_SKUID){
+                        $scope.data.currentSkuIndex = $scope.data.currentBrand.d_SKUsDecisions.indexOf(sku);
+
+                        if($scope.data.currentSkuIndex === -1 ){
+                            $scope.data.currentSkuIndex  = 0;
+                        }
+                    }
+                });
+            }
+
+            $scope.data.currentSku = $scope.data.currentCompany.d_BrandsDecisions[$scope.data.currentBrandIndex].d_SKUsDecisions[$scope.data.currentSkuIndex];
 
             company.getCompanyFutureProjectionCalculator($scope.data.currentSku.d_SKUID).then(function(data, status, headers, config){
     //            console.log(data);
@@ -599,10 +633,13 @@ marksimosapp.controller('chartController', ['$scope',  '$timeout', '$http', 'not
             $scope.data.currentCompanyOtherInfo = {
                 totalAvailableBudget : data.totalAvailableBudget.toFixed(4) * 100,
                 totalAvailableBudgetCSS : data.totalAvailableBudget.toFixed(4)  * 100 + '%',
+                totalAvailableBudgetValue : data.totalAvailableBudgetValue.toFixed(0),
                 normalCapacity : data.normalCapacity.toFixed(4)  * 100,
                 normalCapacityCSS : data.normalCapacity.toFixed(4)  * 100 + '%',
+                normalCapacityValue : data.normalCapacityValue.toFixed(0),
                 overtimeCapacity : data.overtimeCapacity.toFixed(4)  * 100,
-                overtimeCapacityCSS : data.overtimeCapacity.toFixed(4)  * 100 + '%'
+                overtimeCapacityCSS : data.overtimeCapacity.toFixed(4)  * 100 + '%',
+                overtimeCapacityValue : data.overtimeCapacityValue.toFixed(0)
             };
 
     //        console.log($scope.data.currentCompanyOtherInfo);
@@ -634,6 +671,10 @@ marksimosapp.controller('chartController', ['$scope',  '$timeout', '$http', 'not
 
     $scope.clickCurrentSku = function(sku){
         $scope.data.currentSku = sku;
+        company.getCompanyFutureProjectionCalculator($scope.data.currentSku.d_SKUID).then(function(data, status, headers, config){
+            $scope.data.currentCompanyFutureProjectionCalculator = data;
+
+        });
     };
 
 
