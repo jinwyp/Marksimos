@@ -40,11 +40,12 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use(function(req, res, next){
    sessionOperation.setLoginStatus(req, true);
 
-    // sessionOperation.setUserRole(req, config.role.student);
+     sessionOperation.setUserRole(req, config.role.student);
     // sessionOperation.setUserId(req, '53c886642c320f1308904a0a');
 
-   sessionOperation.setUserRole(req, config.role.facilitator); //a
-   sessionOperation.setUserId(req, '53c8b21fd484a5ab29656560'); //a
+
+   //sessionOperation.setUserRole(req, config.role.facilitator); //a
+   sessionOperation.setUserId(req, '53ccb4822672e9d139488a4a'); //a
 
 //    sessionOperation.setUserRole(req, config.role.distributor);
 //    sessionOperation.setUserId(req, '53c8ae4dbf604cf543f7b639');
@@ -53,7 +54,7 @@ app.use(function(req, res, next){
 //    sessionOperation.setUserId(req, 'testid');
 
     req.session.seminarId = '10000';
-    req.session.companyId = 2;
+    req.session.companyId = 1;
 
     if(req.session.currentPeriod === undefined){
         req.session.currentPeriod = 1;
