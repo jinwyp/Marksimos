@@ -129,10 +129,10 @@ $(function() {
      * iCheck plugin in.
      * You can find the documentation at http://fronteed.com/iCheck/
      */
-    $("input[type='checkbox']:not(.simple), input[type='radio']:not(.simple)").iCheck({
-        checkboxClass: 'icheckbox_minimal',
-        radioClass: 'iradio_minimal'
-    });
+//    $("input[type='checkbox']:not(.simple), input[type='radio']:not(.simple)").iCheck({
+//        checkboxClass: 'icheckbox_minimal',
+//        radioClass: 'iradio_minimal'
+//    });
 
 });
 function fix_sidebar() {
@@ -623,36 +623,36 @@ $(window).load(function() {
  * -----------------------
  * This plugin depends on iCheck plugin for checkbox and radio inputs
  */
-(function($) {
-    "use strict";
-
-    $.fn.todolist = function(options) {
-        // Render options
-        var settings = $.extend({
-            //When the user checks the input
-            onCheck: function(ele) {
-            },
-            //When the user unchecks the input
-            onUncheck: function(ele) {
-            }
-        }, options);
-
-        return this.each(function() {
-            $('input', this).on('ifChecked', function(event) {
-                var ele = $(this).parents("li").first();
-                ele.toggleClass("done");
-                settings.onCheck.call(ele);
-            });
-
-            $('input', this).on('ifUnchecked', function(event) {
-                var ele = $(this).parents("li").first();
-                ele.toggleClass("done");
-                settings.onUncheck.call(ele);
-            });
-        });
-    };
-
-}(jQuery));
+//(function($) {
+//    "use strict";
+//
+//    $.fn.todolist = function(options) {
+//        // Render options
+//        var settings = $.extend({
+//            //When the user checks the input
+//            onCheck: function(ele) {
+//            },
+//            //When the user unchecks the input
+//            onUncheck: function(ele) {
+//            }
+//        }, options);
+//
+//        return this.each(function() {
+//            $('input', this).on('ifChecked', function(event) {
+//                var ele = $(this).parents("li").first();
+//                ele.toggleClass("done");
+//                settings.onCheck.call(ele);
+//            });
+//
+//            $('input', this).on('ifUnchecked', function(event) {
+//                var ele = $(this).parents("li").first();
+//                ele.toggleClass("done");
+//                settings.onUncheck.call(ele);
+//            });
+//        });
+//    };
+//
+//}(jQuery));
 
 /* CENTER ELEMENTS */
 (function($) {

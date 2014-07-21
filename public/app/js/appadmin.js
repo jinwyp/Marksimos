@@ -85,11 +85,14 @@ marksimosapp.controller('adminLoginController', ['$scope', '$timeout', '$http', 
 
 
 
+
+
+
 // controller business logic
 marksimosapp.controller('adminHomeController', ['$scope', '$http', function($scope, $http) {
 
     $scope.css = {
-        leftmenu : 2,
+        leftmenu : 21,
         updatestatus : false
     };
 
@@ -110,7 +113,9 @@ marksimosapp.controller('adminHomeController', ['$scope', '$http', function($sco
             gameType : ""
         },
         searchDistributor : {
-            username :''
+            username :'',
+            email :'',
+            user_status :'false'
         },
         distributors : [],
 
