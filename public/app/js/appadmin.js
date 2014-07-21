@@ -40,6 +40,10 @@ marksimosapp.directive('menuAdmin', [function() {
 
             scope.clickMenu = function(currentmenu){
                 scope.currentMenu = currentmenu;
+
+                if(currentmenu === 1){
+                    scope.clickTab(1);
+                }
             };
 
         }
@@ -82,22 +86,31 @@ marksimosapp.controller('adminLoginController', ['$scope', '$timeout', '$http', 
 
 
 // controller business logic
-marksimosapp.controller('adminController', ['$scope', '$http', function($scope, $http) {
+marksimosapp.controller('adminHomeController', ['$scope', '$http', function($scope, $http) {
 
     $scope.css = {
-        leftmenu : "distributor",
+        leftmenu : 2,
         updatestatus : false
     };
 
     $scope.data = {
         newDistributor : {
-            name : "",
+            username : "",
             email : "",
             password : "",
-            country : {},
-            province : "",
-            city : "",
-            licence : ""
+            phone : "",
+            pincode : "",
+            password : "",
+            country : null,
+            state : "shanghai",
+            city : "shanghai",
+            district : "",
+            street : "",
+            num_of_license_granted : 0,
+            gameType : ""
+        },
+        searchDistributor : {
+            username :''
         },
         distributors : [],
 
@@ -110,12 +123,7 @@ marksimosapp.controller('adminController', ['$scope', '$http', function($scope, 
             city : "",
             licence : ""
         },
-        facilitators : [
-            {id:1, name:"Algeria", email:"Algeria@gmail.com", licence:1, distributor:"Mike"},
-            {id:2, name:"Antigua", email:"Antigua@gmail.com", licence:2, distributor:"Mike"},
-            {id:3, name:"Belgium", email:"Belgium@gmail.com", licence:4, distributor:"Mike"},
-            {id:4, name:"Brazil", email:"Brazil@gmail.com", licence:10, distributor:"Mike"}
-        ],
+        facilitators : [],
 
 
         country : [
@@ -231,17 +239,50 @@ marksimosapp.controller('adminController', ['$scope', '$http', function($scope, 
 
     };
 
-    $scope.data.newDistributor.country = $scope.data.country[0];
-    $scope.data.newFacilitator.country = $scope.data.country[5];
+    $scope.data.newDistributor.country = $scope.data.country[20].name;
+    $scope.data.newFacilitator.country = $scope.data.country[20].name;
 
 
-    $http.get('/api/admin/distributors').success(function(data, status, headers, config){
-        $scope.data.distributors = data;
-        console.log($scope.data.distributors);
-    }).error(function(data, status, headers, config) {
-        console.log(data);
-    });
+    /********************  获取信息  ********************/
+    $scope.adminInit = function(){
+        $http.get('/api/admin/distributors').success(function(data, status, headers, config){
+            $scope.data.distributors = data;
+        }).error(function(data, status, headers, config) {
+            console.log(data);
+        });
+    };
 
+
+    $scope.adminInit();
+
+
+    /********************  创建新的 Distributor  ********************/
+    $scope.searchDistributor = function(form){
+        if(form.$valid){
+            console.log($scope.data.searchDistributor);
+            $http.get('/api/admin/distributors', {params : $scope.data.searchDistributor}).success(function(data, status, headers, config){
+
+                $scope.data.distributors = data;
+
+            }).error(function(data, status, headers, config){
+                console.log(data);
+            });
+        }
+    };
+
+    $scope.createNewDistributor = function(form){
+        if(form.$valid){
+            console.log($scope.data.newDistributor);
+            $http.post('/api/admin/distributors', $scope.data.newDistributor).success(function(data, status, headers, config){
+
+                $scope.adminInit();
+                $scope.css.leftmenu = 2;
+
+            }).error(function(data, status, headers, config){
+                console.log(data);
+            });
+        }
+    };
 
 
 }]);

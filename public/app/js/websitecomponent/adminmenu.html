@@ -17,8 +17,8 @@
             <!-- sidebar menu: : style can be found in sidebar.less -->
             <ul class="sidebar-menu">
                 <li ng-class="{'active':css.menuexpand[1]}">
-                    <a href="" ng-click="clickTab(1)">
-                        <i class="fa fa-dashboard"></i> <span>Dashboard</span>
+                    <a href="" ng-click="clickMenu(1)">
+                        <i class="fa fa-dashboard" ></i> <span>Dashboard</span>
                     </a>
                 </li>
 
@@ -29,8 +29,8 @@
                         <i class="fa pull-right" ng-class="{'fa-angle-left':!css.menuexpand[2], 'fa-angle-down':css.menuexpand[2]}"></i>
                     </a>
                     <ul class="treeview-menu" ng-show="css.menuexpand[2]">
-                        <li><a href=""><i class="fa fa-angle-double-right"></i> Distributor List</a></li>
-                        <li><a href=""><i class="fa fa-angle-double-right"></i> Add Distributor</a></li>
+                        <li><a href="" ng-click="clickMenu(2)"><i class="fa fa-angle-double-right"></i> Distributor List</a></li>
+                        <li><a href="" ng-click="clickMenu(3)"><i class="fa fa-angle-double-right"></i> Create Distributor</a></li>
                     </ul>
                 </li>
 

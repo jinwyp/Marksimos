@@ -223,12 +223,12 @@ exports.validateGender = function(gender){
 exports.validateUser = function(req){
     if(req.body.email) req.checkBody('email', 'Invalid email').notEmpty().isEmail();
     if(req.body.password) req.assert('password', '6 to 20 characters required').len(6, 20);
-    if(req.body.name) req.checkBody('name', '6 to 100 characters required.').notEmpty().len(6, 100);
+    if(req.body.username) req.checkBody('username', '6 to 100 characters required.').notEmpty().len(6, 100);
     if(req.body.phone) req.checkBody('phone', 'phone is empty.').notEmpty();
     if(req.body.country) req.checkBody('country', 'country is empty').notEmpty();
     if(req.body.state) req.checkBody('state', 'state is empty').notEmpty();
     if(req.body.city) req.checkBody('city', 'city is empty').notEmpty();
-    if(req.body.num_of_license) req.checkBody('num_of_license', 'Invalid num of license').isInt();
+    if(req.body.num_of_license_granted) req.checkBody('num_of_license_granted', 'Invalid num of license').isInt();
 
     if(req.body.first_name) req.checkBody('first_name', '2 to 20 characters required.').notEmpty().len(2, 20);
     if(req.body.last_name) req.checkBody('last_name', '2 to 20 characters required.').notEmpty().len(2, 20);
@@ -282,8 +282,8 @@ exports.checkRequiredFieldForFacilitator = function(req){
     var checkUserResult = exports.checkRequiredFieldForAllUsers(req);
     if(checkUserResult) return checkUserResult;
 
-    if(!req.body.name) return "name can't be empty.";
-    if(!req.body.num_of_license) return "num_of_license can't be empty.";
+    if(!req.body.username) return "name can't be empty.";
+    if(!req.body.num_of_license_granted) return "num_of_license can't be empty.";
 };
 
 /**
@@ -293,8 +293,8 @@ exports.checkRequiredFieldForDistributor = function(req){
     var checkUserResult = exports.checkRequiredFieldForAllUsers(req);
     if(checkUserResult) return checkUserResult;
 
-    if(!req.body.name) return "name can't be empty.";
-    if(!req.body.num_of_license) return "num_of_license can't be empty.";
+    if(!req.body.username) return "name can't be empty.";
+    if(!req.body.num_of_license_granted) return "num_of_license can't be empty.";
 };
 
 
