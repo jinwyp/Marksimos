@@ -92,25 +92,33 @@ apiRouter.get('/api/company/otherinfo', requireLogin, decisionPageController.get
 
 
 
-apiRouter.post('/api/distributors', requireLogin, authorize('addDistributor'), distributorController.addDistributor);
-apiRouter.put('/api/distributors/:distributor_id', requireLogin, authorize('updateDistributor'), distributorController.updateDistributor);
-apiRouter.get('/api/distributors', requireLogin, authorize('searchDistributor'), distributorController.searchDistributor);
 
 
-apiRouter.post('/api/facilitators', requireLogin, authorize('addFacilitator'), facilitatorController.addFacilitator);
-apiRouter.put('/api/facilitators/:facilitator_id', requireLogin, authorize('updateFacilitator'), facilitatorController.updateFacilitator);
-apiRouter.get('/api/facilitators', requireLogin, authorize('searchFacilitator'), facilitatorController.searchFacilitator);
 
-apiRouter.get('/api/facilitator/seminar', requireLogin, authorize('getSeminarOfFacilitator'), facilitatorController.getSeminarOfFacilitator);
+/**********  API For Administrator  **********/
 
-apiRouter.post('/api/students', requireLogin, authorize('addStudent'), studentController.addStudent);
-apiRouter.put('/api/students/:student_id', requireLogin, authorize('updateStudent'), studentController.updateStudent);
-apiRouter.get('/api/students', requireLogin, authorize('searchStudent'), studentController.searchStudent);
+apiRouter.get('/api/admin/distributors', requireLogin, authorize('searchDistributor'), distributorController.searchDistributor);
+apiRouter.post('/api/admin/distributors', requireLogin, authorize('addDistributor'), distributorController.addDistributor);
+apiRouter.put('/api/admin/distributors/:distributor_id', requireLogin, authorize('updateDistributor'), distributorController.updateDistributor);
+
+
+apiRouter.get('/api/admin/facilitators', requireLogin, authorize('searchFacilitator'), facilitatorController.searchFacilitator);
+apiRouter.post('/api/admin/facilitators', requireLogin, authorize('addFacilitator'), facilitatorController.addFacilitator);
+apiRouter.put('/api/admin/facilitators/:facilitator_id', requireLogin, authorize('updateFacilitator'), facilitatorController.updateFacilitator);
+
+
+apiRouter.get('/api/admin/facilitator/seminar', requireLogin, authorize('getSeminarOfFacilitator'), facilitatorController.getSeminarOfFacilitator);
+
+
+apiRouter.get('/api/admin/students', requireLogin, authorize('searchStudent'), studentController.searchStudent);
+apiRouter.post('/api/admin/students', requireLogin, authorize('addStudent'), studentController.addStudent);
+apiRouter.put('/api/admin/students/:student_id', requireLogin, authorize('updateStudent'), studentController.updateStudent);
+
 
 //get all seminars of the current student
-apiRouter.get('/api/student/seminar', requireLogin, authorize('getSeminarOfStudent'), studentController.getSeminarOfStudent);
+apiRouter.get('/api/admin/student/seminar', requireLogin, authorize('getSeminarOfStudent'), studentController.getSeminarOfStudent);
 
-apiRouter.post('/api/seminar', requireLogin, authorize('addSeminar'), seminarController.addSeminar);
+apiRouter.post('/api/admin/seminar', requireLogin, authorize('addSeminar'), seminarController.addSeminar);
 
 
 
