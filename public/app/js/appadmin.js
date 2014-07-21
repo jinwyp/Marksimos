@@ -5,66 +5,50 @@
 // create module for custom directives
 var marksimosapp = angular.module('marksimosadmin', []);
 
-marksimosapp.directive('headerAdmin', function() {
+marksimosapp.directive('headerAdmin', [function() {
     return {
         scope: {},
         restrict: 'AE',
-        templateUrl: 'app/js/websitecomponent/headeradmin.html'
+        templateUrl: 'app/js/websitecomponent/adminheader.html'
     };
-});
+}]);
 
-marksimosapp.directive('menuAdmin', function() {
+
+marksimosapp.directive('menuAdmin', [function() {
     return {
-        scope: {},
+        scope: {
+            currentMenu : '='
+        },
         restrict: 'AE',
-        templateUrl: 'app/js/websitecomponent/menuadmin.html',
+        templateUrl: 'app/js/websitecomponent/adminmenu.html',
         link : function(scope, element){
-            var btn = element.children("a").first();
-            var menu = element.children(".treeview-menu").first();
-            var isActive = element.hasClass('active');
 
-            console.log(btn);
-            console.log(menu);
-            console.log(isActive);
-
-            //initialize already active menus
-            if (isActive) {
-                menu.show();
-                btn.children(".fa-angle-left").first().removeClass("fa-angle-left").addClass("fa-angle-down");
-            }
-
-            //Slide open or close the menu on link click
 
             scope.css = {
-                currentTab : 1,
-                currentSlideDownMenu : 1,
-                menuclose : true
+                currentTab : 2,
+//                currentMenu : 'DistributorList',
+                menuexpand : [false, false, true, true, true, true, false, false] // menus control expand
             };
 
 
-            scope.clickTab = function(event1){
+            scope.clickTab = function(tab){
 
-                scope.css.menuclose = !scope.css.menuclose;
+                scope.css.menuexpand[tab] = !scope.css.menuexpand[tab];
+                scope.css.currentTab = tab;
 
+            };
 
-//                if (isActive) {
-//                    //Slide up to close menu
-//                    menu.slideUp();
-//                    isActive = false;
-//                    btn.children(".fa-angle-down").first().removeClass("fa-angle-down").addClass("fa-angle-left");
-//                    btn.parent("li").removeClass("active");
-//                } else {
-//                    //Slide down to open menu
-//                    menu.slideDown();
-//                    isActive = true;
-//                    btn.children(".fa-angle-left").first().removeClass("fa-angle-left").addClass("fa-angle-down");
-//                    btn.parent("li").addClass("active");
-//                }
+            scope.clickMenu = function(currentmenu){
+                scope.currentMenu = currentmenu;
+
+                if(currentmenu === 1){
+                    scope.clickTab(1);
+                }
             };
 
         }
     };
-});
+}]);
 
 
 
@@ -102,29 +86,33 @@ marksimosapp.controller('adminLoginController', ['$scope', '$timeout', '$http', 
 
 
 // controller business logic
-marksimosapp.controller('adminController', function($scope, $timeout, $http) {
+marksimosapp.controller('adminHomeController', ['$scope', '$http', function($scope, $http) {
 
     $scope.css = {
-        leftmenu : "distributor",
+        leftmenu : 2,
         updatestatus : false
     };
 
     $scope.data = {
         newDistributor : {
-            name : "",
+            username : "",
             email : "",
             password : "",
-            country : {},
-            province : "",
-            city : "",
-            licence : ""
+            phone : "",
+            pincode : "",
+            password : "",
+            country : null,
+            state : "shanghai",
+            city : "shanghai",
+            district : "",
+            street : "",
+            num_of_license_granted : 0,
+            gameType : ""
         },
-        distributors : [
-            {id:1, name:"Algeria", email:"Algeria@gmail.com", licence:1},
-            {id:2, name:"Antigua", email:"Antigua@gmail.com", licence:2},
-            {id:3, name:"Belgium", email:"Belgium@gmail.com", licence:4},
-            {id:4, name:"Brazil", email:"Brazil@gmail.com", licence:10}
-        ],
+        searchDistributor : {
+            username :''
+        },
+        distributors : [],
 
         newFacilitator : {
             name : "",
@@ -135,12 +123,7 @@ marksimosapp.controller('adminController', function($scope, $timeout, $http) {
             city : "",
             licence : ""
         },
-        facilitators : [
-            {id:1, name:"Algeria", email:"Algeria@gmail.com", licence:1, distributor:"Mike"},
-            {id:2, name:"Antigua", email:"Antigua@gmail.com", licence:2, distributor:"Mike"},
-            {id:3, name:"Belgium", email:"Belgium@gmail.com", licence:4, distributor:"Mike"},
-            {id:4, name:"Brazil", email:"Brazil@gmail.com", licence:10, distributor:"Mike"}
-        ],
+        facilitators : [],
 
 
         country : [
@@ -256,16 +239,51 @@ marksimosapp.controller('adminController', function($scope, $timeout, $http) {
 
     };
 
-    $scope.data.newDistributor.country = $scope.data.country[0];
-    $scope.data.newFacilitator.country = $scope.data.country[5];
+    $scope.data.newDistributor.country = $scope.data.country[20].name;
+    $scope.data.newFacilitator.country = $scope.data.country[20].name;
 
 
-//    $http.get('/api/chart/marketShareInValue').success(function(data, status, headers, config){
-//        $scope.chartData = data;
-//        console.log($scope.chartData);
-//    });
+    /********************  获取信息  ********************/
+    $scope.adminInit = function(){
+        $http.get('/api/admin/distributors').success(function(data, status, headers, config){
+            $scope.data.distributors = data;
+        }).error(function(data, status, headers, config) {
+            console.log(data);
+
+        });
+    };
 
 
+    $scope.adminInit();
 
-});
 
+    /********************  创建新的 Distributor  ********************/
+    $scope.searchDistributor = function(form){
+        if(form.$valid){
+            console.log($scope.data.searchDistributor);
+            $http.get('/api/admin/distributors', {params : $scope.data.searchDistributor}).success(function(data, status, headers, config){
+
+                $scope.data.distributors = data;
+
+            }).error(function(data, status, headers, config){
+                console.log(data);
+            });
+        }
+    };
+
+    $scope.createNewDistributor = function(form){
+        if(form.$valid){
+            console.log($scope.data.newDistributor);
+            $http.post('/api/admin/distributors', $scope.data.newDistributor).success(function(data, status, headers, config){
+
+                $scope.adminInit();
+                $scope.css.leftmenu = 2;
+
+            }).error(function(data, status, headers, config){
+                console.log(data);
+            });
+        }
+    };
+
+
+}]);

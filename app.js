@@ -4,8 +4,8 @@ var favicon = require('static-favicon');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 var mongoose = require('mongoose');
-//var session = require('cookie-session');
-var session = require('express-session')
+var session = require('cookie-session');
+//var session = require('express-session')
 var expressValidator = require('express-validator');
 var sessionOperation = require('./common/sessionOperation.js');
 var config = require('./common/config.js');
@@ -38,11 +38,10 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 //initialize session data
 app.use(function(req, res, next){
-   sessionOperation.setLoginStatus(req, true);
+//   sessionOperation.setLoginStatus(req, true);
 
      sessionOperation.setUserRole(req, config.role.student);
     // sessionOperation.setUserId(req, '53c886642c320f1308904a0a');
-
 
    //sessionOperation.setUserRole(req, config.role.facilitator); //a
    sessionOperation.setUserId(req, '53ccb4822672e9d139488a4a'); //a
@@ -56,9 +55,9 @@ app.use(function(req, res, next){
     req.session.seminarId = '10000';
     req.session.companyId = 1;
 
-    if(req.session.currentPeriod === undefined){
-        req.session.currentPeriod = 1;
-    }
+//    if(req.session.currentPeriod === undefined){
+//        req.session.currentPeriod = 1;
+//    }
     next();
 });
 

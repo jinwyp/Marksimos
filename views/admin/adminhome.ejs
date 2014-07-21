@@ -2,396 +2,198 @@
 <% include ./include/headcssadmin.html %>
 
 
-<body class="skin-blue" ng-app="marksimosadmin" >
+<body class="skin-blue" ng-app="marksimosadmin" ng-controller="adminHomeController">
 
-    <header-admin class="header">></header-admin>
+    <header-admin class="header"></header-admin>
+
 
     <div class="wrapper row-offcanvas row-offcanvas-left">
 
-        <menu-admin></menu-admin>
-
-    </div>
+        <menu-admin current-menu="css.leftmenu"></menu-admin>
 
 
-    <div class="row" ng-controller="adminController">
+        <aside class="right-side">
 
-        <div class="col-md-2">
+            <section class="content" ng-if="css.leftmenu==2">
+                <h2 class="page-header">Distributor Management</h2>
 
-            <ul class="nav nav-pills nav-stacked">
-
-            </ul>
-        </div>
-
-        <div class="col-md-10" ng-switch on="css.leftmenu" >
-
-            <div class="row" ng-switch-when="distributor" >
-
-                <div class="row">
+                <div class="row" >
                     <div class="col-md-12">
 
-                        <div class="page-header">
-                            <h3>Distributor Management <small> Help</small></h3>
+                        <div class="box box-primary">
+                            <form class="form-horizontal" role="form" name="searchDistributorForm">
+
+                                <div class="form-group">
+                                    <label for="inputDistributorUserName" class="col-sm-2 control-label">Distributor UserName</label>
+                                    <div class="col-sm-4">
+                                        <input type="text" class="form-control" id="inputDistributorName" placeholder="Distributor UserName" ng-model="data.searchDistributor.username" required>
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <div class="col-sm-offset-2 col-sm-10">
+                                        <button type="submit" class="btn btn-primary" ng-click="searchDistributor(searchDistributorForm)">Search</button>
+                                    </div>
+                                </div>
+                            </form>
                         </div>
 
-                    </div>
-                </div>
-
-                <div class="row" ng-hide="css.updatestatus">
-                    <div class="col-md-8">
-                        <div class="page-header">
-                            <h4>Create New Distributor </h4>
-                        </div>
-
-                        <form class="form-horizontal" role="form">
-
-                            <div class="form-group">
-                                <label for="inputDistributorName" class="col-sm-4 control-label">Distributor Name</label>
-                                <div class="col-sm-8">
-                                    <input type="text" class="form-control" id="inputDistributorName" placeholder="Distributor Name">
-                                </div>
-                            </div>
-
-                            <div class="form-group">
-                                <label for="inputDistributorEmail" class="col-sm-4 control-label">Distributor Email</label>
-                                <div class="col-sm-8">
-                                    <input type="email" class="form-control" id="inputDistributorEmail" placeholder="Email">
-                                </div>
-                            </div>
-
-                            <div class="form-group">
-                                <label for="inputDistributorPassword" class="col-sm-4 control-label">Password</label>
-                                <div class="col-sm-8">
-                                    <input type="password" class="form-control" id="inputDistributorPassword" placeholder="Password">
-                                </div>
-                            </div>
-
-
-                            <div class="form-group">
-
-                                <div class="col-sm-offset-4 col-sm-2">
-                                    <select class="form-control input-sm" ng-model="data.newDistributor.country" ng-options="country.name for country in data.country">
-
-                                    </select>
-                                </div>
-
-                                <div class="col-sm-2">
-                                    <select class="form-control input-sm">
-                                        <option>Province</option>
-                                    </select>
-                                </div>
-
-                                <div class="col-sm-3">
-                                    <input type="text" class="form-control" id="inputDistributorCity" placeholder="City">
-                                </div>
-                            </div>
-
-
-                            <div class="form-group">
-                                <label for="inputDistributorLicence" class="col-sm-4 control-label">No. of Licences</label>
-                                <div class="col-sm-8">
-                                    <input type="number" class="form-control" id="inputDistributorLicence" placeholder="pls input licence">
-                                </div>
-                            </div>
-
-                            <div class="form-group">
-                                <div class="col-sm-offset-4 col-sm-10">
-                                    <button type="submit" class="btn btn-primary">Create New Distributor</button>
-                                </div>
-                            </div>
-                        </form>
-
-                    </div>
-                </div>
-
-                <div class="row" ng-hide="css.updatestatus">
-                    <div class="col-md-12">
-                        <div class="table-responsive">
-                            <table class="table table-bordered table-striped table-hover">
-                                <thead>
+                        <div class="box">
+                            <div class="box-header">
+                                <h3 class="box-title">Distributor List</h3>
+                            </div><!-- /.box-header -->
+                            <div class="box-body table-responsive no-padding">
+                                <table class="table table-striped table-hover">
+                                    <tbody>
                                     <tr>
                                         <th>ID</th>
                                         <th>Name</th>
                                         <th>Email</th>
+                                        <th>Status</th>
+                                        <th>Licences Used / Granted</th>
+                                        <th>Cell Phone</th>
                                         <th>Country / Province / City</th>
-                                        <th>Licence</th>
+                                        <th>Address</th>
+                                        <th>ID Card</th>
                                     </tr>
-                                </thead>
-
-                                <tbody>
-                                    <tr ng-repeat="user in data.distributors" ng-click="css.updatestatus='true'">
-                                        <td>{{user.id}}</td>
+                                    <tr ng-repeat="user in data.distributors" >
+                                        <td>{{user._id}}</td>
                                         <td>{{user.name}}</td>
                                         <td>{{user.email}}</td>
-                                        <td>China / Shanghai / Shanghai</td>
-                                        <td>{{user.licence}}</td>
+                                        <td>{{user.isDisabled}}</td>
+                                        <td>{{user.numOfUsedLicense}}/{{user.numOfLicense}}</td>
+                                        <td>{{user.phone}}</td>
+                                        <td>{{user.country}} / {{user.state}} / {{user.city}} </td>
+                                        <td>{{user.district}} {{user.street}}</td>
+                                        <td>{{user.pincode}}</td>
                                     </tr>
-                                </tbody>
-                            </table>
+                                    </tbody>
+                                </table>
+                            </div><!-- /.box-body -->
                         </div>
-                    </div>
-                </div>
-
-
-                <div class="row" ng-show="css.updatestatus">
-                    <div class="col-md-8">
-
-                        <div class="page-header">
-                            <h4>Modify Distributor XXX</h4>
-                        </div>
-
-                        <form class="form-horizontal" role="form">
-
-                            <div class="form-group">
-                                <label for="inputDistributorName" class="col-sm-4 control-label">Distributor Name</label>
-                                <div class="col-sm-8">
-                                    <input type="text" class="form-control" id="inputDistributorName" placeholder="Distributor Name">
-                                </div>
-                            </div>
-
-                            <div class="form-group">
-                                <label for="inputDistributorEmail" class="col-sm-4 control-label">Distributor Email</label>
-                                <div class="col-sm-8">
-                                    <input type="email" class="form-control" id="inputDistributorEmail" placeholder="Email">
-                                </div>
-                            </div>
-
-                            <div class="form-group">
-                                <label for="inputDistributorPassword" class="col-sm-4 control-label">Password</label>
-                                <div class="col-sm-8">
-                                    <input type="nu" class="form-control" id="inputDistributorPassword" placeholder="Password">
-                                </div>
-                            </div>
-
-
-                            <div class="form-group">
-
-                                <div class="col-sm-offset-4 col-sm-2">
-                                    <select class="form-control input-sm" ng-model="data.newDistributor.country" ng-options="country.name for country in data.country">
-
-                                    </select>
-                                </div>
-
-                                <div class="col-sm-2">
-                                    <select class="form-control input-sm">
-                                        <option>Province</option>
-                                    </select>
-                                </div>
-
-                                <div class="col-sm-3">
-                                    <input type="text" class="form-control" id="inputDistributorCity" placeholder="City">
-                                </div>
-                            </div>
-
-
-                            <div class="form-group">
-                                <label for="inputDistributorLicence" class="col-sm-4 control-label">No. of Licences</label>
-                                <div class="col-sm-8">
-                                    <input type="number" class="form-control" id="inputDistributorLicence" placeholder="pls input licence">
-                                </div>
-                            </div>
-
-                            <div class="form-group">
-                                <div class="col-sm-offset-4 col-sm-10">
-                                    <button type="submit" class="btn btn-primary">Save</button>
-                                    <button type="submit" class="btn btn-default" ng-click="css.updatestatus='false'">Cancel</button>
-                                </div>
-                            </div>
-                        </form>
 
                     </div>
                 </div>
-
-            </div>
-            <!---- END Distributor ---->
+            </section>
 
 
 
+            <section class="content" ng-if="css.leftmenu==3">
+                <h2 class="page-header">Create New Distributor</h2>
 
-
-            <div class="row" ng-switch-when="facilitator" >
-
-                <div class="row">
+                <div class="row" >
                     <div class="col-md-12">
 
-                        <div class="page-header">
-                            <h3>Facilitator Management <small> Help</small></h3>
+                        <div class="box box-primary">
+                            <form class="form-horizontal" role="form" name="newDistributorForm">
+
+                                <div class="form-group">
+                                    <label for="inputDistributorUserName" class="col-sm-2 control-label">Distributor UserName : </label>
+                                    <div class="col-sm-4">
+                                        <input type="text" class="form-control" id="inputDistributorUserName" placeholder="Distributor UserName" ng-model="data.newDistributor.username" required ng-minlength="6" ng-maxlength="20">
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="inputDistributorEmail" class="col-sm-2 control-label">Distributor Email : </label>
+                                    <div class="col-sm-4">
+                                        <input type="email" class="form-control" id="inputDistributorEmail" placeholder="Email"  ng-model="data.newDistributor.email" required>
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="inputDistributorPassword" class="col-sm-2 control-label">Password : </label>
+                                    <div class="col-sm-4">
+                                        <input type="password" class="form-control" id="inputDistributorPassword" placeholder="Password"  ng-model="data.newDistributor.password" required ng-minlength="6" ng-maxlength="20">
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="inputDistributorPhone" class="col-sm-2 control-label">Phone : </label>
+                                    <div class="col-sm-4">
+                                        <input type="text" class="form-control" id="inputDistributorPhone" placeholder="Cell Phone" ng-model="data.newDistributor.phone" required>
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="inputDistributorIDCard" class="col-sm-2 control-label">ID Card : </label>
+                                    <div class="col-sm-4">
+                                        <input type="text" class="form-control" id="inputDistributorIDCard" placeholder="Pin Code" ng-model="data.newDistributor.pincode">
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="inputDistributorCountry" class="col-sm-2 control-label">Country/State/City : </label>
+                                    <div class="col-sm-3">
+                                        <select class="form-control" ng-model="data.newDistributor.country" ng-options="country.name as country.name for country in data.country">
+
+                                        </select>
+                                    </div>
+
+                                    <div class="col-sm-3">
+                                        <select class="form-control">
+                                            <option>Province</option>
+                                        </select>
+                                    </div>
+
+                                    <div class="col-sm-3">
+                                        <select class="form-control">
+                                            <option>City</option>
+                                        </select>
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="inputDistributorAddress" class="col-sm-2 control-label">Address : </label>
+                                    <div class="col-sm-3">
+                                        <input type="text" class="form-control" id="inputDistributorAddress" placeholder="Address - District" ng-model="data.newDistributor.district">
+                                    </div>
+                                    <div class="col-sm-3">
+                                        <input type="text" class="form-control" id="inputDistributorAddressStreet" placeholder="Address - Street/Building" ng-model="data.newDistributor.street">
+                                    </div>
+
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="inputDistributorLicenceGranted" class="col-sm-2 control-label">No. of Licences Granted :</label>
+                                    <div class="col-sm-4">
+                                        <input type="number" class="form-control" id="inputDistributorLicenceGranted" placeholder="No. of Licences Granted" ng-model="data.newDistributor.num_of_license_granted">
+                                    </div>
+                                </div>
+
+                                <!--<div class="form-group">-->
+                                <!--<label for="inputDistributorLicenceGranted" class="col-sm-2 control-label">Game Type :</label>-->
+                                <!--<div class="col-sm-4">-->
+                                <!--<select class="form-control input-sm">-->
+                                <!--<option>MARKSIMOS B2B</option>-->
+                                <!--<option>MARKSIMOS B2C</option>-->
+                                <!--<option>CASASIMOS</option>-->
+                                <!--</select>-->
+                                <!--</div>-->
+                                <!--</div>-->
+
+                                <div class="form-group">
+                                    <div class="col-sm-offset-2 col-sm-10">
+                                        <button type="submit" class="btn btn-primary" ng-click="createNewDistributor(newDistributorForm)"> Create </button>
+                                    </div>
+                                </div>
+
+                            </form>
                         </div>
+
+
 
                     </div>
                 </div>
-
-                <div class="row" ng-hide="css.updatestatus">
-                    <div class="col-md-8">
-                        <div class="page-header">
-                            <h4>Create New Facilitator </h4>
-                        </div>
-
-                        <form class="form-horizontal" role="form">
-
-                            <div class="form-group">
-                                <label for="inputFacilitatorName" class="col-sm-4 control-label">Facilitator Name</label>
-                                <div class="col-sm-8">
-                                    <input type="text" class="form-control" id="inputFacilitatorName" placeholder="Facilitator Name">
-                                </div>
-                            </div>
-
-                            <div class="form-group">
-                                <label for="inputFacilitatorEmail" class="col-sm-4 control-label">Facilitator Email</label>
-                                <div class="col-sm-8">
-                                    <input type="email" class="form-control" id="inputFacilitatorEmail" placeholder="Email">
-                                </div>
-                            </div>
-
-                            <div class="form-group">
-                                <label for="inputFacilitatorPassword" class="col-sm-4 control-label">Password</label>
-                                <div class="col-sm-8">
-                                    <input type="password" class="form-control" id="inputFacilitatorPassword" placeholder="Password">
-                                </div>
-                            </div>
+            </section>
 
 
-                            <div class="form-group">
-
-                                <div class="col-sm-offset-4 col-sm-2">
-                                    <select class="form-control input-sm" ng-model="data.newFacilitator.country" ng-options="country.name for country in data.country">
-                                    </select>
-                                </div>
-
-                                <div class="col-sm-2">
-                                    <select class="form-control input-sm">
-                                        <option>Province</option>
-                                    </select>
-                                </div>
-
-                                <div class="col-sm-3">
-                                    <input type="text" class="form-control" id="inputFacilitatorCity" placeholder="City">
-                                </div>
-                            </div>
-
-
-                            <div class="form-group">
-                                <label for="inputFacilitatorLicence" class="col-sm-4 control-label">No. of Licences</label>
-                                <div class="col-sm-8">
-                                    <input type="number" class="form-control" id="inputFacilitatorLicence" placeholder="pls input licence">
-                                </div>
-                            </div>
-
-                            <div class="form-group">
-                                <div class="col-sm-offset-4 col-sm-10">
-                                    <button type="submit" class="btn btn-primary">Create New Facilitator</button>
-                                </div>
-                            </div>
-                        </form>
-
-                    </div>
-                </div>
-
-                <div class="row" ng-hide="css.updatestatus">
-                    <div class="col-md-12">
-                        <div class="table-responsive">
-                            <table class="table table-bordered table-striped table-hover">
-                                <thead>
-                                <tr>
-                                    <th>ID</th>
-                                    <th>Name</th>
-                                    <th>Email</th>
-                                    <th>Country / Province / City</th>
-                                    <th>Licence</th>
-                                    <th>Belong to Distributor</th>
-                                </tr>
-                                </thead>
-
-                                <tbody>
-                                <tr ng-repeat="user in data.facilitators" ng-click="css.updatestatus='true'">
-                                    <td>{{user.id}}</td>
-                                    <td>{{user.name}}</td>
-                                    <td>{{user.email}}</td>
-                                    <td>China / Shanghai / Shanghai</td>
-                                    <td>{{user.licence}}</td>
-                                    <td>{{user.distributor}}</td>
-                                </tr>
-                                </tbody>
-                            </table>
-                        </div>
-                    </div>
-                </div>
-
-
-                <div class="row" ng-show="css.updatestatus">
-                    <div class="col-md-8">
-
-                        <div class="page-header">
-                            <h4>Modify Facilitator XXX</h4>
-                        </div>
-
-                        <form class="form-horizontal" role="form">
-
-                            <div class="form-group">
-                                <label for="inputFacilitatorName" class="col-sm-4 control-label">Distributor Name</label>
-                                <div class="col-sm-8">
-                                    <input type="text" class="form-control" id="inputFacilitatorName" placeholder="Distributor Name">
-                                </div>
-                            </div>
-
-                            <div class="form-group">
-                                <label for="inputFacilitatorEmail" class="col-sm-4 control-label">Distributor Email</label>
-                                <div class="col-sm-8">
-                                    <input type="email" class="form-control" id="inputFacilitatorEmail" placeholder="Email">
-                                </div>
-                            </div>
-
-                            <div class="form-group">
-                                <label for="inputFacilitatorPassword" class="col-sm-4 control-label">Password</label>
-                                <div class="col-sm-8">
-                                    <input type="password" class="form-control" id="inputFacilitatorPassword" placeholder="Password">
-                                </div>
-                            </div>
-
-
-                            <div class="form-group">
-
-                                <div class="col-sm-offset-4 col-sm-2">
-                                    <select class="form-control input-sm" ng-model="data.newFacilitator.country" ng-options="country.name for country in data.country">
-
-                                    </select>
-                                </div>
-
-                                <div class="col-sm-2">
-                                    <select class="form-control input-sm">
-                                        <option>Province</option>
-                                    </select>
-                                </div>
-
-                                <div class="col-sm-3">
-                                    <input type="text" class="form-control" id="inputFacilitatorCity" placeholder="City">
-                                </div>
-                            </div>
-
-
-                            <div class="form-group">
-                                <label for="inputFacilitatorLicence" class="col-sm-4 control-label">No. of Licences</label>
-                                <div class="col-sm-8">
-                                    <input type="number" class="form-control" id="inputFacilitatorLicence" placeholder="pls input licence">
-                                </div>
-                            </div>
-
-                            <div class="form-group">
-                                <div class="col-sm-offset-4 col-sm-10">
-                                    <button type="submit" class="btn btn-primary">Save</button>
-                                    <button type="submit" class="btn btn-default" ng-click="css.updatestatus='false'">Cancel</button>
-                                </div>
-                            </div>
-                        </form>
-
-                    </div>
-                </div>
-
-            </div>
-            <!-- END Facilitator -->
-
-        </div>
-
+        </aside>
     </div>
+
+
+
+
 
 
 
