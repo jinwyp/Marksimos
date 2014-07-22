@@ -23,6 +23,10 @@ exports.getFinancialReport = function(allResults){
 
             //generate report for each brand
             onePeriodResult.p_Brands.forEach(function(brandResult){
+                if(brandResult.b_ParentCompanyID !== companyReport.companyId){
+                    return;
+                }
+
                 var brandReport = {
                     brandId: brandResult.b_BrandID,
                     brandName: brandResult.b_BrandName,
@@ -129,6 +133,10 @@ exports.getFinancialReport = function(allResults){
             };
 
             onePeriodResult.p_Brands.forEach(function(brandResult){
+                if(brandResult.b_ParentCompanyID !== companyReport.companyId){
+                    return;
+                }
+
                 var tempReportByBrand = {
                     brandName: brandResult.b_BrandName,
                     salesValue: brandResult.b_FactorySalesValue,

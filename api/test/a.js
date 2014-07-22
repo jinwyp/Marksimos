@@ -201,6 +201,9 @@ function removeStudentFromSeminar(){
 function createTestData(){
     userModel.remove({})
     .then(function(){
+        return seminarModel.delete({})
+    })
+    .then(function(){
         return userModel.insert({
             email: 'distributor@hcdglobal.com',
             password: '123456',
@@ -242,8 +245,8 @@ function createTestData(){
                 city: 'hangzhou',
                 venue: 'HCD 301',
                 facilitatorId: facilitator._id,
-                simulation_span: 4,
-                company_num: 4,
+                simulationSpan: 4,
+                companyNum: 4,
                 seminarId: '10000',
                 companyAssignment: [[student._id],[],[],[]],
                 isFinished: false
