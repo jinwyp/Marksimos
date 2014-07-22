@@ -98,7 +98,7 @@ exports.getFinancialReport = function(allResults){
                     data: []
                 }
 
-                brandReport.data = reportForSKU(brandReport, onePeriodResult);
+                brandReport.data = reportForSKU(onePeriodResult, brandResult.b_BrandID);
                 brandReport.data.push(reportForBrandTotal(brandResult));
 
                 periodReport.brands.push(brandReport);
@@ -133,11 +133,11 @@ exports.getFinancialReport = function(allResults){
     data: []
 }
 */
-function reportForSKU(onePeriodResult, brandResult){
+function reportForSKU(onePeriodResult, brandId){
     var SKUReports = [];
 
     onePeriodResult.p_SKUs.forEach(function(SKUResult){
-        if(SKUResult.u_ParentBrandID === brandResult.b_BrandID){
+        if(SKUResult.u_ParentBrandID === brandId){
             SKUReports.push({
                 SKUName: SKUResult.u_SKUName + ' ' + config.packsizeDescription[SKUResult.u_PackSize],
                 salesValue: SKUResult.u_FactorySalesValue,
