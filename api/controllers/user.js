@@ -45,7 +45,12 @@ exports.getStudent = function(req, res, next){
             seminarId: seminarId
         })
         .then(function(dbSeminar){
+            if(!dbSeminar){
+                throw {message: "seminar " + seminarId +" doesn't exist."}
+            }
             tempUser.numOfTeamMember = dbSeminar.companyAssignment[companyId-1].length;
+            tempUser.numOfCompany = dbSeminar.companyNum;
+            tempUser.currentPeriod = dbSeminar.currentPeriod;
             res.send(tempUser);
         });
     })
