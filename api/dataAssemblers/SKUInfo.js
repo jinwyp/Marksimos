@@ -68,7 +68,14 @@ exports.getSKUInfo = function(seminarId, currentPeriod, companyId, SKUID){
 
             var recommendedConsumer = decision.d_FactoryPrice[0] * (gameParameters.pgen.wholesale_Markup + 1)
                 * (1+ gameParameters.pgen.retail_Markup);
-            currentPeriodInfo.recommendedConsumer = [parseFloat(recommendedConsumer.toFixed(2)), parseFloat((recommendedConsumer / consts.ActualSize[SKUResult.u_PackSize]).toFixed(2))];
+            currentPeriodInfo.recommendedConsumer = [
+                parseFloat(recommendedConsumer.toFixed(2)), 
+                parseFloat((recommendedConsumer / consts.ActualSize[SKUResult.u_PackSize]).toFixed(2))
+            ];
+            // currentPeriodInfo.recommendedConsumer = [
+            //     parseFloat((Math.ceil(recommendedConsumer * 100) / 100).toFixed(2)), 
+            //     parseFloat((Math.ceil(recommendedConsumer / consts.ActualSize[SKUResult.u_PackSize] * 100) / 100).toFixed(2))
+            // ];
 
             currentPeriodInfo.period = currentPeriod;
 
