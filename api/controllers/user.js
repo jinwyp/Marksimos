@@ -5,6 +5,7 @@ var logger = require('../../common/logger.js');
 var util = require('util');
 var sessionOperation = require('../../common/sessionOperation.js');
 var companyDecisionModel = require('../models/companyDecision.js');
+var seminarModel = require('../models/seminar.js');
 
 exports.getUser = function(req, res, next){
     var userId = sessionOperation.getUserId(req);
@@ -34,12 +35,19 @@ exports.getStudent = function(req, res, next){
         }
 
         var companyId = sessionOperation.getCompanyId(req);
+        var seminarId = sessionOperation.getSeminarId(req);
 
         var tempUser = JSON.parse(JSON.stringify(user));
         tempUser.companyId = companyId;
         tempUser.companyName = utility.createCompanyArray(companyId)[companyId-1];
-        
-        res.send(tempUser);
+
+        return seminarModel.findOne({
+            seminarId: seminarId
+        })
+        .then(function(dbSeminar){
+            tempUser.numOfTeamMember = dbSeminar.companyAssignment[companyId-1].length;
+            res.send(tempUser);
+        });
     })
     .fail(function(err){
         logger.error(err);
