@@ -56,7 +56,11 @@ exports.getSKUInfo = function(seminarId, currentPeriod, companyId, SKUID){
                 companyResult.c_AcquiredEfficiency,
                 decision.d_ProductionVolume)
         .then(function(unitProductionCost){
-            currentPeriodInfo.unitProductionCost = [parseFloat(unitProductionCost.toFixed(2)), parseFloat((unitProductionCost / consts.ActualSize[SKUResult.u_PackSize]).toFixed(2))]; 
+            currentPeriodInfo.unitProductionCost = [
+                parseFloat((Math.ceil(unitProductionCost * 100) / 100).toFixed(2)), 
+                parseFloat((Math.ceil(unitProductionCost / consts.ActualSize[SKUResult.u_PackSize] * 100) / 100).toFixed(2))
+            ]; 
+            //currentPeriodInfo.unitProductionCost = [parseFloat(unitProductionCost), parseFloat((unitProductionCost / consts.ActualSize[SKUResult.u_PackSize]))]; 
             
             //not sure if currentPeriodInfo.d_ConsumerPrice is the right value for that parameter
             var wholesalePrice = utility.unitPrice('WHOLESALERS', decision.d_ConsumerPrice);
