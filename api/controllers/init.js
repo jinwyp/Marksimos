@@ -2,6 +2,7 @@ var request = require('../promises/request.js');
 var util = require('util');
 var url = require('url');
 var config = require('../../common/config.js');
+var utility = require('../../common/utility.js');
 var Q = require('q');
 
 var decisionCleaner = require('../convertors/decisionCleaner.js');
@@ -80,7 +81,7 @@ exports.init = function(req, res, next) {
         }
 
         //create company array
-        companies = createCompanyArray(dbSeminar.companyNum);
+        companies = utility.createCompanyArray(dbSeminar.companyNum);
 
         simulationSpan = dbSeminar.simulationSpan;
         companyNum = dbSeminar.companyNum;
@@ -195,7 +196,7 @@ exports.runSimulation = function(req, res, next){
                 return cgiapi.runSimulation({
                     seminarId: seminarId,
                     simulationSpan: dbSeminar.simulationSpan,
-                    teams: createCompanyArray(dbSeminar.companyNum),
+                    teams: utility.createCompanyArray(dbSeminar.companyNum),
                     period: currentPeriod
                 })
                 .then(function(simulationResult){
@@ -418,16 +419,6 @@ function submitDecision(companyId, period, seminarId){
     }
 }
 
-function createCompanyArray(companyNum){
-    var companies = [];
-
-    var letters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
-    for(var j=0; j<companyNum; j++){
-        companies.push('Company'+letters[j]);
-    } 
-
-    return companies;
-}
 
 function initBinaryFile(seminarId, simulation_span, companies){
     return cgiapi.init({

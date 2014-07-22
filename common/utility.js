@@ -298,6 +298,21 @@ exports.checkRequiredFieldForDistributor = function(req){
 };
 
 
+/**
+* Create an array of all the company names
+* @param {Number} companyNum num of companies we need
+*/
+exports.createCompanyArray = function(companyNum){
+    var companies = [];
+
+    var letters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+    for(var j=0; j<companyNum; j++){
+        companies.push('Company'+letters[j]);
+    } 
+
+    return companies;
+}
+
 
 
 

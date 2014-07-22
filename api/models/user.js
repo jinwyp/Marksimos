@@ -37,7 +37,8 @@ var userSchema = new Schema({
     univercity: String,
     organization: String,
     highestEducationalDegree: String,
-    facilitatorId: String
+    facilitatorId: String,
+    companyRole: {type: String, default: 'Team Member'}  //description of the role of this student in this company, like CEO, Marketing
 });
 
 var User = mongoose.model("User", userSchema);

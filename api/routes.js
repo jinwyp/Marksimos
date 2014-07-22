@@ -92,9 +92,7 @@ apiRouter.get('/api/company/otherinfo', requireLogin, decisionPageController.get
 
 
 apiRouter.get('/api/user', requireLogin, userController.getUser);
-
-
-
+apiRouter.get('/api/student', requireLogin, authorize('getStudent'),userController.getStudent);
 
 /**********  API For Administrator  **********/
 
@@ -172,6 +170,7 @@ function authorize(resource){
         'runSimulation'
     ];
     authDefinition[config.role.student] = [
+        'getStudent',
         'updateStudent',
         'chooseSeminar',
         'getSeminarOfStudent'
