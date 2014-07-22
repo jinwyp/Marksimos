@@ -25,6 +25,7 @@ exports.getChart = function(req, res, next){
 
     chartModel.findOne(seminarId)
     .then(function(result){
+        console.log('-----------')
         var allCharts = result.charts;
         var chart = null;
         for(var i=0; i<allCharts.length; i++){
@@ -45,7 +46,7 @@ exports.getChart = function(req, res, next){
             return res.send(chartData);
         }
 
-        res.json(chart.chartData);
+        res.send(chart.chartData);
     })
     .fail(function(err){
         logger.error(err);

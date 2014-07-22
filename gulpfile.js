@@ -18,7 +18,7 @@ var paths = {
     imagespath : './public/app/css/images',
     target_csspath: './public/app/css/stylesheets',
 
-    unit_test: './api/test/unit_test/*.js'
+    unit_test: './api/test/unit_test/*'
 };
 
 
