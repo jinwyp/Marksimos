@@ -128,13 +128,12 @@ exports.getSKUInfo = function(seminarId, currentPeriod, companyId, SKUID){
                 expectedSales.expectedGrossMargin = (expectedSales.expectedMaximalSales 
                 - (SKUResult.u_ps_FactoryStocks[consts.StocksMaxTotal].s_ps_Volume 
                     * SKUResult.u_ps_FactoryStocks[consts.StocksMaxTotal].s_ps_UnitCost
-                    + decision.d_ProductionVolume * decision.d_FactoryPrice[0]
+                    + decision.d_ProductionVolume * unitProductionCost
                    )
                 ) / expectedSales.expectedMaximalSales * 100;
             }else{
                 expectedSales.expectedGrossMargin = 0;
             }
-            
 
             expectedSales.expectedGrossMargin = parseFloat(expectedSales.expectedGrossMargin.toFixed(2));
 
