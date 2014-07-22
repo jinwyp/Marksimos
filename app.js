@@ -44,7 +44,7 @@ app.use(function(req, res, next){
         //sessionOperation.setUserRole(req, config.role.student);
         //sessionOperation.setUserId(req, '53cdcd0c6f50f03fad9b0006');
 
-        sessionOperation.setUserRole(req, config.role.facilitator);
+        sessionOperation.setUserRole(req, config.role.student);
         sessionOperation.setUserId(req, '53cdef3b699e7939c7162fcb');
     }
 
