@@ -144,6 +144,8 @@ exports.login = function(req, res, next){
 
         sessionOperation.setLoginStatus(req, true);
         sessionOperation.setUserRole(req, user.role);
+        sessionOperation.setUserId(req, user._id);
+
         return res.send({
             userId: user._id
         });
