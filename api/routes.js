@@ -7,7 +7,6 @@ var distributorController = require('./controllers/distributor.js');
 var facilitatorController = require('./controllers/facilitator.js');
 var studentController = require('./controllers/student.js');
 var seminarController = require('./controllers/seminar.js');
-var marketIndicatorController = require('./controllers/marketIndicator.js');
 
 var util = require('util');
 var express = require('express');
@@ -89,7 +88,6 @@ apiRouter.get('/api/product_portfolio', requireLogin, decisionController.getProd
 apiRouter.get('/api/spending_details', requireLogin, decisionController.getSpendingDetails);
 apiRouter.get('/api/future_projection_calculator/:sku_id', requireLogin, decisionController.getSKUInfo);
 apiRouter.get('/api/company/otherinfo', requireLogin, decisionController.getOtherinfo);
-apiRouter.get('/api/market_indicator', requireLogin, marketIndicatorController.getMarketIndicator)
 
 apiRouter.get('/api/user', requireLogin, userController.getUser);
 apiRouter.get('/api/student', requireLogin, authorize('getStudent'),userController.getStudent);

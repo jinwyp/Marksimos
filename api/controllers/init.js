@@ -26,6 +26,7 @@ var profitabilityEvolutionReportAssembler = require('../dataAssemblers/profitabi
 var segmentDistributionReportAssembler = require('../dataAssemblers/segmentDistributionReport.js');
 var competitorIntelligenceReportAssembler = require('../dataAssemblers/competitorIntelligence.js');
 var marketTrendsReportAssembler = require('../dataAssemblers/marketTrendsReport.js');
+var marketIndicatorsReportAssembler = require('../dataAssemblers/marketIndicatorsReport.js');
 var chartAssembler = require('../dataAssemblers/chart.js');
 
 var decisionConvertor = require('../convertors/decision.js');
@@ -119,7 +120,8 @@ exports.init = function(req, res, next) {
                     initProfitabilityEvolutionReport(seminarId, allResults),
                     initSegmentDistributionReport(seminarId, allResults),
                     initCompetitorIntelligenceReport(seminarId, allResults),
-                    initMarketTrendsReport(seminarId, allResults)
+                    initMarketTrendsReport(seminarId, allResults),
+                    initMarketIndicatorReport(seminarId, currentPeriod)
                 ]);
             });
         })
@@ -227,7 +229,8 @@ exports.runSimulation = function(req, res, next){
                             initProfitabilityEvolutionReport(seminarId, allResults),
                             initSegmentDistributionReport(seminarId, allResults),
                             initCompetitorIntelligenceReport(seminarId, allResults),
-                            initMarketTrendsReport(seminarId, allResults)
+                            initMarketTrendsReport(seminarId, allResults),
+                            initMarketIndicatorReport(seminarId, currentPeriod)
                         ]);
                     });
                 })
@@ -575,6 +578,21 @@ function initMarketTrendsReport(seminarId, allResults){
         reportName: 'market_trends',
         reportData: marketTrendsReportAssembler.getMarketTrendsReport(allResults)
     })
+}
+
+function initMarketIndicatorReport(seminarId, currentPeriod){
+    return cgiapi.getExogenous(currentPeriod)
+    .then(function(exogenouse){
+        if(!exogenouse || exogenouse.message){
+            throw new Error(exogenouse.message);
+        }
+
+        return reportModel.insert({
+            seminarId: seminarId,
+            reportName: 'market_indicators',
+            reportData: marketIndicatorsReportAssembler.getMarketIndicators(exogenouse)
+        });
+    });
 }
 
 
