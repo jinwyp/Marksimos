@@ -230,8 +230,8 @@ exports.validateUser = function(req){
     if(req.body.city) req.checkBody('city', 'city is empty').notEmpty();
     if(req.body.num_of_license_granted) req.checkBody('num_of_license_granted', 'Invalid num of license').isInt();
 
-    if(req.body.first_name) req.checkBody('first_name', '2 to 20 characters required.').notEmpty().len(2, 20);
-    if(req.body.last_name) req.checkBody('last_name', '2 to 20 characters required.').notEmpty().len(2, 20);
+    if(req.body.firstname) req.checkBody('firstname', '2 to 20 characters required.').notEmpty().len(2, 20);
+    if(req.body.lastname) req.checkBody('lastname', '2 to 20 characters required.').notEmpty().len(2, 20);
 
     var errors = req.validationErrors();
     if(errors){
@@ -271,8 +271,8 @@ exports.checkRequiredFieldForStudent = function(req){
     var checkUserResult = exports.checkRequiredFieldForAllUsers(req);
     if(checkUserResult) return checkUserResult;
 
-    if(!req.body.first_name) return "first_name can't be empty.";
-    if(!req.body.last_name) return "last_name can't be empty.";
+    if(!req.body.firstname) return "first_name can't be empty.";
+    if(!req.body.lastname) return "last_name can't be empty.";
 };
 
 /**
