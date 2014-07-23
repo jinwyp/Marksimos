@@ -10,6 +10,10 @@ var chartSchema = new Schema({
 var Chart = mongoose.model("Chart", chartSchema);
 
 exports.remove = function(seminarId){
+    if(!mongoose.connection.readyState){
+        throw new Error("mongoose is not connected.");
+    }
+    
     var deferred = Q.defer();
     Chart.remove({seminarId: seminarId}, function(err){
         if(err){
@@ -22,6 +26,10 @@ exports.remove = function(seminarId){
 }
 
 exports.insert = function(chart){
+    if(!mongoose.connection.readyState){
+        throw new Error("mongoose is not connected.");
+    }
+
     var deferred = Q.defer();
 
     Chart.create(chart, function(err){
@@ -36,6 +44,10 @@ exports.insert = function(chart){
 }
 
 exports.update = function(seminarId, chart){
+    if(!mongoose.connection.readyState){
+        throw new Error("mongoose is not connected.");
+    }
+
     var deferred = Q.defer();
 
     Chart.update({
@@ -53,6 +65,9 @@ exports.update = function(seminarId, chart){
 }
 
 exports.findOne = function(seminarId){
+    if(!mongoose.connection.readyState){
+        throw new Error("mongoose is not connected.");
+    }
     var deferred = Q.defer();
 
     Chart.findOne({

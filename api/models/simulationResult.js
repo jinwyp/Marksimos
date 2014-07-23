@@ -16,6 +16,10 @@ var simulationResultSchema = new Schema({
 var SimulationResult = mongoose.model("SimulationResult", simulationResultSchema);
 
 exports.insert = function(simulationResult){
+    if(!mongoose.connection.readyState){
+        throw new Error("mongoose is not connected.");
+    }
+
     var deferred = Q.defer();
 
     SimulationResult.create(simulationResult, function(err, result){
@@ -29,6 +33,10 @@ exports.insert = function(simulationResult){
 }
 
 exports.findAll = function(seminarId){
+    if(!mongoose.connection.readyState){
+        throw new Error("mongoose is not connected.");
+    }
+
     var deferred = Q.defer();
 
     SimulationResult.find({seminarId: seminarId})
@@ -45,6 +53,10 @@ exports.findAll = function(seminarId){
 }
 
 exports.removeAll = function(seminarId){
+    if(!mongoose.connection.readyState){
+        throw new Error("mongoose is not connected.");
+    }
+
     var deferred = Q.defer();
 
     SimulationResult.remove({seminarId: seminarId}, function(err){
@@ -59,6 +71,10 @@ exports.removeAll = function(seminarId){
 }
 
 exports.findOne = function(seminarId, period){
+    if(!mongoose.connection.readyState){
+        throw new Error("mongoose is not connected.");
+    }
+
     var deferred = Q.defer();
 
     SimulationResult.findOne({
@@ -76,6 +92,10 @@ exports.findOne = function(seminarId, period){
 }
 
 exports.remove = function(query){
+    if(!mongoose.connection.readyState){
+        throw new Error("mongoose is not connected.");
+    }
+    
     var deferred = Q.defer();
 
     SimulationResult.remove(query, function(err){

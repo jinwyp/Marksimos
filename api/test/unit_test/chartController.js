@@ -1,5 +1,10 @@
 var should = require('should');
 var chartController = require('../../controllers/chart.js');
+var mongoose = require('mongoose');
+var db = mongoose.connection;
+mongoose.connect('mongodb://localhost/Marksimos');
+
+db.on('error', console.error.bind(console, 'connection error:'));
 
 var req = {};
 req.session = {};
@@ -16,6 +21,7 @@ describe('/api/chart/:chart_name', function(){
 
         res.send = function(status, data){
             status.should.be.empty;
+            console.log(data);
             done();
         }
         

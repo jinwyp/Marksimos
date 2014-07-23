@@ -19,6 +19,10 @@ var tDecisionSchema = new Schema({
 var CompanyDecision = mongoose.model('CompanyDecision', tDecisionSchema);
 
 exports.remove =  function(seminarId, companyId){
+    if(!mongoose.connection.readyState){
+        throw new Error("mongoose is not connected.");
+    }
+
     var deferred = Q.defer();
 
     if(!seminarId){
@@ -41,6 +45,10 @@ exports.remove =  function(seminarId, companyId){
 }
 
 exports.removeAll =  function(seminarId){
+    if(!mongoose.connection.readyState){
+        throw new Error("mongoose is not connected.");
+    }
+
     var deferred = Q.defer();
 
     if(!seminarId){
@@ -59,6 +67,10 @@ exports.removeAll =  function(seminarId){
 }
 
 exports.save = function(decision){
+    if(!mongoose.connection.readyState){
+        throw new Error("mongoose is not connected.");
+    }
+
     var deferred = Q.defer();
 
     if(!decision){
@@ -78,6 +90,10 @@ exports.save = function(decision){
 };
 
 exports.findOne = function(seminarId, period, companyId){
+    if(!mongoose.connection.readyState){
+        throw new Error("mongoose is not connected.");
+    }
+
     var deferred = Q.defer();
 
     if(!seminarId){
@@ -102,6 +118,10 @@ exports.findOne = function(seminarId, period, companyId){
 };
 
 exports.updateCompanyDecision = function(seminarId, period, companyId, companyDecision){
+    if(!mongoose.connection.readyState){
+        throw new Error("mongoose is not connected.");
+    }
+
     var deferred = Q.defer();
 
     if(!seminarId){
@@ -131,6 +151,10 @@ exports.updateCompanyDecision = function(seminarId, period, companyId, companyDe
 }
 
 exports.findAllInPeriod = function(seminarId, period){
+    if(!mongoose.connection.readyState){
+        throw new Error("mongoose is not connected.");
+    }
+
     var deferred = Q.defer();
 
     CompanyDecision.find({
@@ -149,6 +173,10 @@ exports.findAllInPeriod = function(seminarId, period){
  * Insert empty company decisions for all companies in the next period
  */
 exports.insertEmptyCompanyDecision = function(seminarId, period){
+    if(!mongoose.connection.readyState){
+        throw new Error("mongoose is not connected.");
+    }
+    
     //find all company decisions in the last period
     return exports.findAllInPeriod(seminarId, period - 1)
     .then(function(allCompanyDecisions){

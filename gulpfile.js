@@ -71,7 +71,7 @@ gulp.task('watch', function() {
 gulp.task('mocha', function () {
     gulp.watch(paths.unit_test, ['mocha']);
     return gulp.src(paths.unit_test, {read: false})
-        .pipe(mocha({reporter: 'nyan'}));
+        .pipe(mocha({reporter: 'nyan', timeout: 2000}));
 });
 
 // 默认任务

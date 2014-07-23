@@ -44,6 +44,10 @@ var userSchema = new Schema({
 var User = mongoose.model("User", userSchema);
 
 exports.insert = function(user){
+    if(!mongoose.connection.readyState){
+        throw new Error("mongoose is not connected.");
+    }
+
     var deferred = Q.defer();
 
     User.create(user, function(err, result){
@@ -58,6 +62,10 @@ exports.insert = function(user){
 }
 
 exports.register = function(user){
+    if(!mongoose.connection.readyState){
+        throw new Error("mongoose is not connected.");
+    }
+
     var deferred = Q.defer();
 
     User.create(user, function(err, result){
@@ -72,6 +80,10 @@ exports.register = function(user){
 }
 
 exports.updateByEmail = function(email, user){
+    if(!mongoose.connection.readyState){
+        throw new Error("mongoose is not connected.");
+    }
+
     var deferred = Q.defer();
 
     User.update({
@@ -90,6 +102,10 @@ exports.updateByEmail = function(email, user){
 }
 
 exports.update = function(query, user){
+    if(!mongoose.connection.readyState){
+        throw new Error("mongoose is not connected.");
+    }
+
     var deferred = Q.defer();
 
     User.update(query
@@ -106,6 +122,10 @@ exports.update = function(query, user){
 };
 
 exports.findByEmail = function(email){
+    if(!mongoose.connection.readyState){
+        throw new Error("mongoose is not connected.");
+    }
+
     var deferred = Q.defer();
 
     User.findOne({
@@ -123,6 +143,10 @@ exports.findByEmail = function(email){
 };
 
 exports.findByEmailAndToken = function(email, token){
+    if(!mongoose.connection.readyState){
+        throw new Error("mongoose is not connected.");
+    }
+
     var deferred = Q.defer();
 
     User.findOne({
@@ -141,6 +165,10 @@ exports.findByEmailAndToken = function(email, token){
 }
 
 exports.find = function(query){
+    if(!mongoose.connection.readyState){
+        throw new Error("mongoose is not connected.");
+    }
+
     var deferred = Q.defer();
 
     User.find(query, 
@@ -156,6 +184,10 @@ exports.find = function(query){
 }
 
 exports.findOne = function(query){
+    if(!mongoose.connection.readyState){
+        throw new Error("mongoose is not connected.");
+    }
+
     var deferred = Q.defer();
 
     User.findOne(query, 
@@ -171,6 +203,10 @@ exports.findOne = function(query){
 }
 
 exports.remove = function(query){
+    if(!mongoose.connection.readyState){
+        throw new Error("mongoose is not connected.");
+    }
+    
     var deferred = Q.defer();
 
     User.remove(query, function(err){
