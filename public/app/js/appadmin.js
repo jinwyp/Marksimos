@@ -3,7 +3,7 @@
  */
 
 // create module for custom directives
-var marksimosapp = angular.module('marksimosadmin', []);
+var marksimosapp = angular.module('marksimosadmin', ['pascalprecht.translate', 'marksimos.component']);
 
 marksimosapp.directive('headerAdmin', [function() {
     return {
@@ -17,7 +17,8 @@ marksimosapp.directive('headerAdmin', [function() {
 marksimosapp.directive('menuAdmin', [function() {
     return {
         scope: {
-            currentMenu : '='
+            currentMenu : '=',
+            showmenu : '='
         },
         restrict: 'AE',
         templateUrl: 'app/js/websitecomponent/adminmenu.html',
@@ -27,7 +28,7 @@ marksimosapp.directive('menuAdmin', [function() {
             scope.css = {
                 currentTab : 2,
 //                currentMenu : 'DistributorList',
-                menuexpand : [false, false, true, true, true, true, false, false] // menus control expand
+                menuexpand : [false, false, true, true, true, true, true, true] // menus control expand
             };
 
 
@@ -85,22 +86,26 @@ marksimosapp.controller('adminLoginController', ['$scope', '$timeout', '$http', 
 
 
 
+
+
+
 // controller business logic
 marksimosapp.controller('adminHomeController', ['$scope', '$http', function($scope, $http) {
 
     $scope.css = {
-        leftmenu : 2,
+        leftmenu : 22,
+        menuShow : [false,false,false,false,false,false], //从第二个false 开始第1个菜单
         updatestatus : false
     };
 
     $scope.data = {
+        currentUser : null,
         newDistributor : {
             username : "",
             email : "",
             password : "",
             phone : "",
             pincode : "",
-            password : "",
             country : null,
             state : "shanghai",
             city : "shanghai",
@@ -110,18 +115,29 @@ marksimosapp.controller('adminHomeController', ['$scope', '$http', function($sco
             gameType : ""
         },
         searchDistributor : {
-            username :''
+            username :'',
+            email :'',
+            user_status :'false'
         },
         distributors : [],
 
         newFacilitator : {
-            name : "",
+            username : "",
             email : "",
             password : "",
-            country : {},
-            province : "",
-            city : "",
-            licence : ""
+            phone : "",
+            pincode : "",
+            country : null,
+            state : "shanghai",
+            city : "shanghai",
+            district : "",
+            street : "",
+            num_of_license_granted : 0
+        },
+        searchFacilitator : {
+            username :'',
+            email :'',
+            user_status :'false'
         },
         facilitators : [],
 
@@ -245,11 +261,44 @@ marksimosapp.controller('adminHomeController', ['$scope', '$http', function($sco
 
     /********************  获取信息  ********************/
     $scope.adminInit = function(){
-        $http.get('/api/admin/distributors').success(function(data, status, headers, config){
-            $scope.data.distributors = data;
+
+        $http.get('/api/user').success(function(data, status, headers, config){
+            $scope.data.currentUser = data;
+
+            if($scope.data.currentUser.role === 1){
+                $scope.searchDistributors();
+                $scope.searchFacilitators();
+                $scope.css.menuShow = [true, true, true, true, true, true, true];
+
+            }else if($scope.data.currentUser.role === 2){
+                $scope.searchFacilitators();
+                $scope.css.menuShow = [false,true,false,true,false,false];
+
+            }else if($scope.data.currentUser.role === 3){
+                $scope.searchFacilitators();
+                $scope.css.menuShow = [false,true,false,true,false,false];
+            }
+
         }).error(function(data, status, headers, config) {
             console.log(data);
+        });
 
+    };
+
+    $scope.searchDistributors = function(){
+        $http.get('/api/admin/distributors').success(function(data, status, headers, config){
+            $scope.data.distributors = data;
+
+        }).error(function(data, status, headers, config) {
+            console.log(data);
+        });
+    };
+
+    $scope.searchFacilitators = function() {
+        $http.get('/api/admin/facilitators').success(function (data, status, headers, config) {
+            $scope.data.facilitators = data;
+        }).error(function (data, status, headers, config) {
+            console.log(data);
         });
     };
 
@@ -257,10 +306,9 @@ marksimosapp.controller('adminHomeController', ['$scope', '$http', function($sco
     $scope.adminInit();
 
 
-    /********************  创建新的 Distributor  ********************/
+    /********************  搜索 Distributor  ********************/
     $scope.searchDistributor = function(form){
         if(form.$valid){
-            console.log($scope.data.searchDistributor);
             $http.get('/api/admin/distributors', {params : $scope.data.searchDistributor}).success(function(data, status, headers, config){
 
                 $scope.data.distributors = data;
@@ -270,14 +318,41 @@ marksimosapp.controller('adminHomeController', ['$scope', '$http', function($sco
             });
         }
     };
-
+    /********************  创建新的 Distributor  ********************/
     $scope.createNewDistributor = function(form){
         if(form.$valid){
             console.log($scope.data.newDistributor);
             $http.post('/api/admin/distributors', $scope.data.newDistributor).success(function(data, status, headers, config){
 
-                $scope.adminInit();
-                $scope.css.leftmenu = 2;
+                $scope.searchDistributors();
+                $scope.css.leftmenu = 21;
+
+            }).error(function(data, status, headers, config){
+                console.log(data);
+            });
+        }
+    };
+
+
+    /********************  搜索 Facilitator  ********************/
+    $scope.searchFacilitator = function(form){
+        if(form.$valid){
+            $http.get('/api/admin/facilitators', {params : $scope.data.searchFacilitator}).success(function(data, status, headers, config){
+                $scope.data.facilitators = data;
+
+            }).error(function(data, status, headers, config){
+                console.log(data);
+            });
+        }
+    };
+    /********************  创建新的 Facilitator  ********************/
+    $scope.createNewFacilitator = function(form){
+        if(form.$valid){
+            console.log($scope.data.newFacilitator);
+            $http.post('/api/admin/facilitators', $scope.data.newFacilitator).success(function(data, status, headers, config){
+
+                $scope.searchFacilitators();
+                $scope.css.leftmenu = 31;
 
             }).error(function(data, status, headers, config){
                 console.log(data);
