@@ -207,7 +207,7 @@ function createTestData(){
         return userModel.insert({
             email: 'distributor@hcdglobal.com',
             password: '123456',
-            name: 'hcd global',
+            name: 'hcd distributor',
             phone: '631122021',
             country: 'china',
             state: 'shanghai',
@@ -223,7 +223,7 @@ function createTestData(){
         return userModel.insert({
             email: 'facilitator@hcdglobal.com',
             password: '123456',
-            name: 'hcd global',
+            name: 'hcd facilitator',
             numOfLicense: 50,
             role: 3,
             distributorId: distributor._id

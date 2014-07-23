@@ -198,14 +198,40 @@ exports.searchFacilitator = function(req, res, next){
     if(isDisabled) query.isDisabled = isDisabled;
 
     userModel.find(query)
-    .then(function(result){
-        res.send(result);
+    .then(function(allFacilitator){
+        if(allFacilitator.length === 0){
+            return res.send([]);
+        }
+
+        allFacilitator = JSON.parse(JSON.stringify(allFacilitator));
+
+        return userModel.find({role: config.role.distributor})
+        .then(function(allDistributor){
+            for(var i=0; i< allFacilitator.length; i++){
+                var facilitator = allFacilitator[i];
+                var distributor = findDistributor(facilitator.distributorId, allDistributor);
+                if(!distributor){
+                    return res.send(500, {message: "distributor " + facilitator.distributorId + " doesn't exist."})
+                }
+                facilitator.distributorName = distributor.name;
+            }
+            
+            res.send(allFacilitator);
+        })
     })
     .fail(function(err){
         logger.error(err);
         res.send(500, {message: 'search failed'})
     })
     .done();
+
+    function findDistributor(distributorId, allDistributor){
+        for(var i=0; i< allDistributor.length; i++){
+            if(allDistributor[i]._id.toString() === distributorId){
+                return allDistributor[i];
+            }
+        }
+    }
 };
 
 exports.getSeminarOfFacilitator = function(req, res, next){
