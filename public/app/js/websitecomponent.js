@@ -6,6 +6,35 @@
 var app = angular.module('marksimos.component', ['pascalprecht.translate']);
 
 
+app.directive('filterpercentage', [ function() {
+    return {
+        require: 'ngModel',
+        restrict: 'A',
+        link: function (scope, element, attr, ngModel) {
+
+            function showFormatText(number) {
+                if(angular.isNumber(number)){
+                    return parseInt( number * 10000) / 100 ;
+                }
+                return number
+            }
+
+            function formatInput(number) {
+
+                if(angular.isNumber(Number(number))){
+                    return number / 100 ;
+                }
+                return number
+            }
+            
+            ngModel.$formatters.push(showFormatText);
+            ngModel.$parsers.push(formatInput);
+
+        }
+    };
+}]);
+
+
 
 app.directive('headerUser', ['$translate', function($translate) {
     return {

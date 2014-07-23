@@ -2823,7 +2823,7 @@
                                             <tr>
                                                 <td>Manufacturer Price ($)</td>
                                                 <td ng-repeat="sku in data.currentBrand.d_SKUsDecisions">
-                                                    <input type="text" class="form-control input-sm" ng-model="sku.d_FactoryPrice[sku.d_FactoryPrice.length-1]" ng-blur="leaveSkuInput(sku, 'd_FactoryPrice', sku.d_FactoryPrice[sku.d_FactoryPrice.length-1])"  ng-focus="clickCurrentSku(sku)">
+                                                    <input type="text" class="form-control input-sm" ng-model="sku.d_FactoryPrice[0]" ng-blur="leaveSkuInput(sku, 'd_FactoryPrice', sku.d_FactoryPrice[0] )"  ng-focus="clickCurrentSku(sku)">
                                                 </td>
                                             </tr>
                                             <tr>
@@ -2876,7 +2876,7 @@
                                             <tr>
                                                 <td>Additional Trade Margin (%)</td>
                                                 <td ng-repeat="sku in data.currentBrand.d_SKUsDecisions">
-                                                    <input type="text" class="form-control input-sm" ng-model="sku.d_AdditionalTradeMargin" ng-blur="leaveSkuInput(sku, 'd_AdditionalTradeMargin', sku.d_AdditionalTradeMargin)"  ng-focus="clickCurrentSku(sku)">
+                                                    <input type="text" class="form-control input-sm" filterpercentage ng-model="sku.d_AdditionalTradeMargin"  ng-blur="leaveSkuInput(sku, 'd_AdditionalTradeMargin', sku.d_AdditionalTradeMargin)"  ng-focus="clickCurrentSku(sku)">
                                                 </td>
                                             </tr>
                                             <tr>
@@ -2886,9 +2886,9 @@
                                                 </td>
                                             </tr>
                                             <tr>
-                                                <td>Wholesale Bonus Rate</td>
+                                                <td>Wholesale Bonus Rate (%)</td>
                                                 <td ng-repeat="sku in data.currentBrand.d_SKUsDecisions">
-                                                    <input type="text" class="form-control input-sm" ng-model="sku.d_WholesalesBonusRate" ng-blur="leaveSkuInput(sku, 'd_WholesalesBonusRate', sku.d_WholesalesBonusRate)"  ng-focus="clickCurrentSku(sku)">
+                                                    <input type="text" class="form-control input-sm" filterpercentage ng-model="sku.d_WholesalesBonusRate" ng-blur="leaveSkuInput(sku, 'd_WholesalesBonusRate', sku.d_WholesalesBonusRate)"  ng-focus="clickCurrentSku(sku)">
                                                 </td>
                                             </tr>
 

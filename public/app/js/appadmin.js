@@ -3,7 +3,7 @@
  */
 
 // create module for custom directives
-var marksimosapp = angular.module('marksimosadmin', ['pascalprecht.translate', 'marksimos.component']);
+var marksimosapp = angular.module('marksimosadmin', ['pascalprecht.translate', 'notifications', 'marksimos.component']);
 
 
 
@@ -45,7 +45,7 @@ marksimosapp.controller('adminLoginController', ['$scope', '$timeout', '$http', 
 
 
 // controller business logic
-marksimosapp.controller('adminHomeController', ['$scope', '$http', function($scope, $http) {
+marksimosapp.controller('adminHomeController', ['$scope', '$http', '$notification', function($scope, $http, $notification) {
 
     $scope.css = {
         leftmenu : 22,
@@ -95,6 +95,26 @@ marksimosapp.controller('adminHomeController', ['$scope', '$http', function($sco
             user_status :'false'
         },
         facilitators : [],
+
+        newStudent : {
+            username : "",
+            email : "",
+            password : "",
+            phone : "",
+            country : null,
+            state : "shanghai",
+            city : "shanghai",
+            occupation : "",
+            university : "",
+            firstname : "",
+            lastname : ""
+        },
+        searchStudent : {
+            username :'',
+            email :'',
+            user_status :'false'
+        },
+        students : [],
 
 
         country : [
@@ -212,6 +232,7 @@ marksimosapp.controller('adminHomeController', ['$scope', '$http', function($sco
 
     $scope.data.newDistributor.country = $scope.data.country[20].name;
     $scope.data.newFacilitator.country = $scope.data.country[20].name;
+    $scope.data.newStudent.country = $scope.data.country[20].name;
 
 
     /********************  获取信息  ********************/
@@ -221,16 +242,17 @@ marksimosapp.controller('adminHomeController', ['$scope', '$http', function($sco
             $scope.data.currentUser = data;
 
             if($scope.data.currentUser.role === 1){
-                $scope.searchDistributors();
-                $scope.searchFacilitators();
+                $scope.getDistributorsInit();
+                $scope.getFacilitatorsInit();
+                $scope.getStudentsInit();
                 $scope.css.menuTabShow = [false, true, true, true, true, true, true];
 
             }else if($scope.data.currentUser.role === 2){
-                $scope.searchFacilitators();
+                $scope.getFacilitatorsInit();
                 $scope.css.menuTabShow = [false, true, false, true, false, false, false];
 
             }else if($scope.data.currentUser.role === 3){
-                $scope.searchFacilitators();
+                $scope.getStudentsInit();
                 $scope.css.menuTabShow = [false, true, false, false ,true, true, false];
             }
 
@@ -240,7 +262,7 @@ marksimosapp.controller('adminHomeController', ['$scope', '$http', function($sco
 
     };
 
-    $scope.searchDistributors = function(){
+    $scope.getDistributorsInit = function(){
         $http.get('/api/admin/distributors').success(function(data, status, headers, config){
             $scope.data.distributors = data;
 
@@ -249,7 +271,7 @@ marksimosapp.controller('adminHomeController', ['$scope', '$http', function($sco
         });
     };
 
-    $scope.searchFacilitators = function() {
+    $scope.getFacilitatorsInit = function() {
         $http.get('/api/admin/facilitators').success(function (data, status, headers, config) {
             $scope.data.facilitators = data;
         }).error(function (data, status, headers, config) {
@@ -257,6 +279,13 @@ marksimosapp.controller('adminHomeController', ['$scope', '$http', function($sco
         });
     };
 
+    $scope.getStudentsInit = function() {
+        $http.get('/api/admin/students').success(function (data, status, headers, config) {
+            $scope.data.students = data;
+        }).error(function (data, status, headers, config) {
+            console.log(data);
+        });
+    };
 
     $scope.adminInit();
 
@@ -279,11 +308,14 @@ marksimosapp.controller('adminHomeController', ['$scope', '$http', function($sco
             console.log($scope.data.newDistributor);
             $http.post('/api/admin/distributors', $scope.data.newDistributor).success(function(data, status, headers, config){
 
-                $scope.searchDistributors();
+                $scope.getDistributorsInit();
                 $scope.css.leftmenu = 21;
+
+                $notification.success('Save success', 'Create Distributor success');
 
             }).error(function(data, status, headers, config){
                 console.log(data);
+                $notification.error('Save failed', data.message);
             });
         }
     };
@@ -306,14 +338,47 @@ marksimosapp.controller('adminHomeController', ['$scope', '$http', function($sco
             console.log($scope.data.newFacilitator);
             $http.post('/api/admin/facilitators', $scope.data.newFacilitator).success(function(data, status, headers, config){
 
-                $scope.searchFacilitators();
+                $scope.getFacilitatorsInit();
                 $scope.css.leftmenu = 31;
+
+                $notification.success('Save success', 'Create Facilitator success');
+
+            }).error(function(data, status, headers, config){
+                console.log(data);
+                $notification.error('Save failed', data.message);
+            });
+        }
+    };
+
+    /********************  搜索 Students  ********************/
+    $scope.searchStudent = function(form){
+        if(form.$valid){
+            $http.get('/api/admin/students', {params : $scope.data.searchStudent}).success(function(data, status, headers, config){
+                $scope.data.students = data;
 
             }).error(function(data, status, headers, config){
                 console.log(data);
             });
         }
     };
+    /********************  创建新的 Student  ********************/
+    $scope.createNewStudent = function(form){
+        if(form.$valid){
+            console.log($scope.data.newStudent);
+            $http.post('/api/admin/students', $scope.data.newStudent).success(function(data, status, headers, config){
+
+                $scope.getStudentsInit();
+                $scope.css.leftmenu = 41;
+
+                $notification.success('Save success', 'Create Student success');
+
+            }).error(function(data, status, headers, config){
+                console.log(data);
+                $notification.error('Save failed', data.message);
+            });
+        }
+    };
+
 
 
 }]);

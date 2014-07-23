@@ -31,7 +31,7 @@ exports.addFacilitator = function(req, res, next){
         password: utility.hashPassword(req.body.password),
         role: config.role.facilitator,
         numOfLicense: req.body.num_of_license_granted, //update distributor license when you update this field.
-        isActive: true,
+        isActivated: true,
         distributorId: distributorId
     };
 
