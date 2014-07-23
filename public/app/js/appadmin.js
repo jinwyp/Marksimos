@@ -5,51 +5,6 @@
 // create module for custom directives
 var marksimosapp = angular.module('marksimosadmin', ['pascalprecht.translate', 'marksimos.component']);
 
-marksimosapp.directive('headerAdmin', [function() {
-    return {
-        scope: {},
-        restrict: 'AE',
-        templateUrl: 'app/js/websitecomponent/adminheader.html'
-    };
-}]);
-
-
-marksimosapp.directive('menuAdmin', [function() {
-    return {
-        scope: {
-            currentMenu : '=',
-            showmenu : '='
-        },
-        restrict: 'AE',
-        templateUrl: 'app/js/websitecomponent/adminmenu.html',
-        link : function(scope, element){
-
-
-            scope.css = {
-                currentTab : 2,
-//                currentMenu : 'DistributorList',
-                menuexpand : [false, false, true, true, true, true, true, true] // menus control expand
-            };
-
-
-            scope.clickTab = function(tab){
-
-                scope.css.menuexpand[tab] = !scope.css.menuexpand[tab];
-                scope.css.currentTab = tab;
-
-            };
-
-            scope.clickMenu = function(currentmenu){
-                scope.currentMenu = currentmenu;
-
-                if(currentmenu === 1){
-                    scope.clickTab(1);
-                }
-            };
-
-        }
-    };
-}]);
 
 
 
@@ -94,7 +49,7 @@ marksimosapp.controller('adminHomeController', ['$scope', '$http', function($sco
 
     $scope.css = {
         leftmenu : 22,
-        menuShow : [false,false,false,false,false,false], //从第二个false 开始第1个菜单
+        menuTabShow : [false,false,false,false,false,false], //从第二个false 开始第1个菜单
         updatestatus : false
     };
 
@@ -268,15 +223,15 @@ marksimosapp.controller('adminHomeController', ['$scope', '$http', function($sco
             if($scope.data.currentUser.role === 1){
                 $scope.searchDistributors();
                 $scope.searchFacilitators();
-                $scope.css.menuShow = [true, true, true, true, true, true, true];
+                $scope.css.menuTabShow = [false, true, true, true, true, true, true];
 
             }else if($scope.data.currentUser.role === 2){
                 $scope.searchFacilitators();
-                $scope.css.menuShow = [false,true,false,true,false,false];
+                $scope.css.menuTabShow = [false, true, false, true, false, false, false];
 
             }else if($scope.data.currentUser.role === 3){
                 $scope.searchFacilitators();
-                $scope.css.menuShow = [false,true,false,true,false,false];
+                $scope.css.menuTabShow = [false, true, false, false ,true, true, false];
             }
 
         }).error(function(data, status, headers, config) {

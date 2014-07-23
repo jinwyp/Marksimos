@@ -45,6 +45,53 @@ app.directive('headerUser', ['$translate', function($translate) {
 }]);
 
 
+app.directive('headerAdmin', [function() {
+    return {
+        scope: {},
+        restrict: 'AE',
+        templateUrl: 'app/js/websitecomponent/adminheader.html'
+    };
+}]);
+
+
+app.directive('menuAdmin', [function() {
+    return {
+        scope: {
+            currentMenu : '=',
+            showtab : '='
+        },
+        restrict: 'AE',
+        templateUrl: 'app/js/websitecomponent/adminmenu.html',
+        link : function(scope, element){
+
+
+            scope.css = {
+                currentTab : 2,
+//                currentMenu : 'DistributorList',
+                menuexpand : [false, false, true, true, true, true, true, true] // menus control expand
+            };
+
+
+            scope.clickTab = function(tab){
+
+                scope.css.menuexpand[tab] = !scope.css.menuexpand[tab];
+                scope.css.currentTab = tab;
+
+            };
+
+            scope.clickMenu = function(currentmenu){
+                scope.currentMenu = currentmenu;
+
+                if(currentmenu === 1){
+                    scope.clickTab(1);
+                }
+            };
+
+        }
+    };
+}]);
+
+
 
 
 
@@ -337,8 +384,8 @@ app.directive('idcardInput', function() {
             }
 
             if(angular.isUndefined(scope.minlength)  ){
-                scope.minlength = 6;
-                scope.minlengtherrorinfo = 'ID Card must be at least 6 characters';
+                scope.minlength = 17;
+                scope.minlengtherrorinfo = 'ID Card must be at least 17 characters';
             }
 
             if(angular.isUndefined(scope.required)  ){
@@ -360,6 +407,7 @@ app.directive('licenceInput', function() {
             formname : '=',
             required : '=',
             requirederrorinfo : '@',
+            numbererrorinfo : '@',
             min : '=',
             minerrorinfo : '@',
             max : '=',
@@ -375,6 +423,7 @@ app.directive('licenceInput', function() {
             if(angular.isUndefined(scope.required)  ){
                 scope.required = true;
                 scope.requirederrorinfo = 'Number is required';
+                scope.numbererrorinfo = 'Must be numeric character';
             }
 
             if(angular.isUndefined(scope.min)  ){
