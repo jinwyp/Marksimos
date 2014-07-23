@@ -16,7 +16,7 @@ app.directive('filterpercentage', [ function() {
                 if(angular.isNumber(number)){
                     return parseInt( number * 10000) / 100 ;
                 }
-                return number
+                return number;
             }
 
             function formatInput(number) {
@@ -24,7 +24,7 @@ app.directive('filterpercentage', [ function() {
                 if(angular.isNumber(Number(number))){
                     return number / 100 ;
                 }
-                return number
+                return number;
             }
             
             ngModel.$formatters.push(showFormatText);
