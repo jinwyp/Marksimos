@@ -79,6 +79,9 @@ module.exports = (function(){
         case 'jin':
             config.logDirectory = '/Users/jinwyp/Documents/github/Marksimos/log/';
             break;
+        case 'ludwik':
+            config.logDirectory = '/Users/ludwik/code/actived/Marksimos/log/';
+            break;            
         case 'development':
             config.logDirectory = '/Users/ludwik/code/Marksimos/log/';
             break;

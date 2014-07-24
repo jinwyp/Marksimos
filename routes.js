@@ -18,7 +18,8 @@ module.exports = function(app){
         res.render('user/userintroduction.ejs', { title : 'MarkSimos - Introduction Videos'});
     });
 
-    app.get('/home', authMiddleware.needLogin, function(req, res, next){
+    // authMiddleware.needLogin,
+    app.get('/home', function(req, res, next){
         res.render('user/userhome.ejs', { title : 'MarkSimos - User Home'});
     });
 
