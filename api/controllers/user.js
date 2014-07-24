@@ -9,7 +9,6 @@ var seminarModel = require('../models/seminar.js');
 
 exports.getUser = function(req, res, next){
     var userId = sessionOperation.getUserId(req);
-
     userModel.findOne({_id: userId})
     .then(function(user){
         if(!user){
