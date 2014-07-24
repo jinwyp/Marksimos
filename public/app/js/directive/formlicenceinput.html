@@ -3,7 +3,8 @@
         <div class="col-sm-4">
             <input type="number" class="form-control" id="inputLicence" name="licence" placeholder="{{placeholdertext}}" ng-model="data" ng-required="{{required}}" min="{{min}}" max="{{max}}"  ng-maxlength="{{maxlength}}"  >
         </div>
-        <label class="control-label" ng-show="formname.licence.$dirty && formname.licence.$error.required" ><i class="fa fa-times-circle-o"></i> {{requirederrorinfo}}</label>
+        <label class="control-label" ng-show="formname.licence.$dirty && formname.licence.$error.required" ><i class="fa fa-times-circle-o"></i> {{requirederrorinfo}} </label>
+        <label class="control-label" ng-show="formname.licence.$dirty && formname.licence.$error.number" ><i class="fa fa-times-circle-o"></i> {{numbererrorinfo}}</label>
         <label class="control-label" ng-show="formname.licence.$dirty && formname.licence.$error.min" ><i class="fa fa-times-circle-o"></i> {{minerrorinfo}}</label>
         <label class="control-label" ng-show="formname.licence.$dirty && formname.licence.$error.max" ><i class="fa fa-times-circle-o"></i> {{maxerrorinfo}}</label>
         <label class="control-label" ng-show="formname.licence.$dirty && formname.licence.$error.minlength" ><i class="fa fa-times-circle-o"></i> {{minlengtherrorinfo}}</label>

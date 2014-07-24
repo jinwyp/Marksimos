@@ -9,7 +9,7 @@
 
     <div class="wrapper row-offcanvas row-offcanvas-left">
 
-        <menu-admin current-menu="css.leftmenu" showmenu="css.menuShow"></menu-admin>
+        <menu-admin current-menu="css.leftmenu" showtab="css.menuTabShow"></menu-admin>
 
 
         <aside class="right-side">
@@ -61,7 +61,7 @@
                                     <tbody>
                                     <tr>
                                         <th>ID</th>
-                                        <th>Name</th>
+                                        <th>UserName</th>
                                         <th>Email</th>
                                         <th>Status</th>
                                         <th>Licences Used / Granted</th>
@@ -138,7 +138,7 @@
                                         </div>
                                     </div>
 
-                                    <licence-input labeltext="No. of Licences Granted :" placeholdertext="No. of Licences Granted" formname="newDistributorForm" data="data.newDistributor.num_of_license_granted" required="false" requirederrorinfo="ID Card is required" min="1" minerrorinfo="Must be greater than 1" max="200" maxerrorinfo="Must be less than 200"></licence-input>
+                                    <licence-input labeltext="No. of Licences Granted :" placeholdertext="No. of Licences Granted" formname="newDistributorForm" data="data.newDistributor.num_of_license_granted" required="true" requirederrorinfo="License is required" numbererrorinfo="License is numeric" min="1" minerrorinfo="Must be greater than 1" max="200" maxerrorinfo="Must be less than 200"></licence-input>
 
 
                                     <!--<div class="form-group">-->
@@ -217,7 +217,7 @@
                                     <tbody>
                                     <tr>
                                         <th>ID</th>
-                                        <th>Name</th>
+                                        <th>UserName</th>
                                         <th>Email</th>
                                         <th>Status</th>
                                         <th>Licences Used / Granted</th>
@@ -237,7 +237,7 @@
                                         <td>{{user.country}} / {{user.state}} / {{user.city}} </td>
                                         <td>{{user.district}} {{user.street}}</td>
                                         <td>{{user.pincode}}</td>
-                                        <td title="{{user.distributorId}}">{{user.distributorId}}</td>
+                                        <td title="{{user.distributorId}}">{{user.distributorName}}</td>
                                     </tr>
                                     </tbody>
                                 </table>
@@ -296,7 +296,7 @@
                                         </div>
                                     </div>
 
-                                    <licence-input labeltext="No. of Licences Granted :" placeholdertext="No. of Licences Granted" formname="newFacilitatorForm" data="data.newFacilitator.num_of_license_granted" required="false" requirederrorinfo="ID Card is required" min="1" minerrorinfo="Must be greater than 1" max="200" maxerrorinfo="Must be less than 200"></licence-input>
+                                    <licence-input labeltext="No. of Licences Granted :" placeholdertext="No. of Licences Granted" formname="newFacilitatorForm" data="data.newFacilitator.num_of_license_granted" required="true" requirederrorinfo="License is required" numbererrorinfo="License is numeric" min="1" minerrorinfo="Must be greater than 1" max="200" maxerrorinfo="Must be less than 200"></licence-input>
 
 
                                     <!--<div class="form-group">-->
@@ -321,11 +321,360 @@
                             </form>
                         </div>
 
+                    </div>
+                </div>
+            </section>
 
+
+
+            <section class="content" ng-if="css.leftmenu==41">
+                <h2 class="page-header">Student Management</h2>
+
+                <div class="row" >
+                    <div class="col-md-12">
+
+                        <div class="box box-primary">
+                            <form class="form-horizontal" role="form" name="searchStudentForm">
+                                <div class="box-body">
+
+                                    <username-input labeltext="Student UserName :" placeholdertext="Student UserName" formname="searchStudentForm" data="data.searchStudent.username" required="false" requirederrorinfo="Username is required" minlength="6" minlengtherrorinfo="Username must be at least 6 characters" maxlength="20" maxlengtherrorinfo="Username is a maximum of 20 characters"></username-input>
+                                    <email-input labeltext="Student Email :" placeholdertext="Email" formname="searchStudentForm" data="data.searchStudent.email" required="false" requirederrorinfo="Email is required" emailerrorinfo="Doesn't look like a valid email !"></email-input>
+
+
+                                    <div class="form-group">
+                                        <label for="inputStudentUserStatus" class="col-sm-2 control-label">User Status</label>
+                                        <div class="col-sm-4">
+                                            <label class="radio-inline">
+                                                <input type="radio" name="inputStudentUserStatus" ng-model="data.searchStudent.user_status" value="false">Active
+                                            </label>
+                                            <label class="radio-inline">
+                                                <input type="radio" name="inputStudentUserStatus" ng-model="data.searchStudent.user_status" value="true">Inactive
+                                            </label>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="box-footer">
+                                    <div class="form-group">
+                                        <div class="col-sm-offset-2 col-sm-10">
+                                            <button type="submit" class="btn btn-primary" ng-click="searchStudent(searchStudentForm)">Search</button>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </form>
+                        </div>
+
+                        <div class="box">
+                            <div class="box-header">
+                                <h3 class="box-title">Student List</h3>
+                            </div><!-- /.box-header -->
+                            <div class="box-body table-responsive no-padding">
+                                <table class="table table-striped table-hover">
+                                    <tbody>
+                                    <tr>
+                                        <th>ID</th>
+                                        <th>UserName</th>
+                                        <th>First/Last Name</th>
+                                        <th>Email</th>
+                                        <th>Status</th>
+                                        <th>Cell Phone</th>
+                                        <th>Country / Province / City</th>
+                                        <th>Current Occupation</th>
+                                        <th>Organization / University</th>
+                                        <th>Facilitator</th>
+                                        <th>Distributor</th>
+                                    </tr>
+                                    <tr ng-repeat="user in data.students" >
+                                        <td>{{user._id}}</td>
+                                        <td>{{user.name}}</td>
+                                        <td>{{user.firstName}} {{user.lastName}}</td>
+                                        <td>{{user.email}}</td>
+                                        <td>{{!user.isDisabled}}</td>
+                                        <td>{{user.phone}}</td>
+                                        <td>{{user.country}} / {{user.state}} / {{user.city}} </td>
+                                        <td>{{user.occupation}}</td>
+                                        <td>{{user.organization}} / {{user.univercity}}</td>
+                                        <td title="{{user.facilitatorId}}">{{user.facilitatorName}}</td>
+                                        <td title="{{user.distributorId}}">{{user.distributorName}}</td>
+                                    </tr>
+                                    </tbody>
+                                </table>
+                            </div><!-- /.box-body -->
+                        </div>
 
                     </div>
                 </div>
             </section>
+
+
+            <section class="content" ng-if="css.leftmenu==42">
+                <h2 class="page-header">Create New Student</h2>
+
+                <div class="row" >
+                    <div class="col-md-12">
+
+                        <div class="box box-primary">
+                            <form class="form-horizontal" role="form" name="newStudentForm">
+                                <div class="box-body">
+
+                                    <username-input labeltext="Student UserName :" placeholdertext="Student UserName" formname="newStudentForm" data="data.newStudent.username" required="true" requirederrorinfo="Username is required" minlength="6" minlengtherrorinfo="Username must be at least 6 characters" maxlength="20" maxlengtherrorinfo="Username is a maximum of 20 characters"></username-input>
+                                    <email-input labeltext="Student Email :" placeholdertext="Email" formname="newStudentForm" data="data.newStudent.email" required="true" requirederrorinfo="Email is required" emailerrorinfo="Doesn't look like a valid email !"></email-input>
+                                    <password-input labeltext="Password :" placeholdertext="Password" formname="newStudentForm" data="data.newStudent.password" required="true" requirederrorinfo="Password is required" minlength="6" minlengtherrorinfo="Password must be at least 6 characters" maxlength="20" maxlengtherrorinfo="Password is a maximum of 20 characters"></password-input>
+                                    <phone-input labeltext="Phone :" placeholdertext="Cell Phone" formname="newStudentForm" data="data.newStudent.phone" required="false" requirederrorinfo="Phone is required" minlength="11" minlengtherrorinfo="Phone must be at least 11 characters" maxlength="15" maxlengtherrorinfo="Phone is a maximum of 15 characters"></phone-input>
+
+                                    <div class="form-group">
+                                        <label for="inputStudentCountry" class="col-sm-2 control-label">Country/State/City : </label>
+                                        <div class="col-sm-3">
+                                            <select class="form-control" ng-model="data.newStudent.country" ng-options="country.name as country.name for country in data.country">
+
+                                            </select>
+                                        </div>
+
+                                        <div class="col-sm-3">
+                                            <select class="form-control">
+                                                <option>Province</option>
+                                            </select>
+                                        </div>
+
+                                        <div class="col-sm-3">
+                                            <select class="form-control">
+                                                <option>City</option>
+                                            </select>
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group" ng-class="{'has-success':newStudentForm.firstname.$dirty && newStudentForm.firstname.$valid, 'has-error': newStudentForm.firstname.$dirty && newStudentForm.firstname.$invalid}">
+                                        <label for="inputFirstName" class="col-sm-2 control-label">First Name : </label>
+                                        <div class="col-sm-4">
+                                            <input type="text" class="form-control" id="inputFirstName" name="firstname"  ng-model="data.newStudent.firstname" required>
+                                        </div>
+                                    </div>
+                                    <div class="form-group" ng-class="{'has-success':newStudentForm.lastname.$dirty && newStudentForm.lastname.$valid, 'has-error': newStudentForm.lastname.$dirty && newStudentForm.lastname.$invalid}">
+                                        <label for="inputLastName" class="col-sm-2 control-label">Last Name : </label>
+                                        <div class="col-sm-4">
+                                            <input type="text" class="form-control" id="inputLastName" name="lastname"  ng-model="data.newStudent.lastname" required>
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group" ng-class="{'has-success':newStudentForm.occupation.$dirty && newStudentForm.occupation.$valid, 'has-error': newStudentForm.occupation.$dirty && newStudentForm.occupation.$invalid}">
+                                        <label for="inputOccupation" class="col-sm-2 control-label">Current Occupation : </label>
+                                        <div class="col-sm-4">
+                                            <input type="text" class="form-control" id="inputOccupation" name="occupation"  ng-model="data.newStudent.occupation">
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group" ng-class="{'has-success':newStudentForm.university.$dirty && newStudentForm.university.$valid, 'has-error': newStudentForm.university.$dirty && newStudentForm.university.$invalid}">
+                                        <label for="inputUniversity" class="col-sm-2 control-label">Organization / University : </label>
+                                        <div class="col-sm-4">
+                                            <input type="text" class="form-control" id="inputUniversity" name="university"  ng-model="data.newStudent.university">
+                                        </div>
+                                    </div>
+
+                                    <!--<div class="form-group">-->
+                                    <!--<label for="inputStudentLicenceGranted" class="col-sm-2 control-label">Game Type :</label>-->
+                                    <!--<div class="col-sm-4">-->
+                                    <!--<select class="form-control input-sm">-->
+                                    <!--<option>MARKSIMOS B2B</option>-->
+                                    <!--<option>MARKSIMOS B2C</option>-->
+                                    <!--<option>CASASIMOS</option>-->
+                                    <!--</select>-->
+                                    <!--</div>-->
+                                    <!--</div>-->
+                                </div>
+
+                                <div class="box-footer">
+                                    <div class="form-group">
+                                        <div class="col-sm-offset-2 col-sm-10">
+                                            <button type="submit" class="btn btn-primary" ng-click="createNewStudent(newStudentForm)"> Create </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+
+                    </div>
+                </div>
+            </section>
+
+
+
+            <section class="content" ng-if="css.leftmenu==51">
+                <h2 class="page-header">Seminar Management</h2>
+
+                <div class="row" >
+                    <div class="col-md-12">
+
+                        <div class="box box-primary">
+                            <form class="form-horizontal" role="form" name="searchSeminarForm">
+                                <div class="box-body">
+
+                                    <username-input labeltext="Seminar UserName :" placeholdertext="Seminar UserName" formname="searchSeminarForm" data="data.searchSeminar.username" required="false" requirederrorinfo="Username is required" minlength="6" minlengtherrorinfo="Username must be at least 6 characters" maxlength="20" maxlengtherrorinfo="Username is a maximum of 20 characters"></username-input>
+                                    <email-input labeltext="Seminar Email :" placeholdertext="Email" formname="searchSeminarForm" data="data.searchSeminar.email" required="false" requirederrorinfo="Email is required" emailerrorinfo="Doesn't look like a valid email !"></email-input>
+
+
+                                    <div class="form-group">
+                                        <label for="inputSeminarUserStatus" class="col-sm-2 control-label">User Status</label>
+                                        <div class="col-sm-4">
+                                            <label class="radio-inline">
+                                                <input type="radio" name="inputSeminarUserStatus" ng-model="data.searchSeminar.user_status" value="false">Active
+                                            </label>
+                                            <label class="radio-inline">
+                                                <input type="radio" name="inputSeminarUserStatus" ng-model="data.searchSeminar.user_status" value="true">Inactive
+                                            </label>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="box-footer">
+                                    <div class="form-group">
+                                        <div class="col-sm-offset-2 col-sm-10">
+                                            <button type="submit" class="btn btn-primary" ng-click="searchSeminar(searchSeminarForm)">Search</button>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </form>
+                        </div>
+
+                        <div class="box">
+                            <div class="box-header">
+                                <h3 class="box-title">Seminar List</h3>
+                            </div><!-- /.box-header -->
+                            <div class="box-body table-responsive no-padding">
+                                <table class="table table-striped table-hover">
+                                    <tbody>
+                                    <tr>
+                                        <th>ID</th>
+                                        <th>UserName</th>
+                                        <th>First/Last Name</th>
+                                        <th>Email</th>
+                                        <th>Status</th>
+                                        <th>Cell Phone</th>
+                                        <th>Country / Province / City</th>
+                                        <th>Current Occupation</th>
+                                        <th>Organization / University</th>
+                                        <th>Facilitator</th>
+                                        <th>Distributor</th>
+                                    </tr>
+                                    <tr ng-repeat="user in data.students" >
+                                        <td>{{user._id}}</td>
+                                        <td>{{user.name}}</td>
+                                        <td>{{user.firstName}} {{user.lastName}}</td>
+                                        <td>{{user.email}}</td>
+                                        <td>{{!user.isDisabled}}</td>
+                                        <td>{{user.phone}}</td>
+                                        <td>{{user.country}} / {{user.state}} / {{user.city}} </td>
+                                        <td>{{user.occupation}}</td>
+                                        <td>{{user.organization}} / {{user.univercity}}</td>
+                                        <td title="{{user.facilitatorId}}">{{user.facilitatorName}}</td>
+                                        <td title="{{user.distributorId}}">{{user.distributorName}}</td>
+                                    </tr>
+                                    </tbody>
+                                </table>
+                            </div><!-- /.box-body -->
+                        </div>
+
+                    </div>
+                </div>
+            </section>
+
+
+            <section class="content" ng-if="css.leftmenu==52">
+                <h2 class="page-header">Create New Seminar</h2>
+
+                <div class="row" >
+                    <div class="col-md-12">
+
+                        <div class="box box-primary">
+                            <form class="form-horizontal" role="form" name="newSeminarForm">
+                                <div class="box-body">
+
+                                    <username-input labeltext="Seminar UserName :" placeholdertext="Seminar UserName" formname="newSeminarForm" data="data.newSeminar.username" required="true" requirederrorinfo="Username is required" minlength="6" minlengtherrorinfo="Username must be at least 6 characters" maxlength="20" maxlengtherrorinfo="Username is a maximum of 20 characters"></username-input>
+                                    <email-input labeltext="Seminar Email :" placeholdertext="Email" formname="newSeminarForm" data="data.newSeminar.email" required="true" requirederrorinfo="Email is required" emailerrorinfo="Doesn't look like a valid email !"></email-input>
+                                    <password-input labeltext="Password :" placeholdertext="Password" formname="newSeminarForm" data="data.newSeminar.password" required="true" requirederrorinfo="Password is required" minlength="6" minlengtherrorinfo="Password must be at least 6 characters" maxlength="20" maxlengtherrorinfo="Password is a maximum of 20 characters"></password-input>
+                                    <phone-input labeltext="Phone :" placeholdertext="Cell Phone" formname="newSeminarForm" data="data.newSeminar.phone" required="false" requirederrorinfo="Phone is required" minlength="11" minlengtherrorinfo="Phone must be at least 11 characters" maxlength="15" maxlengtherrorinfo="Phone is a maximum of 15 characters"></phone-input>
+
+                                    <div class="form-group">
+                                        <label for="inputSeminarCountry" class="col-sm-2 control-label">Country/State/City : </label>
+                                        <div class="col-sm-3">
+                                            <select class="form-control" ng-model="data.newSeminar.country" ng-options="country.name as country.name for country in data.country">
+
+                                            </select>
+                                        </div>
+
+                                        <div class="col-sm-3">
+                                            <select class="form-control">
+                                                <option>Province</option>
+                                            </select>
+                                        </div>
+
+                                        <div class="col-sm-3">
+                                            <select class="form-control">
+                                                <option>City</option>
+                                            </select>
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group" ng-class="{'has-success':newSeminarForm.firstname.$dirty && newSeminarForm.firstname.$valid, 'has-error': newSeminarForm.firstname.$dirty && newSeminarForm.firstname.$invalid}">
+                                        <label for="inputFirstName" class="col-sm-2 control-label">First Name : </label>
+                                        <div class="col-sm-4">
+                                            <input type="text" class="form-control" id="inputFirstName" name="firstname"  ng-model="data.newSeminar.firstname" required>
+                                        </div>
+                                    </div>
+                                    <div class="form-group" ng-class="{'has-success':newSeminarForm.lastname.$dirty && newSeminarForm.lastname.$valid, 'has-error': newSeminarForm.lastname.$dirty && newSeminarForm.lastname.$invalid}">
+                                        <label for="inputLastName" class="col-sm-2 control-label">Last Name : </label>
+                                        <div class="col-sm-4">
+                                            <input type="text" class="form-control" id="inputLastName" name="lastname"  ng-model="data.newSeminar.lastname" required>
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group" ng-class="{'has-success':newSeminarForm.occupation.$dirty && newSeminarForm.occupation.$valid, 'has-error': newSeminarForm.occupation.$dirty && newSeminarForm.occupation.$invalid}">
+                                        <label for="inputOccupation" class="col-sm-2 control-label">Current Occupation : </label>
+                                        <div class="col-sm-4">
+                                            <input type="text" class="form-control" id="inputOccupation" name="occupation"  ng-model="data.newSeminar.occupation">
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group" ng-class="{'has-success':newSeminarForm.university.$dirty && newSeminarForm.university.$valid, 'has-error': newSeminarForm.university.$dirty && newSeminarForm.university.$invalid}">
+                                        <label for="inputUniversity" class="col-sm-2 control-label">Organization / University : </label>
+                                        <div class="col-sm-4">
+                                            <input type="text" class="form-control" id="inputUniversity" name="university"  ng-model="data.newSeminar.university">
+                                        </div>
+                                    </div>
+
+                                    <!--<div class="form-group">-->
+                                    <!--<label for="inputSeminarLicenceGranted" class="col-sm-2 control-label">Game Type :</label>-->
+                                    <!--<div class="col-sm-4">-->
+                                    <!--<select class="form-control input-sm">-->
+                                    <!--<option>MARKSIMOS B2B</option>-->
+                                    <!--<option>MARKSIMOS B2C</option>-->
+                                    <!--<option>CASASIMOS</option>-->
+                                    <!--</select>-->
+                                    <!--</div>-->
+                                    <!--</div>-->
+                                </div>
+
+                                <div class="box-footer">
+                                    <div class="form-group">
+                                        <div class="col-sm-offset-2 col-sm-10">
+                                            <button type="submit" class="btn btn-primary" ng-click="createNewSeminar(newSeminarForm)"> Create </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+
+                    </div>
+                </div>
+            </section>
+
+
+
+
+
+
+
 
         </aside>
     </div>
@@ -333,7 +682,7 @@
 
 
 
-
+    <div notifications="bottom right"></div>
 
 
 
