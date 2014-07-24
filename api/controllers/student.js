@@ -136,7 +136,7 @@ exports.updateStudent = function(req, res, next){
 };
 
 exports.searchStudent = function(req, res, next){
-    var name = req.query.name;
+    var name = req.query.username;
     var email = req.query.email;
     var country = req.query.country;
     var state = req.query.state;
