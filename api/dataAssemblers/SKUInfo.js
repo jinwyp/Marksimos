@@ -31,6 +31,7 @@ exports.getSKUInfo = function(seminarId, currentPeriod, companyId, SKUID){
 
         //current period data
         var currentPeriodInfo = {};
+        currentPeriodInfo.SKUName = brandResult.b_BrandName + SKUResult.u_SKUName;
         currentPeriodInfo.stocksAtFactory = [
             SKUResult.u_ps_FactoryStocks[consts.StocksMaxTotal].s_ps_Volume,
             SKUResult.u_ps_FactoryStocks[consts.StocksMaxTotal].s_ps_Volume * consts.ActualSize[SKUResult.u_PackSize]
@@ -55,7 +56,11 @@ exports.getSKUInfo = function(seminarId, currentPeriod, companyId, SKUID){
                 companyResult.c_AcquiredEfficiency,
                 decision.d_ProductionVolume)
         .then(function(unitProductionCost){
-            currentPeriodInfo.unitProductionCost = [parseFloat(unitProductionCost.toFixed(2)), parseFloat((unitProductionCost / consts.ActualSize[SKUResult.u_PackSize]).toFixed(2))]; 
+            currentPeriodInfo.unitProductionCost = [
+                parseFloat((Math.ceil(unitProductionCost * 100) / 100).toFixed(2)), 
+                parseFloat((Math.ceil(unitProductionCost / consts.ActualSize[SKUResult.u_PackSize] * 100) / 100).toFixed(2))
+            ]; 
+            //currentPeriodInfo.unitProductionCost = [parseFloat(unitProductionCost), parseFloat((unitProductionCost / consts.ActualSize[SKUResult.u_PackSize]))]; 
             
             //not sure if currentPeriodInfo.d_ConsumerPrice is the right value for that parameter
             var wholesalePrice = utility.unitPrice('WHOLESALERS', decision.d_ConsumerPrice);
@@ -63,7 +68,14 @@ exports.getSKUInfo = function(seminarId, currentPeriod, companyId, SKUID){
 
             var recommendedConsumer = decision.d_FactoryPrice[0] * (gameParameters.pgen.wholesale_Markup + 1)
                 * (1+ gameParameters.pgen.retail_Markup);
-            currentPeriodInfo.recommendedConsumer = [parseFloat(recommendedConsumer.toFixed(2)), parseFloat((recommendedConsumer / consts.ActualSize[SKUResult.u_PackSize]).toFixed(2))];
+            currentPeriodInfo.recommendedConsumer = [
+                parseFloat(recommendedConsumer.toFixed(2)), 
+                parseFloat((recommendedConsumer / consts.ActualSize[SKUResult.u_PackSize]).toFixed(2))
+            ];
+            // currentPeriodInfo.recommendedConsumer = [
+            //     parseFloat((Math.ceil(recommendedConsumer * 100) / 100).toFixed(2)), 
+            //     parseFloat((Math.ceil(recommendedConsumer / consts.ActualSize[SKUResult.u_PackSize] * 100) / 100).toFixed(2))
+            // ];
 
             currentPeriodInfo.period = currentPeriod;
 
@@ -116,13 +128,12 @@ exports.getSKUInfo = function(seminarId, currentPeriod, companyId, SKUID){
                 expectedSales.expectedGrossMargin = (expectedSales.expectedMaximalSales 
                 - (SKUResult.u_ps_FactoryStocks[consts.StocksMaxTotal].s_ps_Volume 
                     * SKUResult.u_ps_FactoryStocks[consts.StocksMaxTotal].s_ps_UnitCost
-                    + decision.d_ProductionVolume * decision.d_FactoryPrice[0]
+                    + decision.d_ProductionVolume * unitProductionCost
                    )
                 ) / expectedSales.expectedMaximalSales * 100;
             }else{
                 expectedSales.expectedGrossMargin = 0;
             }
-            
 
             expectedSales.expectedGrossMargin = parseFloat(expectedSales.expectedGrossMargin.toFixed(2));
 

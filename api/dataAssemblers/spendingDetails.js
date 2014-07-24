@@ -79,7 +79,7 @@ exports.getSpendingDetails = function(seminarId, currentPeriod, companyId){
         var companyDataInAllResults = utility.findCompany(lastPeriodResult, companyId)
         
         //average budget per period
-        companyData.averageBudgetPerPeriod = (companyDataInAllResults.c_TotalInvestmentBudget / seminar.simulationSpan).toFixed(2);
+        companyData.averageBudgetPerPeriod = (companyDataInAllResults.c_TotalInvestmentBudget / (seminar.simulationSpan + 1)).toFixed(2);
 
         companyData.totalInvestmentBudget = companyDataInAllResults.c_TotalInvestmentBudget;
 
@@ -96,7 +96,7 @@ exports.getSpendingDetails = function(seminarId, currentPeriod, companyId){
 
         //company data in all results
         if(companyDataInAllResults.c_Capacity - utility.calculateTotalVolume(decision) < 0){
-            companyData.availableOvertimeCapacityExtension = companyDataInAllResults.c_Capacity - calculateTotalVolume(decision) 
+            companyData.availableOvertimeCapacityExtension = companyDataInAllResults.c_Capacity - utility.calculateTotalVolume(decision) 
                 + companyDataInAllResults.c_Capacity * gameParameters.pgen.firm_OvertimeCapacity;
         }else{
             companyData.availableOvertimeCapacityExtension = companyDataInAllResults.c_Capacity * gameParameters.pgen.firm_OvertimeCapacity;

@@ -16,6 +16,10 @@ var tOneBrandDecisionSchema = new Schema({
 var BrandDecision = mongoose.model('BrandDecision', tOneBrandDecisionSchema);
 
 exports.remove =  function(seminarId, period, companyId, brandId){
+    if(!mongoose.connection.readyState){
+        throw new Error("mongoose is not connected.");
+    }
+
     var deferred = Q.defer();
     BrandDecision.remove({
         seminarId: seminarId,
@@ -33,6 +37,10 @@ exports.remove =  function(seminarId, period, companyId, brandId){
 }
 
 exports.removeAll =  function(seminarId){
+    if(!mongoose.connection.readyState){
+        throw new Error("mongoose is not connected.");
+    }
+
     var deferred = Q.defer();
     BrandDecision.remove({seminarId: seminarId}, function(err){
         if(err){
@@ -45,19 +53,27 @@ exports.removeAll =  function(seminarId){
 }
 
 exports.save = function(decision){
+    if(!mongoose.connection.readyState){
+        throw new Error("mongoose is not connected.");
+    }
+
     var deferred = Q.defer();
     var decision = new BrandDecision(decision);
-    decision.save(function(err){
+    decision.save(function(err, saveDecision, numAffected){
         if(err){
             deferred.reject(err);
         }else{
-            deferred.resolve(null);
+            deferred.resolve(saveDecision);
         }
     });
     return deferred.promise;
 };
 
 exports.findAllInCompany = function(seminarId, period, companyId){
+    if(!mongoose.connection.readyState){
+        throw new Error("mongoose is not connected.");
+    }
+
     var deferred = Q.defer();
     BrandDecision.find({
         seminarId: seminarId,
@@ -93,6 +109,10 @@ exports.findAllInPeriod = function(seminarId, period){
 }
 
 exports.findOne = function(seminarId, period, companyId, brandId){
+    if(!mongoose.connection.readyState){
+        throw new Error("mongoose is not connected.");
+    }
+
     var deferred = Q.defer();
 
     BrandDecision.findOne({
@@ -112,6 +132,10 @@ exports.findOne = function(seminarId, period, companyId, brandId){
 }
 
 exports.updateBrand = function(seminarId, period, companyId, brandId, brand){
+    if(!mongoose.connection.readyState){
+        throw new Error("mongoose is not connected.");
+    }
+
     var deferred = Q.defer();
 
     if(!seminarId){
@@ -147,6 +171,10 @@ exports.updateBrand = function(seminarId, period, companyId, brandId, brand){
  * Insert empty brand decisions for all brands in the next period
  */
 exports.insertEmptyBrandDecision = function(seminarId, period){
+    if(!mongoose.connection.readyState){
+        throw new Error("mongoose is not connected.");
+    }
+    
     return exports.findAllInPeriod(seminarId, period - 1)
     .then(function(allBrandDecisions){
         var p = Q();

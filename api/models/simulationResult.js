@@ -16,19 +16,27 @@ var simulationResultSchema = new Schema({
 var SimulationResult = mongoose.model("SimulationResult", simulationResultSchema);
 
 exports.insert = function(simulationResult){
+    if(!mongoose.connection.readyState){
+        throw new Error("mongoose is not connected.");
+    }
+
     var deferred = Q.defer();
 
-    SimulationResult.create(simulationResult, function(err){
+    SimulationResult.create(simulationResult, function(err, result){
         if(err){
             return deferred.reject(err);
         }
-        return deferred.resolve(undefined);
+        return deferred.resolve(result);
     });
 
     return deferred.promise;
 }
 
 exports.findAll = function(seminarId){
+    if(!mongoose.connection.readyState){
+        throw new Error("mongoose is not connected.");
+    }
+
     var deferred = Q.defer();
 
     SimulationResult.find({seminarId: seminarId})
@@ -45,6 +53,10 @@ exports.findAll = function(seminarId){
 }
 
 exports.removeAll = function(seminarId){
+    if(!mongoose.connection.readyState){
+        throw new Error("mongoose is not connected.");
+    }
+
     var deferred = Q.defer();
 
     SimulationResult.remove({seminarId: seminarId}, function(err){
@@ -59,9 +71,16 @@ exports.removeAll = function(seminarId){
 }
 
 exports.findOne = function(seminarId, period){
+    if(!mongoose.connection.readyState){
+        throw new Error("mongoose is not connected.");
+    }
+
     var deferred = Q.defer();
 
-    SimulationResult.findOne({seminarId: seminarId}, function(err, result){
+    SimulationResult.findOne({
+        seminarId: seminarId,
+        period: period
+    }, function(err, result){
         if(err){
             deferred.reject(err);
         }else{
@@ -72,6 +91,23 @@ exports.findOne = function(seminarId, period){
     return deferred.promise;
 }
 
+exports.remove = function(query){
+    if(!mongoose.connection.readyState){
+        throw new Error("mongoose is not connected.");
+    }
+    
+    var deferred = Q.defer();
+
+    SimulationResult.remove(query, function(err){
+        if(err){
+            deferred.reject(err);
+        }else{
+            deferred.resolve();
+        }
+    });
+
+    return deferred.promise;
+}
 
 
 

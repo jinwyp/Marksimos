@@ -362,7 +362,7 @@ angular.module('angularCharts').directive('acChart', [
           linedata.push(d);
         });
         var svg = d3.select(chartContainer[0]).append('svg').attr('width', width + margin.left + margin.right).attr('height', height + margin.top + margin.bottom).append('g').attr('transform', 'translate(' + margin.left + ',' + margin.top + ')');
-        var padding = d3.max(yData) * 0.1;
+        var padding = d3.max(yData) * 0.02;
         y.domain([
           d3.min(yData)- padding,
           d3.max(yData) + padding

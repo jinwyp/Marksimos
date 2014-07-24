@@ -18,7 +18,7 @@ exports.addDistributor = function(req, res, next){
     }
 
     var distributor = {
-        name: req.body.name,
+        name: req.body.username,
         email: req.body.email,
         phone: req.body.phone,
         country: req.body.country,
@@ -26,12 +26,13 @@ exports.addDistributor = function(req, res, next){
         city: req.body.city,
         password: utility.hashPassword(req.body.password),
         role: config.role.distributor,
-        numOfLicense: req.body.num_of_license,
+        numOfLicense: req.body.num_of_license_granted,
         isActivated: true,
+        isDisabled: false,
         district: req.body.district || '',
         street: req.body.street || '',
         pincode: req.body.pincode || ''
-    }
+    };
 
     userModel.findByEmail(req.body.email)
     .then(function(result){
@@ -69,8 +70,8 @@ exports.updateDistributor = function(req, res, next){
         city: req.body.city,
         password: utility.hashPassword(req.body.password),
         role: config.role.distributor,
-        numOfLicense: req.body.num_of_license,
-        isActive: true,
+        numOfLicense: req.body.num_of_license_granted,
+        isActivated: true,
         district: req.body.district || '',
         street: req.body.street || '',
         pincode: req.body.pincode || ''
@@ -91,7 +92,7 @@ exports.updateDistributor = function(req, res, next){
 };
 
 exports.searchDistributor = function(req, res, next){
-    var name = req.query.name;
+    var name = req.query.username;
     var email = req.query.email;
     var country = req.query.country;
     var state = req.query.state;

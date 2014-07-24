@@ -4,6 +4,7 @@ var gulp = require('gulp'),
     nodemon = require('gulp-nodemon'),
     jshint = require('gulp-jshint'),
     compass = require('gulp-compass');
+    mocha = require('gulp-mocha');
 
 var paths = {
     app: './public/app/**',
@@ -15,8 +16,9 @@ var paths = {
     csspath: './public/app/css/stylesheets',
     sasspath: './public/app/css/sass',
     imagespath : './public/app/css/images',
-    target_csspath: './public/app/css/stylesheets'
+    target_csspath: './public/app/css/stylesheets',
 
+    unit_test: './api/test/unit_test/*'
 };
 
 
@@ -41,10 +43,12 @@ gulp.task('compass', function() {
         .pipe(gulp.dest(paths.target_csspath))
 });
 
-
 // 自动重启服务器
 gulp.task('nodemon', function () {
-    nodemon({ script: 'app.js'});
+    nodemon({
+        script: 'app.js',
+        env: { 'NODE_ENV': 'jin' }
+    });
 //        .on('restart', 'default')
 });
 
@@ -63,6 +67,12 @@ gulp.task('watch', function() {
     });
 });
 
+// 自动运行测试
+gulp.task('mocha', function () {
+    gulp.watch(paths.unit_test, ['mocha']);
+    return gulp.src(paths.unit_test, {read: false})
+        .pipe(mocha({reporter: 'nyan', timeout: 2000}));
+});
 
 // 默认任务
 // The default task (called when you run `gulp` from cli)

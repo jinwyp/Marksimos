@@ -1,5 +1,6 @@
 var chartModel = require('../models/chart.js');
 var util = require('util');
+var logger = require('../../common/logger.js');
 
 exports.getChart = function(req, res, next){
     var seminarId = req.session.seminarId;
@@ -12,11 +13,11 @@ exports.getChart = function(req, res, next){
     var companyId = req.session.companyId;
 
     if(!seminarId){
-        return next(new Error('seminarId cannot be empty.'));
+        return res.send(500, {message: 'seminarId cannot be empty.'});
     }
 
     if(!chartName){
-        return next(new Error('chartName cannot be empty.'));
+        return res.send(500, {message: 'chartName cannot be empty.'});
     }
 
     //chart name saved in db doesn't contain _
@@ -35,7 +36,7 @@ exports.getChart = function(req, res, next){
         }
 
         if(!chart){
-            return next(new Error(util.format("chart %s does not exist.", chartName)));
+            return res.send(500, {message: util.format("chart %s does not exist.", chartName)});
         }
 
         if(chartName==='inventory_report'){
@@ -44,10 +45,11 @@ exports.getChart = function(req, res, next){
             return res.send(chartData);
         }
 
-        res.json(chart.chartData);
+        res.send(chart.chartData);
     })
     .fail(function(err){
-        next(err);
+        logger.error(err);
+        res.send(500, {message: "get chart failed."})
     })
     .done();
 

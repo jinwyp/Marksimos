@@ -2,14 +2,27 @@ var request = require('../promises/request.js');
 var config = require('../../common/config.js');
 var url = require('url');
 var util = require('util');
+var Q = require('q');
+
 var companyDecisionModel = require('../models/companyDecision.js');
 var brandDecisionModel = require('../models/brandDecision.js');
 var SKUDecisionModel = require('../models/SKUDecision.js');
+var simulationResultModel = require('../models/simulationResult.js');
+var seminarModel = require('../models/seminar.js');
+
 var decisionCleaner = require('../convertors/decisionCleaner.js');
 var decisionConvertor = require('../convertors/decision.js');
-var Q = require('q');
+
 var logger = require('../../common/logger.js');
+
 var gameParameters = require('../gameParameters.js').parameters;
+var utility = require('../../common/utility.js');
+
+var decisionAssembler = require('../dataAssemblers/decision.js');
+var productPortfolioAssembler = require('../dataAssemblers/productPortfolio.js');
+var spendingDetailsAssembler = require('../dataAssemblers/spendingDetails.js');
+var SKUInfoAssembler = require('../dataAssemblers/SKUinfo.js');
+
 
 /**
  * Sumit decision to CGI service
@@ -118,7 +131,8 @@ exports.submitDecision = function(req, res, next){
         });
     })
     .fail(function(err){
-        next(err);
+        logger.error(err);
+        res.send(500, {message: "submit decision failed."})
     })
     .done();
 
@@ -154,6 +168,28 @@ exports.submitDecision = function(req, res, next){
             decision.d_BrandsDecisions.push(emptyBrand);
         }
     }
+};
+
+
+exports.getDecision = function(req, res, next){
+    var seminarId = req.session.seminarId;
+
+    if(!seminarId){
+        return res.send(400, {message: "You don't choose a seminar."});
+    }
+    
+    var period = req.session.currentPeriod;
+    var companyId = req.session.companyId;
+
+    decisionAssembler.getDecision(seminarId, period, companyId)
+    .then(function(result){
+        res.send(result)
+    })
+    .fail(function(err){
+        logger.error(err);
+        res.send(500, {message: "get company data failed."});
+    })
+    .done();
 };
 
 exports.updateSKUDecision = function(req, res, next){
@@ -542,6 +578,134 @@ exports.deleteBrand = function(req, res, next){
     .fail(function(err){
         logger.error(err);
         res.send(500, {message: "remove brand failed."});
+    })
+    .done();
+}
+
+exports.getProductPortfolio = function(req, res, next){
+    var seminarId = req.session.seminarId;
+
+    if(!seminarId){
+        return res.send(400, {message: "You don't choose a seminar."});
+    }
+
+    var period = req.session.currentPeriod;
+    var companyId = req.session.companyId;
+
+    productPortfolioAssembler.getProductPortfolioForOneCompany(seminarId, period, companyId)
+    .then(function(productPortfolioForOneCompany){
+        res.send(productPortfolioForOneCompany);
+    })
+    .fail(function(err){
+        logger.error(err);
+        res.send(500, {message: "get product portfolio failed."});
+    })
+    .done();
+}
+
+exports.getSpendingDetails = function(req, res, next){
+    var seminarId = req.session.seminarId;
+
+    if(!seminarId){
+        return res.send(400, {message: "You don't choose a seminar."});
+    }
+
+    var period = req.session.currentPeriod;
+    var companyId = req.session.companyId;
+
+    spendingDetailsAssembler.getSpendingDetails(seminarId, period, companyId)
+    .then(function(spendingDetails){
+        res.send(spendingDetails);
+    })
+    .fail(function(err){
+        logger.error(err);
+        res.send(500, {message: "get spending details failed."});
+    })
+    .done();
+}
+
+
+exports.getSKUInfo = function(req, res, next){
+    var seminarId = req.session.seminarId;
+
+    if(!seminarId){
+        return res.send(400, {message: "You don't choose a seminar."});
+    }
+
+    var period = req.session.currentPeriod;
+    var companyId = req.session.companyId;
+
+    var SKUID = req.params.sku_id;
+
+    if(!SKUID){
+        return res.send(400, {message: "Invalid parameter sku_id."});
+    }
+
+    SKUInfoAssembler.getSKUInfo(seminarId, period, companyId, SKUID)
+    .then(function(SKUInfo){
+        res.send(SKUInfo);
+    })
+    .fail(function(err){
+        logger.error(err);
+        res.send(500, {message: "get SKUInfo failed."});
+    })
+    .done();
+}
+
+
+exports.getOtherinfo = function(req, res, next){
+    var seminarId = req.session.seminarId;
+
+    if(!seminarId){
+        return res.send(400, {message: "You don't choose a seminar."});
+    }
+    
+    var currentPeriod = req.session.currentPeriod;
+    var companyId = req.session.companyId;
+
+    Q.all([
+        spendingDetailsAssembler.getSpendingDetails(seminarId, currentPeriod, companyId),
+        simulationResultModel.findOne(seminarId, currentPeriod - 1)
+    ])
+    .spread(function(spendingDetails, lastPeriodResult){
+        var totalInvestment = spendingDetails.companyData.totalInvestment;
+        var companyResult = utility.findCompany(lastPeriodResult, companyId);
+
+        var totalAvailableBudget = parseFloat(
+                (
+                    (companyResult.c_TotalInvestmentBudget - companyResult.c_CumulatedInvestments - totalInvestment
+                    ) / (companyResult.c_TotalInvestmentBudget - companyResult.c_CumulatedInvestments)
+                ).toFixed(2)
+            );
+        var totalAvailableBudgetValue = companyResult.c_TotalInvestmentBudget - companyResult.c_CumulatedInvestments - totalInvestment;
+
+        var normalCapacity = parseFloat((spendingDetails.companyData.normalCapacity/companyResult.c_Capacity).toFixed(2));
+        var normalCapacityValue = spendingDetails.companyData.normalCapacity;
+        
+        var overtimeCapacity = parseFloat(((companyResult.c_Capacity * gameParameters.pgen.firm_OvertimeCapacity +  spendingDetails.companyData.normalCapacity
+            ) / (companyResult.c_Capacity * gameParameters.pgen.firm_OvertimeCapacity)).toFixed(2));
+
+        var overtimeCapacityValue = companyResult.c_Capacity * gameParameters.pgen.firm_OvertimeCapacity +  spendingDetails.companyData.normalCapacity;
+
+        //if normal capacity is not totally used, set overtime capacity to 1
+        if(normalCapacityValue > 0){
+            overtimeCapacity = 1;
+            overtimeCapacityValue = companyResult.c_Capacity * gameParameters.pgen.firm_OvertimeCapacity;
+            //overtimeCapacityValue = companyResult.c_Capacity;
+        }
+
+        res.send({
+            totalAvailableBudget: totalAvailableBudget,
+            normalCapacity: normalCapacity,
+            overtimeCapacity: overtimeCapacity,
+            totalAvailableBudgetValue: totalAvailableBudgetValue,
+            normalCapacityValue: normalCapacityValue,
+            overtimeCapacityValue: overtimeCapacityValue
+        });
+    })
+    .fail(function(err){
+        logger.error(err);
+        res.send(500, {message: "get otherInfo failed."})
     })
     .done();
 }

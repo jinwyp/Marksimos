@@ -1,69 +1,93 @@
-module.exports = {
-    host: 'http://localhost:3000/',
-    cgiService: 'http://10.20.30.97/cgi-bin/',
+module.exports = (function(){
+    var config = {
+        host: 'http://localhost:3000/',
+        cgiService: 'http://10.20.30.97/cgi-bin/',
 
-    passwordSalt: 'hcd',
+    //logDirectory: '/Users/ludwik/code/Marksimos/log/',
+    logDirectory: '/Users/ludwik/code/Actived/Marksimos/log/',
 
-    role: {
-        admin: 1,
-        distributor: 2,
-        facilitator: 3,
-        student: 4
-    },
+        passwordSalt: 'hcd',
 
-    mail: {
-        host: 'mail.hcdglobal.com',
-        user: 'test@hcdglobal.com',
-        password: 'hcd1234##',
-        name: 'HCD'
-    },
+        role: {
+            admin: 1,
+            distributor: 2,
+            facilitator: 3,
+            student: 4
+        },
 
-    segmentNameAndIndex: {
-        'priceSensitive':0, 
-        'pretenders': 1,
-        'moderate': 2,
-        'goodLife': 3,
-        'ultimate': 4,
-        'pragmatic': 5,
-        'allSegments': 6
-    },
-    segmentNames: [
-        'priceSensitive',
-        'pretenders',
-        'moderate',
-        'goodLife',
-        'ultimate',
-        'pragmatic',
-        'allSegments'
-    ],
+        mail: {
+            host: 'mail.hcdglobal.com',
+            user: 'test@hcdglobal.com',
+            password: 'hcd1234##',
+            name: 'HCD'
+        },
 
-    segmentNamesOnProductPortfolio: [
-        '1. Price Sensitive',
-        '2. Pretenders',
-        '3. Moderate',
-        '4. Good Life',
-        '5. Ultimate',
-        '6. Pragmatic'
-    ],
-
-    inventoryNames: {
-        'FMCG': [
-            'FreshInventory',
-            'PreviousInventory',
-            'CloseToEXpireInventory' 
+        segmentNameAndIndex: {
+            'priceSensitive':0, 
+            'pretenders': 1,
+            'moderate': 2,
+            'goodLife': 3,
+            'ultimate': 4,
+            'pragmatic': 5,
+            'allSegments': 6
+        },
+        segmentNames: [
+            'priceSensitive',
+            'pretenders',
+            'moderate',
+            'goodLife',
+            'ultimate',
+            'pragmatic',
+            'allSegments'
         ],
-        'DURABLES': [
-            'Latest Stock',
-            'one-year old Stock',
-            'Two-year old Stock',
-            'Three-year old Stock',
-            'Oldest Stock'
-        ]
-    },
 
-    packsizeDescription: [
-        "Small Pack", 
-        "Normal Pack", 
-        "Large Pack" 
-    ]
-};
+        segmentNamesOnProductPortfolio: [
+            '1. Price Sensitive',
+            '2. Pretenders',
+            '3. Moderate',
+            '4. Good Life',
+            '5. Ultimate',
+            '6. Pragmatic'
+        ],
+
+        inventoryNames: {
+            'FMCG': [
+                'FreshInventory',
+                'PreviousInventory',
+                'CloseToEXpireInventory' 
+            ],
+            'DURABLES': [
+                'Latest Stock',
+                'one-year old Stock',
+                'Two-year old Stock',
+                'Three-year old Stock',
+                'Oldest Stock'
+            ]
+        },
+
+        packsizeDescription: [
+            "Small Pack", 
+            "Normal Pack", 
+            "Large Pack" 
+        ]
+    };
+
+    switch(process.env.NODE_ENV){
+        case 'suyuan':
+            config.logDirectory = '/Users/ludwik/code/Marksimos/log/';
+            break;
+        case 'jin':
+            config.logDirectory = '/Users/jinwyp/Documents/github/Marksimos/log/';
+            break;
+        case 'development':
+            config.logDirectory = '/Users/ludwik/code/Marksimos/log/';
+            break;
+        case 'production':
+            config.logDirectory = '/Users/ludwik/code/Marksimos/log/';
+            break;
+        default:
+            config.logDirectory = '/Users/ludwik/code/Marksimos/log/';
+    }
+
+    return config;
+})();

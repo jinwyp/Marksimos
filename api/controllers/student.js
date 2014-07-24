@@ -22,7 +22,7 @@ exports.addStudent = function(req, res, next){
     var facilitatorId = sessionOperation.getUserId(req);
 
     var student = {
-        name: req.body.first_name + ' ' + req.body.last_name,
+        name: req.body.firstname + ' ' + req.body.lastname,
         email: req.body.email,
         phone: req.body.phone,
         country: req.body.country,
@@ -35,8 +35,8 @@ exports.addStudent = function(req, res, next){
         pincode: req.body.pincode || '',
         gender: req.body.gender || '',
         occupation: req.body.occupation || '',
-        firstName: req.body.first_name,
-        lastName: req.body.last_name,
+        firstName: req.body.firstname,
+        lastName: req.body.lastname,
         univercity: req.body.univercity || '',
         organization: req.body.organization || '',
         highestEducationalDegree: req.body.highest_educational_degree ||''
@@ -77,7 +77,7 @@ exports.updateStudent = function(req, res, next){
 
     var student = {};
 
-    if(req.body.name) student.name = req.body.first_name + ' ' + req.body.last_name;
+    if(req.body.name) student.name = req.body.firstname + ' ' + req.body.lastname;
     if(req.body.phone) student.phone = req.body.phone;
     if(req.body.country) student.country = req.body.country;
     if(req.body.state) student.state = req.body.state;
@@ -86,8 +86,8 @@ exports.updateStudent = function(req, res, next){
     if(req.body.pincode) student.pincode = req.body.pincode;
     if(req.body.gender) student.gender = req.body.gender;
     if(req.body.occupation) student.occupation = req.body.occupation;
-    if(req.body.first_name) student.firstName = req.body.first_name;
-    if(req.body.last_name) student.lastName = req.body.last_name;
+    if(req.body.firstname) student.firstName = req.body.firstname;
+    if(req.body.lastname) student.lastName = req.body.lastname;
     if(req.body.univercity) student.univercity = req.body.univercity;
     if(req.body.organization) student.organization = req.body.organization;
     if(req.body.highestEducationalDegree) student.highestEducationalDegree = req.body.highestEducationalDegree;

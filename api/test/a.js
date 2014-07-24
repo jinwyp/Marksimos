@@ -1,4 +1,9 @@
 var request = require('request');
+var userModel = require('../models/user.js');
+var seminarModel = require('../models/seminar.js');
+var Q = require('q');
+var mongoose = require('mongoose');
+
 
 function register(){
     request.post('http://localhost:3000/api/register', function(err, res, body){
@@ -41,12 +46,12 @@ function addDistributor(){
         country: 'china',
         state: 'shanghai',
         city: 'shanghai',
-        num_of_license: 10
+        num_of_license: 100
     });
 }
 
 function updateDistributor(){
-    request.put('http://localhost:3000/api/distributors/53c38da49f7576ef26b867e9', function(err, res, body){
+    request.put('http://localhost:3000/api/distributors/53c88615d3691cca075a925f', function(err, res, body){
         if(err){
             console.log(JSON.stringify(err));
         }else{
@@ -80,12 +85,12 @@ function addFacilitator(){
         country: 'china',
         state: 'shanghai',
         city: 'shanghai',
-        num_of_license: 1
+        num_of_license: 50
     });
 }
 
 function updateFacilitator(){
-    request.put('http://localhost:3000/api/facilitators/53c38dcb4acf1d1627290928', function(err, res, body){
+    request.put('http://localhost:3000/api/facilitators/53c8863ebc6800ef078e8ac1', function(err, res, body){
         if(err){
             console.log(JSON.stringify(err));
         }else{
@@ -99,7 +104,7 @@ function updateFacilitator(){
         country: 'japan',
         state: 'shanghai',
         city: 'shanghai',
-        num_of_license: 10
+        num_of_license: 50
     });
 }
 
@@ -125,7 +130,7 @@ function addStudent(){
 }
 
 function updateStudent(){
-    request.put('http://localhost:3000/api/students/53c4ed59ea13feae915eaa4c', function(err, res, body){
+    request.put('http://localhost:3000/api/students/53c886642c320f1308904a0a', function(err, res, body){
         if(err){
             console.log(JSON.stringify(err));
         }else{
@@ -140,26 +145,31 @@ function updateStudent(){
         country: 'china',
         state: 'shanghai',
         city: 'hangzhou',
-        pincode: '13911123971123821X'
+        pincode: '13911123971123821X',
+        companyRole: 'Team Member'
     });
 }
 
 function addSeminar(){
-    request.post('http://localhost:3000/api/seminar', function(err, res, body){
-        if(err){
-            console.log(JSON.stringify(err));
-        }else{
-            console.log(body);
-        }
-    }).form({
-        description: 'test seminar',
-        country: 'china',
-        state: 'shanghai',
-        city: 'hangzhou',
-        venue: 'HCD 301',
-        simulation_span: 4,
-        company_num: 3
-    });
+    seminarModel.delete({})
+    .then(function(){
+        request.post('http://localhost:3000/api/seminar', function(err, res, body){
+            if(err){
+                console.log(JSON.stringify(err));
+            }else{
+                console.log(body);
+            }
+        }).form({
+            description: 'test seminar',
+            country: 'china',
+            state: 'shanghai',
+            city: 'hangzhou',
+            venue: 'HCD 301',
+            simulation_span: 4,
+            company_num: 4
+        });
+    })
+    .done();
 }
 
 function assignStudent(){
@@ -188,8 +198,80 @@ function removeStudentFromSeminar(){
     });
 }
 
-assignStudent();
-//removeStudentFromSeminar();
+function createTestData(){
+    userModel.remove({})
+    .then(function(){
+        return seminarModel.delete({})
+    })
+    .then(function(){
+        return userModel.insert({
+            email: 'distributor@hcdglobal.com',
+            password: '123456',
+            name: 'hcd distributor',
+            phone: '631122021',
+            country: 'china',
+            state: 'shanghai',
+            city: 'shanghai',
+            numOfLicense: 100,
+            role: 2
+        })
+    })
+    .then(function(){
+        return userModel.findOne({email: 'distributor@hcdglobal.com'})
+    })
+    .then(function(distributor){
+        return userModel.insert({
+            email: 'facilitator@hcdglobal.com',
+            password: '123456',
+            name: 'hcd facilitator',
+            numOfLicense: 50,
+            role: 3,
+            distributorId: distributor._id
+        })
+    })
+    .then(function(facilitator){
+        return userModel.insert({
+            email: 'student@hcdglobal.com',
+            password: '123456',
+            name: 'jim wozz',
+            role: 4,
+            facilitatorId: facilitator._id
+        })
+        .then(function(student){
+            return seminarModel.insert({
+                description: 'test seminar',
+                country: 'china',
+                state: 'shanghai',
+                city: 'hangzhou',
+                venue: 'HCD 301',
+                facilitatorId: facilitator._id,
+                simulationSpan: 4,
+                companyNum: 6,
+                seminarId: '10000',
+                companyAssignment: [[student._id],[],[],[]],
+                isFinished: false
+            })
+        })
+    })
+    .then(function(){
+        console.log('finished.');
+    })
+    .fail(function(err){
+        console.log(err);
+    })
+    .done();
+}
+
+//updateDistributor();
+//updateFacilitator();
+
+mongoose.connect('mongodb://localhost/Marksimos');
+var db = mongoose.connection;
+db.on('error', console.error.bind(console, 'connection error:'));
+db.once('open', function(response,request) {
+    createTestData();
+});
+
 
 
 

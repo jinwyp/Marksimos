@@ -1,5 +1,6 @@
 var reportModel = require('../models/report.js');
 var logger = require('../../common/logger.js');
+var config = require('../../common/config.js');
 
 exports.getReport = function(req, res, next){
     var seminarId = req.session.seminarId;
@@ -23,7 +24,7 @@ exports.getReport = function(req, res, next){
             return res.send(400, {message: "Report doesn't exist."})
         }
 
-        if(userRole!==1 && isReportNeedFilter(reportName)){
+        if(userRole === config.role.student && isReportNeedFilter(reportName)){
             return res.send(extractReportOfOneCompany(report, companyId));
         }
 

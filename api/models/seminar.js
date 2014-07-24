@@ -1,6 +1,7 @@
 var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
 var Q = require('q');
+var consts = require('../consts.js');
 
 var seminarSchema = new Schema({
     seminarId: String,
@@ -21,7 +22,10 @@ var seminarSchema = new Schema({
     isFinished: {type: Boolean, default: false}, //if this seminar is finished
 
     companyAssignment: [],
-    currentPeriod: {type: Number, default: 0}
+    currentPeriod: {type: Number, default: consts.Period_0 + 1},
+
+    isInitialized: {type: Boolean, default: false}, //if seminar is initialized
+    isSimulationFinised: {type: Boolean, default: false} //if all simulation has been executed.
 });
 
 var teamSchema = new Schema({
@@ -33,6 +37,10 @@ var Seminar = mongoose.model("Seminar", seminarSchema);
 
 
 exports.update = function(query, seminar){
+    if(!mongoose.connection.readyState){
+        throw new Error("mongoose is not connected.");
+    }
+
     var deferred = Q.defer();
     Seminar.update(query, seminar)
     .exec(function(err, numAffected){
@@ -46,6 +54,10 @@ exports.update = function(query, seminar){
 }
 
 exports.insert = function(seminar){
+    if(!mongoose.connection.readyState){
+        throw new Error("mongoose is not connected.");
+    }
+
     var deferred = Q.defer();
     Seminar.create(seminar, function(err, result){
         if(err){
@@ -58,6 +70,10 @@ exports.insert = function(seminar){
 }
 
 exports.remove = function(seminarId){
+    if(!mongoose.connection.readyState){
+        throw new Error("mongoose is not connected.");
+    }
+
     var deferred = Q.defer();
     Seminar.remove({seminarId: seminarId}, function(err){
         if(err){
@@ -70,6 +86,10 @@ exports.remove = function(seminarId){
 }
 
 exports.findOne = function(query){
+    if(!mongoose.connection.readyState){
+        throw new Error("mongoose is not connected.");
+    }
+
     var deferred = Q.defer();
     Seminar.findOne(query, function(err, result){
         if(err){
@@ -82,6 +102,10 @@ exports.findOne = function(query){
 }
 
 exports.find = function(query, sort){
+    if(!mongoose.connection.readyState){
+        throw new Error("mongoose is not connected.");
+    }
+
     var deferred = Q.defer();
     Seminar.find(query)
     .sort(sort)
@@ -92,6 +116,22 @@ exports.find = function(query, sort){
             deferred.resolve(result);
         }
     });
+    return deferred.promise;
+}
+
+exports.delete = function(query){
+    if(!mongoose.connection.readyState){
+        throw new Error("mongoose is not connected.");
+    }
+    
+    var deferred = Q.defer();
+    Seminar.remove(query, function(err){
+        if(err){
+            deferred.reject(err);
+        }else{
+            deferred.resolve();
+        }
+    })
     return deferred.promise;
 }
 

@@ -3,15 +3,7 @@
  */
 
 // create module for custom directives
-var marksimosapp = angular.module('marksimosadmin', []);
-
-marksimosapp.directive('adminHeader', function() {
-    return {
-        scope: {},
-        restrict: 'AE',
-        templateUrl: 'app/js/websitecomponent/headeradmin.html'
-    };
-});
+var marksimosapp = angular.module('marksimosadmin', ['pascalprecht.translate', 'notifications', 'marksimos.component']);
 
 
 
@@ -49,46 +41,80 @@ marksimosapp.controller('adminLoginController', ['$scope', '$timeout', '$http', 
 
 
 
+
+
+
 // controller business logic
-marksimosapp.controller('adminController', function($scope, $timeout, $http) {
+marksimosapp.controller('adminHomeController', ['$scope', '$http', '$notification', function($scope, $http, $notification) {
 
     $scope.css = {
-        leftmenu : "distributor",
+        leftmenu : 22,
+        menuTabShow : [false,false,false,false,false,false], //从第二个false 开始第1个菜单
         updatestatus : false
     };
 
     $scope.data = {
+        currentUser : null,
         newDistributor : {
-            name : "",
+            username : "",
             email : "",
             password : "",
-            country : {},
-            province : "",
-            city : "",
-            licence : ""
+            phone : "",
+            pincode : "",
+            country : null,
+            state : "shanghai",
+            city : "shanghai",
+            district : "",
+            street : "",
+            num_of_license_granted : 0,
+            gameType : ""
         },
-        distributors : [
-            {id:1, name:"Algeria", email:"Algeria@gmail.com", licence:1},
-            {id:2, name:"Antigua", email:"Antigua@gmail.com", licence:2},
-            {id:3, name:"Belgium", email:"Belgium@gmail.com", licence:4},
-            {id:4, name:"Brazil", email:"Brazil@gmail.com", licence:10}
-        ],
+        searchDistributor : {
+            username :'',
+            email :'',
+            user_status :'false'
+        },
+        distributors : [],
 
         newFacilitator : {
-            name : "",
+            username : "",
             email : "",
             password : "",
-            country : {},
-            province : "",
-            city : "",
-            licence : ""
+            phone : "",
+            pincode : "",
+            country : null,
+            state : "shanghai",
+            city : "shanghai",
+            district : "",
+            street : "",
+            num_of_license_granted : 0
         },
-        facilitators : [
-            {id:1, name:"Algeria", email:"Algeria@gmail.com", licence:1, distributor:"Mike"},
-            {id:2, name:"Antigua", email:"Antigua@gmail.com", licence:2, distributor:"Mike"},
-            {id:3, name:"Belgium", email:"Belgium@gmail.com", licence:4, distributor:"Mike"},
-            {id:4, name:"Brazil", email:"Brazil@gmail.com", licence:10, distributor:"Mike"}
-        ],
+        searchFacilitator : {
+            username :'',
+            email :'',
+            user_status :'false'
+        },
+        facilitators : [],
+
+        newStudent : {
+            username : "",
+            email : "",
+            password : "",
+            phone : "",
+            country : null,
+            state : "shanghai",
+            city : "shanghai",
+            occupation : "",
+            university : "",
+            firstname : "",
+            lastname : ""
+        },
+        searchStudent : {
+            username :'',
+            email :'',
+            user_status :'false'
+        },
+        students : [],
 
 
         country : [
@@ -204,16 +230,155 @@ marksimosapp.controller('adminController', function($scope, $timeout, $http) {
 
     };
 
-    $scope.data.newDistributor.country = $scope.data.country[0];
-    $scope.data.newFacilitator.country = $scope.data.country[5];
+    $scope.data.newDistributor.country = $scope.data.country[20].name;
+    $scope.data.newFacilitator.country = $scope.data.country[20].name;
+    $scope.data.newStudent.country = $scope.data.country[20].name;
 
 
-//    $http.get('/api/chart/marketShareInValue').success(function(data, status, headers, config){
-//        $scope.chartData = data;
-//        console.log($scope.chartData);
-//    });
+    /********************  获取信息  ********************/
+    $scope.adminInit = function(){
+
+        $http.get('/api/user').success(function(data, status, headers, config){
+            $scope.data.currentUser = data;
+
+            if($scope.data.currentUser.role === 1){
+                $scope.getDistributorsInit();
+                $scope.getFacilitatorsInit();
+                $scope.getStudentsInit();
+                $scope.css.menuTabShow = [false, true, true, true, true, true, true];
+
+            }else if($scope.data.currentUser.role === 2){
+                $scope.getFacilitatorsInit();
+                $scope.css.menuTabShow = [false, true, false, true, false, false, false];
+
+            }else if($scope.data.currentUser.role === 3){
+                $scope.getStudentsInit();
+                $scope.css.menuTabShow = [false, true, false, false ,true, true, false];
+            }
+
+        }).error(function(data, status, headers, config) {
+            console.log(data);
+        });
+
+    };
+
+    $scope.getDistributorsInit = function(){
+        $http.get('/api/admin/distributors').success(function(data, status, headers, config){
+            $scope.data.distributors = data;
+
+        }).error(function(data, status, headers, config) {
+            console.log(data);
+        });
+    };
+
+    $scope.getFacilitatorsInit = function() {
+        $http.get('/api/admin/facilitators').success(function (data, status, headers, config) {
+            $scope.data.facilitators = data;
+        }).error(function (data, status, headers, config) {
+            console.log(data);
+        });
+    };
+
+    $scope.getStudentsInit = function() {
+        $http.get('/api/admin/students').success(function (data, status, headers, config) {
+            $scope.data.students = data;
+        }).error(function (data, status, headers, config) {
+            console.log(data);
+        });
+    };
+
+    $scope.adminInit();
+
+
+    /********************  搜索 Distributor  ********************/
+    $scope.searchDistributor = function(form){
+        if(form.$valid){
+            $http.get('/api/admin/distributors', {params : $scope.data.searchDistributor}).success(function(data, status, headers, config){
+
+                $scope.data.distributors = data;
+
+            }).error(function(data, status, headers, config){
+                console.log(data);
+            });
+        }
+    };
+    /********************  创建新的 Distributor  ********************/
+    $scope.createNewDistributor = function(form){
+        if(form.$valid){
+            console.log($scope.data.newDistributor);
+            $http.post('/api/admin/distributors', $scope.data.newDistributor).success(function(data, status, headers, config){
+
+                $scope.getDistributorsInit();
+                $scope.css.leftmenu = 21;
+
+                $notification.success('Save success', 'Create Distributor success');
+
+            }).error(function(data, status, headers, config){
+                console.log(data);
+                $notification.error('Save failed', data.message);
+            });
+        }
+    };
+
+
+    /********************  搜索 Facilitator  ********************/
+    $scope.searchFacilitator = function(form){
+        if(form.$valid){
+            $http.get('/api/admin/facilitators', {params : $scope.data.searchFacilitator}).success(function(data, status, headers, config){
+                $scope.data.facilitators = data;
+
+            }).error(function(data, status, headers, config){
+                console.log(data);
+            });
+        }
+    };
+    /********************  创建新的 Facilitator  ********************/
+    $scope.createNewFacilitator = function(form){
+        if(form.$valid){
+            console.log($scope.data.newFacilitator);
+            $http.post('/api/admin/facilitators', $scope.data.newFacilitator).success(function(data, status, headers, config){
+
+                $scope.getFacilitatorsInit();
+                $scope.css.leftmenu = 31;
+
+                $notification.success('Save success', 'Create Facilitator success');
+
+            }).error(function(data, status, headers, config){
+                console.log(data);
+                $notification.error('Save failed', data.message);
+            });
+        }
+    };
+
+    /********************  搜索 Students  ********************/
+    $scope.searchStudent = function(form){
+        if(form.$valid){
+            $http.get('/api/admin/students', {params : $scope.data.searchStudent}).success(function(data, status, headers, config){
+                $scope.data.students = data;
+
+            }).error(function(data, status, headers, config){
+                console.log(data);
+            });
+        }
+    };
+    /********************  创建新的 Student  ********************/
+    $scope.createNewStudent = function(form){
+        if(form.$valid){
+            console.log($scope.data.newStudent);
+            $http.post('/api/admin/students', $scope.data.newStudent).success(function(data, status, headers, config){
+
+                $scope.getStudentsInit();
+                $scope.css.leftmenu = 41;
+
+                $notification.success('Save success', 'Create Student success');
+
+            }).error(function(data, status, headers, config){
+                console.log(data);
+                $notification.error('Save failed', data.message);
+            });
+        }
+    };
 
 
 
-});
-
+}]);
