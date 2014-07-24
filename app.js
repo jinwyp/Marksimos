@@ -4,8 +4,8 @@ var favicon = require('static-favicon');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 var mongoose = require('mongoose');
-var session = require('cookie-session');
-//var session = require('express-session')
+//var session = require('cookie-session');
+var session = require('express-session')
 var expressValidator = require('express-validator');
 var sessionOperation = require('./common/sessionOperation.js');
 var config = require('./common/config.js');
@@ -44,11 +44,11 @@ app.use(function(req, res, next){
         // sessionOperation.setUserRole(req, config.role.student);
         // sessionOperation.setUserId(req, '53cdcd0c6f50f03fad9b0006');
 
-        //sessionOperation.setUserRole(req, config.role.student);
-        //sessionOperation.setUserId(req, '53cdef3b699e7939c7162fcb');
+        sessionOperation.setUserRole(req, config.role.facilitator);
+        sessionOperation.setUserId(req, '53cf756d07f03b0000d4ea5f');
         
-        sessionOperation.setUserRole(req, config.role.distributor);
-        sessionOperation.setUserId(req, '53ce25d8e2e03de6ec7b2f37');
+        // sessionOperation.setUserRole(req, config.role.distributor);
+        // sessionOperation.setUserId(req, '53ce25d8e2e03de6ec7b2f37');
     }
 
     // sessionOperation.setUserRole(req, config.role.student);
