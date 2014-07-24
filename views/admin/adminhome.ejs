@@ -637,6 +637,13 @@
                                     </div>
 
                                     <div class="form-group" ng-class="{'has-success':newSeminarForm.university.$dirty && newSeminarForm.university.$valid, 'has-error': newSeminarForm.university.$dirty && newSeminarForm.university.$invalid}">
+                                        <label for="inputOrganization" class="col-sm-2 control-label">Organization : </label>
+                                        <div class="col-sm-4">
+                                            <input type="text" class="form-control" id="inputOrganization" name="organization"  ng-model="data.newSeminar.university">
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group" ng-class="{'has-success':newSeminarForm.university.$dirty && newSeminarForm.university.$valid, 'has-error': newSeminarForm.university.$dirty && newSeminarForm.university.$invalid}">
                                         <label for="inputUniversity" class="col-sm-2 control-label">Organization / University : </label>
                                         <div class="col-sm-4">
                                             <input type="text" class="form-control" id="inputUniversity" name="university"  ng-model="data.newSeminar.university">

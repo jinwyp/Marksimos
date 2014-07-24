@@ -106,6 +106,7 @@ marksimosapp.controller('adminHomeController', ['$scope', '$http', '$notificatio
             city : "shanghai",
             occupation : "",
             university : "",
+            organization : "",
             firstname : "",
             lastname : ""
         },
