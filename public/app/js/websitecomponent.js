@@ -50,7 +50,6 @@ app.directive('headerUser', ['$translate', function($translate) {
         templateUrl: 'app/js/websitecomponent/headeruser.html',
         link: function (scope, element, attrs) {
 
-
             scope.clickMenu = function(currentmenu){
                 scope.currentMenu = currentmenu;
 
@@ -76,7 +75,9 @@ app.directive('headerUser', ['$translate', function($translate) {
 
 app.directive('headerAdmin', [function() {
     return {
-        scope: {},
+        scope: {
+            currentuser : '='
+        },
         restrict: 'AE',
         templateUrl: 'app/js/websitecomponent/adminheader.html'
     };
@@ -87,7 +88,8 @@ app.directive('menuAdmin', [function() {
     return {
         scope: {
             currentMenu : '=',
-            showtab : '='
+            showtab : '=',
+            currentuser : '='
         },
         restrict: 'AE',
         templateUrl: 'app/js/websitecomponent/adminmenu.html',

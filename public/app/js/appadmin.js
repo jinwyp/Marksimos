@@ -137,7 +137,7 @@ marksimosapp.controller('adminHomeController', ['$scope', '$http', '$notificatio
             seminar_id : 0,
             student_id : 0,
             company_id : 0,
-            companyName : "Choose Company"
+            companyName : "Choose"
         },
 
         country : [
