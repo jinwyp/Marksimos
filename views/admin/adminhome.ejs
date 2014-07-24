@@ -381,9 +381,8 @@
                                         <th>Cell Phone</th>
                                         <th>Country / Province / City</th>
                                         <th>Current Occupation</th>
-                                        <th>Organization / University</th>
-                                        <th>Facilitator</th>
-                                        <th>Distributor</th>
+                                        <th>University</th>
+                                        <th>Organization</th>
                                     </tr>
                                     <tr ng-repeat="user in data.students" >
                                         <td>{{user._id}}</td>
@@ -394,9 +393,8 @@
                                         <td>{{user.phone}}</td>
                                         <td>{{user.country}} / {{user.state}} / {{user.city}} </td>
                                         <td>{{user.occupation}}</td>
-                                        <td>{{user.organization}} / {{user.univercity}}</td>
-                                        <td title="{{user.facilitatorId}}">{{user.facilitatorName}}</td>
-                                        <td title="{{user.distributorId}}">{{user.distributorName}}</td>
+                                        <td>{{user.university}}</td>
+                                        <td>{{user.organization}}</td>
                                     </tr>
                                     </tbody>
                                 </table>
