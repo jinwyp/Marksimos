@@ -89,8 +89,9 @@ apiRouter.get('/api/spending_details', requireLogin, decisionController.getSpend
 apiRouter.get('/api/future_projection_calculator/:sku_id', requireLogin, decisionController.getSKUInfo);
 apiRouter.get('/api/company/otherinfo', requireLogin, decisionController.getOtherinfo);
 
-apiRouter.get('/api/user', requireLogin, userController.getUser);
+
 apiRouter.get('/api/student', requireLogin, authorize('getStudent'),userController.getStudent);
+
 
 /**********  API For Administrator  **********/
 
@@ -116,6 +117,9 @@ apiRouter.put('/api/admin/students/:student_id', requireLogin, authorize('update
 apiRouter.get('/api/admin/student/seminar', requireLogin, authorize('getSeminarOfStudent'), studentController.getSeminarOfStudent);
 
 apiRouter.post('/api/admin/seminar', requireLogin, authorize('addSeminar'), seminarController.addSeminar);
+
+// get current admin role
+apiRouter.get('/api/admin/user', requireLogin, userController.getUser);
 
 
 
