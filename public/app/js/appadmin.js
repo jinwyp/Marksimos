@@ -447,6 +447,7 @@ marksimosapp.controller('adminHomeController', ['$scope', '$http', '$notificatio
             });
         }
     };
+
     /********************  选择公司  ********************/
     $scope.chooseCompany = function(seminar, company){
         $scope.data.addStudentToSeminar.seminar_id = seminar.seminarId;
@@ -457,14 +458,13 @@ marksimosapp.controller('adminHomeController', ['$scope', '$http', '$notificatio
     $scope.addStudentToSeminar = function(seminarid){
 
 
-
         if($scope.data.addStudentToSeminar.company_id === 0 || $scope.data.addStudentToSeminar.student_id === ""){
             $scope.css.seminarId = seminarid;
         }else{
             $scope.css.seminarId = 0;
             $http.post('/api/admin/assign_student_to_seminar', $scope.data.addStudentToSeminar).success(function(data, status, headers, config){
-
-                $notification.success('Save success', 'Create Seminar success');
+                $scope.getSeminarInit();
+                $notification.success('Save success', 'Add Student to Seminar success');
 
             }).error(function(data, status, headers, config){
                 console.log(data);
@@ -479,8 +479,8 @@ marksimosapp.controller('adminHomeController', ['$scope', '$http', '$notificatio
     /********************  Init Seminar  ********************/
     $scope.initSeminar = function(seminarid){
         $http.post('/api/admin/init', {seminar_id:seminarid}).success(function(data, status, headers, config){
-
-            $notification.success('Save success', 'Create Seminar success');
+            $scope.getSeminarInit();
+            $notification.success('Save success', 'Init Seminar success');
 
         }).error(function(data, status, headers, config){
             console.log(data);
@@ -491,8 +491,8 @@ marksimosapp.controller('adminHomeController', ['$scope', '$http', '$notificatio
     /********************  Run Seminar  ********************/
     $scope.runSeminar = function(seminarid){
         $http.post('/api/admin/runsimulation', {seminar_id:seminarid}).success(function(data, status, headers, config){
-
-            $notification.success('Save success', 'Create Seminar success');
+            $scope.getSeminarInit();
+            $notification.success('Save success', 'Run Seminar success');
 
         }).error(function(data, status, headers, config){
             console.log(data);
