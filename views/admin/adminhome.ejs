@@ -588,11 +588,14 @@
                                                                 <li ng-repeat="company in seminar.companies"><a href="" ng-click="chooseCompany(seminar, company)">{{company.companyName}}</a></li>
                                                             </ul>
                                                         </div><!-- /btn-group -->
-                                                        <input type="text" class="form-control" ng-model="data.addStudentToSeminar.student_id">
+                                                        <input type="text" class="form-control" placeholder="Student ID" ng-model="data.addStudentToSeminar.student_id">
                                                         <span class="input-group-btn">
-                                                            <button class="btn btn-info" type="button" ng-click="addStudentToSeminar()">Add</button>
+                                                            <button class="btn btn-info" type="button" ng-click="addStudentToSeminar(seminar.seminarId)">Add</button>
                                                         </span>
                                                     </div><!-- /input-group -->
+                                                    <div class="callout callout-danger" ng-show="seminar.seminarId == css.seminarId">
+                                                        <p>Please choose a company and input student id !</p>
+                                                    </div>
                                         </td>
                                     </tr>
                                     </tbody>
