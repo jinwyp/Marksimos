@@ -519,12 +519,11 @@
                             <form class="form-horizontal" role="form" name="searchSeminarForm">
                                 <div class="box-body">
 
-                                    <username-input labeltext="Seminar UserName :" placeholdertext="Seminar UserName" formname="searchSeminarForm" data="data.searchSeminar.username" required="false" requirederrorinfo="Username is required" minlength="6" minlengtherrorinfo="Username must be at least 6 characters" maxlength="20" maxlengtherrorinfo="Username is a maximum of 20 characters"></username-input>
-                                    <email-input labeltext="Seminar Email :" placeholdertext="Email" formname="searchSeminarForm" data="data.searchSeminar.email" required="false" requirederrorinfo="Email is required" emailerrorinfo="Doesn't look like a valid email !"></email-input>
+                                    <username-input labeltext="Seminar Name :" placeholdertext="Seminar Name" formname="searchSeminarForm" data="data.searchSeminar.username" required="false" requirederrorinfo="Username is required" minlength="6" minlengtherrorinfo="Username must be at least 6 characters" maxlength="20" maxlengtherrorinfo="Username is a maximum of 20 characters"></username-input>
 
 
                                     <div class="form-group">
-                                        <label for="inputSeminarUserStatus" class="col-sm-2 control-label">User Status</label>
+                                        <label for="inputSeminarUserStatus" class="col-sm-2 control-label">Initialized Status</label>
                                         <div class="col-sm-4">
                                             <label class="radio-inline">
                                                 <input type="radio" name="inputSeminarUserStatus" ng-model="data.searchSeminar.user_status" value="false">Active
