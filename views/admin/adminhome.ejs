@@ -563,6 +563,7 @@
                                         <th>Venue</th>
                                         <th>CurrentPeriod / Rounds</th>
                                         <th>Teams</th>
+                                        <th>Manage</th>
                                         <th>Add Students</th>
                                     </tr>
                                     <tr ng-repeat="seminar in data.seminars" >
@@ -575,13 +576,17 @@
                                         <td>{{seminar.currentPeriod}} / {{seminar.simulationSpan}} </td>
                                         <td>{{seminar.companyNum}} </td>
                                         <td>
+                                            <button class="btn btn-primary btn-flat" type="button" ng-click="initSeminar(seminar.seminarId)">Init</button>
+                                            <button class="btn btn-primary btn-flat" type="button" ng-click="runSeminar(seminar.seminarId)">Run</button>
+                                        </td>
+                                        <td>
                                             <div class="row">
-                                                <div class="col-lg-6">
+                                                <div class="col-lg-5">
                                                     <div class="input-group margin">
                                                         <div class="input-group-btn">
                                                             <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">{{data.addStudentToSeminar.companyName}} <span class="fa fa-caret-down"></span></button>
                                                             <ul class="dropdown-menu">
-                                                                <li ng-repeat="company in seminar.companies"><a href="" ng-click="chooseCompany(company)">{{company.name}}</a></li>
+                                                                <li ng-repeat="company in seminar.companies"><a href="" ng-click="chooseCompany(seminar, company)">{{company.companyName}}</a></li>
                                                             </ul>
                                                         </div><!-- /btn-group -->
                                                         <input type="text" class="form-control" ng-model="data.addStudentToSeminar.student_id">

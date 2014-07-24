@@ -448,10 +448,48 @@ marksimosapp.controller('adminHomeController', ['$scope', '$http', '$notificatio
         }
     };
     /********************  选择公司  ********************/
-    $scope.chooseCompany = function(company){
-        $scope.data.addStudentToSeminar.companyName = company.name;
-        $scope.data.addStudentToSeminar.company_id = company.id ;
-
+    $scope.chooseCompany = function(seminar, company){
+        $scope.data.addStudentToSeminar.seminar_id = seminar.seminarId;
+        $scope.data.addStudentToSeminar.companyName = company.companyName;
+        $scope.data.addStudentToSeminar.company_id = company.companyId ;
     };
+    /********************  Add Student To Seminar  ********************/
+    $scope.addStudentToSeminar = function(){
+        $http.post('/api/admin/assign_student_to_seminar', $scope.data.addStudentToSeminar).success(function(data, status, headers, config){
+
+            $notification.success('Save success', 'Create Seminar success');
+
+        }).error(function(data, status, headers, config){
+            console.log(data);
+            $notification.error('Save failed', data.message);
+        });
+    };
+
+    /********************  Init Seminar  ********************/
+    $scope.initSeminar = function(seminarid){
+        $http.post('/api/admin/init', {seminar_id:seminarid}).success(function(data, status, headers, config){
+
+            $notification.success('Save success', 'Create Seminar success');
+
+        }).error(function(data, status, headers, config){
+            console.log(data);
+            $notification.error('Save failed', data.message);
+        });
+    };
+
+    /********************  Run Seminar  ********************/
+    $scope.runSeminar = function(seminarid){
+        $http.post('/api/admin/runsimulation', {seminar_id:seminarid}).success(function(data, status, headers, config){
+
+            $notification.success('Save success', 'Create Seminar success');
+
+        }).error(function(data, status, headers, config){
+            console.log(data);
+            $notification.error('Save failed', data.message);
+        });
+    };
+
+
+
 
 }]);

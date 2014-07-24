@@ -57,8 +57,8 @@ apiRouter.get('/api/report/:report_name', requireLogin, reportController.getRepo
 apiRouter.get('/api/adminreport/:report_name', requireLogin, reportController.getReport);
 
 
-apiRouter.get('/api/init', requireLogin, initController.init);
-apiRouter.get('/api/runsimulation',  requireLogin, authorize('runSimulation'), initController.runSimulation);
+
+
 apiRouter.get('/api/choose_seminar', requireLogin, authorize('chooseSeminar'), seminarController.chooseSeminar);
 
 apiRouter.get('/api/submitdecision', requireLogin, decisionController.submitDecision);
@@ -113,14 +113,17 @@ apiRouter.put('/api/admin/students/:student_id', requireLogin, authorize('update
 apiRouter.get('/api/admin/student/seminar', requireLogin, authorize('getSeminarOfStudent'), studentController.getSeminarOfStudent);
 apiRouter.post('/api/admin/seminar', requireLogin, authorize('addSeminar'), seminarController.addSeminar);
 
-apiRouter.get('/api/admin/choose_seminar', requireLogin, authorize('chooseSeminar'), seminarController.chooseSeminar);
+
 apiRouter.post('/api/admin/assign_student_to_seminar', requireLogin, authorize('assignStudentToSeminar'), seminarController.assignStudentToSeminar);
 apiRouter.post('/api/admin/remove_student_from_seminar', requireLogin, authorize('removeStudentFromSeminar'), seminarController.removeStudentFromSeminar);
 
-
+apiRouter.post('/api/admin/init', requireLogin, initController.init);
+apiRouter.post('/api/admin/runsimulation',  requireLogin, authorize('runSimulation'), initController.runSimulation);
 
 // get current admin role
 apiRouter.get('/api/admin/user', requireLogin, userController.getUser);
+
+
 
 
 

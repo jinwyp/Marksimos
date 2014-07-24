@@ -47,7 +47,7 @@ gulp.task('compass', function() {
 gulp.task('nodemon', function () {
     nodemon({
         script: 'app.js',
-        env: { 'NODE_ENV': 'ludwik' }
+        env: { 'NODE_ENV': 'jin' }
     });
 //        .on('restart', 'default')
 });
