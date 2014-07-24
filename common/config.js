@@ -95,7 +95,7 @@ module.exports = (function(){
             config.logDirectory = '/home/hcd/Marksimos/log/';
             config.mongo_conn = 'mongodb://localhost/Marksimos';
             config.host = 'http://121.40.121.187:3000/';
-            config.cgiService = 'http://121.40.121.3/cgi-bin/';
+            config.cgiService = 'http://10.171.251.169/cgi-bin/';
             break;
         default:
             throw new Error("Invalid process.env.NODE_ENV");
