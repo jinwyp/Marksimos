@@ -246,7 +246,7 @@ function createTestData(){
                 venue: 'HCD 301',
                 facilitatorId: facilitator._id,
                 simulationSpan: 4,
-                companyNum: 4,
+                companyNum: 6,
                 seminarId: '10000',
                 companyAssignment: [[student._id],[],[],[]],
                 isFinished: false
