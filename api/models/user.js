@@ -34,7 +34,7 @@ var userSchema = new Schema({
     occupation: String,
     firstName: String,
     lastName: String,
-    univercity: String,
+    university: String,
     organization: String,
     highestEducationalDegree: String,
     facilitatorId: String,

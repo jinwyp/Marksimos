@@ -35,41 +35,7 @@ app.use(session({
 }));
 app.use(express.static(path.join(__dirname, 'public')));
 
-//initialize session data
-// app.use(function(req, res, next){
-//     sessionOperation.setLoginStatus(req, true);
 
-//     if(process.env.NODE_ENV === 'suyuan'){
-//         // sessionOperation.setUserRole(req, config.role.student);
-//         // sessionOperation.setUserId(req, '53cdcd0c6f50f03fad9b0006');
-
-//         sessionOperation.setUserRole(req, config.role.facilitator);
-//         sessionOperation.setUserId(req, '53cf756d07f03b0000d4ea5f');
-
-//         // sessionOperation.setUserRole(req, config.role.distributor);
-//         // sessionOperation.setUserId(req, '53ce25d8e2e03de6ec7b2f37');
-//     }
-
-//     // sessionOperation.setUserRole(req, config.role.student);
-//     // sessionOperation.setUserId(req, '53c886642c320f1308904a0a');
-
-//     // sessionOperation.setUserRole(req, config.role.facilitator); //a
-//     // sessionOperation.setUserId(req, '53ccb4822672e9d139488a4a'); //a
-
-//     // sessionOperation.setUserRole(req, config.role.distributor);
-//     // sessionOperation.setUserId(req, '53c8ae4dbf604cf543f7b639');
-
-//     // sessionOperation.setUserRole(req, config.role.admin);
-//     // sessionOperation.setUserId(req, 'testid');
-
-//     req.session.seminarId = '10000';
-//     req.session.companyId = 1;
-
-//     if(req.session.currentPeriod === undefined){
-//        req.session.currentPeriod = 1;
-//     }
-//     next();
-// });
 
 //set Content-Type for all API JSON resppnse
 app.all("/api/*", function(req, res, next){

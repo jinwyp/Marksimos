@@ -473,3 +473,51 @@ app.directive('licenceInput', function() {
         }
     };
 });
+
+
+app.directive('roundInput', function() {
+    return {
+        scope: {
+            labeltext : '@',
+            data : '=',
+            placeholdertext : '@',
+            formname : '=',
+            required : '=',
+            requirederrorinfo : '@',
+            numbererrorinfo : '@',
+            min : '=',
+            minerrorinfo : '@',
+            max : '=',
+            maxerrorinfo : '@',
+            maxlength : '=',
+            maxlengtherrorinfo : '@'
+
+        },
+        restrict: 'AE',
+        templateUrl: 'app/js/directive/formroundinput.html',
+        link: function (scope, element, attrs) {
+
+            if(angular.isUndefined(scope.required)  ){
+                scope.required = true;
+                scope.requirederrorinfo = 'Number is required';
+                scope.numbererrorinfo = 'Must be numeric character';
+            }
+
+            if(angular.isUndefined(scope.min)  ){
+                scope.min = 1;
+                scope.minerrorinfo = 'Number must be greater than 0';
+            }
+
+            if(angular.isUndefined(scope.max)  ){
+                scope.max = 9;
+                scope.maxerrorinfo = 'Number must be less than 9';
+            }
+
+            if(angular.isUndefined(scope.required)  ){
+                scope.maxlength = 100;
+                scope.maxlengtherrorinfo = 'Number is a maximum of 100 characters';
+            }
+
+        }
+    };
+});

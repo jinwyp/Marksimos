@@ -100,20 +100,22 @@ exports.addSeminar = function(req, res, next){
     .done();
 }
 
+
+
+
 /**
 * Facilitator can call this API
 */
 exports.assignStudentToSeminar = function(req, res, next){
     var studentId = req.body.student_id;
+    var seminarId = req.body.seminar_id;
 
     if(!studentId){
         return res.send(400, {message: "Invalid student_id"});
     }
 
-    var seminarId = sessionOperation.getSeminarId(req);
-
     if(!seminarId){
-        return res.send(400, {message: "You don't choose a seminar."})
+        return res.send(400, {message: "Invalid seminar id."})
     }
 
     var companyId = req.body.company_id;

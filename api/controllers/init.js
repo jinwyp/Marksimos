@@ -47,7 +47,7 @@ var sessionOperation = require('../../common/sessionOperation.js');
  */
 exports.init = function(req, res, next) {
     //var seminarId = 'TTT'; //this parameter should be posted from client
-    var seminarId = req.query.seminar_id;
+    var seminarId = req.body.seminar_id;
     var simulationSpan; //should be posted from client
     var companyNum;
     var currentPeriod;
@@ -156,7 +156,7 @@ exports.init = function(req, res, next) {
 * Generate new period decision 
 */
 exports.runSimulation = function(req, res, next){
-    var seminarId = sessionOperation.getSeminarId(req);
+    var seminarId = req.body.seminar_id;
 
     if(!seminarId){
         return res.send(400, {message: "You have not choose a seminar."})
