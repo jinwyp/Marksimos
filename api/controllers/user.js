@@ -23,7 +23,7 @@ exports.getUser = function(req, res, next){
         res.send(500, {message: "get user failed."})
     })
     .done();
-}
+};
 
 exports.getStudent = function(req, res, next){
     var userId = sessionOperation.getUserId(req);
@@ -194,7 +194,7 @@ exports.login = function(req, res, next){
         return res.send(500, {message: 'Login failed.'});
     })
     .done();
-}
+};
 
 
 
