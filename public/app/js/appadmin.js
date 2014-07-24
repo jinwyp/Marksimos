@@ -239,7 +239,7 @@ marksimosapp.controller('adminHomeController', ['$scope', '$http', '$notificatio
     /********************  获取信息  ********************/
     $scope.adminInit = function(){
 
-        $http.get('/api/user').success(function(data, status, headers, config){
+        $http.get('/api/admin/user').success(function(data, status, headers, config){
             $scope.data.currentUser = data;
 
             if($scope.data.currentUser.role === 1){

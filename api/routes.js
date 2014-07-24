@@ -118,7 +118,7 @@ apiRouter.get('/api/admin/student/seminar', requireLogin, authorize('getSeminarO
 
 apiRouter.post('/api/admin/seminar', requireLogin, authorize('addSeminar'), seminarController.addSeminar);
 
-
+// get current admin role
 apiRouter.get('/api/admin/user', requireLogin, userController.getUser);
 
 
