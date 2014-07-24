@@ -583,14 +583,14 @@
                                         <td width="460px">
                                                     <div class="input-group margin">
                                                         <div class="input-group-btn">
-                                                            <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">{{data.addStudentToSeminar.companyName}} <span class="fa fa-caret-down"></span></button>
+                                                            <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">{{seminar.currentCompanyName}} <span class="fa fa-caret-down"></span></button>
                                                             <ul class="dropdown-menu">
                                                                 <li ng-repeat="company in seminar.companies"><a href="" ng-click="chooseCompany(seminar, company)">{{company.companyName}}</a></li>
                                                             </ul>
                                                         </div><!-- /btn-group -->
-                                                        <input type="text" class="form-control" placeholder="Student ID" ng-model="data.addStudentToSeminar.student_id">
+                                                        <input type="text" class="form-control" placeholder="Student ID" ng-model="seminar.student_id">
                                                         <span class="input-group-btn">
-                                                            <button class="btn btn-info" type="button" ng-click="addStudentToSeminar(seminar.seminarId)">Add</button>
+                                                            <button class="btn btn-info" type="button" ng-click="addStudentToSeminar(seminar.seminarId, seminar.student_id)">Add</button>
                                                         </span>
                                                     </div><!-- /input-group -->
                                                     <div class="callout callout-danger" ng-show="seminar.seminarId == css.seminarId">

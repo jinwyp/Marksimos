@@ -137,7 +137,6 @@ marksimosapp.controller('adminHomeController', ['$scope', '$http', '$notificatio
             seminar_id : 0,
             student_id : "",
             company_id : 0,
-            companyName : "Choose"
         },
 
         country : [
@@ -450,21 +449,26 @@ marksimosapp.controller('adminHomeController', ['$scope', '$http', '$notificatio
 
     /********************  选择公司  ********************/
     $scope.chooseCompany = function(seminar, company){
-        $scope.data.addStudentToSeminar.seminar_id = seminar.seminarId;
-        $scope.data.addStudentToSeminar.companyName = company.companyName;
+        seminar.currentCompanyName = company.companyName;
+        $scope.data.addStudentToSeminar.seminar_id = seminar.seminarId ;
         $scope.data.addStudentToSeminar.company_id = company.companyId ;
     };
     /********************  Add Student To Seminar  ********************/
-    $scope.addStudentToSeminar = function(seminarid){
+    $scope.addStudentToSeminar = function(seminarid, studentid){
 
-
-        if($scope.data.addStudentToSeminar.company_id === 0 || $scope.data.addStudentToSeminar.student_id === ""){
+        if($scope.data.addStudentToSeminar.company_id === 0 || angular.isUndefined(studentid) ){
             $scope.css.seminarId = seminarid;
         }else{
             $scope.css.seminarId = 0;
+            $scope.data.addStudentToSeminar.student_id = studentid;
+
             $http.post('/api/admin/assign_student_to_seminar', $scope.data.addStudentToSeminar).success(function(data, status, headers, config){
                 $scope.getSeminarInit();
                 $notification.success('Save success', 'Add Student to Seminar success');
+
+                $scope.data.addStudentToSeminar.seminar_id = 0 ;
+                $scope.data.addStudentToSeminar.company_id = 0 ;
+                $scope.data.addStudentToSeminar.student_id = 0 ;
 
             }).error(function(data, status, headers, config){
                 console.log(data);
