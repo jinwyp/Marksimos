@@ -21,7 +21,7 @@ var utility = require('../../common/utility.js');
 var decisionAssembler = require('../dataAssemblers/decision.js');
 var productPortfolioAssembler = require('../dataAssemblers/productPortfolio.js');
 var spendingDetailsAssembler = require('../dataAssemblers/spendingDetails.js');
-var SKUInfoAssembler = require('../dataAssemblers/SKUinfo.js');
+var SKUInfoAssembler = require('../dataAssemblers/SKUInfo.js');
 
 
 /**
