@@ -50,7 +50,7 @@ marksimosapp.controller('adminHomeController', ['$scope', '$http', '$notificatio
     $scope.css = {
         leftmenu : 11,
         menuTabShow : [false,false,false,false,false,false], //从第二个false 开始第1个菜单
-        updatestatus : false
+        seminarId : 0
     };
 
     $scope.data = {
@@ -135,7 +135,7 @@ marksimosapp.controller('adminHomeController', ['$scope', '$http', '$notificatio
 
         addStudentToSeminar : {
             seminar_id : 0,
-            student_id : 0,
+            student_id : "",
             company_id : 0,
             companyName : "Choose"
         },
@@ -454,15 +454,26 @@ marksimosapp.controller('adminHomeController', ['$scope', '$http', '$notificatio
         $scope.data.addStudentToSeminar.company_id = company.companyId ;
     };
     /********************  Add Student To Seminar  ********************/
-    $scope.addStudentToSeminar = function(){
-        $http.post('/api/admin/assign_student_to_seminar', $scope.data.addStudentToSeminar).success(function(data, status, headers, config){
+    $scope.addStudentToSeminar = function(seminarid){
 
-            $notification.success('Save success', 'Create Seminar success');
 
-        }).error(function(data, status, headers, config){
-            console.log(data);
-            $notification.error('Save failed', data.message);
-        });
+
+        if($scope.data.addStudentToSeminar.company_id === 0 || $scope.data.addStudentToSeminar.student_id === ""){
+            $scope.css.seminarId = seminarid;
+        }else{
+            $scope.css.seminarId = 0;
+            $http.post('/api/admin/assign_student_to_seminar', $scope.data.addStudentToSeminar).success(function(data, status, headers, config){
+
+                $notification.success('Save success', 'Create Seminar success');
+
+            }).error(function(data, status, headers, config){
+                console.log(data);
+                $notification.error('Save failed', data.message);
+            });
+        }
+
+
+
     };
 
     /********************  Init Seminar  ********************/
