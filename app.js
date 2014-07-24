@@ -116,7 +116,7 @@ app.use(function(err, req, res, next) {
 app.set('port', process.env.PORT || 3000);
 
 
-mongoose.connect('mongodb://localhost/Marksimos');
+mongoose.connect(config.mongo_conn);
 var db = mongoose.connection;
 db.on('error', console.error.bind(console, 'connection error:'));
 db.once('open', function(response,request) {
