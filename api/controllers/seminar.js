@@ -5,6 +5,7 @@ var sessionOperation = require('../../common/sessionOperation.js');
 var logger = require('../../common/logger.js');
 var consts = require('../consts.js');
 var config = require('../../common/config.js');
+var utility = require('../../common/utility.js');
 
 
 exports.addSeminar = function(req, res, next){
@@ -36,6 +37,15 @@ exports.addSeminar = function(req, res, next){
     seminar.companyAssignment = [];
     for(var i=0; i<seminar.companyNum; i++){
         seminar.companyAssignment.push([]);
+    }
+
+    seminar.companies = [];
+    var companyNameList = utility.createCompanyArray(seminar.companyNum);
+    for(i = 0; i<seminar.companyNum; i++){
+        seminar.companies.push({
+            companyId: i + 1,
+            companyName: companyNameList[i]
+        });
     }
 
     userModel.findOne({_id: facilitatorId})
