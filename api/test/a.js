@@ -145,7 +145,8 @@ function updateStudent(){
         country: 'china',
         state: 'shanghai',
         city: 'hangzhou',
-        pincode: '13911123971123821X'
+        pincode: '13911123971123821X',
+        companyRole: 'Team Member'
     });
 }
 
@@ -197,13 +198,16 @@ function removeStudentFromSeminar(){
     });
 }
 
-function createTestUsers(){
+function createTestData(){
     userModel.remove({})
+    .then(function(){
+        return seminarModel.delete({})
+    })
     .then(function(){
         return userModel.insert({
             email: 'distributor@hcdglobal.com',
             password: '123456',
-            name: 'hcd global',
+            name: 'hcd distributor',
             phone: '631122021',
             country: 'china',
             state: 'shanghai',
@@ -219,10 +223,34 @@ function createTestUsers(){
         return userModel.insert({
             email: 'facilitator@hcdglobal.com',
             password: '123456',
-            name: 'hcd global',
+            name: 'hcd facilitator',
             numOfLicense: 50,
             role: 3,
             distributorId: distributor._id
+        })
+    })
+    .then(function(facilitator){
+        return userModel.insert({
+            email: 'student@hcdglobal.com',
+            password: '123456',
+            name: 'jim wozz',
+            role: 4,
+            facilitatorId: facilitator._id
+        })
+        .then(function(student){
+            return seminarModel.insert({
+                description: 'test seminar',
+                country: 'china',
+                state: 'shanghai',
+                city: 'hangzhou',
+                venue: 'HCD 301',
+                facilitatorId: facilitator._id,
+                simulationSpan: 4,
+                companyNum: 6,
+                seminarId: '10000',
+                companyAssignment: [[student._id],[],[],[]],
+                isFinished: false
+            })
         })
     })
     .then(function(){
@@ -241,8 +269,7 @@ mongoose.connect('mongodb://localhost/Marksimos');
 var db = mongoose.connection;
 db.on('error', console.error.bind(console, 'connection error:'));
 db.once('open', function(response,request) {
-    //createTestUsers();
-    addSeminar();
+    createTestData();
 });
 
 

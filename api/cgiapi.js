@@ -85,6 +85,14 @@ exports.queryDecisionsInOnePeriod = function(seminarId, period, companyNum){
  }
  */
 exports.init = function(initConfig){
+    if(!initConfig.simulationSpan){
+        throw new Error("Invalid simulationSpan");
+    }
+
+    if(!initConfig.seminarId){
+        throw new Error("Invalid seminarId");
+    }
+
     //seminar=TTT&simulation_span=3&team1=companyA&team2=companyB
 
     var reqUrl = config.cgiService + util.format('initialize.exe?seminar=%s&simulation_span=%s'

@@ -45,7 +45,7 @@ exports.getChart = function(req, res, next){
             return res.send(chartData);
         }
 
-        res.json(chart.chartData);
+        res.send(chart.chartData);
     })
     .fail(function(err){
         logger.error(err);

@@ -27,24 +27,22 @@ marksimosapp.controller('userLoginController', function  ($scope,  $timeout, $ht
     $scope.login = function(form){
         if(form.$valid){
              $http.post('/api/login', $scope.data.newUser).success(function(data, status, headers, config){
-                if(data.status == 303){
-                    $window.location.href = "/introduction" ;
-                }else if(data.status == 401){
 
-                    console.log(data);
 
-                    form.password.$valid = false;
-                    form.password.$invalid = true;
-                    $scope.css.newUser.passwordPrompt = true;
-                }
+
+                $window.location.href = "/introduction" ;
+
+
             }).error(function(data, status, headers, config){
-
+                 form.password.$valid = false;
+                 form.password.$invalid = true;
+                 $scope.css.newUser.passwordPrompt = true;
+                 console.log(data);
             });
         }
     };
 
 });
-
 
 
 

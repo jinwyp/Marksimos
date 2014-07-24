@@ -267,6 +267,7 @@ GET
 * segment_distribution
 * competitor_intelligence
 * market_trends
+* market_indicators
 ### response
 
 ## /api/adminreport/:report_name

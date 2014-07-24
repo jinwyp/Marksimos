@@ -22,7 +22,7 @@ exports.addFacilitator = function(req, res, next){
     var distributorId = sessionOperation.getUserId(req);
 
     var facilitator = {
-        name: req.body.name,
+        name: req.body.username,
         email: req.body.email,
         phone: req.body.phone,
         country: req.body.country,
@@ -30,10 +30,10 @@ exports.addFacilitator = function(req, res, next){
         city: req.body.city,
         password: utility.hashPassword(req.body.password),
         role: config.role.facilitator,
-        numOfLicense: req.body.num_of_license, //update distributor license when you update this field.
-        isActive: true,
+        numOfLicense: req.body.num_of_license_granted, //update distributor license when you update this field.
+        isActivated: true,
         distributorId: distributorId
-    }
+    };
 
     userModel.findByEmail(req.body.email)
     .then(function(result){
@@ -53,8 +53,8 @@ exports.addFacilitator = function(req, res, next){
         }
 
         return userModel.update({_id: distributorId}, {
-            numOfLicense: distributor.numOfLicense - parseInt(req.body.num_of_license),
-            numOfUsedLicense: distributor.numOfUsedLicense + parseInt(req.body.num_of_license)
+            numOfLicense: distributor.numOfLicense - parseInt(req.body.num_of_license_granted),
+            numOfUsedLicense: distributor.numOfUsedLicense + parseInt(req.body.num_of_license_granted)
         });
     })
     .then(function(numAffected){
@@ -87,7 +87,7 @@ exports.updateFacilitator = function(req, res, next){
 
     var facilitator = {};
 
-    if(req.body.name) facilitator.name = req.body.name;
+    if(req.body.username) facilitator.name = req.body.username;
     if(req.body.phone) facilitator.phone = req.body.phone;
     if(req.body.country) facilitator.country = req.body.country;
     if(req.body.state) facilitator.state = req.body.state;
@@ -95,8 +95,8 @@ exports.updateFacilitator = function(req, res, next){
     if(req.body.password) facilitator.password = utility.hashPassword(req.body.password);
 
     var userRole = sessionOperation.getUserRole(req);
-    if(req.body.num_of_license && (userRole === config.role.admin || userRole === config.role.distributor)){
-        facilitator.numOfLicense = req.body.num_of_license;
+    if(req.body.num_of_license_granted && (userRole === config.role.admin || userRole === config.role.distributor)){
+        facilitator.numOfLicense = req.body.num_of_license_granted;
     }
     if(req.body.district) facilitator.district = req.body.district;
     if(req.body.street) facilitator.street = req.body.street;
@@ -112,7 +112,7 @@ exports.updateFacilitator = function(req, res, next){
 
     //if the num_of_license is changed, we need to add or remove certain licenses
     //from the distributor
-    if(req.body.num_of_license > 0){
+    if(req.body.num_of_license_granted > 0){
         //find the facilitor to be updated.
         p = userModel.findOne({
             _id: req.params.facilitator_id
@@ -120,7 +120,7 @@ exports.updateFacilitator = function(req, res, next){
         .then(function(dbFacilitator){
             //if this facilitator belongs to the current distributor
             if(dbFacilitator.distributorId === distributorId){
-                var addedLicense = parseInt(req.body.num_of_license) - dbFacilitator.numOfLicense;
+                var addedLicense = parseInt(req.body.num_of_license_granted) - dbFacilitator.numOfLicense;
                 return userModel.findOne({
                     _id: distributorId
                 })
@@ -173,7 +173,7 @@ exports.updateFacilitator = function(req, res, next){
 
 
 exports.searchFacilitator = function(req, res, next){
-    var name = req.query.name;
+    var name = req.query.username;
     var email = req.query.email;
     var country = req.query.country;
     var state = req.query.state;
@@ -198,14 +198,40 @@ exports.searchFacilitator = function(req, res, next){
     if(isDisabled) query.isDisabled = isDisabled;
 
     userModel.find(query)
-    .then(function(result){
-        res.send(result);
+    .then(function(allFacilitator){
+        if(allFacilitator.length === 0){
+            return res.send([]);
+        }
+
+        allFacilitator = JSON.parse(JSON.stringify(allFacilitator));
+
+        return userModel.find({role: config.role.distributor})
+        .then(function(allDistributor){
+            for(var i=0; i< allFacilitator.length; i++){
+                var facilitator = allFacilitator[i];
+                var distributor = findDistributor(facilitator.distributorId, allDistributor);
+                if(!distributor){
+                    return res.send(500, {message: "distributor " + facilitator.distributorId + " doesn't exist."})
+                }
+                facilitator.distributorName = distributor.name;
+            }
+            
+            res.send(allFacilitator);
+        })
     })
     .fail(function(err){
         logger.error(err);
         res.send(500, {message: 'search failed'})
     })
     .done();
+
+    function findDistributor(distributorId, allDistributor){
+        for(var i=0; i< allDistributor.length; i++){
+            if(allDistributor[i]._id.toString() === distributorId){
+                return allDistributor[i];
+            }
+        }
+    }
 };
 
 exports.getSeminarOfFacilitator = function(req, res, next){

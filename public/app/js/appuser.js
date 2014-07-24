@@ -438,7 +438,6 @@ marksimosapp.controller('chartController', ['$scope',  '$timeout', '$http', 'not
 
     /********************  Chart C2  ********************/
     chartReport.perceptionMap().then(function(data, status, headers, config){
-        console.log(data);
         $scope.data.chartC21PerceptionMap.data = data;
         $scope.data.chartC21PerceptionMap.dataChart = data.dataSKU;
     });
@@ -670,7 +669,7 @@ marksimosapp.controller('chartController', ['$scope',  '$timeout', '$http', 'not
     };
 
     $scope.clickCurrentSku = function(sku){
-        $scope.data.currentSku = sku;
+        $scope.data.currentSku = angular.copy(sku);
         company.getCompanyFutureProjectionCalculator($scope.data.currentSku.d_SKUID).then(function(data, status, headers, config){
             $scope.data.currentCompanyFutureProjectionCalculator = data;
 
@@ -696,13 +695,23 @@ marksimosapp.controller('chartController', ['$scope',  '$timeout', '$http', 'not
                 // 针对d_PromotionalEpisodes 字段需要特殊处理
                 $scope.data.currentModifiedSku.sku_data[fieldname][weekindex] = segmentOrWeek;
             }
+        }else if(fieldname === 'd_FactoryPrice'){
+            // 针对 d_FactoryPrice 字段需要特殊处理
+            $scope.data.currentModifiedSku.sku_data[fieldname] = $scope.data.currentSku[fieldname];
+            $scope.data.currentModifiedSku.sku_data[fieldname][0] = Number(fielddata);
+        }else if(fieldname === 'd_AdditionalTradeMargin'){
+            // 针对 d_AdditionalTradeMargin 字段需要特殊处理
+            $scope.data.currentModifiedSku.sku_data[fieldname][0] = Number(fielddata) / 100;
+        }else if(fieldname === 'd_WholesalesBonusRate'){
+            // 针对 d_WholesalesBonusRate 字段需要特殊处理
+            $scope.data.currentModifiedSku.sku_data[fieldname][0] = Number(fielddata) / 100;
         }
+
+
         
 
-        console.log($scope.data.currentModifiedSku, sku);
 
         company.updateSku($scope.data.currentModifiedSku).success(function(data, status, headers, config){
-            console.log(data);
             $scope.companyInfoInit();
 
             notify({

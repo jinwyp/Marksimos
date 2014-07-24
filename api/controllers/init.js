@@ -2,6 +2,7 @@ var request = require('../promises/request.js');
 var util = require('util');
 var url = require('url');
 var config = require('../../common/config.js');
+var utility = require('../../common/utility.js');
 var Q = require('q');
 
 var decisionCleaner = require('../convertors/decisionCleaner.js');
@@ -25,6 +26,7 @@ var profitabilityEvolutionReportAssembler = require('../dataAssemblers/profitabi
 var segmentDistributionReportAssembler = require('../dataAssemblers/segmentDistributionReport.js');
 var competitorIntelligenceReportAssembler = require('../dataAssemblers/competitorIntelligence.js');
 var marketTrendsReportAssembler = require('../dataAssemblers/marketTrendsReport.js');
+var marketIndicatorsReportAssembler = require('../dataAssemblers/marketIndicatorsReport.js');
 var chartAssembler = require('../dataAssemblers/chart.js');
 
 var decisionConvertor = require('../convertors/decision.js');
@@ -80,7 +82,7 @@ exports.init = function(req, res, next) {
         }
 
         //create company array
-        companies = createCompanyArray(dbSeminar.companyNum);
+        companies = utility.createCompanyArray(dbSeminar.companyNum);
 
         simulationSpan = dbSeminar.simulationSpan;
         companyNum = dbSeminar.companyNum;
@@ -118,7 +120,8 @@ exports.init = function(req, res, next) {
                     initProfitabilityEvolutionReport(seminarId, allResults),
                     initSegmentDistributionReport(seminarId, allResults),
                     initCompetitorIntelligenceReport(seminarId, allResults),
-                    initMarketTrendsReport(seminarId, allResults)
+                    initMarketTrendsReport(seminarId, allResults),
+                    initMarketIndicatorReport(seminarId, currentPeriod)
                 ]);
             });
         })
@@ -195,7 +198,7 @@ exports.runSimulation = function(req, res, next){
                 return cgiapi.runSimulation({
                     seminarId: seminarId,
                     simulationSpan: dbSeminar.simulationSpan,
-                    teams: createCompanyArray(dbSeminar.companyNum),
+                    teams: utility.createCompanyArray(dbSeminar.companyNum),
                     period: currentPeriod
                 })
                 .then(function(simulationResult){
@@ -226,7 +229,8 @@ exports.runSimulation = function(req, res, next){
                             initProfitabilityEvolutionReport(seminarId, allResults),
                             initSegmentDistributionReport(seminarId, allResults),
                             initCompetitorIntelligenceReport(seminarId, allResults),
-                            initMarketTrendsReport(seminarId, allResults)
+                            initMarketTrendsReport(seminarId, allResults),
+                            initMarketIndicatorReport(seminarId, currentPeriod)
                         ]);
                     });
                 })
@@ -418,16 +422,6 @@ function submitDecision(companyId, period, seminarId){
     }
 }
 
-function createCompanyArray(companyNum){
-    var companies = [];
-
-    var letters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
-    for(var j=0; j<companyNum; j++){
-        companies.push('Company'+letters[j]);
-    } 
-
-    return companies;
-}
 
 function initBinaryFile(seminarId, simulation_span, companies){
     return cgiapi.init({
@@ -584,6 +578,21 @@ function initMarketTrendsReport(seminarId, allResults){
         reportName: 'market_trends',
         reportData: marketTrendsReportAssembler.getMarketTrendsReport(allResults)
     })
+}
+
+function initMarketIndicatorReport(seminarId, currentPeriod){
+    return cgiapi.getExogenous(currentPeriod)
+    .then(function(exogenouse){
+        if(!exogenouse || exogenouse.message){
+            throw new Error(exogenouse.message);
+        }
+
+        return reportModel.insert({
+            seminarId: seminarId,
+            reportName: 'market_indicators',
+            reportData: marketIndicatorsReportAssembler.getMarketIndicators(exogenouse)
+        });
+    });
 }
 
 

@@ -70,7 +70,7 @@ exports.updateDistributor = function(req, res, next){
         city: req.body.city,
         password: utility.hashPassword(req.body.password),
         role: config.role.distributor,
-        numOfLicense: req.body.num_of_license,
+        numOfLicense: req.body.num_of_license_granted,
         isActivated: true,
         district: req.body.district || '',
         street: req.body.street || '',

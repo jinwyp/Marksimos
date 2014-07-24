@@ -2,7 +2,6 @@ var decisionController = require('./controllers/decision.js');
 var chartController = require('./controllers/chart.js');
 var reportController = require('./controllers/report.js');
 var initController = require('./controllers/init.js');
-var decisionPageController = require('./controllers/decisionPage.js');
 var userController = require('./controllers/user.js');
 var distributorController = require('./controllers/distributor.js');
 var facilitatorController = require('./controllers/facilitator.js');
@@ -84,16 +83,14 @@ apiRouter.delete('/api/brand/decision', requireLogin, decisionController.deleteB
 apiRouter.put('/api/company/decision', requireLogin, decisionController.updateCompanyDecision);
 
 
-apiRouter.get('/api/company', requireLogin, decisionPageController.getDecision);
-apiRouter.get('/api/product_portfolio', requireLogin, decisionPageController.getProductPortfolio);
-apiRouter.get('/api/spending_details', requireLogin, decisionPageController.getSpendingDetails);
-apiRouter.get('/api/future_projection_calculator/:sku_id', requireLogin, decisionPageController.getSKUInfo);
-apiRouter.get('/api/company/otherinfo', requireLogin, decisionPageController.getOtherinfo);
+apiRouter.get('/api/company', requireLogin, decisionController.getDecision);
+apiRouter.get('/api/product_portfolio', requireLogin, decisionController.getProductPortfolio);
+apiRouter.get('/api/spending_details', requireLogin, decisionController.getSpendingDetails);
+apiRouter.get('/api/future_projection_calculator/:sku_id', requireLogin, decisionController.getSKUInfo);
+apiRouter.get('/api/company/otherinfo', requireLogin, decisionController.getOtherinfo);
 
 
-apiRouter.get('/api/user', requireLogin, userController.getUser);
-
-
+apiRouter.get('/api/student', requireLogin, authorize('getStudent'),userController.getStudent);
 
 
 /**********  API For Administrator  **********/
@@ -120,6 +117,9 @@ apiRouter.put('/api/admin/students/:student_id', requireLogin, authorize('update
 apiRouter.get('/api/admin/student/seminar', requireLogin, authorize('getSeminarOfStudent'), studentController.getSeminarOfStudent);
 
 apiRouter.post('/api/admin/seminar', requireLogin, authorize('addSeminar'), seminarController.addSeminar);
+
+
+apiRouter.get('/api/admin/user', requireLogin, userController.getUser);
 
 
 
@@ -172,6 +172,7 @@ function authorize(resource){
         'runSimulation'
     ];
     authDefinition[config.role.student] = [
+        'getStudent',
         'updateStudent',
         'chooseSeminar',
         'getSeminarOfStudent'

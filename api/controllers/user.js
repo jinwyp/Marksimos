@@ -4,6 +4,8 @@ var utility = require('../../common/utility.js');
 var logger = require('../../common/logger.js');
 var util = require('util');
 var sessionOperation = require('../../common/sessionOperation.js');
+var companyDecisionModel = require('../models/companyDecision.js');
+var seminarModel = require('../models/seminar.js');
 
 exports.getUser = function(req, res, next){
     var userId = sessionOperation.getUserId(req);
@@ -13,7 +15,44 @@ exports.getUser = function(req, res, next){
         if(!user){
             return res.send(500, {message: "user doesn't exist."});
         }
+
         res.send(user);
+    })
+    .fail(function(err){
+        logger.error(err);
+        res.send(500, {message: "get user failed."})
+    })
+    .done();
+};
+
+exports.getStudent = function(req, res, next){
+    var userId = sessionOperation.getUserId(req);
+
+    userModel.findOne({_id: userId})
+    .then(function(user){
+        if(!user){
+            return res.send(500, {message: "user doesn't exist."});
+        }
+
+        var companyId = sessionOperation.getCompanyId(req);
+        var seminarId = sessionOperation.getSeminarId(req);
+
+        var tempUser = JSON.parse(JSON.stringify(user));
+        tempUser.companyId = companyId;
+        tempUser.companyName = utility.createCompanyArray(companyId)[companyId-1];
+
+        return seminarModel.findOne({
+            seminarId: seminarId
+        })
+        .then(function(dbSeminar){
+            if(!dbSeminar){
+                throw {message: "seminar " + seminarId +" doesn't exist."}
+            }
+            tempUser.numOfTeamMember = dbSeminar.companyAssignment[companyId-1].length;
+            tempUser.numOfCompany = dbSeminar.companyNum;
+            tempUser.currentPeriod = dbSeminar.currentPeriod;
+            res.send(tempUser);
+        });
     })
     .fail(function(err){
         logger.error(err);
@@ -144,6 +183,8 @@ exports.login = function(req, res, next){
 
         sessionOperation.setLoginStatus(req, true);
         sessionOperation.setUserRole(req, user.role);
+        sessionOperation.setUserId(req, user._id);
+
         return res.send({
             userId: user._id
         });
@@ -153,7 +194,7 @@ exports.login = function(req, res, next){
         return res.send(500, {message: 'Login failed.'});
     })
     .done();
-}
+};
 
 
 

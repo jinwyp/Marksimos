@@ -13,6 +13,10 @@ var reportSchema = new Schema({
 var Report = mongoose.model("Report", reportSchema);
 
 exports.findOne = function(seminarId, reportName){
+    if(!mongoose.connection.readyState){
+        throw new Error("mongoose is not connected.");
+    }
+
     var deferred = Q.defer();
 
     Report.findOne({
@@ -29,6 +33,10 @@ exports.findOne = function(seminarId, reportName){
 }
 
 exports.remove = function(seminarId){
+    if(!mongoose.connection.readyState){
+        throw new Error("mongoose is not connected.");
+    }
+
     var deferred = Q.defer();
     Report.remove({seminarId: seminarId}, function(err){
         if(err){
@@ -41,6 +49,10 @@ exports.remove = function(seminarId){
 };
 
 exports.insert = function(report){
+    if(!mongoose.connection.readyState){
+        throw new Error("mongoose is not connected.");
+    }
+
     var deferred = Q.defer();
 
     Report.create(report, function(err){
@@ -54,6 +66,10 @@ exports.insert = function(report){
 };
 
 exports.update = function(seminarId, report){
+    if(!mongoose.connection.readyState){
+        throw new Error("mongoose is not connected.");
+    }
+    
     var deferred = Q.defer();
 
     Report.update({
