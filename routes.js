@@ -19,44 +19,44 @@ module.exports = function(app){
     });
 
     // authMiddleware.needLogin,
-    app.get('/home', function(req, res, next){
+    app.get('/home', authMiddleware.needLogin, function(req, res, next){
         res.render('user/userhome.ejs', { title : 'MarkSimos - User Home'});
     });
 
-    app.get('/activate', function(req, res, next){
-        var email = req.query.email;
-        var token = req.query.token;
+    // app.get('/activate', function(req, res, next){
+    //     var email = req.query.email;
+    //     var token = req.query.token;
 
-        if(!email){
-            return res.send(400, {message: 'email is required.'})
-        }
+    //     if(!email){
+    //         return res.send(400, {message: 'email is required.'})
+    //     }
 
-        if(!token){
-            return res.send(400, {message: 'token is required.'})
-        }
+    //     if(!token){
+    //         return res.send(400, {message: 'token is required.'})
+    //     }
 
-        userModel.findByEmailAndToken(email, token)
-            .then(function(result){
-                if(result){
-                    return userModel.updateByEmail(email, {
-                        isActivated: true
-                    })
-                        .then(function(numAffected){
-                            if(numAffected === 1){
-                                return res.redirect('/login');
-                            }
-                            throw new Error('more or less than 1 record is updated. it should be only one.')
-                        });
-                }else{
-                    throw new Error('User does not exist.');
-                }
-            })
-            .fail(function(err){
-                logger.error(err);
-                res.send(500, {message: 'activate failed.'})
-            })
-            .done();
-    });
+    //     userModel.findByEmailAndToken(email, token)
+    //         .then(function(result){
+    //             if(result){
+    //                 return userModel.updateByEmail(email, {
+    //                     isActivated: true
+    //                 })
+    //                     .then(function(numAffected){
+    //                         if(numAffected === 1){
+    //                             return res.redirect('/login');
+    //                         }
+    //                         throw new Error('more or less than 1 record is updated. it should be only one.')
+    //                     });
+    //             }else{
+    //                 throw new Error('User does not exist.');
+    //             }
+    //         })
+    //         .fail(function(err){
+    //             logger.error(err);
+    //             res.send(500, {message: 'activate failed.'})
+    //         })
+    //         .done();
+    // });
 
 
 

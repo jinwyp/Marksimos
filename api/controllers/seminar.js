@@ -245,13 +245,17 @@ exports.chooseSeminar = function(req, res, next){
             var studentId = sessionOperation.getUserId(req);
             for(var i=0; i<dbSeminar.companyAssignment.length; i++){
                 if(dbSeminar.companyAssignment[i].indexOf(studentId) > -1){
-                    sessionOperation.setCompanyId = i+1;
+                    sessionOperation.setCompanyId(req, i+1);
                     break;
                 }
             }
 
+            if(!sessionOperation.getCompanyId(req)){
+                throw {message: "this student is not assigned to a seminar."}
+            }
+
             //if companyId is not set, this student can't attend this seminar
-            if(!sessionOperation.setCompanyId){
+            if(!sessionOperation.getCompanyId(req)){
                 sessionOperation.setSeminarId(req, undefined);
                 sessionOperation.setCurrentPeriod(req, undefined);
                 return res.send(400, {message: "You are not authorized to attend this seminar."});

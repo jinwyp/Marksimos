@@ -164,11 +164,6 @@ exports.runSimulation = function(req, res, next){
 
     var currentPeriod = sessionOperation.getCurrentPeriod(req);
 
-    var companyId = sessionOperation.getCompanyId(req);
-    if(!companyId){
-        return res.send(400, {message: "Invalid companyId"});
-    }
-
     //check if this seminar exists
     seminarModel.findOne({
         seminarId: seminarId
@@ -187,12 +182,17 @@ exports.runSimulation = function(req, res, next){
             throw {httpStatus: 400, message: "the last round simulation has been executed."}
         }
 
+        var companies = [];
+        for(var i=0; i<dbSeminar.companyNum; i++){
+            companies.push(i+1);
+        }
+
         //write decision to binary file
-        return submitDecision(companyId, currentPeriod, seminarId)
-            .then(function(submitDecisionResult){
-                if(submitDecisionResult.message!=='submit_decision_success'){
-                    throw {message: submitDecisionResult.message};
-                }
+        return submitDecisionForAllCompany(companies, currentPeriod, seminarId)
+            .then(function(){
+                // if(submitDecisionResult.message!=='submit_decision_success'){
+                //     throw {message: submitDecisionResult.message};
+                // }
 
                 //run simulation
                 return cgiapi.runSimulation({
@@ -307,9 +307,22 @@ function removeCurrentPeriodSimulationResult(seminarId, currentPeriod){
     });
 }
 
+function submitDecisionForAllCompany(companies, period, seminarId){
+    console.log(companies);
+    var p = Q();
+
+    companies.forEach(function(companyId){
+        p = p.then(function(){
+            return submitDecision(companyId, period, seminarId)
+        })
+    });
+
+    return p;
+}
+
 function submitDecision(companyId, period, seminarId){
     var result = {};
-
+    console.log('-------------',companyId, period, seminarId);
     return companyDecisionModel.findOne(seminarId, period, companyId)
     .then(function(decision){
         if(!decision){
