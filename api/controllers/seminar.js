@@ -90,6 +90,9 @@ exports.addSeminar = function(req, res, next){
     .done();
 }
 
+
+
+
 /**
 * Facilitator can call this API
 */
