@@ -166,15 +166,17 @@ exports.login = function(req, res, next){
     var email = req.body.email;
     var password = req.body.password;
 
+    console.log(email, password);
+
     userModel.findByEmail(email)
     .then(function(user){
         if(!user){
             return res.send(400, {message: 'User does not exist.'});
         }
 
-        if(!user.isActivated){
-            return res.send(400, {message: 'User is not activated.'})
-        }
+        // if(!user.isActivated){
+        //     return res.send(400, {message: 'User is not activated.'})
+        // }
 
         if(!utility.comparePassword(password, user.password)){
             return res.send(400, {message: 'Email or password is wrong.'})

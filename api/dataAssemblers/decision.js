@@ -7,6 +7,7 @@ var Q = require('q');
  * Get decision of one period
  */
 exports.getDecision = function(seminarId, period, companyId){
+    console.log(seminarId, period, companyId);
     return Q.all([
         companyDecisionModel.findOne(seminarId, period, companyId),
         brandDecisionModel.findAllInCompany(seminarId, period, companyId),
