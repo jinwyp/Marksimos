@@ -75,6 +75,15 @@ module.exports = (function(){
             break;
         case 'jin':
             config.logDirectory = '/Users/jinwyp/Documents/github/Marksimos/log/';
+            break;
+        case 'ludwik':
+            config.logDirectory = '/Users/ludwik/code/actived/Marksimos/log/';
+            config.mongo_conn = 'mongodb://localhost/Marksimos';
+            config.host = 'http://localhost:3000/';
+            config.cgiService = 'http://10.20.30.97/cgi-bin/';            
+            break;            
+        case 'development':
+            config.logDirectory = '/Users/ludwik/code/Marksimos/log/';
             config.mongo_conn = 'mongodb://localhost/Marksimos';
             config.host = 'http://localhost:3000/';
             config.cgiService = 'http://10.20.30.97/cgi-bin/';
