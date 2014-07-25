@@ -2,7 +2,7 @@
  * Created by jinwyp on 6/26/14.
  */
 
-var app = angular.module('marksimos.filters', []);
+var app = angular.module('marksimos.filter', []);
 
 
 app.filter('usersegment', function() {
