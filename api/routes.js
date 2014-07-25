@@ -52,6 +52,12 @@ apiRouter.get('/api/create_admin', function(req, res, next){
 });
 
 
+// get seminar
+apiRouter.get('/api/user', requireLogin, userController.getUser);
+apiRouter.get('/api/student/seminar', requireLogin, authorize('getSeminarOfStudent'), studentController.getSeminarOfStudent);
+apiRouter.get('/api/studentinfo', requireLogin, authorize('getStudent'),userController.getStudent);
+
+
 //report
 apiRouter.get('/api/report/:report_name', requireLogin, reportController.getReport);
 apiRouter.get('/api/adminreport/:report_name', requireLogin, reportController.getReport);
@@ -87,8 +93,6 @@ apiRouter.get('/api/future_projection_calculator/:sku_id', requireLogin, decisio
 apiRouter.get('/api/company/otherinfo', requireLogin, decisionController.getOtherinfo);
 
 
-apiRouter.get('/api/student', requireLogin, authorize('getStudent'),userController.getStudent);
-
 
 /**********  API For Administrator  **********/
 
@@ -110,7 +114,7 @@ apiRouter.put('/api/admin/students/:student_id', requireLogin, authorize('update
 
 
 //get all seminars of the current student
-apiRouter.get('/api/admin/student/seminar', requireLogin, authorize('getSeminarOfStudent'), studentController.getSeminarOfStudent);
+
 apiRouter.post('/api/admin/seminar', requireLogin, authorize('addSeminar'), seminarController.addSeminar);
 
 

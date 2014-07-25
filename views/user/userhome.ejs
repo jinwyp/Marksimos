@@ -5,7 +5,7 @@
 
 <div class="container-fluid width_big_screen" ng-controller="chartController">
 
-    <header-user login="true"  current-menu="css.menu"></header-user>
+    <user-header showmenu="true"  current-menu="css.menu"></user-header>
 
 
 
@@ -13,16 +13,16 @@
         <div class="col-md-2 user_home_divider user_brand_box">
 
             <div class="row ">
-                <h4 class="user_maincompany">Company <span class="company_a">A</span> </h4>
+                <h4 class="user_maincompany">Company <span class="company_a">{{data.currentStudent.companyName | limitTo:-1}}</span> </h4>
             </div>
             <div class="row">
                 <div class="col-md-5">
                     <img src="./app/css/images/avator.png">
                 </div>
                 <div class="col-md-7">
-                    <h5>ID Name</h5>
-                    <span class="user_title">Market Manage</span>
-                    <span class="user_title">5 Team Member</span>
+                    <h5>{{data.currentStudent.name}}</h5>
+                    <span class="user_title">{{data.currentStudent.companyRole}}</span>
+                    <span class="user_title">{{data.currentStudent.numOfTeamMember}} Team Member</span>
                 </div>
             </div>
         </div>
@@ -41,7 +41,7 @@
         <div class="col-md-1 user_home_divider user_brand_box">
             <div class="row">
                 <div class="col-md-12">
-                    <span class="user_competitorsnum">6</span>
+                    <span class="user_competitorsnum">{{data.currentStudent.numOfCompany}}</span>
                     <span class="user_competitors">Companies</span>
                 </div>
             </div>
@@ -65,6 +65,7 @@
         <div class="col-md-12">
             <div class="row user_home_divider_horizontal ">
                 <div class="col-md-6 col-md-offset-3 ">
+                    Current Period : {{data.currentStudent.currentPeriod}}
                     <img src="./app/css/images/temp1.png" alt=""/>
                 </div>
             </div>
@@ -2823,7 +2824,7 @@
                                             <tr>
                                                 <td>Manufacturer Price ($)</td>
                                                 <td ng-repeat="sku in data.currentBrand.d_SKUsDecisions">
-                                                    <input type="text" class="form-control input-sm" ng-model="sku.d_FactoryPrice[0]" ng-blur="leaveSkuInput(sku, 'd_FactoryPrice', sku.d_FactoryPrice[0] )"  ng-focus="clickCurrentSku(sku)">
+                                                    <input type="text" class="form-control input-sm" filternumber ng-model="sku.d_FactoryPrice[0]" ng-blur="leaveSkuInput(sku, 'd_FactoryPrice', sku.d_FactoryPrice[0] )"  ng-focus="clickCurrentSku(sku)">
                                                 </td>
                                             </tr>
                                             <tr>

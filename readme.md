@@ -77,6 +77,7 @@ bind_ip = 127.0.0.1
 
 ##后端Delphi CGI环境配置
 
+# Delphi 部署时 配置 \cgi-bin\CgiConfig 需要更改 相应的配置 注意windows server 的64或32位路径不同
 
 
 

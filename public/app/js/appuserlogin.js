@@ -4,13 +4,13 @@
 
 // create module for custom directives
 
-var marksimosapp = angular.module('marksimoslogin', [ 'marksimos.component', 'marksimos.factory']);
+var marksimosapp = angular.module('marksimoslogin', ['marksimos.model', 'marksimos.component']);
 
 
 
 
 // controller business logic
-marksimosapp.controller('userLoginController', function  ($scope,  $timeout, $http, $window) {
+marksimosapp.controller('userLoginController', ['$scope', '$http', '$window', function  ($scope, $http, $window) {
     $scope.css = {
         newUser : {
             passwordPrompt : false
@@ -28,10 +28,7 @@ marksimosapp.controller('userLoginController', function  ($scope,  $timeout, $ht
         if(form.$valid){
              $http.post('/api/login', $scope.data.newUser).success(function(data, status, headers, config){
 
-
-
                 $window.location.href = "/introduction" ;
-
 
             }).error(function(data, status, headers, config){
                  form.password.$valid = false;
@@ -42,28 +39,67 @@ marksimosapp.controller('userLoginController', function  ($scope,  $timeout, $ht
         }
     };
 
-});
+}]);
 
 
 
 
-marksimosapp.controller('userIntroController', function  ($scope,  $timeout, $http, $window) {
+marksimosapp.controller('userIntroController', function($scope, $http, $window, student) {
 
     $scope.css = {
-        intro : true
+        showBox : 'intro'
     };
-
 
     $scope.data = {
+        currentStudent : null,
+        seminars : [],
+        selectSeminar : {
+            seminar_id : 0
+        }
+    };
+
+
+    $scope.initSeminar = function() {
+
+        student.getStudent().then(function(data, status, headers, config){
+            $scope.data.currentStudent = data;
+            console.log($scope.data.currentStudent);
+        });
+
+        student.getSeminar().then(function(data, status, headers, config){
+            $scope.data.seminars = data;
+            console.log($scope.data.seminars);
+        })
 
     };
+
+    $scope.initSeminar();
+
+
 
     $scope.introVideosNext = function(){
-        $scope.css.intro = false;
+        $scope.css.showBox = 'seminar';
     };
 
-    $scope.startGame = function(){
-        $window.location.href = "/mainhome" ;
+    $scope.whoamiNext = function(){
+        $window.location.href = "/home" ;
+    };
+
+    $scope.chooseSeminar = function(seminarid){
+
+        $scope.data.selectSeminar.seminar_id = seminarid;
+
+        if($scope.data.selectSeminar.seminar_id !== 0 ){
+            $http.get('/api/choose_seminar', {params : $scope.data.selectSeminar}).success(function(data, status, headers, config){
+                $scope.css.showBox = 'whoami';
+
+            }).error(function(data, status, headers, config){
+                console.log(data);
+            });
+        }
+
+
+
     };
 
 });

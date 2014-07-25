@@ -3,33 +3,62 @@
  */
 
 
-var app = angular.module('marksimos.factory', []);
+var app = angular.module('marksimos.model', []);
 
-app.factory('currentUser', function(){
-
-    var factory = {};
-
-    var user = {
-        name : 'aaa',
-        company : 'Company A'
-    };
+app.factory('Student', ['$http', function($http){
+    var apiPath = '/api/';
 
     var seminar ={
         currentRound : -3, // -3,-2, -1, 0, 1, 2, 3, 4, 5, 6
         companylist : []
     };
 
+    var factory = {
+        getStudent : function(){
+            return $http.get(apiPath + 'user').then(function(result){
+
+                return result.data;
+            }).catch(function(err){
+                console.log(err);
+            });
+        },
+
+        getSeminar : function(){
+            return $http.get(apiPath + 'student/seminar').then(function(result){
+
+                return result.data;
+            }).catch(function(err){
+                console.log(err);
+            });
+        }
+
+
+
+    };
+
     return factory;
-});
+}]);
 
 
 
 
-app.factory('company',['$http', function($http){
+
+
+app.factory('Company', ['$http', function($http){
 
     var apiPath = '/api/';
 
     var factory = {
+        getCurrentStudent : function(){
+            return $http.get(apiPath + 'studentinfo').then(function(result){
+//                console.log(result.data);
+
+                return result.data;
+            }, function(err){
+                console.log(err);
+            });
+        },
+
         getCompany : function(){
             return $http.get(apiPath + 'company').then(function(result){
 //                console.log(result.data);

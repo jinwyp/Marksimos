@@ -4,11 +4,11 @@
 
 
 // create module for custom directives
-var marksimosapp = angular.module('marksimos', ['pascalprecht.translate', 'angularCharts', 'nvd3ChartDirectives', 'cgNotify', 'marksimos.component', 'marksimos.factory', 'marksimos.filters', 'marksimos.translation' ]);
+var marksimosapp = angular.module('marksimos', ['pascalprecht.translate', 'angularCharts', 'nvd3ChartDirectives', 'cgNotify', 'marksimos.component', 'marksimos.model', 'marksimos.filters', 'marksimos.translation' ]);
 
 
 // controller business logic
-marksimosapp.controller('chartController', ['$scope',  '$timeout', '$http', 'notify', 'chartReport', 'tableReport', 'company', function($scope,  $timeout, $http, notify, chartReport, tableReport, company) {
+marksimosapp.controller('chartController', ['$scope',  '$timeout', '$http', 'notify', 'chartReport', 'tableReport', 'Company', function($scope,  $timeout, $http, notify, chartReport, tableReport, Company) {
 
     $scope.css = {
         menu : 'Home',
@@ -32,7 +32,8 @@ marksimosapp.controller('chartController', ['$scope',  '$timeout', '$http', 'not
     };
 
     $scope.data = {
-        currentCompany : {},
+        currentStudent : null,
+        currentCompany : null,
         currentCompanyOtherInfo : {},
         currentCompanyProductPortfolio : {},
         currentCompanySpendingDetails : {},
@@ -581,9 +582,11 @@ marksimosapp.controller('chartController', ['$scope',  '$timeout', '$http', 'not
 
     $scope.companyInfoInit = function(){
 
+        Company.getCurrentStudent().then(function(data, status, headers, config){
+            $scope.data.currentStudent = data;
+        });
 
-
-        company.getCompany().then(function(data, status, headers, config){
+        Company.getCompany().then(function(data, status, headers, config){
 
             //记录上一次选中的Brand 和SKU 并找到对应的Index 供本次查询使用
 
@@ -620,7 +623,7 @@ marksimosapp.controller('chartController', ['$scope',  '$timeout', '$http', 'not
 
             $scope.data.currentSku = $scope.data.currentCompany.d_BrandsDecisions[$scope.data.currentBrandIndex].d_SKUsDecisions[$scope.data.currentSkuIndex];
 
-            company.getCompanyFutureProjectionCalculator($scope.data.currentSku.d_SKUID).then(function(data, status, headers, config){
+            Company.getCompanyFutureProjectionCalculator($scope.data.currentSku.d_SKUID).then(function(data, status, headers, config){
     //            console.log(data);
                 $scope.data.currentCompanyFutureProjectionCalculator = data;
 
@@ -628,7 +631,7 @@ marksimosapp.controller('chartController', ['$scope',  '$timeout', '$http', 'not
 
         });
 
-        company.getCompanyOtherInfo().then(function(data, status, headers, config){
+        Company.getCompanyOtherInfo().then(function(data, status, headers, config){
             $scope.data.currentCompanyOtherInfo = {
                 totalAvailableBudget : parseInt(data.totalAvailableBudget * 10000) / 100,
                 totalAvailableBudgetCSS : data.totalAvailableBudget.toFixed(4)  * 100 + '%',
@@ -645,12 +648,12 @@ marksimosapp.controller('chartController', ['$scope',  '$timeout', '$http', 'not
 
         });
 
-        company.getCompanyProductPortfolio().then(function(data, status, headers, config){
+        Company.getCompanyProductPortfolio().then(function(data, status, headers, config){
     //        console.log(data);
             $scope.data.currentCompanyProductPortfolio = data;
         });
 
-        company.getCompanySpendingDetails().then(function(data, status, headers, config){
+        Company.getCompanySpendingDetails().then(function(data, status, headers, config){
     //        console.log(data);
             $scope.data.currentCompanySpendingDetails = data;
         });
@@ -670,7 +673,7 @@ marksimosapp.controller('chartController', ['$scope',  '$timeout', '$http', 'not
 
     $scope.clickCurrentSku = function(sku){
         $scope.data.currentSku = angular.copy(sku);
-        company.getCompanyFutureProjectionCalculator($scope.data.currentSku.d_SKUID).then(function(data, status, headers, config){
+        Company.getCompanyFutureProjectionCalculator($scope.data.currentSku.d_SKUID).then(function(data, status, headers, config){
             $scope.data.currentCompanyFutureProjectionCalculator = data;
 
         });
@@ -708,10 +711,10 @@ marksimosapp.controller('chartController', ['$scope',  '$timeout', '$http', 'not
         }
 
 
-        
 
 
-        company.updateSku($scope.data.currentModifiedSku).success(function(data, status, headers, config){
+
+        Company.updateSku($scope.data.currentModifiedSku).success(function(data, status, headers, config){
             $scope.companyInfoInit();
 
             notify({
@@ -730,8 +733,7 @@ marksimosapp.controller('chartController', ['$scope',  '$timeout', '$http', 'not
             }
         };
 
-        company.updateBrand($scope.data.currentModifiedBrand).success(function(data, status, headers, config){
-            console.log(data);
+        Company.updateBrand($scope.data.currentModifiedBrand).success(function(data, status, headers, config){
             $scope.companyInfoInit();
             notify({
                 message : 'Save Success !',
@@ -753,7 +755,7 @@ marksimosapp.controller('chartController', ['$scope',  '$timeout', '$http', 'not
             }
         };
 
-        company.updateCompany($scope.data.currentModifiedCompany).success(function(data, status, headers, config){
+        Company.updateCompany($scope.data.currentModifiedCompany).success(function(data, status, headers, config){
             console.log(data);
             $scope.companyInfoInit();
             notify({
