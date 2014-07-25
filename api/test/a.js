@@ -180,7 +180,7 @@ function assignStudent(){
             console.log(body);
         }
     }).form({
-        student_id: '53c5f2c4c71f7f3fb6e6edb4',
+        student_id: 's1@hcdglobal.com',
         company_id: '2'
     });
 }
@@ -262,15 +262,14 @@ function createTestData(){
     .done();
 }
 
-//updateDistributor();
-//updateFacilitator();
+assignStudent();
 
-mongoose.connect('mongodb://localhost/Marksimos');
-var db = mongoose.connection;
-db.on('error', console.error.bind(console, 'connection error:'));
-db.once('open', function(response,request) {
-    addSeminar();
-});
+// mongoose.connect('mongodb://localhost/Marksimos');
+// var db = mongoose.connection;
+// db.on('error', console.error.bind(console, 'connection error:'));
+// db.once('open', function(response,request) {
+//     addSeminar();
+// });
 
 
 

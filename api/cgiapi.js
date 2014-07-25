@@ -124,6 +124,7 @@ exports.runSimulation = function(simulationConfig){
 
     reqUrl += '&period=' + simulationConfig.period;
 
+    console.log(reqUrl);
     return request.get(reqUrl);
 }
 

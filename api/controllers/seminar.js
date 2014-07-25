@@ -107,11 +107,11 @@ exports.addSeminar = function(req, res, next){
 * Facilitator can call this API
 */
 exports.assignStudentToSeminar = function(req, res, next){
-    var studentId = req.body.student_id;
+    var email = req.body.email;
     var seminarId = req.body.seminar_id;
 
-    if(!studentId){
-        return res.send(400, {message: "Invalid student_id"});
+    if(!email){
+        return res.send(400, {message: "Invalid email."});
     }
 
     if(!seminarId){
@@ -134,14 +134,14 @@ exports.assignStudentToSeminar = function(req, res, next){
         var isStudentAssignedToSeminar = false;
 
         for(var i=0; i < companyAssignment.length; i++){
-            if(companyAssignment[i].indexOf(studentId) > -1){
+            if(companyAssignment[i].indexOf(email) > -1){
                 isStudentAssignedToSeminar = true;
             }
         }
 
         //if this student has not been added to this seminar, add it
         if(!isStudentAssignedToSeminar){
-            companyAssignment[companyId-1].push(studentId);
+            companyAssignment[companyId-1].push(email);
         }
 
         return seminarModel.update({seminarId: seminarId}, {
@@ -165,10 +165,10 @@ exports.assignStudentToSeminar = function(req, res, next){
 }
 
 exports.removeStudentFromSeminar = function(req, res, next){
-    var studentId = req.body.student_id;
+    var email = req.body.email;
 
-    if(!studentId){
-        return res.send(400, {message: "Invalid student_id"});
+    if(!email){
+        return res.send(400, {message: "Invalid email."});
     }
 
     var seminarId = sessionOperation.getSeminarId(req);
@@ -191,11 +191,11 @@ exports.removeStudentFromSeminar = function(req, res, next){
         var companyAssignment = dbSeminar.companyAssignment;
 
         //if this student is in this company
-        if(companyAssignment[companyId-1].indexOf(studentId) > -1){
+        if(companyAssignment[companyId-1].indexOf(email) > -1){
             var companyMembers = [];
             for(var i=0; i<companyAssignment[companyId-1].length; i++){
-                if(companyAssignment[companyId-1][i] !== studentId){
-                    companyMembers.push(studentId);
+                if(companyAssignment[companyId-1][i] !== email){
+                    companyMembers.push(email);
                 }
             }
             companyAssignment[companyId-1] = companyMembers;
@@ -242,9 +242,9 @@ exports.chooseSeminar = function(req, res, next){
         sessionOperation.setCurrentPeriod(req, dbSeminar.currentPeriod);
 
         if(sessionOperation.getUserRole(req) === config.role.student){
-            var studentId = sessionOperation.getUserId(req);
+            var email = sessionOperation.getEmail(req);
             for(var i=0; i<dbSeminar.companyAssignment.length; i++){
-                if(dbSeminar.companyAssignment[i].indexOf(studentId) > -1){
+                if(dbSeminar.companyAssignment[i].indexOf(email) > -1){
                     sessionOperation.setCompanyId(req, i+1);
                     break;
                 }

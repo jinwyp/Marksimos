@@ -50,3 +50,11 @@ exports.setCurrentPeriod = function(req, currentPeriod){
 exports.getCurrentPeriod = function(req){
     return req.session.currentPeriod;
 }
+
+exports.setEmail = function(req, email){
+    req.session.email = email;
+}
+
+exports.getEmail = function(){
+    return req.session.email;
+}
