@@ -194,7 +194,7 @@ exports.getSeminarOfStudent = function(req, res, next){
         return res.send(500, {message: "get seminar list failed."})
     })
     .done();
-}
+};
 
 
 

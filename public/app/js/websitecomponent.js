@@ -35,11 +35,39 @@ app.directive('filterpercentage', [ function() {
 }]);
 
 
+app.directive('filternumber', [ function() {
+    return {
+        require: 'ngModel',
+        restrict: 'A',
+        link: function (scope, element, attr, ngModel) {
 
-app.directive('headerUser', ['$translate', function($translate) {
+            function showFormatText(number) {
+                if(angular.isNumber(number)){
+                    return parseInt( number * 100) / 100 ;
+                }
+                return number;
+            }
+
+            function formatInput(number) {
+
+                if(angular.isNumber(Number(number))){
+                    return number  ;
+                }
+                return number;
+            }
+
+            ngModel.$formatters.push(showFormatText);
+            ngModel.$parsers.push(formatInput);
+
+        }
+    };
+}]);
+
+
+app.directive('userHeader', ['$translate', function($translate) {
     return {
         scope: {
-            login : '=',
+            showmenu : '=',
             menuhome : '&clickHome',
             menureport : '&clickReport',
             menuscore : '&clickScore',
@@ -47,21 +75,11 @@ app.directive('headerUser', ['$translate', function($translate) {
             currentMenu : '='
         },
         restrict: 'AE',
-        templateUrl: 'app/js/websitecomponent/headeruser.html',
+        templateUrl: 'app/js/websitecomponent/userheader.html',
         link: function (scope, element, attrs) {
 
             scope.clickMenu = function(currentmenu){
                 scope.currentMenu = currentmenu;
-
-//                if (currentmenu == 'Home'){
-//                    scope.menuhome();
-//                }else if (currentmenu == 'Report'){
-//                    scope.menureport();
-//                }else if (currentmenu == 'Score'){
-//                    scope.menuscore();
-//                }else if (currentmenu == 'Decision'){
-//                    scope.menudecision();
-//                }
             };
 
             scope.changeLanguage = function (langKey) {
@@ -94,7 +112,6 @@ app.directive('menuAdmin', [function() {
         restrict: 'AE',
         templateUrl: 'app/js/websitecomponent/adminmenu.html',
         link : function(scope, element){
-
 
             scope.css = {
                 currentTab : 2,
