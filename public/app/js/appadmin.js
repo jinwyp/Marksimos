@@ -137,6 +137,7 @@ marksimosapp.controller('adminHomeController', ['$scope', '$http', '$notificatio
             seminar_id : 0,
             student_id : "",
             company_id : 0,
+            email : ""
         },
 
         country : [
@@ -454,13 +455,13 @@ marksimosapp.controller('adminHomeController', ['$scope', '$http', '$notificatio
         $scope.data.addStudentToSeminar.company_id = company.companyId ;
     };
     /********************  Add Student To Seminar  ********************/
-    $scope.addStudentToSeminar = function(seminarid, studentid){
+    $scope.addStudentToSeminar = function(seminarid, studentemail){
 
-        if($scope.data.addStudentToSeminar.company_id === 0 || angular.isUndefined(studentid) ){
+        if($scope.data.addStudentToSeminar.company_id === 0 || angular.isUndefined(studentemail) || studentemail=="" ){
             $scope.css.seminarId = seminarid;
         }else{
             $scope.css.seminarId = 0;
-            $scope.data.addStudentToSeminar.student_id = studentid;
+            $scope.data.addStudentToSeminar.email = studentemail;
 
             $http.post('/api/admin/assign_student_to_seminar', $scope.data.addStudentToSeminar).success(function(data, status, headers, config){
                 $scope.getSeminarInit();
