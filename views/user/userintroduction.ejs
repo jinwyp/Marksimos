@@ -81,7 +81,6 @@
                             <h5 class="text-center">I am leading <span class="highlight1">{{data.currentStudentSeminar.companyName}}</span> .
                                 I manage <span class="highlight2">{{data.skuNumber}}</span>  <span class="highlight1">products</span> under <span class="highlight2">{{data.brandNumber}}</span>  <span class="highlight1">brands</span> .
                                 <br/> I compete with <span class="highlight2">{{data.currentStudentSeminar.numOfCompany - 1 }}</span>  other companies.
-
                             </h5>
 
                         </div>
@@ -101,57 +100,12 @@
 
             <div class="row brand_list">
                 <div class="row">
-                    <div class="col-md-2 col-md-offset-1">
-                        <span class="user_brand">Brand 1</span>
+                    <div class="col-md-2" ng-class="{'col-md-offset-1':$first, 'user_brandcolumn':!$first,}" ng-repeat="brand in data.currentCompany.d_BrandsDecisions">
+                        <span class="user_brand">{{brand.d_BrandName}}</span>
                         <ul>
-                            <li class="user_product">P1A - <span>Sensitive</span></li>
-                            <li class="user_product">P1A - <span>Sensitive</span></li>
-                            <li class="user_product">P1A - <span>Sensitive</span></li>
-                            <li class="user_product">P1A - <span>Sensitive</span></li>
-                            <li class="user_product">P1A - <span>Sensitive</span></li>
+                            <li class="user_product" ng-repeat="sku in brand.d_SKUsDecisions">{{sku.d_SKUName}} - <span>{{sku.d_TargetConsumerSegment | usersegment}}</span></li>
                         </ul>
                     </div>
-                    <div class="col-md-2 user_brandcolumn">
-                        <span class="user_brand">Brand 2</span>
-                        <ul>
-                            <li class="user_product">P1A - <span>Sensitive</span></li>
-                            <li class="user_product">P1A - <span>Sensitive</span></li>
-                            <li class="user_product">P1A - <span>Sensitive</span></li>
-                            <li class="user_product">P1A - <span>Sensitive</span></li>
-                            <li class="user_product">P1A - <span>Sensitive</span></li>
-                        </ul>
-                    </div>
-                    <div class="col-md-2 user_brandcolumn">
-                        <span class="user_brand">Brand 3</span>
-                        <ul>
-                            <li class="user_product">P1A - <span>Sensitive</span></li>
-                            <li class="user_product">P1A - <span>Sensitive</span></li>
-                            <li class="user_product">P1A - <span>Sensitive</span></li>
-                            <li class="user_product">P1A - <span>Sensitive</span></li>
-                            <li class="user_product">P1A - <span>Sensitive</span></li>
-                        </ul>
-                    </div>
-                    <div class="col-md-2 user_brandcolumn">
-                        <span class="user_brand">Brand 4</span>
-                        <ul>
-                            <li class="user_product">P1A - <span>Sensitive</span></li>
-                            <li class="user_product">P1A - <span>Sensitive</span></li>
-                            <li class="user_product">P1A - <span>Sensitive</span></li>
-                            <li class="user_product">P1A - <span>Sensitive</span></li>
-                            <li class="user_product">P1A - <span>Sensitive</span></li>
-                        </ul>
-                    </div>
-                    <div class="col-md-2 user_brandcolumn">
-                        <span class="user_brand">Brand 5</span>
-                        <ul>
-                            <li class="user_product">P1A - <span>Sensitive</span></li>
-                            <li class="user_product">P1A - <span>Sensitive</span></li>
-                            <li class="user_product">P1A - <span>Sensitive</span></li>
-                            <li class="user_product">P1A - <span>Sensitive</span></li>
-                            <li class="user_product">P1A - <span>Sensitive</span></li>
-                        </ul>
-                    </div>
-
                 </div>
 
 
