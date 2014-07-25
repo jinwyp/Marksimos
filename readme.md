@@ -223,3 +223,7 @@ Or, if you don't want/need launchctl, you can just run:
 
 
 
+
+# 运行
+NODE_ENV=production nodemon app.js
+
