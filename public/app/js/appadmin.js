@@ -457,7 +457,7 @@ marksimosapp.controller('adminHomeController', ['$scope', '$http', '$notificatio
     /********************  Add Student To Seminar  ********************/
     $scope.addStudentToSeminar = function(seminarid, studentemail){
 
-        if($scope.data.addStudentToSeminar.company_id === 0 || angular.isUndefined(studentemail) || studentemail=="" ){
+        if($scope.data.addStudentToSeminar.company_id === 0 || angular.isUndefined(studentemail) || studentemail === "" ){
             $scope.css.seminarId = seminarid;
         }else{
             $scope.css.seminarId = 0;

@@ -181,8 +181,10 @@ exports.getSeminarOfStudent = function(req, res, next){
             var seminar = allSeminars[i];
             for(var j=0; j<seminar.companyAssignment.length; j++){
                 if(seminar.companyAssignment[j].indexOf(studentId) > -1){
-                    assignedSeminars.push(seminar);
-                    break;
+                    if(seminar.isInitialized ){
+                        assignedSeminars.push(seminar);
+                        break;
+                    }
                 }
             }
         }

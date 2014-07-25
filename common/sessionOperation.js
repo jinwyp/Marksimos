@@ -55,6 +55,6 @@ exports.setEmail = function(req, email){
     req.session.email = email;
 }
 
-exports.getEmail = function(){
+exports.getEmail = function(req){
     return req.session.email;
 }

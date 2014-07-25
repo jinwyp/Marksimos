@@ -44,14 +44,18 @@ marksimosapp.controller('userLoginController', ['$scope', '$http', '$window', fu
 
 
 
-marksimosapp.controller('userIntroController', function($scope, $http, $window, student) {
+marksimosapp.controller('userIntroController',['$scope', '$http', '$window', 'Student',  'Company', function($scope, $http, $window, Student, Company) {
 
     $scope.css = {
         showBox : 'intro'
     };
 
     $scope.data = {
+        brandNumber : 0,
+        skuNumber : 0,
         currentStudent : null,
+        currentStudentSeminar : null,
+        currentCompany : null,
         seminars : [],
         selectSeminar : {
             seminar_id : 0
@@ -61,16 +65,15 @@ marksimosapp.controller('userIntroController', function($scope, $http, $window, 
 
     $scope.initSeminar = function() {
 
-        student.getStudent().then(function(data, status, headers, config){
+        Student.getStudent().then(function(data, status, headers, config){
             $scope.data.currentStudent = data;
             console.log($scope.data.currentStudent);
         });
 
-        student.getSeminar().then(function(data, status, headers, config){
+        Student.getSeminar().then(function(data, status, headers, config){
             $scope.data.seminars = data;
             console.log($scope.data.seminars);
-        })
-
+        });
     };
 
     $scope.initSeminar();
@@ -93,6 +96,24 @@ marksimosapp.controller('userIntroController', function($scope, $http, $window, 
             $http.get('/api/choose_seminar', {params : $scope.data.selectSeminar}).success(function(data, status, headers, config){
                 $scope.css.showBox = 'whoami';
 
+
+                Company.getCurrentStudent().then(function(data, status, headers, config){
+                    $scope.data.currentStudentSeminar = data;
+                });
+
+                Company.getCompany().then(function(data, status, headers, config){
+                    angular.forEach(data.d_BrandsDecisions, function(brand){
+                        $scope.data.brandNumber++;
+
+                        angular.forEach(brand.d_SKUsDecisions, function(sku){
+                            $scope.data.skuNumber++;
+                        });
+                    });
+
+
+                    $scope.data.currentCompany = data;
+                });
+
             }).error(function(data, status, headers, config){
                 console.log(data);
             });
@@ -102,4 +123,4 @@ marksimosapp.controller('userIntroController', function($scope, $http, $window, 
 
     };
 
-});
+}]);
