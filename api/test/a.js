@@ -153,7 +153,7 @@ function updateStudent(){
 function addSeminar(){
     seminarModel.delete({})
     .then(function(){
-        request.post('http://localhost:3000/api/seminar', function(err, res, body){
+        request.post('http://localhost:3000/api/admin/seminar', function(err, res, body){
             if(err){
                 console.log(JSON.stringify(err));
             }else{
@@ -269,7 +269,7 @@ mongoose.connect('mongodb://localhost/Marksimos');
 var db = mongoose.connection;
 db.on('error', console.error.bind(console, 'connection error:'));
 db.once('open', function(response,request) {
-    createTestData();
+    addSeminar();
 });
 
 

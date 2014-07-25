@@ -438,7 +438,6 @@ marksimosapp.controller('chartController', ['$scope',  '$timeout', '$http', 'not
 
     /********************  Chart C2  ********************/
     chartReport.perceptionMap().then(function(data, status, headers, config){
-        console.log(data);
         $scope.data.chartC21PerceptionMap.data = data;
         $scope.data.chartC21PerceptionMap.dataChart = data.dataSKU;
     });

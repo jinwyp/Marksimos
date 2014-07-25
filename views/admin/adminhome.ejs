@@ -4,15 +4,20 @@
 
 <body class="skin-blue" ng-app="marksimosadmin" ng-controller="adminHomeController">
 
-    <header-admin class="header"></header-admin>
+    <header-admin class="header" currentuser="data.currentUser"></header-admin>
 
 
     <div class="wrapper row-offcanvas row-offcanvas-left">
 
-        <menu-admin current-menu="css.leftmenu" showtab="css.menuTabShow"></menu-admin>
+        <menu-admin current-menu="css.leftmenu" showtab="css.menuTabShow" currentuser="data.currentUser"></menu-admin>
 
 
         <aside class="right-side">
+
+            <section class="content" ng-if="css.leftmenu==11">
+                <h2 class="page-header">Dashboard coming soon !!</h2>
+            </section>
+
 
             <section class="content" ng-if="css.leftmenu==21">
                 <h2 class="page-header">Distributor Management</h2>
@@ -381,9 +386,8 @@
                                         <th>Cell Phone</th>
                                         <th>Country / Province / City</th>
                                         <th>Current Occupation</th>
-                                        <th>Organization / University</th>
-                                        <th>Facilitator</th>
-                                        <th>Distributor</th>
+                                        <th>University</th>
+                                        <th>Organization</th>
                                     </tr>
                                     <tr ng-repeat="user in data.students" >
                                         <td>{{user._id}}</td>
@@ -394,9 +398,8 @@
                                         <td>{{user.phone}}</td>
                                         <td>{{user.country}} / {{user.state}} / {{user.city}} </td>
                                         <td>{{user.occupation}}</td>
-                                        <td>{{user.organization}} / {{user.univercity}}</td>
-                                        <td title="{{user.facilitatorId}}">{{user.facilitatorName}}</td>
-                                        <td title="{{user.distributorId}}">{{user.distributorName}}</td>
+                                        <td>{{user.university}}</td>
+                                        <td>{{user.organization}}</td>
                                     </tr>
                                     </tbody>
                                 </table>
@@ -465,9 +468,16 @@
                                     </div>
 
                                     <div class="form-group" ng-class="{'has-success':newStudentForm.university.$dirty && newStudentForm.university.$valid, 'has-error': newStudentForm.university.$dirty && newStudentForm.university.$invalid}">
-                                        <label for="inputUniversity" class="col-sm-2 control-label">Organization / University : </label>
+                                        <label for="inputUniversity" class="col-sm-2 control-label">University : </label>
                                         <div class="col-sm-4">
-                                            <input type="text" class="form-control" id="inputUniversity" name="university"  ng-model="data.newStudent.university">
+                                            <input type="text" class="form-control" id="inputUniversity" name="university"  ng-model="data.newSeminar.university">
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group" ng-class="{'has-success':newStudentForm.university.$dirty && newStudentForm.university.$valid, 'has-error': newStudentForm.university.$dirty && newStudentForm.university.$invalid}">
+                                        <label for="inputOrganization" class="col-sm-2 control-label">Organization : </label>
+                                        <div class="col-sm-4">
+                                            <input type="text" class="form-control" id="inputOrganization" name="organization"  ng-model="data.newSeminar.organization">
                                         </div>
                                     </div>
 
@@ -509,12 +519,11 @@
                             <form class="form-horizontal" role="form" name="searchSeminarForm">
                                 <div class="box-body">
 
-                                    <username-input labeltext="Seminar UserName :" placeholdertext="Seminar UserName" formname="searchSeminarForm" data="data.searchSeminar.username" required="false" requirederrorinfo="Username is required" minlength="6" minlengtherrorinfo="Username must be at least 6 characters" maxlength="20" maxlengtherrorinfo="Username is a maximum of 20 characters"></username-input>
-                                    <email-input labeltext="Seminar Email :" placeholdertext="Email" formname="searchSeminarForm" data="data.searchSeminar.email" required="false" requirederrorinfo="Email is required" emailerrorinfo="Doesn't look like a valid email !"></email-input>
+                                    <username-input labeltext="Seminar Name :" placeholdertext="Seminar Name" formname="searchSeminarForm" data="data.searchSeminar.username" required="false" requirederrorinfo="Username is required" minlength="6" minlengtherrorinfo="Username must be at least 6 characters" maxlength="20" maxlengtherrorinfo="Username is a maximum of 20 characters"></username-input>
 
 
                                     <div class="form-group">
-                                        <label for="inputSeminarUserStatus" class="col-sm-2 control-label">User Status</label>
+                                        <label for="inputSeminarUserStatus" class="col-sm-2 control-label">Initialized Status</label>
                                         <div class="col-sm-4">
                                             <label class="radio-inline">
                                                 <input type="radio" name="inputSeminarUserStatus" ng-model="data.searchSeminar.user_status" value="false">Active
@@ -545,30 +554,49 @@
                                 <table class="table table-striped table-hover">
                                     <tbody>
                                     <tr>
+                                        <th>Action</th>
                                         <th>ID</th>
-                                        <th>UserName</th>
-                                        <th>First/Last Name</th>
-                                        <th>Email</th>
-                                        <th>Status</th>
-                                        <th>Cell Phone</th>
+                                        <th>Description</th>
+                                        <th>Initialized Status</th>
+                                        <th>Finished Status</th>
                                         <th>Country / Province / City</th>
-                                        <th>Current Occupation</th>
-                                        <th>Organization / University</th>
-                                        <th>Facilitator</th>
-                                        <th>Distributor</th>
+                                        <th>Venue</th>
+                                        <th>CurrentPeriod / Rounds</th>
+                                        <th>Teams</th>
+                                        <th>Add Students</th>
                                     </tr>
-                                    <tr ng-repeat="user in data.students" >
-                                        <td>{{user._id}}</td>
-                                        <td>{{user.name}}</td>
-                                        <td>{{user.firstName}} {{user.lastName}}</td>
-                                        <td>{{user.email}}</td>
-                                        <td>{{!user.isDisabled}}</td>
-                                        <td>{{user.phone}}</td>
-                                        <td>{{user.country}} / {{user.state}} / {{user.city}} </td>
-                                        <td>{{user.occupation}}</td>
-                                        <td>{{user.organization}} / {{user.univercity}}</td>
-                                        <td title="{{user.facilitatorId}}">{{user.facilitatorName}}</td>
-                                        <td title="{{user.distributorId}}">{{user.distributorName}}</td>
+                                    <tr ng-repeat="seminar in data.seminars" >
+                                        <td>
+                                            <div class="btn-group-vertical">
+                                                <button type="button" class="btn btn-danger" ng-click="initSeminar(seminar.seminarId)">Init</button>
+                                                <button type="button" class="btn btn-danger" ng-click="runSeminar(seminar.seminarId)">Run</button>
+                                            </div>
+                                        </td>
+                                        <td>{{seminar.seminarId}}</td>
+                                        <td>{{seminar.description}}</td>
+                                        <td>{{seminar.isInitialized}} </td>
+                                        <td>{{seminar.isSimulationFinised}} </td>
+                                        <td>{{seminar.country}} / {{seminar.state}} / {{seminar.city}} </td>
+                                        <td>{{seminar.venue}}</td>
+                                        <td>{{seminar.currentPeriod}} / {{seminar.simulationSpan}} </td>
+                                        <td>{{seminar.companyNum}} </td>
+                                        <td width="460px">
+                                                    <div class="input-group margin">
+                                                        <div class="input-group-btn">
+                                                            <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">{{data.addStudentToSeminar.companyName}} <span class="fa fa-caret-down"></span></button>
+                                                            <ul class="dropdown-menu">
+                                                                <li ng-repeat="company in seminar.companies"><a href="" ng-click="chooseCompany(seminar, company)">{{company.companyName}}</a></li>
+                                                            </ul>
+                                                        </div><!-- /btn-group -->
+                                                        <input type="text" class="form-control" placeholder="Student ID" ng-model="data.addStudentToSeminar.student_id">
+                                                        <span class="input-group-btn">
+                                                            <button class="btn btn-info" type="button" ng-click="addStudentToSeminar(seminar.seminarId)">Add</button>
+                                                        </span>
+                                                    </div><!-- /input-group -->
+                                                    <div class="callout callout-danger" ng-show="seminar.seminarId == css.seminarId">
+                                                        <p>Please choose a company and input student id !</p>
+                                                    </div>
+                                        </td>
                                     </tr>
                                     </tbody>
                                 </table>
@@ -590,10 +618,9 @@
                             <form class="form-horizontal" role="form" name="newSeminarForm">
                                 <div class="box-body">
 
-                                    <username-input labeltext="Seminar UserName :" placeholdertext="Seminar UserName" formname="newSeminarForm" data="data.newSeminar.username" required="true" requirederrorinfo="Username is required" minlength="6" minlengtherrorinfo="Username must be at least 6 characters" maxlength="20" maxlengtherrorinfo="Username is a maximum of 20 characters"></username-input>
-                                    <email-input labeltext="Seminar Email :" placeholdertext="Email" formname="newSeminarForm" data="data.newSeminar.email" required="true" requirederrorinfo="Email is required" emailerrorinfo="Doesn't look like a valid email !"></email-input>
-                                    <password-input labeltext="Password :" placeholdertext="Password" formname="newSeminarForm" data="data.newSeminar.password" required="true" requirederrorinfo="Password is required" minlength="6" minlengtherrorinfo="Password must be at least 6 characters" maxlength="20" maxlengtherrorinfo="Password is a maximum of 20 characters"></password-input>
-                                    <phone-input labeltext="Phone :" placeholdertext="Cell Phone" formname="newSeminarForm" data="data.newSeminar.phone" required="false" requirederrorinfo="Phone is required" minlength="11" minlengtherrorinfo="Phone must be at least 11 characters" maxlength="15" maxlengtherrorinfo="Phone is a maximum of 15 characters"></phone-input>
+                                    <username-input labeltext="Description :" placeholdertext="Seminar Description" formname="newSeminarForm" data="data.newSeminar.description" required="true" requirederrorinfo="description is required" minlength="2" minlengtherrorinfo="description must be at least 2 characters" maxlength="20" maxlengtherrorinfo="description is a maximum of 20 characters"></username-input>
+                                    <round-input labeltext="No. of Rounds :" placeholdertext="No. of Rounds" formname="newSeminarForm" data="data.newSeminar.simulation_span" required="true" requirederrorinfo="Round is required" numbererrorinfo="Round is numeric" min="1" minerrorinfo="Must be greater than 1" max="9" maxerrorinfo="Must be less than 9"></round-input>
+                                    <licence-input labeltext="No. of Teams :" placeholdertext="No. of Teams" formname="newSeminarForm" data="data.newSeminar.company_num" required="true" requirederrorinfo="Team is required" numbererrorinfo="Team is numeric" min="1" minerrorinfo="Must be greater than 1" max="6" maxerrorinfo="Must be less than 6"></licence-input>
 
                                     <div class="form-group">
                                         <label for="inputSeminarCountry" class="col-sm-2 control-label">Country/State/City : </label>
@@ -616,43 +643,14 @@
                                         </div>
                                     </div>
 
-                                    <div class="form-group" ng-class="{'has-success':newSeminarForm.firstname.$dirty && newSeminarForm.firstname.$valid, 'has-error': newSeminarForm.firstname.$dirty && newSeminarForm.firstname.$invalid}">
-                                        <label for="inputFirstName" class="col-sm-2 control-label">First Name : </label>
+                                    <div class="form-group" ng-class="{'has-success':newSeminarForm.venue.$dirty && newSeminarForm.venue.$valid, 'has-error': newSeminarForm.venue.$dirty && newSeminarForm.venue.$invalid}">
+                                        <label for="inputVenue" class="col-sm-2 control-label">Venue : </label>
                                         <div class="col-sm-4">
-                                            <input type="text" class="form-control" id="inputFirstName" name="firstname"  ng-model="data.newSeminar.firstname" required>
-                                        </div>
-                                    </div>
-                                    <div class="form-group" ng-class="{'has-success':newSeminarForm.lastname.$dirty && newSeminarForm.lastname.$valid, 'has-error': newSeminarForm.lastname.$dirty && newSeminarForm.lastname.$invalid}">
-                                        <label for="inputLastName" class="col-sm-2 control-label">Last Name : </label>
-                                        <div class="col-sm-4">
-                                            <input type="text" class="form-control" id="inputLastName" name="lastname"  ng-model="data.newSeminar.lastname" required>
+                                            <input type="text" class="form-control" id="inputVenue" name="venue"  ng-model="data.newSeminar.venue" required>
                                         </div>
                                     </div>
 
-                                    <div class="form-group" ng-class="{'has-success':newSeminarForm.occupation.$dirty && newSeminarForm.occupation.$valid, 'has-error': newSeminarForm.occupation.$dirty && newSeminarForm.occupation.$invalid}">
-                                        <label for="inputOccupation" class="col-sm-2 control-label">Current Occupation : </label>
-                                        <div class="col-sm-4">
-                                            <input type="text" class="form-control" id="inputOccupation" name="occupation"  ng-model="data.newSeminar.occupation">
-                                        </div>
-                                    </div>
 
-                                    <div class="form-group" ng-class="{'has-success':newSeminarForm.university.$dirty && newSeminarForm.university.$valid, 'has-error': newSeminarForm.university.$dirty && newSeminarForm.university.$invalid}">
-                                        <label for="inputUniversity" class="col-sm-2 control-label">Organization / University : </label>
-                                        <div class="col-sm-4">
-                                            <input type="text" class="form-control" id="inputUniversity" name="university"  ng-model="data.newSeminar.university">
-                                        </div>
-                                    </div>
-
-                                    <!--<div class="form-group">-->
-                                    <!--<label for="inputSeminarLicenceGranted" class="col-sm-2 control-label">Game Type :</label>-->
-                                    <!--<div class="col-sm-4">-->
-                                    <!--<select class="form-control input-sm">-->
-                                    <!--<option>MARKSIMOS B2B</option>-->
-                                    <!--<option>MARKSIMOS B2C</option>-->
-                                    <!--<option>CASASIMOS</option>-->
-                                    <!--</select>-->
-                                    <!--</div>-->
-                                    <!--</div>-->
                                 </div>
 
                                 <div class="box-footer">

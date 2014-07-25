@@ -1,11 +1,5 @@
 module.exports = (function(){
     var config = {
-        host: 'http://localhost:3000/',
-        cgiService: 'http://10.20.30.97/cgi-bin/',
-
-    //logDirectory: '/Users/ludwik/code/Marksimos/log/',
-    logDirectory: '/Users/ludwik/code/Actived/Marksimos/log/',
-
         passwordSalt: 'hcd',
 
         role: {
@@ -75,18 +69,36 @@ module.exports = (function(){
     switch(process.env.NODE_ENV){
         case 'suyuan':
             config.logDirectory = '/Users/ludwik/code/Marksimos/log/';
+            config.mongo_conn = 'mongodb://localhost/Marksimos';
+            config.host = 'http://localhost:3000/';
+            config.cgiService = 'http://10.20.30.97/cgi-bin/';
             break;
         case 'jin':
             config.logDirectory = '/Users/jinwyp/Documents/github/Marksimos/log/';
+            config.mongo_conn = 'mongodb://localhost/Marksimos';
+            config.host = 'http://localhost:3000/';
+            config.cgiService = 'http://10.20.30.97/cgi-bin/';
             break;
+        case 'ludwik':
+            config.logDirectory = '/Users/ludwik/code/actived/Marksimos/log/';
+            config.mongo_conn = 'mongodb://localhost/Marksimos';
+            config.host = 'http://localhost:3000/';
+            config.cgiService = 'http://10.20.30.97/cgi-bin/';            
+            break;            
         case 'development':
             config.logDirectory = '/Users/ludwik/code/Marksimos/log/';
+            config.mongo_conn = 'mongodb://localhost/Marksimos';
+            config.host = 'http://localhost:3000/';
+            config.cgiService = 'http://10.20.30.97/cgi-bin/';
             break;
         case 'production':
-            config.logDirectory = '/Users/ludwik/code/Marksimos/log/';
+            config.logDirectory = '/home/hcd/Marksimos/log/';
+            config.mongo_conn = 'mongodb://localhost/Marksimos';
+            config.host = 'http://121.40.121.187:3000/';
+            config.cgiService = 'http://10.171.251.169/cgi-bin/';
             break;
         default:
-            config.logDirectory = '/Users/ludwik/code/Marksimos/log/';
+            throw new Error("Invalid process.env.NODE_ENV");
     }
 
     return config;

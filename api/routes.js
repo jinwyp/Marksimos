@@ -18,7 +18,7 @@ var config = require('../common/config.js');
 var apiRouter = express.Router();
 
 apiRouter.get('/viewsession', function(req, res){
-    res.send({currentPeriod: req.session.currentPeriod});
+    res.send(req.session);
 });
 
 /**********  API For Student  **********/
@@ -57,12 +57,9 @@ apiRouter.get('/api/report/:report_name', requireLogin, reportController.getRepo
 apiRouter.get('/api/adminreport/:report_name', requireLogin, reportController.getReport);
 
 
-apiRouter.get('/api/init', requireLogin, initController.init);
-apiRouter.get('/api/runsimulation',  requireLogin, authorize('runSimulation'), initController.runSimulation);
-apiRouter.get('/api/choose_seminar', requireLogin, authorize('chooseSeminar'), seminarController.chooseSeminar);
-apiRouter.post('/api/assign_student_to_seminar', requireLogin, authorize('assignStudentToSeminar'), seminarController.assignStudentToSeminar);
-apiRouter.post('/api/remove_student_from_seminar', requireLogin, authorize('removeStudentFromSeminar'), seminarController.removeStudentFromSeminar);
 
+
+apiRouter.get('/api/choose_seminar', requireLogin, authorize('chooseSeminar'), seminarController.chooseSeminar);
 
 apiRouter.get('/api/submitdecision', requireLogin, decisionController.submitDecision);
 
@@ -89,8 +86,9 @@ apiRouter.get('/api/spending_details', requireLogin, decisionController.getSpend
 apiRouter.get('/api/future_projection_calculator/:sku_id', requireLogin, decisionController.getSKUInfo);
 apiRouter.get('/api/company/otherinfo', requireLogin, decisionController.getOtherinfo);
 
-apiRouter.get('/api/user', requireLogin, userController.getUser);
+
 apiRouter.get('/api/student', requireLogin, authorize('getStudent'),userController.getStudent);
+
 
 /**********  API For Administrator  **********/
 
@@ -103,7 +101,6 @@ apiRouter.get('/api/admin/facilitators', requireLogin, authorize('searchFacilita
 apiRouter.post('/api/admin/facilitators', requireLogin, authorize('addFacilitator'), facilitatorController.addFacilitator);
 apiRouter.put('/api/admin/facilitators/:facilitator_id', requireLogin, authorize('updateFacilitator'), facilitatorController.updateFacilitator);
 
-
 apiRouter.get('/api/admin/facilitator/seminar', requireLogin, authorize('getSeminarOfFacilitator'), facilitatorController.getSeminarOfFacilitator);
 
 
@@ -114,8 +111,19 @@ apiRouter.put('/api/admin/students/:student_id', requireLogin, authorize('update
 
 //get all seminars of the current student
 apiRouter.get('/api/admin/student/seminar', requireLogin, authorize('getSeminarOfStudent'), studentController.getSeminarOfStudent);
-
 apiRouter.post('/api/admin/seminar', requireLogin, authorize('addSeminar'), seminarController.addSeminar);
+
+
+apiRouter.post('/api/admin/assign_student_to_seminar', requireLogin, authorize('assignStudentToSeminar'), seminarController.assignStudentToSeminar);
+apiRouter.post('/api/admin/remove_student_from_seminar', requireLogin, authorize('removeStudentFromSeminar'), seminarController.removeStudentFromSeminar);
+
+apiRouter.post('/api/admin/init', requireLogin, initController.init);
+apiRouter.post('/api/admin/runsimulation',  requireLogin, authorize('runSimulation'), initController.runSimulation);
+
+// get current admin role
+apiRouter.get('/api/admin/user', requireLogin, userController.getUser);
+
+
 
 
 

@@ -5,6 +5,7 @@ var sessionOperation = require('../../common/sessionOperation.js');
 var logger = require('../../common/logger.js');
 var consts = require('../consts.js');
 var config = require('../../common/config.js');
+var utility = require('../../common/utility.js');
 
 
 exports.addSeminar = function(req, res, next){
@@ -36,6 +37,15 @@ exports.addSeminar = function(req, res, next){
     seminar.companyAssignment = [];
     for(var i=0; i<seminar.companyNum; i++){
         seminar.companyAssignment.push([]);
+    }
+
+    seminar.companies = [];
+    var companyNameList = utility.createCompanyArray(seminar.companyNum);
+    for(i = 0; i<seminar.companyNum; i++){
+        seminar.companies.push({
+            companyId: i + 1,
+            companyName: companyNameList[i]
+        });
     }
 
     userModel.findOne({_id: facilitatorId})
@@ -90,20 +100,22 @@ exports.addSeminar = function(req, res, next){
     .done();
 }
 
+
+
+
 /**
 * Facilitator can call this API
 */
 exports.assignStudentToSeminar = function(req, res, next){
     var studentId = req.body.student_id;
+    var seminarId = req.body.seminar_id;
 
     if(!studentId){
         return res.send(400, {message: "Invalid student_id"});
     }
 
-    var seminarId = sessionOperation.getSeminarId(req);
-
     if(!seminarId){
-        return res.send(400, {message: "You don't choose a seminar."})
+        return res.send(400, {message: "Invalid seminar id."})
     }
 
     var companyId = req.body.company_id;
@@ -233,13 +245,17 @@ exports.chooseSeminar = function(req, res, next){
             var studentId = sessionOperation.getUserId(req);
             for(var i=0; i<dbSeminar.companyAssignment.length; i++){
                 if(dbSeminar.companyAssignment[i].indexOf(studentId) > -1){
-                    sessionOperation.setCompanyId = i+1;
+                    sessionOperation.setCompanyId(req, i+1);
                     break;
                 }
             }
 
+            if(!sessionOperation.getCompanyId(req)){
+                throw {message: "this student is not assigned to a seminar."}
+            }
+
             //if companyId is not set, this student can't attend this seminar
-            if(!sessionOperation.setCompanyId){
+            if(!sessionOperation.getCompanyId(req)){
                 sessionOperation.setSeminarId(req, undefined);
                 sessionOperation.setCurrentPeriod(req, undefined);
                 return res.send(400, {message: "You are not authorized to attend this seminar."});

@@ -48,9 +48,9 @@ marksimosapp.controller('adminLoginController', ['$scope', '$timeout', '$http', 
 marksimosapp.controller('adminHomeController', ['$scope', '$http', '$notification', function($scope, $http, $notification) {
 
     $scope.css = {
-        leftmenu : 22,
+        leftmenu : 11,
         menuTabShow : [false,false,false,false,false,false], //从第二个false 开始第1个菜单
-        updatestatus : false
+        seminarId : 0
     };
 
     $scope.data = {
@@ -106,6 +106,7 @@ marksimosapp.controller('adminHomeController', ['$scope', '$http', '$notificatio
             city : "shanghai",
             occupation : "",
             university : "",
+            organization : "",
             firstname : "",
             lastname : ""
         },
@@ -116,6 +117,28 @@ marksimosapp.controller('adminHomeController', ['$scope', '$http', '$notificatio
         },
         students : [],
 
+
+        newSeminar : {
+            description : "",
+            country : null,
+            state : "shanghai",
+            city : "shanghai",
+            venue : "",
+            simulation_span : 4,
+            company_num : 3
+        },
+        searchSeminar : {
+            id :'',
+            status :'false'
+        },
+        seminars : [],
+
+        addStudentToSeminar : {
+            seminar_id : 0,
+            student_id : "",
+            company_id : 0,
+            companyName : "Choose"
+        },
 
         country : [
             {id:"DZ2", name:"Algeria"},
@@ -233,12 +256,13 @@ marksimosapp.controller('adminHomeController', ['$scope', '$http', '$notificatio
     $scope.data.newDistributor.country = $scope.data.country[20].name;
     $scope.data.newFacilitator.country = $scope.data.country[20].name;
     $scope.data.newStudent.country = $scope.data.country[20].name;
+    $scope.data.newSeminar.country = $scope.data.country[20].name;
 
 
     /********************  获取信息  ********************/
     $scope.adminInit = function(){
 
-        $http.get('/api/user').success(function(data, status, headers, config){
+        $http.get('/api/admin/user').success(function(data, status, headers, config){
             $scope.data.currentUser = data;
 
             if($scope.data.currentUser.role === 1){
@@ -253,6 +277,7 @@ marksimosapp.controller('adminHomeController', ['$scope', '$http', '$notificatio
 
             }else if($scope.data.currentUser.role === 3){
                 $scope.getStudentsInit();
+                $scope.getSeminarInit();
                 $scope.css.menuTabShow = [false, true, false, false ,true, true, false];
             }
 
@@ -287,7 +312,21 @@ marksimosapp.controller('adminHomeController', ['$scope', '$http', '$notificatio
         });
     };
 
+    $scope.getSeminarInit = function() {
+        $http.get('/api/admin/facilitator/seminar').success(function (data, status, headers, config) {
+            $scope.data.seminars = data;
+        }).error(function (data, status, headers, config) {
+            console.log(data);
+        });
+    };
+
+
+
     $scope.adminInit();
+
+
+
+
 
 
     /********************  搜索 Distributor  ********************/
@@ -378,6 +417,89 @@ marksimosapp.controller('adminHomeController', ['$scope', '$http', '$notificatio
             });
         }
     };
+
+
+    /********************  搜索 Seminars  ********************/
+    $scope.searchSeminar = function(form){
+        if(form.$valid){
+            $http.get('/api/admin/facilitator/seminar', {params : $scope.data.searchSeminar}).success(function(data, status, headers, config){
+                $scope.data.seminars = data;
+
+            }).error(function(data, status, headers, config){
+                console.log(data);
+            });
+        }
+    };
+    /********************  创建新的 Seminar  ********************/
+    $scope.createNewSeminar = function(form){
+        if(form.$valid){
+            console.log($scope.data.newSeminar);
+            $http.post('/api/admin/seminar', $scope.data.newSeminar).success(function(data, status, headers, config){
+
+                $scope.getSeminarInit();
+                $scope.css.leftmenu = 51;
+
+                $notification.success('Save success', 'Create Seminar success');
+
+            }).error(function(data, status, headers, config){
+                console.log(data);
+                $notification.error('Save failed', data.message);
+            });
+        }
+    };
+
+    /********************  选择公司  ********************/
+    $scope.chooseCompany = function(seminar, company){
+        $scope.data.addStudentToSeminar.seminar_id = seminar.seminarId;
+        $scope.data.addStudentToSeminar.companyName = company.companyName;
+        $scope.data.addStudentToSeminar.company_id = company.companyId ;
+    };
+    /********************  Add Student To Seminar  ********************/
+    $scope.addStudentToSeminar = function(seminarid){
+
+
+        if($scope.data.addStudentToSeminar.company_id === 0 || $scope.data.addStudentToSeminar.student_id === ""){
+            $scope.css.seminarId = seminarid;
+        }else{
+            $scope.css.seminarId = 0;
+            $http.post('/api/admin/assign_student_to_seminar', $scope.data.addStudentToSeminar).success(function(data, status, headers, config){
+                $scope.getSeminarInit();
+                $notification.success('Save success', 'Add Student to Seminar success');
+
+            }).error(function(data, status, headers, config){
+                console.log(data);
+                $notification.error('Save failed', data.message);
+            });
+        }
+
+
+
+    };
+
+    /********************  Init Seminar  ********************/
+    $scope.initSeminar = function(seminarid){
+        $http.post('/api/admin/init', {seminar_id:seminarid}).success(function(data, status, headers, config){
+            $scope.getSeminarInit();
+            $notification.success('Save success', 'Init Seminar success');
+
+        }).error(function(data, status, headers, config){
+            console.log(data);
+            $notification.error('Save failed', data.message);
+        });
+    };
+
+    /********************  Run Seminar  ********************/
+    $scope.runSeminar = function(seminarid){
+        $http.post('/api/admin/runsimulation', {seminar_id:seminarid}).success(function(data, status, headers, config){
+            $scope.getSeminarInit();
+            $notification.success('Save success', 'Run Seminar success');
+
+        }).error(function(data, status, headers, config){
+            console.log(data);
+            $notification.error('Save failed', data.message);
+        });
+    };
+
 
 
 

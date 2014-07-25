@@ -9,7 +9,6 @@ var seminarModel = require('../models/seminar.js');
 
 exports.getUser = function(req, res, next){
     var userId = sessionOperation.getUserId(req);
-
     userModel.findOne({_id: userId})
     .then(function(user){
         if(!user){
@@ -23,7 +22,7 @@ exports.getUser = function(req, res, next){
         res.send(500, {message: "get user failed."})
     })
     .done();
-}
+};
 
 exports.getStudent = function(req, res, next){
     var userId = sessionOperation.getUserId(req);
@@ -167,15 +166,17 @@ exports.login = function(req, res, next){
     var email = req.body.email;
     var password = req.body.password;
 
+    console.log(email, password);
+
     userModel.findByEmail(email)
     .then(function(user){
         if(!user){
             return res.send(400, {message: 'User does not exist.'});
         }
 
-        if(!user.isActivated){
-            return res.send(400, {message: 'User is not activated.'})
-        }
+        // if(!user.isActivated){
+        //     return res.send(400, {message: 'User is not activated.'})
+        // }
 
         if(!utility.comparePassword(password, user.password)){
             return res.send(400, {message: 'Email or password is wrong.'})
@@ -194,7 +195,7 @@ exports.login = function(req, res, next){
         return res.send(500, {message: 'Login failed.'});
     })
     .done();
-}
+};
 
 
 

@@ -47,7 +47,7 @@ var sessionOperation = require('../../common/sessionOperation.js');
  */
 exports.init = function(req, res, next) {
     //var seminarId = 'TTT'; //this parameter should be posted from client
-    var seminarId = req.query.seminar_id;
+    var seminarId = req.body.seminar_id;
     var simulationSpan; //should be posted from client
     var companyNum;
     var currentPeriod;
@@ -156,18 +156,13 @@ exports.init = function(req, res, next) {
 * Generate new period decision 
 */
 exports.runSimulation = function(req, res, next){
-    var seminarId = sessionOperation.getSeminarId(req);
+    var seminarId = req.body.seminar_id;
 
     if(!seminarId){
         return res.send(400, {message: "You have not choose a seminar."})
     }
 
     var currentPeriod = sessionOperation.getCurrentPeriod(req);
-
-    var companyId = sessionOperation.getCompanyId(req);
-    if(!companyId){
-        return res.send(400, {message: "Invalid companyId"});
-    }
 
     //check if this seminar exists
     seminarModel.findOne({
@@ -187,12 +182,18 @@ exports.runSimulation = function(req, res, next){
             throw {httpStatus: 400, message: "the last round simulation has been executed."}
         }
 
+        var companies = [];
+        for(var i=0; i<dbSeminar.companyNum; i++){
+            companies.push(i+1);
+        }
+
         //write decision to binary file
-        return submitDecision(companyId, currentPeriod, seminarId)
-            .then(function(submitDecisionResult){
-                if(submitDecisionResult.message!=='submit_decision_success'){
-                    throw {message: submitDecisionResult.message};
-                }
+        return submitDecisionForAllCompany(companies, currentPeriod, seminarId)
+            .then(function(){
+                console.log('write decision finished.');
+                // if(submitDecisionResult.message!=='submit_decision_success'){
+                //     throw {message: submitDecisionResult.message};
+                // }
 
                 //run simulation
                 return cgiapi.runSimulation({
@@ -202,6 +203,7 @@ exports.runSimulation = function(req, res, next){
                     period: currentPeriod
                 })
                 .then(function(simulationResult){
+                    console.log('run simulation finished.');
                     if(simulationResult.message !== 'run_simulation_success'){
                         throw {message: simulationResult.message};
                     }
@@ -212,6 +214,7 @@ exports.runSimulation = function(req, res, next){
                             ];
                 })
                 .then(function(){
+                    console.log('get current period simulation result finished.');
                     //once removeCurrentPeriodSimulationResult success, 
                     //query and save the current period simulation result
                     return initCurrentPeriodSimulationResult(seminarId, currentPeriod);
@@ -235,6 +238,7 @@ exports.runSimulation = function(req, res, next){
                     });
                 })
                 .then(function(){
+                    console.log('generate report/chart finished.');
                     //for the last period, we don't create the next period decision automatically
                     if(dbSeminar.currentPeriod < dbSeminar.simulationSpan){
                         return duplicateLastPeriodDecision(seminarId, currentPeriod);
@@ -243,6 +247,7 @@ exports.runSimulation = function(req, res, next){
                     }
                 })
                 .then(function(){
+                    console.log('create duplicate decision from last period finished.');
                     if(dbSeminar.currentPeriod < dbSeminar.simulationSpan){
                         //after simulation success, set currentPeriod to next period
                         sessionOperation.setCurrentPeriod(req, sessionOperation.getCurrentPeriod(req)+1);
@@ -307,9 +312,21 @@ function removeCurrentPeriodSimulationResult(seminarId, currentPeriod){
     });
 }
 
+function submitDecisionForAllCompany(companies, period, seminarId){
+    var p = Q();
+
+    companies.forEach(function(companyId){
+        p = p.then(function(){
+            console.log("submit decision finished.");
+            return submitDecision(companyId, period, seminarId)
+        })
+    });
+
+    return p;
+}
+
 function submitDecision(companyId, period, seminarId){
     var result = {};
-
     return companyDecisionModel.findOne(seminarId, period, companyId)
     .then(function(decision){
         if(!decision){

@@ -37,7 +37,7 @@ exports.addStudent = function(req, res, next){
         occupation: req.body.occupation || '',
         firstName: req.body.firstname,
         lastName: req.body.lastname,
-        univercity: req.body.univercity || '',
+        university: req.body.university || '',
         organization: req.body.organization || '',
         highestEducationalDegree: req.body.highest_educational_degree ||''
     }
@@ -88,7 +88,7 @@ exports.updateStudent = function(req, res, next){
     if(req.body.occupation) student.occupation = req.body.occupation;
     if(req.body.firstname) student.firstName = req.body.firstname;
     if(req.body.lastname) student.lastName = req.body.lastname;
-    if(req.body.univercity) student.univercity = req.body.univercity;
+    if(req.body.university) student.university = req.body.university;
     if(req.body.organization) student.organization = req.body.organization;
     if(req.body.highestEducationalDegree) student.highestEducationalDegree = req.body.highestEducationalDegree;
 
@@ -136,7 +136,7 @@ exports.updateStudent = function(req, res, next){
 };
 
 exports.searchStudent = function(req, res, next){
-    var name = req.query.name;
+    var name = req.query.username;
     var email = req.query.email;
     var country = req.query.country;
     var state = req.query.state;

@@ -16,7 +16,7 @@ app.directive('filterpercentage', [ function() {
                 if(angular.isNumber(number)){
                     return parseInt( number * 10000) / 100 ;
                 }
-                return number
+                return number;
             }
 
             function formatInput(number) {
@@ -24,7 +24,7 @@ app.directive('filterpercentage', [ function() {
                 if(angular.isNumber(Number(number))){
                     return number / 100 ;
                 }
-                return number
+                return number;
             }
             
             ngModel.$formatters.push(showFormatText);
@@ -49,7 +49,6 @@ app.directive('headerUser', ['$translate', function($translate) {
         restrict: 'AE',
         templateUrl: 'app/js/websitecomponent/headeruser.html',
         link: function (scope, element, attrs) {
-
 
             scope.clickMenu = function(currentmenu){
                 scope.currentMenu = currentmenu;
@@ -76,7 +75,9 @@ app.directive('headerUser', ['$translate', function($translate) {
 
 app.directive('headerAdmin', [function() {
     return {
-        scope: {},
+        scope: {
+            currentuser : '='
+        },
         restrict: 'AE',
         templateUrl: 'app/js/websitecomponent/adminheader.html'
     };
@@ -87,7 +88,8 @@ app.directive('menuAdmin', [function() {
     return {
         scope: {
             currentMenu : '=',
-            showtab : '='
+            showtab : '=',
+            currentuser : '='
         },
         restrict: 'AE',
         templateUrl: 'app/js/websitecomponent/adminmenu.html',
@@ -463,6 +465,54 @@ app.directive('licenceInput', function() {
             if(angular.isUndefined(scope.max)  ){
                 scope.max = 1000;
                 scope.maxerrorinfo = 'Number must be less than 1000';
+            }
+
+            if(angular.isUndefined(scope.required)  ){
+                scope.maxlength = 100;
+                scope.maxlengtherrorinfo = 'Number is a maximum of 100 characters';
+            }
+
+        }
+    };
+});
+
+
+app.directive('roundInput', function() {
+    return {
+        scope: {
+            labeltext : '@',
+            data : '=',
+            placeholdertext : '@',
+            formname : '=',
+            required : '=',
+            requirederrorinfo : '@',
+            numbererrorinfo : '@',
+            min : '=',
+            minerrorinfo : '@',
+            max : '=',
+            maxerrorinfo : '@',
+            maxlength : '=',
+            maxlengtherrorinfo : '@'
+
+        },
+        restrict: 'AE',
+        templateUrl: 'app/js/directive/formroundinput.html',
+        link: function (scope, element, attrs) {
+
+            if(angular.isUndefined(scope.required)  ){
+                scope.required = true;
+                scope.requirederrorinfo = 'Number is required';
+                scope.numbererrorinfo = 'Must be numeric character';
+            }
+
+            if(angular.isUndefined(scope.min)  ){
+                scope.min = 1;
+                scope.minerrorinfo = 'Number must be greater than 0';
+            }
+
+            if(angular.isUndefined(scope.max)  ){
+                scope.max = 9;
+                scope.maxerrorinfo = 'Number must be less than 9';
             }
 
             if(angular.isUndefined(scope.required)  ){
