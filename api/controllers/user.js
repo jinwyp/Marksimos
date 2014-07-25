@@ -60,6 +60,11 @@ exports.getStudent = function(req, res, next){
     .done();
 }
 
+exports.logout = function(req, res, next){
+    sessionOperation.setLoginStatus(req, false);
+    res.send({message: 'Logout success'});
+}
+
 exports.register = function(req, res, next){
     req.checkBody('email', 'Invalid email').notEmpty().isEmail();
     req.assert('password', '6 to 20 characters required').len(6, 20);

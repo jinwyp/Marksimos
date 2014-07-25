@@ -51,6 +51,7 @@ apiRouter.get('/api/create_admin', function(req, res, next){
         .done();
 });
 
+apiRouter.get('/api/logout', requireLogin, userController.logout);
 
 //report
 apiRouter.get('/api/report/:report_name', requireLogin, reportController.getReport);
