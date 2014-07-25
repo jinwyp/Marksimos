@@ -172,7 +172,7 @@ exports.searchStudent = function(req, res, next){
 }
 
 exports.getSeminarOfStudent = function(req, res, next){
-    var studentId = sessionOperation.getUserId(req);
+    var email = sessionOperation.getEmail(req);
 
     seminarModel.find({},{})
     .then(function(allSeminars){
@@ -180,7 +180,7 @@ exports.getSeminarOfStudent = function(req, res, next){
         for(var i=0; i<allSeminars.length; i++){
             var seminar = allSeminars[i];
             for(var j=0; j<seminar.companyAssignment.length; j++){
-                if(seminar.companyAssignment[j].indexOf(studentId) > -1){
+                if(seminar.companyAssignment[j].indexOf(email) > -1){
                     if(seminar.isInitialized ){
                         assignedSeminars.push(seminar);
                         break;
