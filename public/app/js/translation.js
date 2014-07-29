@@ -22,7 +22,8 @@ app.config(['$translateProvider', function($translateProvider){
         "ReportMenuSegmentDistributions"    :  "Segment Distributions",
         "ReportMenuMarketEvolution"    :  "Market Evolution",
         "ReportMenuMarketTrends"    :  "Market Trends",
-        "ReportMenuMarketIndicator"    :  "Market Indicator"
+        "ReportMenuMarketIndicator"    :  "Market Indicator",
+        "ReportCompanyStatusTableTitleMarketShare" : "",
     });
 
     // Adding a translation table for the Russian language

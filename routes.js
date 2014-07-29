@@ -6,7 +6,7 @@ module.exports = function(app){
 
     /**********   Routes for User/Student   **********/
 
-     app.get('/', function(req, res, next){
+    app.get('/', function(req, res, next){
         res.render('user/userlogin.ejs', { title : 'MarkSimos - Welcome to the MarkSimos Game'});
     });
      

@@ -21,10 +21,14 @@ apiRouter.get('/viewsession', function(req, res){
     res.send(req.session);
 });
 
+
+
 /**********  API For Student  **********/
 
 apiRouter.post('/api/register', userController.register);
 apiRouter.post('/api/login', userController.login);
+apiRouter.get('/api/logout', requireLogin, userController.logout);
+
 
 apiRouter.get('/api/create_admin', function(req, res, next){
     var userModel = require('./models/user.js');
@@ -51,7 +55,10 @@ apiRouter.get('/api/create_admin', function(req, res, next){
         .done();
 });
 
-apiRouter.get('/api/logout', requireLogin, userController.logout);
+
+
+
+
 
 // get seminar
 apiRouter.get('/api/user', requireLogin, userController.getUser);

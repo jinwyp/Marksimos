@@ -4,7 +4,7 @@
 
 // create module for custom directives
 
-var marksimosapp = angular.module('marksimoslogin', ['marksimos.model', 'marksimos.component',  'marksimos.filter']);
+var marksimosapp = angular.module('marksimoslogin', ['marksimos.model', 'marksimos.websitecomponent',  'marksimos.filter']);
 
 
 

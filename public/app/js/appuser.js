@@ -772,4 +772,3 @@ marksimosapp.controller('chartController', ['$scope',  '$timeout', '$http', 'not
     };
 
 }]);
-
