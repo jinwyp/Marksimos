@@ -14,6 +14,10 @@ app.factory('Student', ['$http', function($http){
     };
 
     var factory = {
+        login : function(user){
+            return $http.post(apiPath + 'login', user);
+        },
+
         getStudent : function(){
             return $http.get(apiPath + 'user').then(function(result){
 

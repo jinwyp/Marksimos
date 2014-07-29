@@ -30,7 +30,7 @@
 
                         <div class="form-group has-feedback" ng-class="{'has-success':loginForm.password.$dirty && loginForm.password.$valid , 'has-error': loginForm.password.$dirty && loginForm.password.$invalid}">
                             <label class="control-label" for="loginInputpassword" ng-hide="css.newUser.passwordPrompt && loginForm.password.$invalid">Password:</label>
-                            <label class="control-label" for="loginInputpassword" ng-show="css.newUser.passwordPrompt && loginForm.password.$invalid">Password Incorrect ! </label>
+                            <label class="control-label" for="loginInputpassword" ng-cloak ng-show="css.newUser.passwordPrompt && loginForm.password.$invalid">Password Incorrect ! </label>
                             <input type="password" class="form-control" id="loginInputpassword" name="password" placeholder="Password" ng-model="data.newUser.password" required ng-minlength="5" ng-maxlength="12">
                             <span class="glyphicon glyphicon-ok form-control-feedback" ng-show="loginForm.password.$dirty && loginForm.password.$valid"></span>
                             <span class="glyphicon glyphicon-remove form-control-feedback" ng-show="loginForm.password.$dirty && loginForm.password.$invalid"></span>

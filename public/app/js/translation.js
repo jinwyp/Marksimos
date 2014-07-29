@@ -23,7 +23,7 @@ app.config(['$translateProvider', function($translateProvider){
         "ReportMenuMarketEvolution"    :  "Market Evolution",
         "ReportMenuMarketTrends"    :  "Market Trends",
         "ReportMenuMarketIndicator"    :  "Market Indicator",
-        "ReportCompanyStatusTableTitleMarketShare" : "",
+        "ReportCompanyStatusBrandTableTitleMarketShare" : ""  //dasfjsjf
     });
 
     // Adding a translation table for the Russian language
