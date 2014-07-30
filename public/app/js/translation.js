@@ -10,551 +10,1390 @@ app.config(['$translateProvider', function($translateProvider){
 // Adding a translation table for the English language
     $translateProvider.translations('en_US', {
 		
-		//Labels for reports menu
+		//Labels for Items on Home page - Top Menu Bar
+		"HomePageMenuBarLabelsHome"		:	"Home",
+		"HomePageMenuBarLabelsHome"		:	"Reports",
+		"HomePageMenuBarLabelsHome"		:	"Decision",
+		"HomePageMenuBarLabelsHome"		:	"Score",
+		"HomePageMenuBarLabelsHome"		:	"Language",
+		"HomePageMenuBarLabelsHome"		:	"Help",
+		"HomePageMenuBarLabelsHome"		:	"About MarkSimos",
+		"HomePageMenuBarLabelsHome"		:	"Log Out",
+		
+		//Labels for Items on Home page - Second Menu Bar
+		"HomePageSecondMenuBarLabelsCompany"		:	"Company",
+		"HomePageSecondMenuBarLabelsPriceSensitive"		:	"1 Price Sensitive",
+		"HomePageSecondMenuBarLabelsPretenders"		:	"2 Pretenders",
+		"HomePageSecondMenuBarLabelsModerate"		:	"3 Moderate",
+		"HomePageSecondMenuBarLabelsGoodLife"		:	"4 Good Life",
+		"HomePageSecondMenuBarLabelsUltimate"		:	"5 Ultimate",
+		"HomePageSecondMenuBarLabelsPragmatic"		:	"6 Pragmatic",
+		"HomePageSecondMenuBarLabelsCompanies"		:	"Companies",
+		"HomePageSecondMenuBarLabelsleftforsubmittingdecision"		:	"left for submitting decision",
+		"HomePageSecondMenuBarLabelsMission"		:	"Mission: Market Share + Profit",
+		"HomePageSecondMenuBarLabelsMakeDecision"		:	"Make Decision",
+		"HomePageSecondMenuBarCurrentPeriod"		:	"CurrentPeriod",
+		
+		//Labels for Items on Home page - Three Boxes
+		"HomePageYourCompanyTableLabel"		:	"Your Company",
+		"HomePageYourCompanyCompanyStatus"		:	"Company Status",
+		"HomePageYourCompanyFinancialReport"		:	"Financial Report",
+		"HomePageYourCompanyInventoryReport"		:	"Inventory Report",
+		"HomePageYourCompanyProfitabilityEvolution"		:	"Profitability Evolution",
+		"HomePageYourCompetitorTableLabel"		:	"Your Competitor",
+		"HomePageYourCompetitorCompetitorIntelligence"		:	"Competitor Intelligence",
+		"HomePageYourCompetitorInvestmentsandProfits"		:	"Investments and Profits",
+		"HomePageYourCompetitorMarketSalesandInventory"		:	"Market Sales and Inventory",
+		"HomePageMarketLandscapeTableLabel"		:	"Market Landscape",
+		"HomePageMarketLandscapeSegmentLeaderTop5"		:	"Segment Leader Top 5",
+		"HomePageMarketLandscapePerceptionMap"		:	"Perception Map",
+		"HomePageMarketLandscapeSegmentDistributions"		:	"Segment Distributions",
+		"HomePageMarketLandscapeMarketEvolution"		:	"Market Evolution",
+		"HomePageMarketLandscapeMarketTrends"		:	"Market Trends",
+		"HomePageMarketLandscapeMarketIndicators"		:	"Market Indicators",
+		
+		
+		
+		//Labels for Items on Reports page - reports menu
+		"ReportYourCompany"		:	"Your Company",
         "ReportMenuCompanyStatus"     : "Company Status",
         "ReportMenuFinancialReport"    :  "Financial Report",
         "ReportMenuInventoryReport"    :  "Inventory Report",
         "ReportMenuProfitabilityEvolution"    :  "Profitability Evolution",
+		"ReportYourCompetitors"		:	"Your Competitors",
         "ReportMenuMarketShare"    :  "Market Share",
         "ReportMenuCompetitorIntelligence"    :  "Competitor Intelligence",
         "ReportMenuInvestmentProfits"    :  "Investment & Profits",
         "ReportMenuMarketSalesInventory"    :  "Market Sales & Inventory",
+		"ReportMarketLandscape"		:	"Market Landscape",
         "ReportMenuSegmentLeaderTop5"    :  "Segment Leader Top5",
         "ReportMenuPerceptionMap"    :  "Perception Map",
         "ReportMenuSegmentDistributions"    :  "Segment Distributions",
         "ReportMenuMarketEvolution"    :  "Market Evolution",
         "ReportMenuMarketTrends"    :  "Market Trends",
-        "ReportMenuMarketIndicator"    :  "Market Indicator"
+        "ReportMenuMarketIndicator"    :  "Market Indicator",
 
 		//Labels for Company Status Report - SKU Level
-		"ReportCompanyStatusSKUMarketShare(value%)"	:	"Market Share (value %)"
-		"ReportCompanyStatusSKUMarketShare(volume%)"	:	"Market Share (volume %)"
-		"ReportCompanyStatusSKUMarketSalesVolume(mlnstd.packs)"	:	"Market Sales Volume (mln std. packs)"		
-		"ReportCompanyStatusSKULostSalesVolumeduetoOOS(mlnstd.packs)"	:	"Lost Sales Volume due to OOS (mln std. packs)"
-		"ReportCompanyStatusSKUNumericalDistribution(%)"	:	"Numerical Distribution (%)"
-		"ReportCompanyStatusSKUVolume-weightedDistribution (%)"	:	"Volume-weighted Distribution (%)"
-		"ReportCompanyStatusSKUShelfSpace(%)"	:	"Shelf Space (%)"
-		"ReportCompanyStatusSKUAwareness(%)"	:	"Awareness (%)"
-		"ReportCompanyStatusSKUAverageNetMarketPrice($/std.pack)"	:	"Average Net Market Price ($/std. pack)"
-		"ReportCompanyStatusSKUAverageDisplayPrice($/std.pack)"	:	"Average Display Price ($/std. pack)"
-		"ReportCompanyStatusSKUPriceRankingIndex"	:	"Price Ranking Index"
-		"ReportCompanyStatusSKUTargetConsumer Segment"	:	"Target Consumer Segment"
-		"ReportCompanyStatusSKUTargetConsumerSegmentExpectedValuePerception"	:	"Target Consumer Segment Expected Value Perception"
-		"ReportCompanyStatusSKUValuePerception"	:	"Value Perception"
-		"ReportCompanyStatusSKUTargetConsumerSegmentExpectedImagePerception"	:	"Target Consumer Segment Expected Image Perception"
-		"ReportCompanyStatusSKUImagePerception"	:	"Image Perception"
-		"ReportCompanyStatusSKUIngredientsQualityIndex"	:	"Ingredients Quality Index"
-		"ReportCompanyStatusSKUAppliedTechnologyIndex"	:	"Applied Technology Index"
-		"ReportCompanyStatusSKUMarketSalesValue($mln)"	:	"Market Sales Value ($ mln)"
-		"ReportCompanyStatusSKUConsumerPricePromotions($mln)"	:	"Consumer Price Promotions ($ mln)"
-		"ReportCompanyStatusSKUMarketNetSalesValue($mln)"	:	"Market Net Sales Value ($ mln)"
-		"ReportCompanyStatusSKULostSalesVolumeduetoOOS(mlnpacks)"	:	"Lost Sales Volume due to OOS (mln packs)"
-		"ReportCompanyStatusSKUNumberofOut-of-stockEpisodes"	:	"Number of Out-of-stock Episodes"
-		"ReportCompanyStatusSKUMarketSalesVolume(mln packs)"	:	"Market Sales Volume (mln packs)"
-		"ReportCompanyStatusSKURetailersPurchasesVolume(mln packs)"	:	"Retailers Purchases Volume (mln packs)"
-		"ReportCompanyStatusSKUShipmentstoWholesalers(mln packs)"	:	"Shipments to Wholesalers (mln packs)"
-		"ReportCompanyStatusSKUProductionVolume(mln packs)"	:	"Production Volume (mln packs)"
-		"ReportCompanyStatusSKUInventoryVolumeAtManufacturer(mln packs)"	:	"Inventory Volume At Manufacturer (mln packs)"
-		"ReportCompanyStatusSKUInventoryVolumeAtWholesalers(mln packs)"	:	"Inventory Volume At Wholesalers (mln packs)"
-		"ReportCompanyStatusSKUInventoryVolumeAtRetailers(mln packs)"	:	"Inventory Volume At Retailers (mln packs)"
-		"ReportCompanyStatusSKUStocksCoverAtRetailers(weeks)"	:	"Stocks Cover At Retailers (weeks)"
-		"ReportCompanyStatusSKUStocksCoverAtWholesalers(weeks)"	:	"Stocks Cover At Wholesalers (weeks)"
+		"ReportCompanyStatusSKUMarketShareValue"	:	"Market Share (Value %)",
+		"ReportCompanyStatusSKUMarketShareVolume"	:	"Market Share (Volume %)"
+		"ReportCompanyStatusSKUMarketSalesVolume"	:	"Market Sales Volume (mln std. packs)",	
+		"ReportCompanyStatusSKULostSalesVolumeduetoOOS"	:	"Lost Sales Volume due to OOS (mln std. packs)",
+		"ReportCompanyStatusSKUNumericalDistribution"	:	"Numerical Distribution (%)",
+		"ReportCompanyStatusSKUVolumeweightedDistribution"	:	"Volume-weighted Distribution (%)",
+		"ReportCompanyStatusSKUShelfSpace"	:	"Shelf Space (%)",
+		"ReportCompanyStatusSKUAwareness"	:	"Awareness (%)",
+		"ReportCompanyStatusSKUAverageNetMarketPrice"	:	"Average Net Market Price ($/std. pack)",
+		"ReportCompanyStatusSKUAverageDisplayPrice"	:	"Average Display Price ($/std. pack)",
+		"ReportCompanyStatusSKUPriceRankingIndex"	:	"Price Ranking Index",
+		"ReportCompanyStatusSKUTargetConsumerSegment"	:	"Target Consumer Segment",
+		"ReportCompanyStatusSKUTargetConsumerSegmentExpectedValuePerception"	:	"Target Consumer Segment Expected Value Perception",
+		"ReportCompanyStatusSKUValuePerception"	:	"Value Perception",
+		"ReportCompanyStatusSKUTargetConsumerSegmentExpectedImagePerception"	:	"Target Consumer Segment Expected Image Perception",
+		"ReportCompanyStatusSKUImagePerception"	:	"Image Perception",
+		"ReportCompanyStatusSKUIngredientsQualityIndex"	:	"Ingredients Quality Index",
+		"ReportCompanyStatusSKUAppliedTechnologyIndex"	:	"Applied Technology Index",
+		"ReportCompanyStatusSKUMarketSalesValue"	:	"Market Sales Value ($ mln)",
+		"ReportCompanyStatusSKUConsumerPricePromotions"	:	"Consumer Price Promotions ($ mln)",
+		"ReportCompanyStatusSKUMarketNetSalesValue"	:	"Market Net Sales Value ($ mln)",
+		"ReportCompanyStatusSKULostSalesVolumeduetoOOS"	:	"Lost Sales Volume due to OOS (mln packs)",
+		"ReportCompanyStatusSKUNumberofOut-of-stockEpisodes"	:	"Number of Out-of-stock Episodes",
+		"ReportCompanyStatusSKUMarketSalesVolume"	:	"Market Sales Volume (mln packs)",
+		"ReportCompanyStatusSKURetailersPurchasesVolume"	:	"Retailers Purchases Volume (mln packs)",
+		"ReportCompanyStatusSKUShipmentstoWholesalers"	:	"Shipments to Wholesalers (mln packs)",
+		"ReportCompanyStatusSKUProductionVolume"	:	"Production Volume (mln packs)",
+		"ReportCompanyStatusSKUInventoryVolumeAtManufacturer"	:	"Inventory Volume At Manufacturer (mln packs)",
+		"ReportCompanyStatusSKUInventoryVolumeAtWholesalers"	:	"Inventory Volume At Wholesalers (mln packs)",
+		"ReportCompanyStatusSKUInventoryVolumeAtRetailers"	:	"Inventory Volume At Retailers (mln packs)",
+		"ReportCompanyStatusSKUStocksCoverAtRetailers"	:	"Stocks Cover At Retailers (weeks)",
+		"ReportCompanyStatusSKUStocksCoverAtWholesalers"	:	"Stocks Cover At Wholesalers (weeks)"
 		
 		
 		//Labels for Company Status Report - Brand Level
-		"ReportCompanyStatusBrandMarketShare(value%)"	:	"Market Share (value %)"
-		"ReportCompanyStatusBrandMarketShare(volume%)"	:	"Market Share (volume %)"
-		"ReportCompanyStatusBrandMarketSalesVolume(mlnstd.packs)"	:	"Market Sales Volume (mln std. packs)"		
-		"ReportCompanyStatusBrandLostSalesVolumeduetoOOS(mlnstd.packs)"	:	"Lost Sales Volume due to OOS (mln std. packs)"
-		"ReportCompanyStatusBrandNumericalDistribution(%)"	:	"Numerical Distribution (%)"
-		"ReportCompanyStatusBrandVolume-weightedDistribution(%)"	:	"Volume-weighted Distribution (%)"
-		"ReportCompanyStatusBrandShelfSpace(%)"	:	"Shelf Space (%)"
-		"ReportCompanyStatusBrandAwareness(%)"	:	"Awareness (%)"
-		"ReportCompanyStatusBrandAverageNetMarketPrice($/std.pack)"	:	"Average Net Market Price ($/std. pack)"
-		"ReportCompanyStatusBrandAverageDisplayPrice($/std.pack)"	:	"Average Display Price ($/std. pack)"
-		"ReportCompanyStatusBrandPriceRankingIndex"	:	"Price Ranking Index"
-		"ReportCompanyStatusBrandValuePerception"	:	"Value Perception"
-		"ReportCompanyStatusBrandImagePerception"	:	"Image Perception"
-		"ReportCompanyStatusBrandIngredientsQualityIndex"	:	"Ingredients Quality Index"
-		"ReportCompanyStatusBrandAppliedTechnologyIndex"	:	"Applied Technology Index"
-		"ReportCompanyStatusBrandMarketSalesValue($mln)"	:	"Market Sales Value ($ mln)"
-		"ReportCompanyStatusBrandConsumerPricePromotions($mln)"	:	"Consumer Price Promotions ($ mln)"
-		"ReportCompanyStatusBrandMarketNetSalesValue($mln)"	:	"Market Net Sales Value ($ mln)"
-		"ReportCompanyStatusBrandLostSalesVolumeduetoOOS(mlnpacks)"	:	"Lost Sales Volume due to OOS (mln packs)"
-		"ReportCompanyStatusBrandumberofOut-of-stockEpisodes"	:	"Number of Out-of-stock Episodes"
-		"ReportCompanyStatusBrandMarketSalesVolume(mlnpacks)"	:	"Market Sales Volume (mln packs)"
-		"ReportCompanyStatusBrandRetailersPurchasesVolume(mlnpacks)"	:	"Retailers Purchases Volume (mln packs)"
-		"ReportCompanyStatusBrandShipmentstoWholesalers(mlnpacks)"	:	"Shipments to Wholesalers (mln packs)"
-		"ReportCompanyStatusBrandProductionVolume(mlnpacks)"	:	"Production Volume (mln packs)"
-		"ReportCompanyStatusBrandInventoryVolumeAtManufacturer(mlnpacks)"	:	"Inventory Volume At Manufacturer (mln packs)"
-		"ReportCompanyStatusBrandInventoryVolumeAtWholesalers(mlnpacks)"	:	"Inventory Volume At Wholesalers (mln packs)"
-		"ReportCompanyStatusBrandInventoryVolumeAtRetailers(mlnpacks)"	:	"Inventory Volume At Retailers (mln packs)"
-		"ReportCompanyStatusBrandStocksCoverAtRetailers(weeks)"	:	"Stocks Cover At Retailers (weeks)"
-		"ReportCompanyStatusBrandStocksCoverAtWholesalers(weeks)"	:	"Stocks Cover At Wholesalers (weeks)"
+		"ReportCompanyStatusBrandMarketShare"	:	"Market Share (Value %)",
+		"ReportCompanyStatusBrandMarketShare"	:	"Market Share (Volume %)",
+		"ReportCompanyStatusBrandMarketSalesVolume"	:	"Market Sales Volume (mln std. packs)",
+		"ReportCompanyStatusBrandLostSalesVolumeduetoOOS"	:	"Lost Sales Volume due to OOS (mln std. packs)",
+		"ReportCompanyStatusBrandNumericalDistribution"	:	"Numerical Distribution (%)",
+		"ReportCompanyStatusBrandVolume-weightedDistribution"	:	"Volume-weighted Distribution (%)",
+		"ReportCompanyStatusBrandShelfSpace"	:	"Shelf Space (%)",
+		"ReportCompanyStatusBrandAwareness"	:	"Awareness (%)",
+		"ReportCompanyStatusBrandAverageNetMarketPrice"	:	"Average Net Market Price ($/std. pack)",
+		"ReportCompanyStatusBrandAverageDisplayPrice"	:	"Average Display Price ($/std. pack)",
+		"ReportCompanyStatusBrandPriceRankingIndex"	:	"Price Ranking Index",
+		"ReportCompanyStatusBrandValuePerception"	:	"Value Perception",
+		"ReportCompanyStatusBrandImagePerception"	:	"Image Perception",
+		"ReportCompanyStatusBrandIngredientsQualityIndex"	:	"Ingredients Quality Index",
+		"ReportCompanyStatusBrandAppliedTechnologyIndex"	:	"Applied Technology Index",
+		"ReportCompanyStatusBrandMarketSalesValue"	:	"Market Sales Value ($ mln)",
+		"ReportCompanyStatusBrandConsumerPricePromotions"	:	"Consumer Price Promotions ($ mln)",
+		"ReportCompanyStatusBrandMarketNetSalesValue"	:	"Market Net Sales Value ($ mln)",
+		"ReportCompanyStatusBrandLostSalesVolumeduetoOOS"	:	"Lost Sales Volume due to OOS (mln packs)",
+		"ReportCompanyStatusBrandumberofOut-of-stockEpisodes"	:	"Number of Out-of-stock Episodes",
+		"ReportCompanyStatusBrandMarketSalesVolume"	:	"Market Sales Volume (mln packs)",
+		"ReportCompanyStatusBrandRetailersPurchasesVolume"	:	"Retailers Purchases Volume (mln packs)",
+		"ReportCompanyStatusBrandShipmentstoWholesalers"	:	"Shipments to Wholesalers (mln packs)",
+		"ReportCompanyStatusBrandProductionVolume"	:	"Production Volume (mln packs)",
+		"ReportCompanyStatusBrandInventoryVolumeAtManufacturer"	:	"Inventory Volume At Manufacturer (mln packs)",
+		"ReportCompanyStatusBrandInventoryVolumeAtWholesalers"	:	"Inventory Volume At Wholesalers (mln packs)",
+		"ReportCompanyStatusBrandInventoryVolumeAtRetailers"	:	"Inventory Volume At Retailers (mln packs)",
+		"ReportCompanyStatusBrandStocksCoverAtRetailers"	:	"Stocks Cover At Retailers (weeks)",
+		"ReportCompanyStatusBrandStocksCoverAtWholesalers"	:	"Stocks Cover At Wholesalers (weeks)",
 		
 		
 		//Labels for Company Status Report - Global Level
-		"ReportCompanyStatusGlobalMarketShare(value%)"	:	"Market Share (value %)"
-		"ReportCompanyStatusGlobalMarketShare(volume%)"	:	"Market Share (volume %)"
-		"ReportCompanyStatusGlobalMarketSalesVolume(mlnstd.packs)"	:	"Market Sales Volume (mln std. packs)"		
-		"ReportCompanyStatusGlobalLostSalesVolumeduetoOOS(mlnstd.packs)"	:	"Lost Sales Volume due to OOS (mln std. packs)"
-		"ReportCompanyStatusGlobalNumericalDistribution(%)"	:	"Numerical Distribution (%)"
-		"ReportCompanyStatusGlobalVolume-weightedDistribution(%)"	:	"Volume-weighted Distribution (%)"
-		"ReportCompanyStatusGlobalShelfSpace(%)"	:	"Shelf Space (%)"
-		"ReportCompanyStatusGlobalMindSpaceShare(%)"	:	"Mind Space Share (%)"
-		"ReportCompanyStatusGlobalAverageNetMarketPrice($/std.pack)"	:	"Average Net Market Price ($/std. pack)"
-		"ReportCompanyStatusGlobalAverageDisplayPrice($/std.pack)"	:	"Average Display Price ($/std. pack)"
-		"ReportCompanyStatusGlobalIngredientsQualityIndex"	:	"Ingredients Quality Index"
-		"ReportCompanyStatusGlobalAppliedTechnologyIndex"	:	"Applied Technology Index"
-		"ReportCompanyStatusGlobalMarketSalesValue($mln)"	:	"Market Sales Value ($ mln)"
-		"ReportCompanyStatusGlobalConsumerPricePromotions($mln)"	:	"Consumer Price Promotions ($ mln)"
-		"ReportCompanyStatusGlobalMarketNetSalesValue($mln)"	:	"Market Net Sales Value ($ mln)"
-		"ReportCompanyStatusGlobalLostSalesVolumeduetoOOS(mlnpacks)"	:	"Lost Sales Volume due to OOS (mln packs)"
-		"ReportCompanyStatusGlobalumberofOut-of-stockEpisodes"	:	"Number of Out-of-stock Episodes"
-		"ReportCompanyStatusGlobalMarketSalesVolume(mlnpacks)"	:	"Market Sales Volume (mln packs)"
-		"ReportCompanyStatusGlobalRetailersPurchasesVolume(mlnpacks)"	:	"Retailers Purchases Volume (mln packs)"
-		"ReportCompanyStatusGlobalShipmentstoWholesalers(mlnpacks)"	:	"Shipments to Wholesalers (mln packs)"
-		"ReportCompanyStatusGlobalProductionVolume(mlnpacks)"	:	"Production Volume (mln packs)"
-		"ReportCompanyStatusGlobalInventoryVolumeAtManufacturer(mlnpacks)"	:	"Inventory Volume At Manufacturer (mln packs)"
-		"ReportCompanyStatusGlobalInventoryVolumeAtWholesalers(mlnpacks)"	:	"Inventory Volume At Wholesalers (mln packs)"
-		"ReportCompanyStatusGlobalInventoryVolumeAtRetailers(mlnpacks)"	:	"Inventory Volume At Retailers (mln packs)"
-		"ReportCompanyStatusGlobalStocksCoverAtRetailers(weeks)"	:	"Stocks Cover At Retailers (weeks)"
-		"ReportCompanyStatusGlobalStocksCoverAtWholesalers(weeks)"	:	"Stocks Cover At Wholesalers (weeks)"
+		"ReportCompanyStatusGlobalMarketShare"	:	"Market Share (Value %)",
+		"ReportCompanyStatusGlobalMarketShare"	:	"Market Share (Volume %)",
+		"ReportCompanyStatusGlobalMarketSalesVolume"	:	"Market Sales Volume (mln std. packs)",
+		"ReportCompanyStatusGlobalLostSalesVolumeduetoOOS"	:	"Lost Sales Volume due to OOS (mln std. packs)",
+		"ReportCompanyStatusGlobalNumericalDistribution"	:	"Numerical Distribution (%)",
+		"ReportCompanyStatusGlobalVolume-weightedDistribution"	:	"Volume-weighted Distribution (%)",
+		"ReportCompanyStatusGlobalShelfSpace"	:	"Shelf Space (%)",
+		"ReportCompanyStatusGlobalMindSpaceShare"	:	"Mind Space Share (%)",
+		"ReportCompanyStatusGlobalAverageNetMarketPrice"	:	"Average Net Market Price ($/std. pack)",
+		"ReportCompanyStatusGlobalAverageDisplayPrice"	:	"Average Display Price ($/std. pack)",
+		"ReportCompanyStatusGlobalIngredientsQualityIndex"	:	"Ingredients Quality Index",
+		"ReportCompanyStatusGlobalAppliedTechnologyIndex"	:	"Applied Technology Index",
+		"ReportCompanyStatusGlobalMarketSalesValue"	:	"Market Sales Value ($ mln)",
+		"ReportCompanyStatusGlobalConsumerPricePromotions"	:	"Consumer Price Promotions ($ mln)",
+		"ReportCompanyStatusGlobalMarketNetSalesValue"	:	"Market Net Sales Value ($ mln)",
+		"ReportCompanyStatusGlobalLostSalesVolumeduetoOOS"	:	"Lost Sales Volume due to OOS (mln packs)",
+		"ReportCompanyStatusGlobalumberofOut-of-stockEpisodes"	:	"Number of Out-of-stock Episodes",
+		"ReportCompanyStatusGlobalMarketSalesVolume"	:	"Market Sales Volume (mln packs)",
+		"ReportCompanyStatusGlobalRetailersPurchasesVolume"	:	"Retailers Purchases Volume (mln packs)",
+		"ReportCompanyStatusGlobalShipmentstoWholesalers"	:	"Shipments to Wholesalers (mln packs)",
+		"ReportCompanyStatusGlobalProductionVolume"	:	"Production Volume (mln packs)",
+		"ReportCompanyStatusGlobalInventoryVolumeAtManufacturer"	:	"Inventory Volume At Manufacturer (mln packs)",
+		"ReportCompanyStatusGlobalInventoryVolumeAtWholesalers"	:	"Inventory Volume At Wholesalers (mln packs)",
+		"ReportCompanyStatusGlobalInventoryVolumeAtRetailers"	:	"Inventory Volume At Retailers (mln packs)",
+		"ReportCompanyStatusGlobalStocksCoverAtRetailers"	:	"Stocks Cover At Retailers (weeks)",
+		"ReportCompanyStatusGlobalStocksCoverAtWholesalers"	:	"Stocks Cover At Wholesalers (weeks)",
 		
 		
 		
 		//Labels for Financial Report - Brand Level
-		"ReportFinancialReportBrandSales Value($mln)"	:	"Sales Value ($ mln)"
-		"ReportFinancialReportBrand(%)ChangeVersusPreviousperiod"	:	"(%) Change Versus Previous period"
-		"ReportFinancialReportBrandShareInBrandTotalSalesValue(%)"	:	"Share In Brand Total Sales Value (%)"
-		"ReportFinancialReportBrandCostofGoodsSold($mln)"	:	"Cost of Goods Sold ($ mln)"
-		"ReportFinancialReportBrandObsoleteGoodsCost($mln)"	:	"Obsolete Goods Cost ($ mln)"
-		"ReportFinancialReportBrandDiscontinuedGoodsCost($mln)"	:	"Discontinued Goods Cost ($ mln)"
-		"ReportFinancialReportBrandInventoryHoldingCost($mln)"	:	"Inventory Holding Cost ($ mln)"
-		"ReportFinancialReportBrandTotalMaterialCost($mln)"	:	"Total Material Cost ($ mln)"
-		"ReportFinancialReportBrandGrossProfit($mln)"	:	"Gross Profit ($ mln)"
-		"ReportFinancialReportBrand(%)ChangeVersusPreviousperiod"	:	"(%) Change Versus Previous period"
-		"ReportFinancialReportBrandGrossProfitMargin(%)"	:	"Gross Profit Margin (%)"
-		"ReportFinancialReportBrandShareInBrandGrossProfit/Losses(%)"	:	"Share In Brand Gross Profit/Losses (%)"
-		"ReportFinancialReportBrandAdvertising($mln)"	:	"Advertising ($ mln)"
-		"ReportFinancialReportBrandConsumerPromotionCost($mln)"	:	"Consumer Promotion Cost ($ mln)"
-		"ReportFinancialReportBrandTradeInvestment($mln)"	:	"Trade Investment ($ mln)"
-		"ReportFinancialReportBrandSalesForceCost($mln)"	:	"Sales Force Cost ($ mln)"
-		"ReportFinancialReportBrandAdditionalTradeMarginCost($mln)"	:	"Additional Trade Margin Cost ($ mln)"
-		"ReportFinancialReportBrandVolumeDiscountCost($mln)"	:	"Volume Discount Cost ($ mln)"
-		"ReportFinancialReportBrandTotalTradeandMarketingExpenses($mln)"	:	"Total Trade and Marketing Expenses ($ mln)"
-		"ReportFinancialReportBrandTradeandMarketingExpensesasa(%)ofSales"	:	"Trade and Marketing Expenses as a (%) of Sales"
-		"ReportFinancialReportBrandShareofTradeandMarketingExpensesinBrandTotal(%)"	:	"Share of Trade and Marketing Expenses in Brand Total (%)"
-		"ReportFinancialReportBrandGeneralExpenses($mln)"	:	"General Expenses ($ mln)"
-		"ReportFinancialReportBrandAmortisation($mln)"	:	"Amortisation ($ mln)"
-		"ReportFinancialReportBrandOperatingProfit($mln)"	:	"Operating Profit ($ mln)"
-		"ReportFinancialReportBrand(%)ChangeVersusPreviousperiod"	:	"(%) Change Versus Previous period"
-		"ReportFinancialReportBrandOperatingProfitMargin($mln)"	:	"Operating Profit Margin ($ mln)"
-		"ReportFinancialReportBrandShareinBrandOperatingProfit/Loss(%)"	:	"Share in Brand Operating Profit/Loss (%)"
-		"ReportFinancialReportBrandInterests($mln)"	:	"Interests ($ mln)"
-		"ReportFinancialReportBrandTaxes($mln)"	:	"Taxes($mln)"
-		"ReportFinancialReportBrandExceptionalCost/Profit($mln)"	:	"Exceptional Cost/Profit ($ mln)"
-		"ReportFinancialReportBrandNetProfit($mln)"	:	"Net Profit ($ mln)"
-		"ReportFinancialReportBrand(%)ChangeVersusPreviousperiod"	:	"(%) Change Versus Previous period"
-		"ReportFinancialReportBrandNetProfitMargin(%)"	:	"Net Profit Margin (%)"
-		"ReportFinancialReportBrandShareinBrandOperatingProfit/Loss(%)"	:	"Share in Brand Operating Profit/Loss (%)"
-		"ReportFinancialReportBrandProductionCost($mln)"	:	"Production Cost ($ mln)"
-		"ReportFinancialReportBrandInventoryValue($mln)"	:	"Inventory Value ($ mln)"
+		"ReportFinancialReportBrandSales Value"	:	"Sales Value ($ mln)",
+		"ReportFinancialReportBrandChangeVersusPreviousperiod"	:	"(%) Change Versus Previous period",
+		"ReportFinancialReportBrandShareInBrandTotalSalesValue"	:	"Share In Brand Total Sales Value (%)",
+		"ReportFinancialReportBrandCostofGoodsSold"	:	"Cost of Goods Sold ($ mln)",
+		"ReportFinancialReportBrandObsoleteGoodsCost"	:	"Obsolete Goods Cost ($ mln)",
+		"ReportFinancialReportBrandDiscontinuedGoodsCost"	:	"Discontinued Goods Cost ($ mln)",
+		"ReportFinancialReportBrandInventoryHoldingCost"	:	"Inventory Holding Cost ($ mln)",
+		"ReportFinancialReportBrandTotalMaterialCost"	:	"Total Material Cost ($ mln)",
+		"ReportFinancialReportBrandGrossProfit"	:	"Gross Profit ($ mln)",
+		"ReportFinancialReportBrandChangeVersusPreviousperiod"	:	"(%) Change Versus Previous period",
+		"ReportFinancialReportBrandGrossProfitMargin"	:	"Gross Profit Margin (%)",
+		"ReportFinancialReportBrandShareInBrandGrossProfitLosses"	:	"Share In Brand Gross Profit/Losses (%)",
+		"ReportFinancialReportBrandAdvertising"	:	"Advertising ($ mln)",
+		"ReportFinancialReportBrandConsumerPromotionCost"	:	"Consumer Promotion Cost ($ mln)",
+		"ReportFinancialReportBrandTradeInvestment"	:	"Trade Investment ($ mln)",
+		"ReportFinancialReportBrandSalesForceCost"	:	"Sales Force Cost ($ mln)",
+		"ReportFinancialReportBrandAdditionalTradeMarginCost"	:	"Additional Trade Margin Cost ($ mln)",
+		"ReportFinancialReportBrandVolumeDiscountCost"	:	"Volume Discount Cost ($ mln)",
+		"ReportFinancialReportBrandTotalTradeandMarketingExpenses"	:	"Total Trade and Marketing Expenses ($ mln)",
+		"ReportFinancialReportBrandTradeandMarketingExpensesasaofSales"	:	"Trade and Marketing Expenses as a (%) of Sales",
+		"ReportFinancialReportBrandShareofTradeandMarketingExpensesinBrandTotal"	:	"Share of Trade and Marketing Expenses in Brand Total (%)",
+		"ReportFinancialReportBrandGeneralExpenses"	:	"General Expenses ($ mln)",
+		"ReportFinancialReportBrandAmortisation"	:	"Amortisation ($ mln)",
+		"ReportFinancialReportBrandOperatingProfit"	:	"Operating Profit ($ mln)",
+		"ReportFinancialReportBrandChangeVersusPreviousperiod"	:	"(%) Change Versus Previous period",
+		"ReportFinancialReportBrandOperatingProfitMargin"	:	"Operating Profit Margin (%)",
+		"ReportFinancialReportBrandShareinBrandOperatingProfitLoss"	:	"Share in Brand Operating Profit/Loss (%)",
+		"ReportFinancialReportBrandInterests"	:	"Interests ($ mln)",
+		"ReportFinancialReportBrandTaxes"	:	"Taxes ($ mln)",
+		"ReportFinancialReportBrandExceptionalCostProfit"	:	"Exceptional Cost/Profit ($ mln)",
+		"ReportFinancialReportBrandNetProfit"	:	"Net Profit ($ mln)",
+		"ReportFinancialReportBrandChangeVersusPreviousperiod"	:	"(%) Change Versus Previous period",
+		"ReportFinancialReportBrandNetProfitMargin"	:	"Net Profit Margin (%)",
+		"ReportFinancialReportBrandShareinBrandNetProfitLoss"	:	"Share in Brand Net Profit/Loss (%)",
+		"ReportFinancialReportBrandProductionCost"	:	"Production Cost ($ mln)",
+		"ReportFinancialReportBrandInventoryValue"	:	"Inventory Value ($ mln)",
 
 
 		//Labels for Financial Report - All Brands
-		"ReportFinancialReportAllBrandSales Value($mln)"	:	"Sales Value ($ mln)"
-		"ReportFinancialReportAllBrand(%)ChangeVersusPreviousperiod"	:	"(%) Change Versus Previous period"
-		"ReportFinancialReportAllBrandShareInCompanyTotalSalesValue(%)"	:	"Share In Company Total Sales Value (%)"
-		"ReportFinancialReportAllBrandCostofGoodsSold($mln)"	:	"Cost of Goods Sold ($ mln)"
-		"ReportFinancialReportAllBrandObsoleteGoodsCost($mln)"	:	"Obsolete Goods Cost ($ mln)"
-		"ReportFinancialReportAllBrandDiscontinuedGoodsCost($mln)"	:	"Discontinued Goods Cost ($ mln)"
-		"ReportFinancialReportAllBrandInventoryHoldingCost($mln)"	:	"Inventory Holding Cost ($ mln)"
-		"ReportFinancialReportAllBrandTotalMaterialCost($mln)"	:	"Total Material Cost ($ mln)"
-		"ReportFinancialReportAllBrandGrossProfit($mln)"	:	"Gross Profit ($ mln)"
-		"ReportFinancialReportAllBrand(%)ChangeVersusPreviousperiod"	:	"(%) Change Versus Previous period"
-		"ReportFinancialReportAllBrandGrossProfitMargin(%)"	:	"Gross Profit Margin (%)"
-		"ReportFinancialReportAllBrandShareInCompanyGrossProfit/Losses(%)"	:	"Share In Company Gross Profit/Losses (%)"
-		"ReportFinancialReportAllBrandAdvertising($mln)"	:	"Advertising ($ mln)"
-		"ReportFinancialReportAllBrandConsumerPromotionCost($mln)"	:	"Consumer Promotion Cost ($ mln)"
-		"ReportFinancialReportAllBrandTradeInvestment($mln)"	:	"Trade Investment ($ mln)"
-		"ReportFinancialReportAllBrandSalesForceCost($mln)"	:	"Sales Force Cost ($ mln)"
-		"ReportFinancialReportAllBrandAdditionalTradeMarginCost($mln)"	:	"Additional Trade Margin Cost ($ mln)"
-		"ReportFinancialReportAllBrandVolumeDiscountCost($mln)"	:	"Volume Discount Cost ($ mln)"
-		"ReportFinancialReportAllBrandTotalTradeandMarketingExpenses($mln)"	:	"Total Trade and Marketing Expenses ($ mln)"
-		"ReportFinancialReportAllBrandTradeandMarketingExpensesasa(%)ofSales"	:	"Trade and Marketing Expenses as a (%) of Sales"
-		"ReportFinancialReportAllBrandShareofTradeandMarketingExpensesinBrandTotal(%)"	:	"Share of Trade and Marketing Expenses in Brand Total (%)"
-		"ReportFinancialReportAllBrandGeneralExpenses($mln)"	:	"General Expenses ($ mln)"
-		"ReportFinancialReportAllBrandAmortisation($mln)"	:	"Amortisation ($ mln)"
-		"ReportFinancialReportAllBrandOperatingProfit($mln)"	:	"Operating Profit ($ mln)"
-		"ReportFinancialReportAllBrand(%)ChangeVersusPreviousperiod"	:	"(%) Change Versus Previous period"
-		"ReportFinancialReportAllBrandOperatingProfitMargin($mln)"	:	"Operating Profit Margin ($ mln)"
-		"ReportFinancialReportAllBrandShareinBrandOperatingProfit/Loss(%)"	:	"Share in Brand Operating Profit/Loss (%)"
-		"ReportFinancialReportAllBrandInterests($mln)"	:	"Interests ($ mln)"
-		"ReportFinancialReportAllBrandTaxes($mln)"	:	"Taxes($mln)"
-		"ReportFinancialReportAllBrandExceptionalCost/Profit($mln)"	:	"Exceptional Cost/Profit ($ mln)"
-		"ReportFinancialReportAllBrandNetProfit($mln)"	:	"Net Profit ($ mln)"
-		"ReportFinancialReportAllBrand(%)ChangeVersusPreviousperiod"	:	"(%) Change Versus Previous period"
-		"ReportFinancialReportAllBrandNetProfitMargin(%)"	:	"Net Profit Margin (%)"
-		"ReportFinancialReportAllBrandShareinBrandOperatingProfit/Loss(%)"	:	"Share in Brand Operating Profit/Loss (%)"
-		"ReportFinancialReportAllBrandProductionCost($mln)"	:	"Production Cost ($ mln)"
-		"ReportFinancialReportAllBrandInventoryValue($mln)"	:	"Inventory Value ($ mln)"
+		"ReportFinancialReportAllBrandSales Value"	:	"Sales Value ($ mln)"
+		"ReportFinancialReportAllBrandChangeVersusPreviousperiod"	:	"(%) Change Versus Previous period",
+		"ReportFinancialReportAllBrandShareInCompanyTotalSalesValue"	:	"Share In Company Total Sales Value (%)",
+		"ReportFinancialReportAllBrandCostofGoodsSold"	:	"Cost of Goods Sold ($ mln)",
+		"ReportFinancialReportAllBrandObsoleteGoodsCost"	:	"Obsolete Goods Cost ($ mln)",
+		"ReportFinancialReportAllBrandDiscontinuedGoodsCost"	:	"Discontinued Goods Cost ($ mln)",
+		"ReportFinancialReportAllBrandInventoryHoldingCost"	:	"Inventory Holding Cost ($ mln)",
+		"ReportFinancialReportAllBrandTotalMaterialCost"	:	"Total Material Cost ($ mln)",
+		"ReportFinancialReportAllBrandGrossProfit"	:	"Gross Profit ($ mln)",
+		"ReportFinancialReportAllBrandChangeVersusPreviousperiod"	:	"(%) Change Versus Previous period",
+		"ReportFinancialReportAllBrandGrossProfitMargin"	:	"Gross Profit Margin (%)",
+		"ReportFinancialReportAllBrandShareInCompanyGrossProfitLosses"	:	"Share In Company Gross Profit/Losses (%)",
+		"ReportFinancialReportAllBrandAdvertising"	:	"Advertising ($ mln)",
+		"ReportFinancialReportAllBrandConsumerPromotionCost"	:	"Consumer Promotion Cost ($ mln)",
+		"ReportFinancialReportAllBrandTradeInvestment"	:	"Trade Investment ($ mln)",
+		"ReportFinancialReportAllBrandSalesForceCost"	:	"Sales Force Cost ($ mln)",
+		"ReportFinancialReportAllBrandAdditionalTradeMarginCost"	:	"Additional Trade Margin Cost ($ mln)",
+		"ReportFinancialReportAllBrandVolumeDiscountCost"	:	"Volume Discount Cost ($ mln)",
+		"ReportFinancialReportAllBrandTotalTradeandMarketingExpenses"	:	"Total Trade and Marketing Expenses ($ mln)",
+		"ReportFinancialReportAllBrandTradeandMarketingExpensesasaofSales"	:	"Trade and Marketing Expenses as a (%) of Sales",
+		"ReportFinancialReportAllBrandShareofTradeandMarketingExpensesinBrandTotal"	:	"Share of Trade and Marketing Expenses in Company Total (%)",
+		"ReportFinancialReportAllBrandGeneralExpenses"	:	"General Expenses ($ mln)",
+		"ReportFinancialReportAllBrandAmortisation"	:	"Amortisation ($ mln)",
+		"ReportFinancialReportAllBrandOperatingProfit"	:	"Operating Profit ($ mln)",
+		"ReportFinancialReportAllBrandChangeVersusPreviousperiod"	:	"(%) Change Versus Previous period",
+		"ReportFinancialReportAllBrandOperatingProfitMargin"	:	"Operating Profit Margin (%)",
+		"ReportFinancialReportAllBrandShareinBrandOperatingProfitLoss"	:	"Share in Company Operating Profit/Loss (%)",
+		"ReportFinancialReportAllBrandInterests"	:	"Interests ($ mln)",
+		"ReportFinancialReportAllBrandTaxes"	:	"Taxes ($ mln)",
+		"ReportFinancialReportAllBrandExceptionalCost/Profit"	:	"Exceptional Cost/Profit ($ mln)",
+		"ReportFinancialReportAllBrandNetProfit"	:	"Net Profit ($ mln)",
+		"ReportFinancialReportAllBrandChangeVersusPreviousperiod"	:	"(%) Change Versus Previous period",
+		"ReportFinancialReportAllBrandNetProfitMargin"	:	"Net Profit Margin (%)",
+		"ReportFinancialReportAllBrandShareinBrandOperatingProfitLoss"	:	"Share in Company Net Profit/Loss (%)",
+		"ReportFinancialReportAllBrandProductionCost"	:	"Production Cost ($ mln)",
+		"ReportFinancialReportAllBrandInventoryValue"	:	"Inventory Value ($ mln)",
 		
 		
 		//Labels for Inventory Report
-		"ReportInventoryReportLabelClosetoexpireInventory"	:	"Close to expire Inventory"
-		"ReportInventoryReportLabelPreviousInventory"	:	"Previous Inventory"
-		"ReportInventoryReportLabelFreshInventory"	:	"Fresh Inventory"
+		"ReportInventoryReportLabelClosetoexpireInventory"	:	"Close to expire Inventory",
+		"ReportInventoryReportLabelPreviousInventory"	:	"Previous Inventory",
+		"ReportInventoryReportLabelFreshInventory"	:	"Fresh Inventory",
+		"ReportInventoryReportTableLabel"	:	"Total Stock (millions of standard pack) = Factory Stock + Trade Stock + Retailer Stock",
 		
 
 		//Labels for Profitability Evolution - SKU Level
-		"ReportProfitabilityEvolutionSKUManufacturerSalesValue($mln)"	:	"Manufacturer Sales Value ($ mln)"
-		"ReportProfitabilityEvolutionSKUCostofGoodsSold($mln)"	:	"Cost of Goods Sold ($ mln)"
-		"ReportProfitabilityEvolutionSKUInventoryHolding($mln)"	:	"Inventory Holding ($ mln)"
-		"ReportProfitabilityEvolutionSKUObsoleteGoods($mln)"	:	"Obsolete Goods ($ mln)"
-		"ReportProfitabilityEvolutionSKUDiscontinuedGoodsCost($mln)"	:	"Discontinued Goods Cost ($ mln)"
-		"ReportProfitabilityEvolutionSKUGross Profit($mln)"	:	"Gross Profit ($ mln)"
-		"ReportProfitabilityEvolutionSKUAdvertising($mln)"	:	"Advertising ($ mln)"
-		"ReportProfitabilityEvolutionSKUConsumerPromotionsCost($mln)"	:	"Consumer Promotions Cost ($ mln)"
-		"ReportProfitabilityEvolutionSKUTradeInvestment($mln)"	:	"Trade Investment ($ mln)"
-		"ReportProfitabilityEvolutionSKUSalesForceCost($mln)"	:	"Sales Force Cost ($ mln)"
-		"ReportProfitabilityEvolutionSKUVolumeDiscountCost($mln)"	:	"Volume Discount Cost ($ mln)"
-		"ReportProfitabilityEvolutionSKUAdditionalTradeMarginCost($mln)"	:	"Additional Trade Margin Cost ($ mln)"
-		"ReportProfitabilityEvolutionSKUTotalTradeandMarketingExpenses($mln)"	:	"Total Trade and Marketing Expenses ($ mln)"
-		"ReportProfitabilityEvolutionSKUGeneralExpenses($mln)"	:	"General Expenses ($ mln)"
-		"ReportProfitabilityEvolutionSKUAmortisation($mln)"	:	"Amortisation ($ mln)"
-		"ReportProfitabilityEvolutionSKUOperatingProfit($mln)"	:	"Operating Profit ($ mln)"
-		"ReportProfitabilityEvolutionSKUInterests($mln)"	:	"Interests ($ mln)"
-		"ReportProfitabilityEvolutionSKUExceptionalCost/Profit($mln)"	:	"Exceptional Cost/Profit ($ mln)"
-		"ReportProfitabilityEvolutionSKUTaxes($mln)"	:	"Taxes ($ mln)"
-		"ReportProfitabilityEvolutionSKUNetProfit($mln)"	:	"Net Profit ($ mln)"
-		"ReportProfitabilityEvolutionSKUSurchargeforsupplementaryInvestmentBudget($mln)"	:	"Surcharge for supplementary InvestmentBudget ($ mln)"
-		"ReportProfitabilityEvolutionSKUNetResult($mln)"	:	"Net Result ($ mln)"
-		"ReportProfitabilityEvolutionSKUShareInBrandTotalSalesValue(%)"	:	"Share In Brand Total Sales Value (%)"
-		"ReportProfitabilityEvolutionSKUShareInBrandGrossProfit/Losses(%)"	:	"Share In Brand Gross Profit/Losses (%)"
-		"ReportProfitabilityEvolutionSKUShareofTradeandMarketingExpensesInBrandTotal(%)"	:	"Share of Trade and Marketing Expenses In Brand Total (%)"
-		"ReportProfitabilityEvolutionSKUShareInBrandOperatingProfit/Losses(%)"	:	"Share In Brand Operating Profit/Losses (%)"
-		"ReportProfitabilityEvolutionSKUShareInBrandNetProfit/Losses(%)"	:	"Share In Brand Net Profit/Losses (%)"
-		"ReportProfitabilityEvolutionSKUGrossProfitMargin(%)"	:	"Gross Profit Margin (%)"
-		"ReportProfitabilityEvolutionSKUTradeandMarketingExpensesasa(%)ofSales"	:	"Trade and Marketing Expenses as a(%) of Sales"
-		"ReportProfitabilityEvolutionSKUGeneralExpensesasa(%)ofSales"	:	"General Expenses as a(%) of Sales"
-		"ReportProfitabilityEvolutionSKUOperatingProfitMargin(%)"	:	"Operating Profit Margin (%)"
-		"ReportProfitabilityEvolutionSKUNetProfitMargin(%)"	:	"Net Profit Margin (%)"
-		"ReportProfitabilityEvolutionSKUReturnonInvestment(%)"	:	"Return on Investment (%)"
-		"ReportProfitabilityEvolutionSKUAverageNetMarketPrice($/pack)"	:	"Average Net Market Price ($/pack)"
-		"ReportProfitabilityEvolutionSKUAverageWholesalesPrice($/pack)"	:	"Average Wholesales Price ($/pack)"
-		"ReportProfitabilityEvolutionSKUAverageManufacturerPrice($/pack)"	:	"Average Manufacturer Price ($/pack)"
-		"ReportProfitabilityEvolutionSKUAverageProductionCost($/pack)"	:	"Average Production Cost ($/pack)"
-		"ReportProfitabilityEvolutionSKUMarketSalesValue($mln)"	:	"Market Sales Value ($ mln)"
-		"ReportProfitabilityEvolutionSKUConsumerPricePromotions($mln)"	:	"Consumer Price Promotions ($ mln)"
-		"ReportProfitabilityEvolutionSKUMarketNetSalesValue($mln)"	:	"Market Net Sales Value ($ mln)"
-		"ReportProfitabilityEvolutionSKUAdditionalRetailersMargin(%)"	:	"Additional Retailers Margin (%)"
-		"ReportProfitabilityEvolutionSKUWholesalersBonusRate(%)"	:	"Wholesalers Bonus Rate (%)"
-		"ReportProfitabilityEvolutionSKUMinimalPurchaseQualifyingforBonus(mlnstd.packs)"	:	"Minimal Purchase Qualifying for Bonus (mln std. packs)"
-		"ReportProfitabilityEvolutionSKUProductionCost($mln)"	:	"Production Cost ($ mln)"
-		"ReportProfitabilityEvolutionSKUInventoryValue($mln)"	:	"Inventory Value ($ mln)"
+		"ReportProfitabilityEvolutionSKUManufacturerSalesValue"	:	"Manufacturer Sales Value ($ mln)",
+		"ReportProfitabilityEvolutionSKUCostofGoodsSold"	:	"Cost of Goods Sold ($ mln)",
+		"ReportProfitabilityEvolutionSKUInventoryHolding"	:	"Inventory Holding ($ mln)",
+		"ReportProfitabilityEvolutionSKUObsoleteGoods"	:	"Obsolete Goods ($ mln)",
+		"ReportProfitabilityEvolutionSKUDiscontinuedGoodsCost"	:	"Discontinued Goods Cost ($ mln)",
+		"ReportProfitabilityEvolutionSKUGross Profit"	:	"Gross Profit ($ mln)",
+		"ReportProfitabilityEvolutionSKUAdvertising"	:	"Advertising ($ mln)",
+		"ReportProfitabilityEvolutionSKUConsumerPromotionsCost"	:	"Consumer Promotions Cost ($ mln)",
+		"ReportProfitabilityEvolutionSKUTradeInvestment"	:	"Trade Investment ($ mln)",
+		"ReportProfitabilityEvolutionSKUSalesForceCost"	:	"Sales Force Cost ($ mln)",
+		"ReportProfitabilityEvolutionSKUVolumeDiscountCost"	:	"Volume Discount Cost ($ mln)",
+		"ReportProfitabilityEvolutionSKUAdditionalTradeMarginCost"	:	"Additional Trade Margin Cost ($ mln)",
+		"ReportProfitabilityEvolutionSKUTotalTradeandMarketingExpenses"	:	"Total Trade and Marketing Expenses ($ mln)",
+		"ReportProfitabilityEvolutionSKUGeneralExpenses"	:	"General Expenses ($ mln)",
+		"ReportProfitabilityEvolutionSKUAmortisation"	:	"Amortisation ($ mln)",
+		"ReportProfitabilityEvolutionSKUOperatingProfit"	:	"Operating Profit ($ mln)",
+		"ReportProfitabilityEvolutionSKUInterests"	:	"Interests ($ mln)",
+		"ReportProfitabilityEvolutionSKUExceptionalCostProfit"	:	"Exceptional Cost/Profit ($ mln)",
+		"ReportProfitabilityEvolutionSKUTaxes"	:	"Taxes ($ mln)",
+		"ReportProfitabilityEvolutionSKUNetProfit"	:	"Net Profit ($ mln)",
+		"ReportProfitabilityEvolutionSKUSurchargeforsupplementaryInvestmentBudget"	:	"Surcharge for supplementary InvestmentBudget ($ mln)",
+		"ReportProfitabilityEvolutionSKUNetResult"	:	"Net Result ($ mln)",
+		"ReportProfitabilityEvolutionSKUShareInBrandTotalSalesValue"	:	"Share In Brand Total Sales Value (%)",
+		"ReportProfitabilityEvolutionSKUShareInBrandGrossProfitLosses"	:	"Share In Brand Gross Profit/Losses (%)",
+		"ReportProfitabilityEvolutionSKUShareofTradeandMarketingExpensesInBrandTotal"	:	"Share of Trade and Marketing Expenses In Brand Total (%)",
+		"ReportProfitabilityEvolutionSKUShareInBrandOperatingProfitLosses"	:	"Share In Brand Operating Profit/Losses (%)",
+		"ReportProfitabilityEvolutionSKUShareInBrandNetProfitLosses"	:	"Share In Brand Net Profit/Losses (%)",
+		"ReportProfitabilityEvolutionSKUGrossProfitMargin"	:	"Gross Profit Margin (%)",
+		"ReportProfitabilityEvolutionSKUTradeandMarketingExpensesasaofSales"	:	"Trade and Marketing Expenses as a(%) of Sales",
+		"ReportProfitabilityEvolutionSKUGeneralExpensesasaofSales"	:	"General Expenses as a(%) of Sales",
+		"ReportProfitabilityEvolutionSKUOperatingProfitMargin"	:	"Operating Profit Margin (%)",
+		"ReportProfitabilityEvolutionSKUNetProfitMargin"	:	"Net Profit Margin (%)",
+		"ReportProfitabilityEvolutionSKUReturnonInvestment"	:	"Return on Investment (%)",
+		"ReportProfitabilityEvolutionSKUAverageNetMarketPrice"	:	"Average Net Market Price ($/pack)",
+		"ReportProfitabilityEvolutionSKUAverageWholesalesPrice"	:	"Average Wholesales Price ($/pack)",
+		"ReportProfitabilityEvolutionSKUAverageManufacturerPrice"	:	"Average Manufacturer Price ($/pack)",
+		"ReportProfitabilityEvolutionSKUAverageProductionCost"	:	"Average Production Cost ($/pack)",
+		"ReportProfitabilityEvolutionSKUMarketSalesValue"	:	"Market Sales Value ($ mln)",
+		"ReportProfitabilityEvolutionSKUConsumerPricePromotions"	:	"Consumer Price Promotions ($ mln)",
+		"ReportProfitabilityEvolutionSKUMarketNetSalesValue"	:	"Market Net Sales Value ($ mln)",
+		"ReportProfitabilityEvolutionSKUAdditionalRetailersMargin"	:	"Additional Retailers Margin (%)",
+		"ReportProfitabilityEvolutionSKUWholesalersBonusRate"	:	"Wholesalers Bonus Rate (%)",
+		"ReportProfitabilityEvolutionSKUMinimalPurchaseQualifyingforBonus"	:	"Minimal Purchase Qualifying for Bonus (mln std. packs)",
+		"ReportProfitabilityEvolutionSKUProductionCost"	:	"Production Cost ($ mln)",
+		"ReportProfitabilityEvolutionSKUInventoryValue"	:	"Inventory Value ($ mln)",
 		
 		
 //Labels for Profitability Evolution - Brand Level
-		"ReportProfitabilityEvolutionBrandManufacturerSalesValue($mln)"	:	"Manufacturer Sales Value ($ mln)"
-		"ReportProfitabilityEvolutionBrandCostofGoodsSold($mln)"	:	"Cost of Goods Sold ($ mln)"
-		"ReportProfitabilityEvolutionBrandInventoryHolding($mln)"	:	"Inventory Holding ($ mln)"
-		"ReportProfitabilityEvolutionBrandObsoleteGoods($mln)"	:	"Obsolete Goods ($ mln)"
-		"ReportProfitabilityEvolutionBrandDiscontinuedGoodsCost($mln)"	:	"Discontinued Goods Cost ($ mln)"
-		"ReportProfitabilityEvolutionBrandGross Profit($mln)"	:	"Gross Profit ($ mln)"
-		"ReportProfitabilityEvolutionBrandAdvertising($mln)"	:	"Advertising ($ mln)"
-		"ReportProfitabilityEvolutionBrandConsumerPromotionsCost($mln)"	:	"Consumer Promotions Cost ($ mln)"
-		"ReportProfitabilityEvolutionBrandTradeInvestment($mln)"	:	"Trade Investment ($ mln)"
-		"ReportProfitabilityEvolutionBrandSalesForceCost($mln)"	:	"Sales Force Cost ($ mln)"
-		"ReportProfitabilityEvolutionBrandVolumeDiscountCost($mln)"	:	"Volume Discount Cost ($ mln)"
-		"ReportProfitabilityEvolutionBrandAdditionalTradeMarginCost($mln)"	:	"Additional Trade Margin Cost ($ mln)"
-		"ReportProfitabilityEvolutionBrandTotalTradeandMarketingExpenses($mln)"	:	"Total Trade and Marketing Expenses ($ mln)"
-		"ReportProfitabilityEvolutionBrandGeneralExpenses($mln)"	:	"General Expenses ($ mln)"
-		"ReportProfitabilityEvolutionBrandAmortisation($mln)"	:	"Amortisation ($ mln)"
-		"ReportProfitabilityEvolutionBrandOperatingProfit($mln)"	:	"Operating Profit ($ mln)"
-		"ReportProfitabilityEvolutionBrandInterests($mln)"	:	"Interests ($ mln)"
-		"ReportProfitabilityEvolutionBrandExceptionalCost/Profit($mln)"	:	"Exceptional Cost/Profit ($ mln)"
-		"ReportProfitabilityEvolutionBrandTaxes($mln)"	:	"Taxes ($ mln)"
-		"ReportProfitabilityEvolutionBrandNetProfit($mln)"	:	"Net Profit ($ mln)"
-		"ReportProfitabilityEvolutionBrandSurchargeforsupplementaryInvestmentBudget($mln)"	:	"Surcharge for supplementary InvestmentBudget ($ mln)"
-		"ReportProfitabilityEvolutionBrandNetResult($mln)"	:	"Net Result ($ mln)"
-		"ReportProfitabilityEvolutionBrandShareInCompanyTotalSalesValue(%)"	:	"Share In Company Total Sales Value (%)"
-		"ReportProfitabilityEvolutionBrandShareInCompanyGrossProfit/Losses(%)"	:	"Share In Company Gross Profit/Losses (%)"
-		"ReportProfitabilityEvolutionBrandShareofTradeandMarketingExpensesInCompanyTotal(%)"	:	"Share of Trade and Marketing Expenses In Company Total (%)"
-		"ReportProfitabilityEvolutionBrandShareInCompanyOperatingProfit/Losses(%)"	:	"Share In Company Operating Profit/Losses (%)"
-		"ReportProfitabilityEvolutionBrandShareInCompanyNetProfit/Losses(%)"	:	"Share In Company Net Profit/Losses (%)"
-		"ReportProfitabilityEvolutionBrandGrossProfitMargin(%)"	:	"Gross Profit Margin (%)"
-		"ReportProfitabilityEvolutionBrandTradeandMarketingExpensesasa(%)ofSales"	:	"Trade and Marketing Expenses as a(%) of Sales"
-		"ReportProfitabilityEvolutionBrandGeneralExpensesasa(%)ofSales"	:	"General Expenses as a(%) of Sales"
-		"ReportProfitabilityEvolutionBrandOperatingProfitMargin(%)"	:	"Operating Profit Margin (%)"
-		"ReportProfitabilityEvolutionBrandNetProfitMargin(%)"	:	"Net Profit Margin (%)"
-		"ReportProfitabilityEvolutionBrandReturnonInvestment(%)"	:	"Return on Investment (%)"
-		"ReportProfitabilityEvolutionBrandAverageNetMarketPrice($/pack)"	:	"Average Net Market Price ($/pack)"
-		"ReportProfitabilityEvolutionBrandAverageWholesalesPrice($/pack)"	:	"Average Wholesales Price ($/pack)"
-		"ReportProfitabilityEvolutionBrandAverageManufacturerPrice($/pack)"	:	"Average Manufacturer Price ($/pack)"
-		"ReportProfitabilityEvolutionBrandAverageProductionCost($/pack)"	:	"Average Production Cost ($/pack)"
-		"ReportProfitabilityEvolutionBrandMarketSalesValue($mln)"	:	"Market Sales Value ($ mln)"
-		"ReportProfitabilityEvolutionBrandConsumerPricePromotions($mln)"	:	"Consumer Price Promotions ($ mln)"
-		"ReportProfitabilityEvolutionBrandMarketNetSalesValue($mln)"	:	"Market Net Sales Value ($ mln)"
-		"ReportProfitabilityEvolutionBrandAdditionalRetailersMargin(%)"	:	"Additional Retailers Margin (%)"
-		"ReportProfitabilityEvolutionBrandWholesalersBonusRate(%)"	:	"Wholesalers Bonus Rate (%)"
-		"ReportProfitabilityEvolutionBrandMinimalPurchaseQualifyingforBonus(mlnstd.packs)"	:	"Minimal Purchase Qualifying for Bonus (mln std. packs)"
-		"ReportProfitabilityEvolutionBrandProductionCost($mln)"	:	"Production Cost ($ mln)"
-		"ReportProfitabilityEvolutionBrandInventoryValue($mln)"	:	"Inventory Value ($ mln)"
+		"ReportProfitabilityEvolutionBrandManufacturerSalesValue"	:	"Manufacturer Sales Value ($ mln)",
+		"ReportProfitabilityEvolutionBrandCostofGoodsSold"	:	"Cost of Goods Sold ($ mln)",
+		"ReportProfitabilityEvolutionBrandInventoryHolding"	:	"Inventory Holding ($ mln)",
+		"ReportProfitabilityEvolutionBrandObsoleteGoods"	:	"Obsolete Goods ($ mln)",
+		"ReportProfitabilityEvolutionBrandDiscontinuedGoodsCost"	:	"Discontinued Goods Cost ($ mln)",
+		"ReportProfitabilityEvolutionBrandGross Profit"	:	"Gross Profit ($ mln)",
+		"ReportProfitabilityEvolutionBrandAdvertising"	:	"Advertising ($ mln)",
+		"ReportProfitabilityEvolutionBrandConsumerPromotionsCost"	:	"Consumer Promotions Cost ($ mln)",
+		"ReportProfitabilityEvolutionBrandTradeInvestment"	:	"Trade Investment ($ mln)",
+		"ReportProfitabilityEvolutionBrandSalesForceCost"	:	"Sales Force Cost ($ mln)",
+		"ReportProfitabilityEvolutionBrandVolumeDiscountCost"	:	"Volume Discount Cost ($ mln)",
+		"ReportProfitabilityEvolutionBrandAdditionalTradeMarginCost"	:	"Additional Trade Margin Cost ($ mln)",
+		"ReportProfitabilityEvolutionBrandTotalTradeandMarketingExpenses"	:	"Total Trade and Marketing Expenses ($ mln)",
+		"ReportProfitabilityEvolutionBrandGeneralExpenses"	:	"General Expenses ($ mln)",
+		"ReportProfitabilityEvolutionBrandAmortisation"	:	"Amortisation ($ mln)",
+		"ReportProfitabilityEvolutionBrandOperatingProfit"	:	"Operating Profit ($ mln)",
+		"ReportProfitabilityEvolutionBrandInterests"	:	"Interests ($ mln)",
+		"ReportProfitabilityEvolutionBrandExceptionalCost/Profit"	:	"Exceptional Cost/Profit ($ mln)",
+		"ReportProfitabilityEvolutionBrandTaxes"	:	"Taxes ($ mln)",
+		"ReportProfitabilityEvolutionBrandNetProfit"	:	"Net Profit ($ mln)",
+		"ReportProfitabilityEvolutionBrandSurchargeforsupplementaryInvestmentBudget"	:	"Surcharge for supplementary InvestmentBudget ($ mln)",
+		"ReportProfitabilityEvolutionBrandNetResult"	:	"Net Result ($ mln)",
+		"ReportProfitabilityEvolutionBrandShareInCompanyTotalSalesValue"	:	"Share In Company Total Sales Value (%)",
+		"ReportProfitabilityEvolutionBrandShareInCompanyGrossProfitLosses"	:	"Share In Company Gross Profit/Losses (%)",
+		"ReportProfitabilityEvolutionBrandShareofTradeandMarketingExpensesInCompanyTotal"	:	"Share of Trade and Marketing Expenses In Company Total (%)",
+		"ReportProfitabilityEvolutionBrandShareInCompanyOperatingProfitLosses"	:	"Share In Company Operating Profit/Losses (%)",
+		"ReportProfitabilityEvolutionBrandShareInCompanyNetProfitLosses"	:	"Share In Company Net Profit/Losses (%)",
+		"ReportProfitabilityEvolutionBrandGrossProfitMargin"	:	"Gross Profit Margin (%)",
+		"ReportProfitabilityEvolutionBrandTradeandMarketingExpensesasaofSales"	:	"Trade and Marketing Expenses as a(%) of Sales",
+		"ReportProfitabilityEvolutionBrandGeneralExpensesasaofSales"	:	"General Expenses as a(%) of Sales",
+		"ReportProfitabilityEvolutionBrandOperatingProfitMargin"	:	"Operating Profit Margin (%)",
+		"ReportProfitabilityEvolutionBrandNetProfitMargin"	:	"Net Profit Margin (%)",
+		"ReportProfitabilityEvolutionBrandReturnonInvestment"	:	"Return on Investment (%)",
+		"ReportProfitabilityEvolutionBrandAverageNetMarketPrice"	:	"Average Net Market Price ($/pack)",
+		"ReportProfitabilityEvolutionBrandAverageWholesalesPrice"	:	"Average Wholesales Price ($/pack)",
+		"ReportProfitabilityEvolutionBrandAverageManufacturerPrice"	:	"Average Manufacturer Price ($/pack)",
+		"ReportProfitabilityEvolutionBrandAverageProductionCost"	:	"Average Production Cost ($/pack)",
+		"ReportProfitabilityEvolutionBrandMarketSalesValue"	:	"Market Sales Value ($ mln)",
+		"ReportProfitabilityEvolutionBrandConsumerPricePromotions"	:	"Consumer Price Promotions ($ mln)",
+		"ReportProfitabilityEvolutionBrandMarketNetSalesValue"	:	"Market Net Sales Value ($ mln)",
+		"ReportProfitabilityEvolutionBrandAdditionalRetailersMargin"	:	"Additional Retailers Margin (%)",
+		"ReportProfitabilityEvolutionBrandWholesalersBonusRate"	:	"Wholesalers Bonus Rate (%)",
+		"ReportProfitabilityEvolutionBrandMinimalPurchaseQualifyingforBonus"	:	"Minimal Purchase Qualifying for Bonus (mln std. packs)",
+		"ReportProfitabilityEvolutionBrandProductionCost"	:	"Production Cost ($ mln)",
+		"ReportProfitabilityEvolutionBrandInventoryValue"	:	"Inventory Value ($ mln)",
 		
 		
 		//Labels for Profitability Evolution - Global Level
-		"ReportProfitabilityEvolutionGlobalManufacturerSalesValue($mln)"	:	"Manufacturer Sales Value ($ mln)"
-		"ReportProfitabilityEvolutionGlobalCostofGoodsSold($mln)"	:	"Cost of Goods Sold ($ mln)"
-		"ReportProfitabilityEvolutionGlobalInventoryHolding($mln)"	:	"Inventory Holding ($ mln)"
-		"ReportProfitabilityEvolutionGlobalObsoleteGoods($mln)"	:	"Obsolete Goods ($ mln)"
-		"ReportProfitabilityEvolutionGlobalDiscontinuedGoodsCost($mln)"	:	"Discontinued Goods Cost ($ mln)"
-		"ReportProfitabilityEvolutionGlobalGross Profit($mln)"	:	"Gross Profit ($ mln)"
-		"ReportProfitabilityEvolutionGlobalAdvertising($mln)"	:	"Advertising ($ mln)"
-		"ReportProfitabilityEvolutionGlobalConsumerPromotionsCost($mln)"	:	"Consumer Promotions Cost ($ mln)"
-		"ReportProfitabilityEvolutionGlobalTradeInvestment($mln)"	:	"Trade Investment ($ mln)"
-		"ReportProfitabilityEvolutionGlobalSalesForceCost($mln)"	:	"Sales Force Cost ($ mln)"
-		"ReportProfitabilityEvolutionGlobalVolumeDiscountCost($mln)"	:	"Volume Discount Cost ($ mln)"
-		"ReportProfitabilityEvolutionGlobalAdditionalTradeMarginCost($mln)"	:	"Additional Trade Margin Cost ($ mln)"
-		"ReportProfitabilityEvolutionGlobalTotalTradeandMarketingExpenses($mln)"	:	"Total Trade and Marketing Expenses ($ mln)"
-		"ReportProfitabilityEvolutionGlobalOverhead($mln)"	:	"Overhead ($ mln)"
-		"ReportProfitabilityEvolutionGlobalInvestmenttoImproveTechnologyLevel($mln)"	:	"Investment to Improve Technology Level ($ mln)"
-		"ReportProfitabilityEvolutionGlobalInvestmenttoIncreaseProductionEfficiency($mln)"	:	"Investment to Increase Production Efficiency ($ mln)"
-		"ReportProfitabilityEvolutionGlobalProductionCapacityDisposalCost($mln)"	:	"Production Capacity Disposal Cost ($ mln)"
-		"ReportProfitabilityEvolutionGlobalOvertimeShiftsCost($mln)"	:	"Overtime Shifts Cost ($ mln)"
-		"ReportProfitabilityEvolutionGlobalTotalGeneralExpenses($mln)"	:	"Total General Expenses ($ mln)"
-		"ReportProfitabilityEvolutionGlobalAmortisation($mln)"	:	"Amortisation ($ mln)"
-		"ReportProfitabilityEvolutionGlobalOperatingProfit($mln)"	:	"Operating Profit ($ mln)"
-		"ReportProfitabilityEvolutionGlobalInterests($mln)"	:	"Interests ($ mln)"
-		"ReportProfitabilityEvolutionGlobalExceptionalCost/Profit($mln)"	:	"Exceptional Cost/Profit ($ mln)"
-		"ReportProfitabilityEvolutionGlobalTaxes($mln)"	:	"Taxes ($ mln)"
-		"ReportProfitabilityEvolutionGlobalNetProfit($mln)"	:	"Net Profit ($ mln)"
-		"ReportProfitabilityEvolutionGlobalSurchargeforsupplementaryInvestmentBudget($mln)"	:	"Surcharge for supplementary InvestmentBudget ($ mln)"
-		"ReportProfitabilityEvolutionGlobalNetResult($mln)"	:	"Net Result ($ mln)"
-		"ReportProfitabilityEvolutionGlobalGrossProfitMargin(%)"	:	"Gross Profit Margin (%)"
-		"ReportProfitabilityEvolutionGlobalTradeandMarketingExpensesasa(%)ofSales"	:	"Trade and Marketing Expenses as a(%) of Sales"
-		"ReportProfitabilityEvolutionGlobalGeneralExpensesasa(%)ofSales"	:	"General Expenses as a(%) of Sales"
-		"ReportProfitabilityEvolutionGlobalOperatingProfitMargin(%)"	:	"Operating Profit Margin (%)"
-		"ReportProfitabilityEvolutionGlobalNetProfitMargin(%)"	:	"Net Profit Margin (%)"
-		"ReportProfitabilityEvolutionGlobalReturnonInvestment(%)"	:	"Return on Investment (%)"
-		"ReportProfitabilityEvolutionGlobalAverageNetMarketPrice($/pack)"	:	"Average Net Market Price ($/pack)"
-		"ReportProfitabilityEvolutionGlobalAverageWholesalesPrice($/pack)"	:	"Average Wholesales Price ($/pack)"
-		"ReportProfitabilityEvolutionGlobalAverageManufacturerPrice($/pack)"	:	"Average Manufacturer Price ($/pack)"
-		"ReportProfitabilityEvolutionGlobalAverageProductionCost($/pack)"	:	"Average Production Cost ($/pack)"
-		"ReportProfitabilityEvolutionGlobalMarketSalesValue($mln)"	:	"Market Sales Value ($ mln)"
-		"ReportProfitabilityEvolutionGlobalConsumerPricePromotions($mln)"	:	"Consumer Price Promotions ($ mln)"
-		"ReportProfitabilityEvolutionGlobalMarketNetSalesValue($mln)"	:	"Market Net Sales Value ($ mln)"
-		"ReportProfitabilityEvolutionGlobalProductionCost($mln)"	:	"Production Cost ($ mln)"
-		"ReportProfitabilityEvolutionGlobalInventoryValue($mln)"	:	"Inventory Value ($ mln)"
-		"ReportProfitabilityEvolutionGlobalCapacityUtilisationRate(%)"	:	"Capacity Utilisation Rate (%)"
-		"ReportProfitabilityEvolutionGlobalChangeInProductionCapacity(mlnstd.packs)"	:	"Change In Production Capacity (mln std. packs)"
-		"ReportProfitabilityEvolutionGlobalNextPeriodAvailableProd.Capacity(mlnstd.packs)"	:	"Next Period Available Prod. Capacity (mln std. packs)"
-		"ReportProfitabilityEvolutionGlobalAvailableTechnologyLevel"	:	"Available Technology Level"
-		"ReportProfitabilityEvolutionGlobalExtraBudgetRequiredtoIncreaseTechnologyLevelby1Step"	:	"Extra Budget Required to Increase Technology Level by 1 Step"
-		"ReportProfitabilityEvolutionGlobalExtraBudgetRequiredtoIncreaseTechnologyLevelby2Steps"	:	"Extra Budget Required to Increase Technology Level by 2 Steps"
-		"ReportProfitabilityEvolutionGlobalAcquiredProductionandLogisticsEfficiency(%)"	:	"Acquired Production and Logistics Efficiency (%)"
-		"ReportProfitabilityEvolutionGlobalExtraBudgetRequiredtoIncreaseEfficiencyby2%points"	:	"Extra Budget Required to Increase Efficiency by 2% points"
-		"ReportProfitabilityEvolutionGlobalExtraBudgetRequiredtoIncreaseEfficiencyby5%points"	:	"Extra Budget Required to Increase Efficiency by 5% points"
-		"ReportProfitabilityEvolutionGlobalAcquiredProductionPlanningFlexibility(%)"	:	"Acquired Production Planning Flexibility (%)"
-		"ReportProfitabilityEvolutionGlobalExtraBudgetRequiredtoIncreaseFlexibilityby2%points"	:	"Extra Budget Required to Increase Flexibility by 2% points"
-		"ReportProfitabilityEvolutionGlobalExtraBudgetRequiredtoIncreaseFlexibilityby5%points"	:	"Extra Budget Required to Increase Flexibility by 5% points"
+		"ReportProfitabilityEvolutionGlobalManufacturerSalesValue"	:	"Manufacturer Sales Value ($ mln)",
+		"ReportProfitabilityEvolutionGlobalCostofGoodsSold"	:	"Cost of Goods Sold ($ mln)",
+		"ReportProfitabilityEvolutionGlobalInventoryHolding"	:	"Inventory Holding ($ mln)",
+		"ReportProfitabilityEvolutionGlobalObsoleteGoods"	:	"Obsolete Goods ($ mln)",
+		"ReportProfitabilityEvolutionGlobalDiscontinuedGoodsCost"	:	"Discontinued Goods Cost ($ mln)",
+		"ReportProfitabilityEvolutionGlobalGross Profit"	:	"Gross Profit ($ mln)",
+		"ReportProfitabilityEvolutionGlobalAdvertising"	:	"Advertising ($ mln)",
+		"ReportProfitabilityEvolutionGlobalConsumerPromotionsCost"	:	"Consumer Promotions Cost ($ mln)",
+		"ReportProfitabilityEvolutionGlobalTradeInvestment"	:	"Trade Investment ($ mln)",
+		"ReportProfitabilityEvolutionGlobalSalesForceCost"	:	"Sales Force Cost ($ mln)",
+		"ReportProfitabilityEvolutionGlobalVolumeDiscountCost"	:	"Volume Discount Cost ($ mln)",
+		"ReportProfitabilityEvolutionGlobalAdditionalTradeMarginCost"	:	"Additional Trade Margin Cost ($ mln)",
+		"ReportProfitabilityEvolutionGlobalTotalTradeandMarketingExpenses"	:	"Total Trade and Marketing Expenses ($ mln)",
+		"ReportProfitabilityEvolutionGlobalOverhead"	:	"Overhead ($ mln)",
+		"ReportProfitabilityEvolutionGlobalInvestmenttoImproveTechnologyLevel"	:	"Investment to Improve Technology Level ($ mln)",
+		"ReportProfitabilityEvolutionGlobalInvestmenttoIncreaseProductionEfficiency"	:	"Investment to Increase Production Efficiency ($ mln)",
+		"ReportProfitabilityEvolutionGlobalProductionCapacityDisposalCost"	:	"Production Capacity Disposal Cost ($ mln)",
+		"ReportProfitabilityEvolutionGlobalOvertimeShiftsCost"	:	"Overtime Shifts Cost ($ mln)",
+		"ReportProfitabilityEvolutionGlobalTotalGeneralExpenses"	:	"Total General Expenses ($ mln)",
+		"ReportProfitabilityEvolutionGlobalAmortisation"	:	"Amortisation ($ mln)",
+		"ReportProfitabilityEvolutionGlobalOperatingProfit"	:	"Operating Profit ($ mln)",
+		"ReportProfitabilityEvolutionGlobalInterests"	:	"Interests ($ mln)",
+		"ReportProfitabilityEvolutionGlobalExceptionalCostProfit"	:	"Exceptional Cost/Profit ($ mln)",
+		"ReportProfitabilityEvolutionGlobalTaxes"	:	"Taxes ($ mln)",
+		"ReportProfitabilityEvolutionGlobalNetProfit"	:	"Net Profit ($ mln)",
+		"ReportProfitabilityEvolutionGlobalSurchargeforsupplementaryInvestmentBudget"	:	"Surcharge for supplementary InvestmentBudget ($ mln)",
+		"ReportProfitabilityEvolutionGlobalNetResult"	:	"Net Result ($ mln)",
+		"ReportProfitabilityEvolutionGlobalGrossProfitMargin"	:	"Gross Profit Margin (%)",
+		"ReportProfitabilityEvolutionGlobalTradeandMarketingExpensesasa ofSales"	:	"Trade and Marketing Expenses as a(%) of Sales",
+		"ReportProfitabilityEvolutionGlobalGeneralExpensesasaofSales"	:	"General Expenses as a(%) of Sales",
+		"ReportProfitabilityEvolutionGlobalOperatingProfitMargin"	:	"Operating Profit Margin (%)",
+		"ReportProfitabilityEvolutionGlobalNetProfitMargin"	:	"Net Profit Margin (%)",
+		"ReportProfitabilityEvolutionGlobalReturnonInvestment"	:	"Return on Investment (%)",
+		"ReportProfitabilityEvolutionGlobalAverageNetMarketPrice"	:	"Average Net Market Price ($/pack)",
+		"ReportProfitabilityEvolutionGlobalAverageWholesalesPrice"	:	"Average Wholesales Price ($/pack)",
+		"ReportProfitabilityEvolutionGlobalAverageManufacturerPrice"	:	"Average Manufacturer Price ($/pack)",
+		"ReportProfitabilityEvolutionGlobalAverageProductionCost"	:	"Average Production Cost ($/pack)",
+		"ReportProfitabilityEvolutionGlobalMarketSalesValue"	:	"Market Sales Value ($ mln)",
+		"ReportProfitabilityEvolutionGlobalConsumerPricePromotions"	:	"Consumer Price Promotions ($ mln)",
+		"ReportProfitabilityEvolutionGlobalMarketNetSalesValue"	:	"Market Net Sales Value ($ mln)",
+		"ReportProfitabilityEvolutionGlobalProductionCost"	:	"Production Cost ($ mln)",
+		"ReportProfitabilityEvolutionGlobalInventoryValue"	:	"Inventory Value ($ mln)",
+		"ReportProfitabilityEvolutionGlobalCapacityUtilisationRate"	:	"Capacity Utilisation Rate (%)",
+		"ReportProfitabilityEvolutionGlobalChangeInProductionCapacity"	:	"Change In Production Capacity (mln std. packs)",
+		"ReportProfitabilityEvolutionGlobalNextPeriodAvailableProd.Capacity"	:	"Next Period Available Prod. Capacity (mln std. packs)",
+		"ReportProfitabilityEvolutionGlobalAvailableTechnologyLevel"	:	"Available Technology Level",
+		"ReportProfitabilityEvolutionGlobalExtraBudgetRequiredtoIncreaseTechnologyLevelby1Step"	:	"Extra Budget Required to Increase Technology Level by 1 Step",
+		"ReportProfitabilityEvolutionGlobalExtraBudgetRequiredtoIncreaseTechnologyLevelby2Steps"	:	"Extra Budget Required to Increase Technology Level by 2 Steps",
+		"ReportProfitabilityEvolutionGlobalAcquiredProductionandLogisticsEfficiency"	:	"Acquired Production and Logistics Efficiency (%)",
+		"ReportProfitabilityEvolutionGlobalExtraBudgetRequiredtoIncreaseEfficiencyby2points"	:	"Extra Budget Required to Increase Efficiency by 2% points",
+		"ReportProfitabilityEvolutionGlobalExtraBudgetRequiredtoIncreaseEfficiencyby5points"	:	"Extra Budget Required to Increase Efficiency by 5% points",
+		"ReportProfitabilityEvolutionGlobalAcquiredProductionPlanningFlexibility"	:	"Acquired Production Planning Flexibility (%)",
+		"ReportProfitabilityEvolutionGlobalExtraBudgetRequiredtoIncreaseFlexibilityby2points"	:	"Extra Budget Required to Increase Flexibility by 2% points",
+		"ReportProfitabilityEvolutionGlobalExtraBudgetRequiredtoIncreaseFlexibilityby5points"	:	"Extra Budget Required to Increase Flexibility by 5% points",
 
 
 		//Labels for Market Share
-		"ReportMarketShareChartTitleMarketShareinValue(%)"	:	"Market Share in Value (%)"
-		"ReportMarketShareChartTitleMarketShareinVolume(%)"	:	"Market Share in Volume (%)"
-		"ReportMarketShareChartTitleMindSpaceShare(%)"	:	"Mind Space Share (%)"
-		"ReportMarketShareChartTitleShelfSpaceShare(%)"	:	"Shelf Space Share (%)"
+		"ReportMarketShareChartTitleMarketShareinValue"	:	"Market Share in Value (%)",
+		"ReportMarketShareChartTitleMarketShareinVolume"	:	"Market Share in Volume (%)",
+		"ReportMarketShareChartTitleMindSpaceShare"	:	"Mind Space Share (%)",
+		"ReportMarketShareChartTitleShelfSpaceShare"	:	"Shelf Space Share (%)",
 
 		
 		//Labels for Competitor Intelligence
-		"ReportCompetitorIntelligenceTableTitleTechnology"	:	"Technology"		
-		"ReportCompetitorIntelligenceTechnologyAcquiredProductionandLogisticsEfficiency(%)"	:	"Acquired Production and Logistics Efficiency (%)"
-		"ReportCompetitorIntelligenceTechnologyAcquiredProductionPlanningFlexibility(%)"	:	"Acquired Production Planning Flexibility (%)"
-		"ReportCompetitorIntelligenceTechnologyAvailableTechnologyLevel"	:	"Available Technology Level"
-		"ReportCompetitorIntelligenceTableTitleMarketing&Sales"	:	"Marketing & Sales"
-		"ReportCompetitorIntelligenceMarketing&SalesAdditionalTradeMarginCost($mln)"	:	"Additional Trade Margin Cost ($ mln)"
-		"ReportCompetitorIntelligenceMarketing&SalesAdvertising($mln)"	:	"Advertising ($ mln)"
-		"ReportCompetitorIntelligenceMarketing&SalesConsumerPromotionsCost($mln)"	:	"Consumer Promotions Cost ($ mln)"
-		"ReportCompetitorIntelligenceMarketing&SalesRetailerPurchaseVolume(mlnstd.packs)"	:	"Retailer Purchase Volume(mln std. packs)"
-		"ReportCompetitorIntelligenceMarketing&SalesSalesForceCost($mln)"	:	"Sales Force Cost ($ mln)"
-		"ReportCompetitorIntelligenceMarketing&SalesShipmenttoWholesalers(mlnstd.packs)"	:	"Shipment to Wholesalers (mln std. packs)"
-		"ReportCompetitorIntelligenceMarketing&SalesTradeInvestments($mln)"	:	"Trade Investments ($ mln)"
-		"ReportCompetitorIntelligenceMarketing&SalesVolumeDiscountCost($mln)"	:	"Volume Discount Cost ($ mln)"
-		"ReportCompetitorIntelligenceTableTitleOperations"	:	"Operations"
-		"ReportCompetitorIntelligenceOperationsCapacityUtilisationRate(%)"	:	"Capacity Utilisation Rate (%)"
-		"ReportCompetitorIntelligenceOperationsInventoryVolumeatManufacturer(mlnstd.packs)"	:	"Inventory Volume at Manufacturer (mln std. packs)"
-		"ReportCompetitorIntelligenceOperationsInventoryVolumeatRetailers(mlnstd.packs)"	:	"Inventory Volume at Retailers (mln std. packs)"
-		"ReportCompetitorIntelligenceOperationsInventoryVolumeatWholesalers(mlnstd.packs)"	:	"Inventory Volume at Wholesalers (mln std. packs)"
-		"ReportCompetitorIntelligenceOperationsNextPeriodAvailableProd.Capacity(mlnstd.packs)"	:	"Next Period Available Prod.Capacity (mln std. packs)"
-		"ReportCompetitorIntelligenceOperationsProductionVolume(mlnstd.packs)"	:	"Production Volume (mln std. packs)"
-		"ReportCompetitorIntelligenceTableTitleOperations"	:	"Investments"
-		"ReportCompetitorIntelligenceInvestmentsInvestmenttoImproveTechnologyLevel($mln)"	:	"Investment to Improve Technology Level ($ mln)"
-		"ReportCompetitorIntelligenceInvestmentsInvestmenttoIncreaseProductionEfficiency($mln)"	:	"Investment to Increase Production Efficiency ($ mln)"
+		"ReportCompetitorIntelligenceTableTitleTechnology"	:	"Technology",	
+		"ReportCompetitorIntelligenceTechnologyAcquiredProductionandLogisticsEfficiency"	:	"Acquired Production and Logistics Efficiency (%)",
+		"ReportCompetitorIntelligenceTechnologyAcquiredProductionPlanningFlexibility"	:	"Acquired Production Planning Flexibility (%)",
+		"ReportCompetitorIntelligenceTechnologyAvailableTechnologyLevel"	:	"Available Technology Level",
+		"ReportCompetitorIntelligenceTableTitleMarketing&Sales"	:	"Marketing & Sales",
+		"ReportCompetitorIntelligenceMarketing&SalesAdditionalTradeMarginCost"	:	"Additional Trade Margin Cost ($ mln)",
+		"ReportCompetitorIntelligenceMarketing&SalesAdvertising"	:	"Advertising ($ mln)",
+		"ReportCompetitorIntelligenceMarketing&SalesConsumerPromotionsCost"	:	"Consumer Promotions Cost ($ mln)",
+		"ReportCompetitorIntelligenceMarketing&SalesRetailerPurchaseVolume"	:	"Retailer Purchase Volume(mln std. packs)",
+		"ReportCompetitorIntelligenceMarketing&SalesSalesForceCost"	:	"Sales Force Cost ($ mln)",
+		"ReportCompetitorIntelligenceMarketing&SalesShipmenttoWholesalers"	:	"Shipment to Wholesalers (mln std. packs)",
+		"ReportCompetitorIntelligenceMarketing&SalesTradeInvestments"	:	"Trade Investments ($ mln)",
+		"ReportCompetitorIntelligenceMarketing&SalesVolumeDiscountCost"	:	"Volume Discount Cost ($ mln)",
+		"ReportCompetitorIntelligenceTableTitleOperations"	:	"Operations",
+		"ReportCompetitorIntelligenceOperationsCapacityUtilisationRate"	:	"Capacity Utilisation Rate (%)",
+		"ReportCompetitorIntelligenceOperationsInventoryVolumeatManufacturer"	:	"Inventory Volume at Manufacturer (mln std. packs)",
+		"ReportCompetitorIntelligenceOperationsInventoryVolumeatRetailers"	:	"Inventory Volume at Retailers (mln std. packs)",
+		"ReportCompetitorIntelligenceOperationsInventoryVolumeatWholesalers"	:	"Inventory Volume at Wholesalers (mln std. packs)",
+		"ReportCompetitorIntelligenceOperationsNextPeriodAvailableProd.Capacity"	:	"Next Period Available Prod.Capacity (mln std. packs)",
+		"ReportCompetitorIntelligenceOperationsProductionVolume"	:	"Production Volume (mln std. packs)",
+		"ReportCompetitorIntelligenceTableTitleOperations"	:	"Investments",
+		"ReportCompetitorIntelligenceInvestmentsInvestmenttoImproveTechnologyLevel"	:	"Investment to Improve Technology Level ($ mln)",
+		"ReportCompetitorIntelligenceInvestmentsInvestmenttoIncreaseProductionEfficiency"	:	"Investment to Increase Production Efficiency ($ mln)",
 		 
 		//Labels for Investments and Profits
-		"ReportInvestmentsandProfitsChartTitleTotalInvestment($mln)"	:	"Total Investment ($ mln)"		 
-		"ReportInvestmentsandProfitsChartTitleNetProfitByCompanies($mln)"	:	"Net Profit By Companies ($ mln)"
-		"ReportInvestmentsandProfitsChartTitleReturnonInvestment(%)"	:	"Return on Investment (%)"
-		"ReportInvestmentsandProfitsChartTitleInvestmentversusBudget(%)"	:	"Investment versus Budget(%)"
+		"ReportInvestmentsandProfitsChartTitleTotalInvestment"	:	"Total Investment ($ mln)",
+		"ReportInvestmentsandProfitsChartTitleNetProfitByCompanies"	:	"Net Profit By Companies ($ mln)",
+		"ReportInvestmentsandProfitsChartTitleReturnonInvestment"	:	"Return on Investment (%)",
+		"ReportInvestmentsandProfitsChartTitleInvestmentversusBudget"	:	"Investment versus Budget(%)",
 		 
 		 
 		//Labels for Market Sales and Inventory
-		"ReportMarketSalesandInventoryChartTitleMarketSalesValue($mln)"	:	"Market Sales Value ($ mln)"		 
-		"ReportMarketSalesandInventoryChartTitleMarketSalesVolume(mlnstd.packs)"	:	"Market Sales Volume (mln std. packs)"
-		"ReportMarketSalesandInventoryChartTitleTotalInventoryatFactory(mlnstd.packs)"	:	"Total Inventory at Factory (mln std. packs)"
-		"ReportMarketSalesandInventoryChartTitleTotalInventoryatTrade(mlnstd.packs)"	:	"Total Inventory at Trade (mln std. packs)"
+		"ReportMarketSalesandInventoryChartTitleMarketSalesValue"	:	"Market Sales Value ($ mln)",
+		"ReportMarketSalesandInventoryChartTitleMarketSalesVolume"	:	"Market Sales Volume (mln std. packs)",
+		"ReportMarketSalesandInventoryChartTitleTotalInventoryatFactory"	:	"Total Inventory at Factory (mln std. packs)",
+		"ReportMarketSalesandInventoryChartTitleTotalInventoryatTrade"	:	"Total Inventory at Trade (mln std. packs)",
 		 
 
 		//Labels for Segment Leader Top 5
-		"ReportSegmentLeaderTop5ChartTitlePriceSensitive(%)"	:	"Price Sensitive (%)"		 
-		"ReportSegmentLeaderTop5ChartTitlePretenders(%)"	:	"Pretenders (%)"
-		"ReportSegmentLeaderTop5ChartTitleModerate(%)"	:	"Moderate (%)"
-		"ReportSegmentLeaderTop5ChartTitleGoodLife(%)"	:	"Good Life (%)"
-		"ReportSegmentLeaderTop5ChartTitleUltimate(%)"	:	"Ultimate (%)"
-		"ReportSegmentLeaderTop5ChartTitlePragmatic(%)"	:	"Pragmatic (%)"
+		"ReportSegmentLeaderTop5ChartTitlePriceSensitive"	:	"1. Price Sensitive (%)",	 
+		"ReportSegmentLeaderTop5ChartTitlePretenders"	:	"2. Pretenders (%)",
+		"ReportSegmentLeaderTop5ChartTitleModerate"	:	"3. Moderate (%)",
+		"ReportSegmentLeaderTop5ChartTitleGoodLife"	:	"4. Good Life (%)",
+		"ReportSegmentLeaderTop5ChartTitleUltimate"	:	"5. Ultimate (%)",
+		"ReportSegmentLeaderTop5ChartTitlePragmatic"	:	"6. Pragmatic (%)",
 		
 		//Labels for Perception Map
-		"ReportPerceptionMapAxisTitleValuePerception"	:	"Value Perception"
-		"ReportPerceptionMapAxisTitleImagePerception"	:	"Image Perception"
-		"ReportPerceptionMapLabelCompanyA"	:	"Company A"
-		"ReportPerceptionMapLabelCompanyB"	:	"Company B"
-		"ReportPerceptionMapLabelCompanyC"	:	"Company C"
-		"ReportPerceptionMapLabelCompanyD"	:	"Company D"
-		"ReportPerceptionMapLabelCompanyE"	:	"Company E"
-		"ReportPerceptionMapLabelCompanyF"	:	"Company F"
+		"ReportPerceptionMapAxisTitleValuePerception"	:	"Value Perception",
+		"ReportPerceptionMapAxisTitleImagePerception"	:	"Image Perception",
+		"ReportPerceptionMapLabelCompanyA"	:	"Company A",
+		"ReportPerceptionMapLabelCompanyB"	:	"Company B",
+		"ReportPerceptionMapLabelCompanyC"	:	"Company C",
+		"ReportPerceptionMapLabelCompanyD"	:	"Company D",
+		"ReportPerceptionMapLabelCompanyE"	:	"Company E",
+		"ReportPerceptionMapLabelCompanyF"	:	"Company F",
 		 
 		 
 		//Labels for Segment Distributions
-		"ReportSegmentDistributionsTableTitleMarketShare(Value%)"	:	"Market Share (Value %)"
-		"ReportSegmentDistributionsTableTitleMarketShare(Volume%)"	:	"Market Share (Volume %)"
-		"ReportSegmentDistributionsTableTitleMarketSalesValue($mln)"	:	"Market Sales Value ($ mln)"
-		"ReportSegmentDistributionsTableTitleMarketSalesVolume(mlnstd.packs)"	:	"Market Sales Volume (mln std. packs)"
-		"ReportSegmentDistributionsTableTitleAverageNetMarketPrice($/std.pack)"	:	"Average Net Market Price ($/std.pack)"
-		"ReportSegmentDistributionsTableTitleValuePerception"	:	"Value Perception"
-		"ReportSegmentDistributionsTableTitleImagePerception"	:	"Image Perception"
+		"ReportSegmentDistributionsTableTitleMarketShareValue"	:	"Market Share (Value %)",
+		"ReportSegmentDistributionsTableTitleMarketShareVolume"	:	"Market Share (Volume %)",
+		"ReportSegmentDistributionsTableTitleMarketSalesValue"	:	"Market Sales Value ($ mln)",
+		"ReportSegmentDistributionsTableTitleMarketSalesVolume"	:	"Market Sales Volume (mln std. packs)",
+		"ReportSegmentDistributionsTableTitleAverageNetMarketPrice"	:	"Average Net Market Price ($/std.pack)",
+		"ReportSegmentDistributionsTableTitleValuePerception"	:	"Value Perception",
+		"ReportSegmentDistributionsTableTitleImagePerception"	:	"Image Perception",
 
 		 
 		//Labels for Market Evolution
-		"ReportMarketEvolutionChartTitleGrowthRateInVolume(Period-3=100)"	:	"Growth Rate In Volume (Period -3 = 100)"	
-		"ReportMarketEvolutionChartTitleGrowthRateInValue(Period-3=100)"	:	"Growth Rate (%) In Value (Period -3 = 100)"
-		"ReportMarketEvolutionChartTitleNetMarketPrice(Period-3=100)"	:	"Net Market Price (Period -3 = 100)"
-		"ReportMarketEvolutionChartTitleSegmentValueShareInTotalMarket(%)"	:	"Segment Value Share In Total Market (%)"
+		"ReportMarketEvolutionChartTitleGrowthRateInVolume"	:	"Growth Rate In Volume (Period -3 = 100)",
+		"ReportMarketEvolutionChartTitleGrowthRateInValue"	:	"Growth Rate In Value (Period -3 = 100)",
+		"ReportMarketEvolutionChartTitleNetMarketPrice"	:	"Net Market Price (Period -3 = 100)",
+		"ReportMarketEvolutionChartTitleSegmentValueShareInTotalMarket"	:	"Segment Value Share In Total Market (%)",
 		 
 		 
 		//Labels for Market Trends - SKU Level
-		"ReportMarketTrendsSKUTableTitleMarketFigures"	:	"Market Figures"	//Market Figures
-		"ReportMarketTrendsSKUMarketFiguresAverageDisplayPrice($/std.pack)"	:	"Average Display Price ($/std.pack)" 
-		"ReportMarketTrendsSKUMarketFiguresAverageNetMarketPrice($/std.pack)"	:	"Average Net Market Price ($/std.pack)"
-		"ReportMarketTrendsSKUMarketFiguresBrandAwareness(%)"	:	"Brand Awareness(%)"
-		"ReportMarketTrendsSKUMarketFiguresImagePerception"	:	"Image Perception"
-		"ReportMarketTrendsSKUMarketFiguresMarketNetSalesValue($mln)"	:	"Market Net Sales Value ($ mln)"
-		"ReportMarketTrendsSKUMarketFiguresMarketNetSalesVolume(mlnstd.packs)"	:	"Market Net Sales Volume (mln std.packs)"
-		"ReportMarketTrendsSKUMarketFiguresMarketShare(Value%)"	:	"Market Share (Value %)"
-		"ReportMarketTrendsSKUMarketFiguresMarketShare(Volume%)"	:	"Market Share (Volume %)"
-		"ReportMarketTrendsSKUTableTitleMiscellaneous"	:	"Miscellaneous"		//Miscellaneous
-		"ReportMarketTrendsSKUMiscellaneousLostSalesVolumeduetoOOS(mlnstd.packs)"	:	"Lost Sales Volume due to OOS (mln std.packs)"
-		"ReportMarketTrendsSKUMiscellaneousNumericalDistribution(%)"	:	"Numerical Distribution (%)"
-		"ReportMarketTrendsSKUMiscellaneousTotalInventoryatTrade(mlnstd.packs)"	:	"Total Inventory at Trade (mln std.packs)"
-		"ReportMarketTrendsSKUMiscellaneousPriceRankingIndex"	:	"Price Ranking Index"
-		"ReportMarketTrendsSKUMiscellaneousShelfSpace(%)"	:	"Shelf Space (%)"
-		"ReportMarketTrendsSKUTableTitleSegmentwiseValueShare"	:	"Segment-wise Value Share"		//Segment-wise Value Share
-		"ReportMarketTrendsSKUSegmentwiseValueShareValueShare(%)in1.PriceSensitiveSegment"	:	"Value Share (%) in 1. Price Sensitive Segment"
-		"ReportMarketTrendsSKUSegmentwiseValueShareValueShare(%)in2.PretendersSegment"	:	"Value Share (%) in 2. Pretenders Segment"
-		"ReportMarketTrendsSKUSegmentwiseValueShareValueShare(%)in3.ModerateSegment"	:	"Value Share (%) in 3. Moderate Segment"
-		"ReportMarketTrendsSKUSegmentwiseValueShareValueShare(%)in4.GoodLifeSegment"	:	"Value Share (%) in 4. Good Life Segment"
-		"ReportMarketTrendsSKUSegmentwiseValueShareValueShare(%)in5.UltimateSegment"	:	"Value Share (%) in 5. Ultimate Segment"
-		"ReportMarketTrendsSKUSegmentwiseValueShareValueShare(%)in6.PragmaticSegment"	:	"Value Share (%) in 6. Pragmatic Segment"
-		"ReportMarketTrendsSKUTableTitleSegmentwiseVolumeShare"	:	"Segment-wise Volume Share"		//Segment-wise Value Share
-		"ReportMarketTrendsSKUSegmentwiseValueShareVolumeShare(%)in1.PriceSensitiveSegment"	:	"Volume Share (%) in 1. Price Sensitive Segment"
-		"ReportMarketTrendsSKUSegmentwiseValueShareVolumeShare(%)in2.PretendersSegment"	:	"Volume Share (%) in 2. Pretenders Segment"
-		"ReportMarketTrendsSKUSegmentwiseValueShareVolumeShare(%)in3.ModerateSegment"	:	"Volume Share (%) in 3. Moderate Segment"
-		"ReportMarketTrendsSKUSegmentwiseValueShareVolumeShare(%)in4.GoodLifeSegment"	:	"Volume Share (%) in 4. Good Life Segment"
-		"ReportMarketTrendsSKUSegmentwiseValueShareVolumeShare(%)in5.UltimateSegment"	:	"Volume Share (%) in 5. Ultimate Segment"
-		"ReportMarketTrendsSKUSegmentwiseValueShareVolumeShare(%)in6.PragmaticSegment"	:	"Volume Share (%) in 6. Pragmatic Segment"
+		"ReportMarketTrendsSKUTableTitleMarketFigures"	:	"Market Figures", //Market Figures
+		"ReportMarketTrendsSKUMarketFiguresAverageDisplayPrice"	:	"Average Display Price ($/std.pack)",
+		"ReportMarketTrendsSKUMarketFiguresAverageNetMarketPrice"	:	"Average Net Market Price ($/std.pack)",
+		"ReportMarketTrendsSKUMarketFiguresBrandAwareness"	:	"Brand Awareness(%)",
+		"ReportMarketTrendsSKUMarketFiguresImagePerception"	:	"Image Perception",
+		"ReportMarketTrendsSKUMarketFiguresMarketNetSalesValue"	:	"Market Net Sales Value ($ mln)",
+		"ReportMarketTrendsSKUMarketFiguresMarketNetSalesVolume"	:	"Market Net Sales Volume (mln std.packs)",
+		"ReportMarketTrendsSKUMarketFiguresMarketShareValue"	:	"Market Share (Value %)",
+		"ReportMarketTrendsSKUMarketFiguresMarketShareVolume"	:	"Market Share (Volume %)",
+		"ReportMarketTrendsSKUTableTitleMiscellaneous"	:	"Miscellaneous",		//Miscellaneous
+		"ReportMarketTrendsSKUMiscellaneousLostSalesVolumeduetoOOS"	:	"Lost Sales Volume due to OOS (mln std.packs)",
+		"ReportMarketTrendsSKUMiscellaneousNumericalDistribution"	:	"Numerical Distribution (%)",
+		"ReportMarketTrendsSKUMiscellaneousTotalInventoryatTrade"	:	"Total Inventory at Trade (mln std.packs)",
+		"ReportMarketTrendsSKUMiscellaneousPriceRankingIndex"	:	"Price Ranking Index",
+		"ReportMarketTrendsSKUMiscellaneousShelfSpace"	:	"Shelf Space (%)",
+		"ReportMarketTrendsSKUTableTitleSegmentwiseValueShare"	:	"Value Share by Segment",		//Segment-wise Value Share
+		"ReportMarketTrendsSKUSegmentwiseValueShareValueSharePriceSensitiveSegment"	:	"Value Share (%) in 1. Price Sensitive Segment",
+		"ReportMarketTrendsSKUSegmentwiseValueShareValueSharePretendersSegment"	:	"Value Share (%) in 2. Pretenders Segment",
+		"ReportMarketTrendsSKUSegmentwiseValueShareValueShareModerateSegment"	:	"Value Share (%) in 3. Moderate Segment",
+		"ReportMarketTrendsSKUSegmentwiseValueShareValueShareGoodLifeSegment"	:	"Value Share (%) in 4. Good Life Segment",
+		"ReportMarketTrendsSKUSegmentwiseValueShareValueShareUltimateSegment"	:	"Value Share (%) in 5. Ultimate Segment",
+		"ReportMarketTrendsSKUSegmentwiseValueShareValueSharePragmaticSegment"	:	"Value Share (%) in 6. Pragmatic Segment",
+		"ReportMarketTrendsSKUTableTitleSegmentwiseVolumeShareSegment-wise Volume Share"	:	"Volume Share by Segment",	//Segment-wise Volume Share
+		"ReportMarketTrendsSKUSegmentwiseValueShareVolumeSharePriceSensitiveSegment"	:	"Volume Share (%) in 1. Price Sensitive Segment",
+		"ReportMarketTrendsSKUSegmentwiseValueShareVolumeSharePretendersSegment"	:	"Volume Share (%) in 2. Pretenders Segment",
+		"ReportMarketTrendsSKUSegmentwiseValueShareVolumeShareModerateSegment"	:	"Volume Share (%) in 3. Moderate Segment",
+		"ReportMarketTrendsSKUSegmentwiseValueShareVolumeShareGoodLifeSegment"	:	"Volume Share (%) in 4. Good Life Segment",
+		"ReportMarketTrendsSKUSegmentwiseValueShareVolumeShareUltimateSegment"	:	"Volume Share (%) in 5. Ultimate Segment",
+		"ReportMarketTrendsSKUSegmentwiseValueShareVolumeSharePragmaticSegment"	:	"Volume Share (%) in 6. Pragmatic Segment",
 		
 		
 		
 		//Labels for Market Trends - Brand Level
-		"ReportMarketTrendsBrandTableTitleMarketFigures"	:	"Market Figures"	//Market Figures
-		"ReportMarketTrendsBrandMarketFiguresAverageDisplayPrice($/std.pack)"	:	"Average Display Price ($/std.pack)" 
-		"ReportMarketTrendsBrandMarketFiguresAverageNetMarketPrice($/std.pack)"	:	"Average Net Market Price ($/std.pack)"
-		"ReportMarketTrendsBrandMarketFiguresBrandAwareness(%)"	:	"Brand Awareness(%)"
-		"ReportMarketTrendsBrandMarketFiguresImagePerception"	:	"Image Perception"
-		"ReportMarketTrendsBrandMarketFiguresMarketNetSalesValue($mln)"	:	"Market Net Sales Value ($ mln)"
-		"ReportMarketTrendsBrandMarketFiguresMarketNetSalesVolume(mlnstd.packs)"	:	"Market Net Sales Volume (mln std.packs)"
-		"ReportMarketTrendsBrandMarketFiguresMarketShare(Value%)"	:	"Market Share (Value %)"
-		"ReportMarketTrendsBrandMarketFiguresMarketShare(Volume%)"	:	"Market Share (Volume %)"
-		"ReportMarketTrendsBrandTableTitleMiscellaneous"	:	"Miscellaneous"		//Miscellaneous
-		"ReportMarketTrendsBrandMiscellaneousLostSalesVolumeduetoOOS(mlnstd.packs)"	:	"Lost Sales Volume due to OOS (mln std.packs)"
-		"ReportMarketTrendsBrandMiscellaneousNumericalDistribution(%)"	:	"Numerical Distribution (%)"
-		"ReportMarketTrendsBrandMiscellaneousTotalInventoryatTrade(mlnstd.packs)"	:	"Total Inventory at Trade (mln std.packs)"
-		"ReportMarketTrendsBrandMiscellaneousPriceRankingIndex"	:	"Price Ranking Index"
-		"ReportMarketTrendsBrandMiscellaneousShelfSpace(%)"	:	"Shelf Space (%)"
-		"ReportMarketTrendsBrandTableTitleSegmentwiseValueShare"	:	"Segment-wise Value Share"		//Segment-wise Value Share
-		"ReportMarketTrendsBrandSegmentwiseValueShareValueShare(%)in1.PriceSensitiveSegment"	:	"Value Share (%) in 1. Price Sensitive Segment"
-		"ReportMarketTrendsBrandSegmentwiseValueShareValueShare(%)in2.PretendersSegment"	:	"Value Share (%) in 2. Pretenders Segment"
-		"ReportMarketTrendsBrandSegmentwiseValueShareValueShare(%)in3.ModerateSegment"	:	"Value Share (%) in 3. Moderate Segment"
-		"ReportMarketTrendsBrandSegmentwiseValueShareValueShare(%)in4.GoodLifeSegment"	:	"Value Share (%) in 4. Good Life Segment"
-		"ReportMarketTrendsBrandSegmentwiseValueShareValueShare(%)in5.UltimateSegment"	:	"Value Share (%) in 5. Ultimate Segment"
-		"ReportMarketTrendsBrandSegmentwiseValueShareValueShare(%)in6.PragmaticSegment"	:	"Value Share (%) in 6. Pragmatic Segment"
-		"ReportMarketTrendsBrandTableTitleSegmentwiseVolumeShare"	:	"Segment-wise Volume Share"		//Segment-wise Value Share
-		"ReportMarketTrendsBrandSegmentwiseValueShareVolumeShare(%)in1.PriceSensitiveSegment"	:	"Volume Share (%) in 1. Price Sensitive Segment"
-		"ReportMarketTrendsBrandSegmentwiseValueShareVolumeShare(%)in2.PretendersSegment"	:	"Volume Share (%) in 2. Pretenders Segment"
-		"ReportMarketTrendsBrandSegmentwiseValueShareVolumeShare(%)in3.ModerateSegment"	:	"Volume Share (%) in 3. Moderate Segment"
-		"ReportMarketTrendsBrandSegmentwiseValueShareVolumeShare(%)in4.GoodLifeSegment"	:	"Volume Share (%) in 4. Good Life Segment"
-		"ReportMarketTrendsBrandSegmentwiseValueShareVolumeShare(%)in5.UltimateSegment"	:	"Volume Share (%) in 5. Ultimate Segment"
-		"ReportMarketTrendsBrandSegmentwiseValueShareVolumeShare(%)in6.PragmaticSegment"	:	"Volume Share (%) in 6. Pragmatic Segment"
+		"ReportMarketTrendsBrandTableTitleMarketFigures"	:	"Market Figures",	//Market Figures
+		"ReportMarketTrendsBrandMarketFiguresAverageDisplayPrice"	:	"Average Display Price ($/std.pack)",
+		"ReportMarketTrendsBrandMarketFiguresAverageNetMarketPrice"	:	"Average Net Market Price ($/std.pack)",
+		"ReportMarketTrendsBrandMarketFiguresBrandAwareness"	:	"Brand Awareness(%)",
+		"ReportMarketTrendsBrandMarketFiguresImagePerception"	:	"Image Perception",
+		"ReportMarketTrendsBrandMarketFiguresMarketNetSalesValue"	:	"Market Net Sales Value ($ mln)",
+		"ReportMarketTrendsBrandMarketFiguresMarketNetSalesVolume"	:	"Market Net Sales Volume (mln std.packs)",
+		"ReportMarketTrendsBrandMarketFiguresMarketShareValue"	:	"Market Share (Value %)",
+		"ReportMarketTrendsBrandMarketFiguresMarketShareVolume"	:	"Market Share (Volume %)",
+		"ReportMarketTrendsBrandTableTitleMiscellaneous"	:	"Miscellaneous",		//Miscellaneous
+		"ReportMarketTrendsBrandMiscellaneousLostSalesVolumeduetoOOS"	:	"Lost Sales Volume due to OOS (mln std.packs)",
+		"ReportMarketTrendsBrandMiscellaneousNumericalDistribution"	:	"Numerical Distribution (%)",
+		"ReportMarketTrendsBrandMiscellaneousTotalInventoryatTrade"	:	"Total Inventory at Trade (mln std.packs)",
+		"ReportMarketTrendsBrandMiscellaneousPriceRankingIndex"	:	"Price Ranking Index",
+		"ReportMarketTrendsBrandMiscellaneousShelfSpace"	:	"Shelf Space (%)",
+		"ReportMarketTrendsBrandTableTitleSegmentwiseValueShare"	:	"Value Share by Segment",		//Segment-wise Value Share
+		"ReportMarketTrendsBrandSegmentwiseValueShareValueSharePriceSensitiveSegment"	:	"Value Share (%) in 1. Price Sensitive Segment",
+		"ReportMarketTrendsBrandSegmentwiseValueShareValueSharePretendersSegment"	:	"Value Share (%) in 2. Pretenders Segment",
+		"ReportMarketTrendsBrandSegmentwiseValueShareValueShareModerateSegment"	:	"Value Share (%) in 3. Moderate Segment",
+		"ReportMarketTrendsBrandSegmentwiseValueShareValueShareGoodLifeSegment"	:	"Value Share (%) in 4. Good Life Segment",
+		"ReportMarketTrendsBrandSegmentwiseValueShareValueShareUltimateSegment"	:	"Value Share (%) in 5. Ultimate Segment",
+		"ReportMarketTrendsBrandSegmentwiseValueShareValueSharePragmaticSegment"	:	"Value Share (%) in 6. Pragmatic Segment",
+		"ReportMarketTrendsBrandTableTitleSegmentwiseVolumeShareSegment-wise Volume Share"	:	"Volume Share by Segment", 	//Segment-wise Volume Share
+		"ReportMarketTrendsBrandSegmentwiseValueShareVolumeSharePriceSensitiveSegment"	:	"Volume Share (%) in 1. Price Sensitive Segment",
+		"ReportMarketTrendsBrandSegmentwiseValueShareVolumeSharePretendersSegment"	:	"Volume Share (%) in 2. Pretenders Segment",
+		"ReportMarketTrendsBrandSegmentwiseValueShareVolumeShareModerateSegment"	:	"Volume Share (%) in 3. Moderate Segment",
+		"ReportMarketTrendsBrandSegmentwiseValueShareVolumeShareGoodLifeSegment"	:	"Volume Share (%) in 4. Good Life Segment",
+		"ReportMarketTrendsBrandSegmentwiseValueShareVolumeShareUltimateSegment"	:	"Volume Share (%) in 5. Ultimate Segment",
+		"ReportMarketTrendsBrandSegmentwiseValueShareVolumeSharePragmaticSegment"	:	"Volume Share (%) in 6. Pragmatic Segment",
 		
 		
 		//Labels for Market Trends - Global Level
-		"ReportMarketTrendsGlobalTableTitleMarketFigures"	:	"Market Figures"	//Market Figures
-		"ReportMarketTrendsGlobalMarketFiguresAverageNetMarketPrice($/std.pack)"	:	"Average Net Market Price ($/std.pack)"
-		"ReportMarketTrendsGlobalMarketFiguresMarketNetSalesValue($mln)"	:	"Market Net Sales Value ($ mln)"
-		"ReportMarketTrendsGlobalMarketFiguresMarketNetSalesVolume(mlnstd.packs)"	:	"Market Net Sales Volume (mln std.packs)"
-		"ReportMarketTrendsGlobalMarketFiguresMarketShare(Value%)"	:	"Market Share (Value %)"
-		"ReportMarketTrendsGlobalMarketFiguresMarketShare(Volume%)"	:	"Market Share (Volume %)"
-		"ReportMarketTrendsGlobalTableTitleMiscellaneous"	:	"Miscellaneous"		//Miscellaneous
-		"ReportMarketTrendsGlobalMiscellaneousLostSalesVolumeduetoOOS(mlnstd.packs)"	:	"Lost Sales Volume due to OOS (mln std.packs)"
-		"ReportMarketTrendsGlobalMiscellaneousNumericalDistribution(%)"	:	"Numerical Distribution (%)"
-		"ReportMarketTrendsGlobalMiscellaneousTotalInventoryatTrade(mlnstd.packs)"	:	"Total Inventory at Trade (mln std.packs)"
-		"ReportMarketTrendsGlobalMiscellaneousPriceRankingIndex"	:	"Price Ranking Index"
-		"ReportMarketTrendsGlobalMiscellaneousShelfSpace(%)"	:	"Shelf Space (%)"
-		"ReportMarketTrendsGlobalTableTitleSegmentwiseValueShare"	:	"Segment-wise Value Share"		//Segment-wise Value Share
-		"ReportMarketTrendsGlobalSegmentwiseValueShareValueShare(%)in1.PriceSensitiveSegment"	:	"Value Share (%) in 1. Price Sensitive Segment"
-		"ReportMarketTrendsGlobalSegmentwiseValueShareValueShare(%)in2.PretendersSegment"	:	"Value Share (%) in 2. Pretenders Segment"
-		"ReportMarketTrendsGlobalSegmentwiseValueShareValueShare(%)in3.ModerateSegment"	:	"Value Share (%) in 3. Moderate Segment"
-		"ReportMarketTrendsGlobalSegmentwiseValueShareValueShare(%)in4.GoodLifeSegment"	:	"Value Share (%) in 4. Good Life Segment"
-		"ReportMarketTrendsGlobalSegmentwiseValueShareValueShare(%)in5.UltimateSegment"	:	"Value Share (%) in 5. Ultimate Segment"
-		"ReportMarketTrendsGlobalSegmentwiseValueShareValueShare(%)in6.PragmaticSegment"	:	"Value Share (%) in 6. Pragmatic Segment"
-		"ReportMarketTrendsGlobalTableTitleSegmentwiseVolumeShare"	:	"Segment-wise Volume Share"		//Segment-wise Value Share
-		"ReportMarketTrendsGlobalSegmentwiseValueShareVolumeShare(%)in1.PriceSensitiveSegment"	:	"Volume Share (%) in 1. Price Sensitive Segment"
-		"ReportMarketTrendsGlobalSegmentwiseValueShareVolumeShare(%)in2.PretendersSegment"	:	"Volume Share (%) in 2. Pretenders Segment"
-		"ReportMarketTrendsGlobalSegmentwiseValueShareVolumeShare(%)in3.ModerateSegment"	:	"Volume Share (%) in 3. Moderate Segment"
-		"ReportMarketTrendsGlobalSegmentwiseValueShareVolumeShare(%)in4.GoodLifeSegment"	:	"Volume Share (%) in 4. Good Life Segment"
-		"ReportMarketTrendsGlobalSegmentwiseValueShareVolumeShare(%)in5.UltimateSegment"	:	"Volume Share (%) in 5. Ultimate Segment"
-		"ReportMarketTrendsGlobalSegmentwiseValueShareVolumeShare(%)in6.PragmaticSegment"	:	"Volume Share (%) in 6. Pragmatic Segment"		
+		"ReportMarketTrendsGlobalTableTitleMarketFigures"	:	"Market Figures",	//Market Figures
+		"ReportMarketTrendsGlobalMarketFiguresAverageNetMarketPrice"	:	"Average Net Market Price ($/std.pack)",
+		"ReportMarketTrendsGlobalMarketFiguresMarketNetSalesValue"	:	"Market Net Sales Value ($ mln)",
+		"ReportMarketTrendsGlobalMarketFiguresMarketNetSalesVolume"	:	"Market Net Sales Volume (mln std.packs)",
+		"ReportMarketTrendsGlobalMarketFiguresMarketShareValue"	:	"Market Share (Value %)",
+		"ReportMarketTrendsGlobalMarketFiguresMarketShareVolume"	:	"Market Share (Volume %)",
+		"ReportMarketTrendsGlobalTableTitleMiscellaneous"	:	"Miscellaneous",	//Miscellaneous
+		"ReportMarketTrendsGlobalMiscellaneousLostSalesVolumeduetoOOS"	:	"Lost Sales Volume due to OOS (mln std.packs)",
+		"ReportMarketTrendsGlobalMiscellaneousNumericalDistribution"	:	"Numerical Distribution (%)",
+		"ReportMarketTrendsGlobalMiscellaneousTotalInventoryatTrade"	:	"Total Inventory at Trade (mln std.packs)",
+		"ReportMarketTrendsGlobalMiscellaneousPriceRankingIndex"	:	"Price Ranking Index",
+		"ReportMarketTrendsGlobalMiscellaneousShelfSpace"	:	"Shelf Space (%)",
+		"ReportMarketTrendsGlobalTableTitleSegmentwiseValueShare"	:	"Value Share by Segment",	//Segment-wise Value Share
+		"ReportMarketTrendsGlobalSegmentwiseValueShareValueSharePriceSensitiveSegment"	:	"Value Share (%) in 1. Price Sensitive Segment",
+		"ReportMarketTrendsGlobalSegmentwiseValueShareValueSharePretendersSegment"	:	"Value Share (%) in 2. Pretenders Segment",
+		"ReportMarketTrendsGlobalSegmentwiseValueShareValueShareModerateSegment"	:	"Value Share (%) in 3. Moderate Segment",
+		"ReportMarketTrendsGlobalSegmentwiseValueShareValueShareGoodLifeSegment"	:	"Value Share (%) in 4. Good Life Segment",
+		"ReportMarketTrendsGlobalSegmentwiseValueShareValueShareUltimateSegment"	:	"Value Share (%) in 5. Ultimate Segment",
+		"ReportMarketTrendsGlobalSegmentwiseValueShareValueSharePragmaticSegment"	:	"Value Share (%) in 6. Pragmatic Segment",
+		"ReportMarketTrendsGlobalTableTitleSegmentwiseVolumeShareSegment-wise Volume Share"	 :   "Volume Share by Segment",	//Segment-wise Volume Share
+		"ReportMarketTrendsGlobalSegmentwiseValueShareVolumeSharePriceSensitiveSegment"	:	"Volume Share (%) in 1. Price Sensitive Segment",
+		"ReportMarketTrendsGlobalSegmentwiseValueShareVolumeSharePretendersSegment"	:	"Volume Share (%) in 2. Pretenders Segment",
+		"ReportMarketTrendsGlobalSegmentwiseValueShareVolumeShareModerateSegment"	:	"Volume Share (%) in 3. Moderate Segment",
+		"ReportMarketTrendsGlobalSegmentwiseValueShareVolumeShareGoodLifeSegment"	:	"Volume Share (%) in 4. Good Life Segment",
+		"ReportMarketTrendsGlobalSegmentwiseValueShareVolumeShareUltimateSegment"	:	"Volume Share (%) in 5. Ultimate Segment",
+		"ReportMarketTrendsGlobalSegmentwiseValueShareVolumeSharePragmaticSegment"	:	"Volume Share (%) in 6. Pragmatic Segment"
 		
-		 
-		 
+		
+		//Labels for Items on Decision Page - Second Menu Bar
+		"DecisionPageSecondMenuBarLabelsCompany"		:	"Company",
+		"DecisionPageSecondMenuBarLabelsTotalAvailableBudget"		:	"Total Available Budget",
+		"DecisionPageSecondMenuBarLabelsNormalCapacity"		:	"Normal Capacity",
+		"DecisionPageSecondMenuBarLabelsOvertimeCapacity"		:	"Overtime Capacity",
+		"DecisionPageSecondMenuBarLabelsAdditionalBudget"		:	"Additional Budget",
+		"DecisionPageSecondMenuBarLabelsleftforsubmittingdecision"		:	"left for submitting decision",
+		
+		//Labels for Items on Decision Page - DecisionTab
+		"DecisionPageDecisionTabMAKEDECISIONS"		:	"MAKE DECISIONS",
+		"DecisionPageDecisionTabMission"		:	"Market Share + Profit",
+		"DecisionPageDecisionTabSalesForce"		:	"Sales Force ($ mln)",
+		"DecisionPageDecisionTabName"		:	"Name",
+		"DecisionPageDecisionTabDiscontinue"		:	"Discontinue?",
+		"DecisionPageDecisionTabProcessingTechnology"		:	"Processing Technology",
+		"DecisionPageDecisionTabIngredientsQuality"		:	"Ingredients Quality",
+		"DecisionPageDecisionTabPackagingSize"		:	"Packaging Size",
+		"DecisionPageDecisionTabPackagingSizeSmall"		:	"Small",
+		"DecisionPageDecisionTabPackagingSizeStandard"		:	"Standard",
+		"DecisionPageDecisionTabPackagingSizeLarge"		:	"Large",
+		"DecisionPageDecisionTabProductionVolume"		:	"Production Volume (mln packs)",
+		"DecisionPageDecisionTabManufacturerPrice"		:	"ManufacturerPrice ($)",
+		"DecisionPageDecisionTabRepriceFactoryStock"		:	"Reprice Factory Stock?",
+		"DecisionPageDecisionTabConsumerCommunication"		:	"Consumer Communication ($ mln)",
+		"DecisionPageDecisionTabTargetConsumerSegment"		:	"Target Consumer Segment",
+		"DecisionPageDecisionTabConsumerPromotions"		:	"Consumer Promotions ($ mln)", 
+		"DecisionPageDecisionTabConsumerPromotionsSchedule"		:	"Consumer Promotions Schedule",
+		"DecisionPageDecisionTabConsumerPromotionsScheduleweek"		:	"Week",
+		"DecisionPageDecisionTabTradeExpenses"		:	"Trade Expenses ($ mln)",
+		"DecisionPageDecisionAdditionalTradeMargin"		:	"Additional Trade Margin (%)",
+		"DecisionPageDecisionWholesaleMinimumVolume"		:	"Wholesale Minimum Volume (mln packs)",
+		"DecisionPageDecisionWholesaleBonusRate"		:	"Wholesale Bonus Rate (%)",
+		"DecisionPageDecisionNewProductDevelopmentInvestment"		:	"New Product Development Investment",
+		"DecisionPageDecisionNewProductDevelopmentInvestmentInvestmentinProductionEfficiency"		:	"Investment in Production Efficiency ($ mln)",
+		"DecisionPageDecisionNewProductDevelopmentInvestmentInvestmentinProcessingTechnology"		:	"Investment in Processing Technology ($ mln)",
+		"DecisionPageDecisionNewProductDevelopmentInvestmentName"		:	"Name",
+		"DecisionPageDecisionNewProductDevelopmentInvestmentRequiredAmount"		:	"Required Amount ($ mln)",
+		"DecisionPageDecisionNewProductDevelopmentInvestmentExtraBudgetRequiredtoIncreaseEfficiencyby25points"		:	"Extra Budget Required to Increase Efficiency by 2% / 5% points",
+		"DecisionPageDecisionNewProductDevelopmentInvestmentExtraBudgetRequiredtoIncreaseFlexibilityby25points"		:	"Extra Budget Required to Increase Flexibility by 2% / 5% points",
+		"DecisionPageDecisionNewProductDevelopmentInvestmentExtraBudgetRequiredtoIncreaseTechnologyLevelby12points"		:	"Extra Budget Required to Increase Technology Level by 1 / 2 Step(s)",
+		"DecisionPageDecisionNewProductDevelopmentInvestmentNote"		:	"Note: Investment on Efficiency could increase Flexibility at the same time",
+		
+		
+		//Labels for Items on Decision Page - Future Projections Calculator
+		"DecisionPageFutureProjectionsTableTitleDATAREFERENCE"		:	"DATA REFERENCE",
+		"DecisionPageFutureProjectionsCalculatorLabel"		:	"Future Projections Calculator",
+		"DecisionPageFutureProjectionsCalculatorTable1Period"		:	"Period",
+		"DecisionPageFutureProjectionsCalculatorTable1InPackUnits"		:	"In Pack Units",
+		"DecisionPageFutureProjectionsCalculatorTable1InStandardUnits"		:	"In Standard Units",
+		"DecisionPageFutureProjectionsCalculatorTable1StocksatFactory"		:	"Stocks at Factory (mln)",
+		"DecisionPageFutureProjectionsCalculatorTable1StocksatWholesales"		:	"Stocks at Wholesales",
+		"DecisionPageFutureProjectionsCalculatorTable1StocksatRetailers "		:	"Stocks at Retailers  (mln)",
+		"DecisionPageFutureProjectionsCalculatorTable1UnitProductionCost"		:	"Unit Production Cost($)",
+		"DecisionPageFutureProjectionsCalculatorTable1WholesalePrice "		:	"Wholesale Price ($)",
+		"DecisionPageFutureProjectionsCalculatorTable1RecommendedConsumer "		:	"Recommended Consumer",
+		"DecisionPageFutureProjectionsCalculatorTable2Period "		:	"Period",
+		"DecisionPageFutureProjectionsCalculatorTable2InPackUnits"		:	"In Pack Units",
+		"DecisionPageFutureProjectionsCalculatorTable2InStandardUnits"		:	"In Standard Units",
+		"DecisionPageFutureProjectionsCalculatorTable12MarketSales"		:	"Market Sales (mln Packs)",
+		"DecisionPageFutureProjectionsCalculatorTable2Shipmentstoretailers"		:	"Shipments to retailers (mln)",
+		"DecisionPageFutureProjectionsCalculatorTable2UnitProductionCost"		:	"Unit Production Cost ($)",
+		"DecisionPageFutureProjectionsCalculatorTable2AverageConsumerPrice"		:	"Average Consumer Price",
+		"DecisionPageFutureProjectionsCalculatorTable2ConsumerCommunication"		:	"Consumer Communication",
+		"DecisionPageFutureProjectionsCalculatorTable2ConsumerPromotions"		:	"Consumer Promotions",
+		"DecisionPageFutureProjectionsCalculatorTable3SKUExpectedSales"		:	"SKU : ExpectedSales",
+		"DecisionPageFutureProjectionsCalculatorTable3AdditionalInformation"		:	"Additional Information (SKU)",
+		"DecisionPageFutureProjectionsCalculatorTable3Expectedmaximalsales"		:	"Expected Maximal Sales ($ mln)",
+		"DecisionPageFutureProjectionsCalculatorTable3ExpectedGrossMargin"		:	"Expected Gross Margin (%)",
+		"DecisionPageFutureProjectionsCalculatorTable3ExpectedOperatingMargin"		:	"Expected Operating Margin (%)",
+		
+		
+		//Labels for Items on Decision Page - Product Portfolio
+		"DecisionPageProductPortfolioLabel"		:	"Product Portfolio",
+		"DecisionPageProductPortfolioTable1CurrentProduction"		:	"Current Production",
+		"DecisionPageProductPortfolioTable1SKUName"		:	"SKU Name",
+		"DecisionPageProductPortfolioTable1TargetSegment"		:	"Target Segment",
+		"DecisionPageProductPortfolioTable1FactoryPrice"		:	"Factory Price",
+		"DecisionPageProductPortfolioTable1IngredientsQuality"		:	"IngredientsQuality",
+		"DecisionPageProductPortfolioTable1TechnologyLevel"		:	"Technology Level",
+		"DecisionPageProductPortfolioTable1ProductionVolume"		:	"Production Volume",
+		"DecisionPageProductPortfolioTable2PreviousInventory"		:	"Previous Inventory",
+		"DecisionPageProductPortfolioTable2SKUName"		:	"SKU Name",
+		"DecisionPageProductPortfolioTable2AverageFactoryPrice"		:	"Average Factory Price",
+		"DecisionPageProductPortfolioTable2AverageIngredientPrice"		:	"Average Ingredient Price",
+		"DecisionPageProductPortfolioTable2AverageTechnologyLevel"		:	"Average Technology Level",
+		"DecisionPageProductPortfolioTable2TotalInventoryVolumeatFactory"		:	"Total Inventory Volume at Factory",
+
+		
+		//Labels for Items on Decision Page - Spending Details
+		"DecisionPageSpendingDetailsLabel"		:	"Spending Details",
+		"DecisionPageSpendingDetailsTable1BrandName"		:	"Brand Name",
+		"DecisionPageSpendingDetailsTable1Total"		:	"Total",
+		"DecisionPageSpendingDetailsTable1SalesForce"		:	"Sales Force ($ mln)",
+		"DecisionPageSpendingDetailsTable1ConsumerCommunication"		:	"Consumer Communication ($ mln)",
+		"DecisionPageSpendingDetailsTable1ConsumerPromotions"		:	"Consumer Promotions ($ mln)",
+		"DecisionPageSpendingDetailsTable1TradeExpenses"		:	"Trade Expenses ($ mln)",
+		"DecisionPageSpendingDetailsTable1EstimatedAdditionalTradeMarginCost"		:	"Estimated Additional Trade Margin Cost ($ mln)",
+		"DecisionPageSpendingDetailsTable1EstimatedWholesaleBonusCost"		:	"Estimated Wholesale Bonus Cost ($ mln)",
+		"DecisionPageSpendingDetailsTable2Company"		:	"Company",
+		"DecisionPageSpendingDetailsTable2Total"		:	"Total",
+		"DecisionPageSpendingDetailsTable2InvestmentinProductionEfficiency"		:	"Investment in Production Efficiency ($ mln)",
+		"DecisionPageSpendingDetailsTable2InvestmentinProcessingTechnology"		:	"Investment in Processing Technology ($ mln)",
+		"DecisionPageSpendingDetailsTable2TotalInvestment"		:	"Total Investment ($ mln)",
+		"DecisionPageSpendingDetailsTable2AverageBudgetperPeriod"		:	"Average Budget per Period ($ mln)",
+		"DecisionPageSpendingDetailsTable2TotalInvestmentBudget"		:	"Total Investment Budget ($ mln)",
+		"DecisionPageSpendingDetailsTable2CumulatedPreviousInvestments"		:	"Cumulated Previous Investments ($ mln)",
+		"DecisionPageSpendingDetailsTable2AvailableBudget"		:	"Available Budget ($ mln)",
+		"DecisionPageSpendingDetailsTable2NormalCapacity"		:	"Normal Capacity (mln Packs)",
+		"DecisionPageSpendingDetailsTable2AvailableOvertimeCapacityExtenstion"		:	"Available Overtime Capacity Extenstion (mln Packs)",
+		"DecisionPageSpendingDetailsTable2Acquired Efficiency"		:	"Acquired Efficiency (%)",
+		"DecisionPageSpendingDetailsTable2AcquiredProductionVolumeFlexibility"		:	"Acquired Production Volume Flexibility (%)",
+		"DecisionPageSpendingDetailsTable2AcquiredTechnologyLevel"		:	"Acquired Technology Level"
+		
     });
 
     // Adding a translation table for the Russian language
     $translateProvider.translations('zh_CN', {
+	
+	
+		//Labels for Items on Home page - Top Menu Bar
+		"HomePageMenuBarLabelsHome"		:	"首页",
+		"HomePageMenuBarLabelsHome"		:	"Reports",
+		"HomePageMenuBarLabelsHome"		:	"Decision",
+		"HomePageMenuBarLabelsHome"		:	"Score",
+		"HomePageMenuBarLabelsHome"		:	"Language",
+		"HomePageMenuBarLabelsHome"		:	"Help",
+		"HomePageMenuBarLabelsHome"		:	"About MarkSimos",
+		"HomePageMenuBarLabelsHome"		:	"Log Out",
+		
+		//Labels for Items on Home page - Second Menu Bar
+		"HomePageSecondMenuBarLabelsCompany"		:	"Company",
+		"HomePageSecondMenuBarLabelsPriceSensitive"		:	"1 Price Sensitive",
+		"HomePageSecondMenuBarLabelsPretenders"		:	"2 Pretenders",
+		"HomePageSecondMenuBarLabelsModerate"		:	"3 Moderate",
+		"HomePageSecondMenuBarLabelsGoodLife"		:	"4 Good Life",
+		"HomePageSecondMenuBarLabelsUltimate"		:	"5 Ultimate",
+		"HomePageSecondMenuBarLabelsPragmatic"		:	"6 Pragmatic",
+		"HomePageSecondMenuBarLabelsCompanies"		:	"Companies",
+		"HomePageSecondMenuBarLabelsleftforsubmittingdecision"		:	"left for submitting decision",
+		"HomePageSecondMenuBarLabelsMission"		:	"Mission: Market Share + Profit",
+		"HomePageSecondMenuBarLabelsMakeDecision"		:	"Make Decision",
+		"HomePageSecondMenuBarCurrentPeriod"		:	"CurrentPeriod",
+		
+		//Labels for Items on Home page - Three Boxes
+		"HomePageYourCompanyTableLabel"		:	"Your Company",
+		"HomePageYourCompanyCompanyStatus"		:	"Company Status",
+		"HomePageYourCompanyFinancialReport"		:	"Financial Report",
+		"HomePageYourCompanyInventoryReport"		:	"Inventory Report",
+		"HomePageYourCompanyProfitabilityEvolution"		:	"Profitability Evolution",
+		"HomePageYourCompetitorTableLabel"		:	"Your Competitor",
+		"HomePageYourCompetitorCompetitorIntelligence"		:	"Competitor Intelligence",
+		"HomePageYourCompetitorInvestmentsandProfits"		:	"Investments and Profits",
+		"HomePageYourCompetitorMarketSalesandInventory"		:	"Market Sales and Inventory",
+		"HomePageMarketLandscapeTableLabel"		:	"Market Landscape",
+		"HomePageMarketLandscapeSegmentLeaderTop5"		:	"Segment Leader Top 5",
+		"HomePageMarketLandscapePerceptionMap"		:	"Perception Map",
+		"HomePageMarketLandscapeSegmentDistributions"		:	"Segment Distributions",
+		"HomePageMarketLandscapeMarketEvolution"		:	"Market Evolution",
+		"HomePageMarketLandscapeMarketTrends"		:	"Market Trends",
+		"HomePageMarketLandscapeMarketIndicators"		:	"Market Indicators",
+	
+		
+		//Labels for Items on Reports page - reports menu
+		"ReportYourCompany"		:	"Your Company",
         "ReportMenuCompanyStatus"     : "公司基本信息",
         "ReportMenuFinancialReport"    :  "财务报告",
         "ReportMenuInventoryReport"    :  "库存报告",
         "ReportMenuProfitabilityEvolution"    :  "盈利变化",
+		"ReportYourCompetitors"		:	"Your Competitors",
         "ReportMenuMarketShare"    :  "市场份额",
         "ReportMenuCompetitorIntelligence"    :  "竞争对手情报",
         "ReportMenuInvestmentProfits"    :  "投资与利润",
         "ReportMenuMarketSalesInventory"    :  "销售与库存状况",
+		"ReportMarketLandscape"		:	"Market Landscape",
         "ReportMenuSegmentLeaderTop5"    :  "细分市场领导者",
         "ReportMenuPerceptionMap"    :  "感知图",
         "ReportMenuSegmentDistributions"    :  "细分市场数据",
         "ReportMenuMarketEvolution"    :  "市场演变趋势",
         "ReportMenuMarketTrends"    :  "市场趋势",
         "ReportMenuMarketIndicator"    :  "宏观市场参数"
+		
+
+
+		//Labels for Company Status Report - SKU Level
+		"ReportCompanyStatusSKUMarketShareValue"	:	"市场份额 (销售额 %)",
+		"ReportCompanyStatusSKUMarketShareVolume"	:	"市场份额 (销量 %)",
+		"ReportCompanyStatusSKUMarketSalesVolume"	:	"市场销量 (百万标准包)",
+		"ReportCompanyStatusSKULostSalesVolumeduetoOOS"	:	"因缺货损失的销售量 (百万标准包)",
+		"ReportCompanyStatusSKUNumericalDistribution"	:	"数值分销率 (%)",
+		"ReportCompanyStatusSKUVolumeweightedDistribution"	:	"加权分销率 (%)",
+		"ReportCompanyStatusSKUShelfSpace"	:	"货架空间 (%)",
+		"ReportCompanyStatusSKUAwareness"	:	"知名度 (%)",
+		"ReportCompanyStatusSKUAverageNetMarketPrice"	:	"平均净市场价 ($/标准包)",
+		"ReportCompanyStatusSKUAverageDisplayPrice"	:	"平均陈列价格 ($/标准包)",
+		"ReportCompanyStatusSKUPriceRankingIndex"	:	"价格排序指数",
+		"ReportCompanyStatusSKUTargetConsumerSegment"	:	"目标细分市场",
+		"ReportCompanyStatusSKUTargetConsumerSegmentExpectedValuePerception"	:	"目标细分市场 预计 价值感知",
+		"ReportCompanyStatusSKUValuePerception"	:	"价值感知"
+		"ReportCompanyStatusSKUTargetConsumerSegmentExpectedImagePerception"	:	"目标细分市场 预计 形象感知",
+		"ReportCompanyStatusSKUImagePerception"	:	"形象感知",
+		"ReportCompanyStatusSKUIngredientsQualityIndex"	:	"成分质量指数",
+		"ReportCompanyStatusSKUAppliedTechnologyIndex"	:	"应用的技术指数",
+		"ReportCompanyStatusSKUMarketSalesValue"	:	"市场销售额 ($ mln)",
+		"ReportCompanyStatusSKUConsumerPricePromotions"	:	"消费者价格促销 ($ mln)",
+		"ReportCompanyStatusSKUMarketNetSalesValue"	:	"市场净销售额  ($ mln)",
+		"ReportCompanyStatusSKULostSalesVolumeduetoOOS"	:	"因缺货损失的销售量 (百万包)",
+		"ReportCompanyStatusSKUNumberofOut-of-stockEpisodes"	:	"缺货周数",
+		"ReportCompanyStatusSKUMarketSalesVolume"	:	"市场销售量 (百万包)",
+		"ReportCompanyStatusSKURetailersPurchasesVolume"	:	"零售商购买量 (百万包)",
+		"ReportCompanyStatusSKUShipmentstoWholesalers"	:	"经销商购买量 (百万包)",
+		"ReportCompanyStatusSKUProductionVolume"	:	"产量 (百万包)",
+		"ReportCompanyStatusSKUInventoryVolumeAtManufacturer"	:	"厂商持有的库存量 (百万包)",
+		"ReportCompanyStatusSKUInventoryVolumeAtWholesalers"	:	"经销商持有的库存量 (百万包)",
+		"ReportCompanyStatusSKUInventoryVolumeAtRetailers"	:	"零售商持有的库存量 (百万包)",
+		"ReportCompanyStatusSKUStocksCoverAtRetailers"	:	"零售商的库存维持期 (周)",
+		"ReportCompanyStatusSKUStocksCoverAtWholesalers"	:	"经销商的库存维持期 (周)",
+		
+		
+		//Labels for Company Status Report - Brand Level
+		"ReportCompanyStatusBrandMarketShare"	:	"市场份额 (销售额 %)",
+		"ReportCompanyStatusBrandMarketShare"	:	"市场份额 (销量 %)",
+		"ReportCompanyStatusBrandMarketSalesVolume"	:	"市场销量 (百万标准包)",		
+		"ReportCompanyStatusBrandLostSalesVolumeduetoOOS"	:	"因缺货损失的销售量 (百万标准包)",
+		"ReportCompanyStatusBrandNumericalDistribution"	:	"数值分销率 (%)",
+		"ReportCompanyStatusBrandVolume-weightedDistribution"	:	"加权分销率 (%)",
+		"ReportCompanyStatusBrandShelfSpace"	:	"货架空间 (%)",
+		"ReportCompanyStatusBrandAwareness"	:	"知名度 (%)",
+		"ReportCompanyStatusBrandAverageNetMarketPrice"	:	"平均净市场价 ($/标准包)",
+		"ReportCompanyStatusBrandAverageDisplayPrice"	:	"平均陈列价格 ($/标准包)",
+		"ReportCompanyStatusBrandPriceRankingIndex"	:	"价格排序指数",
+		"ReportCompanyStatusBrandValuePerception"	:	"价值感知",
+		"ReportCompanyStatusBrandImagePerception"	:	"形象感知",
+		"ReportCompanyStatusBrandIngredientsQualityIndex"	:	"成分质量指数",
+		"ReportCompanyStatusBrandAppliedTechnologyIndex"	:	"应用的技术指数",
+		"ReportCompanyStatusBrandMarketSalesValue"	:	"市场销售额 ($ mln)",
+		"ReportCompanyStatusBrandConsumerPricePromotions"	:	"消费者价格促销 ($ mln)",
+		"ReportCompanyStatusBrandMarketNetSalesValue"	:	"市场净销售额  ($ mln)",
+		"ReportCompanyStatusBrandLostSalesVolumeduetoOOS"	:	"因缺货损失的销售量 (百万包)",
+		"ReportCompanyStatusBrandumberofOut-of-stockEpisodes"	:	"缺货周数",
+		"ReportCompanyStatusBrandMarketSalesVolume"	:	"市场销售量 (百万包)",
+		"ReportCompanyStatusBrandRetailersPurchasesVolume"	:	"零售商购买量 (百万包)",
+		"ReportCompanyStatusBrandShipmentstoWholesalers"	:	"经销商购买量 (百万包)",
+		"ReportCompanyStatusBrandProductionVolume"	:	"产量 (百万包)",
+		"ReportCompanyStatusBrandInventoryVolumeAtManufacturer"	:	"厂商持有的库存量 (百万包)",
+		"ReportCompanyStatusBrandInventoryVolumeAtWholesalers"	:	"经销商持有的库存量 (百万包)",
+		"ReportCompanyStatusBrandInventoryVolumeAtRetailers"	:	"零售商持有的库存量 (百万包)",
+		"ReportCompanyStatusBrandStocksCoverAtRetailers"	:	"零售商的库存维持期 (周)",
+		"ReportCompanyStatusBrandStocksCoverAtWholesalers"	:	"经销商的库存维持期 (周)",
+		
+		
+		//Labels for Company Status Report - Global Level
+		"ReportCompanyStatusGlobalMarketShare"	:	"市场份额 (销售额 %)",
+		"ReportCompanyStatusGlobalMarketShare"	:	"市场份额 (销量 %)",
+		"ReportCompanyStatusGlobalMarketSalesVolume"	:	"市场销量 (百万标准包)",
+		"ReportCompanyStatusGlobalLostSalesVolumeduetoOOS"	:	"因缺货损失的销售量 (百万标准包)",
+		"ReportCompanyStatusGlobalNumericalDistribution"	:	"数值分销率 (%)",
+		"ReportCompanyStatusGlobalVolume-weightedDistribution"	:	"加权分销率 (%)",
+		"ReportCompanyStatusGlobalShelfSpace"	:	"货架空间 (%)",
+		"ReportCompanyStatusGlobalMindSpaceShare"	:	"思维空间份额（%）",
+		"ReportCompanyStatusGlobalAverageNetMarketPrice"	:	"平均净市场价 ($/标准包)",
+		"ReportCompanyStatusGlobalAverageDisplayPrice"	:	"平均陈列价格 ($/标准包)",
+		"ReportCompanyStatusGlobalIngredientsQualityIndex"	:	"成分质量指数",
+		"ReportCompanyStatusGlobalAppliedTechnologyIndex"	:	"应用的技术指数",
+		"ReportCompanyStatusGlobalMarketSalesValue"	:	"市场销售额 ($ mln)",
+		"ReportCompanyStatusGlobalConsumerPricePromotions"	:	"消费者价格促销 ($ mln)",
+		"ReportCompanyStatusGlobalMarketNetSalesValue"	:	"市场净销售额  ($ mln)",
+		"ReportCompanyStatusGlobalLostSalesVolumeduetoOOS"	:	"因缺货损失的销售量 (百万包)",
+		"ReportCompanyStatusGlobalumberofOut-of-stockEpisodes"	:	"缺货周数",
+		"ReportCompanyStatusGlobalMarketSalesVolume"	:	"市场销售量 (百万包)",
+		"ReportCompanyStatusGlobalRetailersPurchasesVolume"	:	"零售商购买量 (百万包)",
+		"ReportCompanyStatusGlobalShipmentstoWholesalers"	:	"经销商购买量 (百万包)",
+		"ReportCompanyStatusGlobalProductionVolume"	:	"产量 (百万包)",
+		"ReportCompanyStatusGlobalInventoryVolumeAtManufacturer"	:	"厂商持有的库存量 (百万包)",
+		"ReportCompanyStatusGlobalInventoryVolumeAtWholesalers"	:	"经销商持有的库存量 (百万包)",
+		"ReportCompanyStatusGlobalInventoryVolumeAtRetailers"	:	"零售商持有的库存量 (百万包)",
+		"ReportCompanyStatusGlobalStocksCoverAtRetailers"	:	"零售商的库存维持期 (周)",
+		"ReportCompanyStatusGlobalStocksCoverAtWholesalers"	:	"经销商的库存维持期 (周)",
+		
+		
+		
+		//Labels for Financial Report - Brand Level
+		"ReportFinancialReportBrandSales Value"	:	"销售额 ($ mln)",
+		"ReportFinancialReportBrandChangeVersusPreviousperiod"	:	"(%) 相对于上阶段的改变",
+		"ReportFinancialReportBrandShareInBrandTotalSalesValue"	:	"占该品牌总销售额的份额 (%)",
+		"ReportFinancialReportBrandCostofGoodsSold"	:	"售出商品成本 ($ mln)",
+		"ReportFinancialReportBrandObsoleteGoodsCost"	:	"处理商品成本 ($ mln)",
+		"ReportFinancialReportBrandDiscontinuedGoodsCost"	:	"停产商品成本 ($ mln)",
+		"ReportFinancialReportBrandInventoryHoldingCost"	:	"库存持有成本 ($ mln)",
+		"ReportFinancialReportBrandTotalMaterialCost"	:	"总材料成本 ($ mln)",
+		"ReportFinancialReportBrandGrossProfit"	:	"毛利额 ($ mln)",
+		"ReportFinancialReportBrandChangeVersusPreviousperiod"	:	"(%) 相对于上阶段的改变",
+		"ReportFinancialReportBrandGrossProfitMargin"	:	"毛利率 (%)",
+		"ReportFinancialReportBrandShareInBrandGrossProfitLosses"	:	"占该品牌 毛利/负毛利 的份额 (%)",
+		"ReportFinancialReportBrandAdvertising"	:	"广告费用 ($ mln)",
+		"ReportFinancialReportBrandConsumerPromotionCost"	:	"促销成本 ($ mln)",
+		"ReportFinancialReportBrandTradeInvestment"	:	"零售终端费用 ($ mln)",
+		"ReportFinancialReportBrandSalesForceCost"	:	"销售团队成本 ($ mln)",
+		"ReportFinancialReportBrandAdditionalTradeMarginCost"	:	"额外零售终端返利 ($ mln)",
+		"ReportFinancialReportBrandVolumeDiscountCost"	:	"经销商进货折扣成本 ($ mln)",
+		"ReportFinancialReportBrandTotalTradeandMarketingExpenses"	:	"总的通路和营销费用 ($ mln)",
+		"ReportFinancialReportBrandTradeandMarketingExpensesasaofSales"	:	"通路和营销费用占销售额的百分比",
+		"ReportFinancialReportBrandShareofTradeandMarketingExpensesinBrandTotal"	:	"占该品牌通路和营销总额的份额 (%)",
+		"ReportFinancialReportBrandGeneralExpenses"	:	"一般性开支 ($ mln)",
+		"ReportFinancialReportBrandAmortisation"	:	"摊销费用 ($ mln)",
+		"ReportFinancialReportBrandOperatingProfit"	:	"运营利润 ($ mln)",
+		"ReportFinancialReportBrandChangeVersusPreviousperiod"	:	"(%) 相对于上阶段的改变",
+		"ReportFinancialReportBrandOperatingProfitMargin"	:	"运营利润率 (%)",
+		"ReportFinancialReportBrandShareinBrandOperatingProfitLoss"	:	"占该品牌 运营利润/运营亏损 的份额 (%)",
+		"ReportFinancialReportBrandInterests"	:	"利息 ($ mln)",
+		"ReportFinancialReportBrandTaxes"	:	"税 ($ mln)",
+		"ReportFinancialReportBrandExceptionalCostProfit"	:	"额外开支/利润  ($ mln)",
+		"ReportFinancialReportBrandNetProfit"	:	"净利润 ($ mln)",
+		"ReportFinancialReportBrandChangeVersusPreviousperiod"	:	"(%) 相对于上阶段的改变",
+		"ReportFinancialReportBrandNetProfitMargin"	:	"净利率 (%)",
+		"ReportFinancialReportBrandShareinBrandNetProfitLoss"	:	"占该品牌 净利润/净亏损 的份额 (%)",
+		"ReportFinancialReportBrandProductionCost"	:	"生产成本 ($ mln)",
+		"ReportFinancialReportBrandInventoryValue"	:	"库存价值 ($ mln)",
+
+
+		//Labels for Financial Report - All Brands
+		"ReportFinancialReportAllBrandSales Value"	:	"销售额 ($ mln)",
+		"ReportFinancialReportAllBrandChangeVersusPreviousperiod"	:	"(%) 相对于上阶段的改变",
+		"ReportFinancialReportAllBrandShareInCompanyTotalSalesValue"	:	"占公司总销售额的份额 (%)",
+		"ReportFinancialReportAllBrandCostofGoodsSold"	:	"售出商品成本 ($ mln)",
+		"ReportFinancialReportAllBrandObsoleteGoodsCost"	:	"处理商品成本 ($ mln)",
+		"ReportFinancialReportAllBrandDiscontinuedGoodsCost"	:	"停产商品成本 ($ mln)",
+		"ReportFinancialReportAllBrandInventoryHoldingCost"	:	"库存持有成本 ($ mln)",
+		"ReportFinancialReportAllBrandTotalMaterialCost"	:	"总材料成本 ($ mln)",
+		"ReportFinancialReportAllBrandGrossProfit"	:	"毛利额 ($ mln)",
+		"ReportFinancialReportAllBrandChangeVersusPreviousperiod"	:	"(%) 相对于上阶段的改变",
+		"ReportFinancialReportAllBrandGrossProfitMargin"	:	"毛利率 (%)",
+		"ReportFinancialReportAllBrandShareInCompanyGrossProfitLosses"	:	"占公司 总毛利/总负毛利 的份额 (%)",
+		"ReportFinancialReportAllBrandAdvertising"	:	"广告费用 ($ mln)",
+		"ReportFinancialReportAllBrandConsumerPromotionCost"	:	"促销成本 ($ mln)",
+		"ReportFinancialReportAllBrandTradeInvestment"	:	"零售终端费用 ($ mln)",
+		"ReportFinancialReportAllBrandSalesForceCost"	:	"销售团队成本 ($ mln)",
+		"ReportFinancialReportAllBrandAdditionalTradeMarginCost"	:	"额外零售终端返利 ($ mln)",
+		"ReportFinancialReportAllBrandVolumeDiscountCost"	:	"经销商进货折扣成本 ($ mln)",
+		"ReportFinancialReportAllBrandTotalTradeandMarketingExpenses"	:	"总的通路和营销费用 ($ mln)",
+		"ReportFinancialReportAllBrandTradeandMarketingExpensesasaofSales"	:	"通路和营销费用占销售额的百分比",
+		"ReportFinancialReportAllBrandShareofTradeandMarketingExpensesinBrandTotal"	:	"占公司通路和营销总费用的份额 (%)",
+		"ReportFinancialReportAllBrandGeneralExpenses"	:	"一般性开支 ($ mln)",
+		"ReportFinancialReportAllBrandAmortisation"	:	"摊销费用 ($ mln)",
+		"ReportFinancialReportAllBrandOperatingProfit"	:	"运营利润 ($ mln)",
+		"ReportFinancialReportAllBrandChangeVersusPreviousperiod"	:	"(%) 相对于上阶段的改变",
+		"ReportFinancialReportAllBrandOperatingProfitMargin"	:	"运营利润率 (%)",
+		"ReportFinancialReportAllBrandShareinBrandOperatingProfitLoss"	:	"占公司 总运营利润/总运营亏损 的份额 (%)",
+		"ReportFinancialReportAllBrandInterests"	:	"利息 ($ mln)",
+		"ReportFinancialReportAllBrandTaxes"	:	"税 ($ mln)",
+		"ReportFinancialReportAllBrandExceptionalCostProfit"	:	"额外开支/利润  ($ mln)",
+		"ReportFinancialReportAllBrandNetProfit"	:	"净利润 ($ mln)",
+		"ReportFinancialReportAllBrandChangeVersusPreviousperiod"	:	"(%) 相对于上阶段的改变",
+		"ReportFinancialReportAllBrandNetProfitMargin"	:	"净利率 (%)",
+		"ReportFinancialReportAllBrandShareinBrandNetProfitLoss"	:	"占公司 净利润/净亏损 的份额 (%)",
+		"ReportFinancialReportAllBrandProductionCost"	:	"生产成本 ($ mln)",
+		"ReportFinancialReportAllBrandInventoryValue"	:	"库存价值 ($ mln)",
+		
+		
+		//Labels for Inventory Report
+		"ReportInventoryReportLabelClosetoexpireInventory"	:	"将要过期的库存",
+		"ReportInventoryReportLabelPreviousInventory"	:	"以前的库存",
+		"ReportInventoryReportLabelFreshInventory"	:	"新库存",
+		"ReportInventoryReportTableLabel"	:	"总库存 (百万标准包) = 工厂库存＋渠道以及零售商库存",
+		
+
+		//Labels for Profitability Evolution - SKU Level
+		"ReportProfitabilityEvolutionSKUManufacturerSalesValue"	:	"厂商销售额 ($ mln)",
+		"ReportProfitabilityEvolutionSKUCostofGoodsSold"	:	"售出商品成本 ($ mln)",
+		"ReportProfitabilityEvolutionSKUInventoryHolding"	:	"库存持有成本 ($ mln)",
+		"ReportProfitabilityEvolutionSKUObsoleteGoods"	:	"处理商品成本 ($ mln)",
+		"ReportProfitabilityEvolutionSKUDiscontinuedGoodsCost"	:	"停产商品成本 ($ mln)",
+		"ReportProfitabilityEvolutionSKUGross Profit"	:	"毛利额 ($ mln)",
+		"ReportProfitabilityEvolutionSKUAdvertising"	:	"广告费用 ($ mln)",
+		"ReportProfitabilityEvolutionSKUConsumerPromotionsCost"	:	"促销成本 ($ mln)",
+		"ReportProfitabilityEvolutionSKUTradeInvestment"	:	"零售终端费用 ($ mln)",
+		"ReportProfitabilityEvolutionSKUSalesForceCost"	:	"销售团队成本 ($ mln)",
+		"ReportProfitabilityEvolutionSKUVolumeDiscountCost"	:	"经销商进货折扣成本 ($ mln)",
+		"ReportProfitabilityEvolutionSKUAdditionalTradeMarginCost"	:	"额外零售终端返利 ($ mln)",
+		"ReportProfitabilityEvolutionSKUTotalTradeandMarketingExpenses"	:	"总的通路和营销费用 ($ mln)",
+		"ReportProfitabilityEvolutionSKUGeneralExpenses"	:	"一般性开支 ($ mln)",
+		"ReportProfitabilityEvolutionSKUAmortisation"	:	"摊销费用 ($ mln)",
+		"ReportProfitabilityEvolutionSKUOperatingProfit"	:	"运营利润 ($ mln)",
+		"ReportProfitabilityEvolutionSKUInterests"	:	"利息 ($ mln)",
+		"ReportProfitabilityEvolutionSKUExceptionalCostProfit"	:	"额外开支/利润  ($ mln)",
+		"ReportProfitabilityEvolutionSKUTaxes"	:	"税 ($ mln)",
+		"ReportProfitabilityEvolutionSKUNetProfit"	:	"净利润 ($ mln)",
+		"ReportProfitabilityEvolutionSKUSurchargeforsupplementaryInvestmentBudget"	:	"追加投资预算产生的额外费用 ($ mln)",
+		"ReportProfitabilityEvolutionSKUNetResult"	:	"净利额 ($ mln)",
+		"ReportProfitabilityEvolutionSKUShareInBrandTotalSalesValue"	:	"占该品牌总销售额的份额 (%)",
+		"ReportProfitabilityEvolutionSKUShareInBrandGrossProfitLosses"	:	"占该品牌 毛利/负毛利 的份额 (%)",
+		"ReportProfitabilityEvolutionSKUShareofTradeandMarketingExpensesInBrandTotal"	:	"占公司通路和营销总费用的份额 (%)",
+		"ReportProfitabilityEvolutionSKUShareInBrandOperatingProfitLosses"	:	"占该品牌 运营利润/运营亏损 的份额 (%)",
+		"ReportProfitabilityEvolutionSKUShareInBrandNetProfitLosses"	:	"占该品牌 净利润/净亏损 的份额 (%)",
+		"ReportProfitabilityEvolutionSKUGrossProfitMargin"	:	"毛利率 (%)",
+		"ReportProfitabilityEvolutionSKUTradeandMarketingExpensesasaofSales"	:	"通路和营销费用占销售额的百分比",
+		"ReportProfitabilityEvolutionSKUGeneralExpensesasaofSales"	:	"一般费用占销售额的百分比",
+		"ReportProfitabilityEvolutionSKUOperatingProfitMargin"	:	"运营利润率 (%)",
+		"ReportProfitabilityEvolutionSKUNetProfitMargin"	:	"净利率 (%)",
+		"ReportProfitabilityEvolutionSKUReturnonInvestment"	:	"投资回报率 (%)",
+		"ReportProfitabilityEvolutionSKUAverageNetMarketPrice"	:	"平均净市场价 ($/包)",
+		"ReportProfitabilityEvolutionSKUAverageWholesalesPrice"	:	"平均批发价 ($/包)",
+		"ReportProfitabilityEvolutionSKUAverageManufacturerPrice"	:	"平均出厂价 ($/包)",
+		"ReportProfitabilityEvolutionSKUAverageProductionCost"	:	"平均生产成本 ($/包)",
+		"ReportProfitabilityEvolutionSKUMarketSalesValue"	:	"市场销售额 ($ mln)",
+		"ReportProfitabilityEvolutionSKUConsumerPricePromotions"	:	"消费者价格促销 ($ mln)",
+		"ReportProfitabilityEvolutionSKUMarketNetSalesValue"	:	"市场净销售额  ($ mln)",
+		"ReportProfitabilityEvolutionSKUAdditionalRetailersMargin"	:	"给零售商的额外折扣 (%)",
+		"ReportProfitabilityEvolutionSKUWholesalersBonusRate"	:	"经销商进货折扣率 (%)",
+		"ReportProfitabilityEvolutionSKUMinimalPurchaseQualifyingforBonus"	:	"享受进货折扣的最低订货量 (百万标准包)",
+		"ReportProfitabilityEvolutionSKUProductionCost"	:	"生产成本 ($ mln)",
+		"ReportProfitabilityEvolutionSKUInventoryValue"	:	"库存价值 ($ mln)",
+		
+		
+//Labels for Profitability Evolution - Brand Level
+		"ReportProfitabilityEvolutionBrandManufacturerSalesValue"	:	"厂商销售额 ($ mln)",
+		"ReportProfitabilityEvolutionBrandCostofGoodsSold"	:	"售出商品成本 ($ mln)",
+		"ReportProfitabilityEvolutionBrandInventoryHolding"	:	"库存持有成本 ($ mln)",
+		"ReportProfitabilityEvolutionBrandObsoleteGoods"	:	"处理商品成本 ($ mln)",
+		"ReportProfitabilityEvolutionBrandDiscontinuedGoodsCost"	:	"停产商品成本 ($ mln)",
+		"ReportProfitabilityEvolutionBrandGross Profit"	:	"毛利额 ($ mln)",
+		"ReportProfitabilityEvolutionBrandAdvertising"	:	"广告费用 ($ mln)",
+		"ReportProfitabilityEvolutionBrandConsumerPromotionsCost"	:	"促销成本 ($ mln)",
+		"ReportProfitabilityEvolutionBrandTradeInvestment"	:	"零售终端费用 ($ mln)",
+		"ReportProfitabilityEvolutionBrandSalesForceCost"	:	"销售团队成本 ($ mln)",
+		"ReportProfitabilityEvolutionBrandVolumeDiscountCost"	:	"经销商进货折扣成本 ($ mln)",
+		"ReportProfitabilityEvolutionBrandAdditionalTradeMarginCost"	:	"额外零售终端返利 ($ mln)",
+		"ReportProfitabilityEvolutionBrandTotalTradeandMarketingExpenses"	:	"总的通路和营销费用 ($ mln)",
+		"ReportProfitabilityEvolutionBrandGeneralExpenses"	:	"一般性开支 ($ mln)",
+		"ReportProfitabilityEvolutionBrandAmortisation"	:	"摊销费用 ($ mln)",
+		"ReportProfitabilityEvolutionBrandOperatingProfit"	:	"运营利润 ($ mln)",
+		"ReportProfitabilityEvolutionBrandInterests"	:	"利息 ($ mln)",
+		"ReportProfitabilityEvolutionBrandExceptionalCost/Profit"	:	"额外开支/利润  ($ mln)",
+		"ReportProfitabilityEvolutionBrandTaxes"	:	"税 ($ mln)",
+		"ReportProfitabilityEvolutionBrandNetProfit"	:	"净利润 ($ mln)",
+		"ReportProfitabilityEvolutionBrandSurchargeforsupplementaryInvestmentBudget"	:	"追加投资预算产生的额外费用 ($ mln)",
+		"ReportProfitabilityEvolutionBrandNetResult"	:	"净利额 ($ mln)",
+		"ReportProfitabilityEvolutionBrandShareInCompanyTotalSalesValue"	:	"占公司总销售额的份额 (%)",
+		"ReportProfitabilityEvolutionBrandShareInCompanyGrossProfitLosses"	:	"占公司 毛利/负毛利 的份额 (%)",
+		"ReportProfitabilityEvolutionBrandShareofTradeandMarketingExpensesInCompanyTotal"	:	"占公司通路和营销总费用的份额 (%)",
+		"ReportProfitabilityEvolutionBrandShareInCompanyOperatingProfitLosses"	:	"占公司 总运营利润/总运营亏损 的份额 (%)",
+		"ReportProfitabilityEvolutionBrandShareInCompanyNetProfitLosses"	:	"占公司 净利润/净亏损 的份额 (%)",
+		"ReportProfitabilityEvolutionBrandGrossProfitMargin"	:	"毛利率 (%)",
+		"ReportProfitabilityEvolutionBrandTradeandMarketingExpensesasaofSales"	:	"通路和营销费用占销售额的百分比",
+		"ReportProfitabilityEvolutionBrandGeneralExpensesasaofSales"	:	"一般费用占销售额的百分比",
+		"ReportProfitabilityEvolutionBrandOperatingProfitMargin"	:	"运营利润率 (%)",
+		"ReportProfitabilityEvolutionBrandNetProfitMargin"	:	"净利率 (%)",
+		"ReportProfitabilityEvolutionBrandReturnonInvestment"	:	"投资回报率 (%)",
+		"ReportProfitabilityEvolutionBrandAverageNetMarketPrice"	:	"平均净市场价 ($/包)",
+		"ReportProfitabilityEvolutionBrandAverageWholesalesPrice"	:	"平均批发价 ($/包)",
+		"ReportProfitabilityEvolutionBrandAverageManufacturerPrice"	:	"平均出厂价 ($/包)",
+		"ReportProfitabilityEvolutionBrandAverageProductionCost"	:	"平均生产成本 ($/包)",
+		"ReportProfitabilityEvolutionBrandMarketSalesValue"	:	"市场销售额 ($ mln)",
+		"ReportProfitabilityEvolutionBrandConsumerPricePromotions"	:	"消费者价格促销 ($ mln)",
+		"ReportProfitabilityEvolutionBrandMarketNetSalesValue"	:	"市场净销售额  ($ mln)",
+		"ReportProfitabilityEvolutionBrandAdditionalRetailersMargin"	:	"给零售商的额外折扣 (%)",
+		"ReportProfitabilityEvolutionBrandWholesalersBonusRate"	:	"经销商进货折扣率 (%)",
+		"ReportProfitabilityEvolutionBrandMinimalPurchaseQualifyingforBonus"	:	"享受进货折扣的最低订货量 (百万标准包)",
+		"ReportProfitabilityEvolutionBrandProductionCost"	:	"生产成本 ($ mln)",
+		"ReportProfitabilityEvolutionBrandInventoryValue"	:	"库存价值 ($ mln)",
+		
+		
+		//Labels for Profitability Evolution - Global Level
+		"ReportProfitabilityEvolutionGlobalManufacturerSalesValue"	:	"厂商销售额 ($ mln)",
+		"ReportProfitabilityEvolutionGlobalCostofGoodsSold"	:	"售出商品成本 ($ mln)",
+		"ReportProfitabilityEvolutionGlobalInventoryHolding"	:	"库存持有成本 ($ mln)",
+		"ReportProfitabilityEvolutionGlobalObsoleteGoods"	:	"处理商品成本 ($ mln)",
+		"ReportProfitabilityEvolutionGlobalDiscontinuedGoodsCost"	:	"停产商品成本 ($ mln)",
+		"ReportProfitabilityEvolutionGlobalGross Profit"	:	"毛利额 ($ mln)",
+		"ReportProfitabilityEvolutionGlobalAdvertising"	:	"广告费用 ($ mln)",
+		"ReportProfitabilityEvolutionGlobalConsumerPromotionsCost"	:	"促销成本 ($ mln)",
+		"ReportProfitabilityEvolutionGlobalTradeInvestment"	:	"零售终端费用 ($ mln)",
+		"ReportProfitabilityEvolutionGlobalSalesForceCost"	:	"销售团队成本 ($ mln)",
+		"ReportProfitabilityEvolutionGlobalVolumeDiscountCost"	:	"经销商进货折扣成本 ($ mln)",
+		"ReportProfitabilityEvolutionGlobalAdditionalTradeMarginCost"	:	"额外零售终端返利 ($ mln)",
+		"ReportProfitabilityEvolutionGlobalTotalTradeandMarketingExpenses"	:	"总的通路和营销费用 ($ mln)",
+		"ReportProfitabilityEvolutionGlobalOverhead"	:	"管理费用 ($ mln)",
+		"ReportProfitabilityEvolutionGlobalInvestmenttoImproveTechnologyLevel"	:	"技术水平投资 ($ mln)",
+		"ReportProfitabilityEvolutionGlobalInvestmenttoIncreaseProductionEfficiency"	:	"生产效率投资 ($ mln)",
+		"ReportProfitabilityEvolutionGlobalProductionCapacityDisposalCost"	:	"产能处置成本 ($ mln)",
+		"ReportProfitabilityEvolutionGlobalOvertimeShiftsCost"	:	"加班成本 ($ mln)",
+		"ReportProfitabilityEvolutionGlobalTotalGeneralExpenses"	:	"一般性费用总额  ($ mln)",
+		"ReportProfitabilityEvolutionGlobalAmortisation"	:	"摊销费用 ($ mln)",
+		"ReportProfitabilityEvolutionGlobalOperatingProfit"	:	"运营利润 ($ mln)",
+		"ReportProfitabilityEvolutionGlobalInterests"	:	"利息 ($ mln)",
+		"ReportProfitabilityEvolutionGlobalExceptionalCostProfit"	:	"额外开支/利润  ($ mln)",
+		"ReportProfitabilityEvolutionGlobalTaxes"	:	"税 ($ mln)",
+		"ReportProfitabilityEvolutionGlobalNetProfit"	:	"净利润 ($ mln)",
+		"ReportProfitabilityEvolutionGlobalSurchargeforsupplementaryInvestmentBudget"	:	"追加投资预算产生的额外费用 ($ mln)",
+		"ReportProfitabilityEvolutionGlobalNetResult"	:	"净利额 ($ mln)",
+		"ReportProfitabilityEvolutionGlobalGrossProfitMargin"	:	"毛利率 (%)",
+		"ReportProfitabilityEvolutionGlobalTradeandMarketingExpensesasa ofSales"	:	"通路和营销费用占销售额的百分比",
+		"ReportProfitabilityEvolutionGlobalGeneralExpensesasaofSales"	:	"一般费用占销售额的百分比",
+		"ReportProfitabilityEvolutionGlobalOperatingProfitMargin"	:	"运营利润率 (%)",
+		"ReportProfitabilityEvolutionGlobalNetProfitMargin"	:	"净利率 (%)",
+		"ReportProfitabilityEvolutionGlobalReturnonInvestment"	:	"投资回报率 (%)",
+		"ReportProfitabilityEvolutionGlobalAverageNetMarketPrice"	:	"平均净市场价 ($/包)",
+		"ReportProfitabilityEvolutionGlobalAverageWholesalesPrice"	:	"平均批发价 ($/包)",
+		"ReportProfitabilityEvolutionGlobalAverageManufacturerPrice"	:	"平均出厂价 ($/包)",
+		"ReportProfitabilityEvolutionGlobalAverageProductionCost"	:	"平均生产成本 ($/包)",
+		"ReportProfitabilityEvolutionGlobalMarketSalesValue"	:	"市场销售额 ($ mln)",
+		"ReportProfitabilityEvolutionGlobalConsumerPricePromotions"	:	"消费者价格促销 ($ mln)",
+		"ReportProfitabilityEvolutionGlobalMarketNetSalesValue"	:	"市场净销售额  ($ mln)",
+		"ReportProfitabilityEvolutionGlobalProductionCost"	:	"生产成本 ($ mln)",
+		"ReportProfitabilityEvolutionGlobalInventoryValue"	:	"库存价值 ($ mln)",
+		"ReportProfitabilityEvolutionGlobalCapacityUtilisationRate"	:	"产能利用率 (%)",
+		"ReportProfitabilityEvolutionGlobalChangeInProductionCapacity"	:	"产能变化 (百万标准包)",
+		"ReportProfitabilityEvolutionGlobalNextPeriodAvailableProd.Capacity"	:	"下一阶段产能 (百万标准包)",
+		"ReportProfitabilityEvolutionGlobalAvailableTechnologyLevel"	:	"最高技术水平",
+		"ReportProfitabilityEvolutionGlobalExtraBudgetRequiredtoIncreaseTechnologyLevelby1Step"	:	"每提高一个级别的技术水平，预计所需的额外预算",
+		"ReportProfitabilityEvolutionGlobalExtraBudgetRequiredtoIncreaseTechnologyLevelby2Steps"	:	"每提高两个级别的技术水平，预计所需的额外预算 ",
+		"ReportProfitabilityEvolutionGlobalAcquiredProductionandLogisticsEfficiency"	:	"当前拥有的生产效率 (%)",
+		"ReportProfitabilityEvolutionGlobalExtraBudgetRequiredtoIncreaseEfficiencyby2points"	:	"提高2%生产灵活性，预计所需的额外预算 ",
+		"ReportProfitabilityEvolutionGlobalExtraBudgetRequiredtoIncreaseEfficiencyby5points"	:	"提高5%生产灵活性，预计所需的额外预算",
+		"ReportProfitabilityEvolutionGlobalAcquiredProductionPlanningFlexibility"	:	"当前拥有的生产灵活度 (%)",
+		"ReportProfitabilityEvolutionGlobalExtraBudgetRequiredtoIncreaseFlexibilityby2points"	:	"提高2%生产灵活性，预计所需的额外预算",
+		"ReportProfitabilityEvolutionGlobalExtraBudgetRequiredtoIncreaseFlexibilityby5points"	:	"提高5%生产灵活性，预计所需的额外预算",
+
+
+		//Labels for Market Share
+		"ReportMarketShareChartTitleMarketShareinValue"	:	"市场份额 （按销售额计%)",
+		"ReportMarketShareChartTitleMarketShareinVolume"	:	"市场份额 （按销量计%)",
+		"ReportMarketShareChartTitleMindSpaceShare"	:	"思维空间份额（%）",
+		"ReportMarketShareChartTitleShelfSpaceShare"	:	"货架空间份额（%）",
+
+		
+		//Labels for Competitor Intelligence
+		"ReportCompetitorIntelligenceTableTitleTechnology"	:	"技术"		
+		"ReportCompetitorIntelligenceTechnologyAcquiredProductionandLogisticsEfficiency"	:	"当前拥有的生产效率 (%)",
+		"ReportCompetitorIntelligenceTechnologyAcquiredProductionPlanningFlexibility"	:	"当前拥有的生产灵活度 (%)",
+		"ReportCompetitorIntelligenceTechnologyAvailableTechnologyLevel"	:	"最高技术水平",
+		"ReportCompetitorIntelligenceTableTitleMarketing&Sales"	:	"市场营销和销售",
+		"ReportCompetitorIntelligenceMarketing&SalesAdditionalTradeMarginCost"	:	"额外零售终端返利 ($ mln)",
+		"ReportCompetitorIntelligenceMarketing&SalesAdvertising"	:	"广告费用 ($ mln)",
+		"ReportCompetitorIntelligenceMarketing&SalesConsumerPromotionsCost"	:	"促销成本 ($ mln)",
+		"ReportCompetitorIntelligenceMarketing&SalesRetailerPurchaseVolume"	:	"零售商购买量 (百万标准包)",
+		"ReportCompetitorIntelligenceMarketing&SalesSalesForceCost"	:	"销售团队成本 ($ mln)",
+		"ReportCompetitorIntelligenceMarketing&SalesShipmenttoWholesalers"	:	"经销商购买量 (百万标准包)",
+		"ReportCompetitorIntelligenceMarketing&SalesTradeInvestments"	:	"零售终端费用 ($ mln)",
+		"ReportCompetitorIntelligenceMarketing&SalesVolumeDiscountCost"	:	"经销商进货折扣成本 ($ mln)",
+		"ReportCompetitorIntelligenceTableTitleOperations"	:	"操作",
+		"ReportCompetitorIntelligenceOperationsCapacityUtilisationRate"	:	"产能利用率 (%)",
+		"ReportCompetitorIntelligenceOperationsInventoryVolumeatManufacturer"	:	"厂商持有的库存量 (百万标准包)",
+		"ReportCompetitorIntelligenceOperationsInventoryVolumeatRetailers"	:	"零售商持有的库存量 (百万标准包)",
+		"ReportCompetitorIntelligenceOperationsInventoryVolumeatWholesalers"	:	"经销商持有的库存量 (百万标准包)",
+		"ReportCompetitorIntelligenceOperationsNextPeriodAvailableProd.Capacity"	:	"下一阶段产能 (百万标准包)",
+		"ReportCompetitorIntelligenceOperationsProductionVolume"	:	"产量 (百万标准包)",
+		"ReportCompetitorIntelligenceTableTitleOperations"	:	"投资",
+		"ReportCompetitorIntelligenceInvestmentsInvestmenttoImproveTechnologyLevel"	:	"技术水平投资 ($ mln)",
+		"ReportCompetitorIntelligenceInvestmentsInvestmenttoIncreaseProductionEfficiency"	:	"生产效率投资 ($ mln)",
+		 
+		//Labels for Investments and Profits
+		"ReportInvestmentsandProfitsChartTitleTotalInvestment"	:	"预计的当期投资总额 ($ mln)",		 
+		"ReportInvestmentsandProfitsChartTitleNetProfitByCompanies"	:	"公司净利额  ($ mln)",
+		"ReportInvestmentsandProfitsChartTitleReturnonInvestment"	:	"投资回报率（%)",
+		"ReportInvestmentsandProfitsChartTitleInvestmentversusBudget"	:	"投资占预算比例(%)",
+		 
+		 
+		//Labels for Market Sales and Inventory
+		"ReportMarketSalesandInventoryChartTitleMarketSalesValue"	:	"市场销售额 ($ mln)", 
+		"ReportMarketSalesandInventoryChartTitleMarketSalesVolume"	:	"市场销售量 (百万标准包)",
+		"ReportMarketSalesandInventoryChartTitleTotalInventoryatFactory"	:	"工厂中的库存量 (百万标准包)",
+		"ReportMarketSalesandInventoryChartTitleTotalInventoryatTrade"	:	"渠道中的库存量 (百万标准包)",
+		 
+
+		//Labels for Segment Leader Top 5
+		"ReportSegmentLeaderTop5ChartTitlePriceSensitive"	:	"1. 价格敏感型 (%)", 
+		"ReportSegmentLeaderTop5ChartTitlePretenders"	:	"2. 虚荣型 (%)",
+		"ReportSegmentLeaderTop5ChartTitleModerate"	:	"3. 适中型 (%)",
+		"ReportSegmentLeaderTop5ChartTitleGoodLife"	:	"4. 享受生活型 (%)",
+		"ReportSegmentLeaderTop5ChartTitleUltimate"	:	"5. 追求极致型 (%)",
+		"ReportSegmentLeaderTop5ChartTitlePragmatic"	:	"6. 实用型 (%)",
+		
+		//Labels for Perception Map
+		"ReportPerceptionMapAxisTitleValuePerception"	:	"价值感知",
+		"ReportPerceptionMapAxisTitleImagePerception"	:	"形象感知",
+		"ReportPerceptionMapLabelCompanyA"	:	"公司 A",
+		"ReportPerceptionMapLabelCompanyB"	:	"公司 B",
+		"ReportPerceptionMapLabelCompanyC"	:	"公司 C",
+		"ReportPerceptionMapLabelCompanyD"	:	"公司 D",
+		"ReportPerceptionMapLabelCompanyE"	:	"公司 E",
+		"ReportPerceptionMapLabelCompanyF"	:	"公司 F",
+		 
+		 
+		//Labels for Segment Distributions
+		"ReportSegmentDistributionsTableTitleMarketShareValue"	:	"市场份额 (销售额 %)",
+		"ReportSegmentDistributionsTableTitleMarketShareVolume"	:	"市场份额 (销量 %)",
+		"ReportSegmentDistributionsTableTitleMarketSalesValue"	:	"市场销售额 ($ mln)",	 
+		"ReportSegmentDistributionsTableTitleMarketSalesVolume"	:	"市场销售量 (百万标准包)",
+		"ReportSegmentDistributionsTableTitleAverageNetMarketPrice"	:	"平均净市场价 ($/标准包)",
+		"ReportSegmentDistributionsTableTitleValuePerception"	:	"价值感知",
+		"ReportSegmentDistributionsTableTitleImagePerception"	:	"形象感知",
+
+		 
+		//Labels for Market Evolution
+		"ReportMarketEvolutionChartTitleGrowthRateInVolume"	:	"基于销量的增长率(阶段-3 = 100)",
+		"ReportMarketEvolutionChartTitleGrowthRateInValue"	:	"基于销售额的增长率(阶段-3 = 100)",
+		"ReportMarketEvolutionChartTitleNetMarketPrice"	:	"净市场价(阶段-3 = 100)",
+		"ReportMarketEvolutionChartTitleSegmentValueShareInTotalMarket"	:	"细分市场占总市场的销售份额（%）",
+		 
+		 
+		//Labels for Market Trends - SKU Level
+		"ReportMarketTrendsSKUTableTitleMarketFigures"	:	"市场数据",	//Market Figures
+		"ReportMarketTrendsSKUMarketFiguresAverageDisplayPrice"	:	"平均陈列价格 ($/标准包)",
+		"ReportMarketTrendsSKUMarketFiguresAverageNetMarketPrice"	:	"平均净市场价 ($/标准包)",
+		"ReportMarketTrendsSKUMarketFiguresBrandAwareness"	:	"品牌知名度 (%)",
+		"ReportMarketTrendsSKUMarketFiguresImagePerception"	:	"形象感知",
+		"ReportMarketTrendsSKUMarketFiguresMarketNetSalesValue"	:	"市场净销售额  ($ mln)",
+		"ReportMarketTrendsSKUMarketFiguresMarketNetSalesVolume"	:	"市场销量  (百万标准包)",
+		"ReportMarketTrendsSKUMarketFiguresMarketShareValue"	:	"市场份额 (销售额 %)",
+		"ReportMarketTrendsSKUMarketFiguresMarketShareVolume"	:	"市场份额 (销量 %)",
+		"ReportMarketTrendsSKUTableTitleMiscellaneous"	:	"其他",	//Miscellaneous
+		"ReportMarketTrendsSKUMiscellaneousLostSalesVolumeduetoOOS"	:	"因缺货损失的销售量 (百万标准包)",
+		"ReportMarketTrendsSKUMiscellaneousNumericalDistribution"	:	"数值分销率 (%)",
+		"ReportMarketTrendsSKUMiscellaneousTotalInventoryatTrade"	:	"渠道中的库存量 (百万标准包)",
+		"ReportMarketTrendsSKUMiscellaneousPriceRankingIndex"	:	"价格排序指数",
+		"ReportMarketTrendsSKUMiscellaneousShelfSpace"	:	"货架空间 (%)",
+		"ReportMarketTrendsSKUTableTitleSegmentwiseValueShare"	:	"占细分市场销售额的(%)",	//Value Share by Segment
+		"ReportMarketTrendsSKUSegmentwiseValueShareValueSharePriceSensitiveSegment"	:	"占细分市场销售额的(%) 1. 价格敏感型 市场",
+		"ReportMarketTrendsSKUSegmentwiseValueShareValueSharePretendersSegment"	:	"占细分市场销售额的 (%) 2. 虚荣型 市场",
+		"ReportMarketTrendsSKUSegmentwiseValueShareValueShareModerateSegment"	:	"占细分市场销售额的(%) 3. 适中型 市场",
+		"ReportMarketTrendsSKUSegmentwiseValueShareValueShareGoodLifeSegment"	:	"占细分市场销售额的 (%) 4. 享受生活型 市场",
+		"ReportMarketTrendsSKUSegmentwiseValueShareValueShareUltimateSegment"	:	"占细分市场销售额的 (%) 5. 追求极致型 市场",
+		"ReportMarketTrendsSKUSegmentwiseValueShareValueSharePragmaticSegment"	:	"占细分市场销售额的 (%) 6. 实用型 市场",
+		"ReportMarketTrendsSKUTableTitleSegmentwiseVolumeShareSegment-wise Volume Share"	："占细分市场销量的(%)",	//Segment-wise Volume Share
+		"ReportMarketTrendsSKUSegmentwiseValueShareVolumeSharePriceSensitiveSegment"	:	"占细分市场销量的 (%) 1. 价格敏感型 市场",
+		"ReportMarketTrendsSKUSegmentwiseValueShareVolumeSharePretendersSegment"	:	"占细分市场销量的(%) 2. 虚荣型 市场",
+		"ReportMarketTrendsSKUSegmentwiseValueShareVolumeShareModerateSegment"	:	"占细分市场销量的 (%) 3. 适中型 市场",
+		"ReportMarketTrendsSKUSegmentwiseValueShareVolumeShareGoodLifeSegment"	:	"占细分市场销量的(%) 4. 享受生活型 市场",
+		"ReportMarketTrendsSKUSegmentwiseValueShareVolumeShareUltimateSegment"	:	"占细分市场销量的 (%) 5. 追求极致型 市场",
+		"ReportMarketTrendsSKUSegmentwiseValueShareVolumeSharePragmaticSegment"	:	"占细分市场销量的(%) 6. 实用型 市场",
+		
+		
+		
+		//Labels for Market Trends - Brand Level
+		"ReportMarketTrendsBrandTableTitleMarketFigures"	:	"市场数据",	//Market Figures
+		"ReportMarketTrendsBrandMarketFiguresAverageDisplayPrice"	:	"平均陈列价格 ($/标准包)",
+		"ReportMarketTrendsBrandMarketFiguresAverageNetMarketPrice"	:	"平均净市场价 ($/标准包)",
+		"ReportMarketTrendsBrandMarketFiguresBrandAwareness"	:	"品牌知名度 (%)",
+		"ReportMarketTrendsBrandMarketFiguresImagePerception"	:	"形象感知",
+		"ReportMarketTrendsBrandMarketFiguresMarketNetSalesValue"	:	"市场净销售额  ($ mln)",
+		"ReportMarketTrendsBrandMarketFiguresMarketNetSalesVolume"	:	"市场销量  (百万标准包)",
+		"ReportMarketTrendsBrandMarketFiguresMarketShareValue"	:	"市场份额 (销售额 %)",
+		"ReportMarketTrendsBrandMarketFiguresMarketShareVolume"	:	"市场份额 (销量 %)",
+		"ReportMarketTrendsBrandTableTitleMiscellaneous"	:	"其他",	//Miscellaneous
+		"ReportMarketTrendsBrandMiscellaneousLostSalesVolumeduetoOOS"	:	"因缺货损失的销售量 (百万标准包)",
+		"ReportMarketTrendsBrandMiscellaneousNumericalDistribution"	:	"数值分销率 (%)",
+		"ReportMarketTrendsBrandMiscellaneousTotalInventoryatTrade"	:	"渠道中的库存量 (百万标准包)",
+		"ReportMarketTrendsBrandMiscellaneousPriceRankingIndex"	:	"价格排序指数",
+		"ReportMarketTrendsBrandMiscellaneousShelfSpace"	:	"货架空间 (%)",
+		"ReportMarketTrendsBrandTableTitleSegmentwiseValueShare"	:	"占细分市场销售额的(%)",	//Value Share by Segment
+		"ReportMarketTrendsBrandSegmentwiseValueShareValueSharePriceSensitiveSegment"	:	"占细分市场销售额的(%) 1. 价格敏感型 市场",
+		"ReportMarketTrendsBrandSegmentwiseValueShareValueSharePretendersSegment"	:	"占细分市场销售额的 (%) 2. 虚荣型 市场",
+		"ReportMarketTrendsBrandSegmentwiseValueShareValueShareModerateSegment"	:	"占细分市场销售额的(%) 3. 适中型 市场",
+		"ReportMarketTrendsBrandSegmentwiseValueShareValueShareGoodLifeSegment"	:	"占细分市场销售额的 (%) 4. 享受生活型 市场",
+		"ReportMarketTrendsBrandSegmentwiseValueShareValueShareUltimateSegment"	:	"占细分市场销售额的 (%) 5. 追求极致型 市场",
+		"ReportMarketTrendsBrandSegmentwiseValueShareValueSharePragmaticSegment"	:	"占细分市场销售额的 (%) 6. 实用型 市场",
+		"ReportMarketTrendsBrandTableTitleSegmentwiseVolumeShareSegment-wise Volume Share"	："占细分市场销量的(%)",	//Segment-wise Volume Share
+		"ReportMarketTrendsBrandSegmentwiseValueShareVolumeSharePriceSensitiveSegment"	:	"占细分市场销量的 (%) 1. 价格敏感型 市场",
+		"ReportMarketTrendsBrandSegmentwiseValueShareVolumeSharePretendersSegment"	:	"占细分市场销量的(%) 2. 虚荣型 市场",
+		"ReportMarketTrendsBrandSegmentwiseValueShareVolumeShareModerateSegment"	:	"占细分市场销量的 (%) 3. 适中型 市场",
+		"ReportMarketTrendsBrandSegmentwiseValueShareVolumeShareGoodLifeSegment"	:	"占细分市场销量的(%) 4. 享受生活型 市场",
+		"ReportMarketTrendsBrandSegmentwiseValueShareVolumeShareUltimateSegment"	:	"占细分市场销量的 (%) 5. 追求极致型 市场",
+		"ReportMarketTrendsBrandSegmentwiseValueShareVolumeSharePragmaticSegment"	:	"占细分市场销量的(%) 6. 实用型 市场",
+		
+		
+		//Labels for Market Trends - Global Level
+		"ReportMarketTrendsGlobalTableTitleMarketFigures"	:	"市场数据",	//Market Figures
+		"ReportMarketTrendsGlobalMarketFiguresAverageNetMarketPrice"	:	"平均净市场价 ($/标准包)",
+		"ReportMarketTrendsGlobalMarketFiguresMarketNetSalesValue"	:	"市场净销售额  ($ mln)",
+		"ReportMarketTrendsGlobalMarketFiguresMarketNetSalesVolume"	:	"市场销量  (百万标准包)",
+		"ReportMarketTrendsGlobalMarketFiguresMarketShareValue"	:	"市场份额 (销售额 %)",
+		"ReportMarketTrendsGlobalMarketFiguresMarketShareVolume"	:	"市场份额 (销量 %)",
+		"ReportMarketTrendsGlobalTableTitleMiscellaneous"	:	"其他",		//Miscellaneous
+		"ReportMarketTrendsGlobalMiscellaneousLostSalesVolumeduetoOOS"	:	"因缺货损失的销售量 (百万标准包)",
+		"ReportMarketTrendsGlobalMiscellaneousNumericalDistribution"	:	"数值分销率 (%)",
+		"ReportMarketTrendsGlobalMiscellaneousTotalInventoryatTrade"	:	"渠道中的库存量 (百万标准包)",
+		"ReportMarketTrendsGlobalMiscellaneousPriceRankingIndex"	:	"价格排序指数",
+		"ReportMarketTrendsGlobalMiscellaneousShelfSpace"	:	"货架空间 (%)",
+		"ReportMarketTrendsGlobalTableTitleSegmentwiseValueShare"	:	"占细分市场销售额的(%)",		//Value Share by Segment
+		"ReportMarketTrendsGlobalSegmentwiseValueShareValueSharePriceSensitiveSegment"	:	"占细分市场销售额的(%) 1. 价格敏感型 市场",
+		"ReportMarketTrendsGlobalSegmentwiseValueShareValueSharePretendersSegment"	:	"占细分市场销售额的 (%) 2. 虚荣型 市场",
+		"ReportMarketTrendsGlobalSegmentwiseValueShareValueShareModerateSegment"	:	"占细分市场销售额的(%) 3. 适中型 市场",
+		"ReportMarketTrendsGlobalSegmentwiseValueShareValueShareGoodLifeSegment"	:	"占细分市场销售额的 (%) 4. 享受生活型 市场",
+		"ReportMarketTrendsGlobalSegmentwiseValueShareValueShareUltimateSegment"	:	"占细分市场销售额的 (%) 5. 追求极致型 市场",
+		"ReportMarketTrendsGlobalSegmentwiseValueShareValueSharePragmaticSegment"	:	"占细分市场销售额的 (%) 6. 实用型 市场",
+		"ReportMarketTrendsGlobalTableTitleSegmentwiseVolumeShareSegment-wise Volume Share"		："占细分市场销量的(%)",	//Segment-wise Volume Share
+		"ReportMarketTrendsGlobalSegmentwiseValueShareVolumeSharePriceSensitiveSegment"	:	"占细分市场销量的 (%) 1. 价格敏感型 市场",
+		"ReportMarketTrendsGlobalSegmentwiseValueShareVolumeSharePretendersSegment"	:	"占细分市场销量的(%) 2. 虚荣型 市场",
+		"ReportMarketTrendsGlobalSegmentwiseValueShareVolumeShareModerateSegment"	:	"占细分市场销量的 (%) 3. 适中型 市场",
+		"ReportMarketTrendsGlobalSegmentwiseValueShareVolumeShareGoodLifeSegment"	:	"占细分市场销量的(%) 4. 享受生活型 市场",
+		"ReportMarketTrendsGlobalSegmentwiseValueShareVolumeShareUltimateSegment"	:	"占细分市场销量的 (%) 5. 追求极致型 市场",
+		"ReportMarketTrendsGlobalSegmentwiseValueShareVolumeSharePragmaticSegment"	:	"占细分市场销量的(%) 6. 实用型 市场"
+		
+		
+
+//Labels for Items on Decision Page - Second Menu Bar
+		"DecisionPageSecondMenuBarLabelsCompany"		:	"Company",
+		"DecisionPageSecondMenuBarLabelsTotalAvailableBudget"		:	"Total Available Budget",
+		"DecisionPageSecondMenuBarLabelsNormalCapacity"		:	"Normal Capacity",
+		"DecisionPageSecondMenuBarLabelsOvertimeCapacity"		:	"Overtime Capacity",
+		"DecisionPageSecondMenuBarLabelsAdditionalBudget"		:	"Additional Budget",
+		"DecisionPageSecondMenuBarLabelsleftforsubmittingdecision"		:	"left for submitting decision",
+		
+		//Labels for Items on Decision Page - DecisionTab
+		"DecisionPageDecisionTabMAKEDECISIONS"		:	"MAKE DECISIONS",
+		"DecisionPageDecisionTabMission"		:	"Market Share + Profit",
+		"DecisionPageDecisionTabSalesForce"		:	"Sales Force ($ mln)",
+		"DecisionPageDecisionTabName"		:	"Name",
+		"DecisionPageDecisionTabDiscontinue"		:	"Discontinue?",
+		"DecisionPageDecisionTabProcessingTechnology"		:	"Processing Technology",
+		"DecisionPageDecisionTabIngredientsQuality"		:	"Ingredients Quality",
+		"DecisionPageDecisionTabPackagingSize"		:	"Packaging Size",
+		"DecisionPageDecisionTabPackagingSizeSmall"		:	"Small",
+		"DecisionPageDecisionTabPackagingSizeStandard"		:	"Standard",
+		"DecisionPageDecisionTabPackagingSizeLarge"		:	"Large",
+		"DecisionPageDecisionTabProductionVolume"		:	"Production Volume (mln packs)",
+		"DecisionPageDecisionTabManufacturerPrice"		:	"ManufacturerPrice ($)",
+		"DecisionPageDecisionTabRepriceFactoryStock"		:	"Reprice Factory Stock?",
+		"DecisionPageDecisionTabConsumerCommunication"		:	"Consumer Communication ($ mln)",
+		"DecisionPageDecisionTabTargetConsumerSegment"		:	"Target Consumer Segment",
+		"DecisionPageDecisionTabConsumerPromotions"		:	"Consumer Promotions ($ mln)", 
+		"DecisionPageDecisionTabConsumerPromotionsSchedule"		:	"Consumer Promotions Schedule",
+		"DecisionPageDecisionTabConsumerPromotionsScheduleweek"		:	"Week",
+		"DecisionPageDecisionTabTradeExpenses"		:	"Trade Expenses ($ mln)",
+		"DecisionPageDecisionAdditionalTradeMargin"		:	"Additional Trade Margin (%)",
+		"DecisionPageDecisionWholesaleMinimumVolume"		:	"Wholesale Minimum Volume (mln packs)",
+		"DecisionPageDecisionWholesaleBonusRate"		:	"Wholesale Bonus Rate (%)",
+		"DecisionPageDecisionNewProductDevelopmentInvestment"		:	"New Product Development Investment",
+		"DecisionPageDecisionNewProductDevelopmentInvestmentInvestmentinProductionEfficiency"		:	"Investment in Production Efficiency ($ mln)",
+		"DecisionPageDecisionNewProductDevelopmentInvestmentInvestmentinProcessingTechnology"		:	"Investment in Processing Technology ($ mln)",
+		"DecisionPageDecisionNewProductDevelopmentInvestmentName"		:	"Name",
+		"DecisionPageDecisionNewProductDevelopmentInvestmentRequiredAmount"		:	"Required Amount ($ mln)",
+		"DecisionPageDecisionNewProductDevelopmentInvestmentExtraBudgetRequiredtoIncreaseEfficiencyby25points"		:	"Extra Budget Required to Increase Efficiency by 2% / 5% points",
+		"DecisionPageDecisionNewProductDevelopmentInvestmentExtraBudgetRequiredtoIncreaseFlexibilityby25points"		:	"Extra Budget Required to Increase Flexibility by 2% / 5% points",
+		"DecisionPageDecisionNewProductDevelopmentInvestmentExtraBudgetRequiredtoIncreaseTechnologyLevelby12points"		:	"Extra Budget Required to Increase Technology Level by 1 / 2 Step(s)",
+		"DecisionPageDecisionNewProductDevelopmentInvestmentNote"		:	"Note: Investment on Efficiency could increase Flexibility at the same time",
+		
+		
+		//Labels for Items on Decision Page - Future Projections Calculator
+		"DecisionPageFutureProjectionsTableTitleDATAREFERENCE"		:	"DATA REFERENCE",
+		"DecisionPageFutureProjectionsCalculatorLabel"		:	"Future Projections Calculator",
+		"DecisionPageFutureProjectionsCalculatorTable1Period"		:	"Period",
+		"DecisionPageFutureProjectionsCalculatorTable1InPackUnits"		:	"In Pack Units",
+		"DecisionPageFutureProjectionsCalculatorTable1InStandardUnits"		:	"In Standard Units",
+		"DecisionPageFutureProjectionsCalculatorTable1StocksatFactory"		:	"Stocks at Factory (mln)",
+		"DecisionPageFutureProjectionsCalculatorTable1StocksatWholesales"		:	"Stocks at Wholesales",
+		"DecisionPageFutureProjectionsCalculatorTable1StocksatRetailers "		:	"Stocks at Retailers  (mln)",
+		"DecisionPageFutureProjectionsCalculatorTable1UnitProductionCost"		:	"Unit Production Cost($)",
+		"DecisionPageFutureProjectionsCalculatorTable1WholesalePrice "		:	"Wholesale Price ($)",
+		"DecisionPageFutureProjectionsCalculatorTable1RecommendedConsumer "		:	"Recommended Consumer",
+		"DecisionPageFutureProjectionsCalculatorTable2Period "		:	"Period",
+		"DecisionPageFutureProjectionsCalculatorTable2InPackUnits"		:	"In Pack Units",
+		"DecisionPageFutureProjectionsCalculatorTable2InStandardUnits"		:	"In Standard Units",
+		"DecisionPageFutureProjectionsCalculatorTable12MarketSales"		:	"Market Sales (mln Packs)",
+		"DecisionPageFutureProjectionsCalculatorTable2Shipmentstoretailers"		:	"Shipments to retailers (mln)",
+		"DecisionPageFutureProjectionsCalculatorTable2UnitProductionCost"		:	"Unit Production Cost ($)",
+		"DecisionPageFutureProjectionsCalculatorTable2AverageConsumerPrice"		:	"Average Consumer Price",
+		"DecisionPageFutureProjectionsCalculatorTable2ConsumerCommunication"		:	"Consumer Communication",
+		"DecisionPageFutureProjectionsCalculatorTable2ConsumerPromotions"		:	"Consumer Promotions",
+		"DecisionPageFutureProjectionsCalculatorTable3SKUExpectedSales"		:	"SKU : ExpectedSales",
+		"DecisionPageFutureProjectionsCalculatorTable3AdditionalInformation"		:	"Additional Information (SKU)",
+		"DecisionPageFutureProjectionsCalculatorTable3Expectedmaximalsales"		:	"Expected Maximal Sales ($ mln)",
+		"DecisionPageFutureProjectionsCalculatorTable3ExpectedGrossMargin"		:	"Expected Gross Margin (%)",
+		"DecisionPageFutureProjectionsCalculatorTable3ExpectedOperatingMargin"		:	"Expected Operating Margin (%)",
+		
+		
+		//Labels for Items on Decision Page - Product Portfolio
+		"DecisionPageProductPortfolioLabel"		:	"Product Portfolio",
+		"DecisionPageProductPortfolioTable1CurrentProduction"		:	"Current Production",
+		"DecisionPageProductPortfolioTable1SKUName"		:	"SKU Name",
+		"DecisionPageProductPortfolioTable1TargetSegment"		:	"Target Segment",
+		"DecisionPageProductPortfolioTable1FactoryPrice"		:	"Factory Price",
+		"DecisionPageProductPortfolioTable1IngredientsQuality"		:	"IngredientsQuality",
+		"DecisionPageProductPortfolioTable1TechnologyLevel"		:	"Technology Level",
+		"DecisionPageProductPortfolioTable1ProductionVolume"		:	"Production Volume",
+		"DecisionPageProductPortfolioTable2PreviousInventory"		:	"Previous Inventory",
+		"DecisionPageProductPortfolioTable2SKUName"		:	"SKU Name",
+		"DecisionPageProductPortfolioTable2AverageFactoryPrice"		:	"Average Factory Price",
+		"DecisionPageProductPortfolioTable2AverageIngredientPrice"		:	"Average Ingredient Price",
+		"DecisionPageProductPortfolioTable2AverageTechnologyLevel"		:	"Average Technology Level",
+		"DecisionPageProductPortfolioTable2TotalInventoryVolumeatFactory"		:	"Total Inventory Volume at Factory",
+
+		
+		//Labels for Items on Decision Page - Spending Details
+		"DecisionPageSpendingDetailsLabel"		:	"Spending Details",
+		"DecisionPageSpendingDetailsTable1BrandName"		:	"Brand Name",
+		"DecisionPageSpendingDetailsTable1Total"		:	"Total",
+		"DecisionPageSpendingDetailsTable1SalesForce"		:	"Sales Force ($ mln)",
+		"DecisionPageSpendingDetailsTable1ConsumerCommunication"		:	"Consumer Communication ($ mln)",
+		"DecisionPageSpendingDetailsTable1ConsumerPromotions"		:	"Consumer Promotions ($ mln)",
+		"DecisionPageSpendingDetailsTable1TradeExpenses"		:	"Trade Expenses ($ mln)",
+		"DecisionPageSpendingDetailsTable1EstimatedAdditionalTradeMarginCost"		:	"Estimated Additional Trade Margin Cost ($ mln)",
+		"DecisionPageSpendingDetailsTable1EstimatedWholesaleBonusCost"		:	"Estimated Wholesale Bonus Cost ($ mln)",
+		"DecisionPageSpendingDetailsTable2Company"		:	"Company",
+		"DecisionPageSpendingDetailsTable2Total"		:	"Total",
+		"DecisionPageSpendingDetailsTable2InvestmentinProductionEfficiency"		:	"Investment in Production Efficiency ($ mln)",
+		"DecisionPageSpendingDetailsTable2InvestmentinProcessingTechnology"		:	"Investment in Processing Technology ($ mln)",
+		"DecisionPageSpendingDetailsTable2TotalInvestment"		:	"Total Investment ($ mln)",
+		"DecisionPageSpendingDetailsTable2AverageBudgetperPeriod"		:	"Average Budget per Period ($ mln)",
+		"DecisionPageSpendingDetailsTable2TotalInvestmentBudget"		:	"Total Investment Budget ($ mln)",
+		"DecisionPageSpendingDetailsTable2CumulatedPreviousInvestments"		:	"Cumulated Previous Investments ($ mln)",
+		"DecisionPageSpendingDetailsTable2AvailableBudget"		:	"Available Budget ($ mln)",
+		"DecisionPageSpendingDetailsTable2NormalCapacity"		:	"Normal Capacity (mln Packs)",
+		"DecisionPageSpendingDetailsTable2AvailableOvertimeCapacityExtenstion"		:	"Available Overtime Capacity Extenstion (mln Packs)",
+		"DecisionPageSpendingDetailsTable2Acquired Efficiency"		:	"Acquired Efficiency (%)",
+		"DecisionPageSpendingDetailsTable2AcquiredProductionVolumeFlexibility"		:	"Acquired Production Volume Flexibility (%)",
+		"DecisionPageSpendingDetailsTable2AcquiredTechnologyLevel"		:	"Acquired Technology Level"
+		
+		
+		
     });
 
     // Tell the module what language to use by default
