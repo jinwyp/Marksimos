@@ -291,9 +291,10 @@ function reportForBrand(onePeriodResult, companyId){
 
 function reportForCompanyTotal(onePeriodResult, companyId){
     console.log(companyId)
+    var report = {};
     onePeriodResult.p_Companies.forEach(function(companyResult){
         if(companyId === companyResult.c_CompanyID){
-            return {
+            report = {
                 brandName: 'Company Total',
                 salesValue: companyResult.c_FactorySalesValue,
                 changeVersusPreviousPeriodSalesValue: companyResult.c_FactorySalesValueChange * 100,
@@ -342,6 +343,7 @@ function reportForCompanyTotal(onePeriodResult, companyId){
             };
         }
     })
+    return report;
 }
 
 
