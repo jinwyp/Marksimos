@@ -51,6 +51,15 @@ gulp.task('nodemon', function () {
     });
 //        .on('restart', 'default')
 });
+gulp.task('nodemonjin', function () {
+    nodemon({
+        script: 'app.js',
+        env: { 'NODE_ENV': 'jin' }
+    });
+//        .on('restart', 'default')
+});
+
+
 
 
 // Rerun the task when a file changes
@@ -67,14 +76,24 @@ gulp.task('watch', function() {
     });
 });
 
-// 自动运行测试
+
+
+
+
+
+// 运行测试
 gulp.task('mocha', function () {
     gulp.watch(paths.unit_test, ['mocha']);
     return gulp.src(paths.unit_test, {read: false})
         .pipe(mocha({reporter: 'nyan', timeout: 2000}));
 });
 
+
+
+
 // 默认任务
 // The default task (called when you run `gulp` from cli)
 gulp.task('default', ['nodemon', 'watch']);
+
+gulp.task('jin', ['nodemonjin', 'watch']);
 
