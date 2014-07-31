@@ -84,9 +84,7 @@ marksimosapp.controller('userIntroController',['$scope', '$http', '$window', 'St
         $scope.css.showBox = 'seminar';
     };
 
-    $scope.whoamiNext = function(){
-        $window.location.href = "/home" ;
-    };
+
 
     $scope.chooseSeminar = function(seminarid){
 
@@ -118,9 +116,10 @@ marksimosapp.controller('userIntroController',['$scope', '$http', '$window', 'St
                 console.log(data);
             });
         }
+    };
 
-
-
+    $scope.whoamiNext = function(){
+        $window.location.href = "/home" ;
     };
 
 }]);

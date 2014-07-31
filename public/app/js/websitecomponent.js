@@ -3,15 +3,16 @@
  */
 
 
-var app = angular.module('marksimos.websitecomponent', ['pascalprecht.translate']);
+var app = angular.module('marksimos.websitecomponent', ['marksimos.model', 'pascalprecht.translate' ]);
 
 
 
 
-app.directive('userHeader', ['$translate', function($translate) {
+app.directive('userHeader', ['$window', '$translate', 'Student', function($window, $translate, Student) {
     return {
         scope: {
             showmenu : '=',
+            showlogout : '=',
             menuhome : '&clickHome',
             menureport : '&clickReport',
             menuscore : '&clickScore',
@@ -29,6 +30,17 @@ app.directive('userHeader', ['$translate', function($translate) {
             scope.changeLanguage = function (langKey) {
                 $translate.use(langKey);
             };
+
+            scope.clickLogout = function () {
+                Student.logOut().success(function(data, status, headers, config){
+
+                    $window.location.href = "/login" ;
+
+                }).error(function(data, status, headers, config){
+                    console.log(data);
+                });
+            };
+
 
         }
     };

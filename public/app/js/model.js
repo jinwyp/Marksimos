@@ -9,13 +9,15 @@ app.factory('Student', ['$http', function($http){
     var apiPath = '/api/';
 
     var seminar ={
-        currentRound : -3, // -3,-2, -1, 0, 1, 2, 3, 4, 5, 6
-        companylist : []
+        currentRound : 0 // -3,-2, -1, 0, 1, 2, 3, 4, 5, 6
     };
 
     var factory = {
         login : function(user){
             return $http.post(apiPath + 'login', user);
+        },
+        logOut : function(){
+            return $http.get(apiPath + 'logout');
         },
 
         getStudent : function(){

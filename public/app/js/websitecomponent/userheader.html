@@ -33,6 +33,7 @@
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown">Language <b class="caret"></b></a>
                         <ul class="dropdown-menu mk_dropdownlist">
                             <li><a href="" ng-click="changeLanguage('en_US')">English</a></li>
+                            <li class="divider mk_dropdowndivider"></li>
                             <li><a href="" ng-click="changeLanguage('zh_CN')">中文</a></li>
                         </ul>
                     </li>
@@ -50,7 +51,7 @@
                     </li>
 
                     <li><a href="#">About MarkSimos</a></li>
-                    <li ng-if="login"><a href="/">Sign out</a></li>
+                    <li ng-if="showlogout"><a href="" ng-click="clickLogout()">Sign Out</a></li>
                 </ul>
             </div><!-- /.navbar-collapse -->
         </div><!-- /.container-fluid -->
