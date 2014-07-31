@@ -80,6 +80,7 @@ exports.init = function(req, res, next) {
             periods.push(startPeriod);
             startPeriod+=1;
         }
+        periods.push(-2);
 
         //create company array
         companies = utility.createCompanyArray(dbSeminar.companyNum);
