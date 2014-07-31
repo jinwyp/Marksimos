@@ -4,7 +4,7 @@
 
 
 // create module for custom directives
-var marksimosapp = angular.module('marksimos', ['pascalprecht.translate', 'angularCharts', 'nvd3ChartDirectives', 'cgNotify', 'marksimos.component', 'marksimos.model', 'marksimos.filter', 'marksimos.translation' ]);
+var marksimosapp = angular.module('marksimos', ['pascalprecht.translate', 'angularCharts', 'nvd3ChartDirectives', 'cgNotify', 'marksimos.websitecomponent', 'marksimos.model', 'marksimos.filter', 'marksimos.translation' ]);
 
 
 // controller business logic

@@ -27,7 +27,7 @@ app.directive('usernameInput', function() {
 
         },
         restrict: 'AE',
-        templateUrl: 'app/js/directive/formusernameinput.html',
+        templateUrl: 'app/js/commoncomponent/formusernameinput.html',
         link: function (scope, element, attrs) {
 
             if(angular.isUndefined(scope.required)  ){
@@ -64,7 +64,7 @@ app.directive('emailInput', function() {
 
         },
         restrict: 'AE',
-        templateUrl: 'app/js/directive/formemailinput.html',
+        templateUrl: 'app/js/commoncomponent/formemailinput.html',
         link: function (scope, element, attrs) {
 
             if(angular.isUndefined(scope.required)  ){
@@ -99,7 +99,7 @@ app.directive('passwordInput', function() {
 
         },
         restrict: 'AE',
-        templateUrl: 'app/js/directive/formpasswordinput.html',
+        templateUrl: 'app/js/commoncomponent/formpasswordinput.html',
         link: function (scope, element, attrs) {
 
             if(angular.isUndefined(scope.required)  ){
@@ -136,7 +136,7 @@ app.directive('phoneInput', function() {
             maxlengtherrorinfo : '@'
         },
         restrict: 'AE',
-        templateUrl: 'app/js/directive/formphoneinput.html',
+        templateUrl: 'app/js/commoncomponent/formphoneinput.html',
         link: function (scope, element, attrs) {
 
             if(angular.isUndefined(scope.required)  ){
@@ -174,7 +174,7 @@ app.directive('idcardInput', function() {
 
         },
         restrict: 'AE',
-        templateUrl: 'app/js/directive/formidcardinput.html',
+        templateUrl: 'app/js/commoncomponent/formidcardinput.html',
         link: function (scope, element, attrs) {
 
             if(angular.isUndefined(scope.required)  ){
@@ -216,7 +216,7 @@ app.directive('licenceInput', function() {
 
         },
         restrict: 'AE',
-        templateUrl: 'app/js/directive/formlicenceinput.html',
+        templateUrl: 'app/js/commoncomponent/formlicenceinput.html',
         link: function (scope, element, attrs) {
 
             if(angular.isUndefined(scope.required)  ){
@@ -264,7 +264,7 @@ app.directive('roundInput', function() {
 
         },
         restrict: 'AE',
-        templateUrl: 'app/js/directive/formroundinput.html',
+        templateUrl: 'app/js/commoncomponent/formroundinput.html',
         link: function (scope, element, attrs) {
 
             if(angular.isUndefined(scope.required)  ){
