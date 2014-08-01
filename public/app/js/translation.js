@@ -584,8 +584,18 @@ app.config(['$translateProvider', function($translateProvider){
 		"ReportMarketTrendsGlobalSegmentwiseValueShareVolumeShareGoodLifeSegment"	:	"Volume Share (%) in 4. Good Life Segment",
 		"ReportMarketTrendsGlobalSegmentwiseValueShareVolumeShareUltimateSegment"	:	"Volume Share (%) in 5. Ultimate Segment",
 		"ReportMarketTrendsGlobalSegmentwiseValueShareVolumeSharePragmaticSegment"	:	"Volume Share (%) in 6. Pragmatic Segment",
-		
-		
+
+
+        //Labels for Market Indicator
+        "ReportMarketIndicatorCorporateTaxRate"	:	"Corporate Tax Rate",
+        "ReportMarketIndicatorInflationRate"	:	"Inflation Rate",
+        "ReportMarketIndicatorDepositRate"	:	"Deposit Rate",
+        "ReportMarketIndicatorBorrowing Rate"	:	"Borrowing Rate",
+        "ReportMarketIndicatorInventoryHoldingCost"	:	"Inventory Holding Cost",
+        "ReportMarketIndicatorObsoleteGoodsCost"	:	"Obsolete Goods Cost",
+        "ReportMarketIndicatorDiscontinuedGoodsCost"	:	"Discontinued Goods Cost ",
+
+
 		//Labels for Items on Decision Page - Second Menu Bar
 		"DecisionPageSecondMenuBarLabelsCompany"		:	"Company",
 		"DecisionPageSecondMenuBarLabelsTotalAvailableBudget"		:	"Total Available Budget",
@@ -1280,7 +1290,18 @@ app.config(['$translateProvider', function($translateProvider){
 		"ReportMarketTrendsGlobalSegmentwiseValueShareVolumeShareGoodLifeSegment"	:	"占细分市场销量的(%) 4. 享受生活型 市场",
 		"ReportMarketTrendsGlobalSegmentwiseValueShareVolumeShareUltimateSegment"	:	"占细分市场销量的 (%) 5. 追求极致型 市场",
 		"ReportMarketTrendsGlobalSegmentwiseValueShareVolumeSharePragmaticSegment"	:	"占细分市场销量的(%) 6. 实用型 市场",
-		
+
+
+        //Labels for Market Indicator
+        "ReportMarketIndicatorCorporateTaxRate"	:	"Corporate Tax Rate",
+        "ReportMarketIndicatorInflationRate"	:	"Inflation Rate",
+        "ReportMarketIndicatorDepositRate"	:	"Deposit Rate",
+        "ReportMarketIndicatorBorrowing Rate"	:	"Borrowing Rate",
+        "ReportMarketIndicatorInventoryHoldingCost"	:	"Inventory Holding Cost",
+        "ReportMarketIndicatorObsoleteGoodsCost"	:	"Obsolete Goods Cost",
+        "ReportMarketIndicatorDiscontinuedGoodsCost"	:	"Discontinued Goods Cost ",
+
+
 
         //Labels for Items on Decision Page - Second Menu Bar
 		"DecisionPageSecondMenuBarLabelsCompany"		:	"公司",
