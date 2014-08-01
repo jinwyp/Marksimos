@@ -11,8 +11,8 @@ var marksimosapp = angular.module('marksimos', ['pascalprecht.translate', 'angul
 marksimosapp.controller('chartController', ['$scope',  '$timeout', '$http', 'notify', 'chartReport', 'tableReport', 'Company', function($scope,  $timeout, $http, notify, chartReport, tableReport, Company) {
 
     $scope.css = {
-        menu : 'Home',
-        chartMenu : 'A1',
+        menu : 'Report',
+        chartMenu : 'C6',
         tableReportTab : 'SKU',
         tableReportMenu : 1,
         additionalBudget : true,
@@ -99,6 +99,9 @@ marksimosapp.controller('chartController', ['$scope',  '$timeout', '$http', 'not
             dataBrand : {},
             dataGlobal : {},
             currentTable : 1
+        },
+        tableC6MarketIndicators : {
+            allData : {}
         },
 
 
@@ -556,7 +559,11 @@ marksimosapp.controller('chartController', ['$scope',  '$timeout', '$http', 'not
 
     });
 
+    /********************  Table Report C6  ********************/
+    tableReport.marketIndicators().then(function(data, status, headers, config){
+        $scope.data.tableC6MarketIndicators.allData = data;
 
+    });
 
 
 

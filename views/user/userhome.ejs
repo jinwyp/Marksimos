@@ -2664,6 +2664,63 @@
                 </div>
             </div>
         </div>
+
+
+        <div class="col-md-10 user_chart_right" ng-if="css.chartMenu=='C6'">
+            <div class="row">
+                <div class="col-md-12 user_table_single">
+                    <h5>{{'ReportMenuMarketIndicator' | translate}}</h5>
+
+                    <div class="table_report" >
+
+                        <table class="table table-striped table-bordered table-hover" >
+                            <thead>
+                                <tr>
+                                    <th>Name</th>
+                                    <th>Value</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>Corporate Tax Rate</td>
+                                    <td>{{data.tableC6MarketIndicators.allData.corporateTaxRate | number : 2}}%</td>
+                                </tr>
+                                <tr>
+                                    <td>Inflation Rate</td>
+                                    <td>{{data.tableC6MarketIndicators.allData.inflationRate | number : 2}}%</td>
+                                </tr>
+                                <tr>
+                                    <td>Deposit Rate</td>
+                                    <td>{{data.tableC6MarketIndicators.allData.depositRate | number : 2}}%</td>
+                                </tr>
+                                <tr>
+                                    <td>Borrowing Rate</td>
+                                    <td>{{data.tableC6MarketIndicators.allData.borrowingRate | number : 2}}%</td>
+                                </tr>
+                                <tr>
+                                    <td>Additional Investment Budget Surcharge Rate</td>
+                                    <td>{{data.tableC6MarketIndicators.allData.additionalInvestmentBudgetSurchargeRate | number : 2}}%</td>
+                                </tr>
+                                <tr>
+                                    <td>Inventory Holding Cost (as a % of inventory value)</td>
+                                    <td>{{data.tableC6MarketIndicators.allData.inventoryHoldingCost | number : 2}}%</td>
+                                </tr>
+                                <tr>
+                                    <td>Obsolete Goods Cost (as a % of purchase cost)</td>
+                                    <td>{{data.tableC6MarketIndicators.allData.obsoleteGoodsCost | number : 2}}%</td>
+                                </tr>
+                                <tr>
+                                    <td>Discontinued Goods Cost (as a % of purchase cost)</td>
+                                    <td>{{data.tableC6MarketIndicators.allData.discontinuedGoodsCost | number : 2}}%</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
     </div>
 
 

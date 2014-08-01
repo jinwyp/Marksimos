@@ -718,6 +718,17 @@ app.factory('tableReport', ['$http', function($http){
             }).catch(function(err){
                 console.log(err);
             });
+        },
+
+        // Table Report C6
+        marketIndicators : function(){
+            return $http.get(apiPath + 'report/market_indicators').then(function(result){
+//                console.log(result.data);
+
+                return result.data;
+            }).catch(function(err){
+                console.log(err);
+            });
         }
     };
 
