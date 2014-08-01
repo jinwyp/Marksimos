@@ -211,5 +211,26 @@ app.directive('tableReportMarketTrendsGlobal', function() {
     };
 });
 
+app.directive('tableReportMarketIndicator', ['$translate', function($translate) {
+    return {
+        scope: {
+            data : '=',
+            unit : '@'
+        },
+        restrict: 'AE',
+        templateUrl: 'app/js/report/tablereportmarketindicator.html',
+        link: function (scope, element, attrs) {
+
+            scope.plus = 1;
+
+            if(angular.isUndefined(scope.unit)) {
+                scope.unit = '';
+            }else if (scope.unit === "%"){
+                scope.plus = 1;
+            }
+
+        }
+    };
+}]);
 
 

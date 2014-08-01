@@ -590,10 +590,11 @@ app.config(['$translateProvider', function($translateProvider){
         "ReportMarketIndicatorCorporateTaxRate"	:	"Corporate Tax Rate",
         "ReportMarketIndicatorInflationRate"	:	"Inflation Rate",
         "ReportMarketIndicatorDepositRate"	:	"Deposit Rate",
-        "ReportMarketIndicatorBorrowing Rate"	:	"Borrowing Rate",
-        "ReportMarketIndicatorInventoryHoldingCost"	:	"Inventory Holding Cost",
-        "ReportMarketIndicatorObsoleteGoodsCost"	:	"Obsolete Goods Cost",
-        "ReportMarketIndicatorDiscontinuedGoodsCost"	:	"Discontinued Goods Cost ",
+        "ReportMarketIndicatorBorrowingRate"	:	"Borrowing Rate",
+        "ReportMarketIndicatorAdditionalInvestmentBudgetSurchargeRate"	:	"Additional Investment Budget Surcharge Rate",
+        "ReportMarketIndicatorInventoryHoldingCost"	:	"Inventory Holding Cost (as a % of inventory value)",
+        "ReportMarketIndicatorObsoleteGoodsCost"	:	"Obsolete Goods Cost (as a % of purchase cost)",
+        "ReportMarketIndicatorDiscontinuedGoodsCost"	:	"Discontinued Goods Cost (as a % of purchase cost)",
 
 
 		//Labels for Items on Decision Page - Second Menu Bar
@@ -1296,10 +1297,11 @@ app.config(['$translateProvider', function($translateProvider){
         "ReportMarketIndicatorCorporateTaxRate"	:	"Corporate Tax Rate",
         "ReportMarketIndicatorInflationRate"	:	"Inflation Rate",
         "ReportMarketIndicatorDepositRate"	:	"Deposit Rate",
-        "ReportMarketIndicatorBorrowing Rate"	:	"Borrowing Rate",
-        "ReportMarketIndicatorInventoryHoldingCost"	:	"Inventory Holding Cost",
-        "ReportMarketIndicatorObsoleteGoodsCost"	:	"Obsolete Goods Cost",
-        "ReportMarketIndicatorDiscontinuedGoodsCost"	:	"Discontinued Goods Cost ",
+        "ReportMarketIndicatorBorrowingRate"	:	"Borrowing Rate",
+        "ReportMarketIndicatorAdditionalInvestmentBudgetSurchargeRate"	:	"Additional Investment Budget Surcharge Rate",
+        "ReportMarketIndicatorInventoryHoldingCost"	:	"Inventory Holding Cost (as a % of inventory value)",
+        "ReportMarketIndicatorObsoleteGoodsCost"	:	"Obsolete Goods Cost (as a % of purchase cost)",
+        "ReportMarketIndicatorDiscontinuedGoodsCost"	:	"Discontinued Goods Cost (as a % of purchase cost)",
 
 
 
