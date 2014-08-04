@@ -72,7 +72,6 @@ marksimosapp.controller('userIntroController',['$scope', '$http', '$window', 'St
 
         Student.getSeminar().then(function(data, status, headers, config){
             $scope.data.seminars = data;
-            console.log($scope.data.seminars);
         });
     };
 
