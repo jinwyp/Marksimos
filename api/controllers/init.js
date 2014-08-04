@@ -75,11 +75,16 @@ exports.init = function(req, res, next) {
         sessionOperation.setCurrentPeriod(req, dbSeminar.currentPeriod);
 
         //create periods array
-        var startPeriod = consts.History_3;
-        for(var i=0; i<dbSeminar.simulationSpan; i++){
-            periods.push(startPeriod);
-            startPeriod+=1;
-        }
+        periods.push(-3);
+        periods.push(-2);
+        periods.push(-1);
+        periods.push(0);        
+        // var startPeriod = consts.History_3;
+
+        // for(var i=0; i<dbSeminar.simulationSpan; i++){
+        //     periods.push(startPeriod);
+        //     startPeriod+=1;
+        // }
 
         //create company array
         companies = utility.createCompanyArray(dbSeminar.companyNum);
@@ -514,6 +519,7 @@ function initSimulationResult(seminarId, periods){
         queries.push(cgiapi.queryOnePeriodResult(seminarId, period));
     });
 
+    console.log(queries);
     return Q.all(queries)
     .then(function(allResults){
         cleanAllResults(allResults);
@@ -530,7 +536,7 @@ function initSimulationResult(seminarId, periods){
 
 function cleanAllResults(allResults){
     allResults.forEach(function(onePeriodResult){
-        //remove useless data like empty SKU, company
+        //remove useless data like empty SKU, company    
         allResultsCleaner.clean(onePeriodResult);
     })
 }

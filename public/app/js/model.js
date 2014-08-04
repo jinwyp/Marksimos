@@ -9,11 +9,17 @@ app.factory('Student', ['$http', function($http){
     var apiPath = '/api/';
 
     var seminar ={
-        currentRound : -3, // -3,-2, -1, 0, 1, 2, 3, 4, 5, 6
-        companylist : []
+        currentRound : 0 // -3,-2, -1, 0, 1, 2, 3, 4, 5, 6
     };
 
     var factory = {
+        login : function(user){
+            return $http.post(apiPath + 'login', user);
+        },
+        logOut : function(){
+            return $http.get(apiPath + 'logout');
+        },
+
         getStudent : function(){
             return $http.get(apiPath + 'user').then(function(result){
 
@@ -706,6 +712,17 @@ app.factory('tableReport', ['$http', function($http){
         // Table Report C5
         marketTrends : function(){
             return $http.get(apiPath + 'report/market_trends').then(function(result){
+//                console.log(result.data);
+
+                return result.data;
+            }).catch(function(err){
+                console.log(err);
+            });
+        },
+
+        // Table Report C6
+        marketIndicators : function(){
+            return $http.get(apiPath + 'report/market_indicators').then(function(result){
 //                console.log(result.data);
 
                 return result.data;

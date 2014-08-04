@@ -5,7 +5,7 @@
 
 <div class="container-fluid width_big_screen" ng-controller="chartController">
 
-    <user-header showmenu="true"  current-menu="css.menu"></user-header>
+    <user-header showmenu="true" showlogout="true"  current-menu="css.menu"></user-header>
 
 
 
@@ -2664,6 +2664,21 @@
                 </div>
             </div>
         </div>
+
+
+        <div class="col-md-10 user_chart_right" ng-if="css.chartMenu=='C6'">
+            <div class="row">
+                <div class="col-md-12 user_table_single">
+                    <h5>{{'ReportMenuMarketIndicator' | translate}}</h5>
+
+                    <div class="table_report" >
+                        <div table-report-market-indicator data="data.tableC6MarketIndicators.allData" unit="%" ></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
     </div>
 
 

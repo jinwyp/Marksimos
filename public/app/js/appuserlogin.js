@@ -4,13 +4,13 @@
 
 // create module for custom directives
 
-var marksimosapp = angular.module('marksimoslogin', ['marksimos.model', 'marksimos.component',  'marksimos.filter']);
+var marksimosapp = angular.module('marksimoslogin', ['marksimos.model', 'marksimos.websitecomponent',  'marksimos.filter']);
 
 
 
 
 // controller business logic
-marksimosapp.controller('userLoginController', ['$scope', '$http', '$window', function  ($scope, $http, $window) {
+marksimosapp.controller('userLoginController', ['$scope', '$http', '$window', 'Student', function  ($scope, $http, $window, Student) {
     $scope.css = {
         newUser : {
             passwordPrompt : false
@@ -26,15 +26,15 @@ marksimosapp.controller('userLoginController', ['$scope', '$http', '$window', fu
 
     $scope.login = function(form){
         if(form.$valid){
-             $http.post('/api/login', $scope.data.newUser).success(function(data, status, headers, config){
+            Student.login($scope.data.newUser).success(function(data, status, headers, config){
 
                 $window.location.href = "/introduction" ;
 
             }).error(function(data, status, headers, config){
-                 form.password.$valid = false;
-                 form.password.$invalid = true;
-                 $scope.css.newUser.passwordPrompt = true;
-                 console.log(data);
+                form.password.$valid = false;
+                form.password.$invalid = true;
+                $scope.css.newUser.passwordPrompt = true;
+                console.log(data);
             });
         }
     };
@@ -84,9 +84,7 @@ marksimosapp.controller('userIntroController',['$scope', '$http', '$window', 'St
         $scope.css.showBox = 'seminar';
     };
 
-    $scope.whoamiNext = function(){
-        $window.location.href = "/home" ;
-    };
+
 
     $scope.chooseSeminar = function(seminarid){
 
@@ -118,9 +116,10 @@ marksimosapp.controller('userIntroController',['$scope', '$http', '$window', 'St
                 console.log(data);
             });
         }
+    };
 
-
-
+    $scope.whoamiNext = function(){
+        $window.location.href = "/home" ;
     };
 
 }]);

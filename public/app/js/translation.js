@@ -74,9 +74,10 @@ app.config(['$translateProvider', function($translateProvider){
         "ReportMenuMarketTrends"    :  "Market Trends",
         "ReportMenuMarketIndicator"    :  "Market Indicator",
 
+
 		//Labels for Company Status Report - SKU Level
 		"ReportCompanyStatusSKUMarketShareValue"	:	"Market Share (Value %)",
-		"ReportCompanyStatusSKUMarketShareVolume"	:	"Market Share (Volume %)"
+		"ReportCompanyStatusSKUMarketShareVolume"	:	"Market Share (Volume %)",
 		"ReportCompanyStatusSKUMarketSalesVolume"	:	"Market Sales Volume (mln std. packs)",	
 		"ReportCompanyStatusSKULostSalesVolumeduetoOOS"	:	"Lost Sales Volume due to OOS (mln std. packs)",
 		"ReportCompanyStatusSKUNumericalDistribution"	:	"Numerical Distribution (%)",
@@ -106,7 +107,7 @@ app.config(['$translateProvider', function($translateProvider){
 		"ReportCompanyStatusSKUInventoryVolumeAtWholesalers"	:	"Inventory Volume At Wholesalers (mln packs)",
 		"ReportCompanyStatusSKUInventoryVolumeAtRetailers"	:	"Inventory Volume At Retailers (mln packs)",
 		"ReportCompanyStatusSKUStocksCoverAtRetailers"	:	"Stocks Cover At Retailers (weeks)",
-		"ReportCompanyStatusSKUStocksCoverAtWholesalers"	:	"Stocks Cover At Wholesalers (weeks)"
+		"ReportCompanyStatusSKUStocksCoverAtWholesalers"	:	"Stocks Cover At Wholesalers (weeks)",
 		
 		
 		//Labels for Company Status Report - Brand Level
@@ -211,7 +212,7 @@ app.config(['$translateProvider', function($translateProvider){
 
 
 		//Labels for Financial Report - All Brands
-		"ReportFinancialReportAllBrandSales Value"	:	"Sales Value ($ mln)"
+		"ReportFinancialReportAllBrandSales Value"	:	"Sales Value ($ mln)",
 		"ReportFinancialReportAllBrandChangeVersusPreviousperiod"	:	"(%) Change Versus Previous period",
 		"ReportFinancialReportAllBrandShareInCompanyTotalSalesValue"	:	"Share In Company Total Sales Value (%)",
 		"ReportFinancialReportAllBrandCostofGoodsSold"	:	"Cost of Goods Sold ($ mln)",
@@ -304,7 +305,7 @@ app.config(['$translateProvider', function($translateProvider){
 		"ReportProfitabilityEvolutionSKUInventoryValue"	:	"Inventory Value ($ mln)",
 		
 		
-//Labels for Profitability Evolution - Brand Level
+        //Labels for Profitability Evolution - Brand Level
 		"ReportProfitabilityEvolutionBrandManufacturerSalesValue"	:	"Manufacturer Sales Value ($ mln)",
 		"ReportProfitabilityEvolutionBrandCostofGoodsSold"	:	"Cost of Goods Sold ($ mln)",
 		"ReportProfitabilityEvolutionBrandInventoryHolding"	:	"Inventory Holding ($ mln)",
@@ -582,6 +583,7 @@ app.config(['$translateProvider', function($translateProvider){
 		"ReportMarketTrendsGlobalSegmentwiseValueShareVolumeShareModerateSegment"	:	"Volume Share (%) in 3. Moderate Segment",
 		"ReportMarketTrendsGlobalSegmentwiseValueShareVolumeShareGoodLifeSegment"	:	"Volume Share (%) in 4. Good Life Segment",
 		"ReportMarketTrendsGlobalSegmentwiseValueShareVolumeShareUltimateSegment"	:	"Volume Share (%) in 5. Ultimate Segment",
+<<<<<<< HEAD
 		"ReportMarketTrendsGlobalSegmentwiseValueShareVolumeSharePragmaticSegment"	:	"Volume Share (%) in 6. Pragmatic Segment"
 		
 		
@@ -597,6 +599,22 @@ app.config(['$translateProvider', function($translateProvider){
 		"ReportMarketIndicatorsDiscontinuedGoodsCost"	:	"Discontinued Goods Cost (as a % of purchase cost)",
 		
 		
+=======
+		"ReportMarketTrendsGlobalSegmentwiseValueShareVolumeSharePragmaticSegment"	:	"Volume Share (%) in 6. Pragmatic Segment",
+
+
+        //Labels for Market Indicator
+        "ReportMarketIndicatorCorporateTaxRate"	:	"Corporate Tax Rate",
+        "ReportMarketIndicatorInflationRate"	:	"Inflation Rate",
+        "ReportMarketIndicatorDepositRate"	:	"Deposit Rate",
+        "ReportMarketIndicatorBorrowingRate"	:	"Borrowing Rate",
+        "ReportMarketIndicatorAdditionalInvestmentBudgetSurchargeRate"	:	"Additional Investment Budget Surcharge Rate",
+        "ReportMarketIndicatorInventoryHoldingCost"	:	"Inventory Holding Cost (as a % of inventory value)",
+        "ReportMarketIndicatorObsoleteGoodsCost"	:	"Obsolete Goods Cost (as a % of purchase cost)",
+        "ReportMarketIndicatorDiscontinuedGoodsCost"	:	"Discontinued Goods Cost (as a % of purchase cost)",
+
+
+>>>>>>> e660fef8a6087d20fecbd8433d6a91ae4fd581b6
 		//Labels for Items on Decision Page - Second Menu Bar
 		"DecisionPageSecondMenuBarLabelsCompany"		:	"Company",
 		"DecisionPageSecondMenuBarLabelsTotalAvailableBudget"		:	"Total Available Budget",
@@ -710,6 +728,7 @@ app.config(['$translateProvider', function($translateProvider){
 		"DecisionPageSpendingDetailsTable2AcquiredProductionVolumeFlexibility"		:	"Acquired Production Volume Flexibility (%)",
 		"DecisionPageSpendingDetailsTable2AcquiredTechnologyLevel"		:	"Acquired Technology Level"
 		
+
     });
 
     // Adding a translation table for the Russian language
@@ -777,7 +796,7 @@ app.config(['$translateProvider', function($translateProvider){
         "ReportMenuSegmentDistributions"    :  "细分市场数据",
         "ReportMenuMarketEvolution"    :  "市场演变趋势",
         "ReportMenuMarketTrends"    :  "市场趋势",
-        "ReportMenuMarketIndicator"    :  "宏观市场参数"
+        "ReportMenuMarketIndicator"    :  "宏观市场参数",
 		
 
 
@@ -795,7 +814,7 @@ app.config(['$translateProvider', function($translateProvider){
 		"ReportCompanyStatusSKUPriceRankingIndex"	:	"价格排序指数",
 		"ReportCompanyStatusSKUTargetConsumerSegment"	:	"目标细分市场",
 		"ReportCompanyStatusSKUTargetConsumerSegmentExpectedValuePerception"	:	"目标细分市场 预计 价值感知",
-		"ReportCompanyStatusSKUValuePerception"	:	"价值感知"
+		"ReportCompanyStatusSKUValuePerception"	:	"价值感知",
 		"ReportCompanyStatusSKUTargetConsumerSegmentExpectedImagePerception"	:	"目标细分市场 预计 形象感知",
 		"ReportCompanyStatusSKUImagePerception"	:	"形象感知",
 		"ReportCompanyStatusSKUIngredientsQualityIndex"	:	"成分质量指数",
@@ -1011,7 +1030,7 @@ app.config(['$translateProvider', function($translateProvider){
 		"ReportProfitabilityEvolutionSKUInventoryValue"	:	"库存价值 ($ mln)",
 		
 		
-//Labels for Profitability Evolution - Brand Level
+        //Labels for Profitability Evolution - Brand Level
 		"ReportProfitabilityEvolutionBrandManufacturerSalesValue"	:	"厂商销售额 ($ mln)",
 		"ReportProfitabilityEvolutionBrandCostofGoodsSold"	:	"售出商品成本 ($ mln)",
 		"ReportProfitabilityEvolutionBrandInventoryHolding"	:	"库存持有成本 ($ mln)",
@@ -1124,7 +1143,7 @@ app.config(['$translateProvider', function($translateProvider){
 
 		
 		//Labels for Competitor Intelligence
-		"ReportCompetitorIntelligenceTableTitleTechnology"	:	"技术"		
+		"ReportCompetitorIntelligenceTableTitleTechnology"	:	"技术"	,
 		"ReportCompetitorIntelligenceTechnologyAcquiredProductionandLogisticsEfficiency"	:	"当前拥有的生产效率 (%)",
 		"ReportCompetitorIntelligenceTechnologyAcquiredProductionPlanningFlexibility"	:	"当前拥有的生产灵活度 (%)",
 		"ReportCompetitorIntelligenceTechnologyAvailableTechnologyLevel"	:	"最高技术水平",
@@ -1221,7 +1240,7 @@ app.config(['$translateProvider', function($translateProvider){
 		"ReportMarketTrendsSKUSegmentwiseValueShareValueShareGoodLifeSegment"	:	"占细分市场销售额的 (%) 4. 享受生活型 市场",
 		"ReportMarketTrendsSKUSegmentwiseValueShareValueShareUltimateSegment"	:	"占细分市场销售额的 (%) 5. 追求极致型 市场",
 		"ReportMarketTrendsSKUSegmentwiseValueShareValueSharePragmaticSegment"	:	"占细分市场销售额的 (%) 6. 实用型 市场",
-		"ReportMarketTrendsSKUTableTitleSegmentwiseVolumeShareSegment-wise Volume Share"	："占细分市场销量的(%)",	//Segment-wise Volume Share
+		"ReportMarketTrendsSKUTableTitleSegmentwiseVolumeShareSegment-wise Volume Share"	: "占细分市场销量的(%)",	//Segment-wise Volume Share
 		"ReportMarketTrendsSKUSegmentwiseValueShareVolumeSharePriceSensitiveSegment"	:	"占细分市场销量的 (%) 1. 价格敏感型 市场",
 		"ReportMarketTrendsSKUSegmentwiseValueShareVolumeSharePretendersSegment"	:	"占细分市场销量的(%) 2. 虚荣型 市场",
 		"ReportMarketTrendsSKUSegmentwiseValueShareVolumeShareModerateSegment"	:	"占细分市场销量的 (%) 3. 适中型 市场",
@@ -1254,7 +1273,7 @@ app.config(['$translateProvider', function($translateProvider){
 		"ReportMarketTrendsBrandSegmentwiseValueShareValueShareGoodLifeSegment"	:	"占细分市场销售额的 (%) 4. 享受生活型 市场",
 		"ReportMarketTrendsBrandSegmentwiseValueShareValueShareUltimateSegment"	:	"占细分市场销售额的 (%) 5. 追求极致型 市场",
 		"ReportMarketTrendsBrandSegmentwiseValueShareValueSharePragmaticSegment"	:	"占细分市场销售额的 (%) 6. 实用型 市场",
-		"ReportMarketTrendsBrandTableTitleSegmentwiseVolumeShareSegment-wise Volume Share"	："占细分市场销量的(%)",	//Segment-wise Volume Share
+		"ReportMarketTrendsBrandTableTitleSegmentwiseVolumeShareSegment-wise Volume Share"	: "占细分市场销量的(%)",	//Segment-wise Volume Share
 		"ReportMarketTrendsBrandSegmentwiseValueShareVolumeSharePriceSensitiveSegment"	:	"占细分市场销量的 (%) 1. 价格敏感型 市场",
 		"ReportMarketTrendsBrandSegmentwiseValueShareVolumeSharePretendersSegment"	:	"占细分市场销量的(%) 2. 虚荣型 市场",
 		"ReportMarketTrendsBrandSegmentwiseValueShareVolumeShareModerateSegment"	:	"占细分市场销量的 (%) 3. 适中型 市场",
@@ -1283,12 +1302,13 @@ app.config(['$translateProvider', function($translateProvider){
 		"ReportMarketTrendsGlobalSegmentwiseValueShareValueShareGoodLifeSegment"	:	"占细分市场销售额的 (%) 4. 享受生活型 市场",
 		"ReportMarketTrendsGlobalSegmentwiseValueShareValueShareUltimateSegment"	:	"占细分市场销售额的 (%) 5. 追求极致型 市场",
 		"ReportMarketTrendsGlobalSegmentwiseValueShareValueSharePragmaticSegment"	:	"占细分市场销售额的 (%) 6. 实用型 市场",
-		"ReportMarketTrendsGlobalTableTitleSegmentwiseVolumeShareSegment-wise Volume Share"		："占细分市场销量的(%)",	//Segment-wise Volume Share
+		"ReportMarketTrendsGlobalTableTitleSegmentwiseVolumeShareSegment-wise Volume Share"		: "占细分市场销量的(%)",	//Segment-wise Volume Share
 		"ReportMarketTrendsGlobalSegmentwiseValueShareVolumeSharePriceSensitiveSegment"	:	"占细分市场销量的 (%) 1. 价格敏感型 市场",
 		"ReportMarketTrendsGlobalSegmentwiseValueShareVolumeSharePretendersSegment"	:	"占细分市场销量的(%) 2. 虚荣型 市场",
 		"ReportMarketTrendsGlobalSegmentwiseValueShareVolumeShareModerateSegment"	:	"占细分市场销量的 (%) 3. 适中型 市场",
 		"ReportMarketTrendsGlobalSegmentwiseValueShareVolumeShareGoodLifeSegment"	:	"占细分市场销量的(%) 4. 享受生活型 市场",
 		"ReportMarketTrendsGlobalSegmentwiseValueShareVolumeShareUltimateSegment"	:	"占细分市场销量的 (%) 5. 追求极致型 市场",
+<<<<<<< HEAD
 		"ReportMarketTrendsGlobalSegmentwiseValueShareVolumeSharePragmaticSegment"	:	"占细分市场销量的(%) 6. 实用型 市场"
 		
 
@@ -1302,15 +1322,32 @@ app.config(['$translateProvider', function($translateProvider){
 		"ReportMarketIndicatorsObsoleteGoodsCost"	:	"过期商品成本（%采购成本）",
 		"ReportMarketIndicatorsDiscontinuedGoodsCost"	:	"停产商品成本（%采购成本）",		
 		
+=======
+		"ReportMarketTrendsGlobalSegmentwiseValueShareVolumeSharePragmaticSegment"	:	"占细分市场销量的(%) 6. 实用型 市场",
+>>>>>>> e660fef8a6087d20fecbd8433d6a91ae4fd581b6
 
-//Labels for Items on Decision Page - Second Menu Bar
+
+        //Labels for Market Indicator
+        "ReportMarketIndicatorCorporateTaxRate"	:	"Corporate Tax Rate",
+        "ReportMarketIndicatorInflationRate"	:	"Inflation Rate",
+        "ReportMarketIndicatorDepositRate"	:	"Deposit Rate",
+        "ReportMarketIndicatorBorrowingRate"	:	"Borrowing Rate",
+        "ReportMarketIndicatorAdditionalInvestmentBudgetSurchargeRate"	:	"Additional Investment Budget Surcharge Rate",
+        "ReportMarketIndicatorInventoryHoldingCost"	:	"Inventory Holding Cost (as a % of inventory value)",
+        "ReportMarketIndicatorObsoleteGoodsCost"	:	"Obsolete Goods Cost (as a % of purchase cost)",
+        "ReportMarketIndicatorDiscontinuedGoodsCost"	:	"Discontinued Goods Cost (as a % of purchase cost)",
+
+
+
+        //Labels for Items on Decision Page - Second Menu Bar
 		"DecisionPageSecondMenuBarLabelsCompany"		:	"公司",
 		"DecisionPageSecondMenuBarLabelsTotalAvailableBudget"		:	"可用全部金额",
 		"DecisionPageSecondMenuBarLabelsNormalCapacity"		:	"正常产能",
 		"DecisionPageSecondMenuBarLabelsOvertimeCapacity"		:	"额外加班产能",
 		"DecisionPageSecondMenuBarLabelsAdditionalBudget"		:	"申请额外预算",
 		"DecisionPageSecondMenuBarLabelsleftforsubmittingdecision"		:	"左为决定提交",
-		
+
+
 		//Labels for Items on Decision Page - DecisionTab
 		"DecisionPageDecisionTabMAKEDECISIONS"		:	"做出决定",
 		"DecisionPageDecisionTabMission"		:	"市场份额+利润",
@@ -1415,8 +1452,6 @@ app.config(['$translateProvider', function($translateProvider){
 		"DecisionPageSpendingDetailsTable2Acquired Efficiency"		:	"当前拥有的生产效率 (%)",
 		"DecisionPageSpendingDetailsTable2AcquiredProductionVolumeFlexibility"		:	"当前拥有的生产灵活度 (%)",
 		"DecisionPageSpendingDetailsTable2AcquiredTechnologyLevel"		:	"最高技术水平"
-		
-		
 		
     });
 
