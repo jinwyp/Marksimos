@@ -585,6 +585,18 @@ app.config(['$translateProvider', function($translateProvider){
 		"ReportMarketTrendsGlobalSegmentwiseValueShareVolumeSharePragmaticSegment"	:	"Volume Share (%) in 6. Pragmatic Segment"
 		
 		
+		
+		//Labels for Market Indicators
+		"ReportMarketIndicatorsCorporateTaxRate"	:	"Corporate Tax Rate",
+		"ReportMarketIndicatorsInflationRate"	:	"Inflation Rate",
+		"ReportMarketIndicatorsDepositRate"	:	"Deposit Rate",
+		"ReportMarketIndicatorsBorrowingRate"	:	"Borrowing Rate",
+		"ReportMarketIndicatorsAdditionalInvestmentBudgetSurchargeRate"	:	"Additional Investment Budget Surcharge Rate",
+		"ReportMarketIndicatorsInventoryHoldingCost"	:	"Inventory Holding Cost (as a % of inventory value)",
+		"ReportMarketIndicatorsObsoleteGoodsCost"	:	"Obsolete Goods Cost (as a % of purchase cost)",
+		"ReportMarketIndicatorsDiscontinuedGoodsCost"	:	"Discontinued Goods Cost (as a % of purchase cost)",
+		
+		
 		//Labels for Items on Decision Page - Second Menu Bar
 		"DecisionPageSecondMenuBarLabelsCompany"		:	"Company",
 		"DecisionPageSecondMenuBarLabelsTotalAvailableBudget"		:	"Total Available Budget",
@@ -1279,6 +1291,16 @@ app.config(['$translateProvider', function($translateProvider){
 		"ReportMarketTrendsGlobalSegmentwiseValueShareVolumeShareUltimateSegment"	:	"占细分市场销量的 (%) 5. 追求极致型 市场",
 		"ReportMarketTrendsGlobalSegmentwiseValueShareVolumeSharePragmaticSegment"	:	"占细分市场销量的(%) 6. 实用型 市场"
 		
+
+		//Labels for Market Indicators
+		"ReportMarketIndicatorsCorporateTaxRate"	:	"公司税率",
+		"ReportMarketIndicatorsInflationRate"	:	"通货膨胀率",
+		"ReportMarketIndicatorsDepositRate"	:	"存款利率",
+		"ReportMarketIndicatorsBorrowingRate"	:	"借贷利率",
+		"ReportMarketIndicatorsAdditionalInvestmentBudgetSurchargeRate"	:	"其他投资预算附加费率",
+		"ReportMarketIndicatorsInventoryHoldingCost"	:	"库存持有成本（%库存量）",
+		"ReportMarketIndicatorsObsoleteGoodsCost"	:	"过期商品成本（%采购成本）",
+		"ReportMarketIndicatorsDiscontinuedGoodsCost"	:	"停产商品成本（%采购成本）",		
 		
 
 //Labels for Items on Decision Page - Second Menu Bar
