@@ -494,35 +494,39 @@ app.config(['$translateProvider', function($translateProvider){
 		 
 		//Labels for Market Trends - SKU Level
 		"ReportMarketTrendsSKUTableTitleMarketFigures"	:	"Market Figures", //Market Figures
-		"ReportMarketTrendsSKUMarketFiguresAverageDisplayPrice"	:	"Average Display Price ($/std.pack)",
-		"ReportMarketTrendsSKUMarketFiguresAverageNetMarketPrice"	:	"Average Net Market Price ($/std.pack)",
-		"ReportMarketTrendsSKUMarketFiguresBrandAwareness"	:	"Brand Awareness(%)",
+		"ReportMarketTrendsSKUMarketFiguresAverageDisplayPrice"	:	"Average Display Price ($/std. pack)",
+		"ReportMarketTrendsSKUMarketFiguresAverageNetMarketPrice"	:	"Average Net Market Price ($/std. pack)",
+		"ReportMarketTrendsSKUMarketFiguresBrandAwareness"	:	"Brand Awareness (%)",
 		"ReportMarketTrendsSKUMarketFiguresImagePerception"	:	"Image Perception",
 		"ReportMarketTrendsSKUMarketFiguresMarketNetSalesValue"	:	"Market Net Sales Value ($ mln)",
-		"ReportMarketTrendsSKUMarketFiguresMarketNetSalesVolume"	:	"Market Net Sales Volume (mln std.packs)",
-		"ReportMarketTrendsSKUMarketFiguresMarketShareValue"	:	"Market Share (Value %)",
-		"ReportMarketTrendsSKUMarketFiguresMarketShareVolume"	:	"Market Share (Volume %)",
+		"ReportMarketTrendsSKUMarketFiguresMarketNetSalesVolume"	:	"Market Net Sales Volume (mln std. packs)",
+		"ReportMarketTrendsSKUMarketFiguresMarketShareValue"	:	"Market Share (value %)",
+		"ReportMarketTrendsSKUMarketFiguresMarketShareVolume"	:	"Market Share (volume %)",
+
 		"ReportMarketTrendsSKUTableTitleMiscellaneous"	:	"Miscellaneous",		//Miscellaneous
-		"ReportMarketTrendsSKUMiscellaneousLostSalesVolumeduetoOOS"	:	"Lost Sales Volume due to OOS (mln std.packs)",
+		"ReportMarketTrendsSKUMiscellaneousLostSalesVolumeduetoOOS"	:	"Lost Sales Volume due to OOS (mln std. packs)",
 		"ReportMarketTrendsSKUMiscellaneousNumericalDistribution"	:	"Numerical Distribution (%)",
-		"ReportMarketTrendsSKUMiscellaneousTotalInventoryatTrade"	:	"Total Inventory at Trade (mln std.packs)",
+		"ReportMarketTrendsSKUMiscellaneousTotalInventoryAtTrade"	:	"Total Inventory at Trade (mln std. packs)",
 		"ReportMarketTrendsSKUMiscellaneousPriceRankingIndex"	:	"Price Ranking Index",
 		"ReportMarketTrendsSKUMiscellaneousShelfSpace"	:	"Shelf Space (%)",
-		"ReportMarketTrendsSKUTableTitleSegmentwiseValueShare"	:	"Value Share by Segment",		//Segment-wise Value Share
-		"ReportMarketTrendsSKUSegmentwiseValueShareValueSharePriceSensitiveSegment"	:	"Value Share (%) in 1. Price Sensitive Segment",
-		"ReportMarketTrendsSKUSegmentwiseValueShareValueSharePretendersSegment"	:	"Value Share (%) in 2. Pretenders Segment",
-		"ReportMarketTrendsSKUSegmentwiseValueShareValueShareModerateSegment"	:	"Value Share (%) in 3. Moderate Segment",
-		"ReportMarketTrendsSKUSegmentwiseValueShareValueShareGoodLifeSegment"	:	"Value Share (%) in 4. Good Life Segment",
-		"ReportMarketTrendsSKUSegmentwiseValueShareValueShareUltimateSegment"	:	"Value Share (%) in 5. Ultimate Segment",
-		"ReportMarketTrendsSKUSegmentwiseValueShareValueSharePragmaticSegment"	:	"Value Share (%) in 6. Pragmatic Segment",
-		"ReportMarketTrendsSKUTableTitleSegmentwiseVolumeShareSegment-wise Volume Share"	:	"Volume Share by Segment",	//Segment-wise Volume Share
-		"ReportMarketTrendsSKUSegmentwiseValueShareVolumeSharePriceSensitiveSegment"	:	"Volume Share (%) in 1. Price Sensitive Segment",
-		"ReportMarketTrendsSKUSegmentwiseValueShareVolumeSharePretendersSegment"	:	"Volume Share (%) in 2. Pretenders Segment",
-		"ReportMarketTrendsSKUSegmentwiseValueShareVolumeShareModerateSegment"	:	"Volume Share (%) in 3. Moderate Segment",
-		"ReportMarketTrendsSKUSegmentwiseValueShareVolumeShareGoodLifeSegment"	:	"Volume Share (%) in 4. Good Life Segment",
-		"ReportMarketTrendsSKUSegmentwiseValueShareVolumeShareUltimateSegment"	:	"Volume Share (%) in 5. Ultimate Segment",
-		"ReportMarketTrendsSKUSegmentwiseValueShareVolumeSharePragmaticSegment"	:	"Volume Share (%) in 6. Pragmatic Segment",
-		
+
+		"ReportMarketTrendsSKUTableTitleSegmentWiseValueShare"	:	"Value Share by Segment",		//Segment-wise Value Share
+		"ReportMarketTrendsSKUSegmentWiseValueShareValueSharePriceSensitiveSegment"	:	"Value Share (%) in 1. Price Sensitive Segment",
+		"ReportMarketTrendsSKUSegmentWiseValueShareValueSharePretendersSegment"	:	"Value Share (%) in 2. Pretenders Segment",
+		"ReportMarketTrendsSKUSegmentWiseValueShareValueShareModerateSegment"	:	"Value Share (%) in 3. Moderate Segment",
+		"ReportMarketTrendsSKUSegmentWiseValueShareValueShareGoodLifeSegment"	:	"Value Share (%) in 4. Good Life Segment",
+		"ReportMarketTrendsSKUSegmentWiseValueShareValueShareUltimateSegment"	:	"Value Share (%) in 5. Ultimate Segment",
+		"ReportMarketTrendsSKUSegmentWiseValueShareValueSharePragmaticSegment"	:	"Value Share (%) in 6. Pragmatic Segment",
+
+		"ReportMarketTrendsSKUTableTitleSegmentWiseVolumeShare"	:	"Volume Share by Segment",	//Segment-wise Volume Share
+		"ReportMarketTrendsSKUSegmentWiseVolumeShareVolumeSharePriceSensitiveSegment"	:	"Volume Share (%) in 1. Price Sensitive Segment",
+		"ReportMarketTrendsSKUSegmentWiseVolumeShareVolumeSharePretendersSegment"	:	"Volume Share (%) in 2. Pretenders Segment",
+		"ReportMarketTrendsSKUSegmentWiseVolumeShareVolumeShareModerateSegment"	:	"Volume Share (%) in 3. Moderate Segment",
+		"ReportMarketTrendsSKUSegmentWiseVolumeShareVolumeShareGoodLifeSegment"	:	"Volume Share (%) in 4. Good Life Segment",
+		"ReportMarketTrendsSKUSegmentWiseVolumeShareVolumeShareUltimateSegment"	:	"Volume Share (%) in 5. Ultimate Segment",
+		"ReportMarketTrendsSKUSegmentWiseVolumeShareVolumeSharePragmaticSegment"	:	"Volume Share (%) in 6. Pragmatic Segment",
+		"ReportMarketTrendsSKUSegmentWiseVolumeShareVolumeWeightedDistribution"	:	"Volume-weighted Distribution (%)",
+
 		
 		
 		//Labels for Market Trends - Brand Level
@@ -713,6 +717,15 @@ app.config(['$translateProvider', function($translateProvider){
 		
 
     });
+
+
+
+
+
+
+
+
+
 
     // Adding a translation table for the Russian language
     $translateProvider.translations('zh_CN', {
@@ -1210,27 +1223,30 @@ app.config(['$translateProvider', function($translateProvider){
 		"ReportMarketTrendsSKUMarketFiguresMarketNetSalesVolume"	:	"市场销量  (百万标准包)",
 		"ReportMarketTrendsSKUMarketFiguresMarketShareValue"	:	"市场份额 (销售额 %)",
 		"ReportMarketTrendsSKUMarketFiguresMarketShareVolume"	:	"市场份额 (销量 %)",
+
 		"ReportMarketTrendsSKUTableTitleMiscellaneous"	:	"其他",	//Miscellaneous
 		"ReportMarketTrendsSKUMiscellaneousLostSalesVolumeduetoOOS"	:	"因缺货损失的销售量 (百万标准包)",
 		"ReportMarketTrendsSKUMiscellaneousNumericalDistribution"	:	"数值分销率 (%)",
-		"ReportMarketTrendsSKUMiscellaneousTotalInventoryatTrade"	:	"渠道中的库存量 (百万标准包)",
+		"ReportMarketTrendsSKUMiscellaneousTotalInventoryAtTrade"	:	"渠道中的库存量 (百万标准包)",
 		"ReportMarketTrendsSKUMiscellaneousPriceRankingIndex"	:	"价格排序指数",
 		"ReportMarketTrendsSKUMiscellaneousShelfSpace"	:	"货架空间 (%)",
-		"ReportMarketTrendsSKUTableTitleSegmentwiseValueShare"	:	"占细分市场销售额的(%)",	//Value Share by Segment
-		"ReportMarketTrendsSKUSegmentwiseValueShareValueSharePriceSensitiveSegment"	:	"占细分市场销售额的(%) 1. 价格敏感型 市场",
-		"ReportMarketTrendsSKUSegmentwiseValueShareValueSharePretendersSegment"	:	"占细分市场销售额的 (%) 2. 虚荣型 市场",
-		"ReportMarketTrendsSKUSegmentwiseValueShareValueShareModerateSegment"	:	"占细分市场销售额的(%) 3. 适中型 市场",
-		"ReportMarketTrendsSKUSegmentwiseValueShareValueShareGoodLifeSegment"	:	"占细分市场销售额的 (%) 4. 享受生活型 市场",
-		"ReportMarketTrendsSKUSegmentwiseValueShareValueShareUltimateSegment"	:	"占细分市场销售额的 (%) 5. 追求极致型 市场",
-		"ReportMarketTrendsSKUSegmentwiseValueShareValueSharePragmaticSegment"	:	"占细分市场销售额的 (%) 6. 实用型 市场",
-		"ReportMarketTrendsSKUTableTitleSegmentwiseVolumeShareSegment-wise Volume Share"	: "占细分市场销量的(%)",	//Segment-wise Volume Share
-		"ReportMarketTrendsSKUSegmentwiseValueShareVolumeSharePriceSensitiveSegment"	:	"占细分市场销量的 (%) 1. 价格敏感型 市场",
-		"ReportMarketTrendsSKUSegmentwiseValueShareVolumeSharePretendersSegment"	:	"占细分市场销量的(%) 2. 虚荣型 市场",
-		"ReportMarketTrendsSKUSegmentwiseValueShareVolumeShareModerateSegment"	:	"占细分市场销量的 (%) 3. 适中型 市场",
-		"ReportMarketTrendsSKUSegmentwiseValueShareVolumeShareGoodLifeSegment"	:	"占细分市场销量的(%) 4. 享受生活型 市场",
-		"ReportMarketTrendsSKUSegmentwiseValueShareVolumeShareUltimateSegment"	:	"占细分市场销量的 (%) 5. 追求极致型 市场",
-		"ReportMarketTrendsSKUSegmentwiseValueShareVolumeSharePragmaticSegment"	:	"占细分市场销量的(%) 6. 实用型 市场",
-		
+
+		"ReportMarketTrendsSKUTableTitleSegmentWiseValueShare"	:	"占细分市场销售额的(%)",	//Value Share by Segment
+		"ReportMarketTrendsSKUSegmentWiseValueShareValueSharePriceSensitiveSegment"	:	"占细分市场销售额的(%) 1. 价格敏感型 市场",
+		"ReportMarketTrendsSKUSegmentWiseValueShareValueSharePretendersSegment"	:	"占细分市场销售额的(%) 2. 虚荣型 市场",
+		"ReportMarketTrendsSKUSegmentWiseValueShareValueShareModerateSegment"	:	"占细分市场销售额的(%) 3. 适中型 市场",
+		"ReportMarketTrendsSKUSegmentWiseValueShareValueShareGoodLifeSegment"	:	"占细分市场销售额的(%) 4. 享受生活型 市场",
+		"ReportMarketTrendsSKUSegmentWiseValueShareValueShareUltimateSegment"	:	"占细分市场销售额的(%) 5. 追求极致型 市场",
+		"ReportMarketTrendsSKUSegmentWiseValueShareValueSharePragmaticSegment"	:	"占细分市场销售额的(%) 6. 实用型 市场",
+
+		"ReportMarketTrendsSKUTableTitleSegmentWiseVolumeShare"	: "占细分市场销量的(%)",	//Segment-wise Volume Share
+		"ReportMarketTrendsSKUSegmentWiseVolumeShareVolumeSharePriceSensitiveSegment"	:	"占细分市场销量的(%) 1. 价格敏感型 市场",
+		"ReportMarketTrendsSKUSegmentWiseVolumeShareVolumeSharePretendersSegment"	:	"占细分市场销量的(%) 2. 虚荣型 市场",
+		"ReportMarketTrendsSKUSegmentWiseVolumeShareVolumeShareModerateSegment"	:	"占细分市场销量的(%) 3. 适中型 市场",
+		"ReportMarketTrendsSKUSegmentWiseVolumeShareVolumeShareGoodLifeSegment"	:	"占细分市场销量的(%) 4. 享受生活型 市场",
+		"ReportMarketTrendsSKUSegmentWiseVolumeShareVolumeShareUltimateSegment"	:	"占细分市场销量的(%) 5. 追求极致型 市场",
+		"ReportMarketTrendsSKUSegmentWiseVolumeShareVolumeSharePragmaticSegment"	:	"占细分市场销量的(%) 6. 实用型 市场",
+        "ReportMarketTrendsSKUSegmentWiseVolumeShareVolumeWeightedDistribution"	:	"Need translation",
 		
 		
 		//Labels for Market Trends - Brand Level

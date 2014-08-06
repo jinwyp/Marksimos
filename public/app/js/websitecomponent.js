@@ -159,10 +159,7 @@ app.directive('tableReportMarketTrendsSku', function() {
 
             if(angular.isUndefined(scope.unit)) {
                 scope.unit = '';
-            }else if (scope.unit === "%"){
-                scope.plus = 1;
             }
-
         }
     };
 });
@@ -181,8 +178,6 @@ app.directive('tableReportMarketTrendsBrand', function() {
 
             if(angular.isUndefined(scope.unit)) {
                 scope.unit = '';
-            }else if (scope.unit === "%"){
-                scope.plus = 1;
             }
 
         }
@@ -203,13 +198,12 @@ app.directive('tableReportMarketTrendsGlobal', function() {
 
             if(angular.isUndefined(scope.unit)) {
                 scope.unit = '';
-            }else if (scope.unit === "%"){
-                scope.plus = 1;
             }
 
         }
     };
 });
+
 
 app.directive('tableReportMarketIndicator', ['$translate', function($translate) {
     return {
