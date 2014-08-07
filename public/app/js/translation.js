@@ -1,5 +1,5 @@
 /**
- * Created by jinwyp on 7/8/14 .
+ * Created by jinwyp on 7/8/14  .
  */
 
 var app = angular.module('marksimos.translation', []);
