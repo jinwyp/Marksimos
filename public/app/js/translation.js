@@ -78,8 +78,8 @@ app.config(['$translateProvider', function($translateProvider){
 		//Labels for Company Status Report - SKU Level
 		"ReportCompanyStatusSKUMarketShareValue"	:	"Market Share (Value %)",
 		"ReportCompanyStatusSKUMarketShareVolume"	:	"Market Share (Volume %)",
-		"ReportCompanyStatusSKUMarketSalesVolume"	:	"Market Sales Volume (mln std. packs)",	
-		"ReportCompanyStatusSKULostSalesVolumeduetoOOS"	:	"Lost Sales Volume due to OOS (mln std. packs)",
+		"ReportCompanyStatusSKUMarketSalesVolumeStd"	:	"Market Sales Volume (mln std. packs)",	
+		"ReportCompanyStatusSKULostSalesVolumeduetoOOSStd"	:	"Lost Sales Volume due to OOS (mln std. packs)",
 		"ReportCompanyStatusSKUNumericalDistribution"	:	"Numerical Distribution (%)",
 		"ReportCompanyStatusSKUVolumeweightedDistribution"	:	"Volume-weighted Distribution (%)",
 		"ReportCompanyStatusSKUShelfSpace"	:	"Shelf Space (%)",
@@ -111,10 +111,10 @@ app.config(['$translateProvider', function($translateProvider){
 		
 		
 		//Labels for Company Status Report - Brand Level
-		"ReportCompanyStatusBrandMarketShare"	:	"Market Share (Value %)",
-		"ReportCompanyStatusBrandMarketShare"	:	"Market Share (Volume %)",
-		"ReportCompanyStatusBrandMarketSalesVolume"	:	"Market Sales Volume (mln std. packs)",
-		"ReportCompanyStatusBrandLostSalesVolumeduetoOOS"	:	"Lost Sales Volume due to OOS (mln std. packs)",
+		"ReportCompanyStatusBrandMarketShareValue"	:	"Market Share (Value %)",
+		"ReportCompanyStatusBrandMarketShareVolume"	:	"Market Share (Volume %)",
+		"ReportCompanyStatusBrandMarketSalesVolumeStd"	:	"Market Sales Volume (mln std. packs)",
+		"ReportCompanyStatusBrandLostSalesVolumeduetoOOSStd"	:	"Lost Sales Volume due to OOS (mln std. packs)",
 		"ReportCompanyStatusBrandNumericalDistribution"	:	"Numerical Distribution (%)",
 		"ReportCompanyStatusBrandVolume-weightedDistribution"	:	"Volume-weighted Distribution (%)",
 		"ReportCompanyStatusBrandShelfSpace"	:	"Shelf Space (%)",
@@ -143,10 +143,10 @@ app.config(['$translateProvider', function($translateProvider){
 		
 		
 		//Labels for Company Status Report - Global Level
-		"ReportCompanyStatusGlobalMarketShare"	:	"Market Share (Value %)",
-		"ReportCompanyStatusGlobalMarketShare"	:	"Market Share (Volume %)",
-		"ReportCompanyStatusGlobalMarketSalesVolume"	:	"Market Sales Volume (mln std. packs)",
-		"ReportCompanyStatusGlobalLostSalesVolumeduetoOOS"	:	"Lost Sales Volume due to OOS (mln std. packs)",
+		"ReportCompanyStatusGlobalMarketShareValue"	:	"Market Share (Value %)",
+		"ReportCompanyStatusGlobalMarketShareVolume"	:	"Market Share (Volume %)",
+		"ReportCompanyStatusGlobalMarketSalesVolumeStd"	:	"Market Sales Volume (mln std. packs)",
+		"ReportCompanyStatusGlobalLostSalesVolumeduetoOOSStd"	:	"Lost Sales Volume due to OOS (mln std. packs)",
 		"ReportCompanyStatusGlobalNumericalDistribution"	:	"Numerical Distribution (%)",
 		"ReportCompanyStatusGlobalVolume-weightedDistribution"	:	"Volume-weighted Distribution (%)",
 		"ReportCompanyStatusGlobalShelfSpace"	:	"Shelf Space (%)",
@@ -173,8 +173,8 @@ app.config(['$translateProvider', function($translateProvider){
 		
 		
 		//Labels for Financial Report - Brand Level
-		"ReportFinancialReportBrandSales Value"	:	"Sales Value ($ mln)",
-		"ReportFinancialReportBrandChangeVersusPreviousperiod"	:	"(%) Change Versus Previous period",
+		"ReportFinancialReportBrandSalesValue"	:	"Sales Value ($ mln)",
+		"ReportFinancialReportBrandChangeVersusPreviousperiodSalesValue"	:	"(%) Change Versus Previous period",
 		"ReportFinancialReportBrandShareInBrandTotalSalesValue"	:	"Share In Brand Total Sales Value (%)",
 		"ReportFinancialReportBrandCostofGoodsSold"	:	"Cost of Goods Sold ($ mln)",
 		"ReportFinancialReportBrandObsoleteGoodsCost"	:	"Obsolete Goods Cost ($ mln)",
@@ -182,7 +182,7 @@ app.config(['$translateProvider', function($translateProvider){
 		"ReportFinancialReportBrandInventoryHoldingCost"	:	"Inventory Holding Cost ($ mln)",
 		"ReportFinancialReportBrandTotalMaterialCost"	:	"Total Material Cost ($ mln)",
 		"ReportFinancialReportBrandGrossProfit"	:	"Gross Profit ($ mln)",
-		"ReportFinancialReportBrandChangeVersusPreviousperiod"	:	"(%) Change Versus Previous period",
+		"ReportFinancialReportBrandChangeVersusPreviousperiodGrossProfit"	:	"(%) Change Versus Previous period",
 		"ReportFinancialReportBrandGrossProfitMargin"	:	"Gross Profit Margin (%)",
 		"ReportFinancialReportBrandShareInBrandGrossProfitLosses"	:	"Share In Brand Gross Profit/Losses (%)",
 		"ReportFinancialReportBrandAdvertising"	:	"Advertising ($ mln)",
@@ -197,14 +197,14 @@ app.config(['$translateProvider', function($translateProvider){
 		"ReportFinancialReportBrandGeneralExpenses"	:	"General Expenses ($ mln)",
 		"ReportFinancialReportBrandAmortisation"	:	"Amortisation ($ mln)",
 		"ReportFinancialReportBrandOperatingProfit"	:	"Operating Profit ($ mln)",
-		"ReportFinancialReportBrandChangeVersusPreviousperiod"	:	"(%) Change Versus Previous period",
+		"ReportFinancialReportBrandChangeVersusPreviousperiodOperatingProfit"	:	"(%) Change Versus Previous period",
 		"ReportFinancialReportBrandOperatingProfitMargin"	:	"Operating Profit Margin (%)",
 		"ReportFinancialReportBrandShareinBrandOperatingProfitLoss"	:	"Share in Brand Operating Profit/Loss (%)",
 		"ReportFinancialReportBrandInterests"	:	"Interests ($ mln)",
 		"ReportFinancialReportBrandTaxes"	:	"Taxes ($ mln)",
 		"ReportFinancialReportBrandExceptionalCostProfit"	:	"Exceptional Cost/Profit ($ mln)",
 		"ReportFinancialReportBrandNetProfit"	:	"Net Profit ($ mln)",
-		"ReportFinancialReportBrandChangeVersusPreviousperiod"	:	"(%) Change Versus Previous period",
+		"ReportFinancialReportBrandChangeVersusPreviousperiodNetProfit"	:	"(%) Change Versus Previous period",
 		"ReportFinancialReportBrandNetProfitMargin"	:	"Net Profit Margin (%)",
 		"ReportFinancialReportBrandShareinBrandNetProfitLoss"	:	"Share in Brand Net Profit/Loss (%)",
 		"ReportFinancialReportBrandProductionCost"	:	"Production Cost ($ mln)",
@@ -212,8 +212,8 @@ app.config(['$translateProvider', function($translateProvider){
 
 
 		//Labels for Financial Report - All Brands
-		"ReportFinancialReportAllBrandSales Value"	:	"Sales Value ($ mln)",
-		"ReportFinancialReportAllBrandChangeVersusPreviousperiod"	:	"(%) Change Versus Previous period",
+		"ReportFinancialReportAllBrandSalesValue"	:	"Sales Value ($ mln)",
+		"ReportFinancialReportAllBrandChangeVersusPreviousperiodSalesValue"	:	"(%) Change Versus Previous period",
 		"ReportFinancialReportAllBrandShareInCompanyTotalSalesValue"	:	"Share In Company Total Sales Value (%)",
 		"ReportFinancialReportAllBrandCostofGoodsSold"	:	"Cost of Goods Sold ($ mln)",
 		"ReportFinancialReportAllBrandObsoleteGoodsCost"	:	"Obsolete Goods Cost ($ mln)",
@@ -221,7 +221,7 @@ app.config(['$translateProvider', function($translateProvider){
 		"ReportFinancialReportAllBrandInventoryHoldingCost"	:	"Inventory Holding Cost ($ mln)",
 		"ReportFinancialReportAllBrandTotalMaterialCost"	:	"Total Material Cost ($ mln)",
 		"ReportFinancialReportAllBrandGrossProfit"	:	"Gross Profit ($ mln)",
-		"ReportFinancialReportAllBrandChangeVersusPreviousperiod"	:	"(%) Change Versus Previous period",
+		"ReportFinancialReportAllBrandChangeVersusPreviousperiodGrossProfit"	:	"(%) Change Versus Previous period",
 		"ReportFinancialReportAllBrandGrossProfitMargin"	:	"Gross Profit Margin (%)",
 		"ReportFinancialReportAllBrandShareInCompanyGrossProfitLosses"	:	"Share In Company Gross Profit/Losses (%)",
 		"ReportFinancialReportAllBrandAdvertising"	:	"Advertising ($ mln)",
@@ -236,14 +236,14 @@ app.config(['$translateProvider', function($translateProvider){
 		"ReportFinancialReportAllBrandGeneralExpenses"	:	"General Expenses ($ mln)",
 		"ReportFinancialReportAllBrandAmortisation"	:	"Amortisation ($ mln)",
 		"ReportFinancialReportAllBrandOperatingProfit"	:	"Operating Profit ($ mln)",
-		"ReportFinancialReportAllBrandChangeVersusPreviousperiod"	:	"(%) Change Versus Previous period",
+		"ReportFinancialReportAllBrandChangeVersusPreviousperiodOperatingProfit"	:	"(%) Change Versus Previous period",
 		"ReportFinancialReportAllBrandOperatingProfitMargin"	:	"Operating Profit Margin (%)",
 		"ReportFinancialReportAllBrandShareinBrandOperatingProfitLoss"	:	"Share in Company Operating Profit/Loss (%)",
 		"ReportFinancialReportAllBrandInterests"	:	"Interests ($ mln)",
 		"ReportFinancialReportAllBrandTaxes"	:	"Taxes ($ mln)",
 		"ReportFinancialReportAllBrandExceptionalCost/Profit"	:	"Exceptional Cost/Profit ($ mln)",
 		"ReportFinancialReportAllBrandNetProfit"	:	"Net Profit ($ mln)",
-		"ReportFinancialReportAllBrandChangeVersusPreviousperiod"	:	"(%) Change Versus Previous period",
+		"ReportFinancialReportAllBrandChangeVersusPreviousperiodNetProfit"	:	"(%) Change Versus Previous period",
 		"ReportFinancialReportAllBrandNetProfitMargin"	:	"Net Profit Margin (%)",
 		"ReportFinancialReportAllBrandShareinBrandOperatingProfitLoss"	:	"Share in Company Net Profit/Loss (%)",
 		"ReportFinancialReportAllBrandProductionCost"	:	"Production Cost ($ mln)",
@@ -438,7 +438,7 @@ app.config(['$translateProvider', function($translateProvider){
 		"ReportCompetitorIntelligenceOperationsInventoryVolumeatWholesalers"	:	"Inventory Volume at Wholesalers (mln std. packs)",
 		"ReportCompetitorIntelligenceOperationsNextPeriodAvailableProd.Capacity"	:	"Next Period Available Prod.Capacity (mln std. packs)",
 		"ReportCompetitorIntelligenceOperationsProductionVolume"	:	"Production Volume (mln std. packs)",
-		"ReportCompetitorIntelligenceTableTitleOperations"	:	"Investments",
+		"ReportCompetitorIntelligenceTableTitleInvestments"	:	"Investments",
 		"ReportCompetitorIntelligenceInvestmentsInvestmenttoImproveTechnologyLevel"	:	"Investment to Improve Technology Level ($ mln)",
 		"ReportCompetitorIntelligenceInvestmentsInvestmenttoIncreaseProductionEfficiency"	:	"Investment to Increase Production Efficiency ($ mln)",
 		 
@@ -480,7 +480,7 @@ app.config(['$translateProvider', function($translateProvider){
 		"ReportSegmentDistributionsTableTitleMarketShareVolume"	:	"Market Share (Volume %)",
 		"ReportSegmentDistributionsTableTitleMarketSalesValue"	:	"Market Sales Value ($ mln)",
 		"ReportSegmentDistributionsTableTitleMarketSalesVolume"	:	"Market Sales Volume (mln std. packs)",
-		"ReportSegmentDistributionsTableTitleAverageNetMarketPrice"	:	"Average Net Market Price ($/std.pack)",
+		"ReportSegmentDistributionsTableTitleAverageNetMarketPrice"	:	"Average Net Market Price ($/std. pack)",
 		"ReportSegmentDistributionsTableTitleValuePerception"	:	"Value Perception",
 		"ReportSegmentDistributionsTableTitleImagePerception"	:	"Image Perception",
 
@@ -540,7 +540,7 @@ app.config(['$translateProvider', function($translateProvider){
 
 		"ReportMarketTrendsBrandMiscellaneousLostSalesVolumeduetoOOS"	:	"Lost Sales Volume due to OOS (mln std. packs)",
 		"ReportMarketTrendsBrandMiscellaneousNumericalDistribution"	:	"Numerical Distribution (%)",
-		"ReportMarketTrendsBrandMiscellaneousTotalInventoryAtTrade"	:	"Total Inventory at Trade (mln std.packs)",
+		"ReportMarketTrendsBrandMiscellaneousTotalInventoryAtTrade"	:	"Total Inventory at Trade (mln std. packs)",
 		"ReportMarketTrendsBrandMiscellaneousPriceRankingIndex"	:	"Price Ranking Index",
 		"ReportMarketTrendsBrandMiscellaneousShelfSpace"	:	"Shelf Space (%)",
 
@@ -561,15 +561,15 @@ app.config(['$translateProvider', function($translateProvider){
 		
 		//Labels for Market Trends - Global Level
 		"ReportMarketTrendsGlobalTableTitleMarketFigures"	:	"Market Figures",	//Market Figures
-		"ReportMarketTrendsGlobalMarketFiguresAverageNetMarketPrice"	:	"Average Net Market Price ($/std.pack)",
+		"ReportMarketTrendsGlobalMarketFiguresAverageNetMarketPrice"	:	"Average Net Market Price ($/std. pack)",
 		"ReportMarketTrendsGlobalMarketFiguresMarketNetSalesValue"	:	"Market Net Sales Value ($ mln)",
-		"ReportMarketTrendsGlobalMarketFiguresMarketNetSalesVolume"	:	"Market Net Sales Volume (mln std.packs)",
+		"ReportMarketTrendsGlobalMarketFiguresMarketNetSalesVolume"	:	"Market Net Sales Volume (mln std. packs)",
 		"ReportMarketTrendsGlobalMarketFiguresMarketShareValue"	:	"Market Share (Value %)",
 		"ReportMarketTrendsGlobalMarketFiguresMarketShareVolume"	:	"Market Share (Volume %)",
 		"ReportMarketTrendsGlobalTableTitleMiscellaneous"	:	"Miscellaneous",	//Miscellaneous
-		"ReportMarketTrendsGlobalMiscellaneousLostSalesVolumeduetoOOS"	:	"Lost Sales Volume due to OOS (mln std.packs)",
+		"ReportMarketTrendsGlobalMiscellaneousLostSalesVolumeduetoOOS"	:	"Lost Sales Volume due to OOS (mln std. packs)",
 		"ReportMarketTrendsGlobalMiscellaneousNumericalDistribution"	:	"Numerical Distribution (%)",
-		"ReportMarketTrendsGlobalMiscellaneousTotalInventoryatTrade"	:	"Total Inventory at Trade (mln std.packs)",
+		"ReportMarketTrendsGlobalMiscellaneousTotalInventoryatTrade"	:	"Total Inventory at Trade (mln std. packs)",
 		"ReportMarketTrendsGlobalMiscellaneousPriceRankingIndex"	:	"Price Ranking Index",
 		"ReportMarketTrendsGlobalMiscellaneousShelfSpace"	:	"Shelf Space (%)",
 		"ReportMarketTrendsGlobalTableTitleSegmentwiseValueShare"	:	"Value Share by Segment",	//Segment-wise Value Share
@@ -798,8 +798,8 @@ app.config(['$translateProvider', function($translateProvider){
 		//Labels for Company Status Report - SKU Level
 		"ReportCompanyStatusSKUMarketShareValue"	:	"市场份额 (销售额 %)",
 		"ReportCompanyStatusSKUMarketShareVolume"	:	"市场份额 (销量 %)",
-		"ReportCompanyStatusSKUMarketSalesVolume"	:	"市场销量 (百万标准包)",
-		"ReportCompanyStatusSKULostSalesVolumeduetoOOS"	:	"因缺货损失的销售量 (百万标准包)",
+		"ReportCompanyStatusSKUMarketSalesVolumeStd"	:	"市场销量 (百万标准包)",
+		"ReportCompanyStatusSKULostSalesVolumeduetoOOSStd"	:	"因缺货损失的销售量 (百万标准包)",
 		"ReportCompanyStatusSKUNumericalDistribution"	:	"数值分销率 (%)",
 		"ReportCompanyStatusSKUVolumeweightedDistribution"	:	"加权分销率 (%)",
 		"ReportCompanyStatusSKUShelfSpace"	:	"货架空间 (%)",
@@ -831,10 +831,10 @@ app.config(['$translateProvider', function($translateProvider){
 		
 		
 		//Labels for Company Status Report - Brand Level
-		"ReportCompanyStatusBrandMarketShare"	:	"市场份额 (销售额 %)",
-		"ReportCompanyStatusBrandMarketShare"	:	"市场份额 (销量 %)",
-		"ReportCompanyStatusBrandMarketSalesVolume"	:	"市场销量 (百万标准包)",		
-		"ReportCompanyStatusBrandLostSalesVolumeduetoOOS"	:	"因缺货损失的销售量 (百万标准包)",
+		"ReportCompanyStatusBrandMarketShareValue"	:	"市场份额 (销售额 %)",
+		"ReportCompanyStatusBrandMarketShareVolume"	:	"市场份额 (销量 %)",
+		"ReportCompanyStatusBrandMarketSalesVolumeStd"	:	"市场销量 (百万标准包)",		
+		"ReportCompanyStatusBrandLostSalesVolumeduetoOOSStd"	:	"因缺货损失的销售量 (百万标准包)",
 		"ReportCompanyStatusBrandNumericalDistribution"	:	"数值分销率 (%)",
 		"ReportCompanyStatusBrandVolume-weightedDistribution"	:	"加权分销率 (%)",
 		"ReportCompanyStatusBrandShelfSpace"	:	"货架空间 (%)",
@@ -863,10 +863,10 @@ app.config(['$translateProvider', function($translateProvider){
 		
 		
 		//Labels for Company Status Report - Global Level
-		"ReportCompanyStatusGlobalMarketShare"	:	"市场份额 (销售额 %)",
-		"ReportCompanyStatusGlobalMarketShare"	:	"市场份额 (销量 %)",
-		"ReportCompanyStatusGlobalMarketSalesVolume"	:	"市场销量 (百万标准包)",
-		"ReportCompanyStatusGlobalLostSalesVolumeduetoOOS"	:	"因缺货损失的销售量 (百万标准包)",
+		"ReportCompanyStatusGlobalMarketShareValue"	:	"市场份额 (销售额 %)",
+		"ReportCompanyStatusGlobalMarketShareVolume"	:	"市场份额 (销量 %)",
+		"ReportCompanyStatusGlobalMarketSalesVolumeStd"	:	"市场销量 (百万标准包)",
+		"ReportCompanyStatusGlobalLostSalesVolumeduetoOOSStd"	:	"因缺货损失的销售量 (百万标准包)",
 		"ReportCompanyStatusGlobalNumericalDistribution"	:	"数值分销率 (%)",
 		"ReportCompanyStatusGlobalVolume-weightedDistribution"	:	"加权分销率 (%)",
 		"ReportCompanyStatusGlobalShelfSpace"	:	"货架空间 (%)",
@@ -893,8 +893,8 @@ app.config(['$translateProvider', function($translateProvider){
 		
 		
 		//Labels for Financial Report - Brand Level
-		"ReportFinancialReportBrandSales Value"	:	"销售额 ($ mln)",
-		"ReportFinancialReportBrandChangeVersusPreviousperiod"	:	"(%) 相对于上阶段的改变",
+		"ReportFinancialReportBrandSalesValue"	:	"销售额 ($ mln)",
+		"ReportFinancialReportBrandChangeVersusPreviousperiodSalesValue"	:	"(%) 相对于上阶段的改变",
 		"ReportFinancialReportBrandShareInBrandTotalSalesValue"	:	"占该品牌总销售额的份额 (%)",
 		"ReportFinancialReportBrandCostofGoodsSold"	:	"售出商品成本 ($ mln)",
 		"ReportFinancialReportBrandObsoleteGoodsCost"	:	"处理商品成本 ($ mln)",
@@ -902,7 +902,7 @@ app.config(['$translateProvider', function($translateProvider){
 		"ReportFinancialReportBrandInventoryHoldingCost"	:	"库存持有成本 ($ mln)",
 		"ReportFinancialReportBrandTotalMaterialCost"	:	"总材料成本 ($ mln)",
 		"ReportFinancialReportBrandGrossProfit"	:	"毛利额 ($ mln)",
-		"ReportFinancialReportBrandChangeVersusPreviousperiod"	:	"(%) 相对于上阶段的改变",
+		"ReportFinancialReportBrandChangeVersusPreviousperiodGrossProfit"	:	"(%) 相对于上阶段的改变",
 		"ReportFinancialReportBrandGrossProfitMargin"	:	"毛利率 (%)",
 		"ReportFinancialReportBrandShareInBrandGrossProfitLosses"	:	"占该品牌 毛利/负毛利 的份额 (%)",
 		"ReportFinancialReportBrandAdvertising"	:	"广告费用 ($ mln)",
@@ -917,14 +917,14 @@ app.config(['$translateProvider', function($translateProvider){
 		"ReportFinancialReportBrandGeneralExpenses"	:	"一般性开支 ($ mln)",
 		"ReportFinancialReportBrandAmortisation"	:	"摊销费用 ($ mln)",
 		"ReportFinancialReportBrandOperatingProfit"	:	"运营利润 ($ mln)",
-		"ReportFinancialReportBrandChangeVersusPreviousperiod"	:	"(%) 相对于上阶段的改变",
+		"ReportFinancialReportBrandChangeVersusPreviousperiodOperatingProfit"	:	"(%) 相对于上阶段的改变",
 		"ReportFinancialReportBrandOperatingProfitMargin"	:	"运营利润率 (%)",
 		"ReportFinancialReportBrandShareinBrandOperatingProfitLoss"	:	"占该品牌 运营利润/运营亏损 的份额 (%)",
 		"ReportFinancialReportBrandInterests"	:	"利息 ($ mln)",
 		"ReportFinancialReportBrandTaxes"	:	"税 ($ mln)",
 		"ReportFinancialReportBrandExceptionalCostProfit"	:	"额外开支/利润  ($ mln)",
 		"ReportFinancialReportBrandNetProfit"	:	"净利润 ($ mln)",
-		"ReportFinancialReportBrandChangeVersusPreviousperiod"	:	"(%) 相对于上阶段的改变",
+		"ReportFinancialReportBrandChangeVersusPreviousperiodNetProfit"	:	"(%) 相对于上阶段的改变",
 		"ReportFinancialReportBrandNetProfitMargin"	:	"净利率 (%)",
 		"ReportFinancialReportBrandShareinBrandNetProfitLoss"	:	"占该品牌 净利润/净亏损 的份额 (%)",
 		"ReportFinancialReportBrandProductionCost"	:	"生产成本 ($ mln)",
@@ -932,8 +932,8 @@ app.config(['$translateProvider', function($translateProvider){
 
 
 		//Labels for Financial Report - All Brands
-		"ReportFinancialReportAllBrandSales Value"	:	"销售额 ($ mln)",
-		"ReportFinancialReportAllBrandChangeVersusPreviousperiod"	:	"(%) 相对于上阶段的改变",
+		"ReportFinancialReportAllBrandSalesValue"	:	"销售额 ($ mln)",
+		"ReportFinancialReportAllBrandChangeVersusPreviousperiodSalesValue"	:	"(%) 相对于上阶段的改变",
 		"ReportFinancialReportAllBrandShareInCompanyTotalSalesValue"	:	"占公司总销售额的份额 (%)",
 		"ReportFinancialReportAllBrandCostofGoodsSold"	:	"售出商品成本 ($ mln)",
 		"ReportFinancialReportAllBrandObsoleteGoodsCost"	:	"处理商品成本 ($ mln)",
@@ -941,7 +941,7 @@ app.config(['$translateProvider', function($translateProvider){
 		"ReportFinancialReportAllBrandInventoryHoldingCost"	:	"库存持有成本 ($ mln)",
 		"ReportFinancialReportAllBrandTotalMaterialCost"	:	"总材料成本 ($ mln)",
 		"ReportFinancialReportAllBrandGrossProfit"	:	"毛利额 ($ mln)",
-		"ReportFinancialReportAllBrandChangeVersusPreviousperiod"	:	"(%) 相对于上阶段的改变",
+		"ReportFinancialReportAllBrandChangeVersusPreviousperiodGrossProfit"	:	"(%) 相对于上阶段的改变",
 		"ReportFinancialReportAllBrandGrossProfitMargin"	:	"毛利率 (%)",
 		"ReportFinancialReportAllBrandShareInCompanyGrossProfitLosses"	:	"占公司 总毛利/总负毛利 的份额 (%)",
 		"ReportFinancialReportAllBrandAdvertising"	:	"广告费用 ($ mln)",
@@ -956,14 +956,14 @@ app.config(['$translateProvider', function($translateProvider){
 		"ReportFinancialReportAllBrandGeneralExpenses"	:	"一般性开支 ($ mln)",
 		"ReportFinancialReportAllBrandAmortisation"	:	"摊销费用 ($ mln)",
 		"ReportFinancialReportAllBrandOperatingProfit"	:	"运营利润 ($ mln)",
-		"ReportFinancialReportAllBrandChangeVersusPreviousperiod"	:	"(%) 相对于上阶段的改变",
+		"ReportFinancialReportAllBrandChangeVersusPreviousperiodOperatingProfit"	:	"(%) 相对于上阶段的改变",
 		"ReportFinancialReportAllBrandOperatingProfitMargin"	:	"运营利润率 (%)",
 		"ReportFinancialReportAllBrandShareinBrandOperatingProfitLoss"	:	"占公司 总运营利润/总运营亏损 的份额 (%)",
 		"ReportFinancialReportAllBrandInterests"	:	"利息 ($ mln)",
 		"ReportFinancialReportAllBrandTaxes"	:	"税 ($ mln)",
 		"ReportFinancialReportAllBrandExceptionalCostProfit"	:	"额外开支/利润  ($ mln)",
 		"ReportFinancialReportAllBrandNetProfit"	:	"净利润 ($ mln)",
-		"ReportFinancialReportAllBrandChangeVersusPreviousperiod"	:	"(%) 相对于上阶段的改变",
+		"ReportFinancialReportAllBrandChangeVersusPreviousperiodNetProfit"	:	"(%) 相对于上阶段的改变",
 		"ReportFinancialReportAllBrandNetProfitMargin"	:	"净利率 (%)",
 		"ReportFinancialReportAllBrandShareinBrandNetProfitLoss"	:	"占公司 净利润/净亏损 的份额 (%)",
 		"ReportFinancialReportAllBrandProductionCost"	:	"生产成本 ($ mln)",
@@ -1158,7 +1158,7 @@ app.config(['$translateProvider', function($translateProvider){
 		"ReportCompetitorIntelligenceOperationsInventoryVolumeatWholesalers"	:	"经销商持有的库存量 (百万标准包)",
 		"ReportCompetitorIntelligenceOperationsNextPeriodAvailableProd.Capacity"	:	"下一阶段产能 (百万标准包)",
 		"ReportCompetitorIntelligenceOperationsProductionVolume"	:	"产量 (百万标准包)",
-		"ReportCompetitorIntelligenceTableTitleOperations"	:	"投资",
+		"ReportCompetitorIntelligenceTableTitleInvestments"	:	"投资",
 		"ReportCompetitorIntelligenceInvestmentsInvestmenttoImproveTechnologyLevel"	:	"技术水平投资 ($ mln)",
 		"ReportCompetitorIntelligenceInvestmentsInvestmenttoIncreaseProductionEfficiency"	:	"生产效率投资 ($ mln)",
 		 
@@ -1245,7 +1245,7 @@ app.config(['$translateProvider', function($translateProvider){
 		"ReportMarketTrendsSKUSegmentWiseVolumeShareVolumeShareGoodLifeSegment"	:	"占细分市场销量的(%) 4. 享受生活型 市场",
 		"ReportMarketTrendsSKUSegmentWiseVolumeShareVolumeShareUltimateSegment"	:	"占细分市场销量的(%) 5. 追求极致型 市场",
 		"ReportMarketTrendsSKUSegmentWiseVolumeShareVolumeSharePragmaticSegment"	:	"占细分市场销量的(%) 6. 实用型 市场",
-        "ReportMarketTrendsSKUSegmentWiseVolumeShareVolumeWeightedDistribution"	:	"Need translation",
+        "ReportMarketTrendsSKUSegmentWiseVolumeShareVolumeWeightedDistribution"	:	"加权分销率 (%)",
 		
 		
 		//Labels for Market Trends - Brand Level
