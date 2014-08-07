@@ -179,7 +179,6 @@ app.directive('tableReportMarketTrendsBrand', function() {
             if(angular.isUndefined(scope.unit)) {
                 scope.unit = '';
             }
-
         }
     };
 });
