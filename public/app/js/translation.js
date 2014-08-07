@@ -473,7 +473,6 @@ app.config(['$translateProvider', function($translateProvider){
 		"ReportPerceptionMapLabelCompanyE"	:	"Company E",
 		"ReportPerceptionMapLabelCompanyF"	:	"Company F",
 
-
 		//Labels for Segment Distributions
 		"ReportSegmentDistributionsTableTitleMarketShareValue"	:	"Market Share (Value %)",
 		"ReportSegmentDistributionsTableTitleMarketShareVolume"	:	"Market Share (Volume %)",
@@ -483,13 +482,11 @@ app.config(['$translateProvider', function($translateProvider){
 		"ReportSegmentDistributionsTableTitleValuePerception"	:	"Value Perception",
 		"ReportSegmentDistributionsTableTitleImagePerception"	:	"Image Perception",
 
-
 		//Labels for Market Evolution
-		"ReportMarketEvolutionChartTitleGrowthRateInVolume"	:	"Growth Rate In Volume (Period -3 = 100)",
-		"ReportMarketEvolutionChartTitleGrowthRateInValue"	:	"Growth Rate In Value (Period -3 = 100)",
-		"ReportMarketEvolutionChartTitleNetMarketPrice"	:	"Net Market Price (Period -3 = 100)",
-		"ReportMarketEvolutionChartTitleSegmentValueShareInTotalMarket"	:	"Segment Value Share In Total Market (%)",
-
+        "ReportMarketEvolutionChartTitleGrowthRateInVolume"             : "Growth Rate In Volume (Period -3 = 100)",
+        "ReportMarketEvolutionChartTitleGrowthRateInValue"              : "Growth Rate In Value (Period -3 = 100)",
+        "ReportMarketEvolutionChartTitleNetMarketPrice"                 : "Net Market Price (Period -3 = 100)",
+        "ReportMarketEvolutionChartTitleSegmentValueShareInTotalMarket" : "Segment Value Share In Total Market (%)",
 
         //Labels for Market Trends - SKU Level
         "ReportMarketTrendsSKUTableTitleMarketFigures"            : "Market Figures", //Market Figures
@@ -526,7 +523,6 @@ app.config(['$translateProvider', function($translateProvider){
         "ReportMarketTrendsSKUSegmentWiseVolumeShareVolumeSharePragmaticSegment"      : "Volume Share (%) in 6. Pragmatic Segment",
         "ReportMarketTrendsSKUSegmentWiseVolumeShareVolumeWeightedDistribution"       : "Volume-weighted Distribution (%)",
 
-
 		//Labels for Market Trends - Brand Level
         "ReportMarketTrendsBrandMarketFiguresAverageDisplayPrice"   : "Average Display Price ($/std. pack)",
         "ReportMarketTrendsBrandMarketFiguresAverageNetMarketPrice" : "Average Net Market Price ($/std. pack)",
@@ -558,7 +554,6 @@ app.config(['$translateProvider', function($translateProvider){
         "ReportMarketTrendsBrandSegmentWiseVolumeShareVolumeSharePragmaticSegment"      : "Volume Share (%) in 6. Pragmatic Segment",
         "ReportMarketTrendsBrandSegmentWiseVolumeShareVolumeWeightedDistribution"       : "Volume-weighted Distribution (%)",
 
-
 		//Labels for Market Trends - Global Level
         "ReportMarketTrendsGlobalMarketFiguresAverageNetMarketPrice" : "Average Net Market Price ($/std. pack)",
         "ReportMarketTrendsGlobalMarketFiguresMarketNetSalesValue"   : "Market Net Sales Value ($ mln)",
@@ -586,7 +581,6 @@ app.config(['$translateProvider', function($translateProvider){
         "ReportMarketTrendsGlobalSegmentWiseVolumeShareVolumeShareUltimateSegment"       : "Volume Share (%) in 5. Ultimate Segment",
         "ReportMarketTrendsGlobalSegmentWiseVolumeShareVolumeSharePragmaticSegment"      : "Volume Share (%) in 6. Pragmatic Segment",
         "ReportMarketTrendsGlobalSegmentWiseVolumeShareVolumeWeightedDistribution"       : "Volume-weighted Distribution (%)",
-
 
         //Labels for Market Indicator
         "ReportMarketIndicatorCorporateTaxRate"	:	"Corporate Tax Rate",
@@ -725,7 +719,7 @@ app.config(['$translateProvider', function($translateProvider){
 
 
 
-    // Adding a translation table for the Russian language
+    // Adding a translation table for the Chinese language
     $translateProvider.translations('zh_CN', {
 	
 	
@@ -1194,7 +1188,6 @@ app.config(['$translateProvider', function($translateProvider){
 		"ReportPerceptionMapLabelCompanyE"	:	"公司 E",
 		"ReportPerceptionMapLabelCompanyF"	:	"公司 F",
 		 
-		 
 		//Labels for Segment Distributions
 		"ReportSegmentDistributionsTableTitleMarketShareValue"	:	"市场份额 (销售额 %)",
 		"ReportSegmentDistributionsTableTitleMarketShareVolume"	:	"市场份额 (销量 %)",
@@ -1204,110 +1197,106 @@ app.config(['$translateProvider', function($translateProvider){
 		"ReportSegmentDistributionsTableTitleValuePerception"	:	"价值感知",
 		"ReportSegmentDistributionsTableTitleImagePerception"	:	"形象感知",
 
-		 
 		//Labels for Market Evolution
-		"ReportMarketEvolutionChartTitleGrowthRateInVolume"	:	"基于销量的增长率(阶段-3 = 100)",
-		"ReportMarketEvolutionChartTitleGrowthRateInValue"	:	"基于销售额的增长率(阶段-3 = 100)",
-		"ReportMarketEvolutionChartTitleNetMarketPrice"	:	"净市场价(阶段-3 = 100)",
-		"ReportMarketEvolutionChartTitleSegmentValueShareInTotalMarket"	:	"细分市场占总市场的销售份额（%）",
-		 
+        "ReportMarketEvolutionChartTitleGrowthRateInVolume"             : "基于销量的增长率 (阶段-3 = 100)",
+        "ReportMarketEvolutionChartTitleGrowthRateInValue"              : "基于销售额的增长率 (阶段-3 = 100)",
+        "ReportMarketEvolutionChartTitleNetMarketPrice"                 : "净市场价 (阶段-3 = 100)",
+        "ReportMarketEvolutionChartTitleSegmentValueShareInTotalMarket" : "细分市场占总市场的销售份额（%）",
 		 
 		//Labels for Market Trends - SKU Level
-		"ReportMarketTrendsSKUTableTitleMarketFigures"	:	"市场数据",	//Market Figures
-		"ReportMarketTrendsSKUMarketFiguresAverageDisplayPrice"	:	"平均陈列价格 ($/标准包)",
-		"ReportMarketTrendsSKUMarketFiguresAverageNetMarketPrice"	:	"平均净市场价 ($/标准包)",
-		"ReportMarketTrendsSKUMarketFiguresBrandAwareness"	:	"品牌知名度 (%)",
-		"ReportMarketTrendsSKUMarketFiguresImagePerception"	:	"形象感知",
-		"ReportMarketTrendsSKUMarketFiguresMarketNetSalesValue"	:	"市场净销售额  ($ mln)",
-		"ReportMarketTrendsSKUMarketFiguresMarketNetSalesVolume"	:	"市场销量  (百万标准包)",
-		"ReportMarketTrendsSKUMarketFiguresMarketShareValue"	:	"市场份额 (销售额 %)",
-		"ReportMarketTrendsSKUMarketFiguresMarketShareVolume"	:	"市场份额 (销量 %)",
+        "ReportMarketTrendsSKUTableTitleMarketFigures"            : "市场数据",	//Market Figures
+        "ReportMarketTrendsSKUMarketFiguresAverageDisplayPrice"   : "平均陈列价格 ($/标准包)",
+        "ReportMarketTrendsSKUMarketFiguresAverageNetMarketPrice" : "平均净市场价 ($/标准包)",
+        "ReportMarketTrendsSKUMarketFiguresBrandAwareness"        : "品牌知名度 (%)",
+        "ReportMarketTrendsSKUMarketFiguresImagePerception"       : "形象感知",
+        "ReportMarketTrendsSKUMarketFiguresMarketNetSalesValue"   : "市场净销售额  ($ mln)",
+        "ReportMarketTrendsSKUMarketFiguresMarketNetSalesVolume"  : "市场销量  (百万标准包)",
+        "ReportMarketTrendsSKUMarketFiguresMarketShareValue"      : "市场份额 (销售额 %)",
+        "ReportMarketTrendsSKUMarketFiguresMarketShareVolume"     : "市场份额 (销量 %)",
 
-		"ReportMarketTrendsSKUTableTitleMiscellaneous"	:	"其他",	//Miscellaneous
-		"ReportMarketTrendsSKUMiscellaneousLostSalesVolumeduetoOOS"	:	"因缺货损失的销售量 (百万标准包)",
-		"ReportMarketTrendsSKUMiscellaneousNumericalDistribution"	:	"数值分销率 (%)",
-		"ReportMarketTrendsSKUMiscellaneousTotalInventoryAtTrade"	:	"渠道中的库存量 (百万标准包)",
-		"ReportMarketTrendsSKUMiscellaneousPriceRankingIndex"	:	"价格排序指数",
-		"ReportMarketTrendsSKUMiscellaneousShelfSpace"	:	"货架空间 (%)",
+        "ReportMarketTrendsSKUTableTitleMiscellaneous"              : "其他",	//Miscellaneous
+        "ReportMarketTrendsSKUMiscellaneousLostSalesVolumeduetoOOS" : "因缺货损失的销售量 (百万标准包)",
+        "ReportMarketTrendsSKUMiscellaneousNumericalDistribution"   : "数值分销率 (%)",
+        "ReportMarketTrendsSKUMiscellaneousTotalInventoryAtTrade"   : "渠道中的库存量 (百万标准包)",
+        "ReportMarketTrendsSKUMiscellaneousPriceRankingIndex"       : "价格排序指数",
+        "ReportMarketTrendsSKUMiscellaneousShelfSpace"              : "货架空间 (%)",
 
-		"ReportMarketTrendsSKUTableTitleSegmentWiseValueShare"	:	"占细分市场销售额的 (%)",	//Value Share by Segment
-		"ReportMarketTrendsSKUSegmentWiseValueShareValueSharePriceSensitiveSegment"	:	"占细分市场销售额的 (%) 1. 价格敏感型 市场",
-		"ReportMarketTrendsSKUSegmentWiseValueShareValueSharePretendersSegment"	:	"占细分市场销售额的 (%) 2. 虚荣型 市场",
-		"ReportMarketTrendsSKUSegmentWiseValueShareValueShareModerateSegment"	:	"占细分市场销售额的 (%) 3. 适中型 市场",
-		"ReportMarketTrendsSKUSegmentWiseValueShareValueShareGoodLifeSegment"	:	"占细分市场销售额的 (%) 4. 享受生活型 市场",
-		"ReportMarketTrendsSKUSegmentWiseValueShareValueShareUltimateSegment"	:	"占细分市场销售额的 (%) 5. 追求极致型 市场",
-		"ReportMarketTrendsSKUSegmentWiseValueShareValueSharePragmaticSegment"	:	"占细分市场销售额的 (%) 6. 实用型 市场",
+        "ReportMarketTrendsSKUTableTitleSegmentWiseValueShare"                      : "占细分市场销售额的 (%)",	//Value Share by Segment
+        "ReportMarketTrendsSKUSegmentWiseValueShareValueSharePriceSensitiveSegment" : "占细分市场销售额的 (%) 1. 价格敏感型 市场",
+        "ReportMarketTrendsSKUSegmentWiseValueShareValueSharePretendersSegment"     : "占细分市场销售额的 (%) 2. 虚荣型 市场",
+        "ReportMarketTrendsSKUSegmentWiseValueShareValueShareModerateSegment"       : "占细分市场销售额的 (%) 3. 适中型 市场",
+        "ReportMarketTrendsSKUSegmentWiseValueShareValueShareGoodLifeSegment"       : "占细分市场销售额的 (%) 4. 享受生活型 市场",
+        "ReportMarketTrendsSKUSegmentWiseValueShareValueShareUltimateSegment"       : "占细分市场销售额的 (%) 5. 追求极致型 市场",
+        "ReportMarketTrendsSKUSegmentWiseValueShareValueSharePragmaticSegment"      : "占细分市场销售额的 (%) 6. 实用型 市场",
 
-		"ReportMarketTrendsSKUTableTitleSegmentWiseVolumeShare"	: "占细分市场销量的(%)",	//Segment-wise Volume Share
-		"ReportMarketTrendsSKUSegmentWiseVolumeShareVolumeSharePriceSensitiveSegment"	:	"占细分市场销量的 (%) 1. 价格敏感型 市场",
-		"ReportMarketTrendsSKUSegmentWiseVolumeShareVolumeSharePretendersSegment"	:	"占细分市场销量的 (%) 2. 虚荣型 市场",
-		"ReportMarketTrendsSKUSegmentWiseVolumeShareVolumeShareModerateSegment"	:	"占细分市场销量的 (%) 3. 适中型 市场",
-		"ReportMarketTrendsSKUSegmentWiseVolumeShareVolumeShareGoodLifeSegment"	:	"占细分市场销量的 (%) 4. 享受生活型 市场",
-		"ReportMarketTrendsSKUSegmentWiseVolumeShareVolumeShareUltimateSegment"	:	"占细分市场销量的 (%) 5. 追求极致型 市场",
-		"ReportMarketTrendsSKUSegmentWiseVolumeShareVolumeSharePragmaticSegment"	:	"占细分市场销量的 (%) 6. 实用型 市场",
-        "ReportMarketTrendsSKUSegmentWiseVolumeShareVolumeWeightedDistribution"	:	"加权分销率 (%)",
+        "ReportMarketTrendsSKUTableTitleSegmentWiseVolumeShare"                       : "占细分市场销量的(%)",	//Segment-wise Volume Share
+        "ReportMarketTrendsSKUSegmentWiseVolumeShareVolumeSharePriceSensitiveSegment" : "占细分市场销量的 (%) 1. 价格敏感型 市场",
+        "ReportMarketTrendsSKUSegmentWiseVolumeShareVolumeSharePretendersSegment"     : "占细分市场销量的 (%) 2. 虚荣型 市场",
+        "ReportMarketTrendsSKUSegmentWiseVolumeShareVolumeShareModerateSegment"       : "占细分市场销量的 (%) 3. 适中型 市场",
+        "ReportMarketTrendsSKUSegmentWiseVolumeShareVolumeShareGoodLifeSegment"       : "占细分市场销量的 (%) 4. 享受生活型 市场",
+        "ReportMarketTrendsSKUSegmentWiseVolumeShareVolumeShareUltimateSegment"       : "占细分市场销量的 (%) 5. 追求极致型 市场",
+        "ReportMarketTrendsSKUSegmentWiseVolumeShareVolumeSharePragmaticSegment"      : "占细分市场销量的 (%) 6. 实用型 市场",
+        "ReportMarketTrendsSKUSegmentWiseVolumeShareVolumeWeightedDistribution"       : "加权分销率 (%)",
 		
 		
 		//Labels for Market Trends - Brand Level
-		"ReportMarketTrendsBrandMarketFiguresAverageDisplayPrice"	:	"平均陈列价格 ($/标准包)",
-		"ReportMarketTrendsBrandMarketFiguresAverageNetMarketPrice"	:	"平均净市场价 ($/标准包)",
-		"ReportMarketTrendsBrandMarketFiguresBrandAwareness"	:	"品牌知名度 (%)",
-		"ReportMarketTrendsBrandMarketFiguresImagePerception"	:	"形象感知",
-		"ReportMarketTrendsBrandMarketFiguresMarketNetSalesValue"	:	"市场净销售额  ($ mln)",
-		"ReportMarketTrendsBrandMarketFiguresMarketNetSalesVolume"	:	"市场销量  (百万标准包)",
-		"ReportMarketTrendsBrandMarketFiguresMarketShareValue"	:	"市场份额 (销售额 %)",
-		"ReportMarketTrendsBrandMarketFiguresMarketShareVolume"	:	"市场份额 (销量 %)",
+        "ReportMarketTrendsBrandMarketFiguresAverageDisplayPrice"   : "平均陈列价格 ($/标准包)",
+        "ReportMarketTrendsBrandMarketFiguresAverageNetMarketPrice" : "平均净市场价 ($/标准包)",
+        "ReportMarketTrendsBrandMarketFiguresBrandAwareness"        : "品牌知名度 (%)",
+        "ReportMarketTrendsBrandMarketFiguresImagePerception"       : "形象感知",
+        "ReportMarketTrendsBrandMarketFiguresMarketNetSalesValue"   : "市场净销售额  ($ mln)",
+        "ReportMarketTrendsBrandMarketFiguresMarketNetSalesVolume"  : "市场销量  (百万标准包)",
+        "ReportMarketTrendsBrandMarketFiguresMarketShareValue"      : "市场份额 (销售额 %)",
+        "ReportMarketTrendsBrandMarketFiguresMarketShareVolume"     : "市场份额 (销量 %)",
 
-		"ReportMarketTrendsBrandMiscellaneousLostSalesVolumeduetoOOS"	:	"因缺货损失的销售量 (百万标准包)",
-		"ReportMarketTrendsBrandMiscellaneousNumericalDistribution"	:	"数值分销率 (%)",
-		"ReportMarketTrendsBrandMiscellaneousTotalInventoryAtTrade"	:	"渠道中的库存量 (百万标准包)",
-		"ReportMarketTrendsBrandMiscellaneousPriceRankingIndex"	:	"价格排序指数",
-		"ReportMarketTrendsBrandMiscellaneousShelfSpace"	:	"货架空间 (%)",
+        "ReportMarketTrendsBrandMiscellaneousLostSalesVolumeduetoOOS" : "因缺货损失的销售量 (百万标准包)",
+        "ReportMarketTrendsBrandMiscellaneousNumericalDistribution"   : "数值分销率 (%)",
+        "ReportMarketTrendsBrandMiscellaneousTotalInventoryAtTrade"   : "渠道中的库存量 (百万标准包)",
+        "ReportMarketTrendsBrandMiscellaneousPriceRankingIndex"       : "价格排序指数",
+        "ReportMarketTrendsBrandMiscellaneousShelfSpace"              : "货架空间 (%)",
 
-		"ReportMarketTrendsBrandSegmentWiseValueShareValueSharePriceSensitiveSegment"	:	"占细分市场销售额的 (%) 1. 价格敏感型 市场",
-		"ReportMarketTrendsBrandSegmentWiseValueShareValueSharePretendersSegment"	:	"占细分市场销售额的 (%) 2. 虚荣型 市场",
-		"ReportMarketTrendsBrandSegmentWiseValueShareValueShareModerateSegment"	:	"占细分市场销售额的 (%) 3. 适中型 市场",
-		"ReportMarketTrendsBrandSegmentWiseValueShareValueShareGoodLifeSegment"	:	"占细分市场销售额的 (%) 4. 享受生活型 市场",
-		"ReportMarketTrendsBrandSegmentWiseValueShareValueShareUltimateSegment"	:	"占细分市场销售额的 (%) 5. 追求极致型 市场",
-		"ReportMarketTrendsBrandSegmentWiseValueShareValueSharePragmaticSegment"	:	"占细分市场销售额的 (%) 6. 实用型 市场",
+        "ReportMarketTrendsBrandSegmentWiseValueShareValueSharePriceSensitiveSegment" : "占细分市场销售额的 (%) 1. 价格敏感型 市场",
+        "ReportMarketTrendsBrandSegmentWiseValueShareValueSharePretendersSegment"     : "占细分市场销售额的 (%) 2. 虚荣型 市场",
+        "ReportMarketTrendsBrandSegmentWiseValueShareValueShareModerateSegment"       : "占细分市场销售额的 (%) 3. 适中型 市场",
+        "ReportMarketTrendsBrandSegmentWiseValueShareValueShareGoodLifeSegment"       : "占细分市场销售额的 (%) 4. 享受生活型 市场",
+        "ReportMarketTrendsBrandSegmentWiseValueShareValueShareUltimateSegment"       : "占细分市场销售额的 (%) 5. 追求极致型 市场",
+        "ReportMarketTrendsBrandSegmentWiseValueShareValueSharePragmaticSegment"      : "占细分市场销售额的 (%) 6. 实用型 市场",
 
-		"ReportMarketTrendsBrandSegmentWiseVolumeShareVolumeSharePriceSensitiveSegment"	:	"占细分市场销量的 (%) 1. 价格敏感型 市场",
-		"ReportMarketTrendsBrandSegmentWiseVolumeShareVolumeSharePretendersSegment"	:	"占细分市场销量的 (%) 2. 虚荣型 市场",
-		"ReportMarketTrendsBrandSegmentWiseVolumeShareVolumeShareModerateSegment"	:	"占细分市场销量的 (%) 3. 适中型 市场",
-		"ReportMarketTrendsBrandSegmentWiseVolumeShareVolumeShareGoodLifeSegment"	:	"占细分市场销量的 (%) 4. 享受生活型 市场",
-		"ReportMarketTrendsBrandSegmentWiseVolumeShareVolumeShareUltimateSegment"	:	"占细分市场销量的 (%) 5. 追求极致型 市场",
-		"ReportMarketTrendsBrandSegmentWiseVolumeShareVolumeSharePragmaticSegment"	:	"占细分市场销量的 (%) 6. 实用型 市场",
-        "ReportMarketTrendsBrandSegmentWiseVolumeShareVolumeWeightedDistribution"	:	"加权分销率 (%)",
+        "ReportMarketTrendsBrandSegmentWiseVolumeShareVolumeSharePriceSensitiveSegment" : "占细分市场销量的 (%) 1. 价格敏感型 市场",
+        "ReportMarketTrendsBrandSegmentWiseVolumeShareVolumeSharePretendersSegment"     : "占细分市场销量的 (%) 2. 虚荣型 市场",
+        "ReportMarketTrendsBrandSegmentWiseVolumeShareVolumeShareModerateSegment"       : "占细分市场销量的 (%) 3. 适中型 市场",
+        "ReportMarketTrendsBrandSegmentWiseVolumeShareVolumeShareGoodLifeSegment"       : "占细分市场销量的 (%) 4. 享受生活型 市场",
+        "ReportMarketTrendsBrandSegmentWiseVolumeShareVolumeShareUltimateSegment"       : "占细分市场销量的 (%) 5. 追求极致型 市场",
+        "ReportMarketTrendsBrandSegmentWiseVolumeShareVolumeSharePragmaticSegment"      : "占细分市场销量的 (%) 6. 实用型 市场",
+        "ReportMarketTrendsBrandSegmentWiseVolumeShareVolumeWeightedDistribution"       : "加权分销率 (%)",
 
-		
 		//Labels for Market Trends - Global Level
-		"ReportMarketTrendsGlobalMarketFiguresAverageNetMarketPrice"	:	"平均净市场价 ($/标准包)",
-		"ReportMarketTrendsGlobalMarketFiguresMarketNetSalesValue"	:	"市场净销售额 ($ mln)",
-		"ReportMarketTrendsGlobalMarketFiguresMarketNetSalesVolume"	:	"市场销量  (百万标准包)",
-		"ReportMarketTrendsGlobalMarketFiguresMarketShareValue"	:	"市场份额 (销售额 %)",
-		"ReportMarketTrendsGlobalMarketFiguresMarketShareVolume"	:	"市场份额 (销量 %)",
+        "ReportMarketTrendsGlobalMarketFiguresAverageNetMarketPrice" : "平均净市场价 ($/标准包)",
+        "ReportMarketTrendsGlobalMarketFiguresMarketNetSalesValue"   : "市场净销售额 ($ mln)",
+        "ReportMarketTrendsGlobalMarketFiguresMarketNetSalesVolume"  : "市场销量  (百万标准包)",
+        "ReportMarketTrendsGlobalMarketFiguresMarketShareValue"      : "市场份额 (销售额 %)",
+        "ReportMarketTrendsGlobalMarketFiguresMarketShareVolume"     : "市场份额 (销量 %)",
 
-		"ReportMarketTrendsGlobalMiscellaneousLostSalesVolumeduetoOOS"	:	"因缺货损失的销售量 (百万标准包)",
-		"ReportMarketTrendsGlobalMiscellaneousNumericalDistribution"	:	"数值分销率 (%)",
-		"ReportMarketTrendsGlobalMiscellaneousTotalInventoryAtTrade"	:	"渠道中的库存量 (百万标准包)",
-		"ReportMarketTrendsGlobalMiscellaneousPriceRankingIndex"	:	"价格排序指数",
-		"ReportMarketTrendsGlobalMiscellaneousShelfSpace"	:	"货架空间 (%)",
+        "ReportMarketTrendsGlobalMiscellaneousLostSalesVolumeduetoOOS" : "因缺货损失的销售量 (百万标准包)",
+        "ReportMarketTrendsGlobalMiscellaneousNumericalDistribution"   : "数值分销率 (%)",
+        "ReportMarketTrendsGlobalMiscellaneousTotalInventoryAtTrade"   : "渠道中的库存量 (百万标准包)",
+        "ReportMarketTrendsGlobalMiscellaneousPriceRankingIndex"       : "价格排序指数",
+        "ReportMarketTrendsGlobalMiscellaneousShelfSpace"              : "货架空间 (%)",
 
-		"ReportMarketTrendsGlobalSegmentWiseValueShareValueSharePriceSensitiveSegment"	:	"占细分市场销售额的 (%) 1. 价格敏感型 市场",
-		"ReportMarketTrendsGlobalSegmentWiseValueShareValueSharePretendersSegment"	:	"占细分市场销售额的 (%) 2. 虚荣型 市场",
-		"ReportMarketTrendsGlobalSegmentWiseValueShareValueShareModerateSegment"	:	"占细分市场销售额的 (%) 3. 适中型 市场",
-		"ReportMarketTrendsGlobalSegmentWiseValueShareValueShareGoodLifeSegment"	:	"占细分市场销售额的 (%) 4. 享受生活型 市场",
-		"ReportMarketTrendsGlobalSegmentWiseValueShareValueShareUltimateSegment"	:	"占细分市场销售额的 (%) 5. 追求极致型 市场",
-		"ReportMarketTrendsGlobalSegmentWiseValueShareValueSharePragmaticSegment"	:	"占细分市场销售额的 (%) 6. 实用型 市场",
+        "ReportMarketTrendsGlobalSegmentWiseValueShareValueSharePriceSensitiveSegment" : "占细分市场销售额的 (%) 1. 价格敏感型 市场",
+        "ReportMarketTrendsGlobalSegmentWiseValueShareValueSharePretendersSegment"     : "占细分市场销售额的 (%) 2. 虚荣型 市场",
+        "ReportMarketTrendsGlobalSegmentWiseValueShareValueShareModerateSegment"       : "占细分市场销售额的 (%) 3. 适中型 市场",
+        "ReportMarketTrendsGlobalSegmentWiseValueShareValueShareGoodLifeSegment"       : "占细分市场销售额的 (%) 4. 享受生活型 市场",
+        "ReportMarketTrendsGlobalSegmentWiseValueShareValueShareUltimateSegment"       : "占细分市场销售额的 (%) 5. 追求极致型 市场",
+        "ReportMarketTrendsGlobalSegmentWiseValueShareValueSharePragmaticSegment"      : "占细分市场销售额的 (%) 6. 实用型 市场",
 
-		"ReportMarketTrendsGlobalSegmentWiseVolumeShareVolumeSharePriceSensitiveSegment"	:	"占细分市场销量的 (%) 1. 价格敏感型 市场",
-		"ReportMarketTrendsGlobalSegmentWiseVolumeShareVolumeSharePretendersSegment"	:	"占细分市场销量的 (%) 2. 虚荣型 市场",
-		"ReportMarketTrendsGlobalSegmentWiseVolumeShareVolumeShareModerateSegment"	:	"占细分市场销量的 (%) 3. 适中型 市场",
-		"ReportMarketTrendsGlobalSegmentWiseVolumeShareVolumeShareGoodLifeSegment"	:	"占细分市场销量的 (%) 4. 享受生活型 市场",
-		"ReportMarketTrendsGlobalSegmentWiseVolumeShareVolumeShareUltimateSegment"	:	"占细分市场销量的 (%) 5. 追求极致型 市场",
-		"ReportMarketTrendsGlobalSegmentWiseVolumeShareVolumeSharePragmaticSegment"	:	"占细分市场销量的 (%) 6. 实用型 市场",
-        "ReportMarketTrendsGlobalSegmentWiseVolumeShareVolumeWeightedDistribution"	:	"加权分销率 (%)",
-
+        "ReportMarketTrendsGlobalSegmentWiseVolumeShareVolumeSharePriceSensitiveSegment" : "占细分市场销量的 (%) 1. 价格敏感型 市场",
+        "ReportMarketTrendsGlobalSegmentWiseVolumeShareVolumeSharePretendersSegment"     : "占细分市场销量的 (%) 2. 虚荣型 市场",
+        "ReportMarketTrendsGlobalSegmentWiseVolumeShareVolumeShareModerateSegment"       : "占细分市场销量的 (%) 3. 适中型 市场",
+        "ReportMarketTrendsGlobalSegmentWiseVolumeShareVolumeShareGoodLifeSegment"       : "占细分市场销量的 (%) 4. 享受生活型 市场",
+        "ReportMarketTrendsGlobalSegmentWiseVolumeShareVolumeShareUltimateSegment"       : "占细分市场销量的 (%) 5. 追求极致型 市场",
+        "ReportMarketTrendsGlobalSegmentWiseVolumeShareVolumeSharePragmaticSegment"      : "占细分市场销量的 (%) 6. 实用型 市场",
+        "ReportMarketTrendsGlobalSegmentWiseVolumeShareVolumeWeightedDistribution"       : "加权分销率 (%)",
 
 		//Labels for Market Indicators
 		"ReportMarketIndicatorCorporateTaxRate"	:	"公司税率",

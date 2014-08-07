@@ -8,7 +8,7 @@ var marksimosapp = angular.module('marksimos', ['pascalprecht.translate', 'angul
 
 
 // controller business logic
-marksimosapp.controller('chartController', ['$scope',  '$timeout', '$http', 'notify', 'chartReport', 'tableReport', 'Company', function($scope,  $timeout, $http, notify, chartReport, tableReport, Company) {
+marksimosapp.controller('chartController', ['$translate', '$scope',  '$timeout', '$http', 'notify', 'chartReport', 'tableReport', 'Company', function($translate, $scope,  $timeout, $http, notify, chartReport, tableReport, Company) {
 
     $scope.css = {
         menu : 'Report',
