@@ -162,7 +162,7 @@ app.factory('chartReport', ['$http', function($http){
         tooltips: true,
         labels: false,
         legend: {
-            display: true,
+            display: false,
             position: 'right' //could be 'left, right'
         },
         innerRadius: 0, // applicable on pieCharts, can be a percentage like '50%'
@@ -200,7 +200,7 @@ app.factory('chartReport', ['$http', function($http){
             // 如果periods 没有定义则是普通的图表,不带有系列的图表
             angular.forEach(chartHttpData.chartData, function(value, key) {
                 if(angular.isUndefined(value.segmentName)){
-                    // 判断是否是消费者segmentName的图表还是SKUName的图表
+                    // 判断是否是Segment Leader Top5 的图表还是SKUName的图表
 
                     if(chartResult.series.indexOf(value.SKUName.substring(0,1)) == -1 ){
                         chartResult.series.push(value.SKUName.substring(0,1));
@@ -278,6 +278,7 @@ app.factory('chartReport', ['$http', function($http){
             // 判断是 company的图表还是 消费者群体的图表
             if(angular.isUndefined(chartHttpData.companyNames)){
                 chartResult.series = chartHttpData.segmentNames;
+
             }else{
                 chartResult.series = chartHttpData.companyNames;
             }

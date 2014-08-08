@@ -456,31 +456,25 @@ app.config(['$translateProvider', function($translateProvider){
 
 
 		//Labels for Segment Leader Top 5
-		"ReportSegmentLeaderTop5ChartTitlePriceSensitive"	:	"1. Price Sensitive (%)",
-		"ReportSegmentLeaderTop5ChartTitlePretenders"	:	"2. Pretenders (%)",
-		"ReportSegmentLeaderTop5ChartTitleModerate"	:	"3. Moderate (%)",
-		"ReportSegmentLeaderTop5ChartTitleGoodLife"	:	"4. Good Life (%)",
-		"ReportSegmentLeaderTop5ChartTitleUltimate"	:	"5. Ultimate (%)",
-		"ReportSegmentLeaderTop5ChartTitlePragmatic"	:	"6. Pragmatic (%)",
+        "ReportSegmentLeaderTop5ChartTitlePriceSensitive" : "1. Price Sensitive (%)",
+        "ReportSegmentLeaderTop5ChartTitlePretenders"     : "2. Pretenders (%)",
+        "ReportSegmentLeaderTop5ChartTitleModerate"       : "3. Moderate (%)",
+        "ReportSegmentLeaderTop5ChartTitleGoodLife"       : "4. Good Life (%)",
+        "ReportSegmentLeaderTop5ChartTitleUltimate"       : "5. Ultimate (%)",
+        "ReportSegmentLeaderTop5ChartTitlePragmatic"      : "6. Pragmatic (%)",
 
 		//Labels for Perception Map
 		"ReportPerceptionMapAxisTitleValuePerception"	:	"Value Perception",
 		"ReportPerceptionMapAxisTitleImagePerception"	:	"Image Perception",
-		"ReportPerceptionMapLabelCompanyA"	:	"Company A",
-		"ReportPerceptionMapLabelCompanyB"	:	"Company B",
-		"ReportPerceptionMapLabelCompanyC"	:	"Company C",
-		"ReportPerceptionMapLabelCompanyD"	:	"Company D",
-		"ReportPerceptionMapLabelCompanyE"	:	"Company E",
-		"ReportPerceptionMapLabelCompanyF"	:	"Company F",
 
 		//Labels for Segment Distributions
-		"ReportSegmentDistributionsTableTitleMarketShareValue"	:	"Market Share (Value %)",
-		"ReportSegmentDistributionsTableTitleMarketShareVolume"	:	"Market Share (Volume %)",
-		"ReportSegmentDistributionsTableTitleMarketSalesValue"	:	"Market Sales Value ($ mln)",
-		"ReportSegmentDistributionsTableTitleMarketSalesVolume"	:	"Market Sales Volume (mln std. packs)",
-		"ReportSegmentDistributionsTableTitleAverageNetMarketPrice"	:	"Average Net Market Price ($/std. pack)",
-		"ReportSegmentDistributionsTableTitleValuePerception"	:	"Value Perception",
-		"ReportSegmentDistributionsTableTitleImagePerception"	:	"Image Perception",
+        "ReportSegmentDistributionsTableTitleMarketShareValue"      : "Market Share (value %)",
+        "ReportSegmentDistributionsTableTitleMarketShareVolume"     : "Market Share (volume %)",
+        "ReportSegmentDistributionsTableTitleMarketSalesValue"      : "Market Sales Value ($ mln)",
+        "ReportSegmentDistributionsTableTitleMarketSalesVolume"     : "Market Sales Volume (mln std. packs)",
+        "ReportSegmentDistributionsTableTitleAverageNetMarketPrice" : "Average Net Market Price ($/std. pack)",
+        "ReportSegmentDistributionsTableTitleValuePerception"       : "Value Perception",
+        "ReportSegmentDistributionsTableTitleImagePerception"       : "Image Perception",
 
 		//Labels for Market Evolution
         "ReportMarketEvolutionChartTitleGrowthRateInVolume"             : "Growth Rate In Volume (Period -3 = 100)",
@@ -1171,31 +1165,25 @@ app.config(['$translateProvider', function($translateProvider){
 		 
 
 		//Labels for Segment Leader Top 5
-		"ReportSegmentLeaderTop5ChartTitlePriceSensitive"	:	"1. 价格敏感型 (%)", 
-		"ReportSegmentLeaderTop5ChartTitlePretenders"	:	"2. 虚荣型 (%)",
-		"ReportSegmentLeaderTop5ChartTitleModerate"	:	"3. 适中型 (%)",
-		"ReportSegmentLeaderTop5ChartTitleGoodLife"	:	"4. 享受生活型 (%)",
-		"ReportSegmentLeaderTop5ChartTitleUltimate"	:	"5. 追求极致型 (%)",
-		"ReportSegmentLeaderTop5ChartTitlePragmatic"	:	"6. 实用型 (%)",
+        "ReportSegmentLeaderTop5ChartTitlePriceSensitive" : "1. 价格敏感型 (%)",
+        "ReportSegmentLeaderTop5ChartTitlePretenders"     : "2. 虚荣型 (%)",
+        "ReportSegmentLeaderTop5ChartTitleModerate"       : "3. 适中型 (%)",
+        "ReportSegmentLeaderTop5ChartTitleGoodLife"       : "4. 享受生活型 (%)",
+        "ReportSegmentLeaderTop5ChartTitleUltimate"       : "5. 追求极致型 (%)",
+        "ReportSegmentLeaderTop5ChartTitlePragmatic"      : "6. 实用型 (%)",
 		
 		//Labels for Perception Map
 		"ReportPerceptionMapAxisTitleValuePerception"	:	"价值感知",
 		"ReportPerceptionMapAxisTitleImagePerception"	:	"形象感知",
-		"ReportPerceptionMapLabelCompanyA"	:	"公司 A",
-		"ReportPerceptionMapLabelCompanyB"	:	"公司 B",
-		"ReportPerceptionMapLabelCompanyC"	:	"公司 C",
-		"ReportPerceptionMapLabelCompanyD"	:	"公司 D",
-		"ReportPerceptionMapLabelCompanyE"	:	"公司 E",
-		"ReportPerceptionMapLabelCompanyF"	:	"公司 F",
 		 
 		//Labels for Segment Distributions
-		"ReportSegmentDistributionsTableTitleMarketShareValue"	:	"市场份额 (销售额 %)",
-		"ReportSegmentDistributionsTableTitleMarketShareVolume"	:	"市场份额 (销量 %)",
-		"ReportSegmentDistributionsTableTitleMarketSalesValue"	:	"市场销售额 ($ mln)",	 
-		"ReportSegmentDistributionsTableTitleMarketSalesVolume"	:	"市场销售量 (百万标准包)",
-		"ReportSegmentDistributionsTableTitleAverageNetMarketPrice"	:	"平均净市场价 ($/标准包)",
-		"ReportSegmentDistributionsTableTitleValuePerception"	:	"价值感知",
-		"ReportSegmentDistributionsTableTitleImagePerception"	:	"形象感知",
+        "ReportSegmentDistributionsTableTitleMarketShareValue"      : "市场份额 (销售额 %)",
+        "ReportSegmentDistributionsTableTitleMarketShareVolume"     : "市场份额 (销量 %)",
+        "ReportSegmentDistributionsTableTitleMarketSalesValue"      : "市场销售额 ($ mln)",
+        "ReportSegmentDistributionsTableTitleMarketSalesVolume"     : "市场销售量 (百万标准包)",
+        "ReportSegmentDistributionsTableTitleAverageNetMarketPrice" : "平均净市场价 ($/标准包)",
+        "ReportSegmentDistributionsTableTitleValuePerception"       : "价值感知",
+        "ReportSegmentDistributionsTableTitleImagePerception"       : "形象感知",
 
 		//Labels for Market Evolution
         "ReportMarketEvolutionChartTitleGrowthRateInVolume"             : "基于销量的增长率 (阶段-3 = 100)",

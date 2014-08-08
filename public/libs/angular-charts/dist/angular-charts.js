@@ -104,6 +104,8 @@ angular.module('angularCharts').directive('acChart', [
         if (!config.legend.display) {
           height = totalHeight;
           width = totalWidth;
+            scope.chartWidth = totalWidth;
+            scope.chartHeight = totalHeight;
           return;
         }
         switch (config.legend.position) {
@@ -111,11 +113,15 @@ angular.module('angularCharts').directive('acChart', [
         case 'bottom':
           height = totalHeight * 0.75;
           width = totalWidth;
+            scope.chartWidth = totalWidth;
+            scope.chartHeight = totalHeight * 0.75;
           break;
         case 'left':
         case 'right':
           height = totalHeight;
           width = totalWidth * 0.75;
+            scope.chartWidth = totalWidth * 0.75;
+            scope.chartHeight = totalHeight;
           break;
         }
       }
@@ -253,7 +259,11 @@ angular.module('angularCharts').directive('acChart', [
           }).enter().append('rect');
         bars.attr('width', x0.rangeBand());
         bars.attr('x', function (d, i) {
-          return x0(i);
+            if(config.legend.display){
+                return x0(i);
+            }else{
+                return x0( Math.floor(series.length/2));
+            }
         }).attr('y', height).style('fill', function (d) {
           return getColor(d.s);
         }).attr('height', 0).transition().ease('cubic-in-out').duration(1000).attr('y', function (d) {
@@ -846,7 +856,7 @@ angular.module("left", []).run(["$templateCache", function($templateCache) {
     "	</tr>\n" +
     "	</table>\n" +
     "</div>\n" +
-    "<div class='ac-chart' style='float:left; width:75%;'>\n" +
+    "<div class='ac-chart' style='float:left; width:{{chartWidth}}px;'>\n" +
     "</div>");
 }]);
 
@@ -865,7 +875,7 @@ angular.module("right", []).run(["$templateCache", function($templateCache) {
     "</style>\n" +
     "\n" +
     "<div class='ac-title' style='font-weight: bold;font-size: 1.2em;'>{{acConfig.title}}</div>\n" +
-    "<div class='ac-chart' style='float:left;width:75%;'>\n" +
+    "<div class='ac-chart' style='float:left;width:{{chartWidth}}px;'>\n" +
     "</div>\n" +
     "<div class='ac-legend' style='float:left; max-width:25%;' ng-show='{{acConfig.legend.display}}'>\n" +
     "	<table style='list-style:none;margin:0px;padding:0px;'>\n" +

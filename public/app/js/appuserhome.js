@@ -12,7 +12,7 @@ marksimosapp.controller('chartController', ['$translate', '$scope',  '$timeout',
 
     $scope.css = {
         menu : 'Report',
-        chartMenu : 'C3',
+        chartMenu : 'C1',
         tableReportTab : 'SKU',
         tableReportMenu : 1,
         additionalBudget : true,
@@ -188,7 +188,6 @@ marksimosapp.controller('chartController', ['$translate', '$scope',  '$timeout',
         chartC21PerceptionMap : {
             data : [],
             dataChart : [],
-            title : 'Perception Maps',
             color : ['#39b54a', '#ff983d', '#0087f0', '#8781bd', '#f26c4f', '#bd8cbf', '#000000']
         },
         chartC41GrowthRateInVolume : {
@@ -407,15 +406,8 @@ marksimosapp.controller('chartController', ['$translate', '$scope',  '$timeout',
 
 
     /********************  Chart C1  ********************/
-    $scope.data.chartC11SegmentsLeadersByValuePriceSensitive.config.title = 'Price Sensitive (%)';
-    $scope.data.chartC12SegmentsLeadersByValuePretenders.config.title = 'Pretenders (%)';
-    $scope.data.chartC13SegmentsLeadersByValueModerate.config.title = 'Moderate (%)';
-    $scope.data.chartC14SegmentsLeadersByValueGoodLife.config.title = 'GoodLife (%)';
-    $scope.data.chartC15SegmentsLeadersByValueUltimate.config.title = 'Ultimate (%)';
-    $scope.data.chartC16SegmentsLeadersByValuePragmatic.config.title = 'Pragmatic (%)';
-
     chartReport.segmentsLeadersByValuePriceSensitive().then(function(data, status, headers, config){
-//        console.log(data);
+        console.log(data);
         $scope.data.chartC11SegmentsLeadersByValuePriceSensitive.data = data;
     });
     chartReport.segmentsLeadersByValuePretenders().then(function(data, status, headers, config){
