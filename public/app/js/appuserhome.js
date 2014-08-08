@@ -12,7 +12,7 @@ marksimosapp.controller('chartController', ['$translate', '$scope',  '$timeout',
 
     $scope.css = {
         menu : 'Report',
-        chartMenu : 'C1',
+        chartMenu : 'B2',
         tableReportTab : 'SKU',
         tableReportMenu : 1,
         additionalBudget : true,
@@ -358,11 +358,6 @@ marksimosapp.controller('chartController', ['$translate', '$scope',  '$timeout',
 
 
     /********************  Chart B3  ********************/
-    $scope.data.chartB31TotalInvestment.config.title = 'Total Investment (mln RMB)';
-    $scope.data.chartB32NetProfitByCompanies.config.title = 'Net Profit By Companies (mln RMB)';
-    $scope.data.chartB33ReturnOnInvestment.config.title = 'Return On Investment (%)';
-    $scope.data.chartB34InvestmentsVersusBudget.config.title = 'Investments Versus Budget (%)';
-
     chartReport.totalInvestment().then(function(data, status, headers, config){
 //        console.log(data);
         $scope.data.chartB31TotalInvestment.data = data;
@@ -382,11 +377,6 @@ marksimosapp.controller('chartController', ['$translate', '$scope',  '$timeout',
 
 
     /********************  Chart B4  ********************/
-    $scope.data.chartB41MarketSalesValue.config.title = 'Market Sales Value (mln RMB)';
-    $scope.data.chartB42MarketSalesVolume.config.title = 'Market Sales Volume (std pack)';
-    $scope.data.chartB43TotalInventoryAtFactory.config.title = 'Total Inventory At Factory (std pack)';
-    $scope.data.chartB44TotalInventoryAtTrade.config.title = 'Total Inventory At Trade (std pack)';
-
     chartReport.marketSalesValue().then(function(data, status, headers, config){
 //        console.log(data);
         $scope.data.chartB41MarketSalesValue.data = data;
@@ -407,7 +397,7 @@ marksimosapp.controller('chartController', ['$translate', '$scope',  '$timeout',
 
     /********************  Chart C1  ********************/
     chartReport.segmentsLeadersByValuePriceSensitive().then(function(data, status, headers, config){
-        console.log(data);
+//        console.log(data);
         $scope.data.chartC11SegmentsLeadersByValuePriceSensitive.data = data;
     });
     chartReport.segmentsLeadersByValuePretenders().then(function(data, status, headers, config){

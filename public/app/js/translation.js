@@ -442,18 +442,17 @@ app.config(['$translateProvider', function($translateProvider){
 		"ReportCompetitorIntelligenceInvestmentsInvestmenttoIncreaseProductionEfficiency"	:	"Investment to Increase Production Efficiency ($ mln)",
 
 		//Labels for Investments and Profits
-		"ReportInvestmentsandProfitsChartTitleTotalInvestment"	:	"Total Investment ($ mln)",
-		"ReportInvestmentsandProfitsChartTitleNetProfitByCompanies"	:	"Net Profit By Companies ($ mln)",
-		"ReportInvestmentsandProfitsChartTitleReturnonInvestment"	:	"Return on Investment (%)",
-		"ReportInvestmentsandProfitsChartTitleInvestmentversusBudget"	:	"Investment versus Budget(%)",
-
+        "ReportInvestmentsAndProfitsChartTitleTotalInvestment"        : "Total Investment ($ mln)",
+        "ReportInvestmentsAndProfitsChartTitleNetProfitByCompanies"   : "Net Profit By Companies ($ mln)",
+        "ReportInvestmentsAndProfitsChartTitleReturnOnInvestment"     : "Return on Investment (%)",
+        "ReportInvestmentsAndProfitsChartTitleInvestmentVersusBudget" : "Investment Versus Budget (%)",
 
 		//Labels for Market Sales and Inventory
-		"ReportMarketSalesandInventoryChartTitleMarketSalesValue"	:	"Market Sales Value ($ mln)",
-		"ReportMarketSalesandInventoryChartTitleMarketSalesVolume"	:	"Market Sales Volume (mln std. packs)",
-		"ReportMarketSalesandInventoryChartTitleTotalInventoryatFactory"	:	"Total Inventory at Factory (mln std. packs)",
-		"ReportMarketSalesandInventoryChartTitleTotalInventoryatTrade"	:	"Total Inventory at Trade (mln std. packs)",
-
+        "ReportMarketSalesAndInventoryChartTitleMarketSalesValue"        : "Market Sales Value ($ mln)",
+        "ReportMarketSalesAndInventoryChartTitleMarketSalesVolume"       : "Market Sales Volume (mln std. packs)",
+        "ReportMarketSalesAndInventoryChartTitleTotalInventoryAtFactory" : "Total Inventory at Factory (mln std. packs)",
+        "ReportMarketSalesAndInventoryChartTitleTotalInventoryAtTrade"   : "Total Inventory at Trade (mln std. packs)",
+        "ReportMarketSalesAndInventoryChartBottomTextPeriod"   : "Period",
 
 		//Labels for Segment Leader Top 5
         "ReportSegmentLeaderTop5ChartTitlePriceSensitive" : "1. Price Sensitive (%)",
@@ -1151,18 +1150,18 @@ app.config(['$translateProvider', function($translateProvider){
 		"ReportCompetitorIntelligenceInvestmentsInvestmenttoIncreaseProductionEfficiency"	:	"生产效率投资 ($ mln)",
 		 
 		//Labels for Investments and Profits
-		"ReportInvestmentsandProfitsChartTitleTotalInvestment"	:	"预计的当期投资总额 ($ mln)",		 
-		"ReportInvestmentsandProfitsChartTitleNetProfitByCompanies"	:	"公司净利额  ($ mln)",
-		"ReportInvestmentsandProfitsChartTitleReturnonInvestment"	:	"投资回报率（%)",
-		"ReportInvestmentsandProfitsChartTitleInvestmentversusBudget"	:	"投资占预算比例(%)",
+        "ReportInvestmentsAndProfitsChartTitleTotalInvestment"        : "预计的当期投资总额 ($ mln)",
+        "ReportInvestmentsAndProfitsChartTitleNetProfitByCompanies"   : "公司净利额  ($ mln)",
+        "ReportInvestmentsAndProfitsChartTitleReturnOnInvestment"     : "投资回报率（%)",
+        "ReportInvestmentsAndProfitsChartTitleInvestmentVersusBudget" : "投资占预算比例(%)",
 		 
-		 
+
 		//Labels for Market Sales and Inventory
-		"ReportMarketSalesandInventoryChartTitleMarketSalesValue"	:	"市场销售额 ($ mln)", 
-		"ReportMarketSalesandInventoryChartTitleMarketSalesVolume"	:	"市场销售量 (百万标准包)",
-		"ReportMarketSalesandInventoryChartTitleTotalInventoryatFactory"	:	"工厂中的库存量 (百万标准包)",
-		"ReportMarketSalesandInventoryChartTitleTotalInventoryatTrade"	:	"渠道中的库存量 (百万标准包)",
-		 
+        "ReportMarketSalesAndInventoryChartTitleMarketSalesValue"        : "市场销售额 ($ mln)",
+        "ReportMarketSalesAndInventoryChartTitleMarketSalesVolume"       : "市场销售量 (百万标准包)",
+        "ReportMarketSalesAndInventoryChartTitleTotalInventoryAtFactory" : "工厂中的库存量 (百万标准包)",
+        "ReportMarketSalesAndInventoryChartTitleTotalInventoryAtTrade"   : "渠道中的库存量 (百万标准包)",
+        "ReportMarketSalesAndInventoryChartBottomTextPeriod"   : "阶段",
 
 		//Labels for Segment Leader Top 5
         "ReportSegmentLeaderTop5ChartTitlePriceSensitive" : "1. 价格敏感型 (%)",
