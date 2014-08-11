@@ -12,7 +12,7 @@ marksimosapp.controller('chartController', ['$translate', '$scope',  '$timeout',
 
     $scope.css = {
         menu : 'Report',
-        chartMenu : 'B2',
+        chartMenu : 'A4',
         tableReportTab : 'SKU',
         tableReportMenu : 1,
         additionalBudget : true,
@@ -334,11 +334,6 @@ marksimosapp.controller('chartController', ['$translate', '$scope',  '$timeout',
 
 
     /********************  Chart B1  ********************/
-    $scope.data.chartB11MarketShareInValue.config.title = 'Market Share in Value (%)';
-    $scope.data.chartB12MarketShareInVolume.config.title = 'Market Share in Volume (%)';
-    $scope.data.chartB13MindSpaceShare.config.title = 'Mind Space Share (%)';
-    $scope.data.chartB14ShelfSpaceShare.config.title = 'Shelf Space Share(%)';
-
     chartReport.marketShareInValue().then(function(data, status, headers, config){
 //        console.log(data);
         $scope.data.chartB11MarketShareInValue.data = data;

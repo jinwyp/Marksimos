@@ -60,11 +60,13 @@ app.config(['$translateProvider', function($translateProvider){
         "ReportMenuFinancialReport"        : "Financial Report",
         "ReportMenuInventoryReport"        : "Inventory Report",
         "ReportMenuProfitabilityEvolution" : "Profitability Evolution",
+
         "ReportYourCompetitors"            : "Your Competitors",
         "ReportMenuMarketShare"            : "Market Share",
         "ReportMenuCompetitorIntelligence" : "Competitor Intelligence",
         "ReportMenuInvestmentProfits"      : "Investment & Profits",
         "ReportMenuMarketSalesInventory"   : "Market Sales & Inventory",
+
         "ReportMarketLandscape"            : "Market Landscape",
         "ReportMenuSegmentLeaderTop5"      : "Segment Leader Top5",
         "ReportMenuPerceptionMap"          : "Perception Map",
@@ -257,8 +259,9 @@ app.config(['$translateProvider', function($translateProvider){
 
 
 		//Labels for Profitability Evolution - SKU Level
+		"ReportProfitabilityEvolutionSKUQuarter"	:	"Quarters",
 		"ReportProfitabilityEvolutionSKUManufacturerSalesValue"	:	"Manufacturer Sales Value ($ mln)",
-		"ReportProfitabilityEvolutionSKUCostofGoodsSold"	:	"Cost of Goods Sold ($ mln)",
+		"ReportProfitabilityEvolutionSKUCostOfGoodsSold"	:	"Cost of Goods Sold ($ mln)",
 		"ReportProfitabilityEvolutionSKUInventoryHolding"	:	"Inventory Holding ($ mln)",
 		"ReportProfitabilityEvolutionSKUObsoleteGoods"	:	"Obsolete Goods ($ mln)",
 		"ReportProfitabilityEvolutionSKUDiscontinuedGoodsCost"	:	"Discontinued Goods Cost ($ mln)",
@@ -408,38 +411,39 @@ app.config(['$translateProvider', function($translateProvider){
 		"ReportProfitabilityEvolutionGlobalExtraBudgetRequiredtoIncreaseFlexibilityby2points"	:	"Extra Budget Required to Increase Flexibility by 2% points",
 		"ReportProfitabilityEvolutionGlobalExtraBudgetRequiredtoIncreaseFlexibilityby5points"	:	"Extra Budget Required to Increase Flexibility by 5% points",
 
-
 		//Labels for Market Share
-		"ReportMarketShareChartTitleMarketShareinValue"	:	"Market Share in Value (%)",
-		"ReportMarketShareChartTitleMarketShareinVolume"	:	"Market Share in Volume (%)",
-		"ReportMarketShareChartTitleMindSpaceShare"	:	"Mind Space Share (%)",
-		"ReportMarketShareChartTitleShelfSpaceShare"	:	"Shelf Space Share (%)",
-
+        "ReportMarketShareChartTitleMarketShareInValue"  : "Market Share in Value (%)",
+        "ReportMarketShareChartTitleMarketShareInVolume" : "Market Share in Volume (%)",
+        "ReportMarketShareChartTitleMindSpaceShare"      : "Mind Space Share (%)",
+        "ReportMarketShareChartTitleShelfSpaceShare"     : "Shelf Space Share (%)",
 
 		//Labels for Competitor Intelligence
-		"ReportCompetitorIntelligenceTableTitleTechnology"	:	"Technology",
-		"ReportCompetitorIntelligenceTechnologyAcquiredProductionandLogisticsEfficiency"	:	"Acquired Production and Logistics Efficiency (%)",
-		"ReportCompetitorIntelligenceTechnologyAcquiredProductionPlanningFlexibility"	:	"Acquired Production Planning Flexibility (%)",
-		"ReportCompetitorIntelligenceTechnologyAvailableTechnologyLevel"	:	"Available Technology Level",
-		"ReportCompetitorIntelligenceTableTitleMarketing&Sales"	:	"Marketing & Sales",
-		"ReportCompetitorIntelligenceMarketing&SalesAdditionalTradeMarginCost"	:	"Additional Trade Margin Cost ($ mln)",
-		"ReportCompetitorIntelligenceMarketing&SalesAdvertising"	:	"Advertising ($ mln)",
-		"ReportCompetitorIntelligenceMarketing&SalesConsumerPromotionsCost"	:	"Consumer Promotions Cost ($ mln)",
-		"ReportCompetitorIntelligenceMarketing&SalesRetailerPurchaseVolume"	:	"Retailer Purchase Volume(mln std. packs)",
-		"ReportCompetitorIntelligenceMarketing&SalesSalesForceCost"	:	"Sales Force Cost ($ mln)",
-		"ReportCompetitorIntelligenceMarketing&SalesShipmenttoWholesalers"	:	"Shipment to Wholesalers (mln std. packs)",
-		"ReportCompetitorIntelligenceMarketing&SalesTradeInvestments"	:	"Trade Investments ($ mln)",
-		"ReportCompetitorIntelligenceMarketing&SalesVolumeDiscountCost"	:	"Volume Discount Cost ($ mln)",
-		"ReportCompetitorIntelligenceTableTitleOperations"	:	"Operations",
-		"ReportCompetitorIntelligenceOperationsCapacityUtilisationRate"	:	"Capacity Utilisation Rate (%)",
-		"ReportCompetitorIntelligenceOperationsInventoryVolumeatManufacturer"	:	"Inventory Volume at Manufacturer (mln std. packs)",
-		"ReportCompetitorIntelligenceOperationsInventoryVolumeatRetailers"	:	"Inventory Volume at Retailers (mln std. packs)",
-		"ReportCompetitorIntelligenceOperationsInventoryVolumeatWholesalers"	:	"Inventory Volume at Wholesalers (mln std. packs)",
-		"ReportCompetitorIntelligenceOperationsNextPeriodAvailableProd.Capacity"	:	"Next Period Available Prod.Capacity (mln std. packs)",
-		"ReportCompetitorIntelligenceOperationsProductionVolume"	:	"Production Volume (mln std. packs)",
-		"ReportCompetitorIntelligenceTableTitleInvestments"	:	"Investments",
-		"ReportCompetitorIntelligenceInvestmentsInvestmenttoImproveTechnologyLevel"	:	"Investment to Improve Technology Level ($ mln)",
-		"ReportCompetitorIntelligenceInvestmentsInvestmenttoIncreaseProductionEfficiency"	:	"Investment to Increase Production Efficiency ($ mln)",
+        "ReportCompetitorIntelligenceTableTitleTechnology"                               : "Technology",
+        "ReportCompetitorIntelligenceTechnologyAcquiredProductionAndLogisticsEfficiency" : "Acquired Production and Logistics Efficiency (%)",
+        "ReportCompetitorIntelligenceTechnologyAcquiredProductionPlanningFlexibility"    : "Acquired Production Planning Flexibility (%)",
+        "ReportCompetitorIntelligenceTechnologyAvailableTechnologyLevel"                 : "Available Technology Level",
+
+        "ReportCompetitorIntelligenceTableTitleMarketingSales"                : "Marketing & Sales",
+        "ReportCompetitorIntelligenceMarketingSalesAdditionalTradeMarginCost" : "Additional Trade Margin Cost ($ mln)",
+        "ReportCompetitorIntelligenceMarketingSalesAdvertising"               : "Advertising ($ mln)",
+        "ReportCompetitorIntelligenceMarketingSalesConsumerPromotionsCost"    : "Consumer Promotions Cost ($ mln)",
+        "ReportCompetitorIntelligenceMarketingSalesRetailerPurchaseVolume"    : "Retailers Purchase Volume (mln std. packs)",
+        "ReportCompetitorIntelligenceMarketingSalesSalesForceCost"            : "Sales Force Cost ($ mln)",
+        "ReportCompetitorIntelligenceMarketingSalesShipmentToWholesalers"     : "Shipments to Wholesalers (mln std. packs)",
+        "ReportCompetitorIntelligenceMarketingSalesTradeInvestments"          : "Trade Investments ($ mln)",
+        "ReportCompetitorIntelligenceMarketingSalesVolumeDiscountCost"        : "Volume Discount Cost ($ mln)",
+
+        "ReportCompetitorIntelligenceTableTitleOperations"                      : "Operations",
+        "ReportCompetitorIntelligenceOperationsCapacityUtilisationRate"         : "Capacity Utilisation Rate (%)",
+        "ReportCompetitorIntelligenceOperationsInventoryVolumeAtManufacturer"   : "Inventory Volume at Manufacturer (mln std. packs)",
+        "ReportCompetitorIntelligenceOperationsInventoryVolumeAtRetailers"      : "Inventory Volume at Retailers (mln std. packs)",
+        "ReportCompetitorIntelligenceOperationsInventoryVolumeAtWholesalers"    : "Inventory Volume at Wholesalers (mln std. packs)",
+        "ReportCompetitorIntelligenceOperationsNextPeriodAvailableProdCapacity" : "Next Period Available Prod.Capacity (mln std. packs)",
+        "ReportCompetitorIntelligenceOperationsProductionVolume"                : "Production Volume (mln std. packs)",
+
+        "ReportCompetitorIntelligenceTableTitleInvestments"                               : "Investments",
+        "ReportCompetitorIntelligenceInvestmentsInvestmentToImproveTechnologyLevel"       : "Investment to Improve Technology Level ($ mln)",
+        "ReportCompetitorIntelligenceInvestmentsInvestmentToIncreaseProductionEfficiency" : "Investment to Increase Production Efficiency ($ mln)",
 
 		//Labels for Investments and Profits
         "ReportInvestmentsAndProfitsChartTitleTotalInvestment"        : "Total Investment ($ mln)",
@@ -762,23 +766,23 @@ app.config(['$translateProvider', function($translateProvider){
 	
 		
 		//Labels for Items on Reports page - reports menu
-		"ReportYourCompany"		:	"您的公司",
-        "ReportMenuCompanyStatus"     : "公司基本信息",
-        "ReportMenuFinancialReport"    :  "财务报告",
-        "ReportMenuInventoryReport"    :  "库存报告",
-        "ReportMenuProfitabilityEvolution"    :  "盈利变化",
-		"ReportYourCompetitors"		:	"你的竞争对手",
-        "ReportMenuMarketShare"    :  "市场份额",
-        "ReportMenuCompetitorIntelligence"    :  "竞争对手情报",
-        "ReportMenuInvestmentProfits"    :  "投资与利润",
-        "ReportMenuMarketSalesInventory"    :  "销售与库存状况",
-		"ReportMarketLandscape"		:	"市场前景",
-        "ReportMenuSegmentLeaderTop5"    :  "细分市场领导者",
-        "ReportMenuPerceptionMap"    :  "感知图",
-        "ReportMenuSegmentDistributions"    :  "细分市场数据",
-        "ReportMenuMarketEvolution"    :  "市场演变趋势",
-        "ReportMenuMarketTrends"    :  "市场趋势",
-        "ReportMenuMarketIndicator"    :  "宏观市场参数",
+        "ReportYourCompany"                : "你的公司",
+        "ReportMenuCompanyStatus"          : "公司基本信息",
+        "ReportMenuFinancialReport"        : "财务报告",
+        "ReportMenuInventoryReport"        : "库存报告",
+        "ReportMenuProfitabilityEvolution" : "盈利变化",
+        "ReportYourCompetitors"            : "你的竞争对手",
+        "ReportMenuMarketShare"            : "市场份额",
+        "ReportMenuCompetitorIntelligence" : "竞争对手情报",
+        "ReportMenuInvestmentProfits"      : "投资与利润",
+        "ReportMenuMarketSalesInventory"   : "销售与库存状况",
+        "ReportMarketLandscape"            : "市场前景",
+        "ReportMenuSegmentLeaderTop5"      : "细分市场领导者",
+        "ReportMenuPerceptionMap"          : "感知图",
+        "ReportMenuSegmentDistributions"   : "细分市场数据",
+        "ReportMenuMarketEvolution"        : "市场演变趋势",
+        "ReportMenuMarketTrends"           : "市场趋势",
+        "ReportMenuMarketIndicator"        : "宏观市场参数",
 		
 
 
@@ -965,8 +969,9 @@ app.config(['$translateProvider', function($translateProvider){
 		
 
 		//Labels for Profitability Evolution - SKU Level
+        "ReportProfitabilityEvolutionSKUQuarter"	:	"阶段",
 		"ReportProfitabilityEvolutionSKUManufacturerSalesValue"	:	"厂商销售额 ($ mln)",
-		"ReportProfitabilityEvolutionSKUCostofGoodsSold"	:	"售出商品成本 ($ mln)",
+		"ReportProfitabilityEvolutionSKUCostOfGoodsSold"	:	"售出商品成本 ($ mln)",
 		"ReportProfitabilityEvolutionSKUInventoryHolding"	:	"库存持有成本 ($ mln)",
 		"ReportProfitabilityEvolutionSKUObsoleteGoods"	:	"处理商品成本 ($ mln)",
 		"ReportProfitabilityEvolutionSKUDiscontinuedGoodsCost"	:	"停产商品成本 ($ mln)",
@@ -1118,36 +1123,38 @@ app.config(['$translateProvider', function($translateProvider){
 
 
 		//Labels for Market Share
-		"ReportMarketShareChartTitleMarketShareinValue"	:	"市场份额 （按销售额计%)",
-		"ReportMarketShareChartTitleMarketShareinVolume"	:	"市场份额 （按销量计%)",
-		"ReportMarketShareChartTitleMindSpaceShare"	:	"思维空间份额（%）",
-		"ReportMarketShareChartTitleShelfSpaceShare"	:	"货架空间份额（%）",
+        "ReportMarketShareChartTitleMarketShareInValue"  : "市场份额 （按销售额计%)",
+        "ReportMarketShareChartTitleMarketShareInVolume" : "市场份额 （按销量计%)",
+        "ReportMarketShareChartTitleMindSpaceShare"      : "思维空间份额（%）",
+        "ReportMarketShareChartTitleShelfSpaceShare"     : "货架空间份额（%）",
 
-		
 		//Labels for Competitor Intelligence
-		"ReportCompetitorIntelligenceTableTitleTechnology"	:	"技术"	,
-		"ReportCompetitorIntelligenceTechnologyAcquiredProductionandLogisticsEfficiency"	:	"当前拥有的生产效率 (%)",
-		"ReportCompetitorIntelligenceTechnologyAcquiredProductionPlanningFlexibility"	:	"当前拥有的生产灵活度 (%)",
-		"ReportCompetitorIntelligenceTechnologyAvailableTechnologyLevel"	:	"最高技术水平",
-		"ReportCompetitorIntelligenceTableTitleMarketing&Sales"	:	"市场营销和销售",
-		"ReportCompetitorIntelligenceMarketing&SalesAdditionalTradeMarginCost"	:	"额外零售终端返利 ($ mln)",
-		"ReportCompetitorIntelligenceMarketing&SalesAdvertising"	:	"广告费用 ($ mln)",
-		"ReportCompetitorIntelligenceMarketing&SalesConsumerPromotionsCost"	:	"促销成本 ($ mln)",
-		"ReportCompetitorIntelligenceMarketing&SalesRetailerPurchaseVolume"	:	"零售商购买量 (百万标准包)",
-		"ReportCompetitorIntelligenceMarketing&SalesSalesForceCost"	:	"销售团队成本 ($ mln)",
-		"ReportCompetitorIntelligenceMarketing&SalesShipmenttoWholesalers"	:	"经销商购买量 (百万标准包)",
-		"ReportCompetitorIntelligenceMarketing&SalesTradeInvestments"	:	"零售终端费用 ($ mln)",
-		"ReportCompetitorIntelligenceMarketing&SalesVolumeDiscountCost"	:	"经销商进货折扣成本 ($ mln)",
-		"ReportCompetitorIntelligenceTableTitleOperations"	:	"操作",
-		"ReportCompetitorIntelligenceOperationsCapacityUtilisationRate"	:	"产能利用率 (%)",
-		"ReportCompetitorIntelligenceOperationsInventoryVolumeatManufacturer"	:	"厂商持有的库存量 (百万标准包)",
-		"ReportCompetitorIntelligenceOperationsInventoryVolumeatRetailers"	:	"零售商持有的库存量 (百万标准包)",
-		"ReportCompetitorIntelligenceOperationsInventoryVolumeatWholesalers"	:	"经销商持有的库存量 (百万标准包)",
-		"ReportCompetitorIntelligenceOperationsNextPeriodAvailableProd.Capacity"	:	"下一阶段产能 (百万标准包)",
-		"ReportCompetitorIntelligenceOperationsProductionVolume"	:	"产量 (百万标准包)",
-		"ReportCompetitorIntelligenceTableTitleInvestments"	:	"投资",
-		"ReportCompetitorIntelligenceInvestmentsInvestmenttoImproveTechnologyLevel"	:	"技术水平投资 ($ mln)",
-		"ReportCompetitorIntelligenceInvestmentsInvestmenttoIncreaseProductionEfficiency"	:	"生产效率投资 ($ mln)",
+        "ReportCompetitorIntelligenceTableTitleTechnology"                               : "技术",
+        "ReportCompetitorIntelligenceTechnologyAcquiredProductionAndLogisticsEfficiency" : "当前拥有的生产效率 (%)",
+        "ReportCompetitorIntelligenceTechnologyAcquiredProductionPlanningFlexibility"    : "当前拥有的生产灵活度 (%)",
+        "ReportCompetitorIntelligenceTechnologyAvailableTechnologyLevel"                 : "最高技术水平",
+
+        "ReportCompetitorIntelligenceTableTitleMarketingSales"                : "市场营销和销售",
+        "ReportCompetitorIntelligenceMarketingSalesAdditionalTradeMarginCost" : "额外零售终端返利 ($ mln)",
+        "ReportCompetitorIntelligenceMarketingSalesAdvertising"               : "广告费用 ($ mln)",
+        "ReportCompetitorIntelligenceMarketingSalesConsumerPromotionsCost"    : "促销成本 ($ mln)",
+        "ReportCompetitorIntelligenceMarketingSalesRetailerPurchaseVolume"    : "零售商购买量 (百万标准包)",
+        "ReportCompetitorIntelligenceMarketingSalesSalesForceCost"            : "销售团队成本 ($ mln)",
+        "ReportCompetitorIntelligenceMarketingSalesShipmentToWholesalers"     : "经销商购买量 (百万标准包)",
+        "ReportCompetitorIntelligenceMarketingSalesTradeInvestments"          : "零售终端费用 ($ mln)",
+        "ReportCompetitorIntelligenceMarketingSalesVolumeDiscountCost"        : "经销商进货折扣成本 ($ mln)",
+
+        "ReportCompetitorIntelligenceTableTitleOperations"                      : "操作",
+        "ReportCompetitorIntelligenceOperationsCapacityUtilisationRate"         : "产能利用率 (%)",
+        "ReportCompetitorIntelligenceOperationsInventoryVolumeAtManufacturer"   : "厂商持有的库存量 (百万标准包)",
+        "ReportCompetitorIntelligenceOperationsInventoryVolumeAtRetailers"      : "零售商持有的库存量 (百万标准包)",
+        "ReportCompetitorIntelligenceOperationsInventoryVolumeAtWholesalers"    : "经销商持有的库存量 (百万标准包)",
+        "ReportCompetitorIntelligenceOperationsNextPeriodAvailableProdCapacity" : "下一阶段产能 (百万标准包)",
+        "ReportCompetitorIntelligenceOperationsProductionVolume"                : "产量 (百万标准包)",
+
+        "ReportCompetitorIntelligenceTableTitleInvestments"                               : "投资",
+        "ReportCompetitorIntelligenceInvestmentsInvestmentToImproveTechnologyLevel"       : "技术水平投资 ($ mln)",
+        "ReportCompetitorIntelligenceInvestmentsInvestmentToIncreaseProductionEfficiency" : "生产效率投资 ($ mln)",
 		 
 		//Labels for Investments and Profits
         "ReportInvestmentsAndProfitsChartTitleTotalInvestment"        : "预计的当期投资总额 ($ mln)",

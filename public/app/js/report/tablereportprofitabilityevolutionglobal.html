@@ -1,0 +1,288 @@
+<table class="table table-striped table-bordered table-hover" >
+    <thead>
+        <tr>
+            <th>{{'ReportProfitabilityEvolutionSKUQuarter' | translate}}</th>
+            <th ng-repeat="quarter in data">{{quarter.period}}</th>
+        </tr>
+    </thead>
+
+    <tbody>
+        <tr>
+            <td>{{'ReportProfitabilityEvolutionSKUManufacturerSalesValue' | translate}}</td>
+            <td ng-repeat="quarter in data">{{quarter.manufacturerSalesValue | number : 2}}</td>
+        </tr>
+        <tr>
+            <td></td>
+            <td ng-repeat="quarter in data"></td>
+        </tr>
+        <tr>
+            <td>{{'ReportProfitabilityEvolutionSKUCostOfGoodsSold' | translate}}</td>
+            <td ng-repeat="quarter in data">{{quarter.costOfGoodsSold | number : 2}}</td>
+        </tr>
+        <tr>
+            <td>Inventory Holding ($ mln)</td>
+            <td ng-repeat="quarter in data">{{quarter.inventoryHoldingCost | number : 2}}</td>
+        </tr>
+        <tr>
+            <td>Obsolete Goods ($ mln)</td>
+            <td ng-repeat="quarter in data">{{quarter.obsoleteGoodsCost | number : 2}}</td>
+        </tr>
+        <tr>
+            <td>Discontinued Goods Cost ($ mln)</td>
+            <td ng-repeat="quarter in data">{{quarter.discontinuedGoodsCost | number : 2}}</td>
+        </tr>
+        <tr>
+            <td>Gross Profit ($ mln)</td>
+            <td ng-repeat="quarter in data">{{quarter.grossProfit | number : 2}}</td>
+        </tr>
+        <tr>
+            <td></td>
+            <td ng-repeat="quarter in data"></td>
+        </tr>
+        <tr>
+            <td>Advertising ($ mln)</td>
+            <td ng-repeat="quarter in data">{{quarter.advertising | number : 2}}</td>
+        </tr>
+        <tr>
+            <td>Consumer Promotions Cost ($ mln)</td>
+            <td ng-repeat="quarter in data">{{quarter.consumerPromotionsCost | number : 2}}</td>
+        </tr>
+        <tr>
+            <td>Trade Investment ($ mln)</td>
+            <td ng-repeat="quarter in data">{{quarter.tradeInvestment | number : 2}}</td>
+        </tr>
+        <tr>
+            <td>Sales Force Cost ($ mln)</td>
+            <td ng-repeat="quarter in data">{{quarter.salesForceCost | number : 2}}</td>
+        </tr>
+        <tr>
+            <td>Volume Discount Cost ($ mln)</td>
+            <td ng-repeat="quarter in data">{{quarter.volumeDiscountCost | number : 2}}</td>
+        </tr>
+        <tr>
+            <td>Additional Trade Margin Cost ($ mln)</td>
+            <td ng-repeat="quarter in data">{{quarter.additionalTradeMarginCost | number : 2}}</td>
+        </tr>
+        <tr>
+            <td>Total Trade and Marketing Expenses ($ mln)</td>
+            <td ng-repeat="quarter in data">{{quarter.totalTradeAndMarketingExpenses | number : 2}}</td>
+        </tr>
+        <tr>
+            <td></td>
+            <td ng-repeat="quarter in data"></td>
+        </tr>
+        <tr>
+            <td>Overhead ($ mln)</td>
+            <td ng-repeat="quarter in data">{{quarter.overhead | number : 2}}</td>
+        </tr>
+        <tr>
+            <td>Investment to Improve Technology Level ($ mln)</td>
+            <td ng-repeat="quarter in data">{{quarter.investmentToImproveTechnologyLevel | number : 2}}</td>
+        </tr>
+        <tr>
+            <td>Investment to Increase Production Efficiency ($ mln)</td>
+            <td ng-repeat="quarter in data">{{quarter.investmentToIncreaseProductionEfficiency | number : 2}}</td>
+        </tr>
+        <tr>
+            <td></td>
+            <td ng-repeat="quarter in data"></td>
+        </tr>
+        <tr>
+            <td>Production Capacity Disposal Cost ($ mln)</td>
+            <td ng-repeat="quarter in data">{{quarter.productionCapacityDisposalCosts | number : 2}}</td>
+        </tr>
+        <tr>
+            <td>Overtime Shifts Cost ($ mln)</td>
+            <td ng-repeat="quarter in data">{{quarter.overtimeShiftsCosts | number : 2}}</td>
+        </tr>
+        <tr>
+            <td>Total General Expenses ($ mln)</td>
+            <td ng-repeat="quarter in data">{{quarter.generalExpenses | number : 2}}</td>
+        </tr>
+        <tr>
+            <td>Amortisation ($ mln)</td>
+            <td ng-repeat="quarter in data">{{quarter.amortisation | number : 2}}</td>
+        </tr>
+        <tr>
+            <td>Operating Profit ($ mln)</td>
+            <td ng-repeat="quarter in data">{{quarter.operatingProfit | number : 2}}</td>
+        </tr>
+        <tr>
+            <td></td>
+            <td ng-repeat="quarter in data"></td>
+        </tr>
+        <tr>
+            <td>Interests ($ mln)</td>
+            <td ng-repeat="quarter in data">{{quarter.interests | number : 2}}</td>
+        </tr>
+        <tr>
+            <td>Exceptional Cost/Profit ($ mln)</td>
+            <td ng-repeat="quarter in data">{{quarter.exceptionalCostsProfits | number : 2}}</td>
+        </tr>
+        <tr>
+            <td>Taxes ($ mln)</td>
+            <td ng-repeat="quarter in data">{{quarter.taxes | number : 2}}</td>
+        </tr>
+        <tr>
+            <td>Net Profit ($ mln)</td>
+            <td ng-repeat="quarter in data">{{quarter.netProfit | number : 2}}</td>
+        </tr>
+        <tr>
+            <td></td>
+            <td ng-repeat="quarter in data"></td>
+        </tr>
+        <tr>
+            <td>Surcharge for upplementary InvestmentBudget ($ mln)</td>
+            <td ng-repeat="quarter in data">{{quarter.surchargeForSupplementaryInvestmentBudget | number : 2}}</td>
+        </tr>
+        <tr>
+            <td>Net Result ($ mln)</td>
+            <td ng-repeat="quarter in data">{{quarter.netResult | number : 2}}</td>
+        </tr>
+        <tr>
+            <td></td>
+            <td ng-repeat="quarter in data"></td>
+        </tr>
+        <tr>
+            <td>Gross Profit Margin (%)</td>
+            <td ng-repeat="quarter in data">{{quarter.grossProfitMargin | number : 2}}%</td>
+        </tr>
+        <tr>
+            <td>Trade and Marketing Expenses as a(%) of Sales</td>
+            <td ng-repeat="quarter in data">{{quarter.tradeAndMarketingExpensesAsAPercentageOfSales | number : 2}}%</td>
+        </tr>
+        <tr>
+            <td>General Expenses as a(%) of Sales</td>
+            <td ng-repeat="quarter in data">{{quarter.generalExpensesAsAPercentageOfSales | number : 2}}%</td>
+        </tr>
+        <tr>
+            <td>Operating Profit Margin (%)</td>
+            <td ng-repeat="quarter in data">{{quarter.operatingProfitMargin | number : 2}}%</td>
+        </tr>
+        <tr>
+            <td>Net Profit Margin (%)</td>
+            <td ng-repeat="quarter in data">{{quarter.netProfitMargin | number : 2}}%</td>
+        </tr>
+        <tr>
+            <td></td>
+            <td ng-repeat="quarter in data"></td>
+        </tr>
+        <tr>
+            <td>Return on Investment (%)</td>
+            <td ng-repeat="quarter in data">{{quarter.returnOnInvestment | number : 2}}%</td>
+        </tr>
+        <tr>
+            <td></td>
+            <td ng-repeat="quarter in data"></td>
+        </tr>
+        <tr>
+            <td>Average Net Market Price ($/pack)</td>
+            <td ng-repeat="quarter in data">{{quarter.averageNetMarketPrice | number : 2}}</td>
+        </tr>
+        <tr>
+            <td>Average Wholesales Price ($/pack)</td>
+            <td ng-repeat="quarter in data">{{quarter.averageWholesalesPrice | number : 2}}</td>
+        </tr>
+        <tr>
+            <td>Average Manufacturer Price ($/pack)</td>
+            <td ng-repeat="quarter in data">{{quarter.averageManufacturerPrice | number : 2}}</td>
+        </tr>
+        <tr>
+            <td>Average Production Cost ($/pack)</td>
+            <td ng-repeat="quarter in data">{{quarter.averageProductionCost | number : 2}}</td>
+        </tr>
+        <tr>
+            <td></td>
+            <td ng-repeat="quarter in data"></td>
+        </tr>
+        <tr>
+            <td>Market Sales Value ($ mln)</td>
+            <td ng-repeat="quarter in data">{{quarter.marketSalesValue | number : 2}}</td>
+        </tr>
+        <tr>
+            <td>Consumer Price Promotions ($ mln)</td>
+            <td ng-repeat="quarter in data">{{quarter.consumerProcePromotion | number : 2}}</td>
+        </tr>
+        <tr>
+            <td>Market Net Sales Value ($ mln)</td>
+            <td ng-repeat="quarter in data">{{quarter.marketNetSalesValue | number : 2}}</td>
+        </tr>
+        <tr>
+            <td></td>
+            <td ng-repeat="quarter in data"></td>
+        </tr>
+        <tr>
+            <td>Production Cost ($ mln)</td>
+            <td ng-repeat="quarter in data">{{quarter.productionCost | number : 2}}</td>
+        </tr>
+        <tr>
+            <td>Inventory Value ($ mln)</td>
+            <td ng-repeat="quarter in data">{{quarter.inventoryValue | number : 2}}</td>
+        </tr>
+        <tr>
+            <td></td>
+            <td ng-repeat="quarter in data"></td>
+        </tr>
+        <tr>
+            <td>Capacity Utilisation Rate (%)</td>
+            <td ng-repeat="quarter in data">{{quarter.capacityUtilisationRate | number : 2}}%</td>
+        </tr>
+        <tr>
+            <td>Change In Production Capacity (mln std. packs)</td>
+            <td ng-repeat="quarter in data">{{quarter.changeInProductionCapacityStdPack | number : 2}}</td>
+        </tr>
+        <tr>
+            <td>Next Period Available Prod. Capacity (mln std. packs)</td>
+            <td ng-repeat="quarter in data">{{quarter.nextPeriodAvailableProdCapacity | number : 2}}</td>
+        </tr>
+        <tr>
+            <td></td>
+            <td ng-repeat="quarter in data"></td>
+        </tr>
+        <tr>
+            <td>Available Technology Level</td>
+            <td ng-repeat="quarter in data">{{quarter.availableTechnologyLevel | number : 2}}</td>
+        </tr>
+        <tr>
+            <td>Extra Budget Required to Increase Technology Level by 1 Step</td>
+            <td ng-repeat="quarter in data">{{quarter.extraBudgetRequiredToIncreaseTechnologyLevelBy1Step | number : 2}}</td>
+        </tr>
+        <tr>
+            <td>Extra Budget Required to Increase Technology Level by 2 Steps</td>
+            <td ng-repeat="quarter in data">{{quarter.extraBudgetRequiredToIncreaseTechnologyLevelBy2Step | number : 2}}</td>
+        </tr>
+        <tr>
+            <td></td>
+            <td ng-repeat="quarter in data"></td>
+        </tr>
+        <tr>
+            <td>Acquired Production and Logistics Efficiency (%)</td>
+            <td ng-repeat="quarter in data">{{quarter.acquiredProductionAndLogisticsEfficiency | number : 2}}%</td>
+        </tr>
+        <tr>
+            <td>Extra Budget Required to Increase Efficiency by 2% points</td>
+            <td ng-repeat="quarter in data">{{quarter.extraBudgetRequiredToIncreaseEfficiencyBy2Points | number : 2}}</td>
+        </tr>
+        <tr>
+            <td>Extra Budget Required to Increase Efficiency by 5% points</td>
+            <td ng-repeat="quarter in data">{{quarter.extraBudgetRequiredToIncreaseEfficiencyBy5Points | number : 2}}</td>
+        </tr>
+        <tr>
+            <td></td>
+            <td ng-repeat="quarter in data"></td>
+        </tr>
+        <tr>
+            <td>Acquired Production Planning Flexibility (%)</td>
+            <td ng-repeat="quarter in data">{{quarter.acquiredProductionPlanningFlexibility | number : 2}}%</td>
+        </tr>
+        <tr>
+            <td>Extra Budget Required to Increase Flexibility by 2% points</td>
+            <td ng-repeat="quarter in data">{{quarter.extraBudgetRequiredToIncreaseFlexibilityBy2Points | number : 2}}</td>
+        </tr>
+        <tr>
+            <td>Extra Budget Required to Increase Flexibility by 5% points</td>
+            <td ng-repeat="quarter in data">{{quarter.extraBudgetRequiredToIncreaseFlexibilityBy5Points | number : 2}}</td>
+        </tr>
+
+    </tbody>
+</table>

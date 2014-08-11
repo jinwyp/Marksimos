@@ -98,26 +98,13 @@ app.directive('menuAdmin', [function() {
 
 
 
-
-
-app.directive('tableReportSegmentDistribution', function() {
+app.directive('tableReportProfitabilityEvolutionGlobal', function() {
     return {
         scope: {
-            data : '=',
-            unit : '@'
+            data : '='
         },
         restrict: 'AE',
-        templateUrl: 'app/js/report/tablereportsegmentdistribution.html',
-        link: function (scope, element, attrs) {
-            scope.plus = 1;
-
-            if(angular.isUndefined(scope.unit)) {
-                scope.unit = '';
-            }else if (scope.unit === "%"){
-                scope.plus = 100;
-            }
-
-        }
+        templateUrl: 'app/js/report/tablereportprofitabilityevolutionglobal.html'
     };
 });
 
@@ -138,6 +125,28 @@ app.directive('tableReportCompetitorIntelligence', function() {
                 scope.unit = '';
             }else if (scope.unit === "%"){
                 scope.plus = 1;
+            }
+
+        }
+    };
+});
+
+
+app.directive('tableReportSegmentDistribution', function() {
+    return {
+        scope: {
+            data : '=',
+            unit : '@'
+        },
+        restrict: 'AE',
+        templateUrl: 'app/js/report/tablereportsegmentdistribution.html',
+        link: function (scope, element, attrs) {
+            scope.plus = 1;
+
+            if(angular.isUndefined(scope.unit)) {
+                scope.unit = '';
+            }else if (scope.unit === "%"){
+                scope.plus = 100;
             }
 
         }
@@ -214,12 +223,8 @@ app.directive('tableReportMarketIndicator', ['$translate', function($translate) 
         templateUrl: 'app/js/report/tablereportmarketindicator.html',
         link: function (scope, element, attrs) {
 
-            scope.plus = 1;
-
             if(angular.isUndefined(scope.unit)) {
                 scope.unit = '';
-            }else if (scope.unit === "%"){
-                scope.plus = 1;
             }
 
         }

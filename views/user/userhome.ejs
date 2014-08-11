@@ -97,7 +97,7 @@
                 <div class="col-md-3 col-md-offset-1">
                     <div class="panel panel-primary user_chart_list user_chart_list_bg2">
                         <div class="panel-heading">
-                            <h3 class="panel-title">Your Company</h3>
+                            <h3 class="panel-title">{{'ReportYourCompany' | translate}}</h3>
                         </div>
 
                         <!-- List group -->
@@ -113,7 +113,7 @@
                 <div class="col-md-3 ">
                     <div class="panel panel-primary user_chart_list user_chart_list_bg2">
                         <div class="panel-heading">
-                            <h3 class="panel-title">Your Competitor</h3>
+                            <h3 class="panel-title">{{'ReportYourCompetitors' | translate}}</h3>
                         </div>
 
                         <!-- List group -->
@@ -129,7 +129,7 @@
                 <div class="col-md-3 ">
                     <div class="panel panel-primary user_chart_list">
                         <div class="panel-heading">
-                            <h3 class="panel-title">Market Landscape</h3>
+                            <h3 class="panel-title">{{'ReportMarketLandscape' | translate}}</h3>
                         </div>
 
                         <!-- List group -->
@@ -213,7 +213,7 @@
         <div class="col-md-2 user_chart_padding user_home_divider">
 
             <div class="panel user_chart_leftmenu">
-                <div class="panel-heading">Your Company</div>
+                <div class="panel-heading">{{'ReportYourCompany' | translate}}</div>
 
                 <!-- List group -->
                 <ul class="list-group">
@@ -225,7 +225,7 @@
             </div>
 
             <div class="panel user_chart_leftmenu">
-                <div class="panel-heading">Your Competitor</div>
+                <div class="panel-heading">{{'ReportYourCompetitors' | translate}}</div>
 
                 <!-- List group -->
                 <ul class="list-group">
@@ -237,7 +237,7 @@
             </div>
 
             <div class="panel user_chart_leftmenu">
-                <div class="panel-heading">Market Landscape</div>
+                <div class="panel-heading">{{'ReportMarketLandscape' | translate}}</div>
 
                 <!-- List group -->
                 <ul class="list-group">
@@ -1687,293 +1687,7 @@
                     </div>
 
                     <div class="table_report" ng-if="css.tableReportTab=='Global'">
-                        <table class="table table-striped table-bordered table-hover" >
-                            <thead>
-                            <tr>
-                                <th>Quarters</th>
-                                <th ng-repeat="quarter in data.tableA4ProfitabilityEvolution.currentGlobal">{{quarter.period}}</th>
-                            </tr>
-                            </thead>
-                            <tbody>
-                            <tr>
-                                <td>Manufacturer Sales Value ($ mln)</td>
-                                <td ng-repeat="quarter in data.tableA4ProfitabilityEvolution.currentGlobal">{{quarter.manufacturerSalesValue | number : 2}}</td>
-                            </tr>
-                            <tr>
-                                <td></td>
-                                <td ng-repeat="quarter in data.tableA4ProfitabilityEvolution.currentGlobal"></td>
-                            </tr>
-                            <tr>
-                                <td>Cost of Goods Sold ($ mln)</td>
-                                <td ng-repeat="quarter in data.tableA4ProfitabilityEvolution.currentGlobal">{{quarter.costOfGoodsSold | number : 2}}</td>
-                            </tr>
-                            <tr>
-                                <td>Inventory Holding ($ mln)</td>
-                                <td ng-repeat="quarter in data.tableA4ProfitabilityEvolution.currentGlobal">{{quarter.inventoryHoldingCost | number : 2}}</td>
-                            </tr>
-                            <tr>
-                                <td>Obsolete Goods ($ mln)</td>
-                                <td ng-repeat="quarter in data.tableA4ProfitabilityEvolution.currentGlobal">{{quarter.obsoleteGoodsCost | number : 2}}</td>
-                            </tr>
-                            <tr>
-                                <td>Discontinued Goods Cost ($ mln)</td>
-                                <td ng-repeat="quarter in data.tableA4ProfitabilityEvolution.currentGlobal">{{quarter.discontinuedGoodsCost | number : 2}}</td>
-                            </tr>
-                            <tr>
-                                <td>Gross Profit ($ mln)</td>
-                                <td ng-repeat="quarter in data.tableA4ProfitabilityEvolution.currentGlobal">{{quarter.grossProfit | number : 2}}</td>
-                            </tr>
-                            <tr>
-                                <td></td>
-                                <td ng-repeat="quarter in data.tableA4ProfitabilityEvolution.currentGlobal"></td>
-                            </tr>
-                            <tr>
-                                <td>Advertising ($ mln)</td>
-                                <td ng-repeat="quarter in data.tableA4ProfitabilityEvolution.currentGlobal">{{quarter.advertising | number : 2}}</td>
-                            </tr>
-                            <tr>
-                                <td>Consumer Promotions Cost ($ mln)</td>
-                                <td ng-repeat="quarter in data.tableA4ProfitabilityEvolution.currentGlobal">{{quarter.consumerPromotionsCost | number : 2}}</td>
-                            </tr>
-                            <tr>
-                                <td>Trade Investment ($ mln)</td>
-                                <td ng-repeat="quarter in data.tableA4ProfitabilityEvolution.currentGlobal">{{quarter.tradeInvestment | number : 2}}</td>
-                            </tr>
-                            <tr>
-                                <td>Sales Force Cost ($ mln)</td>
-                                <td ng-repeat="quarter in data.tableA4ProfitabilityEvolution.currentGlobal">{{quarter.salesForceCost | number : 2}}</td>
-                            </tr>
-                            <tr>
-                                <td>Volume Discount Cost ($ mln)</td>
-                                <td ng-repeat="quarter in data.tableA4ProfitabilityEvolution.currentGlobal">{{quarter.volumeDiscountCost | number : 2}}</td>
-                            </tr>
-                            <tr>
-                                <td>Additional Trade Margin Cost ($ mln)</td>
-                                <td ng-repeat="quarter in data.tableA4ProfitabilityEvolution.currentGlobal">{{quarter.additionalTradeMarginCost | number : 2}}</td>
-                            </tr>
-                            <tr>
-                                <td>Total Trade and Marketing Expenses ($ mln)</td>
-                                <td ng-repeat="quarter in data.tableA4ProfitabilityEvolution.currentGlobal">{{quarter.totalTradeAndMarketingExpenses | number : 2}}</td>
-                            </tr>
-                            <tr>
-                                <td></td>
-                                <td ng-repeat="quarter in data.tableA4ProfitabilityEvolution.currentGlobal"></td>
-                            </tr>
-                            <tr>
-                                <td>Overhead ($ mln)</td>
-                                <td ng-repeat="quarter in data.tableA4ProfitabilityEvolution.currentGlobal">{{quarter.overhead | number : 2}}</td>
-                            </tr>
-                            <tr>
-                                <td>Investment to Improve Technology Level ($ mln)</td>
-                                <td ng-repeat="quarter in data.tableA4ProfitabilityEvolution.currentGlobal">{{quarter.investmentToImproveTechnologyLevel | number : 2}}</td>
-                            </tr>
-                            <tr>
-                                <td>Investment to Increase Production Efficiency ($ mln)</td>
-                                <td ng-repeat="quarter in data.tableA4ProfitabilityEvolution.currentGlobal">{{quarter.investmentToIncreaseProductionEfficiency | number : 2}}</td>
-                            </tr>
-                            <tr>
-                                <td></td>
-                                <td ng-repeat="quarter in data.tableA4ProfitabilityEvolution.currentGlobal"></td>
-                            </tr>
-                            <tr>
-                                <td>Production Capacity Disposal Cost ($ mln)</td>
-                                <td ng-repeat="quarter in data.tableA4ProfitabilityEvolution.currentGlobal">{{quarter.productionCapacityDisposalCosts | number : 2}}</td>
-                            </tr>
-                            <tr>
-                                <td>Overtime Shifts Cost ($ mln)</td>
-                                <td ng-repeat="quarter in data.tableA4ProfitabilityEvolution.currentGlobal">{{quarter.overtimeShiftsCosts | number : 2}}</td>
-                            </tr>
-                            <tr>
-                                <td>Total General Expenses ($ mln)</td>
-                                <td ng-repeat="quarter in data.tableA4ProfitabilityEvolution.currentGlobal">{{quarter.generalExpenses | number : 2}}</td>
-                            </tr>
-                            <tr>
-                                <td>Amortisation ($ mln)</td>
-                                <td ng-repeat="quarter in data.tableA4ProfitabilityEvolution.currentGlobal">{{quarter.amortisation | number : 2}}</td>
-                            </tr>
-                            <tr>
-                                <td>Operating Profit ($ mln)</td>
-                                <td ng-repeat="quarter in data.tableA4ProfitabilityEvolution.currentGlobal">{{quarter.operatingProfit | number : 2}}</td>
-                            </tr>
-                            <tr>
-                                <td></td>
-                                <td ng-repeat="quarter in data.tableA4ProfitabilityEvolution.currentGlobal"></td>
-                            </tr>
-                            <tr>
-                                <td>Interests ($ mln)</td>
-                                <td ng-repeat="quarter in data.tableA4ProfitabilityEvolution.currentGlobal">{{quarter.interests | number : 2}}</td>
-                            </tr>
-                            <tr>
-                                <td>Exceptional Cost/Profit ($ mln)</td>
-                                <td ng-repeat="quarter in data.tableA4ProfitabilityEvolution.currentGlobal">{{quarter.exceptionalCostsProfits | number : 2}}</td>
-                            </tr>
-                            <tr>
-                                <td>Taxes ($ mln)</td>
-                                <td ng-repeat="quarter in data.tableA4ProfitabilityEvolution.currentGlobal">{{quarter.taxes | number : 2}}</td>
-                            </tr>
-                            <tr>
-                                <td>Net Profit ($ mln)</td>
-                                <td ng-repeat="quarter in data.tableA4ProfitabilityEvolution.currentGlobal">{{quarter.netProfit | number : 2}}</td>
-                            </tr>
-                            <tr>
-                                <td></td>
-                                <td ng-repeat="quarter in data.tableA4ProfitabilityEvolution.currentGlobal"></td>
-                            </tr>
-                            <tr>
-                                <td>Surcharge for upplementary InvestmentBudget ($ mln)</td>
-                                <td ng-repeat="quarter in data.tableA4ProfitabilityEvolution.currentGlobal">{{quarter.surchargeForSupplementaryInvestmentBudget | number : 2}}</td>
-                            </tr>
-                            <tr>
-                                <td>Net Result ($ mln)</td>
-                                <td ng-repeat="quarter in data.tableA4ProfitabilityEvolution.currentGlobal">{{quarter.netResult | number : 2}}</td>
-                            </tr>
-                            <tr>
-                                <td></td>
-                                <td ng-repeat="quarter in data.tableA4ProfitabilityEvolution.currentGlobal"></td>
-                            </tr>
-                            <tr>
-                                <td>Gross Profit Margin (%)</td>
-                                <td ng-repeat="quarter in data.tableA4ProfitabilityEvolution.currentGlobal">{{quarter.grossProfitMargin | number : 2}}%</td>
-                            </tr>
-                            <tr>
-                                <td>Trade and Marketing Expenses as a(%) of Sales</td>
-                                <td ng-repeat="quarter in data.tableA4ProfitabilityEvolution.currentGlobal">{{quarter.tradeAndMarketingExpensesAsAPercentageOfSales | number : 2}}%</td>
-                            </tr>
-                            <tr>
-                                <td>General Expenses as a(%) of Sales</td>
-                                <td ng-repeat="quarter in data.tableA4ProfitabilityEvolution.currentGlobal">{{quarter.generalExpensesAsAPercentageOfSales | number : 2}}%</td>
-                            </tr>
-                            <tr>
-                                <td>Operating Profit Margin (%)</td>
-                                <td ng-repeat="quarter in data.tableA4ProfitabilityEvolution.currentGlobal">{{quarter.operatingProfitMargin | number : 2}}%</td>
-                            </tr>
-                            <tr>
-                                <td>Net Profit Margin (%)</td>
-                                <td ng-repeat="quarter in data.tableA4ProfitabilityEvolution.currentGlobal">{{quarter.netProfitMargin | number : 2}}%</td>
-                            </tr>
-                            <tr>
-                                <td></td>
-                                <td ng-repeat="quarter in data.tableA4ProfitabilityEvolution.currentGlobal"></td>
-                            </tr>
-                            <tr>
-                                <td>Return on Investment (%)</td>
-                                <td ng-repeat="quarter in data.tableA4ProfitabilityEvolution.currentGlobal">{{quarter.returnOnInvestment | number : 2}}%</td>
-                            </tr>
-                            <tr>
-                                <td></td>
-                                <td ng-repeat="quarter in data.tableA4ProfitabilityEvolution.currentGlobal"></td>
-                            </tr>
-                            <tr>
-                                <td>Average Net Market Price ($/pack)</td>
-                                <td ng-repeat="quarter in data.tableA4ProfitabilityEvolution.currentGlobal">{{quarter.averageNetMarketPrice | number : 2}}</td>
-                            </tr>
-                            <tr>
-                                <td>Average Wholesales Price ($/pack)</td>
-                                <td ng-repeat="quarter in data.tableA4ProfitabilityEvolution.currentGlobal">{{quarter.averageWholesalesPrice | number : 2}}</td>
-                            </tr>
-                            <tr>
-                                <td>Average Manufacturer Price ($/pack)</td>
-                                <td ng-repeat="quarter in data.tableA4ProfitabilityEvolution.currentGlobal">{{quarter.averageManufacturerPrice | number : 2}}</td>
-                            </tr>
-                            <tr>
-                                <td>Average Production Cost ($/pack)</td>
-                                <td ng-repeat="quarter in data.tableA4ProfitabilityEvolution.currentGlobal">{{quarter.averageProductionCost | number : 2}}</td>
-                            </tr>
-                            <tr>
-                                <td></td>
-                                <td ng-repeat="quarter in data.tableA4ProfitabilityEvolution.currentGlobal"></td>
-                            </tr>
-                            <tr>
-                                <td>Market Sales Value ($ mln)</td>
-                                <td ng-repeat="quarter in data.tableA4ProfitabilityEvolution.currentGlobal">{{quarter.marketSalesValue | number : 2}}</td>
-                            </tr>
-                            <tr>
-                                <td>Consumer Price Promotions ($ mln)</td>
-                                <td ng-repeat="quarter in data.tableA4ProfitabilityEvolution.currentGlobal">{{quarter.consumerProcePromotion | number : 2}}</td>
-                            </tr>
-                            <tr>
-                                <td>Market Net Sales Value ($ mln)</td>
-                                <td ng-repeat="quarter in data.tableA4ProfitabilityEvolution.currentGlobal">{{quarter.marketNetSalesValue | number : 2}}</td>
-                            </tr>
-                            <tr>
-                                <td></td>
-                                <td ng-repeat="quarter in data.tableA4ProfitabilityEvolution.currentGlobal"></td>
-                            </tr>
-                            <tr>
-                                <td>Production Cost ($ mln)</td>
-                                <td ng-repeat="quarter in data.tableA4ProfitabilityEvolution.currentGlobal">{{quarter.productionCost | number : 2}}</td>
-                            </tr>
-                            <tr>
-                                <td>Inventory Value ($ mln)</td>
-                                <td ng-repeat="quarter in data.tableA4ProfitabilityEvolution.currentGlobal">{{quarter.inventoryValue | number : 2}}</td>
-                            </tr>
-                            <tr>
-                                <td></td>
-                                <td ng-repeat="quarter in data.tableA4ProfitabilityEvolution.currentGlobal"></td>
-                            </tr>
-                            <tr>
-                                <td>Capacity Utilisation Rate (%)</td>
-                                <td ng-repeat="quarter in data.tableA4ProfitabilityEvolution.currentGlobal">{{quarter.capacityUtilisationRate | number : 2}}%</td>
-                            </tr>
-                            <tr>
-                                <td>Change In Production Capacity (mln std. packs)</td>
-                                <td ng-repeat="quarter in data.tableA4ProfitabilityEvolution.currentGlobal">{{quarter.changeInProductionCapacityStdPack | number : 2}}</td>
-                            </tr>
-                            <tr>
-                                <td>Next Period Available Prod. Capacity (mln std. packs)</td>
-                                <td ng-repeat="quarter in data.tableA4ProfitabilityEvolution.currentGlobal">{{quarter.nextPeriodAvailableProdCapacity | number : 2}}</td>
-                            </tr>
-                            <tr>
-                                <td></td>
-                                <td ng-repeat="quarter in data.tableA4ProfitabilityEvolution.currentGlobal"></td>
-                            </tr>
-                            <tr>
-                                <td>Available Technology Level</td>
-                                <td ng-repeat="quarter in data.tableA4ProfitabilityEvolution.currentGlobal">{{quarter.availableTechnologyLevel | number : 2}}</td>
-                            </tr>
-                            <tr>
-                                <td>Extra Budget Required to Increase Technology Level by 1 Step</td>
-                                <td ng-repeat="quarter in data.tableA4ProfitabilityEvolution.currentGlobal">{{quarter.extraBudgetRequiredToIncreaseTechnologyLevelBy1Step | number : 2}}</td>
-                            </tr>
-                            <tr>
-                                <td>Extra Budget Required to Increase Technology Level by 2 Steps</td>
-                                <td ng-repeat="quarter in data.tableA4ProfitabilityEvolution.currentGlobal">{{quarter.extraBudgetRequiredToIncreaseTechnologyLevelBy2Step | number : 2}}</td>
-                            </tr>
-                            <tr>
-                                <td></td>
-                                <td ng-repeat="quarter in data.tableA4ProfitabilityEvolution.currentGlobal"></td>
-                            </tr>
-                            <tr>
-                                <td>Acquired Production and Logistics Efficiency (%)</td>
-                                <td ng-repeat="quarter in data.tableA4ProfitabilityEvolution.currentGlobal">{{quarter.acquiredProductionAndLogisticsEfficiency | number : 2}}%</td>
-                            </tr>
-                            <tr>
-                                <td>Extra Budget Required to Increase Efficiency by 2% points</td>
-                                <td ng-repeat="quarter in data.tableA4ProfitabilityEvolution.currentGlobal">{{quarter.extraBudgetRequiredToIncreaseEfficiencyBy2Points | number : 2}}</td>
-                            </tr>
-                            <tr>
-                                <td>Extra Budget Required to Increase Efficiency by 5% points</td>
-                                <td ng-repeat="quarter in data.tableA4ProfitabilityEvolution.currentGlobal">{{quarter.extraBudgetRequiredToIncreaseEfficiencyBy5Points | number : 2}}</td>
-                            </tr>
-                            <tr>
-                                <td></td>
-                                <td ng-repeat="quarter in data.tableA4ProfitabilityEvolution.currentGlobal"></td>
-                            </tr>
-                            <tr>
-                                <td>Acquired Production Planning Flexibility (%)</td>
-                                <td ng-repeat="quarter in data.tableA4ProfitabilityEvolution.currentGlobal">{{quarter.acquiredProductionPlanningFlexibility | number : 2}}%</td>
-                            </tr>
-                            <tr>
-                                <td>Extra Budget Required to Increase Flexibility by 2% points</td>
-                                <td ng-repeat="quarter in data.tableA4ProfitabilityEvolution.currentGlobal">{{quarter.extraBudgetRequiredToIncreaseFlexibilityBy2Points | number : 2}}</td>
-                            </tr>
-                            <tr>
-                                <td>Extra Budget Required to Increase Flexibility by 5% points</td>
-                                <td ng-repeat="quarter in data.tableA4ProfitabilityEvolution.currentGlobal">{{quarter.extraBudgetRequiredToIncreaseFlexibilityBy5Points | number : 2}}</td>
-                            </tr>
-
-                            </tbody>
-                        </table>
+                        <div table-report-profitability-evolution-global data="data.tableA4ProfitabilityEvolution.currentGlobal"></div>
                     </div>
 
                 </div>
@@ -1985,43 +1699,43 @@
         <div class="col-md-10 user_chart_right" ng-if="css.chartMenu=='B1'">
             <div class="row">
                 <div class="col-md-6 user_chart_single chart_2">
-                    <h5>{{data.chartB11MarketShareInValue.config.title}}
-                        <span class="glyphicon glyphicon-info-sign"></span>
+                    <h5>{{'ReportMarketShareChartTitleMarketShareInValue' | translate}}
+                        <!--<span class="glyphicon glyphicon-info-sign"></span>-->
                         <!--<span class="glyphicon glyphicon-resize-full chart_icon"></span>-->
                         <!--<span class="glyphicon glyphicon-save chart_icon"></span>-->
                     </h5>
                     <div ac-chart="'line'" ac-data="data.chartB11MarketShareInValue.data" ac-config="data.chartB11MarketShareInValue.config" class="chartBox"></div>
-                    <p class="text-center">Period</p>
+                    <p class="text-center">{{'ReportMarketSalesAndInventoryChartBottomTextPeriod' | translate}}</p>
                 </div>
                 <div class="col-md-6 user_chart_single chart_2">
-                    <h5>{{data.chartB12MarketShareInVolume.config.title}}
-                        <span class="glyphicon glyphicon-info-sign"></span>
+                    <h5>{{'ReportMarketShareChartTitleMarketShareInVolume' | translate}}
+                        <!--<span class="glyphicon glyphicon-info-sign"></span>-->
                         <!--<span class="glyphicon glyphicon-resize-full chart_icon"></span>-->
                         <!--<span class="glyphicon glyphicon-save chart_icon"></span>-->
                     </h5>
                     <div ac-chart="'line'" ac-data="data.chartB12MarketShareInVolume.data" ac-config="data.chartB12MarketShareInVolume.config" class="chartBox"></div>
-                    <p class="text-center">Period</p>
+                    <p class="text-center">{{'ReportMarketSalesAndInventoryChartBottomTextPeriod' | translate}}</p>
                 </div>
             </div>
 
             <div class="row">
                 <div class="col-md-6 user_chart_single chart_2">
-                    <h5>{{data.chartB13MindSpaceShare.config.title}}
-                        <span class="glyphicon glyphicon-info-sign"></span>
+                    <h5>{{'ReportMarketShareChartTitleMindSpaceShare' | translate}}
+                        <!--<span class="glyphicon glyphicon-info-sign"></span>-->
                         <!--<span class="glyphicon glyphicon-resize-full chart_icon"></span>-->
                         <!--<span class="glyphicon glyphicon-save chart_icon"></span>-->
                     </h5>
                     <div ac-chart="'line'" ac-data="data.chartB13MindSpaceShare.data" ac-config="data.chartB13MindSpaceShare.config" class="chartBox"></div>
-                    <p class="text-center">Period</p>
+                    <p class="text-center">{{'ReportMarketSalesAndInventoryChartBottomTextPeriod' | translate}}</p>
                 </div>
                 <div class="col-md-6 user_chart_single chart_2">
-                    <h5>{{data.chartB14ShelfSpaceShare.config.title}}
-                        <span class="glyphicon glyphicon-info-sign"></span>
+                    <h5>{{'ReportMarketShareChartTitleShelfSpaceShare' | translate}}
+                        <!--<span class="glyphicon glyphicon-info-sign"></span>-->
                         <!--<span class="glyphicon glyphicon-resize-full chart_icon"></span>-->
                         <!--<span class="glyphicon glyphicon-save chart_icon"></span>-->
                     </h5>
                     <div ac-chart="'line'" ac-data="data.chartB14ShelfSpaceShare.data" ac-config="data.chartB14ShelfSpaceShare.config" class="chartBox"></div>
-                    <p class="text-center">Period</p>
+                    <p class="text-center">{{'ReportMarketSalesAndInventoryChartBottomTextPeriod' | translate}}</p>
                 </div>
             </div>
         </div>
@@ -2033,17 +1747,17 @@
                     <h5>{{'ReportMenuCompetitorIntelligence' | translate}}</h5>
 
                     <ul class="nav nav-pills table_multimenu">
-                        <li ng-class="{'active': css.tableReportMenu == 1}"><a href="" ng-click="switchTableMenuLevel1(1)">Technology</a></li>
-                        <li ng-class="{'active': css.tableReportMenu == 2}"><a href="" ng-click="switchTableMenuLevel1(2)">Marketing & Sales</a></li>
-                        <li ng-class="{'active': css.tableReportMenu == 3}"><a href="" ng-click="switchTableMenuLevel1(3)">Operations</a></li>
-                        <li ng-class="{'active': css.tableReportMenu == 4}"><a href="" ng-click="switchTableMenuLevel1(4)">Investment</a></li>
+                        <li ng-class="{'active': css.tableReportMenu == 1}"><a href="" ng-click="switchTableMenuLevel1(1)">{{'ReportCompetitorIntelligenceTableTitleTechnology' | translate}}</a></li>
+                        <li ng-class="{'active': css.tableReportMenu == 2}"><a href="" ng-click="switchTableMenuLevel1(2)">{{'ReportCompetitorIntelligenceTableTitleMarketingSales' | translate}}</a></li>
+                        <li ng-class="{'active': css.tableReportMenu == 3}"><a href="" ng-click="switchTableMenuLevel1(3)">{{'ReportCompetitorIntelligenceTableTitleOperations' | translate}}</a></li>
+                        <li ng-class="{'active': css.tableReportMenu == 4}"><a href="" ng-click="switchTableMenuLevel1(4)">{{'ReportCompetitorIntelligenceTableTitleInvestments' | translate}}</a></li>
                     </ul>
 
                     <div class="table_report" ng-if="css.tableReportMenu == 1">
                         <ul class="nav nav-pills">
-                            <li ng-class="{'active': data.tableB2CompetitorIntelligence.currentTable==1}"><a href="" ng-click="switchTableReport(1)">Acquired Production and Logistics Efficiency (%)</a></li>
-                            <li ng-class="{'active': data.tableB2CompetitorIntelligence.currentTable==2}"><a href="" ng-click="switchTableReport(2)">Acquired Production Planning Flexibility (%)</a></li>
-                            <li ng-class="{'active': data.tableB2CompetitorIntelligence.currentTable==3}"><a href="" ng-click="switchTableReport(3)">Available Technology Level</a></li>
+                            <li ng-class="{'active': data.tableB2CompetitorIntelligence.currentTable==1}"><a href="" ng-click="switchTableReport(1)">{{'ReportCompetitorIntelligenceTechnologyAcquiredProductionAndLogisticsEfficiency' | translate}}</a></li>
+                            <li ng-class="{'active': data.tableB2CompetitorIntelligence.currentTable==2}"><a href="" ng-click="switchTableReport(2)">{{'ReportCompetitorIntelligenceTechnologyAcquiredProductionPlanningFlexibility' | translate}}</a></li>
+                            <li ng-class="{'active': data.tableB2CompetitorIntelligence.currentTable==3}"><a href="" ng-click="switchTableReport(3)">{{'ReportCompetitorIntelligenceTechnologyAvailableTechnologyLevel' | translate}}</a></li>
                         </ul>
 
                         <div class="divider_horizontal"></div>
@@ -2055,14 +1769,14 @@
 
                     <div class="table_report" ng-if="css.tableReportMenu == 2">
                         <ul class="nav nav-pills">
-                            <li ng-class="{'active': data.tableB2CompetitorIntelligence.currentTable==1}"><a href="" ng-click="switchTableReport(1)">Additional Trade Margin Cost ($ min)</a></li>
-                            <li ng-class="{'active': data.tableB2CompetitorIntelligence.currentTable==2}"><a href="" ng-click="switchTableReport(2)">Advertising ($ min)</a></li>
-                            <li ng-class="{'active': data.tableB2CompetitorIntelligence.currentTable==3}"><a href="" ng-click="switchTableReport(3)">Consumer Promotions Cost ($ min)</a></li>
-                            <li ng-class="{'active': data.tableB2CompetitorIntelligence.currentTable==4}"><a href="" ng-click="switchTableReport(4)">Retailers Purchase Volume (mln std. packs)</a></li>
-                            <li ng-class="{'active': data.tableB2CompetitorIntelligence.currentTable==5}"><a href="" ng-click="switchTableReport(5)">Sales Force Cost ($ mln)</a></li>
-                            <li ng-class="{'active': data.tableB2CompetitorIntelligence.currentTable==6}"><a href="" ng-click="switchTableReport(6)">Shipments to Wholesalers (mln std. packs)</a></li>
-                            <li ng-class="{'active': data.tableB2CompetitorIntelligence.currentTable==7}"><a href="" ng-click="switchTableReport(7)">Trade Investment ($ mln)</a></li>
-                            <li ng-class="{'active': data.tableB2CompetitorIntelligence.currentTable==8}"><a href="" ng-click="switchTableReport(8)">Volume Discount Cost ($ mln)</a></li>
+                            <li ng-class="{'active': data.tableB2CompetitorIntelligence.currentTable==1}"><a href="" ng-click="switchTableReport(1)">{{'ReportCompetitorIntelligenceMarketingSalesAdditionalTradeMarginCost' | translate}} </a></li>
+                            <li ng-class="{'active': data.tableB2CompetitorIntelligence.currentTable==2}"><a href="" ng-click="switchTableReport(2)">{{'ReportCompetitorIntelligenceMarketingSalesAdvertising' | translate}}</a></li>
+                            <li ng-class="{'active': data.tableB2CompetitorIntelligence.currentTable==3}"><a href="" ng-click="switchTableReport(3)">{{'ReportCompetitorIntelligenceMarketingSalesConsumerPromotionsCost' | translate}}</a></li>
+                            <li ng-class="{'active': data.tableB2CompetitorIntelligence.currentTable==4}"><a href="" ng-click="switchTableReport(4)">{{'ReportCompetitorIntelligenceMarketingSalesRetailerPurchaseVolume' | translate}}</a></li>
+                            <li ng-class="{'active': data.tableB2CompetitorIntelligence.currentTable==5}"><a href="" ng-click="switchTableReport(5)">{{'ReportCompetitorIntelligenceMarketingSalesSalesForceCost' | translate}}</a></li>
+                            <li ng-class="{'active': data.tableB2CompetitorIntelligence.currentTable==6}"><a href="" ng-click="switchTableReport(6)">{{'ReportCompetitorIntelligenceMarketingSalesShipmentToWholesalers' | translate}}</a></li>
+                            <li ng-class="{'active': data.tableB2CompetitorIntelligence.currentTable==7}"><a href="" ng-click="switchTableReport(7)">{{'ReportCompetitorIntelligenceMarketingSalesTradeInvestments' | translate}}</a></li>
+                            <li ng-class="{'active': data.tableB2CompetitorIntelligence.currentTable==8}"><a href="" ng-click="switchTableReport(8)">{{'ReportCompetitorIntelligenceMarketingSalesVolumeDiscountCost' | translate}}</a></li>
                         </ul>
 
                         <div class="divider_horizontal"></div>
@@ -2079,12 +1793,12 @@
 
                     <div class="table_report" ng-if="css.tableReportMenu == 3">
                         <ul class="nav nav-pills">
-                            <li ng-class="{'active': data.tableB2CompetitorIntelligence.currentTable==1}"><a href="" ng-click="switchTableReport(1)">Capacity Utilisation Rate (%)</a></li>
-                            <li ng-class="{'active': data.tableB2CompetitorIntelligence.currentTable==2}"><a href="" ng-click="switchTableReport(2)">Inventory Volume at Manufacturer (mln std. packs)</a></li>
-                            <li ng-class="{'active': data.tableB2CompetitorIntelligence.currentTable==3}"><a href="" ng-click="switchTableReport(3)">Inventory Volume at Retailers (mln std. packs)</a></li>
-                            <li ng-class="{'active': data.tableB2CompetitorIntelligence.currentTable==4}"><a href="" ng-click="switchTableReport(4)">Inventory Volume at Wholesalers (mln std. packs)</a></li>
-                            <li ng-class="{'active': data.tableB2CompetitorIntelligence.currentTable==5}"><a href="" ng-click="switchTableReport(5)">Next Period Available Prod. Capacity (mln std. packs)</a></li>
-                            <li ng-class="{'active': data.tableB2CompetitorIntelligence.currentTable==6}"><a href="" ng-click="switchTableReport(6)">Production Volume (mln std. packs)</a></li>
+                            <li ng-class="{'active': data.tableB2CompetitorIntelligence.currentTable==1}"><a href="" ng-click="switchTableReport(1)">{{'ReportCompetitorIntelligenceOperationsCapacityUtilisationRate' | translate}}  </a></li>
+                            <li ng-class="{'active': data.tableB2CompetitorIntelligence.currentTable==2}"><a href="" ng-click="switchTableReport(2)">{{'ReportCompetitorIntelligenceOperationsInventoryVolumeAtManufacturer' | translate}}  </a></li>
+                            <li ng-class="{'active': data.tableB2CompetitorIntelligence.currentTable==3}"><a href="" ng-click="switchTableReport(3)">{{'ReportCompetitorIntelligenceOperationsInventoryVolumeAtRetailers' | translate}}  </a></li>
+                            <li ng-class="{'active': data.tableB2CompetitorIntelligence.currentTable==4}"><a href="" ng-click="switchTableReport(4)">{{'ReportCompetitorIntelligenceOperationsInventoryVolumeAtWholesalers' | translate}}  </a></li>
+                            <li ng-class="{'active': data.tableB2CompetitorIntelligence.currentTable==5}"><a href="" ng-click="switchTableReport(5)">{{'ReportCompetitorIntelligenceOperationsNextPeriodAvailableProdCapacity' | translate}}  </a></li>
+                            <li ng-class="{'active': data.tableB2CompetitorIntelligence.currentTable==6}"><a href="" ng-click="switchTableReport(6)">{{'ReportCompetitorIntelligenceOperationsProductionVolume' | translate}}  </a></li>
                         </ul>
 
                         <div class="divider_horizontal"></div>
@@ -2099,8 +1813,8 @@
 
                     <div class="table_report" ng-if="css.tableReportMenu == 4">
                         <ul class="nav nav-pills">
-                            <li ng-class="{'active': data.tableB2CompetitorIntelligence.currentTable==1}"><a href="" ng-click="switchTableReport(1)">Investment to Improve Technology Level ($ min)</a></li>
-                            <li ng-class="{'active': data.tableB2CompetitorIntelligence.currentTable==2}"><a href="" ng-click="switchTableReport(2)">Investment to Increase Production Efficiency ($ min)</a></li>
+                            <li ng-class="{'active': data.tableB2CompetitorIntelligence.currentTable==1}"><a href="" ng-click="switchTableReport(1)">{{'ReportCompetitorIntelligenceInvestmentsInvestmentToImproveTechnologyLevel' | translate}} </a></li>
+                            <li ng-class="{'active': data.tableB2CompetitorIntelligence.currentTable==2}"><a href="" ng-click="switchTableReport(2)">{{'ReportCompetitorIntelligenceInvestmentsInvestmentToIncreaseProductionEfficiency' | translate}} </a></li>
                         </ul>
 
                         <div class="divider_horizontal"></div>
