@@ -5,7 +5,7 @@
   touch-action:none;
   position:static;
   left:auto;
-  width:1300px;
+  width:2260px;
   margin-left:0;
   margin-right:0;
   text-align:left;
@@ -460,4 +460,25 @@
 }
 #u30_input:disabled {
   color:grayText;
+}
+#u31 {
+  position:absolute;
+  left:1080px;
+  top:296px;
+  width:1180px;
+  height:25px;
+}
+#u31_input {
+  position:absolute;
+  left:0px;
+  top:0px;
+  width:1180px;
+  height:25px;
+  font-family:'Arial Italic', 'Arial';
+  font-weight:400;
+  font-style:italic;
+  font-size:12px;
+  text-decoration:none;
+  color:#0000FF;
+  text-align:left;
 }
