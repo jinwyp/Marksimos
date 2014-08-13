@@ -106,14 +106,14 @@
   position:absolute;
   left:130px;
   top:477px;
-  width:200px;
+  width:250px;
   height:25px;
 }
 #u5_input {
   position:absolute;
   left:0px;
   top:0px;
-  width:200px;
+  width:250px;
   height:25px;
   font-family:'Arial Regular', 'Arial';
   font-weight:400;
@@ -125,7 +125,7 @@
 }
 #u6 {
   position:absolute;
-  left:349px;
+  left:408px;
   top:482px;
   width:200px;
   height:16px;
@@ -147,8 +147,8 @@
 #u8 {
   position:absolute;
   left:130px;
-  top:626px;
-  width:111px;
+  top:657px;
+  width:150px;
   height:16px;
   font-family:'Heiti SC Light', 'Heiti SC';
   font-weight:200;
@@ -158,14 +158,14 @@
   position:absolute;
   left:0px;
   top:0px;
-  width:111px;
+  width:150px;
   height:16px;
 }
 #u9 {
   position:absolute;
   left:0px;
   top:0px;
-  width:111px;
+  width:150px;
   white-space:nowrap;
 }
 #u10 {
@@ -304,7 +304,7 @@
 #u18 {
   position:absolute;
   left:130px;
-  top:646px;
+  top:677px;
   width:204px;
   height:16px;
   font-family:'Heiti SC Light', 'Heiti SC';
@@ -328,7 +328,7 @@
 #u20 {
   position:absolute;
   left:130px;
-  top:682px;
+  top:713px;
   width:100px;
   height:25px;
 }
@@ -349,7 +349,7 @@
 #u21 {
   position:absolute;
   left:130px;
-  top:551px;
+  top:582px;
   width:200px;
   height:25px;
 }
@@ -370,7 +370,7 @@
 #u22 {
   position:absolute;
   left:354px;
-  top:556px;
+  top:587px;
   width:416px;
   height:16px;
   font-family:'Heiti SC Light', 'Heiti SC';
@@ -820,7 +820,7 @@
 #u54 {
   position:absolute;
   left:130px;
-  top:591px;
+  top:622px;
   width:200px;
   height:25px;
 }
@@ -841,7 +841,7 @@
 #u55 {
   position:absolute;
   left:364px;
-  top:594px;
+  top:625px;
   width:349px;
   height:16px;
   font-family:'Heiti SC Light', 'Heiti SC';
@@ -861,4 +861,49 @@
   top:0px;
   width:349px;
   word-wrap:break-word;
+}
+#u57 {
+  position:absolute;
+  left:130px;
+  top:549px;
+  width:200px;
+  height:25px;
+}
+#u57_input {
+  position:absolute;
+  left:0px;
+  top:0px;
+  width:200px;
+  height:25px;
+  font-family:'Arial Regular', 'Arial';
+  font-weight:400;
+  font-style:normal;
+  font-size:13px;
+  text-decoration:none;
+  color:#999999;
+  text-align:left;
+}
+#u58 {
+  position:absolute;
+  left:355px;
+  top:552px;
+  width:72px;
+  height:16px;
+  font-family:'Heiti SC Light', 'Heiti SC';
+  font-weight:200;
+  font-style:normal;
+}
+#u58_img {
+  position:absolute;
+  left:0px;
+  top:0px;
+  width:72px;
+  height:16px;
+}
+#u59 {
+  position:absolute;
+  left:0px;
+  top:0px;
+  width:72px;
+  white-space:nowrap;
 }
