@@ -97,6 +97,27 @@ app.directive('menuAdmin', [function() {
 
 
 
+app.directive('tableReportProfitabilityEvolutionSku', function() {
+    return {
+        scope: {
+            data : '='
+        },
+        restrict: 'AE',
+        templateUrl: 'app/js/report/tablereportprofitabilityevolutionsku.html'
+    };
+});
+
+
+app.directive('tableReportProfitabilityEvolutionBrand', function() {
+    return {
+        scope: {
+            data : '='
+        },
+        restrict: 'AE',
+        templateUrl: 'app/js/report/tablereportprofitabilityevolutionbrand.html'
+    };
+});
+
 
 app.directive('tableReportProfitabilityEvolutionGlobal', function() {
     return {
