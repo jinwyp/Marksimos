@@ -373,7 +373,7 @@
 #u21 {
   position:absolute;
   left:130px;
-  top:600px;
+  top:648px;
   width:100px;
   height:25px;
 }
@@ -746,4 +746,52 @@
   top:0px;
   width:349px;
   word-wrap:break-word;
+}
+#u48 {
+  position:absolute;
+  left:130px;
+  top:594px;
+  width:130px;
+  height:16px;
+  font-family:'Heiti SC Light', 'Heiti SC';
+  font-weight:200;
+  font-style:normal;
+}
+#u48_img {
+  position:absolute;
+  left:0px;
+  top:0px;
+  width:130px;
+  height:16px;
+}
+#u49 {
+  position:absolute;
+  left:0px;
+  top:0px;
+  width:130px;
+  white-space:nowrap;
+}
+#u50 {
+  position:absolute;
+  left:130px;
+  top:614px;
+  width:204px;
+  height:16px;
+  font-family:'Heiti SC Light', 'Heiti SC';
+  font-weight:200;
+  font-style:normal;
+}
+#u50_img {
+  position:absolute;
+  left:0px;
+  top:0px;
+  width:204px;
+  height:16px;
+}
+#u51 {
+  position:absolute;
+  left:0px;
+  top:0px;
+  width:204px;
+  white-space:nowrap;
 }

@@ -2583,3 +2583,27 @@
   color:#000000;
   text-align:left;
 }
+#u212 {
+  position:absolute;
+  left:370px;
+  top:362px;
+  width:349px;
+  height:16px;
+  font-family:'Heiti SC Light', 'Heiti SC';
+  font-weight:200;
+  font-style:normal;
+}
+#u212_img {
+  position:absolute;
+  left:0px;
+  top:0px;
+  width:349px;
+  height:16px;
+}
+#u213 {
+  position:absolute;
+  left:0px;
+  top:0px;
+  width:349px;
+  word-wrap:break-word;
+}
