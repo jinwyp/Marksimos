@@ -2,6 +2,8 @@ var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
 var consts = require('../consts.js');
 var Q = require('q');
+var util = require('util');
+var logger = require('../../common/logger.js');
 
 var tOneSKUDecisionSchema = new Schema({
     seminarId: String,
@@ -31,6 +33,20 @@ var tOneSKUDecisionSchema = new Schema({
 
 var SKUDecision = mongoose.model('SKUDecision', tOneSKUDecisionSchema);
 
+// tOneSKUDecisionSchema.pre('save', true, function(next, done){
+//     var self = this;
+//     var validationAction = {
+
+//     }
+
+//     function(doValidate(fields){
+//         fields.forEach(function(field){
+//             if(typeof validationAction[field] != 'function'){
+//                 throw new Error('Cannot find validate action for ' + field);
+//             }
+//         })
+//     })
+// })
 exports.remove =  function(seminarId, period, companyId, brandId, SKUID){
     if(!mongoose.connection.readyState){
         throw new Error("mongoose is not connected.");
@@ -200,12 +216,12 @@ exports.findAllInPeriod = function(seminarId, period){
 }
 
 exports.updateSKU = function(seminarId, period, companyId, brandId, SKUID, SKU){
+
     if(!mongoose.connection.readyState){
         throw new Error("mongoose is not connected.");
     }
 
-    var deferred = Q.defer();
-
+    var deferred = Q.defer(); 
     if(!seminarId){
         deferred.reject(new Error("Invalid argument seminarId."));
     }else if(period===undefined){
@@ -219,21 +235,47 @@ exports.updateSKU = function(seminarId, period, companyId, brandId, SKUID, SKU){
     }else if(SKU===undefined){
         deferred.reject(new Error("Invalid argument SKU."))
     }else{
-        SKUDecision.update({
-            seminarId: seminarId,
-            period: period,
-            d_CID: companyId,
-            d_BrandID: brandId,
-            d_SKUID: SKUID
-        },
-        SKU,
-        function(err, numAffected){
-            if(err){
-                return deferred.reject(err);
-            }
+        SKUDecision.findOne({
+            seminarId : seminarId,
+            period    : period,
+            d_CID     : companyId,
+            d_BrandID : brandId,
+            d_SKUID   : SKUID
+        },function(err, doc){
+            if(err){ return deferred.reject(err);}
 
-            return deferred.resolve(numAffected);
-        })
+            var fields = ['d_Advertising',
+                          'd_AdditionalTradeMargin',
+                          'd_FactoryPrice',
+                          'd_RepriceFactoryStocks',
+                          'd_IngredientsQuality',
+                          'd_PackSize',
+                          'd_ProductionVolume',
+                          'd_PromotionalBudget',
+                          'd_PromotionalEpisodes',
+                          'd_TargetConsumerSegment',
+                          'd_Technology',
+                          'd_ToDrop',
+                          'd_TradeExpenses',
+                          'd_WholesalesBonusMinVolume',
+                          'd_WholesalesBonusRate',
+                          'd_WarrantyLength'];
+
+            doc.modifiedField = [];                          
+            fields.forEach(function(field){
+                if(SKU[field] !== undefined){
+                    doc.modifiedField.push(field);
+                    doc[field] = SKU[field];
+                }
+            });
+
+            logger.log(doc.modifiedField);
+            doc.save(function(err, doc){         
+                if(err){ return deferred.reject(err);}
+                else{ return deferred.resolve(doc);}
+            });
+        });
+  
     }
     return deferred.promise;
 };

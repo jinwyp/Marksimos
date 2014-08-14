@@ -190,7 +190,7 @@ function generateGlobalReport(companyId, allResults){
                 onePeriodReport.period = "Quarter " + onePeriodResult.period;
                 onePeriodReport.marketShareValue = companyResult.c_ValueSegmentShare[consts.ConsumerSegmentsMaxTotal-1] * 100;
                 onePeriodReport.marketShareVolume = companyResult.c_VolumeSegmentShare[consts.ConsumerSegmentsMaxTotal -1] * 100;
-                onePeriodReport.marketSalesVolumeStdPack = companyResult.c_MarketSalesVolume[consts.ConsumerSegmentsMaxTotal-1] * 100;
+                onePeriodReport.marketSalesVolumeStdPack = companyResult.c_MarketSalesVolume[consts.ConsumerSegmentsMaxTotal-1];
                 onePeriodReport.lostSalesVolumeDueToOOSStdPack = companyResult.c_TotalStockOutVolume;
                 onePeriodReport.numbericalDistribution = companyResult.c_AverageDistributionNum * 100;
                 onePeriodReport.volumeWeightedDistribution = companyResult.c_AverageDistributionVol * 100;

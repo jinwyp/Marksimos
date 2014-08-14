@@ -116,6 +116,7 @@ app.factory('Company', ['$http', function($http){
         },
 
         updateBrand : function(postdata){
+            console.log(postdata);
             return $http.put(apiPath + 'brand/decision', postdata);
         },
 
