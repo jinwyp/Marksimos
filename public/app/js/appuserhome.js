@@ -12,7 +12,7 @@ marksimosapp.controller('chartController', ['$translate', '$scope',  '$timeout',
 
     $scope.css = {
         menu : 'Report',
-        chartMenu : 'A4',
+        chartMenu : 'A2',
         tableReportTab : 'SKU',
         tableReportMenu : 1,
         additionalBudget : true,

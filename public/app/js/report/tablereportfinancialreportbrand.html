@@ -1,0 +1,182 @@
+<table class="table table-striped table-bordered table-hover" >
+    <thead>
+        <tr>
+            <th>SKUs</th>
+            <th ng-repeat="sku in data">{{sku.SKUName}}</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td>{{'ReportFinancialReportBrandSalesValue' | translate}}</td>
+            <td ng-repeat="sku in data">{{sku.salesValue | number : 2}}</td>
+        </tr>
+        <tr>
+            <td>{{'ReportFinancialReportBrandChangeVersusPreviousPeriodSalesValue' | translate}}</td>
+            <td ng-repeat="sku in data">{{sku.changeVersusPreviousPeriodSalesValue | number : 2}}%</td>
+        </tr>
+        <tr>
+            <td>{{'ReportFinancialReportBrandShareInBrandTotalSalesValue' | translate}}</td>
+            <td ng-repeat="sku in data">{{sku.shareInBrandTotalSalesValue | number : 2}}%</td>
+        </tr>
+        <tr>
+            <td>{{'ReportFinancialReportBrandCostOfGoodsSold' | translate}}</td>
+            <td ng-repeat="sku in data">{{sku.costOfGoodsSold | number : 2}}</td>
+        </tr>
+        <tr>
+            <td>{{'ReportFinancialReportBrandObsoleteGoodsCost' | translate}}</td>
+            <td ng-repeat="sku in data">{{sku.obsoleteGoodsCost | number : 2}}</td>
+        </tr>
+        <tr>
+            <td>{{'ReportFinancialReportBrandDiscontinuedGoodsCost' | translate}}</td>
+            <td ng-repeat="sku in data">{{sku.discontinuedGoodsCost | number : 2}}</td>
+        </tr>
+        <tr>
+            <td>{{'ReportFinancialReportBrandInventoryHoldingCost' | translate}}</td>
+            <td ng-repeat="sku in data">{{sku.inventoryHoldingCost | number : 2}}</td>
+        </tr>
+        <tr>
+            <td>{{'ReportFinancialReportBrandTotalMaterialCost' | translate}}</td>
+            <td ng-repeat="sku in data">{{sku.totalMaterialCosts | number : 2}}</td>
+        </tr>
+        <tr>
+            <td></td>
+            <td ng-repeat="sku in data"></td>
+        </tr>
+        <tr>
+            <td>{{'ReportFinancialReportBrandTotalMaterialCost' | translate}}</td>
+            <td ng-repeat="sku in data">{{sku.grossProfit | number : 2}}</td>
+        </tr>
+        <tr>
+            <td>{{'ReportFinancialReportBrandChangeVersusPreviousPeriodGrossProfit' | translate}}</td>
+            <td ng-repeat="sku in data">{{sku.changeVersusPreviousPeriodGrossProfit | number : 2}}%</td>
+        </tr>
+        <tr>
+            <td>{{'ReportFinancialReportBrandGrossProfitMargin' | translate}}</td>
+            <td ng-repeat="sku in data">{{sku.grossProfitMargin | number : 2}}%</td>
+        </tr>
+        <tr>
+            <td>{{'ReportFinancialReportBrandShareInBrandGrossProfitLosses' | translate}}</td>
+            <td ng-repeat="sku in data">{{sku.shareInBrandGrossProfitLosses | number : 2}}%</td>
+        </tr>
+        <tr>
+            <td></td>
+            <td ng-repeat="sku in data"></td>
+        </tr>
+        <tr>
+            <td>{{'ReportFinancialReportBrandShareInBrandGrossProfitLosses' | translate}}</td>
+            <td ng-repeat="sku in data">{{sku.advertising | number : 2}}</td>
+        </tr>
+        <tr>
+            <td>{{'ReportFinancialReportBrandShareInBrandGrossProfitLosses' | translate}}</td>
+            <td ng-repeat="sku in data">{{sku.consumerPromotionsCost | number : 2}}</td>
+        </tr>
+        <tr>
+            <td>{{'ReportFinancialReportBrandShareInBrandGrossProfitLosses' | translate}}</td>
+            <td ng-repeat="sku in data">{{sku.tradeInvestment | number : 2}}</td>
+        </tr>
+        <tr>
+            <td>{{'ReportFinancialReportBrandShareInBrandGrossProfitLosses' | translate}}</td>
+            <td ng-repeat="sku in data">{{sku.salesForceCost | number : 2}}</td>
+        </tr>
+        <tr>
+            <td>{{'ReportFinancialReportBrandAdditionalTradeMarginCost' | translate}}</td>
+            <td ng-repeat="sku in data">{{sku.additionalTradeMarginCost | number : 2}}</td>
+        </tr>
+        <tr>
+            <td>{{'ReportFinancialReportBrandVolumeDiscountCost' | translate}}</td>
+            <td ng-repeat="sku in data">{{sku.volumeDiscountCost | number : 2}}</td>
+        </tr>
+        <tr>
+            <td>{{'ReportFinancialReportBrandTotalTradeAndMarketingExpenses' | translate}}</td>
+            <td ng-repeat="sku in data">{{sku.totalTradeAndMarketingExpenses | number : 2}}</td>
+        </tr>
+        <tr>
+            <td>{{'ReportFinancialReportBrandTradeAndMarketingExpensesasaOfSales' | translate}}</td>
+            <td ng-repeat="sku in data">{{sku.tradeAndMarketingExpensesAsAPercentageOfSales | number : 2}}%</td>
+        </tr>
+        <tr>
+            <td>{{'ReportFinancialReportBrandShareOfTradeAndMarketingExpensesInBrandTotal' | translate}}</td>
+            <td ng-repeat="sku in data">{{sku.shareOfTradeAndMarketingExpensesInBrandTotal | number : 2}}%</td>
+        </tr>
+        <tr>
+            <td></td>
+            <td ng-repeat="sku in data"></td>
+        </tr>
+        <tr>
+            <td>{{'ReportFinancialReportBrandGeneralExpenses' | translate}}</td>
+            <td ng-repeat="sku in data">{{sku.generalExpenses | number : 2}}</td>
+        </tr>
+        <tr>
+            <td>{{'ReportFinancialReportBrandAmortisation' | translate}}</td>
+            <td ng-repeat="sku in data">{{sku.amortisation | number : 2}}</td>
+        </tr>
+        <tr>
+            <td></td>
+            <td ng-repeat="sku in data"></td>
+        </tr>
+        <tr>
+            <td>{{'ReportFinancialReportBrandOperatingProfit' | translate}}</td>
+            <td ng-repeat="sku in data">{{sku.operatingProfit | number : 2}}</td>
+        </tr>
+        <tr>
+            <td>{{'ReportFinancialReportBrandChangeVersusPreviousPeriodOperatingProfit' | translate}}</td>
+            <td ng-repeat="sku in data">{{sku.changeVersusPreviousPeriodOperatingProfit | number : 2}}%</td>
+        </tr>
+        <tr>
+            <td>{{'ReportFinancialReportBrandOperatingProfitMargin' | translate}}</td>
+            <td ng-repeat="sku in data">{{sku.operatingProfitMargin | number : 2}}%</td>
+        </tr>
+        <tr>
+            <td>{{'ReportFinancialReportBrandShareInBrandOperatingProfitLoss' | translate}}</td>
+            <td ng-repeat="sku in data">{{sku.shareInBrandOperatingProfitLosses | number : 2}}%</td>
+        </tr>
+        <tr>
+            <td></td>
+            <td ng-repeat="sku in data"></td>
+        </tr>
+        <tr>
+            <td>{{'ReportFinancialReportBrandInterests' | translate}}</td>
+            <td ng-repeat="sku in data">{{sku.interests | number : 2}}</td>
+        </tr>
+        <tr>
+            <td>{{'ReportFinancialReportBrandTaxes' | translate}}</td>
+            <td ng-repeat="sku in data">{{sku.taxes | number : 2}}</td>
+        </tr>
+        <tr>
+            <td>{{'ReportFinancialReportBrandExceptionalCostProfit' | translate}}</td>
+            <td ng-repeat="sku in data">{{sku.exceptionalCostsProfits | number : 2}}</td>
+        </tr>
+        <tr>
+            <td></td>
+            <td ng-repeat="sku in data"></td>
+        </tr>
+        <tr>
+            <td>{{'ReportFinancialReportBrandNetProfit' | translate}}</td>
+            <td ng-repeat="sku in data">{{sku.netProfit | number : 2}}</td>
+        </tr>
+        <tr>
+            <td>{{'ReportFinancialReportBrandChangeVersusPreviousPeriodNetProfit' | translate}}</td>
+            <td ng-repeat="sku in data">{{sku.changeVersusPreviousPeriodNetProfit | number : 2}}%</td>
+        </tr>
+        <tr>
+            <td>{{'ReportFinancialReportBrandNetProfitMargin' | translate}}</td>
+            <td ng-repeat="sku in data">{{sku.netProfitMargin | number : 2}}%</td>
+        </tr>
+        <tr>
+            <td>{{'ReportFinancialReportBrandShareInBrandNetProfitLoss' | translate}}</td>
+            <td ng-repeat="sku in data">{{sku.shareInBrandNetProfitLosses | number : 2}}%</td>
+        </tr>
+        <tr>
+            <td></td>
+            <td ng-repeat="sku in data"></td>
+        </tr>
+        <tr>
+            <td>{{'ReportFinancialReportBrandProductionCost' | translate}}</td>
+            <td ng-repeat="sku in data">{{sku.productionCost | number : 2}}</td>
+        </tr>
+        <tr>
+            <td>{{'ReportFinancialReportBrandInventoryValue' | translate}}</td>
+            <td ng-repeat="sku in data">{{sku.inventoryValue | number : 2}}</td>
+        </tr>
+    </tbody>
+</table>

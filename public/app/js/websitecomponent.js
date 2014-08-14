@@ -97,6 +97,29 @@ app.directive('menuAdmin', [function() {
 
 
 
+
+app.directive('tableReportFinancialReportBrand', function() {
+    return {
+        scope: {
+            data : '='
+        },
+        restrict: 'AE',
+        templateUrl: 'app/js/report/tablereportfinancialreportbrand.html'
+    };
+});
+
+
+app.directive('tableReportFinancialReportAllBrand', function() {
+    return {
+        scope: {
+            data : '='
+        },
+        restrict: 'AE',
+        templateUrl: 'app/js/report/tablereportfinancialreportallbrand.html'
+    };
+});
+
+
 app.directive('tableReportProfitabilityEvolutionSku', function() {
     return {
         scope: {
