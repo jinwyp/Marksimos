@@ -97,6 +97,38 @@ app.directive('menuAdmin', [function() {
 
 
 
+app.directive('tableReportCompanyStatusSku', function() {
+    return {
+        scope: {
+            data : '='
+        },
+        restrict: 'AE',
+        templateUrl: 'app/js/report/tablereportcompanystatussku.html'
+    };
+});
+
+
+app.directive('tableReportCompanyStatusBrand', function() {
+    return {
+        scope: {
+            data : '='
+        },
+        restrict: 'AE',
+        templateUrl: 'app/js/report/tablereportcompanystatusbrand.html'
+    };
+});
+
+
+app.directive('tableReportCompanyStatusGlobal', function() {
+    return {
+        scope: {
+            data : '='
+        },
+        restrict: 'AE',
+        templateUrl: 'app/js/report/tablereportcompanystatusglobal.html'
+    };
+});
+
 
 app.directive('tableReportFinancialReportBrand', function() {
     return {
