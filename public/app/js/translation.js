@@ -12,13 +12,16 @@ app.config(['$translateProvider', function($translateProvider){
 
 		//Labels for Items on Home page - Top Menu Bar
         "HomePageMenuBarLabelsHome"     : "Home",
-        "HomePageMenuBarLabelsReport"   : "Reports",
-        "HomePageMenuBarLabelsDecision" : "Decision",
-        "HomePageMenuBarLabelsScore"    : "Score",
-        "HomePageMenuBarLabelsLanguage" : "Language",
-        "HomePageMenuBarLabelsHelp"     : "Help",
-        "HomePageMenuBarLabelsAbout"    : "About MarkSimos",
-        "HomePageMenuBarLabelsLogout"   : "Log Out",
+        "HomePageMenuBarLabelsReport"     : "Reports",
+        "HomePageMenuBarLabelsDecision"   : "Decision",
+        "HomePageMenuBarLabelsScore"      : "Score",
+        "HomePageMenuBarLabelsLanguage"   : "Language",
+        "HomePageMenuBarLabelsHelp"       : "Help",
+        "HomePageMenuBarLabelsHelpFAQ"    : "FAQ",
+        "HomePageMenuBarLabelsHelpVideo"  : "Video",
+        "HomePageMenuBarLabelsHelpManual" : "Manual",
+        "HomePageMenuBarLabelsAbout"      : "About MarkSimos",
+        "HomePageMenuBarLabelsLogout"     : "Log Out",
 
 		//Labels for Items on Home page - Second Menu Bar
         "HomePageSecondMenuBarLabelsCompany"                   : "Company",
@@ -774,14 +777,17 @@ app.config(['$translateProvider', function($translateProvider){
 	
 	
 		//Labels for Items on Home page - Top Menu Bar
-		"HomePageMenuBarLabelsHome"		:	"首页",
-		"HomePageMenuBarLabelsReport"		:	"报告",
-		"HomePageMenuBarLabelsDecision"		:	"决策",
-		"HomePageMenuBarLabelsScore"		:	"得分",
-		"HomePageMenuBarLabelsLanguage"		:	"语言",
-		"HomePageMenuBarLabelsHelp"		:	"帮助",
-		"HomePageMenuBarLabelsAbout"		:	"关于 MarkSimos",
-		"HomePageMenuBarLabelsLogout"		:	"注销",
+        "HomePageMenuBarLabelsHome"       : "首页",
+        "HomePageMenuBarLabelsReport"     : "报告",
+        "HomePageMenuBarLabelsDecision"   : "决策",
+        "HomePageMenuBarLabelsScore"      : "得分",
+        "HomePageMenuBarLabelsLanguage"   : "语言",
+        "HomePageMenuBarLabelsHelp"       : "帮助",
+        "HomePageMenuBarLabelsHelpFAQ"    : "FAQ",
+        "HomePageMenuBarLabelsHelpVideo"  : "视频",
+        "HomePageMenuBarLabelsHelpManual" : "手册",
+        "HomePageMenuBarLabelsAbout"      : "关于 MarkSimos",
+        "HomePageMenuBarLabelsLogout"     : "登出",
 
 		
 		//Labels for Items on Home page - Second Menu Bar
@@ -943,7 +949,7 @@ app.config(['$translateProvider', function($translateProvider){
 		"ReportCompanyStatusGlobalInventoryVolumeAtRetailers"	:	"零售商持有的库存量 (百万包)",
 		"ReportCompanyStatusGlobalStocksCoverAtRetailers"	:	"零售商的库存维持期 (周)",
 		"ReportCompanyStatusGlobalStocksCoverAtWholesalers"	:	"经销商的库存维持期 (周)",
-		
+
 		//Labels for Financial Report - Brand Level
 		"ReportFinancialReportBrandSalesValue"	:	"销售额 ($ mln)",
 		"ReportFinancialReportBrandChangeVersusPreviousPeriodSalesValue"	:	"(%) 相对于上阶段的改变",
