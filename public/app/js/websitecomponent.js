@@ -3,7 +3,7 @@
  */
 
 
-var app = angular.module('marksimos.websitecomponent', ['marksimos.model', 'pascalprecht.translate' ]);
+var app = angular.module('marksimos.websitecomponent', ['marksimos.model', 'pascalprecht.translate', 'marksimos.translation' ]);
 
 
 
