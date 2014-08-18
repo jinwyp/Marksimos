@@ -8,7 +8,32 @@ var marksimosapp = angular.module('marksimos', ['pascalprecht.translate', 'angul
 
 
 // controller business logic
-marksimosapp.controller('chartController', ['$translate', '$scope',  '$timeout', '$http', 'notify', 'chartReport', 'tableReport', 'Company', function($translate, $scope,  $timeout, $http, notify, chartReport, tableReport, Company) {
+marksimosapp.controller('chartController', ['$translate', '$scope', '$rootScope', '$timeout', '$http', 'notify', 'chartReport', 'tableReport', 'Company', function($translate, $scope, $rootScope, $timeout, $http, notify, chartReport, tableReport, Company) {
+    $rootScope.$on('$translateChangeSuccess', function () {
+        $translate(['HomePageSegmentLabelPriceSensitive', 'HomePageSegmentLabelPretenders', 'HomePageSegmentLabelModerate',
+            'HomePageSegmentLabelGoodLife', 'HomePageSegmentLabelUltimate', 'HomePageSegmentLabelPragmatic']).then(function (translations) {
+            $scope.data.userSegment = [
+                {id:1, name: translations['HomePageSegmentLabelPriceSensitive']},
+                {id:2, name: translations['HomePageSegmentLabelPretenders']},
+                {id:3, name: translations['HomePageSegmentLabelModerate']},
+                {id:4, name: translations['HomePageSegmentLabelGoodLife']},
+                {id:5, name: translations['HomePageSegmentLabelUltimate']},
+                {id:6, name: translations['HomePageSegmentLabelPragmatic']}
+            ]
+        });
+    });
+
+    $translate(['HomePageSegmentLabelPriceSensitive', 'HomePageSegmentLabelPretenders', 'HomePageSegmentLabelModerate',
+        'HomePageSegmentLabelGoodLife', 'HomePageSegmentLabelUltimate', 'HomePageSegmentLabelPragmatic']).then(function (translations) {
+        $scope.data.userSegment = [
+            {id:1, name: translations['HomePageSegmentLabelPriceSensitive']},
+            {id:2, name: translations['HomePageSegmentLabelPretenders']},
+            {id:3, name: translations['HomePageSegmentLabelModerate']},
+            {id:4, name: translations['HomePageSegmentLabelGoodLife']},
+            {id:5, name: translations['HomePageSegmentLabelUltimate']},
+            {id:6, name: translations['HomePageSegmentLabelPragmatic']}
+        ]
+    });
 
     $scope.css = {
         menu : 'Decision',
@@ -45,14 +70,7 @@ marksimosapp.controller('chartController', ['$translate', '$scope',  '$timeout',
         currentModifiedCompany : {},
         currentSku : null,
         currentSkuIndex : 0,
-        userSegment : [
-            {id:1, name:'1 Price Sensitive'},
-            {id:2, name:'2 Pretenders'},
-            {id:3, name:'3 Moderate'},
-            {id:4, name:'4 Good Life'},
-            {id:5, name:'5 Ultimate'},
-            {id:6, name:'6 Pragmatic'}
-        ],
+
 
 
         tableA1CompanyStatus : {
