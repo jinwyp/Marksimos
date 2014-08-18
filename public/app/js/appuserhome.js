@@ -35,6 +35,7 @@ marksimosapp.controller('chartController', ['$translate', '$scope', '$rootScope'
         ]
     });
 
+
     $scope.css = {
         menu : 'Decision',
         chartMenu : 'A1',
@@ -70,8 +71,6 @@ marksimosapp.controller('chartController', ['$translate', '$scope', '$rootScope'
         currentModifiedCompany : {},
         currentSku : null,
         currentSkuIndex : 0,
-
-
 
         tableA1CompanyStatus : {
             allCompanyData : [],
