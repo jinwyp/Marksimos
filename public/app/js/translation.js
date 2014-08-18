@@ -660,6 +660,8 @@ app.config(['$translateProvider', function($translateProvider){
 		"DecisionPageDecisionTabMission"		:	"Market Share + Profit",
 		"DecisionPageDecisionTabSalesForce"		:	"Sales Force ($ mln)",
 		"DecisionPageDecisionTabName"		:	"Name",
+
+
 		"DecisionPageDecisionTabDiscontinue"		:	"Discontinue?",
 		"DecisionPageDecisionTabProcessingTechnology"		:	"Processing Technology",
 		"DecisionPageDecisionTabIngredientsQuality"		:	"Ingredients Quality",
@@ -667,6 +669,7 @@ app.config(['$translateProvider', function($translateProvider){
 		"DecisionPageDecisionTabPackagingSizeSmall"		:	"Small",
 		"DecisionPageDecisionTabPackagingSizeStandard"		:	"Standard",
 		"DecisionPageDecisionTabPackagingSizeLarge"		:	"Large",
+
 		"DecisionPageDecisionTabProductionVolume"		:	"Production Volume (mln packs)",
 		"DecisionPageDecisionTabManufacturerPrice"		:	"Manufacturer Price ($)",
 		"DecisionPageDecisionTabRepriceFactoryStock"		:	"Reprice Factory Stock?",
@@ -674,11 +677,12 @@ app.config(['$translateProvider', function($translateProvider){
 		"DecisionPageDecisionTabTargetConsumerSegment"		:	"Target Consumer Segment",
 		"DecisionPageDecisionTabConsumerPromotions"		:	"Consumer Promotions ($ mln)",
 		"DecisionPageDecisionTabConsumerPromotionsSchedule"		:	"Consumer Promotions Schedule",
-		"DecisionPageDecisionTabConsumerPromotionsScheduleweek"		:	"Week",
+		"DecisionPageDecisionTabConsumerPromotionsScheduleWeek"		:	"Week",
 		"DecisionPageDecisionTabTradeExpenses"		:	"Trade Expenses ($ mln)",
-		"DecisionPageDecisionAdditionalTradeMargin"		:	"Additional Trade Margin (%)",
-		"DecisionPageDecisionWholesaleMinimumVolume"		:	"Wholesale Minimum Volume (mln packs)",
-		"DecisionPageDecisionWholesaleBonusRate"		:	"Wholesale Bonus Rate (%)",
+		"DecisionPageDecisionTabAdditionalTradeMargin"		:	"Additional Trade Margin (%)",
+		"DecisionPageDecisionTabWholesaleMinimumVolume"		:	"Wholesale Minimum Volume (mln packs)",
+		"DecisionPageDecisionTabWholesaleBonusRate"		:	"Wholesale Bonus Rate (%)",
+
 		"DecisionPageDecisionNewProductDevelopmentInvestment"		:	"New Product Development Investment",
 		"DecisionPageDecisionNewProductDevelopmentInvestmentInvestmentinProductionEfficiency"		:	"Investment in Production Efficiency ($ mln)",
 		"DecisionPageDecisionNewProductDevelopmentInvestmentInvestmentinProcessingTechnology"		:	"Investment in Processing Technology ($ mln)",
@@ -1432,6 +1436,7 @@ app.config(['$translateProvider', function($translateProvider){
 		"DecisionPageDecisionTabMission"		:	"市场份额+利润",
 		"DecisionPageDecisionTabSalesForce"		:	"销售团队 ($ mln)",
 		"DecisionPageDecisionTabName"		:	"名称",
+
 		"DecisionPageDecisionTabDiscontinue"		:	"是否停止运营?",
 		"DecisionPageDecisionTabProcessingTechnology"		:	"生产技术",
 		"DecisionPageDecisionTabIngredientsQuality"		:	"原料质量",
@@ -1446,11 +1451,12 @@ app.config(['$translateProvider', function($translateProvider){
 		"DecisionPageDecisionTabTargetConsumerSegment"		:	"目标细分市场",
 		"DecisionPageDecisionTabConsumerPromotions"		:	"促销 ($ mln)", 
 		"DecisionPageDecisionTabConsumerPromotionsSchedule"		:	"促销日程",
-		"DecisionPageDecisionTabConsumerPromotionsScheduleweek"		:	"周",
+		"DecisionPageDecisionTabConsumerPromotionsScheduleWeek"		:	"周",
 		"DecisionPageDecisionTabTradeExpenses"		:	"零售终端费用 ($ mln)",
-		"DecisionPageDecisionAdditionalTradeMargin"		:	"额外零售终端返利 (%)",
-		"DecisionPageDecisionWholesaleMinimumVolume"		:	"经销商最低订货量 (百万件)",
-		"DecisionPageDecisionWholesaleBonusRate"		:	"经销商进货折扣率 (%)",
+		"DecisionPageDecisionTabAdditionalTradeMargin"		:	"额外零售终端返利 (%)",
+		"DecisionPageDecisionTabWholesaleMinimumVolume"		:	"经销商最低订货量 (百万件)",
+		"DecisionPageDecisionTabWholesaleBonusRate"		:	"经销商进货折扣率 (%)",
+
 		"DecisionPageDecisionNewProductDevelopmentInvestment"		:	"生产技术以及生产效率研发投入",
 		"DecisionPageDecisionNewProductDevelopmentInvestmentInvestmentinProductionEfficiency"		:	"生产效率的投资 ($ mln)",
 		"DecisionPageDecisionNewProductDevelopmentInvestmentInvestmentinProcessingTechnology"		:	"生产技术的投资 ($ mln)",

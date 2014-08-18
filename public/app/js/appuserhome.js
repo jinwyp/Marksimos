@@ -11,7 +11,7 @@ var marksimosapp = angular.module('marksimos', ['pascalprecht.translate', 'angul
 marksimosapp.controller('chartController', ['$translate', '$scope',  '$timeout', '$http', 'notify', 'chartReport', 'tableReport', 'Company', function($translate, $scope,  $timeout, $http, notify, chartReport, tableReport, Company) {
 
     $scope.css = {
-        menu : 'Report',
+        menu : 'Decision',
         chartMenu : 'A1',
         tableReportTab : 'SKU',
         tableReportMenu : 1,

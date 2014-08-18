@@ -1268,57 +1268,57 @@
 
                                         <tbody>
                                             <tr >
-                                                <td>Discontinue?</td>
+                                                <td>{{'DecisionPageDecisionTabDiscontinue' | translate}}</td>
                                                 <td ng-repeat="sku in data.currentBrand.d_SKUsDecisions">
                                                     <input type="checkbox" ng-model="sku.d_ToDrop" ng-change="leaveSkuInput(sku, 'd_ToDrop', sku.d_ToDrop)" ng-focus="clickCurrentSku(sku)">
                                                 </td>
                                             </tr>
                                             <tr >
-                                                <td class="tdgroup">Processing Technology</td>
+                                                <td class="tdgroup">{{'DecisionPageDecisionTabProcessingTechnology' | translate}}</td>
                                                 <td ng-repeat="sku in data.currentBrand.d_SKUsDecisions">
                                                     <input type="text" class="form-control input-sm" ng-model="sku.d_Technology" ng-blur="leaveSkuInput(sku, 'd_Technology', sku.d_Technology)"  ng-focus="clickCurrentSku(sku)">
                                                 </td>
                                             </tr>
                                             <tr>
-                                                <td>Ingredients Quality</td>
+                                                <td>{{'DecisionPageDecisionTabIngredientsQuality' | translate}}</td>
                                                 <td ng-repeat="sku in data.currentBrand.d_SKUsDecisions">
                                                     <input type="text" class="form-control input-sm" ng-model="sku.d_IngredientsQuality" ng-blur="leaveSkuInput(sku, 'd_IngredientsQuality', sku.d_IngredientsQuality)"  ng-focus="clickCurrentSku(sku)">
                                                 </td>
                                             </tr>
                                             <tr>
-                                                <td>Packaging Size</td>
+                                                <td>{{'DecisionPageDecisionTabPackagingSize' | translate}}</td>
                                                 <td ng-repeat="sku in data.currentBrand.d_SKUsDecisions"  ng-focus="clickCurrentSku(sku)">
-                                                    <span ng-if="sku.d_PackSize==0">Small</span>
-                                                    <span ng-if="sku.d_PackSize==1">Standard</span>
-                                                    <span ng-if="sku.d_PackSize==2">Large</span>
+                                                    <span ng-if="sku.d_PackSize==0">{{'DecisionPageDecisionTabPackagingSizeSmall' | translate}}</span>
+                                                    <span ng-if="sku.d_PackSize==1">{{'DecisionPageDecisionTabPackagingSizeStandard' | translate}}</span>
+                                                    <span ng-if="sku.d_PackSize==2">{{'DecisionPageDecisionTabPackagingSizeLarge' | translate}}</span>
                                                  </td>
                                             </tr>
                                             <tr>
-                                                <td class="tdgroup">Production Volume (mln Packs)</td>
+                                                <td class="tdgroup">{{'DecisionPageDecisionTabProductionVolume' | translate}}</td>
                                                 <td ng-repeat="sku in data.currentBrand.d_SKUsDecisions">
                                                     <input type="text" class="form-control input-sm" ng-model="sku.d_ProductionVolume" ng-blur="leaveSkuInput(sku, 'd_ProductionVolume', sku.d_ProductionVolume)"  ng-focus="clickCurrentSku(sku)">
                                                 </td>
                                             </tr>
                                             <tr>
-                                                <td>Manufacturer Price ($)</td>
+                                                <td>{{'DecisionPageDecisionTabManufacturerPrice' | translate}}</td>
                                                 <td ng-repeat="sku in data.currentBrand.d_SKUsDecisions">
                                                     <input type="text" class="form-control input-sm" filternumber ng-model="sku.d_FactoryPrice[0]" ng-blur="leaveSkuInput(sku, 'd_FactoryPrice', sku.d_FactoryPrice[0] )"  ng-focus="clickCurrentSku(sku)">
                                                 </td>
                                             </tr>
                                             <tr>
-                                                <td>Reprice Factory Stock?</td>
+                                                <td>{{'DecisionPageDecisionTabRepriceFactoryStock' | translate}}</td>
                                                 <td ng-repeat="sku in data.currentBrand.d_SKUsDecisions">
                                                     <input type="checkbox" ng-model="sku.d_RepriceFactoryStocks" ng-change="leaveSkuInput(sku, 'd_RepriceFactoryStocks', sku.d_RepriceFactoryStocks)"  ng-focus="clickCurrentSku(sku)">
                                                 </td>
                                             </tr>
                                             <tr>
-                                                <td class="tdgroup">Consumer Communication ($mln)</td>
+                                                <td class="tdgroup">{{'DecisionPageDecisionTabConsumerCommunication' | translate}}</td>
                                                 <td ng-repeat="sku in data.currentBrand.d_SKUsDecisions">
                                                     <input type="text" class="form-control input-sm" ng-model="sku.d_Advertising" ng-blur="leaveSkuInput(sku, 'd_Advertising', sku.d_Advertising)"  ng-focus="clickCurrentSku(sku)">
                                                 </td>
                                             </tr>
                                             <tr>
-                                                <td>Target Consumer Segment</td>
+                                                <td>{{'DecisionPageDecisionTabTargetConsumerSegment' | translate}}</td>
                                                 <td ng-repeat="sku in data.currentBrand.d_SKUsDecisions">
                                                     <div class="btn-group">
                                                         <button type="button" class="btn btn-default btn-sm dropdown-toggle" data-toggle="dropdown"  ng-focus="clickCurrentSku(sku)">
@@ -1333,39 +1333,39 @@
                                                 </td>
                                             </tr>
                                             <tr>
-                                                <td class="tdgroup">Consumer Promotions ($mln) </td>
+                                                <td class="tdgroup">{{'DecisionPageDecisionTabConsumerPromotions' | translate}}</td>
                                                 <td ng-repeat="sku in data.currentBrand.d_SKUsDecisions">
                                                     <input type="text" class="form-control input-sm" ng-model="sku.d_PromotionalBudget" ng-blur="leaveSkuInput(sku, 'd_PromotionalBudget', sku.d_PromotionalBudget)"  ng-focus="clickCurrentSku(sku)">
                                                 </td>
                                             </tr>
                                             <tr>
-                                                <td>Consumer Promotions Schedule </td>
-                                                <td ng-repeat="sku in data.currentBrand.d_SKUsDecisions">week
+                                                <td>{{'DecisionPageDecisionTabConsumerPromotionsSchedule' | translate}}</td>
+                                                <td ng-repeat="sku in data.currentBrand.d_SKUsDecisions">{{'DecisionPageDecisionTabConsumerPromotionsScheduleWeek' | translate}}
                                                     <span ng-repeat="week in sku.d_PromotionalEpisodes track by $index">
                                                         <input type="checkbox" ng-model="week" ng-change="leaveSkuInput(sku, 'd_PromotionalEpisodes', sku.d_PromotionalEpisodes, week, $index)"  ng-focus="clickCurrentSku(sku)">
                                                     </span>
                                                 </td>
                                             </tr>
                                             <tr>
-                                                <td class="tdgroup">Trade Expenses ($min)</td>
+                                                <td class="tdgroup">{{'DecisionPageDecisionTabTradeExpenses' | translate}}</td>
                                                 <td ng-repeat="sku in data.currentBrand.d_SKUsDecisions">
                                                     <input type="text" class="form-control input-sm" ng-model="sku.d_TradeExpenses" ng-blur="leaveSkuInput(sku, 'd_TradeExpenses', sku.d_TradeExpenses)"  ng-focus="clickCurrentSku(sku)">
                                                 </td>
                                             </tr>
                                             <tr>
-                                                <td>Additional Trade Margin (%)</td>
+                                                <td>{{'DecisionPageDecisionTabAdditionalTradeMargin' | translate}}</td>
                                                 <td ng-repeat="sku in data.currentBrand.d_SKUsDecisions">
                                                     <input type="text" class="form-control input-sm" filterpercentage ng-model="sku.d_AdditionalTradeMargin"  ng-blur="leaveSkuInput(sku, 'd_AdditionalTradeMargin', sku.d_AdditionalTradeMargin)"  ng-focus="clickCurrentSku(sku)">
                                                 </td>
                                             </tr>
                                             <tr>
-                                                <td class="tdgroup">Wholesale Minimum Volume (min Packs)</td>
+                                                <td class="tdgroup">{{'DecisionPageDecisionTabWholesaleMinimumVolume' | translate}}</td>
                                                 <td ng-repeat="sku in data.currentBrand.d_SKUsDecisions">
                                                     <input type="text" class="form-control input-sm" ng-model="sku.d_WholesalesBonusMinVolume" ng-blur="leaveSkuInput(sku, 'd_WholesalesBonusMinVolume', sku.d_WholesalesBonusMinVolume)"  ng-focus="clickCurrentSku(sku)">
                                                 </td>
                                             </tr>
                                             <tr>
-                                                <td>Wholesale Bonus Rate (%)</td>
+                                                <td>{{'DecisionPageDecisionTabWholesaleBonusRate' | translate}}</td>
                                                 <td ng-repeat="sku in data.currentBrand.d_SKUsDecisions">
                                                     <input type="text" class="form-control input-sm" filterpercentage ng-model="sku.d_WholesalesBonusRate" ng-blur="leaveSkuInput(sku, 'd_WholesalesBonusRate', sku.d_WholesalesBonusRate)"  ng-focus="clickCurrentSku(sku)">
                                                 </td>
