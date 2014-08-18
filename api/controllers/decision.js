@@ -258,11 +258,11 @@ exports.updateSKUDecision = function(req, res, next){
             if(postedSKU[field] !== undefined){
                 result[field] = postedSKU[field];
 
-                //update consumer price automatically if user try to update factory price
-                if(field === 'd_FactoryPrice'){
-                    result.d_ConsumerPrice = result.d_FactoryPrice[0] * (gameParameters.pgen.wholesale_Markup + 1)
-                        * (gameParameters.pgen.retail_Markup + 1);
-                }
+                // //update consumer price automatically if user try to update factory price
+                // if(field === 'd_FactoryPrice'){
+                //     result.d_ConsumerPrice = result.d_FactoryPrice[0] * (gameParameters.pgen.wholesale_Markup + 1)
+                //         * (gameParameters.pgen.retail_Markup + 1);
+                // }
             }
         })
 

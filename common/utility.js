@@ -43,7 +43,7 @@ exports.findSKU = function(onePeriodResult, SKUID){
 exports.findCompany = function(onePeriodResult, companyId){
     for(var i=0; i<onePeriodResult.p_Companies.length; i++){
         var companyResult = onePeriodResult.p_Companies[i];
-        if(companyResult.c_CompanyID === companyId){
+        if(companyResult.c_CompanyID === companyId){           
             return companyResult;
         }
     }
@@ -313,13 +313,22 @@ exports.createCompanyArray = function(companyNum){
     return companies;
 }
 
+exports.getConsumerPrice = function(factoryPrice){
+    return factoryPrice * (gameParameters.pgen.wholesale_Markup + 1)
+                        * (gameParameters.pgen.retail_Markup + 1);
+}
 
+exports.getEstimatedAdditionalTradeMarginCost = function(consumerPrice, productionVolume, margin){
+    return consumerPrice * productionVolume * margin;
+}
 
+exports.getEstimatedWholesalesBonusCost = function(consumerPrice, minimumOrder, margin){
+    return consumerPrice * minimumOrder * margin;
+}
 
-
-
-
-
+exports.getFactoryPriceByConsumberPrice = function(consumerPrice){
+    return (consumerPrice / ((gameParameters.pgen.wholesale_Markup + 1) * (gameParameters.pgen.retail_Markup + 1)) ); 
+}
 
 
 

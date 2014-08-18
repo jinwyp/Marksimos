@@ -6,6 +6,9 @@ var util = require('util');
 var logger = require('../../common/logger.js');
 var spendingDetailsAssembler = require('../dataAssemblers/spendingDetails.js');
 var gameParameters = require('../gameParameters.js').parameters;
+var utility = require('../../common/utility.js');
+var simulationResultModel = require('./simulationResult.js');
+
 
 var tOneSKUDecisionSchema = new Schema({
     seminarId                  : String,
@@ -76,31 +79,88 @@ tOneSKUDecisionSchema.pre('save', true, function(next, done){
 })
 
 
-//Factory Price Range:
-//Max()
-//~ Min()
-// function validateFactoryPrice(field, currentInput, done){
-//     Q.spread([
-//         spendingDetailsAssembler.getSpendingDetails(currentInput.seminarId, currentInput.period, currentInput.d_CID),
-//         exports.findOne(currentInput.seminarId, currentInput.period, currentInput.d_CID, currentInput.d_BrandID, currentInput.d_SKUID)
-//     ], function(spendingDetails, oneSKUDecision){
-//         var budgetLeft = spendingDetails.companyData.availableBudget;
-//         var preInput = oneSKUDecision[field];
+//...Limits : [{msg : 'budgetLeft', value : 200}, {msg : 'para', value: 3000}]
+function rangeCheck(input, lowerLimits, upperLimits){
+    var maxOfLower = { value : 0 };
+    var minOfUpper = { value : Infinity };
+    lowerLimits.forEach(function(limit){
+        if(limit.value > maxOfLower.value){ 
+            maxOfLower.value = limit.value, maxOfLower.msg = limit.msg
+        };
+    });
 
-//         //logger.log(budgetLeft + ' + ' + preInput + ' - ' + currentInput.d_Advertising);
-//         if(budgetLeft + preInput - currentInput[field] < 0){       
-//             var validateErr = new Error('Input is out of range');
-//             validateErr.msg = 'Available budget is not enough.';
-//             validateErr.modifiedField = field;
-//             validateErr.upper = budgetLeft + preInput;
-//             validateErr.lower = 0;
-//             done(validateErr);
-//         } else {   
-//             logger.log('Input ' + currentInput[field] + ' is OK, done()');                 
-//             done();
-//         }                
-//     })
-// }
+    upperLimits.forEach(function(limit){
+        if(limit.value < minOfUpper.value){ 
+            minOfUpper.value = limit.value, minOfUpper.msg = limit.msg
+        };
+    })
+
+    logger.log('minOfUpper:' + util.inspect(minOfUpper) + ', input:' + input);
+    if(input < maxOfLower.value){
+        var err = new Error('Input is out of range');
+        err.msg = maxOfLower.msg;
+        err.lower = maxOfLower.value;
+        err.upper = minOfUpper.value;
+        return err;
+    } else if (input > minOfUpper.value){
+        var err = new Error('Input is out of range');
+        err.msg = minOfUpper.msg;
+        err.lower = maxOfLower.value;
+        err.upper = minOfUpper.value;        
+        return err;
+    } else {
+        return undefined;
+    }
+}
+
+
+//Factory Price Range:
+//Lower limit: Max(UnitCost * (1 - pgen.man_MaxDumpingPercentage));
+//Upper limit: Min(UnitCost * (1 + pgen.man_MaxMarkup),
+//                 make sure cost of Additional trade margin cost < budget left,
+//                 mare sure cost of WholeSales Bonus exceeds < budget left)
+function validateFactoryPrice(field, curSKUDecision, done){
+    logger.log('curSKUDecision:' +curSKUDecision);
+    simulationResultModel.findOne(curSKUDecision.seminarId, curSKUDecision.period - 1).then(function(lastPeriodResult){
+        companyResult = utility.findCompany(lastPeriodResult, curSKUDecision.d_CID);
+        // logger.log('companyResult:' + companyResult.c_CumulatedProductionVolumes);
+        // logger.log('acquiredEffiency:' + companyResult.c_AcquiredEfficiency);
+
+        Q.spread([
+            spendingDetailsAssembler.getSpendingDetails(curSKUDecision.seminarId, curSKUDecision.period, curSKUDecision.d_CID),            
+            utility.unitCost(curSKUDecision.period, curSKUDecision.d_PackSize, curSKUDecision.d_IngredientsQuality, curSKUDecision.d_Technology, companyResult.c_CumulatedProductionVolumes, companyResult.c_AcquiredEfficiency, curSKUDecision.d_ProductionVolume),
+            exports.findOne(curSKUDecision.seminarId, curSKUDecision.period, curSKUDecision.d_CID, curSKUDecision.d_BrandID, curSKUDecision.d_SKUID)
+        ], function(spendingDetails, unitProductionCost, preSKUDecision){
+            var budgetLeft = spendingDetails.companyData.availableBudget;
+            var err, lowerLimits = [], upperLimits = [];
+            
+            // logger.log('unitProductionCost: ' + unitProductionCost);
+            // logger.log('preSKUDecision: ' + preSKUDecision);
+            // logger.log('budgetLeft: ' + budgetLeft);
+            // logger.log('1: ' + (parseFloat(budgetLeft) + (preSKUDecision[field][0] * preSKUDecision.d_WholesalesBonusMinVolume * preSKUDecision.d_WholesalesBonusRate)));
+            // logger.log('2: ' + curSKUDecision.d_WholesalesBonusRate * curSKUDecision.d_WholesalesBonusMinVolume);       
+
+            lowerLimits.push({value : unitProductionCost * (1 - gameParameters.pgen.man_MaxDumpingPercentage), msg : 'Max dumping percentage : ' + gameParameters.pgen.man_MaxDumpingPercentage * 100 + '%'});
+            upperLimits.push({value : unitProductionCost * (1 + gameParameters.pgen.man_MaxMarkup), msg : 'Max Markup percentage : ' + gameParameters.pgen.man_MaxMarkup * 100 + '% of Unit Production Cost'});
+            upperLimits.push({value : utility.getFactoryPriceByConsumberPrice( (parseFloat(budgetLeft) + (preSKUDecision[field][0] * preSKUDecision.d_ProductionVolume * preSKUDecision.d_AdditionalTradeMargin)) / (curSKUDecision.d_ProductionVolume * curSKUDecision.d_AdditionalTradeMargin) ),             msg : 'Budget left is not enough for traditional trade margin.'});
+            upperLimits.push({value : utility.getFactoryPriceByConsumberPrice( (parseFloat(budgetLeft) + (preSKUDecision[field][0] * preSKUDecision.d_WholesalesBonusMinVolume * preSKUDecision.d_WholesalesBonusRate)) / (curSKUDecision.d_WholesalesBonusRate * curSKUDecision.d_WholesalesBonusMinVolume) ), msg : 'Budget left is not enough for WholeSales bonus cost.'});
+
+            logger.log('lowerLimits: ' + util.inspect(lowerLimits));
+            logger.log('upperLimits: ' + util.inspect(upperLimits));
+            err = rangeCheck(curSKUDecision[field][0],lowerLimits,upperLimits);      
+
+            if(err != undefined){
+                err.modifiedField = field;
+                done(err);
+            } else {
+                done();
+            }
+        });
+
+    }).fail(function(err){
+        done(err);
+    });
+}
 
 function validateAvailableBudget(field, currentInput, done){
     Q.spread([
