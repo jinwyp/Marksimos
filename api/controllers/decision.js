@@ -244,8 +244,8 @@ exports.updateSKUDecision = function(req, res, next){
         res.send(200, {status: 1, message: 'update success.'});
     })
     .fail(function(err){
-        logger.error('err:' + err);
-        res.send(403, {message: 'update failed.'});
+        var message = JSON.stringify(err, null, 2);     
+        res.send(403, message);
     })
     .done(); 
 

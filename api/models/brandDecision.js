@@ -23,7 +23,7 @@ tOneBrandDecisionSchema.pre('save', true, function(next, done){
     var validateAction = {
         'd_SalesForce' : function(field){
             Q.spread([
-                spendingDetailsAssembler.getSpendingDetails(self.seminarId, self.period, self.period),
+                spendingDetailsAssembler.getSpendingDetails(self.seminarId, self.period, self.d_CID),
                 exports.findOne(self.seminarId, self.period, self.d_CID, self.d_BrandID)
             ], function(spendingDetails, oneBrandDecision){
                 var budgetLeft = spendingDetails.companyData.availableBudget;

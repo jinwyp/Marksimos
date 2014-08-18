@@ -714,13 +714,20 @@ marksimosapp.controller('chartController', ['$scope',  '$timeout', '$http', 'not
 
 
         console.log($scope.data.currentModifiedSku);
-        Company.updateSku($scope.data.currentModifiedSku).success(function(data, status, headers, config){
+        Company.updateSku($scope.data.currentModifiedSku).then(function(data, status, headers, config){
             $scope.companyInfoInit();
 
             notify({
                 message : 'Save Success !',
                 template : './app/js/websitecomponent/notifysavesuccess.html',
                 position : 'center'
+            });
+        }, function(data){
+            console.log(data);
+            notify({
+                message : JSON.stringify(data.data) + ', status: ' + data.status,
+                template : './app/js/websitecomponent/notifysavesuccess.html',
+                position : 'center'                
             });
         });
     };
