@@ -60,7 +60,6 @@ tOneSKUDecisionSchema.pre('save', true, function(next, done){
         //'d_ConsumerPrice'            : function(field){ validateConsumerPrice(field, self, done); },       
     }
 
-
     function doValidate(field){        
         logger.log('field:' + field);
 
@@ -113,7 +112,6 @@ function rangeCheck(input, lowerLimits, upperLimits){
     }
 }
 
-
 //Factory Price Range:
 //Lower limit: Max(UnitCost * (1 - pgen.man_MaxDumpingPercentage));
 //Upper limit: Min(UnitCost * (1 + pgen.man_MaxMarkup),
@@ -123,8 +121,6 @@ function validateFactoryPrice(field, curSKUDecision, done){
     logger.log('curSKUDecision:' +curSKUDecision);
     simulationResultModel.findOne(curSKUDecision.seminarId, curSKUDecision.period - 1).then(function(lastPeriodResult){
         companyResult = utility.findCompany(lastPeriodResult, curSKUDecision.d_CID);
-        // logger.log('companyResult:' + companyResult.c_CumulatedProductionVolumes);
-        // logger.log('acquiredEffiency:' + companyResult.c_AcquiredEfficiency);
 
         Q.spread([
             spendingDetailsAssembler.getSpendingDetails(curSKUDecision.seminarId, curSKUDecision.period, curSKUDecision.d_CID),            
@@ -133,12 +129,6 @@ function validateFactoryPrice(field, curSKUDecision, done){
         ], function(spendingDetails, unitProductionCost, preSKUDecision){
             var budgetLeft = spendingDetails.companyData.availableBudget;
             var err, lowerLimits = [], upperLimits = [];
-            
-            // logger.log('unitProductionCost: ' + unitProductionCost);
-            // logger.log('preSKUDecision: ' + preSKUDecision);
-            // logger.log('budgetLeft: ' + budgetLeft);
-            // logger.log('1: ' + (parseFloat(budgetLeft) + (preSKUDecision[field][0] * preSKUDecision.d_WholesalesBonusMinVolume * preSKUDecision.d_WholesalesBonusRate)));
-            // logger.log('2: ' + curSKUDecision.d_WholesalesBonusRate * curSKUDecision.d_WholesalesBonusMinVolume);       
 
             lowerLimits.push({value : unitProductionCost * (1 - gameParameters.pgen.man_MaxDumpingPercentage), msg : 'Max dumping percentage : ' + gameParameters.pgen.man_MaxDumpingPercentage * 100 + '%'});
             upperLimits.push({value : unitProductionCost * (1 + gameParameters.pgen.man_MaxMarkup), msg : 'Max Markup percentage : ' + gameParameters.pgen.man_MaxMarkup * 100 + '% of Unit Production Cost'});
@@ -153,6 +143,7 @@ function validateFactoryPrice(field, curSKUDecision, done){
                 err.modifiedField = field;
                 done(err);
             } else {
+                //TODO: update consumer price automatically 
                 done();
             }
         });
