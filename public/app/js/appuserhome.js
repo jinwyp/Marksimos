@@ -13,26 +13,26 @@ marksimosapp.controller('chartController', ['$translate', '$scope', '$rootScope'
         $translate(['HomePageSegmentLabelPriceSensitive', 'HomePageSegmentLabelPretenders', 'HomePageSegmentLabelModerate',
             'HomePageSegmentLabelGoodLife', 'HomePageSegmentLabelUltimate', 'HomePageSegmentLabelPragmatic']).then(function (translations) {
             $scope.data.userSegment = [
-                {id:1, name: translations['HomePageSegmentLabelPriceSensitive']},
-                {id:2, name: translations['HomePageSegmentLabelPretenders']},
-                {id:3, name: translations['HomePageSegmentLabelModerate']},
-                {id:4, name: translations['HomePageSegmentLabelGoodLife']},
-                {id:5, name: translations['HomePageSegmentLabelUltimate']},
-                {id:6, name: translations['HomePageSegmentLabelPragmatic']}
-            ]
+                {id:1, name: translations.HomePageSegmentLabelPriceSensitive},
+                {id:2, name: translations.HomePageSegmentLabelPretenders},
+                {id:3, name: translations.HomePageSegmentLabelModerate},
+                {id:4, name: translations.HomePageSegmentLabelGoodLife},
+                {id:5, name: translations.HomePageSegmentLabelUltimate},
+                {id:6, name: translations.HomePageSegmentLabelPragmatic}
+            ];
         });
     });
 
     $translate(['HomePageSegmentLabelPriceSensitive', 'HomePageSegmentLabelPretenders', 'HomePageSegmentLabelModerate',
         'HomePageSegmentLabelGoodLife', 'HomePageSegmentLabelUltimate', 'HomePageSegmentLabelPragmatic']).then(function (translations) {
         $scope.data.userSegment = [
-            {id:1, name: translations['HomePageSegmentLabelPriceSensitive']},
-            {id:2, name: translations['HomePageSegmentLabelPretenders']},
-            {id:3, name: translations['HomePageSegmentLabelModerate']},
-            {id:4, name: translations['HomePageSegmentLabelGoodLife']},
-            {id:5, name: translations['HomePageSegmentLabelUltimate']},
-            {id:6, name: translations['HomePageSegmentLabelPragmatic']}
-        ]
+            {id:1, name: translations.HomePageSegmentLabelPriceSensitive},
+            {id:2, name: translations.HomePageSegmentLabelPretenders},
+            {id:3, name: translations.HomePageSegmentLabelModerate},
+            {id:4, name: translations.HomePageSegmentLabelGoodLife},
+            {id:5, name: translations.HomePageSegmentLabelUltimate},
+            {id:6, name: translations.HomePageSegmentLabelPragmatic}
+        ];
     });
 
 

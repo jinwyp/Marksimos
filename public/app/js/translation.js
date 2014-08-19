@@ -805,6 +805,7 @@ app.config(['$translateProvider', function($translateProvider){
         "HomePageSegmentLabelUltimate"       : "5 追求极致型",
         "HomePageSegmentLabelPragmatic"      : "6 实用型",
 
+
 		//Labels for Items on Home page - Second Menu Bar
 		"HomePageSecondMenuBarLabelsCompany"		:	"公司",
 		"HomePageSecondMenuBarLabelsCompanies"		:	"公司总",
