@@ -127,18 +127,14 @@ function validateFactoryPrice(field, curSKUDecision, done){
             utility.unitCost(curSKUDecision.period, curSKUDecision.d_PackSize, curSKUDecision.d_IngredientsQuality, curSKUDecision.d_Technology, companyResult.c_CumulatedProductionVolumes, companyResult.c_AcquiredEfficiency, curSKUDecision.d_ProductionVolume),
             exports.findOne(curSKUDecision.seminarId, curSKUDecision.period, curSKUDecision.d_CID, curSKUDecision.d_BrandID, curSKUDecision.d_SKUID)
         ], function(spendingDetails, unitProductionCost, preSKUDecision){
-            var budgetLeft = spendingDetails.companyData.availableBudget;
+            var budgetLeft = parseFloat(spendingDetails.companyData.availableBudget);
             var err, lowerLimits = [], upperLimits = [];
 
             lowerLimits.push({value : unitProductionCost * (1 - gameParameters.pgen.man_MaxDumpingPercentage), msg : 'Max dumping percentage : ' + gameParameters.pgen.man_MaxDumpingPercentage * 100 + '%'});
             upperLimits.push({value : unitProductionCost * (1 + gameParameters.pgen.man_MaxMarkup), msg : 'Max Markup percentage : ' + gameParameters.pgen.man_MaxMarkup * 100 + '% of Unit Production Cost'});
-            upperLimits.push({value : utility.getFactoryPriceByConsumberPrice( (parseFloat(budgetLeft) + (preSKUDecision[field][0] * preSKUDecision.d_ProductionVolume * preSKUDecision.d_AdditionalTradeMargin)) / (curSKUDecision.d_ProductionVolume * curSKUDecision.d_AdditionalTradeMargin) ),             msg : 'Budget left is not enough for traditional trade margin.'});
-            upperLimits.push({value : utility.getFactoryPriceByConsumberPrice( (parseFloat(budgetLeft) + (preSKUDecision[field][0] * preSKUDecision.d_WholesalesBonusMinVolume * preSKUDecision.d_WholesalesBonusRate)) / (curSKUDecision.d_WholesalesBonusRate * curSKUDecision.d_WholesalesBonusMinVolume) ), msg : 'Budget left is not enough for WholeSales bonus cost.'});
-
-            logger.log('lowerLimits: ' + util.inspect(lowerLimits));
-            logger.log('upperLimits: ' + util.inspect(upperLimits));
+            upperLimits.push({value : utility.getFactoryPriceByConsumberPrice( (budgetLeft + (preSKUDecision[field][0] * preSKUDecision.d_ProductionVolume * preSKUDecision.d_AdditionalTradeMargin)) / (curSKUDecision.d_ProductionVolume * curSKUDecision.d_AdditionalTradeMargin) ),             msg : 'Budget left is not enough for traditional trade margin cost.'});
+            upperLimits.push({value : utility.getFactoryPriceByConsumberPrice( (budgetLeft + (preSKUDecision[field][0] * preSKUDecision.d_WholesalesBonusMinVolume * preSKUDecision.d_WholesalesBonusRate)) / (curSKUDecision.d_WholesalesBonusRate * curSKUDecision.d_WholesalesBonusMinVolume) ), msg : 'Budget left is not enough for WholeSales bonus cost.'});
             err = rangeCheck(curSKUDecision[field][0],lowerLimits,upperLimits);      
-
             if(err != undefined){
                 err.modifiedField = field;
                 done(err);
@@ -149,65 +145,52 @@ function validateFactoryPrice(field, curSKUDecision, done){
         });
 
     }).fail(function(err){
-        done(err);
+        done(err);  
     });
 }
 
-function validateAvailableBudget(field, currentInput, done){
+function validateAvailableBudget(field, curSKUDecision, done){
     Q.spread([
-        spendingDetailsAssembler.getSpendingDetails(currentInput.seminarId, currentInput.period, currentInput.d_CID),
-        exports.findOne(currentInput.seminarId, currentInput.period, currentInput.d_CID, currentInput.d_BrandID, currentInput.d_SKUID)
-    ], function(spendingDetails, oneSKUDecision){
-        var budgetLeft = spendingDetails.companyData.availableBudget;
-        var preInput = oneSKUDecision[field];
+        spendingDetailsAssembler.getSpendingDetails(curSKUDecision.seminarId, curSKUDecision.period, curSKUDecision.d_CID),
+        exports.findOne(curSKUDecision.seminarId, curSKUDecision.period, curSKUDecision.d_CID, curSKUDecision.d_BrandID, curSKUDecision.d_SKUID)
+    ], function(spendingDetails, preSKUDecision){
+        var budgetLeft = parseFloat(spendingDetails.companyData.availableBudget);
+        var err, lowerLimits = [],upperLimits = [];
 
-        //logger.log(budgetLeft + ' + ' + preInput + ' - ' + currentInput.d_Advertising);
-        if(budgetLeft + preInput - currentInput[field] < 0){       
-            var validateErr = new Error('Input is out of range');
-            validateErr.msg = 'Available budget is not enough.';
-            validateErr.modifiedField = field;
-            validateErr.upper = budgetLeft + preInput;
-            validateErr.lower = 0;
-            done(validateErr);
-        } else {   
-            logger.log('Input ' + currentInput[field] + ' is OK, done()');                 
+        lowerLimits.push({value : 0, msg: 'Cannot accept negative number.'});
+        upperLimits.push({value : budgetLeft + preSKUDecision[field], msg : 'Budget Left is not enough.'});
+        err = rangeCheck(curSKUDecision[field],lowerLimits,upperLimits);      
+        if(err != undefined){
+            err.modifiedField = field;
+            done(err);
+        } else {
             done();
-        }                
+        }         
     })
 }
 
-function validateAdditionalTradeMargin(field, currentInput, done){
-    if((currentInput[field] > 1) || (currentInput[field] < 0)){
-        var validateErr = new Error('Input is out of range');
-        validateErr.msg = 'Input is out of range: 0% ~ 100%';
-        validateErr.modifiedField = field;
-        return done(validateErr);
-    }
-
+function validateAdditionalTradeMargin(field, curSKUDecision, done){
     Q.spread([
-        spendingDetailsAssembler.getSpendingDetails(currentInput.seminarId, currentInput.period, currentInput.d_CID),
-        exports.findOne(currentInput.seminarId, currentInput.period, currentInput.d_CID, currentInput.d_BrandID, currentInput.d_SKUID)
-    ], function(spendingDetails, oneSKUDecision){
-        var budgetLeft = spendingDetails.companyData.availableBudget;
+        spendingDetailsAssembler.getSpendingDetails(curSKUDecision.seminarId, curSKUDecision.period, curSKUDecision.d_CID),
+        exports.findOne(curSKUDecision.seminarId, curSKUDecision.period, curSKUDecision.d_CID, curSKUDecision.d_BrandID, curSKUDecision.d_SKUID)
+    ], function(spendingDetails, preSKUDecision){
+        var budgetLeft = parseFloat(spendingDetails.companyData.availableBudget);
+        var err, lowerLimits = [],upperLimits = [];
 
-        var preEstimatedCost = oneSKUDecision[field] * oneSKUDecision.d_ProductionVolume * oneSKUDecision.d_ConsumerPrice;
-        var currentEstimatedCost = currentInput[field] * oneSKUDecision.d_ProductionVolume * oneSKUDecision.d_ConsumerPrice;
+        var preEstimatedCost = preSKUDecision[field] * preSKUDecision.d_ProductionVolume * preSKUDecision.d_ConsumerPrice;
+        lowerLimits.push({value : 0, msg: 'Cannot accept negative number.'});
+        upperLimits.push({value : 1, msg: 'Input should less than 100%.'});
+        upperLimits.push({value : (gameParameters.pgen.retail_Markup)/(1 + gameParameters.pgen.retail_Markup), msg: 'Input should less than - retailer markup / (1 + retailer markup)'});
+        upperLimits.push({value : (budgetLeft + preEstimatedCost)/(preSKUDecision.d_ProductionVolume * preSKUDecision.d_ConsumerPrice), msg : 'Budget left is not enough for traditional trade margin cost.'});
 
-        //logger.log('preEstimatedCost:' + preEstimatedCost + ', currentEstimatedCost:' + currentEstimatedCost);
-        if(budgetLeft + preEstimatedCost - currentEstimatedCost < 0){       
-            var validateErr = new Error('Input is out of range');
-            validateErr.msg = 'Available budget is not enough.';
-            validateErr.modifiedField = field;
-
-            validateErr.upper = Math.min(1,
-                                        (100 * gameParameters.pgen.retail_Markup)/(1 + gameParameters.pgen.retail_Markup),
-                                        (budgetLeft + preEstimatedCost)/(oneSKUDecision.d_ProductionVolume * oneSKUDecision * d_ConsumerPrice));
-            validateErr.lower = 0;
-            done(validateErr);
-        } else {   
-            logger.log('Input ' + currentInput[field] + ' is OK, done()');                 
+        logger.log(util.inspect(upperLimits));        
+        err = rangeCheck(curSKUDecision[field],lowerLimits,upperLimits);      
+        if(err != undefined){
+            err.modifiedField = field;
+            done(err);
+        } else {
             done();
-        }                
+        }                   
     })
 }
 
