@@ -1450,6 +1450,7 @@ app.config(['$translateProvider', function($translateProvider){
 		"DecisionPageDecisionTabPackagingSizeSmall"		:	"小",
 		"DecisionPageDecisionTabPackagingSizeStandard"		:	"标准",
 		"DecisionPageDecisionTabPackagingSizeLarge"		:	"大",
+
 		"DecisionPageDecisionTabProductionVolume"		:	"产量(百万件)",
 		"DecisionPageDecisionTabManufacturerPrice"		:	"出厂价($)",
 		"DecisionPageDecisionTabRepriceFactoryStock"		:	"重新定价工厂库存?",

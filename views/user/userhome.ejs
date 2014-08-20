@@ -1257,6 +1257,47 @@
 
                             <div class="row sku_box">
                                 <div class="col-md-12">
+
+                                    <form class="form-horizontal" role="form" name="newSkuForm">
+                                        <div class="form-group">
+                                            <div class="col-sm-8 col-md-offset-4">
+                                                <h4>Add New SKU</h4>
+                                            </div>
+                                        </div>
+
+                                        <text-form-input type="text" name="skuName" label="SKU Name :"  data="data.newSku.sku_name" required="true" minlength="1" maxlength="1"></text-form-input>
+                                        <text-form-input type="checkbox" name="skuDiscontinue" label="Discontinue ?"  data="data.newSku.d_ToDrop" ></text-form-input>
+                                        <text-form-input type="number" name="skuProcessingTechnology" label="Processing Technology :" placeholder="" data="data.newSku.skuProcessingTechnology" required="true" min="1" max="14" ></text-form-input>
+                                        <text-form-input type="number" name="skuIngredientsQuality" label="Ingredients Quality :" placeholder="" data="data.newSku.d_IngredientsQuality" required="true" minlength="1" maxlength="14" ></text-form-input>
+
+                                        <div class="form-group" ng-class="{ 'has-success':form.$dirty && form.$valid , 'has-error': form.$dirty && form.$invalid}">
+                                            <label class="col-sm-4 control-label" for="skuPackagingSize">{{'DecisionPageDecisionTabPackagingSize' | translate}}</label>
+                                            <div class="col-sm-8">
+
+                                                <label class="radio-inline">
+                                                    <input type="radio" name="skuPackagingSize" id="skuPackagingSizeRadio1" value="0"> {{'DecisionPageDecisionTabPackagingSizeSmall' | translate}}
+                                                </label>
+                                                <label class="radio-inline">
+                                                    <input type="radio" name="skuPackagingSize" id="skuPackagingSizeRadio2" value="1"> {{'DecisionPageDecisionTabPackagingSizeStandard' | translate}}
+                                                </label>
+                                                <label class="radio-inline">
+                                                    <input type="radio" name="skuPackagingSize" id="skuPackagingSizeRadio3" value="2"> {{'DecisionPageDecisionTabPackagingSizeLarge' | translate}}
+                                                </label>
+
+                                            </div>
+                                        </div>
+
+                                        <div class="form-group">
+                                            <div class="col-sm-offset-4 col-sm-8">
+                                                <button type="submit" class="btn btn-default">Save</button>
+                                            </div>
+                                        </div>
+                                    </form>
+
+
+
+
+
                                     <table class="table table-hover">
                                         <thead>
                                             <tr>

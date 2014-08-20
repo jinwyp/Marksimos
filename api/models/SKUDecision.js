@@ -58,7 +58,7 @@ tOneSKUDecisionSchema.pre('save', true, function(next, done){
         //'d_WholesalesBonusRate'      : function(field){ validateWholesalesBonusRate(field, self, done); },
         //'d_WarrantyLength'           : function(field){ validateWarrantyLength(field, self, done); },
         //'d_ConsumerPrice'            : function(field){ validateConsumerPrice(field, self, done); },       
-    }
+    };
 
 
     function doValidate(field){        
