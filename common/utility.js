@@ -77,6 +77,8 @@ exports.unitCost = function(periodNumber, packsize, ingredientsQuality, technolo
 
     volumeNow = Math.max(volumeNow, gameParameters.pgen.sku_MinProductionVolume);
 
+    //TODO: UnitCost problem : a) calculation result is wrong, 
+    //TODO: UnitCost problem : b) still depends on cgi request exogenous 
     return cgiapi.getExogenous(periodNumber)
     .then(function(exogenous){
         if(periodNumber < 0){

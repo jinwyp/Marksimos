@@ -42,17 +42,21 @@ var SKUDecision = mongoose.model('SKUDecision', tOneSKUDecisionSchema);
 tOneSKUDecisionSchema.pre('save', true, function(next, done){
     var self = this;
     var validateAction = {
+        //step 1:
         'd_Technology'               : function(field){ validateTechnology(field, self, done); },
         'd_IngredientsQuality'       : function(field){ validateIngredientsQuality(field, self, done); },
+        //step 2:
         'd_FactoryPrice'             : function(field){ validateFactoryPrice(field, self, done); },
+        'd_ProductionVolume'         : function(field){ validateProductionVolume(field, self, done); },
+        //step 3:
         'd_AdditionalTradeMargin'    : function(field){ validateAdditionalTradeMargin(field, self, done); },
         'd_WholesalesBonusMinVolume' : function(field){ validateWholesalesBonusMinVolume(field, self, done); },
         'd_WholesalesBonusRate'      : function(field){ validateWholesalesBonusRate(field, self, done); },
-        'd_ProductionVolume'         : function(field){ validateProductionVolume(field, self, done); },
+        //rest:
         'd_Advertising'              : function(field){ validateAvailableBudget(field, self, done); },
         'd_PromotionalBudget'        : function(field){ validateAvailableBudget(field, self, done); },
         'd_TradeExpenses'            : function(field){ validateAvailableBudget(field, self, done); },
-
+        //no need validation for the time being:
         'd_PackSize'                 : function(field){ validatePackSize(field, self, done); },
         'd_PromotionalEpisodes'      : function(field){ validatePromotionalEpisodes(field, self, done); },
         'd_TargetConsumerSegment'    : function(field){ validateTargetConsumerSegment(field, self, done); },
@@ -264,7 +268,26 @@ function validateWholesalesBonusRate(field, curSKUDecision, done){
 }
 
 function validateProductionVolume(field, curSKUDecision, done){
-    process.nextTick(done);
+    Q.spread([
+        spendingDetailsAssembler.getSpendingDetails(curSKUDecision.seminarId, curSKUDecision.period, curSKUDecision.d_CID),
+        exports.findOne(curSKUDecision.seminarId, curSKUDecision.period, curSKUDecision.d_CID, curSKUDecision.d_BrandID, curSKUDecision.d_SKUID)
+    ], function(spendingDetails, preSKUDecision){
+        var budgetLeft = parseFloat(spendingDetails.companyData.availableBudget);
+        var err, lowerLimits = [],upperLimits = [];
+        var preEstimatedCost = preSKUDecision[field] * preSKUDecision.d_AdditionalTradeMargin * preSKUDecision.d_ConsumerPrice;
+
+        lowerLimits.push({value : 0, msg: 'Cannot accept negative number.'});        
+        upperLimits.push({value : spendingDetails.companyData.normalCapacity + parseFloat(spendingDetails.companyData.availableOvertimeCapacityExtension), msg: 'Production capacity is not enough.'});
+        upperLimits.push({value : (budgetLeft + preEstimatedCost)/(preSKUDecision.d_AdditionalTradeMargin * preSKUDecision.d_ConsumerPrice), msg : 'Budget left is not enough for traditional trade margin cost.'});
+
+        err = rangeCheck(curSKUDecision[field],lowerLimits,upperLimits);      
+        if(err != undefined){
+            err.modifiedField = field;
+            done(err);
+        } else {
+            done();
+        }         
+    });
 }
 
 function validateAvailableBudget(field, curSKUDecision, done){
@@ -288,11 +311,12 @@ function validateAvailableBudget(field, curSKUDecision, done){
 }
 
 //Pack size : 0 - small, 1 - standard 2 - big
+//TODO: need to test if "process.nextTick(done(err))" works
 function validatePackSize(field, curSKUDecision, done){
     if((curSKUDecision[field] != 0) || (curSKUDecision[field] != 1) || (curSKUDecision[field] != 2)){
         var err = new Error('Input is out of range');
         err.msg = 'Pack format must be SMALL/STANDARD/BIG';
-        process.nextTick(done);
+        process.nextTick(done(err));
     } else {
         process.nextTick(done);
     }
