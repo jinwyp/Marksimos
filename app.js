@@ -78,7 +78,7 @@ app.use(function(err, req, res, next) {
 });
 
 
-app.set('port', process.env.PORT || 3000);
+app.set('port', process.env.PORT || 80);
 
 
 mongoose.connect(config.mongo_conn);
