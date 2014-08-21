@@ -24,7 +24,7 @@ marksimosapp.controller('adminLoginController', ['$scope', '$timeout', '$http', 
         if(form.$valid){
             $http.post('/marksimos/api/login', $scope.data.admin).success(function(data, status, headers, config){
 
-                $window.location.href = "/adminhome" ;
+                $window.location.href = "/marksimos/adminhome" ;
 
             }).error(function(data, status, headers, config){
                 if(status == 400){
