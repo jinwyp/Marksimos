@@ -22,7 +22,7 @@ marksimosapp.controller('adminLoginController', ['$scope', '$timeout', '$http', 
 
     $scope.login = function(form){
         if(form.$valid){
-            $http.post('/api/login', $scope.data.admin).success(function(data, status, headers, config){
+            $http.post('/marksimos/api/login', $scope.data.admin).success(function(data, status, headers, config){
 
                 $window.location.href = "/adminhome" ;
 
@@ -262,7 +262,7 @@ marksimosapp.controller('adminHomeController', ['$scope', '$http', '$notificatio
     /********************  获取信息  ********************/
     $scope.adminInit = function(){
 
-        $http.get('/api/admin/user').success(function(data, status, headers, config){
+        $http.get('/marksimos/api/admin/user').success(function(data, status, headers, config){
             $scope.data.currentUser = data;
 
             if($scope.data.currentUser.role === 1){
@@ -288,7 +288,7 @@ marksimosapp.controller('adminHomeController', ['$scope', '$http', '$notificatio
     };
 
     $scope.getDistributorsInit = function(){
-        $http.get('/api/admin/distributors').success(function(data, status, headers, config){
+        $http.get('/marksimos/api/admin/distributors').success(function(data, status, headers, config){
             $scope.data.distributors = data;
 
         }).error(function(data, status, headers, config) {
@@ -297,7 +297,7 @@ marksimosapp.controller('adminHomeController', ['$scope', '$http', '$notificatio
     };
 
     $scope.getFacilitatorsInit = function() {
-        $http.get('/api/admin/facilitators').success(function (data, status, headers, config) {
+        $http.get('/marksimos/api/admin/facilitators').success(function (data, status, headers, config) {
             $scope.data.facilitators = data;
         }).error(function (data, status, headers, config) {
             console.log(data);
@@ -305,7 +305,7 @@ marksimosapp.controller('adminHomeController', ['$scope', '$http', '$notificatio
     };
 
     $scope.getStudentsInit = function() {
-        $http.get('/api/admin/students').success(function (data, status, headers, config) {
+        $http.get('/marksimos/api/admin/students').success(function (data, status, headers, config) {
             $scope.data.students = data;
         }).error(function (data, status, headers, config) {
             console.log(data);
@@ -313,7 +313,7 @@ marksimosapp.controller('adminHomeController', ['$scope', '$http', '$notificatio
     };
 
     $scope.getSeminarInit = function() {
-        $http.get('/api/admin/facilitator/seminar').success(function (data, status, headers, config) {
+        $http.get('/marksimos/api/admin/facilitator/seminar').success(function (data, status, headers, config) {
             $scope.data.seminars = data;
         }).error(function (data, status, headers, config) {
             console.log(data);
@@ -332,7 +332,7 @@ marksimosapp.controller('adminHomeController', ['$scope', '$http', '$notificatio
     /********************  搜索 Distributor  ********************/
     $scope.searchDistributor = function(form){
         if(form.$valid){
-            $http.get('/api/admin/distributors', {params : $scope.data.searchDistributor}).success(function(data, status, headers, config){
+            $http.get('/marksimos/api/admin/distributors', {params : $scope.data.searchDistributor}).success(function(data, status, headers, config){
 
                 $scope.data.distributors = data;
 
@@ -345,7 +345,7 @@ marksimosapp.controller('adminHomeController', ['$scope', '$http', '$notificatio
     $scope.createNewDistributor = function(form){
         if(form.$valid){
             console.log($scope.data.newDistributor);
-            $http.post('/api/admin/distributors', $scope.data.newDistributor).success(function(data, status, headers, config){
+            $http.post('/marksimos/api/admin/distributors', $scope.data.newDistributor).success(function(data, status, headers, config){
 
                 $scope.getDistributorsInit();
                 $scope.css.leftmenu = 21;
@@ -363,7 +363,7 @@ marksimosapp.controller('adminHomeController', ['$scope', '$http', '$notificatio
     /********************  搜索 Facilitator  ********************/
     $scope.searchFacilitator = function(form){
         if(form.$valid){
-            $http.get('/api/admin/facilitators', {params : $scope.data.searchFacilitator}).success(function(data, status, headers, config){
+            $http.get('/marksimos/api/admin/facilitators', {params : $scope.data.searchFacilitator}).success(function(data, status, headers, config){
                 $scope.data.facilitators = data;
 
             }).error(function(data, status, headers, config){
@@ -375,7 +375,7 @@ marksimosapp.controller('adminHomeController', ['$scope', '$http', '$notificatio
     $scope.createNewFacilitator = function(form){
         if(form.$valid){
             console.log($scope.data.newFacilitator);
-            $http.post('/api/admin/facilitators', $scope.data.newFacilitator).success(function(data, status, headers, config){
+            $http.post('/marksimos/api/admin/facilitators', $scope.data.newFacilitator).success(function(data, status, headers, config){
 
                 $scope.getFacilitatorsInit();
                 $scope.css.leftmenu = 31;
@@ -392,7 +392,7 @@ marksimosapp.controller('adminHomeController', ['$scope', '$http', '$notificatio
     /********************  搜索 Students  ********************/
     $scope.searchStudent = function(form){
         if(form.$valid){
-            $http.get('/api/admin/students', {params : $scope.data.searchStudent}).success(function(data, status, headers, config){
+            $http.get('/marksimos/api/admin/students', {params : $scope.data.searchStudent}).success(function(data, status, headers, config){
                 $scope.data.students = data;
 
             }).error(function(data, status, headers, config){
@@ -404,7 +404,7 @@ marksimosapp.controller('adminHomeController', ['$scope', '$http', '$notificatio
     $scope.createNewStudent = function(form){
         if(form.$valid){
             console.log($scope.data.newStudent);
-            $http.post('/api/admin/students', $scope.data.newStudent).success(function(data, status, headers, config){
+            $http.post('/marksimos/api/admin/students', $scope.data.newStudent).success(function(data, status, headers, config){
 
                 $scope.getStudentsInit();
                 $scope.css.leftmenu = 41;
@@ -422,7 +422,7 @@ marksimosapp.controller('adminHomeController', ['$scope', '$http', '$notificatio
     /********************  搜索 Seminars  ********************/
     $scope.searchSeminar = function(form){
         if(form.$valid){
-            $http.get('/api/admin/facilitator/seminar', {params : $scope.data.searchSeminar}).success(function(data, status, headers, config){
+            $http.get('/marksimos/api/admin/facilitator/seminar', {params : $scope.data.searchSeminar}).success(function(data, status, headers, config){
                 $scope.data.seminars = data;
 
             }).error(function(data, status, headers, config){
@@ -434,7 +434,7 @@ marksimosapp.controller('adminHomeController', ['$scope', '$http', '$notificatio
     $scope.createNewSeminar = function(form){
         if(form.$valid){
             console.log($scope.data.newSeminar);
-            $http.post('/api/admin/seminar', $scope.data.newSeminar).success(function(data, status, headers, config){
+            $http.post('/marksimos/api/admin/seminar', $scope.data.newSeminar).success(function(data, status, headers, config){
 
                 $scope.getSeminarInit();
                 $scope.css.leftmenu = 51;
@@ -463,7 +463,7 @@ marksimosapp.controller('adminHomeController', ['$scope', '$http', '$notificatio
             $scope.css.seminarId = 0;
             $scope.data.addStudentToSeminar.email = studentemail;
 
-            $http.post('/api/admin/assign_student_to_seminar', $scope.data.addStudentToSeminar).success(function(data, status, headers, config){
+            $http.post('/marksimos/api/admin/assign_student_to_seminar', $scope.data.addStudentToSeminar).success(function(data, status, headers, config){
                 $scope.getSeminarInit();
                 $notification.success('Save success', 'Add Student to Seminar success');
 
@@ -483,7 +483,7 @@ marksimosapp.controller('adminHomeController', ['$scope', '$http', '$notificatio
 
     /********************  Init Seminar  ********************/
     $scope.initSeminar = function(seminarid){
-        $http.post('/api/admin/init', {seminar_id:seminarid}).success(function(data, status, headers, config){
+        $http.post('/marksimos/api/admin/init', {seminar_id:seminarid}).success(function(data, status, headers, config){
             $scope.getSeminarInit();
             $notification.success('Save success', 'Init Seminar success');
 
@@ -495,7 +495,7 @@ marksimosapp.controller('adminHomeController', ['$scope', '$http', '$notificatio
 
     /********************  Run Seminar  ********************/
     $scope.runSeminar = function(seminarid){
-        $http.post('/api/admin/runsimulation', {seminar_id:seminarid}).success(function(data, status, headers, config){
+        $http.post('/marksimos/api/admin/runsimulation', {seminar_id:seminarid}).success(function(data, status, headers, config){
             $scope.getSeminarInit();
             $notification.success('Save success', 'Run Seminar success');
 

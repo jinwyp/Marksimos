@@ -362,13 +362,13 @@ app.directive('textFormInput', function() {
 
 
             if (type === 'checkbox'){
-                return tplcheckbox
+                return tplcheckbox;
 
             }else if(type === 'number'){
                 min = tAttrs.hasOwnProperty('min') ? 'min="' + tAttrs.min + '"' : "";
                 max = tAttrs.hasOwnProperty('max') ? 'max="' + tAttrs.max + '"' : "";
                 numbererrorinfo = tAttrs.hasOwnProperty('numbererrorinfo') ? tAttrs.numbererrorinfo  : 'must be in range ' + tAttrs.min + ' to '+ tAttrs.max;
-                return tpltext
+                return tpltext;
 
             }else{
 
@@ -377,7 +377,7 @@ app.directive('textFormInput', function() {
 
                 maxlength = tAttrs.hasOwnProperty('maxlength') ? 'ng-maxlength="' + tAttrs.maxlength + '"' : "";
                 maxlengtherrorinfo = tAttrs.hasOwnProperty('maxlengtherrorinfo') ? tAttrs.maxlengtherrorinfo  : 'field is a maximum of ' + tAttrs.maxlength + ' characters';
-                return tpltext
+                return tpltext;
             }
 
 

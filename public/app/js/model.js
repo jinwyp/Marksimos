@@ -6,7 +6,7 @@
 var app = angular.module('marksimos.model', []);
 
 app.factory('Student', ['$http', function($http){
-    var apiPath = '/api/';
+    var apiPath = '/marksimos/api/';
 
     var seminar ={
         currentRound : 0 // -3,-2, -1, 0, 1, 2, 3, 4, 5, 6
@@ -52,7 +52,7 @@ app.factory('Student', ['$http', function($http){
 
 app.factory('Company', ['$http', function($http){
 
-    var apiPath = '/api/';
+    var apiPath = '/marksimos/api/';
 
     var factory = {
         getCurrentStudent : function(){
@@ -135,7 +135,7 @@ app.factory('Company', ['$http', function($http){
 
 app.factory('chartReport', ['$http', function($http){
 
-    var apiPath = '/api/';
+    var apiPath = '/marksimos/api/';
 
     var errorHandler = function(err){
         console.log("Error 404 , Type : API chartReport", err );
@@ -624,7 +624,7 @@ app.factory('chartReport', ['$http', function($http){
 
 app.factory('tableReport', ['$http', function($http){
 
-    var apiPath = '/api/';
+    var apiPath = '/marksimos/api/';
 
     var tableResult = {
         series: [],

@@ -4,22 +4,30 @@ var authMiddleware = require('./middleware/auth.js');
 
 module.exports = function(app){
 
-    /**********   Routes for User/Student   **********/
 
-    app.get('/', function(req, res, next){
+    /**********   Routes for HCD Learning Website   **********/
+
+
+
+
+
+
+    /**********   Routes for MarkSimos User/Student   **********/
+
+    app.get('/marksimos', function(req, res, next){
         res.render('user/userlogin.ejs', { title : 'MarkSimos - Welcome to the MarkSimos Game'});
     });
      
-    app.get('/login', function(req, res, next){
+    app.get('/marksimos/login', function(req, res, next){
         res.render('user/userlogin.ejs', { title : 'MarkSimos - User Sign In'});
     });
 
-    app.get('/introduction', authMiddleware.needLogin, function(req, res, next){
+    app.get('/marksimos/introduction', authMiddleware.needLogin, function(req, res, next){
         res.render('user/userintroduction.ejs', { title : 'MarkSimos - Introduction Videos'});
     });
 
     // authMiddleware.needLogin,
-    app.get('/home', authMiddleware.needLogin, function(req, res, next){
+    app.get('/marksimos/home', authMiddleware.needLogin, function(req, res, next){
         res.render('user/userhome.ejs', { title : 'MarkSimos - User Home'});
     });
 
@@ -65,11 +73,11 @@ module.exports = function(app){
 
 
 
-    app.get('/admin', function(req, res, next){
+    app.get('/marksimos/admin', function(req, res, next){
         res.render('admin/adminlogin.ejs', {title : 'Admin | Log in'});
     });
 
-    app.get('/adminhome', authMiddleware.adminNeedLogin, function(req, res, next){
+    app.get('/marksimos/adminhome', authMiddleware.adminNeedLogin, function(req, res, next){
         res.render('admin/adminhome.ejs', {title : 'Admin | Dashboard'});
     });
 };
