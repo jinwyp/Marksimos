@@ -11,25 +11,25 @@
                     <span class="icon-bar"></span>
                 </button>
                 <a class="navbar-brand" href="">
-                    <img src="./app/css/images/logoheader.png" alt="MarkSimosLogo"> MarkSimos
+                    <img src="/app/css/images/logoheader.png" alt="MarkSimosLogo"> MarkSimos
                 </a>
             </div>
 
             <!-- Collect the nav links, forms, and other content for toggling -->
             <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                 <ul class="nav navbar-nav" ng-if="showmenu">
-                    <li ng-class="{'active':currentMenu=='Home'}"><a href="" ng-click="clickMenu('Home')">Home</a></li>
-                    <li ng-class="{'active':currentMenu=='Report'}"><a href="" ng-click="clickMenu('Report')">Report  </a></li>
+                    <li ng-class="{'active':currentMenu=='Home'}"><a href="" ng-click="clickMenu('Home')">{{'HomePageMenuBarLabelsHome' | translate}}</a></li>
+                    <li ng-class="{'active':currentMenu=='Report'}"><a href="" ng-click="clickMenu('Report')">{{'HomePageMenuBarLabelsReport' | translate}}</a></li>
 
-                    <li ng-class="{'active':currentMenu=='Decision'}"><a href="" ng-click="clickMenu('Decision')">Decision</a></li>
-                    <li ng-class="{'active':currentMenu=='Score'}"><a href="" ng-click="clickMenu('Score')">Score <span class="num">0</span></a></li>
+                    <li ng-class="{'active':currentMenu=='Decision'}"><a href="" ng-click="clickMenu('Decision')">{{'HomePageMenuBarLabelsDecision' | translate}}</a></li>
+                    <li ng-class="{'active':currentMenu=='Score'}"><a href="" ng-click="clickMenu('Score')">{{'HomePageMenuBarLabelsScore' | translate}} <span class="num">0</span></a></li>
                 </ul>
 
 
                 <ul class="nav navbar-nav navbar-right">
 
                     <li class="dropdown">
-                        <a href="" class="dropdown-toggle" data-toggle="dropdown">Language <b class="caret"></b></a>
+                        <a href="" class="dropdown-toggle" data-toggle="dropdown">{{'HomePageMenuBarLabelsLanguage' | translate}} <b class="caret"></b></a>
                         <ul class="dropdown-menu mk_dropdownlist">
                             <li><a href="" ng-click="changeLanguage('en_US')">English</a></li>
                             <li class="divider mk_dropdowndivider"></li>
@@ -39,18 +39,18 @@
 
 
                     <li class="dropdown">
-                        <a href="" class="dropdown-toggle" data-toggle="dropdown">Help <b class="caret"></b></a>
+                        <a href="" class="dropdown-toggle" data-toggle="dropdown">{{'HomePageMenuBarLabelsHelp' | translate}} <b class="caret"></b></a>
                         <ul class="dropdown-menu mk_dropdownlist">
-                            <li><a href="">FAQ</a></li>
+                            <li><a href="">{{'HomePageMenuBarLabelsHelpFAQ' | translate}}</a></li>
                             <li class="divider mk_dropdowndivider"></li>
-                            <li><a href="">Video</a></li>
+                            <li><a href="">{{'HomePageMenuBarLabelsHelpVideo' | translate}}</a></li>
                             <li class="divider mk_dropdowndivider"></li>
-                            <li><a href="">Manual</a></li>
+                            <li><a href="">{{'HomePageMenuBarLabelsHelpManual' | translate}}</a></li>
                         </ul>
                     </li>
 
-                    <li><a href="">About MarkSimos</a></li>
-                    <li ng-if="showlogout"><a href="" ng-click="clickLogout()">Sign Out</a></li>
+                    <li><a href="">{{'HomePageMenuBarLabelsAbout' | translate}}</a></li>
+                    <li ng-if="showlogout"><a href="" ng-click="clickLogout()">{{'HomePageMenuBarLabelsLogout' | translate}}</a></li>
                 </ul>
             </div><!-- /.navbar-collapse -->
         </div><!-- /.container-fluid -->

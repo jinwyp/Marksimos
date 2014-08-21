@@ -1,0 +1,183 @@
+<table class="table table-striped table-bordered table-hover" >
+    <thead>
+        <tr>
+            <th>Brands</th>
+            <th ng-repeat="brand in data">{{brand.brandName}}</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td>{{'ReportFinancialReportAllBrandSalesValue' | translate}}</td>
+            <td ng-repeat="brand in data">{{brand.salesValue | number : 2}}</td>
+        </tr>
+        <tr>
+            <td>{{'ReportFinancialReportAllBrandChangeVersusPreviousPeriodSalesValue' | translate}}</td>
+            <td ng-repeat="brand in data">{{brand.changeVersusPreviousPeriodSalesValue | number : 2}}%</td>
+        </tr>
+        <tr>
+            <td>{{'ReportFinancialReportAllBrandShareInCompanyTotalSalesValue' | translate}}</td>
+            <td ng-repeat="brand in data">{{brand.shareInCompanyTotalSalesValue | number : 2}}%</td>
+        </tr>
+        <tr>
+            <td>{{'ReportFinancialReportAllBrandCostOfGoodsSold' | translate}}</td>
+            <td ng-repeat="brand in data">{{brand.costOfGoodsSold | number : 2}}</td>
+        </tr>
+        <tr>
+            <td>{{'ReportFinancialReportAllBrandObsoleteGoodsCost' | translate}}</td>
+            <td ng-repeat="brand in data">{{brand.obsoleteGoodsCost | number : 2}}</td>
+        </tr>
+        <tr>
+            <td>{{'ReportFinancialReportAllBrandDiscontinuedGoodsCost' | translate}}</td>
+            <td ng-repeat="brand in data">{{brand.discontinuedGoodsCost | number : 2}}</td>
+        </tr>
+        <tr>
+            <td>{{'ReportFinancialReportAllBrandInventoryHoldingCost' | translate}}</td>
+            <td ng-repeat="brand in data">{{brand.inventoryHoldingCost | number : 2}}</td>
+        </tr>
+        <tr>
+            <td>{{'ReportFinancialReportAllBrandTotalMaterialCost' | translate}}</td>
+            <td ng-repeat="brand in data">{{brand.totalMaterialCosts | number : 2}}</td>
+        </tr>
+        <tr>
+            <td></td>
+            <td ng-repeat="brand in data"></td>
+        </tr>
+        <tr>
+            <td>{{'ReportFinancialReportAllBrandGrossProfit' | translate}}</td>
+            <td ng-repeat="brand in data">{{brand.grossProfit | number : 2}}</td>
+        </tr>
+        <tr>
+            <td>{{'ReportFinancialReportAllBrandChangeVersusPreviousperiodGrossProfit' | translate}}</td>
+            <td ng-repeat="brand in data">{{brand.changeVersusPreviousPeriodGrossProfit | number : 2}}%</td>
+        </tr>
+        <tr>
+            <td>{{'ReportFinancialReportAllBrandGrossProfitMargin' | translate}}</td>
+            <td ng-repeat="brand in data">{{brand.grossProfitMargin | number : 2}}%</td>
+        </tr>
+        <tr>
+            <td>{{'ReportFinancialReportAllBrandShareInCompanyGrossProfitLosses' | translate}}</td>
+            <td ng-repeat="brand in data">{{brand.shareInCompanyGrossProfitLosses | number : 2}}%</td>
+        </tr>
+        <tr>
+            <td></td>
+            <td ng-repeat="brand in data"></td>
+        </tr>
+        <tr>
+            <td>{{'ReportFinancialReportAllBrandAdvertising' | translate}}</td>
+            <td ng-repeat="brand in data">{{brand.advertising | number : 2}}</td>
+        </tr>
+        <tr>
+            <td>{{'ReportFinancialReportAllBrandConsumerPromotionCost' | translate}}</td>
+            <td ng-repeat="brand in data">{{brand.consumerPromotionsCost | number : 2}}</td>
+        </tr>
+        <tr>
+            <td>{{'ReportFinancialReportAllBrandTradeInvestment' | translate}}</td>
+            <td ng-repeat="brand in data">{{brand.tradeInvestment | number : 2}}</td>
+        </tr>
+        <tr>
+            <td>{{'ReportFinancialReportAllBrandSalesForceCost' | translate}}</td>
+            <td ng-repeat="brand in data">{{brand.salesForceCost | number : 2}}</td>
+        </tr>
+        <tr>
+            <td>{{'ReportFinancialReportAllBrandAdditionalTradeMarginCost' | translate}}</td>
+            <td ng-repeat="brand in data">{{brand.additionalTradeMarginCost | number : 2}}</td>
+        </tr>
+        <tr>
+            <td>{{'ReportFinancialReportAllBrandVolumeDiscountCost' | translate}}</td>
+            <td ng-repeat="brand in data">{{brand.volumeDiscountCost | number : 2}}</td>
+        </tr>
+        <tr>
+            <td>{{'ReportFinancialReportAllBrandTotalTradeAndMarketingExpenses' | translate}}</td>
+            <td ng-repeat="brand in data">{{brand.totalTradeAndMarketingExpenses | number : 2}}</td>
+        </tr>
+        <tr>
+            <td>{{'ReportFinancialReportAllBrandTradeAndMarketingExpensesasaOfSales' | translate}}</td>
+            <td ng-repeat="brand in data">{{brand.tradeAndMarketingExpensesAsAPercentageOfSales | number : 2}}%</td>
+        </tr>
+        <tr>
+            <td>{{'ReportFinancialReportAllBrandShareOfTradeAndMarketingExpensesInBrandTotal' | translate}}</td>
+            <td ng-repeat="brand in data">{{brand.shareOfTradeAndMarketingExpensesInBrandTotal | number : 2}}%</td>
+        </tr>
+        <tr>
+            <td></td>
+            <td ng-repeat="brand in data"></td>
+        </tr>
+        <tr>
+            <td>{{'ReportFinancialReportAllBrandGeneralExpenses' | translate}}</td>
+            <td ng-repeat="brand in data">{{brand.generalExpenses | number : 2}}</td>
+        </tr>
+        <tr>
+            <td>{{'ReportFinancialReportAllBrandAmortisation' | translate}}</td>
+            <td ng-repeat="brand in data">{{brand.amortisation | number : 2}}</td>
+        </tr>
+        <tr>
+            <td></td>
+            <td ng-repeat="brand in data"></td>
+        </tr>
+        <tr>
+            <td>{{'ReportFinancialReportAllBrandOperatingProfit' | translate}}</td>
+            <td ng-repeat="brand in data">{{brand.operatingProfit | number : 2}}</td>
+        </tr>
+        <tr>
+            <td>{{'ReportFinancialReportAllBrandChangeVersusPreviousPeriodOperatingProfit' | translate}}</td>
+            <td ng-repeat="brand in data">{{brand.changeVersusPreviousPeriodOperatingProfit | number : 2}}%</td>
+        </tr>
+        <tr>
+            <td>{{'ReportFinancialReportAllBrandOperatingProfitMargin' | translate}}</td>
+            <td ng-repeat="brand in data">{{brand.operatingProfitMargin | number : 2}}%</td>
+        </tr>
+        <tr>
+            <td>{{'ReportFinancialReportAllBrandShareInBrandOperatingProfitLoss' | translate}}</td>
+            <td ng-repeat="brand in data">{{brand.shareInBrandOperatingProfitLosses | number : 2}}%</td>
+        </tr>
+        <tr>
+            <td></td>
+            <td ng-repeat="brand in data"></td>
+        </tr>
+        <tr>
+            <td>{{'ReportFinancialReportAllBrandInterests' | translate}}</td>
+            <td ng-repeat="brand in data">{{brand.interests | number : 2}}</td>
+        </tr>
+        <tr>
+            <td>{{'ReportFinancialReportAllBrandTaxes' | translate}}</td>
+            <td ng-repeat="brand in data">{{brand.taxes | number : 2}}</td>
+        </tr>
+        <tr>
+            <td>{{'ReportFinancialReportAllBrandExceptionalCostProfit' | translate}}</td>
+            <td ng-repeat="brand in data">{{brand.exceptionalCostsProfits | number : 2}}</td>
+        </tr>
+        <tr>
+            <td></td>
+            <td ng-repeat="brand in data"></td>
+        </tr>
+        <tr>
+            <td>{{'ReportFinancialReportAllBrandNetProfit' | translate}}</td>
+            <td ng-repeat="brand in data">{{brand.netProfit | number : 2}}</td>
+        </tr>
+        <tr>
+            <td>{{'ReportFinancialReportAllBrandChangeVersusPreviousPeriodNetProfit' | translate}}</td>
+            <td ng-repeat="brand in data">{{brand.changeVersusPreviousPeriodNetProfit | number : 2}}%</td>
+        </tr>
+        <tr>
+            <td>{{'ReportFinancialReportAllBrandNetProfitMargin' | translate}}</td>
+            <td ng-repeat="brand in data">{{brand.netProfitMargin | number : 2}}%</td>
+        </tr>
+        <tr>
+            <td>{{'ReportFinancialReportAllBrandShareInCompanyNetProfitLoss' | translate}}</td>
+            <td ng-repeat="brand in data">{{brand.shareInBrandNetProfitLosses | number : 2}}%</td>
+        </tr>
+        <tr>
+            <td></td>
+            <td ng-repeat="brand in data"></td>
+        </tr>
+        <tr>
+            <td>{{'ReportFinancialReportAllBrandProductionCost' | translate}}</td>
+            <td ng-repeat="brand in data">{{brand.productionCost | number : 2}}</td>
+        </tr>
+        <tr>
+            <td>{{'ReportFinancialReportAllBrandInventoryValue' | translate}}</td>
+            <td ng-repeat="brand in data">{{brand.inventoryValue | number : 2}}</td>
+        </tr>
+
+    </tbody>
+</table>

@@ -1,0 +1,238 @@
+<table class="table table-striped table-bordered table-hover" >
+    <thead>
+        <tr>
+            <th>{{'ReportProfitabilityEvolutionSKUQuarter' | translate}}</th>
+            <th ng-repeat="quarter in data">{{quarter.period}}</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td>{{'ReportProfitabilityEvolutionSKUManufacturerSalesValue' | translate}}</td>
+            <td ng-repeat="quarter in data">{{quarter.manufacturerSalesValue | number : 2}}</td>
+        </tr>
+        <tr>
+            <td></td>
+            <td ng-repeat="quarter in data"></td>
+        </tr>
+        <tr>
+            <td>{{'ReportProfitabilityEvolutionSKUCostOfGoodsSold' | translate}}</td>
+            <td ng-repeat="quarter in data">{{quarter.costOfGoodsSold | number : 2}}</td>
+        </tr>
+        <tr>
+            <td>{{'ReportProfitabilityEvolutionSKUInventoryHolding' | translate}}</td>
+            <td ng-repeat="quarter in data">{{quarter.inventoryHoldingCost | number : 2}}</td>
+        </tr>
+        <tr>
+            <td>{{'ReportProfitabilityEvolutionSKUObsoleteGoods' | translate}}</td>
+            <td ng-repeat="quarter in data">{{quarter.obsoleteGoodsCost | number : 2}}</td>
+        </tr>
+        <tr>
+            <td>{{'ReportProfitabilityEvolutionSKUDiscontinuedGoodsCost' | translate}}</td>
+            <td ng-repeat="quarter in data">{{quarter.discontinuedGoodsCost | number : 2}}</td>
+        </tr>
+        <tr>
+            <td>{{'ReportProfitabilityEvolutionSKUGrossProfit' | translate}}</td>
+            <td ng-repeat="quarter in data">{{quarter.grossProfit | number : 2}}</td>
+        </tr>
+        <tr>
+            <td></td>
+            <td ng-repeat="quarter in data"></td>
+        </tr>
+        <tr>
+            <td>{{'ReportProfitabilityEvolutionSKUAdvertising' | translate}}</td>
+            <td ng-repeat="quarter in data">{{quarter.advertising | number : 2}}</td>
+        </tr>
+        <tr>
+            <td>{{'ReportProfitabilityEvolutionSKUConsumerPromotionsCost' | translate}}</td>
+            <td ng-repeat="quarter in data">{{quarter.consumerPromotionsCost | number : 2}}</td>
+        </tr>
+        <tr>
+            <td>{{'ReportProfitabilityEvolutionSKUTradeInvestment' | translate}}</td>
+            <td ng-repeat="quarter in data">{{quarter.tradeInvestment | number : 2}}</td>
+        </tr>
+        <tr>
+            <td>{{'ReportProfitabilityEvolutionSKUSalesForceCost' | translate}}</td>
+            <td ng-repeat="quarter in data">{{quarter.salesForceCost | number : 2}}</td>
+        </tr>
+        <tr>
+            <td>{{'ReportProfitabilityEvolutionSKUVolumeDiscountCost' | translate}}</td>
+            <td ng-repeat="quarter in data">{{quarter.volumeDiscountCost | number : 2}}</td>
+        </tr>
+        <tr>
+            <td>{{'ReportProfitabilityEvolutionSKUAdditionalTradeMarginCost' | translate}}</td>
+            <td ng-repeat="quarter in data">{{quarter.additionalTradeMarginCost | number : 2}}</td>
+        </tr>
+        <tr>
+            <td>{{'ReportProfitabilityEvolutionSKUTotalTradeAndMarketingExpenses' | translate}}</td>
+            <td ng-repeat="quarter in data">{{quarter.totalTradeAndMarketingExpenses | number : 2}}</td>
+        </tr>
+        <tr>
+            <td></td>
+            <td ng-repeat="quarter in data"></td>
+        </tr>
+        <tr>
+            <td>{{'ReportProfitabilityEvolutionSKUGeneralExpenses' | translate}}</td>
+            <td ng-repeat="quarter in data">{{quarter.generalExpenses | number : 2}}</td>
+        </tr>
+        <tr>
+            <td>{{'ReportProfitabilityEvolutionSKUAmortisation' | translate}}</td>
+            <td ng-repeat="quarter in data">{{quarter.amortisation | number : 2}}</td>
+        </tr>
+        <tr>
+            <td>{{'ReportProfitabilityEvolutionSKUOperatingProfit' | translate}}</td>
+            <td ng-repeat="quarter in data">{{quarter.operatingProfit | number : 2}}</td>
+        </tr>
+        <tr>
+            <td></td>
+            <td ng-repeat="quarter in data"></td>
+        </tr>
+        <tr>
+            <td>{{'ReportProfitabilityEvolutionSKUInterests' | translate}}</td>
+            <td ng-repeat="quarter in data">{{quarter.interests | number : 2}}</td>
+        </tr>
+        <tr>
+            <td>{{'ReportProfitabilityEvolutionSKUExceptionalCostProfit' | translate}}</td>
+            <td ng-repeat="quarter in data">{{quarter.exceptionalCostsProfits | number : 2}}</td>
+        </tr>
+        <tr>
+            <td>{{'ReportProfitabilityEvolutionSKUTaxes' | translate}}</td>
+            <td ng-repeat="quarter in data">{{quarter.taxes | number : 2}}</td>
+        </tr>
+        <tr>
+            <td>{{'ReportProfitabilityEvolutionSKUNetProfit' | translate}}</td>
+            <td ng-repeat="quarter in data">{{quarter.netProfit | number : 2}}</td>
+        </tr>
+        <tr>
+            <td></td>
+            <td ng-repeat="quarter in data"></td>
+        </tr>
+        <tr>
+            <td>{{'ReportProfitabilityEvolutionSKUSurchargeForSupplementaryInvestmentBudget' | translate}}</td>
+            <td ng-repeat="quarter in data">{{quarter.surchargeForSupplementaryInvestmentBudget | number : 2}}</td>
+        </tr>
+        <tr>
+            <td>{{'ReportProfitabilityEvolutionSKUNetResult' | translate}}</td>
+            <td ng-repeat="quarter in data">{{quarter.netResult | number : 2}}</td>
+        </tr>
+        <tr>
+            <td></td>
+            <td ng-repeat="quarter in data"></td>
+        </tr>
+        <tr>
+            <td>{{'ReportProfitabilityEvolutionSKUShareInBrandTotalSalesValue' | translate}}</td>
+            <td ng-repeat="quarter in data">{{quarter.shareInBrandTotalSalesValue | number : 2}}%</td>
+        </tr>
+        <tr>
+            <td>{{'ReportProfitabilityEvolutionSKUShareInBrandGrossProfitLosses' | translate}}</td>
+            <td ng-repeat="quarter in data">{{quarter.shareInBrandGrossProfitLosses | number : 2}}%</td>
+        </tr>
+        <tr>
+            <td>{{'ReportProfitabilityEvolutionSKUShareOfTradeAndMarketingExpensesInBrandTotal' | translate}}</td>
+            <td ng-repeat="quarter in data">{{quarter.shareOfTradeAndMarketingExpensesInBrandTotal | number : 2}}%</td>
+        </tr>
+        <tr>
+            <td>{{'ReportProfitabilityEvolutionSKUShareInBrandOperatingProfitLosses' | translate}}</td>
+            <td ng-repeat="quarter in data">{{quarter.shareInBrandOperatingProfitLosses | number : 2}}%</td>
+        </tr>
+        <tr>
+            <td>{{'ReportProfitabilityEvolutionSKUShareInBrandNetProfitLosses' | translate}}</td>
+            <td ng-repeat="quarter in data">{{quarter.shareInBrandNetProfitLosses | number : 2}}%</td>
+        </tr>
+        <tr>
+            <td></td>
+            <td ng-repeat="quarter in data"></td>
+        </tr>
+        <tr>
+            <td>{{'ReportProfitabilityEvolutionSKUGrossProfitMargin' | translate}}</td>
+            <td ng-repeat="quarter in data">{{quarter.grossProfitMargin | number : 2}}%</td>
+        </tr>
+        <tr>
+            <td>{{'ReportProfitabilityEvolutionSKUTradeAndMarketingExpensesasaOfSales' | translate}}</td>
+            <td ng-repeat="quarter in data">{{quarter.tradeAndMarketingExpensesAsAPercentageOfSales | number : 2}}%</td>
+        </tr>
+        <tr>
+            <td>{{'ReportProfitabilityEvolutionSKUGeneralExpensesasaOfSales' | translate}}</td>
+            <td ng-repeat="quarter in data">{{quarter.generalExpensesAsAPercentageOfSales | number : 2}}%</td>
+        </tr>
+        <tr>
+            <td>{{'ReportProfitabilityEvolutionSKUOperatingProfitMargin' | translate}}</td>
+            <td ng-repeat="quarter in data">{{quarter.operatingProfitMargin | number : 2}}%</td>
+        </tr>
+        <tr>
+            <td>{{'ReportProfitabilityEvolutionSKUNetProfitMargin' | translate}}</td>
+            <td ng-repeat="quarter in data">{{quarter.netProfitMargin | number : 2}}%</td>
+        </tr>
+        <tr>
+            <td></td>
+            <td ng-repeat="quarter in data"></td>
+        </tr>
+        <tr>
+            <td>{{'ReportProfitabilityEvolutionSKUReturnOnInvestment' | translate}}</td>
+            <td ng-repeat="quarter in data">{{quarter.returnOnInvestment | number : 2}}%</td>
+        </tr>
+        <tr>
+            <td></td>
+            <td ng-repeat="quarter in data"></td>
+        </tr>
+        <tr>
+            <td>{{'ReportProfitabilityEvolutionSKUAverageNetMarketPrice' | translate}}</td>
+            <td ng-repeat="quarter in data">{{quarter.averageNetMarketPrice | number : 2}}</td>
+        </tr>
+        <tr>
+            <td>{{'ReportProfitabilityEvolutionSKUAverageWholesalesPrice' | translate}}</td>
+            <td ng-repeat="quarter in data">{{quarter.averageWholesalesPrice | number : 2}}</td>
+        </tr>
+        <tr>
+            <td>{{'ReportProfitabilityEvolutionSKUAverageManufacturerPrice' | translate}}</td>
+            <td ng-repeat="quarter in data">{{quarter.averageManufacturerPrice | number : 2}}</td>
+        </tr>
+        <tr>
+            <td>{{'ReportProfitabilityEvolutionSKUAverageProductionCost' | translate}}</td>
+            <td ng-repeat="quarter in data">{{quarter.averageProductionCost | number : 2}}</td>
+        </tr>
+        <tr>
+            <td></td>
+            <td ng-repeat="quarter in data"></td>
+        </tr>
+        <tr>
+            <td>{{'ReportProfitabilityEvolutionSKUMarketSalesValue' | translate}}</td>
+            <td ng-repeat="quarter in data">{{quarter.marketSalesValue | number : 2}}</td>
+        </tr>
+        <tr>
+            <td>{{'ReportProfitabilityEvolutionSKUConsumerPricePromotions' | translate}}</td>
+            <td ng-repeat="quarter in data">{{quarter.consumerProcePromotion | number : 2}}</td>
+        </tr>
+        <tr>
+            <td>{{'ReportProfitabilityEvolutionSKUMarketNetSalesValue' | translate}}</td>
+            <td ng-repeat="quarter in data">{{quarter.marketNetSalesValue | number : 2}}</td>
+        </tr>
+        <tr>
+            <td></td>
+            <td ng-repeat="quarter in data"></td>
+        </tr>
+        <tr>
+            <td>{{'ReportProfitabilityEvolutionSKUAdditionalRetailersMargin' | translate}}</td>
+            <td ng-repeat="quarter in data">{{quarter.additionalRetailerMargin | number : 2}}%</td>
+        </tr>
+        <tr>
+            <td>{{'ReportProfitabilityEvolutionSKUWholesalersBonusRate' | translate}}</td>
+            <td ng-repeat="quarter in data">{{quarter.wholesalersBonusRate | number : 2}}%</td>
+        </tr>
+        <tr>
+            <td>{{'ReportProfitabilityEvolutionSKUMinimalPurchaseQualifyingForBonus' | translate}}</td>
+            <td ng-repeat="quarter in data">{{quarter.minimalPurchaseQualifyingForBonusStdPack | number : 2}}</td>
+        </tr>
+        <tr>
+            <td></td>
+            <td ng-repeat="quarter in data"></td>
+        </tr>
+        <tr>
+            <td>{{'ReportProfitabilityEvolutionSKUProductionCost' | translate}}</td>
+            <td ng-repeat="quarter in data">{{quarter.productionCost | number : 2}}</td>
+        </tr>
+        <tr>
+            <td>{{'ReportProfitabilityEvolutionSKUInventoryValue' | translate}}</td>
+            <td ng-repeat="quarter in data">{{quarter.inventoryValue | number : 2}}</td>
+        </tr>
+    </tbody>
+</table>

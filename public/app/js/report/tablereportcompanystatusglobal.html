@@ -1,0 +1,127 @@
+<table class="table table-striped table-bordered table-hover" >
+    <thead>
+        <tr>
+            <th>{{'ReportCompanyStatusSKUQuarter' | translate}}</th>
+            <th ng-repeat="quarter in data">{{quarter.period}}</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td>{{'ReportCompanyStatusGlobalMarketShareValue' | translate}}</td>
+            <td ng-repeat="quarter in data">{{quarter.marketShareValue | number : 2}}%</td>
+        </tr>
+        <tr>
+            <td>{{'ReportCompanyStatusGlobalMarketShareVolume' | translate}}</td>
+            <td ng-repeat="quarter in data">{{quarter.marketShareVolume | number : 2}}%</td>
+        </tr>
+        <tr>
+            <td>{{'ReportCompanyStatusGlobalMarketSalesVolumeStd' | translate}}</td>
+            <td ng-repeat="quarter in data">{{quarter.marketSalesVolumeStdPack | number : 2}}</td>
+        </tr>
+        <tr>
+            <td>{{'ReportCompanyStatusGlobalLostSalesVolumeDueToOOSStd' | translate}}</td>
+            <td ng-repeat="quarter in data">{{quarter.lostSalesVolumeDueToOOSStdPack | number : 2}}</td>
+        </tr>
+        <tr>
+            <td>{{'ReportCompanyStatusGlobalNumericalDistribution' | translate}}</td>
+            <td ng-repeat="quarter in data">{{quarter.numbericalDistribution | number : 2}}%</td>
+        </tr>
+        <tr>
+            <td>{{'ReportCompanyStatusGlobalVolumeWeightedDistribution' | translate}}</td>
+            <td ng-repeat="quarter in data">{{quarter.volumeWeightedDistribution | number : 2}}%</td>
+        </tr>
+        <tr>
+            <td>{{'ReportCompanyStatusGlobalShelfSpace' | translate}}</td>
+            <td ng-repeat="quarter in data">{{quarter.shelfSpace | number : 2}}%</td>
+        </tr>
+        <tr>
+            <td>{{'ReportCompanyStatusGlobalMindSpaceShare' | translate}}</td>
+            <td ng-repeat="quarter in data">{{quarter.mindSpaceShare | number : 2}}%</td>
+        </tr>
+        <tr>
+            <td>{{'ReportCompanyStatusGlobalAverageNetMarketPrice' | translate}}</td>
+            <td ng-repeat="quarter in data">{{quarter.averageNetMarketPriceStdPack | number : 2}}</td>
+        </tr>
+        <tr>
+            <td>{{'ReportCompanyStatusGlobalAverageDisplayPrice' | translate}}</td>
+            <td ng-repeat="quarter in data">{{quarter.averageDisplayPriceStdPack | number : 2}}</td>
+        </tr>
+        <tr>
+            <td>{{'ReportCompanyStatusGlobalIngredientsQualityIndex' | translate}}</td>
+            <td ng-repeat="quarter in data">{{quarter.ingredientsQualityIndex | number : 2}}</td>
+        </tr>
+        <tr>
+            <td>{{'ReportCompanyStatusGlobalAppliedTechnologyIndex' | translate}}</td>
+            <td ng-repeat="quarter in data">{{quarter.appliedTechnologyIndex | number : 2}}</td>
+        </tr>
+        <tr>
+            <td></td>
+            <td ng-repeat="quarter in data"></td>
+        </tr>
+        <tr>
+            <td>{{'ReportCompanyStatusGlobalMarketSalesValue' | translate}}</td>
+            <td ng-repeat="quarter in data">{{quarter.marketSalesValue | number : 2}}</td>
+        </tr>
+        <tr>
+            <td>{{'ReportCompanyStatusGlobalConsumerPricePromotions' | translate}}</td>
+            <td ng-repeat="quarter in data">{{quarter.consumerPricePromotions | number : 2}}</td>
+        </tr>
+        <tr>
+            <td>{{'ReportCompanyStatusGlobalMarketNetSalesValue' | translate}}</td>
+            <td ng-repeat="quarter in data">{{quarter.marketNetSalesValue | number : 2}}</td>
+        </tr>
+        <tr>
+            <td></td>
+            <td ng-repeat="quarter in data"></td>
+        </tr>
+        <tr>
+            <td>{{'ReportCompanyStatusGlobalLostSalesVolumeDueToOOS' | translate}}</td>
+            <td ng-repeat="quarter in data">{{quarter.lostSalesVolumeDueToOOSStdPack | number : 2}}</td>
+        </tr>
+        <tr>
+            <td></td>
+            <td ng-repeat="quarter in data"></td>
+        </tr>
+        <tr>
+            <td>{{'ReportCompanyStatusGlobalMarketSalesVolume' | translate}}</td>
+            <td ng-repeat="quarter in data">{{quarter.marketSalesVolumeStdPack | number : 2}}</td>
+        </tr>
+        <tr>
+            <td>{{'ReportCompanyStatusGlobalRetailersPurchasesVolume' | translate}}</td>
+            <td ng-repeat="quarter in data">{{quarter.retailersPurchasesVolume | number : 2}}</td>
+        </tr>
+        <tr>
+            <td>{{'ReportCompanyStatusGlobalShipmentsToWholesalers' | translate}}</td>
+            <td ng-repeat="quarter in data">{{quarter.shipmentsToWholesalers | number : 2}}</td>
+        </tr>
+        <tr>
+            <td>{{'ReportCompanyStatusGlobalProductionVolume' | translate}}</td>
+            <td ng-repeat="quarter in data">{{quarter.productionVolume | number : 2}}</td>
+        </tr>
+        <tr>
+            <td>{{'ReportCompanyStatusGlobalInventoryVolumeAtManufacturer' | translate}}</td>
+            <td ng-repeat="quarter in data">{{quarter.inventoryVolumeAtManufacturer | number : 2}}</td>
+        </tr>
+        <tr>
+            <td>{{'ReportCompanyStatusGlobalInventoryVolumeAtWholesalers' | translate}}</td>
+            <td ng-repeat="quarter in data">{{quarter.inventoryVolumeAtWholesalers | number : 2}}</td>
+        </tr>
+        <tr>
+            <td>{{'ReportCompanyStatusGlobalInventoryVolumeAtRetailers' | translate}}</td>
+            <td ng-repeat="quarter in data">{{quarter.inventoryVolumeAtRetailers | number : 2}}</td>
+        </tr>
+        <tr>
+            <td></td>
+            <td ng-repeat="quarter in data"></td>
+        </tr>
+        <tr>
+            <td>{{'ReportCompanyStatusGlobalStocksCoverAtRetailers' | translate}}</td>
+            <td ng-repeat="quarter in data">{{quarter.stocksCoverAtRetailersWeeks | number : 2}}</td>
+        </tr>
+        <tr>
+            <td>{{'ReportCompanyStatusGlobalStocksCoverAtWholesalers' | translate}}</td>
+            <td ng-repeat="quarter in data">{{quarter.stocksCoverAtWholesalersWeeks | number : 2}}</td>
+        </tr>
+
+    </tbody>
+</table>

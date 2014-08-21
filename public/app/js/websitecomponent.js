@@ -3,7 +3,7 @@
  */
 
 
-var app = angular.module('marksimos.websitecomponent', ['marksimos.model', 'pascalprecht.translate' ]);
+var app = angular.module('marksimos.websitecomponent', ['marksimos.model', 'pascalprecht.translate', 'marksimos.translation' ]);
 
 
 
@@ -20,7 +20,7 @@ app.directive('userHeader', ['$window', '$translate', 'Student', function($windo
             currentMenu : '='
         },
         restrict: 'AE',
-        templateUrl: 'app/js/websitecomponent/userheader.html',
+        templateUrl: '/app/js/websitecomponent/userheader.html',
         link: function (scope, element, attrs) {
 
             scope.clickMenu = function(currentmenu){
@@ -34,7 +34,7 @@ app.directive('userHeader', ['$window', '$translate', 'Student', function($windo
             scope.clickLogout = function () {
                 Student.logOut().success(function(data, status, headers, config){
 
-                    $window.location.href = "/login" ;
+                    $window.location.href = "/marksimos/login" ;
 
                 }).error(function(data, status, headers, config){
                     console.log(data);
@@ -53,7 +53,7 @@ app.directive('headerAdmin', [function() {
             currentuser : '='
         },
         restrict: 'AE',
-        templateUrl: 'app/js/websitecomponent/adminheader.html'
+        templateUrl: '/app/js/websitecomponent/adminheader.html'
     };
 }]);
 
@@ -66,7 +66,7 @@ app.directive('menuAdmin', [function() {
             currentuser : '='
         },
         restrict: 'AE',
-        templateUrl: 'app/js/websitecomponent/adminmenu.html',
+        templateUrl: '/app/js/websitecomponent/adminmenu.html',
         link : function(scope, element){
 
             scope.css = {
@@ -97,7 +97,115 @@ app.directive('menuAdmin', [function() {
 
 
 
+app.directive('tableReportCompanyStatusSku', function() {
+    return {
+        scope: {
+            data : '='
+        },
+        restrict: 'AE',
+        templateUrl: '/app/js/report/tablereportcompanystatussku.html'
+    };
+});
 
+
+app.directive('tableReportCompanyStatusBrand', function() {
+    return {
+        scope: {
+            data : '='
+        },
+        restrict: 'AE',
+        templateUrl: '/app/js/report/tablereportcompanystatusbrand.html'
+    };
+});
+
+
+app.directive('tableReportCompanyStatusGlobal', function() {
+    return {
+        scope: {
+            data : '='
+        },
+        restrict: 'AE',
+        templateUrl: '/app/js/report/tablereportcompanystatusglobal.html'
+    };
+});
+
+
+app.directive('tableReportFinancialReportBrand', function() {
+    return {
+        scope: {
+            data : '='
+        },
+        restrict: 'AE',
+        templateUrl: '/app/js/report/tablereportfinancialreportbrand.html'
+    };
+});
+
+
+app.directive('tableReportFinancialReportAllBrand', function() {
+    return {
+        scope: {
+            data : '='
+        },
+        restrict: 'AE',
+        templateUrl: '/app/js/report/tablereportfinancialreportallbrand.html'
+    };
+});
+
+
+app.directive('tableReportProfitabilityEvolutionSku', function() {
+    return {
+        scope: {
+            data : '='
+        },
+        restrict: 'AE',
+        templateUrl: '/app/js/report/tablereportprofitabilityevolutionsku.html'
+    };
+});
+
+
+app.directive('tableReportProfitabilityEvolutionBrand', function() {
+    return {
+        scope: {
+            data : '='
+        },
+        restrict: 'AE',
+        templateUrl: '/app/js/report/tablereportprofitabilityevolutionbrand.html'
+    };
+});
+
+
+app.directive('tableReportProfitabilityEvolutionGlobal', function() {
+    return {
+        scope: {
+            data : '='
+        },
+        restrict: 'AE',
+        templateUrl: '/app/js/report/tablereportprofitabilityevolutionglobal.html'
+    };
+});
+
+
+app.directive('tableReportCompetitorIntelligence', function() {
+    return {
+        scope: {
+            data : '=',
+            unit : '@'
+        },
+        restrict: 'AE',
+        templateUrl: '/app/js/report/tablereportcompetitorintelligence.html',
+        link: function (scope, element, attrs) {
+
+            scope.plus = 1;
+
+            if(angular.isUndefined(scope.unit)) {
+                scope.unit = '';
+            }else if (scope.unit === "%"){
+                scope.plus = 1;
+            }
+
+        }
+    };
+});
 
 
 app.directive('tableReportSegmentDistribution', function() {
@@ -107,7 +215,7 @@ app.directive('tableReportSegmentDistribution', function() {
             unit : '@'
         },
         restrict: 'AE',
-        templateUrl: 'app/js/report/tablereportsegmentdistribution.html',
+        templateUrl: '/app/js/report/tablereportsegmentdistribution.html',
         link: function (scope, element, attrs) {
             scope.plus = 1;
 
@@ -122,29 +230,6 @@ app.directive('tableReportSegmentDistribution', function() {
 });
 
 
-app.directive('tableReportCompetitorIntelligence', function() {
-    return {
-        scope: {
-            data : '=',
-            unit : '@'
-        },
-        restrict: 'AE',
-        templateUrl: 'app/js/report/tablereportcompetitorintelligence.html',
-        link: function (scope, element, attrs) {
-
-            scope.plus = 1;
-
-            if(angular.isUndefined(scope.unit)) {
-                scope.unit = '';
-            }else if (scope.unit === "%"){
-                scope.plus = 1;
-            }
-
-        }
-    };
-});
-
-
 app.directive('tableReportMarketTrendsSku', function() {
     return {
         scope: {
@@ -152,17 +237,14 @@ app.directive('tableReportMarketTrendsSku', function() {
             unit : '@'
         },
         restrict: 'AE',
-        templateUrl: 'app/js/report/tablereportmarkettrendssku.html',
+        templateUrl: '/app/js/report/tablereportmarkettrendssku.html',
         link: function (scope, element, attrs) {
 
             scope.plus = 1;
 
             if(angular.isUndefined(scope.unit)) {
                 scope.unit = '';
-            }else if (scope.unit === "%"){
-                scope.plus = 1;
             }
-
         }
     };
 });
@@ -174,17 +256,14 @@ app.directive('tableReportMarketTrendsBrand', function() {
             unit : '@'
         },
         restrict: 'AE',
-        templateUrl: 'app/js/report/tablereportmarkettrendsbrand.html',
+        templateUrl: '/app/js/report/tablereportmarkettrendsbrand.html',
         link: function (scope, element, attrs) {
 
             scope.plus = 1;
 
             if(angular.isUndefined(scope.unit)) {
                 scope.unit = '';
-            }else if (scope.unit === "%"){
-                scope.plus = 1;
             }
-
         }
     };
 });
@@ -196,20 +275,36 @@ app.directive('tableReportMarketTrendsGlobal', function() {
             unit : '@'
         },
         restrict: 'AE',
-        templateUrl: 'app/js/report/tablereportmarkettrendsglobal.html',
+        templateUrl: '/app/js/report/tablereportmarkettrendsglobal.html',
         link: function (scope, element, attrs) {
 
             scope.plus = 1;
 
             if(angular.isUndefined(scope.unit)) {
                 scope.unit = '';
-            }else if (scope.unit === "%"){
-                scope.plus = 1;
             }
 
         }
     };
 });
 
+
+app.directive('tableReportMarketIndicator', ['$translate', function($translate) {
+    return {
+        scope: {
+            data : '=',
+            unit : '@'
+        },
+        restrict: 'AE',
+        templateUrl: '/app/js/report/tablereportmarketindicator.html',
+        link: function (scope, element, attrs) {
+
+            if(angular.isUndefined(scope.unit)) {
+                scope.unit = '';
+            }
+
+        }
+    };
+}]);
 
 

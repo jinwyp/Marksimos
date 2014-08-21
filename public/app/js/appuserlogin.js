@@ -4,7 +4,7 @@
 
 // create module for custom directives
 
-var marksimosapp = angular.module('marksimoslogin', ['marksimos.model', 'marksimos.websitecomponent',  'marksimos.filter']);
+var marksimosapp = angular.module('marksimoslogin', ['pascalprecht.translate', 'marksimos.model', 'marksimos.websitecomponent',  'marksimos.filter', 'marksimos.translation']);
 
 
 
@@ -24,11 +24,12 @@ marksimosapp.controller('userLoginController', ['$scope', '$http', '$window', 'S
         }
     };
 
+
     $scope.login = function(form){
         if(form.$valid){
             Student.login($scope.data.newUser).success(function(data, status, headers, config){
 
-                $window.location.href = "/introduction" ;
+                $window.location.href = "/marksimos/introduction" ;
 
             }).error(function(data, status, headers, config){
                 form.password.$valid = false;
@@ -72,7 +73,6 @@ marksimosapp.controller('userIntroController',['$scope', '$http', '$window', 'St
 
         Student.getSeminar().then(function(data, status, headers, config){
             $scope.data.seminars = data;
-            console.log($scope.data.seminars);
         });
     };
 
@@ -91,7 +91,7 @@ marksimosapp.controller('userIntroController',['$scope', '$http', '$window', 'St
         $scope.data.selectSeminar.seminar_id = seminarid;
 
         if($scope.data.selectSeminar.seminar_id !== 0 ){
-            $http.get('/api/choose_seminar', {params : $scope.data.selectSeminar}).success(function(data, status, headers, config){
+            $http.get('/marksimos/api/choose_seminar', {params : $scope.data.selectSeminar}).success(function(data, status, headers, config){
                 $scope.css.showBox = 'whoami';
 
 
@@ -119,7 +119,7 @@ marksimosapp.controller('userIntroController',['$scope', '$http', '$window', 'St
     };
 
     $scope.whoamiNext = function(){
-        $window.location.href = "/home" ;
+        $window.location.href = "/marksimos/home" ;
     };
 
 }]);

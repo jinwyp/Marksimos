@@ -96,13 +96,13 @@ exports.getFinancialReport = function(allResults){
                     brandId: brandResult.b_BrandID,
                     brandName: brandResult.b_BrandName,
                     data: []
-                }
+                };
 
                 brandReport.data = reportForSKU(onePeriodResult, brandResult.b_BrandID);
                 brandReport.data.push(reportForBrandTotal(brandResult));
 
                 periodReport.brands.push(brandReport);
-            })
+            });
             
             //Report for all brands tab
             var reportByBrand = {
@@ -115,7 +115,7 @@ exports.getFinancialReport = function(allResults){
     
             companyReport.periods.push(periodReport);
         })
-    })
+    });
 
     return allCompanyReport;
 

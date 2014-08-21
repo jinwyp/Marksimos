@@ -4,20 +4,47 @@
 
 
 // create module for custom directives
-var marksimosapp = angular.module('marksimos', ['pascalprecht.translate', 'angularCharts', 'nvd3ChartDirectives', 'cgNotify', 'marksimos.websitecomponent', 'marksimos.model', 'marksimos.filter', 'marksimos.translation' ]);
+var marksimosapp = angular.module('marksimos', ['pascalprecht.translate', 'angularCharts', 'nvd3ChartDirectives', 'cgNotify', , 'marksimos.commoncomponent', 'marksimos.websitecomponent', 'marksimos.model', 'marksimos.filter', 'marksimos.translation' ]);
 
 
 // controller business logic
-marksimosapp.controller('chartController', ['$scope',  '$timeout', '$http', 'notify', 'chartReport', 'tableReport', 'Company', function($scope,  $timeout, $http, notify, chartReport, tableReport, Company) {
+marksimosapp.controller('chartController', ['$translate', '$scope', '$rootScope', '$timeout', '$http', 'notify', 'chartReport', 'tableReport', 'Company', function($translate, $scope, $rootScope, $timeout, $http, notify, chartReport, tableReport, Company) {
+    $rootScope.$on('$translateChangeSuccess', function () {
+        $translate(['HomePageSegmentLabelPriceSensitive', 'HomePageSegmentLabelPretenders', 'HomePageSegmentLabelModerate',
+            'HomePageSegmentLabelGoodLife', 'HomePageSegmentLabelUltimate', 'HomePageSegmentLabelPragmatic']).then(function (translations) {
+            $scope.data.userSegment = [
+                {id:1, name: translations.HomePageSegmentLabelPriceSensitive},
+                {id:2, name: translations.HomePageSegmentLabelPretenders},
+                {id:3, name: translations.HomePageSegmentLabelModerate},
+                {id:4, name: translations.HomePageSegmentLabelGoodLife},
+                {id:5, name: translations.HomePageSegmentLabelUltimate},
+                {id:6, name: translations.HomePageSegmentLabelPragmatic}
+            ];
+        });
+    });
+
+    $translate(['HomePageSegmentLabelPriceSensitive', 'HomePageSegmentLabelPretenders', 'HomePageSegmentLabelModerate',
+        'HomePageSegmentLabelGoodLife', 'HomePageSegmentLabelUltimate', 'HomePageSegmentLabelPragmatic']).then(function (translations) {
+        $scope.data.userSegment = [
+            {id:1, name: translations.HomePageSegmentLabelPriceSensitive},
+            {id:2, name: translations.HomePageSegmentLabelPretenders},
+            {id:3, name: translations.HomePageSegmentLabelModerate},
+            {id:4, name: translations.HomePageSegmentLabelGoodLife},
+            {id:5, name: translations.HomePageSegmentLabelUltimate},
+            {id:6, name: translations.HomePageSegmentLabelPragmatic}
+        ];
+    });
+
 
     $scope.css = {
-        menu : 'Home',
+        menu : 'Decision',
         chartMenu : 'A1',
         tableReportTab : 'SKU',
         tableReportMenu : 1,
         additionalBudget : true,
         currentDecisionBrandId : 0,
-        currentDecisionRightMenu : 1
+        currentDecisionRightMenu : 1,
+        addNewSku : false
     };
 
     $scope.dataChartSimple = {
@@ -45,15 +72,7 @@ marksimosapp.controller('chartController', ['$scope',  '$timeout', '$http', 'not
         currentModifiedCompany : {},
         currentSku : null,
         currentSkuIndex : 0,
-        userSegment : [
-            {id:1, name:'1 Price Sensitive'},
-            {id:2, name:'2 Pretenders'},
-            {id:3, name:'3 Moderate'},
-            {id:4, name:'4 Good Life'},
-            {id:5, name:'5 Ultimate'},
-            {id:6, name:'6 Pragmatic'}
-        ],
-
+        newSku : {},
 
         tableA1CompanyStatus : {
             allCompanyData : [],
@@ -99,6 +118,9 @@ marksimosapp.controller('chartController', ['$scope',  '$timeout', '$http', 'not
             dataBrand : {},
             dataGlobal : {},
             currentTable : 1
+        },
+        tableC6MarketIndicators : {
+            allData : {}
         },
 
 
@@ -185,7 +207,6 @@ marksimosapp.controller('chartController', ['$scope',  '$timeout', '$http', 'not
         chartC21PerceptionMap : {
             data : [],
             dataChart : [],
-            title : 'Perception Maps',
             color : ['#39b54a', '#ff983d', '#0087f0', '#8781bd', '#f26c4f', '#bd8cbf', '#000000']
         },
         chartC41GrowthRateInVolume : {
@@ -332,11 +353,6 @@ marksimosapp.controller('chartController', ['$scope',  '$timeout', '$http', 'not
 
 
     /********************  Chart B1  ********************/
-    $scope.data.chartB11MarketShareInValue.config.title = 'Market Share in Value (%)';
-    $scope.data.chartB12MarketShareInVolume.config.title = 'Market Share in Volume (%)';
-    $scope.data.chartB13MindSpaceShare.config.title = 'Mind Space Share (%)';
-    $scope.data.chartB14ShelfSpaceShare.config.title = 'Shelf Space Share(%)';
-
     chartReport.marketShareInValue().then(function(data, status, headers, config){
 //        console.log(data);
         $scope.data.chartB11MarketShareInValue.data = data;
@@ -356,11 +372,6 @@ marksimosapp.controller('chartController', ['$scope',  '$timeout', '$http', 'not
 
 
     /********************  Chart B3  ********************/
-    $scope.data.chartB31TotalInvestment.config.title = 'Total Investment (mln RMB)';
-    $scope.data.chartB32NetProfitByCompanies.config.title = 'Net Profit By Companies (mln RMB)';
-    $scope.data.chartB33ReturnOnInvestment.config.title = 'Return On Investment (%)';
-    $scope.data.chartB34InvestmentsVersusBudget.config.title = 'Investments Versus Budget (%)';
-
     chartReport.totalInvestment().then(function(data, status, headers, config){
 //        console.log(data);
         $scope.data.chartB31TotalInvestment.data = data;
@@ -380,11 +391,6 @@ marksimosapp.controller('chartController', ['$scope',  '$timeout', '$http', 'not
 
 
     /********************  Chart B4  ********************/
-    $scope.data.chartB41MarketSalesValue.config.title = 'Market Sales Value (mln RMB)';
-    $scope.data.chartB42MarketSalesVolume.config.title = 'Market Sales Volume (std pack)';
-    $scope.data.chartB43TotalInventoryAtFactory.config.title = 'Total Inventory At Factory (std pack)';
-    $scope.data.chartB44TotalInventoryAtTrade.config.title = 'Total Inventory At Trade (std pack)';
-
     chartReport.marketSalesValue().then(function(data, status, headers, config){
 //        console.log(data);
         $scope.data.chartB41MarketSalesValue.data = data;
@@ -404,13 +410,6 @@ marksimosapp.controller('chartController', ['$scope',  '$timeout', '$http', 'not
 
 
     /********************  Chart C1  ********************/
-    $scope.data.chartC11SegmentsLeadersByValuePriceSensitive.config.title = 'Price Sensitive (%)';
-    $scope.data.chartC12SegmentsLeadersByValuePretenders.config.title = 'Pretenders (%)';
-    $scope.data.chartC13SegmentsLeadersByValueModerate.config.title = 'Moderate (%)';
-    $scope.data.chartC14SegmentsLeadersByValueGoodLife.config.title = 'GoodLife (%)';
-    $scope.data.chartC15SegmentsLeadersByValueUltimate.config.title = 'Ultimate (%)';
-    $scope.data.chartC16SegmentsLeadersByValuePragmatic.config.title = 'Pragmatic (%)';
-
     chartReport.segmentsLeadersByValuePriceSensitive().then(function(data, status, headers, config){
 //        console.log(data);
         $scope.data.chartC11SegmentsLeadersByValuePriceSensitive.data = data;
@@ -556,7 +555,11 @@ marksimosapp.controller('chartController', ['$scope',  '$timeout', '$http', 'not
 
     });
 
+    /********************  Table Report C6  ********************/
+    tableReport.marketIndicators().then(function(data, status, headers, config){
+        $scope.data.tableC6MarketIndicators.allData = data;
 
+    });
 
 
 
@@ -660,10 +663,20 @@ marksimosapp.controller('chartController', ['$scope',  '$timeout', '$http', 'not
 
     };
 
-    //
+
     $scope.companyInfoInit();
 
 
+
+
+    /********************  点击添加一个新的SKU 显示添加SKU的表单  ********************/
+    $scope.showAddNewSkuForm = function(){
+        $scope.css.addNewSku = true;
+    };
+
+    $scope.addNewSku = function(){
+        $scope.css.addNewSku = false;
+    };
 
 
     $scope.clickBrand = function(brand){
