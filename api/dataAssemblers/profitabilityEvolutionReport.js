@@ -143,6 +143,8 @@ function generateBrandReport(companyId, allResults){
 
                     var onePeriodReport = {};
 
+                    onePeriodReport.period = "Quarter " + onePeriodResult.period;
+
                     onePeriodReport.manufacturerSalesValue = brandResult.b_FactorySalesValue;
                     onePeriodReport.costOfGoodsSold = -brandResult.b_CostOfGoodsSold;
                     onePeriodReport.inventoryHoldingCost = -brandResult.b_InventoryHoldingCost;

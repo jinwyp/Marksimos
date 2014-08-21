@@ -4,7 +4,7 @@
 
 
 // create module for custom directives
-var marksimosapp = angular.module('marksimos', ['pascalprecht.translate', 'angularCharts', 'nvd3ChartDirectives', 'cgNotify', 'marksimos.websitecomponent', 'marksimos.model', 'marksimos.filter', 'marksimos.translation' ]);
+var marksimosapp = angular.module('marksimos', ['pascalprecht.translate', 'angularCharts', 'nvd3ChartDirectives', 'cgNotify', , 'marksimos.commoncomponent', 'marksimos.websitecomponent', 'marksimos.model', 'marksimos.filter', 'marksimos.translation' ]);
 
 
 // controller business logic
@@ -43,7 +43,8 @@ marksimosapp.controller('chartController', ['$translate', '$scope', '$rootScope'
         tableReportMenu : 1,
         additionalBudget : true,
         currentDecisionBrandId : 0,
-        currentDecisionRightMenu : 1
+        currentDecisionRightMenu : 1,
+        addNewSku : false
     };
 
     $scope.dataChartSimple = {
@@ -71,6 +72,7 @@ marksimosapp.controller('chartController', ['$translate', '$scope', '$rootScope'
         currentModifiedCompany : {},
         currentSku : null,
         currentSkuIndex : 0,
+        newSku : {},
 
         tableA1CompanyStatus : {
             allCompanyData : [],
@@ -661,10 +663,20 @@ marksimosapp.controller('chartController', ['$translate', '$scope', '$rootScope'
 
     };
 
-    //
+
     $scope.companyInfoInit();
 
 
+
+
+    /********************  点击添加一个新的SKU 显示添加SKU的表单  ********************/
+    $scope.showAddNewSkuForm = function(){
+        $scope.css.addNewSku = true;
+    };
+
+    $scope.addNewSku = function(){
+        $scope.css.addNewSku = false;
+    };
 
 
     $scope.clickBrand = function(brand){
@@ -714,14 +726,21 @@ marksimosapp.controller('chartController', ['$translate', '$scope', '$rootScope'
 
 
 
-
-        Company.updateSku($scope.data.currentModifiedSku).success(function(data, status, headers, config){
+        console.log($scope.data.currentModifiedSku);
+        Company.updateSku($scope.data.currentModifiedSku).then(function(data, status, headers, config){
             $scope.companyInfoInit();
 
             notify({
                 message : 'Save Success !',
                 template : './app/js/websitecomponent/notifysavesuccess.html',
                 position : 'center'
+            });
+        }, function(data){
+            console.log(data);
+            notify({
+                message : JSON.stringify(data.data) + ', status: ' + data.status,
+                template : './app/js/websitecomponent/notifysavesuccess.html',
+                position : 'center'                
             });
         });
     };
@@ -734,12 +753,19 @@ marksimosapp.controller('chartController', ['$translate', '$scope', '$rootScope'
             }
         };
 
-        Company.updateBrand($scope.data.currentModifiedBrand).success(function(data, status, headers, config){
+        Company.updateBrand($scope.data.currentModifiedBrand).then(function(data, status, headers, config){
             $scope.companyInfoInit();
             notify({
                 message : 'Save Success !',
                 template : './app/js/websitecomponent/notifysavesuccess.html',
                 position : 'center'
+            });
+        }, function(data){
+            console.log(data);
+            notify({
+                message : JSON.stringify(data.data) + ', status: ' + data.status,
+                template : './app/js/websitecomponent/notifysavesuccess.html',
+                position : 'center'                
             });
         });
     };

@@ -291,3 +291,109 @@ app.directive('roundInput', function() {
         }
     };
 });
+
+
+app.directive('textFormInput', function() {
+    return {
+        scope: {
+            type        : '@',
+            name        : '@',
+            label       : '@',
+            labelclass  : '@',
+            inputclass  : '@',
+            placeholder : '@',
+            data        : '=',
+
+            required          : '=',
+            requirederrorinfo : '@',
+
+            minlength          : '@',
+            minlengtherrorinfo : '@',
+            maxlength          : '@',
+            maxlengtherrorinfo : '@',
+
+            numbererrorinfo : '@',
+            min             : '@',
+            max             : '@'
+
+
+
+        },
+        restrict: 'AE',
+        require: '^form',
+        template: function(tElement, tAttrs) {
+            var labelclass = tAttrs.labelclass || 'col-sm-4';
+            var inputclass = tAttrs.inputclass || 'col-sm-3';
+
+            var type = tAttrs.type || 'text';
+
+            var required, requirederrorinfo, minlength, minlengtherrorinfo, maxlength, maxlengtherrorinfo, min, max, numbererrorinfo;
+
+            required = tAttrs.hasOwnProperty('required') ? 'ng-required="' + tAttrs.required + '"' : "";
+            requirederrorinfo = tAttrs.hasOwnProperty('requirederrorinfo') ? tAttrs.requirederrorinfo  : "field is required";
+
+
+            var tpltext = '<div class="form-group has-feedback" ng-class="{ \'has-success\':form.$dirty && form.$valid , \'has-error\': form.$dirty && form.$invalid}">' +
+                            '<label class="' + labelclass + ' control-label" for="' + tAttrs.name + '" >' + tAttrs.label + '</label>' +
+                            '<div class="' + inputclass + '">' +
+                                '<input type="' + type + '" class="form-control" id="ID' + tAttrs.name +'" name="' + tAttrs.name +'" placeholder="{{placeholder}}" ng-model="data" ' + required + minlength + maxlength + min + max + '>' +
+                                '<span ng-if="form.$dirty && form.$valid" class="glyphicon glyphicon-ok form-control-feedback"></span>' +
+                                '<span ng-if="form.$dirty && form.$invalid" class="glyphicon glyphicon-remove form-control-feedback"></span>' +
+                            '</div>' +
+                            '<label class="control-label" ng-if="form.$dirty && form.$error.required && !form.$error.number"><i class="fa fa-times-circle-o"></i> ' + requirederrorinfo + ' </label>' +
+                            '<label class="control-label" ng-if="form.$dirty && form.$error.minlength" ><i class="fa fa-times-circle-o"></i>' + minlengtherrorinfo + '</label>' +
+                            '<label class="control-label" ng-if="form.$dirty && form.$error.maxlength" ><i class="fa fa-times-circle-o"></i>' + maxlengtherrorinfo + '</label>' +
+                            '<label class="control-label" ng-if="form.$dirty && form.$error.number" ><i class="fa fa-times-circle-o"></i>must be a number</label>' +
+                            '<label class="control-label" ng-if="form.$dirty && form.$error.min || form.$dirty && form.$error.max " ><i class="fa fa-times-circle-o"></i>' + numbererrorinfo + '</label>' +
+
+                            '</div>';
+
+            var tplcheckbox = '<div class="form-group" ng-class="{ \'has-success\':form.$dirty && form.$valid , \'has-error\': form.$dirty && form.$invalid}">' +
+                                '<label class="' + labelclass + ' control-label" for="' + tAttrs.name + '" >' + tAttrs.label + '</label>' +
+                                '<div class="' + inputclass + '">' +
+                                    '<div class="checkbox">' +
+                                        '<label>' +
+                                            '<input type="' + type + '" id="ID' + tAttrs.name +'" name="' + tAttrs.name +'" ng-model="data" ' + required + '>' +
+                                        '</label>' +
+                                    '</div>' +
+                                '</div>' +
+                                '</div>';
+
+
+
+            if (type === 'checkbox'){
+                return tplcheckbox
+
+            }else if(type === 'number'){
+                min = tAttrs.hasOwnProperty('min') ? 'min="' + tAttrs.min + '"' : "";
+                max = tAttrs.hasOwnProperty('max') ? 'max="' + tAttrs.max + '"' : "";
+                numbererrorinfo = tAttrs.hasOwnProperty('numbererrorinfo') ? tAttrs.numbererrorinfo  : 'must be in range ' + tAttrs.min + ' to '+ tAttrs.max;
+                return tpltext
+
+            }else{
+
+                minlength = tAttrs.hasOwnProperty('minlength') ? 'ng-minlength="' + tAttrs.minlength + '"' : "";
+                minlengtherrorinfo = tAttrs.hasOwnProperty('minlengtherrorinfo') ? tAttrs.minlengtherrorinfo  : 'field must be at least ' + tAttrs.minlength + ' characters';
+
+                maxlength = tAttrs.hasOwnProperty('maxlength') ? 'ng-maxlength="' + tAttrs.maxlength + '"' : "";
+                maxlengtherrorinfo = tAttrs.hasOwnProperty('maxlengtherrorinfo') ? tAttrs.maxlengtherrorinfo  : 'field is a maximum of ' + tAttrs.maxlength + ' characters';
+                return tpltext
+            }
+
+
+
+
+
+
+
+        },
+
+        compile: function ( tElement, tAttrs) {
+
+            return function (scope, element, attributes, formController) {
+                scope.form = formController[scope.name];
+            };
+        }
+    };
+});
+
