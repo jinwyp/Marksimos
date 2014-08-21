@@ -732,14 +732,14 @@ marksimosapp.controller('chartController', ['$translate', '$scope', '$rootScope'
 
             notify({
                 message : 'Save Success !',
-                template : './app/js/websitecomponent/notifysavesuccess.html',
+                template : '/app/js/websitecomponent/notifysavesuccess.html',
                 position : 'center'
             });
         }, function(data){
             console.log(data);
             notify({
                 message : JSON.stringify(data.data) + ', status: ' + data.status,
-                template : './app/js/websitecomponent/notifysavesuccess.html',
+                template : '/app/js/websitecomponent/notifysavesuccess.html',
                 position : 'center'                
             });
         });
@@ -757,14 +757,14 @@ marksimosapp.controller('chartController', ['$translate', '$scope', '$rootScope'
             $scope.companyInfoInit();
             notify({
                 message : 'Save Success !',
-                template : './app/js/websitecomponent/notifysavesuccess.html',
+                template : '/app/js/websitecomponent/notifysavesuccess.html',
                 position : 'center'
             });
         }, function(data){
             console.log(data);
             notify({
                 message : JSON.stringify(data.data) + ', status: ' + data.status,
-                template : './app/js/websitecomponent/notifysavesuccess.html',
+                template : '/app/js/websitecomponent/notifysavesuccess.html',
                 position : 'center'                
             });
         });
@@ -787,7 +787,7 @@ marksimosapp.controller('chartController', ['$translate', '$scope', '$rootScope'
             $scope.companyInfoInit();
             notify({
                 message : 'Save Success !',
-                template : './app/js/websitecomponent/notifysavesuccess.html',
+                template : '/app/js/websitecomponent/notifysavesuccess.html',
                 position : 'center'
             });
         });
