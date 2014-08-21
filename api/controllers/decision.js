@@ -126,7 +126,6 @@ exports.submitDecision = function(req, res, next){
             team: companyId
         })
         .then(function(postDecisionResult){
-            //console.log(!postDecisionResult);
             res.send(postDecisionResult);
         });
     })
@@ -235,12 +234,10 @@ exports.updateSKUDecision = function(req, res, next){
     //create a SKU object using the data posted by the client
     var tempSKU = createSKU(jsonSKU);
 
-    logger.log('SKU:' + util.inspect(tempSKU));
 
 
     SKUDecisionModel.updateSKU(seminarId, period, companyId, brandId, SKUID, tempSKU)
     .then(function(doc){
-        logger.log('1');
         res.send(200, {status: 1, message: 'update success.'});
     })
     .fail(function(err){
@@ -322,7 +319,6 @@ exports.updateBrandDecision = function(req, res, next){
     .fail(function(err){
         //logger.error(err);
         var message = JSON.stringify(err, null, 2);
-        //console.error('message:'+ message)        
         res.send(403, message);
     })
     .done(); 

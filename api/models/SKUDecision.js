@@ -62,13 +62,12 @@ tOneSKUDecisionSchema.pre('save', true, function(next, done){
         'd_TargetConsumerSegment'    : function(field){ validateTargetConsumerSegment(field, self, done); },
         'd_ToDrop'                   : function(field){ validateToDrop(field, self, done); },
         'd_RepriceFactoryStocks'     : function(field){ validateRepriceFactoryStocks(field, self, done); },
+        'd_ConsumerPrice'            : function(field){ validateConsumberPrice(field, self, done); }
         //DURABLES:
         //'d_WarrantyLength'           : function(field){ validateWarrantyLength(field, self, done); },
     }
 
     function doValidate(field){        
-        logger.log('field:' + field);
-
         if(typeof validateAction[field] != 'function'){
             var validateErr = new Error('Cannot find validate action for ' + field);
             validateErr.msg = 'Cannot find validate action for ' + field;
@@ -163,9 +162,15 @@ function validateIngredientsQuality(field, curSKUDecision, done){
 //                 make sure cost of Additional trade margin cost < budget left,
 //                 mare sure cost of WholeSales Bonus exceeds < budget left)
 function validateFactoryPrice(field, curSKUDecision, done){
-    logger.log('curSKUDecision:' +curSKUDecision);
-    simulationResultModel.findOne(curSKUDecision.seminarId, curSKUDecision.period - 1).then(function(lastPeriodResult){
-        companyResult = utility.findCompany(lastPeriodResult, curSKUDecision.d_CID);
+    simulationResultModel.findOne(curSKUDecision.seminarId, curSKUDecision.period - 1).then(function(result){
+//        logger.log(curSKUDecision.d_CID);  
+        //logger.log(result);
+        companyResult = utility.findCompany(result, curSKUDecision.d_CID);
+        if(companyResult == undefined){
+            err = new Error('find companyResult failed.');
+            err.msg = 'find companyResult failed.';
+            done(err);
+        }
 
         Q.spread([
             spendingDetailsAssembler.getSpendingDetails(curSKUDecision.seminarId, curSKUDecision.period, curSKUDecision.d_CID),            
@@ -184,9 +189,13 @@ function validateFactoryPrice(field, curSKUDecision, done){
                 err.modifiedField = field;
                 done(err);
             } else {
-                //TODO: update consumer price automatically 
-
-                done();
+                //update consumer price automatically                 
+                preSKUDecision.d_ConsumerPrice = utility.getConsumerPrice(curSKUDecision[field][0]);
+                preSKUDecision.modifiedField = 'd_ConsumerPrice';
+                preSKUDecision.save(function(err){
+                    if(err){ return done(err);}
+                    done();
+                });
             }
         });
 
@@ -219,29 +228,28 @@ function validateAdditionalTradeMargin(field, curSKUDecision, done){
     });
 }
 
-//TODO: need testing when in the office, /api/future_projection_calculator does not work without cgi sever
 function validateWholesalesBonusMinVolume(field, curSKUDecision, done){
-    // Q.spread([
-    //     spendingDetailsAssembler.getSpendingDetails(curSKUDecision.seminarId, curSKUDecision.period, curSKUDecision.d_CID),
-    //     exports.findOne(curSKUDecision.seminarId, curSKUDecision.period, curSKUDecision.d_CID, curSKUDecision.d_BrandID, curSKUDecision.d_SKUID),
-    //     SKUInfoAssembler.getSKUInfo(curSKUDecision.seminarId, curSKUDecision.period, curSKUDecision.d_CID, curSKUDecision.d_SKUID)
-    // ], function(spendingDetails, preSKUDecision, SKUHistoryInfo){
-    //     var budgetLeft = parseFloat(spendingDetails.companyData.availableBudget);
-    //     var err, lowerLimits = [],upperLimits = [];
+    Q.spread([
+        spendingDetailsAssembler.getSpendingDetails(curSKUDecision.seminarId, curSKUDecision.period, curSKUDecision.d_CID),
+        exports.findOne(curSKUDecision.seminarId, curSKUDecision.period, curSKUDecision.d_CID, curSKUDecision.d_BrandID, curSKUDecision.d_SKUID),
+        SKUInfoAssembler.getSKUInfo(curSKUDecision.seminarId, curSKUDecision.period, curSKUDecision.d_CID, curSKUDecision.d_SKUID)
+    ], function(spendingDetails, preSKUDecision, SKUHistoryInfo){
+        var budgetLeft = parseFloat(spendingDetails.companyData.availableBudget);
+        var err, lowerLimits = [],upperLimits = [];
 
-    //     lowerLimits.push({value : 0, msg: 'Cannot accept negative number.'});
-    //     upperLimits.push({value : SKUHistoryInfo.currentPeriodInfo.stocksAtFactory[0] +  preSKUDecision.d_ProductionVolume, msg : 'Minimum Order cannot exceed production volume + factory stock'});
-    //     upperLimits.push({value : (budgetLeft + (preSKUDecision[field] * preSKUDecision.d_ConsumerPrice * preSKUDecision.d_WholesalesBonusRate)) / (curSKUDecision.d_WholesalesBonusRate * curSKUDecision.d_ConsumerPrice) , msg : 'Budget left is not enough for WholeSales bonus cost.'});
+        lowerLimits.push({value : 0, msg: 'Cannot accept negative number.'});
+        upperLimits.push({value : SKUHistoryInfo.currentPeriodInfo.stocksAtFactory[0] +  preSKUDecision.d_ProductionVolume, msg : 'Minimum Order cannot exceed production volume + factory stock'});
+        upperLimits.push({value : (budgetLeft + (preSKUDecision[field] * preSKUDecision.d_ConsumerPrice * preSKUDecision.d_WholesalesBonusRate)) / (curSKUDecision.d_WholesalesBonusRate * curSKUDecision.d_ConsumerPrice) , msg : 'Budget left is not enough for WholeSales bonus cost.'});
 
-    //     err = rangeCheck(curSKUDecision[field],lowerLimits,upperLimits);      
-    //     if(err != undefined){
-    //         err.modifiedField = field;
-    //         done(err);
-    //     } else {
-    //         done();
-    //     }         
-    // });    
-    process.nextTick(done);
+        err = rangeCheck(curSKUDecision[field],lowerLimits,upperLimits);      
+        if(err != undefined){
+            err.modifiedField = field;
+            done(err);
+        } else {
+            done();
+        }         
+    });    
+
 }
 
 
@@ -320,6 +328,10 @@ function validatePackSize(field, curSKUDecision, done){
     } else {
         process.nextTick(done);
     }
+}
+
+function validateConsumberPrice(field, curSKUDecision, done){
+    process.nextTick(done);
 }
 
 function validateRepriceFactoryStocks(field, curSKUDecision, done){
