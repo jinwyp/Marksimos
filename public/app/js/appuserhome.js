@@ -43,7 +43,8 @@ marksimosapp.controller('chartController', ['$translate', '$scope', '$rootScope'
         tableReportMenu : 1,
         additionalBudget : true,
         currentDecisionBrandId : 0,
-        currentDecisionRightMenu : 1
+        currentDecisionRightMenu : 1,
+        addNewSku : false
     };
 
     $scope.dataChartSimple = {
@@ -662,10 +663,20 @@ marksimosapp.controller('chartController', ['$translate', '$scope', '$rootScope'
 
     };
 
-    //
+
     $scope.companyInfoInit();
 
 
+
+
+    /********************  点击添加一个新的SKU 显示添加SKU的表单  ********************/
+    $scope.showAddNewSkuForm = function(){
+        $scope.css.addNewSku = true;
+    };
+
+    $scope.addNewSku = function(){
+        $scope.css.addNewSku = false;
+    };
 
 
     $scope.clickBrand = function(brand){
