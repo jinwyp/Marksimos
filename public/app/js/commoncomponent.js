@@ -27,7 +27,7 @@ app.directive('usernameInput', function() {
 
         },
         restrict: 'AE',
-        templateUrl: 'app/js/commoncomponent/formusernameinput.html',
+        templateUrl: '/app/js/commoncomponent/formusernameinput.html',
         link: function (scope, element, attrs) {
 
             if(angular.isUndefined(scope.required)  ){
@@ -64,7 +64,7 @@ app.directive('emailInput', function() {
 
         },
         restrict: 'AE',
-        templateUrl: 'app/js/commoncomponent/formemailinput.html',
+        templateUrl: '/app/js/commoncomponent/formemailinput.html',
         link: function (scope, element, attrs) {
 
             if(angular.isUndefined(scope.required)  ){
@@ -99,7 +99,7 @@ app.directive('passwordInput', function() {
 
         },
         restrict: 'AE',
-        templateUrl: 'app/js/commoncomponent/formpasswordinput.html',
+        templateUrl: '/app/js/commoncomponent/formpasswordinput.html',
         link: function (scope, element, attrs) {
 
             if(angular.isUndefined(scope.required)  ){
@@ -136,7 +136,7 @@ app.directive('phoneInput', function() {
             maxlengtherrorinfo : '@'
         },
         restrict: 'AE',
-        templateUrl: 'app/js/commoncomponent/formphoneinput.html',
+        templateUrl: '/app/js/commoncomponent/formphoneinput.html',
         link: function (scope, element, attrs) {
 
             if(angular.isUndefined(scope.required)  ){
@@ -174,7 +174,7 @@ app.directive('idcardInput', function() {
 
         },
         restrict: 'AE',
-        templateUrl: 'app/js/commoncomponent/formidcardinput.html',
+        templateUrl: '/app/js/commoncomponent/formidcardinput.html',
         link: function (scope, element, attrs) {
 
             if(angular.isUndefined(scope.required)  ){
@@ -216,7 +216,7 @@ app.directive('licenceInput', function() {
 
         },
         restrict: 'AE',
-        templateUrl: 'app/js/commoncomponent/formlicenceinput.html',
+        templateUrl: '/app/js/commoncomponent/formlicenceinput.html',
         link: function (scope, element, attrs) {
 
             if(angular.isUndefined(scope.required)  ){
@@ -264,7 +264,7 @@ app.directive('roundInput', function() {
 
         },
         restrict: 'AE',
-        templateUrl: 'app/js/commoncomponent/formroundinput.html',
+        templateUrl: '/app/js/commoncomponent/formroundinput.html',
         link: function (scope, element, attrs) {
 
             if(angular.isUndefined(scope.required)  ){
@@ -362,13 +362,13 @@ app.directive('textFormInput', function() {
 
 
             if (type === 'checkbox'){
-                return tplcheckbox
+                return tplcheckbox;
 
             }else if(type === 'number'){
                 min = tAttrs.hasOwnProperty('min') ? 'min="' + tAttrs.min + '"' : "";
                 max = tAttrs.hasOwnProperty('max') ? 'max="' + tAttrs.max + '"' : "";
                 numbererrorinfo = tAttrs.hasOwnProperty('numbererrorinfo') ? tAttrs.numbererrorinfo  : 'must be in range ' + tAttrs.min + ' to '+ tAttrs.max;
-                return tpltext
+                return tpltext;
 
             }else{
 
@@ -377,7 +377,7 @@ app.directive('textFormInput', function() {
 
                 maxlength = tAttrs.hasOwnProperty('maxlength') ? 'ng-maxlength="' + tAttrs.maxlength + '"' : "";
                 maxlengtherrorinfo = tAttrs.hasOwnProperty('maxlengtherrorinfo') ? tAttrs.maxlengtherrorinfo  : 'field is a maximum of ' + tAttrs.maxlength + ' characters';
-                return tpltext
+                return tpltext;
             }
 
 
