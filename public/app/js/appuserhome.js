@@ -35,6 +35,9 @@ marksimosapp.controller('chartController', ['$translate', '$scope', '$rootScope'
         ];
     });
 
+    notify.config({
+        duration : 10000
+    }) ;
 
     $scope.css = {
         menu : 'Decision',
@@ -723,7 +726,7 @@ marksimosapp.controller('chartController', ['$translate', '$scope', '$rootScope'
             });
         }, function(data){
             notify({
-                message  : JSON.stringify(data.data) + ', status: ' + data.status,
+                message  : data.data.message,
                 template : notifytemplate.failure,
                 position : 'center'
             });
@@ -790,7 +793,7 @@ marksimosapp.controller('chartController', ['$translate', '$scope', '$rootScope'
         }, function(data){
             console.log(data);
             notify({
-                message : JSON.stringify(data.data) + ', status: ' + data.status,
+                message : data.data.message,
                 template : notifytemplate.failure,
                 position : 'center'                
             });
