@@ -315,7 +315,7 @@ exports.updateBrandDecision = function(req, res, next){
         res.send({status: 1, message: 'update success.'});
     })
     .fail(function(err){        
-        var message = JSON.stringify(err, null, 2);
+        var message = JSON.stringify(err, ['message', 'lower', 'upper', 'modifiedField'], 2);        
         res.send(403, message);
     })
     .done(); 
@@ -371,7 +371,7 @@ exports.updateCompanyDecision = function(req, res, next){
         res.send({message: 'update success.'});
     })
     .fail(function(err){
-        var message = JSON.stringify(err, null, 2);     
+        var message = JSON.stringify(err, ['message', 'lower', 'upper', 'modifiedField'], 2);
         res.send(403, message);        
     })
     .done(); 
