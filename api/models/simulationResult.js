@@ -77,15 +77,28 @@ exports.findOne = function(seminarId, period){
 
     var deferred = Q.defer();
 
+    // SimulationResult.find({
+    //     seminarId: seminarId,
+    //     period: period
+    // }).lean().exec(function(err, result){
+    //     if(err){
+    //         deferred.reject(err);
+    //     }else{
+    //         //console.log(result);
+    //         deferred.resolve(result);
+    //     }        
+    // });
+
     SimulationResult.findOne({
         seminarId: seminarId,
         period: period
     }, function(err, result){
-        if(err){
+          if(err){
             deferred.reject(err);
         }else{
+            //console.log(result);
             deferred.resolve(result);
-        }
+        }              
     });
 
     return deferred.promise;

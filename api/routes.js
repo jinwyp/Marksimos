@@ -69,28 +69,20 @@ apiRouter.get('/marksimos/api/studentinfo', requireLogin, authorize('getStudent'
 //report
 apiRouter.get('/marksimos/api/report/:report_name', requireLogin, reportController.getReport);
 apiRouter.get('/marksimos/api/adminreport/:report_name', requireLogin, reportController.getReport);
-
-
-
-
 apiRouter.get('/marksimos/api/choose_seminar', requireLogin, authorize('chooseSeminar'), seminarController.chooseSeminar);
-
 apiRouter.get('/marksimos/api/submitdecision', requireLogin, decisionController.submitDecision);
 
 //chart
 apiRouter.get('/marksimos/api/chart/:chart_name', requireLogin, chartController.getChart);
 
 
-
 //make decision page
 apiRouter.put('/marksimos/api/sku/decision', requireLogin, decisionController.updateSKUDecision);
 apiRouter.post('/marksimos/api/sku/decision', requireLogin, decisionController.addSKU);
 apiRouter.delete('/marksimos/api/sku/decision', requireLogin, decisionController.deleteSKU);
-
 apiRouter.put('/marksimos/api/brand/decision', requireLogin, decisionController.updateBrandDecision);
 apiRouter.post('/marksimos/api/brand/decision', requireLogin, decisionController.addBrand);
 apiRouter.delete('/marksimos/api/brand/decision', requireLogin, decisionController.deleteBrand);
-
 apiRouter.put('/marksimos/api/company/decision', requireLogin, decisionController.updateCompanyDecision);
 
 

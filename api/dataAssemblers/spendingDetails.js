@@ -40,8 +40,8 @@ exports.getSpendingDetails = function(seminarId, currentPeriod, companyId){
                 brandDataRow.estimatedWholesaleBonusCost += SKUDecision.d_WholesalesBonusRate;
             }
 
-            brandDataRow.estimatedAdditionalTradeMarginCost = brandDataRow.estimatedAdditionalTradeMarginCost.toFixed(2);
-            brandDataRow.estimatedWholesaleBonusCost = brandDataRow.estimatedWholesaleBonusCost.toFixed(2);
+            brandDataRow.estimatedAdditionalTradeMarginCost = brandDataRow.estimatedAdditionalTradeMarginCost;
+            brandDataRow.estimatedWholesaleBonusCost = brandDataRow.estimatedWholesaleBonusCost;
 
             brandData.push(brandDataRow);
         }
@@ -73,20 +73,21 @@ exports.getSpendingDetails = function(seminarId, currentPeriod, companyId){
         companyData.investmentInProductionEfficiency = decision.d_InvestmentInEfficiency;
         companyData.investmentInProcessingTechnology = decision.d_InvestmentInTechnology;
 
-        companyData.totalInvestment = (total.salesForce + total.consumerCommunication + total.consumerPromotion
-        + total.tradeExpenses + total.estimatedAdditionalTradeMarginCost + total.estimatedWholesaleBonusCost).toFixed(2);
+        companyData.totalInvestment = total.salesForce + total.consumerCommunication + total.consumerPromotion
+        + total.tradeExpenses + total.estimatedAdditionalTradeMarginCost + total.estimatedWholesaleBonusCost;
+
 
         var companyDataInAllResults = utility.findCompany(lastPeriodResult, companyId)
         
         //average budget per period
-        companyData.averageBudgetPerPeriod = (companyDataInAllResults.c_TotalInvestmentBudget / (seminar.simulationSpan + 1)).toFixed(2);
+        companyData.averageBudgetPerPeriod = companyDataInAllResults.c_TotalInvestmentBudget / (seminar.simulationSpan + 1);
 
         companyData.totalInvestmentBudget = companyDataInAllResults.c_TotalInvestmentBudget;
 
-        companyData.cumulatedPreviousInvestments = companyDataInAllResults.c_CumulatedInvestments.toFixed(2);
+        companyData.cumulatedPreviousInvestments = companyDataInAllResults.c_CumulatedInvestments;
 
-        companyData.availableBudget = (companyDataInAllResults.c_TotalInvestmentBudget - companyDataInAllResults.c_CumulatedInvestments 
-            - companyData.totalInvestment).toFixed(2);
+        companyData.availableBudget = companyDataInAllResults.c_TotalInvestmentBudget - companyDataInAllResults.c_CumulatedInvestments 
+            - companyData.totalInvestment;
 
         //normal capacity
         companyData.normalCapacity = companyDataInAllResults.c_Capacity - utility.calculateTotalVolume(decision)
@@ -102,12 +103,12 @@ exports.getSpendingDetails = function(seminarId, currentPeriod, companyId){
             companyData.availableOvertimeCapacityExtension = companyDataInAllResults.c_Capacity * gameParameters.pgen.firm_OvertimeCapacity;
         }
 
-        companyData.availableOvertimeCapacityExtension = companyData.availableOvertimeCapacityExtension.toFixed(2);
+        companyData.availableOvertimeCapacityExtension = companyData.availableOvertimeCapacityExtension;
         
 
-        companyData.acquiredEfficiency = (companyDataInAllResults.c_AcquiredEfficiency*100).toFixed(2);
+        companyData.acquiredEfficiency = companyDataInAllResults.c_AcquiredEfficiency*100;
 
-        companyData.acquiredProductionVolumeFlexibility = (companyDataInAllResults.c_AcquiredFlexibility * 100).toFixed(2);
+        companyData.acquiredProductionVolumeFlexibility = companyDataInAllResults.c_AcquiredFlexibility * 100;
 
         companyData.acquiredTechnologyLevel = companyDataInAllResults.c_AcquiredTechnologyLevel;
 
