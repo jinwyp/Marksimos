@@ -74,7 +74,8 @@ marksimosapp.controller('chartController', ['$translate', '$scope', '$rootScope'
         currentSkuIndex : 0,
         newSku : {
             sku_name : "",
-            brand_id : ""
+            brand_id : "",
+            othererrorinfo : ""
         },
 
         tableA1CompanyStatus : {
@@ -675,6 +676,9 @@ marksimosapp.controller('chartController', ['$translate', '$scope', '$rootScope'
     /********************  点击添加一个新的SKU 显示添加SKU的表单  ********************/
     $scope.showAddNewSkuForm = function(){
         $scope.css.addNewSku = true;
+        $scope.data.newSku.sku_name = "";
+        $scope.data.newSku.brand_id = "";
+        $scope.data.newSku.othererrorinfo = "";
     };
 
     var notifytemplate = {
@@ -697,17 +701,33 @@ marksimosapp.controller('chartController', ['$translate', '$scope', '$rootScope'
 
                 $scope.css.addNewSku = false;
             }, function(data){
-                console.log(data);
-                notify({
-                    message  : JSON.stringify(data.data) + ', status: ' + data.status,
-                    template : notifytemplate.failure,
-                    position : 'center'
-                });
-            });
+                form.skuName.$valid = false;
+                form.skuName.$invalid = true;
+                $scope.data.newSku.othererrorinfo = data.data.message ;
 
+            });
 
         }
 
+    };
+
+    /********************  删除一个SKU  注意该SKU必须是本回合添加的SKU才可以删除 ********************/
+    $scope.delSku = function(sku){
+        Company.delSku(sku.d_SKUID).then(function(data, status, headers, config){
+            $scope.companyInfoInit();
+
+            notify({
+                message  : 'Delete Sku Success !',
+                template : notifytemplate.success,
+                position : 'center'
+            });
+        }, function(data){
+            notify({
+                message  : JSON.stringify(data.data) + ', status: ' + data.status,
+                template : notifytemplate.failure,
+                position : 'center'
+            });
+        });
     };
 
 

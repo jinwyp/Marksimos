@@ -1265,7 +1265,7 @@
                                             </div>
                                         </div>
 
-                                        <text-form-input type="text" name="skuName" label="SKU Name :"  data="data.newSku.sku_name" required="true" minlength="1" maxlength="1"></text-form-input>
+                                        <text-form-input type="text" name="skuName" label="SKU Name :"  data="data.newSku.sku_name" required="true" minlength="1" maxlength="1" othererrorinfo="data.newSku.othererrorinfo"></text-form-input>
 
                                         <!--<text-form-input type="checkbox" name="skuDiscontinue" label="Discontinue ?"  data="data.newSku.d_ToDrop" ></text-form-input>-->
                                         <!--<text-form-input type="number" name="skuProcessingTechnology" label="Processing Technology :" placeholder="" data="data.newSku.skuProcessingTechnology" required="true" min="1" max="14" ></text-form-input>-->
@@ -1304,7 +1304,8 @@
                                             <tr>
                                                 <th class="sku_table">Name <button class="btn btn-default btn-xs" ng-click="showAddNewSkuForm()">+</button></th>
                                                 <th ng-repeat="sku in data.currentBrand.d_SKUsDecisions" ng-click="clickCurrentSku(sku)">
-                                                    <a href="">{{data.currentBrand.d_BrandName}}{{sku.d_SKUName}}</a></th>
+                                                    <a href="">{{data.currentBrand.d_BrandName}}{{sku.d_SKUName}}</a>
+                                                    <button type="button" class="btn btn-default btn-xs" ng-show="true" ng-click="delSku(sku)">x</button></th>
                                             </tr>
                                         </thead>
 

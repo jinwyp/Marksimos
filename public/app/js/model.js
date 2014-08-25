@@ -117,6 +117,10 @@ app.factory('Company', ['$http', function($http){
 
         updateCompany : function(postdata){
             return $http.put(apiPath + 'company/decision', postdata);
+        },
+
+        delSku : function(id){
+            return $http.delete(apiPath + 'sku/decision/' + id);
         }
 
     };
