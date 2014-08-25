@@ -314,8 +314,9 @@ app.directive('textFormInput', function() {
 
             numbererrorinfo : '@',
             min             : '@',
-            max             : '@'
+            max             : '@',
 
+            othererrorinfo : '='
 
 
         },
@@ -381,7 +382,7 @@ app.directive('textFormInput', function() {
                             '<label class="control-label" ng-if="form.$dirty && form.$error.maxlength" ><i class="fa fa-times-circle-o"></i>' + maxlengtherrorinfo + '</label>' +
                             '<label class="control-label" ng-if="form.$dirty && form.$error.number" ><i class="fa fa-times-circle-o"></i>must be a number</label>' +
                             '<label class="control-label" ng-if="form.$dirty && form.$error.min || form.$dirty && form.$error.max " ><i class="fa fa-times-circle-o"></i>' + numbererrorinfo + '</label>' +
-                            '<label class="control-label" ng-if="form.$" ><i class="fa fa-times-circle-o"></i>' + numbererrorinfo + '</label>' +
+                            '<label class="control-label" ng-if="form.$invalid" ><i class="fa fa-times-circle-o"></i>{{othererrorinfo}}</label>' +
 
                             '</div>';
 

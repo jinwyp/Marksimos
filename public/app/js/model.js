@@ -103,12 +103,22 @@ app.factory('Company', ['$http', function($http){
             }).catch(errorHandler);
         },
 
+
         addSku : function(postdata){
             return $http.post(apiPath + 'sku/decision/', postdata);
         },
 
         updateSku : function(postdata){
             return $http.put(apiPath + 'sku/decision/', postdata);
+        },
+
+        delSku : function(id){
+            return $http.delete(apiPath + 'sku/decision/' + id);
+        },
+
+
+        addBrand : function(postdata){
+            return $http.post(apiPath + 'brand/decision/', postdata);
         },
 
         updateBrand : function(postdata){
@@ -118,6 +128,7 @@ app.factory('Company', ['$http', function($http){
         updateCompany : function(postdata){
             return $http.put(apiPath + 'company/decision', postdata);
         }
+
 
     };
 
