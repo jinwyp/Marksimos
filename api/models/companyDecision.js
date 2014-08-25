@@ -32,7 +32,7 @@ tDecisionSchema.pre('save', true, function(next, done){
     function doValidate(field){        
         if(typeof validateAction[field] != 'function'){
             var validateErr = new Error('Cannot find validate action for ' + field);
-            validateErr.msg = 'Cannot find validate action for ' + field;
+            validateErr.message = 'Cannot find validate action for ' + field;
             validateErr.modifiedField = field;
             return done(validateErr);
         }
@@ -52,8 +52,8 @@ function validateAdditionalBudget(field, curCompanyDecision, done){
         var budgetLeft = parseFloat(spendingDetails.companyData.availableBudget);
         var err, lowerLimits = [],upperLimits = [];
 
-        lowerLimits.push({value : 0, msg: 'Cannot accept negative number.'});        
-        upperLimits.push({value : parseFloat(spendingDetails.companyData.averageBudgetPerPeriod), msg : 'Cannot accept number bigger than ' + spendingDetails.companyData.averageBudgetPerPeriod});
+        lowerLimits.push({value : 0, message: 'Cannot accept negative number.'});        
+        upperLimits.push({value : parseFloat(spendingDetails.companyData.averageBudgetPerPeriod), message : 'Cannot accept number bigger than ' + spendingDetails.companyData.averageBudgetPerPeriod});
 
         console.log(uitl.inspect(upperLimits));
         err = rangeCheck(curCompanyDecision[field],lowerLimits,upperLimits);      
@@ -74,8 +74,8 @@ function validateAvailableBudget(field, curCompanyDecision, done){
         var budgetLeft = parseFloat(spendingDetails.companyData.availableBudget);
         var err, lowerLimits = [],upperLimits = [];
 
-        lowerLimits.push({value : 0, msg: 'Cannot accept negative number.'});
-        upperLimits.push({value : budgetLeft + preCompanyDecision[field], msg : 'Budget Left is not enough.'});
+        lowerLimits.push({value : 0, message: 'Cannot accept negative number.'});
+        upperLimits.push({value : budgetLeft + preCompanyDecision[field], message : 'Budget Left is not enough.'});
         err = rangeCheck(curCompanyDecision[field],lowerLimits,upperLimits);      
         if(err != undefined){
             err.modifiedField = field;
@@ -86,31 +86,31 @@ function validateAvailableBudget(field, curCompanyDecision, done){
     });
 }
 
-//...Limits : [{msg : 'budgetLeft', value : 200}, {msg : 'para', value: 3000}]
+//...Limits : [{message : 'budgetLeft', value : 200}, {message : 'para', value: 3000}]
 function rangeCheck(input, lowerLimits, upperLimits){
     var maxOfLower = { value : 0 };
     var minOfUpper = { value : Infinity };
     lowerLimits.forEach(function(limit){
         if(limit.value > maxOfLower.value){ 
-            maxOfLower.value = limit.value, maxOfLower.msg = limit.msg
+            maxOfLower.value = limit.value, maxOfLower.message = limit.message
         };
     });
 
     upperLimits.forEach(function(limit){
         if(limit.value < minOfUpper.value){ 
-            minOfUpper.value = limit.value, minOfUpper.msg = limit.msg
+            minOfUpper.value = limit.value, minOfUpper.message = limit.message
         };
     })
 
     if(input < maxOfLower.value){
         var err = new Error('Input is out of range');
-        err.msg = maxOfLower.msg;
+        err.message = maxOfLower.message;
         err.lower = maxOfLower.value;
         err.upper = minOfUpper.value;
         return err;
     } else if (input > minOfUpper.value){
         var err = new Error('Input is out of range');
-        err.msg = minOfUpper.msg;
+        err.message = minOfUpper.message;
         err.lower = maxOfLower.value;
         err.upper = minOfUpper.value;        
         return err;

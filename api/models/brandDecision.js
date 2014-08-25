@@ -33,7 +33,7 @@ tOneBrandDecisionSchema.pre('save', true, function(next, done){
                 if(budgetLeft - oldInput - self.d_SalesForce < 0){       
                     logger.log('!!!');             
                     var validateErr = new Error('Input is out of range');
-                    validateErr.msg = 'Available budget is not enough.';
+                    validateErr.message = 'Available budget is not enough.';
                     validateErr.modifiedField = field;
                     validateErr.upper = budgetLeft - oldInput;
                     validateErr.lower = 0;

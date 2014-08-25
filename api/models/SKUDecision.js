@@ -89,7 +89,7 @@ tOneSKUDecisionSchema.pre('save', true, function(next, done){
     next();
 })
 
-//...Limits : [{msg : 'budgetLeft', value : 200}, {msg : 'para', value: 3000}]
+//...Limits : [{message : 'budgetLeft', value : 200}, {message : 'para', value: 3000}]
 function rangeCheck(input, lowerLimits, upperLimits){
     var maxOfLower = { value : 0 };
     var minOfUpper = { value : Infinity };
@@ -152,9 +152,9 @@ function validateTechnology(field, curSKUDecision, done){
     ], function(spendingDetails, preSKUDecision){
         var err, lowerLimits = [],upperLimits = [];
 
-        lowerLimits.push({value : 1, msg: 'Cannot accept number smaller than 1'});
-        lowerLimits.push({value : preSKUDecision.d_IngredientsQuality - gameParameters.pgen.sku_IngredientsTechnologyGap, msg: 'Cannot accept number smaller than IngredientsQuality - ' + gameParameters.pgen.sku_IngredientsTechnologyGap});
-        upperLimits.push({value : spendingDetails.companyData.acquiredTechnologyLevel, msg: 'Company acquired technology level: ' + spendingDetails.companyData.acquiredTechnologyLevel});
+        lowerLimits.push({value : 1, message: 'Cannot accept number smaller than 1'});
+        lowerLimits.push({value : preSKUDecision.d_IngredientsQuality - gameParameters.pgen.sku_IngredientsTechnologyGap, message: 'Cannot accept number smaller than IngredientsQuality - ' + gameParameters.pgen.sku_IngredientsTechnologyGap});
+        upperLimits.push({value : spendingDetails.companyData.acquiredTechnologyLevel, message: 'Company acquired technology level: ' + spendingDetails.companyData.acquiredTechnologyLevel});
         err = rangeCheck(curSKUDecision[field],lowerLimits,upperLimits);      
         if(err != undefined){
             err.modifiedField = field;
@@ -172,8 +172,8 @@ function validateIngredientsQuality(field, curSKUDecision, done){
     ], function(spendingDetails, preSKUDecision){
         var err, lowerLimits = [],upperLimits = [];
 
-        lowerLimits.push({value : 1, msg: 'Cannot accept number smaller than 1'});
-        upperLimits.push({value : preSKUDecision.d_Technology + gameParameters.pgen.sku_IngredientsTechnologyGap, msg: 'Cannot accept number bigger than technology level + ' + gameParameters.pgen.sku_IngredientsTechnologyGap});
+        lowerLimits.push({value : 1, message: 'Cannot accept number smaller than 1'});
+        upperLimits.push({value : preSKUDecision.d_Technology + gameParameters.pgen.sku_IngredientsTechnologyGap, message: 'Cannot accept number bigger than technology level + ' + gameParameters.pgen.sku_IngredientsTechnologyGap});
         err = rangeCheck(curSKUDecision[field],lowerLimits,upperLimits);      
         if(err != undefined){
             err.modifiedField = field;
@@ -208,10 +208,10 @@ function validateFactoryPrice(field, curSKUDecision, done){
             var budgetLeft = parseFloat(spendingDetails.companyData.availableBudget);
             var err, lowerLimits = [], upperLimits = [];
 
-            lowerLimits.push({value : unitProductionCost * (1 - gameParameters.pgen.man_MaxDumpingPercentage), msg : 'Max dumping percentage : ' + (gameParameters.pgen.man_MaxDumpingPercentage * 100).toFixed(2) + '%'});
-            upperLimits.push({value : unitProductionCost * (1 + gameParameters.pgen.man_MaxMarkup), msg : 'Max Markup percentage : ' + (gameParameters.pgen.man_MaxMarkup * 100).toFixed(2) + '% of Unit Production Cost'});
-            upperLimits.push({value : utility.getFactoryPriceByConsumberPrice( (budgetLeft + (preSKUDecision[field][0] * preSKUDecision.d_ProductionVolume * preSKUDecision.d_AdditionalTradeMargin)) / (curSKUDecision.d_ProductionVolume * curSKUDecision.d_AdditionalTradeMargin) ),             msg : 'Budget left is not enough for traditional trade margin cost.'});
-            upperLimits.push({value : utility.getFactoryPriceByConsumberPrice( (budgetLeft + (preSKUDecision[field][0] * preSKUDecision.d_WholesalesBonusMinVolume * preSKUDecision.d_WholesalesBonusRate)) / (curSKUDecision.d_WholesalesBonusRate * curSKUDecision.d_WholesalesBonusMinVolume) ), msg : 'Budget left is not enough for WholeSales bonus cost.'});
+            lowerLimits.push({value : unitProductionCost * (1 - gameParameters.pgen.man_MaxDumpingPercentage), message : 'Max dumping percentage : ' + (gameParameters.pgen.man_MaxDumpingPercentage * 100).toFixed(2) + '%'});
+            upperLimits.push({value : unitProductionCost * (1 + gameParameters.pgen.man_MaxMarkup), message : 'Max Markup percentage : ' + (gameParameters.pgen.man_MaxMarkup * 100).toFixed(2) + '% of Unit Production Cost'});
+            upperLimits.push({value : utility.getFactoryPriceByConsumberPrice( (budgetLeft + (preSKUDecision[field][0] * preSKUDecision.d_ProductionVolume * preSKUDecision.d_AdditionalTradeMargin)) / (curSKUDecision.d_ProductionVolume * curSKUDecision.d_AdditionalTradeMargin) ),             message : 'Budget left is not enough for traditional trade margin cost.'});
+            upperLimits.push({value : utility.getFactoryPriceByConsumberPrice( (budgetLeft + (preSKUDecision[field][0] * preSKUDecision.d_WholesalesBonusMinVolume * preSKUDecision.d_WholesalesBonusRate)) / (curSKUDecision.d_WholesalesBonusRate * curSKUDecision.d_WholesalesBonusMinVolume) ), message : 'Budget left is not enough for WholeSales bonus cost.'});
             err = rangeCheck(curSKUDecision[field][0],lowerLimits,upperLimits);      
             if(err != undefined){
                 err.modifiedField = field;
@@ -242,10 +242,10 @@ function validateAdditionalTradeMargin(field, curSKUDecision, done){
         var err, lowerLimits = [],upperLimits = [];
         var preEstimatedCost = preSKUDecision[field] * preSKUDecision.d_ProductionVolume * preSKUDecision.d_ConsumerPrice;
 
-        lowerLimits.push({value : 0, msg: 'Cannot accept negative number.'});
-        upperLimits.push({value : 1, msg: 'Input should less than 100%.'});
-        upperLimits.push({value : (gameParameters.pgen.retail_Markup)/(1 + gameParameters.pgen.retail_Markup), msg: 'Input should less than - retailer markup / (1 + retailer markup)'});
-        upperLimits.push({value : (budgetLeft + preEstimatedCost)/(preSKUDecision.d_ProductionVolume * preSKUDecision.d_ConsumerPrice), msg : 'Budget left is not enough for traditional trade margin cost.'});
+        lowerLimits.push({value : 0, message: 'Cannot accept negative number.'});
+        upperLimits.push({value : 1, message: 'Input should less than 100%.'});
+        upperLimits.push({value : (gameParameters.pgen.retail_Markup)/(1 + gameParameters.pgen.retail_Markup), message: 'Input should less than - retailer markup / (1 + retailer markup)'});
+        upperLimits.push({value : (budgetLeft + preEstimatedCost)/(preSKUDecision.d_ProductionVolume * preSKUDecision.d_ConsumerPrice), message : 'Budget left is not enough for traditional trade margin cost.'});
         err = rangeCheck(curSKUDecision[field],lowerLimits,upperLimits);      
         if(err != undefined){
             err.modifiedField = field;
@@ -265,9 +265,9 @@ function validateWholesalesBonusMinVolume(field, curSKUDecision, done){
         var budgetLeft = parseFloat(spendingDetails.companyData.availableBudget);
         var err, lowerLimits = [],upperLimits = [];
 
-        lowerLimits.push({value : 0, msg: 'Cannot accept negative number.'});
-        upperLimits.push({value : SKUHistoryInfo.currentPeriodInfo.stocksAtFactory[0] +  preSKUDecision.d_ProductionVolume, msg : 'Minimum Order cannot exceed production volume + factory stock'});
-        upperLimits.push({value : (budgetLeft + (preSKUDecision[field] * preSKUDecision.d_ConsumerPrice * preSKUDecision.d_WholesalesBonusRate)) / (curSKUDecision.d_WholesalesBonusRate * curSKUDecision.d_ConsumerPrice) , msg : 'Budget left is not enough for WholeSales bonus cost.'});
+        lowerLimits.push({value : 0, message: 'Cannot accept negative number.'});
+        upperLimits.push({value : SKUHistoryInfo.currentPeriodInfo.stocksAtFactory[0] +  preSKUDecision.d_ProductionVolume, message : 'Minimum Order cannot exceed production volume + factory stock'});
+        upperLimits.push({value : (budgetLeft + (preSKUDecision[field] * preSKUDecision.d_ConsumerPrice * preSKUDecision.d_WholesalesBonusRate)) / (curSKUDecision.d_WholesalesBonusRate * curSKUDecision.d_ConsumerPrice) , message : 'Budget left is not enough for WholeSales bonus cost.'});
 
         err = rangeCheck(curSKUDecision[field],lowerLimits,upperLimits);      
         if(err != undefined){
@@ -289,9 +289,9 @@ function validateWholesalesBonusRate(field, curSKUDecision, done){
         var budgetLeft = parseFloat(spendingDetails.companyData.availableBudget);
         var err, lowerLimits = [],upperLimits = [];
 
-        lowerLimits.push({value : 0, msg: 'Cannot accept negative number.'});
-        upperLimits.push({value : gameParameters.pgen.wholesale_Markup, msg : 'Cannot accept number bigger than wholesale markup: ' + (gameParameters.pgen.wholesale_Markup * 100).toFixed(2)+ '%'});
-        upperLimits.push({value : (budgetLeft + (preSKUDecision[field] * preSKUDecision.d_ConsumerPrice * preSKUDecision.d_WholesalesBonusMinVolume)) / (curSKUDecision.d_WholesalesBonusMinVolume * curSKUDecision.d_ConsumerPrice) , msg : 'Budget left is not enough for WholeSales bonus cost.'});
+        lowerLimits.push({value : 0, message: 'Cannot accept negative number.'});
+        upperLimits.push({value : gameParameters.pgen.wholesale_Markup, message : 'Cannot accept number bigger than wholesale markup: ' + (gameParameters.pgen.wholesale_Markup * 100).toFixed(2)+ '%'});
+        upperLimits.push({value : (budgetLeft + (preSKUDecision[field] * preSKUDecision.d_ConsumerPrice * preSKUDecision.d_WholesalesBonusMinVolume)) / (curSKUDecision.d_WholesalesBonusMinVolume * curSKUDecision.d_ConsumerPrice) , message : 'Budget left is not enough for WholeSales bonus cost.'});
 
         err = rangeCheck(curSKUDecision[field],lowerLimits,upperLimits);      
         if(err != undefined){
@@ -312,9 +312,9 @@ function validateProductionVolume(field, curSKUDecision, done){
         var err, lowerLimits = [],upperLimits = [];
         var preEstimatedCost = preSKUDecision[field] * preSKUDecision.d_AdditionalTradeMargin * preSKUDecision.d_ConsumerPrice;
 
-        lowerLimits.push({value : 0, msg: 'Cannot accept negative number.'});        
-        upperLimits.push({value : spendingDetails.companyData.normalCapacity + parseFloat(spendingDetails.companyData.availableOvertimeCapacityExtension), msg: 'Production capacity is not enough.'});
-        upperLimits.push({value : (budgetLeft + preEstimatedCost)/(preSKUDecision.d_AdditionalTradeMargin * preSKUDecision.d_ConsumerPrice), msg : 'Budget left is not enough for traditional trade margin cost.'});
+        lowerLimits.push({value : 0, message: 'Cannot accept negative number.'});        
+        upperLimits.push({value : spendingDetails.companyData.normalCapacity + parseFloat(spendingDetails.companyData.availableOvertimeCapacityExtension), message: 'Production capacity is not enough.'});
+        upperLimits.push({value : (budgetLeft + preEstimatedCost)/(preSKUDecision.d_AdditionalTradeMargin * preSKUDecision.d_ConsumerPrice), message : 'Budget left is not enough for traditional trade margin cost.'});
 
         err = rangeCheck(curSKUDecision[field],lowerLimits,upperLimits);      
         if(err != undefined){
@@ -334,8 +334,8 @@ function validateAvailableBudget(field, curSKUDecision, done){
         var budgetLeft = parseFloat(spendingDetails.companyData.availableBudget);
         var err, lowerLimits = [],upperLimits = [];
 
-        lowerLimits.push({value : 0, msg: 'Cannot accept negative number.'});
-        upperLimits.push({value : budgetLeft + preSKUDecision[field], msg : 'Budget Left is not enough.'});
+        lowerLimits.push({value : 0, message: 'Cannot accept negative number.'});
+        upperLimits.push({value : budgetLeft + preSKUDecision[field], message : 'Budget Left is not enough.'});
         err = rangeCheck(curSKUDecision[field],lowerLimits,upperLimits);      
         if(err != undefined){
             err.modifiedField = field;

@@ -76,16 +76,6 @@ exports.getSpendingDetails = function(seminarId, currentPeriod, companyId){
         companyData.totalInvestment = total.salesForce + total.consumerCommunication + total.consumerPromotion
         + total.tradeExpenses + total.estimatedAdditionalTradeMarginCost + total.estimatedWholesaleBonusCost;
 
-        console.log(typeof total.salesForce);
-        console.log(typeof total.consumerCommunication);
-        console.log(typeof total.consumerPromotion);
-        console.log(typeof total.tradeExpenses);
-        console.log(typeof total.estimatedAdditionalTradeMarginCost);
-        console.log(typeof total.estimatedAdditionalTradeMarginCost);
-        // console.log(typeof total.salesForce);
-        // console.log(typeof total.salesForce);
-        console.log(typeof companyData.totalInvestment);
-
 
         var companyDataInAllResults = utility.findCompany(lastPeriodResult, companyId)
         
