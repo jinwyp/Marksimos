@@ -319,7 +319,6 @@ app.directive('textFormInput', function() {
             othererrorinfo : '='
 
 
-
         },
         restrict: 'AE',
         require: '^form',
