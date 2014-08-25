@@ -35,9 +35,18 @@ marksimosapp.controller('chartController', ['$translate', '$scope', '$rootScope'
         ];
     });
 
+
     notify.config({
         duration : 10000
     }) ;
+    var notifytemplate = {
+        success : '/app/js/websitecomponent/notifysavesuccess.html',
+        failure : '/app/js/websitecomponent/notifysavefailure.html'
+    };
+    $scope.closeAll = function(){
+        notify.closeAll();
+    };
+
 
     $scope.css = {
         menu : 'Decision',
@@ -47,7 +56,8 @@ marksimosapp.controller('chartController', ['$translate', '$scope', '$rootScope'
         additionalBudget : true,
         currentDecisionBrandId : 0,
         currentDecisionRightMenu : 1,
-        addNewSku : false
+        addNewSku : false,
+        addNewBrand : false
     };
 
     $scope.dataChartSimple = {
@@ -75,6 +85,11 @@ marksimosapp.controller('chartController', ['$translate', '$scope', '$rootScope'
         currentModifiedCompany : {},
         currentSku : null,
         currentSkuIndex : 0,
+        newBrand : {
+            brand_name : "",
+            sku_name : "",
+            othererrorinfo : ""
+        },
         newSku : {
             sku_name : "",
             brand_id : "",
@@ -234,6 +249,9 @@ marksimosapp.controller('chartController', ['$translate', '$scope', '$rootScope'
         }
 
     };
+
+
+
 
 
     $scope.A31ColorFunction = function(){
@@ -573,6 +591,17 @@ marksimosapp.controller('chartController', ['$translate', '$scope', '$rootScope'
 
 
 
+
+
+
+
+
+
+
+
+
+
+
     /********************  切换左部图标菜单  ********************/
     $scope.clickChartMenu = function(chart){
         $scope.css.menu = 'Report';
@@ -676,6 +705,38 @@ marksimosapp.controller('chartController', ['$translate', '$scope', '$rootScope'
 
 
 
+
+    /********************  点击添加一个新的Brand 显示添加Brand的表单  ********************/
+    $scope.showAddNewBrandForm = function(){
+        $scope.css.addNewBrand = true;
+        $scope.data.newBrand.brand_name = "";
+        $scope.data.newBrand.sku_name = "";
+        $scope.data.newBrand.othererrorinfo = "";
+    };
+
+    $scope.addNewBrand = function(form){
+
+        if (form.$valid) {
+            Company.addBrand($scope.data.newBrand).then(function(data, status, headers, config){
+                $scope.companyInfoInit();
+
+                notify({
+                    message  : 'Save Success !',
+                    template : notifytemplate.success,
+                    position : 'center'
+                });
+
+                $scope.css.addNewBrand = false;
+            }, function(data){
+                form.brandName.$valid = false;
+                form.brandName.$invalid = true;
+                $scope.data.newBrand.othererrorinfo = data.data.message ;
+
+            });
+        }
+    };
+
+
     /********************  点击添加一个新的SKU 显示添加SKU的表单  ********************/
     $scope.showAddNewSkuForm = function(){
         $scope.css.addNewSku = true;
@@ -684,10 +745,7 @@ marksimosapp.controller('chartController', ['$translate', '$scope', '$rootScope'
         $scope.data.newSku.othererrorinfo = "";
     };
 
-    var notifytemplate = {
-        success : '/app/js/websitecomponent/notifysavesuccess.html',
-        failure : '/app/js/websitecomponent/notifysavefailure.html'
-    };
+
 
     $scope.addNewSku = function(form){
         $scope.data.newSku.brand_id = $scope.data.currentBrand.d_BrandID;
@@ -709,9 +767,7 @@ marksimosapp.controller('chartController', ['$translate', '$scope', '$rootScope'
                 $scope.data.newSku.othererrorinfo = data.data.message ;
 
             });
-
         }
-
     };
 
     /********************  删除一个SKU  注意该SKU必须是本回合添加的SKU才可以删除 ********************/
@@ -738,6 +794,8 @@ marksimosapp.controller('chartController', ['$translate', '$scope', '$rootScope'
     $scope.clickBrand = function(brand){
         $scope.css.currentDecisionBrandId = brand._id;
         $scope.data.currentBrand = brand;
+        $scope.css.addNewBrand = false;
+        $scope.css.addNewSku = false;
     };
 
     $scope.clickCurrentSku = function(sku){
@@ -856,8 +914,6 @@ marksimosapp.controller('chartController', ['$translate', '$scope', '$rootScope'
     };
 
 
-    $scope.closeAll = function(){
-        notify.closeAll();
-    };
+
 
 }]);
