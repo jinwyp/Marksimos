@@ -677,6 +677,11 @@ marksimosapp.controller('chartController', ['$translate', '$scope', '$rootScope'
         $scope.css.addNewSku = true;
     };
 
+    var notifytemplate = {
+        success : '/app/js/websitecomponent/notifysavesuccess.html',
+        failure : '/app/js/websitecomponent/notifysavefailure.html'
+    };
+
     $scope.addNewSku = function(form){
         $scope.data.newSku.brand_id = $scope.data.currentBrand._id;
 
@@ -685,8 +690,8 @@ marksimosapp.controller('chartController', ['$translate', '$scope', '$rootScope'
                 $scope.companyInfoInit();
 
                 notify({
-                    message : 'Save Success !',
-                    template : '/app/js/websitecomponent/notifysavesuccess.html',
+                    message  : 'Save Success !',
+                    template : notifytemplate.success,
                     position : 'center'
                 });
 
@@ -694,8 +699,8 @@ marksimosapp.controller('chartController', ['$translate', '$scope', '$rootScope'
             }, function(data){
                 console.log(data);
                 notify({
-                    message : JSON.stringify(data.data) + ', status: ' + data.status,
-                    template : '/app/js/websitecomponent/notifysavesuccess.html',
+                    message  : JSON.stringify(data.data) + ', status: ' + data.status,
+                    template : notifytemplate.failure,
                     position : 'center'
                 });
             });
@@ -759,14 +764,14 @@ marksimosapp.controller('chartController', ['$translate', '$scope', '$rootScope'
 
             notify({
                 message : 'Save Success !',
-                template : '/app/js/websitecomponent/notifysavesuccess.html',
+                template : notifytemplate.success,
                 position : 'center'
             });
         }, function(data){
             console.log(data);
             notify({
                 message : JSON.stringify(data.data) + ', status: ' + data.status,
-                template : '/app/js/websitecomponent/notifysavesuccess.html',
+                template : notifytemplate.failure,
                 position : 'center'                
             });
         });
@@ -784,14 +789,14 @@ marksimosapp.controller('chartController', ['$translate', '$scope', '$rootScope'
             $scope.companyInfoInit();
             notify({
                 message : 'Save Success !',
-                template : '/app/js/websitecomponent/notifysavesuccess.html',
+                template : notifytemplate.success,
                 position : 'center'
             });
         }, function(data){
             console.log(data);
             notify({
                 message : JSON.stringify(data.data) + ', status: ' + data.status,
-                template : '/app/js/websitecomponent/notifysavesuccess.html',
+                template : notifytemplate.failure,
                 position : 'center'                
             });
         });
@@ -814,7 +819,14 @@ marksimosapp.controller('chartController', ['$translate', '$scope', '$rootScope'
             $scope.companyInfoInit();
             notify({
                 message : 'Save Success !',
-                template : '/app/js/websitecomponent/notifysavesuccess.html',
+                template : notifytemplate.success,
+                position : 'center'
+            });
+        }, function(data){
+            console.log(data);
+            notify({
+                message : JSON.stringify(data.data) + ', status: ' + data.status,
+                template : notifytemplate.failure,
                 position : 'center'
             });
         });
