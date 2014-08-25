@@ -495,7 +495,8 @@ exports.addSKU = function(req, res, next){
             d_CID: companyId,
             d_BrandID: brand_id,
             d_SKUID: maxSKUID + 1,
-            d_SKUName: sku_name
+            d_SKUName: sku_name,
+            modifiedField : 'addNewSKU',
         })
     })
     .then(function(){

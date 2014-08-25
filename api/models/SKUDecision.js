@@ -9,27 +9,27 @@ var SKUInfoAssembler         = require('../dataAssemblers/SKUInfo.js');
 var gameParameters           = require('../gameParameters.js').parameters;
 var utility                  = require('../../common/utility.js');
 var simulationResultModel    = require('./simulationResult.js');
-
-
+ 
 var tOneSKUDecisionSchema = new Schema({
     seminarId                  : String,
     period                     : Number,
+    periodOfBirth              : Number,
     d_CID                      : Number,
     d_BrandID                  : Number,
     d_SKUID                    : Number,
     d_SKUName                  : String,
     d_Advertising              : {type: Number, default: 0}, //consumer communication
     d_AdditionalTradeMargin    : {type: Number, default: 0},
-    d_FactoryPrice             : {type: [Number], default: [0,0,0]},
+    d_FactoryPrice             : {type: [Number], default: [3,0,0]},
     d_ConsumerPrice            : {type: Number, default: 0},
     d_RepriceFactoryStocks     : {type: Boolean, default: 0},
-    d_IngredientsQuality       : {type: Number, default: 0},
-    d_PackSize                 : {type: Number, default: 0},
+    d_IngredientsQuality       : {type: Number, default: 1},
+    d_PackSize                 : {type: Number, default: 1},
     d_ProductionVolume         : {type: Number, default: 0}, 
     d_PromotionalBudget        : {type: Number, default: 0}, //consumer promotions
     d_PromotionalEpisodes      : {type: [Boolean], default: [false, false,false,false,false,false,false,false,false,false,false,false,false]}, //consumer promotions schedule
-    d_TargetConsumerSegment    : {type: Number, default: 0},
-    d_Technology               : {type: Number, default: 0},
+    d_TargetConsumerSegment    : {type: Number, default: 1},
+    d_Technology               : {type: Number, default: 1},
     d_ToDrop                   : {type: Boolean, default: 0},
     d_TradeExpenses            : {type: Number, default: 0},
     d_WholesalesBonusMinVolume : {type: Number, default: 0},
@@ -39,9 +39,16 @@ var tOneSKUDecisionSchema = new Schema({
 
 var SKUDecision = mongoose.model('SKUDecision', tOneSKUDecisionSchema);
 
-tOneSKUDecisionSchema.pre('save', true, function(next, done){
+tOneSKUDecisionSchema.pre('save', true, function(next, done){    
+    //if save middle-ware is active by behavior adding SKU, use default values and skip validations
+    if(this.modifiedField == 'addNewSKU'){
+        return process.nextTick(done);
+    }
+
     var self = this;
     var validateAction = {
+        //add new SKU
+        'd_SKUName'                  : function(field){ validateSKUName(field, self, done); },
         //step 1:
         'd_Technology'               : function(field){ validateTechnology(field, self, done); },
         'd_IngredientsQuality'       : function(field){ validateIngredientsQuality(field, self, done); },
@@ -70,7 +77,7 @@ tOneSKUDecisionSchema.pre('save', true, function(next, done){
     function doValidate(field){        
         if(typeof validateAction[field] != 'function'){
             var validateErr = new Error('Cannot find validate action for ' + field);
-            validateErr.msg = 'Cannot find validate action for ' + field;
+            validateErr.message = 'Cannot find validate action for ' + field;
             validateErr.modifiedField = field;
             return done(validateErr);
         }
@@ -82,38 +89,59 @@ tOneSKUDecisionSchema.pre('save', true, function(next, done){
     next();
 })
 
-
 //...Limits : [{msg : 'budgetLeft', value : 200}, {msg : 'para', value: 3000}]
 function rangeCheck(input, lowerLimits, upperLimits){
     var maxOfLower = { value : 0 };
     var minOfUpper = { value : Infinity };
     lowerLimits.forEach(function(limit){
         if(limit.value > maxOfLower.value){ 
-            maxOfLower.value = limit.value, maxOfLower.msg = limit.msg
+            maxOfLower.value = limit.value, maxOfLower.message = limit.message
         };
     });
 
     upperLimits.forEach(function(limit){
         if(limit.value < minOfUpper.value){ 
-            minOfUpper.value = limit.value, minOfUpper.msg = limit.msg
+            minOfUpper.value = limit.value, minOfUpper.message = limit.message
         };
     })
 
     if(input < maxOfLower.value){
         var err = new Error('Input is out of range');
-        err.msg = maxOfLower.msg;
+        err.message = maxOfLower.message;
         err.lower = maxOfLower.value;
         err.upper = minOfUpper.value;
         return err;
     } else if (input > minOfUpper.value){
         var err = new Error('Input is out of range');
-        err.msg = minOfUpper.msg;
+        err.message = minOfUpper.message;
         err.lower = maxOfLower.value;
         err.upper = minOfUpper.value;        
         return err;
     } else {
         return undefined;
     }
+}
+
+function validateSKUName(field, curSKUDecision, done){
+    if(curSKUDecision.d_SKUName.length() > 1){
+        var err = new Error('Out of SKU name range');
+        err.message = 'Out of SKU name range';
+        return done(err);
+    }
+
+    exports.findAllInBrand(curSKUDecision.seminarId, curSKUDecision.period, curSKUDecision.d_CID, curSKUDecision.d_BrandID).then(function(SKUs){
+                
+        var isNameExisted = SKUs.some(function(sku){ sku.d_SKUName == curSKUDecision.d_SKUName; });
+        if(isNameExisted){
+            var err = new Error('Name existed.');
+            err.message = 'Name existed.';
+            return done(err);            
+        } else {
+            done();
+        }
+    }, function(err){
+        done(err);
+    });
 }
 
 //step 1: decide portfolio (UnitCost will be decide)
@@ -168,7 +196,7 @@ function validateFactoryPrice(field, curSKUDecision, done){
         companyResult = utility.findCompany(result, curSKUDecision.d_CID);
         if(companyResult == undefined){
             err = new Error('find companyResult failed.');
-            err.msg = 'find companyResult failed.';
+            err.message = 'find companyResult failed.';
             done(err);
         }
 
@@ -323,7 +351,7 @@ function validateAvailableBudget(field, curSKUDecision, done){
 function validatePackSize(field, curSKUDecision, done){
     if((curSKUDecision[field] != 0) || (curSKUDecision[field] != 1) || (curSKUDecision[field] != 2)){
         var err = new Error('Input is out of range');
-        err.msg = 'Pack format must be SMALL/STANDARD/BIG';
+        err.message = 'Pack format must be SMALL/STANDARD/BIG';
         process.nextTick(done(err));
     } else {
         process.nextTick(done);
