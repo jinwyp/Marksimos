@@ -465,7 +465,7 @@ exports.addBrand = function(req, res, next){
         res.send(500, {message: "addBrand failed."})
     })
     .done();
-}
+};
 
 exports.addSKU = function(req, res, next){
     var seminarId = req.session.seminarId;
@@ -518,7 +518,7 @@ exports.addSKU = function(req, res, next){
         res.send(500, {message: "addSKU failed."})
     })
     .done();
-}
+};
 
 exports.deleteSKU = function(req, res, next){
     var seminarId = req.session.seminarId;

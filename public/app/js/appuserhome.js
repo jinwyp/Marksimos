@@ -72,7 +72,10 @@ marksimosapp.controller('chartController', ['$translate', '$scope', '$rootScope'
         currentModifiedCompany : {},
         currentSku : null,
         currentSkuIndex : 0,
-        newSku : {},
+        newSku : {
+            sku_name : "",
+            brand_id : ""
+        },
 
         tableA1CompanyStatus : {
             allCompanyData : [],
@@ -674,11 +677,36 @@ marksimosapp.controller('chartController', ['$translate', '$scope', '$rootScope'
         $scope.css.addNewSku = true;
     };
 
-    $scope.addNewSku = function(){
-        $scope.css.addNewSku = false;
+    $scope.addNewSku = function(form){
+        $scope.data.newSku.brand_id = $scope.data.currentBrand._id;
+
+        if (form.$valid) {
+            Company.addSku($scope.data.newSku).then(function(data, status, headers, config){
+                $scope.companyInfoInit();
+
+                notify({
+                    message : 'Save Success !',
+                    template : '/app/js/websitecomponent/notifysavesuccess.html',
+                    position : 'center'
+                });
+
+                $scope.css.addNewSku = false;
+            }, function(data){
+                console.log(data);
+                notify({
+                    message : JSON.stringify(data.data) + ', status: ' + data.status,
+                    template : '/app/js/websitecomponent/notifysavesuccess.html',
+                    position : 'center'
+                });
+            });
+
+
+        }
+
     };
 
 
+    /********************  点击选中Brand 或 SKU  ********************/
     $scope.clickBrand = function(brand){
         $scope.css.currentDecisionBrandId = brand._id;
         $scope.data.currentBrand = brand;
@@ -725,8 +753,7 @@ marksimosapp.controller('chartController', ['$translate', '$scope', '$rootScope'
 
 
 
-
-        console.log($scope.data.currentModifiedSku);
+//        console.log($scope.data.currentModifiedSku);
         Company.updateSku($scope.data.currentModifiedSku).then(function(data, status, headers, config){
             $scope.companyInfoInit();
 
