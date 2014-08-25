@@ -683,7 +683,7 @@ marksimosapp.controller('chartController', ['$translate', '$scope', '$rootScope'
     };
 
     $scope.addNewSku = function(form){
-        $scope.data.newSku.brand_id = $scope.data.currentBrand._id;
+        $scope.data.newSku.brand_id = $scope.data.currentBrand.d_BrandID;
 
         if (form.$valid) {
             Company.addSku($scope.data.newSku).then(function(data, status, headers, config){
