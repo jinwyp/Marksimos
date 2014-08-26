@@ -59,7 +59,9 @@ marksimosapp.controller('chartController', ['$translate', '$scope', '$rootScope'
         addNewSku                : false,
         addNewBrand              : false,
         skuErrorField : '',
-        skuErrorInfo  : ''
+        skuErrorInfo  : '',
+        brandErrorInfo  : '',
+        companyErrorInfo  : ''
     };
 
     $scope.dataChartSimple = {
@@ -84,7 +86,9 @@ marksimosapp.controller('chartController', ['$translate', '$scope', '$rootScope'
         currentBrandIndex : 0,
         currentModifiedSku : {},
         currentModifiedBrand : {},
-        currentModifiedCompany : {},
+        currentModifiedCompany : {
+            company_data : {}
+        },
         currentSku : null,
         currentSkuIndex : 0,
         newBrand : {
@@ -808,7 +812,7 @@ marksimosapp.controller('chartController', ['$translate', '$scope', '$rootScope'
     };
 
 
-
+    /********************  更新 SKU  ********************/
     $scope.leaveSkuInput = function(sku, fieldname, fielddata, segmentOrWeek, weekindex){
         $scope.data.currentModifiedSku = {
             brand_id : sku.d_BrandID,
@@ -906,7 +910,8 @@ marksimosapp.controller('chartController', ['$translate', '$scope', '$rootScope'
         });
     };
 
-    $scope.updateBrand = function(){
+    /********************  更新 Brand  ********************/
+    $scope.updateBrand = function(form){
         $scope.data.currentModifiedBrand = {
             brand_id : $scope.data.currentBrand.d_BrandID,
             brand_data : {
@@ -915,6 +920,9 @@ marksimosapp.controller('chartController', ['$translate', '$scope', '$rootScope'
         };
 
         Company.updateBrand($scope.data.currentModifiedBrand).then(function(data, status, headers, config){
+            form.brandSalesForce.$valid = true;
+            form.brandSalesForce.$invalid = false;
+
             $scope.companyInfoInit();
             notify({
                 message : 'Save Success !',
@@ -923,38 +931,53 @@ marksimosapp.controller('chartController', ['$translate', '$scope', '$rootScope'
             });
         }, function(data){
             console.log(data);
+
+            form.brandSalesForce.$valid = false;
+            form.brandSalesForce.$invalid = true;
+
+            $scope.css.brandErrorInfo = data.data;
+
             notify({
-                message : JSON.stringify(data.data) + ', status: ' + data.status,
+                message : data.data.message,
                 template : notifytemplate.failure,
                 position : 'center'                
             });
         });
     };
 
-    $scope.updateCompany = function(){
 
-        $scope.css.additionalBudget = true;
+    /********************  更新 Company  ********************/
+    $scope.updateCompany = function(fieldname, form, formfieldname){
 
-        $scope.data.currentModifiedCompany = {
-            company_data : {
-                d_InvestmentInEfficiency : $scope.data.currentCompany.d_InvestmentInEfficiency,
-                d_InvestmentInTechnology : $scope.data.currentCompany.d_InvestmentInTechnology,
-                d_RequestedAdditionalBudget : $scope.data.currentCompany.d_RequestedAdditionalBudget
-            }
-        };
+        $scope.data.currentModifiedCompany.company_data = {};
+        $scope.data.currentModifiedCompany.company_data[fieldname] = $scope.data.currentCompany[fieldname];
 
+        console.log($scope.data.currentModifiedCompany);
         Company.updateCompany($scope.data.currentModifiedCompany).success(function(data, status, headers, config){
             console.log(data);
+            $scope.css.additionalBudget = true;
+
+
+            form[formfieldname].$valid = true;
+            form[formfieldname].$invalid = false;
+
             $scope.companyInfoInit();
             notify({
                 message : 'Save Success !',
                 template : notifytemplate.success,
                 position : 'center'
             });
-        }, function(data){
+        }).error(function(data, status, headers, config){
             console.log(data);
+
+            form[formfieldname].$valid = false;
+            form[formfieldname].$invalid = true;
+
+            $scope.css.companyErrorInfo = data;
+
             notify({
-                message : JSON.stringify(data.data) + ', status: ' + data.status,
+//                message : JSON.stringify(data.data) + ', status: ' + data.status,
+                message : data.message,
                 template : notifytemplate.failure,
                 position : 'center'
             });

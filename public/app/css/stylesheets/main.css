@@ -1175,12 +1175,11 @@ body a, body button {
 /* line 1104, ../sass/main.scss */
 .mainbody .decision_box .investment_form label {
   text-align: left;
-  color: #373737;
   font-family: "Helvetica", "Arial, sans-serif";
   font-weight: normal;
   font-size: 13px;
 }
-/* line 1114, ../sass/main.scss */
+/* line 1113, ../sass/main.scss */
 .mainbody .decision_box .decision_button {
   color: #ffffff;
   font-family: "Helvetica", "Arial, sans-serif";
@@ -1215,11 +1214,11 @@ body a, body button {
   background: linear-gradient(top, #298ffe, #298ffe);
   border-color: #298FFE;
 }
-/* line 1121, ../sass/main.scss */
+/* line 1120, ../sass/main.scss */
 .mainbody .decision_right_box {
   width: 47%;
 }
-/* line 1124, ../sass/main.scss */
+/* line 1123, ../sass/main.scss */
 .mainbody .decision_right_box .right_menu {
   border-width: 1px 0px 0px 0px;
   -webkit-border-radius: 0px;
@@ -1229,7 +1228,7 @@ body a, body button {
   border-radius: 0px;
   padding: 20px 0px 0px 0px;
 }
-/* line 1132, ../sass/main.scss */
+/* line 1131, ../sass/main.scss */
 .mainbody .decision_right_box .right_menu .product_portfolio h4 {
   font-size: 13px;
   font-family: "Helvetica", "Arial, sans-serif";
@@ -1239,13 +1238,13 @@ body a, body button {
   background-repeat: no-repeat;
   background-position: 4px 2px;
 }
-/* line 1141, ../sass/main.scss */
+/* line 1140, ../sass/main.scss */
 .mainbody .decision_right_box .right_menu .product_portfolio .sku_bg {
   background-image: url(../images/userproduct.png);
   background-repeat: no-repeat;
   background-position: 4px 5px;
 }
-/* line 1147, ../sass/main.scss */
+/* line 1146, ../sass/main.scss */
 .mainbody .decision_right_box .right_menu .product_portfolio .panel-heading {
   font-size: 13px;
   font-family: "Helvetica", "Arial, sans-serif";
@@ -1289,23 +1288,23 @@ body a, body button {
   background-color: #feeaff;
 }
 
-/* line 1164, ../sass/main.scss */
+/* line 1163, ../sass/main.scss */
 .bgbrand {
   background-color: #fdfdfd;
 }
 
-/* line 1168, ../sass/main.scss */
+/* line 1167, ../sass/main.scss */
 .chartBox {
   width: 99%;
   height: 350px;
   margin: 0px 0px;
 }
-/* line 1172, ../sass/main.scss */
+/* line 1171, ../sass/main.scss */
 .chartBox .ac-title {
   text-align: center;
   display: none;
 }
-/* line 1177, ../sass/main.scss */
+/* line 1176, ../sass/main.scss */
 .chartBox .bar_chart_label {
   font-size: 10px;
 }

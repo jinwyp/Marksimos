@@ -1190,11 +1190,11 @@
 
         <div class="col-md-1 user_home_divider user_chart_box">
 
-            <form class=" budget_form" role="form">
-                <div class="form-group text-center">
+            <form class="budget_form" role="form" name="updateCompanyForm">
+                <div class="form-group text-center" ng-class="{ 'has-success':updateCompanyForm.companyAdditionalBudget.$dirty && updateCompanyForm.companyAdditionalBudget.$valid , 'has-error': updateCompanyForm.companyAdditionalBudget.$dirty && updateCompanyForm.companyAdditionalBudget.$invalid}">
                     <label class="budget_title" for="additionalBudget" ng-show="css.additionalBudget" ng-click="css.additionalBudget=false">${{data.currentCompany.d_RequestedAdditionalBudget}}</label>
-                    <label for="additionalBudget" ng-show="css.additionalBudget" ng-click="css.additionalBudget=false">Additional Budget</label>
-                    <input type="number" class="form-control input-sm" id="additionalBudget"   ng-model="data.currentCompany.d_RequestedAdditionalBudget" ng-blur="updateCompany()">
+                    <label for="companyAdditionalBudget" ng-show="css.additionalBudget" ng-click="css.additionalBudget=false">Additional Budget</label>
+                    <input type="number" class="form-control input-sm" id="companyAdditionalBudget" name="companyAdditionalBudget" required ng-model="data.currentCompany.d_RequestedAdditionalBudget" ng-blur="updateCompany('d_RequestedAdditionalBudget', updateCompanyForm, 'companyAdditionalBudget')">
                 </div>
             </form>
         </div>
@@ -1252,12 +1252,15 @@
                             </form>
 
 
-                            <form class="form-horizontal brand_form" role="form" ng-if="!css.addNewBrand">
-                                <div class="form-group">
+                            <form class="form-horizontal brand_form" role="form" name="updateBrandForm" novalidate ng-if="!css.addNewBrand">
+                                <div class="form-group has-feedback" ng-class="{ 'has-success':updateBrandForm.brandSalesForce.$dirty && updateBrandForm.brandSalesForce.$valid , 'has-error': updateBrandForm.brandSalesForce.$dirty && updateBrandForm.brandSalesForce.$invalid}">
                                     <label class="col-sm-4 control-label" for="brandSalesForce">Sales Force($min)</label>
                                     <div class="col-sm-3">
-                                        <input type="number" class="form-control" id="brandSalesForce" ng-model="data.currentBrand.d_SalesForce" ng-blur="updateBrand()">
+                                        <input type="number" class="form-control" id="brandSalesForce" name="brandSalesForce" ng-model="data.currentBrand.d_SalesForce" required min="1" ng-blur="updateBrand(updateBrandForm)">
+                                        <span ng-if="updateBrandForm.brandSalesForce.$dirty && updateBrandForm.brandSalesForce.$valid" class="glyphicon glyphicon-ok form-control-feedback"></span>
+                                        <span ng-if="updateBrandForm.brandSalesForce.$dirty && updateBrandForm.brandSalesForce.$invalid" class="glyphicon glyphicon-remove form-control-feedback"></span>
                                     </div>
+                                    <label class="control-label" ng-if="updateBrandForm.brandSalesForce.$dirty && updateBrandForm.brandSalesForce.$invalid" ><i class="fa fa-times-circle-o"></i>Must be in range {{css.brandErrorInfo.lower}} to {{css.brandErrorInfo.upper.toFixed(0)}} !</label>
                                 </div>
                             </form>
 
@@ -1456,22 +1459,28 @@
                     <div class="row brand_box">
                         <div class="col-md-12">
                             <h5>New Product Development Investment  <span class="glyphicon glyphicon-info-sign" ng-mouseenter="css.investmentInfo='true'" ></span></h5>
-                            <form class="form-horizontal investment_form" role="form">
-                                <div class="form-group">
-                                    <label class="col-sm-8 control-label text-left" for="InvestmentProductionEfficiency">Investment in Production Efficiency ($mln)</label>
+
+                            <form class="form-horizontal investment_form" role="form" name="updateCompanyForm" novalidate>
+
+                                <div class="form-group has-feedback" ng-class="{ 'has-success':updateCompanyForm.companyInvestmentProductionEfficiency.$dirty && updateCompanyForm.companyInvestmentProductionEfficiency.$valid , 'has-error': updateCompanyForm.companyInvestmentProductionEfficiency.$dirty && updateCompanyForm.companyInvestmentProductionEfficiency.$invalid}">
+                                    <label class="col-sm-6 control-label text-left" for="companyInvestmentProductionEfficiency">Investment in Production Efficiency ($mln)</label>
                                     <div class="col-sm-3">
-                                        <input type="number" class="form-control" id="InvestmentProductionEfficiency" ng-model="data.currentCompany.d_InvestmentInEfficiency" ng-blur="updateCompany()">
+                                        <input type="number" class="form-control" id="companyInvestmentProductionEfficiency" name="companyInvestmentProductionEfficiency" ng-model="data.currentCompany.d_InvestmentInEfficiency" required ng-blur="updateCompany('d_InvestmentInEfficiency', updateCompanyForm, 'companyInvestmentProductionEfficiency')">
+                                        <span ng-if="updateCompanyForm.companyInvestmentProductionEfficiency.$dirty && updateCompanyForm.companyInvestmentProductionEfficiency.$valid" class="glyphicon glyphicon-ok form-control-feedback"></span>
+                                        <span ng-if="updateCompanyForm.companyInvestmentProductionEfficiency.$dirty && updateCompanyForm.companyInvestmentProductionEfficiency.$invalid" class="glyphicon glyphicon-remove form-control-feedback"></span>
                                     </div>
+                                    <label class="control-label" ng-if="updateCompanyForm.companyInvestmentProductionEfficiency.$dirty && updateCompanyForm.companyInvestmentProductionEfficiency.$invalid" ><i class="fa fa-times-circle-o"></i>Range from {{css.companyErrorInfo.lower}} to {{css.companyErrorInfo.upper.toFixed(0)}} !</label>
                                 </div>
 
-                                <div class="form-group">
-                                    <label class="col-sm-8 control-label text-left"  for="InvestmentProcessingTechnology">Investment in Processing Technology ($mln)</label>
+                                <div class="form-group has-feedback" ng-class="{ 'has-success':updateCompanyForm.companyInvestmentProcessingTechnology.$dirty && updateCompanyForm.companyInvestmentProcessingTechnology.$valid , 'has-error': updateCompanyForm.companyInvestmentProcessingTechnology.$dirty && updateCompanyForm.companyInvestmentProcessingTechnology.$invalid}">
+                                    <label class="col-sm-6 control-label text-left"  for="companyInvestmentProcessingTechnology">Investment in Processing Technology ($mln)</label>
                                     <div class="col-sm-3">
-                                        <input type="number" class="form-control" id="InvestmentProcessingTechnology" ng-model="data.currentCompany.d_InvestmentInTechnology" ng-blur="updateCompany()">
+                                        <input type="number" class="form-control" id="companyInvestmentProcessingTechnology" name="companyInvestmentProcessingTechnology" ng-model="data.currentCompany.d_InvestmentInTechnology" required ng-blur="updateCompany('d_InvestmentInTechnology', updateCompanyForm, 'companyInvestmentProcessingTechnology')">
+                                        <span ng-if="updateCompanyForm.companyInvestmentProcessingTechnology.$dirty && updateCompanyForm.companyInvestmentProcessingTechnology.$valid" class="glyphicon glyphicon-ok form-control-feedback"></span>
+                                        <span ng-if="updateCompanyForm.companyInvestmentProcessingTechnology.$dirty && updateCompanyForm.companyInvestmentProcessingTechnology.$invalid" class="glyphicon glyphicon-remove form-control-feedback"></span>
                                     </div>
+                                    <label class="control-label" ng-if="updateCompanyForm.companyInvestmentProcessingTechnology.$dirty && updateCompanyForm.companyInvestmentProcessingTechnology.$invalid" ><i class="fa fa-times-circle-o"></i>Range from {{css.companyErrorInfo.lower}} to {{css.companyErrorInfo.upper.toFixed(0)}} !</label>
                                 </div>
-
-
                             </form>
 
                             <table class="table table-striped table-hover table-condensed table-bordered" ng-show="css.investmentInfo">
