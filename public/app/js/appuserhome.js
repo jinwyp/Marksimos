@@ -49,15 +49,17 @@ marksimosapp.controller('chartController', ['$translate', '$scope', '$rootScope'
 
 
     $scope.css = {
-        menu : 'Decision',
-        chartMenu : 'A1',
-        tableReportTab : 'SKU',
-        tableReportMenu : 1,
-        additionalBudget : true,
-        currentDecisionBrandId : 0,
+        menu                     : 'Decision',
+        chartMenu                : 'A1',
+        tableReportTab           : 'SKU',
+        tableReportMenu          : 1,
+        additionalBudget         : true,
+        currentDecisionBrandId   : 0,
         currentDecisionRightMenu : 1,
-        addNewSku : false,
-        addNewBrand : false
+        addNewSku                : false,
+        addNewBrand              : false,
+        skuErrorField : '',
+        skuErrorInfo  : ''
     };
 
     $scope.dataChartSimple = {
@@ -745,8 +747,6 @@ marksimosapp.controller('chartController', ['$translate', '$scope', '$rootScope'
         $scope.data.newSku.othererrorinfo = "";
     };
 
-
-
     $scope.addNewSku = function(form){
         $scope.data.newSku.brand_id = $scope.data.currentBrand.d_BrandID;
 
@@ -799,6 +799,7 @@ marksimosapp.controller('chartController', ['$translate', '$scope', '$rootScope'
     };
 
     $scope.clickCurrentSku = function(sku){
+        $scope.css.skuErrorField = '';
         $scope.data.currentSku = angular.copy(sku);
         Company.getCompanyFutureProjectionCalculator($scope.data.currentSku.d_SKUID).then(function(data, status, headers, config){
             $scope.data.currentCompanyFutureProjectionCalculator = data;
@@ -850,6 +851,53 @@ marksimosapp.controller('chartController', ['$translate', '$scope', '$rootScope'
             });
         }, function(data){
             console.log(data);
+
+            $scope.css.skuErrorField = data.data.modifiedField;
+
+            // 使用命令对象
+            function showSkuErrorInfo(fieldname) {
+                var names = {
+                    'd_Technology': function() {
+                        return data.data;
+                    },
+                    'd_IngredientsQuality': function() {
+                        return data.data;
+                    },
+                    'd_ProductionVolume': function() {
+                        return data.data;
+                    },
+                    'd_FactoryPrice': function() {
+                        return data.data;
+                    },
+                    'd_Advertising': function() {
+                        return data.data;
+                    },
+                    'd_PromotionalBudget': function() {
+                        return data.data;
+                    },
+                    'd_TradeExpenses': function() {
+                        return data.data;
+                    },
+                    'd_AdditionalTradeMargin': function() {
+                        return data.data;
+                    },
+                    'd_WholesalesBonusMinVolume': function() {
+                        return data.data;
+                    },
+                    'd_WholesalesBonusRate': function() {
+                        return data.data;
+                    }
+
+                };
+                if (typeof names[fieldname] !== 'function') {
+                    return false;
+                }
+                return names[fieldname]();
+            }
+
+            $scope.css.skuErrorInfo = showSkuErrorInfo($scope.css.skuErrorField);
+
+
             notify({
                 message : data.data.message,
                 template : notifytemplate.failure,
