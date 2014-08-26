@@ -1,27 +1,22 @@
-var request = require('../promises/request.js');
-var config = require('../../common/config.js');
-var url = require('url');
-var util = require('util');
-var Q = require('q');
-
-var companyDecisionModel = require('../models/companyDecision.js');
-var brandDecisionModel = require('../models/brandDecision.js');
-var SKUDecisionModel = require('../models/SKUDecision.js');
-var simulationResultModel = require('../models/simulationResult.js');
-var seminarModel = require('../models/seminar.js');
-
-var decisionCleaner = require('../convertors/decisionCleaner.js');
-var decisionConvertor = require('../convertors/decision.js');
-
-var logger = require('../../common/logger.js');
-
-var gameParameters = require('../gameParameters.js').parameters;
-var utility = require('../../common/utility.js');
-
-var decisionAssembler = require('../dataAssemblers/decision.js');
+var request                   = require('../promises/request.js');
+var config                    = require('../../common/config.js');
+var url                       = require('url');
+var util                      = require('util');
+var Q                         = require('q');
+var companyDecisionModel      = require('../models/companyDecision.js');
+var brandDecisionModel        = require('../models/brandDecision.js');
+var SKUDecisionModel          = require('../models/SKUDecision.js');
+var simulationResultModel     = require('../models/simulationResult.js');
+var seminarModel              = require('../models/seminar.js');
+var decisionCleaner           = require('../convertors/decisionCleaner.js');
+var decisionConvertor         = require('../convertors/decision.js');
+var logger                    = require('../../common/logger.js');
+var gameParameters            = require('../gameParameters.js').parameters;
+var utility                   = require('../../common/utility.js');
+var decisionAssembler         = require('../dataAssemblers/decision.js');
 var productPortfolioAssembler = require('../dataAssemblers/productPortfolio.js');
-var spendingDetailsAssembler = require('../dataAssemblers/spendingDetails.js');
-var SKUInfoAssembler = require('../dataAssemblers/SKUInfo.js');
+var spendingDetailsAssembler  = require('../dataAssemblers/spendingDetails.js');
+var SKUInfoAssembler          = require('../dataAssemblers/SKUInfo.js');
 
 
 /**
@@ -126,7 +121,6 @@ exports.submitDecision = function(req, res, next){
             team: companyId
         })
         .then(function(postDecisionResult){
-            //console.log(!postDecisionResult);
             res.send(postDecisionResult);
         });
     })
@@ -235,16 +229,17 @@ exports.updateSKUDecision = function(req, res, next){
     //create a SKU object using the data posted by the client
     var tempSKU = createSKU(jsonSKU);
 
-    logger.log('SKU:' + util.inspect(tempSKU));
 
 
     SKUDecisionModel.updateSKU(seminarId, period, companyId, brandId, SKUID, tempSKU)
     .then(function(doc){
-        logger.log('1');
         res.send(200, {status: 1, message: 'update success.'});
     })
     .fail(function(err){
-        var message = JSON.stringify(err, null, 2);     
+
+    var message = JSON.stringify(err, ['message', 'lower', 'upper', 'modifiedField'], 2);
+
+    logger.log('!!!!: ' + message);
         res.send(403, message);
     })
     .done(); 
@@ -319,10 +314,8 @@ exports.updateBrandDecision = function(req, res, next){
     .then(function(doc){
         res.send({status: 1, message: 'update success.'});
     })
-    .fail(function(err){
-        //logger.error(err);
-        var message = JSON.stringify(err, null, 2);
-        //console.error('message:'+ message)        
+    .fail(function(err){        
+        var message = JSON.stringify(err, ['message', 'lower', 'upper', 'modifiedField'], 2);        
         res.send(403, message);
     })
     .done(); 
@@ -374,15 +367,12 @@ exports.updateCompanyDecision = function(req, res, next){
 
 
     companyDecisionModel.updateCompanyDecision(seminarId, period, companyId, tempCompanyDecision)
-    .then(function(numAffected){
-        if(numAffected !== 1){
-            return res.send(403, {message: 'companyDecision does not exist.'});
-        }
+    .then(function(result){
         res.send({message: 'update success.'});
     })
     .fail(function(err){
-        logger.error(err);
-        res.send(500, {message: 'update failed.'});
+        var message = JSON.stringify(err, ['message', 'lower', 'upper', 'modifiedField'], 2);
+        res.send(403, message);        
     })
     .done(); 
 
@@ -465,7 +455,7 @@ exports.addBrand = function(req, res, next){
         res.send(500, {message: "addBrand failed."})
     })
     .done();
-}
+};
 
 exports.addSKU = function(req, res, next){
     var seminarId = req.session.seminarId;
@@ -507,7 +497,8 @@ exports.addSKU = function(req, res, next){
             d_CID: companyId,
             d_BrandID: brand_id,
             d_SKUID: maxSKUID + 1,
-            d_SKUName: sku_name
+            d_SKUName: sku_name,
+            modifiedField : 'addNewSKU',
         })
     })
     .then(function(){
@@ -518,7 +509,7 @@ exports.addSKU = function(req, res, next){
         res.send(500, {message: "addSKU failed."})
     })
     .done();
-}
+};
 
 exports.deleteSKU = function(req, res, next){
     var seminarId = req.session.seminarId;

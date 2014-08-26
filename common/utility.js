@@ -41,12 +41,21 @@ exports.findSKU = function(onePeriodResult, SKUID){
 }
 
 exports.findCompany = function(onePeriodResult, companyId){
-    for(var i=0; i<onePeriodResult.p_Companies.length; i++){
-        var companyResult = onePeriodResult.p_Companies[i];
-        if(companyResult.c_CompanyID === companyId){           
-            return companyResult;
+    var companyResult = undefined;
+
+    try {
+        for(var i=0; i<onePeriodResult.p_Companies.length; i++){
+    //        var companyResult = onePeriodResult.p_Companies[i];
+            if(onePeriodResult.p_Companies[i].c_CompanyID === companyId){           
+                companyResult = onePeriodResult.p_Companies[i];
+            }
         }
+    } catch(e) {
+        return undefined;
     }
+
+
+    return companyResult;
 }
 
 
@@ -77,6 +86,8 @@ exports.unitCost = function(periodNumber, packsize, ingredientsQuality, technolo
 
     volumeNow = Math.max(volumeNow, gameParameters.pgen.sku_MinProductionVolume);
 
+    //TODO: UnitCost problem : a) calculation result is wrong, 
+    //TODO: UnitCost problem : b) still depends on cgi request exogenous 
     return cgiapi.getExogenous(periodNumber)
     .then(function(exogenous){
         if(periodNumber < 0){

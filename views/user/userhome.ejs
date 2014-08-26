@@ -1227,13 +1227,32 @@
                             <a href="" >{{brand.d_BrandName}}</a>
                         </li>
 
-                        <li><a href="">+</a></li>
+                        <li><a href="" ng-click="showAddNewBrandForm()">+</a></li>
                     </ul>
 
                     <div class="row brand_box">
                         <div class="col-md-12">
 
-                            <form class="form-horizontal brand_form" role="form">
+                            <form class="form-horizontal" role="form" name="newBrandForm" novalidate ng-if="css.addNewBrand">
+                                <div class="form-group">
+                                    <div class="col-sm-8 col-md-offset-4">
+                                        <h4>Add New Brand</h4>
+                                    </div>
+                                </div>
+
+                                <text-form-input type="text" name="brandName" label="Brand Name :"  data="data.newBrand.brand_name" required="true" minlength="1" maxlength="1" othererrorinfo="data.newBrand.othererrorinfo"></text-form-input>
+                                <text-form-input type="text" name="skuName" label="First SKU Name :"  data="data.newBrand.sku_name" required="true" minlength="1" maxlength="1"></text-form-input>
+
+
+                                <div class="form-group">
+                                    <div class="col-sm-offset-4 col-sm-8">
+                                        <button type="submit" class="btn btn-default" ng-disabled="newBrandForm.$invalid" ng-click="addNewBrand(newBrandForm)">Save</button>
+                                    </div>
+                                </div>
+                            </form>
+
+
+                            <form class="form-horizontal brand_form" role="form" ng-if="!css.addNewBrand">
                                 <div class="form-group">
                                     <label class="col-sm-4 control-label" for="brandSalesForce">Sales Force($min)</label>
                                     <div class="col-sm-3">
@@ -1255,41 +1274,42 @@
                                 <!--</div>-->
                             <!--</div>-->
 
-                            <div class="row sku_box">
+                            <div class="row sku_box" ng-if="!css.addNewBrand">
                                 <div class="col-md-12">
 
-                                    <form class="form-horizontal" role="form" name="newSkuForm" ng-if="css.addNewSku">
+                                    <form class="form-horizontal" role="form" name="newSkuForm" novalidate ng-if="css.addNewSku">
                                         <div class="form-group">
                                             <div class="col-sm-8 col-md-offset-4">
                                                 <h4>Add New SKU</h4>
                                             </div>
                                         </div>
 
-                                        <text-form-input type="text" name="skuName" label="SKU Name :"  data="data.newSku.sku_name" required="true" minlength="1" maxlength="1"></text-form-input>
-                                        <text-form-input type="checkbox" name="skuDiscontinue" label="Discontinue ?"  data="data.newSku.d_ToDrop" ></text-form-input>
-                                        <text-form-input type="number" name="skuProcessingTechnology" label="Processing Technology :" placeholder="" data="data.newSku.skuProcessingTechnology" required="true" min="1" max="14" ></text-form-input>
-                                        <text-form-input type="number" name="skuIngredientsQuality" label="Ingredients Quality :" placeholder="" data="data.newSku.d_IngredientsQuality" required="true" minlength="1" maxlength="14" ></text-form-input>
+                                        <text-form-input type="text" name="skuName" label="SKU Name :"  data="data.newSku.sku_name" required="true" minlength="1" maxlength="1" othererrorinfo="data.newSku.othererrorinfo"></text-form-input>
 
-                                        <div class="form-group" ng-class="{ 'has-success':form.$dirty && form.$valid , 'has-error': form.$dirty && form.$invalid}">
-                                            <label class="col-sm-4 control-label" for="skuPackagingSize">{{'DecisionPageDecisionTabPackagingSize' | translate}}</label>
-                                            <div class="col-sm-8">
+                                        <!--<text-form-input type="checkbox" name="skuDiscontinue" label="Discontinue ?"  data="data.newSku.d_ToDrop" ></text-form-input>-->
+                                        <!--<text-form-input type="number" name="skuProcessingTechnology" label="Processing Technology :" placeholder="" data="data.newSku.skuProcessingTechnology" required="true" min="1" max="14" ></text-form-input>-->
+                                        <!--<text-form-input type="number" name="skuIngredientsQuality" label="Ingredients Quality :" placeholder="" data="data.newSku.d_IngredientsQuality" required="true" minlength="2" maxlength="14" ></text-form-input>-->
 
-                                                <label class="radio-inline">
-                                                    <input type="radio" name="skuPackagingSize" id="skuPackagingSizeRadio1" value="0"> {{'DecisionPageDecisionTabPackagingSizeSmall' | translate}}
-                                                </label>
-                                                <label class="radio-inline">
-                                                    <input type="radio" name="skuPackagingSize" id="skuPackagingSizeRadio2" value="1"> {{'DecisionPageDecisionTabPackagingSizeStandard' | translate}}
-                                                </label>
-                                                <label class="radio-inline">
-                                                    <input type="radio" name="skuPackagingSize" id="skuPackagingSizeRadio3" value="2"> {{'DecisionPageDecisionTabPackagingSizeLarge' | translate}}
-                                                </label>
+                                        <!--<div class="form-group" ng-class="{ 'has-success':form.$dirty && form.$valid , 'has-error': form.$dirty && form.$invalid}">-->
+                                            <!--<label class="col-sm-4 control-label" for="skuPackagingSize">{{'DecisionPageDecisionTabPackagingSize' | translate}}</label>-->
+                                            <!--<div class="col-sm-8">-->
 
-                                            </div>
-                                        </div>
+                                                <!--<label class="radio-inline">-->
+                                                    <!--<input type="radio" name="skuPackagingSize" id="skuPackagingSizeRadio1" value="0"> {{'DecisionPageDecisionTabPackagingSizeSmall' | translate}}-->
+                                                <!--</label>-->
+                                                <!--<label class="radio-inline">-->
+                                                    <!--<input type="radio" name="skuPackagingSize" id="skuPackagingSizeRadio2" value="1"> {{'DecisionPageDecisionTabPackagingSizeStandard' | translate}}-->
+                                                <!--</label>-->
+                                                <!--<label class="radio-inline">-->
+                                                    <!--<input type="radio" name="skuPackagingSize" id="skuPackagingSizeRadio3" value="2"> {{'DecisionPageDecisionTabPackagingSizeLarge' | translate}}-->
+                                                <!--</label>-->
+
+                                            <!--</div>-->
+                                        <!--</div>-->
 
                                         <div class="form-group">
                                             <div class="col-sm-offset-4 col-sm-8">
-                                                <button type="submit" class="btn btn-default" ng-click="addNewSku()">Save</button>
+                                                <button type="submit" class="btn btn-default" ng-disabled="newSkuForm.$invalid" ng-click="addNewSku(newSkuForm)">Save</button>
                                             </div>
                                         </div>
                                     </form>
@@ -1303,7 +1323,8 @@
                                             <tr>
                                                 <th class="sku_table">Name <button class="btn btn-default btn-xs" ng-click="showAddNewSkuForm()">+</button></th>
                                                 <th ng-repeat="sku in data.currentBrand.d_SKUsDecisions" ng-click="clickCurrentSku(sku)">
-                                                    <a href="">{{data.currentBrand.d_BrandName}}{{sku.d_SKUName}}</a></th>
+                                                    <a href="">{{data.currentBrand.d_BrandName}}{{sku.d_SKUName}}</a>
+                                                    <button type="button" class="btn btn-default btn-xs" ng-show="true" ng-click="delSku(sku)">x</button></th>
                                             </tr>
                                         </thead>
 

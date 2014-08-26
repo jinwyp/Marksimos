@@ -36,6 +36,18 @@ marksimosapp.controller('chartController', ['$translate', '$scope', '$rootScope'
     });
 
 
+    notify.config({
+        duration : 10000
+    }) ;
+    var notifytemplate = {
+        success : '/app/js/websitecomponent/notifysavesuccess.html',
+        failure : '/app/js/websitecomponent/notifysavefailure.html'
+    };
+    $scope.closeAll = function(){
+        notify.closeAll();
+    };
+
+
     $scope.css = {
         menu : 'Decision',
         chartMenu : 'A1',
@@ -44,7 +56,8 @@ marksimosapp.controller('chartController', ['$translate', '$scope', '$rootScope'
         additionalBudget : true,
         currentDecisionBrandId : 0,
         currentDecisionRightMenu : 1,
-        addNewSku : false
+        addNewSku : false,
+        addNewBrand : false
     };
 
     $scope.dataChartSimple = {
@@ -72,7 +85,16 @@ marksimosapp.controller('chartController', ['$translate', '$scope', '$rootScope'
         currentModifiedCompany : {},
         currentSku : null,
         currentSkuIndex : 0,
-        newSku : {},
+        newBrand : {
+            brand_name : "",
+            sku_name : "",
+            othererrorinfo : ""
+        },
+        newSku : {
+            sku_name : "",
+            brand_id : "",
+            othererrorinfo : ""
+        },
 
         tableA1CompanyStatus : {
             allCompanyData : [],
@@ -227,6 +249,9 @@ marksimosapp.controller('chartController', ['$translate', '$scope', '$rootScope'
         }
 
     };
+
+
+
 
 
     $scope.A31ColorFunction = function(){
@@ -566,6 +591,17 @@ marksimosapp.controller('chartController', ['$translate', '$scope', '$rootScope'
 
 
 
+
+
+
+
+
+
+
+
+
+
+
     /********************  切换左部图标菜单  ********************/
     $scope.clickChartMenu = function(chart){
         $scope.css.menu = 'Report';
@@ -669,19 +705,97 @@ marksimosapp.controller('chartController', ['$translate', '$scope', '$rootScope'
 
 
 
+
+    /********************  点击添加一个新的Brand 显示添加Brand的表单  ********************/
+    $scope.showAddNewBrandForm = function(){
+        $scope.css.addNewBrand = true;
+        $scope.data.newBrand.brand_name = "";
+        $scope.data.newBrand.sku_name = "";
+        $scope.data.newBrand.othererrorinfo = "";
+    };
+
+    $scope.addNewBrand = function(form){
+
+        if (form.$valid) {
+            Company.addBrand($scope.data.newBrand).then(function(data, status, headers, config){
+                $scope.companyInfoInit();
+
+                notify({
+                    message  : 'Save Success !',
+                    template : notifytemplate.success,
+                    position : 'center'
+                });
+
+                $scope.css.addNewBrand = false;
+            }, function(data){
+                form.brandName.$valid = false;
+                form.brandName.$invalid = true;
+                $scope.data.newBrand.othererrorinfo = data.data.message ;
+
+            });
+        }
+    };
+
+
     /********************  点击添加一个新的SKU 显示添加SKU的表单  ********************/
     $scope.showAddNewSkuForm = function(){
         $scope.css.addNewSku = true;
+        $scope.data.newSku.sku_name = "";
+        $scope.data.newSku.brand_id = "";
+        $scope.data.newSku.othererrorinfo = "";
     };
 
-    $scope.addNewSku = function(){
-        $scope.css.addNewSku = false;
+
+
+    $scope.addNewSku = function(form){
+        $scope.data.newSku.brand_id = $scope.data.currentBrand.d_BrandID;
+
+        if (form.$valid) {
+            Company.addSku($scope.data.newSku).then(function(data, status, headers, config){
+                $scope.companyInfoInit();
+
+                notify({
+                    message  : 'Save Success !',
+                    template : notifytemplate.success,
+                    position : 'center'
+                });
+
+                $scope.css.addNewSku = false;
+            }, function(data){
+                form.skuName.$valid = false;
+                form.skuName.$invalid = true;
+                $scope.data.newSku.othererrorinfo = data.data.message ;
+
+            });
+        }
+    };
+
+    /********************  删除一个SKU  注意该SKU必须是本回合添加的SKU才可以删除 ********************/
+    $scope.delSku = function(sku){
+        Company.delSku(sku.d_SKUID).then(function(data, status, headers, config){
+            $scope.companyInfoInit();
+
+            notify({
+                message  : 'Delete Sku Success !',
+                template : notifytemplate.success,
+                position : 'center'
+            });
+        }, function(data){
+            notify({
+                message  : data.data.message,
+                template : notifytemplate.failure,
+                position : 'center'
+            });
+        });
     };
 
 
+    /********************  点击选中Brand 或 SKU  ********************/
     $scope.clickBrand = function(brand){
         $scope.css.currentDecisionBrandId = brand._id;
         $scope.data.currentBrand = brand;
+        $scope.css.addNewBrand = false;
+        $scope.css.addNewSku = false;
     };
 
     $scope.clickCurrentSku = function(sku){
@@ -725,21 +839,20 @@ marksimosapp.controller('chartController', ['$translate', '$scope', '$rootScope'
 
 
 
-
-        console.log($scope.data.currentModifiedSku);
+//        console.log($scope.data.currentModifiedSku);
         Company.updateSku($scope.data.currentModifiedSku).then(function(data, status, headers, config){
             $scope.companyInfoInit();
 
             notify({
                 message : 'Save Success !',
-                template : '/app/js/websitecomponent/notifysavesuccess.html',
+                template : notifytemplate.success,
                 position : 'center'
             });
         }, function(data){
             console.log(data);
             notify({
-                message : JSON.stringify(data.data) + ', status: ' + data.status,
-                template : '/app/js/websitecomponent/notifysavesuccess.html',
+                message : data.data.message,
+                template : notifytemplate.failure,
                 position : 'center'                
             });
         });
@@ -757,14 +870,14 @@ marksimosapp.controller('chartController', ['$translate', '$scope', '$rootScope'
             $scope.companyInfoInit();
             notify({
                 message : 'Save Success !',
-                template : '/app/js/websitecomponent/notifysavesuccess.html',
+                template : notifytemplate.success,
                 position : 'center'
             });
         }, function(data){
             console.log(data);
             notify({
                 message : JSON.stringify(data.data) + ', status: ' + data.status,
-                template : '/app/js/websitecomponent/notifysavesuccess.html',
+                template : notifytemplate.failure,
                 position : 'center'                
             });
         });
@@ -787,15 +900,20 @@ marksimosapp.controller('chartController', ['$translate', '$scope', '$rootScope'
             $scope.companyInfoInit();
             notify({
                 message : 'Save Success !',
-                template : '/app/js/websitecomponent/notifysavesuccess.html',
+                template : notifytemplate.success,
+                position : 'center'
+            });
+        }, function(data){
+            console.log(data);
+            notify({
+                message : JSON.stringify(data.data) + ', status: ' + data.status,
+                template : notifytemplate.failure,
                 position : 'center'
             });
         });
     };
 
 
-    $scope.closeAll = function(){
-        notify.closeAll();
-    };
+
 
 }]);

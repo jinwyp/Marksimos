@@ -314,8 +314,9 @@ app.directive('textFormInput', function() {
 
             numbererrorinfo : '@',
             min             : '@',
-            max             : '@'
+            max             : '@',
 
+            othererrorinfo : '='
 
 
         },
@@ -332,6 +333,42 @@ app.directive('textFormInput', function() {
             required = tAttrs.hasOwnProperty('required') ? 'ng-required="' + tAttrs.required + '"' : "";
             requirederrorinfo = tAttrs.hasOwnProperty('requirederrorinfo') ? tAttrs.requirederrorinfo  : "field is required";
 
+            if (type === 'checkbox'){
+
+                var tplcheckbox = '<div class="form-group" ng-class="{ \'has-success\':form.$dirty && form.$valid , \'has-error\': form.$dirty && form.$invalid}">' +
+                                    '<label class="' + labelclass + ' control-label" for="' + tAttrs.name + '" >' + tAttrs.label + '</label>' +
+                                        '<div class="' + inputclass + '">' +
+                                            '<div class="checkbox">' +
+                                            '<label>' +
+                                                '<input type="' + type + '" id="ID' + tAttrs.name +'" name="' + tAttrs.name +'" ng-model="data" ' + required + '>' +
+                                            '</label>' +
+                                        '</div>' +
+                                    '</div>' +
+                                    '</div>';
+
+                return tplcheckbox;
+
+            }else if(type === 'number'){
+                min = tAttrs.hasOwnProperty('min') ? 'min="' + tAttrs.min + '"' : "";
+                max = tAttrs.hasOwnProperty('max') ? 'max="' + tAttrs.max + '"' : "";
+                numbererrorinfo = tAttrs.hasOwnProperty('numbererrorinfo') ? tAttrs.numbererrorinfo  : 'must be in range ' + tAttrs.min + ' to '+ tAttrs.max;
+
+                minlength = "";
+                minlengtherrorinfo = "";
+                maxlength = "";
+                maxlengtherrorinfo = "";
+
+            }else{
+                min = "";
+                max = "";
+                numbererrorinfo = "";
+
+                minlength = tAttrs.hasOwnProperty('minlength') ? 'ng-minlength="' + tAttrs.minlength + '"' : "";
+                minlengtherrorinfo = tAttrs.hasOwnProperty('minlengtherrorinfo') ? tAttrs.minlengtherrorinfo  : 'field must be at least ' + tAttrs.minlength + ' characters';
+
+                maxlength = tAttrs.hasOwnProperty('maxlength') ? 'ng-maxlength="' + tAttrs.maxlength + '"' : "";
+                maxlengtherrorinfo = tAttrs.hasOwnProperty('maxlengtherrorinfo') ? tAttrs.maxlengtherrorinfo  : 'field is a maximum of ' + tAttrs.maxlength + ' characters';
+            }
 
             var tpltext = '<div class="form-group has-feedback" ng-class="{ \'has-success\':form.$dirty && form.$valid , \'has-error\': form.$dirty && form.$invalid}">' +
                             '<label class="' + labelclass + ' control-label" for="' + tAttrs.name + '" >' + tAttrs.label + '</label>' +
@@ -345,46 +382,11 @@ app.directive('textFormInput', function() {
                             '<label class="control-label" ng-if="form.$dirty && form.$error.maxlength" ><i class="fa fa-times-circle-o"></i>' + maxlengtherrorinfo + '</label>' +
                             '<label class="control-label" ng-if="form.$dirty && form.$error.number" ><i class="fa fa-times-circle-o"></i>must be a number</label>' +
                             '<label class="control-label" ng-if="form.$dirty && form.$error.min || form.$dirty && form.$error.max " ><i class="fa fa-times-circle-o"></i>' + numbererrorinfo + '</label>' +
+                            '<label class="control-label" ng-if="form.$invalid" ><i class="fa fa-times-circle-o"></i>{{othererrorinfo}}</label>' +
 
                             '</div>';
 
-            var tplcheckbox = '<div class="form-group" ng-class="{ \'has-success\':form.$dirty && form.$valid , \'has-error\': form.$dirty && form.$invalid}">' +
-                                '<label class="' + labelclass + ' control-label" for="' + tAttrs.name + '" >' + tAttrs.label + '</label>' +
-                                '<div class="' + inputclass + '">' +
-                                    '<div class="checkbox">' +
-                                        '<label>' +
-                                            '<input type="' + type + '" id="ID' + tAttrs.name +'" name="' + tAttrs.name +'" ng-model="data" ' + required + '>' +
-                                        '</label>' +
-                                    '</div>' +
-                                '</div>' +
-                                '</div>';
-
-
-
-            if (type === 'checkbox'){
-                return tplcheckbox;
-
-            }else if(type === 'number'){
-                min = tAttrs.hasOwnProperty('min') ? 'min="' + tAttrs.min + '"' : "";
-                max = tAttrs.hasOwnProperty('max') ? 'max="' + tAttrs.max + '"' : "";
-                numbererrorinfo = tAttrs.hasOwnProperty('numbererrorinfo') ? tAttrs.numbererrorinfo  : 'must be in range ' + tAttrs.min + ' to '+ tAttrs.max;
-                return tpltext;
-
-            }else{
-
-                minlength = tAttrs.hasOwnProperty('minlength') ? 'ng-minlength="' + tAttrs.minlength + '"' : "";
-                minlengtherrorinfo = tAttrs.hasOwnProperty('minlengtherrorinfo') ? tAttrs.minlengtherrorinfo  : 'field must be at least ' + tAttrs.minlength + ' characters';
-
-                maxlength = tAttrs.hasOwnProperty('maxlength') ? 'ng-maxlength="' + tAttrs.maxlength + '"' : "";
-                maxlengtherrorinfo = tAttrs.hasOwnProperty('maxlengtherrorinfo') ? tAttrs.maxlengtherrorinfo  : 'field is a maximum of ' + tAttrs.maxlength + ' characters';
-                return tpltext;
-            }
-
-
-
-
-
-
+            return tpltext;
 
         },
 

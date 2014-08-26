@@ -25,7 +25,8 @@
     "slang": "~0.3.0",
     "express-session": "~1.6.5",
     "winston": "~0.7.3",
-    "should": "~4.0.4"
+    "should": "~4.0.4",
+    "swagger-node-express" : "~2.0"
   },
   "devDependencies": {
     "bower": "~1.3.2",

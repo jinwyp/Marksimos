@@ -29,17 +29,14 @@ tOneBrandDecisionSchema.pre('save', true, function(next, done){
                 var budgetLeft = spendingDetails.companyData.availableBudget;
                 var oldInput = oneBrandDecision.d_SalesForce;
 
-                logger.log(budgetLeft + ' - ' + oldInput + ' - ' + self.d_SalesForce);
-                if(budgetLeft - oldInput - self.d_SalesForce < 0){       
-                    logger.log('!!!');             
+                if(budgetLeft + oldInput - self.d_SalesForce < 0){       
                     var validateErr = new Error('Input is out of range');
-                    validateErr.msg = 'Available budget is not enough.';
+                    validateErr.message = 'Available budget is not enough.';
                     validateErr.modifiedField = field;
                     validateErr.upper = budgetLeft - oldInput;
                     validateErr.lower = 0;
                     done(validateErr);
                 } else {   
-                    logger.log('Input ' + self.d_SalesForce + ' is OK, done()');                 
                     done();
                 }
             }).fail(function(err){

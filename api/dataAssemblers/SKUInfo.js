@@ -8,6 +8,10 @@ var gameParameters = require('../gameParameters.js').parameters;
 var simulationResultModel = require('../models/simulationResult.js');
 
 exports.getSKUInfo = function(seminarId, currentPeriod, companyId, SKUID){
+    if(typeof SKUID == 'number'){
+        SKUID = SKUID.toString();
+    }
+
     return Q.all([
         simulationResultModel.findOne(seminarId, currentPeriod-1),
         SKUDecisionModel.findOne(seminarId, currentPeriod, companyId, SKUID.slice(0, 2), SKUID),

@@ -54,15 +54,17 @@ app.factory('Company', ['$http', function($http){
 
     var apiPath = '/marksimos/api/';
 
+    var errorHandler = function(err){
+        console.log("Error 404 , Type : API Company", err );
+    };
+
     var factory = {
         getCurrentStudent : function(){
             return $http.get(apiPath + 'studentinfo').then(function(result){
 //                console.log(result.data);
 
                 return result.data;
-            }, function(err){
-                console.log(err);
-            });
+            }).catch(errorHandler);
         },
 
         getCompany : function(){
@@ -70,59 +72,63 @@ app.factory('Company', ['$http', function($http){
 //                console.log(result.data);
 
                 return result.data;
-            }, function(err){
-                console.log(err);
-            });
+            }).catch(errorHandler);
         },
         getCompanyOtherInfo : function(){
             return $http.get(apiPath + 'company/otherinfo').then(function(result){
 //                console.log(result.data);
 
                 return result.data;
-            }, function(err){
-                console.log(err);
-            });
+            }).catch(errorHandler);
         },
         getCompanyFutureProjectionCalculator : function(id){
             return $http.get(apiPath + 'future_projection_calculator/' + id).then(function(result){
 //                console.log(result.data);
 
                 return result.data;
-            }, function(err){
-                console.log(err);
-            });
+            }).catch(errorHandler);
         },
         getCompanyProductPortfolio : function(){
             return $http.get(apiPath + 'product_portfolio').then(function(result){
 //                console.log(result.data);
 
                 return result.data;
-            }, function(err){
-                console.log(err);
-            });
+            }).catch(errorHandler);
         },
         getCompanySpendingDetails : function(){
             return $http.get(apiPath + 'spending_details').then(function(result){
 //                console.log(result.data);
 
                 return result.data;
-            }, function(err){
-                console.log(err);
-            });
+            }).catch(errorHandler);
+        },
+
+
+        addSku : function(postdata){
+            return $http.post(apiPath + 'sku/decision/', postdata);
         },
 
         updateSku : function(postdata){
             return $http.put(apiPath + 'sku/decision/', postdata);
         },
 
+        delSku : function(id){
+            return $http.delete(apiPath + 'sku/decision/' + id);
+        },
+
+
+        addBrand : function(postdata){
+            return $http.post(apiPath + 'brand/decision/', postdata);
+        },
+
         updateBrand : function(postdata){
-            console.log(postdata);
             return $http.put(apiPath + 'brand/decision', postdata);
         },
 
         updateCompany : function(postdata){
             return $http.put(apiPath + 'company/decision', postdata);
         }
+
 
     };
 

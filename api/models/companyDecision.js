@@ -2,6 +2,8 @@ var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
 var consts = require('../consts.js');
 var Q = require('q');
+var spendingDetailsAssembler = require('../dataAssemblers/spendingDetails.js');
+var util = require('util');
 
 var tDecisionSchema = new Schema({
     seminarId: String,
@@ -17,6 +19,105 @@ var tDecisionSchema = new Schema({
 });
 
 var CompanyDecision = mongoose.model('CompanyDecision', tDecisionSchema);
+
+tDecisionSchema.pre('save', true, function(next, done){
+    var self = this;
+    var validateAction = {
+        'd_RequestedAdditionalBudget' : function(field){ validateAdditionalBudget(field, self, done); },
+        'd_InvestmentInEfficiency'    : function(field){ validateAvailableBudget(field, self, done); },         
+        'd_InvestmentInTechnology'    : function(field){ validateAvailableBudget(field, self, done); },         
+        'd_InvestmentInServicing'     : function(field){ validateAvailableBudget(field, self, done); }               
+    }
+
+    function doValidate(field){        
+        if(typeof validateAction[field] != 'function'){
+            var validateErr = new Error('Cannot find validate action for ' + field);
+            validateErr.message = 'Cannot find validate action for ' + field;
+            validateErr.modifiedField = field;
+            return done(validateErr);
+        }
+
+        validateAction[field](field);        
+    }
+    console.log('this.modifiedField:' + this.modifiedField);
+    doValidate(this.modifiedField);
+    next();
+})
+
+function validateAdditionalBudget(field, curCompanyDecision, done){
+    Q.spread([
+        spendingDetailsAssembler.getSpendingDetails(curCompanyDecision.seminarId, curCompanyDecision.period, curCompanyDecision.d_CID),
+        exports.findOne(curCompanyDecision.seminarId, curCompanyDecision.period, curCompanyDecision.d_CID)
+    ], function(spendingDetails, preCompanyDecision){
+        var budgetLeft = parseFloat(spendingDetails.companyData.availableBudget);
+        var err, lowerLimits = [],upperLimits = [];
+
+        lowerLimits.push({value : 0, message: 'Cannot accept negative number.'});        
+        upperLimits.push({value : parseFloat(spendingDetails.companyData.averageBudgetPerPeriod), message : 'Cannot accept number bigger than ' + spendingDetails.companyData.averageBudgetPerPeriod});
+
+        console.log(uitl.inspect(upperLimits));
+        err = rangeCheck(curCompanyDecision[field],lowerLimits,upperLimits);      
+        if(err != undefined){
+            err.modifiedField = field;
+            done(err);
+        } else {
+            done();
+        }         
+    });
+}
+
+function validateAvailableBudget(field, curCompanyDecision, done){
+    Q.spread([
+        spendingDetailsAssembler.getSpendingDetails(curCompanyDecision.seminarId, curCompanyDecision.period, curCompanyDecision.d_CID),
+        exports.findOne(curCompanyDecision.seminarId, curCompanyDecision.period, curCompanyDecision.d_CID)
+    ], function(spendingDetails, preCompanyDecision){
+        var budgetLeft = parseFloat(spendingDetails.companyData.availableBudget);
+        var err, lowerLimits = [],upperLimits = [];
+
+        lowerLimits.push({value : 0, message: 'Cannot accept negative number.'});
+        upperLimits.push({value : budgetLeft + preCompanyDecision[field], message : 'Budget Left is not enough.'});
+        err = rangeCheck(curCompanyDecision[field],lowerLimits,upperLimits);      
+        if(err != undefined){
+            err.modifiedField = field;
+            done(err);
+        } else {
+            done();
+        }         
+    });
+}
+
+//...Limits : [{message : 'budgetLeft', value : 200}, {message : 'para', value: 3000}]
+function rangeCheck(input, lowerLimits, upperLimits){
+    var maxOfLower = { value : 0 };
+    var minOfUpper = { value : Infinity };
+    lowerLimits.forEach(function(limit){
+        if(limit.value > maxOfLower.value){ 
+            maxOfLower.value = limit.value, maxOfLower.message = limit.message
+        };
+    });
+
+    upperLimits.forEach(function(limit){
+        if(limit.value < minOfUpper.value){ 
+            minOfUpper.value = limit.value, minOfUpper.message = limit.message
+        };
+    })
+
+    if(input < maxOfLower.value){
+        var err = new Error('Input is out of range');
+        err.message = maxOfLower.message;
+        err.lower = maxOfLower.value;
+        err.upper = minOfUpper.value;
+        return err;
+    } else if (input > minOfUpper.value){
+        var err = new Error('Input is out of range');
+        err.message = minOfUpper.message;
+        err.lower = maxOfLower.value;
+        err.upper = minOfUpper.value;        
+        return err;
+    } else {
+        return undefined;
+    }
+}
 
 exports.remove =  function(seminarId, companyId){
     if(!mongoose.connection.readyState){
@@ -133,19 +234,29 @@ exports.updateCompanyDecision = function(seminarId, period, companyId, companyDe
     }else if(!companyDecision){
         deferred.reject(new Error("Invalid argument companyDecision."))
     }else{
-        CompanyDecision.update({
+        CompanyDecision.findOne({
             seminarId: seminarId,
             period: period,
             d_CID: companyId
-        },
-        companyDecision,
-        function(err, numAffected){
-            if(err){
-                return deferred.reject(err);
-            }
+        },function(err, doc){
+            if(err){return deferred.reject(err);}
+            var fields = ['d_RequestedAdditionalBudget',
+                          'd_InvestmentInEfficiency',
+                          'd_InvestmentInTechnology',
+                          'd_InvestmentInServicing'];
 
-            return deferred.resolve(numAffected);
-        })
+            fields.forEach(function(field){
+                if(companyDecision[field] !== undefined){
+                    doc.modifiedField = field;
+                    doc[field] = companyDecision[field];
+                }
+            });
+
+            doc.save(function(err, doc){         
+                if(err){ deferred.reject(err);}
+                else{ return deferred.resolve(doc);}
+            });
+        });
     }
     return deferred.promise;
 }

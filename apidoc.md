@@ -138,8 +138,8 @@ PUT
 
 ### response
 失败的Response
-
-    HTTP Status: 400, {status: 0, message: "Invalid parameter brand_id."}
+    
+    HTTP Status: 403, {message: "xxxxxx", lower: 0, upper: 1000, modifiedField: "d_Technology"}
     HTTP Status: 500, {status: 0, message: 'update failed.'}
 
 成功的Response
@@ -195,7 +195,8 @@ Delete a brand
 DELETE
 
 ### Parameters
-* brand_id
+* 
+
 
 ## /api/company/decision
 Update a company decision
