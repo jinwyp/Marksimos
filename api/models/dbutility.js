@@ -60,7 +60,7 @@ exports.saveBrandDecision = function(decision, seminarId, period){
         brandDecision.seminarId = seminarId;
         brandDecision.period = period;
         d = d.then(function(){
-            return brandDecisionModel.save(brandDecision)
+            return brandDecisionModel.initCreate(brandDecision)
         });
     });
     return d;
@@ -74,7 +74,7 @@ exports.saveSKUDecision = function(decision, seminarId, period){
         SKUDecision.seminarId = seminarId;
         SKUDecision.period = period;
         d = d.then(function(){
-            return SKUDecisionModel.save(SKUDecision)
+            return SKUDecisionModel.initCreate(SKUDecision)
         })
     });
     

@@ -1,4 +1,4 @@
-exports.Exogenous = function(period) {
+exports.getExogenousByPeriod = function(period) {
 	var result = {};
 	var BSIP,SGR;
 	switch (period) {

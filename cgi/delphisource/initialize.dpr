@@ -69,6 +69,7 @@ begin
     if(params.ContainsKey('team6') and (params['team6'] <> '')) then config.cr_ActiveTeams[6] :=  True;
 
     result := InitialiseFiles(config);
+    Writeln(DataDirectory);
 
     //no sure why -3 period runs three times
     if(result = init_OK) then result := RunOnePeriod(config, -3)

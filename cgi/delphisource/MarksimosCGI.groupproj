@@ -1,0 +1,96 @@
+﻿	<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+		<PropertyGroup>
+			<ProjectGuid>{4B39929E-A031-4905-8ACE-191F9E785172}</ProjectGuid>
+		</PropertyGroup>
+		<ItemGroup>
+			<Projects Include="decisions.dproj">
+				<Dependencies/>
+			</Projects>
+			<Projects Include="exogenous.dproj">
+				<Dependencies/>
+			</Projects>
+			<Projects Include="initialize.dproj">
+				<Dependencies/>
+			</Projects>
+			<Projects Include="parameters.dproj">
+				<Dependencies/>
+			</Projects>
+			<Projects Include="runsimulation.dproj">
+				<Dependencies/>
+			</Projects>
+			<Projects Include="allresults.dproj">
+				<Dependencies/>
+			</Projects>
+		</ItemGroup>
+		<ProjectExtensions>
+			<Borland.Personality>Default.Personality.12</Borland.Personality>
+			<Borland.ProjectType/>
+			<BorlandProject>
+				<Default.Personality/>
+			</BorlandProject>
+		</ProjectExtensions>
+		<Target Name="decisions">
+			<MSBuild Projects="decisions.dproj"/>
+		</Target>
+		<Target Name="decisions:Clean">
+			<MSBuild Projects="decisions.dproj" Targets="Clean"/>
+		</Target>
+		<Target Name="decisions:Make">
+			<MSBuild Projects="decisions.dproj" Targets="Make"/>
+		</Target>
+		<Target Name="exogenous">
+			<MSBuild Projects="exogenous.dproj"/>
+		</Target>
+		<Target Name="exogenous:Clean">
+			<MSBuild Projects="exogenous.dproj" Targets="Clean"/>
+		</Target>
+		<Target Name="exogenous:Make">
+			<MSBuild Projects="exogenous.dproj" Targets="Make"/>
+		</Target>
+		<Target Name="initialize">
+			<MSBuild Projects="initialize.dproj"/>
+		</Target>
+		<Target Name="initialize:Clean">
+			<MSBuild Projects="initialize.dproj" Targets="Clean"/>
+		</Target>
+		<Target Name="initialize:Make">
+			<MSBuild Projects="initialize.dproj" Targets="Make"/>
+		</Target>
+		<Target Name="parameters">
+			<MSBuild Projects="parameters.dproj"/>
+		</Target>
+		<Target Name="parameters:Clean">
+			<MSBuild Projects="parameters.dproj" Targets="Clean"/>
+		</Target>
+		<Target Name="parameters:Make">
+			<MSBuild Projects="parameters.dproj" Targets="Make"/>
+		</Target>
+		<Target Name="runsimulation">
+			<MSBuild Projects="runsimulation.dproj"/>
+		</Target>
+		<Target Name="runsimulation:Clean">
+			<MSBuild Projects="runsimulation.dproj" Targets="Clean"/>
+		</Target>
+		<Target Name="runsimulation:Make">
+			<MSBuild Projects="runsimulation.dproj" Targets="Make"/>
+		</Target>
+		<Target Name="allresults">
+			<MSBuild Projects="allresults.dproj"/>
+		</Target>
+		<Target Name="allresults:Clean">
+			<MSBuild Projects="allresults.dproj" Targets="Clean"/>
+		</Target>
+		<Target Name="allresults:Make">
+			<MSBuild Projects="allresults.dproj" Targets="Make"/>
+		</Target>
+		<Target Name="Build">
+			<CallTarget Targets="decisions;exogenous;initialize;parameters;runsimulation;allresults"/>
+		</Target>
+		<Target Name="Clean">
+			<CallTarget Targets="decisions:Clean;exogenous:Clean;initialize:Clean;parameters:Clean;runsimulation:Clean;allresults:Clean"/>
+		</Target>
+		<Target Name="Make">
+			<CallTarget Targets="decisions:Make;exogenous:Make;initialize:Make;parameters:Make;runsimulation:Make;allresults:Make"/>
+		</Target>
+		<Import Condition="Exists('$(BDS)\Bin\CodeGear.Group.Targets')" Project="$(BDS)\Bin\CodeGear.Group.Targets"/>
+	</Project>

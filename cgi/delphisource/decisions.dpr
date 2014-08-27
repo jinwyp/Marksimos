@@ -43,6 +43,7 @@ begin
         params := Explode(sValue);
 
         LoadConfigIni(DataDirectory, params['seminar']);
+        //LoadConfigIni(DataDirectory, getSeminar(sListData));
 
         resultCode := ReadDecisionRecord(DataDirectory, params['seminar'], StrToInt(params['period']), StrToInt(params['team']), decision);
         if (resultCode<>0) then raise Exception.Create('read decision failed, code:'+IntToStr(resultCode));

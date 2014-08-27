@@ -79,7 +79,7 @@ apiRouter.get('/marksimos/api/chart/:chart_name', requireLogin, chartController.
 //make decision page
 apiRouter.put('/marksimos/api/sku/decision', requireLogin, decisionController.updateSKUDecision);
 apiRouter.post('/marksimos/api/sku/decision', requireLogin, decisionController.addSKU);
-apiRouter.delete('/marksimos/api/sku/decision', requireLogin, decisionController.deleteSKU);
+apiRouter.delete('/marksimos/api/sku/decision/:brand_id/:sku_id', requireLogin, decisionController.deleteSKU);
 apiRouter.put('/marksimos/api/brand/decision', requireLogin, decisionController.updateBrandDecision);
 apiRouter.post('/marksimos/api/brand/decision', requireLogin, decisionController.addBrand);
 apiRouter.delete('/marksimos/api/brand/decision', requireLogin, decisionController.deleteBrand);

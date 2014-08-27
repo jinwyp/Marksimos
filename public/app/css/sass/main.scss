@@ -174,6 +174,9 @@ $color_main_body_decision_table_hover: #feeaff;
 }
 
 
+
+
+
 /*********************************************************/
 
 /** 仿 iOS 系统通知数字样式 **/
@@ -223,6 +226,8 @@ $color_main_body_decision_table_hover: #feeaff;
     font-size: 11px;
     z-index: 999;
 }
+
+
 
 
 /********************  Angular JS 首次载入页面默认隐藏模板显示  ********************/
@@ -411,7 +416,9 @@ body{
                 font-weight: bold;
                 padding-left: 15px;
                 padding-right: 15px;
+                text-align: center;
             }
+
 
             .active a {
                 background-image: -webkit-linear-gradient(top, $color_main_header_menu_active 100%, $color_main_header_menu_active 100%);
@@ -428,8 +435,8 @@ body{
                     font-size: 0;     /*是因为, 虽然宽高度为0, 但在IE6下会具有默认的 */
                     line-height: 0;  /* 字体大小和行高, 导致盒子呈现被撑开的长矩形 */
                     content:"";
-                    top: 43px;
-                    left: 26px;
+                    top: 44px;
+                    left: 42%;
                     position:absolute;
                 }
             }
@@ -931,6 +938,43 @@ body{
         background-color: $color_main_body_progress_bar_overtime;
     }
 
+    .form-control-error {
+        border-color: #a94442;
+        -webkit-box-shadow: inset 0 1px 1px rgba(0,0,0,.075);
+        box-shadow: inset 0 1px 1px rgba(0,0,0,.075);
+    }
+
+    .alert-tooltip{
+        position: absolute;
+        top : 10%;
+        left : 65px;
+        padding : 5px;
+        z-index: 999;
+    }
+    .alert-tooltip:after, .alert-tooltip:before {
+        top: 50%;
+        right: 100%;
+        border: solid transparent;
+        content: " ";
+        height: 0;
+        width: 0;
+        position: absolute;
+        pointer-events: none;
+    }
+    .alert-tooltip:after {
+        border-color: rgba(136, 183, 213, 0);
+        border-right-color: #f2dede;
+        border-width: 6px;
+        margin-top: -6px;
+    }
+    .alert-tooltip:before {
+        border-color: rgba(194, 225, 245, 0);
+        border-right-color: #ebccd1;
+        border-width: 7px;
+        margin-top: -7px;
+    }
+
+
     .budget_form {
         padding: 5px 0px;
 
@@ -1002,6 +1046,7 @@ body{
             font-family: $font_main_header2;
             font-size: 12px;
             color:$color_main_body_company;
+            position: relative;
         }
 
         .table .tdgroup{
@@ -1058,7 +1103,6 @@ body{
             margin-left: 10px;
             label {
                 text-align: left;
-                color: $color_main_body_company;
                 font-family: $font_main_header2;
                 font-weight: normal;
                 font-size: 13px;

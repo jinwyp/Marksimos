@@ -1190,11 +1190,11 @@
 
         <div class="col-md-1 user_home_divider user_chart_box">
 
-            <form class=" budget_form" role="form">
-                <div class="form-group text-center">
+            <form class="budget_form" role="form" name="updateCompanyForm2">
+                <div class="form-group text-center" ng-class="{ 'has-success':updateCompanyForm2.companyAdditionalBudget.$dirty && updateCompanyForm2.companyAdditionalBudget.$valid , 'has-error': updateCompanyForm2.companyAdditionalBudget.$dirty && updateCompanyForm2.companyAdditionalBudget.$invalid}">
                     <label class="budget_title" for="additionalBudget" ng-show="css.additionalBudget" ng-click="css.additionalBudget=false">${{data.currentCompany.d_RequestedAdditionalBudget}}</label>
-                    <label for="additionalBudget" ng-show="css.additionalBudget" ng-click="css.additionalBudget=false">Additional Budget</label>
-                    <input type="number" class="form-control input-sm" id="additionalBudget"   ng-model="data.currentCompany.d_RequestedAdditionalBudget" ng-blur="updateCompany()">
+                    <label for="companyAdditionalBudget" ng-show="css.additionalBudget" ng-click="css.additionalBudget=false">Additional Budget</label>
+                    <input type="number" class="form-control input-sm" id="companyAdditionalBudget" name="companyAdditionalBudget" required ng-model="data.currentCompany.d_RequestedAdditionalBudget" ng-blur="updateCompany('d_RequestedAdditionalBudget', updateCompanyForm2, 'companyAdditionalBudget')">
                 </div>
             </form>
         </div>
@@ -1252,12 +1252,15 @@
                             </form>
 
 
-                            <form class="form-horizontal brand_form" role="form" ng-if="!css.addNewBrand">
-                                <div class="form-group">
+                            <form class="form-horizontal brand_form" role="form" name="updateBrandForm" novalidate ng-if="!css.addNewBrand">
+                                <div class="form-group has-feedback" ng-class="{ 'has-success':updateBrandForm.brandSalesForce.$dirty && updateBrandForm.brandSalesForce.$valid , 'has-error': updateBrandForm.brandSalesForce.$dirty && updateBrandForm.brandSalesForce.$invalid}">
                                     <label class="col-sm-4 control-label" for="brandSalesForce">Sales Force($min)</label>
                                     <div class="col-sm-3">
-                                        <input type="number" class="form-control" id="brandSalesForce" ng-model="data.currentBrand.d_SalesForce" ng-blur="updateBrand()">
+                                        <input type="number" class="form-control" id="brandSalesForce" name="brandSalesForce" ng-model="data.currentBrand.d_SalesForce" required min="1" ng-blur="updateBrand(updateBrandForm)">
+                                        <span ng-if="updateBrandForm.brandSalesForce.$dirty && updateBrandForm.brandSalesForce.$valid" class="glyphicon glyphicon-ok form-control-feedback"></span>
+                                        <span ng-if="updateBrandForm.brandSalesForce.$dirty && updateBrandForm.brandSalesForce.$invalid" class="glyphicon glyphicon-remove form-control-feedback"></span>
                                     </div>
+                                    <label class="control-label" ng-if="updateBrandForm.brandSalesForce.$dirty && updateBrandForm.brandSalesForce.$invalid" ><i class="fa fa-times-circle-o"></i>Must be in range {{css.brandErrorInfo.lower}} to {{css.brandErrorInfo.upper.toFixed(0)}} !</label>
                                 </div>
                             </form>
 
@@ -1318,7 +1321,7 @@
 
 
 
-                                    <table class="table table-hover" ng-if="!css.addNewSku">
+                                    <table class="table table-hover " ng-if="!css.addNewSku">
                                         <thead>
                                             <tr>
                                                 <th class="sku_table">Name <button class="btn btn-default btn-xs" ng-click="showAddNewSkuForm()">+</button></th>
@@ -1337,14 +1340,16 @@
                                             </tr>
                                             <tr >
                                                 <td class="tdgroup">{{'DecisionPageDecisionTabProcessingTechnology' | translate}}</td>
-                                                <td ng-repeat="sku in data.currentBrand.d_SKUsDecisions">
-                                                    <input type="text" class="form-control input-sm" ng-model="sku.d_Technology" ng-blur="leaveSkuInput(sku, 'd_Technology', sku.d_Technology)"  ng-focus="clickCurrentSku(sku)">
+                                                <td ng-repeat="sku in data.currentBrand.d_SKUsDecisions" >
+                                                    <div class="alert alert-danger alert-tooltip" role="alert" ng-show="css.skuErrorField=='d_Technology' && sku.d_SKUID==data.currentSku.d_SKUID">Must be in range {{css.skuErrorInfo.lower}} to {{css.skuErrorInfo.upper.toFixed(0)}} !</div>
+                                                    <input type="text" class="form-control input-sm " ng-class="{'form-control-error':css.skuErrorField=='d_Technology' && sku.d_SKUID==data.currentSku.d_SKUID}" ng-model="sku.d_Technology" ng-blur="leaveSkuInput(sku, 'd_Technology', sku.d_Technology)"  ng-focus="clickCurrentSku(sku)">
                                                 </td>
                                             </tr>
                                             <tr>
                                                 <td>{{'DecisionPageDecisionTabIngredientsQuality' | translate}}</td>
                                                 <td ng-repeat="sku in data.currentBrand.d_SKUsDecisions">
-                                                    <input type="text" class="form-control input-sm" ng-model="sku.d_IngredientsQuality" ng-blur="leaveSkuInput(sku, 'd_IngredientsQuality', sku.d_IngredientsQuality)"  ng-focus="clickCurrentSku(sku)">
+                                                    <div class="alert alert-danger alert-tooltip" role="alert" ng-show="css.skuErrorField=='d_IngredientsQuality' && sku.d_SKUID==data.currentSku.d_SKUID">Must be in range {{css.skuErrorInfo.lower}} to {{css.skuErrorInfo.upper.toFixed(0)}} !</div>
+                                                    <input type="text" class="form-control input-sm" ng-class="{'form-control-error':css.skuError=='d_IngredientsQuality' && sku.d_SKUID==data.currentSku.d_SKUID}" ng-model="sku.d_IngredientsQuality" ng-blur="leaveSkuInput(sku, 'd_IngredientsQuality', sku.d_IngredientsQuality)"  ng-focus="clickCurrentSku(sku)">
                                                 </td>
                                             </tr>
                                             <tr>
@@ -1358,13 +1363,15 @@
                                             <tr>
                                                 <td class="tdgroup">{{'DecisionPageDecisionTabProductionVolume' | translate}}</td>
                                                 <td ng-repeat="sku in data.currentBrand.d_SKUsDecisions">
-                                                    <input type="text" class="form-control input-sm" ng-model="sku.d_ProductionVolume" ng-blur="leaveSkuInput(sku, 'd_ProductionVolume', sku.d_ProductionVolume)"  ng-focus="clickCurrentSku(sku)">
+                                                    <div class="alert alert-danger alert-tooltip" role="alert" ng-show="css.skuErrorField=='d_ProductionVolume' && sku.d_SKUID==data.currentSku.d_SKUID">Must be in range {{css.skuErrorInfo.lower}} to {{css.skuErrorInfo.upper.toFixed(0)}} !</div>
+                                                    <input type="text" class="form-control input-sm" ng-class="{'form-control-error':css.skuError=='d_ProductionVolume' && sku.d_SKUID==data.currentSku.d_SKUID}" ng-model="sku.d_ProductionVolume" ng-blur="leaveSkuInput(sku, 'd_ProductionVolume', sku.d_ProductionVolume)"  ng-focus="clickCurrentSku(sku)">
                                                 </td>
                                             </tr>
                                             <tr>
                                                 <td>{{'DecisionPageDecisionTabManufacturerPrice' | translate}}</td>
                                                 <td ng-repeat="sku in data.currentBrand.d_SKUsDecisions">
-                                                    <input type="text" class="form-control input-sm" filternumber ng-model="sku.d_FactoryPrice[0]" ng-blur="leaveSkuInput(sku, 'd_FactoryPrice', sku.d_FactoryPrice[0] )"  ng-focus="clickCurrentSku(sku)">
+                                                    <div class="alert alert-danger alert-tooltip" role="alert" ng-show="css.skuErrorField=='d_FactoryPrice' && sku.d_SKUID==data.currentSku.d_SKUID">Must be in range {{css.skuErrorInfo.lower}} to {{css.skuErrorInfo.upper.toFixed(0)}} !</div>
+                                                    <input type="text" class="form-control input-sm" ng-class="{'form-control-error':css.skuError=='d_FactoryPrice' && sku.d_SKUID==data.currentSku.d_SKUID}" filternumber ng-model="sku.d_FactoryPrice[0]" ng-blur="leaveSkuInput(sku, 'd_FactoryPrice', sku.d_FactoryPrice[0] )"  ng-focus="clickCurrentSku(sku)">
                                                 </td>
                                             </tr>
                                             <tr>
@@ -1376,7 +1383,8 @@
                                             <tr>
                                                 <td class="tdgroup">{{'DecisionPageDecisionTabConsumerCommunication' | translate}}</td>
                                                 <td ng-repeat="sku in data.currentBrand.d_SKUsDecisions">
-                                                    <input type="text" class="form-control input-sm" ng-model="sku.d_Advertising" ng-blur="leaveSkuInput(sku, 'd_Advertising', sku.d_Advertising)"  ng-focus="clickCurrentSku(sku)">
+                                                    <div class="alert alert-danger alert-tooltip" role="alert" ng-show="css.skuErrorField=='d_Advertising' && sku.d_SKUID==data.currentSku.d_SKUID">Must be in range {{css.skuErrorInfo.lower}} to {{css.skuErrorInfo.upper.toFixed(0)}} !</div>
+                                                    <input type="text" class="form-control input-sm" ng-class="{'form-control-error':css.skuError=='d_Advertising' && sku.d_SKUID==data.currentSku.d_SKUID}" ng-model="sku.d_Advertising" ng-blur="leaveSkuInput(sku, 'd_Advertising', sku.d_Advertising)"  ng-focus="clickCurrentSku(sku)">
                                                 </td>
                                             </tr>
                                             <tr>
@@ -1397,7 +1405,8 @@
                                             <tr>
                                                 <td class="tdgroup">{{'DecisionPageDecisionTabConsumerPromotions' | translate}}</td>
                                                 <td ng-repeat="sku in data.currentBrand.d_SKUsDecisions">
-                                                    <input type="text" class="form-control input-sm" ng-model="sku.d_PromotionalBudget" ng-blur="leaveSkuInput(sku, 'd_PromotionalBudget', sku.d_PromotionalBudget)"  ng-focus="clickCurrentSku(sku)">
+                                                    <div class="alert alert-danger alert-tooltip" role="alert" ng-show="css.skuErrorField=='d_PromotionalBudget' && sku.d_SKUID==data.currentSku.d_SKUID">Must be in range {{css.skuErrorInfo.lower}} to {{css.skuErrorInfo.upper.toFixed(0)}} !</div>
+                                                    <input type="text" class="form-control input-sm" ng-class="{'form-control-error':css.skuError=='d_PromotionalBudget' && sku.d_SKUID==data.currentSku.d_SKUID}" ng-model="sku.d_PromotionalBudget" ng-blur="leaveSkuInput(sku, 'd_PromotionalBudget', sku.d_PromotionalBudget)"  ng-focus="clickCurrentSku(sku)">
                                                 </td>
                                             </tr>
                                             <tr>
@@ -1411,25 +1420,29 @@
                                             <tr>
                                                 <td class="tdgroup">{{'DecisionPageDecisionTabTradeExpenses' | translate}}</td>
                                                 <td ng-repeat="sku in data.currentBrand.d_SKUsDecisions">
-                                                    <input type="text" class="form-control input-sm" ng-model="sku.d_TradeExpenses" ng-blur="leaveSkuInput(sku, 'd_TradeExpenses', sku.d_TradeExpenses)"  ng-focus="clickCurrentSku(sku)">
+                                                    <div class="alert alert-danger alert-tooltip" role="alert" ng-show="css.skuErrorField=='d_TradeExpenses' && sku.d_SKUID==data.currentSku.d_SKUID">Must be in range {{css.skuErrorInfo.lower}} to {{css.skuErrorInfo.upper.toFixed(0)}} !</div>
+                                                    <input type="text" class="form-control input-sm" ng-class="{'form-control-error':css.skuError=='d_TradeExpenses' && sku.d_SKUID==data.currentSku.d_SKUID}" ng-model="sku.d_TradeExpenses" ng-blur="leaveSkuInput(sku, 'd_TradeExpenses', sku.d_TradeExpenses)"  ng-focus="clickCurrentSku(sku)">
                                                 </td>
                                             </tr>
                                             <tr>
                                                 <td>{{'DecisionPageDecisionTabAdditionalTradeMargin' | translate}}</td>
                                                 <td ng-repeat="sku in data.currentBrand.d_SKUsDecisions">
-                                                    <input type="text" class="form-control input-sm" filterpercentage ng-model="sku.d_AdditionalTradeMargin"  ng-blur="leaveSkuInput(sku, 'd_AdditionalTradeMargin', sku.d_AdditionalTradeMargin)"  ng-focus="clickCurrentSku(sku)">
+                                                    <div class="alert alert-danger alert-tooltip" role="alert" ng-show="css.skuErrorField=='d_AdditionalTradeMargin' && sku.d_SKUID==data.currentSku.d_SKUID">Must be in range {{css.skuErrorInfo.lower}} to {{css.skuErrorInfo.upper.toFixed(0)}} !</div>
+                                                    <input type="text" class="form-control input-sm" ng-class="{'form-control-error':css.skuError=='d_AdditionalTradeMargin' && sku.d_SKUID==data.currentSku.d_SKUID}"  filterpercentage ng-model="sku.d_AdditionalTradeMargin"  ng-blur="leaveSkuInput(sku, 'd_AdditionalTradeMargin', sku.d_AdditionalTradeMargin)"  ng-focus="clickCurrentSku(sku)">
                                                 </td>
                                             </tr>
                                             <tr>
                                                 <td class="tdgroup">{{'DecisionPageDecisionTabWholesaleMinimumVolume' | translate}}</td>
                                                 <td ng-repeat="sku in data.currentBrand.d_SKUsDecisions">
-                                                    <input type="text" class="form-control input-sm" ng-model="sku.d_WholesalesBonusMinVolume" ng-blur="leaveSkuInput(sku, 'd_WholesalesBonusMinVolume', sku.d_WholesalesBonusMinVolume)"  ng-focus="clickCurrentSku(sku)">
+                                                    <div class="alert alert-danger alert-tooltip" role="alert" ng-show="css.skuErrorField=='d_WholesalesBonusMinVolume' && sku.d_SKUID==data.currentSku.d_SKUID">Must be in range {{css.skuErrorInfo.lower}} to {{css.skuErrorInfo.upper.toFixed(0)}} !</div>
+                                                    <input type="text" class="form-control input-sm" ng-class="{'form-control-error':css.skuError=='d_WholesalesBonusMinVolume' && sku.d_SKUID==data.currentSku.d_SKUID}"  ng-model="sku.d_WholesalesBonusMinVolume" ng-blur="leaveSkuInput(sku, 'd_WholesalesBonusMinVolume', sku.d_WholesalesBonusMinVolume)"  ng-focus="clickCurrentSku(sku)">
                                                 </td>
                                             </tr>
                                             <tr>
                                                 <td>{{'DecisionPageDecisionTabWholesaleBonusRate' | translate}}</td>
                                                 <td ng-repeat="sku in data.currentBrand.d_SKUsDecisions">
-                                                    <input type="text" class="form-control input-sm" filterpercentage ng-model="sku.d_WholesalesBonusRate" ng-blur="leaveSkuInput(sku, 'd_WholesalesBonusRate', sku.d_WholesalesBonusRate)"  ng-focus="clickCurrentSku(sku)">
+                                                    <div class="alert alert-danger alert-tooltip" role="alert" ng-show="css.skuErrorField=='d_WholesalesBonusRate' && sku.d_SKUID==data.currentSku.d_SKUID">Must be in range {{css.skuErrorInfo.lower}} to {{css.skuErrorInfo.upper.toFixed(0)}} !</div>
+                                                    <input type="text" class="form-control input-sm" ng-class="{'form-control-error':css.skuError=='d_WholesalesBonusRate' && sku.d_SKUID==data.currentSku.d_SKUID}"  filterpercentage ng-model="sku.d_WholesalesBonusRate" ng-blur="leaveSkuInput(sku, 'd_WholesalesBonusRate', sku.d_WholesalesBonusRate)"  ng-focus="clickCurrentSku(sku)">
                                                 </td>
                                             </tr>
 
@@ -1446,22 +1459,28 @@
                     <div class="row brand_box">
                         <div class="col-md-12">
                             <h5>New Product Development Investment  <span class="glyphicon glyphicon-info-sign" ng-mouseenter="css.investmentInfo='true'" ></span></h5>
-                            <form class="form-horizontal investment_form" role="form">
-                                <div class="form-group">
-                                    <label class="col-sm-8 control-label text-left" for="InvestmentProductionEfficiency">Investment in Production Efficiency ($mln)</label>
+
+                            <form class="form-horizontal investment_form" role="form" name="updateCompanyForm" novalidate>
+
+                                <div class="form-group has-feedback" ng-class="{ 'has-success':updateCompanyForm.companyInvestmentProductionEfficiency.$dirty && updateCompanyForm.companyInvestmentProductionEfficiency.$valid , 'has-error': updateCompanyForm.companyInvestmentProductionEfficiency.$dirty && updateCompanyForm.companyInvestmentProductionEfficiency.$invalid}">
+                                    <label class="col-sm-6 control-label text-left" for="companyInvestmentProductionEfficiency">Investment in Production Efficiency ($mln)</label>
                                     <div class="col-sm-3">
-                                        <input type="number" class="form-control" id="InvestmentProductionEfficiency" ng-model="data.currentCompany.d_InvestmentInEfficiency" ng-blur="updateCompany()">
+                                        <input type="number" class="form-control" id="companyInvestmentProductionEfficiency" name="companyInvestmentProductionEfficiency" ng-model="data.currentCompany.d_InvestmentInEfficiency" required ng-blur="updateCompany('d_InvestmentInEfficiency', updateCompanyForm, 'companyInvestmentProductionEfficiency')">
+                                        <span ng-if="updateCompanyForm.companyInvestmentProductionEfficiency.$dirty && updateCompanyForm.companyInvestmentProductionEfficiency.$valid" class="glyphicon glyphicon-ok form-control-feedback"></span>
+                                        <span ng-if="updateCompanyForm.companyInvestmentProductionEfficiency.$dirty && updateCompanyForm.companyInvestmentProductionEfficiency.$invalid" class="glyphicon glyphicon-remove form-control-feedback"></span>
                                     </div>
+                                    <label class="control-label" ng-if="updateCompanyForm.companyInvestmentProductionEfficiency.$dirty && updateCompanyForm.companyInvestmentProductionEfficiency.$invalid" ><i class="fa fa-times-circle-o"></i>Range from {{css.companyErrorInfo.lower}} to {{css.companyErrorInfo.upper.toFixed(0)}} !</label>
                                 </div>
 
-                                <div class="form-group">
-                                    <label class="col-sm-8 control-label text-left"  for="InvestmentProcessingTechnology">Investment in Processing Technology ($mln)</label>
+                                <div class="form-group has-feedback" ng-class="{ 'has-success':updateCompanyForm.companyInvestmentProcessingTechnology.$dirty && updateCompanyForm.companyInvestmentProcessingTechnology.$valid , 'has-error': updateCompanyForm.companyInvestmentProcessingTechnology.$dirty && updateCompanyForm.companyInvestmentProcessingTechnology.$invalid}">
+                                    <label class="col-sm-6 control-label text-left"  for="companyInvestmentProcessingTechnology">Investment in Processing Technology ($mln)</label>
                                     <div class="col-sm-3">
-                                        <input type="number" class="form-control" id="InvestmentProcessingTechnology" ng-model="data.currentCompany.d_InvestmentInTechnology" ng-blur="updateCompany()">
+                                        <input type="number" class="form-control" id="companyInvestmentProcessingTechnology" name="companyInvestmentProcessingTechnology" ng-model="data.currentCompany.d_InvestmentInTechnology" required ng-blur="updateCompany('d_InvestmentInTechnology', updateCompanyForm, 'companyInvestmentProcessingTechnology')">
+                                        <span ng-if="updateCompanyForm.companyInvestmentProcessingTechnology.$dirty && updateCompanyForm.companyInvestmentProcessingTechnology.$valid" class="glyphicon glyphicon-ok form-control-feedback"></span>
+                                        <span ng-if="updateCompanyForm.companyInvestmentProcessingTechnology.$dirty && updateCompanyForm.companyInvestmentProcessingTechnology.$invalid" class="glyphicon glyphicon-remove form-control-feedback"></span>
                                     </div>
+                                    <label class="control-label" ng-if="updateCompanyForm.companyInvestmentProcessingTechnology.$dirty && updateCompanyForm.companyInvestmentProcessingTechnology.$invalid" ><i class="fa fa-times-circle-o"></i>Range from {{css.companyErrorInfo.lower}} to {{css.companyErrorInfo.upper.toFixed(0)}} !</label>
                                 </div>
-
-
                             </form>
 
                             <table class="table table-striped table-hover table-condensed table-bordered" ng-show="css.investmentInfo">
