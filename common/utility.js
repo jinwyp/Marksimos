@@ -73,7 +73,9 @@ exports.unitCost = function(periodNumber, packsize, ingredientsQuality, technolo
     var QI;
     var TL;
     var costNow;
+    var exogenous;
 
+    console.log('periodNumber:'+periodNumber+',packsize:'+packsize+',ingredientsQuality:'+ingredientsQuality+',technologyLevel:'+technologyLevel+',previousCumulatedVolumes:['+previousCumulatedVolumes+'],efficiencyOfProduction:'+efficiencyOfProduction+',currentVolume:'+currentVolume);
     var volumeNow = currentVolume * consts.ActualSize[packsize];
 
     volumeNow += previousCumulatedVolumes[technologyLevel];
@@ -86,35 +88,73 @@ exports.unitCost = function(periodNumber, packsize, ingredientsQuality, technolo
 
     volumeNow = Math.max(volumeNow, gameParameters.pgen.sku_MinProductionVolume);
 
+    //edit exogenous function 
+    exogenous=require('../api/gameExsogenous.js').Exogenous(periodNumber);
+    if(periodNumber < 0){
+        inflation = Math.pow(1 + exogenous.exo_InflationRate, Math.abs(periodNumber));
+    }else{
+        inflation = 1.0;
+    }
+
+    QI = ingredientsQuality;
+
+    QI = gameParameters.pgen.sku_CostIQSquare * QI * QI
+        + gameParameters.pgen.sku_CostIQLinear * QI
+        + gameParameters.pgen.sku_CostIQIntercept;
+
+    TL = technologyLevel;
+
+    TL = gameParameters.pgen.sku_CostTLSquare * TL * TL
+        + gameParameters.pgen.sku_CostTLLinear * TL
+        + gameParameters.pgen.sku_CostTLIntercept;
+
+    console.log('QI:'+QI+',TL:'+TL);
+
+    costNow = exogenous.exo_IngredientsCost / inflation * QI
+
+        + exogenous.exo_TechnologyExpense / inflation * TL;
+
+    costNow = costNow* Math.pow((volumeNow / gameParameters.pgen.sku_MinProductionVolume), gameParameters.pgen.sku_DefaultCostDrop);
+
+    costNow = (costNow + exogenous.exo_LogisticsFixedCosts / inflation) * (1.00 - efficiencyOfProduction);
+
+    costNow = costNow * consts.ActualSize[packsize];
+
+
+    console.log('Math.pow((volumeNow / gameParameters.pgen.sku_MinProductionVolume), gameParameters.pgen.sku_DefaultCostDrop):'+Math.pow((volumeNow / gameParameters.pgen.sku_MinProductionVolume), gameParameters.pgen.sku_DefaultCostDrop));
+    console.log('exogenous.exo_LogisticsFixedCosts:'+exogenous.exo_LogisticsFixedCosts);
+    console.log('1.00 - efficiencyOfProduction:'+(1.00 - efficiencyOfProduction));
+    console.log('consts.ActualSize[packsize]:'+consts.ActualSize[packsize]);
+    return costNow;
     //TODO: UnitCost problem : a) calculation result is wrong, 
     //TODO: UnitCost problem : b) still depends on cgi request exogenous 
-    return cgiapi.getExogenous(periodNumber)
-    .then(function(exogenous){
-        if(periodNumber < 0){
-            inflation = Math.pow(1 + exogenous.exo_InflationRate, Math.abs(periodNumber));
-        }else{
-            inflation = 1.0;
-        }
+    // return cgiapi.getExogenous(periodNumber)
+    // .then(function(exogenous){
+    //     if(periodNumber < 0){
+    //         inflation = Math.pow(1 + exogenous.exo_InflationRate, Math.abs(periodNumber));
+    //     }else{
+    //         inflation = 1.0;
+    //     }
 
-        QI = gameParameters.pgen.sku_CostIQSquare * ingredientsQuality * ingredientsQuality
-            + gameParameters.pgen.sku_CostIQLinear * ingredientsQuality
-            + gameParameters.pgen.sku_CostIQIntercept;
+    //     QI = gameParameters.pgen.sku_CostIQSquare * ingredientsQuality * ingredientsQuality
+    //         + gameParameters.pgen.sku_CostIQLinear * ingredientsQuality
+    //         + gameParameters.pgen.sku_CostIQIntercept;
 
-        TL = gameParameters.pgen.sku_CostTLSquare * technologyLevel * technologyLevel
-            + gameParameters.pgen.sku_CostTLLinear * technologyLevel
-            + gameParameters.pgen.sku_CostTLIntercept;
+    //     TL = gameParameters.pgen.sku_CostTLSquare * technologyLevel * technologyLevel
+    //         + gameParameters.pgen.sku_CostTLLinear * technologyLevel
+    //         + gameParameters.pgen.sku_CostTLIntercept;
 
-        costNow = exogenous.exo_IngredientsCost / inflation * QI
-            + exogenous.exo_TechnologyExpense / inflation * TL;
+    //     costNow = exogenous.exo_IngredientsCost / inflation * QI
+    //         + exogenous.exo_TechnologyExpense / inflation * TL;
 
-        costNow *= Math.pow(volumeNow / gameParameters.pgen.sku_MinProductionVolume, gameParameters.pgen.sku_DefaultCostDrop);
+    //     costNow *= Math.pow(volumeNow / gameParameters.pgen.sku_MinProductionVolume, gameParameters.pgen.sku_DefaultCostDrop);
 
-        costNow = (costNow + exogenous.exo_LogisticsFixedCosts / inflation) * (1.00 - efficiencyOfProduction);
+    //     costNow = (costNow + exogenous.exo_LogisticsFixedCosts / inflation) * (1.00 - efficiencyOfProduction);
 
-        costNow = costNow * consts.ActualSize[packsize];
+    //     costNow = costNow * consts.ActualSize[packsize];
 
-        return costNow;
-    })
+    //     return costNow;
+    // })
 }
 
 exports.unitPrice = function(localtion, consumerPrice){
