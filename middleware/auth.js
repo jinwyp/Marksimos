@@ -12,7 +12,7 @@ exports.needLogin = function(req, res, next){
     if(sessionOperation.getLoginStatus(req)){
         next();
     }else{
-        res.redirect('/login');
+        res.redirect('/marksimos/login');
     }
 };
 
@@ -20,6 +20,6 @@ exports.adminNeedLogin = function(req, res, next){
     if(sessionOperation.getLoginStatus(req)){
         next();
     }else{
-        res.redirect('/admin');
+        res.redirect('/marksimos/admin');
     }
 };

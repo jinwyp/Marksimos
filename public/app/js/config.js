@@ -1,0 +1,21 @@
+/**
+ * Created by jinwyp on 6/26/14.
+ */
+
+var app = angular.module('marksimos.config', []);
+
+
+
+/********************  解决提交请求$http 时出现 "Provisional headers are shown angular" ********************/
+/********************  http://stackoverflow.com/questions/21630534/node-js-angular-js-caution-provisional-headers-are-shown ********************/
+
+
+app.config(['$httpProvider', function ($httpProvider) {
+    //Reset headers to avoid OPTIONS request (aka preflight)
+    $httpProvider.defaults.headers.common = {};
+    $httpProvider.defaults.headers.post = {};
+    $httpProvider.defaults.headers.put = {};
+    $httpProvider.defaults.headers.patch = {};
+}]);
+
+

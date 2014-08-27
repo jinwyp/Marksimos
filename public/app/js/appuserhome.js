@@ -4,7 +4,9 @@
 
 
 // create module for custom directives
-var marksimosapp = angular.module('marksimos', ['pascalprecht.translate', 'angularCharts', 'nvd3ChartDirectives', 'cgNotify', , 'marksimos.commoncomponent', 'marksimos.websitecomponent', 'marksimos.model', 'marksimos.filter', 'marksimos.translation' ]);
+var marksimosapp = angular.module('marksimos', ['pascalprecht.translate', 'angularCharts', 'nvd3ChartDirectives', 'cgNotify',  'marksimos.commoncomponent', 'marksimos.websitecomponent', 'marksimos.model', 'marksimos.filter', 'marksimos.translation' ]);
+
+
 
 
 // controller business logic
@@ -49,15 +51,19 @@ marksimosapp.controller('chartController', ['$translate', '$scope', '$rootScope'
 
 
     $scope.css = {
-        menu : 'Decision',
-        chartMenu : 'A1',
-        tableReportTab : 'SKU',
-        tableReportMenu : 1,
-        additionalBudget : true,
-        currentDecisionBrandId : 0,
+        menu                     : 'Decision',
+        chartMenu                : 'A1',
+        tableReportTab           : 'SKU',
+        tableReportMenu          : 1,
+        additionalBudget         : true,
+        currentDecisionBrandId   : 0,
         currentDecisionRightMenu : 1,
-        addNewSku : false,
-        addNewBrand : false
+        addNewSku                : false,
+        addNewBrand              : false,
+        skuErrorField : '',
+        skuErrorInfo  : '',
+        brandErrorInfo  : '',
+        companyErrorInfo  : ''
     };
 
     $scope.dataChartSimple = {
@@ -82,7 +88,9 @@ marksimosapp.controller('chartController', ['$translate', '$scope', '$rootScope'
         currentBrandIndex : 0,
         currentModifiedSku : {},
         currentModifiedBrand : {},
-        currentModifiedCompany : {},
+        currentModifiedCompany : {
+            company_data : {}
+        },
         currentSku : null,
         currentSkuIndex : 0,
         newBrand : {
@@ -745,8 +753,6 @@ marksimosapp.controller('chartController', ['$translate', '$scope', '$rootScope'
         $scope.data.newSku.othererrorinfo = "";
     };
 
-
-
     $scope.addNewSku = function(form){
         $scope.data.newSku.brand_id = $scope.data.currentBrand.d_BrandID;
 
@@ -799,6 +805,7 @@ marksimosapp.controller('chartController', ['$translate', '$scope', '$rootScope'
     };
 
     $scope.clickCurrentSku = function(sku){
+        $scope.css.skuErrorField = '';
         $scope.data.currentSku = angular.copy(sku);
         Company.getCompanyFutureProjectionCalculator($scope.data.currentSku.d_SKUID).then(function(data, status, headers, config){
             $scope.data.currentCompanyFutureProjectionCalculator = data;
@@ -807,7 +814,7 @@ marksimosapp.controller('chartController', ['$translate', '$scope', '$rootScope'
     };
 
 
-
+    /********************  更新 SKU  ********************/
     $scope.leaveSkuInput = function(sku, fieldname, fielddata, segmentOrWeek, weekindex){
         $scope.data.currentModifiedSku = {
             brand_id : sku.d_BrandID,
@@ -850,6 +857,53 @@ marksimosapp.controller('chartController', ['$translate', '$scope', '$rootScope'
             });
         }, function(data){
             console.log(data);
+
+            $scope.css.skuErrorField = data.data.modifiedField;
+
+            // 使用命令对象
+            function showSkuErrorInfo(fieldname) {
+                var names = {
+                    'd_Technology': function() {
+                        return data.data;
+                    },
+                    'd_IngredientsQuality': function() {
+                        return data.data;
+                    },
+                    'd_ProductionVolume': function() {
+                        return data.data;
+                    },
+                    'd_FactoryPrice': function() {
+                        return data.data;
+                    },
+                    'd_Advertising': function() {
+                        return data.data;
+                    },
+                    'd_PromotionalBudget': function() {
+                        return data.data;
+                    },
+                    'd_TradeExpenses': function() {
+                        return data.data;
+                    },
+                    'd_AdditionalTradeMargin': function() {
+                        return data.data;
+                    },
+                    'd_WholesalesBonusMinVolume': function() {
+                        return data.data;
+                    },
+                    'd_WholesalesBonusRate': function() {
+                        return data.data;
+                    }
+
+                };
+                if (typeof names[fieldname] !== 'function') {
+                    return false;
+                }
+                return names[fieldname]();
+            }
+
+            $scope.css.skuErrorInfo = showSkuErrorInfo($scope.css.skuErrorField);
+
+
             notify({
                 message : data.data.message,
                 template : notifytemplate.failure,
@@ -858,7 +912,8 @@ marksimosapp.controller('chartController', ['$translate', '$scope', '$rootScope'
         });
     };
 
-    $scope.updateBrand = function(){
+    /********************  更新 Brand  ********************/
+    $scope.updateBrand = function(form){
         $scope.data.currentModifiedBrand = {
             brand_id : $scope.data.currentBrand.d_BrandID,
             brand_data : {
@@ -867,6 +922,9 @@ marksimosapp.controller('chartController', ['$translate', '$scope', '$rootScope'
         };
 
         Company.updateBrand($scope.data.currentModifiedBrand).then(function(data, status, headers, config){
+            form.brandSalesForce.$valid = true;
+            form.brandSalesForce.$invalid = false;
+
             $scope.companyInfoInit();
             notify({
                 message : 'Save Success !',
@@ -875,38 +933,53 @@ marksimosapp.controller('chartController', ['$translate', '$scope', '$rootScope'
             });
         }, function(data){
             console.log(data);
+
+            form.brandSalesForce.$valid = false;
+            form.brandSalesForce.$invalid = true;
+
+            $scope.css.brandErrorInfo = data.data;
+
             notify({
-                message : JSON.stringify(data.data) + ', status: ' + data.status,
+                message : data.data.message,
                 template : notifytemplate.failure,
                 position : 'center'                
             });
         });
     };
 
-    $scope.updateCompany = function(){
 
-        $scope.css.additionalBudget = true;
+    /********************  更新 Company  ********************/
+    $scope.updateCompany = function(fieldname, form, formfieldname){
 
-        $scope.data.currentModifiedCompany = {
-            company_data : {
-                d_InvestmentInEfficiency : $scope.data.currentCompany.d_InvestmentInEfficiency,
-                d_InvestmentInTechnology : $scope.data.currentCompany.d_InvestmentInTechnology,
-                d_RequestedAdditionalBudget : $scope.data.currentCompany.d_RequestedAdditionalBudget
-            }
-        };
+        $scope.data.currentModifiedCompany.company_data = {};
+        $scope.data.currentModifiedCompany.company_data[fieldname] = $scope.data.currentCompany[fieldname];
 
+        console.log($scope.data.currentModifiedCompany);
         Company.updateCompany($scope.data.currentModifiedCompany).success(function(data, status, headers, config){
             console.log(data);
+            $scope.css.additionalBudget = true;
+
+
+            form[formfieldname].$valid = true;
+            form[formfieldname].$invalid = false;
+
             $scope.companyInfoInit();
             notify({
                 message : 'Save Success !',
                 template : notifytemplate.success,
                 position : 'center'
             });
-        }, function(data){
+        }).error(function(data, status, headers, config){
             console.log(data);
+
+            form[formfieldname].$valid = false;
+            form[formfieldname].$invalid = true;
+
+            $scope.css.companyErrorInfo = data;
+
             notify({
-                message : JSON.stringify(data.data) + ', status: ' + data.status,
+//                message : JSON.stringify(data.data) + ', status: ' + data.status,
+                message : data.message,
                 template : notifytemplate.failure,
                 position : 'center'
             });

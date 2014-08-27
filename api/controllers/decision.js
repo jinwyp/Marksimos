@@ -335,6 +335,7 @@ exports.updateBrandDecision = function(req, res, next){
 };
 
 exports.updateCompanyDecision = function(req, res, next){
+
     var company_data = req.body.company_data;
 
     var seminarId = req.session.seminarId;
