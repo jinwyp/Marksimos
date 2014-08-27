@@ -56,6 +56,7 @@ exports.getSKUInfo = function(seminarId, currentPeriod, companyId, SKUID){
             currentPeriodInfo.stocksAtRetailers = [0, 0];
         }
 
+
         //not sure if the last parameter is decision.d_ProductionVolume 
         return utility.unitCost(
                 currentPeriod,

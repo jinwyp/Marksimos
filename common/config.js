@@ -91,6 +91,12 @@ module.exports = (function(){
             config.host = 'http://localhost:3000/';
             config.cgiService = 'http://10.20.30.97/cgi-bin/';
             break;
+        case 'raven':
+            config.logDirectory = '/Users/raven/desktop/Marksimos/log/';
+            config.mongo_conn = 'mongodb://localhost/Marksimos';
+            config.host = 'http://localhost:3000/';
+            config.cgiService = 'http://192.168.1.103:800/cgi-bin/';
+            break;
         case 'production':
             config.logDirectory = '/home/hcd/Marksimos/log/';
             config.mongo_conn = 'mongodb://localhost/Marksimos';
