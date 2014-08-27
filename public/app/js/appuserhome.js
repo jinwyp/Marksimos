@@ -778,7 +778,7 @@ marksimosapp.controller('chartController', ['$translate', '$scope', '$rootScope'
 
     /********************  删除一个SKU  注意该SKU必须是本回合添加的SKU才可以删除 ********************/
     $scope.delSku = function(sku){
-        Company.delSku(sku.d_SKUID).then(function(data, status, headers, config){
+        Company.delSku(sku.d_SKUID, sku.d_BrandID).then(function(data, status, headers, config){
             $scope.companyInfoInit();
 
             notify({
