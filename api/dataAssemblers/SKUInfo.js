@@ -35,25 +35,31 @@ exports.getSKUInfo = function(seminarId, currentPeriod, companyId, SKUID){
 
         //current period data
         var currentPeriodInfo = {};
-        currentPeriodInfo.SKUName = brandResult.b_BrandName + SKUResult.u_SKUName;
-        currentPeriodInfo.stocksAtFactory = [
-            SKUResult.u_ps_FactoryStocks[consts.StocksMaxTotal].s_ps_Volume,
-            SKUResult.u_ps_FactoryStocks[consts.StocksMaxTotal].s_ps_Volume * consts.ActualSize[SKUResult.u_PackSize]
-        ];
-        currentPeriodInfo.stocksAtWholsalers = [
-            SKUResult.u_ps_WholesaleStocks[consts.StocksMaxTotal].s_ps_Volume,
-            SKUResult.u_ps_WholesaleStocks[consts.StocksMaxTotal].s_ps_Volume * consts.ActualSize[SKUResult.u_PackSize]
-        ];
-        currentPeriodInfo.stocksAtRetailers = [
-            SKUResult.u_ps_RetailStocks[consts.StocksMaxTotal].s_ps_Volume,
-            SKUResult.u_ps_RetailStocks[consts.StocksMaxTotal].s_ps_Volume * consts.ActualSize[SKUResult.u_PackSize]
-        ];
+        currentPeriodInfo.SKUName = decision.b_BrandName + decision.u_SKUName;
 
+        if(SKUResult){
+            currentPeriodInfo.stocksAtFactory = [
+                SKUResult.u_ps_FactoryStocks[consts.StocksMaxTotal].s_ps_Volume,
+                SKUResult.u_ps_FactoryStocks[consts.StocksMaxTotal].s_ps_Volume * consts.ActualSize[SKUResult.u_PackSize]
+            ];
+            currentPeriodInfo.stocksAtWholsalers = [
+                SKUResult.u_ps_WholesaleStocks[consts.StocksMaxTotal].s_ps_Volume,
+                SKUResult.u_ps_WholesaleStocks[consts.StocksMaxTotal].s_ps_Volume * consts.ActualSize[SKUResult.u_PackSize]
+            ];
+            currentPeriodInfo.stocksAtRetailers = [
+                SKUResult.u_ps_RetailStocks[consts.StocksMaxTotal].s_ps_Volume,
+                SKUResult.u_ps_RetailStocks[consts.StocksMaxTotal].s_ps_Volume * consts.ActualSize[SKUResult.u_PackSize]
+            ];            
+        } else {
+            currentPeriodInfo.stocksAtFactory = [0, 0];
+            currentPeriodInfo.stocksAtWholsalers = [0, 0];
+            currentPeriodInfo.stocksAtRetailers = [0, 0];
+        }
 
         //not sure if the last parameter is decision.d_ProductionVolume 
         return utility.unitCost(
                 currentPeriod,
-                SKUResult.u_PackSize,
+                decision.d_PackSize,
                 decision.d_IngredientsQuality,
                 decision.d_Technology,
                 companyResult.c_CumulatedProductionVolumes,
@@ -62,19 +68,18 @@ exports.getSKUInfo = function(seminarId, currentPeriod, companyId, SKUID){
         .then(function(unitProductionCost){
             currentPeriodInfo.unitProductionCost = [
                 parseFloat((Math.ceil(unitProductionCost * 100) / 100).toFixed(2)), 
-                parseFloat((Math.ceil(unitProductionCost / consts.ActualSize[SKUResult.u_PackSize] * 100) / 100).toFixed(2))
+                parseFloat((Math.ceil(unitProductionCost / consts.ActualSize[decision.d_PackSize] * 100) / 100).toFixed(2))
             ]; 
-            //currentPeriodInfo.unitProductionCost = [parseFloat(unitProductionCost), parseFloat((unitProductionCost / consts.ActualSize[SKUResult.u_PackSize]))]; 
             
             //not sure if currentPeriodInfo.d_ConsumerPrice is the right value for that parameter
             var wholesalePrice = utility.unitPrice('WHOLESALERS', decision.d_ConsumerPrice);
-            currentPeriodInfo.wholesalePrice = [parseFloat(wholesalePrice.toFixed(2)), parseFloat((wholesalePrice/consts.ActualSize[SKUResult.u_PackSize]).toFixed(2))];
+            currentPeriodInfo.wholesalePrice = [parseFloat(wholesalePrice.toFixed(2)), parseFloat((wholesalePrice/consts.ActualSize[decision.d_PackSize]).toFixed(2))];
 
             var recommendedConsumer = decision.d_FactoryPrice[0] * (gameParameters.pgen.wholesale_Markup + 1)
-                * (1+ gameParameters.pgen.retail_Markup);
+                * (1+ gameParameters.pgen.retail_Markup);                
             currentPeriodInfo.recommendedConsumer = [
                 parseFloat(recommendedConsumer.toFixed(2)), 
-                parseFloat((recommendedConsumer / consts.ActualSize[SKUResult.u_PackSize]).toFixed(2))
+                parseFloat((recommendedConsumer / consts.ActualSize[decision.d_PackSize]).toFixed(2))
             ];
             // currentPeriodInfo.recommendedConsumer = [
             //     parseFloat((Math.ceil(recommendedConsumer * 100) / 100).toFixed(2)), 
@@ -87,35 +92,65 @@ exports.getSKUInfo = function(seminarId, currentPeriod, companyId, SKUID){
 
             //previous period data
             var previousPeriodInfo = {};
-            previousPeriodInfo.marketSales = [
-                parseFloat((SKUResult.u_MarketSalesVolume[consts.ConsumerSegmentsMaxTotal-1] / consts.ActualSize[SKUResult.u_PackSize]).toFixed(2)),
-                parseFloat(SKUResult.u_MarketSalesVolume[consts.ConsumerSegmentsMaxTotal-1].toFixed(2))
-            ];
 
-            previousPeriodInfo.shipmentsToRetailers = [
-                parseFloat((SKUResult.u_WholesalesVolume/consts.ActualSize[SKUResult.u_PackSize]).toFixed(2)),
-                parseFloat(SKUResult.u_WholesalesVolume.toFixed(2))
-            ];
+            if(SKUResult){
+                previousPeriodInfo.marketSales = [
+                    parseFloat((SKUResult.u_MarketSalesVolume[consts.ConsumerSegmentsMaxTotal-1] / consts.ActualSize[SKUResult.u_PackSize]).toFixed(2)),
+                    parseFloat(SKUResult.u_MarketSalesVolume[consts.ConsumerSegmentsMaxTotal-1].toFixed(2))
+                ];
 
-            previousPeriodInfo.unitProductionCost = [
-                parseFloat(SKUResult.u_ps_UnitCost.toFixed(2)),
-                parseFloat((SKUResult.u_ps_UnitCost / consts.ActualSize[SKUResult.u_PackSize]).toFixed(2))
-            ];
+                previousPeriodInfo.shipmentsToRetailers = [
+                    parseFloat((SKUResult.u_WholesalesVolume/consts.ActualSize[SKUResult.u_PackSize]).toFixed(2)),
+                    parseFloat(SKUResult.u_WholesalesVolume.toFixed(2))
+                ];
 
-            previousPeriodInfo.averageConsumerPrice = [
-                parseFloat((SKUResult.u_AverageNetMarketPrice * consts.ActualSize[SKUResult.u_PackSize]).toFixed(2)),
-                parseFloat(SKUResult.u_AverageNetMarketPrice.toFixed(2))
-            ];
+                previousPeriodInfo.unitProductionCost = [
+                    parseFloat(SKUResult.u_ps_UnitCost.toFixed(2)),
+                    parseFloat((SKUResult.u_ps_UnitCost / consts.ActualSize[SKUResult.u_PackSize]).toFixed(2))
+                ];
 
-            previousPeriodInfo.consumerCommunication = SKUResult.u_Advertising;
-            previousPeriodInfo.consumerPromotions = SKUResult.u_ConsumerPromotions;
+                previousPeriodInfo.averageConsumerPrice = [
+                    parseFloat((SKUResult.u_AverageNetMarketPrice * consts.ActualSize[SKUResult.u_PackSize]).toFixed(2)),
+                    parseFloat(SKUResult.u_AverageNetMarketPrice.toFixed(2))
+                ];
+
+                previousPeriodInfo.consumerCommunication = SKUResult.u_Advertising;
+                previousPeriodInfo.consumerPromotions = SKUResult.u_ConsumerPromotions;                
+            } else {
+                previousPeriodInfo.marketSales = ['/', '/'];
+                previousPeriodInfo.shipmentsToRetailers = ['/', '/'];
+                previousPeriodInfo.unitProductionCost = ['/', '/'];
+                previousPeriodInfo.averageConsumerPrice = ['/', '/'];
+                previousPeriodInfo.consumerCommunication = '/';
+                previousPeriodInfo.consumerPromotions = '/';                
+
+            }
             previousPeriodInfo.period = currentPeriod - 1;
-
             result.previousPeriodInfo = previousPeriodInfo;
 
 
             // //expected sales
             var expectedSales = {};
+
+            if(!SKUResult){
+                SKUResult = {};
+                SKUResult.u_ps_FactoryStocks = [];
+                SKUResult.u_ps_WholesaleStocks = [];
+                SKUResult.u_ps_RetailStocks = [];                
+                for (var i = 0; i < 6; i++) {
+                    SKUResult.u_ps_FactoryStocks.push({s_ps_Volume: 0, s_ps_UnitPrice: 0, s_ps_UnitCost : 0});                                
+                    SKUResult.u_ps_WholesaleStocks.push({s_ps_Volume:0});
+                    SKUResult.u_ps_RetailStocks.push({s_ps_Volume:0});
+                };
+                SKUResult.u_PackSize = 1;
+            } 
+
+            if(!brandResult){
+                brandResult = [];
+                for (var i = 0; i < 6; i++) {
+                    brandResult.b_FactoryStocks.push({s_Volume:0});
+                };                
+            }
 
             if(decision.d_RepriceFactoryStocks){
                 expectedSales.expectedMaximalSales = (SKUResult.u_ps_FactoryStocks[consts.StocksMaxTotal].s_ps_Volume
@@ -175,9 +210,7 @@ exports.getSKUInfo = function(seminarId, currentPeriod, companyId, SKUID){
                 expectedSales.expectedOperatingMargin = 0;
             }
 
-
             result.expectedSales = expectedSales;
-
             return result;
         })
     });

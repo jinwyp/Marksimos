@@ -26,7 +26,8 @@ tDecisionSchema.pre('save', true, function(next, done){
         'd_RequestedAdditionalBudget' : function(field){ validateAdditionalBudget(field, self, done); },
         'd_InvestmentInEfficiency'    : function(field){ validateAvailableBudget(field, self, done); },         
         'd_InvestmentInTechnology'    : function(field){ validateAvailableBudget(field, self, done); },         
-        'd_InvestmentInServicing'     : function(field){ validateAvailableBudget(field, self, done); }               
+        'd_InvestmentInServicing'     : function(field){ validateAvailableBudget(field, self, done); },
+        'skip'                        : function(field){ process.nextTick(done); }                       
     }
 
     function doValidate(field){        
@@ -39,7 +40,8 @@ tDecisionSchema.pre('save', true, function(next, done){
 
         validateAction[field](field);        
     }
-    console.log('this.modifiedField:' + this.modifiedField);
+//    console.log('this.modifiedField:' + this.modifiedField);
+    if(!this.modifiedField){ this.modifiedField = 'skip'; }    
     doValidate(this.modifiedField);
     next();
 })
