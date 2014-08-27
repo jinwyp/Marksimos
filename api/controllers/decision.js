@@ -366,7 +366,7 @@ exports.updateCompanyDecision = function(req, res, next){
 
     var tempCompanyDecision = createCompanyDecision(company_data);
 
-
+    logger.log('tempCompanyDecision:' + util.inspect(tempCompanyDecision));
     companyDecisionModel.updateCompanyDecision(seminarId, period, companyId, tempCompanyDecision)
     .then(function(result){
         res.send({message: 'update success.'});

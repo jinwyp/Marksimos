@@ -184,7 +184,7 @@ function validateTechnology(field, curSKUDecision, done){
         } else {
             done();
         }                   
-    });
+    }).done();
 }
 
 function validateIngredientsQuality(field, curSKUDecision, done){
@@ -203,7 +203,7 @@ function validateIngredientsQuality(field, curSKUDecision, done){
         } else {
             done();
         }                   
-    });
+    }).done();
 }
 
 //step 2: Factory Price 
@@ -247,7 +247,7 @@ function validateFactoryPrice(field, curSKUDecision, done){
 
     }).fail(function(err){
         done(err);  
-    });
+    }).done();
 }
 
 //Step 3: decide rest unitCost related field (margin and bonus)
@@ -271,7 +271,7 @@ function validateAdditionalTradeMargin(field, curSKUDecision, done){
         } else {
             done();
         }                   
-    });
+    }).done();
 }
 
 function validateWholesalesBonusMinVolume(field, curSKUDecision, done){
@@ -294,7 +294,7 @@ function validateWholesalesBonusMinVolume(field, curSKUDecision, done){
         } else {
             done();
         }         
-    });    
+    }).done();    
 
 }
 
@@ -318,7 +318,7 @@ function validateWholesalesBonusRate(field, curSKUDecision, done){
         } else {
             done();
         }         
-    });     
+    }).done();     
 }
 
 function validateProductionVolume(field, curSKUDecision, done){
@@ -341,7 +341,7 @@ function validateProductionVolume(field, curSKUDecision, done){
         } else {
             done();
         }         
-    });
+    }).done();
 }
 
 function validateAvailableBudget(field, curSKUDecision, done){
@@ -361,7 +361,7 @@ function validateAvailableBudget(field, curSKUDecision, done){
         } else {
             done();
         }         
-    });
+    }).done();
 }
 
 //Pack size : 0 - small, 1 - standard 2 - big

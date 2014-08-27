@@ -40,24 +40,25 @@ tDecisionSchema.pre('save', true, function(next, done){
 
         validateAction[field](field);        
     }
-//    console.log('this.modifiedField:' + this.modifiedField);
+    console.log('this.modifiedField:' + this.modifiedField);
     if(!this.modifiedField){ this.modifiedField = 'skip'; }    
     doValidate(this.modifiedField);
     next();
 })
 
 function validateAdditionalBudget(field, curCompanyDecision, done){
+
     Q.spread([
         spendingDetailsAssembler.getSpendingDetails(curCompanyDecision.seminarId, curCompanyDecision.period, curCompanyDecision.d_CID),
         exports.findOne(curCompanyDecision.seminarId, curCompanyDecision.period, curCompanyDecision.d_CID)
     ], function(spendingDetails, preCompanyDecision){
+
         var budgetLeft = parseFloat(spendingDetails.companyData.availableBudget);
         var err, lowerLimits = [],upperLimits = [];
 
         lowerLimits.push({value : 0, message: 'Cannot accept negative number.'});        
         upperLimits.push({value : parseFloat(spendingDetails.companyData.averageBudgetPerPeriod), message : 'Cannot accept number bigger than ' + spendingDetails.companyData.averageBudgetPerPeriod});
 
-        console.log(uitl.inspect(upperLimits));
         err = rangeCheck(curCompanyDecision[field],lowerLimits,upperLimits);      
         if(err != undefined){
             err.modifiedField = field;
@@ -65,7 +66,7 @@ function validateAdditionalBudget(field, curCompanyDecision, done){
         } else {
             done();
         }         
-    });
+    }).done();
 }
 
 function validateAvailableBudget(field, curCompanyDecision, done){
@@ -85,7 +86,7 @@ function validateAvailableBudget(field, curCompanyDecision, done){
         } else {
             done();
         }         
-    });
+    }).done();
 }
 
 //...Limits : [{message : 'budgetLeft', value : 200}, {message : 'para', value: 3000}]
