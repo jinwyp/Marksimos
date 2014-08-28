@@ -63,8 +63,8 @@ function generateSKUReport(companyId, allResults, allExogenous){
                     onePeriodReport.lostSalesVolumeDueToOOSStdPack = SKU.u_StockOutVolume;
                     onePeriodReport.numbericalDistribution = SKU.u_DistributionNum * 100;
                     onePeriodReport.volumeWeightedDistribution = SKU.u_DistributionVol * 100;
-                    onePeriodReport.shelfSpace = SKU.u_ShelfSpace;
-                    onePeriodReport.awareness = SKU.u_Awareness;
+                    onePeriodReport.shelfSpace = SKU.u_ShelfSpace * 100;
+                    onePeriodReport.awareness = SKU.u_Awareness * 100;
                     onePeriodReport.averageNetMarketPriceStdPack = SKU.u_AverageNetMarketPrice;
                     onePeriodReport.averageDisplayPriceStdPack = SKU.u_AverageDisplayPrice;
                     onePeriodReport.priceRankingIndex = SKU.u_PriceIndex;
