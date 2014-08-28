@@ -5,6 +5,7 @@ var Q = require('q');
 var logger = require('../../common/logger.js');
 var spendingDetailsAssembler = require('../dataAssemblers/spendingDetails.js');
 var util = require('util');
+var companyDecisionModel      = require('./companyDecision.js');
 
 var tOneBrandDecisionSchema = new Schema({
     seminarId: String,
@@ -94,7 +95,7 @@ function validateBrandName(field, curBrandecision, done){
             //TODO: if kernel discontinue some brand/sku without re-organise ID, logic below will get screwed             
             if(maxBrandID != 1){
                 curBrandecision.d_BrandID = maxBrandID + 1;    
-                curBrandecision.d_SKUsDecisions.push((maxBrandID+1)*10 + 1);
+            //curBrandecision.d_SKUsDecisions.push((maxBrandID+1)*10 + 1);
             //this is first one Brand under company? 
             } else {
                 done(new Error('This is first one Brand under company??'));
@@ -168,7 +169,7 @@ exports.initCreate = function(decision){
     return deferred.promise;
 }
 
-//User choose to launch new product, need name validation and create related SKU
+//User choose to launch new product, need name validation and update companyDoc.d_BrandsDecisions
 exports.create = function(decision){
     if(!mongoose.connection.readyState){
         throw new Error("mongoose is not connected.");
@@ -179,16 +180,26 @@ exports.create = function(decision){
     decision.bs_PeriodOfBirth = 0;
     decision.modifiedField = 'd_BrandName';
 
-    decision.save(function(err, saveDecision, numAffected){
+    decision.save(function(err, brandDoc, numAffected){
         if(err){
             deferred.reject(err);
         }else{            
-            deferred.resolve(saveDecision.d_BrandID);
+            companyDecisionModel.findOne(brandDoc.seminarId, brandDoc.period, brandDoc.d_CID).then(function(companyDoc){
+                var isIDExisted = companyDoc.d_BrandsDecisions.some(function(id){ return id == brandDoc.d_BrandID; })
+                if(isIDExisted){ return deferred.reject(new Error('find Duplicate BrandID in the companyDecision.d_BrandsDecisions!')); }
+
+                companyDoc.d_BrandsDecisions.push(brandDoc.d_BrandID);
+                companyDoc.save(function(err){
+                    if(err){ return deferred.reject(err); }
+                    else{ return deferred.resolve(brandDoc.d_BrandID); }
+                })
+            }).fail(function(err){
+                return deferred.reject(err);
+            }).done();
         }
     });
     return deferred.promise;
 }
-
 
 exports.findAllInCompany = function(seminarId, period, companyId){
     if(!mongoose.connection.readyState){
