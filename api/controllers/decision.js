@@ -420,12 +420,12 @@ exports.addBrand = function(req, res, next){
         d_BrandName     : brand_name,
         d_SKUsDecisions : [] 
     })
-    .then(function(newBrand){
+    .then(function(newBrandID){
         return SKUDecisionModel.create({
             seminarId: seminarId,
             period: period,
             d_CID: companyId,
-            d_BrandID: newBrand.d_BrandID,
+            d_BrandID: newBrandID,
             d_SKUName: '_' + sku_name
         });        
     })

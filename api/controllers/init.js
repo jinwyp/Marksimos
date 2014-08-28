@@ -660,7 +660,7 @@ function duplicateLastPeriodDecision(seminarId, lastPeriod){
                     if(!result){
                         throw new Error("save brandDecision failed during create copy of last period decision.");
                     }
-                    return brandDecisionModel.init(tempBrandDecision);
+                    return brandDecisionModel.initCreate(tempBrandDecision);
                 })
             })
             return p;

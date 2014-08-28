@@ -147,7 +147,8 @@ exports.getSKUInfo = function(seminarId, currentPeriod, companyId, SKUID){
             } 
 
             if(!brandResult){
-                brandResult = [];
+                brandResult = {};
+                brandResult.b_FactoryStocks = [];
                 for (var i = 0; i < 6; i++) {
                     brandResult.b_FactoryStocks.push({s_Volume:0});
                 };                

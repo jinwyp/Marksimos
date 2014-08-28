@@ -64,6 +64,7 @@ tOneBrandDecisionSchema.pre('save', true, function(next, done){
     next();
 })
 
+//not only validate name, but also validate if this brand is allowed to created 
 function validateBrandName(field, curBrandecision, done){
     if(curBrandecision.d_BrandName.length > 5){
         var err = new Error('Out of Brand name range');
@@ -92,6 +93,7 @@ function validateBrandName(field, curBrandecision, done){
             //TODO: if kernel discontinue some brand/sku without re-organise ID, logic below will get screwed             
             if(maxBrandID != 1){
                 curBrandecision.d_BrandID = maxBrandID + 1;    
+                curBrandecision.d_SKUsDecisions.push((maxBrandID+1)*10 + 1);
             //this is first one Brand under company? 
             } else {
                 done(new Error('This is first one Brand under company??'));
@@ -179,8 +181,7 @@ exports.create = function(decision){
     decision.save(function(err, saveDecision, numAffected){
         if(err){
             deferred.reject(err);
-        }else{
-
+        }else{            
             deferred.resolve(saveDecision.d_BrandID);
         }
     });

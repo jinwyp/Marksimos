@@ -40,7 +40,6 @@ tDecisionSchema.pre('save', true, function(next, done){
 
         validateAction[field](field);        
     }
-    console.log('this.modifiedField:' + this.modifiedField);
     if(!this.modifiedField){ this.modifiedField = 'skip'; }    
     doValidate(this.modifiedField);
     next();

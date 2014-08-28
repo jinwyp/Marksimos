@@ -417,6 +417,7 @@ exports.remove =  function(seminarId, period, companyId, brandId, SKUID){
                 return deferred.reject(err);
             }else{
                 //TODO: need to remove related Brand if there is no other SKU under it 
+                //TODO: if it is not only one SKU under Brand, need to clear SKUID in brandDecision.d_SKUDecisions
                 return deferred.resolve(undefined);
             }            
         });
