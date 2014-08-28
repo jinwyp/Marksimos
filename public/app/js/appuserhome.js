@@ -51,7 +51,7 @@ marksimosapp.controller('chartController', ['$translate', '$scope', '$rootScope'
 
 
     $scope.css = {
-        menu                     : 'Home',
+        menu                     : 'Decision',
         chartMenu                : 'A1',
         tableReportTab           : 'SKU',
         tableReportMenu          : 1,

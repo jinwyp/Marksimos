@@ -1248,7 +1248,7 @@
                                     </div>
                                 </div>
 
-                                <text-form-input type="text" name="brandName" label="Brand Name :"  data="data.newBrand.brand_name" required="true" minlength="1" maxlength="1" othererrorinfo="data.newBrand.othererrorinfo"></text-form-input>
+                                <text-form-input type="text" name="brandName" label="Brand Name :"  data="data.newBrand.brand_name" required="true" minlength="1" maxlength="4" othererrorinfo="data.newBrand.othererrorinfo"></text-form-input>
                                 <text-form-input type="text" name="skuName" label="First SKU Name :"  data="data.newBrand.sku_name" required="true" minlength="1" maxlength="1"></text-form-input>
 
 
@@ -1264,7 +1264,7 @@
                                 <div class="form-group has-feedback" ng-class="{ 'has-success':updateBrandForm.brandSalesForce.$dirty && updateBrandForm.brandSalesForce.$valid , 'has-error': updateBrandForm.brandSalesForce.$dirty && updateBrandForm.brandSalesForce.$invalid}">
                                     <label class="col-sm-4 control-label" for="brandSalesForce">{{'DecisionPageDecisionTabSalesForce' | translate}}</label>
                                     <div class="col-sm-3">
-                                        <input type="number" class="form-control" id="brandSalesForce" name="brandSalesForce" ng-model="data.currentBrand.d_SalesForce" required min="1" ng-blur="updateBrand(updateBrandForm)">
+                                        <input type="number" class="form-control" id="brandSalesForce" name="brandSalesForce" ng-model="data.currentBrand.d_SalesForce" required min="0" ng-blur="updateBrand(updateBrandForm)">
                                         <span ng-if="updateBrandForm.brandSalesForce.$dirty && updateBrandForm.brandSalesForce.$valid" class="glyphicon glyphicon-ok form-control-feedback"></span>
                                         <span ng-if="updateBrandForm.brandSalesForce.$dirty && updateBrandForm.brandSalesForce.$invalid" class="glyphicon glyphicon-remove form-control-feedback"></span>
                                     </div>
