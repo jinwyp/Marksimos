@@ -4,7 +4,7 @@ var consts = require('../consts.js');
 var Q = require('q');
 var logger = require('../../common/logger.js');
 var spendingDetailsAssembler = require('../dataAssemblers/spendingDetails.js');
-var util = require('util')
+var util = require('util');
 
 var tOneBrandDecisionSchema = new Schema({
     seminarId: String,
@@ -50,6 +50,7 @@ tOneBrandDecisionSchema.pre('save', true, function(next, done){
 
     }
 
+
     function doValidate(field){
         if(typeof validateAction[field] != 'function'){
             throw new Error('Cannot find validate action for ' + field);
@@ -62,7 +63,7 @@ tOneBrandDecisionSchema.pre('save', true, function(next, done){
 
 //    var err = new Error('something went wrong:' + this.modifiedField + ', d_CID:' + this.d_CID);
     next();
-})
+});
 
 //not only validate name, but also validate if this brand is allowed to created 
 function validateBrandName(field, curBrandecision, done){
@@ -126,7 +127,7 @@ exports.remove =  function(seminarId, period, companyId, brandId){
         }
     });
     return deferred.promise;
-}
+};
 
 exports.removeAll =  function(seminarId){
     if(!mongoose.connection.readyState){
@@ -142,7 +143,7 @@ exports.removeAll =  function(seminarId){
         }
     });
     return deferred.promise;
-}
+};
 
 
 //Initialize process, create brand decision document based on binary files, skip all the validations
@@ -226,7 +227,7 @@ exports.findAllInPeriod = function(seminarId, period){
         }
     });
     return deferred.promise;
-}
+};
 
 exports.findOne = function(seminarId, period, companyId, brandId){
     if(!mongoose.connection.readyState){
@@ -246,10 +247,10 @@ exports.findOne = function(seminarId, period, companyId, brandId){
         }else{
             deferred.resolve(result);
         }
-    })
+    });
 
     return deferred.promise;
-}
+};
 
 exports.updateBrand = function(seminarId, period, companyId, brandId, brand){
     if(!mongoose.connection.readyState){
@@ -292,7 +293,8 @@ exports.updateBrand = function(seminarId, period, companyId, brandId, brand){
         });
     }
     return deferred.promise;
-}
+};
+
 
 /**
  * Insert empty brand decisions for all brands in the next period
@@ -316,7 +318,7 @@ exports.insertEmptyBrandDecision = function(seminarId, period){
                     d_SKUsDecisions: brandDecision.d_SKUsDecisions
                 })
             })
-        })
+        });
         return p;
     })
-}
+};

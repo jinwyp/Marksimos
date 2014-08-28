@@ -38,6 +38,12 @@ $color_main_body_product: #464646;
 $color_main_body_product_target: #6f6f6f;
 $color_main_body_competitors: #2f4e9b;
 $color_main_body_user_clock: #373737;
+
+$color_main_body_user_period_bar: #9FA5BF;
+$color_main_body_user_period_bar_border: #dfe0e5;
+$color_main_body_user_period_bar_active: #b3c2e7;
+$color_main_body_user_period_bar_normal: #edeef1;
+
 $color_main_body_user_decision_button: #19acfe;
 $color_main_body_user_chart_title: #2f4e9b;
 $color_main_body_user_chart_list: #464646;
@@ -573,7 +579,50 @@ body{
 
         @include user_decision_button;
     }
-    
+
+
+    .user_period_bar{
+        background-color:transparent;
+        border-color:$color_main_body_user_period_bar_border;
+        margin: 25px auto;
+        border-radius:15px;
+        color:$color_main_body_user_period_bar;
+        ul li{
+            width:70px;
+            height: 15px;
+            border-width: 1px 1px 1px 0px;
+            border-style: solid;
+            border-color: $color_main_body_user_period_bar_border;
+            background-color:$color_main_body_user_period_bar_normal;
+        }
+
+        .start{
+            border-radius:15px 0 0 15px;
+            background-color:$color_main_body_user_period_bar_border;
+        }
+        .past{
+            background-color:$color_main_body_user_period_bar_border;
+        }
+        .active{
+            background-color:$color_main_body_user_period_bar_active;
+        }
+        .end{
+            border-radius:0 15px 15px 0;
+        }
+
+        .period_info_bottom{
+            margin: 20px 0 0 31px;
+            position: absolute;
+            font-size:11px;
+        }
+        .period_info_top{
+            position : absolute;
+            margin:-20px 0 0 11px;
+            display:block;
+            font-size:11px;
+        }
+    }
+
     .user_search_chart{
         padding-top: 30px;
         padding-bottom: 30px;

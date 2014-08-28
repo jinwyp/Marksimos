@@ -63,7 +63,8 @@ marksimosapp.controller('chartController', ['$translate', '$scope', '$rootScope'
         skuErrorField : '',
         skuErrorInfo  : '',
         brandErrorInfo  : '',
-        companyErrorInfo  : ''
+        companyErrorInfo  : '',
+        periods : []
     };
 
     $scope.dataChartSimple = {
@@ -625,12 +626,41 @@ marksimosapp.controller('chartController', ['$translate', '$scope', '$rootScope'
 
 
 
+
     /********************  获取Decision信息  ********************/
 
     $scope.companyInfoInit = function(){
 
         Company.getCurrentStudent().then(function(data, status, headers, config){
             $scope.data.currentStudent = data;
+
+            if(angular.isNumber($scope.data.currentStudent.currentPeriod)){
+                for (var i = -3; i <= $scope.data.currentStudent.maxPeriodRound; i++) {
+
+                    if (i ===  $scope.data.currentStudent.currentPeriod ) {
+                        $scope.css.periods.push({
+                            value : i,
+                            currentPeriod : true,
+                            pastPeriod : false
+                        });
+
+                    } else if(i <  $scope.data.currentStudent.currentPeriod){
+                        $scope.css.periods.push({
+                            value : i,
+                            currentPeriod : false,
+                            pastPeriod : true
+                        });
+                    }else{
+                        $scope.css.periods.push({
+                            value : i,
+                            currentPeriod : false,
+                            pastPeriod : false
+                        });
+                    }
+                }
+            }
+
+
         });
 
         Company.getCompany().then(function(data, status, headers, config){
@@ -778,7 +808,7 @@ marksimosapp.controller('chartController', ['$translate', '$scope', '$rootScope'
 
     /********************  删除一个SKU  注意该SKU必须是本回合添加的SKU才可以删除 ********************/
     $scope.delSku = function(sku){
-        Company.delSku(sku.d_SKUID).then(function(data, status, headers, config){
+        Company.delSku(sku.d_SKUID, sku.d_BrandID).then(function(data, status, headers, config){
             $scope.companyInfoInit();
 
             notify({
