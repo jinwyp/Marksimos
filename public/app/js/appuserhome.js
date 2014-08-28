@@ -51,7 +51,7 @@ marksimosapp.controller('chartController', ['$translate', '$scope', '$rootScope'
 
 
     $scope.css = {
-        menu                     : 'Decision',
+        menu                     : 'Home',
         chartMenu                : 'A1',
         tableReportTab           : 'SKU',
         tableReportMenu          : 1,
@@ -63,7 +63,8 @@ marksimosapp.controller('chartController', ['$translate', '$scope', '$rootScope'
         skuErrorField : '',
         skuErrorInfo  : '',
         brandErrorInfo  : '',
-        companyErrorInfo  : ''
+        companyErrorInfo  : '',
+        periods : []
     };
 
     $scope.dataChartSimple = {
@@ -623,19 +624,7 @@ marksimosapp.controller('chartController', ['$translate', '$scope', '$rootScope'
     };
 
 
-    $scope.periods=[{
-        value:0,css:'start',
-    },{
-        value:1,css:'normal',
-    },{
-        value:2,css:'normal',
-    },{
-        value:3,css:'normal',
-    },{
-        value:4,css:'normal',
-    },{
-        value:5,css:'end',
-    }];
+
 
 
     /********************  获取Decision信息  ********************/
@@ -645,13 +634,33 @@ marksimosapp.controller('chartController', ['$translate', '$scope', '$rootScope'
         Company.getCurrentStudent().then(function(data, status, headers, config){
             $scope.data.currentStudent = data;
 
-            for (var i = 0; i < $scope.periods.length; i++) {
-                if ($scope.periods[i].value == $scope.data.currentStudent.currentPeriod && $scope.data.currentStudent.currentPeriod != 5) {
-                    $scope.periods[i].css = "active";
-                } else if ($scope.periods[i].value == $scope.data.currentStudent.currentPeriod && $scope.data.currentStudent.currentPeriod == 5) {
-                    $scope.periods[i].css = "end_active";
+            if(angular.isNumber($scope.data.currentStudent.currentPeriod)){
+                for (var i = -3; i <= $scope.data.currentStudent.maxPeriodRound; i++) {
+
+                    if (i ===  $scope.data.currentStudent.currentPeriod ) {
+                        $scope.css.periods.push({
+                            value : i,
+                            currentPeriod : true,
+                            pastPeriod : false
+                        });
+
+                    } else if(i <  $scope.data.currentStudent.currentPeriod){
+                        $scope.css.periods.push({
+                            value : i,
+                            currentPeriod : false,
+                            pastPeriod : true
+                        });
+                    }else{
+                        $scope.css.periods.push({
+                            value : i,
+                            currentPeriod : false,
+                            pastPeriod : false
+                        });
+                    }
                 }
             }
+
+
         });
 
         Company.getCompany().then(function(data, status, headers, config){

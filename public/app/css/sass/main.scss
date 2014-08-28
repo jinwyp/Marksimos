@@ -40,9 +40,9 @@ $color_main_body_competitors: #2f4e9b;
 $color_main_body_user_clock: #373737;
 
 $color_main_body_user_period_bar: #9FA5BF;
-$color_main_body_user_period_bar_border: #E9E9E5;
-$color_main_body_user_period_bar_active: #B0BBE4;
-$color_main_body_user_period_bar_normal: #EDEDF1;
+$color_main_body_user_period_bar_border: #dfe0e5;
+$color_main_body_user_period_bar_active: #b3c2e7;
+$color_main_body_user_period_bar_normal: #edeef1;
 
 $color_main_body_user_decision_button: #19acfe;
 $color_main_body_user_chart_title: #2f4e9b;
@@ -581,39 +581,35 @@ body{
     }
 
 
-    .user_period_bar_info{
-        margin:25px auto;
-        width:120px;
-    }
     .user_period_bar{
         background-color:transparent;
         border-color:$color_main_body_user_period_bar_border;
         margin: 25px auto;
         border-radius:15px;
         color:$color_main_body_user_period_bar;
-        ul li.normal{
+        ul li{
             width:70px;
+            height: 15px;
+            border-width: 1px 1px 1px 0px;
+            border-style: solid;
+            border-color: $color_main_body_user_period_bar_border;
             background-color:$color_main_body_user_period_bar_normal;
         }
-        ul li.active{
-            width:70px;
-            background-color:$color_main_body_user_period_bar_active;
-        }
-        ul li.start{
-            width:166px;
+
+        .start{
             border-radius:15px 0 0 15px;
             background-color:$color_main_body_user_period_bar_border;
         }
-        ul li.end{
-            width:70px;
-            border-radius:0 15px 15px 0;
-            background-color:$color_main_body_user_period_bar_normal;
+        .past{
+            background-color:$color_main_body_user_period_bar_border;
         }
-        ul li.end_active{
-            width:70px;
-            border-radius:0 15px 15px 0;
+        .active{
             background-color:$color_main_body_user_period_bar_active;
         }
+        .end{
+            border-radius:0 15px 15px 0;
+        }
+
         .period_info_bottom{
             margin: 20px 0 0 31px;
             position: absolute;

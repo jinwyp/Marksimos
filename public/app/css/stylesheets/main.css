@@ -555,86 +555,79 @@ body a, body button {
   border-color: #298FFE;
 }
 /* line 584, ../sass/main.scss */
-.mainbody .user_period_bar_info {
-  margin: 25px auto;
-  width: 120px;
-}
-/* line 588, ../sass/main.scss */
 .mainbody .user_period_bar {
   background-color: transparent;
-  border-color: #e9e9e5;
+  border-color: #dfe0e5;
   margin: 25px auto;
   border-radius: 15px;
   color: #9fa5bf;
 }
-/* line 594, ../sass/main.scss */
-.mainbody .user_period_bar ul li.normal {
+/* line 590, ../sass/main.scss */
+.mainbody .user_period_bar ul li {
   width: 70px;
-  background-color: #ededf1;
+  height: 15px;
+  border-width: 1px 1px 1px 0px;
+  border-style: solid;
+  border-color: #dfe0e5;
+  background-color: #edeef1;
 }
-/* line 598, ../sass/main.scss */
-.mainbody .user_period_bar ul li.active {
-  width: 70px;
-  background-color: #b0bbe4;
-}
-/* line 602, ../sass/main.scss */
-.mainbody .user_period_bar ul li.start {
-  width: 166px;
+/* line 599, ../sass/main.scss */
+.mainbody .user_period_bar .start {
   border-radius: 15px 0 0 15px;
-  background-color: #e9e9e5;
+  background-color: #dfe0e5;
 }
-/* line 607, ../sass/main.scss */
-.mainbody .user_period_bar ul li.end {
-  width: 70px;
+/* line 603, ../sass/main.scss */
+.mainbody .user_period_bar .past {
+  background-color: #dfe0e5;
+}
+/* line 606, ../sass/main.scss */
+.mainbody .user_period_bar .active {
+  background-color: #b3c2e7;
+}
+/* line 609, ../sass/main.scss */
+.mainbody .user_period_bar .end {
   border-radius: 0 15px 15px 0;
-  background-color: #ededf1;
 }
-/* line 612, ../sass/main.scss */
-.mainbody .user_period_bar ul li.end_active {
-  width: 70px;
-  border-radius: 0 15px 15px 0;
-  background-color: #b0bbe4;
-}
-/* line 617, ../sass/main.scss */
+/* line 613, ../sass/main.scss */
 .mainbody .user_period_bar .period_info_bottom {
   margin: 20px 0 0 31px;
   position: absolute;
   font-size: 11px;
 }
-/* line 622, ../sass/main.scss */
+/* line 618, ../sass/main.scss */
 .mainbody .user_period_bar .period_info_top {
   position: absolute;
   margin: -20px 0 0 11px;
   display: block;
   font-size: 11px;
 }
-/* line 630, ../sass/main.scss */
+/* line 626, ../sass/main.scss */
 .mainbody .user_search_chart {
   padding-top: 30px;
   padding-bottom: 30px;
 }
-/* line 634, ../sass/main.scss */
+/* line 630, ../sass/main.scss */
 .mainbody .user_search_chart .droplist_company {
   color: #6f6f6f;
 }
-/* line 639, ../sass/main.scss */
+/* line 635, ../sass/main.scss */
 .mainbody .user_chart_list {
   border-color: #cfd3e0;
   height: 389px;
 }
-/* line 644, ../sass/main.scss */
+/* line 640, ../sass/main.scss */
 .mainbody .user_chart_list .panel-heading {
   background-color: #dbe3f6;
   border-color: #cfd3e0;
 }
-/* line 650, ../sass/main.scss */
+/* line 646, ../sass/main.scss */
 .mainbody .user_chart_list h3 {
   font-size: 16px;
   color: #2f4e9b;
   padding: 10px 10px 10px 20px;
   text-align: center;
 }
-/* line 657, ../sass/main.scss */
+/* line 653, ../sass/main.scss */
 .mainbody .user_chart_list ul .list-group-item {
   background-color: white;
   background-image: url(../images/userchartlist.png);
@@ -642,35 +635,35 @@ body a, body button {
   background-position: 75px 20px;
   padding: 18px 1px 18px 95px;
 }
-/* line 665, ../sass/main.scss */
+/* line 661, ../sass/main.scss */
 .mainbody .user_chart_list ul .list-group-item a {
   font-size: 13px;
   font-family: "Helvetica", "Arial, sans-serif";
   color: #464646;
   font-weight: bold;
 }
-/* line 672, ../sass/main.scss */
+/* line 668, ../sass/main.scss */
 .mainbody .user_chart_list ul .list-group-item-active {
   background-color: #fbfbfb;
 }
-/* line 676, ../sass/main.scss */
+/* line 672, ../sass/main.scss */
 .mainbody .user_chart_list_bg2 {
   background-color: #fbfbfb;
 }
-/* line 688, ../sass/main.scss */
+/* line 684, ../sass/main.scss */
 .mainbody .user_chart_box {
   height: 70px;
 }
-/* line 692, ../sass/main.scss */
+/* line 688, ../sass/main.scss */
 .mainbody .user_chart_company {
   margin: 18px 0px 1px 28px;
 }
-/* line 696, ../sass/main.scss */
+/* line 692, ../sass/main.scss */
 .mainbody .user_chart_search_box {
   padding-top: 16px;
   padding-bottom: 10px;
 }
-/* line 702, ../sass/main.scss */
+/* line 698, ../sass/main.scss */
 .mainbody .user_chart_vs {
   color: #373737;
   font-size: 10px;
@@ -682,12 +675,12 @@ body a, body button {
   margin: 16px 0px 1px 0px;
   display: block;
 }
-/* line 714, ../sass/main.scss */
+/* line 710, ../sass/main.scss */
 .mainbody .user_chart_clock {
   font-size: 10px;
   margin: 10px 0px 1px 0px;
 }
-/* line 719, ../sass/main.scss */
+/* line 715, ../sass/main.scss */
 .mainbody .user_chart_make_decision {
   color: #373737;
   font-size: 10px;
@@ -695,7 +688,7 @@ body a, body button {
   margin: 5px 0px 5px 0px;
   display: block;
 }
-/* line 727, ../sass/main.scss */
+/* line 723, ../sass/main.scss */
 .mainbody .user_chart_decision_button {
   font-size: 11px;
   font-weight: normal;
@@ -733,12 +726,12 @@ body a, body button {
   background: linear-gradient(top, #298ffe, #298ffe);
   border-color: #298FFE;
 }
-/* line 735, ../sass/main.scss */
+/* line 731, ../sass/main.scss */
 .mainbody .user_chart_padding {
   padding-left: 0px;
   padding-right: 0px;
 }
-/* line 740, ../sass/main.scss */
+/* line 736, ../sass/main.scss */
 .mainbody .user_chart_leftmenu {
   background-color: #fdfdfd;
   border-width: 0px 0px 1px 0px;
@@ -753,13 +746,13 @@ body a, body button {
   box-shadow: #e7e9ed 0px 0px 0px;
   margin-bottom: 5px;
 }
-/* line 749, ../sass/main.scss */
+/* line 745, ../sass/main.scss */
 .mainbody .user_chart_leftmenu .panel-heading {
   font-size: 14px;
   color: #6f6f6f;
   margin: 10px 0px 0px 15px;
 }
-/* line 756, ../sass/main.scss */
+/* line 752, ../sass/main.scss */
 .mainbody .user_chart_leftmenu ul .list-group-item {
   border: 0px none #000000;
   background-color: #fdfdfd;
@@ -768,21 +761,21 @@ body a, body button {
   background-position: 30px 12px;
   padding: 11px 1px 13px 50px;
 }
-/* line 764, ../sass/main.scss */
+/* line 760, ../sass/main.scss */
 .mainbody .user_chart_leftmenu ul .list-group-item a {
   font-size: 11px;
   color: #464646;
 }
-/* line 769, ../sass/main.scss */
+/* line 765, ../sass/main.scss */
 .mainbody .user_chart_leftmenu ul .list-group-item-active {
   background-color: #eef3ff;
 }
-/* line 772, ../sass/main.scss */
+/* line 768, ../sass/main.scss */
 .mainbody .user_chart_leftmenu ul .list-group-item-active a {
   font-weight: bold;
   color: #2f4e9b;
 }
-/* line 777, ../sass/main.scss */
+/* line 773, ../sass/main.scss */
 .mainbody .user_chart_leftmenu ul .list-group-item-active:before {
   border: 3px solid #236ac7;
   width: 0;
@@ -793,18 +786,18 @@ body a, body button {
   top: 0px;
   left: 0px;
 }
-/* line 791, ../sass/main.scss */
+/* line 787, ../sass/main.scss */
 .mainbody .user_chart_right {
   background-color: whitesmoke;
 }
-/* line 794, ../sass/main.scss */
+/* line 790, ../sass/main.scss */
 .mainbody .user_chart_right .user_chart_single {
   border: 1px solid #d9dce3;
   background-color: white;
   margin: 10px 5px 10px 10px;
   padding: 0px 0px 0px 0px;
 }
-/* line 800, ../sass/main.scss */
+/* line 796, ../sass/main.scss */
 .mainbody .user_chart_right .user_chart_single h5 {
   text-align: center;
   font-size: 14px;
@@ -813,27 +806,27 @@ body a, body button {
   margin: 0px 0px 0px 0px;
   padding: 13px 0px;
 }
-/* line 808, ../sass/main.scss */
+/* line 804, ../sass/main.scss */
 .mainbody .user_chart_right .user_chart_single h5 .chart_icon {
   float: right;
   padding-right: 10px;
 }
-/* line 813, ../sass/main.scss */
+/* line 809, ../sass/main.scss */
 .mainbody .user_chart_right .user_chart_single h5 .perception_map_button {
   font-size: 11px;
   font-family: "Helvetica", "Arial, sans-serif";
 }
-/* line 817, ../sass/main.scss */
+/* line 813, ../sass/main.scss */
 .mainbody .user_chart_right .user_chart_single h5 .perception_map_group {
   float: right;
   margin-right: 60px;
   margin-top: -5px;
 }
-/* line 824, ../sass/main.scss */
+/* line 820, ../sass/main.scss */
 .mainbody .user_chart_right .user_chart_single .nvtooltip {
   border: 0 none;
 }
-/* line 827, ../sass/main.scss */
+/* line 823, ../sass/main.scss */
 .mainbody .user_chart_right .user_chart_single .nvtooltip h5 {
   border: 1px solid #bdbdbd;
   -webkit-border-radius: 4px;
@@ -843,58 +836,58 @@ body a, body button {
   border-radius: 4px;
   padding: 8px 10px;
 }
-/* line 834, ../sass/main.scss */
+/* line 830, ../sass/main.scss */
 .mainbody .user_chart_right .user_chart_single .perception_panel {
   margin-bottom: 0px;
 }
-/* line 836, ../sass/main.scss */
+/* line 832, ../sass/main.scss */
 .mainbody .user_chart_right .user_chart_single .perception_panel .panel-heading {
   font-size: 12px;
   font-weight: bold;
   font-family: "Helvetica", "Arial, sans-serif";
   color: #6f6f6f;
 }
-/* line 843, ../sass/main.scss */
+/* line 839, ../sass/main.scss */
 .mainbody .user_chart_right .user_chart_single .perception_list {
   padding: 5px 10px;
   font-size: 12px;
   font-family: "Helvetica", "Arial, sans-serif";
   color: #373737;
 }
-/* line 849, ../sass/main.scss */
+/* line 845, ../sass/main.scss */
 .mainbody .user_chart_right .user_chart_single .perception_list_bg {
   background-color: #f9f9f9;
 }
-/* line 852, ../sass/main.scss */
+/* line 848, ../sass/main.scss */
 .mainbody .user_chart_right .user_chart_single .perception_info {
   width: 180px;
   display: inline-block;
 }
-/* line 856, ../sass/main.scss */
+/* line 852, ../sass/main.scss */
 .mainbody .user_chart_right .user_chart_single .perception_info_number {
   width: 40px;
   display: inline-block;
 }
-/* line 860, ../sass/main.scss */
+/* line 856, ../sass/main.scss */
 .mainbody .user_chart_right .user_chart_single .perception_logo {
   padding: 6px 6px;
   margin: 0px 5px 0px 0px;
   background-color: #0000FF;
   display: inline-block;
 }
-/* line 868, ../sass/main.scss */
+/* line 864, ../sass/main.scss */
 .mainbody .user_chart_right .chart_1 {
   width: 98%;
 }
-/* line 872, ../sass/main.scss */
+/* line 868, ../sass/main.scss */
 .mainbody .user_chart_right .chart_2 {
   width: 48%;
 }
-/* line 875, ../sass/main.scss */
+/* line 871, ../sass/main.scss */
 .mainbody .user_chart_right .chart_3 {
   width: 31%;
 }
-/* line 882, ../sass/main.scss */
+/* line 878, ../sass/main.scss */
 .mainbody .user_chart_right .user_table_single h5 {
   font-size: 14px;
   color: #373737;
@@ -902,11 +895,11 @@ body a, body button {
   padding: 20px 0px;
   border-bottom: 1px solid #e1e1e1;
 }
-/* line 890, ../sass/main.scss */
+/* line 886, ../sass/main.scss */
 .mainbody .user_chart_right .user_table_single .table_multimenu {
   margin: 20px 0px 0px 0px;
 }
-/* line 895, ../sass/main.scss */
+/* line 891, ../sass/main.scss */
 .mainbody .user_chart_right .user_table_single .table_multimenu li a {
   background-color: #fdfdfd;
   color: #373737;
@@ -923,11 +916,11 @@ body a, body button {
   padding: 7px 15px 7px 27px;
   margin-left: 5px;
 }
-/* line 910, ../sass/main.scss */
+/* line 906, ../sass/main.scss */
 .mainbody .user_chart_right .user_table_single .table_multimenu li a:hover, .mainbody .user_chart_right .user_table_single .table_multimenu li a:focus {
   background-color: #dbe3f6;
 }
-/* line 918, ../sass/main.scss */
+/* line 914, ../sass/main.scss */
 .mainbody .user_chart_right .user_table_single .table_multimenu li.active a,
 .mainbody .user_chart_right .user_table_single .table_multimenu li.active a:hover,
 .mainbody .user_chart_right .user_table_single .table_multimenu li.active a:focus {
@@ -936,14 +929,14 @@ body a, body button {
   background-image: url(../images/userchartlist2.png);
   border: 1px solid #4b67ae;
 }
-/* line 927, ../sass/main.scss */
+/* line 923, ../sass/main.scss */
 .mainbody .user_chart_right .user_table_single .table_report {
   border: 1px solid #d9dce3;
   background-color: white;
   margin: 20px 0px 20px 0px;
   padding: 50px 40px 0px 40px;
 }
-/* line 934, ../sass/main.scss */
+/* line 930, ../sass/main.scss */
 .mainbody .user_chart_right .user_table_single .table_report .nav-pills li a {
   background-color: whitesmoke;
   color: #6f6f6f;
@@ -961,11 +954,11 @@ body a, body button {
   -webkit-border-bottom-right-radius: 0px;
   border-bottom-right-radius: 0px;
 }
-/* line 942, ../sass/main.scss */
+/* line 938, ../sass/main.scss */
 .mainbody .user_chart_right .user_table_single .table_report .nav-pills li a:hover, .mainbody .user_chart_right .user_table_single .table_report .nav-pills li a:focus {
   background-color: #dbe3f6;
 }
-/* line 950, ../sass/main.scss */
+/* line 946, ../sass/main.scss */
 .mainbody .user_chart_right .user_table_single .table_report .nav-pills li.active a,
 .mainbody .user_chart_right .user_table_single .table_report .nav-pills li.active a:hover,
 .mainbody .user_chart_right .user_table_single .table_report .nav-pills li.active a:focus {
@@ -1014,15 +1007,15 @@ body a, body button {
 .mainbody .user_chart_right .user_table_single .table-striped tbody tr:nth-child(even):hover th {
   background-color: #feeaff;
 }
-/* line 963, ../sass/main.scss */
+/* line 959, ../sass/main.scss */
 .mainbody .user_chart_right .user_table_single .table > thead > tr > th {
   font-weight: bold;
 }
-/* line 977, ../sass/main.scss */
+/* line 973, ../sass/main.scss */
 .mainbody .progress_title {
   color: #6f6f6f;
 }
-/* line 981, ../sass/main.scss */
+/* line 977, ../sass/main.scss */
 .mainbody .progress_radius {
   -webkit-border-radius: 16px;
   -moz-border-radius: 16px;
@@ -1030,25 +1023,25 @@ body a, body button {
   -o-border-radius: 16px;
   border-radius: 16px;
 }
-/* line 984, ../sass/main.scss */
+/* line 980, ../sass/main.scss */
 .mainbody .progress_bar_budget {
   background-color: #6071b9;
 }
-/* line 987, ../sass/main.scss */
+/* line 983, ../sass/main.scss */
 .mainbody .progress_bar_normal_capacity {
   background-color: #7169af;
 }
-/* line 990, ../sass/main.scss */
+/* line 986, ../sass/main.scss */
 .mainbody .progress_bar_overtime {
   background-color: #ad5ab3;
 }
-/* line 994, ../sass/main.scss */
+/* line 990, ../sass/main.scss */
 .mainbody .form-control-error {
   border-color: #a94442;
   -webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
   box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
 }
-/* line 1000, ../sass/main.scss */
+/* line 996, ../sass/main.scss */
 .mainbody .alert-tooltip {
   position: absolute;
   top: 10%;
@@ -1056,7 +1049,7 @@ body a, body button {
   padding: 5px;
   z-index: 999;
 }
-/* line 1007, ../sass/main.scss */
+/* line 1003, ../sass/main.scss */
 .mainbody .alert-tooltip:after, .mainbody .alert-tooltip:before {
   top: 50%;
   right: 100%;
@@ -1067,46 +1060,46 @@ body a, body button {
   position: absolute;
   pointer-events: none;
 }
-/* line 1017, ../sass/main.scss */
+/* line 1013, ../sass/main.scss */
 .mainbody .alert-tooltip:after {
   border-color: rgba(136, 183, 213, 0);
   border-right-color: #f2dede;
   border-width: 6px;
   margin-top: -6px;
 }
-/* line 1023, ../sass/main.scss */
+/* line 1019, ../sass/main.scss */
 .mainbody .alert-tooltip:before {
   border-color: rgba(194, 225, 245, 0);
   border-right-color: #ebccd1;
   border-width: 7px;
   margin-top: -7px;
 }
-/* line 1031, ../sass/main.scss */
+/* line 1027, ../sass/main.scss */
 .mainbody .budget_form {
   padding: 5px 0px;
 }
-/* line 1034, ../sass/main.scss */
+/* line 1030, ../sass/main.scss */
 .mainbody .budget_form label {
   color: #252525;
   font-size: 10px;
   font-weight: normal;
 }
-/* line 1039, ../sass/main.scss */
+/* line 1035, ../sass/main.scss */
 .mainbody .budget_form .budget_title {
   font-size: 18px;
 }
-/* line 1043, ../sass/main.scss */
+/* line 1039, ../sass/main.scss */
 .mainbody .budget_form input {
   width: 80px;
   margin-top: 15px;
 }
-/* line 1049, ../sass/main.scss */
+/* line 1045, ../sass/main.scss */
 .mainbody .decision_box {
   margin: 10px 0px 0px 15px;
   border: 1px solid #e1e1e1;
   background-color: white;
 }
-/* line 1054, ../sass/main.scss */
+/* line 1050, ../sass/main.scss */
 .mainbody .decision_box h4 {
   color: #2f4e9b;
   font-size: 18px;
@@ -1114,14 +1107,14 @@ body a, body button {
   font-family: "Helvetica", "Arial, sans-serif";
   margin: 25px 0 5px 0;
 }
-/* line 1061, ../sass/main.scss */
+/* line 1057, ../sass/main.scss */
 .mainbody .decision_box h6 {
   color: #bdbdbd;
   font-family: "Helvetica", "Arial, sans-serif";
   font-weight: normal;
   margin-top: 0;
 }
-/* line 1068, ../sass/main.scss */
+/* line 1064, ../sass/main.scss */
 .mainbody .decision_box .brand_box {
   border: 1px solid #c2c2d3;
   margin: 0px -10px 20px -10px;
@@ -1131,7 +1124,7 @@ body a, body button {
   -o-border-radius: 4px;
   border-radius: 4px;
 }
-/* line 1074, ../sass/main.scss */
+/* line 1070, ../sass/main.scss */
 .mainbody .decision_box .sku_box {
   border: 1px solid #ebebeb;
   margin: 0px -10px 10px -10px;
@@ -1141,22 +1134,22 @@ body a, body button {
   -o-border-radius: 4px;
   border-radius: 4px;
 }
-/* line 1079, ../sass/main.scss */
+/* line 1075, ../sass/main.scss */
 .mainbody .decision_box .sku_box .input-sm {
   height: 25px;
   width: 50px;
 }
-/* line 1085, ../sass/main.scss */
+/* line 1081, ../sass/main.scss */
 .mainbody .decision_box .table > thead > tr > th {
   font-weight: bold;
   color: #6f6f6f;
 }
-/* line 1088, ../sass/main.scss */
+/* line 1084, ../sass/main.scss */
 .mainbody .decision_box .table > thead > tr > th a {
   font-weight: bold;
   color: #6f6f6f;
 }
-/* line 1096, ../sass/main.scss */
+/* line 1092, ../sass/main.scss */
 .mainbody .decision_box .table > thead > tr > td,
 .mainbody .decision_box .table > tbody > tr > td,
 .mainbody .decision_box .table > tfoot > tr > td {
@@ -1167,19 +1160,19 @@ body a, body button {
   color: #373737;
   position: relative;
 }
-/* line 1105, ../sass/main.scss */
+/* line 1101, ../sass/main.scss */
 .mainbody .decision_box .table .tdgroup {
   padding-top: 20px;
 }
-/* line 1109, ../sass/main.scss */
+/* line 1105, ../sass/main.scss */
 .mainbody .decision_box .sku_table {
   width: 125px;
 }
-/* line 1114, ../sass/main.scss */
+/* line 1110, ../sass/main.scss */
 .mainbody .decision_box .nav li a {
   padding: 7px 15px;
 }
-/* line 1119, ../sass/main.scss */
+/* line 1115, ../sass/main.scss */
 .mainbody .decision_box .nav-pills li a {
   background-color: whitesmoke;
   color: #6f6f6f;
@@ -1197,11 +1190,11 @@ body a, body button {
   -webkit-border-bottom-right-radius: 0px;
   border-bottom-right-radius: 0px;
 }
-/* line 1127, ../sass/main.scss */
+/* line 1123, ../sass/main.scss */
 .mainbody .decision_box .nav-pills li a:hover, .mainbody .decision_box .nav-pills li a:focus {
   background-color: #dbe3f6;
 }
-/* line 1135, ../sass/main.scss */
+/* line 1131, ../sass/main.scss */
 .mainbody .decision_box .nav-pills li.active a,
 .mainbody .decision_box .nav-pills li.active a:hover,
 .mainbody .decision_box .nav-pills li.active a:focus {
@@ -1209,11 +1202,11 @@ body a, body button {
   font-family: "Helvetica", "Arial, sans-serif";
   background-color: #2f4e9b;
 }
-/* line 1142, ../sass/main.scss */
+/* line 1138, ../sass/main.scss */
 .mainbody .decision_box .brand_form {
   margin: 30px 0px;
 }
-/* line 1146, ../sass/main.scss */
+/* line 1142, ../sass/main.scss */
 .mainbody .decision_box h5 {
   color: #252525;
   font-family: "Helvetica", "Arial, sans-serif";
@@ -1221,19 +1214,19 @@ body a, body button {
   font-size: 16px;
   padding: 10px 0px 0px 10px;
 }
-/* line 1154, ../sass/main.scss */
+/* line 1150, ../sass/main.scss */
 .mainbody .decision_box .investment_form {
   margin-top: 20px;
   margin-left: 10px;
 }
-/* line 1157, ../sass/main.scss */
+/* line 1153, ../sass/main.scss */
 .mainbody .decision_box .investment_form label {
   text-align: left;
   font-family: "Helvetica", "Arial, sans-serif";
   font-weight: normal;
   font-size: 13px;
 }
-/* line 1166, ../sass/main.scss */
+/* line 1162, ../sass/main.scss */
 .mainbody .decision_box .decision_button {
   color: #ffffff;
   font-family: "Helvetica", "Arial, sans-serif";
@@ -1268,11 +1261,11 @@ body a, body button {
   background: linear-gradient(top, #298ffe, #298ffe);
   border-color: #298FFE;
 }
-/* line 1173, ../sass/main.scss */
+/* line 1169, ../sass/main.scss */
 .mainbody .decision_right_box {
   width: 47%;
 }
-/* line 1176, ../sass/main.scss */
+/* line 1172, ../sass/main.scss */
 .mainbody .decision_right_box .right_menu {
   border-width: 1px 0px 0px 0px;
   -webkit-border-radius: 0px;
@@ -1282,7 +1275,7 @@ body a, body button {
   border-radius: 0px;
   padding: 20px 0px 0px 0px;
 }
-/* line 1184, ../sass/main.scss */
+/* line 1180, ../sass/main.scss */
 .mainbody .decision_right_box .right_menu .product_portfolio h4 {
   font-size: 13px;
   font-family: "Helvetica", "Arial, sans-serif";
@@ -1292,13 +1285,13 @@ body a, body button {
   background-repeat: no-repeat;
   background-position: 4px 2px;
 }
-/* line 1193, ../sass/main.scss */
+/* line 1189, ../sass/main.scss */
 .mainbody .decision_right_box .right_menu .product_portfolio .sku_bg {
   background-image: url(../images/userproduct.png);
   background-repeat: no-repeat;
   background-position: 4px 5px;
 }
-/* line 1199, ../sass/main.scss */
+/* line 1195, ../sass/main.scss */
 .mainbody .decision_right_box .right_menu .product_portfolio .panel-heading {
   font-size: 13px;
   font-family: "Helvetica", "Arial, sans-serif";
@@ -1342,23 +1335,23 @@ body a, body button {
   background-color: #feeaff;
 }
 
-/* line 1216, ../sass/main.scss */
+/* line 1212, ../sass/main.scss */
 .bgbrand {
   background-color: #fdfdfd;
 }
 
-/* line 1220, ../sass/main.scss */
+/* line 1216, ../sass/main.scss */
 .chartBox {
   width: 99%;
   height: 350px;
   margin: 0px 0px;
 }
-/* line 1224, ../sass/main.scss */
+/* line 1220, ../sass/main.scss */
 .chartBox .ac-title {
   text-align: center;
   display: none;
 }
-/* line 1229, ../sass/main.scss */
+/* line 1225, ../sass/main.scss */
 .chartBox .bar_chart_label {
   font-size: 10px;
 }
