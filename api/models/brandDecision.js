@@ -92,9 +92,9 @@ function validateBrandName(field, curBrandecision, done){
             //TODO: if kernel discontinue some brand/sku without re-organise ID, logic below will get screwed             
             if(maxBrandID != 1){
                 curBrandecision.d_BrandID = maxBrandID + 1;    
-            //this is first one Brand under brand 
+            //this is first one Brand under company? 
             } else {
-                curBrandecision.d_SKUID = curBrandecision.d_BrandID * 10 + maxSKUID;                
+                done(new Error('This is first one Brand under company??'));
             }
             curBrandecision.bs_PeriodOfBirth = curBrandecision.period;
             done();
