@@ -38,6 +38,12 @@ $color_main_body_product: #464646;
 $color_main_body_product_target: #6f6f6f;
 $color_main_body_competitors: #2f4e9b;
 $color_main_body_user_clock: #373737;
+
+$color_main_body_user_period_bar: #9FA5BF;
+$color_main_body_user_period_bar_border: #E9E9E5;
+$color_main_body_user_period_bar_active: #B0BBE4;
+$color_main_body_user_period_bar_normal: #EDEDF1;
+
 $color_main_body_user_decision_button: #19acfe;
 $color_main_body_user_chart_title: #2f4e9b;
 $color_main_body_user_chart_list: #464646;
@@ -573,7 +579,54 @@ body{
 
         @include user_decision_button;
     }
-    
+
+
+    .user_period_bar_info{
+        margin:25px auto;
+        width:120px;
+    }
+    .user_period_bar{
+        background-color:transparent;
+        border-color:$color_main_body_user_period_bar_border;
+        margin: 25px auto;
+        border-radius:15px;
+        color:$color_main_body_user_period_bar;
+        ul li.normal{
+            width:70px;
+            background-color:$color_main_body_user_period_bar_normal;
+        }
+        ul li.active{
+            width:70px;
+            background-color:$color_main_body_user_period_bar_active;
+        }
+        ul li.start{
+            width:166px;
+            border-radius:15px 0 0 15px;
+            background-color:$color_main_body_user_period_bar_border;
+        }
+        ul li.end{
+            width:70px;
+            border-radius:0 15px 15px 0;
+            background-color:$color_main_body_user_period_bar_normal;
+        }
+        ul li.end_active{
+            width:70px;
+            border-radius:0 15px 15px 0;
+            background-color:$color_main_body_user_period_bar_active;
+        }
+        .period_info_bottom{
+            margin: 20px 0 0 31px;
+            position: absolute;
+            font-size:11px;
+        }
+        .period_info_top{
+            position : absolute;
+            margin:-20px 0 0 11px;
+            display:block;
+            font-size:11px;
+        }
+    }
+
     .user_search_chart{
         padding-top: 30px;
         padding-bottom: 30px;

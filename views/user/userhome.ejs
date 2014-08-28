@@ -66,7 +66,22 @@
             <div class="row user_home_divider_horizontal ">
                 <div class="col-md-6 col-md-offset-3 ">
                     Current Period : {{data.currentStudent.currentPeriod}}
-                    <img src="/app/css/images/temp1.png" alt=""/>
+
+                    <p class="user_period_bar_info pull-left">Current Period : {{data.currentStudent.currentPeriod}}</p>
+                    <nav class="user_period_bar navbar-inverse pull-left">
+                        <ul class="navbar-nav">
+                            <li ng-class="period.css" ng-repeat="period in periods">
+                                <span class="period_info_bottom" ng-show='period.value!=0'>
+                                {{period.value}}
+                                </span>
+                                <span class="period_info_top" ng-show="period.value==data.currentStudent.currentPeriod">
+                                Period {{period.value}}
+                                </span>
+                                <span>&nbsp;</span>
+                            </li>
+                        </ul>
+                    </nav>
+
                 </div>
             </div>
 
