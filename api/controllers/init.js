@@ -618,7 +618,6 @@ function initMarketIndicatorReport(seminarId, currentPeriod){
     });
 }
 
-
 function duplicateLastPeriodDecision(seminarId, lastPeriod){
     return companyDecisionModel.findAllInPeriod(seminarId, lastPeriod)
     .then(function(allCompanyDecision){
