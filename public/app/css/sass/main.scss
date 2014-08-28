@@ -38,6 +38,13 @@ $color_main_body_product: #464646;
 $color_main_body_product_target: #6f6f6f;
 $color_main_body_competitors: #2f4e9b;
 $color_main_body_user_clock: #373737;
+
+$color_main_body_user_period_bar: #9FA5BF;
+$color_main_body_user_period_bar_border: #dfe0e5;
+$color_main_body_user_period_bar_active: #b3c2e7;
+$color_main_body_user_period_bar_normal: #edeef1;
+
+
 $color_main_body_user_decision_button: #19acfe;
 $color_main_body_user_chart_title: #2f4e9b;
 $color_main_body_user_chart_list: #464646;
@@ -61,6 +68,10 @@ $color_main_body_decision_subtitle: #bdbdbd;
 $color_main_body_decision_brand_border: #c2c2d3;
 $color_main_body_decision_sku_border: #ebebeb;
 $color_main_body_decision_table_hover: #feeaff;
+
+$color_main_body_user_feedback_back: #FFF2E5;
+$color_main_body_user_feedback_border: #FF941F;
+$color_main_body_user_feedback: #A07041;
 
 
 
@@ -106,6 +117,18 @@ $color_main_body_decision_table_hover: #feeaff;
     background-position: 1px 0px;
     padding-left: 25px;
     margin: 32px 5px 20px 3px;
+    display: block;
+}
+
+@mixin icon_user_score {
+    color: $color_main_body_brand;
+    font-size: 14px;
+    /*change another picture*/
+    background-image: url(../images/userbrand.png);
+    background-repeat: no-repeat;
+    background-position: 1px 0px;
+    padding-left: 25px;
+    margin: 20px;
     display: block;
 }
 
@@ -573,7 +596,50 @@ body{
 
         @include user_decision_button;
     }
-    
+
+
+    .user_period_bar{
+        background-color:transparent;
+        border-color:$color_main_body_user_period_bar_border;
+        margin: 25px auto;
+        border-radius:15px;
+        color:$color_main_body_user_period_bar;
+        ul li{
+            width:70px;
+            height: 15px;
+            border-width: 1px 1px 1px 0px;
+            border-style: solid;
+            border-color: $color_main_body_user_period_bar_border;
+            background-color:$color_main_body_user_period_bar_normal;
+        }
+
+        .start{
+            border-radius:15px 0 0 15px;
+            background-color:$color_main_body_user_period_bar_border;
+        }
+        .past{
+            background-color:$color_main_body_user_period_bar_border;
+        }
+        .active{
+            background-color:$color_main_body_user_period_bar_active;
+        }
+        .end{
+            border-radius:0 15px 15px 0;
+        }
+
+        .period_info_bottom{
+            margin: 20px 0 0 31px;
+            position: absolute;
+            font-size:11px;
+        }
+        .period_info_top{
+            position : absolute;
+            margin:-20px 0 0 11px;
+            display:block;
+            font-size:11px;
+        }
+    }
+
     .user_search_chart{
         padding-top: 30px;
         padding-bottom: 30px;
@@ -916,8 +982,39 @@ body{
     }
 
 
+    /**********  Score 页面开始  **********/
 
+    .score_box {
+        border:1px solid $color_login_panel_border;
+        margin: 10px 12.5%;
+    }
 
+    .feedback_box {
+        border:1px solid $color_main_body_user_feedback_border;
+        color: $color_main_body_user_feedback;
+        margin: 10px 12.5%;
+    }
+
+    .score_info {
+        background-color: $color_login_panel_background;
+        .score_info_title{
+            @include icon_user_score;
+        }
+    }
+    .score_data {
+        background-color: $color_login_panel_background;
+        .score_img{
+            margin:0 20px 20px;
+        }
+    }
+
+    .feedback_info {
+        background-color: $color_main_body_user_feedback_back;
+        padding:20px;
+        .provide_feedback{
+            margin:10px 0;
+        }
+    }
 
     /**********  Decision 页面开始  **********/
 

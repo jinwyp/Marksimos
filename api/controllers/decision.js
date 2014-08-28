@@ -95,7 +95,7 @@ exports.submitDecision = function(req, res, next){
                                 tempSKUDecision.d_WholesalesBonusRate = SKUDecision.d_WholesalesBonusRate;
                                 tempSKUDecision.d_WarrantyLength = SKUDecision.d_WarrantyLength;
                                 tempBrandDecision.d_SKUsDecisions.push(tempSKUDecision);
-                            })
+                            });
                             result.d_BrandsDecisions.push(tempBrandDecision);
                         })
                     })

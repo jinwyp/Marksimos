@@ -65,8 +65,16 @@
         <div class="col-md-12">
             <div class="row user_home_divider_horizontal ">
                 <div class="col-md-6 col-md-offset-3 ">
-                    Current Period : {{data.currentStudent.currentPeriod}}
-                    <img src="/app/css/images/temp1.png" alt=""/>
+
+                    <nav class="user_period_bar  pull-left">
+                        <ul class="navbar-nav">
+                            <li  ng-class="{'start':$first, 'end':$last, 'active': period.currentPeriod, 'past':period.pastPeriod}" ng-repeat="period in css.periods">
+                                <span class="period_info_top" ng-show="period.currentPeriod">Period {{period.value}}</span>
+                                <span class="period_info_bottom" >{{period.value}}</span>
+                            </li>
+                        </ul>
+                    </nav>
+
                 </div>
             </div>
 
@@ -1214,8 +1222,8 @@
         <div class="col-md-6 decision_box">
             <div class="row">
                 <div class="col-md-12">
-                    <h4 class="text-center">MAKE DECISIONS</h4>
-                    <h6 class="text-center">Market Share + Profit</h6>
+                    <h4 class="text-center">{{'DecisionPageDecisionTabMAKEDECISIONS' | translate}}</h4>
+                    <h6 class="text-center">{{'DecisionPageDecisionTabMission' | translate}}</h6>
                 </div>
             </div>
 
@@ -1236,11 +1244,11 @@
                             <form class="form-horizontal" role="form" name="newBrandForm" novalidate ng-if="css.addNewBrand">
                                 <div class="form-group">
                                     <div class="col-sm-8 col-md-offset-4">
-                                        <h4>Add New Brand</h4>
+                                        <h4>{{'DecisionPageDecisionTabAddNewBrand' | translate}}</h4>
                                     </div>
                                 </div>
 
-                                <text-form-input type="text" name="brandName" label="Brand Name :"  data="data.newBrand.brand_name" required="true" minlength="1" maxlength="1" othererrorinfo="data.newBrand.othererrorinfo"></text-form-input>
+                                <text-form-input type="text" name="brandName" label="Brand Name :"  data="data.newBrand.brand_name" required="true" minlength="1" maxlength="4" othererrorinfo="data.newBrand.othererrorinfo"></text-form-input>
                                 <text-form-input type="text" name="skuName" label="First SKU Name :"  data="data.newBrand.sku_name" required="true" minlength="1" maxlength="1"></text-form-input>
 
 
@@ -1254,9 +1262,9 @@
 
                             <form class="form-horizontal brand_form" role="form" name="updateBrandForm" novalidate ng-if="!css.addNewBrand">
                                 <div class="form-group has-feedback" ng-class="{ 'has-success':updateBrandForm.brandSalesForce.$dirty && updateBrandForm.brandSalesForce.$valid , 'has-error': updateBrandForm.brandSalesForce.$dirty && updateBrandForm.brandSalesForce.$invalid}">
-                                    <label class="col-sm-4 control-label" for="brandSalesForce">Sales Force($min)</label>
+                                    <label class="col-sm-4 control-label" for="brandSalesForce">{{'DecisionPageDecisionTabSalesForce' | translate}}</label>
                                     <div class="col-sm-3">
-                                        <input type="number" class="form-control" id="brandSalesForce" name="brandSalesForce" ng-model="data.currentBrand.d_SalesForce" required min="1" ng-blur="updateBrand(updateBrandForm)">
+                                        <input type="number" class="form-control" id="brandSalesForce" name="brandSalesForce" ng-model="data.currentBrand.d_SalesForce" required min="0" ng-blur="updateBrand(updateBrandForm)">
                                         <span ng-if="updateBrandForm.brandSalesForce.$dirty && updateBrandForm.brandSalesForce.$valid" class="glyphicon glyphicon-ok form-control-feedback"></span>
                                         <span ng-if="updateBrandForm.brandSalesForce.$dirty && updateBrandForm.brandSalesForce.$invalid" class="glyphicon glyphicon-remove form-control-feedback"></span>
                                     </div>
@@ -1283,7 +1291,7 @@
                                     <form class="form-horizontal" role="form" name="newSkuForm" novalidate ng-if="css.addNewSku">
                                         <div class="form-group">
                                             <div class="col-sm-8 col-md-offset-4">
-                                                <h4>Add New SKU</h4>
+                                                <h4>{{'DecisionPageDecisionTabAddNewSKU' | translate}}</h4>
                                             </div>
                                         </div>
 
@@ -1324,7 +1332,7 @@
                                     <table class="table table-hover " ng-if="!css.addNewSku">
                                         <thead>
                                             <tr>
-                                                <th class="sku_table">Name <button class="btn btn-default btn-xs" ng-click="showAddNewSkuForm()">+</button></th>
+                                                <th class="sku_table">{{'DecisionPageDecisionTabName' | translate}} <button class="btn btn-default btn-xs" ng-click="showAddNewSkuForm()">+</button></th>
                                                 <th ng-repeat="sku in data.currentBrand.d_SKUsDecisions" ng-click="clickCurrentSku(sku)">
                                                     <a href="">{{data.currentBrand.d_BrandName}}{{sku.d_SKUName}}</a>
                                                     <button type="button" class="btn btn-default btn-xs" ng-show="true" ng-click="delSku(sku)">x</button></th>
@@ -1458,12 +1466,12 @@
 
                     <div class="row brand_box">
                         <div class="col-md-12">
-                            <h5>New Product Development Investment  <span class="glyphicon glyphicon-info-sign" ng-mouseenter="css.investmentInfo='true'" ></span></h5>
+                            <h5>{{'DecisionPageDecisionNewProductDevelopmentInvestment' | translate}}  <span class="glyphicon glyphicon-info-sign" ng-mouseenter="css.investmentInfo='true'" ></span></h5>
 
                             <form class="form-horizontal investment_form" role="form" name="updateCompanyForm" novalidate>
 
                                 <div class="form-group has-feedback" ng-class="{ 'has-success':updateCompanyForm.companyInvestmentProductionEfficiency.$dirty && updateCompanyForm.companyInvestmentProductionEfficiency.$valid , 'has-error': updateCompanyForm.companyInvestmentProductionEfficiency.$dirty && updateCompanyForm.companyInvestmentProductionEfficiency.$invalid}">
-                                    <label class="col-sm-6 control-label text-left" for="companyInvestmentProductionEfficiency">Investment in Production Efficiency ($mln)</label>
+                                    <label class="col-sm-6 control-label text-left" for="companyInvestmentProductionEfficiency">{{'DecisionPageDecisionNewProductDevelopmentInvestmentInvestmentInProductionEfficiency' | translate}}</label>
                                     <div class="col-sm-3">
                                         <input type="number" class="form-control" id="companyInvestmentProductionEfficiency" name="companyInvestmentProductionEfficiency" ng-model="data.currentCompany.d_InvestmentInEfficiency" required ng-blur="updateCompany('d_InvestmentInEfficiency', updateCompanyForm, 'companyInvestmentProductionEfficiency')">
                                         <span ng-if="updateCompanyForm.companyInvestmentProductionEfficiency.$dirty && updateCompanyForm.companyInvestmentProductionEfficiency.$valid" class="glyphicon glyphicon-ok form-control-feedback"></span>
@@ -1473,7 +1481,7 @@
                                 </div>
 
                                 <div class="form-group has-feedback" ng-class="{ 'has-success':updateCompanyForm.companyInvestmentProcessingTechnology.$dirty && updateCompanyForm.companyInvestmentProcessingTechnology.$valid , 'has-error': updateCompanyForm.companyInvestmentProcessingTechnology.$dirty && updateCompanyForm.companyInvestmentProcessingTechnology.$invalid}">
-                                    <label class="col-sm-6 control-label text-left"  for="companyInvestmentProcessingTechnology">Investment in Processing Technology ($mln)</label>
+                                    <label class="col-sm-6 control-label text-left"  for="companyInvestmentProcessingTechnology">{{'DecisionPageDecisionNewProductDevelopmentInvestmentInvestmentInProcessingTechnology' | translate}}</label>
                                     <div class="col-sm-3">
                                         <input type="number" class="form-control" id="companyInvestmentProcessingTechnology" name="companyInvestmentProcessingTechnology" ng-model="data.currentCompany.d_InvestmentInTechnology" required ng-blur="updateCompany('d_InvestmentInTechnology', updateCompanyForm, 'companyInvestmentProcessingTechnology')">
                                         <span ng-if="updateCompanyForm.companyInvestmentProcessingTechnology.$dirty && updateCompanyForm.companyInvestmentProcessingTechnology.$valid" class="glyphicon glyphicon-ok form-control-feedback"></span>
@@ -1486,26 +1494,26 @@
                             <table class="table table-striped table-hover table-condensed table-bordered" ng-show="css.investmentInfo">
                                 <thead>
                                     <tr>
-                                        <th >Name</th>
-                                        <th>Required amount</th>
+                                        <th>{{'DecisionPageDecisionNewProductDevelopmentInvestmentName' | translate}}</th>
+                                        <th>{{'DecisionPageDecisionNewProductDevelopmentInvestmentRequiredAmount' | translate}}</th>
                                     </tr>
                                 </thead>
                                 <tbody>
                                     <tr>
-                                        <td>Extra Budget Required to Increase Efficiency by 2% / 5% points</td>
+                                        <td>{{'DecisionPageDecisionNewProductDevelopmentInvestmentExtraBudgetRequiredToIncreaseEfficiencyBy25points' | translate}}</td>
                                         <td>190.00 / 450.00</td>
                                     </tr>
                                     <tr>
-                                        <td>Extra Budget Required to Increase Flexibility by 2% / 5% points</td>
+                                        <td>{{'DecisionPageDecisionNewProductDevelopmentInvestmentExtraBudgetRequiredToIncreaseFlexibilityBy25points' | translate}}</td>
                                         <td>100.00 / 770.0</td>
                                     </tr>
                                     <tr>
-                                        <td>Extra Budget Required to Increase Technology Level by 1 / 2 Step</td>
+                                        <td>{{'DecisionPageDecisionNewProductDevelopmentInvestmentExtraBudgetRequiredToIncreaseTechnologyLevelBy12points' | translate}}</td>
                                         <td>110.00 / 190.00</td>
                                     </tr>
 
                                     <tr>
-                                        <td colspan="2" class="text-right">Note: Investment on Efficiency could increase Flexibility at the same time</td>
+                                        <td colspan="2" class="text-right">{{'DecisionPageDecisionNewProductDevelopmentInvestmentNote' | translate}}</td>
                                     </tr>
                                 </tbody>
                             </table>
@@ -1847,6 +1855,103 @@
         </div>
     </div>
 
+
+    <div class="row mainbody" ng-cloak ng-if="css.menu=='Score'">
+        <div class="col-md-2 user_home_divider user_chart_box">
+
+            <div class="row ">
+                <h4 class="user_maincompany user_chart_company">Company <span class="company_a">{{data.currentStudent.companyName | limitTo:-1}}</span> </h4>
+
+            </div>
+
+        </div>
+
+        <div class="col-md-5 user_home_divider user_chart_box" >
+            <div class="row">
+                <div class="col-md-12 user_chart_search_box">
+                    <div class="input-group">
+                        <div class="input-group-btn">
+
+                            <button type="button" class="btn btn-default dropdown-toggle droplist_company" data-toggle="dropdown">Company A <span class="caret"></span></button>
+                            <ul class="dropdown-menu">
+                                <li><a href="">Company A</a></li>
+                                <li><a href="">Company B</a></li>
+                                <li><a href="">Company C</a></li>
+                            </ul>
+                        </div><!-- /btn-group -->
+
+                        <input type="text" class="form-control" placeholder="find ....">
+                    </div><!-- /input-group -->
+                </div>
+
+            </div>
+        </div>
+
+        <div class="col-md-1 user_home_divider user_chart_box">
+            <div class="row">
+                <div class="col-md-12 ">
+                    <span class="user_chart_vs"> Compare Data</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-2 user_home_divider user_chart_box">
+            <div class="row">
+                <div class="col-md-12 ">
+                    <span class="user_clock user_chart_clock"><strong>1h22mins left</strong> for submitting decision</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-2">
+            <div class="row">
+                <div class="col-md-12 ">
+                    <span class="user_chart_make_decision">Mission: Market Share + Profit</span>
+                    <button type="button" class="btn user_chart_decision_button" ng-click="switchHeaderMenu('Decision')">Make Decision</button>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <div class="row mainbody" ng-cloak ng-if="css.menu=='Score'">
+
+        <div class="col-md-9 score_box">
+
+            <div class="row">
+
+                <div class="col-md-12 score_info">
+
+                    <span class="score_info_title">Score</span>
+
+
+                </div>
+
+            </div>
+
+            <div class="row">
+                <div class="col-md-12 score_data">
+                    <img src='/app/css/images/score_data.png' class="score_img">
+                </div>
+            </div>
+
+        </div>
+
+        <div class="col-md-9 feedback_box">
+
+            <div class="row">
+                <div class="col-md-12 feedback_info">
+                    <h4 class="text-center">Congratulations! You finish the game!</h4>
+                    <h4 class="text-center">Please take 5 minutes to provide feedback to MarkSimos. Your feedback will help us to improve ....</h4>
+                    <p class="text-center provide_feedback">
+                        <button class="btn btn-warning">Provide Feedback</button>
+                    </p>
+                </div>
+            </div>
+
+        </div>
+
+    </div>
 
 </div>
 

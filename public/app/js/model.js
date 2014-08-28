@@ -112,8 +112,8 @@ app.factory('Company', ['$http', function($http){
             return $http.put(apiPath + 'sku/decision/', postdata);
         },
 
-        delSku : function(id){
-            return $http.delete(apiPath + 'sku/decision/' + id);
+        delSku : function(skuid, brandid){
+            return $http.delete(apiPath + 'sku/decision/' + brandid + '/' + skuid);
         },
 
 
