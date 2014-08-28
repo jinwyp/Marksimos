@@ -634,6 +634,7 @@ marksimosapp.controller('chartController', ['$translate', '$scope', '$rootScope'
         Company.getCurrentStudent().then(function(data, status, headers, config){
             $scope.data.currentStudent = data;
 
+            // 处理显示当前第几回合进度条
             if(angular.isNumber($scope.data.currentStudent.currentPeriod)){
                 for (var i = -3; i <= $scope.data.currentStudent.maxPeriodRound; i++) {
 

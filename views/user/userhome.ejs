@@ -64,7 +64,7 @@
     <div class="row mainbody" ng-cloak ng-if="css.menu=='Home'">
         <div class="col-md-12">
             <div class="row user_home_divider_horizontal ">
-                <div class="col-md-6 col-md-offset-3 ">
+                <div class="col-md-9 col-md-offset-3 ">
 
                     <nav class="user_period_bar  pull-left">
                         <ul class="navbar-nav">
@@ -1248,7 +1248,7 @@
                                     </div>
                                 </div>
 
-                                <text-form-input type="text" name="brandName" label="Brand Name :"  data="data.newBrand.brand_name" required="true" minlength="1" maxlength="4" othererrorinfo="data.newBrand.othererrorinfo"></text-form-input>
+                                <text-form-input type="text" name="brandName" label="Brand Name :" inputgroupclass="true" inputgroupprefix="{{data.currentStudent.companyName | limitTo:-1}}" data="data.newBrand.brand_name" required="true" minlength="1" maxlength="4" othererrorinfo="data.newBrand.othererrorinfo"></text-form-input>
                                 <text-form-input type="text" name="skuName" label="First SKU Name :"  data="data.newBrand.sku_name" required="true" minlength="1" maxlength="1"></text-form-input>
 
 
