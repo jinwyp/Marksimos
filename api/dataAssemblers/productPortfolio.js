@@ -18,6 +18,7 @@ exports.getProductPortfolioForOneCompany = function(seminarId, currentPeriod, co
         decisionAssembler.getDecision(seminarId, currentPeriod, companyId)
     ])
     .spread(function(lastPeriodResult, decision){
+    
 
         var productPortfolioForOneCompany = [];
         
@@ -40,14 +41,23 @@ exports.getProductPortfolioForOneCompany = function(seminarId, currentPeriod, co
                 productPortfolioForSKU.technologyLevel = SKUDecision.d_Technology;
                 productPortfolioForSKU.productionVolume = SKUDecision.d_ProductionVolume;
 
+
                 var SKUInAllResults = utility.findSKU(lastPeriodResult, SKUDecision.d_SKUID);
-                productPortfolioForSKU.averageFactoryPrice = (SKUInAllResults.u_AverageManufacturerPrice * consts.ActualSize[SKUInAllResults.u_PackSize]).toFixed(2)
-                + ' / (' + SKUInAllResults.u_AverageManufacturerPrice.toFixed(2) +")";
-                
-                productPortfolioForSKU.averageIngredientsQuality = SKUInAllResults.u_ps_FactoryStocks[consts.StocksMaxTotal].s_IngredientsQuality;
-                productPortfolioForSKU.averageTechnologyLevel = SKUInAllResults.u_ps_FactoryStocks[consts.StocksMaxTotal].s_Technology;
-                productPortfolioForSKU.totalInventoryVolumeAtFactory = SKUInAllResults.u_ps_FactoryStocks[consts.StocksMaxTotal].s_ps_Volume.toFixed(2);
-                productPortfolioForOneCompany.push(productPortfolioForSKU);
+                if(SKUInAllResults){
+                    productPortfolioForSKU.averageFactoryPrice = (SKUInAllResults.u_AverageManufacturerPrice * consts.ActualSize[SKUInAllResults.u_PackSize]).toFixed(2)
+                    + ' / (' + SKUInAllResults.u_AverageManufacturerPrice.toFixed(2) +")";
+                    
+                    productPortfolioForSKU.averageIngredientsQuality = SKUInAllResults.u_ps_FactoryStocks[consts.StocksMaxTotal].s_IngredientsQuality;
+                    productPortfolioForSKU.averageTechnologyLevel = SKUInAllResults.u_ps_FactoryStocks[consts.StocksMaxTotal].s_Technology;
+                    productPortfolioForSKU.totalInventoryVolumeAtFactory = SKUInAllResults.u_ps_FactoryStocks[consts.StocksMaxTotal].s_ps_Volume.toFixed(2);
+                    productPortfolioForOneCompany.push(productPortfolioForSKU);                        
+                } else {
+                    productPortfolioForSKU.averageFactoryPrice = '/';
+                    productPortfolioForSKU.averageIngredientsQuality = '/';
+                    productPortfolioForSKU.averageTechnologyLevel = '/';
+                    productPortfolioForSKU.totalInventoryVolumeAtFactory = '/';
+                    productPortfolioForOneCompany.push(productPortfolioForSKU);                        
+                }
             }
         }
 

@@ -366,7 +366,7 @@ exports.updateCompanyDecision = function(req, res, next){
 
     var tempCompanyDecision = createCompanyDecision(company_data);
 
-
+    logger.log('tempCompanyDecision:' + util.inspect(tempCompanyDecision));
     companyDecisionModel.updateCompanyDecision(seminarId, period, companyId, tempCompanyDecision)
     .then(function(result){
         res.send({message: 'update success.'});
@@ -413,52 +413,80 @@ exports.addBrand = function(req, res, next){
         return res.send(403, {message: "Invalid parameter sku_name."})
     }
 
-    brandDecisionModel.findAllInCompany(seminarId, period, companyId)
-    .then(function(allBrands){
-        var maxBrandId = 0;
-        allBrands.forEach(function(brand){
-            if(brand.d_BrandID>maxBrandId){
-                maxBrandId = brand.d_BrandID;
-            }
-        })
-
-        if(maxBrandId===0 || maxBrandId % 10 > 4){
-            return res.send(403, {message: "you alread have 5 brands."});
-        }
-
-        var nextBrandId = maxBrandId +1;
-        var firstSKUID = (maxBrandId+1)*10 + 1;//SKUID =  brandID * 10 + 1 
-
-        return SKUDecisionModel.save({
+    brandDecisionModel.create({
+        seminarId       : seminarId,
+        period          : period,
+        d_CID           : companyId,
+        d_BrandName     : brand_name,
+        d_SKUsDecisions : [] 
+    })
+    .then(function(newBrandID){
+        return SKUDecisionModel.create({
             seminarId: seminarId,
             period: period,
             d_CID: companyId,
-            d_BrandID: nextBrandId,
-            d_SKUID: firstSKUID,
-            d_SKUName: sku_name
-        })
-        .then(function(){
-            return brandDecisionModel.save({
-                seminarId: seminarId,
-                period: period,
-                d_CID: companyId,
-                d_BrandID: nextBrandId,
-                d_BrandName     : brand_name,
-                d_SKUsDecisions : [firstSKUID] 
-            })
-        })      
+            d_BrandID: newBrandID,
+            d_SKUName: '_' + sku_name
+        });        
     })
     .then(function(){
-        res.send({message: "add brand success."});
+        res.send({message: "add brand and sku success."});
     })
     .fail(function(err){
-        logger.error(err);
-        res.send(500, {message: "addBrand failed."})
+        var message = JSON.stringify(err, ['message'], 2);
+        res.send(403, message);        
     })
     .done();
+
+
+    // brandDecisionModel.findAllInCompany(seminarId, period, companyId)
+    // .then(function(allBrands){
+    //     var maxBrandId = 0;
+    //     allBrands.forEach(function(brand){
+    //         if(brand.d_BrandID>maxBrandId){
+    //             maxBrandId = brand.d_BrandID;
+    //         }
+    //     })
+
+    //     if(maxBrandId===0 || maxBrandId % 10 > 4){
+    //         return res.send(403, {message: "you alread have 5 brands."});
+    //     }
+
+    //     var nextBrandId = maxBrandId +1;
+    //     var firstSKUID = (maxBrandId+1)*10 + 1;//SKUID =  brandID * 10 + 1 
+
+    //     return SKUDecisionModel.create({
+    //         seminarId: seminarId,
+    //         period: period,
+    //         d_CID: companyId,
+    //         d_BrandID: nextBrandId,
+    //         d_SKUID: firstSKUID,
+    //         d_SKUName: sku_name
+    //     })
+    //     .then(function(){
+    //         return brandDecisionModel.save({
+    //             seminarId: seminarId,
+    //             period: period,
+    //             d_CID: companyId,
+    //             d_BrandID: nextBrandId,
+    //             d_BrandName     : brand_name,
+    //             d_SKUsDecisions : [firstSKUID] 
+    //         })
+    //     })      
+    // })
+    // .then(function(){
+    //     res.send({message: "add brand success."});
+    // })
+    // .fail(function(err){
+    //     logger.error(err);
+    //     res.send(500, {message: "addBrand failed."})
+    // })
+    // .done();
+
+
 };
 
-exports.addSKU = function(req, res, next){
+exports.addSKU = function(req, res, next){    
     var seminarId = req.session.seminarId;
 
     if(!seminarId){
@@ -475,39 +503,19 @@ exports.addSKU = function(req, res, next){
         return res.send(403, {message: "Invalid parameter sku_name."})
     }
 
-    SKUDecisionModel.findAllInBrand(seminarId, period, companyId, brand_id)
-    .then(function(allSKUs){
-        var maxSKUID = 0;
-        allSKUs.forEach(function(SKU){
-            if(SKU.d_SKUID > maxSKUID){
-                maxSKUID = SKU.d_SKUID;
-            }
-        })
-
-        if(maxSKUID===0){
-            return res.send({message: "there's no SKU, probably the brand doesn't exist."});
-        }
-
-        if(maxSKUID.toString()[maxSKUID.toString().length-1] === '5'){
-            return res.send({message: "You already have 5 SKUs."});
-        }
-
-        return SKUDecisionModel.save({
-            seminarId: seminarId,
-            period: period,
-            d_CID: companyId,
-            d_BrandID: brand_id,
-            d_SKUID: maxSKUID + 1,
-            d_SKUName: sku_name,
-            modifiedField : 'addNewSKU',
-        })
+    SKUDecisionModel.create({
+        seminarId: seminarId,
+        period: period,
+        d_CID: companyId,
+        d_BrandID: brand_id,
+        d_SKUName: '_' + sku_name
     })
-    .then(function(){
-        res.send({message: 'add SKU successfully.'});
+    .then(function(result){
+        res.send(result);
     })
     .fail(function(err){
-        logger.error(err);
-        res.send(500, {message: "addSKU failed."})
+        var message = JSON.stringify(err, ['message'], 2);
+        res.send(403, message)
     })
     .done();
 };
@@ -519,15 +527,11 @@ exports.deleteSKU = function(req, res, next){
         return res.send(403, {message: "You don't choose a seminar."});
     }
 
-    if(!seminarId){
-        return res.send(403, {message: "You don't choose a seminar."});
-    }
-    
     var period = req.session.currentPeriod;
     var companyId = req.session.companyId;
 
-    var brand_id = req.body.brand_id;
-    var sku_id = req.body.sku_id;
+    var brand_id = req.params.brand_id;
+    var sku_id = req.params.sku_id;
 
     if(!brand_id){
         return res.send(403, {message: "Invalid parameter brand_id."});
@@ -538,12 +542,12 @@ exports.deleteSKU = function(req, res, next){
     }
 
     SKUDecisionModel.remove(seminarId, period, companyId, brand_id, sku_id)
-    .then(function(){
-        res.send({message: "remove SKU successfully."});
+    .then(function(result){
+        res.send(result);
     })
     .fail(function(err){
-        logger.error(err);
-        res.send(500, {message: "remove SKU failed."});
+        var message = JSON.stringify(err, ['message'], 2);
+        res.send(403, message)
     })
     .done();
 }
@@ -567,8 +571,8 @@ exports.deleteBrand = function(req, res, next){
         res.send({message: "Remove brand successfully."});
     })
     .fail(function(err){
-        logger.error(err);
-        res.send(500, {message: "remove brand failed."});
+        var message = JSON.stringify(err, ['message'], 2);
+        res.send(403, message)
     })
     .done();
 }

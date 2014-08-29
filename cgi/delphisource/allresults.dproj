@@ -67,7 +67,7 @@
 			<DCC_RemoteDebug>true</DCC_RemoteDebug>
 		</PropertyGroup>
 		<PropertyGroup Condition="'$(Cfg_1_Win32)'!=''">
-			<DCC_ExeOutput>C:\Program Files\Apache Software Foundation\Apache2.2\cgi-bin\</DCC_ExeOutput>
+			<DCC_ExeOutput>C:\Program Files (x86)\Apache Software Foundation\Apache2.2\cgi-bin\</DCC_ExeOutput>
 			<DCC_UnitSearchPath>..\common;.\common;$(DCC_UnitSearchPath)</DCC_UnitSearchPath>
 			<VerInfo_Locale>1033</VerInfo_Locale>
 			<Manifest_File>None</Manifest_File>
@@ -131,6 +131,7 @@
 						<VersionInfoKeys Name="Comments"/>
 					</VersionInfoKeys>
 					<Excluded_Packages>
+						<Excluded_Packages Name="C:\Program Files (x86)\TMS Component Pack\DelphiXE2\TMSDeDXE2.bpl">TMS Component Pack design time support</Excluded_Packages>
 						<Excluded_Packages Name="$(BDSBIN)\dcloffice2k160.bpl">Microsoft Office 2000 Sample Automation Server Wrapper Components</Excluded_Packages>
 					</Excluded_Packages>
 				</Delphi.Personality>

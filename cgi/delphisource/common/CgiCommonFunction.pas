@@ -108,19 +108,32 @@ procedure LoadConfigIni(var DataDirectory: string; seminar : string);
 var
 	ini : Tinifile;
 begin
-	ini := TIniFile.Create(ExtractFilePath(ParamStr(0)) + 'CgiConfig.ini');
+	ini := TIniFile.Create(ExtractFilePath(ParamStr(0)) + 'CgiConfigMarksimos.ini');
 	with ini do
 	begin
 	  DataDirectory := ini.ReadString('Options','DataDirectory','C:\Marksimos\');
-    //DataDirectory := DataDirectory + seminar + '\';
+
     if Copy(DataDirectory, Length(DataDirectory), 1) <> '\' then
     begin
       DataDirectory := DataDirectory + '\';
     end;
+    DataDirectory := DataDirectory + seminar + '\';
 	  ini.Free;
 	end;
 end;
 
+//procedure LoadConfigIni(var DataDirectory: string; seminar : string);
+//var
+//  ini : Tinifile;
+//begin
+//  ini := TIniFile.Create(ExtractFilePath(ParamStr(0)) + 'CgiConfig.ini');
+//  with ini do
+//  begin
+//    DataDirectory := ini.ReadString('Options','DataDirectory','C:\E-project\ecgi\');
+//    DataDirectory := DataDirectory + seminar + '\';
+//    ini.Free;
+//  end;
+//end;
 
 end.
 

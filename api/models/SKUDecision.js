@@ -9,15 +9,18 @@ var SKUInfoAssembler         = require('../dataAssemblers/SKUInfo.js');
 var gameParameters           = require('../gameParameters.js').parameters;
 var utility                  = require('../../common/utility.js');
 var simulationResultModel    = require('./simulationResult.js');
- 
+var _                        = require('underscore');
+var brandDecisionModel       = require('./brandDecision.js');
+var companyDecisionModel      = require('./companyDecision.js');
+
 var tOneSKUDecisionSchema = new Schema({
     seminarId                  : String,
     period                     : Number,
-    periodOfBirth              : Number,
     d_CID                      : Number,
     d_BrandID                  : Number,
     d_SKUID                    : Number,
     d_SKUName                  : String,
+    bs_PeriodOfBirth           : {type: Number},
     d_Advertising              : {type: Number, default: 0}, //consumer communication
     d_AdditionalTradeMargin    : {type: Number, default: 0},
     d_FactoryPrice             : {type: [Number], default: [3,0,0]},
@@ -69,8 +72,9 @@ tOneSKUDecisionSchema.pre('save', true, function(next, done){
         'd_TargetConsumerSegment'    : function(field){ validateTargetConsumerSegment(field, self, done); },
         'd_ToDrop'                   : function(field){ validateToDrop(field, self, done); },
         'd_RepriceFactoryStocks'     : function(field){ validateRepriceFactoryStocks(field, self, done); },
-        'd_ConsumerPrice'            : function(field){ validateConsumberPrice(field, self, done); }
+        'd_ConsumerPrice'            : function(field){ validateConsumberPrice(field, self, done); },
         //DURABLES:
+        'skip'                       : function(field){ process.nextTick(done); }
         //'d_WarrantyLength'           : function(field){ validateWarrantyLength(field, self, done); },
     }
 
@@ -84,6 +88,8 @@ tOneSKUDecisionSchema.pre('save', true, function(next, done){
 
         validateAction[field](field);        
     }
+//    logger.log('modifiedField:' + this.modifiedField);
+    if(!this.modifiedField){ this.modifiedField = 'skip'; }
 
     doValidate(this.modifiedField);
     next();
@@ -123,22 +129,41 @@ function rangeCheck(input, lowerLimits, upperLimits){
 }
 
 function validateSKUName(field, curSKUDecision, done){
-    if(curSKUDecision.d_SKUName.length() > 1){
+    if(curSKUDecision.d_SKUName.length > 2){
         var err = new Error('Out of SKU name range');
         err.message = 'Out of SKU name range';
         return done(err);
     }
 
     exports.findAllInBrand(curSKUDecision.seminarId, curSKUDecision.period, curSKUDecision.d_CID, curSKUDecision.d_BrandID).then(function(SKUs){
+        var maxSKUID = 1;
+        SKUs.forEach(function(SKU){
+            if(SKU.d_SKUID > maxSKUID){
+                maxSKUID = SKU.d_SKUID;
+            }
+        })
+        
+        if(maxSKUID.toString()[maxSKUID.toString().length-1] === '5'){ return done(new Error("You already have 5 SKUs."));}
                 
-        var isNameExisted = SKUs.some(function(sku){ sku.d_SKUName == curSKUDecision.d_SKUName; });
+        //logger.log('d_SKUName:' + curSKUDecision.d_SKUName + ', SKUs:' + SKUs);
+        var isNameExisted = SKUs.some(function(sku){             
+            return sku.d_SKUName == curSKUDecision.d_SKUName; 
+        });
+
         if(isNameExisted){
-            var err = new Error('Name existed.');
-            err.message = 'Name existed.';
-            return done(err);            
+            return done(new Error('Name existed.'));            
         } else {
+            //TODO: if kernel discontinue some brand/sku without re-organise ID, logic below will get screwed                         
+            if(maxSKUID != 1){
+                curSKUDecision.d_SKUID = maxSKUID + 1;                
+            //this is first one SKU under brand 
+            } else {
+                curSKUDecision.d_SKUID = curSKUDecision.d_BrandID * 10 + maxSKUID;                
+            }
+            curSKUDecision.bs_PeriodOfBirth = curSKUDecision.period;
             done();
         }
+
     }, function(err){
         done(err);
     });
@@ -162,7 +187,7 @@ function validateTechnology(field, curSKUDecision, done){
         } else {
             done();
         }                   
-    });
+    }).done();
 }
 
 function validateIngredientsQuality(field, curSKUDecision, done){
@@ -181,7 +206,7 @@ function validateIngredientsQuality(field, curSKUDecision, done){
         } else {
             done();
         }                   
-    });
+    }).done();
 }
 
 //step 2: Factory Price 
@@ -217,19 +242,15 @@ function validateFactoryPrice(field, curSKUDecision, done){
                 err.modifiedField = field;
                 done(err);
             } else {
-                //update consumer price automatically                 
-                preSKUDecision.d_ConsumerPrice = utility.getConsumerPrice(curSKUDecision[field][0]);
-                preSKUDecision.modifiedField = 'd_ConsumerPrice';
-                preSKUDecision.save(function(err){
-                    if(err){ return done(err);}
-                    done();
-                });
+                //update consumer price automatically         
+                curSKUDecision.d_ConsumerPrice = utility.getConsumerPrice(curSKUDecision[field][0]);        
+                done();
             }
         });
 
     }).fail(function(err){
         done(err);  
-    });
+    }).done();
 }
 
 //Step 3: decide rest unitCost related field (margin and bonus)
@@ -253,7 +274,7 @@ function validateAdditionalTradeMargin(field, curSKUDecision, done){
         } else {
             done();
         }                   
-    });
+    }).done();
 }
 
 function validateWholesalesBonusMinVolume(field, curSKUDecision, done){
@@ -276,7 +297,7 @@ function validateWholesalesBonusMinVolume(field, curSKUDecision, done){
         } else {
             done();
         }         
-    });    
+    }).done();    
 
 }
 
@@ -300,7 +321,7 @@ function validateWholesalesBonusRate(field, curSKUDecision, done){
         } else {
             done();
         }         
-    });     
+    }).done();     
 }
 
 function validateProductionVolume(field, curSKUDecision, done){
@@ -323,7 +344,7 @@ function validateProductionVolume(field, curSKUDecision, done){
         } else {
             done();
         }         
-    });
+    }).done();
 }
 
 function validateAvailableBudget(field, curSKUDecision, done){
@@ -343,7 +364,7 @@ function validateAvailableBudget(field, curSKUDecision, done){
         } else {
             done();
         }         
-    });
+    }).done();
 }
 
 //Pack size : 0 - small, 1 - standard 2 - big
@@ -384,21 +405,60 @@ exports.remove =  function(seminarId, period, companyId, brandId, SKUID){
     }
 
     var deferred = Q.defer();
-    SKUDecision.remove({
+    SKUDecision.findOne({
         seminarId: seminarId,
         period: period,
         d_CID: companyId,
         d_BrandID: brandId,
         d_SKUID: SKUID
-    }, function(err){
-        if(err){
-            return deferred.reject(err);
-        }else{
-            return deferred.resolve(undefined);
-        }
-    });
+    }, function(err, skuDoc){
+        if(err) { return deferred.reject({message:'SKU does not exist.'}); }
+        if(!skuDoc){ return deferred.reject({message: 'Cannot fine SKU.'});  }
+        if(skuDoc.bs_PeriodOfBirth != skuDoc.period){ return deferred.reject({message:'You cannot delete this SKU manually, please choose discontinue.'}); }
+
+
+        //Step 1: remove SKU doc
+        skuDoc.remove(function(err){
+            if(err){
+                return deferred.reject(err);
+            }else{
+                //Step 2: clear SKUID in the related brandDecision.d_SKUsDecisions
+                brandDecisionModel.findOne(skuDoc.seminarId, skuDoc.period, skuDoc.d_CID, skuDoc.d_BrandID).then(function(brandDoc){
+                    brandDoc.d_SKUsDecisions = _.without(brandDoc.d_SKUsDecisions, skuDoc.d_SKUID);
+                    //Step 3(v1): if there is no other SKU under it, need to remove related Brand Doc
+                    if(brandDoc.d_SKUsDecisions.length == 0){
+                        brandDoc.remove(function(err){
+                            if(err){ return deferred.reject(err); }
+                            //Step 3.5: clear related BrandID in the array companyDecision.d_BrandsDecisions
+                            else { 
+                                companyDecisionModel.findOne(brandDoc.seminarId, brandDoc.period, brandDoc.d_CID).then(function(companyDoc){
+                                    companyDoc.d_BrandsDecisions = _.without(companyDoc.d_BrandsDecisions, brandDoc.d_BrandID);                     
+                                    companyDoc.save(function(err){
+                                        if(err){ return deferred.reject(err);}
+                                        else{  return deferred.resolve({message: 'SKU and related Brand have been removed.'});  }    
+                                    });                                    
+                                }).fail(function(err){
+                                    return deferred.reject(err);
+                                }).done();                                    
+                            }
+                        })
+                    } else {
+                    //Step 3(v2): if it is not only one SKU under Brand, clear SKUID in brandDecision.d_SKUsDecisions is enough
+                        brandDoc.save(function(err){
+                            if(err){ return deferred.reject(err); }
+                            else { return deferred.resolve({message: 'SKU has been removed.'}); }
+                        })                        
+                    }
+                }).fail(function(err){
+                    return deferred.reject(err);
+                }).done();                
+            }            
+        });
+    });   
+
     return deferred.promise;
 }
+
 
 exports.removeAll =  function(seminarId){
     if(!mongoose.connection.readyState){
@@ -436,13 +496,52 @@ exports.removeAllInBrand = function(seminarId, period, companyId){
     return deferred.promise;
 }
 
-exports.save = function(decision){
+//User choose to launch new product, need name validations(also set up SKUID)
+exports.create = function(decision){
     if(!mongoose.connection.readyState){
         throw new Error("mongoose is not connected.");
     }
 
     var deferred = Q.defer();
     var d = new SKUDecision(decision);
+    d.modifiedField = 'd_SKUName';
+
+    d.save(function(err, skuDoc, numAffected){
+        if(err){
+            deferred.reject(err);
+        }else if(numAffected!==1){
+            deferred.reject(new Error("no result found in db"))
+        }else{
+            //update parentBrandDecision, update SKUID in brandDecision.d_SKUsDecisions
+            brandDecisionModel.findOne(skuDoc.seminarId, skuDoc.period, skuDoc.d_CID, skuDoc.d_BrandID).then(function(brandDoc){
+                var isIDExisted = brandDoc.d_SKUsDecisions.some(function(id){ return id == skuDoc.d_SKUID; })
+                if(isIDExisted){ return deferred.reject(new Error('find Duplicate SKUID in the brandDecision.d_SKUsDecisions!')); }
+
+                //logger.log('push :' + skuDoc.d_SKUID + ', typeof:' + typeof skuDoc.d_SKUID);
+                brandDoc.d_SKUsDecisions.push(skuDoc.d_SKUID);
+                brandDoc.save(function(err){
+                    if(err){ return deferred.reject(err); }
+                    else { return deferred.resolve({message: 'SKU has been added.'}); }
+                });                      
+            }).fail(function(err){
+                return deferred.reject(err);
+            }).done();  
+        }
+    });
+    return deferred.promise;
+};
+
+//Initialize process, create brand decision document based on binary files, skip all the validations
+//set bs_PeriodOfBirth = 0
+exports.initCreate = function(decision){
+    if(!mongoose.connection.readyState){
+        throw new Error("mongoose is not connected.");
+    }
+
+    var deferred = Q.defer();
+    var d = new SKUDecision(decision);
+    d.bs_PeriodOfBirth = 0;
+    d.modifiedField = 'skip';
 
     d.save(function(err, result, numAffected){
         if(err){
@@ -455,6 +554,7 @@ exports.save = function(decision){
     });
     return deferred.promise;
 };
+
 
 
 exports.findOne = function(seminarId, period, companyId, brandId, SKUID){

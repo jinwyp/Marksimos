@@ -97,7 +97,7 @@ exports.init = function(req, res, next) {
     })
     .then(function(initResult){
         if(initResult.message !== 'init_success'){
-            return res.send({message: 'init binary file failed. initResult = ' + initResult.message});
+            return res.send(403, {message: 'init binary file failed. initResult = ' + initResult.message});
         }
 
         return Q.all([
@@ -144,7 +144,7 @@ exports.init = function(req, res, next) {
                 throw {message: "there's error during set isInitialized to true."};
             }
             res.send({message: 'initialize success'});
-        })
+        }).done();
     })
     .fail(function(err){
         logger.error(err);
@@ -618,7 +618,6 @@ function initMarketIndicatorReport(seminarId, currentPeriod){
     });
 }
 
-
 function duplicateLastPeriodDecision(seminarId, lastPeriod){
     return companyDecisionModel.findAllInPeriod(seminarId, lastPeriod)
     .then(function(allCompanyDecision){
@@ -629,6 +628,10 @@ function duplicateLastPeriodDecision(seminarId, lastPeriod){
             delete tempCompanyDecision._id;
             delete tempCompanyDecision.__v;
             tempCompanyDecision.period = tempCompanyDecision.period + 1;
+            tempCompanyDecision.d_RequestedAdditionalBudget = 0;
+            tempCompanyDecision.d_InvestmentInServicing = 0;
+            tempCompanyDecision.d_InvestmentInEfficiency = 0;
+            tempCompanyDecision.d_InvestmentInTechnology = 0;
             p = p.then(function(result){
                 if(!result){
                     throw new Error("save comanyDecision failed during create copy of last period decision.");
@@ -651,11 +654,12 @@ function duplicateLastPeriodDecision(seminarId, lastPeriod){
                 delete tempBrandDecision._id;
                 delete tempBrandDecision.__v;
                 tempBrandDecision.period = tempBrandDecision.period + 1;
+                tempBrandDecision.d_SalesForce = 0;
                 p = p.then(function(result){
                     if(!result){
                         throw new Error("save brandDecision failed during create copy of last period decision.");
                     }
-                    return brandDecisionModel.save(tempBrandDecision);
+                    return brandDecisionModel.initCreate(tempBrandDecision);
                 })
             })
             return p;
@@ -673,12 +677,21 @@ function duplicateLastPeriodDecision(seminarId, lastPeriod){
 
                 delete tempSKUDecision._id;
                 delete tempSKUDecision.__v;
+
+                //Make sure to copy all the field instead of field listed below:
                 tempSKUDecision.period = tempSKUDecision.period + 1;
+                tempSKUDecision.d_Advertising = 0;
+                tempSKUDecision.d_AdditionalTradeMargin = 0;
+                tempSKUDecision.d_ProductionVolume = 0;
+                tempSKUDecision.d_PromotionalBudget = 0;
+                tempSKUDecision.d_TradeExpenses = 0;
+                tempSKUDecision.d_WholesalesBonusRate = 0;
+                tempSKUDecision.d_WholesalesBonusMinVolume = 0;
                 p = p.then(function(result){
                     if(!result){
                         throw new Error("save SKUDecision failed during create copy of last period decision.");
                     }
-                    return SKUDecisionModel.save(tempSKUDecision);
+                    return SKUDecisionModel.initCreate(tempSKUDecision);
                 })
             })
             return p;

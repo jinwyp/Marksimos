@@ -1756,11 +1756,11 @@
                                         </tr>
                                         <tr>
                                             <th>Estimated Additional Trade Margin Cost</th>
-                                            <td ng-repeat="brand in data.currentCompanySpendingDetails.brandData">{{brand.estimatedAdditionalTradeMarginCost}}</td>
+                                            <td ng-repeat="brand in data.currentCompanySpendingDetails.brandData">{{brand.estimatedAdditionalTradeMarginCost| number:2}}</td>
                                         </tr>
                                         <tr>
                                             <th>Estimated Wholesale Bonus Cost</th>
-                                            <td ng-repeat="brand in data.currentCompanySpendingDetails.brandData">{{brand.estimatedWholesaleBonusCost}}</td>
+                                            <td ng-repeat="brand in data.currentCompanySpendingDetails.brandData">{{brand.estimatedWholesaleBonusCost| number:2}}</td>
                                         </tr>
                                     </tbody>
                                 </table>
@@ -1803,11 +1803,11 @@
                                         </tr>
                                         <tr>
                                             <td>Total Investment</td>
-                                            <td>{{data.currentCompanySpendingDetails.companyData.totalInvestment}}</td>
+                                            <td>{{data.currentCompanySpendingDetails.companyData.totalInvestment | number :2}}</td>
                                         </tr>
                                         <tr>
                                             <td>Average Budget per Period</td>
-                                            <td>{{data.currentCompanySpendingDetails.companyData.averageBudgetPerPeriod}}</td>
+                                            <td>{{data.currentCompanySpendingDetails.companyData.averageBudgetPerPeriod | number :2}}</td>
                                         </tr>
                                         <tr>
                                             <td>Total Investment Budget</td>
@@ -1819,7 +1819,7 @@
                                         </tr>
                                         <tr>
                                             <td>Available Budget</td>
-                                            <td>{{data.currentCompanySpendingDetails.companyData.availableBudget}}</td>
+                                            <td>{{data.currentCompanySpendingDetails.companyData.availableBudget | number :2}}</td>
                                         </tr>
                                         <tr>
                                             <td>Normal Capacity (mln Packs)</td>
@@ -1827,15 +1827,15 @@
                                         </tr>
                                         <tr>
                                             <td>Available Overtime Capacity Extenstion (mln Packs)</td>
-                                            <td>{{data.currentCompanySpendingDetails.companyData.availableOvertimeCapacityExtension}}</td>
+                                            <td>{{data.currentCompanySpendingDetails.companyData.availableOvertimeCapacityExtension | number :2}}</td>
                                         </tr>
                                         <tr>
                                             <td>Acquired Efficiency (%)</td>
-                                            <td>{{data.currentCompanySpendingDetails.companyData.acquiredEfficiency}}%</td>
+                                            <td>{{data.currentCompanySpendingDetails.companyData.acquiredEfficiency | number :2}}%</td>
                                         </tr>
                                         <tr>
                                             <td>Acquired Production Volmume Flexibility (%)</td>
-                                            <td>{{data.currentCompanySpendingDetails.companyData.acquiredProductionVolumeFlexibility}}%</td>
+                                            <td>{{data.currentCompanySpendingDetails.companyData.acquiredProductionVolumeFlexibility | number :2}}%</td>
                                         </tr>
                                         <tr>
                                             <td>Acquired Technology Level</td>
