@@ -667,7 +667,8 @@ marksimosapp.controller('chartController', ['$translate', '$scope', '$rootScope'
 
             $scope.data.currentCompanyNameCharacter = showCompanyName($scope.data.currentStudent.companyId);
 
-
+            $scope.css.periods = [];
+            
             // 处理显示当前第几回合进度条
             if(angular.isNumber($scope.data.currentStudent.currentPeriod)){
                 for (var i = -3; i <= $scope.data.currentStudent.maxPeriodRound; i++) {
@@ -706,7 +707,7 @@ marksimosapp.controller('chartController', ['$translate', '$scope', '$rootScope'
                 angular.forEach(data.d_BrandsDecisions, function(brand){
                     if(brand.d_BrandID === $scope.data.currentBrand.d_BrandID){
                         $scope.data.currentBrandIndex = data.d_BrandsDecisions.indexOf(brand);
-
+                        console.log($scope.data.currentBrandIndex);
                         if($scope.data.currentBrandIndex === -1 ){
                             $scope.data.currentBrandIndex  = 0;
                         }
@@ -715,7 +716,16 @@ marksimosapp.controller('chartController', ['$translate', '$scope', '$rootScope'
             }
 
             $scope.data.currentCompany = data;
-            $scope.css.currentDecisionBrandId = $scope.data.currentCompany.d_BrandsDecisions[$scope.data.currentBrandIndex]._id;
+
+            //要处理删除SKU后,同时删除Brand后的问题
+            console.log($scope.data.currentBrandIndex);
+            if( angular.isUndefined($scope.data.currentCompany.d_BrandsDecisions[$scope.data.currentBrandIndex]._id) ){
+                $scope.css.currentDecisionBrandId = $scope.data.currentCompany.d_BrandsDecisions[0]._id
+                console.log($scope.data.currentCompany.d_BrandsDecisions[0]);
+            }else{
+                $scope.css.currentDecisionBrandId = $scope.data.currentCompany.d_BrandsDecisions[$scope.data.currentBrandIndex]._id;
+            }
+
             $scope.data.currentBrand = $scope.data.currentCompany.d_BrandsDecisions[$scope.data.currentBrandIndex];
 
 
