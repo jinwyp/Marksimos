@@ -73,6 +73,8 @@ $color_main_body_user_feedback_back: #FFF2E5;
 $color_main_body_user_feedback_border: #FF941F;
 $color_main_body_user_feedback: #A07041;
 
+$color_main_body_user_feedback_title:#5E66E6;
+
 
 
 
@@ -986,13 +988,13 @@ body{
 
     .score_box {
         border:1px solid $color_login_panel_border;
-        margin: 10px 12.5%;
+        margin: 20px 12.5% 10px 12.5%;
     }
 
     .feedback_box {
         border:1px solid $color_main_body_user_feedback_border;
         color: $color_main_body_user_feedback;
-        margin: 10px 12.5%;
+        margin: 0 12.5% 20px;
     }
 
     .score_info {
@@ -1003,9 +1005,6 @@ body{
     }
     .score_data {
         background-color: $color_login_panel_background;
-        .score_img{
-            margin:0 20px 20px;
-        }
     }
 
     .feedback_info {
@@ -1014,6 +1013,19 @@ body{
         .provide_feedback{
             margin:10px 0;
         }
+    }
+    .feedback_data{
+        background-color: $color_login_panel_background;
+        h3 {
+            color: $color_main_body_user_feedback_title;
+            font-family: $font_main_header2;
+            font-weight: normal;
+            padding: 30px;
+        }
+    }
+    .submit_feedback_button{
+        font-size: 14px;
+        @include user_decision_button;
     }
 
     /**********  Decision 页面开始  **********/
