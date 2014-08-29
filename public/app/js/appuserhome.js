@@ -799,8 +799,10 @@ marksimosapp.controller('chartController', ['$translate', '$scope', '$rootScope'
         if (form.$valid) {
 
             // 自动给品牌名称增加公司前缀
+            $scope.data.newBrand.brand_name = $scope.data.currentCompanyNameCharacter + $scope.data.newBrand.brand_name;
 
             Company.addBrand($scope.data.newBrand).then(function(data, status, headers, config){
+
                 $scope.companyInfoInit();
 
                 notify({
