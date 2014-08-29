@@ -668,7 +668,7 @@ marksimosapp.controller('chartController', ['$translate', '$scope', '$rootScope'
             $scope.data.currentCompanyNameCharacter = showCompanyName($scope.data.currentStudent.companyId);
 
             $scope.css.periods = [];
-            
+
             // 处理显示当前第几回合进度条
             if(angular.isNumber($scope.data.currentStudent.currentPeriod)){
                 for (var i = -3; i <= $scope.data.currentStudent.maxPeriodRound; i++) {
@@ -701,13 +701,13 @@ marksimosapp.controller('chartController', ['$translate', '$scope', '$rootScope'
 
         Company.getCompany().then(function(data, status, headers, config){
 
-            //记录上一次选中的Brand 和SKU 并找到对应的Index 供本次查询使用
-
+            //记录上一次选中的Brand  并找到对应的Index 供本次查询使用
             if($scope.data.currentBrand !== null ){
                 angular.forEach(data.d_BrandsDecisions, function(brand){
+
                     if(brand.d_BrandID === $scope.data.currentBrand.d_BrandID){
                         $scope.data.currentBrandIndex = data.d_BrandsDecisions.indexOf(brand);
-                        console.log($scope.data.currentBrandIndex);
+
                         if($scope.data.currentBrandIndex === -1 ){
                             $scope.data.currentBrandIndex  = 0;
                         }
@@ -717,19 +717,17 @@ marksimosapp.controller('chartController', ['$translate', '$scope', '$rootScope'
 
             $scope.data.currentCompany = data;
 
-            //要处理删除SKU后,同时删除Brand后的问题
-            console.log($scope.data.currentBrandIndex);
-            if( angular.isUndefined($scope.data.currentCompany.d_BrandsDecisions[$scope.data.currentBrandIndex]._id) ){
-                $scope.css.currentDecisionBrandId = $scope.data.currentCompany.d_BrandsDecisions[0]._id
-                console.log($scope.data.currentCompany.d_BrandsDecisions[0]);
-            }else{
-                $scope.css.currentDecisionBrandId = $scope.data.currentCompany.d_BrandsDecisions[$scope.data.currentBrandIndex]._id;
+            //要处理删除SKU后,同时删除Brand后的问题 currentBrandIndex 要重置为零
+            if( angular.isUndefined($scope.data.currentCompany.d_BrandsDecisions[$scope.data.currentBrandIndex]) ){
+                $scope.data.currentBrandIndex = 0;
+                $scope.data.currentSkuIndex  = 0;
             }
 
+            $scope.css.currentDecisionBrandId = $scope.data.currentCompany.d_BrandsDecisions[$scope.data.currentBrandIndex]._id;
             $scope.data.currentBrand = $scope.data.currentCompany.d_BrandsDecisions[$scope.data.currentBrandIndex];
 
 
-            //记录上一次选中的Brand 和SKU 并找到对应的Index 供本次查询使用
+            //记录上一次选中的SKU 并找到对应的Index 供本次查询使用
             if($scope.data.currentSku !== null ){
                 angular.forEach($scope.data.currentBrand.d_SKUsDecisions, function(sku){
 
@@ -746,7 +744,6 @@ marksimosapp.controller('chartController', ['$translate', '$scope', '$rootScope'
             $scope.data.currentSku = $scope.data.currentCompany.d_BrandsDecisions[$scope.data.currentBrandIndex].d_SKUsDecisions[$scope.data.currentSkuIndex];
 
             Company.getCompanyFutureProjectionCalculator($scope.data.currentSku.d_SKUID).then(function(data, status, headers, config){
-    //            console.log(data);
                 $scope.data.currentCompanyFutureProjectionCalculator = data;
 
             });

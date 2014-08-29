@@ -1333,8 +1333,8 @@
                                         <thead>
                                             <tr>
                                                 <th class="sku_table">{{'DecisionPageDecisionTabName' | translate}} <button class="btn btn-default btn-xs" ng-click="showAddNewSkuForm()">+</button></th>
-                                                <th ng-repeat="sku in data.currentBrand.d_SKUsDecisions" ng-click="clickCurrentSku(sku)">
-                                                    <a href="">{{data.currentBrand.d_BrandName}}{{sku.d_SKUName}}</a>
+                                                <th ng-repeat="sku in data.currentBrand.d_SKUsDecisions" >
+                                                    <a href="" ng-click="clickCurrentSku(sku)">{{data.currentBrand.d_BrandName}}{{sku.d_SKUName}}</a>
                                                     <button type="button" class="btn btn-default btn-xs" ng-show="true" ng-click="delSku(sku)">x</button></th>
                                             </tr>
                                         </thead>
