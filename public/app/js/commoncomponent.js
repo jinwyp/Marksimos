@@ -329,7 +329,6 @@ app.directive('textFormInput', function() {
             var inputclass = tAttrs.inputclass || 'col-sm-3';
             var inputgroupclass = tAttrs.inputgroupclass ? ' input-group' : '';
 
-
             var type = tAttrs.type || 'text';
 
             var required, requirederrorinfo, minlength, minlengtherrorinfo, maxlength, maxlengtherrorinfo, min, max, numbererrorinfo;
@@ -376,8 +375,8 @@ app.directive('textFormInput', function() {
 
             var tpltext = '<div class="form-group has-feedback" ng-class="{ \'has-success\':form.$dirty && form.$valid , \'has-error\': form.$dirty && form.$invalid}">' +
                             '<label class="' + labelclass + ' control-label" for="' + tAttrs.name + '" >' + tAttrs.label + '</label>' +
-                            '<div class="' + inputclass + inputgroupclass + '">' +
-                                '<div class="input-group-addon" ng-if="inputgroupclass">{{inputgroupprefix}}</div>' +
+                            '<div class="' + inputclass + '">'  +
+                                '<p class="form-control-static" >{{inputgroupprefix}}</p>' +
                                 '<input type="' + type + '" class="form-control" id="ID' + tAttrs.name +'" name="' + tAttrs.name +'" placeholder="{{placeholder}}" ng-model="data" ' + required + minlength + maxlength + min + max + '>' +
                                 '<span ng-if="form.$dirty && form.$valid" class="glyphicon glyphicon-ok form-control-feedback"></span>' +
                                 '<span ng-if="form.$dirty && form.$invalid" class="glyphicon glyphicon-remove form-control-feedback"></span>' +

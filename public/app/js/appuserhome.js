@@ -81,6 +81,7 @@ marksimosapp.controller('chartController', ['$translate', '$scope', '$rootScope'
     $scope.data = {
         currentStudent : null,
         currentCompany : null,
+        currentCompanyNameCharacter : "",
         currentCompanyOtherInfo : {},
         currentCompanyProductPortfolio : {},
         currentCompanySpendingDetails : {},
@@ -634,6 +635,39 @@ marksimosapp.controller('chartController', ['$translate', '$scope', '$rootScope'
         Company.getCurrentStudent().then(function(data, status, headers, config){
             $scope.data.currentStudent = data;
 
+            // 处理当前的公司名称
+
+            function showCompanyName(fieldname) {
+                var names = {
+                    '1': function() {
+                        return "A";
+                    },
+                    '2': function() {
+                        return "B";
+                    },
+                    '3': function() {
+                        return "C";
+                    },
+                    '4': function() {
+                        return "D";
+                    },
+                    '5': function() {
+                        return "E";
+                    },
+                    '6': function() {
+                        return "F";
+                    }
+
+                };
+                if (typeof names[fieldname] !== 'function') {
+                    return false;
+                }
+                return names[fieldname]();
+            }
+
+            $scope.data.currentCompanyNameCharacter = showCompanyName($scope.data.currentStudent.companyId);
+
+
             // 处理显示当前第几回合进度条
             if(angular.isNumber($scope.data.currentStudent.currentPeriod)){
                 for (var i = -3; i <= $scope.data.currentStudent.maxPeriodRound; i++) {
@@ -756,6 +790,9 @@ marksimosapp.controller('chartController', ['$translate', '$scope', '$rootScope'
     $scope.addNewBrand = function(form){
 
         if (form.$valid) {
+
+            // 自动给品牌名称增加公司前缀
+
             Company.addBrand($scope.data.newBrand).then(function(data, status, headers, config){
                 $scope.companyInfoInit();
 
