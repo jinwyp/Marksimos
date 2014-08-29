@@ -1097,6 +1097,7 @@ body{
         .table > thead > tr > th {
             font-weight: bold;
             color: $color_main_body_user_chart_leftmenu_title;
+            vertical-align: middle;
             a {
                 font-weight: bold;
                 color: $color_main_body_user_chart_leftmenu_title;
