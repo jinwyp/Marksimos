@@ -51,13 +51,14 @@ marksimosapp.controller('chartController', ['$translate', '$scope', '$rootScope'
 
 
     $scope.css = {
-        menu                     : 'Decision',
+        menu                     : 'Home',
         chartMenu                : 'A1',
         tableReportTab           : 'SKU',
         tableReportMenu          : 1,
         additionalBudget         : true,
         currentDecisionBrandId   : 0,
         currentDecisionRightMenu : 1,
+        currentSearchReportName  : '',
         addNewSku                : false,
         addNewBrand              : false,
         skuErrorField : '',
@@ -95,6 +96,7 @@ marksimosapp.controller('chartController', ['$translate', '$scope', '$rootScope'
         },
         currentSku : null,
         currentSkuIndex : 0,
+        reportName : "",
         newBrand : {
             brand_name : "",
             sku_name : "",
@@ -1064,6 +1066,106 @@ marksimosapp.controller('chartController', ['$translate', '$scope', '$rootScope'
     };
 
 
+
+
+
+
+    /********************  Search Report   ********************/
+
+    var reports = [
+        {
+            name : 'Company Status',
+            id : 'A1',
+            keywords : [ 'Company', 'report2' ]
+        },
+        {
+            name : 'Financial Report',
+            id : 'A2',
+            keywords : [ 'Financial', 'report2' ]
+        },
+        {
+            name : 'Inventory Report',
+            id : 'A3',
+            keywords : [ 'Inventory', 'report2' ]
+        },
+        {
+            name : 'Profitability Evolution',
+            id : 'A4',
+            keywords : [ 'Evolution', 'report2' ]
+        },
+        {
+            name : 'Market Share',
+            id : 'B1',
+            keywords : [ 'Share', 'report2' ]
+        },
+        {
+            name : 'Competitor Intelligence',
+            id : 'B2',
+            keywords : [ 'Intelligence', 'report2' ]
+        },
+        {
+            name : 'Investment & Profits',
+            id : 'B3',
+            keywords : [ 'Profits', 'report2' ]
+        },
+        {
+            name : 'Market Sales & Inventory',
+            id : 'B4',
+            keywords : [ 'Sales', 'report2' ]
+        },
+        {
+            name : 'Segment Leader Top5',
+            id : 'C1',
+            keywords : [ 'Segment', 'report2' ]
+        },
+        {
+            name : 'Perception Map',
+            id : 'C2',
+            keywords : [ 'Perception', 'report2' ]
+        },
+        {
+            name : 'Segment Distributions',
+            id : 'C3',
+            keywords : [ 'Distributions', 'report2' ]
+        },
+        {
+            name : 'Market Evolution',
+            id : 'C4',
+            keywords : [ 'Evolution', 'report2' ]
+        },
+        {
+            name : 'Market Trends',
+            id : 'C5',
+            keywords : [ 'Trends', 'report2' ]
+        },
+        {
+            name : 'Market Indicator',
+            id : 'C6',
+            keywords : [ 'Indicator', 'report2' ]
+        }
+    ];
+
+    $scope.searchReport = function(){
+        console.log($scope.css.currentSearchReportName);
+        $scope.css.currentSearchReportName = '';
+        if($scope.data.reportName === ''){
+
+        }else{
+            angular.forEach(reports, function(child){
+
+                angular.forEach(child.keywords, function(keyword){
+
+                    if(keyword.toLowerCase().indexOf($scope.data.reportName) > -1){
+                        $scope.css.currentSearchReportName = child.id;
+                        return
+                    }
+                });
+            });
+        }
+
+
+
+    };
 
 
 }]);
