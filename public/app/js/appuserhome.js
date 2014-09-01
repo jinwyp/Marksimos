@@ -1157,14 +1157,11 @@ marksimosapp.controller('chartController', ['$translate', '$scope', '$rootScope'
 
                     if(keyword.toLowerCase().indexOf($scope.data.reportName) > -1){
                         $scope.css.currentSearchReportName = child.id;
-                        return
+                        return;
                     }
                 });
             });
         }
-
-
-
     };
 
 
