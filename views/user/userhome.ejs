@@ -165,17 +165,11 @@
             <div class="row">
                 <div class="col-md-12 user_chart_search_box">
                     <div class="input-group">
-                        <div class="input-group-btn">
 
-                            <button type="button" class="btn btn-default dropdown-toggle droplist_company" data-toggle="dropdown">Company A <span class="caret"></span></button>
-                            <ul class="dropdown-menu">
-                                <li><a href="">Company A</a></li>
-                                <li><a href="">Company B</a></li>
-                                <li><a href="">Company C</a></li>
-                            </ul>
-                        </div><!-- /btn-group -->
-
-                        <input type="text" class="form-control" placeholder="find report or chart">
+                        <span class="input-group-btn">
+                            <button class="btn btn-default" type="button"><span class="glyphicon glyphicon-search"></span></button>
+                        </span>
+                        <input type="text" class="form-control" placeholder="find report or chart" ng-model="data.reportName" ng-change="searchReport()">
                     </div><!-- /input-group -->
                 </div>
 
@@ -218,10 +212,10 @@
 
                 <!-- List group -->
                 <ul class="list-group">
-                    <li class="list-group-item" ng-class="{'list-group-item-active': css.chartMenu=='A1'}"><a href="" ng-click="clickChartMenu('A1')">{{'ReportMenuCompanyStatus' | translate}}</a></li>
-                    <li class="list-group-item" ng-class="{'list-group-item-active': css.chartMenu=='A2'}"><a href="" ng-click="clickChartMenu('A2')">{{'ReportMenuFinancialReport' | translate}}</a></li>
-                    <li class="list-group-item" ng-class="{'list-group-item-active': css.chartMenu=='A3'}"><a href="" ng-click="clickChartMenu('A3')">{{'ReportMenuInventoryReport' | translate}}</a></li>
-                    <li class="list-group-item" ng-class="{'list-group-item-active': css.chartMenu=='A4'}"><a href="" ng-click="clickChartMenu('A4')">{{'ReportMenuProfitabilityEvolution' | translate}}</a></li>
+                    <li class="list-group-item" ng-class="{'list-group-item-active': css.chartMenu=='A1', 'spotlight_overlay':css.currentSearchReportName=='A1'}"><a href="" ng-click="clickChartMenu('A1')">{{'ReportMenuCompanyStatus' | translate}}</a></li>
+                    <li class="list-group-item" ng-class="{'list-group-item-active': css.chartMenu=='A2', 'spotlight_overlay':css.currentSearchReportName=='A2'}"><a href="" ng-click="clickChartMenu('A2')">{{'ReportMenuFinancialReport' | translate}}</a></li>
+                    <li class="list-group-item" ng-class="{'list-group-item-active': css.chartMenu=='A3', 'spotlight_overlay':css.currentSearchReportName=='A3'}"><a href="" ng-click="clickChartMenu('A3')">{{'ReportMenuInventoryReport' | translate}}</a></li>
+                    <li class="list-group-item" ng-class="{'list-group-item-active': css.chartMenu=='A4', 'spotlight_overlay':css.currentSearchReportName=='A4'}"><a href="" ng-click="clickChartMenu('A4')">{{'ReportMenuProfitabilityEvolution' | translate}}</a></li>
                 </ul>
             </div>
 
@@ -230,10 +224,10 @@
 
                 <!-- List group -->
                 <ul class="list-group">
-                    <li class="list-group-item" ng-class="{'list-group-item-active': css.chartMenu=='B1'}"><a href="" ng-click="clickChartMenu('B1')">{{'ReportMenuMarketShare' | translate}}</a></li>
-                    <li class="list-group-item" ng-class="{'list-group-item-active': css.chartMenu=='B2'}"><a href="" ng-click="clickChartMenu('B2')">{{'ReportMenuCompetitorIntelligence' | translate}}</a></li>
-                    <li class="list-group-item" ng-class="{'list-group-item-active': css.chartMenu=='B3'}"><a href="" ng-click="clickChartMenu('B3')">{{'ReportMenuInvestmentProfits' | translate}}</a></li>
-                    <li class="list-group-item" ng-class="{'list-group-item-active': css.chartMenu=='B4'}"><a href="" ng-click="clickChartMenu('B4')">{{'ReportMenuMarketSalesInventory' | translate}}</a></li>
+                    <li class="list-group-item" ng-class="{'list-group-item-active': css.chartMenu=='B1', 'spotlight_overlay':css.currentSearchReportName=='B1'}"><a href="" ng-click="clickChartMenu('B1')">{{'ReportMenuMarketShare' | translate}}</a></li>
+                    <li class="list-group-item" ng-class="{'list-group-item-active': css.chartMenu=='B2', 'spotlight_overlay':css.currentSearchReportName=='B2'}"><a href="" ng-click="clickChartMenu('B2')">{{'ReportMenuCompetitorIntelligence' | translate}}</a></li>
+                    <li class="list-group-item" ng-class="{'list-group-item-active': css.chartMenu=='B3', 'spotlight_overlay':css.currentSearchReportName=='B3'}"><a href="" ng-click="clickChartMenu('B3')">{{'ReportMenuInvestmentProfits' | translate}}</a></li>
+                    <li class="list-group-item" ng-class="{'list-group-item-active': css.chartMenu=='B4', 'spotlight_overlay':css.currentSearchReportName=='B4'}"><a href="" ng-click="clickChartMenu('B4')">{{'ReportMenuMarketSalesInventory' | translate}}</a></li>
                 </ul>
             </div>
 
@@ -242,12 +236,12 @@
 
                 <!-- List group -->
                 <ul class="list-group">
-                    <li class="list-group-item" ng-class="{'list-group-item-active': css.chartMenu=='C1'}"><a href="" ng-click="clickChartMenu('C1')">{{'ReportMenuSegmentLeaderTop5' | translate}}</a></li>
-                    <li class="list-group-item" ng-class="{'list-group-item-active': css.chartMenu=='C2'}"><a href="" ng-click="clickChartMenu('C2')">{{'ReportMenuPerceptionMap' | translate}}</a></li>
-                    <li class="list-group-item" ng-class="{'list-group-item-active': css.chartMenu=='C3'}"><a href="" ng-click="clickChartMenu('C3')">{{'ReportMenuSegmentDistributions' | translate}}</a></li>
-                    <li class="list-group-item" ng-class="{'list-group-item-active': css.chartMenu=='C4'}"><a href="" ng-click="clickChartMenu('C4')">{{'ReportMenuMarketEvolution' | translate}}</a></li>
-                    <li class="list-group-item" ng-class="{'list-group-item-active': css.chartMenu=='C5'}"><a href="" ng-click="clickChartMenu('C5')">{{'ReportMenuMarketTrends' | translate}}</a></li>
-                    <li class="list-group-item" ng-class="{'list-group-item-active': css.chartMenu=='C6'}"><a href="" ng-click="clickChartMenu('C6')">{{'ReportMenuMarketIndicator' | translate}}</a> </li>
+                    <li class="list-group-item" ng-class="{'list-group-item-active': css.chartMenu=='C1', 'spotlight_overlay':css.currentSearchReportName=='C1'}"><a href="" ng-click="clickChartMenu('C1')">{{'ReportMenuSegmentLeaderTop5' | translate}}</a></li>
+                    <li class="list-group-item" ng-class="{'list-group-item-active': css.chartMenu=='C2', 'spotlight_overlay':css.currentSearchReportName=='C2'}"><a href="" ng-click="clickChartMenu('C2')">{{'ReportMenuPerceptionMap' | translate}}</a></li>
+                    <li class="list-group-item" ng-class="{'list-group-item-active': css.chartMenu=='C3', 'spotlight_overlay':css.currentSearchReportName=='C3'}"><a href="" ng-click="clickChartMenu('C3')">{{'ReportMenuSegmentDistributions' | translate}}</a></li>
+                    <li class="list-group-item" ng-class="{'list-group-item-active': css.chartMenu=='C4', 'spotlight_overlay':css.currentSearchReportName=='C4'}"><a href="" ng-click="clickChartMenu('C4')">{{'ReportMenuMarketEvolution' | translate}}</a></li>
+                    <li class="list-group-item" ng-class="{'list-group-item-active': css.chartMenu=='C5', 'spotlight_overlay':css.currentSearchReportName=='C5'}"><a href="" ng-click="clickChartMenu('C5')">{{'ReportMenuMarketTrends' | translate}}</a></li>
+                    <li class="list-group-item" ng-class="{'list-group-item-active': css.chartMenu=='C6', 'spotlight_overlay':css.currentSearchReportName=='C6'}"><a href="" ng-click="clickChartMenu('C6')">{{'ReportMenuMarketIndicator' | translate}}</a> </li>
                 </ul>
             </div>
 

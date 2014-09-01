@@ -1146,7 +1146,6 @@ marksimosapp.controller('chartController', ['$translate', '$scope', '$rootScope'
     ];
 
     $scope.searchReport = function(){
-        console.log($scope.css.currentSearchReportName);
         $scope.css.currentSearchReportName = '';
         if($scope.data.reportName === ''){
 

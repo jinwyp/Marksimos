@@ -182,7 +182,16 @@ $color_main_body_decision_table_hover: #feeaff;
     }
 }
 
+@mixin spotlight_overlay{
+    .spotlight_overlay {
+        z-index:1; /* show it on top of the other images (they have z-index 0) */
+        @include box-shadow( 0px 0px 10px 0px $color_main_body_user_chart_leftmenu_active_bgbefore);
 
+        a {
+            color: $color_main_body_user_chart_leftmenu_active_bgbefore;
+        }
+    }
+}
 
 
 
@@ -691,14 +700,8 @@ body{
             background-color: $color_main_body_background;
         }
 
-        .spotlight_overlay {
-            z-index:1; /* show it on top of the other images (they have z-index 0) */
-            @include box-shadow( 0px 0px 10px 0px $color_main_body_user_chart_leftmenu_active_bgbefore);
+        @include spotlight_overlay;
 
-            a {
-                color: $color_main_body_user_chart_leftmenu_active_bgbefore;
-            }
-        }
 
 
     }
@@ -783,7 +786,7 @@ body{
         }
 
 
-        ul .list-group-item{
+        .list-group-item{
             border: 0px none $color_white;
             background-color: $color_main_body_background_brand;
             background-image: url(../images/userchartlist.png);
@@ -796,7 +799,7 @@ body{
                 color: $color_main_body_user_chart_list;
             }
         }
-        ul .list-group-item-active{
+        .list-group-item-active{
             background-color: $color_main_body_user_chart_leftmenu_active_bg;
 
             a{
@@ -815,6 +818,8 @@ body{
                 left:0px;
             }
         }
+
+        @include spotlight_overlay;
 
     }
 
