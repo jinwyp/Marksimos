@@ -6,6 +6,9 @@ $font_login_title: 'Georgia', 'Arial, sans-serif';
 
 $path_images: "./";
 
+$color_white : #ffffff;
+
+
 $color_main_header: #2d428e;
 $color_main_header_menu: #d5def5;
 $color_main_header_menu_active: #4358a1;
@@ -25,7 +28,6 @@ $color_login_input_label : #252525;
 
 $color_main_body_border: #eceff1;
 
-
 $color_main_body_background: #fbfbfb;
 $color_main_body_background_brand: #fdfdfd;
 $color_main_body_background_chart: #dbe3f6;
@@ -38,13 +40,14 @@ $color_main_body_product: #464646;
 $color_main_body_product_target: #6f6f6f;
 $color_main_body_competitors: #2f4e9b;
 $color_main_body_user_clock: #373737;
+$color_main_body_user_decision_button: #19acfe;
 
 $color_main_body_user_period_bar: #9FA5BF;
 $color_main_body_user_period_bar_border: #dfe0e5;
 $color_main_body_user_period_bar_active: #b3c2e7;
 $color_main_body_user_period_bar_normal: #edeef1;
 
-$color_main_body_user_decision_button: #19acfe;
+
 $color_main_body_user_chart_title: #2f4e9b;
 $color_main_body_user_chart_list: #464646;
 $color_main_body_user_chart_list_border: #cfd3e0;
@@ -246,7 +249,6 @@ $color_main_body_decision_table_hover: #feeaff;
     font-weight: 400;
     line-height: 1;
     height: 34px;
-    color: #555;
     text-align: center;
 
 }
@@ -419,7 +421,7 @@ body{
         background-size: 100% 100%;
 
         .navbar-brand {
-            color: #ffffff;
+            color: $color_white;
             font-weight: bold;
             font-size: 12px;
             margin-right: 20px;
@@ -448,7 +450,7 @@ body{
                 box-shadow: none;
 
                 &:before{
-                    border-color:transparent transparent #ffffff transparent;
+                    border-color:transparent transparent $color_white transparent;
                     border-style:dashed dashed solid dashed;
                     border-width:0px 8px 7px 8px;
                     height:0;
@@ -471,7 +473,7 @@ body{
                 background-color: $color_main_header_menu_dropdown;
 
                 li a {
-                    color: #ffffff;
+                    color: $color_white;
                     font-weight: normal;
                     font-size: 12px;
                     background-color: $color_main_header_menu_dropdown;
@@ -649,6 +651,8 @@ body{
     }
 
     .user_chart_list{
+
+
         border-color: $color_main_body_user_chart_list_border;
         height: 389px;
 //        background-color: $color_main_body_background;
@@ -683,6 +687,18 @@ body{
         }
         ul .list-group-item-active{
             background-color: $color_main_body_background;
+        }
+
+        .spotlight_overlay {
+            border:4px solid white; /* choose whatever you like */
+            z-index:1; /* show it on top of the other images (they have z-index 0) */
+
+//            border-radius: 20px;
+//            background-image: -webkit-gradient(radial, 1450 540, 0, 1450 540, 100, from(rgba(0, 0, 0, 0)), to(rgba(0, 0, 0, 0.8)), color-stop(0.8, rgba(0, 0, 0, 0)));
+//            background:-webkit-gradient(radial, 250 50,0,250 50,800,
+//                    from(rgba(255,255,255,.4)),to(transparent)) transparent;
+//            background: -moz-radial-gradient(250px 50px,
+//                    rgba(255,255,255,.4), transparent) transparent;
         }
     }
     .user_chart_list_bg2{
@@ -766,7 +782,7 @@ body{
 
 
         ul .list-group-item{
-            border: 0px none #000000;
+            border: 0px none $color_white;
             background-color: $color_main_body_background_brand;
             background-image: url(../images/userchartlist.png);
             background-repeat: no-repeat;
@@ -1108,7 +1124,7 @@ body{
         .table > tbody > tr > td,
         .table > tfoot > tr > td {
             vertical-align: middle;
-            border-top: 1px none #ddd;
+            border-top: 0px none $color_white;
             font-family: $font_main_header2;
             font-size: 12px;
             color:$color_main_body_company;
@@ -1214,7 +1230,7 @@ body{
                     font-family: $font_main_header2;
                     font-weight: bold;
                     color: $color_main_body_user_chart_leftmenu_title;
-                    background-color: #f1f1f1;
+                    background-color: $color_login_background;
                 }
 
                 @include table_report;
