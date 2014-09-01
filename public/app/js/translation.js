@@ -769,8 +769,48 @@ app.config(['$translateProvider', function($translateProvider){
 		"DecisionPageSpendingDetailsTable2AvailableOvertimeCapacityExtenstion"		:	"Available Overtime Capacity Extension (mln Packs)",
 		"DecisionPageSpendingDetailsTable2Acquired Efficiency"		:	"Acquired Efficiency (%)",
 		"DecisionPageSpendingDetailsTable2AcquiredProductionVolumeFlexibility"		:	"Acquired Production Volume Flexibility (%)",
-		"DecisionPageSpendingDetailsTable2AcquiredTechnologyLevel"		:	"Acquired Technology Level"
+		"DecisionPageSpendingDetailsTable2AcquiredTechnologyLevel"		:	"Acquired Technology Level",
 		
+        //Labels for Questionnaire Page
+        "QuestionnairePageQuestionnaire":"Questionnaire",
+        "QuestionnairePageVeryPoor":"Very poor",
+        "QuestionnairePageAverage":"Average",
+        "QuestionnairePageExcellent":"Excellent",
+        "QuestionnairePageOverallSatisfactionWiththeProgram":"Overall Satisfaction With the Program",
+        "QuestionnairePageChallengeStrategicThinkingAbility":"Challenge strategic thinking ability",
+        "QuestionnairePageDevelopAnIntegratedPerspective":"Develop an integrated perspective",
+        "QuestionnairePageTestPersonalAbilityOfBalancingRisks":"Test personal ability of balancing risks",
+        "QuestionnairePageChallengeLeadershipAndTeamworkAbility":"Challenge leadership and teamwork ability",
+        "QuestionnairePageChallengeAnalysisAndDecisionMakingAbility":"Overall Satisfaction With the Program",
+        "QuestionnairePageSimulationInteresting":"Simulation interesting",
+        "QuestionnairePageTeachingTeam":"Teaching Team",
+        "QuestionnairePageFacilitator":"Facilitator",
+        "QuestionnairePageNormanYen":"Norman Yen",
+        "QuestionnairePageFeedbackOnSimulationDecisions":"Feedback on simulation decisions",
+        "QuestionnairePageExpandingViewAndInspireThinking":"Expanding view and inspire thinking",
+        "QuestionnairePageProduct":"Product",
+        "QuestionnairePageOverallProductUsageExperience":"Overall Product Usage Experience",
+        "QuestionnairePageUserInterfaceExperience":"User Interface Experience",
+        "QuestionnairePageEaseOfNavigation":"Ease of Navigation",
+        "QuestionnairePageClarityOfWordsUsed":"Clarity of words used",
+        "QuestionnairePageInterpreter":"Interpreter",
+        "QuestionnairePageOlive":"Olive",
+        "QuestionnairePageAccuracyANDPresentation":"Accuracy & Presentation",
+        "QuestionnairePageTeachingSupport":"Teaching Support",
+        "QuestionnairePageMayYu":"May Yu",
+        "QuestionnairePageHelpfulness":"Helpfulness",
+        "QuestionnairePageQualityOfTechnicalSupport":"Quality of Technical Support",
+        
+        "QuestionnairePageOthers":"Others",
+        "QuestionnairePageMostBenefit":"Which format of the program would benefit you the most",
+        "QuestionnairePageJoinProgram":"Join Program with other companies",
+        "QuestionnairePageCompanyInHouse":"Company In-House Program with other functions",
+        "QuestionnairePageOpenClass":"Open class",
+        "QuestionnairePageRecommendMarkSimos":"Would you like to recommend MarkSimos to other companies or business school",
+        "QuestionnairePageYes":"Yes",
+        "QuestionnairePageNo":"No",
+        "QuestionnairePageBringYou":"What is the best benefit or experience MarkSimos bring to you ? Is there something special you learned that you like was unique / different compared to what you learned before"
+        
 
     });
 
@@ -1549,8 +1589,48 @@ app.config(['$translateProvider', function($translateProvider){
 		"DecisionPageSpendingDetailsTable2AvailableOvertimeCapacityExtenstion"		:	"额外加班产能 (mln Packs)",
 		"DecisionPageSpendingDetailsTable2Acquired Efficiency"		:	"当前拥有的生产效率 (%)",
 		"DecisionPageSpendingDetailsTable2AcquiredProductionVolumeFlexibility"		:	"当前拥有的生产灵活度 (%)",
-		"DecisionPageSpendingDetailsTable2AcquiredTechnologyLevel"		:	"最高技术水平"
+		"DecisionPageSpendingDetailsTable2AcquiredTechnologyLevel"		:	"最高技术水平",
 		
+        //Labels for Questionnaire Page
+        "QuestionnairePageQuestionnaire":"问卷调查",
+        "QuestionnairePageVeryPoor":"Very poor",
+        "QuestionnairePageAverage":"Average",
+        "QuestionnairePageExcellent":"Excellent",
+        "QuestionnairePageOverallSatisfactionWiththeProgram":"Overall Satisfaction With the Program",
+        "QuestionnairePageChallengeStrategicThinkingAbility":"Challenge strategic thinking ability",
+        "QuestionnairePageDevelopAnIntegratedPerspective":"Develop an integrated perspective",
+        "QuestionnairePageTestPersonalAbilityOfBalancingRisks":"Test personal ability of balancing risks",
+        "QuestionnairePageChallengeLeadershipAndTeamworkAbility":"Challenge leadership and teamwork ability",
+        "QuestionnairePageChallengeAnalysisAndDecisionMakingAbility":"Overall Satisfaction With the Program",
+        "QuestionnairePageSimulationInteresting":"Simulation interesting",
+        "QuestionnairePageTeachingTeam":"Teaching Team",
+        "QuestionnairePageFacilitator":"Facilitator",
+        "QuestionnairePageNormanYen":"Norman Yen",
+        "QuestionnairePageFeedbackOnSimulationDecisions":"Feedback on simulation decisions",
+        "QuestionnairePageExpandingViewAndInspireThinking":"Expanding view and inspire thinking",
+        "QuestionnairePageProduct":"Product",
+        "QuestionnairePageOverallProductUsageExperience":"Overall Product Usage Experience",
+        "QuestionnairePageUserInterfaceExperience":"User Interface Experience",
+        "QuestionnairePageEaseOfNavigation":"Ease of Navigation",
+        "QuestionnairePageClarityOfWordsUsed":"Clarity of words used",
+        "QuestionnairePageInterpreter":"Interpreter",
+        "QuestionnairePageOlive":"Olive",
+        "QuestionnairePageAccuracyANDPresentation":"Accuracy & Presentation",
+        "QuestionnairePageTeachingSupport":"Teaching Support",
+        "QuestionnairePageMayYu":"May Yu",
+        "QuestionnairePageHelpfulness":"Helpfulness",
+        "QuestionnairePageQualityOfTechnicalSupport":"Quality of Technical Support",
+        
+        "QuestionnairePageOthers":"Others",
+        "QuestionnairePageMostBenefit":"Which format of the program would benefit you the most",
+        "QuestionnairePageJoinProgram":"Join Program with other companies",
+        "QuestionnairePageCompanyInHouse":"Company In-House Program with other functions",
+        "QuestionnairePageOpenClass":"Open class",
+        "QuestionnairePageRecommendMarkSimos":"Would you like to recommend MarkSimos to other companies or business school",
+        "QuestionnairePageYes":"Yes",
+        "QuestionnairePageNo":"No",
+        "QuestionnairePageBringYou":"What is the best benefit or experience MarkSimos bring to you ? Is there something special you learned that you like was unique / different compared to what you learned before"
+        
     });
 
     // Tell the module what language to use by default

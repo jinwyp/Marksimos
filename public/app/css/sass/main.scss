@@ -74,6 +74,7 @@ $color_main_body_user_feedback_border: #FF941F;
 $color_main_body_user_feedback: #A07041;
 
 $color_main_body_user_feedback_title:#5E66E6;
+$color_main_body_user_feedback_subTitle:#5D67D2;
 
 
 
@@ -1016,11 +1017,50 @@ body{
     }
     .feedback_data{
         background-color: $color_login_panel_background;
+        padding:80px 0px;
         h3 {
             color: $color_main_body_user_feedback_title;
             font-family: $font_main_header2;
             font-weight: normal;
-            padding: 30px;
+            padding: 0 40px;
+            margin:0;
+        }
+        h4{
+            color:$color_main_body_user_feedback_subTitle;
+            font-family:$font_main_header2;
+            font-weight:normal;
+            padding:10px 40px;
+            margin:0;
+            font-size:16px;
+        }
+        h5{
+            font-family:$font_main_header2;
+            font-weight:normal;
+            padding:10px 68px;
+            font-size:15px;
+            margin:0;
+        }
+        p{
+            padding:0;
+            margin:0;
+        }
+        .table_feedback{
+            font-size:14px;
+            padding:0 40px;
+            .p_left_20{
+                padding-left:20px;
+            }
+            .table_feedback_left_title{
+                width:50%;
+            }
+            .table_feedback_right_data{   
+                width:10%;
+            }
+            @include divider_horizontal;
+
+        }
+        .feedback_others_p{
+            padding:0 68px;
         }
     }
     .submit_feedback_button{
@@ -1228,7 +1268,7 @@ body{
 
     .decision_right_box{
         width: 47%;
-
+s
         .right_menu{
             border-width: 1px 0px 0px 0px;
             @include border-radius(0px);
