@@ -58,7 +58,7 @@ marksimosapp.controller('chartController', ['$translate', '$scope', '$rootScope'
         additionalBudget         : true,
         currentDecisionBrandId   : 0,
         currentDecisionRightMenu : 1,
-        currentSearchReportName  : '',
+        currentSearchReportName  : [],
         addNewSku                : false,
         addNewBrand              : false,
         skuErrorField : '',
@@ -1146,19 +1146,36 @@ marksimosapp.controller('chartController', ['$translate', '$scope', '$rootScope'
     ];
 
     $scope.searchReport = function(){
-        $scope.css.currentSearchReportName = '';
-        if($scope.data.reportName === ''){
+        $scope.css.currentSearchReportName = [];
+        if($scope.data.reportName !== ''){
 
-        }else{
+
             angular.forEach(reports, function(child){
 
-                angular.forEach(child.keywords, function(keyword){
+                var flagHaveThisReport = false;
+                //判断是否该报告已经被搜索到了, 如果没搜索到在继续循环关键字.
+                if($scope.css.currentSearchReportName.length > 0){
 
-                    if(keyword.toLowerCase().indexOf($scope.data.reportName) > -1){
-                        $scope.css.currentSearchReportName = child.id;
-                        return;
-                    }
-                });
+                    angular.forEach($scope.css.currentSearchReportName, function(reportid){
+                        if(reportid === child.id){
+                            flagHaveThisReport = true;
+                        }
+                    })
+                }
+
+                if(!flagHaveThisReport){
+                    angular.forEach(child.keywords, function(keyword){
+
+                        if(!flagHaveThisReport){
+                            if(keyword.toLowerCase().indexOf($scope.data.reportName) > -1){
+                                $scope.css.currentSearchReportName.push(child.id);
+                                flagHaveThisReport = true;
+                            }
+                        }
+                    });
+
+                }
+
             });
         }
     };
