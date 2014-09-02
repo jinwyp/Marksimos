@@ -420,12 +420,12 @@ exports.addBrand = function(req, res, next){
         d_BrandName     : brand_name,
         d_SKUsDecisions : [] 
     })
-    .then(function(newBrand){
+    .then(function(newBrandID){
         return SKUDecisionModel.create({
             seminarId: seminarId,
             period: period,
             d_CID: companyId,
-            d_BrandID: newBrand.d_BrandID,
+            d_BrandID: newBrandID,
             d_SKUName: '_' + sku_name
         });        
     })
@@ -510,8 +510,8 @@ exports.addSKU = function(req, res, next){
         d_BrandID: brand_id,
         d_SKUName: '_' + sku_name
     })
-    .then(function(){
-        res.send({message: 'add SKU successfully.'});
+    .then(function(result){
+        res.send(result);
     })
     .fail(function(err){
         var message = JSON.stringify(err, ['message'], 2);
@@ -527,10 +527,6 @@ exports.deleteSKU = function(req, res, next){
         return res.send(403, {message: "You don't choose a seminar."});
     }
 
-    if(!seminarId){
-        return res.send(403, {message: "You don't choose a seminar."});
-    }
-    
     var period = req.session.currentPeriod;
     var companyId = req.session.companyId;
 
@@ -546,12 +542,12 @@ exports.deleteSKU = function(req, res, next){
     }
 
     SKUDecisionModel.remove(seminarId, period, companyId, brand_id, sku_id)
-    .then(function(){
-        res.send({message: "remove SKU successfully."});
+    .then(function(result){
+        res.send(result);
     })
     .fail(function(err){
-        logger.error(err);
-        res.send(500, {message: "remove SKU failed."});
+        var message = JSON.stringify(err, ['message'], 2);
+        res.send(403, message)
     })
     .done();
 }
@@ -575,8 +571,8 @@ exports.deleteBrand = function(req, res, next){
         res.send({message: "Remove brand successfully."});
     })
     .fail(function(err){
-        logger.error(err);
-        res.send(500, {message: "remove brand failed."});
+        var message = JSON.stringify(err, ['message'], 2);
+        res.send(403, message)
     })
     .done();
 }

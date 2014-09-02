@@ -78,7 +78,7 @@ exports.unitCost = function(periodNumber, packsize, ingredientsQuality, technolo
     var costNow;
     var exogenous;
 
-    logger.log('periodNumber:'+periodNumber+',packsize:'+packsize+',ingredientsQuality:'+ingredientsQuality+',technologyLevel:'+technologyLevel+',previousCumulatedVolumes:['+previousCumulatedVolumes+'],efficiencyOfProduction:'+efficiencyOfProduction+',currentVolume:'+currentVolume);
+    //logger.log('periodNumber:'+periodNumber+',packsize:'+packsize+',ingredientsQuality:'+ingredientsQuality+',technologyLevel:'+technologyLevel+',previousCumulatedVolumes:['+previousCumulatedVolumes+'],efficiencyOfProduction:'+efficiencyOfProduction+',currentVolume:'+currentVolume);
     var volumeNow = currentVolume * consts.ActualSize[packsize];
 
     volumeNow += previousCumulatedVolumes[technologyLevel];
@@ -111,7 +111,7 @@ exports.unitCost = function(periodNumber, packsize, ingredientsQuality, technolo
         + gameParameters.pgen.sku_CostTLLinear * TL
         + gameParameters.pgen.sku_CostTLIntercept;
 
-    logger.log('QI:'+QI+',TL:'+TL);
+    //logger.log('QI:'+QI+',TL:'+TL);
 
     costNow = exogenous.exo_IngredientsCost / inflation * QI
         + exogenous.exo_TechnologyExpense / inflation * TL;
@@ -120,10 +120,10 @@ exports.unitCost = function(periodNumber, packsize, ingredientsQuality, technolo
 
     costNow = costNow * consts.ActualSize[packsize];
 
-    logger.log('Math.pow((volumeNow / gameParameters.pgen.sku_MinProductionVolume), gameParameters.pgen.sku_DefaultCostDrop):'+Math.pow((volumeNow / gameParameters.pgen.sku_MinProductionVolume), gameParameters.pgen.sku_DefaultCostDrop));
-    logger.log('exogenous.exo_LogisticsFixedCosts:'+exogenous.exo_LogisticsFixedCosts);
-    logger.log('1.00 - efficiencyOfProduction:'+(1.00 - efficiencyOfProduction));
-    logger.log('consts.ActualSize[packsize]:'+consts.ActualSize[packsize]);
+    //logger.log('Math.pow((volumeNow / gameParameters.pgen.sku_MinProductionVolume), gameParameters.pgen.sku_DefaultCostDrop):'+Math.pow((volumeNow / gameParameters.pgen.sku_MinProductionVolume), gameParameters.pgen.sku_DefaultCostDrop));
+    //logger.log('exogenous.exo_LogisticsFixedCosts:'+exogenous.exo_LogisticsFixedCosts);
+    //logger.log('1.00 - efficiencyOfProduction:'+(1.00 - efficiencyOfProduction));
+    //logger.log('consts.ActualSize[packsize]:'+consts.ActualSize[packsize]);
     
     deferred.resolve(costNow);
 

@@ -35,7 +35,10 @@ exports.getSKUInfo = function(seminarId, currentPeriod, companyId, SKUID){
 
         //current period data
         var currentPeriodInfo = {};
-        currentPeriodInfo.SKUName = decision.b_BrandName + decision.u_SKUName;
+        if(!decision){
+
+        }
+        currentPeriodInfo.SKUName = brandDecision.d_BrandName + decision.d_SKUName;
 
         if(SKUResult){
             currentPeriodInfo.stocksAtFactory = [
@@ -147,7 +150,8 @@ exports.getSKUInfo = function(seminarId, currentPeriod, companyId, SKUID){
             } 
 
             if(!brandResult){
-                brandResult = [];
+                brandResult = {};
+                brandResult.b_FactoryStocks = [];
                 for (var i = 0; i < 6; i++) {
                     brandResult.b_FactoryStocks.push({s_Volume:0});
                 };                

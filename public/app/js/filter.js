@@ -57,6 +57,9 @@ app.filter('usersegment', function() {
 
 
 
+
+
+
 /********************  NgModel Filters ********************/
 
 
@@ -116,4 +119,5 @@ app.directive('filternumber', [ function() {
         }
     };
 }]);
+
 

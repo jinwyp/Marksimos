@@ -40,7 +40,6 @@ tDecisionSchema.pre('save', true, function(next, done){
 
         validateAction[field](field);        
     }
-    console.log('this.modifiedField:' + this.modifiedField);
     if(!this.modifiedField){ this.modifiedField = 'skip'; }    
     doValidate(this.modifiedField);
     next();
@@ -58,7 +57,6 @@ function validateAdditionalBudget(field, curCompanyDecision, done){
 
         lowerLimits.push({value : 0, message: 'Cannot accept negative number.'});        
         upperLimits.push({value : parseFloat(spendingDetails.companyData.averageBudgetPerPeriod), message : 'Cannot accept number bigger than ' + spendingDetails.companyData.averageBudgetPerPeriod});
-
         err = rangeCheck(curCompanyDecision[field],lowerLimits,upperLimits);      
         if(err != undefined){
             err.modifiedField = field;

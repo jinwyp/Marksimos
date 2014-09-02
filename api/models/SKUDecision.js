@@ -9,7 +9,10 @@ var SKUInfoAssembler         = require('../dataAssemblers/SKUInfo.js');
 var gameParameters           = require('../gameParameters.js').parameters;
 var utility                  = require('../../common/utility.js');
 var simulationResultModel    = require('./simulationResult.js');
- 
+var _                        = require('underscore');
+var brandDecisionModel       = require('./brandDecision.js');
+var companyDecisionModel      = require('./companyDecision.js');
+
 var tOneSKUDecisionSchema = new Schema({
     seminarId                  : String,
     period                     : Number,
@@ -408,16 +411,47 @@ exports.remove =  function(seminarId, period, companyId, brandId, SKUID){
         d_CID: companyId,
         d_BrandID: brandId,
         d_SKUID: SKUID
-    }, function(err, doc){
+    }, function(err, skuDoc){
         if(err) { return deferred.reject({message:'SKU does not exist.'}); }
-        if(doc.bs_PeriodOfBirth != doc.period){ return deferred.reject({message:'You cannot delete this SKU manually, please choose discontinue.'}); }
+        if(!skuDoc){ return deferred.reject({message: 'Cannot fine SKU.'});  }
+        if(skuDoc.bs_PeriodOfBirth != skuDoc.period){ return deferred.reject({message:'You cannot delete this SKU manually, please choose discontinue.'}); }
 
-        doc.remove(function(err){
+
+        //Step 1: remove SKU doc
+        skuDoc.remove(function(err){
             if(err){
                 return deferred.reject(err);
             }else{
-                //TODO: need to remove related Brand if there is no other SKU under it 
-                return deferred.resolve(undefined);
+                //Step 2: clear SKUID in the related brandDecision.d_SKUsDecisions
+                brandDecisionModel.findOne(skuDoc.seminarId, skuDoc.period, skuDoc.d_CID, skuDoc.d_BrandID).then(function(brandDoc){
+                    brandDoc.d_SKUsDecisions = _.without(brandDoc.d_SKUsDecisions, skuDoc.d_SKUID);
+                    //Step 3(v1): if there is no other SKU under it, need to remove related Brand Doc
+                    if(brandDoc.d_SKUsDecisions.length == 0){
+                        brandDoc.remove(function(err){
+                            if(err){ return deferred.reject(err); }
+                            //Step 3.5: clear related BrandID in the array companyDecision.d_BrandsDecisions
+                            else { 
+                                companyDecisionModel.findOne(brandDoc.seminarId, brandDoc.period, brandDoc.d_CID).then(function(companyDoc){
+                                    companyDoc.d_BrandsDecisions = _.without(companyDoc.d_BrandsDecisions, brandDoc.d_BrandID);                     
+                                    companyDoc.save(function(err){
+                                        if(err){ return deferred.reject(err);}
+                                        else{  return deferred.resolve({message: 'SKU and related Brand have been removed.'});  }    
+                                    });                                    
+                                }).fail(function(err){
+                                    return deferred.reject(err);
+                                }).done();                                    
+                            }
+                        })
+                    } else {
+                    //Step 3(v2): if it is not only one SKU under Brand, clear SKUID in brandDecision.d_SKUsDecisions is enough
+                        brandDoc.save(function(err){
+                            if(err){ return deferred.reject(err); }
+                            else { return deferred.resolve({message: 'SKU has been removed.'}); }
+                        })                        
+                    }
+                }).fail(function(err){
+                    return deferred.reject(err);
+                }).done();                
             }            
         });
     });   
@@ -472,13 +506,26 @@ exports.create = function(decision){
     var d = new SKUDecision(decision);
     d.modifiedField = 'd_SKUName';
 
-    d.save(function(err, result, numAffected){
+    d.save(function(err, skuDoc, numAffected){
         if(err){
             deferred.reject(err);
         }else if(numAffected!==1){
             deferred.reject(new Error("no result found in db"))
         }else{
-            deferred.resolve(result);
+            //update parentBrandDecision, update SKUID in brandDecision.d_SKUsDecisions
+            brandDecisionModel.findOne(skuDoc.seminarId, skuDoc.period, skuDoc.d_CID, skuDoc.d_BrandID).then(function(brandDoc){
+                var isIDExisted = brandDoc.d_SKUsDecisions.some(function(id){ return id == skuDoc.d_SKUID; })
+                if(isIDExisted){ return deferred.reject(new Error('find Duplicate SKUID in the brandDecision.d_SKUsDecisions!')); }
+
+                //logger.log('push :' + skuDoc.d_SKUID + ', typeof:' + typeof skuDoc.d_SKUID);
+                brandDoc.d_SKUsDecisions.push(skuDoc.d_SKUID);
+                brandDoc.save(function(err){
+                    if(err){ return deferred.reject(err); }
+                    else { return deferred.resolve({message: 'SKU has been added.'}); }
+                });                      
+            }).fail(function(err){
+                return deferred.reject(err);
+            }).done();  
         }
     });
     return deferred.promise;

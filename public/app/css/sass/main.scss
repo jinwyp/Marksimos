@@ -6,6 +6,9 @@ $font_login_title: 'Georgia', 'Arial, sans-serif';
 
 $path_images: "./";
 
+$color_white : #ffffff;
+
+
 $color_main_header: #2d428e;
 $color_main_header_menu: #d5def5;
 $color_main_header_menu_active: #4358a1;
@@ -25,7 +28,6 @@ $color_login_input_label : #252525;
 
 $color_main_body_border: #eceff1;
 
-
 $color_main_body_background: #fbfbfb;
 $color_main_body_background_brand: #fdfdfd;
 $color_main_body_background_chart: #dbe3f6;
@@ -38,6 +40,7 @@ $color_main_body_product: #464646;
 $color_main_body_product_target: #6f6f6f;
 $color_main_body_competitors: #2f4e9b;
 $color_main_body_user_clock: #373737;
+$color_main_body_user_decision_button: #19acfe;
 
 $color_main_body_user_period_bar: #9FA5BF;
 $color_main_body_user_period_bar_border: #dfe0e5;
@@ -45,7 +48,6 @@ $color_main_body_user_period_bar_active: #b3c2e7;
 $color_main_body_user_period_bar_normal: #edeef1;
 
 
-$color_main_body_user_decision_button: #19acfe;
 $color_main_body_user_chart_title: #2f4e9b;
 $color_main_body_user_chart_list: #464646;
 $color_main_body_user_chart_list_border: #cfd3e0;
@@ -166,6 +168,51 @@ $color_main_body_user_feedback_subTitle:#5D67D2;
     .table > tbody > tr > td,
     .table > tfoot > tr > td {
         vertical-align: middle;
+        border-top: 1px solid $color_login_panel_border;
+        font-family: $font_main_header2;
+        font-size: 12px;
+        color: $color_main_body_user_chart_leftmenu_title;
+    }
+
+    .table-striped > tbody > tr:nth-child(odd) > td,
+    .table-striped > tbody > tr:nth-child(odd) > th {
+        background-color: $color_login_panel_background;
+    }
+
+    .table-striped > tbody > tr:nth-child(even) > td,
+    .table-striped > tbody > tr:nth-child(even) > th {
+        background-color: $color_main_body_background;
+    }
+
+    .table-striped tbody tr:nth-child(odd):hover td,
+    .table-striped tbody tr:nth-child(odd):hover th,
+    .table-striped tbody tr:nth-child(even):hover td,
+    .table-striped tbody tr:nth-child(even):hover th{
+        background-color: $color_main_body_decision_table_hover;
+    }
+
+}
+
+
+
+@mixin seminar_table_list{
+
+    .table > thead > tr > th{
+        font-size: 12px;
+        font-family: $font_main_header2;
+        font-weight: bold;
+        color: $color_main_body_user_chart_leftmenu_title;
+        background-color: $color_login_content_background;
+        height: 50px;
+        vertical-align: middle;
+        border-bottom-width: 1px ;
+    }
+
+    .table > thead > tr > td,
+    .table > tbody > tr > td,
+    .table > tfoot > tr > td {
+        vertical-align: middle;
+        height: 45px;
         border-top: 1px solid #ddd;
         font-family: $font_main_header2;
         font-size: 12px;
@@ -191,6 +238,8 @@ $color_main_body_user_feedback_subTitle:#5D67D2;
 
 }
 
+
+
 @mixin divider_horizontal{
     .divider_horizontal{
         width: 100%;
@@ -199,7 +248,40 @@ $color_main_body_user_feedback_subTitle:#5D67D2;
     }
 }
 
+@mixin spotlight_overlay{
+    .spotlight_overlay {
+        z-index:1; /* show it on top of the other images (they have z-index 0) */
+        @include box-shadow( 0px 0px 10px 0px $color_main_body_user_chart_leftmenu_active_bgbefore);
 
+        a {
+            color: $color_main_body_user_chart_leftmenu_active_bgbefore;
+        }
+    }
+    .spotlight_overlay2 {
+        z-index:1; /* show it on top of the other images (they have z-index 0) */
+        @include box-shadow( 0px 0px 10px 0px $color_main_body_user_chart_leftmenu_active_bgbefore);
+
+        a {
+            color: $color_main_body_user_chart_leftmenu_active_bgbefore;
+        }
+    }
+    .spotlight_overlay3 {
+        z-index:1; /* show it on top of the other images (they have z-index 0) */
+        @include box-shadow( 0px 0px 10px 0px $color_main_body_user_chart_leftmenu_active_bgbefore);
+
+        a {
+            color: $color_main_body_user_chart_leftmenu_active_bgbefore;
+        }
+    }
+    .spotlight_overlay4 {
+        z-index:1; /* show it on top of the other images (they have z-index 0) */
+        @include box-shadow( 0px 0px 10px 0px $color_main_body_user_chart_leftmenu_active_bgbefore);
+
+        a {
+            color: $color_main_body_user_chart_leftmenu_active_bgbefore;
+        }
+    }
+}
 
 
 
@@ -254,6 +336,21 @@ $color_main_body_user_feedback_subTitle:#5D67D2;
 }
 
 
+/**  输入框前缀 **/
+.form-input-prefix{
+    vertical-align: middle;
+    display: block;
+    position: absolute;
+    top: 0px;
+    left: -4px;
+    padding: 9px 4px;
+    font-size: 14px;
+    font-weight: 400;
+    line-height: 1;
+    height: 34px;
+    text-align: center;
+
+}
 
 
 /********************  Angular JS 首次载入页面默认隐藏模板显示  ********************/
@@ -349,9 +446,17 @@ body{
             margin-bottom: 20px;
         }
 
+        .game_list {
+            margin-top: 50px;
+            margin-bottom: 50px;
+
+
+        }
+
+        @include seminar_table_list;
+
         .first_intro{
             margin-top: 50px;
-
         }
 
         .whoami {
@@ -423,7 +528,7 @@ body{
         background-size: 100% 100%;
 
         .navbar-brand {
-            color: #ffffff;
+            color: $color_white;
             font-weight: bold;
             font-size: 12px;
             margin-right: 20px;
@@ -452,7 +557,7 @@ body{
                 box-shadow: none;
 
                 &:before{
-                    border-color:transparent transparent #ffffff transparent;
+                    border-color:transparent transparent $color_white transparent;
                     border-style:dashed dashed solid dashed;
                     border-width:0px 8px 7px 8px;
                     height:0;
@@ -475,7 +580,7 @@ body{
                 background-color: $color_main_header_menu_dropdown;
 
                 li a {
-                    color: #ffffff;
+                    color: $color_white;
                     font-weight: normal;
                     font-size: 12px;
                     background-color: $color_main_header_menu_dropdown;
@@ -653,6 +758,8 @@ body{
     }
 
     .user_chart_list{
+
+
         border-color: $color_main_body_user_chart_list_border;
         height: 389px;
 //        background-color: $color_main_body_background;
@@ -670,7 +777,9 @@ body{
             text-align: center;
         }
 
-        ul .list-group-item{
+
+
+        .list-group-item{
 
             background-color: $color_login_panel_background;
             background-image: url(../images/userchartlist.png);
@@ -685,10 +794,16 @@ body{
                 font-weight: bold;
             }
         }
-        ul .list-group-item-active{
+        .list-group-item-active{
             background-color: $color_main_body_background;
         }
+
+        @include spotlight_overlay;
+
+
+
     }
+
     .user_chart_list_bg2{
         background-color: $color_main_body_background;
     }
@@ -769,8 +884,8 @@ body{
         }
 
 
-        ul .list-group-item{
-            border: 0px none #000000;
+        .list-group-item{
+            border: 0px none $color_white;
             background-color: $color_main_body_background_brand;
             background-image: url(../images/userchartlist.png);
             background-repeat: no-repeat;
@@ -782,7 +897,7 @@ body{
                 color: $color_main_body_user_chart_list;
             }
         }
-        ul .list-group-item-active{
+        .list-group-item-active{
             background-color: $color_main_body_user_chart_leftmenu_active_bg;
 
             a{
@@ -801,6 +916,8 @@ body{
                 left:0px;
             }
         }
+
+        @include spotlight_overlay;
 
     }
 
@@ -1190,6 +1307,7 @@ body{
         .table > thead > tr > th {
             font-weight: bold;
             color: $color_main_body_user_chart_leftmenu_title;
+            vertical-align: middle;
             a {
                 font-weight: bold;
                 color: $color_main_body_user_chart_leftmenu_title;
@@ -1200,7 +1318,7 @@ body{
         .table > tbody > tr > td,
         .table > tfoot > tr > td {
             vertical-align: middle;
-            border-top: 1px none #ddd;
+            border-top: 0px none $color_white;
             font-family: $font_main_header2;
             font-size: 12px;
             color:$color_main_body_company;
@@ -1305,7 +1423,7 @@ body{
                     font-family: $font_main_header2;
                     font-weight: bold;
                     color: $color_main_body_user_chart_leftmenu_title;
-                    background-color: #f1f1f1;
+                    background-color: $color_login_background;
                 }
 
                 @include table_report;

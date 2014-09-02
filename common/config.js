@@ -71,7 +71,7 @@ module.exports = (function(){
             config.logDirectory = '/Users/ludwik/code/Marksimos/log/';
             config.mongo_conn = 'mongodb://localhost/Marksimos';
             config.host = 'http://localhost:3000/';
-            config.cgiService = 'http://10.20.30.97/cgi-bin/';
+            config.cgiService = 'http://10.20.30.97/cgi-bin/'; 
             break;
         case 'jin':
             config.logDirectory = '/Users/jinwyp/Documents/github/Marksimos/log/';

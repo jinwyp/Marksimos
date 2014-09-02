@@ -51,13 +51,14 @@ marksimosapp.controller('chartController', ['$translate', '$scope', '$rootScope'
 
 
     $scope.css = {
-        menu                     : 'Decision',
+        menu                     : 'Home',
         chartMenu                : 'A1',
         tableReportTab           : 'SKU',
         tableReportMenu          : 1,
         additionalBudget         : true,
         currentDecisionBrandId   : 0,
         currentDecisionRightMenu : 1,
+        currentSearchReportName  : [],
         addNewSku                : false,
         addNewBrand              : false,
         skuErrorField : '',
@@ -81,6 +82,7 @@ marksimosapp.controller('chartController', ['$translate', '$scope', '$rootScope'
     $scope.data = {
         currentStudent : null,
         currentCompany : null,
+        currentCompanyNameCharacter : "",
         currentCompanyOtherInfo : {},
         currentCompanyProductPortfolio : {},
         currentCompanySpendingDetails : {},
@@ -94,6 +96,7 @@ marksimosapp.controller('chartController', ['$translate', '$scope', '$rootScope'
         },
         currentSku : null,
         currentSkuIndex : 0,
+        reportName : "",
         newBrand : {
             brand_name : "",
             sku_name : "",
@@ -634,6 +637,41 @@ marksimosapp.controller('chartController', ['$translate', '$scope', '$rootScope'
         Company.getCurrentStudent().then(function(data, status, headers, config){
             $scope.data.currentStudent = data;
 
+            // 处理当前的公司名称
+
+            function showCompanyName(fieldname) {
+                var names = {
+                    '1': function() {
+                        return "A";
+                    },
+                    '2': function() {
+                        return "B";
+                    },
+                    '3': function() {
+                        return "C";
+                    },
+                    '4': function() {
+                        return "D";
+                    },
+                    '5': function() {
+                        return "E";
+                    },
+                    '6': function() {
+                        return "F";
+                    }
+
+                };
+                if (typeof names[fieldname] !== 'function') {
+                    return false;
+                }
+                return names[fieldname]();
+            }
+
+            $scope.data.currentCompanyNameCharacter = showCompanyName($scope.data.currentStudent.companyId);
+
+            $scope.css.periods = [];
+
+            // 处理显示当前第几回合进度条
             if(angular.isNumber($scope.data.currentStudent.currentPeriod)){
                 for (var i = -3; i <= $scope.data.currentStudent.maxPeriodRound; i++) {
 
@@ -665,10 +703,10 @@ marksimosapp.controller('chartController', ['$translate', '$scope', '$rootScope'
 
         Company.getCompany().then(function(data, status, headers, config){
 
-            //记录上一次选中的Brand 和SKU 并找到对应的Index 供本次查询使用
-
+            //记录上一次选中的Brand  并找到对应的Index 供本次查询使用
             if($scope.data.currentBrand !== null ){
                 angular.forEach(data.d_BrandsDecisions, function(brand){
+
                     if(brand.d_BrandID === $scope.data.currentBrand.d_BrandID){
                         $scope.data.currentBrandIndex = data.d_BrandsDecisions.indexOf(brand);
 
@@ -680,11 +718,18 @@ marksimosapp.controller('chartController', ['$translate', '$scope', '$rootScope'
             }
 
             $scope.data.currentCompany = data;
+
+            //要处理删除SKU后,同时删除Brand后的问题 currentBrandIndex 要重置为零
+            if( angular.isUndefined($scope.data.currentCompany.d_BrandsDecisions[$scope.data.currentBrandIndex]) ){
+                $scope.data.currentBrandIndex = 0;
+                $scope.data.currentSkuIndex  = 0;
+            }
+
             $scope.css.currentDecisionBrandId = $scope.data.currentCompany.d_BrandsDecisions[$scope.data.currentBrandIndex]._id;
             $scope.data.currentBrand = $scope.data.currentCompany.d_BrandsDecisions[$scope.data.currentBrandIndex];
 
 
-            //记录上一次选中的Brand 和SKU 并找到对应的Index 供本次查询使用
+            //记录上一次选中的SKU 并找到对应的Index 供本次查询使用
             if($scope.data.currentSku !== null ){
                 angular.forEach($scope.data.currentBrand.d_SKUsDecisions, function(sku){
 
@@ -750,7 +795,12 @@ marksimosapp.controller('chartController', ['$translate', '$scope', '$rootScope'
     $scope.addNewBrand = function(form){
 
         if (form.$valid) {
+
+            // 自动给品牌名称增加公司前缀
+            $scope.data.newBrand.brand_name = $scope.data.currentCompanyNameCharacter + $scope.data.newBrand.brand_name;
+
             Company.addBrand($scope.data.newBrand).then(function(data, status, headers, config){
+
                 $scope.companyInfoInit();
 
                 notify({
@@ -1054,5 +1104,117 @@ marksimosapp.controller('chartController', ['$translate', '$scope', '$rootScope'
             });
         })
     };
+
+
+
+    /********************  Search Report   ********************/
+
+    var reports = [
+        {
+            name : 'Company Status',
+            id : 'A1',
+            keywords : [ 'Company', 'Company Status', 'Market Share', 'Market Share Value', 'Market Share Volume', 'Lost Sales Volume', 'Numberical Distribution', 'Volume Weighted Distribution', 'Shelf Space', 'Awareness', 'Average Net Market Price', 'Average Display Price', 'Average Market Price', 'Price Ranking Index', 'Target Consumer Segment', 'Value Perception', 'Image Perception', 'Ingredients Quality Index', 'Applied Technology Index', 'Market Sales Value', 'Consumer Price Promotions', 'Market Net Sales Value', 'Number of Out-of-stock Episodes', 'Market Sales Volume', 'Retailers Purchases Volume', 'Shipments to Wholesalers', 'Production Volume', 'Inventory Volume At Manufacturer', 'Inventory Volume At Wholesalers', 'Inventory Volume At Retailers', 'Stocks Cover At Retailers', 'Stocks Cover At Wholesalers', '公司基本信息', '市场份额', '市场销量', '因缺货损失的销售量', '数值分销率', '加权分销率', '货架空间', '知名度', '平均净市场价', '平均陈列价格', '价格排序指数', '目标细分市场', '价值感知', '形象感知', '成分质量指数', '应用的技术指数', '市场销售额', '消费者价格促销', '市场净销售额', '缺货周数', '市场销售量', '零售商购买量', '经销商购买量', '产量', '厂商持有的库存量', '经销商持有的库存量', '零售商持有的库存量', '零售商的库存维持期', '经销商的库存维持期' ]
+        },
+        {
+            name : 'Financial Report',
+            id : 'A2',
+            keywords : [ 'Financial', 'Financial Report', '"Sales Value', 'Share In Brand Total Sales Value', 'Cost of Goods Sold', 'Obsolete Goods Cost', 'Discontinued Goods Cost', 'Inventory Holding Cost', 'Total Material Cost', 'Gross Profit', 'Gross Profit Margin', 'Share In Brand Gross Profit/Losses', 'Advertising', 'Consumer Promotion Cost', 'Trade Investment', 'Sales Force Cost', 'Additional Trade Margin Cost', 'Volume Discount Cost', 'Total Trade and Marketing Expenses', 'Trade and Marketing Expenses as a (%) of Sales', 'Share of Trade and Marketing Expenses in Brand Total', 'General Expenses', 'Amortisation', 'Operating Profit', 'Operating Profit Margin', 'Share in Brand Operating Profit/Loss', 'Interests', 'Taxes', 'Exceptional Cost/Profit', 'Net Profit', 'Net Profit Margin', 'Share in Brand Net Profit/Loss', 'Production Cost', 'Inventory Value', '财务报告', '销售额', '占该品牌总销售额的份额', '售出商品成本', '处理商品成本', '停产商品成本', '库存持有成本', '总材料成本', '毛利额', '毛利率', '占该品牌 毛利/负毛利 的份额', '广告费用', '促销成本', '零售终端费用', '销售团队成本', '额外零售终端返利', '经销商进货折扣成本', '总的通路和营销费用', '通路和营销费用占销售额的百分比', '占该品牌通路和营销总额的份额', '一般性开支', '摊销费用', '运营利润', '运营利润率', '占该品牌 运营利润/运营亏损 的份额', '利息', '税', '额外开支/利润', '净利润', '净利率', '占该品牌 净利润/净亏损 的份额', '生产成本', '库存价值' ]
+        },
+        {
+            name : 'Inventory Report',
+            id : 'A3',
+            keywords : [ 'Inventory', 'Inventory Report', 'Close to expire Inventory', 'Previous Inventory', 'Fresh Inventory', 'Total Stock', '库存报告', '将要过期的库存', '以前的库存', '新库存' ]
+        },
+        {
+            name : 'Profitability Evolution',
+            id : 'A4',
+            keywords : [ 'Evolution', 'Profitability Evolution', 'Manufacturer Sales Value', 'Cost of Goods Sold', 'Inventory Holding', 'Obsolete Goods', 'Discontinued Goods Cost', 'Gross Profit', 'Advertising', 'Consumer Promotions Cost', 'Trade Investment', 'Sales Force Cost', 'Volume Discount Cost', 'Additional Trade Margin Cost', 'Total Trade and Marketing Expenses', 'General Expenses', 'Amortisation', 'Operating Profit', 'Interests', 'Exceptional Cost/Profit', 'Taxes', 'Net Profit', 'Surcharge for supplementary InvestmentBudget', 'Share In Brand Total Sales Value', 'Share In Brand Gross Profit/Losses', 'Share of Trade and Marketing Expenses In Brand Total', 'Share In Brand Operating Profit/Losses', 'Share In Brand Net Profit/Losses', 'Gross Profit Margin', 'Trade and Marketing Expenses as a(%) of Sales', 'General Expenses as a(%) of Sales', 'Operating Profit Margin', 'Net Profit Margin', 'Return on Investment', 'Average Net Market Price', 'Average Wholesales Price', 'Average Manufacturer Price', 'Average Production Cost', 'Market Sales Value', 'Consumer Price Promotions', 'Market Net Sales Value', 'Additional Retailers Margin', 'Wholesalers Bonus Rate', 'Minimal Purchase Qualifying for Bonus', 'Production Cost', 'Inventory Value', '盈利变化', '厂商销售额', '售出商品成本', '库存持有成本', '处理商品成本', '停产商品成本', '毛利额', '广告费用', '促销成本', '零售终端费用', '销售团队成本', '经销商进货折扣成本', '额外零售终端返利', '总的通路和营销费用', '一般性开支', '摊销费用', '运营利润', '利息', '额外开支/利润', '税', '净利润', '追加投资预算产生的额外费用', '净利额', '占该品牌总销售额的份额', '占该品牌 毛利/负毛利 的份额', '占公司通路和营销总费用的份额', '占该品牌 运营利润/运营亏损 的份额', '占该品牌 净利润/净亏损 的份额', '毛利率', '通路和营销费用占销售额的百分比', '一般费用占销售额的百分比', '运营利润率', '净利率', '投资回报率', '平均净市场价', '平均批发价', '平均出厂价', '平均生产成本', '市场销售额', '消费者价格促销', '市场净销售额', '给零售商的额外折扣', '经销商进货折扣率', '享受进货折扣的最低订货量', '生产成本', '库存价值' ]
+        },
+        {
+            name : 'Market Share',
+            id : 'B1',
+            keywords : [ 'Market Share', 'Market Share in Value', 'Market Share in Volume', 'Mind Space Share', 'Shelf Space Share', '市场份额', '市场份额 （按销售额计%)', '市场份额 （按销量计%)', '思维空间份额', '货架空间份额' ]
+        },
+        {
+            name : 'Competitor Intelligence',
+            id : 'B2',
+            keywords : [ 'Intelligence', 'Competitor Intelligence', 'Competitor', 'Technology', 'Acquired Production and Logistics Efficiency', 'Acquired Production Planning Flexibility', 'Available Technology Level', 'Marketing & Sales', 'Additional Trade Margin Cost', 'Advertising', 'Consumer Promotions Cost', 'Retailers Purchase Volume', 'Sales Force Cost', 'Shipments to Wholesalers', 'Trade Investments', 'Volume Discount Cost', 'Operations', 'Capacity Utilisation Rate', 'Inventory Volume at Manufacturer', 'Inventory Volume at Retailers', 'Inventory Volume at Wholesalers', 'Next Period Available Prod.Capacity', 'Production Volume', 'Investments', 'Investment to Improve Technology Level', 'Investment to Increase Production Efficiency', '竞争对手情报', '技术', '当前拥有的生产效率', '当前拥有的生产灵活度', '最高技术水平', '市场营销和销售', '额外零售终端返利', '广告费用', '促销成本', '零售商购买量', '销售团队成本', '经销商购买量', '零售终端费用', '经销商进货折扣成本', '操作', '产能利用率', '厂商持有的库存量', '零售商持有的库存量', '经销商持有的库存量', '下一阶段产能', '产量', '投资', '技术水平投资', '生产效率投资' ]
+        },
+        {
+            name : 'Investment & Profits',
+            id : 'B3',
+            keywords : [ 'Investment and Profits', 'Investment', 'Profit', 'Total Investment', 'Net Profit By Companies', 'Return on Investment', 'Investment Versus Budget', '投资与利润', '预计的当期投资总额', '公司净利额', '投资回报率', '投资占预算比例' ]
+        },
+        {
+            name : 'Market Sales & Inventory',
+            id : 'B4',
+            keywords : [ 'Market Sales & Inventory Report', 'Market Sales', 'Inventory', 'Market Sales Value', 'Market Sales Volume', 'Total Inventory at Factory', 'Total Inventory at Trade', '销售与库存状况', '市场销售额', '市场销售量', '工厂中的库存量', '渠道中的库存量' ]
+        },
+        {
+            name : 'Segment Leader Top5',
+            id : 'C1',
+            keywords : [ 'Segment', 'Segment Leader', 'Segment Leader Top 5', '细分市场领导者' ]
+        },
+        {
+            name : 'Perception Map',
+            id : 'C2',
+            keywords : [ 'Perception', 'Perception Map', 'Value Perception', 'Image Perception', '感知图', '价值感知', '形象感知' ]
+        },
+        {
+            name : 'Segment Distributions',
+            id : 'C3',
+            keywords : [ 'Distributions', 'Segment Distributions', 'Market Share Value', 'Market Share Volume', 'Market Sales Value', 'Market Sales Volume', 'Average Net Market Price', 'Value Perception', 'Image Perception', '细分市场数据', '市场份额', '市场销售额', '市场销售量', '平均净市场价', '价值感知', '形象感知' ]
+        },
+        {
+            name : 'Market Evolution',
+            id : 'C4',
+            keywords : [ 'Evolution', 'Market Evolution', 'Growth Rate', 'Growth Rate In Volume', 'Growth Rate In Value', 'Net Market Price', 'Segment Value Share In Total Market', '市场演变趋势', '基于销量的增长率', '基于销售额的增长率', '净市场价', '细分市场占总市场的销售份额（' ]
+        },
+        {
+            name : 'Market Trends',
+            id : 'C5',
+            keywords : [ 'Trends', 'Market Trends', 'Market Figures', 'Average Display Price', 'Average Net Market Price', 'Brand Awareness', 'Image Perception', 'Market Net Sales Value', 'Market Net Sales Volume', 'Market Share', 'Market Share', 'Miscellaneous', 'Lost Sales Volume', 'Numerical Distribution', 'Total Inventory at Trade', 'Price Ranking Index', 'Shelf Space', 'Value Share', 'Value Share by Segment', 'Volume Share', 'Volume Share by Segment', '市场趋势', '市场数据', '平均陈列价格', '平均净市场价', '品牌知名度', '形象感知', '市场净销售额', '市场销量', '市场份额', '其他', '因缺货损失的销售量', '数值分销率', '渠道中的库存量', '价格排序指数', '货架空间', '占细分市场销售额' ]
+        },
+        {
+            name : 'Market Indicator',
+            id : 'C6',
+            keywords : [ 'Indicator', 'Market Indiciator', 'Corporate Tax Rate', 'Inflation Rate', 'Deposit Rate', 'Borrowing Rate', 'Additional Investment Budget Surcharge Rate', 'Inventory Holding Cost', 'Obsolete Goods Cost', 'Discontinued Goods Cost', '宏观市场参数', '公司税率', '通货膨胀率', '存款利率', '借贷利率', '其他投资预算附加费率', '库存持有成本', '过期商品成本', '停产商品成' ]
+        }
+    ];
+
+    $scope.searchReport = function(){
+        $scope.css.currentSearchReportName = [];
+        if($scope.data.reportName !== ''){
+
+            angular.forEach(reports, function(child){
+
+                var flagHaveThisReport = false;
+                //判断是否该报告已经被搜索到了, 如果没搜索到在继续循环关键字.
+                if($scope.css.currentSearchReportName.length > 0){
+
+                    angular.forEach($scope.css.currentSearchReportName, function(reportid){
+                        if(reportid === child.id){
+                            flagHaveThisReport = true;
+                        }
+                    });
+                }
+
+                if(!flagHaveThisReport){
+                    angular.forEach(child.keywords, function(keyword){
+
+                        if(!flagHaveThisReport){
+                            if(keyword.toLowerCase().indexOf($scope.data.reportName) > -1){
+                                $scope.css.currentSearchReportName.push(child.id);
+                                flagHaveThisReport = true;
+                            }
+                        }
+                    });
+
+                }
+
+            });
+        }
+    };
+
 
 }]);
