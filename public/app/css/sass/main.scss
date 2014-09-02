@@ -149,6 +149,51 @@ $color_main_body_decision_table_hover: #feeaff;
     .table > tbody > tr > td,
     .table > tfoot > tr > td {
         vertical-align: middle;
+        border-top: 1px solid $color_login_panel_border;
+        font-family: $font_main_header2;
+        font-size: 12px;
+        color: $color_main_body_user_chart_leftmenu_title;
+    }
+
+    .table-striped > tbody > tr:nth-child(odd) > td,
+    .table-striped > tbody > tr:nth-child(odd) > th {
+        background-color: $color_login_panel_background;
+    }
+
+    .table-striped > tbody > tr:nth-child(even) > td,
+    .table-striped > tbody > tr:nth-child(even) > th {
+        background-color: $color_main_body_background;
+    }
+
+    .table-striped tbody tr:nth-child(odd):hover td,
+    .table-striped tbody tr:nth-child(odd):hover th,
+    .table-striped tbody tr:nth-child(even):hover td,
+    .table-striped tbody tr:nth-child(even):hover th{
+        background-color: $color_main_body_decision_table_hover;
+    }
+
+}
+
+
+
+@mixin seminar_table_list{
+
+    .table > thead > tr > th{
+        font-size: 12px;
+        font-family: $font_main_header2;
+        font-weight: bold;
+        color: $color_main_body_user_chart_leftmenu_title;
+        background-color: $color_login_content_background;
+        height: 50px;
+        vertical-align: middle;
+        border-bottom-width: 1px ;
+    }
+
+    .table > thead > tr > td,
+    .table > tbody > tr > td,
+    .table > tfoot > tr > td {
+        vertical-align: middle;
+        height: 45px;
         border-top: 1px solid #ddd;
         font-family: $font_main_header2;
         font-size: 12px;
@@ -173,6 +218,8 @@ $color_main_body_decision_table_hover: #feeaff;
     }
 
 }
+
+
 
 @mixin divider_horizontal{
     .divider_horizontal{
@@ -380,9 +427,17 @@ body{
             margin-bottom: 20px;
         }
 
+        .game_list {
+            margin-top: 50px;
+            margin-bottom: 50px;
+
+
+        }
+
+        @include seminar_table_list;
+
         .first_intro{
             margin-top: 50px;
-
         }
 
         .whoami {
