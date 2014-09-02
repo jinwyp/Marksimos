@@ -5,7 +5,7 @@
 
 <div class="container-fluid width_big_screen" ng-controller="chartController">
 
-    <user-header showmenu="true" showlogout="true"  current-menu="css.menu"></user-header>
+    <user-header showmenu="true" showlogout="true"  current-menu="css.menu" is-feedback-shown='isFeedbackShown'></user-header>
 
 
 
@@ -1916,7 +1916,7 @@
 
     <div class="row mainbody" ng-cloak ng-if="css.menu=='Score'">
 
-        <div class="col-md-9 score_box" ng-show='!isFeedbackShown'>
+        <div class="col-md-9 score_box" ng-if='!isFeedbackShown'>
 
             <div class="row">
 
@@ -1939,273 +1939,280 @@
 
         </div>
 
-        <div class="col-md-9 feedback_box" ng-show='!isFeedbackShown'>
+        <div class="col-md-9 feedback_box" ng-if='!isFeedbackShown'>
 
             <div class="row">
                 <div class="col-md-12 feedback_info">
                     <h4 class="text-center">Congratulations! You finish the game!</h4>
                     <h4 class="text-center">Please take 5 minutes to provide feedback to MarkSimos. Your feedback will help us to improve ....</h4>
                     <p class="text-center provide_feedback">
-                        <button class="btn btn-warning" ng-click='isFeedbackShown=true' ng-disabled='isFeedbackSumbit'>Provide Feedback</button>
+                        <button class="btn btn-warning" ng-click='showQuestionnaire()' ng-disabled='isFeedbackSumbit'>Provide Feedback</button>
                     </p>
                 </div>
             </div>
 
         </div>
 
-        <div class="col-md-9 score_box fade in" ng-show='isFeedbackShown'>
+        <div class="col-md-9 score_box fade in" ng-if='isFeedbackShown'>
 
             <div class="row">
+                <form role="form" name='questionnaireForm'>
+                    <div class="col-md-12 feedback_data">
+                        <h3 class="text-center">
+                            {{'QuestionnairePageQuestionnaire' | translate}}
+                        </h3>
 
-                <div class="col-md-12 feedback_data">
-                    <h3 class="text-center">
-                        {{'QuestionnairePageQuestionnaire' | translate}}
-                    </h3>
+                        <h4>
+                            A {{'QuestionnairePageOverallSatisfactionWiththeProgram' | translate}}
+                        </h4>
 
-                    <h4>
-                        {{'QuestionnairePageOverallSatisfactionWiththeProgram' | translate}}
-                    </h4>
+                        <div class="table_feedback">
+                            <table class="table table-hover">
+                                <thead>
+                                    <tr>
+                                        <th class="table_feedback_left_title">
+                                            <p>&nbsp;</p>
+                                        </th>
+                                        <th class="table_feedback_right_data">
+                                            <p>{{'QuestionnairePageVeryPoor' | translate}}</p>
+                                        </th>
+                                        <th class="table_feedback_right_data">
+                                            <p>&nbsp;</p>
+                                        </th>
+                                        <th class="table_feedback_right_data">
+                                            <p>{{'QuestionnairePageAverage' | translate}}</p>
+                                        </th>
+                                        <th class="table_feedback_right_data">
+                                            <p>&nbsp;</p>
+                                        </th></th>
+                                        <th class="table_feedback_right_data">
+                                            <p>{{'QuestionnairePageExcellent' | translate}}</p>
+                                        </th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr ng-repeat='radio in questionnaire.radio_OverallSatisfactionWithThePrograms.info' ng-init="index=$index">
+                                        <td>
+                                            <p class="p_left_20">{{'QuestionnairePage'+radio | translate}}</p>
+                                        </td>
+                                        <td ng-repeat='n in [1,2,3,4,5]'>
+                                            <p class="text-center">
+                                            <input value={{n}} type="radio" ng-model="questionnaire.q_OverallSatisfactionWithTheProgram[index]" name="{{radio}}" id="{{radio+($index+1)}}" ng-blur="updateQuestionnaire('q_OverallSatisfactionWithTheProgram',index, questionnaireForm,radio)">
+                                                <label>{{n}}</label>
+                                            </p>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
 
-                    <div class="table_feedback">
-                        <table class="table table-hover">
-                            <thead>
-                                <tr>
-                                    <th class="table_feedback_left_title">
-                                        <p>&nbsp;</p>
-                                    </th>
-                                    <th class="table_feedback_right_data">
-                                        <p>{{'QuestionnairePageVeryPoor' | translate}}</p>
-                                    </th>
-                                    <th class="table_feedback_right_data">
-                                        <p>&nbsp;</p>
-                                    </th>
-                                    <th class="table_feedback_right_data">
-                                        <p>{{'QuestionnairePageAverage' | translate}}</p>
-                                    </th>
-                                    <th class="table_feedback_right_data">
-                                        <p>&nbsp;</p>
-                                    </th></th>
-                                    <th class="table_feedback_right_data">
-                                        <p>{{'QuestionnairePageExcellent' | translate}}</p>
-                                    </th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <td>
-                                        <p class="p_left_20">{{'QuestionnairePageChallengeStrategicThinkingAbility' | translate}}</p>
-                                    </td>
-                                    <td>
-                                        <p class="text-center">
-                                            <input type="radio" id="radio1" name="radio1s" value="true" checked>
-                                            <label for="radio1">1</label>
-                                        </p>
-                                    </td>
-                                    <td>
-                                        <p class="text-center">
-                                            <input type="radio" id="radio2" name="radio1s" value="false">
-                                            <label for="radio2">2</label>
-                                        </p>
-                                    </td>
-                                    <td>
-                                        <p class="text-center">
-                                            <input type="radio" id="radio3" name="radio1s" value="false">
-                                            <label for="radio3">3</label>
-                                        </p>
-                                    </td>
-                                    <td>
-                                        <p class="text-center">
-                                            <input type="radio" id="radio4" name="radio1s" value="false">
-                                            <label for="radio4">4</label>
-                                        </p>
-                                    </td>
-                                    <td>
-                                        <p class="text-center">
-                                            <input type="radio" id="radio5" name="radio1s" value="false">
-                                            <label for="radio5">5</label>
-                                        </p>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>
-                                        <p class="p_left_20">{{'QuestionnairePageDevelopAnIntegratedPerspective' | translate}}</p>
-                                    </td>
-                                    <td>
-                                        <p class="text-center">
-                                            <input type="radio" id="radio1" name="radio2s" value="true" checked>
-                                            <label for="radio1">1</label>
-                                        </p>
-                                    </td>
-                                    <td>
-                                        <p class="text-center">
-                                            <input type="radio" id="radio2" name="radio2s" value="false">
-                                            <label for="radio2">2</label>
-                                        </p>
-                                    </td>
-                                    <td>
-                                        <p class="text-center">
-                                            <input type="radio" id="radio3" name="radio2s" value="false">
-                                            <label for="radio3">3</label>
-                                        </p>
-                                    </td>
-                                    <td>
-                                        <p class="text-center">
-                                            <input type="radio" id="radio4" name="radio2s" value="false">
-                                            <label for="radio4">4</label>
-                                        </p>
-                                    </td>
-                                    <td>
-                                        <p class="text-center">
-                                            <input type="radio" id="radio5" name="radio2s" value="false">
-                                            <label for="radio5">5</label>
-                                        </p>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>
-                                        <p class="p_left_20">{{'QuestionnairePageTestPersonalAbilityOfBalancingRisks' | translate}}</p>
-                                    </td>
-                                    <td>
-                                        <p class="text-center">
-                                            <input type="radio" id="radio1" name="radio3s" value="true" checked>
-                                            <label for="radio1">1</label>
-                                        </p>
-                                    </td>
-                                    <td>
-                                        <p class="text-center">
-                                            <input type="radio" id="radio2" name="radio3s" value="false">
-                                            <label for="radio2">2</label>
-                                        </p>
-                                    </td>
-                                    <td>
-                                        <p class="text-center">
-                                            <input type="radio" id="radio3" name="radio3s" value="false">
-                                            <label for="radio3">3</label>
-                                        </p>
-                                    </td>
-                                    <td>
-                                        <p class="text-center">
-                                            <input type="radio" id="radio4" name="radio3s" value="false">
-                                            <label for="radio4">4</label>
-                                        </p>
-                                    </td>
-                                    <td>
-                                        <p class="text-center">
-                                            <input type="radio" id="radio5" name="radio3s" value="false">
-                                            <label for="radio5">5</label>
-                                        </p>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>
-                                        <p class="p_left_20">{{'QuestionnairePageChallengeLeadershipAndTeamworkAbility' | translate}}</p>
-                                    </td>
-                                    <td>
-                                        <p class="text-center">
-                                            <input type="radio" id="radio1" name="radio4s" value="true" checked>
-                                            <label for="radio1">1</label>
-                                        </p>
-                                    </td>
-                                    <td>
-                                        <p class="text-center">
-                                            <input type="radio" id="radio2" name="radio4s" value="false">
-                                            <label for="radio2">2</label>
-                                        </p>
-                                    </td>
-                                    <td>
-                                        <p class="text-center">
-                                            <input type="radio" id="radio3" name="radio4s" value="false">
-                                            <label for="radio3">3</label>
-                                        </p>
-                                    </td>
-                                    <td>
-                                        <p class="text-center">
-                                            <input type="radio" id="radio4" name="radio4s" value="false">
-                                            <label for="radio4">4</label>
-                                        </p>
-                                    </td>
-                                    <td>
-                                        <p class="text-center">
-                                            <input type="radio" id="radio5" name="radio4s" value="false">
-                                            <label for="radio5">5</label>
-                                        </p>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>
-                                        <p class="p_left_20">{{'QuestionnairePageChallengeAnalysisAndDecisionMakingAbility' | translate}}</p>
-                                    </td>
-                                    <td>
-                                        <p class="text-center">
-                                            <input type="radio" id="radio1" name="radio5s" value="true" checked>
-                                            <label for="radio1">1</label>
-                                        </p>
-                                    </td>
-                                    <td>
-                                        <p class="text-center">
-                                            <input type="radio" id="radio2" name="radio5s" value="false">
-                                            <label for="radio2">2</label>
-                                        </p>
-                                    </td>
-                                    <td>
-                                        <p class="text-center">
-                                            <input type="radio" id="radio3" name="radio5s" value="false">
-                                            <label for="radio3">3</label>
-                                        </p>
-                                    </td>
-                                    <td>
-                                        <p class="text-center">
-                                            <input type="radio" id="radio4" name="radio5s" value="false">
-                                            <label for="radio4">4</label>
-                                        </p>
-                                    </td>
-                                    <td>
-                                        <p class="text-center">
-                                            <input type="radio" id="radio5" name="radio5s" value="false">
-                                            <label for="radio5">5</label>
-                                        </p>
-                                    </td>
-                                </tr>
-                            </tbody>
-                        </table>
+                        <h4>
+                            B {{'QuestionnairePageTeachingTeam' | translate}}
+                        </h4>
+
+                        <div class="table_feedback">
+                            <table class="table table-hover">
+                                <thead>
+                                    <tr>
+                                        <th class="table_feedback_left_title">
+                                            <p>{{'QuestionnairePageFacilitator' | translate}} : {{'QuestionnairePageNormanYen' | translate}}</p>
+                                        </th>
+                                        <th class="table_feedback_right_data">
+                                            <p>{{'QuestionnairePageVeryPoor' | translate}}</p>
+                                        </th>
+                                        <th class="table_feedback_right_data">
+                                            <p>&nbsp;</p>
+                                        </th>
+                                        <th class="table_feedback_right_data">
+                                            <p>{{'QuestionnairePageAverage' | translate}}</p>
+                                        </th>
+                                        <th class="table_feedback_right_data">
+                                            <p>&nbsp;</p>
+                                        </th></th>
+                                        <th class="table_feedback_right_data">
+                                            <p>{{'QuestionnairePageExcellent' | translate}}</p>
+                                        </th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr ng-repeat='radio in questionnaire.radio_TeachingTeams.info' ng-init="index=$index">
+                                        <td>
+                                            <p class="p_left_20">{{'QuestionnairePage'+radio | translate}}</p>
+                                        </td>
+                                        <td ng-repeat='n in [1,2,3,4,5]'>
+                                            <p class="text-center">
+                                            <input value={{n}} type="radio" ng-model="questionnaire.q_TeachingTeam[index]" name="{{radio}}" id="{{radio+($index+1)}}" ng-blur="updateQuestionnaire('q_TeachingTeam',index, questionnaireForm,radio)">
+                                                <label>{{n}}</label>
+                                            </p>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+
+                        <h4>
+                            C {{'QuestionnairePageProduct' | translate}}
+                        </h4>
+
+                        <div class="table_feedback">
+                            <table class="table table-hover">
+                                <thead>
+                                    <tr>
+                                        <th class="table_feedback_left_title">
+                                            <p>&nbsp;</p>
+                                        </th>
+                                        <th class="table_feedback_right_data">
+                                            <p>{{'QuestionnairePageVeryPoor' | translate}}</p>
+                                        </th>
+                                        <th class="table_feedback_right_data">
+                                            <p>&nbsp;</p>
+                                        </th>
+                                        <th class="table_feedback_right_data">
+                                            <p>{{'QuestionnairePageAverage' | translate}}</p>
+                                        </th>
+                                        <th class="table_feedback_right_data">
+                                            <p>&nbsp;</p>
+                                        </th></th>
+                                        <th class="table_feedback_right_data">
+                                            <p>{{'QuestionnairePageExcellent' | translate}}</p>
+                                        </th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr ng-repeat='radio in questionnaire.radio_Products.info' ng-init="index=$index">
+                                        <td>
+                                            <p class="p_left_20">{{'QuestionnairePage'+radio | translate}}</p>
+                                        </td>
+                                        <td ng-repeat='n in [1,2,3,4,5]'>
+                                            <p class="text-center">
+                                            <input value={{n}} type="radio" ng-model="questionnaire.q_Product[index]" name="{{radio}}" id="{{radio+($index+1)}}" ng-blur="updateQuestionnaire('q_Product',index, questionnaireForm,radio)">
+                                                <label>{{n}}</label>
+                                            </p>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+
+                        <h4>
+                            D {{'QuestionnairePageInterpreter' | translate}}
+                        </h4>
+
+                        <div class="table_feedback">
+                            <table class="table table-hover">
+                                <thead>
+                                    <tr>
+                                        <th class="table_feedback_left_title">
+                                            <p>{{'QuestionnairePageOlive' | translate}}</p>
+                                        </th>
+                                        <th class="table_feedback_right_data">
+                                            <p>{{'QuestionnairePageVeryPoor' | translate}}</p>
+                                        </th>
+                                        <th class="table_feedback_right_data">
+                                            <p>&nbsp;</p>
+                                        </th>
+                                        <th class="table_feedback_right_data">
+                                            <p>{{'QuestionnairePageAverage' | translate}}</p>
+                                        </th>
+                                        <th class="table_feedback_right_data">
+                                            <p>&nbsp;</p>
+                                        </th></th>
+                                        <th class="table_feedback_right_data">
+                                            <p>{{'QuestionnairePageExcellent' | translate}}</p>
+                                        </th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>
+                                            <p class="p_left_20">{{'QuestionnairePageAccuracyAndPresentation' | translate}}</p>
+                                        </td>
+                                        <td ng-repeat='n in [1,2,3,4,5]'>
+                                            <p class="text-center">
+                                            <input value={{n}} type="radio" ng-model="questionnaire.q_Interpreter" name="AccuracyAndPresentation" id="{{'AccuracyAndPresentation'+$index}}" ng-blur="updateQuestionnaire('q_Interpreter',-1, questionnaireForm,'AccuracyAndPresentation')">
+                                                <label>{{n}}</label>
+                                            </p>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+
+                        <h4>
+                            E {{'QuestionnairePageTeachingSupport' | translate}}
+                        </h4>
+
+                        <div class="table_feedback">
+                            <table class="table table-hover">
+                                <thead>
+                                    <tr>
+                                        <th class="table_feedback_left_title">
+                                            <p>{{'QuestionnairePageMayYu' | translate}}</p>
+                                        </th>
+                                        <th class="table_feedback_right_data">
+                                            <p>{{'QuestionnairePageVeryPoor' | translate}}</p>
+                                        </th>
+                                        <th class="table_feedback_right_data">
+                                            <p>&nbsp;</p>
+                                        </th>
+                                        <th class="table_feedback_right_data">
+                                            <p>{{'QuestionnairePageAverage' | translate}}</p>
+                                        </th>
+                                        <th class="table_feedback_right_data">
+                                            <p>&nbsp;</p>
+                                        </th></th>
+                                        <th class="table_feedback_right_data">
+                                            <p>{{'QuestionnairePageExcellent' | translate}}</p>
+                                        </th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr ng-repeat='radio in questionnaire.radio_TeachingSupports.info' ng-init="index=$index">
+                                        <td>
+                                            <p class="p_left_20">{{'QuestionnairePage'+radio | translate}}</p>
+                                        </td>
+                                        <td ng-repeat='n in [1,2,3,4,5]'>
+                                            <p class="text-center">
+                                            <input value={{n}} type="radio" ng-model="questionnaire.q_TeachingSupport[index]" name="{{radio}}" id="{{radio+($index+1)}}" ng-blur="updateQuestionnaire('q_TeachingSupport',index, questionnaireForm,radio)">
+                                                <label>{{n}}</label>
+                                            </p>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+
+                        <h4>{{'QuestionnairePageOthers' | translate}}</h4>
+
+                        <h5>1.{{'QuestionnairePageMostBenefit' | translate}} ?</h5>
+                        <p class="feedback_others_p text-muted" ng-repeat="radio in questionnaire.radio_MostBenefits.info">
+                           <input type="radio" id="{{radio+($index+1)}}" name="mostBenefits" value="{{$index+1}}" ng-model='questionnaire.q_MostBenefit' ng-blur="updateQuestionnaire('q_MostBenefit',$index, questionnaireForm,radio)">
+                           <label for="{{radio+($index+1)}}">{{$index+1}} . {{'QuestionnairePage'+radio | translate}}</label>
+                        </p>
+                        <h4 class="clear"></h4>
+                        <h5>2.{{'QuestionnairePageRecommendMarkSimos' | translate}} ?</h5>
+                        <div class="pull-left">
+                            <p class="feedback_others_p_top">
+                                <input type="radio" id="RecommendMarkSimos1" name="RecommendMarkSimos" value="1" ng-model='questionnaire.q_WillRecommend' ng-blur="updateQuestionnaire('q_WillRecommend',$index, questionnaireForm,radio)">
+                                <label for="RecommendMarkSimos1">{{'QuestionnairePageYes' | translate}}</label>
+                            </p>
+                            <p class="feedback_others_p_bottom">
+                                <input type="radio" id="RecommendMarkSimos2" name="RecommendMarkSimos" value="0" ng-model='questionnaire.q_WillRecommend' ng-blur="updateQuestionnaire('q_WillRecommend',$index, questionnaireForm,radio)">
+                                <label for="RecommendMarkSimos2">{{'QuestionnairePageNo' | translate}}</label>
+                            </p>
+                        </div>
+                        <div class="col-sm-8 pull-left">
+                            <textarea class="form-control" rows="2" id="QuestionnairePageYes" name='QuestionnairePageYes' ng-model='questionnaire.q_ReasonForRecommendOrNot' ng-blur="updateQuestionnaire('q_ReasonForRecommendOrNot',-1, questionnaireForm,'QuestionnairePageYes')"></textarea>
+                        </div>
+                        <h4 class="clear"></h4>
+                        <h5>3.{{'QuestionnairePageBringYou' | translate}} ?</h5>
+                        <p class="feedback_others_p">
+                            <textarea class="form-control" rows="3" id="QuestionnairePageBringYou" name='QuestionnairePageBringYou' ng-model='questionnaire.q_FeelAboutMarkSimos' ng-blur="updateQuestionnaire('q_FeelAboutMarkSimos',-1, questionnaireForm,'QuestionnairePageBringYou')"></textarea>
+                        </p>
+
 
                     </div>
-
-                    <h4>{{'QuestionnairePageOthers' | translate}}</h4>
-
-                    <h5>1.{{'QuestionnairePageWhichFormart' | translate}}?</h5>
-                    <p class="feedback_others_p text-muted">
-                       <input type="radio" id="radio1" name="radio6s" value="true" checked>
-                       <label for="radio1">1.{{'QuestionnairePageJoinProgram' | translate}}</label>
-                    </p>
-                    <p class="feedback_others_p text-muted">
-                       <input type="radio" id="radio2" name="radio6s" value="false">
-                       <label for="radio2">2.{{'QuestionnairePageCompanyInHouse' | translate}}</label>
-                    </p>
-                    <p class="feedback_others_p text-muted">
-                       <input type="radio" id="radio3" name="radio6s" value="false">
-                       <label for="radio3">3.{{'QuestionnairePageOpenClass' | translate}}</label>
-                    </p>
-                    <h4></h4>
-                    <h5>2.{{'QuestionnairePageRecommendMarkSimos' | translate}}?</h5>
-                    <p class="feedback_others_p">
-                        <input type="radio" id="radio1" name="radio7s" value="true" checked>
-                        <label for="radio1">{{'QuestionnairePageYes' | translate}}</label>
-                        <textarea class="form-control" rows="3"></textarea>
-                    </p>
-                    <p class="feedback_others_p">
-                        <input type="radio" id="radio2" name="radio7s" value="false">
-                        <label for="radio2">{{'QuestionnairePageNo' | translate}}</label>
-                        <textarea class="form-control" rows="3"></textarea>
-                    </p>
-                    <h4></h4>
-                    <h5>3.{{'QuestionnairePageBringYou' | translate}}?</h5>
-                    <p class="feedback_others_p">
-                        <textarea class="form-control" rows="3"></textarea>
-                    </p>
-
-
-                </div>
+                </form>
 
             </div>
 

@@ -17,7 +17,8 @@ app.directive('userHeader', ['$window', '$translate', 'Student', function($windo
             menureport : '&clickReport',
             menuscore : '&clickScore',
             menudecision : '&clickDecision',
-            currentMenu : '='
+            currentMenu : '=',
+            isFeedbackShown : '='
         },
         restrict: 'AE',
         templateUrl: '/app/js/websitecomponent/userheader.html',
@@ -25,6 +26,7 @@ app.directive('userHeader', ['$window', '$translate', 'Student', function($windo
 
             scope.clickMenu = function(currentmenu){
                 scope.currentMenu = currentmenu;
+                scope.isFeedbackShown = false;
             };
 
             scope.changeLanguage = function (langKey) {

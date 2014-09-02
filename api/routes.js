@@ -7,6 +7,7 @@ var distributorController = require('./controllers/distributor.js');
 var facilitatorController = require('./controllers/facilitator.js');
 var studentController = require('./controllers/student.js');
 var seminarController = require('./controllers/seminar.js');
+var questionnaireController = require('./controllers/questionnaire.js');
 
 var util = require('util');
 var express = require('express');
@@ -128,6 +129,10 @@ apiRouter.post('/marksimos/api/admin/runsimulation',  requireLogin, authorize('r
 // get current admin role
 apiRouter.get('/marksimos/api/admin/user', requireLogin, userController.getUser);
 
+//getQuestionnaire
+apiRouter.get('/marksimos/api/questionnaire',requireLogin,questionnaireController.getQuestionnaire); 
+//updateQuestionnaire
+apiRouter.put('/marksimos/api/questionnaire',requireLogin,questionnaireController.updateQuestionnaire); 
 
 
 

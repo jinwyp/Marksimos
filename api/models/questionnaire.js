@@ -7,10 +7,14 @@ var questionnaireSchema = new Schema({
 	seminarId: String,
 	email: String,
 	q_OverallSatisfactionWithTheProgram: {type: [Number],default: [5, 5, 5, 5, 5, 5]},
+	q_TeachingTeam:{type: [Number],default: [5, 5, 5]},
+	q_Product:{type: [Number],default: [5, 5, 5, 5]},
+	q_Interpreter:{type: Number,default: 5},
+	q_TeachingSupport:{type: [Number],default: [5, 5]},
 	q_MostBenefit: {type: Number,default: 1},
 	q_WillRecommend: {type: Boolean,default: true},
-	q_ReasonForRecommendOrNot: String,
-	q_FeelAboutMarkSimos: String
+	q_ReasonForRecommendOrNot: {type: String,default: ''},
+	q_FeelAboutMarkSimos: {type: String,default: ''}
 });
 
 
@@ -61,17 +65,17 @@ exports.insert = function(questionnaire) {
 
 	var deferred = Q.defer();
 
-	Questionnaire.create(questionnaire, function(err) {
+	Questionnaire.create(questionnaire, function(err,result) {
 		if (err) {
 			return deferred.reject(err);
 		}
-		return deferred.resolve(undefined);
+		return deferred.resolve(result);
 	});
 
 	return deferred.promise;
 };
 
-exports.update = function(seminarId, email, Questionnaire) {
+exports.update = function(seminarId, email, questionnaire) {
 	if (!mongoose.connection.readyState) {
 		throw new Error("mongoose is not connected.");
 	}
@@ -79,19 +83,17 @@ exports.update = function(seminarId, email, Questionnaire) {
 	var deferred = Q.defer();
 
 	Questionnaire.update({
-			seminarId: seminarId,
-			email: email
-		},
-		Questionnaire)
-		.exec(function(err, numAffected) {
-			if (err) {
-				deferred.reject(err);
-			} else if (numAffected !== 1) {
-				deferred.reject(new Error("Can't update a Questionnaire which doesn't exist."));
-			} else {
-				deferred.resolve(numAffected);
-			}
-		});
+		seminarId: seminarId,
+		email: email
+	},
+	questionnaire
+	, function(err, numAffected){
+		if(err){
+	        deferred.reject(err);
+	    }else{
+	        deferred.resolve(numAffected);
+	    }
+	});
 
 	return deferred.promise;
 };

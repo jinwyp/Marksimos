@@ -10,7 +10,7 @@ var marksimosapp = angular.module('marksimos', ['pascalprecht.translate', 'angul
 
 
 // controller business logic
-marksimosapp.controller('chartController', ['$translate', '$scope', '$rootScope', '$timeout', '$http', 'notify', 'chartReport', 'tableReport', 'Company', function($translate, $scope, $rootScope, $timeout, $http, notify, chartReport, tableReport, Company) {
+marksimosapp.controller('chartController', ['$translate', '$scope', '$rootScope', '$timeout', '$http', 'notify', 'chartReport', 'tableReport', 'Company', 'Questionnaire', function($translate, $scope, $rootScope, $timeout, $http, notify, chartReport, tableReport, Company , Questionnaire) {
     $rootScope.$on('$translateChangeSuccess', function () {
         $translate(['HomePageSegmentLabelPriceSensitive', 'HomePageSegmentLabelPretenders', 'HomePageSegmentLabelModerate',
             'HomePageSegmentLabelGoodLife', 'HomePageSegmentLabelUltimate', 'HomePageSegmentLabelPragmatic']).then(function (translations) {
@@ -701,7 +701,6 @@ marksimosapp.controller('chartController', ['$translate', '$scope', '$rootScope'
             $scope.data.currentSku = $scope.data.currentCompany.d_BrandsDecisions[$scope.data.currentBrandIndex].d_SKUsDecisions[$scope.data.currentSkuIndex];
 
             Company.getCompanyFutureProjectionCalculator($scope.data.currentSku.d_SKUID).then(function(data, status, headers, config){
-    //            console.log(data);
                 $scope.data.currentCompanyFutureProjectionCalculator = data;
 
             });
@@ -721,17 +720,13 @@ marksimosapp.controller('chartController', ['$translate', '$scope', '$rootScope'
                 overtimeCapacityValue : data.overtimeCapacityValue.toFixed(0)
             };
 
-    //        console.log($scope.data.currentCompanyOtherInfo);
-
         });
 
         Company.getCompanyProductPortfolio().then(function(data, status, headers, config){
-    //        console.log(data);
             $scope.data.currentCompanyProductPortfolio = data;
         });
 
         Company.getCompanySpendingDetails().then(function(data, status, headers, config){
-    //        console.log(data);
             $scope.data.currentCompanySpendingDetails = data;
         });
 
@@ -876,7 +871,6 @@ marksimosapp.controller('chartController', ['$translate', '$scope', '$rootScope'
 
 
 
-//        console.log($scope.data.currentModifiedSku);
         Company.updateSku($scope.data.currentModifiedSku).then(function(data, status, headers, config){
             $scope.companyInfoInit();
 
@@ -984,7 +978,6 @@ marksimosapp.controller('chartController', ['$translate', '$scope', '$rootScope'
         $scope.data.currentModifiedCompany.company_data = {};
         $scope.data.currentModifiedCompany.company_data[fieldname] = $scope.data.currentCompany[fieldname];
 
-        console.log($scope.data.currentModifiedCompany);
         Company.updateCompany($scope.data.currentModifiedCompany).success(function(data, status, headers, config){
             console.log(data);
             $scope.css.additionalBudget = true;
@@ -1008,7 +1001,6 @@ marksimosapp.controller('chartController', ['$translate', '$scope', '$rootScope'
             $scope.css.companyErrorInfo = data;
 
             notify({
-//                message : JSON.stringify(data.data) + ', status: ' + data.status,
                 message : data.message,
                 template : notifytemplate.failure,
                 position : 'center'
@@ -1017,6 +1009,50 @@ marksimosapp.controller('chartController', ['$translate', '$scope', '$rootScope'
     };
 
 
+    /********************  get getQuestionnaire  ********************/
+    $scope.showQuestionnaire = function(){
+        $scope.isFeedbackShown=true;
+        Questionnaire.getQuestionnaire().then(function(data, status, headers, config){
+            $scope.questionnaire=data;
+            $scope.questionnaire.radio_OverallSatisfactionWithThePrograms={
+                info:['ChallengeStrategicThinkingAbility','DevelopAnIntegratedPerspective','TestPersonalAbilityOfBalancingRisks','ChallengeLeadershipAndTeamworkAbility','ChallengeAnalysisAndDecisionMakingAbility','SimulationInteresting']
+            };
+            $scope.questionnaire.radio_TeachingTeams={
+                info:['FeedbackOnSimulationDecisions','ExpandingViewAndInspireThinking','Lectures']
+            };
+            $scope.questionnaire.radio_Products={
+                info:['OverallProductUsageExperience','UserInterfaceExperience','EaseOfNavigation','ClarityOfWordsUsed']
+            };
+            $scope.questionnaire.radio_TeachingSupports={
+                info:['Helpfulness','QualityOfTechnicalSupport']
+            };
+            $scope.questionnaire.radio_MostBenefits={
+                info:["JoinProgram","CompanyInHouse","OpenClass"]
+            };
+        });
 
+    }
+    /********************  更新 Questionnaire  ********************/
+    $scope.updateQuestionnaire = function(fieldname , index, form, formfieldname){
+
+        var currentData={
+            'location':fieldname,
+            'data':$scope.questionnaire[fieldname]
+        }
+
+        Questionnaire.updateQuestionnaire(currentData).then(function(data, status, headers, config){
+            notify({
+                message : 'Save Success !',
+                template : notifytemplate.success,
+                position : 'center'
+            });
+        },function(data, status, headers, config){
+            notify({
+                message : data.message,
+                template : notifytemplate.failure,
+                position : 'center'
+            });
+        })
+    };
 
 }]);
