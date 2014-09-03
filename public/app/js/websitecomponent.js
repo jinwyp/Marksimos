@@ -309,4 +309,14 @@ app.directive('tableReportMarketIndicator', ['$translate', function($translate) 
     };
 }]);
 
+app.directive('tableReportFinalScore', ['$translate', function($translate) {
+    return {
+        scope: {
+            data : '='
+        },
+        restrict: 'AE',
+        templateUrl: '/app/js/report/tablereportfinalscore.html'
+    };
+}]);
+
 

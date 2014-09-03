@@ -35,6 +35,11 @@ $color_main_body_background_chart: #dbe3f6;
 $color_main_body_company: #373737;
 $color_main_body_company_a: #ffffff;
 $color_main_body_company_a_bg: #39ae41;
+$color_main_body_company_b_bg: #ff983d;
+$color_main_body_company_c_bg: #0087f0;
+$color_main_body_company_d_bg: #8781bd;
+$color_main_body_company_e_bg: #f26c4f;
+$color_main_body_company_f_bg: #bd8cbf;
 $color_main_body_brand: #2f4e9b;
 $color_main_body_product: #464646;
 $color_main_body_product_target: #6f6f6f;
@@ -78,6 +83,8 @@ $color_main_body_user_feedback: #A07041;
 $color_main_body_user_feedback_title:#5E66E6;
 $color_main_body_user_feedback_subTitle:#5D67D2;
 
+$color_main_body_user_feedback_warning:#FCFFD9;
+$color_main_body_user_feedback_info:#EAEFFF;
 
 
 
@@ -140,6 +147,7 @@ $color_main_body_user_feedback_subTitle:#5D67D2;
 
 @mixin icon_user_product{
     color: $color_main_body_product;
+    -webkit-text-size-adjust:none;
     font-size: 11px;
     background-image: url(../images/userproduct.png);
     background-repeat: no-repeat;
@@ -304,6 +312,7 @@ $color_main_body_user_feedback_subTitle:#5D67D2;
     line-height: 16px;
     font-family:$font_main_header;
     font-weight:normal;
+    -webkit-text-size-adjust:none;
     font-size: 11px;
     z-index: 999;
 }
@@ -331,6 +340,7 @@ $color_main_body_user_feedback_subTitle:#5D67D2;
     line-height: 16px;
     font-family:$font_main_header;
     font-weight:normal;
+    -webkit-text-size-adjust:none;
     font-size: 11px;
     z-index: 999;
 }
@@ -543,6 +553,7 @@ body{
 
             li a {
                 color: $color_main_header_menu;
+                -webkit-text-size-adjust:none;
                 font-size: 11px;
                 font-weight: bold;
                 padding-left: 15px;
@@ -645,6 +656,7 @@ body{
 
     .user_title{
         color: $color_main_body_company;
+        -webkit-text-size-adjust:none;
         font-size: 11px;
         @include inline-block;
         padding-bottom: 5px;
@@ -676,6 +688,7 @@ body{
 
     .user_clock{
         color: $color_main_body_user_clock;
+        -webkit-text-size-adjust:none;
         font-size: 11px;
         background-image: url(../images/userclock.png);
         background-repeat: no-repeat;
@@ -692,6 +705,7 @@ body{
 
     .user_makedecision{
         color: $color_main_body_user_clock;
+        -webkit-text-size-adjust:none;
         font-size: 11px;
         margin: 12px 0px 13px 23px;
 
@@ -738,13 +752,15 @@ body{
         .period_info_bottom{
             margin: 20px 0 0 31px;
             position: absolute;
-            font-size:11px;
+            -webkit-text-size-adjust:none;
+            font-size: 11px;
         }
         .period_info_top{
             position : absolute;
             margin:-20px 0 0 11px;
             display:block;
-            font-size:11px;
+            -webkit-text-size-adjust:none;
+            font-size: 11px;
         }
     }
 
@@ -832,6 +848,7 @@ body{
 
     .user_chart_vs{
         color: $color_main_body_user_clock;
+        
         font-size: 10px;
         text-align: center;
         background-image: url(../images/chartvs.png);
@@ -843,12 +860,14 @@ body{
     }
 
     .user_chart_clock{
+        
         font-size: 10px;
         margin: 10px 0px 1px 0px;
     }
 
     .user_chart_make_decision{
         color: $color_main_body_user_clock;
+        
         font-size: 10px;
         text-align: center;
         margin: 5px 0px 5px 0px;
@@ -856,6 +875,7 @@ body{
     }
 
     .user_chart_decision_button{
+        -webkit-text-size-adjust:none;
         font-size: 11px;
         font-weight: normal;
         margin: 0px 0px 0px 19px;
@@ -893,6 +913,7 @@ body{
             padding: 11px 1px 13px 50px;
 
             a{
+                -webkit-text-size-adjust:none;
                 font-size: 11px;
                 color: $color_main_body_user_chart_list;
             }
@@ -944,6 +965,7 @@ body{
                 }
 
                 .perception_map_button{
+                    -webkit-text-size-adjust:none;
                     font-size: 11px;
                     font-family: $font_main_header2;
                 }
@@ -1123,6 +1145,84 @@ body{
     }
     .score_data {
         background-color: $color_login_panel_background;
+        .table_report{
+            background-color: $color_login_panel_background;
+            padding: 20px;
+            .company{
+                width: 15px;
+                height: 15px;
+                padding:0;
+                margin:0;
+                display:-moz-inline-box; display:inline-block;
+            }
+            .company_a {
+                background-color: $color_main_body_company_a_bg;
+            }
+            .company_b {
+                background-color: $color_main_body_company_b_bg;
+            }
+            .company_c {
+                background-color: $color_main_body_company_c_bg;
+            }
+            .company_d {
+                background-color: $color_main_body_company_d_bg;
+            }
+            .company_e {
+                background-color: $color_main_body_company_e_bg;
+            }
+            .company_f {
+                background-color: $color_main_body_company_f_bg;
+            }
+
+            .table > thead > tr > th,
+            .table > tbody > tr > td,
+            .table > tfoot > tr > td {
+                text-align:right;
+            }
+
+            .table > thead > tr > th:first-child,
+            .table > tbody > tr > td:first-child,
+            .table > tfoot > tr > td:first-child {
+                text-align:left;
+            }
+            .td_info{
+                background-color:$color_main_body_user_feedback_info;
+            }
+            .tr_warning{
+                background-color:$color_main_body_user_feedback_warning;
+            }
+            .tr_warning td{
+                font-weight: bold;
+            }
+            .nav-pills li{
+                a{
+                    background-color: $color_login_background;
+                    color: $color_main_body_user_chart_leftmenu_title;
+                    font-family: $font_main_header2;
+                    @include border-top-radius(4px);
+                    @include border-bottom-radius(0px);
+
+                    &:hover,
+                    &:focus{
+                        background-color: $color_main_body_background_chart;
+                    }
+                }
+            }
+            .nav-pills li.active{
+                a,
+                a:hover,
+                a:focus{
+                    color: $color_main_body_company_a;
+                    font-family: $font_main_header2;
+                    background-color: $color_login_title;
+                }
+            }
+
+            @include divider_horizontal;
+
+        }
+
+        @include table_report;
     }
 
     .feedback_info {
@@ -1130,6 +1230,9 @@ body{
         padding:20px;
         .provide_feedback{
             margin:10px 0;
+        }
+        h4{
+            font-size:17px;
         }
     }
     .feedback_data{
@@ -1148,7 +1251,7 @@ body{
             font-weight:normal;
             padding:10px 40px;
             margin:0;
-            font-size:16px;
+            font-size:18px;
         }
         h5{
             font-family:$font_main_header2;
@@ -1255,6 +1358,7 @@ body{
 
         label {
             color: $color_login_input_label;
+            
             font-size: 10px;
             font-weight: normal;
         }
@@ -1449,6 +1553,7 @@ body{
     }
 
     .bar_chart_label{
+        
         font-size: 10px;
     }
 }

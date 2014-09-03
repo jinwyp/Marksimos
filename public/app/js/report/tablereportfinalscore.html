@@ -1,0 +1,51 @@
+<table class="table table-bordered">
+    <thead>
+        <tr>
+            <th>&nbsp;</th>
+            <th>{{'FinalScorePageWeightFactor' | translate}} </th>
+            <th ng-repeat="n in ['A','B','C','D','E','F']">
+                <span class="company {{'company_'+n.toLowerCase()}}">&nbsp;</span>
+                {{'FinalScorePageCompany' | translate}} {{n}}
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td>{{'FinalScorePageIncrementalMarketShare' | translate}}</td>
+            <td class="td_info">?</td>
+            <td ng-repeat="n in [1,2,3,4,5,6]">{{n}}
+            </td>
+        </tr>
+        <tr>
+            <td>{{'FinalScorePageCumulatedNetProfit' | translate}}</td>
+            <td class="td_info">?</td>
+            <td ng-repeat="n in [1,2,3,4,5,6]">{{n}}
+            </td>
+        </tr>
+        <tr>
+            <td>{{'FinalScorePageSpendingVersusBudgets' | translate}}</td>
+            <td class="td_info">?</td>
+            <td ng-repeat="n in [1,2,3,4,5,6]">{{n}}
+            </td>
+        </tr>
+        <tr>
+            <td>{{'FinalScorePageShareInBrandTotalSalesValue' | translate}}</td>
+            <td class="td_info">?</td>
+            <td ng-repeat="n in [1,2,3,4,5,6]">{{n}}
+            </td>
+        </tr>
+        <tr>
+            <td>{{'FinalScorePageAchievementOfInitialObjectives' | translate}}</td>
+            <td class="td_info">?</td>
+            <td ng-repeat="n in [1,2,3,4,5,6]">{{n}}
+            </td>
+        </tr>
+        <tr class="tr_warning">
+            <td>{{'FinalScorePageFinalScore' | translate}}</td>
+            <td>?</td>
+            <td ng-repeat="n in [1,2,3,4,5,6]">{{n}}
+            </td>
+        </tr>
+
+    </tbody>
+</table>

@@ -1917,9 +1917,22 @@
 
             <div class="row">
                 <div class="col-md-12 score_data">
-                    <p class="text-center">
+                    
+                    <div class="table_report">
+
+                        <ul class="nav nav-pills">
+                            <li ng-class="{'active': n==5}" ng-repeat="n in [5,4,3,2,1]"><a href="" ng-click="switchTableReportFinalScore(n)">{{'FinalScorePagePeriod' | translate}} {{n}}</a></li>
+                        </ul>
+
+                        <div class="divider_horizontal"></div>
+                        <div table-report-final-score></div>
+
+                    </div>
+
+                    <!--<p class="text-center">
                         <img src='/app/css/images/score_data.png'>
-                    </p>
+                    </p>-->
+
                 </div>
             </div>
 
@@ -1929,10 +1942,11 @@
 
             <div class="row">
                 <div class="col-md-12 feedback_info">
-                    <h4 class="text-center">Congratulations! You finish the game!</h4>
-                    <h4 class="text-center">Please take 5 minutes to provide feedback to MarkSimos. Your feedback will help us to improve ....</h4>
+                    <h4 class="text-center">
+                    {{'FinalScorePageCongratulations' | translate}} !</h4>
+                    <h4 class="text-center">{{'FinalScorePageCongratulationsInfo' | translate}} .</h4>
                     <p class="text-center provide_feedback">
-                        <button class="btn btn-warning" ng-click='showQuestionnaire()' ng-disabled='isFeedbackSumbit'>Provide Feedback</button>
+                        <button class="btn btn-warning" ng-click='showQuestionnaire()' ng-disabled='isFeedbackSumbit'>{{'FinalScorePageProvideFeedback' | translate}}</button>
                     </p>
                 </div>
             </div>

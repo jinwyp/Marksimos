@@ -771,6 +771,22 @@ app.config(['$translateProvider', function($translateProvider){
 		"DecisionPageSpendingDetailsTable2AcquiredProductionVolumeFlexibility"		:	"Acquired Production Volume Flexibility (%)",
 		"DecisionPageSpendingDetailsTable2AcquiredTechnologyLevel"		:	"Acquired Technology Level",
 		
+        //Labels for final score page
+        "FinalScorePageScore":"Score",
+        "FinalScorePageWeightFactor":"Weight / Factor",
+        "FinalScorePageIncrementalMarketShare":"Incremental market share (value)",
+        "FinalScorePageCumulatedNetProfit":"Cumulated net profit",
+        "FinalScorePageSpendingVersusBudgets":"Spending versus budgets",
+        "FinalScorePageShareInBrandTotalSalesValue":"Share in Brand Total Sales Value",
+        "FinalScorePageAchievementOfInitialObjectives":"Achievement of initial objectives",
+        "FinalScorePageFinalScore":"Final Score",
+        "FinalScorePageCompany":"Company",
+        "FinalScorePagePeriod":"Period",
+        "FinalScorePageCongratulations":"Congratulations ! You finish the game",
+        "FinalScorePageCongratulationsInfo":"Please take 5 minutes to provide feedback to MarkSimos. Your feedback will help us to improve our service",
+        "FinalScorePageProvideFeedback":"Provide Feedback",
+
+        
         //Labels for Questionnaire Page
         "QuestionnairePageQuestionnaire":"Questionnaire",
         "QuestionnairePageVeryPoor":"Very poor",
@@ -1592,6 +1608,20 @@ app.config(['$translateProvider', function($translateProvider){
 		"DecisionPageSpendingDetailsTable2AcquiredProductionVolumeFlexibility"		:	"当前拥有的生产灵活度 (%)",
 		"DecisionPageSpendingDetailsTable2AcquiredTechnologyLevel"		:	"最高技术水平",
 		
+        //Labels for final score page
+        "FinalScorePageScore":"Score",
+        "FinalScorePageWeightFactor":"Weight / Factor",
+        "FinalScorePageIncrementalMarketShare":"Incremental market share (value)",
+        "FinalScorePageCumulatedNetProfit":"Cumulated net profit",
+        "FinalScorePageSpendingVersusBudgets":"Spending versus budgets",
+        "FinalScorePageShareInBrandTotalSalesValue":"Share in Brand Total Sales Value",
+        "FinalScorePageAchievementOfInitialObjectives":"Achievement of initial objectives",
+        "FinalScorePageFinalScore":"Final Score",
+        "FinalScorePageCompany":"Company",
+        "FinalScorePagePeriod":"Period",
+        "FinalScorePageCongratulations":"Congratulations ! You finish the game",
+        "FinalScorePageCongratulationsInfo":"Please take 5 minutes to provide feedback to MarkSimos. Your feedback will help us to improve our service",
+        "FinalScorePageProvideFeedback":"Provide Feedback",
         //Labels for Questionnaire Page
         "QuestionnairePageQuestionnaire":"问卷调查",
         "QuestionnairePageVeryPoor":"Very poor",
