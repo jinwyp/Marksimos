@@ -713,6 +713,26 @@ app.factory('tableReport', ['$http', function($http){
 
 }]);
 
+app.factory('FinalScore',['$http',function($http){
+    var apiPath = '/marksimos/api/';
+
+    var errorHandler = function(err){
+        console.log("Error 404 , Type : API questionnaire", err );
+    };
+
+    var factory = {
+
+        getFinalScore : function(){
+            return $http.get(apiPath + 'report/final_score').then(function(result){
+                return result.data;
+            }).catch(errorHandler);
+        }
+
+    };
+
+    return factory;
+}]);
+
 app.factory('Questionnaire', ['$http', function($http){
     var apiPath = '/marksimos/api/';
 

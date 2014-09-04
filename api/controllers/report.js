@@ -2,9 +2,6 @@ var reportModel = require('../models/report.js');
 var logger = require('../../common/logger.js');
 var config = require('../../common/config.js');
 
-exports.getFinalScore = function(req, res, next){
-    res.send(200, 'final Score');
-}
 
 exports.getReport = function(req, res, next){
     var seminarId = req.session.seminarId;

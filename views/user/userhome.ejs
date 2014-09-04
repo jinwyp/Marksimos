@@ -2191,19 +2191,15 @@
                         </p>
                         <h4 class="clear"></h4>
                         <h5>2.{{'QuestionnairePageRecommendMarkSimos' | translate}} ?</h5>
-                        <div class="pull-left">
-                            <p class="feedback_others_p_top">
-                                <input type="radio" id="RecommendMarkSimos1" name="RecommendMarkSimos" value="1" ng-model='questionnaire.q_WillRecommend' ng-blur="updateQuestionnaire('q_WillRecommend',$index, questionnaireForm,radio)">
-                                <label for="RecommendMarkSimos1">{{'QuestionnairePageYes' | translate}}</label>
-                            </p>
-                            <p class="feedback_others_p_bottom">
-                                <input type="radio" id="RecommendMarkSimos2" name="RecommendMarkSimos" value="0" ng-model='questionnaire.q_WillRecommend' ng-blur="updateQuestionnaire('q_WillRecommend',$index, questionnaireForm,radio)">
-                                <label for="RecommendMarkSimos2">{{'QuestionnairePageNo' | translate}}</label>
-                            </p>
-                        </div>
-                        <div class="col-sm-8 pull-left">
-                            <textarea class="form-control" rows="2" id="QuestionnairePageYes" name='QuestionnairePageYes' ng-model='questionnaire.q_ReasonForRecommendOrNot' ng-blur="updateQuestionnaire('q_ReasonForRecommendOrNot',-1, questionnaireForm,'QuestionnairePageYes')"></textarea>
-                        </div>
+                        <p class="feedback_others_p">
+                            <input type="radio" id="RecommendMarkSimos1" name="RecommendMarkSimos" value="1" ng-model='questionnaire.q_WillRecommend' ng-blur="updateQuestionnaire('q_WillRecommend',$index, questionnaireForm,radio)">
+                            <label for="RecommendMarkSimos1">{{'QuestionnairePageYes' | translate}}</label>
+                            <input type="radio" class="margin_left_10" id="RecommendMarkSimos2" name="RecommendMarkSimos" value="0" ng-model='questionnaire.q_WillRecommend' ng-blur="updateQuestionnaire('q_WillRecommend',$index, questionnaireForm,radio)">
+                            <label for="RecommendMarkSimos2">{{'QuestionnairePageNo' | translate}}</label>
+                        </p>
+                        <p class="feedback_others_p">
+                            <textarea class="form-control" rows="3" id="QuestionnairePageYes" name='QuestionnairePageYes' ng-model='questionnaire.q_ReasonForRecommendOrNot' ng-blur="updateQuestionnaire('q_ReasonForRecommendOrNot',-1, questionnaireForm,'QuestionnairePageYes')"></textarea>
+                        </p>
                         <h4 class="clear"></h4>
                         <h5>3.{{'QuestionnairePageBringYou' | translate}} ?</h5>
                         <p class="feedback_others_p">

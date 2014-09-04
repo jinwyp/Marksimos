@@ -1279,14 +1279,12 @@ body{
             @include divider_horizontal;
 
         }
-        .feedback_others_p_top{
-            padding:0 0 6px 68px;
-        }
-        .feedback_others_p_bottom{
-            padding:6px 0 0 68px;
-        }
+
         .feedback_others_p{
             padding:0 68px;
+            .margin_left_10{
+                padding-left:20px;
+            }
         }
         .clear{
             clear:both;

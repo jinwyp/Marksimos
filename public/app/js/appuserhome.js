@@ -10,7 +10,7 @@ var marksimosapp = angular.module('marksimos', ['pascalprecht.translate', 'angul
 
 
 // controller business logic
-marksimosapp.controller('chartController', ['$translate', '$scope', '$rootScope', '$timeout', '$http', 'notify', 'chartReport', 'tableReport', 'Company', 'Questionnaire', function($translate, $scope, $rootScope, $timeout, $http, notify, chartReport, tableReport, Company , Questionnaire) {
+marksimosapp.controller('chartController', ['$translate', '$scope', '$rootScope', '$timeout', '$http', 'notify', 'chartReport', 'tableReport', 'Company', 'FinalScore', 'Questionnaire', function($translate, $scope, $rootScope, $timeout, $http, notify, chartReport, tableReport, Company , FinalScore, Questionnaire) {
     $rootScope.$on('$translateChangeSuccess', function () {
         $translate(['HomePageSegmentLabelPriceSensitive', 'HomePageSegmentLabelPretenders', 'HomePageSegmentLabelModerate',
             'HomePageSegmentLabelGoodLife', 'HomePageSegmentLabelUltimate', 'HomePageSegmentLabelPragmatic']).then(function (translations) {
@@ -154,6 +154,9 @@ marksimosapp.controller('chartController', ['$translate', '$scope', '$rootScope'
             currentTable : 1
         },
         tableC6MarketIndicators : {
+            allData : {}
+        },
+        tableFinalScore:{
             allData : {}
         },
 
@@ -1059,28 +1062,39 @@ marksimosapp.controller('chartController', ['$translate', '$scope', '$rootScope'
     };
 
 
+    /********************  get FinalScore  ********************/
+    FinalScore.getFinalScore().then(function(data, status, headers, config){
+        $scope.finalscores=data;
+    });
+
+    $scope.switchTableReportFinalScore = function(period){
+        $scope.data.tableA1CompanyStatus.currentCompany = company;
+        $scope.data.tableA1CompanyStatus.currentSKU = $scope.data.tableA1CompanyStatus.currentCompany.SKU[0];
+        $scope.data.tableA1CompanyStatus.currentBrand = $scope.data.tableA1CompanyStatus.currentCompany.brand[0];
+        $scope.data.tableA1CompanyStatus.currentGlobal = $scope.data.tableA1CompanyStatus.currentCompany.global;
+    };
+
     /********************  get getQuestionnaire  ********************/
+    Questionnaire.getQuestionnaire().then(function(data, status, headers, config){
+        $scope.questionnaire = data;
+        $scope.questionnaire.radio_OverallSatisfactionWithThePrograms={
+            info:['ChallengeStrategicThinkingAbility','DevelopAnIntegratedPerspective','TestPersonalAbilityOfBalancingRisks','ChallengeLeadershipAndTeamworkAbility','ChallengeAnalysisAndDecisionMakingAbility','SimulationInteresting']
+        };
+        $scope.questionnaire.radio_TeachingTeams={
+            info:['FeedbackOnSimulationDecisions','ExpandingViewAndInspireThinking','Lectures']
+        };
+        $scope.questionnaire.radio_Products={
+            info:['OverallProductUsageExperience','UserInterfaceExperience','EaseOfNavigation','ClarityOfWordsUsed']
+        };
+        $scope.questionnaire.radio_TeachingSupports={
+            info:['Helpfulness','QualityOfTechnicalSupport']
+        };
+        $scope.questionnaire.radio_MostBenefits={
+            info:["JoinProgram","CompanyInHouse","OpenClass"]
+        };
+    });
     $scope.showQuestionnaire = function(){
         $scope.isFeedbackShown=true;
-        Questionnaire.getQuestionnaire().then(function(data, status, headers, config){
-            $scope.questionnaire=data;
-            $scope.questionnaire.radio_OverallSatisfactionWithThePrograms={
-                info:['ChallengeStrategicThinkingAbility','DevelopAnIntegratedPerspective','TestPersonalAbilityOfBalancingRisks','ChallengeLeadershipAndTeamworkAbility','ChallengeAnalysisAndDecisionMakingAbility','SimulationInteresting']
-            };
-            $scope.questionnaire.radio_TeachingTeams={
-                info:['FeedbackOnSimulationDecisions','ExpandingViewAndInspireThinking','Lectures']
-            };
-            $scope.questionnaire.radio_Products={
-                info:['OverallProductUsageExperience','UserInterfaceExperience','EaseOfNavigation','ClarityOfWordsUsed']
-            };
-            $scope.questionnaire.radio_TeachingSupports={
-                info:['Helpfulness','QualityOfTechnicalSupport']
-            };
-            $scope.questionnaire.radio_MostBenefits={
-                info:["JoinProgram","CompanyInHouse","OpenClass"]
-            };
-        });
-
     }
     /********************  更新 Questionnaire  ********************/
     $scope.updateQuestionnaire = function(fieldname , index, form, formfieldname){
