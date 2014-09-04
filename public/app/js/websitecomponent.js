@@ -11,17 +11,24 @@ var app = angular.module('marksimos.websitecomponent', ['marksimos.model', 'pasc
 app.directive('userHeader', ['$window', '$translate', 'Student', function($window, $translate, Student) {
     return {
         scope: {
-            showmenu : '=',
-            showlogout : '=',
-            menuhome : '&clickHome',
-            menureport : '&clickReport',
-            menuscore : '&clickScore',
+            showmenu     : '=',
+            showlogout   : '=',
+            menuhome     : '&clickHome',
+            menureport   : '&clickReport',
+            menuscore    : '&clickScore',
             menudecision : '&clickDecision',
-            currentMenu : '='
+            currentMenu  : '=',
+            currentRound : '='
         },
         restrict: 'AE',
         templateUrl: '/app/js/websitecomponent/userheader.html',
         link: function (scope, element, attrs) {
+
+
+            if(angular.isUndefined(attrs.currentRound)){
+                console.log('Need current Round data');
+                scope.currentRound = 0;
+            }
 
             scope.clickMenu = function(currentmenu){
                 scope.currentMenu = currentmenu;
@@ -40,7 +47,6 @@ app.directive('userHeader', ['$window', '$translate', 'Student', function($windo
                     console.log(data);
                 });
             };
-
 
         }
     };
