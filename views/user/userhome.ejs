@@ -9,6 +9,9 @@
 
 
 
+
+
+    <!----------  Home Page  ---------->
     <div class="row mainbody bgbrand" ng-cloak ng-if="css.menu=='Home'">
         <div class="col-md-2 user_home_divider user_brand_box">
 
@@ -60,6 +63,7 @@
         </div>
 
     </div>
+
 
     <div class="row mainbody" ng-cloak ng-if="css.menu=='Home'">
         <div class="col-md-12">
@@ -147,10 +151,13 @@
             </div>
         </div>
     </div>
+    <!----------  End Home Page  ---------->
 
 
 
 
+
+    <!----------  Report Page  ---------->
     <div class="row mainbody bgbrand" ng-cloak ng-if="css.menu=='Report'">
         <div class="col-md-2 user_home_divider user_chart_box">
 
@@ -178,7 +185,7 @@
 
         <div class="col-md-1 user_home_divider user_chart_box">
             <div class="row">
-                <div class="col-md-12 ">
+                <div class="col-md-12 " ng-click="showComparisonPage()">
                     <span class="user_chart_vs"> Compare Data</span>
                 </div>
             </div>
@@ -203,8 +210,144 @@
         </div>
 
     </div>
+    <!----------  End Report Top Part Page  ---------->
 
-    <div class="row mainbody bgbrand" ng-cloak ng-if="css.menu=='Report'">
+
+    <div class="row mainbody bgbrand" ng-cloak ng-if="css.menu=='Report' && css.comparisonPage">
+        <div class="col-md-12">
+            <div class="row">
+                <div class="col-md-6 comparison_box">
+                    <div class="row">
+                        <!--<div class="col-md-12">-->
+                            <!--<p class="text-center center-block blank_title">VS</p>-->
+                            <!--<p class="text-center center-block blank_info">Drag your favorite report here to compare data </p>-->
+                        <!--</div>-->
+
+                        <div class="col-md-12 user_chart_right" >
+                            <div class="row">
+                                <div class="col-md-12 user_table_single">
+                                    <h5>{{'ReportMenuCompanyStatus' | translate}}
+
+                                        <div class="pull-right">
+                                            <div class="btn-group">
+                                                <button type="button" class="btn btn-default btn-sm dropdown-toggle" data-toggle="dropdown">
+                                                    {{data.tableA1CompanyStatus.currentCompany.companyName}} <span class="caret"></span>
+                                                </button>
+                                                <ul class="dropdown-menu" role="menu">
+                                                    <li ng-repeat="company in data.tableA1CompanyStatus.allCompanyData"><a href="" ng-click="switchTableReportCompany(company)">{{company.companyName}}</a></li>
+                                                </ul>
+                                            </div>
+
+
+                                            <div class="btn-group btn-group-sm">
+                                                <button type="button" class="btn btn-default" ng-class="{'active': css.tableReportTab=='SKU'}" ng-click="css.tableReportTab='SKU' ">SKU</button>
+                                                <button type="button" class="btn btn-default" ng-class="{'active': css.tableReportTab=='Brand'}" ng-click="css.tableReportTab='Brand' ">Brand</button>
+                                                <button type="button" class="btn btn-default" ng-class="{'active': css.tableReportTab=='Global'}" ng-click="css.tableReportTab='Global' ">Global</button>
+                                            </div>
+                                        </div>
+                                    </h5>
+
+                                    <div class="table_report" ng-if="css.tableReportTab=='SKU'">
+
+                                        <ul class="nav nav-pills">
+                                            <li ng-class="{'active': data.tableA1CompanyStatus.currentSKU.SKUID==sku.SKUID}" ng-repeat="sku in data.tableA1CompanyStatus.currentCompany.SKU"><a href="" ng-click="switchTableReportSKU(sku)">{{sku.SKUName}}</a></li>
+                                        </ul>
+
+                                        <div class="divider_horizontal"></div>
+                                        <div table-report-company-status-sku data="data.tableA1CompanyStatus.currentSKU.data"></div>
+
+
+                                    </div>
+
+                                    <div class="table_report" ng-if="css.tableReportTab=='Brand'">
+
+                                        <ul class="nav nav-pills">
+                                            <li ng-class="{'active': data.tableA1CompanyStatus.currentBrand.brandId==brand.brandId}" ng-repeat="brand in data.tableA1CompanyStatus.currentCompany.brand"><a href="" ng-click="switchTableReportBrand(brand)">{{brand.brandName}}</a></li>
+                                        </ul>
+
+                                        <div class="divider_horizontal"></div>
+                                        <div table-report-company-status-brand data="data.tableA1CompanyStatus.currentBrand.data"></div>
+
+                                    </div>
+
+                                    <div class="table_report" ng-if="css.tableReportTab=='Global'">
+                                        <div table-report-company-status-global data="data.tableA1CompanyStatus.currentGlobal"></div>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-6 comparison_box">
+                    <div class="row">
+                        <!--<div class="col-md-12">-->
+                            <!--<p class="text-center center-block blank_title">VS</p>-->
+                            <!--<p class="text-center center-block blank_info">Drag your favorite report here to compare data </p>-->
+                        <!--</div>-->
+
+                        <div class="col-md-12 user_chart_right" >
+                            <div class="row">
+                                <div class="col-md-12 user_table_single">
+                                    <h5>{{'ReportMenuFinancialReport' | translate}}
+                                        <div class="pull-right">
+                                            <div class="btn-group">
+                                                <button type="button" class="btn btn-default btn-sm dropdown-toggle" data-toggle="dropdown">
+                                                    Period {{data.tableA2FinancialData.currentPeriod.period}} <span class="caret"></span>
+                                                </button>
+                                                <ul class="dropdown-menu" role="menu">
+                                                    <li ng-repeat="period in data.tableA2FinancialData.currentCompany.periods"><a href="" ng-click="switchTableReportPeriod(period)">Period {{period.period}}</a></li>
+                                                </ul>
+                                            </div>
+                                        </div>
+                                    </h5>
+
+                                    <div class="table_report" >
+
+                                        <ul class="nav nav-pills">
+                                            <li ng-class="{'active': data.tableA2FinancialData.currentBrand.brandId==brand.brandId}" ng-repeat="brand in data.tableA2FinancialData.currentPeriod.brands"><a href="" ng-click="switchTableReportBrand(brand)">{{brand.brandName}}</a></li>
+                                            <li ng-class="{'active': data.tableA2FinancialData.currentBrand=='allbrand'}" ><a href="" ng-click="switchTableReportBrand('allbrand')">{{data.tableA2FinancialData.currentPeriod.allBrands.brandName}}</a></li>
+                                        </ul>
+
+                                        <div class="divider_horizontal"></div>
+                                        <div table-report-financial-report-brand data="data.tableA2FinancialData.currentBrand.data" ng-if="data.tableA2FinancialData.currentBrand!=='allbrand'"></div>
+                                        <div table-report-financial-report-all-brand data="data.tableA2FinancialData.currentPeriod.allBrands.data" ng-if="data.tableA2FinancialData.currentBrand=='allbrand'"></div>
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row all_comparison_reports">
+                <div class="col-md-12">
+                    <h6><span class="glyphicon glyphicon-book"></span><span class="title">All Reports</span> </h6>
+
+                    <ul class="list-group">
+                        <li class="list-group-item">{{'ReportMenuCompanyStatus' | translate}}</li>
+                        <li class="list-group-item">{{'ReportMenuFinancialReport' | translate}}</li>
+                        <li class="list-group-item">{{'ReportMenuProfitabilityEvolution' | translate}}</li>
+
+                        <li class="list-group-item">{{'ReportMenuCompetitorIntelligence' | translate}}</li>
+
+                        <li class="list-group-item">{{'ReportMenuSegmentDistributions' | translate}}</li>
+                        <li class="list-group-item">{{'ReportMenuMarketTrends' | translate}}</li>
+                        <li class="list-group-item">{{'ReportMenuMarketIndicator' | translate}}</li>
+
+                    </ul>
+                </div>
+
+            </div>
+        </div>
+    </div>
+    <!----------  End Report Comparison Part Page  ---------->
+
+
+    <!----------  Begin Report Chart Part Page  ---------->
+    <div class="row mainbody bgbrand" ng-cloak ng-if="css.menu=='Report' && !css.comparisonPage">
         <div class="col-md-2 user_chart_padding user_home_divider">
 
             <div class="panel user_chart_leftmenu">
@@ -1138,10 +1281,13 @@
         </div>
 
     </div>
+    <!----------  End Report Page  ---------->
 
 
 
 
+
+    <!----------  Decision Page  ---------->
     <div class="row mainbody bgbrand" ng-cloak ng-if="css.menu=='Decision'">
         <div class="col-md-2 user_home_divider user_chart_box">
 
@@ -1189,7 +1335,7 @@
                 <div class="form-group text-center" ng-class="{ 'has-success':updateCompanyForm2.companyAdditionalBudget.$dirty && updateCompanyForm2.companyAdditionalBudget.$valid , 'has-error': updateCompanyForm2.companyAdditionalBudget.$dirty && updateCompanyForm2.companyAdditionalBudget.$invalid}">
                     <label class="budget_title" for="additionalBudget" ng-show="css.additionalBudget" ng-click="css.additionalBudget=false">${{data.currentCompany.d_RequestedAdditionalBudget}}</label>
                     <label for="companyAdditionalBudget" ng-show="css.additionalBudget" ng-click="css.additionalBudget=false">Additional Budget</label>
-                    <input type="number" class="form-control input-sm" id="companyAdditionalBudget" name="companyAdditionalBudget" required ng-model="data.currentCompany.d_RequestedAdditionalBudget" ng-blur="updateCompany('d_RequestedAdditionalBudget', updateCompanyForm2, 'companyAdditionalBudget')">
+                    <input type="number" class="form-control input-sm" id="companyAdditionalBudget" name="companyAdditionalBudget" ng-hide="css.additionalBudget" required ng-model="data.currentCompany.d_RequestedAdditionalBudget" ng-blur="updateCompany('d_RequestedAdditionalBudget', updateCompanyForm2, 'companyAdditionalBudget')">
                 </div>
             </form>
         </div>
@@ -1204,6 +1350,7 @@
         </div>
 
     </div>
+
 
     <div class="row mainbody" ng-cloak ng-if="css.menu=='Decision'">
         <div class="col-md-6 decision_box">
@@ -1841,6 +1988,7 @@
         </div>
     </div>
 
+    <!----------  End Decision Page  ---------->
 
 </div>
 

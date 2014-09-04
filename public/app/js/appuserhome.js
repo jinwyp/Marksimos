@@ -51,7 +51,7 @@ marksimosapp.controller('chartController', ['$translate', '$scope', '$rootScope'
 
 
     $scope.css = {
-        menu                     : 'Home',
+        menu                     : 'Report',
         chartMenu                : 'A1',
         tableReportTab           : 'SKU',
         tableReportMenu          : 1,
@@ -65,7 +65,8 @@ marksimosapp.controller('chartController', ['$translate', '$scope', '$rootScope'
         skuErrorInfo  : '',
         brandErrorInfo  : '',
         companyErrorInfo  : '',
-        periods : []
+        periods : [],
+        comparisonPage : false
     };
 
     $scope.dataChartSimple = {
@@ -1178,6 +1179,12 @@ marksimosapp.controller('chartController', ['$translate', '$scope', '$rootScope'
             });
         }
     };
+
+
+    /********************  Report Comparison   ********************/
+    $scope.showComparisonPage = function(){
+        $scope.css.comparisonPage = !$scope.css.comparisonPage;
+    }
 
 
 }]);
