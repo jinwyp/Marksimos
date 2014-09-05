@@ -3,7 +3,15 @@
 
 <body ng-app="marksimos">
 
+
+
+
+
 <div class="container-fluid width_big_screen" ng-controller="chartController">
+
+    <div class="dragReportMovingBox" ng-style="css.dragReportPosition" >
+        aaaaadfas
+    </div>
 
     <user-header showmenu="true" showlogout="true"  current-menu="css.menu" current-round="data.currentStudent.currentPeriod"></user-header>
 
@@ -213,7 +221,7 @@
     <!----------  End Report Top Part Page  ---------->
 
 
-    <div class="row mainbody bgbrand" ng-cloak ng-if="css.menu=='Report' && css.comparisonPage">
+    <div class="row mainbody bgbrand" ng-cloak ng-if="css.menu=='Report' && !css.comparisonPage">
         <div class="col-md-12">
             <div class="row">
                 <div class="col-md-6 comparison_box">
@@ -327,17 +335,20 @@
                     <h6><span class="glyphicon glyphicon-book"></span><span class="title">All Reports</span> </h6>
 
                     <ul class="list-group">
-                        <li class="list-group-item">{{'ReportMenuCompanyStatus' | translate}}</li>
-                        <li class="list-group-item">{{'ReportMenuFinancialReport' | translate}}</li>
-                        <li class="list-group-item">{{'ReportMenuProfitabilityEvolution' | translate}}</li>
 
-                        <li class="list-group-item">{{'ReportMenuCompetitorIntelligence' | translate}}</li>
+                        <li class="list-group-item" ng-mousedown="startDragReport('reportA1', $event)"><span>{{'ReportMenuCompanyStatus' | translate}}</span></li>
+                        <li class="list-group-item" ng-mousedown="startDragReport('reportA2', $event)">{{'ReportMenuFinancialReport' | translate}}</li>
+                        <li class="list-group-item" ng-mousedown="startDragReport('reportA4', $event)">{{'ReportMenuProfitabilityEvolution' | translate}}</li>
 
-                        <li class="list-group-item">{{'ReportMenuSegmentDistributions' | translate}}</li>
-                        <li class="list-group-item">{{'ReportMenuMarketTrends' | translate}}</li>
-                        <li class="list-group-item">{{'ReportMenuMarketIndicator' | translate}}</li>
+                        <li class="list-group-item" ng-mousedown="startDragReport('reportB2', $event)">{{'ReportMenuCompetitorIntelligence' | translate}}</li>
+
+                        <li class="list-group-item" ng-mousedown="startDragReport('reportC3', $event)">{{'ReportMenuSegmentDistributions' | translate}}</li>
+                        <li class="list-group-item" ng-mousedown="startDragReport('reportC5', $event)">{{'ReportMenuMarketTrends' | translate}}</li>
+                        <li class="list-group-item" ng-mousedown="startDragReport('reportC6', $event)">{{'ReportMenuMarketIndicator' | translate}}</li>
 
                     </ul>
+
+
                 </div>
 
             </div>

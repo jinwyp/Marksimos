@@ -359,6 +359,12 @@ body{
     }
 }
 
+.dragReportMovingBox{
+    position: fixed;
+    z-index: 999;
+}
+
+
 .width_big_screen {
     width: 1340px;
     padding: 0 15px;
@@ -1117,7 +1123,6 @@ body{
 
             height: 30px;
             line-height: 30px;
-
         }
     }
 
