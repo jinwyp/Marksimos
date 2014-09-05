@@ -74,9 +74,13 @@ marksimosapp.controller('chartController', ['$translate', '$scope', '$rootScope'
         },
         dragReportFlag : false,
         dragReportPosition : {
-            'top' : 0,
-            'left' : 0
-        }
+            'top' : 2000,
+            'left' : 2000
+        },
+        dragTargetBoxId : '',
+        dragSourceReportId : '',
+        dragHaveLeftReport : false,
+        dragHaveRightReport : false
     };
 
 
@@ -1198,15 +1202,24 @@ marksimosapp.controller('chartController', ['$translate', '$scope', '$rootScope'
     };
 
     $scope.startDragReport = function(reportid, event1){
-        console.log(event1.pageY);
+        $scope.css.dragSourceReportId = reportid;
+        $scope.css.dragTargetBoxId = '';
         $scope.css.dragReportFlag = true;
 
         // Prevent default dragging of selected content
         event1.preventDefault();
 
-        console.log(event1.target, event1.currentTarget);
+        var moveSourceDom = angular.element(event1.currentTarget);
 
-        var moveDom = angular.element(event1.currentTarget);
+        console.log(moveSourceDom);
+
+        var movingDom = angular.element('.dragReportMovingBox');
+        movingDom.empty().append(moveSourceDom.clone());
+
+        $scope.css.dragReportPosition.top = event.clientY + 10;
+        $scope.css.dragReportPosition.left = event.clientX - 120;
+
+
 
 //        element.centerX = (element.width()/2);
 //        element.centerY = (element.height()/2);
@@ -1222,23 +1235,52 @@ marksimosapp.controller('chartController', ['$translate', '$scope', '$rootScope'
 
     function onReportMove(event) {
         $scope.$apply(function () {
-            $scope.css.dragReportPosition.top = event.pageY;
-            $scope.css.dragReportPosition.left = event.pageX;
+            $scope.css.dragReportPosition.top = event.clientY + 10;
+            $scope.css.dragReportPosition.left = event.clientX - 120;
         });
 
-
-        console.log(event.pageY);
-        console.log($scope.css.dragReportPosition);
-
+//        console.log($scope.css.dragReportPosition);
     }
 
     function onReportRelease() {
         $scope.$apply(function () {
+            var targetDom = {};
+            var targetDomContent = {};
+            if($scope.css.dragTargetBoxId !== ''){
+                targetDom = angular.element('#' + $scope.css.dragTargetBoxId);
+                targetDomContent = angular.element('#' + $scope.css.dragSourceReportId).clone();
+                targetDomContent.removeClass( "col-md-10 ng-hide").addClass( "col-md-12" ).removeAttr("ng-show");
+
+                targetDom.empty().append(targetDomContent);
+
+
+                if($scope.css.dragTargetBoxId === 'comparisonBoxLeft'){
+                    $scope.css.dragHaveLeftReport = true;
+                }else{
+                    $scope.css.dragHaveRightReport = true;
+                }
+            }
+            console.log(targetDomContent);
+            console.log(targetDom);
+            console.log($scope.css.dragSourceReportId);
+
             $scope.css.dragReportFlag = false;
+            $scope.css.dragSourceReportId = '';
+            $scope.css.dragTargetBoxId = '';
         });
 
         $document.off($scope.css.dragEvent.moveEvents, onReportMove);
         $document.off($scope.css.dragEvent.releaseEvents, onReportRelease);
+    }
+
+    $scope.enterComparisonBox = function(targetboxid){
+
+        if(targetboxid === ''){
+            $scope.css.dragTargetBoxId = '';
+        }else{
+            $scope.css.dragTargetBoxId = 'comparisonBox' +  targetboxid;
+        }
+
     }
 
 }]);
