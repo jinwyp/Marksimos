@@ -60,8 +60,8 @@ apiRouter.get('/marksimos/api/create_admin', function(req, res, next){
 
 
 
-apiRouter.get('/marksimos/addFAQ', faqController.addFAQ);
-apiRouter.get('/marksimos/findFAQ', faqController.findFAQ);
+apiRouter.get('/marksimos/api/addFAQ', faqController.addFAQ);
+apiRouter.get('/marksimos/api/getFAQ', faqController.getFAQ);
 
 
 

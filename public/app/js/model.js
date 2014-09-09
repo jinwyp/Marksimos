@@ -733,6 +733,24 @@ app.factory('FinalScore',['$http',function($http){
     return factory;
 }]);
 
+app.factory('FAQ',['$http',function($http){
+    var apiPath = '/marksimos/api/';
+
+    var errorHandler = function(err){
+        console.log("Error 404 , Type : API questionnaire", err );
+    };
+
+    var factory = {
+
+        getFAQ : function(){
+            return $http.get(apiPath + 'getFAQ').then(function(result){
+                return result.data;
+            }).catch(errorHandler);
+        }
+    };
+    return factory;
+}])
+
 app.factory('Questionnaire', ['$http', function($http){
     var apiPath = '/marksimos/api/';
 

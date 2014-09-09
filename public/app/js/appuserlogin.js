@@ -135,7 +135,7 @@ marksimosapp.controller('userIntroController',['$scope', '$http', '$window', 'St
 
 }]);
 
-marksimosapp.controller('userHelpController',['$scope', '$sce', '$http', '$window', function($scope, $sce, $http, $window) {
+marksimosapp.controller('userHelpController',['$scope', '$sce', '$http', '$window', 'FAQ', function($scope, $sce, $http, $window, FAQ) {
 
 
     $scope.initPage = function() {
@@ -143,12 +143,14 @@ marksimosapp.controller('userHelpController',['$scope', '$sce', '$http', '$windo
         $scope.isFAQShown=false;
         $scope.isVideoShown=false;
         $scope.isManualShown=true;
-        $http({
-            url:'/marksimos/manual',
-            method:'GET'
+        FAQ.getFAQ().then(function(doc){
+            console.log(doc);
+            return $http({
+                url:'/marksimos/manual',
+                method:'GET'
+            });
         }).then(function(data){
             $scope.manual=data.data;
-
         });
     };
 
