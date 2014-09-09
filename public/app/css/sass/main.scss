@@ -506,6 +506,62 @@ body{
             padding: 20px 40px 40px 40px;
         }
 
+        .bs-docs-sidenav {
+            margin-top: 20px;
+            margin-bottom: 20px;
+        }
+        
+        .bs-docs-sidebar .nav > li > a {
+            display: block;
+            font-size: 13px;
+            font-weight: 500;
+            color: #999;
+            padding: 4px 20px;
+        }
+        .bs-docs-sidebar .nav > li > a:hover,
+        .bs-docs-sidebar .nav > li > a:focus {
+            padding-left: 19px;
+            color: #563d7c;
+            text-decoration: none;
+            background-color: transparent;
+            border-left: 1px solid #563d7c;
+        }
+        .bs-docs-sidebar .nav > .active > a,
+        .bs-docs-sidebar .nav > .active:hover > a,
+        .bs-docs-sidebar .nav > .active:focus > a {
+            padding-left: 18px;
+            font-weight: bold;
+            color: #563d7c;
+            background-color: transparent;
+            border-left: 2px solid #563d7c;
+        }
+
+        .bs-docs-sidebar .nav .nav {
+            display: none;
+            padding-bottom: 10px;
+        }
+
+        .bs-docs-sidebar .nav > .active > ul {
+            display: block;
+        }
+        .bs-docs-sidebar .nav .nav > li > a {
+            padding-top:    1px;
+            padding-bottom: 1px;
+            padding-left: 30px;
+            font-size: 12px;
+            font-weight: normal;
+        }
+        .bs-docs-sidebar .nav .nav > li > a:hover,
+        .bs-docs-sidebar .nav .nav > li > a:focus {
+            padding-left: 29px;
+        }
+        .bs-docs-sidebar .nav .nav > .active > a,
+        .bs-docs-sidebar .nav .nav > .active:hover > a,
+        .bs-docs-sidebar .nav .nav > .active:focus > a {
+            font-weight: 500;
+            padding-left: 28px;
+        }
+
 
         .intro_video_next_button{
             font-size: 14px;
@@ -516,8 +572,6 @@ body{
         .game_list {
             margin-top: 50px;
             margin-bottom: 50px;
-
-
         }
 
         @include seminar_table_list;

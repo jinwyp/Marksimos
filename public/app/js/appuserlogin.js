@@ -154,7 +154,7 @@ marksimosapp.controller('userHelpController',['$scope', '$sce', '$http', '$windo
         });
     };
 
-    $scope.deliberatelyTrustDangerousSnippet = function(data) {
+    $scope.trustAsHtml = function(data) {
           return $sce.trustAsHtml(data);
     };
 

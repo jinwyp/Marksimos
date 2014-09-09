@@ -240,7 +240,68 @@ body a, body button {
 .login .panelbox .intro_data {
   padding: 20px 40px 40px 40px;
 }
-/* line 510, ../sass/main.scss */
+/* line 509, ../sass/main.scss */
+.login .panelbox .bs-docs-sidenav {
+  margin-top: 20px;
+  margin-bottom: 20px;
+}
+/* line 514, ../sass/main.scss */
+.login .panelbox .bs-docs-sidebar .nav > li > a {
+  display: block;
+  font-size: 13px;
+  font-weight: 500;
+  color: #999;
+  padding: 4px 20px;
+}
+/* line 521, ../sass/main.scss */
+.login .panelbox .bs-docs-sidebar .nav > li > a:hover,
+.login .panelbox .bs-docs-sidebar .nav > li > a:focus {
+  padding-left: 19px;
+  color: #563d7c;
+  text-decoration: none;
+  background-color: transparent;
+  border-left: 1px solid #563d7c;
+}
+/* line 529, ../sass/main.scss */
+.login .panelbox .bs-docs-sidebar .nav > .active > a,
+.login .panelbox .bs-docs-sidebar .nav > .active:hover > a,
+.login .panelbox .bs-docs-sidebar .nav > .active:focus > a {
+  padding-left: 18px;
+  font-weight: bold;
+  color: #563d7c;
+  background-color: transparent;
+  border-left: 2px solid #563d7c;
+}
+/* line 539, ../sass/main.scss */
+.login .panelbox .bs-docs-sidebar .nav .nav {
+  display: none;
+  padding-bottom: 10px;
+}
+/* line 544, ../sass/main.scss */
+.login .panelbox .bs-docs-sidebar .nav > .active > ul {
+  display: block;
+}
+/* line 547, ../sass/main.scss */
+.login .panelbox .bs-docs-sidebar .nav .nav > li > a {
+  padding-top: 1px;
+  padding-bottom: 1px;
+  padding-left: 30px;
+  font-size: 12px;
+  font-weight: normal;
+}
+/* line 554, ../sass/main.scss */
+.login .panelbox .bs-docs-sidebar .nav .nav > li > a:hover,
+.login .panelbox .bs-docs-sidebar .nav .nav > li > a:focus {
+  padding-left: 29px;
+}
+/* line 558, ../sass/main.scss */
+.login .panelbox .bs-docs-sidebar .nav .nav > .active > a,
+.login .panelbox .bs-docs-sidebar .nav .nav > .active:hover > a,
+.login .panelbox .bs-docs-sidebar .nav .nav > .active:focus > a {
+  font-weight: 500;
+  padding-left: 28px;
+}
+/* line 566, ../sass/main.scss */
 .login .panelbox .intro_video_next_button {
   font-size: 14px;
   color: #ffffff;
@@ -276,7 +337,7 @@ body a, body button {
   background: linear-gradient(to bottom, #298ffe, #298ffe);
   border-color: #298FFE;
 }
-/* line 516, ../sass/main.scss */
+/* line 572, ../sass/main.scss */
 .login .panelbox .game_list {
   margin-top: 50px;
   margin-bottom: 50px;
@@ -320,43 +381,43 @@ body a, body button {
 .login .panelbox .table-striped tbody tr:nth-child(even):hover th {
   background-color: #feeaff;
 }
-/* line 525, ../sass/main.scss */
+/* line 579, ../sass/main.scss */
 .login .panelbox .first_intro {
   margin-top: 50px;
 }
-/* line 529, ../sass/main.scss */
+/* line 583, ../sass/main.scss */
 .login .panelbox .whoami {
   margin: 10px 20px 35px 20px;
 }
-/* line 534, ../sass/main.scss */
+/* line 588, ../sass/main.scss */
 .login .panelbox h2 {
   color: #5375e1;
   font-size: 36px;
   font-family: "Georgia", "Arial, sans-serif";
 }
-/* line 540, ../sass/main.scss */
+/* line 594, ../sass/main.scss */
 .login .panelbox h5 {
   color: #373737;
   font-family: "Helvetica", "Arial, sans-serif";
   padding: 15px 0px 1px 0px;
   font-size: 14px;
 }
-/* line 547, ../sass/main.scss */
+/* line 601, ../sass/main.scss */
 .login .panelbox .highlight1 {
   font-weight: bold;
   color: #5375e1;
 }
-/* line 551, ../sass/main.scss */
+/* line 605, ../sass/main.scss */
 .login .panelbox .highlight2 {
   font-weight: bold;
   color: #5375e1;
   font-size: 24px;
 }
-/* line 557, ../sass/main.scss */
+/* line 611, ../sass/main.scss */
 .login .panelbox .brand_list {
   background-color: #fcfcfc;
 }
-/* line 560, ../sass/main.scss */
+/* line 614, ../sass/main.scss */
 .login .panelbox .brand_list .user_brand {
   color: #2f4e9b;
   font-size: 14px;
@@ -367,7 +428,7 @@ body a, body button {
   margin: 32px 5px 20px 3px;
   display: block;
 }
-/* line 564, ../sass/main.scss */
+/* line 618, ../sass/main.scss */
 .login .panelbox .brand_list .user_product {
   color: #464646;
   -webkit-text-size-adjust: none;
@@ -383,7 +444,7 @@ body a, body button {
 .login .panelbox .brand_list .user_product span {
   color: #6f6f6f;
 }
-/* line 569, ../sass/main.scss */
+/* line 623, ../sass/main.scss */
 .login .panelbox .start_button {
   font-size: 14px;
   color: #ffffff;
@@ -421,7 +482,7 @@ body a, body button {
   border-color: #298FFE;
 }
 
-/* line 582, ../sass/main.scss */
+/* line 636, ../sass/main.scss */
 .header .navbar {
   margin-bottom: 0px;
   border: 0px;
@@ -429,7 +490,7 @@ body a, body button {
   -webkit-border-radius: 0px;
   border-radius: 0px;
 }
-/* line 588, ../sass/main.scss */
+/* line 642, ../sass/main.scss */
 .header .navbar-inverse {
   background-image: -webkit-linear-gradient(top, #2d428e 100%, #2d428e 100%);
   background-image: linear-gradient(to bottom, #2d428e 100%, #2d428e 100%);
@@ -439,7 +500,7 @@ body a, body button {
   background-position: 0px 0px;
   background-size: 100% 100%;
 }
-/* line 597, ../sass/main.scss */
+/* line 651, ../sass/main.scss */
 .header .navbar-inverse .navbar-brand {
   color: #ffffff;
   font-weight: bold;
@@ -447,12 +508,12 @@ body a, body button {
   margin-right: 20px;
   padding: 13px 15px;
 }
-/* line 603, ../sass/main.scss */
+/* line 657, ../sass/main.scss */
 .header .navbar-inverse .navbar-brand img {
   max-width: 100%;
   max-height: 100%;
 }
-/* line 611, ../sass/main.scss */
+/* line 665, ../sass/main.scss */
 .header .navbar-inverse .navbar-nav li a {
   color: #d5def5;
   -webkit-text-size-adjust: none;
@@ -462,13 +523,13 @@ body a, body button {
   padding-right: 15px;
   text-align: center;
 }
-/* line 622, ../sass/main.scss */
+/* line 676, ../sass/main.scss */
 .header .navbar-inverse .navbar-nav .active a {
   background-image: -webkit-linear-gradient(top, #4358a1 100%, #4358a1 100%);
   background-image: linear-gradient(to bottom, #4358a1 100%, #4358a1 100%);
   box-shadow: none;
 }
-/* line 627, ../sass/main.scss */
+/* line 681, ../sass/main.scss */
 .header .navbar-inverse .navbar-nav .active a:before {
   border-color: transparent transparent #ffffff transparent;
   border-style: dashed dashed solid dashed;
@@ -486,27 +547,27 @@ body a, body button {
   left: 42%;
   position: absolute;
 }
-/* line 643, ../sass/main.scss */
+/* line 697, ../sass/main.scss */
 .header .navbar-inverse .navbar-nav .open a, .header .navbar-inverse .navbar-nav .open a:hover, .header .navbar-inverse .navbar-nav .open a:focus {
   background-color: #4358a1;
 }
-/* line 647, ../sass/main.scss */
+/* line 701, ../sass/main.scss */
 .header .navbar-inverse .navbar-nav .mk_dropdownlist {
   background-color: #4d6bd1;
 }
-/* line 650, ../sass/main.scss */
+/* line 704, ../sass/main.scss */
 .header .navbar-inverse .navbar-nav .mk_dropdownlist li a {
   color: #ffffff;
   font-weight: normal;
   font-size: 12px;
   background-color: #4d6bd1;
 }
-/* line 658, ../sass/main.scss */
+/* line 712, ../sass/main.scss */
 .header .navbar-inverse .navbar-nav .mk_dropdowndivider {
   background-color: #3e5bbf;
 }
 
-/* line 669, ../sass/main.scss */
+/* line 723, ../sass/main.scss */
 .mainbody {
   /***** MainUserHome 页面开始 *****/
   background-color: #fbfbfb;
@@ -516,19 +577,19 @@ body a, body button {
   /**********  Comparison 页面开始  **********/
   /**********  Decision 页面开始  **********/
 }
-/* line 676, ../sass/main.scss */
+/* line 730, ../sass/main.scss */
 .mainbody .user_brand_box {
   height: 200px;
 }
-/* line 680, ../sass/main.scss */
+/* line 734, ../sass/main.scss */
 .mainbody .user_home_divider {
   border-right: 1px solid #eceff1;
 }
-/* line 683, ../sass/main.scss */
+/* line 737, ../sass/main.scss */
 .mainbody .user_home_divider_horizontal {
   border-bottom: 1px solid #eceff1;
 }
-/* line 687, ../sass/main.scss */
+/* line 741, ../sass/main.scss */
 .mainbody .user_maincompany {
   font-family: "Helvetica", "Arial, sans-serif";
   color: #373737;
@@ -536,7 +597,7 @@ body a, body button {
   font-size: 24px;
   margin: 30px 1px 20px 28px;
 }
-/* line 694, ../sass/main.scss */
+/* line 748, ../sass/main.scss */
 .mainbody .user_maincompany .company_a {
   color: #ffffff;
   background-color: #39ae41;
@@ -547,17 +608,17 @@ body a, body button {
   -webkit-border-radius: 4px;
   border-radius: 4px;
 }
-/* line 704, ../sass/main.scss */
+/* line 758, ../sass/main.scss */
 .mainbody h5 {
   color: #373737;
   font-size: 14px;
 }
-/* line 709, ../sass/main.scss */
+/* line 763, ../sass/main.scss */
 .mainbody .user_brandcolumn {
   width: 19%;
   margin-left: 6px;
 }
-/* line 714, ../sass/main.scss */
+/* line 768, ../sass/main.scss */
 .mainbody .user_title {
   color: #373737;
   -webkit-text-size-adjust: none;
@@ -569,7 +630,7 @@ body a, body button {
   *display: inline;
   padding-bottom: 5px;
 }
-/* line 722, ../sass/main.scss */
+/* line 776, ../sass/main.scss */
 .mainbody .user_brand {
   color: #2f4e9b;
   font-size: 14px;
@@ -580,7 +641,7 @@ body a, body button {
   margin: 32px 5px 20px 3px;
   display: block;
 }
-/* line 726, ../sass/main.scss */
+/* line 780, ../sass/main.scss */
 .mainbody .user_product {
   color: #464646;
   -webkit-text-size-adjust: none;
@@ -596,7 +657,7 @@ body a, body button {
 .mainbody .user_product span {
   color: #6f6f6f;
 }
-/* line 730, ../sass/main.scss */
+/* line 784, ../sass/main.scss */
 .mainbody .user_competitorsnum {
   color: #2f4e9b;
   font-family: "Helvetica", "Arial, sans-serif";
@@ -605,14 +666,14 @@ body a, body button {
   margin: 55px 0px 15px 0px;
   display: block;
 }
-/* line 739, ../sass/main.scss */
+/* line 793, ../sass/main.scss */
 .mainbody .user_competitors {
   text-align: center;
   color: #464646;
   margin: 0px 0px 5px 0px;
   display: block;
 }
-/* line 746, ../sass/main.scss */
+/* line 800, ../sass/main.scss */
 .mainbody .user_clock {
   color: #373737;
   -webkit-text-size-adjust: none;
@@ -626,11 +687,11 @@ body a, body button {
   display: block;
   height: 55px;
 }
-/* line 758, ../sass/main.scss */
+/* line 812, ../sass/main.scss */
 .mainbody .user_clock strong {
   display: block;
 }
-/* line 763, ../sass/main.scss */
+/* line 817, ../sass/main.scss */
 .mainbody .user_makedecision {
   color: #373737;
   -webkit-text-size-adjust: none;
@@ -638,7 +699,7 @@ body a, body button {
   margin: 12px 0px 13px 23px;
   display: block;
 }
-/* line 772, ../sass/main.scss */
+/* line 826, ../sass/main.scss */
 .mainbody .user_decisionbutton {
   font-size: 14px;
   margin: 0px 0px 0px 23px;
@@ -674,7 +735,7 @@ body a, body button {
   background: linear-gradient(to bottom, #298ffe, #298ffe);
   border-color: #298FFE;
 }
-/* line 780, ../sass/main.scss */
+/* line 834, ../sass/main.scss */
 .mainbody .user_period_bar {
   background-color: transparent;
   border-color: #dfe0e5;
@@ -682,7 +743,7 @@ body a, body button {
   border-radius: 15px;
   color: #9FA5BF;
 }
-/* line 786, ../sass/main.scss */
+/* line 840, ../sass/main.scss */
 .mainbody .user_period_bar ul li {
   width: 70px;
   height: 15px;
@@ -691,31 +752,31 @@ body a, body button {
   border-color: #dfe0e5;
   background-color: #edeef1;
 }
-/* line 795, ../sass/main.scss */
+/* line 849, ../sass/main.scss */
 .mainbody .user_period_bar .start {
   border-radius: 15px 0 0 15px;
   background-color: #dfe0e5;
 }
-/* line 799, ../sass/main.scss */
+/* line 853, ../sass/main.scss */
 .mainbody .user_period_bar .past {
   background-color: #dfe0e5;
 }
-/* line 802, ../sass/main.scss */
+/* line 856, ../sass/main.scss */
 .mainbody .user_period_bar .active {
   background-color: #b3c2e7;
 }
-/* line 805, ../sass/main.scss */
+/* line 859, ../sass/main.scss */
 .mainbody .user_period_bar .end {
   border-radius: 0 15px 15px 0;
 }
-/* line 809, ../sass/main.scss */
+/* line 863, ../sass/main.scss */
 .mainbody .user_period_bar .period_info_bottom {
   margin: 20px 0 0 31px;
   position: absolute;
   -webkit-text-size-adjust: none;
   font-size: 11px;
 }
-/* line 815, ../sass/main.scss */
+/* line 869, ../sass/main.scss */
 .mainbody .user_period_bar .period_info_top {
   position: absolute;
   margin: -20px 0 0 11px;
@@ -723,33 +784,33 @@ body a, body button {
   -webkit-text-size-adjust: none;
   font-size: 11px;
 }
-/* line 824, ../sass/main.scss */
+/* line 878, ../sass/main.scss */
 .mainbody .user_search_chart {
   padding-top: 30px;
   padding-bottom: 30px;
 }
-/* line 828, ../sass/main.scss */
+/* line 882, ../sass/main.scss */
 .mainbody .user_search_chart .droplist_company {
   color: #6f6f6f;
 }
-/* line 833, ../sass/main.scss */
+/* line 887, ../sass/main.scss */
 .mainbody .user_chart_list {
   border-color: #cfd3e0;
   height: 389px;
 }
-/* line 839, ../sass/main.scss */
+/* line 893, ../sass/main.scss */
 .mainbody .user_chart_list .panel-heading {
   background-color: #dbe3f6;
   border-color: #cfd3e0;
 }
-/* line 845, ../sass/main.scss */
+/* line 899, ../sass/main.scss */
 .mainbody .user_chart_list h3 {
   font-size: 16px;
   color: #2f4e9b;
   padding: 10px 10px 10px 20px;
   text-align: center;
 }
-/* line 854, ../sass/main.scss */
+/* line 908, ../sass/main.scss */
 .mainbody .user_chart_list .list-group-item {
   background-color: #ffffff;
   background-image: url(../images/userchartlist.png);
@@ -757,14 +818,14 @@ body a, body button {
   background-position: 75px 20px;
   padding: 18px 1px 18px 95px;
 }
-/* line 862, ../sass/main.scss */
+/* line 916, ../sass/main.scss */
 .mainbody .user_chart_list .list-group-item a {
   font-size: 13px;
   font-family: "Helvetica", "Arial, sans-serif";
   color: #464646;
   font-weight: bold;
 }
-/* line 869, ../sass/main.scss */
+/* line 923, ../sass/main.scss */
 .mainbody .user_chart_list .list-group-item-active {
   background-color: #fbfbfb;
 }
@@ -816,24 +877,24 @@ body a, body button {
 .mainbody .user_chart_list .spotlight_overlay4 a {
   color: #236ac7;
 }
-/* line 879, ../sass/main.scss */
+/* line 933, ../sass/main.scss */
 .mainbody .user_chart_list_bg2 {
   background-color: #fbfbfb;
 }
-/* line 891, ../sass/main.scss */
+/* line 945, ../sass/main.scss */
 .mainbody .user_chart_box {
   height: 70px;
 }
-/* line 895, ../sass/main.scss */
+/* line 949, ../sass/main.scss */
 .mainbody .user_chart_company {
   margin: 18px 0px 1px 28px;
 }
-/* line 899, ../sass/main.scss */
+/* line 953, ../sass/main.scss */
 .mainbody .user_chart_search_box {
   padding-top: 16px;
   padding-bottom: 10px;
 }
-/* line 905, ../sass/main.scss */
+/* line 959, ../sass/main.scss */
 .mainbody .user_chart_vs {
   color: #373737;
   font-size: 10px;
@@ -845,12 +906,12 @@ body a, body button {
   margin: 16px 0px 1px 0px;
   display: block;
 }
-/* line 918, ../sass/main.scss */
+/* line 972, ../sass/main.scss */
 .mainbody .user_chart_clock {
   font-size: 10px;
   margin: 10px 0px 1px 0px;
 }
-/* line 924, ../sass/main.scss */
+/* line 978, ../sass/main.scss */
 .mainbody .user_chart_make_decision {
   color: #373737;
   font-size: 10px;
@@ -858,7 +919,7 @@ body a, body button {
   margin: 5px 0px 5px 0px;
   display: block;
 }
-/* line 933, ../sass/main.scss */
+/* line 987, ../sass/main.scss */
 .mainbody .user_chart_decision_button {
   -webkit-text-size-adjust: none;
   font-size: 11px;
@@ -897,12 +958,12 @@ body a, body button {
   background: linear-gradient(to bottom, #298ffe, #298ffe);
   border-color: #298FFE;
 }
-/* line 942, ../sass/main.scss */
+/* line 996, ../sass/main.scss */
 .mainbody .user_chart_padding {
   padding-left: 0px;
   padding-right: 0px;
 }
-/* line 947, ../sass/main.scss */
+/* line 1001, ../sass/main.scss */
 .mainbody .user_chart_leftmenu {
   background-color: #fdfdfd;
   border-width: 0px 0px 1px 0px;
@@ -915,13 +976,13 @@ body a, body button {
   box-shadow: #e7e9ed 0px 0px 0px;
   margin-bottom: 5px;
 }
-/* line 956, ../sass/main.scss */
+/* line 1010, ../sass/main.scss */
 .mainbody .user_chart_leftmenu .panel-heading {
   font-size: 14px;
   color: #6f6f6f;
   margin: 10px 0px 0px 15px;
 }
-/* line 963, ../sass/main.scss */
+/* line 1017, ../sass/main.scss */
 .mainbody .user_chart_leftmenu .list-group-item {
   border: 0px none #ffffff;
   background-color: #fdfdfd;
@@ -930,22 +991,22 @@ body a, body button {
   background-position: 30px 12px;
   padding: 11px 1px 13px 50px;
 }
-/* line 971, ../sass/main.scss */
+/* line 1025, ../sass/main.scss */
 .mainbody .user_chart_leftmenu .list-group-item a {
   -webkit-text-size-adjust: none;
   font-size: 11px;
   color: #464646;
 }
-/* line 977, ../sass/main.scss */
+/* line 1031, ../sass/main.scss */
 .mainbody .user_chart_leftmenu .list-group-item-active {
   background-color: #eef3ff;
 }
-/* line 980, ../sass/main.scss */
+/* line 1034, ../sass/main.scss */
 .mainbody .user_chart_leftmenu .list-group-item-active a {
   font-weight: bold;
   color: #2f4e9b;
 }
-/* line 985, ../sass/main.scss */
+/* line 1039, ../sass/main.scss */
 .mainbody .user_chart_leftmenu .list-group-item-active:before {
   border: 3px solid #236ac7;
   width: 0;
@@ -1004,18 +1065,18 @@ body a, body button {
 .mainbody .user_chart_leftmenu .spotlight_overlay4 a {
   color: #236ac7;
 }
-/* line 1001, ../sass/main.scss */
+/* line 1055, ../sass/main.scss */
 .mainbody .user_chart_right {
   background-color: #f5f5f5;
 }
-/* line 1004, ../sass/main.scss */
+/* line 1058, ../sass/main.scss */
 .mainbody .user_chart_right .user_chart_single {
   border: 1px solid #d9dce3;
   background-color: #ffffff;
   margin: 10px 5px 10px 10px;
   padding: 0px 0px 0px 0px;
 }
-/* line 1010, ../sass/main.scss */
+/* line 1064, ../sass/main.scss */
 .mainbody .user_chart_right .user_chart_single h5 {
   text-align: center;
   font-size: 14px;
@@ -1024,28 +1085,28 @@ body a, body button {
   margin: 0px 0px 0px 0px;
   padding: 13px 0px;
 }
-/* line 1018, ../sass/main.scss */
+/* line 1072, ../sass/main.scss */
 .mainbody .user_chart_right .user_chart_single h5 .chart_icon {
   float: right;
   padding-right: 10px;
 }
-/* line 1023, ../sass/main.scss */
+/* line 1077, ../sass/main.scss */
 .mainbody .user_chart_right .user_chart_single h5 .perception_map_button {
   -webkit-text-size-adjust: none;
   font-size: 11px;
   font-family: "Helvetica", "Arial, sans-serif";
 }
-/* line 1028, ../sass/main.scss */
+/* line 1082, ../sass/main.scss */
 .mainbody .user_chart_right .user_chart_single h5 .perception_map_group {
   float: right;
   margin-right: 60px;
   margin-top: -5px;
 }
-/* line 1035, ../sass/main.scss */
+/* line 1089, ../sass/main.scss */
 .mainbody .user_chart_right .user_chart_single .nvtooltip {
   border: 0 none;
 }
-/* line 1038, ../sass/main.scss */
+/* line 1092, ../sass/main.scss */
 .mainbody .user_chart_right .user_chart_single .nvtooltip h5 {
   border: 1px solid #bdbdbd;
   -moz-border-radius: 4px;
@@ -1053,58 +1114,58 @@ body a, body button {
   border-radius: 4px;
   padding: 8px 10px;
 }
-/* line 1045, ../sass/main.scss */
+/* line 1099, ../sass/main.scss */
 .mainbody .user_chart_right .user_chart_single .perception_panel {
   margin-bottom: 0px;
 }
-/* line 1047, ../sass/main.scss */
+/* line 1101, ../sass/main.scss */
 .mainbody .user_chart_right .user_chart_single .perception_panel .panel-heading {
   font-size: 12px;
   font-weight: bold;
   font-family: "Helvetica", "Arial, sans-serif";
   color: #6f6f6f;
 }
-/* line 1054, ../sass/main.scss */
+/* line 1108, ../sass/main.scss */
 .mainbody .user_chart_right .user_chart_single .perception_list {
   padding: 5px 10px;
   font-size: 12px;
   font-family: "Helvetica", "Arial, sans-serif";
   color: #373737;
 }
-/* line 1060, ../sass/main.scss */
+/* line 1114, ../sass/main.scss */
 .mainbody .user_chart_right .user_chart_single .perception_list_bg {
   background-color: #f9f9f9;
 }
-/* line 1063, ../sass/main.scss */
+/* line 1117, ../sass/main.scss */
 .mainbody .user_chart_right .user_chart_single .perception_info {
   width: 180px;
   display: inline-block;
 }
-/* line 1067, ../sass/main.scss */
+/* line 1121, ../sass/main.scss */
 .mainbody .user_chart_right .user_chart_single .perception_info_number {
   width: 40px;
   display: inline-block;
 }
-/* line 1071, ../sass/main.scss */
+/* line 1125, ../sass/main.scss */
 .mainbody .user_chart_right .user_chart_single .perception_logo {
   padding: 6px 6px;
   margin: 0px 5px 0px 0px;
   background-color: #0000FF;
   display: inline-block;
 }
-/* line 1079, ../sass/main.scss */
+/* line 1133, ../sass/main.scss */
 .mainbody .user_chart_right .chart_1 {
   width: 98%;
 }
-/* line 1083, ../sass/main.scss */
+/* line 1137, ../sass/main.scss */
 .mainbody .user_chart_right .chart_2 {
   width: 48%;
 }
-/* line 1086, ../sass/main.scss */
+/* line 1140, ../sass/main.scss */
 .mainbody .user_chart_right .chart_3 {
   width: 31%;
 }
-/* line 1093, ../sass/main.scss */
+/* line 1147, ../sass/main.scss */
 .mainbody .user_chart_right .user_table_single h5 {
   font-size: 14px;
   color: #373737;
@@ -1112,11 +1173,11 @@ body a, body button {
   padding: 20px 0px;
   border-bottom: 1px solid #e1e1e1;
 }
-/* line 1101, ../sass/main.scss */
+/* line 1155, ../sass/main.scss */
 .mainbody .user_chart_right .user_table_single .table_multimenu {
   margin: 20px 0px 0px 0px;
 }
-/* line 1106, ../sass/main.scss */
+/* line 1160, ../sass/main.scss */
 .mainbody .user_chart_right .user_table_single .table_multimenu li a {
   background-color: #fdfdfd;
   color: #373737;
@@ -1131,11 +1192,11 @@ body a, body button {
   padding: 7px 15px 7px 27px;
   margin-left: 5px;
 }
-/* line 1120, ../sass/main.scss */
+/* line 1174, ../sass/main.scss */
 .mainbody .user_chart_right .user_table_single .table_multimenu li a:hover, .mainbody .user_chart_right .user_table_single .table_multimenu li a:focus {
   background-color: #dbe3f6;
 }
-/* line 1127, ../sass/main.scss */
+/* line 1181, ../sass/main.scss */
 .mainbody .user_chart_right .user_table_single .table_multimenu li.active a,
 .mainbody .user_chart_right .user_table_single .table_multimenu li.active a:hover,
 .mainbody .user_chart_right .user_table_single .table_multimenu li.active a:focus {
@@ -1144,14 +1205,14 @@ body a, body button {
   background-image: url(../images/userchartlist2.png);
   border: 1px solid #4b67ae;
 }
-/* line 1138, ../sass/main.scss */
+/* line 1192, ../sass/main.scss */
 .mainbody .user_chart_right .user_table_single .table_report {
   border: 1px solid #d9dce3;
   background-color: #ffffff;
   margin: 20px 0px 20px 0px;
   padding: 50px 40px 0px 40px;
 }
-/* line 1145, ../sass/main.scss */
+/* line 1199, ../sass/main.scss */
 .mainbody .user_chart_right .user_table_single .table_report .nav-pills li a {
   background-color: #f5f5f5;
   color: #6f6f6f;
@@ -1169,11 +1230,11 @@ body a, body button {
   -webkit-border-bottom-right-radius: 0px;
   border-bottom-right-radius: 0px;
 }
-/* line 1152, ../sass/main.scss */
+/* line 1206, ../sass/main.scss */
 .mainbody .user_chart_right .user_table_single .table_report .nav-pills li a:hover, .mainbody .user_chart_right .user_table_single .table_report .nav-pills li a:focus {
   background-color: #dbe3f6;
 }
-/* line 1159, ../sass/main.scss */
+/* line 1213, ../sass/main.scss */
 .mainbody .user_chart_right .user_table_single .table_report .nav-pills li.active a,
 .mainbody .user_chart_right .user_table_single .table_report .nav-pills li.active a:hover,
 .mainbody .user_chart_right .user_table_single .table_report .nav-pills li.active a:focus {
@@ -1222,26 +1283,26 @@ body a, body button {
 .mainbody .user_chart_right .user_table_single .table-striped tbody tr:nth-child(even):hover th {
   background-color: #feeaff;
 }
-/* line 1174, ../sass/main.scss */
+/* line 1228, ../sass/main.scss */
 .mainbody .user_chart_right .user_table_single .table > thead > tr > th {
   font-weight: bold;
 }
-/* line 1185, ../sass/main.scss */
+/* line 1239, ../sass/main.scss */
 .mainbody .score_box {
   border: 1px solid #e1e1e1;
   margin: 20px 12.5% 10px 12.5%;
 }
-/* line 1190, ../sass/main.scss */
+/* line 1244, ../sass/main.scss */
 .mainbody .feedback_box {
   border: 1px solid #FF941F;
   color: #A07041;
   margin: 0 12.5% 20px;
 }
-/* line 1196, ../sass/main.scss */
+/* line 1250, ../sass/main.scss */
 .mainbody .score_info {
   background-color: #ffffff;
 }
-/* line 1198, ../sass/main.scss */
+/* line 1252, ../sass/main.scss */
 .mainbody .score_info .score_info_title {
   color: #2f4e9b;
   font-size: 14px;
@@ -1253,16 +1314,16 @@ body a, body button {
   margin: 20px;
   display: block;
 }
-/* line 1202, ../sass/main.scss */
+/* line 1256, ../sass/main.scss */
 .mainbody .score_data {
   background-color: #ffffff;
 }
-/* line 1204, ../sass/main.scss */
+/* line 1258, ../sass/main.scss */
 .mainbody .score_data .table_report {
   background-color: #ffffff;
   padding: 20px;
 }
-/* line 1207, ../sass/main.scss */
+/* line 1261, ../sass/main.scss */
 .mainbody .score_data .table_report .company {
   width: 15px;
   height: 15px;
@@ -1271,55 +1332,55 @@ body a, body button {
   display: -moz-inline-box;
   display: inline-block;
 }
-/* line 1214, ../sass/main.scss */
+/* line 1268, ../sass/main.scss */
 .mainbody .score_data .table_report .company_a {
   background-color: #39ae41;
 }
-/* line 1217, ../sass/main.scss */
+/* line 1271, ../sass/main.scss */
 .mainbody .score_data .table_report .company_b {
   background-color: #ff983d;
 }
-/* line 1220, ../sass/main.scss */
+/* line 1274, ../sass/main.scss */
 .mainbody .score_data .table_report .company_c {
   background-color: #0087f0;
 }
-/* line 1223, ../sass/main.scss */
+/* line 1277, ../sass/main.scss */
 .mainbody .score_data .table_report .company_d {
   background-color: #8781bd;
 }
-/* line 1226, ../sass/main.scss */
+/* line 1280, ../sass/main.scss */
 .mainbody .score_data .table_report .company_e {
   background-color: #f26c4f;
 }
-/* line 1229, ../sass/main.scss */
+/* line 1283, ../sass/main.scss */
 .mainbody .score_data .table_report .company_f {
   background-color: #bd8cbf;
 }
-/* line 1233, ../sass/main.scss */
+/* line 1287, ../sass/main.scss */
 .mainbody .score_data .table_report .table > thead > tr > th,
 .mainbody .score_data .table_report .table > tbody > tr > td,
 .mainbody .score_data .table_report .table > tfoot > tr > td {
   text-align: right;
 }
-/* line 1239, ../sass/main.scss */
+/* line 1293, ../sass/main.scss */
 .mainbody .score_data .table_report .table > thead > tr > th:first-child,
 .mainbody .score_data .table_report .table > tbody > tr > td:first-child,
 .mainbody .score_data .table_report .table > tfoot > tr > td:first-child {
   text-align: left;
 }
-/* line 1244, ../sass/main.scss */
+/* line 1298, ../sass/main.scss */
 .mainbody .score_data .table_report .td_info {
   background-color: #EAEFFF;
 }
-/* line 1247, ../sass/main.scss */
+/* line 1301, ../sass/main.scss */
 .mainbody .score_data .table_report .tr_warning {
   background-color: #FCFFD9;
 }
-/* line 1250, ../sass/main.scss */
+/* line 1304, ../sass/main.scss */
 .mainbody .score_data .table_report .tr_warning td {
   font-weight: bold;
 }
-/* line 1254, ../sass/main.scss */
+/* line 1308, ../sass/main.scss */
 .mainbody .score_data .table_report .nav-pills li a {
   background-color: #f5f5f5;
   color: #6f6f6f;
@@ -1337,11 +1398,11 @@ body a, body button {
   -webkit-border-bottom-right-radius: 0px;
   border-bottom-right-radius: 0px;
 }
-/* line 1261, ../sass/main.scss */
+/* line 1315, ../sass/main.scss */
 .mainbody .score_data .table_report .nav-pills li a:hover, .mainbody .score_data .table_report .nav-pills li a:focus {
   background-color: #dbe3f6;
 }
-/* line 1268, ../sass/main.scss */
+/* line 1322, ../sass/main.scss */
 .mainbody .score_data .table_report .nav-pills li.active a,
 .mainbody .score_data .table_report .nav-pills li.active a:hover,
 .mainbody .score_data .table_report .nav-pills li.active a:focus {
@@ -1390,25 +1451,25 @@ body a, body button {
 .mainbody .score_data .table-striped tbody tr:nth-child(even):hover th {
   background-color: #feeaff;
 }
-/* line 1284, ../sass/main.scss */
+/* line 1338, ../sass/main.scss */
 .mainbody .feedback_info {
   background-color: #FFF2E5;
   padding: 20px;
 }
-/* line 1287, ../sass/main.scss */
+/* line 1341, ../sass/main.scss */
 .mainbody .feedback_info .provide_feedback {
   margin: 10px 0;
 }
-/* line 1290, ../sass/main.scss */
+/* line 1344, ../sass/main.scss */
 .mainbody .feedback_info h4 {
   font-size: 17px;
 }
-/* line 1294, ../sass/main.scss */
+/* line 1348, ../sass/main.scss */
 .mainbody .feedback_data {
   background-color: #ffffff;
   padding: 80px 0px;
 }
-/* line 1297, ../sass/main.scss */
+/* line 1351, ../sass/main.scss */
 .mainbody .feedback_data h3 {
   color: #5E66E6;
   font-family: "Helvetica", "Arial, sans-serif";
@@ -1416,7 +1477,7 @@ body a, body button {
   padding: 0 40px;
   margin: 0;
 }
-/* line 1304, ../sass/main.scss */
+/* line 1358, ../sass/main.scss */
 .mainbody .feedback_data h4 {
   color: #5D67D2;
   font-family: "Helvetica", "Arial, sans-serif";
@@ -1425,7 +1486,7 @@ body a, body button {
   margin: 0;
   font-size: 18px;
 }
-/* line 1312, ../sass/main.scss */
+/* line 1366, ../sass/main.scss */
 .mainbody .feedback_data h5 {
   font-family: "Helvetica", "Arial, sans-serif";
   font-weight: normal;
@@ -1433,25 +1494,25 @@ body a, body button {
   font-size: 15px;
   margin: 0;
 }
-/* line 1319, ../sass/main.scss */
+/* line 1373, ../sass/main.scss */
 .mainbody .feedback_data p {
   padding: 0;
   margin: 0;
 }
-/* line 1323, ../sass/main.scss */
+/* line 1377, ../sass/main.scss */
 .mainbody .feedback_data .table_feedback {
   font-size: 14px;
   padding: 0 40px;
 }
-/* line 1326, ../sass/main.scss */
+/* line 1380, ../sass/main.scss */
 .mainbody .feedback_data .table_feedback .p_left_20 {
   padding-left: 20px;
 }
-/* line 1329, ../sass/main.scss */
+/* line 1383, ../sass/main.scss */
 .mainbody .feedback_data .table_feedback .table_feedback_left_title {
   width: 50%;
 }
-/* line 1332, ../sass/main.scss */
+/* line 1386, ../sass/main.scss */
 .mainbody .feedback_data .table_feedback .table_feedback_right_data {
   width: 10%;
 }
@@ -1461,19 +1522,19 @@ body a, body button {
   border-top: 1px solid #5375e1;
   margin-bottom: 10px;
 }
-/* line 1339, ../sass/main.scss */
+/* line 1393, ../sass/main.scss */
 .mainbody .feedback_data .feedback_others_p {
   padding: 0 68px;
 }
-/* line 1341, ../sass/main.scss */
+/* line 1395, ../sass/main.scss */
 .mainbody .feedback_data .feedback_others_p .margin_left_10 {
   padding-left: 20px;
 }
-/* line 1345, ../sass/main.scss */
+/* line 1399, ../sass/main.scss */
 .mainbody .feedback_data .clear {
   clear: both;
 }
-/* line 1349, ../sass/main.scss */
+/* line 1403, ../sass/main.scss */
 .mainbody .submit_feedback_button {
   font-size: 14px;
   color: #ffffff;
@@ -1508,7 +1569,7 @@ body a, body button {
   background: linear-gradient(to bottom, #298ffe, #298ffe);
   border-color: #298FFE;
 }
-/* line 1355, ../sass/main.scss */
+/* line 1409, ../sass/main.scss */
 .mainbody .comparison_box {
   width: 48%;
   min-height: 600px;
@@ -1516,7 +1577,7 @@ body a, body button {
   border: 1px solid #e1e1e1;
   background-color: #ffffff;
 }
-/* line 1362, ../sass/main.scss */
+/* line 1416, ../sass/main.scss */
 .mainbody .comparison_box .blank_title {
   margin-top: 30%;
   font-size: 30px;
@@ -1530,7 +1591,7 @@ body a, body button {
   -webkit-border-radius: 60px;
   border-radius: 60px;
 }
-/* line 1374, ../sass/main.scss */
+/* line 1428, ../sass/main.scss */
 .mainbody .comparison_box .blank_info {
   margin-top: 70px;
   font-size: 18px;
@@ -1538,12 +1599,12 @@ body a, body button {
   height: 30px;
   line-height: 30px;
 }
-/* line 1384, ../sass/main.scss */
+/* line 1438, ../sass/main.scss */
 .mainbody .all_comparison_reports {
   border-top: 1px solid #d4d4d4;
   padding: 15px 0px 40px 0px;
 }
-/* line 1388, ../sass/main.scss */
+/* line 1442, ../sass/main.scss */
 .mainbody .all_comparison_reports h6 {
   font-size: 14px;
   color: #6f6f6f;
@@ -1551,11 +1612,11 @@ body a, body button {
   padding-left: 5px;
   margin-bottom: 25px;
 }
-/* line 1394, ../sass/main.scss */
+/* line 1448, ../sass/main.scss */
 .mainbody .all_comparison_reports h6 .title {
   padding-left: 10px;
 }
-/* line 1399, ../sass/main.scss */
+/* line 1453, ../sass/main.scss */
 .mainbody .all_comparison_reports .list-group-item {
   background-color: #f9f9f9;
   background-image: url(../images/userchartlist.png);
@@ -1578,40 +1639,40 @@ body a, body button {
   text-align: center;
   float: left;
 }
-/* line 1423, ../sass/main.scss */
+/* line 1477, ../sass/main.scss */
 .mainbody .all_comparison_reports .dragReportMovingBox {
   position: fixed;
   z-index: 999;
 }
-/* line 1434, ../sass/main.scss */
+/* line 1488, ../sass/main.scss */
 .mainbody .progress_title {
   color: #6f6f6f;
 }
-/* line 1438, ../sass/main.scss */
+/* line 1492, ../sass/main.scss */
 .mainbody .progress_radius {
   -moz-border-radius: 16px;
   -webkit-border-radius: 16px;
   border-radius: 16px;
 }
-/* line 1441, ../sass/main.scss */
+/* line 1495, ../sass/main.scss */
 .mainbody .progress_bar_budget {
   background-color: #6071b9;
 }
-/* line 1444, ../sass/main.scss */
+/* line 1498, ../sass/main.scss */
 .mainbody .progress_bar_normal_capacity {
   background-color: #7169af;
 }
-/* line 1447, ../sass/main.scss */
+/* line 1501, ../sass/main.scss */
 .mainbody .progress_bar_overtime {
   background-color: #ad5ab3;
 }
-/* line 1451, ../sass/main.scss */
+/* line 1505, ../sass/main.scss */
 .mainbody .form-control-error {
   border-color: #a94442;
   -webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
   box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
 }
-/* line 1457, ../sass/main.scss */
+/* line 1511, ../sass/main.scss */
 .mainbody .alert-tooltip {
   position: absolute;
   top: 10%;
@@ -1619,7 +1680,7 @@ body a, body button {
   padding: 5px;
   z-index: 999;
 }
-/* line 1464, ../sass/main.scss */
+/* line 1518, ../sass/main.scss */
 .mainbody .alert-tooltip:after, .mainbody .alert-tooltip:before {
   top: 50%;
   right: 100%;
@@ -1630,46 +1691,46 @@ body a, body button {
   position: absolute;
   pointer-events: none;
 }
-/* line 1474, ../sass/main.scss */
+/* line 1528, ../sass/main.scss */
 .mainbody .alert-tooltip:after {
   border-color: rgba(136, 183, 213, 0);
   border-right-color: #f2dede;
   border-width: 6px;
   margin-top: -6px;
 }
-/* line 1480, ../sass/main.scss */
+/* line 1534, ../sass/main.scss */
 .mainbody .alert-tooltip:before {
   border-color: rgba(194, 225, 245, 0);
   border-right-color: #ebccd1;
   border-width: 7px;
   margin-top: -7px;
 }
-/* line 1488, ../sass/main.scss */
+/* line 1542, ../sass/main.scss */
 .mainbody .budget_form {
   padding: 5px 0px;
 }
-/* line 1491, ../sass/main.scss */
+/* line 1545, ../sass/main.scss */
 .mainbody .budget_form label {
   color: #252525;
   font-size: 10px;
   font-weight: normal;
 }
-/* line 1497, ../sass/main.scss */
+/* line 1551, ../sass/main.scss */
 .mainbody .budget_form .budget_title {
   font-size: 18px;
 }
-/* line 1501, ../sass/main.scss */
+/* line 1555, ../sass/main.scss */
 .mainbody .budget_form input {
   width: 80px;
   margin-top: 15px;
 }
-/* line 1507, ../sass/main.scss */
+/* line 1561, ../sass/main.scss */
 .mainbody .decision_box {
   margin: 10px 0px 0px 15px;
   border: 1px solid #e1e1e1;
   background-color: #ffffff;
 }
-/* line 1512, ../sass/main.scss */
+/* line 1566, ../sass/main.scss */
 .mainbody .decision_box h4 {
   color: #2f4e9b;
   font-size: 18px;
@@ -1677,14 +1738,14 @@ body a, body button {
   font-family: "Helvetica", "Arial, sans-serif";
   margin: 25px 0 5px 0;
 }
-/* line 1519, ../sass/main.scss */
+/* line 1573, ../sass/main.scss */
 .mainbody .decision_box h6 {
   color: #bdbdbd;
   font-family: "Helvetica", "Arial, sans-serif";
   font-weight: normal;
   margin-top: 0;
 }
-/* line 1526, ../sass/main.scss */
+/* line 1580, ../sass/main.scss */
 .mainbody .decision_box .brand_box {
   border: 1px solid #c2c2d3;
   margin: 0px -10px 20px -10px;
@@ -1692,7 +1753,7 @@ body a, body button {
   -webkit-border-radius: 4px;
   border-radius: 4px;
 }
-/* line 1532, ../sass/main.scss */
+/* line 1586, ../sass/main.scss */
 .mainbody .decision_box .sku_box {
   border: 1px solid #ebebeb;
   margin: 0px -10px 10px -10px;
@@ -1700,23 +1761,23 @@ body a, body button {
   -webkit-border-radius: 4px;
   border-radius: 4px;
 }
-/* line 1537, ../sass/main.scss */
+/* line 1591, ../sass/main.scss */
 .mainbody .decision_box .sku_box .input-sm {
   height: 25px;
   width: 50px;
 }
-/* line 1543, ../sass/main.scss */
+/* line 1597, ../sass/main.scss */
 .mainbody .decision_box .table > thead > tr > th {
   font-weight: bold;
   color: #6f6f6f;
   vertical-align: middle;
 }
-/* line 1547, ../sass/main.scss */
+/* line 1601, ../sass/main.scss */
 .mainbody .decision_box .table > thead > tr > th a {
   font-weight: bold;
   color: #6f6f6f;
 }
-/* line 1553, ../sass/main.scss */
+/* line 1607, ../sass/main.scss */
 .mainbody .decision_box .table > thead > tr > td,
 .mainbody .decision_box .table > tbody > tr > td,
 .mainbody .decision_box .table > tfoot > tr > td {
@@ -1727,19 +1788,19 @@ body a, body button {
   color: #373737;
   position: relative;
 }
-/* line 1564, ../sass/main.scss */
+/* line 1618, ../sass/main.scss */
 .mainbody .decision_box .table .tdgroup {
   padding-top: 20px;
 }
-/* line 1568, ../sass/main.scss */
+/* line 1622, ../sass/main.scss */
 .mainbody .decision_box .sku_table {
   width: 125px;
 }
-/* line 1573, ../sass/main.scss */
+/* line 1627, ../sass/main.scss */
 .mainbody .decision_box .nav li a {
   padding: 7px 15px;
 }
-/* line 1578, ../sass/main.scss */
+/* line 1632, ../sass/main.scss */
 .mainbody .decision_box .nav-pills li a {
   background-color: #f5f5f5;
   color: #6f6f6f;
@@ -1757,11 +1818,11 @@ body a, body button {
   -webkit-border-bottom-right-radius: 0px;
   border-bottom-right-radius: 0px;
 }
-/* line 1585, ../sass/main.scss */
+/* line 1639, ../sass/main.scss */
 .mainbody .decision_box .nav-pills li a:hover, .mainbody .decision_box .nav-pills li a:focus {
   background-color: #dbe3f6;
 }
-/* line 1592, ../sass/main.scss */
+/* line 1646, ../sass/main.scss */
 .mainbody .decision_box .nav-pills li.active a,
 .mainbody .decision_box .nav-pills li.active a:hover,
 .mainbody .decision_box .nav-pills li.active a:focus {
@@ -1769,11 +1830,11 @@ body a, body button {
   font-family: "Helvetica", "Arial, sans-serif";
   background-color: #2f4e9b;
 }
-/* line 1601, ../sass/main.scss */
+/* line 1655, ../sass/main.scss */
 .mainbody .decision_box .brand_form {
   margin: 30px 0px;
 }
-/* line 1605, ../sass/main.scss */
+/* line 1659, ../sass/main.scss */
 .mainbody .decision_box h5 {
   color: #252525;
   font-family: "Helvetica", "Arial, sans-serif";
@@ -1781,19 +1842,19 @@ body a, body button {
   font-size: 16px;
   padding: 10px 0px 0px 10px;
 }
-/* line 1613, ../sass/main.scss */
+/* line 1667, ../sass/main.scss */
 .mainbody .decision_box .investment_form {
   margin-top: 20px;
   margin-left: 10px;
 }
-/* line 1616, ../sass/main.scss */
+/* line 1670, ../sass/main.scss */
 .mainbody .decision_box .investment_form label {
   text-align: left;
   font-family: "Helvetica", "Arial, sans-serif";
   font-weight: normal;
   font-size: 13px;
 }
-/* line 1625, ../sass/main.scss */
+/* line 1679, ../sass/main.scss */
 .mainbody .decision_box .decision_button {
   color: #ffffff;
   font-family: "Helvetica", "Arial, sans-serif";
@@ -1828,11 +1889,11 @@ body a, body button {
   background: linear-gradient(to bottom, #298ffe, #298ffe);
   border-color: #298FFE;
 }
-/* line 1632, ../sass/main.scss */
+/* line 1686, ../sass/main.scss */
 .mainbody .decision_right_box {
   width: 47%;
 }
-/* line 1634, ../sass/main.scss */
+/* line 1688, ../sass/main.scss */
 .mainbody .decision_right_box .right_menu {
   border-width: 1px 0px 0px 0px;
   -moz-border-radius: 0px;
@@ -1840,7 +1901,7 @@ body a, body button {
   border-radius: 0px;
   padding: 20px 0px 0px 0px;
 }
-/* line 1642, ../sass/main.scss */
+/* line 1696, ../sass/main.scss */
 .mainbody .decision_right_box .right_menu .product_portfolio h4 {
   font-size: 13px;
   font-family: "Helvetica", "Arial, sans-serif";
@@ -1850,13 +1911,13 @@ body a, body button {
   background-repeat: no-repeat;
   background-position: 4px 2px;
 }
-/* line 1651, ../sass/main.scss */
+/* line 1705, ../sass/main.scss */
 .mainbody .decision_right_box .right_menu .product_portfolio .sku_bg {
   background-image: url(../images/userproduct.png);
   background-repeat: no-repeat;
   background-position: 4px 5px;
 }
-/* line 1657, ../sass/main.scss */
+/* line 1711, ../sass/main.scss */
 .mainbody .decision_right_box .right_menu .product_portfolio .panel-heading {
   font-size: 13px;
   font-family: "Helvetica", "Arial, sans-serif";
@@ -1900,23 +1961,23 @@ body a, body button {
   background-color: #feeaff;
 }
 
-/* line 1674, ../sass/main.scss */
+/* line 1728, ../sass/main.scss */
 .bgbrand {
   background-color: #fdfdfd;
 }
 
-/* line 1678, ../sass/main.scss */
+/* line 1732, ../sass/main.scss */
 .chartBox {
   width: 99%;
   height: 350px;
   margin: 0px 0px;
 }
-/* line 1682, ../sass/main.scss */
+/* line 1736, ../sass/main.scss */
 .chartBox .ac-title {
   text-align: center;
   display: none;
 }
-/* line 1687, ../sass/main.scss */
+/* line 1741, ../sass/main.scss */
 .chartBox .bar_chart_label {
   font-size: 10px;
 }
