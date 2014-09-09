@@ -1,0 +1,194 @@
+	{
+        id : 100,
+        menuname :"Overview",
+        submenu : [
+            {
+                id : 1000,
+                menuname : "What is MarkSimos"
+            },
+            {
+                id : 1001,
+                menuname : "Market and Industry"
+            },
+            {
+                id : 1002,
+                menuname : "4P's"
+            }			
+        ]
+    }
+
+	{
+        id : 110,
+        menuname :"Business Operation",
+        submenu : [
+            {
+                id : 1100,
+                menuname : "Brief Overview"
+            }		
+        ]
+    }
+	
+	{
+        id : 120,
+        menuname :"Order and Inventory Decisions",
+        submenu : [
+            {
+                id : 1200,
+                menuname : "Order Decisions"
+            },
+            {
+                id : 1201,
+                menuname : "Inventory Decisions"
+            },
+            {
+                id : 1202,
+                menuname : "Obsolete goods"
+            }			
+        ]
+    }
+	
+	{
+        id : 130,
+        menuname :"Financial Decisions",
+        submenu : [
+            {
+                id : 1300,
+                menuname : "Investment Budget and Funding Sources"
+            }		
+        ]
+    }
+	
+	{
+        id : 140,
+        menuname :"R&D Decisions",
+        submenu : [
+            {
+                id : 1400,
+                menuname : "Investment in Processing Technology"
+            },	
+            {
+                id : 1401,
+                menuname : "Investment in Production Efficiency"
+            }			
+        ]
+    }
+	
+	{
+        id : 150,
+        menuname :"R&D Decisions",
+        submenu : [
+            {
+                id : 1500,
+                menuname : "Sales Force	Decisions"
+            }			
+        ]
+    }
+	
+	{
+        id : 160,
+        menuname :"Portfolio Decisions",
+        submenu : [
+            {
+                id : 1600,
+                menuname : "Launching a new Brand"
+            },		
+            {
+                id : 1601,
+                menuname : "Modifying an existing Brand"
+            },
+            {
+                id : 1602,
+                menuname : "Discontinue?"
+            }			
+        ]
+    }
+	
+	{
+        id : 170,
+        menuname :"Production Volume Decisions",
+        submenu : [
+            {
+                id : 1700,
+                menuname : "Overview"
+            }		
+        ]
+    }
+	
+	{
+        id : 180,
+        menuname :"Pricing",
+        submenu : [
+            {
+                id : 1800,
+                menuname : "Manufacturer Price"
+            },
+            {
+                id : 1801,
+                menuname : "Apply New Manufacturer Price to Old Inventories at Factory"
+            }
+        ]
+    }
+	
+	{
+        id : 190,
+        menuname :"Pricing",
+        submenu : [
+            {
+                id : 1900,
+                menuname : "Manufacturer Price"
+            },
+            {
+                id : 1901,
+                menuname : "Apply New Manufacturer Price to Old Inventories at Factory"
+            }
+        ]
+    }
+	
+	{
+        id : 200,
+        menuname :"Marketing Decisions",
+        submenu : [
+            {
+                id : 2000,
+                menuname : "Communication Decisions"
+            },
+            {
+                id : 2001,
+                menuname : "Promotion Decisions"
+            }
+        ]
+    }
+	
+	{
+        id : 210,
+        menuname :"Trade Decisions",
+        submenu : [
+            {
+                id : 2100,
+                menuname : "Trade Expenses"
+            },
+            {
+                id : 2101,
+                menuname : "Additional Trade Margin"
+            },
+            {
+                id : 2102,
+                menuname : "Wholesale Minimum Bonus Volume"
+            },
+            {
+                id : 2103,
+                menuname : "Wholesale Bonus Rate"
+            }
+        ]
+    }
+	
+	{
+        id : 220,
+        menuname :"Final Remarks",
+        submenu : [
+            {
+                id : 2200,
+                menuname : "Final Remarks"
+            }
+        ]
+    }
