@@ -11,22 +11,34 @@ var app = angular.module('marksimos.websitecomponent', ['marksimos.model', 'pasc
 app.directive('userHeader', ['$window', '$translate', 'Student', function($window, $translate, Student) {
     return {
         scope: {
-            showmenu : '=',
-            showlogout : '=',
-            menuhome : '&clickHome',
-            menureport : '&clickReport',
-            menuscore : '&clickScore',
+            showmenu     : '=',
+            showlogout   : '=',
+            menuhome     : '&clickHome',
+            menureport   : '&clickReport',
+            menuscore    : '&clickScore',
             menudecision : '&clickDecision',
             currentMenu : '=',
-            isFeedbackShown : '='
+            isFeedbackShown : '=',
+            currentRound : '='
         },
         restrict: 'AE',
         templateUrl: '/app/js/websitecomponent/userheader.html',
         link: function (scope, element, attrs) {
 
+
+            if(angular.isUndefined(attrs.currentRound)){
+                console.log('Need current Round data');
+                scope.currentRound = 0;
+            }
+
             scope.clickMenu = function(currentmenu){
                 scope.currentMenu = currentmenu;
                 scope.isFeedbackShown = false;
+            };
+
+            scope.clickHelpMenu = function(currentmenu){
+                if($window.location.href.indexOf('/marksimos/help')==-1)
+                    $window.location.href='/marksimos/help';
             };
 
             scope.changeLanguage = function (langKey) {
@@ -42,7 +54,6 @@ app.directive('userHeader', ['$window', '$translate', 'Student', function($windo
                     console.log(data);
                 });
             };
-
 
         }
     };

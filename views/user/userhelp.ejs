@@ -1,0 +1,63 @@
+<% include ./include/headcssuser.html %>
+
+<body ng-app="marksimoslogin">
+
+<div class="container-fluid width_big_screen" ng-controller="userHelpController" >
+
+    <user-header showmenu="false" showlogout="true" current-round="0"></user-header>
+
+
+    <div class="row login" ng-cloak>
+        <div class="col-md-10 col-md-offset-1 panelbox">
+
+
+            <div class="row">
+                <div class="col-md-12 intro_box">
+                    <ul class="nav nav-pills">
+                        
+                        <li ng-class="{'active':isFAQShown}"><a href="" ng-click='clickIntro("FAQ")'>FAQ</a></li>
+                        <li ng-class="{'active':isVideoShown}"><a href="" ng-click='clickIntro("Video")'>Video</a></li>
+                        <li ng-class="{'active':isManualShown}"><a href="" ng-click='clickIntro("Manual")'>Manual</a></li>
+                    </ul>
+                    <div class="divider_horizontal"></div>
+                </div>
+            </div>
+
+            <div class="row" ng-show='isFAQShown'>
+            	isFAQShown
+            </div>
+
+            <div class="row" ng-show='isManualShown'>
+            	isManualShown
+            </div>
+
+            <div class="row video_list" ng-show='isVideoShown'>
+                <div class="col-md-3 col-md-offset-1">
+
+                    <iframe width=200 height=150 src="http://player.youku.com/embed/XNzE0OTYyMTcy" frameborder=0 allowfullscreen></iframe>
+
+                </div>
+
+                <div class="col-md-3">
+
+                    <iframe width=200 height=150 src="http://player.youku.com/embed/XNTY0ODgxMzAw" frameborder=0 allowfullscreen></iframe>
+
+                </div>
+
+                <div class="col-md-3">
+
+                    <iframe width=200 height=150 src="http://player.youku.com/embed/XNzMxODUwODMy" frameborder=0 allowfullscreen></iframe>
+
+                </div>
+            </div>
+
+
+        </div>
+
+    </div>
+
+
+</div>
+
+<% include ./include/footerscriptuserlogin.html %>
+

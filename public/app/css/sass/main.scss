@@ -303,8 +303,8 @@ $color_main_body_user_feedback_info:#EAEFFF;
     padding:0px 5px;
 
     position:absolute;
-    top:9px;
-    left:50px;
+    top:16%;
+    left:76%;
 
     text-indent: 0;
     text-align: center;
@@ -399,6 +399,7 @@ body{
 
     }
 
+
     .panelbox {
         border: $color_login_panel_border 1px solid;
         background-color: $color_login_panel_background;
@@ -449,6 +450,38 @@ body{
             margin-top : 70px;
             padding: 0px 0px 70px 30px;
         }
+
+        .intro_box{
+            background-color: $color_login_panel_background;
+            padding: 40px 40px 0px;
+
+            .nav-pills li{
+                a{
+                    background-color: $color_login_background;
+                    color: $color_main_body_user_chart_leftmenu_title;
+                    font-family: $font_main_header2;
+                    @include border-top-radius(4px);
+                    @include border-bottom-radius(0px);
+
+                    &:hover,
+                    &:focus{
+                        background-color: $color_main_body_background_chart;
+                    }
+                }
+            }
+            .nav-pills li.active{
+                a,
+                a:hover,
+                a:focus{
+                    color: $color_main_body_company_a;
+                    font-family: $font_main_header2;
+                    background-color: $color_login_title;
+                }
+            }
+
+            @include divider_horizontal;
+        }
+
 
         .intro_video_next_button{
             font-size: 14px;

@@ -51,6 +51,12 @@ gulp.task('nodemon', function () {
     });
 //        .on('restart', 'default')
 });
+gulp.task('nodemonraven', function () {
+    nodemon({
+        script: 'app.js',
+        env: { 'NODE_ENV': 'raven' }
+    });
+});
 gulp.task('nodemonjin', function () {
     nodemon({
         script: 'app.js',

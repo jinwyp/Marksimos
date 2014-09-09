@@ -1068,6 +1068,8 @@ marksimosapp.controller('chartController', ['$translate', '$scope', '$rootScope'
     });
 
     $scope.switchTableReportFinalScore = function(period){
+        
+        
         $scope.data.tableA1CompanyStatus.currentCompany = company;
         $scope.data.tableA1CompanyStatus.currentSKU = $scope.data.tableA1CompanyStatus.currentCompany.SKU[0];
         $scope.data.tableA1CompanyStatus.currentBrand = $scope.data.tableA1CompanyStatus.currentCompany.brand[0];

@@ -17,6 +17,10 @@ module.exports = function(app){
     app.get('/marksimos', function(req, res, next){
         res.render('user/userlogin.ejs', { title : 'MarkSimos - Welcome to the MarkSimos Game'});
     });
+
+    app.get('/marksimos/help', function(req, res, next){
+        res.render('user/userhelp.ejs', { title : 'MarkSimos - Help'});
+    });
      
     app.get('/marksimos/login', function(req, res, next){
         res.render('user/userlogin.ejs', { title : 'MarkSimos - User Sign In'});

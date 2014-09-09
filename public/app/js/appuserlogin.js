@@ -48,7 +48,7 @@ marksimosapp.controller('userLoginController', ['$scope', '$http', '$window', 'S
 marksimosapp.controller('userIntroController',['$scope', '$http', '$window', 'Student',  'Company', function($scope, $http, $window, Student, Company) {
 
     $scope.css = {
-        showBox : 'intro'
+        showBox : 'seminar'
     };
 
     $scope.data = {
@@ -63,12 +63,14 @@ marksimosapp.controller('userIntroController',['$scope', '$http', '$window', 'St
         }
     };
 
-
     $scope.initSeminar = function() {
+
+        $scope.isFAQShown=true;
+        $scope.isVideoShown=false;
+        $scope.isManualShown=false;
 
         Student.getStudent().then(function(data, status, headers, config){
             $scope.data.currentStudent = data;
-            console.log($scope.data.currentStudent);
         });
 
         Student.getSeminar().then(function(data, status, headers, config){
@@ -78,6 +80,15 @@ marksimosapp.controller('userIntroController',['$scope', '$http', '$window', 'St
 
     $scope.initSeminar();
 
+
+    $scope.clickIntro=function(item){
+        $scope.isFAQShown=false;$scope.isVideoShown=false;$scope.isManualShown=false;
+        switch(item){
+            case 'FAQ':$scope.isFAQShown=true;break;
+            case 'Video':$scope.isVideoShown=true;break;
+            case 'Manual':$scope.isManualShown=true;break;
+        }
+    }
 
 
     $scope.introVideosNext = function(){
@@ -121,5 +132,29 @@ marksimosapp.controller('userIntroController',['$scope', '$http', '$window', 'St
     $scope.whoamiNext = function(){
         $window.location.href = "/marksimos/home" ;
     };
+
+}]);
+
+marksimosapp.controller('userHelpController',['$scope', '$http', '$window', function($scope, $http, $window) {
+
+
+    $scope.initPage = function() {
+
+        $scope.isFAQShown=true;
+        $scope.isVideoShown=false;
+        $scope.isManualShown=false;
+    };
+
+    $scope.initPage();
+
+
+    $scope.clickIntro=function(item){
+        $scope.isFAQShown=false;$scope.isVideoShown=false;$scope.isManualShown=false;
+        switch(item){
+            case 'FAQ':$scope.isFAQShown=true;break;
+            case 'Video':$scope.isVideoShown=true;break;
+            case 'Manual':$scope.isManualShown=true;break;
+        }
+    }
 
 }]);
