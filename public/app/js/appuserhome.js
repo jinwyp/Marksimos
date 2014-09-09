@@ -10,7 +10,9 @@ var marksimosapp = angular.module('marksimos', ['pascalprecht.translate', 'angul
 
 
 // controller business logic
-marksimosapp.controller('chartController', ['$translate', '$scope', '$rootScope', '$timeout', '$http', 'notify', 'chartReport', 'tableReport', 'Company', 'FinalScore', 'Questionnaire', function($translate, $scope, $rootScope, $timeout, $http, notify, chartReport, tableReport, Company , FinalScore, Questionnaire) {
+
+marksimosapp.controller('chartController', ['$translate', '$scope', '$rootScope', '$document', '$timeout', '$http', 'notify', 'chartReport', 'tableReport', 'Company', 'FinalScore', 'Questionnaire', function($translate, $scope, $rootScope, $timeout, $http, notify, chartReport, tableReport, Company , FinalScore, Questionnaire) {
+
     $rootScope.$on('$translateChangeSuccess', function () {
         $translate(['HomePageSegmentLabelPriceSensitive', 'HomePageSegmentLabelPretenders', 'HomePageSegmentLabelModerate',
             'HomePageSegmentLabelGoodLife', 'HomePageSegmentLabelUltimate', 'HomePageSegmentLabelPragmatic']).then(function (translations) {
@@ -51,7 +53,7 @@ marksimosapp.controller('chartController', ['$translate', '$scope', '$rootScope'
 
 
     $scope.css = {
-        menu                     : 'Home',
+        menu                     : 'Report',
         chartMenu                : 'A1',
         tableReportTab           : 'SKU',
         tableReportMenu          : 1,
@@ -65,8 +67,24 @@ marksimosapp.controller('chartController', ['$translate', '$scope', '$rootScope'
         skuErrorInfo  : '',
         brandErrorInfo  : '',
         companyErrorInfo  : '',
-        periods : []
+        periods : [],
+        comparisonPage : false,
+        dragEvent : {
+            pressEvents   : 'touchstart mousedown',
+            moveEvents    : 'touchmove mousemove',
+            releaseEvents : 'touchend mouseup'
+        },
+        dragReportFlag : false,
+        dragReportPosition : {
+            'top' : 2000,
+            'left' : 2000
+        },
+        dragTargetBoxId : '',
+        dragSourceReportId : '',
+        dragHaveLeftReport : false,
+        dragHaveRightReport : false
     };
+
 
     $scope.dataChartSimple = {
         series: ['A', 'B', 'C'],
@@ -1232,5 +1250,92 @@ marksimosapp.controller('chartController', ['$translate', '$scope', '$rootScope'
         }
     };
 
+
+    /********************  Report Comparison   ********************/
+    $scope.showComparisonPage = function(){
+        $scope.css.comparisonPage = !$scope.css.comparisonPage;
+    };
+
+    $scope.startDragReport = function(reportid, event1){
+        $scope.css.dragSourceReportId = reportid;
+        $scope.css.dragTargetBoxId = '';
+        $scope.css.dragReportFlag = true;
+
+        // Prevent default dragging of selected content
+        event1.preventDefault();
+
+        var moveSourceDom = angular.element(event1.currentTarget);
+
+        console.log(moveSourceDom);
+
+        var movingDom = angular.element('.dragReportMovingBox');
+        movingDom.empty().append(moveSourceDom.clone());
+
+        $scope.css.dragReportPosition.top = event.clientY + 10;
+        $scope.css.dragReportPosition.left = event.clientX - 120;
+
+
+
+//        element.centerX = (element.width()/2);
+//        element.centerY = (element.height()/2);
+//        element.addClass('dragging');
+//        _mx = (evt.pageX || evt.originalEvent.touches[0].pageX);
+//        _my = (evt.pageY || evt.originalEvent.touches[0].pageY);
+//        _tx=_mx-element.centerX-$window.scrollLeft()
+//        _ty=_my -element.centerY-$window.scrollTop();
+//        moveElement(_tx, _ty);
+        $document.on($scope.css.dragEvent.moveEvents, onReportMove);
+        $document.on($scope.css.dragEvent.releaseEvents, onReportRelease);
+    };
+
+    function onReportMove(event) {
+        $scope.$apply(function () {
+            $scope.css.dragReportPosition.top = event.clientY + 10;
+            $scope.css.dragReportPosition.left = event.clientX - 120;
+        });
+
+//        console.log($scope.css.dragReportPosition);
+    }
+
+    function onReportRelease() {
+        $scope.$apply(function () {
+            var targetDom = {};
+            var targetDomContent = {};
+            if($scope.css.dragTargetBoxId !== ''){
+                targetDom = angular.element('#' + $scope.css.dragTargetBoxId);
+                targetDomContent = angular.element('#' + $scope.css.dragSourceReportId).clone();
+                targetDomContent.removeClass( "col-md-10 ng-hide").addClass( "col-md-12" ).removeAttr("ng-show");
+
+                targetDom.empty().append(targetDomContent);
+
+
+                if($scope.css.dragTargetBoxId === 'comparisonBoxLeft'){
+                    $scope.css.dragHaveLeftReport = true;
+                }else{
+                    $scope.css.dragHaveRightReport = true;
+                }
+            }
+            console.log(targetDomContent);
+            console.log(targetDom);
+            console.log($scope.css.dragSourceReportId);
+
+            $scope.css.dragReportFlag = false;
+            $scope.css.dragSourceReportId = '';
+            $scope.css.dragTargetBoxId = '';
+        });
+
+        $document.off($scope.css.dragEvent.moveEvents, onReportMove);
+        $document.off($scope.css.dragEvent.releaseEvents, onReportRelease);
+    }
+
+    $scope.enterComparisonBox = function(targetboxid){
+
+        if(targetboxid === ''){
+            $scope.css.dragTargetBoxId = '';
+        }else{
+            $scope.css.dragTargetBoxId = 'comparisonBox' +  targetboxid;
+        }
+
+    }
 
 }]);
