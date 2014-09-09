@@ -11,7 +11,6 @@ module.exports = function(app){
 
 
 
-
     /**********   Routes for MarkSimos User/Student   **********/
 
     app.get('/marksimos', function(req, res, next){
@@ -21,6 +20,10 @@ module.exports = function(app){
     app.get('/marksimos/help', function(req, res, next){
         res.render('user/userhelp.ejs', { title : 'MarkSimos - Help'});
     });
+
+    app.get('/marksimos/manual',function(req,res,next){
+        res.render('user/manual.md',{layout:false});
+    })
      
     app.get('/marksimos/login', function(req, res, next){
         res.render('user/userlogin.ejs', { title : 'MarkSimos - User Sign In'});
