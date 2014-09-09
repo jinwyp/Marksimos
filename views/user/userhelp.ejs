@@ -11,42 +11,54 @@
         <div class="col-md-10 col-md-offset-1 panelbox">
 
 
-            <div class="row">
-                <div class="col-md-12 intro_box">
+            <div class="row intro_box">
+                <div class="col-md-12">
                     <ul class="nav nav-pills">
-                        
-                        <li ng-class="{'active':isFAQShown}"><a href="" ng-click='clickIntro("FAQ")'>FAQ</a></li>
-                        <li ng-class="{'active':isVideoShown}"><a href="" ng-click='clickIntro("Video")'>Video</a></li>
-                        <li ng-class="{'active':isManualShown}"><a href="" ng-click='clickIntro("Manual")'>Manual</a></li>
+                        <li ng-class="{'active':isFAQShown}">
+                            <a href="" ng-click='clickIntro("FAQ")'>FAQ</a>
+                        </li>
+                        <li ng-class="{'active':isVideoShown}">
+                            <a href="" ng-click='clickIntro("Video")'>Video</a>
+                        </li>
+                        <li ng-class="{'active':isManualShown}">
+                            <a href="" ng-click='clickIntro("Manual")'>Manual</a>
+                        </li>
                     </ul>
                     <div class="divider_horizontal"></div>
                 </div>
+
+
             </div>
 
-            <div class="row" ng-show='isFAQShown'>
-            	isFAQShown
+
+            <div class="row intro_data" ng-show='isManualShown'>
+                <div class="col-md-12">
+                    <div class="bs-docs-section" ng-bind-html='deliberatelyTrustDangerousSnippet(manual)'></div>
+                </div>
             </div>
 
-            <div class="row" ng-show='isManualShown'>
-            	isManualShown
+            <div class="row intro_data" ng-show='isFAQShown'>
+                <div class="col-md-12">
+                    <div class="bs-docs-section" ng-bind-html='deliberatelyTrustDangerousSnippet(manual)'></div>
+                </div>
             </div>
 
             <div class="row video_list" ng-show='isVideoShown'>
-                <div class="col-md-3 col-md-offset-1">
+                <div class="col-md-3 col-md-offset-1-5">
 
-                    <iframe width=200 height=150 src="http://player.youku.com/embed/XNzE0OTYyMTcy" frameborder=0 allowfullscreen></iframe>
-
-                </div>
-
-                <div class="col-md-3">
-
-                    <iframe width=200 height=150 src="http://player.youku.com/embed/XNTY0ODgxMzAw" frameborder=0 allowfullscreen></iframe>
+                    <iframe width=100% src="http://player.youku.com/embed/XNzE0OTYyMTcy" frameborder=0 allowfullscreen></iframe>
 
                 </div>
 
                 <div class="col-md-3">
 
-                    <iframe width=200 height=150 src="http://player.youku.com/embed/XNzMxODUwODMy" frameborder=0 allowfullscreen></iframe>
+                    <iframe width=100% src="http://player.youku.com/embed/XNTY0ODgxMzAw" frameborder=0 allowfullscreen></iframe>
+
+                </div>
+
+                <div class="col-md-3">
+
+                    <iframe width=100% src="http://player.youku.com/embed/XNzMxODUwODMy" frameborder=0 allowfullscreen></iframe>
 
                 </div>
             </div>

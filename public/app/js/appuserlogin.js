@@ -135,14 +135,25 @@ marksimosapp.controller('userIntroController',['$scope', '$http', '$window', 'St
 
 }]);
 
-marksimosapp.controller('userHelpController',['$scope', '$http', '$window', function($scope, $http, $window) {
+marksimosapp.controller('userHelpController',['$scope', '$sce', '$http', '$window', function($scope, $sce, $http, $window) {
 
 
     $scope.initPage = function() {
 
-        $scope.isFAQShown=true;
+        $scope.isFAQShown=false;
         $scope.isVideoShown=false;
-        $scope.isManualShown=false;
+        $scope.isManualShown=true;
+        $http({
+            url:'/marksimos/manual',
+            method:'GET'
+        }).then(function(data){
+            $scope.manual=data.data;
+
+        });
+    };
+
+    $scope.deliberatelyTrustDangerousSnippet = function(data) {
+          return $sce.trustAsHtml(data);
     };
 
     $scope.initPage();

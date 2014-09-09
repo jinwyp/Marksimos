@@ -36,7 +36,7 @@ app.directive('userHeader', ['$window', '$translate', 'Student', function($windo
                 scope.isFeedbackShown = false;
             };
 
-            scope.clickHelpMenu = function(currentmenu){
+            scope.clickHelpMenu = function(){
                 if($window.location.href.indexOf('/marksimos/help')==-1)
                     $window.location.href='/marksimos/help';
             };

@@ -447,9 +447,12 @@ body{
         }
 
         .video_list{
-            margin-top : 70px;
-            padding: 0px 0px 70px 30px;
+            padding: 100px 40px;
+            .col-md-offset-1-5{
+                margin-left:12.5%;
+            }
         }
+
 
         .intro_box{
             background-color: $color_login_panel_background;
@@ -480,6 +483,10 @@ body{
             }
 
             @include divider_horizontal;
+        }
+
+        .intro_data{
+            padding: 20px 40px 40px 40px;
         }
 
 

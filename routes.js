@@ -22,7 +22,7 @@ module.exports = function(app){
     });
 
     app.get('/marksimos/manual',function(req,res,next){
-        res.render('user/manual.md',{layout:false});
+        res.render('user/markdown/manual.md',{layout:false});
     })
      
     app.get('/marksimos/login', function(req, res, next){
