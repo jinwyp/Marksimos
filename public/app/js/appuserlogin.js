@@ -145,6 +145,8 @@ marksimosapp.controller('userHelpController',['$scope', '$sce', '$http', '$windo
         $scope.isFAQShown=true;
         $scope.isVideoShown=false;
         $scope.isManualShown=false;
+        $scope.questionsShown=[1,0,0,0,0,0,0,0];
+
         FAQ.getFAQ().then(function(doc){
             console.log(doc);
             $scope.faqs=doc;
@@ -156,6 +158,12 @@ marksimosapp.controller('userHelpController',['$scope', '$sce', '$http', '$windo
             $scope.manual=data.data;
         });
     };
+
+    $scope.chickFAQ=function(index){
+        $scope.firstCategory=false;
+        $scope.questionsShown=[0,0,0,0,0,0,0,0];
+        $scope.questionsShown[index]=1;
+    }
 
     $scope.trustAsHtml = function(data) {
         return $sce.trustAsHtml(data);

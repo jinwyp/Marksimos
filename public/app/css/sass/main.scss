@@ -506,6 +506,36 @@ body{
             padding: 20px 40px 40px 40px;
         }
 
+        .bs-docs-section{
+            p {
+                color: $color_main_body_company;
+                font-size: 14px;
+                font-family: $font_main_header2;
+                margin:0px;
+            }
+            h3 {
+                color: $color_login_title;
+                font-size: 30px;
+                font-family: $font_login_title;
+                padding-left: 0px;
+                border-bottom: 1px solid $color_main_body_border;
+            }
+            h4 {
+                color: $color_main_body_company;
+                font-size: 16px;
+                font-family: $font_main_header2;
+                padding : 15px 0px;
+                margin : 0px;
+            }
+        }
+
+        .info_highlight {
+            padding: 9px 14px;
+            background-color: $color_main_body_background;
+            border: 1px solid $color_main_body_border;
+            border-radius: 4px;
+        }
+
         .bs-docs-sidenav {
             margin-top: 20px;
             margin-bottom: 20px;
@@ -515,25 +545,25 @@ body{
             display: block;
             font-size: 13px;
             font-weight: 500;
-            color: #999;
+            color: $color_main_body_product;
             padding: 4px 20px;
         }
         .bs-docs-sidebar .nav > li > a:hover,
         .bs-docs-sidebar .nav > li > a:focus {
             padding-left: 19px;
-            color: #563d7c;
+            color: $color_main_body_brand;
             text-decoration: none;
             background-color: transparent;
-            border-left: 1px solid #563d7c;
+            border-left: 1px solid $color_main_body_user_chart_leftmenu_active_bgbefore;
         }
         .bs-docs-sidebar .nav > .active > a,
         .bs-docs-sidebar .nav > .active:hover > a,
         .bs-docs-sidebar .nav > .active:focus > a {
             padding-left: 18px;
             font-weight: bold;
-            color: #563d7c;
+            color: $color_main_body_brand;
             background-color: transparent;
-            border-left: 2px solid #563d7c;
+            border-left: 2px solid $color_main_body_user_chart_leftmenu_active_bgbefore;
         }
 
         .bs-docs-sidebar .nav .nav {

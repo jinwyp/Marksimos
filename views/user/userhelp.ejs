@@ -39,33 +39,12 @@
 
             <div class="row intro_data" ng-show='isFAQShown'>
                 <div class="col-md-3">
-                    <div class="bs-docs-sidebar" manual-nav>
+                    <div class="bs-docs-sidebar">
 
                         <ul class="nav bs-docs-sidenav">
 
-                            <li class="active">
-                                <a href="">Pricing</a>
-                            </li>
-                            <li class="">
-                                <a href="">Product</a>
-                            </li>
-                            <li class="">
-                                <a href="">Trade</a>
-                            </li>
-                            <li class="">
-                                <a href="">Inventory</a>
-                            </li>
-                            <li class="">
-                                <a href="">Production Capacity</a>
-                            </li>
-                            <li class="">
-                                <a href="">Technology</a>
-                            </li>
-                            <li class="">
-                                <a href="">Budget</a>
-                            </li>
-                            <li class="">
-                                <a href="">Sales</a>
+                            <li class="" ng-class="{'active':questionsShown[$index]}" ng-repeat='faq in faqs'>
+                                <a href="" ng-click='chickFAQ($index)'>{{faq.category}}</a>
                             </li>
 
                         </ul>
@@ -74,7 +53,17 @@
                 </div>
 
                 <div class="col-md-9">
-                    <div class="bs-docs-section" ng-bind-html='trustAsHtml(manual)'></div>
+                    <div class="bs-docs-section">
+                        <div ng-repeat='faq in faqs' ng-show='questionsShown[$index]'>
+                            <h3>{{faq.category}}</h3>
+                            <div ng-repeat='q in faq.questions'>
+                                <h4>{{q.title}}</h4>
+                                <div class="info_highlight">
+                                    <p>{{q.answer}}</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
 
