@@ -510,30 +510,19 @@ body{
             h1,.h1 {
               font-size: 36px;
               border-bottom: 1px solid $color_main_body_border;
-              font-weight:500;
+              font-weight:bold;
               font-family:$font_main_header2;
             }
             h2,.h2 {
               font-size: 21px;
               font-family:$font_main_header2;
+              font-weight:300;
             }
             h3,.h3 {
               font-size: 24px;
               color:black;
               padding-left: 0px;
-              font-weight:500;
-              font-family:$font_main_header2;
-            }
-            h4,.h4 {
-              font-size: 18px;
-              font-family:$font_main_header2;
-            }
-            h5,.h5 {
-              font-size: 14px;
-              font-family:$font_main_header2;
-            }
-            h6,.h6 {
-              font-size: 12px;
+              font-weight:bold;
               font-family:$font_main_header2;
             }
             p{
@@ -552,6 +541,7 @@ body{
                 font-family: $font_login_title;
                 padding-left: 0px;
                 border-bottom: 1px solid $color_main_body_border;
+                font-weight:500;
             }
             .bs_h4 {
                 color: $color_main_body_company;

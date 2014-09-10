@@ -229,16 +229,14 @@ In a normal situation, the same factors, as those mentioned above, influence ret
 Investment in Sales Force, Trade Expense and Additional Trade Margin will encourage higher retailers' orders.
 
 
-Inventory Decisions
----------------
+### Inventory Decisions
 
 The F.I.F.O. rule is universally applied at manufacturers, wholesalers and retailers. For simplicity reasons the I.H.C. is calculated by applying 2% rate to the period ending inventory value. 
 
 If a manufacturer is selling batches of different age, the final C.O.G.S. will actually be a sum of production costs linked to volumes coming from different batches.
 
 
-Obsolete Goods
----------------
+### Obsolete Goods
 
 Goods produced with technology level lower than 11 have two-quarter validity time. Those manufactured with higher technology – and correspondingly higher quality of ingredients - can be stored for three quarters. 
 
@@ -255,8 +253,7 @@ Inventories that reached its expiry date will be destroyed at the end of period.
 Financial Decisions
 ===========
 
-Investment Budget and Funding Sources 
----------------
+### Investment Budget and Funding Sources 
 
 Each company is assigned a total investment budget (T.I.B.) that can be spent in a discretionary way. Each team may choose its own investment strategy. 
 
@@ -274,8 +271,7 @@ If a company generates operational profits, it can earn Interests on deposits at
 R&D Decisions
 ===========
 
-Investment in Processing Technology 
---------------- 
+### Investment in Processing Technology 
 
 Improved technology allows: 
 a)	Utilization of better ingredients
@@ -285,8 +281,8 @@ c)	Extending inventory storage duration,
 Technology enhancements take non-negligible part of T.I.B. Obtaining more significant improvements will require disproportionally higher investments as improving A.T.L. is substantially cheaper at the initial stages.
 
 
-Investment in Production Efficiency 
---------------- 
+### Investment in Production Efficiency 
+
 
 R&D Dept. will suggest the estimated investment budget to increase production efficiency or production volume flexibility. 
 
@@ -308,8 +304,8 @@ Increasing production efficiency will also have impact on reduction of productio
 Sales Decisions
 ===========
 
-Sales Force Decisions 
---------------- 
+### Sales Force Decisions 
+ 
 
 The sales force budget expressed in $mln determines the number of field representatives in charge of the entire brand. An acceptable range of values is from 0 to A.I.B. 
 
@@ -321,8 +317,8 @@ Changes in the distribution resulting from the modifications of sales force budg
 Portfolio Decisions
 ===========
 
-Launching a new Brand 
---------------- 
+### Launching a new Brand 
+ 
 
 Each company can have up to five brands with five SKU‟s within each brand. 
 
@@ -337,15 +333,13 @@ Following dimensions need to be decided when launching a new brand:
 > - By clicking “more information” on the interface of R&D decisions, you will the information needed for your investment decisions.
 
 
-Modify an existing Brand 
---------------- 
+### Modify an existing Brand 
 
 An existing brand can be modified by adjusting applied Processing Technology or Quality of Ingredients. The pack size for a specific SKU can only be set at the launch moment. 
 
 A new SKU needs to be launched if a company wishes to offer an alternative or additional item with a different pack size.
 
-Discontinue?
---------------- 
+### Discontinue?
 
 If “YES” is entered, the corresponding SKU is discontinued at the end of period. All remaining inventories at manufacturer, wholesalers and retailers are sold off at 25% of the purchase or production cost respectively. 
 
@@ -364,8 +358,7 @@ The corresponding 75% charge is considered as a material cost and decreases manu
 Production Volume Decisions
 ===========
 
-Overview
---------------- 
+### Overview
 
 It defines the planned production (in mln packs) for the entire period. It is subject to certain adjustments (increase or reduction). The scale of adjustments depends on previous investments in production and logistics efficiency. 
 
@@ -381,15 +374,14 @@ You can ask for overtime shifts, which will increase the production cost by 27%.
 Pricing Decisions
 ===========
 
-Manufacturer Price 
---------------- 
+### Manufacturer Price 
 
 It is expressed in $ per actual pack size. For SMALL or LARGE packs, it is converted to the price per STANDARD pack in market studies reports. 
 
 Authorized input for Manufacturer Price values vary from 50% to 300% of manufacturer production cost. 
 
-Apply New Manufacturer Price to Old Inventories at Factory
---------------- 
+### Apply New Manufacturer Price to Old Inventories at Factory
+
 
 In case there are some previously produced inventories, and their prices were different from the currently decided.
 
@@ -449,8 +441,8 @@ If retailers still have inventory with reduced price, a residual effect may last
 Trade Decisions
 ===========
 
-Trade Expenses 
---------------- 
+### Trade Expenses 
+
 
 The budget expressed in $mln encompasses all investments to improve merchandising and to stimulate retailers. Possible input values range from 0 to A.I.B. It does not increase retailers’ margin, but covers costs of better display, in-store communication, product sampling, tasting, information booths, etc. 
 
@@ -459,8 +451,7 @@ Trade investments influence Volume weighted distribution and shelf space mainly.
 Significant spill-over effects can be observed across other SKUs of the same brand.
 
 
-Additional Trade Margin
---------------- 
+### Additional Trade Margin
 
 Margin decided here is added on top of the regular one. Possible input range is from 0% to 25%. The actual maximal percentage is limited by A.I.B. (Average Investment Budget).
 
@@ -473,16 +464,14 @@ Retailers’ inventory plus expected retailers purchases multiplied by absolute 
 > - It does not influence consumer price but makes given SKU more profitable for retailers and therefore incentivizes them not only to allocate larger shelf space but also to increase volume orders. 
 
 
-Wholesale Minimum Bonus Volume
---------------- 
+### Wholesale Minimum Bonus Volume
 
 You can set purchase volume (in mln packs) threshold for wholesalers based on production volume and inventory. If their orders reach or exceed the required minimum, they will qualify for discount increasing their regular margin of 6%. Allowed input range varies from 0 to the volume of inventory at manufacturer increased by the current production. 
 
 When the bonus program is proposed, wholesalers’ purchases will be modified upwards if the difference between regular volume and the one qualifying for bonus is smaller than 15%. Direct result of bonus program is increase of wholesalers’ purchases. It may prove important to avoid out-of-stock situation in the marketplace.
 
 
-Wholesale Bonus Rate
---------------- 
+### Wholesale Bonus Rate
 
 Percentage specified here represents additional profit margin for wholesalers provided that their purchases reach or exceed defined above volume. Allowed range is from 0% to 6%, but absolute maximal percentage is limited by A.I.B. 
 
@@ -498,8 +487,8 @@ Wholesale Bonus = Order Quantity x Manufacturer Price x Wholesale Bonus Rate.
 Final Remarks
 ===========
 
-Final Remarks
---------------- 
+### Final Remarks
+ 
 
 Although this manual tends to give a lot of information, for clarity and readability reasons, it does not cover all details. If you have any questions make a note of them so that you can ask the administrator during the introductory sessions at the beginning of your exercise. Hopefully, you have now some idea of how MarkSimos simulation works, and that you are ready to face its challenges. 
 
