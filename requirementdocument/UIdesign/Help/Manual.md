@@ -3,17 +3,16 @@ Overview
 
 
 
-What is MarkSimos?
-----------
+###What is MarkSimos?
 
-#### **Overview**
+### **Overview**
 
 **MarkSimos** is Business Simulation Game that allows you to run a company in a realistic, yet risk-free virtual environment with an intensive time frame.
 
 Through stimulating team sharing and experiential learning encourages participants to create a CEO perspective and to get a well-rounded view of the firm and its functions. 
 
 
-#### **Your Mission and Roles**
+### **Your Mission and Roles**
 
 You and the other members of your team have just been recruited by a large corporation to replace the former management team to manage its business in an **emerging market**, marked by large populated cities with a healthy and stable growth. 
 
@@ -26,7 +25,7 @@ Your **objective** is to make sure that during your period of control the compan
 To succeed it is indispensable first to **understand the market**, second to **determine clear strategy for serving that market** and third to **implement the strategy consistently**. At the same time, a permanent and thorough analysis of the market evolution is required to properly adjust ways of using the available tools. All common marketing tools and concepts such as pricing, brand portfolio management, innovation, advertising, trade investment, segmentation and positioning are represented within the model.
 
 
-#### **Methodology**
+### **Methodology**
 
 The simulation takes place among 20-30 participants divided into 4 to 6 teams producing and selling similar products. Each team represents a company composed with 3 to 6 members each that will be assigned with different roles (CEO, CMO, COO…).
 
@@ -49,14 +48,14 @@ The simulation lasts 4 to 5 rounds, each one representing a real life quarter. A
 Market and Industry
 ----------
 
-#### **Market Situation**
+### **Market Situation**
 
 The currency unit is $. The **inflation** itself remains relatively stable at around **8.5% on a yearly basis**. 
 
 **Market growth** is quite significant, with a rate approaching **9% in average on a yearly basis (around 2% per quarter)**. At the same time, the market is very price sensitive and any price increases significantly exceeding inflation may result in volume growth stabilization, or even reduction. The fast pace of consumers‟ maturing is constantly forcing the manufacturers to improve their offer and/or increase efficiency. 
 
 
-#### **Consumer Segments** 
+### **Consumer Segments** 
 
 All products are perceived by the consumers in terms of: 
 
@@ -98,7 +97,7 @@ As the simulation goes on, manufacturers launch new brands and their variants wi
 4P's
 ----------
 
-#### **Product**
+### **Product**
 
 All companies manufacture products that are frequently bought by virtually every household, which are not presumed as food or non-food items. Important fact is that they usually **cannot be stored more than two periods** after their production period. Product production cost and quality is determined by two aspects: 
 **a)	Applied Technology Level**
@@ -146,7 +145,7 @@ Overtime shifts allow extending production ability by at most 30%. The increment
 
 Acquired production Volumes Flexibility refers to the percentage by which the company can adjust its initially planned production volumes upwards or downwards.
 
-#### **Place (Distribution)**
+### **Place (Distribution)**
 
 Manufacturers do not sell directly to retailers; their products are first shipped to wholesalers, and then delivered to retailers. All associated costs are implicitly included in the production costs. 
 
@@ -157,7 +156,7 @@ Wholesalers and retailers are very careful with their ordering policies; besides
 Products tend to be constantly changed and improved. As a result, consumers have a strong preference to renew their purchases instead of forward buying for a long period. 
 If an item is discontinued, it continues to be sold till the end of this period. If there is any stock left in the channel at the period end, all remaining inventories at manufacturer, wholesalers and retailers are sold off at 25% of the purchase cost respectively. The corresponding 75% charge is considered as a material cost and decreases manufacturer gross profit.
 
-#### **Price**
+### **Price**
 
 Manufacturers enjoy relative flexibility in setting prices between **50% to 300% of product manufacturing cost price**. 
 
@@ -165,7 +164,7 @@ Once the list price is decided it determines the purchase price for retailers as
 
 Retailers do not entirely respect the price recommendations. Some deviations between + 5% are commonly observed, and in some extreme situation +15 is also possible. They may decide in some cases to reduce or to augment their margin by altering consumer price. On less performing items retailers tend to reduce prices. At the same time, they are inclined to raise prices on SKU demonstrating upwards sales trend.
 
-#### **Promotion**
+### **Promotion**
 
 Consistently, consumer promotions should be unambiguously considered as price promotions. During price promotions retailers respect accurately producers‟ plans. The actual consumer prices will be reduced proportionally to the decided promotional budget.
 
@@ -184,7 +183,7 @@ Consistently, consumer promotions should be unambiguously considered as price pr
 Business Operation
 ===========
 
-#### **Brief Overview**
+### **Brief Overview**
 
 Before making decisions, you should understand the market evolution by analyzing the market and competition information provided in the reports. 
 
@@ -212,7 +211,7 @@ Order and Inventory Decisions
 Order Decisions
 ---------------
 
-#### **Wholesalers' Orders**
+### **Wholesalers' Orders**
 
 Current period orders are determined by the following factors: 
 > - Market sales and sales trend over previous periods
@@ -222,7 +221,7 @@ Current period orders are determined by the following factors:
 
 Manufacturers may influence wholesalers’ behavior by offering additional financial incentives.
  
-#### **Retailers' Orders**
+### **Retailers' Orders**
 
 In a normal situation, the same factors, as those mentioned above, influence retailers’ orders. In addition, retailers take into account planned price promotions. Retailers tend to have smaller stocks cover; usually it is no bigger than 4 weeks. 
 
@@ -406,11 +405,11 @@ Marketing Decisions
 Communication Decisions
 --------------- 
 
-#### **Communication Overview**
+### **Communication Overview**
 
 It is an advertising budget expressed in $mln. Possible range of input values varies from 0 to A.I.B. The consumer communication decided at SKU levels has significant spill-over effects. 
 
-#### **Target Consumer Segment **
+### **Target Consumer Segment **
 
 If target segment is specified, the advertising budget is used to reposition SKU towards the indicated segment expectations. The specified value influences Value and Image Perceptions of an SKU. It may also affect perceptions of other SKUs marketed under the same brand name. 
 
@@ -420,7 +419,7 @@ It may also be left without specifying any segment, in this case advertising bud
 Promotion Decisions
 --------------- 
 
-#### **Promotional Budget**
+### **Promotional Budget**
 
 It is a budget expressed in $mln for consumer promotions in stores. Possible input values range from 0 to A.I.B. The list of variables directly influenced by promotional budget contains: 
 > - Display price 
@@ -431,7 +430,7 @@ It is a budget expressed in $mln for consumer promotions in stores. Possible inp
 > - Awareness 
 
 
-#### **Promotions Schedule**
+### **Promotions Schedule**
 
 Defines weeks when promotions occur. At least one week needs to be selected. In extreme case all 13 weeks can be selected. 
 
