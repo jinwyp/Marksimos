@@ -25,10 +25,6 @@ app.directive('userHeader', ['$window', '$translate', 'Student', function($windo
         link: function (scope, element, attrs) {
 
 
-            if(angular.isUndefined(attrs.currentRound)){
-                console.log('Need current Round data');
-                scope.currentRound = 0;
-            }
 
             scope.clickMenu = function(currentmenu){
                 scope.currentMenu = currentmenu;
