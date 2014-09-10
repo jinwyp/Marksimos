@@ -10,8 +10,7 @@ var marksimosapp = angular.module('marksimos', ['pascalprecht.translate', 'angul
 
 
 // controller business logic
-
-marksimosapp.controller('chartController', ['$translate', '$scope', '$rootScope', '$document', '$timeout', '$http', 'notify', 'chartReport', 'tableReport', 'Company', 'FinalScore', 'Questionnaire', function($translate, $scope, $rootScope, $timeout, $http, notify, chartReport, tableReport, Company , FinalScore, Questionnaire) {
+marksimosapp.controller('chartController', ['$translate', '$scope', '$rootScope', '$document', '$timeout', '$http', 'notify', 'chartReport', 'tableReport', 'Company', 'FinalScore', 'Questionnaire', function($translate, $scope, $rootScope, $document, $timeout, $http, notify, chartReport, tableReport, Company , FinalScore, Questionnaire) {
 
     $rootScope.$on('$translateChangeSuccess', function () {
         $translate(['HomePageSegmentLabelPriceSensitive', 'HomePageSegmentLabelPretenders', 'HomePageSegmentLabelModerate',
@@ -40,9 +39,9 @@ marksimosapp.controller('chartController', ['$translate', '$scope', '$rootScope'
     });
 
 
-    // notify.config({
-    //     duration : 10000
-    // }) ;
+    notify.config({
+        duration : 10000
+    }) ;
     var notifytemplate = {
         success : '/app/js/websitecomponent/notifysavesuccess.html',
         failure : '/app/js/websitecomponent/notifysavefailure.html'
