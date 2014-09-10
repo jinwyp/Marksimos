@@ -1,5 +1,5 @@
 var express = require('express');
-var markdown = require('markdown-js');
+// var markdown = require('markdown-js');
 var path = require('path');
 var favicon = require('static-favicon');
 var cookieParser = require('cookie-parser');
@@ -20,7 +20,7 @@ var app = express();
 app.engine('md', function(path, options, fn){
   fs.readFile(path, 'utf8', function(err, str){
     if (err) return fn(err);
-    str = markdown.parse(str).toString();
+    //str = markdown.parse(str).toString();
     fn(null, str);
   });
 });

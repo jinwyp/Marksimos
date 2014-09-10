@@ -46,6 +46,7 @@ $color_main_body_product_target: #6f6f6f;
 $color_main_body_competitors: #2f4e9b;
 $color_main_body_user_clock: #373737;
 $color_main_body_user_decision_button: #19acfe;
+$color_main_body_user_muted: #999999;
 
 $color_main_body_user_period_bar: #9FA5BF;
 $color_main_body_user_period_bar_border: #dfe0e5;
@@ -146,6 +147,17 @@ $color_main_body_user_feedback_info:#EAEFFF;
     background-position: 1px 0px;
     padding-left: 25px;
     margin: 20px;
+    display: block;
+}
+
+@mixin icon_user_faq {
+    color: $color_login_title;
+    font-size: 30px;
+    background-image: url(../images/faq.png);
+    background-repeat: no-repeat;
+    background-position: 1px 0px;
+    padding-left: 37px;
+    margin: 20px 0px;
     display: block;
 }
 
@@ -530,11 +542,26 @@ body{
             }
 
             .bs_p {
-                color: $color_main_body_company;
+                color: $color_main_body_user_muted;
                 font-size: 14px;
                 font-family: $font_main_header2;
                 margin:0px;
             }
+            .faq_h3{
+                color: $color_login_title;
+                font-family: $font_login_title;
+                font-weight:500;
+                @include icon_user_faq;
+            }
+            .faq_h5{
+                font-family: $font_login_title;
+                font-weight:normal;
+                font-size:16px;
+                padding-left:35px;
+                margin:0 0 30px 0;
+                color:$color_main_body_user_muted;
+            }
+
             .bs_h3 {
                 color: $color_login_title;
                 font-size: 30px;
@@ -542,13 +569,15 @@ body{
                 padding-left: 0px;
                 border-bottom: 1px solid $color_main_body_border;
                 font-weight:500;
+                margin:20px;
             }
             .bs_h4 {
                 color: $color_main_body_company;
                 font-size: 16px;
                 font-family: $font_main_header2;
                 padding : 15px 0px;
-                margin : 0px;
+                margin : 0 20px;
+
             }
         }
 
@@ -557,64 +586,104 @@ body{
             background-color: $color_main_body_background;
             border: 1px solid $color_main_body_border;
             border-radius: 4px;
+            margin: 0 20px;
         }
 
-        .bs-docs-sidenav {
-            margin-top: 20px;
-            margin-bottom: 20px;
-        }
         
-        .bs-docs-sidebar .nav > li > a {
-            display: block;
-            font-size: 13px;
-            font-weight: 500;
-            color: $color_main_body_product;
-            padding: 4px 20px;
-        }
-        .bs-docs-sidebar .nav > li > a:hover,
-        .bs-docs-sidebar .nav > li > a:focus {
-            padding-left: 19px;
-            color: $color_main_body_brand;
-            text-decoration: none;
-            background-color: transparent;
-            border-left: 1px solid $color_main_body_user_chart_leftmenu_active_bgbefore;
-        }
-        .bs-docs-sidebar .nav > .active > a,
-        .bs-docs-sidebar .nav > .active:hover > a,
-        .bs-docs-sidebar .nav > .active:focus > a {
-            padding-left: 18px;
-            font-weight: bold;
-            color: $color_main_body_brand;
-            background-color: transparent;
-            border-left: 2px solid $color_main_body_user_chart_leftmenu_active_bgbefore;
+
+        .bs-docs-sidebar{
+            .nav{
+                li{
+                    a{
+                        display: block;
+                        font-size: 13px;
+                        font-weight: 500;
+                        color: $color_main_body_product;
+                        padding: 4px 20px;
+                    }
+                    a:hover,a:focus {
+                        padding-left: 19px;
+                        color: $color_main_body_brand;
+                        text-decoration: none;
+                        background-color: transparent;
+                        border-left: 1px solid $color_main_body_user_chart_leftmenu_active_bgbefore;
+                    }
+                }
+                li.active,li.active:hover,li.active:focus{
+                    a{
+                        padding-left: 18px;
+                        font-weight: bold;
+                        color: $color_main_body_brand;
+                        background-color: transparent;
+                        border-left: 2px solid $color_main_body_user_chart_leftmenu_active_bgbefore;
+                    }
+                }
+                .nav{
+                    display: none;
+                    padding-bottom: 10px;
+                    li{
+                        a{
+                            padding-top:    1px;
+                            padding-bottom: 1px;
+                            padding-left: 30px;
+                            font-size: 12px;
+                            font-weight: normal;
+                        }
+                        a:hover,a:focus{
+                            padding-left: 29px;
+                        }
+                    }
+                    li.activ,li.active:hover,li.active:focus{
+                        a{
+                            font-weight: 500;
+                            padding-left: 28px; 
+                        }
+                    }
+                }
+                .active{
+                    ul{
+                        display: block;
+                    }
+                }
+            }
+            .bs-docs-sidenav {
+                margin-top: 20px;
+                margin-bottom: 20px;
+            }
+            .list-inline{
+                padding:0px;
+                margin:0px;
+                li{
+                   padding:0px; 
+                }
+            }
+            .bs-faq-sidenav{
+                li{
+                    a{
+                        font-size: 14px;
+                        font-weight: 500;
+                        color: $color_main_body_product;
+                        padding: 4px 20px;
+                        border-radius:10px;
+                        border: 1px solid transparent;
+                    }
+                    a:hover,a:focus {
+                        color: $color_main_body_user_chart_leftmenu_active_bgbefore;
+                        text-decoration: none;
+                        background-color: $color_login_panel_background;
+                        border: 1px solid $color_main_body_user_chart_leftmenu_active_bgbefore;
+                    }
+                }
+                li.active,li.active:hover,li.active:focus{
+                    a{
+                        color: $color_login_panel_background;
+                        background-color: $color_main_body_user_chart_leftmenu_active_bgbefore;                      
+                    }
+                }
+            }
+
         }
 
-        .bs-docs-sidebar .nav .nav {
-            display: none;
-            padding-bottom: 10px;
-        }
-
-
-        .bs-docs-sidebar .nav > .active > ul {
-            display: block;
-        }
-        .bs-docs-sidebar .nav .nav > li > a {
-            padding-top:    1px;
-            padding-bottom: 1px;
-            padding-left: 30px;
-            font-size: 12px;
-            font-weight: normal;
-        }
-        .bs-docs-sidebar .nav .nav > li > a:hover,
-        .bs-docs-sidebar .nav .nav > li > a:focus {
-            padding-left: 29px;
-        }
-        .bs-docs-sidebar .nav .nav > .active > a,
-        .bs-docs-sidebar .nav .nav > .active:hover > a,
-        .bs-docs-sidebar .nav .nav > .active:focus > a {
-            font-weight: 500;
-            padding-left: 28px;
-        }
 
 
         .intro_video_next_button{

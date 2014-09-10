@@ -1,6 +1,6 @@
 <% include ./include/headcssuser.html %>
 
-<body ng-app="marksimoslogin">
+<body ng-app="marksimoshelp">
 
 <div class="container-fluid width_big_screen" ng-controller="userHelpController" >
 
@@ -33,26 +33,36 @@
 
             <div class="row intro_data" ng-show='isManualShown'>
                 <div class="col-md-12">
-                    <div class="bs-docs-section" ng-bind-html='trustAsHtml(manual)'></div>
+                    <!-- <div class="bs-docs-section" ng-bind-html='trustAsHtml(manual)'></div> -->
+                    <div class="bs-docs-section" btf-markdown='manual'></div>
                 </div>
             </div>
 
             <div class="row intro_data" ng-show='isFAQShown'>
-                <div class="col-md-3">
-                    <div class="bs-docs-sidebar">
-
-                        <ul class="nav bs-docs-sidenav">
-
-                            <li class="" ng-class="{'active':questionsShown[$index]}" ng-repeat='faq in faqs'>
-                                <a href="" ng-click='chickFAQ($index)'>{{faq.category}}</a>
-                            </li>
-
-                        </ul>
-
+                <div class="col-md-12">
+                    <div class="bs-docs-section">
+                        <h3 class="faq_h3">Frequently Asked Questions</h3>
+                        <h5 class="faq_h5">This FAQ will attempt to cover the most asked question about Marksimos.This FAQ will attempt to cover the most asked question about Marksimos.This FAQ will attempt to cover the most asked question about Marksimos.</h5>
                     </div>
                 </div>
 
-                <div class="col-md-9">
+                <div class="col-md-12">
+                    <div class="bs-docs-section">
+                        <div class="bs-docs-sidebar">
+
+                            <ul class="list-inline bs-faq-sidenav">
+
+                                <li class="" ng-class="{'active':questionsShown[$index]}" ng-repeat='faq in faqs'>
+                                    <a href="" ng-click='chickFAQ($index)'>{{faq.category}}</a>
+                                </li>
+
+                            </ul>
+
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-12">
                     <div class="bs-docs-section">
                         <div ng-repeat='faq in faqs' ng-show='questionsShown[$index]'>
                             <h3 class="bs_h3">{{faq.category}}</h3>
@@ -95,5 +105,5 @@
 
 </div>
 
-<% include ./include/footerscriptuserlogin.html %>
+<% include ./include/footerscripthelp.html %>
 
