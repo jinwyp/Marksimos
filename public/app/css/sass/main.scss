@@ -1106,7 +1106,7 @@ body{
     .comparison_box {
         width: 48%;
         min-height: 600px;
-        margin: 10px 0px 30px 15px;
+        margin: 20px 0px 30px 15px;
         border: 1px solid $color_login_panel_border;
         background-color: $color_login_panel_background;
 
@@ -1133,8 +1133,8 @@ body{
     }
 
     .all_comparison_reports{
-        border-top:1px solid $color_main_body_comparison_division_line;
-        padding : 15px 0px 40px 0px ;
+        border-bottom:1px solid $color_main_body_comparison_division_line;
+        padding : 15px 0px 10px 0px ;
 
         h6{
             font-size: 14px;

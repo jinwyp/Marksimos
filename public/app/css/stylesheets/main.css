@@ -1168,7 +1168,7 @@ body a, body button {
 .mainbody .comparison_box {
   width: 48%;
   min-height: 600px;
-  margin: 10px 0px 30px 15px;
+  margin: 20px 0px 30px 15px;
   border: 1px solid #e1e1e1;
   background-color: #ffffff;
 }
@@ -1196,8 +1196,8 @@ body a, body button {
 }
 /* line 1135, ../sass/main.scss */
 .mainbody .all_comparison_reports {
-  border-top: 1px solid #d4d4d4;
-  padding: 15px 0px 40px 0px;
+  border-bottom: 1px solid #d4d4d4;
+  padding: 15px 0px 10px 0px;
 }
 /* line 1139, ../sass/main.scss */
 .mainbody .all_comparison_reports h6 {
