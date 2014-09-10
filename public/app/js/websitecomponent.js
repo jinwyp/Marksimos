@@ -330,4 +330,21 @@ app.directive('tableReportFinalScore', ['$translate', function($translate) {
     };
 }]);
 
+app.directive('manualNav', function() {
+    return function(scope, elm, attrs) {
+        $($(".bs-docs-sidenav").firstChild).addClass("active");
+        $(".bs-docs-sidenav>li>a").click(function() {
+            $(".bs-docs-sidenav li").removeClass("active");
+            $(this).parent().addClass("active");
+            if ($($($(this).parent()).children()[1]).children()[0] != undefined) {
+                $($($($(this).parent()).children()[1]).children()[0]).addClass('active');
+            }
+        });
+        $(".second-sidenav>li>a").click(function() {
+            $(".second-sidenav li").removeClass("active");
+            $(this).parent().addClass("active");
+        });
+    }
+})
+
 

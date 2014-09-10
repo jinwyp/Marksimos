@@ -140,11 +140,14 @@ marksimosapp.controller('userHelpController',['$scope', '$sce', '$http', '$windo
 
     $scope.initPage = function() {
 
-        $scope.isFAQShown=false;
+
+
+        $scope.isFAQShown=true;
         $scope.isVideoShown=false;
-        $scope.isManualShown=true;
+        $scope.isManualShown=false;
         FAQ.getFAQ().then(function(doc){
             console.log(doc);
+            $scope.faqs=doc;
             return $http({
                 url:'/marksimos/manual',
                 method:'GET'
@@ -155,7 +158,7 @@ marksimosapp.controller('userHelpController',['$scope', '$sce', '$http', '$windo
     };
 
     $scope.trustAsHtml = function(data) {
-          return $sce.trustAsHtml(data);
+        return $sce.trustAsHtml(data);
     };
 
     $scope.initPage();

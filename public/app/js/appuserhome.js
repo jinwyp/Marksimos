@@ -40,9 +40,9 @@ marksimosapp.controller('chartController', ['$translate', '$scope', '$rootScope'
     });
 
 
-    notify.config({
-        duration : 10000
-    }) ;
+    // notify.config({
+    //     duration : 10000
+    // }) ;
     var notifytemplate = {
         success : '/app/js/websitecomponent/notifysavesuccess.html',
         failure : '/app/js/websitecomponent/notifysavefailure.html'
