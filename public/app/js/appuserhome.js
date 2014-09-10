@@ -10,7 +10,7 @@ var marksimosapp = angular.module('marksimos', ['pascalprecht.translate', 'angul
 
 
 // controller business logic
-marksimosapp.controller('chartController', ['$translate', '$scope', '$rootScope', '$document', '$timeout', '$http', 'notify', 'chartReport', 'tableReport', 'Company', function($translate, $scope, $rootScope, $document, $timeout, $http, notify, chartReport, tableReport, Company) {
+marksimosapp.controller('chartController', ['$translate', '$scope', '$rootScope', '$document', '$timeout', '$interval', '$http', 'notify', 'chartReport', 'tableReport', 'Company', function($translate, $scope, $rootScope, $document, $timeout, $interval, $http, notify, chartReport, tableReport, Company) {
     $rootScope.$on('$translateChangeSuccess', function () {
         $translate(['HomePageSegmentLabelPriceSensitive', 'HomePageSegmentLabelPretenders', 'HomePageSegmentLabelModerate',
             'HomePageSegmentLabelGoodLife', 'HomePageSegmentLabelUltimate', 'HomePageSegmentLabelPragmatic']).then(function (translations) {
@@ -96,6 +96,11 @@ marksimosapp.controller('chartController', ['$translate', '$scope', '$rootScope'
     };
 
     $scope.data = {
+        currentTime : {
+            hour : 0,
+            minute : 0,
+            second : 0
+        },
         currentStudent : null,
         currentCompany : null,
         currentCompanyNameCharacter : "",
@@ -652,6 +657,25 @@ marksimosapp.controller('chartController', ['$translate', '$scope', '$rootScope'
 
         Company.getCurrentStudent().then(function(data, status, headers, config){
             $scope.data.currentStudent = data;
+
+            var currentDate = new Date();
+
+            var timer = $interval(function() {
+                currentDate = new Date();
+                if(currentDate.getHours() < 13 && currentDate.getHours() > 9){
+                    $scope.data.currentTime.hour = 13 - currentDate.getHours();
+                    $scope.data.currentTime.minute = 60 - currentDate.getMinutes();
+                    $scope.data.currentTime.second = 60 - currentDate.getSeconds() ;
+                }else if(currentDate.getHours() < 19 && currentDate.getHours() > 13){
+                    $scope.data.currentTime.hour = 19 - currentDate.getHours();
+                    $scope.data.currentTime.minute = 60 - currentDate.getMinutes();
+                    $scope.data.currentTime.second = 60 - currentDate.getSeconds() ;
+                }else {
+                    $interval.cancel(timer);
+                }
+            }, 3000);
+
+
 
             // 处理当前的公司名称
 
@@ -1267,6 +1291,6 @@ marksimosapp.controller('chartController', ['$translate', '$scope', '$rootScope'
             $scope.css.dragTargetBoxId = 'comparisonBox' +  targetboxid;
         }
 
-    }
+    };
 
 }]);
