@@ -646,7 +646,12 @@ marksimosapp.controller('chartController', ['$translate', '$scope', '$rootScope'
     /********************  切换左部图标菜单  ********************/
     $scope.clickChartMenu = function(chart){
         $scope.css.menu = 'Report';
-        $scope.css.chartMenu = chart;
+
+        // 不知道为什么 图表渲染的宽度没有撑开,所以加入$timeout.
+        $timeout(function() {
+            $scope.css.chartMenu = chart;
+        }, 100);
+
     };
 
 
