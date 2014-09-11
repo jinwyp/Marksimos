@@ -4,12 +4,25 @@
 'use strict';
 
 // create module for custom directives
-var marksimosapp = angular.module('marksimoshelp', ['pascalprecht.translate', 'marksimos.model', 'marksimos.websitecomponent',  'marksimos.filter', 'marksimos.translation', 'ngSanitize',
-  'btford.markdown']);
+var marksimosapp = angular.module('marksimoshelp', ['pascalprecht.translate', 'marksimos.model', 'marksimos.websitecomponent',  'marksimos.filter', 'marksimos.translation']);
 
 
 
-marksimosapp.controller('userHelpController',['$scope', '$sce', '$http', '$window', 'FAQ', function($scope, $sce, $http, $window, FAQ) {
+marksimosapp.controller('userHelpController',['$rootScope', '$scope', '$translate', '$sce', '$http', '$window', 'FAQ', 'Manual',function($rootScope, $scope, $translate, $sce, $http, $window, FAQ, Manual) {
+
+    
+
+    $rootScope.$on('$translateChangeSuccess', function (a,b) {
+        if($translate.use()=="zh_CN"){
+            Manual.getZH_CN().then(function(manual){
+                $scope.manual=manual;
+            })
+        }else if($translate.use()=="en_US"){
+            Manual.getEN_US().then(function(manual){
+                $scope.manual=manual;
+            })
+        }
+    });
 
 
     $scope.initPage = function() {
@@ -21,15 +34,21 @@ marksimosapp.controller('userHelpController',['$scope', '$sce', '$http', '$windo
         $scope.isManualShown=false;
         $scope.questionsShown=[1,0,0,0,0,0,0,0];
 
+        if($translate.use()=="zh_CN"){
+
+        }else if($translate.use()=="en_US"){
+
+        }
+
         FAQ.getFAQ().then(function(doc){
-            console.log(doc);
             $scope.faqs=doc;
-            return $http({
-                url:'/marksimos/manual',
-                method:'GET'
-            });
+            if($translate.use()=="zh_CN"){
+                return Manual.getZH_CN();
+            }else if($translate.use()=="en_US"){
+                return Manual.getEN_US();
+            }
         }).then(function(data){
-            $scope.manual=data.data;
+            $scope.manual=data;
         });
     };
 

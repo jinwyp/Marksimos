@@ -1,5 +1,4 @@
 var express = require('express');
-// var markdown = require('markdown-js');
 var path = require('path');
 var favicon = require('static-favicon');
 var cookieParser = require('cookie-parser');
@@ -16,11 +15,9 @@ var morgan = require('morgan');
 
 var app = express();
 
-//让Express渲染markdown文件
 app.engine('md', function(path, options, fn){
   fs.readFile(path, 'utf8', function(err, str){
     if (err) return fn(err);
-    //str = markdown.parse(str).toString();
     fn(null, str);
   });
 });

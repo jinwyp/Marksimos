@@ -15,7 +15,6 @@
     "express": "~4.0.0",
     "express-session": "~1.6.5",
     "express-validator": "~2.3.0",
-    "markdown-js": "0.0.3",
     "mongoose": "~3.8.8",
     "morgan": "~1.0.0",
     "node-uuid": "~1.4.1",
