@@ -549,14 +549,11 @@ marksimosapp.controller('chartController', ['$translate', '$scope', '$rootScope'
         $scope.data.tableA1CompanyStatus.currentBrand = $scope.data.tableA1CompanyStatus.currentCompany.brand[0];
         $scope.data.tableA1CompanyStatus.currentGlobal = $scope.data.tableA1CompanyStatus.currentCompany.global;
     };
-    $scope.switchTableReportSKU = function(SKU){
+    $scope.switchTableReportA1SKU = function(SKU){
         $scope.data.tableA1CompanyStatus.currentSKU = SKU;
-        $scope.data.tableA4ProfitabilityEvolution.currentSKU = SKU;
     };
-    $scope.switchTableReportBrand = function(brand){
+    $scope.switchTableReportA1Brand = function(brand){
         $scope.data.tableA1CompanyStatus.currentBrand = brand;
-        $scope.data.tableA2FinancialData.currentBrand = brand;
-        $scope.data.tableA4ProfitabilityEvolution.currentBrand = brand;
     };
 
 
@@ -572,6 +569,11 @@ marksimosapp.controller('chartController', ['$translate', '$scope', '$rootScope'
         $scope.data.tableA2FinancialData.currentPeriod = period;
         $scope.data.tableA2FinancialData.currentBrand = $scope.data.tableA2FinancialData.currentPeriod.brands[0];
     };
+    $scope.switchTableReportA2Brand = function(brand){
+        $scope.data.tableA2FinancialData.currentBrand = brand;
+    };
+
+
     /********************  Table Report A4  ********************/
     tableReport.profitabilityEvolution().then(function(data, status, headers, config){
 //        console.log(data);
@@ -580,6 +582,12 @@ marksimosapp.controller('chartController', ['$translate', '$scope', '$rootScope'
         $scope.data.tableA4ProfitabilityEvolution.currentBrand = $scope.data.tableA4ProfitabilityEvolution.allData.brand[0];
         $scope.data.tableA4ProfitabilityEvolution.currentGlobal = $scope.data.tableA4ProfitabilityEvolution.allData.global;
     });
+    $scope.switchTableReportA4SKU = function(SKU){
+        $scope.data.tableA4ProfitabilityEvolution.currentSKU = SKU;
+    };
+    $scope.switchTableReportA4Brand = function(brand){
+        $scope.data.tableA4ProfitabilityEvolution.currentBrand = brand;
+    };
 
     /********************  Table Report B2  ********************/
     tableReport.competitorIntelligence().then(function(data, status, headers, config){

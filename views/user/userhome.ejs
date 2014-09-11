@@ -284,7 +284,7 @@
                                     <div class="table_report" ng-if="css.tableReportTab=='SKU'">
 
                                         <ul class="nav nav-pills">
-                                            <li ng-class="{'active': data.tableA1CompanyStatus.currentSKU.SKUID==sku.SKUID}" ng-repeat="sku in data.tableA1CompanyStatus.currentCompany.SKU"><a href="" ng-click="switchTableReportSKU(sku)">{{sku.SKUName}}</a></li>
+                                            <li ng-class="{'active': data.tableA1CompanyStatus.currentSKU.SKUID==sku.SKUID}" ng-repeat="sku in data.tableA1CompanyStatus.currentCompany.SKU"><a href="" ng-click="switchTableReportA1SKU(sku)">{{sku.SKUName}}</a></li>
                                         </ul>
 
                                         <div class="divider_horizontal"></div>
@@ -296,7 +296,7 @@
                                     <div class="table_report" ng-if="css.tableReportTab=='Brand'">
 
                                         <ul class="nav nav-pills">
-                                            <li ng-class="{'active': data.tableA1CompanyStatus.currentBrand.brandId==brand.brandId}" ng-repeat="brand in data.tableA1CompanyStatus.currentCompany.brand"><a href="" ng-click="switchTableReportBrand(brand)">{{brand.brandName}}</a></li>
+                                            <li ng-class="{'active': data.tableA1CompanyStatus.currentBrand.brandId==brand.brandId}" ng-repeat="brand in data.tableA1CompanyStatus.currentCompany.brand"><a href="" ng-click="switchTableReportA1Brand(brand)">{{brand.brandName}}</a></li>
                                         </ul>
 
                                         <div class="divider_horizontal"></div>
@@ -332,8 +332,8 @@
                                     <div class="table_report" >
 
                                         <ul class="nav nav-pills">
-                                            <li ng-class="{'active': data.tableA2FinancialData.currentBrand.brandId==brand.brandId}" ng-repeat="brand in data.tableA2FinancialData.currentPeriod.brands"><a href="" ng-click="switchTableReportBrand(brand)">{{brand.brandName}}</a></li>
-                                            <li ng-class="{'active': data.tableA2FinancialData.currentBrand=='allbrand'}" ><a href="" ng-click="switchTableReportBrand('allbrand')">{{data.tableA2FinancialData.currentPeriod.allBrands.brandName}}</a></li>
+                                            <li ng-class="{'active': data.tableA2FinancialData.currentBrand.brandId==brand.brandId}" ng-repeat="brand in data.tableA2FinancialData.currentPeriod.brands"><a href="" ng-click="switchTableReportA2Brand(brand)">{{brand.brandName}}</a></li>
+                                            <li ng-class="{'active': data.tableA2FinancialData.currentBrand=='allbrand'}" ><a href="" ng-click="switchTableReportA2Brand('allbrand')">{{data.tableA2FinancialData.currentPeriod.allBrands.brandName}}</a></li>
                                         </ul>
 
                                         <div class="divider_horizontal"></div>
@@ -362,7 +362,7 @@
                                     <div class="table_report" ng-if="css.tableReportTab=='SKU'">
 
                                         <ul class="nav nav-pills">
-                                            <li ng-class="{'active': data.tableA4ProfitabilityEvolution.currentSKU.SKUID==sku.SKUID}" ng-repeat="sku in data.tableA4ProfitabilityEvolution.allData.SKU"><a href="" ng-click="switchTableReportSKU(sku)">{{sku.SKUName}}</a></li>
+                                            <li ng-class="{'active': data.tableA4ProfitabilityEvolution.currentSKU.SKUID==sku.SKUID}" ng-repeat="sku in data.tableA4ProfitabilityEvolution.allData.SKU"><a href="" ng-click="switchTableReportA4SKU(sku)">{{sku.SKUName}}</a></li>
                                         </ul>
 
                                         <div class="divider_horizontal"></div>
@@ -373,7 +373,7 @@
                                     <div class="table_report" ng-if="css.tableReportTab=='Brand'">
 
                                         <ul class="nav nav-pills">
-                                            <li ng-class="{'active': data.tableA4ProfitabilityEvolution.currentBrand.brandId==brand.brandId}" ng-repeat="brand in data.tableA4ProfitabilityEvolution.allData.brand"><a href="" ng-click="switchTableReportBrand(brand)">{{brand.brandName}}</a></li>
+                                            <li ng-class="{'active': data.tableA4ProfitabilityEvolution.currentBrand.brandId==brand.brandId}" ng-repeat="brand in data.tableA4ProfitabilityEvolution.allData.brand"><a href="" ng-click="switchTableReportA4Brand(brand)">{{brand.brandName}}</a></li>
                                         </ul>
 
                                         <div class="divider_horizontal"></div>
@@ -863,7 +863,7 @@
                                     <div class="table_report" ng-if="css.tableReportTab=='SKU'">
 
                                         <ul class="nav nav-pills">
-                                            <li ng-class="{'active': data.tableA1CompanyStatus.currentSKU.SKUID==sku.SKUID}" ng-repeat="sku in data.tableA1CompanyStatus.currentCompany.SKU"><a href="" ng-click="switchTableReportSKU(sku)">{{sku.SKUName}}</a></li>
+                                            <li ng-class="{'active': data.tableA1CompanyStatus.currentSKU.SKUID==sku.SKUID}" ng-repeat="sku in data.tableA1CompanyStatus.currentCompany.SKU"><a href="" ng-click="switchTableReportA1SKU(sku)">{{sku.SKUName}}</a></li>
                                         </ul>
 
                                         <div class="divider_horizontal"></div>
@@ -875,7 +875,7 @@
                                     <div class="table_report" ng-if="css.tableReportTab=='Brand'">
 
                                         <ul class="nav nav-pills">
-                                            <li ng-class="{'active': data.tableA1CompanyStatus.currentBrand.brandId==brand.brandId}" ng-repeat="brand in data.tableA1CompanyStatus.currentCompany.brand"><a href="" ng-click="switchTableReportBrand(brand)">{{brand.brandName}}</a></li>
+                                            <li ng-class="{'active': data.tableA1CompanyStatus.currentBrand.brandId==brand.brandId}" ng-repeat="brand in data.tableA1CompanyStatus.currentCompany.brand"><a href="" ng-click="switchTableReportA1Brand(brand)">{{brand.brandName}}</a></li>
                                         </ul>
 
                                         <div class="divider_horizontal"></div>
@@ -911,8 +911,8 @@
                                     <div class="table_report" >
 
                                         <ul class="nav nav-pills">
-                                            <li ng-class="{'active': data.tableA2FinancialData.currentBrand.brandId==brand.brandId}" ng-repeat="brand in data.tableA2FinancialData.currentPeriod.brands"><a href="" ng-click="switchTableReportBrand(brand)">{{brand.brandName}}</a></li>
-                                            <li ng-class="{'active': data.tableA2FinancialData.currentBrand=='allbrand'}" ><a href="" ng-click="switchTableReportBrand('allbrand')">{{data.tableA2FinancialData.currentPeriod.allBrands.brandName}}</a></li>
+                                            <li ng-class="{'active': data.tableA2FinancialData.currentBrand.brandId==brand.brandId}" ng-repeat="brand in data.tableA2FinancialData.currentPeriod.brands"><a href="" ng-click="switchTableReportA2Brand(brand)">{{brand.brandName}}</a></li>
+                                            <li ng-class="{'active': data.tableA2FinancialData.currentBrand=='allbrand'}" ><a href="" ng-click="switchTableReportA2Brand('allbrand')">{{data.tableA2FinancialData.currentPeriod.allBrands.brandName}}</a></li>
                                         </ul>
 
                                         <div class="divider_horizontal"></div>
@@ -941,7 +941,7 @@
                                     <div class="table_report" ng-if="css.tableReportTab=='SKU'">
 
                                         <ul class="nav nav-pills">
-                                            <li ng-class="{'active': data.tableA4ProfitabilityEvolution.currentSKU.SKUID==sku.SKUID}" ng-repeat="sku in data.tableA4ProfitabilityEvolution.allData.SKU"><a href="" ng-click="switchTableReportSKU(sku)">{{sku.SKUName}}</a></li>
+                                            <li ng-class="{'active': data.tableA4ProfitabilityEvolution.currentSKU.SKUID==sku.SKUID}" ng-repeat="sku in data.tableA4ProfitabilityEvolution.allData.SKU"><a href="" ng-click="switchTableReportA4SKU(sku)">{{sku.SKUName}}</a></li>
                                         </ul>
 
                                         <div class="divider_horizontal"></div>
@@ -952,7 +952,7 @@
                                     <div class="table_report" ng-if="css.tableReportTab=='Brand'">
 
                                         <ul class="nav nav-pills">
-                                            <li ng-class="{'active': data.tableA4ProfitabilityEvolution.currentBrand.brandId==brand.brandId}" ng-repeat="brand in data.tableA4ProfitabilityEvolution.allData.brand"><a href="" ng-click="switchTableReportBrand(brand)">{{brand.brandName}}</a></li>
+                                            <li ng-class="{'active': data.tableA4ProfitabilityEvolution.currentBrand.brandId==brand.brandId}" ng-repeat="brand in data.tableA4ProfitabilityEvolution.allData.brand"><a href="" ng-click="switchTableReportA4Brand(brand)">{{brand.brandName}}</a></li>
                                         </ul>
 
                                         <div class="divider_horizontal"></div>
@@ -1485,7 +1485,7 @@
                     <div class="table_report" ng-if="css.tableReportTab=='SKU'">
 
                         <ul class="nav nav-pills">
-                            <li ng-class="{'active': data.tableA1CompanyStatus.currentSKU.SKUID==sku.SKUID}" ng-repeat="sku in data.tableA1CompanyStatus.currentCompany.SKU"><a href="" ng-click="switchTableReportSKU(sku)">{{sku.SKUName}}</a></li>
+                            <li ng-class="{'active': data.tableA1CompanyStatus.currentSKU.SKUID==sku.SKUID}" ng-repeat="sku in data.tableA1CompanyStatus.currentCompany.SKU"><a href="" ng-click="switchTableReportA1SKU(sku)">{{sku.SKUName}}</a></li>
                         </ul>
 
                         <div class="divider_horizontal"></div>
@@ -1497,7 +1497,7 @@
                     <div class="table_report" ng-if="css.tableReportTab=='Brand'">
 
                         <ul class="nav nav-pills">
-                            <li ng-class="{'active': data.tableA1CompanyStatus.currentBrand.brandId==brand.brandId}" ng-repeat="brand in data.tableA1CompanyStatus.currentCompany.brand"><a href="" ng-click="switchTableReportBrand(brand)">{{brand.brandName}}</a></li>
+                            <li ng-class="{'active': data.tableA1CompanyStatus.currentBrand.brandId==brand.brandId}" ng-repeat="brand in data.tableA1CompanyStatus.currentCompany.brand"><a href="" ng-click="switchTableReportA1Brand(brand)">{{brand.brandName}}</a></li>
                         </ul>
 
                         <div class="divider_horizontal"></div>
@@ -1533,8 +1533,8 @@
                     <div class="table_report" >
 
                         <ul class="nav nav-pills">
-                            <li ng-class="{'active': data.tableA2FinancialData.currentBrand.brandId==brand.brandId}" ng-repeat="brand in data.tableA2FinancialData.currentPeriod.brands"><a href="" ng-click="switchTableReportBrand(brand)">{{brand.brandName}}</a></li>
-                            <li ng-class="{'active': data.tableA2FinancialData.currentBrand=='allbrand'}" ><a href="" ng-click="switchTableReportBrand('allbrand')">{{data.tableA2FinancialData.currentPeriod.allBrands.brandName}}</a></li>
+                            <li ng-class="{'active': data.tableA2FinancialData.currentBrand.brandId==brand.brandId}" ng-repeat="brand in data.tableA2FinancialData.currentPeriod.brands"><a href="" ng-click="switchTableReportA2Brand(brand)">{{brand.brandName}}</a></li>
+                            <li ng-class="{'active': data.tableA2FinancialData.currentBrand=='allbrand'}" ><a href="" ng-click="switchTableReportA2Brand('allbrand')">{{data.tableA2FinancialData.currentPeriod.allBrands.brandName}}</a></li>
                         </ul>
 
                         <div class="divider_horizontal"></div>
@@ -1581,7 +1581,7 @@
                     <div class="table_report" ng-if="css.tableReportTab=='SKU'">
 
                         <ul class="nav nav-pills">
-                            <li ng-class="{'active': data.tableA4ProfitabilityEvolution.currentSKU.SKUID==sku.SKUID}" ng-repeat="sku in data.tableA4ProfitabilityEvolution.allData.SKU"><a href="" ng-click="switchTableReportSKU(sku)">{{sku.SKUName}}</a></li>
+                            <li ng-class="{'active': data.tableA4ProfitabilityEvolution.currentSKU.SKUID==sku.SKUID}" ng-repeat="sku in data.tableA4ProfitabilityEvolution.allData.SKU"><a href="" ng-click="switchTableReportA4SKU(sku)">{{sku.SKUName}}</a></li>
                         </ul>
 
                         <div class="divider_horizontal"></div>
@@ -1592,7 +1592,7 @@
                     <div class="table_report" ng-if="css.tableReportTab=='Brand'">
 
                         <ul class="nav nav-pills">
-                            <li ng-class="{'active': data.tableA4ProfitabilityEvolution.currentBrand.brandId==brand.brandId}" ng-repeat="brand in data.tableA4ProfitabilityEvolution.allData.brand"><a href="" ng-click="switchTableReportBrand(brand)">{{brand.brandName}}</a></li>
+                            <li ng-class="{'active': data.tableA4ProfitabilityEvolution.currentBrand.brandId==brand.brandId}" ng-repeat="brand in data.tableA4ProfitabilityEvolution.allData.brand"><a href="" ng-click="switchTableReportA4Brand(brand)">{{brand.brandName}}</a></li>
                         </ul>
 
                         <div class="divider_horizontal"></div>
