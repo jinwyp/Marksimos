@@ -41,7 +41,7 @@ exports.getFinalScore = function(req, res, next){
                 // scaledSOM      : scaledSOM,              
                 // scaledProfit   : scaledProfit,
                 // scaledBudget   : scaledBudget,
-                // finalScore     : finalScore,
+                 finalScore     : 0,
             });
         };
 
