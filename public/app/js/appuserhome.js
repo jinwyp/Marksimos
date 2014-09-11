@@ -680,8 +680,6 @@ marksimosapp.controller('chartController', ['$translate', '$scope', '$rootScope'
                     $scope.data.currentTime.minute = 60 - currentDate.getMinutes();
                     $scope.data.currentTime.second = 60 - currentDate.getSeconds() ;
                 }else if(currentDate.getHours() < 19 && currentDate.getHours() > 13){
-
-                    console.log(currentDate.getHours());
                     $scope.data.currentTime.hour = 18 - currentDate.getHours();
                     $scope.data.currentTime.minute = 60 - currentDate.getMinutes();
                     $scope.data.currentTime.second = 60 - currentDate.getSeconds() ;

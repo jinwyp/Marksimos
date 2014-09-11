@@ -22,7 +22,7 @@
         <div class="col-md-2 user_home_divider user_brand_box">
 
             <div class="row ">
-                <h4 class="user_maincompany">Company <span class="company_a">{{data.currentStudent.companyName | limitTo:-1}}</span> </h4>
+                <h4 class="user_maincompany">{{'HomePageSecondMenuBarLabelsCompany' | translate}} <span class="company_a">{{data.currentStudent.companyName | limitTo:-1}}</span> </h4>
             </div>
             <div class="row">
                 <div class="col-md-5">
@@ -51,7 +51,7 @@
             <div class="row">
                 <div class="col-md-12">
                     <span class="user_competitorsnum">{{data.currentStudent.numOfCompany}}</span>
-                    <span class="user_competitors">Companies</span>
+                    <span class="user_competitors">{{'HomePageSecondMenuBarLabelsCompanies' | translate}}</span>
                 </div>
             </div>
         </div>
@@ -59,12 +59,12 @@
         <div class="col-md-2">
             <div class="row">
                 <div class="col-md-12 user_home_divider_horizontal">
-                    <span class="user_clock"><strong>{{data.currentTime.hour}}h {{data.currentTime.minute}}mins {{data.currentTime.second}}s left</strong> for submitting decision</span>
+                    <span class="user_clock"><strong>{{data.currentTime.hour}}h {{data.currentTime.minute}}mins {{data.currentTime.second}}s  {{'HomePageSecondMenuBarLabelsTimeLeft' | translate}}</strong> {{'HomePageSecondMenuBarLabelsTimeLeftForSubmit' | translate}}</span>
                 </div>
             </div>
             <div class="row">
-                <span class="user_makedecision">Mission: Market Share + Profit</span>
-                <button type="button" class="btn user_decisionbutton" ng-click="switchHeaderMenu('Decision')">Make Decision</button>
+                <span class="user_makedecision">{{'HomePageSecondMenuBarLabelsMission' | translate}}</span>
+                <button type="button" class="btn user_decisionbutton" ng-click="switchHeaderMenu('Decision')">{{'HomePageSecondMenuBarLabelsMakeDecision' | translate}}</button>
             </div>
         </div>
 
@@ -79,7 +79,7 @@
                     <nav class="user_period_bar  pull-left">
                         <ul class="navbar-nav">
                             <li  ng-class="{'start':$first, 'end':$last, 'active': period.currentPeriod, 'past':period.pastPeriod}" ng-repeat="period in css.periods">
-                                <span class="period_info_top" ng-show="period.currentPeriod">Period {{period.value}}</span>
+                                <span class="period_info_top text-center" ng-show="period.currentPeriod">{{'HomePageSecondMenuBarCurrentPeriod' | translate}} {{period.value}}</span>
                                 <span class="period_info_bottom" >{{period.value}}</span>
                             </li>
                         </ul>
@@ -168,7 +168,7 @@
         <div class="col-md-2 user_home_divider user_chart_box">
 
             <div class="row ">
-                <h4 class="user_maincompany user_chart_company">Company <span class="company_a">{{data.currentStudent.companyName | limitTo:-1}}</span> </h4>
+                <h4 class="user_maincompany user_chart_company">{{'HomePageSecondMenuBarLabelsCompany' | translate}} <span class="company_a">{{data.currentStudent.companyName | limitTo:-1}}</span> </h4>
 
             </div>
 
@@ -192,7 +192,7 @@
         <div class="col-md-1 user_home_divider user_chart_box">
             <div class="row">
                 <div class="col-md-12 " ng-click="showComparisonPage()">
-                    <span class="user_chart_vs"> Compare Data</span>
+                    <span class="user_chart_vs"> {{'HomePageSecondMenuBarCompareData' | translate}}</span>
                 </div>
             </div>
         </div>
@@ -200,7 +200,7 @@
         <div class="col-md-2 user_home_divider user_chart_box">
             <div class="row">
                 <div class="col-md-12 ">
-                    <span class="user_clock user_chart_clock"><strong>{{data.currentTime.hour}}h {{data.currentTime.minute}}mins {{data.currentTime.second}}s left</strong> for submitting decision</span>
+                    <span class="user_clock user_chart_clock"><strong>{{data.currentTime.hour}}h {{data.currentTime.minute}}mins {{data.currentTime.second}}s {{'HomePageSecondMenuBarLabelsTimeLeft' | translate}}</strong> {{'HomePageSecondMenuBarLabelsTimeLeftForSubmit' | translate}}</span>
                 </div>
             </div>
         </div>
@@ -208,8 +208,8 @@
         <div class="col-md-2">
             <div class="row">
                 <div class="col-md-12 ">
-                    <span class="user_chart_make_decision">Mission: Market Share + Profit</span>
-                    <button type="button" class="btn user_chart_decision_button" ng-click="switchHeaderMenu('Decision')">Make Decision</button>
+                    <span class="user_chart_make_decision">{{'HomePageSecondMenuBarLabelsMission' | translate}}</span>
+                    <button type="button" class="btn user_chart_decision_button" ng-click="switchHeaderMenu('Decision')">{{'HomePageSecondMenuBarLabelsMakeDecision' | translate}}</button>
                 </div>
             </div>
 

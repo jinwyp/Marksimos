@@ -34,12 +34,15 @@ app.config(['$translateProvider', function($translateProvider){
 
 
 		//Labels for Items on Home page - Second Menu Bar
-        "HomePageSecondMenuBarLabelsCompany"                   : "Company",
-        "HomePageSecondMenuBarLabelsCompanies"                 : "Companies",
-        "HomePageSecondMenuBarLabelsleftforsubmittingdecision" : "left for submitting decision",
-        "HomePageSecondMenuBarLabelsMission"                   : "Mission: Market Share + Profit",
-        "HomePageSecondMenuBarLabelsMakeDecision"              : "Make Decision",
-        "HomePageSecondMenuBarCurrentPeriod"                   : "CurrentPeriod",
+        "HomePageSecondMenuBarLabelsCompany"           : "Company",
+        "HomePageSecondMenuBarLabelsCompanies"         : "Companies",
+        "HomePageSecondMenuBarLabelsTimeLeft"          : "left",
+        "HomePageSecondMenuBarLabelsTimeLeftForSubmit" : "for submitting decision",
+        "HomePageSecondMenuBarLabelsMission"           : "Mission: Market Share + Profit",
+        "HomePageSecondMenuBarLabelsMakeDecision"      : "Make Decision",
+        "HomePageSecondMenuBarCurrentPeriod"           : "Period",
+
+        "HomePageSecondMenuBarCompareData"           : "Compare Data",
 
 		//Labels for Items on Home page - Three Boxes
         "HomePageYourCompanyTableLabel"                 : "Your Company",
@@ -810,31 +813,34 @@ app.config(['$translateProvider', function($translateProvider){
 
 
 		//Labels for Items on Home page - Second Menu Bar
-		"HomePageSecondMenuBarLabelsCompany"		:	"公司",
-		"HomePageSecondMenuBarLabelsCompanies"		:	"公司总",
-		"HomePageSecondMenuBarLabelsleftforsubmittingdecision"		:	"左为决定提交",
-		"HomePageSecondMenuBarLabelsMission"		:	"公司宗旨：市场份额+利润",
-		"HomePageSecondMenuBarLabelsMakeDecision"		:	"做决策",
-		"HomePageSecondMenuBarCurrentPeriod"		:	"当前阶段",
-		
+        "HomePageSecondMenuBarLabelsCompany"           : "公司",
+        "HomePageSecondMenuBarLabelsCompanies"         : "个公司",
+        "HomePageSecondMenuBarLabelsTimeLeft"          : "剩余",
+        "HomePageSecondMenuBarLabelsTimeLeftForSubmit" : "时间做决策",
+        "HomePageSecondMenuBarLabelsMission"           : "目标：市场份额+利润",
+        "HomePageSecondMenuBarLabelsMakeDecision"      : "做决策",
+        "HomePageSecondMenuBarCurrentPeriod"           : "阶段",
+
+        "HomePageSecondMenuBarCompareData"           : "数据报告对比",
+
 		//Labels for Items on Home page - Three Boxes
-		"HomePageYourCompanyTableLabel"		:	"您的公司",
-		"HomePageYourCompanyCompanyStatus"		:	"公司基本信息",
-		"HomePageYourCompanyFinancialReport"		:	"财务报告",
-		"HomePageYourCompanyInventoryReport"		:	"库存报告",
-		"HomePageYourCompanyProfitabilityEvolution"		:	"盈利变化",
-		"HomePageYourCompetitorTableLabel"		:	"你的竞争对手",
-		"HomePageYourCompetitorMarketShare"		:	"市场份额",
-		"HomePageYourCompetitorCompetitorIntelligence"		:	"竞争对手情报",
-		"HomePageYourCompetitorInvestmentsandProfits"		:	"投资与利润",
-		"HomePageYourCompetitorMarketSalesandInventory"		:	"销售与库存状况",
-		"HomePageMarketLandscapeTableLabel"		:	"市场前景",
-		"HomePageMarketLandscapeSegmentLeaderTop5"		:	"细分市场领导者",
-		"HomePageMarketLandscapePerceptionMap"		:	"感知图",
-		"HomePageMarketLandscapeSegmentDistributions"		:	"细分市场数据",
-		"HomePageMarketLandscapeMarketEvolution"		:	"市场演变趋势",
-		"HomePageMarketLandscapeMarketTrends"		:	"市场趋势",
-		"HomePageMarketLandscapeMarketIndicators"		:	"宏观市场参数",
+        "HomePageYourCompanyTableLabel"                 : "您的公司",
+        "HomePageYourCompanyCompanyStatus"              : "公司基本信息",
+        "HomePageYourCompanyFinancialReport"            : "财务报告",
+        "HomePageYourCompanyInventoryReport"            : "库存报告",
+        "HomePageYourCompanyProfitabilityEvolution"     : "盈利变化",
+        "HomePageYourCompetitorTableLabel"              : "你的竞争对手",
+        "HomePageYourCompetitorMarketShare"             : "市场份额",
+        "HomePageYourCompetitorCompetitorIntelligence"  : "竞争对手情报",
+        "HomePageYourCompetitorInvestmentsandProfits"   : "投资与利润",
+        "HomePageYourCompetitorMarketSalesandInventory" : "销售与库存状况",
+        "HomePageMarketLandscapeTableLabel"             : "市场前景",
+        "HomePageMarketLandscapeSegmentLeaderTop5"      : "细分市场领导者",
+        "HomePageMarketLandscapePerceptionMap"          : "感知图",
+        "HomePageMarketLandscapeSegmentDistributions"   : "细分市场数据",
+        "HomePageMarketLandscapeMarketEvolution"        : "市场演变趋势",
+        "HomePageMarketLandscapeMarketTrends"           : "市场趋势",
+        "HomePageMarketLandscapeMarketIndicators"       : "宏观市场参数",
 	
 		
 		//Labels for Items on Reports page - reports menu
