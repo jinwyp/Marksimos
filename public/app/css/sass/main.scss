@@ -47,6 +47,7 @@ $color_main_body_competitors: #2f4e9b;
 $color_main_body_user_clock: #373737;
 $color_main_body_user_decision_button: #19acfe;
 $color_main_body_user_muted: #999999;
+$color_main_body_user_muted_border : #dddddd;
 
 $color_main_body_user_period_bar: #9FA5BF;
 $color_main_body_user_period_bar_border: #dfe0e5;
@@ -578,6 +579,37 @@ body{
                 padding : 15px 0px;
                 margin : 0 20px;
 
+            }
+            table {
+                width: 100%;
+                margin-bottom: 20px;
+                background-color: transparent;
+            }
+            table > thead > tr > th,
+            table > tbody > tr > th,
+            table > tfoot > tr > th,
+            table > thead > tr > td,
+            table > tbody > tr > td,
+            table > tfoot > tr > td {
+                padding: 8px;
+                line-height: 1.42857143;
+                vertical-align: top;
+                border-top: 1px solid $color_main_body_user_muted_border;
+            }
+            table > thead > tr > th {
+                vertical-align: bottom;
+                border-bottom: 2px solid $color_main_body_user_muted_border;
+            }
+            table > caption + thead > tr:first-child > th,
+            table > colgroup + thead > tr:first-child > th,
+            table > thead:first-child > tr:first-child > th,
+            table > caption + thead > tr:first-child > td,
+            table > colgroup + thead > tr:first-child > td,
+            table > thead:first-child > tr:first-child > td {
+                border-top: 0;
+            }
+            table > tbody + tbody {
+                border-top: 2px solid $color_main_body_user_muted_border;
             }
         }
 
