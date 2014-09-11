@@ -655,12 +655,12 @@ app.config(['$translateProvider', function($translateProvider){
 
 
 		//Labels for Items on Decision Page - Second Menu Bar
-		"DecisionPageSecondMenuBarLabelsCompany"		:	"Company",
-		"DecisionPageSecondMenuBarLabelsTotalAvailableBudget"		:	"Total Available Budget",
-		"DecisionPageSecondMenuBarLabelsNormalCapacity"		:	"Normal Capacity",
-		"DecisionPageSecondMenuBarLabelsOvertimeCapacity"		:	"Overtime Capacity",
-		"DecisionPageSecondMenuBarLabelsAdditionalBudget"		:	"Additional Budget",
-		"DecisionPageSecondMenuBarLabelsleftforsubmittingdecision"		:	"left for submitting decision",
+
+        "DecisionPageSecondMenuBarLabelsTotalAvailableBudget" : "Total Available Budget",
+        "DecisionPageSecondMenuBarLabelsNormalCapacity"       : "Normal Capacity",
+        "DecisionPageSecondMenuBarLabelsOvertimeCapacity"     : "Overtime Capacity",
+        "DecisionPageSecondMenuBarLabelsAdditionalBudget"     : "Additional Budget",
+
 
 		//Labels for Items on Decision Page - DecisionTab
         "DecisionPageDecisionTabMAKEDECISIONS" : "MAKE DECISIONS",
@@ -1438,12 +1438,10 @@ app.config(['$translateProvider', function($translateProvider){
 
 
         //Labels for Items on Decision Page - Second Menu Bar
-		"DecisionPageSecondMenuBarLabelsCompany"		:	"公司",
-		"DecisionPageSecondMenuBarLabelsTotalAvailableBudget"		:	"可用全部金额",
-		"DecisionPageSecondMenuBarLabelsNormalCapacity"		:	"正常产能",
-		"DecisionPageSecondMenuBarLabelsOvertimeCapacity"		:	"额外加班产能",
-		"DecisionPageSecondMenuBarLabelsAdditionalBudget"		:	"申请额外预算",
-		"DecisionPageSecondMenuBarLabelsleftforsubmittingdecision"		:	"左为决定提交",
+        "DecisionPageSecondMenuBarLabelsTotalAvailableBudget" : "全部可用预算金额",
+        "DecisionPageSecondMenuBarLabelsNormalCapacity"       : "正常产能",
+        "DecisionPageSecondMenuBarLabelsOvertimeCapacity"     : "额外加班产能",
+        "DecisionPageSecondMenuBarLabelsAdditionalBudget"     : "申请额外预算",
 
 
 		//Labels for Items on Decision Page - DecisionTab

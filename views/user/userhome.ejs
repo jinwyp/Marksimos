@@ -2318,7 +2318,7 @@
         <div class="col-md-2 user_home_divider user_chart_box">
 
             <div class="row ">
-                <h4 class="user_maincompany user_chart_company">Company <span class="company_a">{{data.currentStudent.companyName | limitTo:-1}}</span> </h4>
+                <h4 class="user_maincompany user_chart_company">{{'HomePageSecondMenuBarLabelsCompany' | translate}} <span class="company_a">{{data.currentStudent.companyName | limitTo:-1}}</span> </h4>
             </div>
 
         </div>
@@ -2326,7 +2326,7 @@
         <div class="col-md-7 user_home_divider user_chart_box" >
             <div class="row">
                 <div class="col-md-4">
-                    <h6 class="progress_title text-center">Total Available Budget</h6>
+                    <h6 class="progress_title text-center">{{'DecisionPageSecondMenuBarLabelsTotalAvailableBudget' | translate}}</h6>
                     <div class="progress progress_radius">
                         <div class="progress-bar progress_bar_budget" role="progressbar" title="{{data.currentCompanyOtherInfo.totalAvailableBudgetValue}}" aria-valuenow="{{data.currentCompanyOtherInfo.totalAvailableBudget}}" aria-valuemin="0" aria-valuemax="100" style="width: {{data.currentCompanyOtherInfo.totalAvailableBudgetCSS}};">
                              {{data.currentCompanyOtherInfo.totalAvailableBudget}}%
@@ -2335,7 +2335,7 @@
                 </div>
 
                 <div class="col-md-4">
-                    <h6 class="progress_title text-center">Normal Capacity</h6>
+                    <h6 class="progress_title text-center">{{'DecisionPageSecondMenuBarLabelsNormalCapacity' | translate}}</h6>
                     <div class="progress progress_radius">
                         <div class="progress-bar progress_bar_normal_capacity" role="progressbar"  title="{{data.currentCompanyOtherInfo.normalCapacityValue}}" aria-valuenow="{{data.currentCompanyOtherInfo.normalCapacity}}" aria-valuemin="0" aria-valuemax="100" style="width: {{data.currentCompanyOtherInfo.normalCapacityCSS}};">
                             {{data.currentCompanyOtherInfo.normalCapacity}}%
@@ -2344,7 +2344,7 @@
                 </div>
 
                 <div class="col-md-4">
-                    <h6 class="progress_title text-center">Overtime Capacity</h6>
+                    <h6 class="progress_title text-center">{{'DecisionPageSecondMenuBarLabelsOvertimeCapacity' | translate}}</h6>
                     <div class="progress progress_radius">
                         <div class="progress-bar progress_bar_overtime" role="progressbar"  title="{{data.currentCompanyOtherInfo.overtimeCapacityValue}}" aria-valuenow="{{data.currentCompanyOtherInfo.overtimeCapacity}}" aria-valuemin="0" aria-valuemax="100" style="width: {{data.currentCompanyOtherInfo.overtimeCapacityCSS}};">
                             {{data.currentCompanyOtherInfo.overtimeCapacity}}%
@@ -2360,7 +2360,7 @@
             <form class="budget_form" role="form" name="updateCompanyForm2">
                 <div class="form-group text-center" ng-class="{ 'has-success':updateCompanyForm2.companyAdditionalBudget.$dirty && updateCompanyForm2.companyAdditionalBudget.$valid , 'has-error': updateCompanyForm2.companyAdditionalBudget.$dirty && updateCompanyForm2.companyAdditionalBudget.$invalid}">
                     <label class="budget_title" for="additionalBudget" ng-show="css.additionalBudget" ng-click="css.additionalBudget=false">${{data.currentCompany.d_RequestedAdditionalBudget}}</label>
-                    <label for="companyAdditionalBudget" ng-show="css.additionalBudget" ng-click="css.additionalBudget=false">Additional Budget</label>
+                    <label for="companyAdditionalBudget" ng-show="css.additionalBudget" ng-click="css.additionalBudget=false">{{'DecisionPageSecondMenuBarLabelsAdditionalBudget' | translate}}</label>
                     <input type="number" class="form-control input-sm" id="companyAdditionalBudget" name="companyAdditionalBudget" ng-hide="css.additionalBudget" required ng-model="data.currentCompany.d_RequestedAdditionalBudget" ng-blur="updateCompany('d_RequestedAdditionalBudget', updateCompanyForm2, 'companyAdditionalBudget')">
                 </div>
             </form>
@@ -2369,7 +2369,7 @@
         <div class="col-md-2">
             <div class="row">
                 <div class="col-md-12 ">
-                    <span class="user_clock user_chart_clock"><strong>{{data.currentTime.hour}}h {{data.currentTime.minute}}mins {{data.currentTime.second}}s left</strong> for submitting decision</span>
+                    <span class="user_clock user_chart_clock"><strong>{{data.currentTime.hour}}h {{data.currentTime.minute}}mins {{data.currentTime.second}}s {{'HomePageSecondMenuBarLabelsTimeLeft' | translate}}</strong> {{'HomePageSecondMenuBarLabelsTimeLeftForSubmit' | translate}}</span>
                 </div>
             </div>
 
