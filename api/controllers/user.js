@@ -25,7 +25,6 @@ exports.getUser = function(req, res, next){
 };
 
 
-
 exports.getStudent = function(req, res, next){
     var userId = sessionOperation.getUserId(req);
 

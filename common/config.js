@@ -83,7 +83,7 @@ module.exports = (function(){
             config.logDirectory = '/Users/ludwik/code/actived/Marksimos/log/';
             config.mongo_conn = 'mongodb://localhost/Marksimos';
             config.host = 'http://localhost:3000/';
-            config.cgiService = 'http://localhost:8080/cgi-bin/';            
+            config.cgiService = 'http://localhost:8080/cgi-bin/marksimos/';            
             break;            
         case 'development':
             config.logDirectory = '/Users/ludwik/code/Marksimos/log/';

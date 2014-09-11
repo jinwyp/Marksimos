@@ -35,9 +35,7 @@ exports.getSKUInfo = function(seminarId, currentPeriod, companyId, SKUID){
 
         //current period data
         var currentPeriodInfo = {};
-        if(!decision){
 
-        }
         currentPeriodInfo.SKUName = brandDecision.d_BrandName + decision.d_SKUName;
 
         if(SKUResult){
