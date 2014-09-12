@@ -165,7 +165,7 @@ exports.addFAQ =function(req,res,next){
     })
     .done();
 
-}
+};
 
 exports.getFAQ = function(req,res,next){
 	faqModel.find()
