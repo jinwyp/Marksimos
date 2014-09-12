@@ -746,7 +746,7 @@ app.factory('FAQ',['$http',function($http){
 
         getFAQ : function(){
             return $http.get(apiPath + 'getFAQ').then(function(result){
-                return result.data;
+                    return result.data;
             }).catch(errorHandler);
         }
     };
