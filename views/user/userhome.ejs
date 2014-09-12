@@ -11,7 +11,7 @@
 
 
 
-    <user-header showmenu="true" showlogout="true"  current-menu="css.menu" current-round="data.currentStudent.currentPeriod" is-feedback-shown='isFeedbackShown'></user-header>
+    <user-header showmenu="true" showlogout="true"  current-menu="css.menu" current-round="data.currentStudent.currentPeriod" is-feedback-shown='css.isFeedbackShown'></user-header>
 
 
 
@@ -1945,7 +1945,7 @@
 
     <div class="row mainbody" ng-cloak ng-if="css.menu=='Score'">
 
-        <div class="col-md-9 score_box" ng-if='!isFeedbackShown'>
+        <div class="col-md-9 score_box" ng-if='!css.isFeedbackShown'>
 
             <div class="row">
 
@@ -1964,11 +1964,11 @@
                     <div class="table_report">
 
                         <ul class="nav nav-pills">
-                            <li ng-class="{'active': n==5}" ng-repeat="n in [5,4,3,2,1]"><a href="" ng-click="switchTableReportFinalScore(n)">{{'FinalScorePagePeriod' | translate}} {{n}}</a></li>
+                            <li ng-class="{'active': n==css.selectFinalScorePeriod}" ng-repeat="n in css.finalReportPeriods"><a href="" ng-click="switchTableReportFinalScore(n)">{{'FinalScorePagePeriod' | translate}} {{n}}</a></li>
                         </ul>
 
                         <div class="divider_horizontal"></div>
-                        <div table-report-final-score></div>
+                        <div table-report-final-score data="data.tableFinalScore.selectPeriodData"></div>
 
                     </div>
 
@@ -1981,7 +1981,7 @@
 
         </div>
 
-        <div class="col-md-9 feedback_box" ng-if='!isFeedbackShown'>
+        <div class="col-md-9 feedback_box" ng-if='!css.isFeedbackShown'>
 
             <div class="row">
                 <div class="col-md-12 feedback_info">
@@ -1996,7 +1996,7 @@
 
         </div>
 
-        <div class="col-md-9 score_box fade in" ng-if='isFeedbackShown'>
+        <div class="col-md-9 score_box fade in" ng-if='css.isFeedbackShown'>
 
             <div class="row">
                 <form role="form" name='questionnaireForm'>

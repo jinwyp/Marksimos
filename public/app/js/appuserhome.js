@@ -81,7 +81,11 @@ marksimosapp.controller('chartController', ['$translate', '$scope', '$rootScope'
         dragTargetBoxId : '',
         dragSourceReportId : '',
         dragHaveLeftReport : false,
-        dragHaveRightReport : false
+        dragHaveRightReport : false,
+        //score
+        selectFinalScorePeriod : 0,
+        finalReportPeriods: [],
+        isFeedbackShown:false
     };
 
 
@@ -95,6 +99,7 @@ marksimosapp.controller('chartController', ['$translate', '$scope', '$rootScope'
             }
         ]
     };
+
 
     $scope.data = {
         currentStudent : null,
@@ -174,7 +179,7 @@ marksimosapp.controller('chartController', ['$translate', '$scope', '$rootScope'
             allData : {}
         },
         tableFinalScore:{
-            allData : {}
+            selectPeriodData : {}
         },
 
 
@@ -691,6 +696,8 @@ marksimosapp.controller('chartController', ['$translate', '$scope', '$rootScope'
 
             $scope.css.periods = [];
 
+            $scope.css.finalReportPeriods = [];
+
             // 处理显示当前第几回合进度条
             if(angular.isNumber($scope.data.currentStudent.currentPeriod)){
                 for (var i = -3; i <= $scope.data.currentStudent.maxPeriodRound; i++) {
@@ -716,9 +723,19 @@ marksimosapp.controller('chartController', ['$translate', '$scope', '$rootScope'
                         });
                     }
                 }
+                //get periods of finalScore
+                for (var i = -3; i < $scope.data.currentStudent.currentPeriod; i++) {
+                    $scope.css.finalReportPeriods.push(i);
+                }
+
             }
 
 
+            //get finalscore data  of current period
+            $scope.css.selectFinalScorePeriod = $scope.data.currentStudent.currentPeriod - 1;
+            return FinalScore.getFinalScore($scope.data.currentStudent.currentPeriod - 1);
+        }).then(function(data, status, headers, config){
+            $scope.data.tableFinalScore.selectPeriodData = data;
         });
 
         Company.getCompany().then(function(data, status, headers, config){
@@ -1080,17 +1097,14 @@ marksimosapp.controller('chartController', ['$translate', '$scope', '$rootScope'
 
 
     /********************  get FinalScore  ********************/
-    FinalScore.getFinalScore().then(function(data, status, headers, config){
-        $scope.finalscores=data;
-    });
+
 
     $scope.switchTableReportFinalScore = function(period){
-        
-        
-        $scope.data.tableA1CompanyStatus.currentCompany = company;
-        $scope.data.tableA1CompanyStatus.currentSKU = $scope.data.tableA1CompanyStatus.currentCompany.SKU[0];
-        $scope.data.tableA1CompanyStatus.currentBrand = $scope.data.tableA1CompanyStatus.currentCompany.brand[0];
-        $scope.data.tableA1CompanyStatus.currentGlobal = $scope.data.tableA1CompanyStatus.currentCompany.global;
+        $scope.css.selectFinalScorePeriod = period ;
+        FinalScore.getFinalScore(period)
+        .then(function(data, status, headers, config){
+            $scope.data.tableFinalScore.selectPeriodData = data;
+        });
     };
 
     /********************  get getQuestionnaire  ********************/
@@ -1113,7 +1127,7 @@ marksimosapp.controller('chartController', ['$translate', '$scope', '$rootScope'
         };
     });
     $scope.showQuestionnaire = function(){
-        $scope.isFeedbackShown=true;
+        $scope.css.isFeedbackShown=true;
     }
     /********************  更新 Questionnaire  ********************/
     $scope.updateQuestionnaire = function(fieldname , index, form, formfieldname){

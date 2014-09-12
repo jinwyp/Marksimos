@@ -1,6 +1,114 @@
-var reportModel = require('../models/report.js');
-var logger = require('../../common/logger.js');
-var config = require('../../common/config.js');
+var reportModel      = require('../models/report.js');
+var logger           = require('../../common/logger.js');
+var config           = require('../../common/config.js');
+var simulationResult = require('../models/simulationResult.js');
+var seminarModel     = require('../models/seminar.js');
+var Q                = require('q');
+var _                = require('underscore');
+
+exports.getFinalScore = function(req, res, next){
+    var seminarId = req.session.seminarId;    
+    var period = req.params.period;
+
+    if(!seminarId){
+        return res.send(400, {message: "You don't choose a seminar."});
+    }
+
+    Q.all([
+        simulationResult.findOne(seminarId, period),
+        simulationResult.findOne(seminarId, 0),
+        seminarModel.findOne(seminarId)
+    ]).spread(function(requestedPeriodResult, initialPeriodResult, seminarInfo){
+        var scores = [];
+        var highest_SOM, lowest_SOM, highest_Profit, lowest_Profit;
+        var a, b, c, d;
+        
+
+        for (var i = 0; i < requestedPeriodResult.p_Companies.length; i++) {
+            var originalSOM, originalProfit, originalBudget;
+            var scaledSOM, scaledProfit, scaledBudget, finalScore;
+
+            originalSOM = 100 * (requestedPeriodResult.p_Companies[i].c_ValueSegmentShare[6] - initialPeriodResult.p_Companies[i].c_ValueSegmentShare[6]);
+            originalProfit = requestedPeriodResult.p_Companies[i].c_CumulatedNetResults;
+            originalBudget = 100 * requestedPeriodResult.p_Companies[i].c_CumulatedInvestments / (period/(seminarInfo.simulationSpan * requestedPeriodResult.p_Companies[i].c_TotalInvestmentBudget));
+
+            scores.push({
+                companyId      : requestedPeriodResult.p_Companies[i].c_CompanyID,
+                period         : period,
+                originalSOM    : originalSOM,
+                originalProfit : originalProfit,
+                originalBudget : originalBudget,                
+                // scaledSOM      : scaledSOM,              
+                // scaledProfit   : scaledProfit,
+                // scaledBudget   : scaledBudget,
+                 finalScore     : 0,
+            });
+        };
+
+        highest_SOM    = _.max(scores, function(companyScore){ return companyScore.originalSOM; }).originalSOM;
+        lowest_SOM     = _.min(scores, function(companyScore){ return companyScore.originalSOM; }).originalSOM;
+        highest_Profit = _.max(scores, function(companyScore){ return companyScore.originalProfit; }).originalProfit;
+        lowest_Profit  = _.min(scores, function(companyScore){ return companyScore.originalProfit; }).originalProfit;
+        
+        a = highest_SOM - lowest_SOM;
+        c = highest_Profit - lowest_Profit;
+
+        scores.forEach(function(companyScore){
+            if(lowest_SOM < 0){ companyScore.scaledSOM = companyScore.originalSOM + a; }
+            else { companyScore.scaledSOM = companyScore.originalSOM; }
+
+            if(lowest_Profit < 0){ companyScore.scaledProfit = companyScore.originalProfit + c; }
+            else { companyScore.scaledProfit = companyScore.originalProfit; }
+        })
+
+        if(lowest_SOM < 0){
+            lowest_SOM = lowest_SOM + a;
+            highest_SOM = highest_SOM + a;
+        }
+
+        if(lowest_Profit < 0){
+            lowest_Profit = lowest_Profit + c;
+            highest_Profit = highest_Profit + c;
+        }
+
+        // console.log('highest_SOM:' + highest_SOM);
+        // console.log('lowest_SOM:' + lowest_SOM);
+        // console.log('highest_Profit:' + highest_Profit);
+        // console.log('lowest_Profit:' + lowest_Profit);
+
+        if(highest_SOM > lowest_SOM){
+            a = 100 / (highest_SOM - lowest_SOM);
+            b = 100 - a * highest_SOM;
+        } else {
+            a = 0;
+            b = 50;
+        }        
+
+        if (highest_Profit > lowest_Profit){
+            c = 100 / (highest_Profit - lowest_Profit);
+            d = 100 - c * highest_Profit;
+        } else {
+            c = 0;
+            d = 50;            
+        }
+
+        scores.forEach(function(companyScore){
+            companyScore.scaledSOM = a * companyScore.scaledSOM + b;
+            companyScore.scaledProfit = c * companyScore.scaledProfit + d;
+            if(companyScore.originalBudget <= 100){
+                companyScore.scaledBudget = 0;
+            } else {
+                companyScore.scaledBudget = 100 - companyScore.originalBudget;
+            }
+        });
+
+        res.send(200, scores);
+
+    }).fail(function(err){
+        res.send(403, err.message);
+    }).done();
+    
+}
 
 
 exports.getReport = function(req, res, next){

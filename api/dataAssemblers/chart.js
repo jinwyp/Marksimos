@@ -448,6 +448,7 @@ function prepareSKUTooltips(allResults, SKUID){
 
     var currentPeriodSKU = utility.findSKU(currentPeriodResult, SKUID);
     var previousPeriodSKU = utility.findSKU(perviousPeriodResult, SKUID);
+    if(!currentPeriodSKU || !previousPeriodSKU){ console.log('SKUID:' + SKUID);}
 
     //marke share
     var marketShareChange = compare(currentPeriodSKU.u_ValueSegmentShare[consts.ConsumerSegmentsMax] 

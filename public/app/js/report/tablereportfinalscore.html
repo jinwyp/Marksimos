@@ -13,37 +13,37 @@
         <tr>
             <td>{{'FinalScorePageIncrementalMarketShare' | translate}}</td>
             <td class="td_info">?</td>
-            <td ng-repeat="n in [1,2,3,4,5,6]">{{n}}
+            <td ng-repeat="score in data">{{score.originalSOM | number :2}}
             </td>
         </tr>
         <tr>
             <td>{{'FinalScorePageCumulatedNetProfit' | translate}}</td>
             <td class="td_info">?</td>
-            <td ng-repeat="n in [1,2,3,4,5,6]">{{n}}
+            <td ng-repeat="score in data">{{score.originalProfit | number :2}}
             </td>
         </tr>
         <tr>
             <td>{{'FinalScorePageSpendingVersusBudgets' | translate}}</td>
             <td class="td_info">?</td>
-            <td ng-repeat="n in [1,2,3,4,5,6]">{{n}}
+            <td ng-repeat="score in data">{{score.originalBudget | number :2}}
             </td>
         </tr>
         <tr>
             <td>{{'FinalScorePageShareInBrandTotalSalesValue' | translate}}</td>
             <td class="td_info">?</td>
-            <td ng-repeat="n in [1,2,3,4,5,6]">{{n}}
+            <td ng-repeat="score in data">{{score.scaledSOM | number :2}}
             </td>
         </tr>
         <tr>
             <td>{{'FinalScorePageAchievementOfInitialObjectives' | translate}}</td>
             <td class="td_info">?</td>
-            <td ng-repeat="n in [1,2,3,4,5,6]">{{n}}
+            <td ng-repeat="score in data">{{score.scaledProfit | number :2}}
             </td>
         </tr>
         <tr class="tr_warning">
             <td>{{'FinalScorePageFinalScore' | translate}}</td>
             <td>?</td>
-            <td ng-repeat="n in [1,2,3,4,5,6]">{{n}}
+            <td ng-repeat="score in data">{{score.finalScore | number :2}}
             </td>
         </tr>
 
