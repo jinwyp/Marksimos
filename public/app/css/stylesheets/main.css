@@ -564,7 +564,7 @@ body a, body button {
   font-size: 14px;
   background-image: url(../images/userbrand.png);
   background-repeat: no-repeat;
-  background-position: 1px 0px;
+  background-position: 3px 2px;
   padding-left: 25px;
   margin: 32px 5px 20px 3px;
   display: block;
@@ -777,7 +777,7 @@ body a, body button {
   font-size: 14px;
   background-image: url(../images/userbrand.png);
   background-repeat: no-repeat;
-  background-position: 1px 0px;
+  background-position: 3px 2px;
   padding-left: 25px;
   margin: 32px 5px 20px 3px;
   display: block;
@@ -821,7 +821,7 @@ body a, body button {
   font-size: 11px;
   background-image: url(../images/userclock.png);
   background-repeat: no-repeat;
-  background-position: 1px 0px;
+  background-position: -3px -2px;
   padding-left: 62px;
   padding-top: 9px;
   margin: 25px 0px 20px 0px;
@@ -1141,6 +1141,7 @@ body a, body button {
 /* line 1186, ../sass/main.scss */
 .mainbody .user_chart_leftmenu .list-group-item-active {
   background-color: #eef3ff;
+  background-image: url(../images/userchartlist3.png);
 }
 /* line 1189, ../sass/main.scss */
 .mainbody .user_chart_leftmenu .list-group-item-active a {
@@ -2050,7 +2051,7 @@ body a, body button {
   padding: 5px 0px 8px 25px;
   background-image: url(../images/userbrand.png);
   background-repeat: no-repeat;
-  background-position: 4px 2px;
+  background-position: 4px 4px;
 }
 /* line 1860, ../sass/main.scss */
 .mainbody .decision_right_box .right_menu .product_portfolio .sku_bg {
