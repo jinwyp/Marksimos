@@ -5,7 +5,7 @@
             <th>{{'FinalScorePageWeightFactor' | translate}} </th>
             <th ng-repeat="company in data">
                 <span class="company {{'company_'+company.companyId}}">&nbsp;</span>
-                {{'FinalScorePageCompany' | translate}} {{n}}
+                {{'FinalScorePageCompany' | translate}} {{company.companyId}}
             </th>
         </tr>
     </thead>

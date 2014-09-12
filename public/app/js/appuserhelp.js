@@ -33,6 +33,7 @@ marksimosapp.controller('userHelpController',['$rootScope', '$scope', '$translat
         $scope.questionsShown=[1,0,0,0,0,0,0,0];
 
         FAQ.getFAQ().then(function(doc){
+            console.log(doc);
             $scope.faqs=doc;
             if($translate.use()=="zh_CN"){
                 return Manual.getZH_CN();
