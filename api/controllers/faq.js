@@ -115,12 +115,13 @@ exports.getFAQ = function(req,res,next){
                 'answer':'FAQPageInventoryQ1Answer'
             }]
         }]
-    }
+    };
 
     faqModel.findByReportName('FAQ')
 	.then(function(result){
 		if(result){
     		return res.send(result);
+
     	}else{
             return faqModel.insert(faq).then(function(result){
                 if(!result){
@@ -137,5 +138,5 @@ exports.getFAQ = function(req,res,next){
         res.send(500, {message: "find faqs failed."})
     })
     .done();
-}
+};
 

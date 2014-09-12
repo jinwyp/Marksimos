@@ -85,7 +85,7 @@ marksimosapp.controller('chartController', ['$translate', '$scope', '$rootScope'
         //score
         selectFinalScorePeriod : 0,
         finalReportPeriods: [],
-        isFeedbackShown:false
+        isFeedbackShown : false
     };
 
 
@@ -770,9 +770,11 @@ marksimosapp.controller('chartController', ['$translate', '$scope', '$rootScope'
 
             //get finalscore data  of current period
             $scope.css.selectFinalScorePeriod = $scope.data.currentStudent.currentPeriod - 1;
-            return FinalScore.getFinalScore($scope.data.currentStudent.currentPeriod - 1);
-        }).then(function(data, status, headers, config){
-            $scope.data.tableFinalScore.selectPeriodData = data;
+
+
+            FinalScore.getFinalScore($scope.data.currentStudent.currentPeriod - 1).then(function(data, status, headers, config){
+                $scope.data.tableFinalScore.selectPeriodData = data.scores;
+            });
         });
 
         Company.getCompany().then(function(data, status, headers, config){
@@ -1177,14 +1179,15 @@ marksimosapp.controller('chartController', ['$translate', '$scope', '$rootScope'
     });
     $scope.showQuestionnaire = function(){
         $scope.css.isFeedbackShown=true;
-    }
+    };
+
     /********************  更新 Questionnaire  ********************/
     $scope.updateQuestionnaire = function(fieldname , index, form, formfieldname){
 
         var currentData={
             'location':fieldname,
             'data':$scope.questionnaire[fieldname]
-        }
+        };
 
         Questionnaire.updateQuestionnaire(currentData).then(function(data, status, headers, config){
             notify({

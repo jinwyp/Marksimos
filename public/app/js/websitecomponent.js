@@ -325,6 +325,8 @@ app.directive('tableReportFinalScore', ['$translate', function($translate) {
         templateUrl: '/app/js/report/tablereportfinalscore.html'
     };
 }]);
+
+
 app.directive('genParseMd', ['mdParse', 'sanitize', 'pretty', 'isVisible', '$timeout',
     function (mdParse, sanitize, pretty, isVisible, $timeout) {
         // <div gen-parse-md="document"></div>

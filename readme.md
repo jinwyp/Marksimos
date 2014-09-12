@@ -21,7 +21,9 @@
 * 查看已安装的前段的包
 ``` bower list ```
 
-
+* 安装前段的包与库资源,同时自动写入 bower.json 文件,然后运行 ：
+``` bower install -S```
+``` bower install --save```
 
 
 ### 后端(NodeJS)依赖安装：
