@@ -70,7 +70,7 @@ exports.init = function(req, res, next) {
         }
 
         //before init, a new seminar should be created,
-        //and it's currentPeriod should be set correctly
+        //and it's currentPeriod should be set correctly = 1
         currentPeriod = dbSeminar.currentPeriod;
         sessionOperation.setCurrentPeriod(req, dbSeminar.currentPeriod);
 
@@ -654,7 +654,7 @@ function duplicateLastPeriodDecision(seminarId, lastPeriod){
                 delete tempBrandDecision._id;
                 delete tempBrandDecision.__v;
                 tempBrandDecision.period = tempBrandDecision.period + 1;
-                tempBrandDecision.d_SalesForce = 0;
+                //tempBrandDecision.d_SalesForce = 0;
                 p = p.then(function(result){
                     if(!result){
                         throw new Error("save brandDecision failed during create copy of last period decision.");
@@ -680,13 +680,13 @@ function duplicateLastPeriodDecision(seminarId, lastPeriod){
 
                 //Make sure to copy all the field instead of field listed below:
                 tempSKUDecision.period = tempSKUDecision.period + 1;
-                tempSKUDecision.d_Advertising = 0;
-                tempSKUDecision.d_AdditionalTradeMargin = 0;
-                tempSKUDecision.d_ProductionVolume = 0;
-                tempSKUDecision.d_PromotionalBudget = 0;
-                tempSKUDecision.d_TradeExpenses = 0;
-                tempSKUDecision.d_WholesalesBonusRate = 0;
-                tempSKUDecision.d_WholesalesBonusMinVolume = 0;
+                // tempSKUDecision.d_Advertising = 0;
+                // tempSKUDecision.d_AdditionalTradeMargin = 0;
+                // tempSKUDecision.d_ProductionVolume = 0;
+                // tempSKUDecision.d_PromotionalBudget = 0;
+                // tempSKUDecision.d_TradeExpenses = 0;
+                // tempSKUDecision.d_WholesalesBonusRate = 0;
+                // tempSKUDecision.d_WholesalesBonusMinVolume = 0;
                 p = p.then(function(result){
                     if(!result){
                         throw new Error("save SKUDecision failed during create copy of last period decision.");
