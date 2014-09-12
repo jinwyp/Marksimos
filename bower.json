@@ -33,6 +33,9 @@
     "angular-loading-bar": "~0.4.3",
     "angular-notify": "~1.1.0",
     "angular-notifications": "~0.1.1",
-    "font-awesome": "~4.1.0"
+    "font-awesome": "~4.1.0",
+    "google-code-prettify": "~1.0.3",
+    "jsonkit": "~0.3.2",
+    "marked": "~0.3.2"
   }
 }
