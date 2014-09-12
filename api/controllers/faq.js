@@ -117,7 +117,7 @@ exports.getFAQ = function(req,res,next){
         }]
     }
 
-    faqModel.findOne('FAQ')
+    faqModel.findByReportName('FAQ')
 	.then(function(result){
 		if(result){
     		return res.send(result);

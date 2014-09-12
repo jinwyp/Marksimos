@@ -3,7 +3,7 @@ var Schema = mongoose.Schema;
 var Q = require('q');
 
 var faqSchema = new Schema({
-	reportNmae  : String,
+	reportName  : String,
 	categories  : [categorySchema]
 })
 var categorySchema = mongoose.Schema({
@@ -33,7 +33,7 @@ exports.insert = function(faq){
 	return deferred.promise;
 }
 
-exports.findOne = function(reportName) {
+exports.findByReportName = function(reportName) {
 	if (!mongoose.connection.readyState) {
 		throw new Error("mongoose is not connected.");
 	}
