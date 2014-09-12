@@ -1,8 +1,6 @@
 /**
  * Created by jinwyp on 5/29/14.
  */
-
-
 var app = angular.module('marksimos.model', []);
 
 app.factory('Student', ['$http', function($http){
@@ -725,7 +723,9 @@ app.factory('FinalScore',['$http',function($http){
 
         getFinalScore : function(period){
             return $http.get(apiPath+period).then(function(result){
+                result.data.highest_score = _.max(result.data.scores, function(companyScore){ return companyScore.scaledSOM; }).scaledSOM;
                 return result.data;
+
             }).catch(errorHandler);
         }
 
@@ -746,7 +746,7 @@ app.factory('FAQ',['$http',function($http){
 
         getFAQ : function(){
             return $http.get(apiPath + 'getFAQ').then(function(result){
-                return result.data;
+                    return result.data;
             }).catch(errorHandler);
         }
     };
