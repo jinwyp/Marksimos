@@ -723,7 +723,8 @@ app.factory('FinalScore',['$http',function($http){
 
         getFinalScore : function(period){
             return $http.get(apiPath+period).then(function(result){
-                result.data.highest_score = _.max(result.data.scores, function(companyScore){ return companyScore.scaledSOM; }).scaledSOM;
+                result.data.highest_score = _.max(result.data.scores, function(companyScore){ return companyScore.finalScore; }).finalScore;
+                console.log(result.data);
                 return result.data;
 
             }).catch(errorHandler);
@@ -746,7 +747,7 @@ app.factory('FAQ',['$http',function($http){
 
         getFAQ : function(){
             return $http.get(apiPath + 'getFAQ').then(function(result){
-                    return result.data;
+                return result.data;
             }).catch(errorHandler);
         }
     };

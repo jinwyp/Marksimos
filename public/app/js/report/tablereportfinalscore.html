@@ -6,6 +6,7 @@
             <th ng-repeat="company in data.scores">
                 <span class="company {{'company_'+company.companyId}}">&nbsp;</span>
                 {{'FinalScorePageCompany' | translate}} {{company.companyId}}
+                <span ng-show="{{company.finalScore==data.highest_score}}">Winner</span>
             </th>
         </tr>
     </thead>
