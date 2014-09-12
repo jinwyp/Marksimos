@@ -23,27 +23,30 @@ exports.getFinalScore = function(req, res, next){
         var highest_SOM, lowest_SOM, highest_Profit, lowest_Profit;
         var a, b, c, d;
         
-
         for (var i = 0; i < requestedPeriodResult.p_Companies.length; i++) {
             var originalSOM, originalProfit, originalBudget;
             var scaledSOM, scaledProfit, scaledBudget, finalScore;
 
             originalSOM = 100 * (requestedPeriodResult.p_Companies[i].c_ValueSegmentShare[6] - initialPeriodResult.p_Companies[i].c_ValueSegmentShare[6]);
             originalProfit = requestedPeriodResult.p_Companies[i].c_CumulatedNetResults;
-            originalBudget = 100 * requestedPeriodResult.p_Companies[i].c_CumulatedInvestments / (period/(seminarInfo.simulationSpan * requestedPeriodResult.p_Companies[i].c_TotalInvestmentBudget));
+
+            originalBudget = (period/seminarInfo.simulationSpan) * requestedPeriodResult.p_Companies[i].c_TotalInvestmentBudget;
+
+            if(originalBudget > 0){
+                originalBudget =  100 * requestedPeriodResult.p_Companies[i].c_CumulatedInvestments / originalBudget;
+            } else {
+                originalBudget = 0;
+            }
 
             scores.push({
                 companyId      : requestedPeriodResult.p_Companies[i].c_CompanyID,
-                period         : period,
                 originalSOM    : originalSOM,
                 originalProfit : originalProfit,
                 originalBudget : originalBudget,                
-                // scaledSOM      : scaledSOM,              
-                // scaledProfit   : scaledProfit,
-                // scaledBudget   : scaledBudget,
-                 finalScore     : 0,
             });
         };
+
+        console.log(scores);
 
         highest_SOM    = _.max(scores, function(companyScore){ return companyScore.originalSOM; }).originalSOM;
         lowest_SOM     = _.min(scores, function(companyScore){ return companyScore.originalSOM; }).originalSOM;
@@ -60,6 +63,8 @@ exports.getFinalScore = function(req, res, next){
             if(lowest_Profit < 0){ companyScore.scaledProfit = companyScore.originalProfit + c; }
             else { companyScore.scaledProfit = companyScore.originalProfit; }
         })
+
+        
 
         if(lowest_SOM < 0){
             lowest_SOM = lowest_SOM + a;
@@ -78,7 +83,7 @@ exports.getFinalScore = function(req, res, next){
 
         if(highest_SOM > lowest_SOM){
             a = 100 / (highest_SOM - lowest_SOM);
-            b = 100 - a * highest_SOM;
+            b = 100 - (a * highest_SOM);
         } else {
             a = 0;
             b = 50;
@@ -86,7 +91,7 @@ exports.getFinalScore = function(req, res, next){
 
         if (highest_Profit > lowest_Profit){
             c = 100 / (highest_Profit - lowest_Profit);
-            d = 100 - c * highest_Profit;
+            d = 100 - (c * highest_Profit);
         } else {
             c = 0;
             d = 50;            
@@ -94,15 +99,23 @@ exports.getFinalScore = function(req, res, next){
 
         scores.forEach(function(companyScore){
             companyScore.scaledSOM = a * companyScore.scaledSOM + b;
+            if(companyScore.scaledSOM < 0){ companyScore.scaledSOM = 0; }
+
             companyScore.scaledProfit = c * companyScore.scaledProfit + d;
+            if(companyScore.scaledProfit < 0){ companyScore.scaledProfit = 0; }
+
             if(companyScore.originalBudget <= 100){
                 companyScore.scaledBudget = 0;
             } else {
                 companyScore.scaledBudget = 100 - companyScore.originalBudget;
             }
+
+            companyScore.finalScore =  initialPeriodResult.p_Market.m_fs_DeltaSOM_Weight * companyScore.scaledSOM + initialPeriodResult.p_Market.m_fs_Profits_Weight * companyScore.scaledProfit;
+            //a = 1 + initialPeriodResult.p_Market.m_fs_BudgetExcess_ScalingFactor * companyScore.scaledBudget / 100;
+            companyScore.finalScore = companyScore.finalScore + 2 * companyScore.scaledBudget;          
         });
 
-        res.send(200, scores);
+        res.send(200, { period : period, seminarId : seminarId, scores : scores } );
 
     }).fail(function(err){
         res.send(403, err.message);
