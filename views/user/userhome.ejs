@@ -2826,18 +2826,18 @@
                         <div class="col-md-12 " ng-if="css.currentDecisionRightMenu==2">
                             <div class="panel panel-default product_portfolio">
                                 <!-- Default panel contents -->
-                                <div class="panel-heading text-center ">Current Production</div>
+                                <div class="panel-heading text-center ">{{'DecisionPageProductPortfolioTable1CurrentProduction' | translate}}</div>
 
                                 <!-- Table -->
                                 <table class="table table-striped table-bordered table-hover">
                                     <thead>
                                         <tr>
-                                            <th>SKU Name</th>
-                                            <th>Target Segment</th>
-                                            <th>Factory Price</th>
-                                            <th>Ingredients Quality</th>
-                                            <th>Technology Level</th>
-                                            <th>Production Volume</th>
+                                            <th>{{'DecisionPageProductPortfolioTable1SKUName' | translate}}</th>
+                                            <th>{{'DecisionPageProductPortfolioTable1TargetSegment' | translate}}</th>
+                                            <th>{{'DecisionPageProductPortfolioTable1FactoryPrice' | translate}}</th>
+                                            <th>{{'DecisionPageProductPortfolioTable1IngredientsQuality' | translate}}</th>
+                                            <th>{{'DecisionPageProductPortfolioTable1TechnologyLevel' | translate}}</th>
+                                            <th>{{'DecisionPageProductPortfolioTable1ProductionVolume' | translate}}</th>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -2855,17 +2855,17 @@
 
                             <div class="panel panel-default product_portfolio">
                                 <!-- Default panel contents -->
-                                <div class="panel-heading text-center ">Previous Inventory</div>
+                                <div class="panel-heading text-center ">{{'DecisionPageProductPortfolioTable2PreviousInventory' | translate}}</div>
 
                                 <!-- Table -->
                                 <table class="table table-striped table-bordered table-hover">
                                     <thead>
                                         <tr>
-                                            <th>SKU Name</th>
-                                            <th>Average Factory Price</th>
-                                            <th>Average Ingredient Price</th>
-                                            <th>Average Technology Level</th>
-                                            <th>Total Inventory Volume at Factory</th>
+                                            <th>{{'DecisionPageProductPortfolioTable2SKUName' | translate}}</th>
+                                            <th>{{'DecisionPageProductPortfolioTable2AverageFactoryPrice' | translate}}</th>
+                                            <th>{{'DecisionPageProductPortfolioTable2AverageIngredientQuality' | translate}}</th>
+                                            <th>{{'DecisionPageProductPortfolioTable2AverageTechnologyLevel' | translate}}</th>
+                                            <th>{{'DecisionPageProductPortfolioTable2TotalInventoryVolumeAtFactory' | translate}}</th>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -2892,33 +2892,33 @@
                                 <table class="table table-striped table-bordered table-hover">
                                     <thead>
                                         <tr>
-                                            <th>Brand Name</th>
+                                            <th>{{'DecisionPageSpendingDetailsTable1BrandName' | translate}}</th>
                                             <th ng-repeat="brand in data.currentCompanySpendingDetails.brandData">{{brand.brandName}}</th>
                                         </tr>
                                     </thead>
                                     <tbody>
                                         <tr>
-                                            <th>Sale Force</th>
+                                            <td>{{'DecisionPageSpendingDetailsTable1SalesForce' | translate}}</td>
                                             <td ng-repeat="brand in data.currentCompanySpendingDetails.brandData">{{brand.salesForce}}</td>
                                         </tr>
                                         <tr>
-                                            <th>Consumer Communication</th>
+                                            <td>{{'DecisionPageSpendingDetailsTable1ConsumerCommunication' | translate}}</td>
                                             <td ng-repeat="brand in data.currentCompanySpendingDetails.brandData">{{brand.consumerCommunication}}</td>
                                         </tr>
                                         <tr>
-                                            <th>Consumer Promotions</th>
+                                            <td>{{'DecisionPageSpendingDetailsTable1ConsumerPromotions' | translate}}</td>
                                             <td ng-repeat="brand in data.currentCompanySpendingDetails.brandData">{{brand.consumerPromotion}}</td>
                                         </tr>
                                         <tr>
-                                            <th>Trade Expenses</th>
+                                            <td>{{'DecisionPageSpendingDetailsTable1TradeExpenses' | translate}}</td>
                                             <td ng-repeat="brand in data.currentCompanySpendingDetails.brandData">{{brand.tradeExpenses}}</td>
                                         </tr>
                                         <tr>
-                                            <th>Estimated Additional Trade Margin Cost</th>
+                                            <td>{{'DecisionPageSpendingDetailsTable1EstimatedAdditionalTradeMarginCost' | translate}}</td>
                                             <td ng-repeat="brand in data.currentCompanySpendingDetails.brandData">{{brand.estimatedAdditionalTradeMarginCost| number:2}}</td>
                                         </tr>
                                         <tr>
-                                            <th>Estimated Wholesale Bonus Cost</th>
+                                            <td>{{'DecisionPageSpendingDetailsTable1EstimatedWholesaleBonusCost' | translate}}</td>
                                             <td ng-repeat="brand in data.currentCompanySpendingDetails.brandData">{{brand.estimatedWholesaleBonusCost| number:2}}</td>
                                         </tr>
                                     </tbody>
@@ -2947,57 +2947,57 @@
 
                                     <thead>
                                         <tr>
-                                            <th>Company</th>
-                                            <th>Total</th>
+                                            <th>{{'DecisionPageSpendingDetailsTable2Company' | translate}}</th>
+                                            <th>{{'DecisionPageSpendingDetailsTable2Total' | translate}}</th>
                                         </tr>
                                     </thead>
                                     <tbody>
                                         <tr>
-                                            <td>Investment in Production Efficiency</td>
+                                            <td>{{'DecisionPageSpendingDetailsTable2InvestmentInProductionEfficiency' | translate}}</td>
                                             <td>{{data.currentCompanySpendingDetails.companyData.investmentInProductionEfficiency}}</td>
                                         </tr>
                                         <tr>
-                                            <td>Investment in Processing Technology</td>
+                                            <td>{{'DecisionPageSpendingDetailsTable2InvestmentInProcessingTechnology' | translate}}</td>
                                             <td>{{data.currentCompanySpendingDetails.companyData.investmentInProcessingTechnology}}</td>
                                         </tr>
                                         <tr>
-                                            <td>Total Investment</td>
+                                            <td>{{'DecisionPageSpendingDetailsTable2TotalInvestment' | translate}}</td>
                                             <td>{{data.currentCompanySpendingDetails.companyData.totalInvestment | number :2}}</td>
                                         </tr>
                                         <tr>
-                                            <td>Average Budget per Period</td>
+                                            <td>{{'DecisionPageSpendingDetailsTable2AverageBudgetPerPeriod' | translate}}</td>
                                             <td>{{data.currentCompanySpendingDetails.companyData.averageBudgetPerPeriod | number :2}}</td>
                                         </tr>
                                         <tr>
-                                            <td>Total Investment Budget</td>
+                                            <td>{{'DecisionPageSpendingDetailsTable2TotalInvestmentBudget' | translate}}</td>
                                             <td>{{data.currentCompanySpendingDetails.companyData.totalInvestmentBudget}}</td>
                                         </tr>
                                         <tr>
-                                            <td>Cumulated Previous Investments</td>
+                                            <td>{{'DecisionPageSpendingDetailsTable2CumulatedPreviousInvestments' | translate}}</td>
                                             <td>{{data.currentCompanySpendingDetails.companyData.cumulatedPreviousInvestments}}</td>
                                         </tr>
                                         <tr>
-                                            <td>Available Budget</td>
+                                            <td>{{'DecisionPageSpendingDetailsTable2AvailableBudget' | translate}}</td>
                                             <td>{{data.currentCompanySpendingDetails.companyData.availableBudget | number :2}}</td>
                                         </tr>
                                         <tr>
-                                            <td>Normal Capacity (mln Packs)</td>
+                                            <td>{{'DecisionPageSpendingDetailsTable2NormalCapacity' | translate}}</td>
                                             <td>{{data.currentCompanySpendingDetails.companyData.normalCapacity}}</td>
                                         </tr>
                                         <tr>
-                                            <td>Available Overtime Capacity Extenstion (mln Packs)</td>
+                                            <td>{{'DecisionPageSpendingDetailsTable2AvailableOvertimeCapacityExtension' | translate}}</td>
                                             <td>{{data.currentCompanySpendingDetails.companyData.availableOvertimeCapacityExtension | number :2}}</td>
                                         </tr>
                                         <tr>
-                                            <td>Acquired Efficiency (%)</td>
+                                            <td>{{'DecisionPageSpendingDetailsTable2AcquiredEfficiency' | translate}}</td>
                                             <td>{{data.currentCompanySpendingDetails.companyData.acquiredEfficiency | number :2}}%</td>
                                         </tr>
                                         <tr>
-                                            <td>Acquired Production Volmume Flexibility (%)</td>
+                                            <td>{{'DecisionPageSpendingDetailsTable2AcquiredProductionVolumeFlexibility' | translate}}</td>
                                             <td>{{data.currentCompanySpendingDetails.companyData.acquiredProductionVolumeFlexibility | number :2}}%</td>
                                         </tr>
                                         <tr>
-                                            <td>Acquired Technology Level</td>
+                                            <td>{{'DecisionPageSpendingDetailsTable2AcquiredTechnologyLevel' | translate}}</td>
                                             <td>{{data.currentCompanySpendingDetails.companyData.acquiredTechnologyLevel}}</td>
                                         </tr>
 
