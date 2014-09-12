@@ -826,8 +826,12 @@ app.config(['$translateProvider', function($translateProvider){
         "QuestionnairePageRecommendMarkSimos":"Would you like to recommend MarkSimos to other companies or business school",
         "QuestionnairePageYes":"Yes",
         "QuestionnairePageNo":"No",
-        "QuestionnairePageBringYou":"What is the best benefit or experience MarkSimos bring to you ? Is there something special you learned that you like was unique / different compared to what you learned before"
+        "QuestionnairePageBringYou":"What is the best benefit or experience MarkSimos bring to you ? Is there something special you learned that you like was unique / different compared to what you learned before",
         
+        //Labels for FAQ Page
+        "FAQPageTitle":"Frequently Asked Questions",
+        "FAQPageSubTitle":"This FAQ will attempt to cover the most asked question about Marksimos.This FAQ will attempt to cover the most asked question about Marksimos.This FAQ will attempt to cover the most asked question about Marksimos .",
+
 
     });
 

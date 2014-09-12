@@ -4,33 +4,33 @@ var config = require('../../common/config.js');
 
 exports.addFAQ =function(req,res,next){
 	var faq=[{
-        "category" : "Production Capacity",
-        "questions" :[
-            {
-            	"title" : "1. Can you improve Production Capacity according to your own requirement?",
-            	"answer" : "No, you can't. If your company is exceeding the capacity utilization rate of 90% for consecutive 2 periods, the capacity will be automatically increased in the next period. Similarly, if the total output represents less than 60% of production capacity, it is automatically reduced in the next period."
-            },
-            {
-            	"title" : "2. Once you increase Production Capacity, will the investment in Production Capacity be deducted from Total Initial Budget?",
-            	"answer" : "No, it will not."
-            },
-            {
-            	"title" : "3. What are the benefits from increasing Production Volume Flexibility?",
-            	"answer" : "If the company has high level of Production Volume Flexibility, the production department will be able to adjust the production volume automatically within certain scale (no more than 30% of current production volume). In this case, if the market requirement is higher than the established production volume, production department is able to increase the volume to reduce the loss of out-of-stocks. On the other hand, if the market requirement is less than the established production volume, production department is able to reduce the volume in order to reduce the inventories."
-            },
-            {
-            	"title" : "4. How to increase Production Volume Flexibility?",
-            	"answer" : "Add certain amount to Investment in Production Efficiency and you will increase your Production Volume Flexibility. If you need to increase both Production Efficiency and Production Volume Flexibility, add both investments amount together and enter to Investment in Production Efficiency. Please keep in mind that the increase of Production Efficiency can indirectly help to lift up Production Volume Flexibility."
-            },
-            {
-            	"title" : "5. What is the difference between Normal Capacity and Overtime Capacity?",
-            	"answer" : "Overtime shifts allow extending production ability by at most 30%. The incremental volume is associated with additional costs which represent about 27% increase compared to the regular production cost. In Competitive Intelligence, all the capacities refer to Normal Capacity."
-            },
-            {
-            	"title" : "6. Why you can't produce any product while the company's Normal Capacity is still remaining?",
-            	"answer" : "Production Volume is affected by both Trade Expense and Wholesaler Bonus Rate indirectly and both of them have direct reaction with your remaining budgets. The higher Production Volume, the higher rate of Trade Expense and Wholesaler Bonus Rate will be. Your company will limit the Production Volume according to the remaining total budgets."
-            }       
-        ]
+            "category" : "Production Capacity",
+            "questions" :[
+                {
+                	"title" : "1. Can you improve Production Capacity according to your own requirement?",
+                	"answer" : "No, you can't. If your company is exceeding the capacity utilization rate of 90% for consecutive 2 periods, the capacity will be automatically increased in the next period. Similarly, if the total output represents less than 60% of production capacity, it is automatically reduced in the next period."
+                },
+                {
+                	"title" : "2. Once you increase Production Capacity, will the investment in Production Capacity be deducted from Total Initial Budget?",
+                	"answer" : "No, it will not."
+                },
+                {
+                	"title" : "3. What are the benefits from increasing Production Volume Flexibility?",
+                	"answer" : "If the company has high level of Production Volume Flexibility, the production department will be able to adjust the production volume automatically within certain scale (no more than 30% of current production volume). In this case, if the market requirement is higher than the established production volume, production department is able to increase the volume to reduce the loss of out-of-stocks. On the other hand, if the market requirement is less than the established production volume, production department is able to reduce the volume in order to reduce the inventories."
+                },
+                {
+                	"title" : "4. How to increase Production Volume Flexibility?",
+                	"answer" : "Add certain amount to Investment in Production Efficiency and you will increase your Production Volume Flexibility. If you need to increase both Production Efficiency and Production Volume Flexibility, add both investments amount together and enter to Investment in Production Efficiency. Please keep in mind that the increase of Production Efficiency can indirectly help to lift up Production Volume Flexibility."
+                },
+                {
+                	"title" : "5. What is the difference between Normal Capacity and Overtime Capacity?",
+                	"answer" : "Overtime shifts allow extending production ability by at most 30%. The incremental volume is associated with additional costs which represent about 27% increase compared to the regular production cost. In Competitive Intelligence, all the capacities refer to Normal Capacity."
+                },
+                {
+                	"title" : "6. Why you can't produce any product while the company's Normal Capacity is still remaining?",
+                	"answer" : "Production Volume is affected by both Trade Expense and Wholesaler Bonus Rate indirectly and both of them have direct reaction with your remaining budgets. The higher Production Volume, the higher rate of Trade Expense and Wholesaler Bonus Rate will be. Your company will limit the Production Volume according to the remaining total budgets."
+                }       
+            ]
     },{
         "category" : "Technology",
         "questions" :[
@@ -148,11 +148,11 @@ exports.addFAQ =function(req,res,next){
             }
         ]
     }];
-
 	faqModel.addOne(faq)
 	.then(function(result){
 		if(result){
     		return res.send(result);
+            return 
     	}else{
     		throw new Error('Add faq failed.');
     	}

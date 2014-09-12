@@ -1431,13 +1431,13 @@ body a, body button {
 /* line 1394, ../sass/main.scss */
 .mainbody .score_box {
   border: 1px solid #e1e1e1;
-  margin: 20px 12.5% 10px 12.5%;
+  margin: 20px 12.5% 0 12.5%;
 }
 /* line 1399, ../sass/main.scss */
 .mainbody .feedback_box {
   border: 1px solid #FF941F;
   color: #A07041;
-  margin: 0 12.5% 20px;
+  margin: 20px 12.5%;
 }
 /* line 1405, ../sass/main.scss */
 .mainbody .score_info {
@@ -1474,27 +1474,27 @@ body a, body button {
   display: inline-block;
 }
 /* line 1423, ../sass/main.scss */
-.mainbody .score_data .table_report .company_a {
+.mainbody .score_data .table_report .company_1 {
   background-color: #39ae41;
 }
 /* line 1426, ../sass/main.scss */
-.mainbody .score_data .table_report .company_b {
+.mainbody .score_data .table_report .company_2 {
   background-color: #ff983d;
 }
 /* line 1429, ../sass/main.scss */
-.mainbody .score_data .table_report .company_c {
+.mainbody .score_data .table_report .company_3 {
   background-color: #0087f0;
 }
 /* line 1432, ../sass/main.scss */
-.mainbody .score_data .table_report .company_d {
+.mainbody .score_data .table_report .company_4 {
   background-color: #8781bd;
 }
 /* line 1435, ../sass/main.scss */
-.mainbody .score_data .table_report .company_e {
+.mainbody .score_data .table_report .company_5 {
   background-color: #f26c4f;
 }
 /* line 1438, ../sass/main.scss */
-.mainbody .score_data .table_report .company_f {
+.mainbody .score_data .table_report .company_6 {
   background-color: #bd8cbf;
 }
 /* line 1442, ../sass/main.scss */

@@ -2,25 +2,30 @@ var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
 var Q = require('q');
 
-var faqSchema = new Schema({
-	category  : String,
-    questions : [questionSchema]
+var manualSchema = new Schema({
+	language  : String,
+	content  : String,
+	menu 	 : [menuSchema]
 })
 
-var questionSchema = mongoose.Schema({
-    title : String,                   //TCategoriesTotal : 1~(2+1)
-    answer : String
+var menuSchema = mongoose.Schema({
+	menuName : String
+	subMenu  : [submenuSchema]
+})
+
+var submenuSchema = mongoose.Schema({
+	subMenuName : String
 })
 
 
-var FAQ = mongoose.model("FAQ", faqSchema);
+var Manual = mongoose.model("Manual", manualSchema);
 
-exports.addOne = function(faq){
+exports.addOne = function(manual){
 	if (!mongoose.connection.readyState) {
 		throw new Error("mongoose is not connected.");
 	}
 	var deferred = Q.defer();
-	FAQ.create(faq, function(err,result) {
+	Manual.create(manual, function(err,result) {
 		if (err) {
 			return deferred.reject(err);
 		}
@@ -29,19 +34,21 @@ exports.addOne = function(faq){
 	return deferred.promise;
 }
 
-exports.find = function() {
+exports.findByLanguage = function(language) {
 	if (!mongoose.connection.readyState) {
 		throw new Error("mongoose is not connected.");
 	}
 
 	var deferred = Q.defer();
 
-	FAQ.find(function(err, result){
+	Manual.findOne({
+		language: language
+	},function(err, result){
 		if(err){
             deferred.reject(err);
         }else{
             deferred.resolve(result);
         }
-	});
+	})
 	return deferred.promise;
 }

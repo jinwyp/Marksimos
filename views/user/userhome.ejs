@@ -1945,7 +1945,7 @@
 
     <div class="row mainbody" ng-cloak ng-if="css.menu=='Score'">
 
-        <div class="col-md-9 score_box" ng-if='!css.isFeedbackShown'>
+        <div class="col-md-9 score_box" ng-if='!css.isFeedbackShown' ng-show='data.currentStudent.currentPeriod>1'>
 
             <div class="row">
 
@@ -1971,10 +1971,6 @@
                         <div table-report-final-score data="data.tableFinalScore.selectPeriodData"></div>
 
                     </div>
-
-                    <!--<p class="text-center">
-                        <img src='/app/css/images/score_data.png'>
-                    </p>-->
 
                 </div>
             </div>

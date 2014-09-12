@@ -34,12 +34,12 @@ $color_main_body_background_chart: #dbe3f6;
 
 $color_main_body_company: #373737;
 $color_main_body_company_a: #ffffff;
-$color_main_body_company_a_bg: #39ae41;
-$color_main_body_company_b_bg: #ff983d;
-$color_main_body_company_c_bg: #0087f0;
-$color_main_body_company_d_bg: #8781bd;
-$color_main_body_company_e_bg: #f26c4f;
-$color_main_body_company_f_bg: #bd8cbf;
+$color_main_body_company_1_bg: #39ae41;
+$color_main_body_company_2_bg: #ff983d;
+$color_main_body_company_3_bg: #0087f0;
+$color_main_body_company_4_bg: #8781bd;
+$color_main_body_company_5_bg: #f26c4f;
+$color_main_body_company_6_bg: #bd8cbf;
 $color_main_body_brand: #2f4e9b;
 $color_main_body_product: #464646;
 $color_main_body_product_target: #6f6f6f;
@@ -902,7 +902,7 @@ body{
         
         .company_a{
             color: $color_main_body_company_a;
-            background-color: $color_main_body_company_a_bg;
+            background-color: $color_main_body_company_1_bg;
             width: 36px;
             height: 36px;
             padding: 5px 10px;
@@ -1393,13 +1393,13 @@ body{
 
     .score_box {
         border:1px solid $color_login_panel_border;
-        margin: 20px 12.5% 10px 12.5%;
+        margin: 20px 12.5% 0 12.5%;
     }
 
     .feedback_box {
         border:1px solid $color_main_body_user_feedback_border;
         color: $color_main_body_user_feedback;
-        margin: 0 12.5% 20px;
+        margin: 20px 12.5%;
     }
 
     .score_info {
@@ -1420,23 +1420,23 @@ body{
                 margin:0;
                 display:-moz-inline-box; display:inline-block;
             }
-            .company_a {
-                background-color: $color_main_body_company_a_bg;
+            .company_1 {
+                background-color: $color_main_body_company_1_bg;
             }
-            .company_b {
-                background-color: $color_main_body_company_b_bg;
+            .company_2 {
+                background-color: $color_main_body_company_2_bg;
             }
-            .company_c {
-                background-color: $color_main_body_company_c_bg;
+            .company_3 {
+                background-color: $color_main_body_company_3_bg;
             }
-            .company_d {
-                background-color: $color_main_body_company_d_bg;
+            .company_4 {
+                background-color: $color_main_body_company_4_bg;
             }
-            .company_e {
-                background-color: $color_main_body_company_e_bg;
+            .company_5 {
+                background-color: $color_main_body_company_5_bg;
             }
-            .company_f {
-                background-color: $color_main_body_company_f_bg;
+            .company_6 {
+                background-color: $color_main_body_company_6_bg;
             }
 
             .table > thead > tr > th,

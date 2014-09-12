@@ -27,18 +27,10 @@ marksimosapp.controller('userHelpController',['$rootScope', '$scope', '$translat
 
     $scope.initPage = function() {
 
-
-
         $scope.isFAQShown=true;
         $scope.isVideoShown=false;
         $scope.isManualShown=false;
         $scope.questionsShown=[1,0,0,0,0,0,0,0];
-
-        if($translate.use()=="zh_CN"){
-
-        }else if($translate.use()=="en_US"){
-
-        }
 
         FAQ.getFAQ().then(function(doc){
             $scope.faqs=doc;
@@ -57,10 +49,6 @@ marksimosapp.controller('userHelpController',['$rootScope', '$scope', '$translat
         $scope.questionsShown=[0,0,0,0,0,0,0,0];
         $scope.questionsShown[index]=1;
     }
-
-    $scope.trustAsHtml = function(data) {
-        return $sce.trustAsHtml(data);
-    };
 
     $scope.initPage();
 
