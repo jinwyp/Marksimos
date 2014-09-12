@@ -22,6 +22,7 @@ marksimosapp.controller('userHelpController',['$rootScope', '$scope', '$translat
                 $scope.manual=manual;
             })
         }
+        console.log($scope.manual);
     });
 
 
@@ -49,7 +50,7 @@ marksimosapp.controller('userHelpController',['$rootScope', '$scope', '$translat
         $scope.firstCategory=false;
         $scope.questionsShown=[0,0,0,0,0,0,0,0];
         $scope.questionsShown[index]=1;
-    }
+    };
 
     $scope.initPage();
 
