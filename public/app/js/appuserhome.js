@@ -772,7 +772,7 @@ marksimosapp.controller('chartController', ['$translate', '$scope', '$rootScope'
             $scope.css.selectFinalScorePeriod = $scope.data.currentStudent.currentPeriod - 1;
             return FinalScore.getFinalScore($scope.data.currentStudent.currentPeriod - 1);
         }).then(function(data, status, headers, config){
-            $scope.data.tableFinalScore.selectPeriodData = data.scores;
+            $scope.data.tableFinalScore.selectPeriodData = data;
         });
 
         Company.getCompany().then(function(data, status, headers, config){
@@ -1152,7 +1152,7 @@ marksimosapp.controller('chartController', ['$translate', '$scope', '$rootScope'
         $scope.css.selectFinalScorePeriod = period ;
         FinalScore.getFinalScore(period)
         .then(function(data, status, headers, config){
-            $scope.data.tableFinalScore.selectPeriodData = data.scores;
+            $scope.data.tableFinalScore.selectPeriodData = data; 
         });
     };
 

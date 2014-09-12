@@ -46,8 +46,6 @@ exports.getFinalScore = function(req, res, next){
             });
         };
 
-        console.log(scores);
-
         highest_SOM    = _.max(scores, function(companyScore){ return companyScore.originalSOM; }).originalSOM;
         lowest_SOM     = _.min(scores, function(companyScore){ return companyScore.originalSOM; }).originalSOM;
         highest_Profit = _.max(scores, function(companyScore){ return companyScore.originalProfit; }).originalProfit;
@@ -75,11 +73,6 @@ exports.getFinalScore = function(req, res, next){
             lowest_Profit = lowest_Profit + c;
             highest_Profit = highest_Profit + c;
         }
-
-        // console.log('highest_SOM:' + highest_SOM);
-        // console.log('lowest_SOM:' + lowest_SOM);
-        // console.log('highest_Profit:' + highest_Profit);
-        // console.log('lowest_Profit:' + lowest_Profit);
 
         if(highest_SOM > lowest_SOM){
             a = 100 / (highest_SOM - lowest_SOM);
