@@ -6,7 +6,7 @@ var app = angular.module('marksimos.config', []);
 
 
 
-/********************  解决提交请求$http 时出现 "Provisional headers are shown angular" ********************/
+/********************  解决提交请求$http 时出现 "Provisional headers are shown angular"(实际上并没有采用,而是后端出的问题导致了该问题) ********************/
 /********************  http://stackoverflow.com/questions/21630534/node-js-angular-js-caution-provisional-headers-are-shown ********************/
 
 

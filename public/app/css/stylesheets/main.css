@@ -913,45 +913,44 @@ body a, body button {
 /* line 1018, ../sass/main.scss */
 .mainbody .user_period_bar .period_info_bottom {
   margin: 20px 0 0 31px;
-  position: absolute;
-  -webkit-text-size-adjust: none;
   font-size: 11px;
+  display: block;
 }
-/* line 1024, ../sass/main.scss */
+/* line 1023, ../sass/main.scss */
 .mainbody .user_period_bar .period_info_top {
   position: absolute;
-  margin: -20px 0 0 11px;
+  margin: -20px 0 0 15px;
   display: block;
   -webkit-text-size-adjust: none;
   font-size: 11px;
 }
-/* line 1033, ../sass/main.scss */
+/* line 1032, ../sass/main.scss */
 .mainbody .user_search_chart {
   padding-top: 30px;
   padding-bottom: 30px;
 }
-/* line 1037, ../sass/main.scss */
+/* line 1036, ../sass/main.scss */
 .mainbody .user_search_chart .droplist_company {
   color: #6f6f6f;
 }
-/* line 1042, ../sass/main.scss */
+/* line 1041, ../sass/main.scss */
 .mainbody .user_chart_list {
   border-color: #cfd3e0;
   height: 389px;
 }
-/* line 1048, ../sass/main.scss */
+/* line 1047, ../sass/main.scss */
 .mainbody .user_chart_list .panel-heading {
   background-color: #dbe3f6;
   border-color: #cfd3e0;
 }
-/* line 1054, ../sass/main.scss */
+/* line 1053, ../sass/main.scss */
 .mainbody .user_chart_list h3 {
   font-size: 16px;
   color: #2f4e9b;
   padding: 10px 10px 10px 20px;
   text-align: center;
 }
-/* line 1063, ../sass/main.scss */
+/* line 1062, ../sass/main.scss */
 .mainbody .user_chart_list .list-group-item {
   background-color: #ffffff;
   background-image: url(../images/userchartlist.png);
@@ -959,14 +958,14 @@ body a, body button {
   background-position: 75px 20px;
   padding: 18px 1px 18px 95px;
 }
-/* line 1071, ../sass/main.scss */
+/* line 1070, ../sass/main.scss */
 .mainbody .user_chart_list .list-group-item a {
   font-size: 13px;
   font-family: "Helvetica", "Arial, sans-serif";
   color: #464646;
   font-weight: bold;
 }
-/* line 1078, ../sass/main.scss */
+/* line 1077, ../sass/main.scss */
 .mainbody .user_chart_list .list-group-item-active {
   background-color: #fbfbfb;
 }
@@ -1018,24 +1017,24 @@ body a, body button {
 .mainbody .user_chart_list .spotlight_overlay4 a {
   color: #236ac7;
 }
-/* line 1088, ../sass/main.scss */
+/* line 1087, ../sass/main.scss */
 .mainbody .user_chart_list_bg2 {
   background-color: #fbfbfb;
 }
-/* line 1100, ../sass/main.scss */
+/* line 1099, ../sass/main.scss */
 .mainbody .user_chart_box {
   height: 70px;
 }
-/* line 1104, ../sass/main.scss */
+/* line 1103, ../sass/main.scss */
 .mainbody .user_chart_company {
   margin: 18px 0px 1px 28px;
 }
-/* line 1108, ../sass/main.scss */
+/* line 1107, ../sass/main.scss */
 .mainbody .user_chart_search_box {
   padding-top: 16px;
   padding-bottom: 10px;
 }
-/* line 1114, ../sass/main.scss */
+/* line 1113, ../sass/main.scss */
 .mainbody .user_chart_vs {
   color: #373737;
   font-size: 10px;
@@ -1047,12 +1046,12 @@ body a, body button {
   margin: 16px 0px 1px 0px;
   display: block;
 }
-/* line 1127, ../sass/main.scss */
+/* line 1126, ../sass/main.scss */
 .mainbody .user_chart_clock {
   font-size: 10px;
   margin: 10px 0px 1px 0px;
 }
-/* line 1133, ../sass/main.scss */
+/* line 1132, ../sass/main.scss */
 .mainbody .user_chart_make_decision {
   color: #373737;
   font-size: 10px;
@@ -1060,11 +1059,12 @@ body a, body button {
   margin: 5px 0px 5px 0px;
   display: block;
 }
-/* line 1142, ../sass/main.scss */
+/* line 1141, ../sass/main.scss */
 .mainbody .user_chart_decision_button {
   -webkit-text-size-adjust: none;
   font-size: 11px;
   font-weight: normal;
+  width: 154px;
   margin: 0px 0px 0px 19px;
   padding: 8px 40px 8px 40px;
   color: #ffffff;
@@ -1714,7 +1714,7 @@ body a, body button {
 .mainbody .comparison_box {
   width: 48%;
   min-height: 600px;
-  margin: 10px 0px 30px 15px;
+  margin: 20px 0px 30px 15px;
   border: 1px solid #e1e1e1;
   background-color: #ffffff;
 }
@@ -1742,8 +1742,8 @@ body a, body button {
 }
 /* line 1593, ../sass/main.scss */
 .mainbody .all_comparison_reports {
-  border-top: 1px solid #d4d4d4;
-  padding: 15px 0px 40px 0px;
+  border-bottom: 1px solid #d4d4d4;
+  padding: 15px 0px 10px 0px;
 }
 /* line 1597, ../sass/main.scss */
 .mainbody .all_comparison_reports h6 {

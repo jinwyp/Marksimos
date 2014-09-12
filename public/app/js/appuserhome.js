@@ -10,7 +10,7 @@ var marksimosapp = angular.module('marksimos', ['pascalprecht.translate', 'angul
 
 
 // controller business logic
-marksimosapp.controller('chartController', ['$translate', '$scope', '$rootScope', '$document', '$timeout', '$http', 'notify', 'chartReport', 'tableReport', 'Company', 'FinalScore', 'Questionnaire', function($translate, $scope, $rootScope, $document, $timeout, $http, notify, chartReport, tableReport, Company , FinalScore, Questionnaire) {
+marksimosapp.controller('chartController', ['$translate', '$scope', '$rootScope', '$document', '$timeout', '$interval', '$http', 'notify', 'chartReport', 'tableReport', 'Company', 'FinalScore', 'Questionnaire', function($translate, $scope, $rootScope, $document, $timeout, $interval, $http, notify, chartReport, tableReport, Company , FinalScore, Questionnaire) {
 
     $rootScope.$on('$translateChangeSuccess', function () {
         $translate(['HomePageSegmentLabelPriceSensitive', 'HomePageSegmentLabelPretenders', 'HomePageSegmentLabelModerate',
@@ -52,7 +52,7 @@ marksimosapp.controller('chartController', ['$translate', '$scope', '$rootScope'
 
 
     $scope.css = {
-        menu                     : 'Report',
+        menu                     : 'Home',
         chartMenu                : 'A1',
         tableReportTab           : 'SKU',
         tableReportMenu          : 1,
@@ -102,6 +102,11 @@ marksimosapp.controller('chartController', ['$translate', '$scope', '$rootScope'
 
 
     $scope.data = {
+        currentTime : {
+            hour : 0,
+            minute : 0,
+            second : 0
+        },
         currentStudent : null,
         currentCompany : null,
         currentCompanyNameCharacter : "",
@@ -553,14 +558,11 @@ marksimosapp.controller('chartController', ['$translate', '$scope', '$rootScope'
         $scope.data.tableA1CompanyStatus.currentBrand = $scope.data.tableA1CompanyStatus.currentCompany.brand[0];
         $scope.data.tableA1CompanyStatus.currentGlobal = $scope.data.tableA1CompanyStatus.currentCompany.global;
     };
-    $scope.switchTableReportSKU = function(SKU){
+    $scope.switchTableReportA1SKU = function(SKU){
         $scope.data.tableA1CompanyStatus.currentSKU = SKU;
-        $scope.data.tableA4ProfitabilityEvolution.currentSKU = SKU;
     };
-    $scope.switchTableReportBrand = function(brand){
+    $scope.switchTableReportA1Brand = function(brand){
         $scope.data.tableA1CompanyStatus.currentBrand = brand;
-        $scope.data.tableA2FinancialData.currentBrand = brand;
-        $scope.data.tableA4ProfitabilityEvolution.currentBrand = brand;
     };
 
 
@@ -576,6 +578,11 @@ marksimosapp.controller('chartController', ['$translate', '$scope', '$rootScope'
         $scope.data.tableA2FinancialData.currentPeriod = period;
         $scope.data.tableA2FinancialData.currentBrand = $scope.data.tableA2FinancialData.currentPeriod.brands[0];
     };
+    $scope.switchTableReportA2Brand = function(brand){
+        $scope.data.tableA2FinancialData.currentBrand = brand;
+    };
+
+
     /********************  Table Report A4  ********************/
     tableReport.profitabilityEvolution().then(function(data, status, headers, config){
 //        console.log(data);
@@ -584,6 +591,12 @@ marksimosapp.controller('chartController', ['$translate', '$scope', '$rootScope'
         $scope.data.tableA4ProfitabilityEvolution.currentBrand = $scope.data.tableA4ProfitabilityEvolution.allData.brand[0];
         $scope.data.tableA4ProfitabilityEvolution.currentGlobal = $scope.data.tableA4ProfitabilityEvolution.allData.global;
     });
+    $scope.switchTableReportA4SKU = function(SKU){
+        $scope.data.tableA4ProfitabilityEvolution.currentSKU = SKU;
+    };
+    $scope.switchTableReportA4Brand = function(brand){
+        $scope.data.tableA4ProfitabilityEvolution.currentBrand = brand;
+    };
 
     /********************  Table Report B2  ********************/
     tableReport.competitorIntelligence().then(function(data, status, headers, config){
@@ -642,7 +655,12 @@ marksimosapp.controller('chartController', ['$translate', '$scope', '$rootScope'
     /********************  切换左部图标菜单  ********************/
     $scope.clickChartMenu = function(chart){
         $scope.css.menu = 'Report';
-        $scope.css.chartMenu = chart;
+
+        // 不知道为什么 图表渲染的宽度没有撑开,所以加入$timeout.
+        $timeout(function() {
+            $scope.css.chartMenu = chart;
+        }, 100);
+
     };
 
 
@@ -661,6 +679,25 @@ marksimosapp.controller('chartController', ['$translate', '$scope', '$rootScope'
 
         Company.getCurrentStudent().then(function(data, status, headers, config){
             $scope.data.currentStudent = data;
+
+            var currentDate = new Date();
+
+            var timer = $interval(function() {
+                currentDate = new Date();
+                if(currentDate.getHours() < 13 && currentDate.getHours() > 9){
+                    $scope.data.currentTime.hour = 12 - currentDate.getHours();
+                    $scope.data.currentTime.minute = 60 - currentDate.getMinutes();
+                    $scope.data.currentTime.second = 60 - currentDate.getSeconds() ;
+                }else if(currentDate.getHours() < 19 && currentDate.getHours() >= 13){
+                    $scope.data.currentTime.hour = 18 - currentDate.getHours();
+                    $scope.data.currentTime.minute = 60 - currentDate.getMinutes();
+                    $scope.data.currentTime.second = 60 - currentDate.getSeconds() ;
+                }else {
+                    $interval.cancel(timer);
+                }
+            }, 3000);
+
+
 
             // 处理当前的公司名称
 
@@ -1276,6 +1313,13 @@ marksimosapp.controller('chartController', ['$translate', '$scope', '$rootScope'
     };
 
 
+
+
+
+
+
+
+
     /********************  Report Comparison   ********************/
     $scope.showComparisonPage = function(){
         $scope.css.comparisonPage = !$scope.css.comparisonPage;
@@ -1291,8 +1335,6 @@ marksimosapp.controller('chartController', ['$translate', '$scope', '$rootScope'
 
         var moveSourceDom = angular.element(event1.currentTarget);
 
-        console.log(moveSourceDom);
-
         var movingDom = angular.element('.dragReportMovingBox');
         movingDom.empty().append(moveSourceDom.clone());
 
@@ -1300,15 +1342,6 @@ marksimosapp.controller('chartController', ['$translate', '$scope', '$rootScope'
         $scope.css.dragReportPosition.left = event.clientX - 120;
 
 
-
-//        element.centerX = (element.width()/2);
-//        element.centerY = (element.height()/2);
-//        element.addClass('dragging');
-//        _mx = (evt.pageX || evt.originalEvent.touches[0].pageX);
-//        _my = (evt.pageY || evt.originalEvent.touches[0].pageY);
-//        _tx=_mx-element.centerX-$window.scrollLeft()
-//        _ty=_my -element.centerY-$window.scrollTop();
-//        moveElement(_tx, _ty);
         $document.on($scope.css.dragEvent.moveEvents, onReportMove);
         $document.on($scope.css.dragEvent.releaseEvents, onReportRelease);
     };
@@ -1318,8 +1351,6 @@ marksimosapp.controller('chartController', ['$translate', '$scope', '$rootScope'
             $scope.css.dragReportPosition.top = event.clientY + 10;
             $scope.css.dragReportPosition.left = event.clientX - 120;
         });
-
-//        console.log($scope.css.dragReportPosition);
     }
 
     function onReportRelease() {
@@ -1327,26 +1358,18 @@ marksimosapp.controller('chartController', ['$translate', '$scope', '$rootScope'
             var targetDom = {};
             var targetDomContent = {};
             if($scope.css.dragTargetBoxId !== ''){
-                targetDom = angular.element('#' + $scope.css.dragTargetBoxId);
-                targetDomContent = angular.element('#' + $scope.css.dragSourceReportId).clone();
-                targetDomContent.removeClass( "col-md-10 ng-hide").addClass( "col-md-12" ).removeAttr("ng-show");
-
-                targetDom.empty().append(targetDomContent);
-
 
                 if($scope.css.dragTargetBoxId === 'comparisonBoxLeft'){
-                    $scope.css.dragHaveLeftReport = true;
+                    $scope.css.dragHaveLeftReport = $scope.css.dragSourceReportId;
                 }else{
-                    $scope.css.dragHaveRightReport = true;
+                    $scope.css.dragHaveRightReport = $scope.css.dragSourceReportId;
                 }
             }
-            console.log(targetDomContent);
-            console.log(targetDom);
-            console.log($scope.css.dragSourceReportId);
 
             $scope.css.dragReportFlag = false;
             $scope.css.dragSourceReportId = '';
             $scope.css.dragTargetBoxId = '';
+
         });
 
         $document.off($scope.css.dragEvent.moveEvents, onReportMove);
@@ -1361,6 +1384,6 @@ marksimosapp.controller('chartController', ['$translate', '$scope', '$rootScope'
             $scope.css.dragTargetBoxId = 'comparisonBox' +  targetboxid;
         }
 
-    }
+    };
 
 }]);
