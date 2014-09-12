@@ -10,7 +10,8 @@ var marksimosapp = angular.module('marksimos', ['pascalprecht.translate', 'angul
 
 
 // controller business logic
-marksimosapp.controller('chartController', ['$translate', '$scope', '$rootScope', '$document', '$timeout', '$interval', '$http', 'notify', 'chartReport', 'tableReport', 'Company', function($translate, $scope, $rootScope, $document, $timeout, $interval, $http, notify, chartReport, tableReport, Company) {
+marksimosapp.controller('chartController', ['$translate', '$scope', '$rootScope', '$document', '$timeout', '$interval', '$http', 'notify', 'chartReport', 'tableReport', 'Company', 'FinalScore', 'Questionnaire', function($translate, $scope, $rootScope, $document, $timeout, $interval, $http, notify, chartReport, tableReport, Company , FinalScore, Questionnaire) {
+
     $rootScope.$on('$translateChangeSuccess', function () {
         $translate(['HomePageSegmentLabelPriceSensitive', 'HomePageSegmentLabelPretenders', 'HomePageSegmentLabelModerate',
             'HomePageSegmentLabelGoodLife', 'HomePageSegmentLabelUltimate', 'HomePageSegmentLabelPragmatic']).then(function (translations) {
@@ -80,7 +81,11 @@ marksimosapp.controller('chartController', ['$translate', '$scope', '$rootScope'
         dragTargetBoxId : '',
         dragSourceReportId : '',
         dragHaveLeftReport : false,
-        dragHaveRightReport : false
+        dragHaveRightReport : false,
+        //score
+        selectFinalScorePeriod : 0,
+        finalReportPeriods: [],
+        isFeedbackShown:false
     };
 
 
@@ -94,6 +99,7 @@ marksimosapp.controller('chartController', ['$translate', '$scope', '$rootScope'
             }
         ]
     };
+
 
     $scope.data = {
         currentTime : {
@@ -176,6 +182,9 @@ marksimosapp.controller('chartController', ['$translate', '$scope', '$rootScope'
         },
         tableC6MarketIndicators : {
             allData : {}
+        },
+        tableFinalScore:{
+            selectPeriodData : {}
         },
 
 
@@ -724,6 +733,8 @@ marksimosapp.controller('chartController', ['$translate', '$scope', '$rootScope'
 
             $scope.css.periods = [];
 
+            $scope.css.finalReportPeriods = [];
+
             // 处理显示当前第几回合进度条
             if(angular.isNumber($scope.data.currentStudent.currentPeriod)){
                 for (var i = -3; i <= $scope.data.currentStudent.maxPeriodRound; i++) {
@@ -749,9 +760,19 @@ marksimosapp.controller('chartController', ['$translate', '$scope', '$rootScope'
                         });
                     }
                 }
+                //get periods of finalScore
+                for (var i = -3; i < $scope.data.currentStudent.currentPeriod; i++) {
+                    $scope.css.finalReportPeriods.push(i);
+                }
+
             }
 
 
+            //get finalscore data  of current period
+            $scope.css.selectFinalScorePeriod = $scope.data.currentStudent.currentPeriod - 1;
+            return FinalScore.getFinalScore($scope.data.currentStudent.currentPeriod - 1);
+        }).then(function(data, status, headers, config){
+            $scope.data.tableFinalScore.selectPeriodData = data.scores;
         });
 
         Company.getCompany().then(function(data, status, headers, config){
@@ -818,17 +839,13 @@ marksimosapp.controller('chartController', ['$translate', '$scope', '$rootScope'
                 overtimeCapacityValue : data.overtimeCapacityValue.toFixed(0)
             };
 
-    //        console.log($scope.data.currentCompanyOtherInfo);
-
         });
 
         Company.getCompanyProductPortfolio().then(function(data, status, headers, config){
-    //        console.log(data);
             $scope.data.currentCompanyProductPortfolio = data;
         });
 
         Company.getCompanySpendingDetails().then(function(data, status, headers, config){
-    //        console.log(data);
             $scope.data.currentCompanySpendingDetails = data;
         });
 
@@ -978,7 +995,6 @@ marksimosapp.controller('chartController', ['$translate', '$scope', '$rootScope'
 
 
 
-//        console.log($scope.data.currentModifiedSku);
         Company.updateSku($scope.data.currentModifiedSku).then(function(data, status, headers, config){
             $scope.companyInfoInit();
 
@@ -1086,7 +1102,6 @@ marksimosapp.controller('chartController', ['$translate', '$scope', '$rootScope'
         $scope.data.currentModifiedCompany.company_data = {};
         $scope.data.currentModifiedCompany.company_data[fieldname] = $scope.data.currentCompany[fieldname];
 
-        console.log($scope.data.currentModifiedCompany);
         Company.updateCompany($scope.data.currentModifiedCompany).success(function(data, status, headers, config){
             console.log(data);
             $scope.css.additionalBudget = true;
@@ -1110,7 +1125,6 @@ marksimosapp.controller('chartController', ['$translate', '$scope', '$rootScope'
             $scope.css.companyErrorInfo = data;
 
             notify({
-//                message : JSON.stringify(data.data) + ', status: ' + data.status,
                 message : data.message,
                 template : notifytemplate.failure,
                 position : 'center'
@@ -1119,7 +1133,73 @@ marksimosapp.controller('chartController', ['$translate', '$scope', '$rootScope'
     };
 
 
+    /********************  get FinalScore  ********************/
 
+
+    $scope.translateCompany = function (companyId){
+        console.log('message');
+        switch(companyId){
+            case 1 : return 'A';break;
+            case 2 : return 'B';break;
+            case 3 : return 'C';break;
+            case 4 : return 'D';break;
+            case 5 : return 'E';break;
+            case 6 : return 'F';break;
+        }
+    }
+    
+    $scope.switchTableReportFinalScore = function(period){
+        $scope.css.selectFinalScorePeriod = period ;
+        FinalScore.getFinalScore(period)
+        .then(function(data, status, headers, config){
+            $scope.data.tableFinalScore.selectPeriodData = data.scores;
+        });
+    };
+
+    /********************  get getQuestionnaire  ********************/
+    Questionnaire.getQuestionnaire().then(function(data, status, headers, config){
+        $scope.questionnaire = data;
+        $scope.questionnaire.radio_OverallSatisfactionWithThePrograms={
+            info:['ChallengeStrategicThinkingAbility','DevelopAnIntegratedPerspective','TestPersonalAbilityOfBalancingRisks','ChallengeLeadershipAndTeamworkAbility','ChallengeAnalysisAndDecisionMakingAbility','SimulationInteresting']
+        };
+        $scope.questionnaire.radio_TeachingTeams={
+            info:['FeedbackOnSimulationDecisions','ExpandingViewAndInspireThinking','Lectures']
+        };
+        $scope.questionnaire.radio_Products={
+            info:['OverallProductUsageExperience','UserInterfaceExperience','EaseOfNavigation','ClarityOfWordsUsed']
+        };
+        $scope.questionnaire.radio_TeachingSupports={
+            info:['Helpfulness','QualityOfTechnicalSupport']
+        };
+        $scope.questionnaire.radio_MostBenefits={
+            info:["JoinProgram","CompanyInHouse","OpenClass"]
+        };
+    });
+    $scope.showQuestionnaire = function(){
+        $scope.css.isFeedbackShown=true;
+    }
+    /********************  更新 Questionnaire  ********************/
+    $scope.updateQuestionnaire = function(fieldname , index, form, formfieldname){
+
+        var currentData={
+            'location':fieldname,
+            'data':$scope.questionnaire[fieldname]
+        }
+
+        Questionnaire.updateQuestionnaire(currentData).then(function(data, status, headers, config){
+            notify({
+                message : 'Save Success !',
+                template : notifytemplate.success,
+                position : 'center'
+            });
+        },function(data, status, headers, config){
+            notify({
+                message : data.message,
+                template : notifytemplate.failure,
+                position : 'center'
+            });
+        })
+    };
 
 
 

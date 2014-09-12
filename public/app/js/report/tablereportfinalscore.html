@@ -1,0 +1,51 @@
+<table class="table table-bordered">
+    <thead>
+        <tr>
+            <th>&nbsp;</th>
+            <th>{{'FinalScorePageWeightFactor' | translate}} </th>
+            <th ng-repeat="company in data">
+                <span class="company {{'company_'+company.companyId}}">&nbsp;</span>
+                {{'FinalScorePageCompany' | translate}} {{company.companyId}}
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td>{{'FinalScorePageIncrementalMarketShare' | translate}}</td>
+            <td class="td_info">50</td>
+            <td ng-repeat="score in data">{{score.scaledSOM | number :2}}
+            </td>
+        </tr>
+        <tr>
+            <td>{{'FinalScorePageCumulatedNetProfit' | translate}}</td>
+            <td class="td_info">50</td>
+            <td ng-repeat="score in data">{{score.scaledProfit | number :2}}
+            </td>
+        </tr>
+        <tr>
+            <td>{{'FinalScorePageSpendingVersusBudgets' | translate}}</td>
+            <td class="td_info">0</td>
+            <td ng-repeat="score in data">{{score.scaledBudget | number :2}}
+            </td>
+        </tr>
+        <!-- <tr>
+            <td>{{'FinalScorePageShareInBrandTotalSalesValue' | translate}}</td>
+            <td class="td_info">?</td>
+            <td ng-repeat="score in data">{{score.originalSOM | number :2}}
+            </td>
+        </tr>
+        <tr>
+            <td>{{'FinalScorePageAchievementOfInitialObjectives' | translate}}</td>
+            <td class="td_info">?</td>
+            <td ng-repeat="score in data">{{score.originalProfit | number :2}}
+            </td>
+        </tr> -->
+        <tr class="tr_warning">
+            <td>{{'FinalScorePageFinalScore' | translate}}</td>
+            <td>&nbsp;</td>
+            <td ng-repeat="score in data">{{score.finalScore | number :2}}
+            </td>
+        </tr>
+
+    </tbody>
+</table>

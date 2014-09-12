@@ -38,16 +38,17 @@
                     </li>
 
 
-                    <li class="dropdown">
+                    <!--<li class="dropdown">
                         <a href="" class="dropdown-toggle" data-toggle="dropdown">{{'HomePageMenuBarLabelsHelp' | translate}} <b class="caret"></b></a>
                         <ul class="dropdown-menu mk_dropdownlist">
-                            <li><a href="">{{'HomePageMenuBarLabelsHelpFAQ' | translate}}</a></li>
+                            <li><a href="" ng-click='clickHelpMenu("FAQ")'>{{'HomePageMenuBarLabelsHelpFAQ' | translate}}</a></li>
                             <li class="divider mk_dropdowndivider"></li>
-                            <li><a href="">{{'HomePageMenuBarLabelsHelpVideo' | translate}}</a></li>
+                            <li><a href="" ng-click='clickHelpMenu("Video")'>{{'HomePageMenuBarLabelsHelpVideo' | translate}}</a></li>
                             <li class="divider mk_dropdowndivider"></li>
-                            <li><a href="">{{'HomePageMenuBarLabelsHelpManual' | translate}}</a></li>
+                            <li><a href="" ng-click='clickHelpMenu("Manual")'>{{'HomePageMenuBarLabelsHelpManual' | translate}}</a></li>
                         </ul>
-                    </li>
+                    </li>-->
+                    <li><a href="" ng-click='clickHelpMenu()'>{{'HomePageMenuBarLabelsHelp' | translate}}</a></li>
 
                     <li><a href="/marksimos.html">{{'HomePageMenuBarLabelsAbout' | translate}}</a></li>
                     <li ng-if="showlogout"><a href="" ng-click="clickLogout()">{{'HomePageMenuBarLabelsLogout' | translate}}</a></li>

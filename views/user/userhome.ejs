@@ -11,7 +11,7 @@
 
 
 
-    <user-header showmenu="true" showlogout="true"  current-menu="css.menu" current-round="data.currentStudent.currentPeriod"></user-header>
+    <user-header showmenu="true" showlogout="true"  current-menu="css.menu" current-round="data.currentStudent.currentPeriod" is-feedback-shown='css.isFeedbackShown'></user-header>
 
 
 
@@ -3015,6 +3015,375 @@
     </div>
 
     <!----------  End Decision Page  ---------->
+
+    <div class="row mainbody" ng-cloak ng-if="css.menu=='Score'">
+        <div class="col-md-2 user_home_divider user_chart_box">
+
+            <div class="row ">
+                <h4 class="user_maincompany user_chart_company">Company <span class="company_a">{{data.currentStudent.companyName | limitTo:-1}}</span> </h4>
+
+            </div>
+
+        </div>
+
+        <div class="col-md-5 user_home_divider user_chart_box" >
+            <div class="row">
+                <div class="col-md-12 user_chart_search_box">
+                    <div class="input-group">
+                        <div class="input-group-btn">
+
+                            <button type="button" class="btn btn-default dropdown-toggle droplist_company" data-toggle="dropdown">Company A <span class="caret"></span></button>
+                            <ul class="dropdown-menu">
+                                <li><a href="">Company A</a></li>
+                                <li><a href="">Company B</a></li>
+                                <li><a href="">Company C</a></li>
+                            </ul>
+                        </div><!-- /btn-group -->
+
+                        <input type="text" class="form-control" placeholder="find ....">
+                    </div><!-- /input-group -->
+                </div>
+
+            </div>
+        </div>
+
+        <div class="col-md-1 user_home_divider user_chart_box">
+            <div class="row">
+                <div class="col-md-12 ">
+                    <span class="user_chart_vs"> Compare Data</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-2 user_home_divider user_chart_box">
+            <div class="row">
+                <div class="col-md-12 ">
+                    <span class="user_clock user_chart_clock"><strong>1h22mins left</strong> for submitting decision</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-2">
+            <div class="row">
+                <div class="col-md-12 ">
+                    <span class="user_chart_make_decision">Mission: Market Share + Profit</span>
+                    <button type="button" class="btn user_chart_decision_button" ng-click="switchHeaderMenu('Decision')">Make Decision</button>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <div class="row mainbody" ng-cloak ng-if="css.menu=='Score'">
+
+        <div class="col-md-9 score_box" ng-if='!css.isFeedbackShown'>
+
+            <div class="row">
+
+                <div class="col-md-12 score_info">
+
+                    <span class="score_info_title">Score</span>
+
+
+                </div>
+
+            </div>
+
+            <div class="row">
+                <div class="col-md-12 score_data">
+                    
+                    <div class="table_report">
+
+                        <ul class="nav nav-pills">
+                            <li ng-class="{'active': n==css.selectFinalScorePeriod}" ng-repeat="n in css.finalReportPeriods"><a href="" ng-click="switchTableReportFinalScore(n)">{{'FinalScorePagePeriod' | translate}} {{n}}</a></li>
+                        </ul>
+
+                        <div class="divider_horizontal"></div>
+                        <div table-report-final-score data="data.tableFinalScore.selectPeriodData"></div>
+
+                    </div>
+
+                </div>
+            </div>
+
+        </div>
+
+        <div class="col-md-9 feedback_box" ng-if='!css.isFeedbackShown'>
+
+            <div class="row">
+                <div class="col-md-12 feedback_info">
+                    <h4 class="text-center">
+                    {{'FinalScorePageCongratulations' | translate}} !</h4>
+                    <h4 class="text-center">{{'FinalScorePageCongratulationsInfo' | translate}} .</h4>
+                    <p class="text-center provide_feedback">
+                        <button class="btn btn-warning" ng-click='showQuestionnaire()' ng-disabled='isFeedbackSumbit'>{{'FinalScorePageProvideFeedback' | translate}}</button>
+                    </p>
+                </div>
+            </div>
+
+        </div>
+
+        <div class="col-md-9 score_box fade in" ng-if='css.isFeedbackShown'>
+
+            <div class="row">
+                <form role="form" name='questionnaireForm'>
+                    <div class="col-md-12 feedback_data">
+                        <h3 class="text-center">
+                            {{'QuestionnairePageQuestionnaire' | translate}}
+                        </h3>
+
+                        <h4>
+                            A {{'QuestionnairePageOverallSatisfactionWiththeProgram' | translate}}
+                        </h4>
+
+                        <div class="table_feedback">
+                            <table class="table table-hover">
+                                <thead>
+                                    <tr>
+                                        <th class="table_feedback_left_title">
+                                            <p>&nbsp;</p>
+                                        </th>
+                                        <th class="table_feedback_right_data">
+                                            <p>{{'QuestionnairePageVeryPoor' | translate}}</p>
+                                        </th>
+                                        <th class="table_feedback_right_data">
+                                            <p>&nbsp;</p>
+                                        </th>
+                                        <th class="table_feedback_right_data">
+                                            <p>{{'QuestionnairePageAverage' | translate}}</p>
+                                        </th>
+                                        <th class="table_feedback_right_data">
+                                            <p>&nbsp;</p>
+                                        </th></th>
+                                        <th class="table_feedback_right_data">
+                                            <p>{{'QuestionnairePageExcellent' | translate}}</p>
+                                        </th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr ng-repeat='radio in questionnaire.radio_OverallSatisfactionWithThePrograms.info' ng-init="index=$index">
+                                        <td>
+                                            <p class="p_left_20">{{'QuestionnairePage'+radio | translate}}</p>
+                                        </td>
+                                        <td ng-repeat='n in [1,2,3,4,5]'>
+                                            <p class="text-center">
+                                            <input value={{n}} type="radio" ng-model="questionnaire.q_OverallSatisfactionWithTheProgram[index]" name="{{radio}}" id="{{radio+($index+1)}}" ng-blur="updateQuestionnaire('q_OverallSatisfactionWithTheProgram',index, questionnaireForm,radio)">
+                                                <label>{{n}}</label>
+                                            </p>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+
+                        <h4>
+                            B {{'QuestionnairePageTeachingTeam' | translate}}
+                        </h4>
+
+                        <div class="table_feedback">
+                            <table class="table table-hover">
+                                <thead>
+                                    <tr>
+                                        <th class="table_feedback_left_title">
+                                            <p>{{'QuestionnairePageFacilitator' | translate}} : {{'QuestionnairePageNormanYen' | translate}}</p>
+                                        </th>
+                                        <th class="table_feedback_right_data">
+                                            <p>{{'QuestionnairePageVeryPoor' | translate}}</p>
+                                        </th>
+                                        <th class="table_feedback_right_data">
+                                            <p>&nbsp;</p>
+                                        </th>
+                                        <th class="table_feedback_right_data">
+                                            <p>{{'QuestionnairePageAverage' | translate}}</p>
+                                        </th>
+                                        <th class="table_feedback_right_data">
+                                            <p>&nbsp;</p>
+                                        </th></th>
+                                        <th class="table_feedback_right_data">
+                                            <p>{{'QuestionnairePageExcellent' | translate}}</p>
+                                        </th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr ng-repeat='radio in questionnaire.radio_TeachingTeams.info' ng-init="index=$index">
+                                        <td>
+                                            <p class="p_left_20">{{'QuestionnairePage'+radio | translate}}</p>
+                                        </td>
+                                        <td ng-repeat='n in [1,2,3,4,5]'>
+                                            <p class="text-center">
+                                            <input value={{n}} type="radio" ng-model="questionnaire.q_TeachingTeam[index]" name="{{radio}}" id="{{radio+($index+1)}}" ng-blur="updateQuestionnaire('q_TeachingTeam',index, questionnaireForm,radio)">
+                                                <label>{{n}}</label>
+                                            </p>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+
+                        <h4>
+                            C {{'QuestionnairePageProduct' | translate}}
+                        </h4>
+
+                        <div class="table_feedback">
+                            <table class="table table-hover">
+                                <thead>
+                                    <tr>
+                                        <th class="table_feedback_left_title">
+                                            <p>&nbsp;</p>
+                                        </th>
+                                        <th class="table_feedback_right_data">
+                                            <p>{{'QuestionnairePageVeryPoor' | translate}}</p>
+                                        </th>
+                                        <th class="table_feedback_right_data">
+                                            <p>&nbsp;</p>
+                                        </th>
+                                        <th class="table_feedback_right_data">
+                                            <p>{{'QuestionnairePageAverage' | translate}}</p>
+                                        </th>
+                                        <th class="table_feedback_right_data">
+                                            <p>&nbsp;</p>
+                                        </th></th>
+                                        <th class="table_feedback_right_data">
+                                            <p>{{'QuestionnairePageExcellent' | translate}}</p>
+                                        </th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr ng-repeat='radio in questionnaire.radio_Products.info' ng-init="index=$index">
+                                        <td>
+                                            <p class="p_left_20">{{'QuestionnairePage'+radio | translate}}</p>
+                                        </td>
+                                        <td ng-repeat='n in [1,2,3,4,5]'>
+                                            <p class="text-center">
+                                            <input value={{n}} type="radio" ng-model="questionnaire.q_Product[index]" name="{{radio}}" id="{{radio+($index+1)}}" ng-blur="updateQuestionnaire('q_Product',index, questionnaireForm,radio)">
+                                                <label>{{n}}</label>
+                                            </p>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+
+                        <h4>
+                            D {{'QuestionnairePageInterpreter' | translate}}
+                        </h4>
+
+                        <div class="table_feedback">
+                            <table class="table table-hover">
+                                <thead>
+                                    <tr>
+                                        <th class="table_feedback_left_title">
+                                            <p>{{'QuestionnairePageOlive' | translate}}</p>
+                                        </th>
+                                        <th class="table_feedback_right_data">
+                                            <p>{{'QuestionnairePageVeryPoor' | translate}}</p>
+                                        </th>
+                                        <th class="table_feedback_right_data">
+                                            <p>&nbsp;</p>
+                                        </th>
+                                        <th class="table_feedback_right_data">
+                                            <p>{{'QuestionnairePageAverage' | translate}}</p>
+                                        </th>
+                                        <th class="table_feedback_right_data">
+                                            <p>&nbsp;</p>
+                                        </th></th>
+                                        <th class="table_feedback_right_data">
+                                            <p>{{'QuestionnairePageExcellent' | translate}}</p>
+                                        </th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>
+                                            <p class="p_left_20">{{'QuestionnairePageAccuracyAndPresentation' | translate}}</p>
+                                        </td>
+                                        <td ng-repeat='n in [1,2,3,4,5]'>
+                                            <p class="text-center">
+                                            <input value={{n}} type="radio" ng-model="questionnaire.q_Interpreter" name="AccuracyAndPresentation" id="{{'AccuracyAndPresentation'+$index}}" ng-blur="updateQuestionnaire('q_Interpreter',-1, questionnaireForm,'AccuracyAndPresentation')">
+                                                <label>{{n}}</label>
+                                            </p>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+
+                        <h4>
+                            E {{'QuestionnairePageTeachingSupport' | translate}}
+                        </h4>
+
+                        <div class="table_feedback">
+                            <table class="table table-hover">
+                                <thead>
+                                    <tr>
+                                        <th class="table_feedback_left_title">
+                                            <p>{{'QuestionnairePageMayYu' | translate}}</p>
+                                        </th>
+                                        <th class="table_feedback_right_data">
+                                            <p>{{'QuestionnairePageVeryPoor' | translate}}</p>
+                                        </th>
+                                        <th class="table_feedback_right_data">
+                                            <p>&nbsp;</p>
+                                        </th>
+                                        <th class="table_feedback_right_data">
+                                            <p>{{'QuestionnairePageAverage' | translate}}</p>
+                                        </th>
+                                        <th class="table_feedback_right_data">
+                                            <p>&nbsp;</p>
+                                        </th>
+                                        <th class="table_feedback_right_data">
+                                            <p>{{'QuestionnairePageExcellent' | translate}}</p>
+                                        </th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr ng-repeat='radio in questionnaire.radio_TeachingSupports.info' ng-init="index=$index">
+                                        <td>
+                                            <p class="p_left_20">{{'QuestionnairePage'+radio | translate}}</p>
+                                        </td>
+                                        <td ng-repeat='n in [1,2,3,4,5]'>
+                                            <p class="text-center">
+                                            <input value={{n}} type="radio" ng-model="questionnaire.q_TeachingSupport[index]" name="{{radio}}" id="{{radio+($index+1)}}" ng-blur="updateQuestionnaire('q_TeachingSupport',index, questionnaireForm,radio)">
+                                                <label>{{n}}</label>
+                                            </p>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+
+                        <h4>{{'QuestionnairePageOthers' | translate}}</h4>
+
+                        <h5>1.{{'QuestionnairePageMostBenefit' | translate}} ?</h5>
+                        <p class="feedback_others_p text-muted" ng-repeat="radio in questionnaire.radio_MostBenefits.info">
+                           <input type="radio" id="{{radio+($index+1)}}" name="mostBenefits" value="{{$index+1}}" ng-model='questionnaire.q_MostBenefit' ng-blur="updateQuestionnaire('q_MostBenefit',$index, questionnaireForm,radio)">
+                           <label for="{{radio+($index+1)}}">{{$index+1}} . {{'QuestionnairePage'+radio | translate}}</label>
+                        </p>
+                        <h4 class="clear"></h4>
+                        <h5>2.{{'QuestionnairePageRecommendMarkSimos' | translate}} ?</h5>
+                        <p class="feedback_others_p">
+                            <input type="radio" id="RecommendMarkSimos1" name="RecommendMarkSimos" value="1" ng-model='questionnaire.q_WillRecommend' ng-blur="updateQuestionnaire('q_WillRecommend',$index, questionnaireForm,radio)">
+                            <label for="RecommendMarkSimos1">{{'QuestionnairePageYes' | translate}}</label>
+                            <input type="radio" class="margin_left_10" id="RecommendMarkSimos2" name="RecommendMarkSimos" value="0" ng-model='questionnaire.q_WillRecommend' ng-blur="updateQuestionnaire('q_WillRecommend',$index, questionnaireForm,radio)">
+                            <label for="RecommendMarkSimos2">{{'QuestionnairePageNo' | translate}}</label>
+                        </p>
+                        <p class="feedback_others_p">
+                            <textarea class="form-control" rows="3" id="QuestionnairePageYes" name='QuestionnairePageYes' ng-model='questionnaire.q_ReasonForRecommendOrNot' ng-blur="updateQuestionnaire('q_ReasonForRecommendOrNot',-1, questionnaireForm,'QuestionnairePageYes')"></textarea>
+                        </p>
+                        <h4 class="clear"></h4>
+                        <h5>3.{{'QuestionnairePageBringYou' | translate}} ?</h5>
+                        <p class="feedback_others_p">
+                            <textarea class="form-control" rows="3" id="QuestionnairePageBringYou" name='QuestionnairePageBringYou' ng-model='questionnaire.q_FeelAboutMarkSimos' ng-blur="updateQuestionnaire('q_FeelAboutMarkSimos',-1, questionnaireForm,'QuestionnairePageBringYou')"></textarea>
+                        </p>
+
+                    </div>
+                </form>
+
+            </div>
+
+        </div>
+
+    </div>
 
 </div>
 

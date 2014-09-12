@@ -11,11 +11,21 @@ module.exports = function(app){
 
 
 
-
     /**********   Routes for MarkSimos User/Student   **********/
 
     app.get('/marksimos', function(req, res, next){
         res.render('user/userlogin.ejs', { title : 'MarkSimos - Welcome to the MarkSimos Game'});
+    });
+
+    app.get('/marksimos/help', function(req, res, next){
+        res.render('user/userhelp.ejs', { title : 'MarkSimos - Help'});
+    });
+
+    app.get('/marksimos/manual/zh_CN',function(req,res,next){
+        res.render('user/markdown/manual_cn.md',{layout:false});
+    });
+    app.get('/marksimos/manual/en_US',function(req,res,next){
+        res.render('user/markdown/manual_en.md',{layout:false});
     });
      
     app.get('/marksimos/login', function(req, res, next){

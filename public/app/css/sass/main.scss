@@ -34,13 +34,20 @@ $color_main_body_background_chart: #dbe3f6;
 
 $color_main_body_company: #373737;
 $color_main_body_company_a: #ffffff;
-$color_main_body_company_a_bg: #39ae41;
+$color_main_body_company_1_bg: #39ae41;
+$color_main_body_company_2_bg: #ff983d;
+$color_main_body_company_3_bg: #0087f0;
+$color_main_body_company_4_bg: #8781bd;
+$color_main_body_company_5_bg: #f26c4f;
+$color_main_body_company_6_bg: #bd8cbf;
 $color_main_body_brand: #2f4e9b;
 $color_main_body_product: #464646;
 $color_main_body_product_target: #6f6f6f;
 $color_main_body_competitors: #2f4e9b;
 $color_main_body_user_clock: #373737;
 $color_main_body_user_decision_button: #19acfe;
+$color_main_body_user_muted: #999999;
+$color_main_body_user_muted_border : #dddddd;
 
 $color_main_body_user_period_bar: #9FA5BF;
 $color_main_body_user_period_bar_border: #dfe0e5;
@@ -76,6 +83,15 @@ $color_main_body_decision_brand_border: #c2c2d3;
 $color_main_body_decision_sku_border: #ebebeb;
 $color_main_body_decision_table_hover: #feeaff;
 
+$color_main_body_user_feedback_back: #FFF2E5;
+$color_main_body_user_feedback_border: #FF941F;
+$color_main_body_user_feedback: #A07041;
+
+$color_main_body_user_feedback_title:#5E66E6;
+$color_main_body_user_feedback_subTitle:#5D67D2;
+
+$color_main_body_user_feedback_warning:#FCFFD9;
+$color_main_body_user_feedback_info:#EAEFFF;
 
 
 
@@ -123,9 +139,33 @@ $color_main_body_decision_table_hover: #feeaff;
     display: block;
 }
 
+@mixin icon_user_score {
+    color: $color_main_body_brand;
+    font-size: 14px;
+    /*change another picture*/
+    background-image: url(../images/userbrand.png);
+    background-repeat: no-repeat;
+    background-position: 1px 0px;
+    padding-left: 25px;
+    margin: 20px;
+    display: block;
+}
+
+@mixin icon_user_faq {
+    color: $color_login_title;
+    font-size: 30px;
+    background-image: url(../images/faq.png);
+    background-repeat: no-repeat;
+    background-position: 1px 0px;
+    padding-left: 37px;
+    margin: 20px 0px;
+    display: block;
+}
+
 
 @mixin icon_user_product{
     color: $color_main_body_product;
+    -webkit-text-size-adjust:none;
     font-size: 11px;
     background-image: url(../images/userproduct.png);
     background-repeat: no-repeat;
@@ -290,6 +330,7 @@ $color_main_body_decision_table_hover: #feeaff;
     line-height: 16px;
     font-family:$font_main_header;
     font-weight:normal;
+    -webkit-text-size-adjust:none;
     font-size: 11px;
     z-index: 999;
 }
@@ -317,6 +358,7 @@ $color_main_body_decision_table_hover: #feeaff;
     line-height: 16px;
     font-family:$font_main_header;
     font-weight:normal;
+    -webkit-text-size-adjust:none;
     font-size: 11px;
     z-index: 999;
 }
@@ -387,6 +429,7 @@ body{
 
     }
 
+
     .panelbox {
         border: $color_login_panel_border 1px solid;
         background-color: $color_login_panel_background;
@@ -434,9 +477,246 @@ body{
         }
 
         .video_list{
-            margin-top : 70px;
-            padding: 0px 0px 70px 30px;
+            padding: 100px 40px;
+            .col-md-offset-1-5{
+                margin-left:12.5%;
+            }
         }
+
+
+        .intro_box{
+            background-color: $color_login_panel_background;
+            padding: 40px 40px 0px;
+
+            .nav-pills li{
+                a{
+                    background-color: $color_login_background;
+                    color: $color_main_body_user_chart_leftmenu_title;
+                    font-family: $font_main_header2;
+                    @include border-top-radius(4px);
+                    @include border-bottom-radius(0px);
+
+                    &:hover,
+                    &:focus{
+                        background-color: $color_main_body_background_chart;
+                    }
+                }
+            }
+            .nav-pills li.active{
+                a,
+                a:hover,
+                a:focus{
+                    color: $color_main_body_company_a;
+                    font-family: $font_main_header2;
+                    background-color: $color_login_title;
+                }
+            }
+
+            @include divider_horizontal;
+        }
+
+        .intro_data{
+            padding: 20px 40px 40px 40px;
+        }
+
+        .bs-docs-section{
+            h1,.h1 {
+              font-size: 36px;
+              border-bottom: 1px solid $color_main_body_border;
+              font-weight:bold;
+              font-family:$font_main_header2;
+            }
+            h2,.h2 {
+              font-size: 21px;
+              font-family:$font_main_header2;
+              font-weight:300;
+            }
+            h3,.h3 {
+              font-size: 24px;
+              color:black;
+              padding-left: 0px;
+              font-weight:bold;
+              font-family:$font_main_header2;
+            }
+            p{
+                font-family:$font_main_header2;
+            }
+
+            .bs_p {
+                color: $color_main_body_user_muted;
+                font-size: 14px;
+                font-family: $font_main_header2;
+                margin:0px;
+            }
+            .faq_h3{
+                color: $color_login_title;
+                font-family: $font_login_title;
+                font-weight:500;
+                @include icon_user_faq;
+            }
+            .faq_h5{
+                font-family: $font_login_title;
+                font-weight:normal;
+                font-size:16px;
+                padding-left:35px;
+                margin:0 0 30px 0;
+                color:$color_main_body_user_muted;
+            }
+
+            .bs_h3 {
+                color: $color_login_title;
+                font-size: 30px;
+                font-family: $font_login_title;
+                padding-left: 0px;
+                border-bottom: 1px solid $color_main_body_border;
+                font-weight:500;
+                margin:20px;
+            }
+            .bs_h4 {
+                color: $color_main_body_company;
+                font-size: 16px;
+                font-family: $font_main_header2;
+                padding : 15px 0px;
+                margin : 0 20px;
+
+            }
+            table {
+                width: 100%;
+                margin-bottom: 20px;
+                background-color: transparent;
+            }
+            table > thead > tr > th,
+            table > tbody > tr > th,
+            table > tfoot > tr > th,
+            table > thead > tr > td,
+            table > tbody > tr > td,
+            table > tfoot > tr > td {
+                padding: 8px;
+                line-height: 1.42857143;
+                vertical-align: top;
+                border-top: 1px solid $color_main_body_user_muted_border;
+            }
+            table > thead > tr > th {
+                vertical-align: bottom;
+                border-bottom: 2px solid $color_main_body_user_muted_border;
+            }
+            table > caption + thead > tr:first-child > th,
+            table > colgroup + thead > tr:first-child > th,
+            table > thead:first-child > tr:first-child > th,
+            table > caption + thead > tr:first-child > td,
+            table > colgroup + thead > tr:first-child > td,
+            table > thead:first-child > tr:first-child > td {
+                border-top: 0;
+            }
+            table > tbody + tbody {
+                border-top: 2px solid $color_main_body_user_muted_border;
+            }
+        }
+
+        .info_highlight {
+            padding: 9px 14px;
+            background-color: $color_main_body_background;
+            border: 1px solid $color_main_body_border;
+            border-radius: 4px;
+            margin: 0 20px;
+        }
+
+        
+
+        .bs-docs-sidebar{
+            .nav{
+                li{
+                    a{
+                        display: block;
+                        font-size: 13px;
+                        font-weight: 500;
+                        color: $color_main_body_product;
+                        padding: 4px 20px;
+                    }
+                    a:hover,a:focus {
+                        padding-left: 19px;
+                        color: $color_main_body_brand;
+                        text-decoration: none;
+                        background-color: transparent;
+                        border-left: 1px solid $color_main_body_user_chart_leftmenu_active_bgbefore;
+                    }
+                }
+                li.active,li.active:hover,li.active:focus{
+                    a{
+                        padding-left: 18px;
+                        font-weight: bold;
+                        color: $color_main_body_brand;
+                        background-color: transparent;
+                        border-left: 2px solid $color_main_body_user_chart_leftmenu_active_bgbefore;
+                    }
+                }
+                .nav{
+                    display: none;
+                    padding-bottom: 10px;
+                    li{
+                        a{
+                            padding-top:    1px;
+                            padding-bottom: 1px;
+                            padding-left: 30px;
+                            font-size: 12px;
+                            font-weight: normal;
+                        }
+                        a:hover,a:focus{
+                            padding-left: 29px;
+                        }
+                    }
+                    li.activ,li.active:hover,li.active:focus{
+                        a{
+                            font-weight: 500;
+                            padding-left: 28px; 
+                        }
+                    }
+                }
+                .active{
+                    ul{
+                        display: block;
+                    }
+                }
+            }
+            .bs-docs-sidenav {
+                margin-top: 20px;
+                margin-bottom: 20px;
+            }
+            .list-inline{
+                padding:0px;
+                margin:0px;
+                li{
+                   padding:0px; 
+                }
+            }
+            .bs-faq-sidenav{
+                li{
+                    a{
+                        font-size: 14px;
+                        font-weight: 500;
+                        color: $color_main_body_product;
+                        padding: 4px 20px;
+                        border-radius:10px;
+                        border: 1px solid transparent;
+                    }
+                    a:hover,a:focus {
+                        color: $color_main_body_user_chart_leftmenu_active_bgbefore;
+                        text-decoration: none;
+                        background-color: $color_login_panel_background;
+                        border: 1px solid $color_main_body_user_chart_leftmenu_active_bgbefore;
+                    }
+                }
+                li.active,li.active:hover,li.active:focus{
+                    a{
+                        color: $color_login_panel_background;
+                        background-color: $color_main_body_user_chart_leftmenu_active_bgbefore;                      
+                    }
+                }
+            }
+
+        }
+
+
 
         .intro_video_next_button{
             font-size: 14px;
@@ -447,8 +727,6 @@ body{
         .game_list {
             margin-top: 50px;
             margin-bottom: 50px;
-
-
         }
 
         @include seminar_table_list;
@@ -541,6 +819,7 @@ body{
 
             li a {
                 color: $color_main_header_menu;
+                -webkit-text-size-adjust:none;
                 font-size: 11px;
                 font-weight: bold;
                 padding-left: 15px;
@@ -623,7 +902,7 @@ body{
         
         .company_a{
             color: $color_main_body_company_a;
-            background-color: $color_main_body_company_a_bg;
+            background-color: $color_main_body_company_1_bg;
             width: 36px;
             height: 36px;
             padding: 5px 10px;
@@ -643,6 +922,7 @@ body{
 
     .user_title{
         color: $color_main_body_company;
+        -webkit-text-size-adjust:none;
         font-size: 11px;
         @include inline-block;
         padding-bottom: 5px;
@@ -674,6 +954,7 @@ body{
 
     .user_clock{
         color: $color_main_body_user_clock;
+        -webkit-text-size-adjust:none;
         font-size: 11px;
         background-image: url(../images/userclock.png);
         background-repeat: no-repeat;
@@ -690,6 +971,7 @@ body{
 
     .user_makedecision{
         color: $color_main_body_user_clock;
+        -webkit-text-size-adjust:none;
         font-size: 11px;
         margin: 12px 0px 13px 23px;
 
@@ -742,7 +1024,8 @@ body{
             position : absolute;
             margin:-20px 0 0 15px;
             display:block;
-            font-size:11px;
+            -webkit-text-size-adjust:none;
+            font-size: 11px;
         }
     }
 
@@ -829,6 +1112,7 @@ body{
 
     .user_chart_vs{
         color: $color_main_body_user_clock;
+        
         font-size: 10px;
         text-align: center;
         background-image: url(../images/chartvs.png);
@@ -840,12 +1124,14 @@ body{
     }
 
     .user_chart_clock{
+        
         font-size: 10px;
         margin: 10px 0px 1px 0px;
     }
 
     .user_chart_make_decision{
         color: $color_main_body_user_clock;
+        
         font-size: 10px;
         text-align: center;
         margin: 5px 0px 5px 0px;
@@ -853,6 +1139,7 @@ body{
     }
 
     .user_chart_decision_button{
+        -webkit-text-size-adjust:none;
         font-size: 11px;
         font-weight: normal;
         width: 154px;
@@ -891,6 +1178,7 @@ body{
             padding: 11px 1px 13px 50px;
 
             a{
+                -webkit-text-size-adjust:none;
                 font-size: 11px;
                 color: $color_main_body_user_chart_list;
             }
@@ -942,6 +1230,7 @@ body{
                 }
 
                 .perception_map_button{
+                    -webkit-text-size-adjust:none;
                     font-size: 11px;
                     font-family: $font_main_header2;
                 }
@@ -1100,8 +1389,176 @@ body{
     }
 
 
+    /**********  Score 页面开始  **********/
 
+    .score_box {
+        border:1px solid $color_login_panel_border;
+        margin: 20px 12.5% 0 12.5%;
+    }
 
+    .feedback_box {
+        border:1px solid $color_main_body_user_feedback_border;
+        color: $color_main_body_user_feedback;
+        margin: 20px 12.5%;
+    }
+
+    .score_info {
+        background-color: $color_login_panel_background;
+        .score_info_title{
+            @include icon_user_score;
+        }
+    }
+    .score_data {
+        background-color: $color_login_panel_background;
+        .table_report{
+            background-color: $color_login_panel_background;
+            padding: 20px;
+            .company{
+                width: 15px;
+                height: 15px;
+                padding:0;
+                margin:0;
+                display:-moz-inline-box; display:inline-block;
+            }
+            .company_1 {
+                background-color: $color_main_body_company_1_bg;
+            }
+            .company_2 {
+                background-color: $color_main_body_company_2_bg;
+            }
+            .company_3 {
+                background-color: $color_main_body_company_3_bg;
+            }
+            .company_4 {
+                background-color: $color_main_body_company_4_bg;
+            }
+            .company_5 {
+                background-color: $color_main_body_company_5_bg;
+            }
+            .company_6 {
+                background-color: $color_main_body_company_6_bg;
+            }
+
+            .table > thead > tr > th,
+            .table > tbody > tr > td,
+            .table > tfoot > tr > td {
+                text-align:right;
+            }
+
+            .table > thead > tr > th:first-child,
+            .table > tbody > tr > td:first-child,
+            .table > tfoot > tr > td:first-child {
+                text-align:left;
+            }
+            .td_info{
+                background-color:$color_main_body_user_feedback_info;
+            }
+            .tr_warning{
+                background-color:$color_main_body_user_feedback_warning;
+            }
+            .tr_warning td{
+                font-weight: bold;
+            }
+            .nav-pills li{
+                a{
+                    background-color: $color_login_background;
+                    color: $color_main_body_user_chart_leftmenu_title;
+                    font-family: $font_main_header2;
+                    @include border-top-radius(4px);
+                    @include border-bottom-radius(0px);
+
+                    &:hover,
+                    &:focus{
+                        background-color: $color_main_body_background_chart;
+                    }
+                }
+            }
+            .nav-pills li.active{
+                a,
+                a:hover,
+                a:focus{
+                    color: $color_main_body_company_a;
+                    font-family: $font_main_header2;
+                    background-color: $color_login_title;
+                }
+            }
+
+            @include divider_horizontal;
+
+        }
+
+        @include table_report;
+    }
+
+    .feedback_info {
+        background-color: $color_main_body_user_feedback_back;
+        padding:20px;
+        .provide_feedback{
+            margin:10px 0;
+        }
+        h4{
+            font-size:17px;
+        }
+    }
+    .feedback_data{
+        background-color: $color_login_panel_background;
+        padding:80px 0px;
+        h3 {
+            color: $color_main_body_user_feedback_title;
+            font-family: $font_main_header2;
+            font-weight: normal;
+            padding: 0 40px;
+            margin:0;
+        }
+        h4{
+            color:$color_main_body_user_feedback_subTitle;
+            font-family:$font_main_header2;
+            font-weight:normal;
+            padding:10px 40px;
+            margin:0;
+            font-size:18px;
+        }
+        h5{
+            font-family:$font_main_header2;
+            font-weight:normal;
+            padding:10px 68px;
+            font-size:15px;
+            margin:0;
+        }
+        p{
+            padding:0;
+            margin:0;
+        }
+        .table_feedback{
+            font-size:14px;
+            padding:0 40px;
+            .p_left_20{
+                padding-left:20px;
+            }
+            .table_feedback_left_title{
+                width:50%;
+            }
+            .table_feedback_right_data{   
+                width:10%;
+            }
+            @include divider_horizontal;
+
+        }
+
+        .feedback_others_p{
+            padding:0 68px;
+            .margin_left_10{
+                padding-left:20px;
+            }
+        }
+        .clear{
+            clear:both;
+        }
+    }
+    .submit_feedback_button{
+        font-size: 14px;
+        @include user_decision_button;
+    }
     /**********  Comparison 页面开始  **********/
 
     .comparison_box {
@@ -1181,8 +1638,6 @@ body{
 
 
 
-
-
     /**********  Decision 页面开始  **********/
 
     .progress_title{
@@ -1244,6 +1699,7 @@ body{
 
         label {
             color: $color_login_input_label;
+            
             font-size: 10px;
             font-weight: normal;
         }
@@ -1384,7 +1840,6 @@ body{
 
     .decision_right_box{
         width: 47%;
-
         .right_menu{
             border-width: 1px 0px 0px 0px;
             @include border-radius(0px);
@@ -1439,6 +1894,7 @@ body{
     }
 
     .bar_chart_label{
+        
         font-size: 10px;
     }
 }

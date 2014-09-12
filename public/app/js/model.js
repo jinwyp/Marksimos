@@ -712,3 +712,133 @@ app.factory('tableReport', ['$http', function($http){
 
 
 }]);
+
+app.factory('FinalScore',['$http',function($http){
+    var apiPath = '/marksimos/api/finalScore/';
+    var result = new Array();
+
+    var errorHandler = function(err){
+        console.log("Error 404 , Type : API questionnaire", err );
+    };
+
+    var factory = {
+
+        getFinalScore : function(period){
+            return $http.get(apiPath+period).then(function(result){
+                return result.data;
+            }).catch(errorHandler);
+        }
+
+    };
+
+    return factory;
+}]);
+
+
+app.factory('FAQ',['$http',function($http){
+    var apiPath = '/marksimos/api/';
+
+    var errorHandler = function(err){
+        console.log("Error 404 , Type : API questionnaire", err );
+    };
+
+    var factory = {
+
+        getFAQ : function(){
+            return $http.get(apiPath + 'getFAQ').then(function(result){
+                return result.data;
+            }).catch(errorHandler);
+        }
+    };
+    return factory;
+}])
+
+app.factory('Questionnaire', ['$http', function($http){
+    var apiPath = '/marksimos/api/';
+
+    var errorHandler = function(err){
+        console.log("Error 404 , Type : API questionnaire", err );
+    };
+
+    var factory = {
+
+        getQuestionnaire : function(){
+            return $http.get(apiPath + 'questionnaire').then(function(result){
+                return result.data;
+            }).catch(errorHandler);
+        },
+
+        updateQuestionnaire : function(postdata){
+            return $http.put(apiPath + 'questionnaire', postdata);
+        }
+
+    };
+
+    return factory;
+}]);
+
+app.factory('Manual', ['$http', function($http){
+    var apiPath = '/marksimos/manual/';
+
+    var errorHandler = function(err){
+        console.log("Error 404 , Type : API questionnaire", err );
+    };
+
+    var factory = {
+
+        getZH_CN : function(){
+            return $http.get(apiPath + 'zh_CN').then(function(result){
+                return result.data;
+            }).catch(errorHandler);
+        },
+        getEN_US : function(){
+            return $http.get(apiPath + 'en_US').then(function(result){
+                return result.data;
+            }).catch(errorHandler);
+        }
+    };
+
+    return factory;
+}]);
+
+/*JSONKit pretty isVisible mdParse sanitize for markdown*/
+app.factory('JSONKit', function () {
+    return window.JSONKit;
+});
+app.factory('pretty', function () {
+    return window.prettyPrint;
+});
+app.factory('isVisible', function () {
+    return function (element) {
+        var rect = element[0].getBoundingClientRect();
+        return Boolean(rect.bottom - rect.top);
+    };
+});
+app.factory('mdParse', ['JSONKit',
+    function (JSONKit) {
+        return function (html) {
+            return window.marked(JSONKit.toStr(html));
+        };
+    }
+]);
+app.factory('sanitize', ['JSONKit',
+    function (JSONKit) {
+        var San = Sanitize,
+            config = San.Config,
+            sanitize = [
+                new San({}),
+                new San(config.RESTRICTED),
+                new San(config.BASIC),
+                new San(config.RELAXED)
+            ];
+        // level: 0, 1, 2, 3
+        return function (html, level) {
+            var innerDOM = document.createElement('div'),
+                outerDOM = document.createElement('div');
+            level = level >= 0 ? level : 3;
+            innerDOM.innerHTML = JSONKit.toStr(html);
+            outerDOM.appendChild(sanitize[level].clean_node(innerDOM));
+            return outerDOM.innerHTML;
+        };
+    }
+]);
