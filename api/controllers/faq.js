@@ -4,7 +4,7 @@ var config = require('../../common/config.js');
 
 exports.addFAQ =function(req,res,next){
 	var faq=[{
-            "category" : "Production Capacity",
+            "category" : "FAQPageProductionCapacity",
             "questions" :[
                 {
                 	"title" : "1. Can you improve Production Capacity according to your own requirement?",
@@ -32,7 +32,7 @@ exports.addFAQ =function(req,res,next){
                 }       
             ]
     },{
-        "category" : "Technology",
+        "category" : "FAQPageTechnology",
         "questions" :[
             {
             	"title" : "1. Why the Technology Level does not increase in the next period when you have already invested in Applied Technology Level?",
@@ -48,7 +48,7 @@ exports.addFAQ =function(req,res,next){
             }
         ]
     },{
-        "category" : "Pricing",
+        "category" : "FAQPagePricing",
         "questions" :[
             {
             	"title" : "1. Why the decision interface shows 'Error / input value out of range' when you enter the same manufacture price comparing with the one in previous period?",
@@ -72,7 +72,7 @@ exports.addFAQ =function(req,res,next){
             }
         ]
     },{
-        "category" : "Product",
+        "category" : "FAQPageProduct",
         "questions" :[
             {
             	"title" : "1. Can you change the package sizes for current SKUs?",
@@ -88,7 +88,7 @@ exports.addFAQ =function(req,res,next){
             }
         ]
     },{
-        "category" : "Budget",
+        "category" : "FAQPageBudget",
         "questions" :[
             {
             	"title" : "1. Why you can't make any investment while the 'Available Budget' bar shows still having remaining budget?",
@@ -112,7 +112,7 @@ exports.addFAQ =function(req,res,next){
             }
         ]
     },{
-        "category" : "Sales",
+        "category" : "FAQPageSales",
         "questions" :[
             {
             	"title" : "1. What is the difference between Numerical Distribution and Volume-weighted Distribution?",
@@ -128,7 +128,7 @@ exports.addFAQ =function(req,res,next){
             }
         ]
     },{
-        "category" : "Trade",
+        "category" : "FAQPageTrade",
         "questions" :[
             {
             	"title" : "1. What does Promotion specific refer to?",
@@ -140,7 +140,7 @@ exports.addFAQ =function(req,res,next){
             }
         ]
     },{
-        "category" : "Inventory",
+        "category" : "FAQPageInventory",
         "questions" :[
             {
             	"title" : "1. Does the 'Inventory Report' on the main screen include the distribution inventories?",
