@@ -67,7 +67,7 @@
                         <div ng-repeat='f in faq.categories' ng-show='questionsShown[$index]'>
                             <h3 class="bs_h3">{{faq.category | translate}}</h3>
                             <div ng-repeat='q in f.questions'>
-                                <h4 class="bs_h4">{{q.title | translate}}</h4>
+                                <h4 class="bs_h4">{{$index+1}}. {{q.title | translate}}</h4>
                                 <div class="info_highlight">
                                     <p class="bs_p">{{q.answer | translate}}</p>
                                 </div>
