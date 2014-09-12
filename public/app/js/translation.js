@@ -840,6 +840,11 @@ app.config(['$translateProvider', function($translateProvider){
         "QuestionnairePageNo":"No",
         "QuestionnairePageBringYou":"What is the best benefit or experience MarkSimos bring to you ? Is there something special you learned that you like was unique / different compared to what you learned before",
         
+        //Labels for Help page
+        "HelpPageMenuFAQ":"FAQ",
+        "HelpPageMenuVideo":"Video",
+        "HelpPageMenuManual":"Manual",
+        "HelpPageHomePage":"Home Page",
         //Labels for FAQ Page
         "FAQPageTitle":"Frequently Asked Questions",
         "FAQPageSubTitle":"This FAQ will attempt to cover the most asked question about Marksimos.This FAQ will attempt to cover the most asked question about Marksimos.This FAQ will attempt to cover the most asked question about Marksimos ."
@@ -1687,6 +1692,12 @@ app.config(['$translateProvider', function($translateProvider){
         "QuestionnairePageNo":"No",
         "QuestionnairePageBringYou":"What is the best benefit or experience MarkSimos bring to you ? Is there something special you learned that you like was unique / different compared to what you learned before",
         
+        //Labels for help page
+        "HelpPageMenuFAQ":"常见问题",
+        "HelpPageMenuVideo":"视频介绍",
+        "HelpPageMenuManual":"使用手册",
+        "HelpPageHomePage":"返回主页",
+
         //Labels for FAQ Page
         "FAQPageTitle":"常见问题",
         "FAQPageSubTitle":"This FAQ will attempt to cover the most asked question about Marksimos.This FAQ will attempt to cover the most asked question about Marksimos.This FAQ will attempt to cover the most asked question about Marksimos ."

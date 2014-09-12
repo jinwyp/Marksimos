@@ -15,16 +15,17 @@
                 <div class="col-md-12">
                     <ul class="nav nav-pills">
                         <li ng-class="{'active':isFAQShown}">
-                            <a href="" ng-click='clickIntro("FAQ")'>FAQ</a>
+                            <a href="" ng-click='clickIntro("FAQ")'>{{'HelpPageMenuFAQ' | translate}}</a>
                         </li>
                         <li ng-class="{'active':isVideoShown}">
-                            <a href="" ng-click='clickIntro("Video")'>Video</a>
+                            <a href="" ng-click='clickIntro("Video")'>{{'HelpPageMenuVideo' | translate}}</a>
                         </li>
                         <li ng-class="{'active':isManualShown}">
-                            <a href="" ng-click='clickIntro("Manual")'>Manual</a>
+                            <a href="" ng-click='clickIntro("Manual")'>{{'HelpPageMenuManual' | translate}}</a>
                         </li>
                         <li class="active pull-right">
-                            <a href="/marksimos/home">HomePage</a></li>
+                            <a href="/marksimos/home">{{'HelpPageHomePage' | translate}}</a>
+                        </li>
                     </ul>
                     <div class="divider_horizontal"></div>
                 </div>
