@@ -773,7 +773,7 @@ marksimosapp.controller('chartController', ['$translate', '$scope', '$rootScope'
 
 
             FinalScore.getFinalScore($scope.data.currentStudent.currentPeriod - 1).then(function(data, status, headers, config){
-                $scope.data.tableFinalScore.selectPeriodData = data.scores;
+                $scope.data.tableFinalScore.selectPeriodData = data;
             });
         });
 

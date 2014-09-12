@@ -724,6 +724,9 @@ app.factory('FinalScore',['$http',function($http){
         getFinalScore : function(period){
             return $http.get(apiPath+period).then(function(result){
                 result.data.highest_score = _.max(result.data.scores, function(companyScore){ return companyScore.finalScore; }).finalScore;
+                for(var i=0;i<result.data.scores.length;i++){
+                    result.data.scores[i].companyName = String.fromCharCode(64+result.data.scores[i].companyId);
+                }
                 return result.data;
             }).catch(errorHandler);
         }

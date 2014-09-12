@@ -37,7 +37,6 @@ exports.getFinalScore = function(req, res, next){
             } else {
                 originalBudget = 0;
             }
-
             scores.push({
                 companyId      : requestedPeriodResult.p_Companies[i].c_CompanyID,
                 originalSOM    : originalSOM,

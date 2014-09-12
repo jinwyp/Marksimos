@@ -5,8 +5,9 @@
             <th>{{'FinalScorePageWeightFactor' | translate}} </th>
             <th ng-repeat="company in data.scores">
                 <span class="company {{'company_'+company.companyId}}">&nbsp;</span>
-                {{'FinalScorePageCompany' | translate}} {{company.companyId}}
-                <span ng-show="{{company.finalScore==data.highest_score}}">Winner</span>
+                {{'FinalScorePageCompany' | translate}} {{company.companyName}}
+
+
             </th>
         </tr>
     </thead>
