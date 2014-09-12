@@ -872,8 +872,8 @@ app.config(['$translateProvider', function($translateProvider){
         "FAQPageTechnologyQ3Title":"Will the costs increase once you increase your Technology Level ?",
         "FAQPageTechnologyQ3Answer":"Generally, the higher Technology Level will increase the production cost. When your cumulated production volume is very high with a certain Technology Level, the production cost will be reduced obviously by Production Efficiency. In some extreme situations, high investment in Technology Level also can lower the production costs comparing to applying lower Technology Level .",
 
-        "FAQPagePricingQ1Title":"Why the Technology Level does not increase in the next period when you have already invested in Applied Technology Level ?",
-        "FAQPagePricingQ1Answer":"No, you can't. If your company is exceeding the capacity utilization rate of 90% for consecutive 2 periods, the capacity will be automatically increased in the next period. Similarly, if the total output represents less than 60% of production capacity, it is automatically reduced in the next period .",
+        "FAQPagePricingQ1Title":"Why the decision interface shows 'Error / input value out of range' when you enter the same manufacture price comparing with the one in previous period ?",
+        "FAQPagePricingQ1Answer":"Please double check the production costs in current period. Production cost differs in each period. Generally, the higher accumulated production volume, the cheaper production costs are. Manufacturers enjoy relative flexibility in setting prices between 50% to 300% of product manufacturing cost price .",
         "FAQPagePricingQ2Title":"What is Net Average Market Price ?",
         "FAQPagePricingQ2Answer":"Net Average Market Price is also called 'Actual Market Sales Price' which refers to actual retail sales price after deducting all the discounts. If retailer sells different batches of SKUs, Net Average Market Price will average the actual sales price for all different batches of inventories .",
         "FAQPagePricingQ3Title":"Why the Retailer Displayed Price is different from the Manufacturer Suggested Price ?",
