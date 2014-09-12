@@ -2,6 +2,9 @@ var userModel = require('./api/models/user.js');
 var logger = require('./common/logger.js');
 var authMiddleware = require('./middleware/auth.js');
 
+var faq = require('./views/user/help/faq.js');
+
+
 module.exports = function(app){
 
 
@@ -22,12 +25,19 @@ module.exports = function(app){
     });
 
     app.get('/marksimos/manual/zh_CN',function(req,res,next){
-        res.render('user/markdown/manual_cn.md',{layout:false});
+        res.render('user/help/manual_cn.md',{layout:false});
     });
     app.get('/marksimos/manual/en_US',function(req,res,next){
-        res.render('user/markdown/manual_en.md',{layout:false});
+        res.render('user/help/manual_en.md',{layout:false});
     });
      
+    app.get('/marksimos/faq/en_US',function(req,res,next){
+        res.send(faq.getFAQ_EN);
+    });
+    app.get('/marksimos/faq/zh_CN',function(req,res,next){
+        res.send(faq.getFAQ_CN);
+    });
+
     app.get('/marksimos/login', function(req, res, next){
         res.render('user/userlogin.ejs', { title : 'MarkSimos - User Sign In'});
     });

@@ -8,7 +8,6 @@ var facilitatorController = require('./controllers/facilitator.js');
 var studentController = require('./controllers/student.js');
 var seminarController = require('./controllers/seminar.js');
 var questionnaireController = require('./controllers/questionnaire.js');
-var faqController = require('./controllers/faq.js');
 
 var util = require('util');
 var express = require('express');
@@ -57,10 +56,6 @@ apiRouter.get('/marksimos/api/create_admin', function(req, res, next){
         .done();
 });
 
-
-
-
-apiRouter.get('/marksimos/api/getFAQ', faqController.getFAQ);
 
 
 

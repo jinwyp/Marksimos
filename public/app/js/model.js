@@ -724,9 +724,7 @@ app.factory('FinalScore',['$http',function($http){
         getFinalScore : function(period){
             return $http.get(apiPath+period).then(function(result){
                 result.data.highest_score = _.max(result.data.scores, function(companyScore){ return companyScore.finalScore; }).finalScore;
-                console.log(result.data);
                 return result.data;
-
             }).catch(errorHandler);
         }
 
@@ -737,7 +735,7 @@ app.factory('FinalScore',['$http',function($http){
 
 
 app.factory('FAQ',['$http',function($http){
-    var apiPath = '/marksimos/api/';
+    var apiPath = '/marksimos/faq/';
 
     var errorHandler = function(err){
         console.log("Error 404 , Type : API questionnaire", err );
@@ -745,8 +743,13 @@ app.factory('FAQ',['$http',function($http){
 
     var factory = {
 
-        getFAQ : function(){
-            return $http.get(apiPath + 'getFAQ').then(function(result){
+        getZH_CN : function(){
+            return $http.get(apiPath + 'zh_CN').then(function(result){
+                return result.data;
+            }).catch(errorHandler);
+        },
+        getEN_US : function(){
+            return $http.get(apiPath + 'en_US').then(function(result){
                 return result.data;
             }).catch(errorHandler);
         }

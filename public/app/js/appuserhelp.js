@@ -14,13 +14,19 @@ marksimosapp.controller('userHelpController',['$rootScope', '$scope', '$translat
 
     $rootScope.$on('$translateChangeSuccess', function (a,b) {
         if($translate.use()=="zh_CN"){
-            Manual.getZH_CN().then(function(manual){
-                $scope.manual=manual;
-            })
+            FAQ.getZH_CN().then(function(faqResult){
+                $scope.faq=faqResult;
+                return Manual.getZH_CN();
+            }).then(function(manualResult){
+                $scope.manual=manualResult;
+            });
         }else if($translate.use()=="en_US"){
-            Manual.getEN_US().then(function(manual){
-                $scope.manual=manual;
-            })
+            FAQ.getEN_US().then(function(faqResult){
+                $scope.faq=faqResult;
+                return Manual.getEN_US();
+            }).then(function(manualResult){
+                $scope.manual=manualResult;
+            });
         }
     });
 
@@ -32,16 +38,21 @@ marksimosapp.controller('userHelpController',['$rootScope', '$scope', '$translat
         $scope.isManualShown=false;
         $scope.questionsShown=[1,0,0,0,0,0,0,0];
 
-        FAQ.getFAQ().then(function(doc){
-            $scope.faq=doc;
-            if($translate.use()=="zh_CN"){
+        if($translate.use()=="zh_CN"){
+            FAQ.getZH_CN().then(function(faqResult){
+                $scope.faq=faqResult;
                 return Manual.getZH_CN();
-            }else if($translate.use()=="en_US"){
+            }).then(function(manualResult){
+                $scope.manual=manualResult;
+            });
+        }else if($translate.use()=="en_US"){
+            FAQ.getEN_US().then(function(faqResult){
+                $scope.faq=faqResult;
                 return Manual.getEN_US();
-            }
-        }).then(function(data){
-            $scope.manual=data;
-        });
+            }).then(function(manualResult){
+                $scope.manual=manualResult;
+            });
+        }
     };
 
     $scope.chickFAQ=function(index){
