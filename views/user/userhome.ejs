@@ -3020,7 +3020,7 @@
         <div class="col-md-2 user_home_divider user_chart_box">
 
             <div class="row ">
-                <h4 class="user_maincompany user_chart_company">Company <span class="company_a">{{data.currentStudent.companyName | limitTo:-1}}</span> </h4>
+                <h4 class="user_maincompany user_chart_company">{{'HomePageSecondMenuBarLabelsCompany' | translate}} <span class="company_a">{{data.currentStudent.companyName | limitTo:-1}}</span> </h4>
 
             </div>
 
@@ -3028,19 +3028,13 @@
 
         <div class="col-md-5 user_home_divider user_chart_box" >
             <div class="row">
-                <div class="col-md-12 user_chart_search_box">
+               <div class="col-md-12 user_chart_search_box">
                     <div class="input-group">
-                        <div class="input-group-btn">
 
-                            <button type="button" class="btn btn-default dropdown-toggle droplist_company" data-toggle="dropdown">Company A <span class="caret"></span></button>
-                            <ul class="dropdown-menu">
-                                <li><a href="">Company A</a></li>
-                                <li><a href="">Company B</a></li>
-                                <li><a href="">Company C</a></li>
-                            </ul>
-                        </div><!-- /btn-group -->
-
-                        <input type="text" class="form-control" placeholder="find ....">
+                        <span class="input-group-btn">
+                            <button class="btn btn-default" type="button"><span class="glyphicon glyphicon-search"></span></button>
+                        </span>
+                        <input type="text" class="form-control" placeholder="find report or chart" ng-model="data.reportName" ng-change="searchReport()">
                     </div><!-- /input-group -->
                 </div>
 
@@ -3049,8 +3043,8 @@
 
         <div class="col-md-1 user_home_divider user_chart_box">
             <div class="row">
-                <div class="col-md-12 ">
-                    <span class="user_chart_vs"> Compare Data</span>
+                <div class="col-md-12 " ng-click="showComparisonPage()">
+                    <span class="user_chart_vs"> {{'HomePageSecondMenuBarCompareData' | translate}}</span>
                 </div>
             </div>
         </div>
@@ -3058,7 +3052,7 @@
         <div class="col-md-2 user_home_divider user_chart_box">
             <div class="row">
                 <div class="col-md-12 ">
-                    <span class="user_clock user_chart_clock"><strong>1h22mins left</strong> for submitting decision</span>
+                    <span class="user_clock user_chart_clock"><strong>{{data.currentTime.hour}}h {{data.currentTime.minute}}mins {{data.currentTime.second}}s {{'HomePageSecondMenuBarLabelsTimeLeft' | translate}}</strong> {{'HomePageSecondMenuBarLabelsTimeLeftForSubmit' | translate}}</span>
                 </div>
             </div>
         </div>
@@ -3066,8 +3060,8 @@
         <div class="col-md-2">
             <div class="row">
                 <div class="col-md-12 ">
-                    <span class="user_chart_make_decision">Mission: Market Share + Profit</span>
-                    <button type="button" class="btn user_chart_decision_button" ng-click="switchHeaderMenu('Decision')">Make Decision</button>
+                    <span class="user_chart_make_decision">{{'HomePageSecondMenuBarLabelsMission' | translate}}</span>
+                    <button type="button" class="btn user_chart_decision_button" ng-click="switchHeaderMenu('Decision')">{{'HomePageSecondMenuBarLabelsMakeDecision' | translate}}</button>
                 </div>
             </div>
 
@@ -3082,7 +3076,7 @@
 
                 <div class="col-md-12 score_info">
 
-                    <span class="score_info_title">Score</span>
+                    <span class="score_info_title">{{'FinalScorePageScore' | translate}}</span>
 
 
                 </div>
