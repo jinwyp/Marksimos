@@ -37,6 +37,7 @@ var logger = require('../../common/logger.js');
 var consts = require('../consts.js');
 
 var sessionOperation = require('../../common/sessionOperation.js');
+var _ = require('underscore');
 
 
 /**
@@ -133,6 +134,7 @@ exports.init = function(req, res, next) {
         .then(function(){
             //copy decision of period (currentPeriod - 1 = 0)
             return duplicateLastPeriodDecision(seminarId, currentPeriod - 1);
+            
         })
         .then(function(){
             return seminarModel.update({seminarId: seminarId}, {
@@ -246,7 +248,7 @@ exports.runSimulation = function(req, res, next){
                     console.log('generate report/chart finished.');
                     //for the last period, we don't create the next period decision automatically
                     if(dbSeminar.currentPeriod < dbSeminar.simulationSpan){
-                        return duplicateLastPeriodDecision(seminarId, currentPeriod);
+                        return createNewDecisionBasedOnLastPeriodDecision(seminarId, currentPeriod);
                     }else{
                         return undefined;
                     }
@@ -654,7 +656,7 @@ function duplicateLastPeriodDecision(seminarId, lastPeriod){
                 delete tempBrandDecision._id;
                 delete tempBrandDecision.__v;
                 tempBrandDecision.period = tempBrandDecision.period + 1;
-                //tempBrandDecision.d_SalesForce = 0;
+                tempBrandDecision.d_SalesForce = 0;
                 p = p.then(function(result){
                     if(!result){
                         throw new Error("save brandDecision failed during create copy of last period decision.");
@@ -680,13 +682,13 @@ function duplicateLastPeriodDecision(seminarId, lastPeriod){
 
                 //Make sure to copy all the field instead of field listed below:
                 tempSKUDecision.period = tempSKUDecision.period + 1;
-                // tempSKUDecision.d_Advertising = 0;
-                // tempSKUDecision.d_AdditionalTradeMargin = 0;
-                // tempSKUDecision.d_ProductionVolume = 0;
-                // tempSKUDecision.d_PromotionalBudget = 0;
-                // tempSKUDecision.d_TradeExpenses = 0;
-                // tempSKUDecision.d_WholesalesBonusRate = 0;
-                // tempSKUDecision.d_WholesalesBonusMinVolume = 0;
+                tempSKUDecision.d_Advertising = 0;
+                tempSKUDecision.d_AdditionalTradeMargin = 0;
+                tempSKUDecision.d_ProductionVolume = 0;
+                tempSKUDecision.d_PromotionalBudget = 0;
+                tempSKUDecision.d_TradeExpenses = 0;
+                tempSKUDecision.d_WholesalesBonusRate = 0;
+                tempSKUDecision.d_WholesalesBonusMinVolume = 0;
                 p = p.then(function(result){
                     if(!result){
                         throw new Error("save SKUDecision failed during create copy of last period decision.");
@@ -699,8 +701,108 @@ function duplicateLastPeriodDecision(seminarId, lastPeriod){
     })
 }
 
+//TODO: createNewDecisionBasedOnLastPeriodDecision
+//a) copy previous to current except dropped SKUs/Brands
+//b) clean array brandDecisions.d_SKUsDecisions
+//c) clean array companyDecisions.d_BrandsDecisions
+function createNewDecisionBasedOnLastPeriodDecision(seminarId, lastPeriod){
+    var discontinuedSKUId = [];
+    var discontinuedBrandId = [];
 
+    return SKUDecisionModel.findAllInPeriod(seminarId, lastPeriod)
+        .then(function(allSKUDecision){
+            discontinuedSKUId = [];
+            discontinuedBrandId = [];
 
+            var p = Q('init');
+            allSKUDecision.forEach(function(SKUDecision){
+                var tempSKUDecision = JSON.parse(JSON.stringify(SKUDecision));
+
+                if(tempSKUDecision.d_ToDrop){
+                    discontinuedSKUId.push(tempSKUDecision.d_SKUID); 
+                } else {
+                    delete tempSKUDecision._id;
+                    delete tempSKUDecision.__v;
+                    //Make sure to copy all the field instead of field listed below:
+                    tempSKUDecision.period = tempSKUDecision.period + 1;
+                    tempSKUDecision.d_Advertising = 0;
+                    tempSKUDecision.d_AdditionalTradeMargin = 0;
+                    tempSKUDecision.d_ProductionVolume = 0;
+                    tempSKUDecision.d_PromotionalBudget = 0;
+                    tempSKUDecision.d_TradeExpenses = 0;
+                    tempSKUDecision.d_WholesalesBonusRate = 0;
+                    tempSKUDecision.d_WholesalesBonusMinVolume = 0;
+                    p = p.then(function(result){
+                        if(!result){
+                            throw new Error("save SKUDecision failed during create copy of last period decision.");
+                        }
+                        return SKUDecisionModel.createSKUDecisionBasedOnLastPeriodDecision(tempSKUDecision);
+                    })                    
+                }
+            })
+            return p;
+    })
+    .then(function(result){
+        logger.log('discontinuedSKUId:' + discontinuedSKUId);
+
+        if(!result){
+            throw new Error("save comanyDecision failed during create copy of last period decision.");
+        }
+        return brandDecisionModel.findAllInPeriod(seminarId, lastPeriod)
+        .then(function(allBrandDecision){
+            var p = Q('init');
+            allBrandDecision.forEach(function(brandDecision){
+                var tempBrandDecision = JSON.parse(JSON.stringify(brandDecision));
+
+                tempBrandDecision.d_SKUsDecisions = _.difference(tempBrandDecision.d_SKUsDecisions, discontinuedSKUId);
+                if(tempBrandDecision.d_SKUsDecisions.length == 0){
+                    discontinuedBrandId.push(tempBrandDecision.d_BrandID);
+                } else {
+                    delete tempBrandDecision._id;
+                    delete tempBrandDecision.__v;
+                    tempBrandDecision.period = tempBrandDecision.period + 1;
+                    tempBrandDecision.d_SalesForce = 0;
+                    p = p.then(function(result){
+                        if(!result){
+                            throw new Error("save brandDecision failed during create copy of last period decision.");
+                        }
+                        return brandDecisionModel.createBrandDecisionBasedOnLastPeriodDecision(tempBrandDecision);
+                    })
+                }
+
+            })
+            return p;
+        })        
+    }).then(function(result){
+        logger.log('discontinuedBrandId:' + discontinuedBrandId);
+
+        return companyDecisionModel.findAllInPeriod(seminarId, lastPeriod)
+        .then(function(allCompanyDecision){
+            var p = Q('init');
+            allCompanyDecision.forEach(function(companyDecision){
+                var tempCompanyDecision = JSON.parse(JSON.stringify(companyDecision));
+
+                delete tempCompanyDecision._id;
+                delete tempCompanyDecision.__v;
+
+                tempCompanyDecision.d_BrandsDecisions = _.difference(tempCompanyDecision.d_BrandsDecisions, discontinuedBrandId);
+                tempCompanyDecision.period = tempCompanyDecision.period + 1;
+                tempCompanyDecision.d_RequestedAdditionalBudget = 0;
+                tempCompanyDecision.d_InvestmentInServicing = 0;
+                tempCompanyDecision.d_InvestmentInEfficiency = 0;
+                tempCompanyDecision.d_InvestmentInTechnology = 0;
+                p = p.then(function(result){
+                    if(!result){
+                        throw new Error("save comanyDecision failed during create copy of last period decision.");
+                    }
+                    return companyDecisionModel.save(tempCompanyDecision);
+                })
+            })
+            return p;
+        })        
+    })
+
+}
 
 
 
