@@ -162,6 +162,17 @@ $color_main_body_user_feedback_info:#EAEFFF;
     display: block;
 }
 
+@mixin icon_user_pdf {
+    color: $color_login_title;
+    font-size: 30px;
+    background-image: url(../images/file-pdf.png);
+    background-repeat: no-repeat;
+    background-position: 1px 0px;
+    padding-left: 37px;
+    margin: 20px 0px;
+    display: block;
+}
+
 
 @mixin icon_user_product{
     color: $color_main_body_product;
@@ -561,6 +572,20 @@ body{
                 padding-left:35px;
                 margin:0 0 30px 0;
                 color:$color_main_body_user_muted;
+            }
+            .manual_h3{
+                color: $color_login_title;
+                font-family: $font_login_title;
+                font-weight:500;
+            }
+            .manual_download{
+                color: $color_login_title;
+                font-family: $font_login_title;
+                font-weight:500;
+                @include icon_user_pdf;
+            }
+            .manual_clear{
+                clear:both;
             }
 
             .bs_h3 {

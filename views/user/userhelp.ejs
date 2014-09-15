@@ -33,8 +33,14 @@
 
             <div class="row intro_data" ng-show='isManualShown'>
                 <div class="col-md-12">
-                    <!-- <div class="bs-docs-section" ng-bind-html='trustAsHtml(manual)'></div> -->
-                    <div class="bs-docs-section" gen-parse-md='manual'></div>
+                    <div class="bs-docs-section">
+                        <h3 class="manual_h3 col-md-9">{{'ManualPageTitle' | translate}}</h3>
+                        <h3 class="pull-right manual_download">
+                            <a href="/marksimos/download/manual">{{'ManualPageDownload' | translate}}</a>
+                        </h3>
+                        <div class="manual_clear"></div>
+                        <div gen-parse-md='manual'></div>
+                    </div>
                 </div>
             </div>
 

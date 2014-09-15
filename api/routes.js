@@ -57,12 +57,11 @@ apiRouter.get('/marksimos/api/create_admin', function(req, res, next){
 });
 
 
-
-
 // get seminar
 apiRouter.get('/marksimos/api/user', requireLogin, userController.getUser);
 apiRouter.get('/marksimos/api/student/seminar', requireLogin, authorize('getSeminarOfStudent'), studentController.getSeminarOfStudent);
 apiRouter.get('/marksimos/api/studentinfo', requireLogin, authorize('getStudent'),userController.getStudent);
+
 
 
 //report

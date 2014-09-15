@@ -24,6 +24,11 @@ module.exports = function(app){
         res.render('user/userhelp.ejs', { title : 'MarkSimos - Help'});
     });
 
+    //download file
+    app.get('/marksimos/download/manual', function(req, res, next){
+        res.download('./public/app/file/MarkSimos_Participants_Manual.pdf');
+    });
+
     app.get('/marksimos/manual/zh_CN',function(req,res,next){
         res.render('user/help/manual_cn.md',{layout:false});
     });

@@ -80,6 +80,8 @@ At the starting point, the total market represents in volume terms about 2,000 m
 
 The chart below shows the segments classification and their initial market share (in volume) at the end of Period 0.
 
+![the segments classification and their initial market share](/app/css/images/manual_en_segments_classification.png)
+
 The table below shows indicates consumers’ needs regarding products perceptions at the starting point:
 
 

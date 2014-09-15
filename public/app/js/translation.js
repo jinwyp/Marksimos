@@ -844,11 +844,12 @@ app.config(['$translateProvider', function($translateProvider){
         "HelpPageMenuFAQ":"FAQ",
         "HelpPageMenuVideo":"Video",
         "HelpPageMenuManual":"Manual",
-        "HelpPageHomePage":"Home Page",
         //Labels for FAQ Page
         "FAQPageTitle":"Frequently Asked Questions",
-        "FAQPageSubTitle":"This FAQ will attempt to cover the most asked question about Marksimos.This FAQ will attempt to cover the most asked question about Marksimos.This FAQ will attempt to cover the most asked question about Marksimos ."
+        "FAQPageSubTitle":"This FAQ will attempt to cover the most asked question about Marksimos.This FAQ will attempt to cover the most asked question about Marksimos.This FAQ will attempt to cover the most asked question about Marksimos .",
 
+        "ManualPageTitle":"Manual",
+        "ManualPageDownload":"Download"
 
     });
 
@@ -1638,16 +1639,16 @@ app.config(['$translateProvider', function($translateProvider){
         "DecisionPageSpendingDetailsTable2AcquiredTechnologyLevel"             : "最高技术水平",
 		
         //Labels for final score page
-        "FinalScorePageScore":"得分",
+        "FinalScorePageScore":"最终得分",
         "FinalScorePageWeightFactor":"Weight / Factor",
         "FinalScorePageIncrementalMarketShare":"Incremental market share (value)",
         "FinalScorePageCumulatedNetProfit":"Cumulated net profit",
         "FinalScorePageSpendingVersusBudgets":"Spending versus budgets",
         "FinalScorePageShareInBrandTotalSalesValue":"Share in Brand Total Sales Value",
         "FinalScorePageAchievementOfInitialObjectives":"Achievement of initial objectives",
-        "FinalScorePageFinalScore":"最终得分",
-        "FinalScorePageCompany":"公司",
-        "FinalScorePagePeriod":"阶段",
+        "FinalScorePageFinalScore":"Final Score",
+        "FinalScorePageCompany":"Company",
+        "FinalScorePagePeriod":"Period",
         "FinalScorePageCongratulations":"Congratulations ! You finish the game",
         "FinalScorePageCongratulationsInfo":"Please take 5 minutes to provide feedback to MarkSimos. Your feedback will help us to improve our service",
         "FinalScorePageProvideFeedback":"Provide Feedback",
@@ -1696,11 +1697,13 @@ app.config(['$translateProvider', function($translateProvider){
         "HelpPageMenuFAQ":"常见问题",
         "HelpPageMenuVideo":"视频介绍",
         "HelpPageMenuManual":"使用手册",
-        "HelpPageHomePage":"返回主页",
 
         //Labels for FAQ Page
         "FAQPageTitle":"常见问题",
-        "FAQPageSubTitle":"This FAQ will attempt to cover the most asked question about Marksimos.This FAQ will attempt to cover the most asked question about Marksimos.This FAQ will attempt to cover the most asked question about Marksimos ."
+        "FAQPageSubTitle":"This FAQ will attempt to cover the most asked question about Marksimos.This FAQ will attempt to cover the most asked question about Marksimos.This FAQ will attempt to cover the most asked question about Marksimos .",
+        
+        "ManualPageTitle":"使用手册",
+        "ManualPageDownload":"下载"
     });
 
     // Tell the module what language to use by default
