@@ -2,6 +2,8 @@
  * Created by jinwyp on 4/28/14.
  */
 
+"use strict";
+
 
 // create module for custom directives
 var marksimosapp = angular.module('marksimos', ['pascalprecht.translate', 'angularCharts', 'nvd3ChartDirectives', 'cgNotify',  'marksimos.commoncomponent', 'marksimos.websitecomponent', 'marksimos.model', 'marksimos.filter', 'marksimos.translation' ]);
@@ -1278,8 +1280,6 @@ marksimosapp.controller('chartController', ['$translate', '$scope', '$rootScope'
     ];
 
     $scope.searchReport = function(){
-        /*Score 页面跳转到Report页面*/
-        $scope.css.menu = 'Report';
 
         $scope.css.currentSearchReportName = [];
         if($scope.data.reportName !== ''){

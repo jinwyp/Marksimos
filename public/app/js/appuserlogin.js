@@ -65,9 +65,6 @@ marksimosapp.controller('userIntroController',['$scope', '$http', '$window', 'St
 
     $scope.initSeminar = function() {
 
-        $scope.isFAQShown=true;
-        $scope.isVideoShown=false;
-        $scope.isManualShown=false;
 
         Student.getStudent().then(function(data, status, headers, config){
             $scope.data.currentStudent = data;
@@ -79,21 +76,6 @@ marksimosapp.controller('userIntroController',['$scope', '$http', '$window', 'St
     };
 
     $scope.initSeminar();
-
-
-    $scope.clickIntro=function(item){
-        $scope.isFAQShown=false;$scope.isVideoShown=false;$scope.isManualShown=false;
-        switch(item){
-            case 'FAQ':$scope.isFAQShown=true;break;
-            case 'Video':$scope.isVideoShown=true;break;
-            case 'Manual':$scope.isManualShown=true;break;
-        }
-    }
-
-
-    $scope.introVideosNext = function(){
-        $scope.css.showBox = 'seminar';
-    };
 
 
 
@@ -119,9 +101,6 @@ marksimosapp.controller('userIntroController',['$scope', '$http', '$window', 'St
                         });
                     });
 
-                    $scope.data.hello=data;
-
-
                     $scope.data.currentCompany = data;
                 });
 
@@ -136,6 +115,10 @@ marksimosapp.controller('userIntroController',['$scope', '$http', '$window', 'St
     };
 
 }]);
+
+
+
+
 
 marksimosapp.controller('userHelpController',['$scope', '$sce', '$http', '$window', 'FAQ', function($scope, $sce, $http, $window, FAQ) {
 
@@ -175,7 +158,9 @@ marksimosapp.controller('userHelpController',['$scope', '$sce', '$http', '$windo
 
 
     $scope.clickIntro=function(item){
-        $scope.isFAQShown=false;$scope.isVideoShown=false;$scope.isManualShown=false;
+        $scope.isFAQShown=false;
+        $scope.isVideoShown=false;
+        $scope.isManualShown=false;
         switch(item){
             case 'FAQ':$scope.isFAQShown=true;break;
             case 'Video':$scope.isVideoShown=true;break;
