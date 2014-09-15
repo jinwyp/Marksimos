@@ -2359,8 +2359,8 @@
 
             <form class="budget_form" role="form" name="updateCompanyForm2">
                 <div class="form-group text-center" ng-class="{ 'has-success':updateCompanyForm2.companyAdditionalBudget.$dirty && updateCompanyForm2.companyAdditionalBudget.$valid , 'has-error': updateCompanyForm2.companyAdditionalBudget.$dirty && updateCompanyForm2.companyAdditionalBudget.$invalid}">
-                    <label class="budget_title" for="additionalBudget" ng-show="css.additionalBudget" ng-click="css.additionalBudget=false">${{data.currentCompany.d_RequestedAdditionalBudget}}</label>
-                    <label for="companyAdditionalBudget" ng-show="css.additionalBudget" ng-click="css.additionalBudget=false">{{'DecisionPageSecondMenuBarLabelsAdditionalBudget' | translate}}</label>
+                    <label class="budget_title" for="additionalBudget" ng-show="css.additionalBudget" >${{data.currentCompany.d_RequestedAdditionalBudget}}</label>
+                    <label for="companyAdditionalBudget" ng-show="css.additionalBudget" ng-click="css.additionalBudget=true">{{'DecisionPageSecondMenuBarLabelsAdditionalBudget' | translate}}</label>
                     <input type="number" class="form-control input-sm" id="companyAdditionalBudget" name="companyAdditionalBudget" ng-hide="css.additionalBudget" required ng-model="data.currentCompany.d_RequestedAdditionalBudget" ng-blur="updateCompany('d_RequestedAdditionalBudget', updateCompanyForm2, 'companyAdditionalBudget')">
                 </div>
             </form>
