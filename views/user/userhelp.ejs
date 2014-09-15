@@ -58,8 +58,8 @@
 
                             <ul class="list-inline bs-faq-sidenav">
 
-                                <li class="" ng-class="{'active':questionsShown[$index]}" ng-repeat='category in faq'>
-                                    <a href="" ng-click='chickFAQ($index)'>{{category.category}}</a>
+                                <li class="" ng-class="{'active':questionsShown[$index]}" ng-repeat='category in faq.categories'>
+                                    <a href="" ng-click='chickFAQ($index)'>{{category.name}}</a>
                                 </li>
 
                             </ul>
@@ -70,8 +70,8 @@
 
                 <div class="col-md-12">
                     <div class="bs-docs-section">
-                        <div ng-repeat='category in faq' ng-show='questionsShown[$index]'>
-                            <h3 class="bs_h3">{{category.category}}</h3>
+                        <div ng-repeat='category in faq.categories' ng-show='questionsShown[$index]'>
+                            <h3 class="bs_h3">{{category.name}}</h3>
                             <div ng-repeat='q in category.questions'>
                                 <h4 class="bs_h4">{{$index+1}}. {{q.title}}</h4>
                                 <div class="info_highlight">

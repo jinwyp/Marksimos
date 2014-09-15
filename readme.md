@@ -4,6 +4,7 @@
 
 ## 基本环境配置
 
+
 ### 前端包与依赖管理 使用Bower工具
 
 * 安装Bower
@@ -15,20 +16,20 @@
 ``` npm install bower --save ```
 
 
-* 安装前段的包与库资源,通过编辑 bower.json 文件,然后运行 ：
+* 安装前段的包与库资源,通过编辑 bower.json 文件, 运行命令为 ：
 ``` bower install ```
 
 * 查看已安装的前段的包
 ``` bower list ```
 
-* 安装前段的包与库资源,同时自动写入 bower.json 文件,然后运行 ：
+* 安装前端的包与库资源,同时自动写入 bower.json 文件, 运行命令为 ：
 ``` bower install -S```
 ``` bower install --save```
 
 
 ### 后端(NodeJS)依赖安装：
 
-* 编辑后端依赖列表文件 package.json 文件,然后运行
+* 编辑后端依赖列表文件 package.json 文件, 运行命令为
 ``` npm install --save-dev ```
 
 * 查看当前已安装的包
@@ -44,10 +45,15 @@
 
 To have launchd start mongodb at login:
     ``` ln -sfv /usr/local/opt/mongodb/*.plist ~/Library/LaunchAgents ```
+
 Then to load mongodb now:
     ``` launchctl load ~/Library/LaunchAgents/homebrew.mxcl.mongodb.plist ```
+
 Or, if you don't want/need launchctl, you can just run:
     ``` mongod --config /usr/local/etc/mongod.conf ```
+
+
+
 
 * 运行mongo, 并指定数据库路径(默认路径在/usr/local/var/mongodb) ``` mongod --dbpath <path to data directory> ``` (请确保当前用户对数据库文件路径有读写权限)
 
@@ -56,30 +62,34 @@ Or, if you don't want/need launchctl, you can just run:
 * mongo 的配置文件范例
 
 ```
-# Store data in /usr/local/var/mongodb instead of the default /data/db
-# dbpath = /usr/local/var/mongodb
-dbpath = /Users/jinwyp/Documents/mongodata
+    // Store data in /usr/local/var/mongodb instead of the default /data/db
+    // dbpath = /usr/local/var/mongodb
+    dbpath = /Users/jinwyp/Documents/mongodata
 
-# Append logs to /usr/local/var/log/mongodb/mongo.log
-# logpath = /usr/local/var/log/mongodb/mongo.log
-logpath = /Users/jinwyp/Documents/mongolog/mongo.log
-logappend = true
+    // Append logs to /usr/local/var/log/mongodb/mongo.log
+    // logpath = /usr/local/var/log/mongodb/mongo.log
 
-# Only accept local connections
-bind_ip = 127.0.0.1
+    logpath = /Users/jinwyp/Documents/mongolog/mongo.log
+    logappend = true
 
 
-# fork = true
-# port = 27017
-# quiet = true
-# journal = true
+    // Only accept local connections
+    bind_ip = 127.0.0.1
+
+
+    // fork = true
+    // port = 27017
+    // quiet = true
+    // journal = true
 
 ```
 
 
-##后端Delphi CGI环境配置
+## 后端Delphi CGI环境配置
 
-# Delphi 部署时 配置 \cgi-bin\CgiConfig 需要更改 相应的配置 注意windows server 的64或32位路径不同
+### Delphi 部署时 配置 \cgi-bin\CgiConfig 需要更改 相应的配置 注意windows server 的64或32位路径不同
+
+
 
 
 
@@ -213,18 +223,35 @@ uFormBrandDecision.pas
 ```
 
 
-# Mongo 安装后
 
-==> Caveats
-To have launchd start mongodb at login:
-    ln -sfv /usr/local/opt/mongodb/*.plist ~/Library/LaunchAgents
-Then to load mongodb now:
-    launchctl load ~/Library/LaunchAgents/homebrew.mxcl.mongodb.plist
-Or, if you don't want/need launchctl, you can just run:
-    mongod --config /usr/local/etc/mongod.conf
+
 
 
 
 
 # 运行
 NODE_ENV=production nodemon app.js
+
+
+
+
+# Markdown 格式范例
+
+Consumer Segment        | Description
+---------               | -----
+Price Sensitive         | Consumers accept that they cannot be too demanding on Image perception, since they care so much about price and the Value for money
+Pretenders              | Consumers are also very price sensitive but they want to show off; therefore they look for high Image perception. 
+Moderate                | Consumers are slightly less price sensitive than Segment 1, hence their expectations are slightly higher on both dimensions. 
+Good Life               | Consumers are even less price sensitive than Segment 3 and expect more on Value as well as on Image. 
+Ultimate                | Consumers are not really price sensitive. They can afford higher prices, but in exchange they ask for very high quality, hence they have high expectations on Value dimension. 
+Pragmatic               | Consumers are well-educated and practical people with their strong judgments. They don’t follow fashion. They want very good Value offer, but Image aspect is for them a bit shallow and futile, which doesn’t mean that they would be happy with entry level products. They look for something decent. 
+
+| Segment Name      | Expected  Value Perception | Expected Image Perception  |
+| :--------         | :--------:                 | :--:                       |
+| Price Sensitive   | 24                         |  24                        |
+| Pretenders        | 24                         |  45                        |
+| Moderate          | 32                         |  30                        |
+| Good Life         | 32                         |  36                        |
+| Ultimate          | 53                         |  53                        |
+| Pragmatic         | 52                         |  53                        |
+>>>>>>> 0915

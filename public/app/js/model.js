@@ -125,8 +125,29 @@ app.factory('Company', ['$http', function($http){
 
         updateCompany : function(postdata){
             return $http.put(apiPath + 'company/decision', postdata);
-        }
+        },
 
+        getFinalScore : function(period){
+            return $http.get(apiPath + 'finalScore/' + period).then(function(result){
+
+                result.data.highest_score = _.max(result.data.scores, function(companyScore){
+                    return companyScore.finalScore;
+                }).finalScore;
+
+                for(var i=0;i<result.data.scores.length;i++){
+                    result.data.scores[i].companyName = String.fromCharCode( 64 + result.data.scores[i].companyId);
+                }
+                return result.data;
+            }).catch(errorHandler);
+        },
+
+        getQuestionnaire : function(){
+            return $http.get(apiPath + 'questionnaire');
+        },
+
+        updateQuestionnaire : function(postdata){
+            return $http.put(apiPath + 'questionnaire', postdata);
+        }
 
     };
 
@@ -711,102 +732,45 @@ app.factory('tableReport', ['$http', function($http){
 
 }]);
 
-app.factory('FinalScore',['$http',function($http){
-    var apiPath = '/marksimos/api/finalScore/';
-    var result = new Array();
-
-    var errorHandler = function(err){
-        console.log("Error 404 , Type : API questionnaire", err );
-    };
-
-    var factory = {
-
-        getFinalScore : function(period){
-            return $http.get(apiPath+period).then(function(result){
-                result.data.highest_score = _.max(result.data.scores, function(companyScore){ return companyScore.finalScore; }).finalScore;
-                for(var i=0;i<result.data.scores.length;i++){
-                    result.data.scores[i].companyName = String.fromCharCode(64+result.data.scores[i].companyId);
-                }
-                return result.data;
-            }).catch(errorHandler);
-        }
-
-    };
-
-    return factory;
-}]);
 
 
-app.factory('FAQ',['$http',function($http){
-    var apiPath = '/marksimos/faq/';
 
-    var errorHandler = function(err){
-        console.log("Error 404 , Type : API questionnaire", err );
-    };
 
-    var factory = {
 
-        getZH_CN : function(){
-            return $http.get(apiPath + 'zh_CN').then(function(result){
-                return result.data;
-            }).catch(errorHandler);
-        },
-        getEN_US : function(){
-            return $http.get(apiPath + 'en_US').then(function(result){
-                return result.data;
-            }).catch(errorHandler);
-        }
-    };
-    return factory;
-}])
-
-app.factory('Questionnaire', ['$http', function($http){
+app.factory('Help',['$http',function($http){
     var apiPath = '/marksimos/api/';
 
     var errorHandler = function(err){
-        console.log("Error 404 , Type : API questionnaire", err );
+        console.log("Error 404 , Type : API Help", err );
     };
 
     var factory = {
 
-        getQuestionnaire : function(){
-            return $http.get(apiPath + 'questionnaire').then(function(result){
+        getFAQ : function(){
+            return $http.get(apiPath + 'faq').then(function(result){
                 return result.data;
             }).catch(errorHandler);
         },
-
-        updateQuestionnaire : function(postdata){
-            return $http.put(apiPath + 'questionnaire', postdata);
-        }
-
-    };
-
-    return factory;
-}]);
-
-app.factory('Manual', ['$http', function($http){
-    var apiPath = '/marksimos/manual/';
-
-    var errorHandler = function(err){
-        console.log("Error 404 , Type : API questionnaire", err );
-    };
-
-    var factory = {
-
-        getZH_CN : function(){
-            return $http.get(apiPath + 'zh_CN').then(function(result){
+        getManualChinese : function(){
+            return $http.get('/marksimos/manual/zh_CN').then(function(result){
                 return result.data;
             }).catch(errorHandler);
         },
-        getEN_US : function(){
-            return $http.get(apiPath + 'en_US').then(function(result){
+        getManualEnglish : function(){
+            return $http.get('/marksimos/manual/en_US').then(function(result){
                 return result.data;
             }).catch(errorHandler);
         }
-    };
 
+    };
     return factory;
 }]);
+
+
+
+
+
+
 
 /*JSONKit pretty isVisible mdParse sanitize for markdown*/
 app.factory('JSONKit', function () {

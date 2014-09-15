@@ -29,7 +29,7 @@ marksimosapp.controller('userLoginController', ['$scope', '$http', '$window', 'S
         if(form.$valid){
             Student.login($scope.data.newUser).success(function(data, status, headers, config){
 
-                $window.location.href = "/marksimos/introduction" ;
+                $window.location.href = "/marksimos/intro" ;
 
             }).error(function(data, status, headers, config){
                 form.password.$valid = false;

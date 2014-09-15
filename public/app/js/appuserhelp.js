@@ -8,27 +8,23 @@ var marksimosapp = angular.module('marksimoshelp', ['pascalprecht.translate', 'm
 
 
 
-marksimosapp.controller('userHelpController',['$rootScope', '$scope', '$translate', '$sce', '$http', '$window', 'FAQ', 'Manual',function($rootScope, $scope, $translate, $sce, $http, $window, FAQ, Manual) {
+marksimosapp.controller('userHelpController',['$rootScope', '$scope', '$translate', '$sce', '$http', '$window', 'Help',function($rootScope, $scope, $translate, $sce, $http, $window, Help) {
 
-    
+    $scope.data ={
+        faq : [],
+        manualChinese : {},
+        manualEnglish : {}
+    };
 
-    $rootScope.$on('$translateChangeSuccess', function (a,b) {
+    $rootScope.$on('$translateChangeSuccess', function () {
         if($translate.use()=="zh_CN"){
-            FAQ.getZH_CN().then(function(faqResult){
-                $scope.faq=faqResult;
-                return Manual.getZH_CN();
-            }).then(function(manualResult){
-                $scope.manual=manualResult;
-            });
+            $scope.faq = $scope.data.faq[1];
+            $scope.manual = $scope.data.manualChinese;
+
         }else if($translate.use()=="en_US"){
-            FAQ.getEN_US().then(function(faqResult){
-                $scope.faq=faqResult;
-                return Manual.getEN_US();
-            }).then(function(manualResult){
-                $scope.manual=manualResult;
-            });
+            $scope.faq = $scope.data.faq[0];
+            $scope.manual = $scope.data.manualEnglish;
         }
-        console.log($scope.manual);
     });
 
 
@@ -39,21 +35,27 @@ marksimosapp.controller('userHelpController',['$rootScope', '$scope', '$translat
         $scope.isManualShown=false;
         $scope.questionsShown=[1,0,0,0,0,0,0,0];
 
-        if($translate.use()=="zh_CN"){
-            FAQ.getZH_CN().then(function(faqResult){
-                $scope.faq=faqResult;
-                return Manual.getZH_CN();
-            }).then(function(manualResult){
-                $scope.manual=manualResult;
+        Help.getFAQ().then(function(faqResult){
+            $scope.data.faq = faqResult;
+
+            Help.getManualChinese().then(function(manualResult){
+                $scope.data.manualChinese = manualResult;
+
+                return Help.getManualEnglish();
+            })
+            .then(function(manualResult){
+                $scope.data.manualEnglish = manualResult;
+
+                if($translate.use()=="zh_CN"){
+                    $scope.faq = $scope.data.faq[1];
+                    $scope.manual = $scope.data.manualChinese;
+                }else if($translate.use()=="en_US"){
+                    $scope.faq = $scope.data.faq[0];
+                    $scope.manual = $scope.data.manualEnglish;
+                }
             });
-        }else if($translate.use()=="en_US"){
-            FAQ.getEN_US().then(function(faqResult){
-                $scope.faq=faqResult;
-                return Manual.getEN_US();
-            }).then(function(manualResult){
-                $scope.manual=manualResult;
-            });
-        }
+
+        });
     };
 
     $scope.chickFAQ=function(index){
