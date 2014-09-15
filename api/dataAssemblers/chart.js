@@ -448,7 +448,24 @@ function prepareSKUTooltips(allResults, SKUID){
 
     var currentPeriodSKU = utility.findSKU(currentPeriodResult, SKUID);
     var previousPeriodSKU = utility.findSKU(perviousPeriodResult, SKUID);
-    if(!currentPeriodSKU || !previousPeriodSKU){ console.log('SKUID:' + SKUID);}
+
+    // if(!currentPeriodSKU){ 
+
+    //     console.log('1');
+    // } else {
+    //     console.log(currentPeriodSKU);
+    // }
+
+
+    if(!previousPeriodSKU){
+        previousPeriodSKU = {
+            u_AverageDisplayPrice : 0,
+            u_ValueSegmentShare : [0,0,0,0,0,0],
+            u_Awareness : 0,
+            u_ShelfSpace : 0,
+            u_Perception : [0,0]
+        };
+    } 
 
     //marke share
     var marketShareChange = compare(currentPeriodSKU.u_ValueSegmentShare[consts.ConsumerSegmentsMax] 
@@ -522,6 +539,7 @@ function prepareSKUTooltips(allResults, SKUID){
     }
 
     function getTechnologyLevel(SKU){
+        if(!SKU.u_ps_RetailStocks){ return 1; }
         if(SKU.u_ps_RetailStocks[consts.StocksMaxTotal].s_ps_Volume>0){
             return SKU.u_ps_RetailStocks[consts.StocksMaxTotal].s_Technology;
 
@@ -537,6 +555,7 @@ function prepareSKUTooltips(allResults, SKUID){
     }
 
     function getIngredientsQuality(SKU){
+        if(!SKU.u_ps_RetailStocks){ return 1; }
         if(SKU.u_ps_RetailStocks[consts.StocksMaxTotal].s_ps_Volume>0){
             return SKU.u_ps_RetailStocks[consts.StocksMaxTotal].s_IngredientsQuality;
 

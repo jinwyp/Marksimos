@@ -31,10 +31,24 @@ var _ = require('underscore')
 // console.log(a.concat(b));
 
 
-var a = { sku: [1,2,3]};
+// var a = { sku: [1,2,3]};
 
-console.log(a.sku);
+// console.log(a.sku);
 
-a.sku = _.without(a.sku, 2);
+// a.sku = _.without(a.sku, 2);
 
-console.log(a.sku);
+//console.log(a.sku);
+
+function test(){
+	var b = [];
+
+	b.push(1);
+
+	return function(){
+		console.log('closure: ' + b);
+	}
+}
+
+test()();
+test()();
+test()();
