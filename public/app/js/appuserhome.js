@@ -10,7 +10,7 @@ var marksimosapp = angular.module('marksimos', ['pascalprecht.translate', 'angul
 
 
 // controller business logic
-marksimosapp.controller('chartController', ['$translate', '$scope', '$rootScope', '$document', '$timeout', '$interval', '$http', 'notify', 'chartReport', 'tableReport', 'Company', 'FinalScore', 'Questionnaire', function($translate, $scope, $rootScope, $document, $timeout, $interval, $http, notify, chartReport, tableReport, Company , FinalScore, Questionnaire) {
+marksimosapp.controller('chartController', ['$translate', '$scope', '$rootScope', '$document', '$timeout', '$interval', '$http', 'notify', 'chartReport', 'tableReport', 'Company',  function($translate, $scope, $rootScope, $document, $timeout, $interval, $http, notify, chartReport, tableReport, Company ) {
 
     $rootScope.$on('$translateChangeSuccess', function () {
         $translate(['HomePageSegmentLabelPriceSensitive', 'HomePageSegmentLabelPretenders', 'HomePageSegmentLabelModerate',
@@ -772,7 +772,7 @@ marksimosapp.controller('chartController', ['$translate', '$scope', '$rootScope'
             $scope.css.selectFinalScorePeriod = $scope.data.currentStudent.currentPeriod - 1;
 
 
-            FinalScore.getFinalScore($scope.data.currentStudent.currentPeriod - 1).then(function(data, status, headers, config){
+            Company.getFinalScore($scope.data.currentStudent.currentPeriod - 1).then(function(data, status, headers, config){
                 $scope.data.tableFinalScore.selectPeriodData = data;
             });
         });
@@ -1148,18 +1148,18 @@ marksimosapp.controller('chartController', ['$translate', '$scope', '$rootScope'
             case 5 : return 'E';break;
             case 6 : return 'F';break;
         }
-    }
+    };
     
     $scope.switchTableReportFinalScore = function(period){
         $scope.css.selectFinalScorePeriod = period ;
-        FinalScore.getFinalScore(period)
+        Company.getFinalScore(period)
         .then(function(data, status, headers, config){
             $scope.data.tableFinalScore.selectPeriodData = data; 
         });
     };
 
     /********************  get getQuestionnaire  ********************/
-    Questionnaire.getQuestionnaire().then(function(data, status, headers, config){
+    Company.getQuestionnaire().success(function(data, status, headers, config){
         $scope.questionnaire = data;
         $scope.questionnaire.radio_OverallSatisfactionWithThePrograms={
             info:['ChallengeStrategicThinkingAbility','DevelopAnIntegratedPerspective','TestPersonalAbilityOfBalancingRisks','ChallengeLeadershipAndTeamworkAbility','ChallengeAnalysisAndDecisionMakingAbility','SimulationInteresting']
@@ -1189,7 +1189,7 @@ marksimosapp.controller('chartController', ['$translate', '$scope', '$rootScope'
             'data':$scope.questionnaire[fieldname]
         };
 
-        Questionnaire.updateQuestionnaire(currentData).then(function(data, status, headers, config){
+        Company.updateQuestionnaire(currentData).success(function(data, status, headers, config){
             notify({
                 message : 'Save Success !',
                 template : notifytemplate.success,
