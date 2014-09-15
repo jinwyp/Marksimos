@@ -121,12 +121,12 @@ exports.init = function(req, res, next) {
                 return Q.all([
                     initChartData(seminarId, allResults),
                     
-                    initCompanyStatusReport(seminarId, allResults),
+                    initCompanyStatusReport(seminarId, allResults, 0),
                     initFinancialReport(seminarId, allResults),
-                    initProfitabilityEvolutionReport(seminarId, allResults),
+                    initProfitabilityEvolutionReport(seminarId, allResults, 0),
                     initSegmentDistributionReport(seminarId, allResults),
                     initCompetitorIntelligenceReport(seminarId, allResults),
-                    initMarketTrendsReport(seminarId, allResults),
+                    initMarketTrendsReport(seminarId, allResults, 0),
                     initMarketIndicatorReport(seminarId, currentPeriod)
                 ]);
             });
@@ -170,6 +170,7 @@ exports.runSimulation = function(req, res, next){
     }
 
     var currentPeriod = sessionOperation.getCurrentPeriod(req);
+    console.log('currentPeriod: ' + currentPeriod);
 
     //check if this seminar exists
     seminarModel.findOne({
@@ -234,12 +235,12 @@ exports.runSimulation = function(req, res, next){
                         return Q.all([
                             initChartData(seminarId, allResults),
                             
-                            initCompanyStatusReport(seminarId, allResults),
+                            initCompanyStatusReport(seminarId, allResults, currentPeriod),
                             initFinancialReport(seminarId, allResults),
-                            initProfitabilityEvolutionReport(seminarId, allResults),
+                            initProfitabilityEvolutionReport(seminarId, allResults, currentPeriod),
                             initSegmentDistributionReport(seminarId, allResults),
                             initCompetitorIntelligenceReport(seminarId, allResults),
-                            initMarketTrendsReport(seminarId, allResults),
+                            initMarketTrendsReport(seminarId, allResults, currentPeriod),
                             initMarketIndicatorReport(seminarId, currentPeriod)
                         ]);
                     });
@@ -334,6 +335,7 @@ function submitDecisionForAllCompany(companies, period, seminarId){
 
 function submitDecision(companyId, period, seminarId){
     var result = {};
+    console.log('companyId:' + companyId + ', period:' + period + ', seminarId:' + seminarId);
     return companyDecisionModel.findOne(seminarId, period, companyId)
     .then(function(decision){
         if(!decision){
@@ -543,17 +545,18 @@ function cleanAllResults(allResults){
     })
 }
 
-function initCompanyStatusReport(seminarId, allResults){
+function initCompanyStatusReport(seminarId, allResults, period){
     var queries = [];
     allResults.forEach(function(onePeriodResult){
         queries.push(cgiapi.getExogenous(onePeriodResult.period));
     })
+
     return Q.all(queries)
     .then(function(allExogenous){
         return reportModel.insert({
             seminarId: seminarId,
             reportName: "company_status",
-            reportData: companyStatusReportAssembler.getCompanyStatusReport(allResults, allExogenous)
+            reportData: companyStatusReportAssembler.getCompanyStatusReport(allResults, allExogenous, period)
         })
     });
 };
@@ -566,11 +569,11 @@ function initFinancialReport(seminarId, allResults){
     })
 }
 
-function initProfitabilityEvolutionReport(seminarId, allResults){
+function initProfitabilityEvolutionReport(seminarId, allResults, period){
     return reportModel.insert({
         seminarId: seminarId,
         reportName: "profitability_evolution",
-        reportData: profitabilityEvolutionReportAssembler.getProfitabilityEvolutionReport(allResults)
+        reportData: profitabilityEvolutionReportAssembler.getProfitabilityEvolutionReport(allResults, period)
     })
 }
 
@@ -597,11 +600,11 @@ function initCompetitorIntelligenceReport(seminarId, allResults){
     })
 }
 
-function initMarketTrendsReport(seminarId, allResults){
+function initMarketTrendsReport(seminarId, allResults, period){
     return reportModel.insert({
         seminarId: seminarId,
         reportName: 'market_trends',
-        reportData: marketTrendsReportAssembler.getMarketTrendsReport(allResults)
+        reportData: marketTrendsReportAssembler.getMarketTrendsReport(allResults, period)
     })
 }
 
@@ -701,7 +704,7 @@ function duplicateLastPeriodDecision(seminarId, lastPeriod){
     })
 }
 
-//TODO: createNewDecisionBasedOnLastPeriodDecision
+//createNewDecisionBasedOnLastPeriodDecision
 //a) copy previous to current except dropped SKUs/Brands
 //b) clean array brandDecisions.d_SKUsDecisions
 //c) clean array companyDecisions.d_BrandsDecisions
@@ -743,8 +746,6 @@ function createNewDecisionBasedOnLastPeriodDecision(seminarId, lastPeriod){
             return p;
     })
     .then(function(result){
-        logger.log('discontinuedSKUId:' + discontinuedSKUId);
-
         if(!result){
             throw new Error("save comanyDecision failed during create copy of last period decision.");
         }
@@ -774,8 +775,6 @@ function createNewDecisionBasedOnLastPeriodDecision(seminarId, lastPeriod){
             return p;
         })        
     }).then(function(result){
-        logger.log('discontinuedBrandId:' + discontinuedBrandId);
-
         return companyDecisionModel.findAllInPeriod(seminarId, lastPeriod)
         .then(function(allCompanyDecision){
             var p = Q('init');

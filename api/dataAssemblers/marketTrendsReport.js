@@ -2,56 +2,56 @@ var consts = require('../consts.js');
 var utility = require('../../common/utility.js');
 var config = require('../../common/config.js');
 
-exports.getMarketTrendsReport = function(allResults){
+exports.getMarketTrendsReport = function(allResults, period){
     var result = {
         global: genereateCompanyReport(allResults),
-        brand: generateBrandReport(allResults),
-        SKU: generateSKUReport(allResults)
+        brand: generateBrandReport(allResults, period),
+        SKU: generateSKUReport(allResults, period)
     }
     return result;
 }
 
-function generateSKUReport(allResults){
+function generateSKUReport(allResults, period){
     return {
-        averageDisplayPriceStdPack: generateSKUFieldReport(allResults, function(SKUResult){return SKUResult.u_AverageDisplayPrice}),
-        averageNetMarketPriceStdPack: generateSKUFieldReport(allResults, function(SKUResult){return SKUResult.u_AverageNetMarketPrice}),
-        brandAwareness: generateSKUFieldReport(allResults, function(SKUResult){return SKUResult.u_Awareness * 100}),
-        imagePerception: generateSKUFieldReport(allResults, function(SKUResult){return SKUResult.u_Perception[1]}),
-        lostSalesVolumeDueToOOSStdPack: generateSKUFieldReport(allResults, function(SKUResult){return SKUResult.u_StockOutVolume}),
-        marketNetSalesValue: generateSKUFieldReport(allResults, function(SKUResult){return SKUResult.u_MarketNetSalesValue[consts.ConsumerSegmentsMaxTotal-1]}),
-        marketSalesVolumeStdPack: generateSKUFieldReport(allResults, function(SKUResult){return SKUResult.u_MarketSalesVolume[consts.ConsumerSegmentsMaxTotal-1]}),
-        marketShareValue: generateSKUFieldReport(allResults, function(SKUResult){return SKUResult.u_ValueSegmentShare[consts.ConsumerSegmentsMaxTotal-1] * 100}),
-        marketShareVolume: generateSKUFieldReport(allResults, function(SKUResult){return SKUResult.u_VolumeSegmentShare[consts.ConsumerSegmentsMaxTotal-1] * 100}),
-        numericalDistribution: generateSKUFieldReport(allResults, function(SKUResult){return SKUResult.u_DistributionNum * 100}),
-
-        priceRankingIndex: generateSKUFieldReport(allResults, function(SKUResult){return SKUResult.u_PriceIndex}),
-        shelfSpace: generateSKUFieldReport(allResults, function(SKUResult){return SKUResult.u_ShelfSpace * 100}),
-        totalInventoryAtTradeStdPack: generateSKUFieldReport(allResults, function(SKUResult){return SKUResult.u_ps_WholesaleStocks[consts.StocksMaxTotal].s_ps_Volume + SKUResult.u_ps_RetailStocks[consts.StocksMaxTotal].s_ps_Volume}),
-        valuePerception: generateSKUFieldReport(allResults, function(SKUResult){return SKUResult.u_Perception[0]}),
-
-        valueShareInPriceSensitiveSegment: generateSKUFieldReport(allResults, function(SKUResult){return SKUResult.u_ValueSegmentShare[0] * 100;}),
-        valueShareInPretendersSegment: generateSKUFieldReport(allResults, function(SKUResult){return SKUResult.u_ValueSegmentShare[1] * 100;}),
-        valueShareInModerateSegment: generateSKUFieldReport(allResults, function(SKUResult){return SKUResult.u_ValueSegmentShare[2] * 100;}),
-        valueShareInGoodLifeSegment: generateSKUFieldReport(allResults, function(SKUResult){return SKUResult.u_ValueSegmentShare[3] * 100;}),
-        valueShareInUltimateSegment: generateSKUFieldReport(allResults, function(SKUResult){return SKUResult.u_ValueSegmentShare[4] * 100;}),
-        valueShareInPragmaticSegment: generateSKUFieldReport(allResults, function(SKUResult){return SKUResult.u_ValueSegmentShare[5] * 100;}),
+        averageDisplayPriceStdPack         : generateSKUFieldReport(allResults, period, function(SKUResult){return SKUResult.u_AverageDisplayPrice}),
+        averageNetMarketPriceStdPack       : generateSKUFieldReport(allResults, period, function(SKUResult){return SKUResult.u_AverageNetMarketPrice}),
+        brandAwareness                     : generateSKUFieldReport(allResults, period, function(SKUResult){return SKUResult.u_Awareness * 100}),
+        imagePerception                    : generateSKUFieldReport(allResults, period, function(SKUResult){return SKUResult.u_Perception[1]}),
+        lostSalesVolumeDueToOOSStdPack     : generateSKUFieldReport(allResults, period, function(SKUResult){return SKUResult.u_StockOutVolume}),
+        marketNetSalesValue                : generateSKUFieldReport(allResults, period, function(SKUResult){return SKUResult.u_MarketNetSalesValue[consts.ConsumerSegmentsMaxTotal-1]}),
+        marketSalesVolumeStdPack           : generateSKUFieldReport(allResults, period, function(SKUResult){return SKUResult.u_MarketSalesVolume[consts.ConsumerSegmentsMaxTotal-1]}),
+        marketShareValue                   : generateSKUFieldReport(allResults, period, function(SKUResult){return SKUResult.u_ValueSegmentShare[consts.ConsumerSegmentsMaxTotal-1] * 100}),
+        marketShareVolume                  : generateSKUFieldReport(allResults, period, function(SKUResult){return SKUResult.u_VolumeSegmentShare[consts.ConsumerSegmentsMaxTotal-1] * 100}),
+        numericalDistribution              : generateSKUFieldReport(allResults, period, function(SKUResult){return SKUResult.u_DistributionNum * 100}),
         
-        volumeShareInPriceSensitiveSegment: generateSKUFieldReport(allResults, function(SKUResult){return SKUResult.u_VolumeSegmentShare[0] * 100;}),
-        volumeShareInPretendersSegment: generateSKUFieldReport(allResults, function(SKUResult){return SKUResult.u_VolumeSegmentShare[1] * 100;}),
-        volumeShareInModerateSegment: generateSKUFieldReport(allResults, function(SKUResult){return SKUResult.u_VolumeSegmentShare[2] * 100;}),
-        volumeShareInGoodLifeSegment: generateSKUFieldReport(allResults, function(SKUResult){return SKUResult.u_VolumeSegmentShare[3] * 100;}),
-        volumeShareInUltimateSegment: generateSKUFieldReport(allResults, function(SKUResult){return SKUResult.u_VolumeSegmentShare[4] * 100;}),
-        volumeShareInPragmaticSegment: generateSKUFieldReport(allResults, function(SKUResult){return SKUResult.u_VolumeSegmentShare[5] * 100;}),
-
-        volumeWeightedDistribution: generateSKUFieldReport(allResults, function(SKUResult){return SKUResult.u_DistributionVol * 100;})
+        priceRankingIndex                  : generateSKUFieldReport(allResults, period, function(SKUResult){return SKUResult.u_PriceIndex}),
+        shelfSpace                         : generateSKUFieldReport(allResults, period, function(SKUResult){return SKUResult.u_ShelfSpace * 100}),
+        totalInventoryAtTradeStdPack       : generateSKUFieldReport(allResults, period, function(SKUResult){return SKUResult.u_ps_WholesaleStocks[consts.StocksMaxTotal].s_ps_Volume + SKUResult.u_ps_RetailStocks[consts.StocksMaxTotal].s_ps_Volume}),
+        valuePerception                    : generateSKUFieldReport(allResults, period, function(SKUResult){return SKUResult.u_Perception[0]}),
+        
+        valueShareInPriceSensitiveSegment  : generateSKUFieldReport(allResults, period, function(SKUResult){return SKUResult.u_ValueSegmentShare[0] * 100;}),
+        valueShareInPretendersSegment      : generateSKUFieldReport(allResults, period, function(SKUResult){return SKUResult.u_ValueSegmentShare[1] * 100;}),
+        valueShareInModerateSegment        : generateSKUFieldReport(allResults, period, function(SKUResult){return SKUResult.u_ValueSegmentShare[2] * 100;}),
+        valueShareInGoodLifeSegment        : generateSKUFieldReport(allResults, period, function(SKUResult){return SKUResult.u_ValueSegmentShare[3] * 100;}),
+        valueShareInUltimateSegment        : generateSKUFieldReport(allResults, period, function(SKUResult){return SKUResult.u_ValueSegmentShare[4] * 100;}),
+        valueShareInPragmaticSegment       : generateSKUFieldReport(allResults, period, function(SKUResult){return SKUResult.u_ValueSegmentShare[5] * 100;}),
+        
+        volumeShareInPriceSensitiveSegment : generateSKUFieldReport(allResults, period, function(SKUResult){return SKUResult.u_VolumeSegmentShare[0] * 100;}),
+        volumeShareInPretendersSegment     : generateSKUFieldReport(allResults, period, function(SKUResult){return SKUResult.u_VolumeSegmentShare[1] * 100;}),
+        volumeShareInModerateSegment       : generateSKUFieldReport(allResults, period, function(SKUResult){return SKUResult.u_VolumeSegmentShare[2] * 100;}),
+        volumeShareInGoodLifeSegment       : generateSKUFieldReport(allResults, period, function(SKUResult){return SKUResult.u_VolumeSegmentShare[3] * 100;}),
+        volumeShareInUltimateSegment       : generateSKUFieldReport(allResults, period, function(SKUResult){return SKUResult.u_VolumeSegmentShare[4] * 100;}),
+        volumeShareInPragmaticSegment      : generateSKUFieldReport(allResults, period, function(SKUResult){return SKUResult.u_VolumeSegmentShare[5] * 100;}),
+        
+        volumeWeightedDistribution         : generateSKUFieldReport(allResults, period, function(SKUResult){return SKUResult.u_DistributionVol * 100;})
     }
 }
 
-function generateSKUFieldReport(allResults, getField){
+function generateSKUFieldReport(allResults, period, getField){
     var result = [];
 
-    allResults[0].p_SKUs.forEach(function(SKU){
-        var SKUName = utility.findBrand(allResults[0], SKU.u_ParentBrandID).b_BrandName + SKU.u_SKUName + ' ' + config.packsizeDescription[SKU.u_PackSize];
+    allResults[period + 3].p_SKUs.forEach(function(SKU){
+        var SKUName = utility.findBrand(allResults[period + 3], SKU.u_ParentBrandID).b_BrandName + SKU.u_SKUName + ' ' + config.packsizeDescription[SKU.u_PackSize];
         result.push({
             SKUID: SKU.u_SKUID,
             SKUName: SKUName,
@@ -62,15 +62,24 @@ function generateSKUFieldReport(allResults, getField){
     result.forEach(function(SKU){
         for(var i=0; i<allResults.length; i++){
             var onePeriodResult = allResults[i];
+            var foundValue = false;
 
             for(var j=0; j<onePeriodResult.p_SKUs.length; j++){
                 var SKUResult = onePeriodResult.p_SKUs[j];
                 if(SKUResult.u_SKUID === SKU.SKUID){
+                    foundValue = true;
                     SKU.data.push({
                         name: 'Quarter ' + onePeriodResult.period,
                         value: getField(SKUResult)
                     });
-                }
+                } 
+            }
+
+            if(!foundValue){
+                SKU.data.push({
+                    name: 'Quarter ' + onePeriodResult.period,
+                    value: '/'
+                });                
             }
         }
     })
@@ -78,46 +87,46 @@ function generateSKUFieldReport(allResults, getField){
     return result;
 }
 
-function generateBrandReport(allResults){
+function generateBrandReport(allResults, period){
     return {
-        averageDisplayPriceStdPack: generateBrandFieldReport(allResults, function(brandResult){return brandResult.b_AverageDisplayPrice}),
-        averageNetMarketPriceStdPack: generateBrandFieldReport(allResults, function(brandResult){return brandResult.b_AverageNetMarketPrice}),
-        brandAwareness: generateBrandFieldReport(allResults, function(brandResult){return brandResult.b_Awareness * 100}),
-        imagePerception: generateBrandFieldReport(allResults, function(brandResult){return brandResult.b_Perception[1]}),
-        lostSalesVolumeDueToOOSStdPack: generateBrandFieldReport(allResults, function(brandResult){return brandResult.b_StockOutVolume}),
-        marketNetSalesValue: generateBrandFieldReport(allResults, function(brandResult){return brandResult.b_MarketNetSalesValue[consts.ConsumerSegmentsMaxTotal-1]}),
-        marketSalesVolumeStdPack: generateBrandFieldReport(allResults, function(brandResult){return brandResult.b_MarketSalesVolume[consts.ConsumerSegmentsMaxTotal-1]}),
-        marketShareValue: generateBrandFieldReport(allResults, function(brandResult){return brandResult.b_ValueSegmentShare[consts.ConsumerSegmentsMaxTotal-1] * 100}),
-        marketShareVolume: generateBrandFieldReport(allResults, function(brandResult){return brandResult.b_VolumeSegmentShare[consts.ConsumerSegmentsMaxTotal-1] * 100}),
-        numericalDistribution: generateBrandFieldReport(allResults, function(brandResult){return brandResult.b_AverageDistributionNum * 100}),
-
-        priceRankingIndex: generateBrandFieldReport(allResults, function(brandResult){return brandResult.b_AveragePriceIndex}),
-        shelfSpace: generateBrandFieldReport(allResults, function(brandResult){return brandResult.b_ShelfSpace * 100}),
-        totalInventoryAtTradeStdPack: generateBrandFieldReport(allResults, function(brandResult){return brandResult.b_WholesalesStocks[consts.StocksMaxTotal].s_Volume + brandResult.b_RetailStocks[consts.StocksMaxTotal].s_Volume}),
-        valuePerception: generateBrandFieldReport(allResults, function(brandResult){return brandResult.b_Perception[0]}),
-
-        valueShareInPriceSensitiveSegment: generateBrandFieldReport(allResults, function(brandResult){return brandResult.b_ValueSegmentShare[0] * 100;}),
-        valueShareInPretendersSegment: generateBrandFieldReport(allResults, function(brandResult){return brandResult.b_ValueSegmentShare[1] * 100;}),
-        valueShareInModerateSegment: generateBrandFieldReport(allResults, function(brandResult){return brandResult.b_ValueSegmentShare[2] * 100;}),
-        valueShareInGoodLifeSegment: generateBrandFieldReport(allResults, function(brandResult){return brandResult.b_ValueSegmentShare[3] * 100;}),
-        valueShareInUltimateSegment: generateBrandFieldReport(allResults, function(brandResult){return brandResult.b_ValueSegmentShare[4] * 100;}),
-        valueShareInPragmaticSegment: generateBrandFieldReport(allResults, function(brandResult){return brandResult.b_ValueSegmentShare[5] * 100;}),
+        averageDisplayPriceStdPack         : generateBrandFieldReport(allResults, period, function(brandResult){return brandResult.b_AverageDisplayPrice}),
+        averageNetMarketPriceStdPack       : generateBrandFieldReport(allResults, period, function(brandResult){return brandResult.b_AverageNetMarketPrice}),
+        brandAwareness                     : generateBrandFieldReport(allResults, period, function(brandResult){return brandResult.b_Awareness * 100}),
+        imagePerception                    : generateBrandFieldReport(allResults, period, function(brandResult){return brandResult.b_Perception[1]}),
+        lostSalesVolumeDueToOOSStdPack     : generateBrandFieldReport(allResults, period, function(brandResult){return brandResult.b_StockOutVolume}),
+        marketNetSalesValue                : generateBrandFieldReport(allResults, period, function(brandResult){return brandResult.b_MarketNetSalesValue[consts.ConsumerSegmentsMaxTotal-1]}),
+        marketSalesVolumeStdPack           : generateBrandFieldReport(allResults, period, function(brandResult){return brandResult.b_MarketSalesVolume[consts.ConsumerSegmentsMaxTotal-1]}),
+        marketShareValue                   : generateBrandFieldReport(allResults, period, function(brandResult){return brandResult.b_ValueSegmentShare[consts.ConsumerSegmentsMaxTotal-1] * 100}),
+        marketShareVolume                  : generateBrandFieldReport(allResults, period, function(brandResult){return brandResult.b_VolumeSegmentShare[consts.ConsumerSegmentsMaxTotal-1] * 100}),
+        numericalDistribution              : generateBrandFieldReport(allResults, period, function(brandResult){return brandResult.b_AverageDistributionNum * 100}),
         
-        volumeShareInPriceSensitiveSegment: generateBrandFieldReport(allResults, function(brandResult){return brandResult.b_VolumeSegmentShare[0] * 100;}),
-        volumeShareInPretendersSegment: generateBrandFieldReport(allResults, function(brandResult){return brandResult.b_VolumeSegmentShare[1] * 100;}),
-        volumeShareInModerateSegment: generateBrandFieldReport(allResults, function(brandResult){return brandResult.b_VolumeSegmentShare[2] * 100;}),
-        volumeShareInGoodLifeSegment: generateBrandFieldReport(allResults, function(brandResult){return brandResult.b_VolumeSegmentShare[3] * 100;}),
-        volumeShareInUltimateSegment: generateBrandFieldReport(allResults, function(brandResult){return brandResult.b_VolumeSegmentShare[4] * 100;}),
-        volumeShareInPragmaticSegment: generateBrandFieldReport(allResults, function(brandResult){return brandResult.b_VolumeSegmentShare[5] * 100;}),
-
-        volumeWeightedDistribution: generateBrandFieldReport(allResults, function(brandResult){return brandResult.b_AverageDistributionVol * 100;})
+        priceRankingIndex                  : generateBrandFieldReport(allResults, period, function(brandResult){return brandResult.b_AveragePriceIndex}),
+        shelfSpace                         : generateBrandFieldReport(allResults, period, function(brandResult){return brandResult.b_ShelfSpace * 100}),
+        totalInventoryAtTradeStdPack       : generateBrandFieldReport(allResults, period, function(brandResult){return brandResult.b_WholesalesStocks[consts.StocksMaxTotal].s_Volume + brandResult.b_RetailStocks[consts.StocksMaxTotal].s_Volume}),
+        valuePerception                    : generateBrandFieldReport(allResults, period, function(brandResult){return brandResult.b_Perception[0]}),
+        
+        valueShareInPriceSensitiveSegment  : generateBrandFieldReport(allResults, period, function(brandResult){return brandResult.b_ValueSegmentShare[0] * 100;}),
+        valueShareInPretendersSegment      : generateBrandFieldReport(allResults, period, function(brandResult){return brandResult.b_ValueSegmentShare[1] * 100;}),
+        valueShareInModerateSegment        : generateBrandFieldReport(allResults, period, function(brandResult){return brandResult.b_ValueSegmentShare[2] * 100;}),
+        valueShareInGoodLifeSegment        : generateBrandFieldReport(allResults, period, function(brandResult){return brandResult.b_ValueSegmentShare[3] * 100;}),
+        valueShareInUltimateSegment        : generateBrandFieldReport(allResults, period, function(brandResult){return brandResult.b_ValueSegmentShare[4] * 100;}),
+        valueShareInPragmaticSegment       : generateBrandFieldReport(allResults, period, function(brandResult){return brandResult.b_ValueSegmentShare[5] * 100;}),
+        
+        volumeShareInPriceSensitiveSegment : generateBrandFieldReport(allResults, period, function(brandResult){return brandResult.b_VolumeSegmentShare[0] * 100;}),
+        volumeShareInPretendersSegment     : generateBrandFieldReport(allResults, period, function(brandResult){return brandResult.b_VolumeSegmentShare[1] * 100;}),
+        volumeShareInModerateSegment       : generateBrandFieldReport(allResults, period, function(brandResult){return brandResult.b_VolumeSegmentShare[2] * 100;}),
+        volumeShareInGoodLifeSegment       : generateBrandFieldReport(allResults, period, function(brandResult){return brandResult.b_VolumeSegmentShare[3] * 100;}),
+        volumeShareInUltimateSegment       : generateBrandFieldReport(allResults, period, function(brandResult){return brandResult.b_VolumeSegmentShare[4] * 100;}),
+        volumeShareInPragmaticSegment      : generateBrandFieldReport(allResults, period, function(brandResult){return brandResult.b_VolumeSegmentShare[5] * 100;}),
+        
+        volumeWeightedDistribution         : generateBrandFieldReport(allResults, period, function(brandResult){return brandResult.b_AverageDistributionVol * 100;})
     };
 }
 
-function generateBrandFieldReport(allResults, getField){
+function generateBrandFieldReport(allResults, period, getField){
     var result = [];
 
-    allResults[0].p_Brands.forEach(function(brand){
+    allResults[period + 3].p_Brands.forEach(function(brand){
         result.push({
             brandId: brand.b_BrandID,
             brandName: brand.b_BrandName,
@@ -128,15 +137,24 @@ function generateBrandFieldReport(allResults, getField){
     result.forEach(function(brand){
         for(var i=0; i<allResults.length; i++){
             var onePeriodResult = allResults[i];
+            var foundValue = false;
 
             for(var j=0; j<onePeriodResult.p_Brands.length; j++){
                 var brandResult = onePeriodResult.p_Brands[j];
                 if(brandResult.b_BrandID === brand.brandId){
+                    foundValue = true;
                     brand.data.push({
                         name: 'Quarter ' + onePeriodResult.period,
                         value: getField(brandResult)
                     });
-                }
+                } 
+            }
+
+            if(!foundValue){
+                brand.data.push({
+                    name: 'Quarter ' + onePeriodResult.period,
+                    value: '/'
+                });                
             }
         }
     })
