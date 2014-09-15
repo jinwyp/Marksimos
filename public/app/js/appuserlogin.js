@@ -3,8 +3,11 @@
  */
 
 // create module for custom directives
+(function () {
+    'use strict';
 
-'use strict';
+
+
 
 
 var marksimosapp = angular.module('marksimoslogin', ['pascalprecht.translate', 'marksimos.model', 'marksimos.websitecomponent',  'marksimos.filter', 'marksimos.translation']);
@@ -148,10 +151,10 @@ marksimosapp.controller('userHelpController',['$scope', '$sce', '$http', '$windo
     };
 
     $scope.chickFAQ=function(index){
-        $scope.firstCategory=false;
-        $scope.questionsShown=[0,0,0,0,0,0,0,0];
-        $scope.questionsShown[index]=1;
-    }
+        $scope.firstCategory = false;
+        $scope.questionsShown = [0, 0, 0, 0, 0, 0, 0, 0];
+        $scope.questionsShown[index] = 1;
+    };
 
     $scope.trustAsHtml = function(data) {
         return $sce.trustAsHtml(data);
@@ -169,6 +172,9 @@ marksimosapp.controller('userHelpController',['$scope', '$sce', '$http', '$windo
             case 'Video':$scope.isVideoShown=true;break;
             case 'Manual':$scope.isManualShown=true;break;
         }
-    }
+    };
 
 }]);
+
+
+}());

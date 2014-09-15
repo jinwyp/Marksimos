@@ -12,7 +12,6 @@ var marksimosapp = angular.module('marksimosadmin', ['pascalprecht.translate', '
 
 
 
-
 // controller business logic
 marksimosapp.controller('adminLoginController', ['$scope', '$timeout', '$http', '$window', function($scope, $timeout, $http, $window) {
 

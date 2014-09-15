@@ -2,7 +2,8 @@
  * Created by jinwyp on 4/28/14.
  */
 
-'use strict';
+(function () {
+    'use strict';
 
 
 // create module for custom directives
@@ -759,8 +760,8 @@ marksimosapp.controller('chartController', ['$translate', '$scope', '$rootScope'
                     }
                 }
                 //get periods of finalScore
-                for (var i = -3; i < $scope.data.currentStudent.currentPeriod; i++) {
-                    $scope.css.finalReportPeriods.push(i);
+                for (var j = -3; j < $scope.data.currentStudent.currentPeriod; j++) {
+                    $scope.css.finalReportPeriods.push(j);
                 }
 
             }
@@ -1133,18 +1134,26 @@ marksimosapp.controller('chartController', ['$translate', '$scope', '$rootScope'
     };
 
 
+
+
     /********************  get FinalScore  ********************/
 
 
     $scope.translateCompany = function (companyId){
         console.log('message');
         switch(companyId){
-            case 1 : return 'A';break;
-            case 2 : return 'B';break;
-            case 3 : return 'C';break;
-            case 4 : return 'D';break;
-            case 5 : return 'E';break;
-            case 6 : return 'F';break;
+            case 1 : return 'A';
+                break;
+            case 2 : return 'B';
+                break;
+            case 3 : return 'C';
+                break;
+            case 4 : return 'D';
+                break;
+            case 5 : return 'E';
+                break;
+            case 6 : return 'F';
+                break;
         }
     };
     
@@ -1199,7 +1208,7 @@ marksimosapp.controller('chartController', ['$translate', '$scope', '$rootScope'
                 template : notifytemplate.failure,
                 position : 'center'
             });
-        })
+        });
     };
 
 
@@ -1392,3 +1401,9 @@ marksimosapp.controller('chartController', ['$translate', '$scope', '$rootScope'
     };
 
 }]);
+
+
+
+
+
+}());
