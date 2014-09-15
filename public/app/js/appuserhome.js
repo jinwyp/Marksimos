@@ -1282,6 +1282,8 @@ marksimosapp.controller('chartController', ['$translate', '$scope', '$rootScope'
     ];
 
     $scope.searchReport = function(){
+        /*Score 页面跳转到Report页面*/
+        $scope.css.menu = 'Report';
 
         $scope.css.currentSearchReportName = [];
         if($scope.data.reportName !== ''){
@@ -1326,6 +1328,9 @@ marksimosapp.controller('chartController', ['$translate', '$scope', '$rootScope'
 
     /********************  Report Comparison   ********************/
     $scope.showComparisonPage = function(){
+        /*Score 页面跳转到Report页面*/
+        $scope.css.menu = 'Report';
+        
         $scope.css.comparisonPage = !$scope.css.comparisonPage;
     };
 
