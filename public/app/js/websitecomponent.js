@@ -319,7 +319,8 @@ app.directive('tableReportMarketIndicator', ['$translate', function($translate) 
 app.directive('tableReportFinalScore', ['$translate', function($translate) {
     return {
         scope: {
-            data : '='
+            data : '=',
+            selectScore: '='
         },
         restrict: 'AE',
         templateUrl: '/app/js/report/tablereportfinalscore.html'

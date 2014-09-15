@@ -157,8 +157,7 @@ $color_main_body_user_manual_table_2n:#f8f8f8;
     background-image: url(../images/userbrand.png);
     background-repeat: no-repeat;
     background-position: 1px 0px;
-    padding-left: 25px;
-    margin: 20px;
+    padding: 5px 25px;
     display: block;
 }
 
@@ -411,6 +410,10 @@ $color_main_body_user_manual_table_2n:#f8f8f8;
 
 
 /*********************************************************/
+html,body{
+    margin:0px;
+    height:100%;
+}
 
 body{
     font-family: $font_main_header;
@@ -1505,9 +1508,14 @@ body{
         color: $color_main_body_user_feedback;
         margin: 20px 12.5%;
     }
+    .support_box{
+        min-height:120px;
+        margin: 20px 12.5%;
+    }
 
     .score_info {
         background-color: $color_login_panel_background;
+        padding:40px 35px 20px;
         .score_info_title{
             @include icon_user_score;
         }

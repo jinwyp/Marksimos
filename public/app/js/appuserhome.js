@@ -84,8 +84,12 @@ marksimosapp.controller('chartController', ['$translate', '$scope', '$rootScope'
         dragHaveRightReport : false,
         //score
         selectFinalScorePeriod : 0,
+        selectScore : 'Original',
+        currentPeriod : 0,
+        maxPeriodRound:0,
         finalReportPeriods: [],
-        isFeedbackShown : false
+        isFeedbackShown : false,
+
     };
 
 
@@ -731,6 +735,10 @@ marksimosapp.controller('chartController', ['$translate', '$scope', '$rootScope'
 
             $scope.data.currentCompanyNameCharacter = showCompanyName($scope.data.currentStudent.companyId);
 
+            $scope.css.currentPeriod = $scope.data.currentStudent.currentPeriod;
+
+            $scope.css.maxPeriodRound = $scope.data.currentStudent.maxPeriodRound;            
+
             $scope.css.periods = [];
 
             $scope.css.finalReportPeriods = [];
@@ -761,7 +769,7 @@ marksimosapp.controller('chartController', ['$translate', '$scope', '$rootScope'
                     }
                 }
                 //get periods of finalScore
-                for (var i = -3; i < $scope.data.currentStudent.currentPeriod; i++) {
+                for (var i = 0; i < $scope.data.currentStudent.currentPeriod; i++) {
                     $scope.css.finalReportPeriods.push(i);
                 }
 

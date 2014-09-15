@@ -3076,8 +3076,17 @@
 
                 <div class="col-md-12 score_info">
 
-                    <span class="score_info_title">{{'FinalScorePageScore' | translate}}</span>
+                    <span class="score_info_title col-md-9">{{'FinalScorePageScore' | translate}}</span>
 
+                    <div class="pull-right">
+
+                        <div class="btn-group btn-group-sm">
+                            <button type="button" class="btn btn-default" ng-class="{'active':css.selectScore=='Original'}" ng-click="css.selectScore='Original' ">Original</button>
+
+                            <button type="button" class="btn btn-default" ng-class="{'active':css.selectScore=='Rescaled'}" ng-click="css.selectScore='Rescaled' ">Rescaled</button>
+
+                        </div>
+                    </div>
 
                 </div>
 
@@ -3093,7 +3102,7 @@
                         </ul>
 
                         <div class="divider_horizontal"></div>
-                        <div table-report-final-score data="data.tableFinalScore.selectPeriodData"></div>
+                        <div table-report-final-score data="data.tableFinalScore.selectPeriodData" select-score="css.selectScore"></div>
 
                     </div>
 
@@ -3102,7 +3111,7 @@
 
         </div>
 
-        <div class="col-md-9 feedback_box" ng-if='!css.isFeedbackShown'>
+        <div class="col-md-9 feedback_box" ng-if='!css.isFeedbackShown&&css.currentPeriod==css.maxPeriodRound'>
 
             <div class="row">
                 <div class="col-md-12 feedback_info">
@@ -3115,6 +3124,10 @@
                 </div>
             </div>
 
+        </div>
+
+        <div class="col-md-9 support_box" ng-if='!css.isFeedbackShown||css.currentPeriod!=css.maxPeriodRound'>
+            <div class="row"></div>
         </div>
 
         <div class="col-md-9 score_box fade in" ng-if='css.isFeedbackShown'>
