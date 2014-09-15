@@ -1,497 +1,347 @@
-概述 中文版本
+使用指南
 ===========
 
 
 
-What is MarkSimos?
+1. MarkSimos 概述
 ----------
 
-### Overview
+### 1.1 你的角色
 
-**MarkSimos** is Business Simulation Game that allows you to run a company in a realistic, yet risk-free virtual environment with an intensive time frame.
+你和你的小组成员刚刚被一家公司录用，接替刚被解雇的前任管理团队, 管理这家公司在新兴市场的业务。你们将和其他几家公司在一个快速消费品市场里进行竞争，吸引消费者购买你们的产品。新任管理团队需要制定针对该市场的长期营销战略，并把这些战略付诸实施。
 
-Through stimulating team sharing and experiential learning encourages participants to create a CEO perspective and to get a well-rounded view of the firm and its functions. 
+公司希望通过你们的努力，到结束时在以下方面有提高：
+-	 市场份额(以销售额计)
+-	 累计净利润
 
-
-### Your Mission and Roles
-
-You and the other members of your team have just been recruited by a large corporation to replace the former management team to manage its business in an **emerging market**, marked by large populated cities with a healthy and stable growth. 
-
-You will compete with several other firms in a **Fast Moving Consumer Goods (FMCG)** industry (i.e. food & drinks, clothes, smart phones, luxury goods…) with the objective of attracting consumers to buy your products. During this exercise, you will be responsible for formulating and implementing the **long-term marketing strategy of your division**. 
-
-Your **objective** is to make sure that during your period of control the company has improved its relative standing versus other competitors in terms of: 
--	 Incremental market share (in value) 
--	 Cumulated profits
-
-To succeed it is indispensable first to **understand the market**, second to **determine clear strategy for serving that market** and third to **implement the strategy consistently**. At the same time, a permanent and thorough analysis of the market evolution is required to properly adjust ways of using the available tools. All common marketing tools and concepts such as pricing, brand portfolio management, innovation, advertising, trade investment, segmentation and positioning are represented within the model.
+和现实生活一样，要取得成功，你首先必须了解市场，其次要制定清晰的战略，如何在战略实施过程中保持一致性也很关键。你需要综合运用各种工具，对市场变化做出长期全面的分析并进行相应的决策调整。你所熟悉的各种营销工具和概念，如品牌组合、定价、广告、通路投资、市场细分和市场定位等，在模拟中同样适用。
 
 
-### Methodology
+### 1.2 市场概述
 
-The simulation takes place among 20-30 participants divided into 4 to 6 teams producing and selling similar products. Each team represents a company composed with 3 to 6 members each that will be assigned with different roles (CEO, CMO, COO…).
+公司所处的市场宏观环境相对稳定，该地区的货币单位为元(RMB)。通货膨胀率保持稳定增长，每年在8.5%左右，预期在未来几年不会发生重大变化。
 
-Before the interactive simulation each team analyzes the market information and industry dynamics. Then, the decision-making process starts and participants implement a business strategy being aware of the constantly changing environment. 
+市场增长速度很快，平均每年约9%（每季度约2%）。市场对价格非常敏感，如果价格上涨幅度大大超过通胀率，销量可能停滞甚至下降。消费者成熟速度很快。在他们的推动下，生产商需不断改进产品、提高效率。
 
+一轮决策代表现实中的一个季度，模拟通常进行5-6轮，一般有3至6家公司互相竞争。
 
-The simulation lasts 4 to 5 rounds, each one representing a real life quarter. After each round the facilitator evaluates each of the teams’ decisions and draws out lessons to learn. Moreover, the expert delivers lectures to distill important marketing frameworks and concepts. Finally, the team with the best profitability and market share is named the winner. 
-
-
-> **NOTE:**
-> 
-> - Initially, all teams will have access to the financial results of Period 0 and the market information of previous 4 periods. 
->- Then, they will be asked to make a set of decisions (i.e. decision 1) that will be submitted to the simulation administrator who will generate the results of the subsequent period (i.e. period 1). 
-> - The whole process will be repeated several times. After the last round, the final evaluations will be performed to determine which team achieved the best results. 
+模拟开始时，所有公司将获得起始阶段(0阶段)的公司财务报告和过去一年（4个阶段）的各种市场信息，你所在的管理团队经过分析后做出决策。所有公司的决策提交后，产生下一阶段的结果和各种报告。由此重复决策，直到完成自己的任期，最后把公司交还董事会。
 
 
 
+### 1.3 消费者细分
+
+市场中的消费者主要从以下两方面感知商品：
+
+1. 价值（反映产品质量与市场价格之间的平衡）
+2. 形象（反映品牌资产、声誉、可靠性和新鲜感等）
+
+整个市场由六个细分市场组成，分别是:
+1. 价格敏感型
+2. 炫耀型
+3. 适中型
+4. 享受生活型
+5. 追求极致型
+6. 实用型
 
 
-Market and Industry
-----------
-
-### Market Situation
-
-The currency unit is $. The **inflation** itself remains relatively stable at around **8.5% on a yearly basis**. 
-
-**Market growth** is quite significant, with a rate approaching **9% in average on a yearly basis (around 2% per quarter)**. At the same time, the market is very price sensitive and any price increases significantly exceeding inflation may result in volume growth stabilization, or even reduction. The fast pace of consumers‟ maturing is constantly forcing the manufacturers to improve their offer and/or increase efficiency. 
+各细分市场的特征如下：
 
 
-### Consumer Segments
-
-All products are perceived by the consumers in terms of: 
-
- 1. **Value** - which reflects the trade-off between the final qualities of a product versus its market price. 
- 2. **Image** - which gauges acquired product equity, prestige, reliability and newness. 
-
-Six consumers segments with a different characterization have been identified in the market:
-
-
-Consumer Segment        | Description
+消费板块		        | 说明
 ---------               | -----
-Price Sensitive         | Consumers accept that they cannot be too demanding on Image perception, since they care so much about price and the Value for money
-Pretenders              | Consumers are also very price sensitive but they want to show off; therefore they look for high Image perception. 
-Moderate                | Consumers are slightly less price sensitive than Segment 1, hence their expectations are slightly higher on both dimensions. 
-Good Life               | Consumers are even less price sensitive than Segment 3 and expect more on Value as well as on Image. 
-Ultimate                | Consumers are not really price sensitive. They can afford higher prices, but in exchange they ask for very high quality, hence they have high expectations on Value dimension. 
-Pragmatic               | Consumers are well-educated and practical people with their strong judgments. They don’t follow fashion. They want very good Value offer, but Image aspect is for them a bit shallow and futile, which doesn’t mean that they would be happy with entry level products. They look for something decent. 
+价格敏感型		        | 对品牌形象要求不高，非常关注价格和性价比
+炫耀型             	    | 价格敏感度很高，同时想要炫耀，对品牌形象要求较高
+适中型                  | 不如价格敏感型消费者对价格那么敏感，对品牌形象和价值的要求相对高一些
+享受生活型              | 不如适中型对价格那么敏感，对产品价值和品牌形象方面的期望更高
+追求极致型              | 对价格不敏感。他们能够接受更高的价格，但是作为交换他们需要更高的质量，对价值的期望很高
+实用型                  | 受过良好教育，很实际而且有很好的判断力。他们不会盲目跟风，期望购买高价值的商品，他们对品牌形象不会过于关注，但并不意味他们喜欢很低级的产品。他们需要体面的东西。
 
 
-At the starting point, the total market represents in volume terms about 2,000 mln std packs. Its value attains almost 12,000 $mln. 
+模拟开始时的市场总规模大约为20 亿包（标准包装），价值约为120 亿元。
 
-The chart below shows the segments classification and their initial market share (in volume) at the end of Period 0.
-
-![the segments classification and their initial market share](/app/css/images/manual_en_segments_classification.png)
-
-The table below shows indicates consumers’ needs regarding products perceptions at the starting point:
+在你接手管理公司时，各细分市场消费者对价值和形象的期望值如下：
 
 
-| Segment Name      | Expected  Value Perception | Expected Image Perception  |
+| 细分市场名称      | 期望的价值感知			 | 期望的形象感知  |
 | :--------         | :--------:                 | :--:                       |
-| Price Sensitive   | 24                         |  24                        |
-| Pretenders        | 24                         |  45                        |
-| Moderate          | 32                         |  30                        |
-| Good Life         | 32                         |  36                        |
-| Ultimate          | 53                         |  53                        |
-| Pragmatic         | 52                         |  53                        |
+| 价格敏感型	    | 24                         |  24                        |
+| 炫耀型	        | 24                         |  45                        |
+| 适中型            | 32                         |  30                        |
+| 享受生活型        | 32                         |  36                        |
+| 追求极致型        | 53                         |  53                        |
+| 实用型            | 52                         |  53                        |
 
-As the simulation goes on, manufacturers launch new brands and their variants will influence consumers‟ preferences. As a result, segments‟ sizes will evolve.
+在整个决策过程中，要谨记上述感知值都是动态、相对的。随着生产商不断推出新品，消费者偏好将会受到影响，细分市场的规模也会随之变化。
 
 
-4P's
+### 1.4 产品
+
+所有公司生产的都是消费者经常购买的日常商品，通常生产后只能保存两个阶段。产品的成本和质量主要受两个因素影响：
+**1)	所使用的生产技术水平**
+**2)	所采用的原料质量水平** 
+
+市场中的生产技术水平从1到20表示，1表示‘非常落后’，20表示‘非常先进’。起始阶段每家公司的最高生产技术水平都为7。
+
+生产技术水平直接影响生产时可以使用的最高原料质量水平。市场中的原料质量水平从1到22表示，1代表‘质量最差’，22代表‘质量最好’。
+为了避免不必要的浪费，公司规定所使用的原料水平必须和生产技术匹配，最多不得超过生产技术水平2个等级。如生产使用的技术为7，原料质量最高可以选择9。
+
+市场上销售的产品有三种包装规格：标准包装、小包装和大包装。
+
+1)	标准包装
+2)	小包装 (=1/2 标准包装)
+3)	大包装 (=（标准包装的2倍)
+
+### 1.5 品牌
+
+每家公司最多可以拥有5个不同的品牌。每个品牌旗下最多可以拥有5个单品。同一品牌名称下的单品可能在以下方面有差异：
+1.	原料质量
+2.	生产技术
+3.	包装规格
+4.	价格
+5.	市场定位 
+
+这些因素会影响消费者对某个单品及整个品牌的感知。
+
+生产商生产的品牌可以通过品牌名称和首字母来识别。例如，公司1生产的品牌以“A”开头，公司2的品牌以“B”开头，依此类推。品牌下面的单品可以数字后缀表示。例如BOBOB_1、BOBOB_2表示这是BOBOB品牌下的两个单品。
+
+### 1.6 生产
+
+生产成本主要受以下三个因素影响： 
+1.	生产技术
+2.	原料质量
+3.	生产效率
+
+一般来说，所使用的生产技术水平越高、原料质量水平越高，生产成本也越高。
+
+提高生产效率有助于降低生产成本。使用相同的生产技术水平进行大规模生产可以获得明显的规模效益，有效降低成本。如果几个单品使用同一种技术生产，节省的成本将被分摊到所有的单品中，最高将达到25%。
+
+起始阶段每家公司的产能接近。你不能直接调整公司的产能，公司总部会根据过去的产能利用情况自动调整。如果产能利用率连续两个阶段都保持在较高水平（90%以上），下阶段的产能自动调高。反之，如果产能利用率连续两个阶段都保持在较低水平（60%以下），下阶段的产能自动调低。
+
+扩大产能不会占用总投资预算。
+
+公司还可以通过加班获得额外产能。额外加班产能通常为正常产能的30%，生产成本是正常生产成本的1.27倍。
+
+如果生产部门拥有较高的生产灵活性，将有能力根据市场实际销量在一定范围提高或降低产量。
+
+
+### 1.7 销售
+
+生产商把产品销售给经销商，再由经销商销售给零售商。产品从生产商到经销商再到零售商的物流由可靠的第三方负责。所有相关成本都包含在生产成本中。
+
+经销商和零售商的毛利率相对稳定。如果生产商推出任何针对渠道的激励措施，市场一般都会做出正常回应。生产商对一线销售队伍的预算和零售终端的投资具有一定的延续效果，但针对经销商的让利或零售商的返利措施，只在实施的那段时间有效。
+
+经销商和零售商对库存管理很谨慎，一方面是为了避免过多占用公司资金，同时也因为产品更新变化很快。
+
+因为市场上的商品在不断地改进和变化，消费者不会一下子购买很多，更倾向于分次购买。
+
+如果你决定停产一个产品，该产品在当阶段可以继续销售，直到停产当阶段结束。如果到期末渠道中还有库存，你必须回收渠道里所有的剩余库存，并按经销商和零售商实际采购价的75%赔偿渠道。生产商按生产成本的25%出售所有回收库存及工厂库存。
+
+
+### 1.8 定价
+
+为了避免倾销或暴利，政府规定生产商可以在生产成本的50%到300%范围内灵活制定出厂价。经销商和零售商的正常毛利率分别固定为6%和25%。一旦决定了出厂价，等于确定了建议零售价。
+
+零售商并不会完全遵守推荐的零售价，他们会根据需要降低或提高零售价。对于一些市场表现不好的商品，零售商通常会降价。反之，会倾向提价销售。一般的调价幅度为建议零售价的+5%内，在某些极端情况下，+15%也有可能。
+
+### 1.9 促销
+
+促销是针对消费者的降价。零售商会严格遵守生产商的促销计划，所有促销预算完全用于降低终端零售价，又称“实际成交价”。
+
+
+### 1.10 采购和库存
+
+1. 经销商采购
+   经销商在采购时通常考虑下列因素：
+   - 前期市场销售状况和趋势
+   - 零售商的缺货情况
+   - 零售商和经销商的库存（经销商一般最多维持8周库存）
+   - 生产商投资的力度（主要指销售团队预算）
+   生产商投资的力度（主要指销售团队预算）
+   
+2. 零售商采购
+	在正常情况下，上面所提到的因素同样影响零售商采购。此外，零售商会考虑到价格促销的影响。零售商通常最多维持不超过4周的库存。
+	生产商对销售团队的投入、给予零售商的零售终端费用及额外零售终端返利都会推动零售商增加采购量。
+	
+3. 库存
+	整个行业（包括生产商、经销商和零售商）约定对库存采用“先进先出”法。库存持有成本按期末库存价值的6%计算。
+	如果生产商出售不同批次的产品，最终的售出商品成本为不同批次商品生产成本的总和。
+	
+4. 过期库存
+	产品的保质期一般为2个阶段。即第一阶段生产的产品，可以销售到第三阶段结束。
+	当实际使用的生产技术水平达到11或更高时，因为技术和原料两方面的原因，产品保质期延长到3个阶段。即阶段一生产的产品，可以销售到阶段四结束。
+	过期库存将在期末销毁，生产商按经销商和零售商实际采购价的60%给予补偿。生产商按生产成本的40%出售过期工厂库存商品。
+
+
+### 1.11 公司预算和财务
+
+	每家公司在开始时都分配到同样的总投资预算。各公司可以根据自己的战略规划使用预算。
+	
+	如有需要，你可以向管理员申请额外预算。申请额度最多不超过每阶段的平均预算额，而且需支付高昂的利息(年利率为31%，每季度为7%)。在你管理公司期间，你最多有两次申请额外预算的机会！
+	
+	如果你的公司产生经营利润，该利润可以帮你赚取利息，存款利率为12.5%，最后计入累计净利，但不会增加预算总额！相反，如果公司亏损，银行会自动借款，但需要支付利息，借款利率为17.0%，折成每个季度分别为3%和4%。
+
+
+
+2. 公司经营和决策
 ----------
 
-### Product
+对现有情况作任何改动前，你应该先试着了解市场环境的各种变化，利用市场信息报告分析公司所处的环境以及过去的竞争行为，不要急于决策或得出结论。
 
-All companies manufacture products that are frequently bought by virtually every household, which are not presumed as food or non-food items. Important fact is that they usually **cannot be stored more than two periods** after their production period. Product production cost and quality is determined by two aspects: 
-**a)	Applied Technology Level**
-**b)	Quality of raw materials** 
+在每个决策周期内，你需要对以下方面做出决策。其中生产技术、生产效率的投资属于公司层面的决策，销售团队按品牌进行决策，其他决策按单品进行。
 
-**Processing Technology** reflects a company’s acquired know-how. It is an index ranging from 1 to 20, where 1 means “very primitive” and 20 refers to “ultimate state-of-art”. 
+	- 一般性决策：生产技术
+	- 一般性决策：生产效率
+	- 销售团队（按品牌）
+	- 产品组合
+	- 产量
+	- 定价
+	- 广告
+	- 通路
 
-Initially all companies start with relatively low A.T.L., which equals to 7 the highest. 
-The acquired technology level (A.T.L.) determines the quality of raw materials that company can efficiently use to manufacture the final products. The metric used to identify the quality of raw materials is also an index ranging from 1 to 22, where 1 stands for “poorest possible quality”, and 22 means “best possible quality”. 
+### 2.1 一般性决策：生产技术的投资
 
-The simulation imposes the following constraint: a company cannot practically use raw materials of quality index higher than its A.T.L. index plus 2. If the applied technology level is 7, the quality of raw materials will be no higher than 9. 
+投资生产技术水平有助于公司获得技术领先优势。一旦拥有更高的技术水平，你可以：
+	- 使用更好的原料
+	- 生产更高质量的产品
+	- 延长产品保质期
+	
+你可以在每阶段平均预算范围内任意决定你的投资。生产技术水平越高，所需的投资越多。
 
-There are three different kinds of products packaging sizes, which are STANDARD, SMALL and LARGE.
+### 2.2 一般性决策：生产效率的投资
 
-a)	STANDARD PACKAGING
-b)	SMALL PACKAGING (=1/2 Standard Packaging)
-c)	LARGE PACKAGING (=2 Standard Packaging)
+研发部门会告诉你提高生产效率或生产灵活性所需的预计投资预算。
 
-**Brands and SKUs**
-Each firm can have up to five different brands. Each brand can be marketed in five different variants, called stock-keeping-unit (SKU). SKUs sold under same brand name may differ considerably in terms of: 
-a.	Quality of used ingredients
-b.	Processing technology 
-c.	Packaging size
-d.	Price
-e.	Positioning 
+提高生产效率有助于降低生产成本，同时还能顺便获得一定的生产灵活性。
 
-These factors may significantly influence consumers‟ perception of a specific SKU, as well as the perception of the entire brand. 
+如果你打算重点提升生产灵活性，请参考对应的预计投资预算额。
 
-Brands produced by a given manufacturer can be recognized by their names and the letter at the beginning of the name. Correspondingly, brands produced by Firm 1 start with “A”, those of Firm 2 start with “B”, and so on. SKUs of a specific brand are identified by a number suffix; for instance SKUs of the brand BOBOB (produced by Firm 2) will be known as: “BOBOB_1”, “BOBOB_2”, etc.
+你可以在每阶段平均预算范围内任意决定你的投资。
 
-Production 
-The average production cost is a function of the following three factors: 
-**1.	Applied processing technology** 
-**2.	Ingredients quality** 
-**3.	Production efficiency**
+点击研发决策界面的[更多信息]图标会显示以下窗口，为生产技术和生产效率的投资决策提供支持信息。
 
-Generally, production cost raises correspondingly along with the high values of both applied technology level and ingredients quality. 
 
-A decision to invest in improving production efficiency results in reduction in reduced average unit production cost. Substantial economies of scale can be achieved with big production volumes using the same technology level. In other words, if several SKUs are produced with the same technology, the savings will be spread across all those items up to 25%. 
+### 2.3 销售团队决策（按品牌）
 
-All firms start with similar production capacities that are utilized on average at 90%. As the simulation goes on, for firms exceeding the capacity utilization rate of 90% for consecutive 2 periods, the capacity will be automatically increased in the next period. Similarly, if the total output represents less than 60% of production capacity, it is automatically reduced in the next period. Increasing production capacity will not be deducted from T.I.B. 
+销售团队预算按品牌制订，决定整个品牌的一线销售支持团队人数。你可以在每阶段平均预算范围内任意确定投资金额。销售团队会直接影响以下方面：
+	- 品牌和单品在售点的可见性，如给产品分配的货架空间。
+	- 零售商的采购订单。如果没有销售代表经常提醒，零售商往往会‘忘记’订购足够数量的品牌或单品。
 
+增加一线销售团队的投入可以使零售终端费用发挥更大的作用。
 
-Overtime shifts allow extending production ability by at most 30%. The incremental volume is associated with additional costs, which represent about 27% increase, as compared with the regular production cost.
+### 2.4 产品组合决策
 
-Acquired production Volumes Flexibility refers to the percentage by which the company can adjust its initially planned production volumes upwards or downwards.
+2.4.1.推出新品
 
-### Place (Distribution)
+每个公司最多能拥有五个品牌，每个品牌下最多推五个单品。
 
-Manufacturers do not sell directly to retailers; their products are first shipped to wholesalers, and then delivered to retailers. All associated costs are implicitly included in the production costs. 
+如果要推出一个新品牌，选择决策界面的“推出新品牌”，并确定新品牌名字和旗下第一个单品名。如果要推出新单品，点击“增加新单品”，确定新单品名，即可增加新的单品。
 
-Wholesalers‟ and retailers‟ margins are practically fixed. All trade channels react in a similar way to stimulations from manufacturers. Some of manufacturers‟ actions, like field force budget and investments in points of sales, tend to have continuous character. Some other ones, like increases in wholesalers‟ or retailers‟ margins, occur only during certain periods. 
+推出新品时需要决定以下要素：
 
-Wholesalers and retailers are very careful with their ordering policies; besides financial repercussions, they avoid stocking goods that risk becoming less attractive or simply out-of-date, as the category is very heavily innovation driven. 
+	- 生产技术水平
+	  确定新品所用的生产技术水平。这对产品的质量和成本有影响。
+	- 原料质量水平
+	  确定原料质量水平，最多不能超过所使用的生产技术水平2个等级。这对产品的质量和成本有影响。
+	- 包装规格
+	  市场上销售的包装规格有三种：标准包装、小包装和大包装。
+	  小包装=1/2标准包装，大包装=2倍标准包装。包装规格对生产成本和品牌形象有影响。
+	  
+2.4.2.修改现有品牌
 
-Products tend to be constantly changed and improved. As a result, consumers have a strong preference to renew their purchases instead of forward buying for a long period. 
-If an item is discontinued, it continues to be sold till the end of this period. If there is any stock left in the channel at the period end, all remaining inventories at manufacturer, wholesalers and retailers are sold off at 25% of the purchase cost respectively. The corresponding 75% charge is considered as a material cost and decreases manufacturer gross profit.
+现有品牌如需更改，可以调整所使用的生产技术水平和原材料质量水平。考虑到市场实际情况，现有品牌或单品不能调整包装规格。
 
-### Price
+2.4.2.停产
 
-Manufacturers enjoy relative flexibility in setting prices between **50% to 300% of product manufacturing cost price**. 
+如果决定停产某个单品，该单品在该阶段仍可以销售，直到阶段结束时退出市场。如果到阶段末经销商和零售商仍有库存，生产商将以各自采购价的75%补偿经销商和零售商，生产商的库存以生产成本的25%出售。所有费用从生产商毛利中扣除。
 
-Once the list price is decided it determines the purchase price for retailers as all wholesalers apply fixed margin of 6%. Given that average retailers‟ margin is also fixed at 25%, the price paid by consumers is de facto also determined at that moment. 
+如果决定删除某个品牌，旗下所有单品需退出市场。
 
-Retailers do not entirely respect the price recommendations. Some deviations between + 5% are commonly observed, and in some extreme situation +15 is also possible. They may decide in some cases to reduce or to augment their margin by altering consumer price. On less performing items retailers tend to reduce prices. At the same time, they are inclined to raise prices on SKU demonstrating upwards sales trend.
+点击单品名称旁边的[信息]图标，会显示一个信息窗口，提供该单品的成本、价格、前期投资和业绩表现等一些基本信息。
 
-### Promotion
 
-Consistently, consumer promotions should be unambiguously considered as price promotions. During price promotions retailers respect accurately producers‟ plans. The actual consumer prices will be reduced proportionally to the decided promotional budget.
+### 2.5 产量决策
 
+在每个决策周期内，你都要负责为公司经营的每一个单品制订生产计划。你可以在公司拥有的产能范围内（包括正常产能和额外加班产能）随意调整任何一个产品的产量。通常情况下，生产部门都可以按你的要求生产出合格产品。
 
+你可以要求生产部门加班，加班生产的成本是正常生产成本的1.27倍。
 
 
+### 2.6 定价决策
 
+2.6.1.出厂价
 
+你可以在生产成本的50%到300%范围内随意定价。为了方便查看，市场报告中的相关信息会统一以标准包装规格计。
 
+2.6.2.工厂旧库存的定价
 
+对生产商持有的前期存货，如果存货出厂价与当期定价不同，公司需决定对前期库存的定价：要么维持原有出厂价，要么以当前新的出厂价出售。
 
 
+### 2.7 广告决策
 
+2.7.1. 广告预算
 
+你可以在每期平均预算范围内为每个单品确定广告预算。同一品牌下单品的广告投入，对其他单品有溢出效应。
 
-Business Operation
-===========
+2.7.2. 细分市场选择
 
-### Brief Overview
+你可以为产品任意选择某个目标细分市场。广告可以帮助产品在所期望的细分市场重新定位，这会影响该单品的价值感知和形象感知, 也可能影响同一品牌下其他单品的感知。
 
-Before making decisions, you should understand the market evolution by analyzing the market and competition information provided in the reports. 
+你也可以不指定任何一个细分市场。在这种情况下，广告只用来提高产品的知名度。
 
-In each period, you’ll make a set of decisions. With the exception of investment in processing technology and production efficiency, which are decided at the corporate level, and Sales Force budget, which is decided by brand, all items are decided at the SKU level. 
-> - General Decisions: Processing Technology 
-> - General decisions: Production Efficiency 
-> - Sale force (by brand) 
-> - Product Portfolio 
-> - Production Volume 
-> - Pricing 
-> - Communication 
-> - Trade 
 
+### 2.8 通路决策
 
+2.8.1. 促销预算
 
+这是针对终端消费者的零售价格促销，你可以在每期平均预算范围内确定促销预算。 促销预算会直接影响：
+	- 终端陈列价格
+	- 价格排序指数（用10-100表示，指实际售价的相对高低水平，100最贵，10最便宜）
+	- 价值感知
+	- 零售商订单
+	- 货架空间
+	- 知名度
+	
+2.8.2. 促销日程
 
+一个决策周期相当于现实中的一个季度，即13周。你需要决定在哪些时段（按周选择）开展促销降价活动。至少要选择1周，最多可13周全选。
 
+促销效果和选择的促销时段相关。由于预算已确定，促销越频繁，促销力度越弱。
 
+非促销时段零售商按正常零售价销售。尽管没有价格优惠，促销影响会得到一定延续。
 
+2.8.3. 零售终端费用
 
+零售终端费用包括所有用来改善终端商品管理的投资。你可以在平均每阶段的预算范围内确定投资金额。零售终端费用虽然不能直接增加零售商的利润率，但是有助于推动销售，对零售商有激励作用。
 
-Order and Inventory Decisions
-===========
+零售终端投资有助于提高分销和货架份额，其有效性和投入的销售团队相关。
 
-Order Decisions
----------------
+对某个单品在零售终端的投资，同一品牌的其他单品也有一定获益。
 
-### Wholesalers' Orders
+2.8.4 额外零售终端返点
 
-Current period orders are determined by the following factors: 
-> - Market sales and sales trend over previous periods
-> - Corrected for out-of-stock volume at retailers
-> - Inventories at retailers’ and at wholesalers’ (wholesalers’ inventories are no bigger than 8 weeks)
-> - Importance of manufacturers’ investments, (mainly sales force budget). 
+额外零售终端返点指生产商基于零售价提供给零售商的激励。你可以在25%范围内任意决定激励幅度。额外零售终端返利受实际市场销量影响，返利总额=实际市场销量X返点比例X实际终端零售价。
 
-Manufacturers may influence wholesalers’ behavior by offering additional financial incentives.
- 
-### Retailers' Orders
+请注意：
+	- 额外零售终端返利不能超过每阶段平均预算额。
+	- 额外零售终端返利是生产商给零售商的返利，不会影响终端实际零售价，但会激励零售商分配更多货架空间，还有助于增加采购量。
 
-In a normal situation, the same factors, as those mentioned above, influence retailers’ orders. In addition, retailers take into account planned price promotions. Retailers tend to have smaller stocks cover; usually it is no bigger than 4 weeks. 
+2.8.5 经销商最低采购量
 
-Investment in Sales Force, Trade Expense and Additional Trade Margin will encourage higher retailers' orders.
+你可以为经销商设最低采购量，辅以相应的激励政策。设立最低采购量时请参考你的产量和库存。
 
+如果实际采购量和最低起订量之差小于15%，为了赢得激励，经销商通常会自动调高采购量。激励计划会影响经销商的采购量，有助于改善缺货现象。
 
-### Inventory Decisions
+2.8.6 经销商进货折扣率
 
-The F.I.F.O. rule is universally applied at manufacturers, wholesalers and retailers. For simplicity reasons the I.H.C. is calculated by applying 2% rate to the period ending inventory value. 
+经销商进货折扣率是针对经销商的让利措施。你可以在出厂价的6%范围内随意确定针对经销商的激励幅度，激励总额=经销商实际进货量X出厂价X进货折扣率，总额不得超过每阶段平均预算额。
 
-If a manufacturer is selling batches of different age, the final C.O.G.S. will actually be a sum of production costs linked to volumes coming from different batches.
 
+### 结束语
 
-### Obsolete Goods
+为了使这份手册具有可读性，我们并没有在文中提及每一个微小的细节。如果你有任何疑问，请记下来，在模拟开始的介绍时间里和管理员沟通。
 
-Goods produced with technology level lower than 11 have two-quarter validity time. Those manufactured with higher technology – and correspondingly higher quality of ingredients - can be stored for three quarters. 
+我们希望至此为止，你对“营销在线”的运作有所了解。
 
-Inventories that reached its expiry date will be destroyed at the end of period. Manufacturers will compensate wholesalers and retailers by paying them back 60% of their respective purchase cost. Manufacturers also get 60% charge on factory stocks, i.e. they sell them off at a price equal to 40% of production cost.
-
-
-
-
-
-
-
-
-
-Financial Decisions
-===========
-
-### Investment Budget and Funding Sources 
-
-Each company is assigned a total investment budget (T.I.B.) that can be spent in a discretionary way. Each team may choose its own investment strategy. 
-
-If needed, additional investment budget can be applied from the administrator by paying high interests. The maximum amount equals to A.I.B. You can apply for additional investment for up to 2 times during your period of control. The interest rates are 31% on yearly basis and 7% on quarterly basis. 
-
-If a company generates operational profits, it can earn Interests on deposits at 12.5% but will not increase T.I.B. In the opposite case, it has to borrow funds and as a result it pays Interests at 17.0%. On quarterly basis the respective values are 3% and 4%. 
-
-
-> **NOTE:**
-> 
-> - By clicking “Spending versus Budget”, you will see the information about Total Investment, Average Budget per Period, current investment, Acquired Technology Level, Acquired Production Volume Flexibility and etc.  
-
-
-
-R&D Decisions
-===========
-
-### Investment in Processing Technology 
-
-Improved technology allows: 
-a)	Utilization of better ingredients
-b)	Production of high quality and image goods
-c)	Extending inventory storage duration, 
-
-Technology enhancements take non-negligible part of T.I.B. Obtaining more significant improvements will require disproportionally higher investments as improving A.T.L. is substantially cheaper at the initial stages.
-
-
-### Investment in Production Efficiency 
-
-
-R&D Dept. will suggest the estimated investment budget to increase production efficiency or production volume flexibility. 
-
-Increasing production efficiency will also have impact on reduction of production cost and increase in production volume flexibility as well. If you would only improve production volume flexibility, please refer to the estimated budget correspondingly. Investment is limited by A.I.B. 
-
-
-> **NOTE:**
-> 
-> - By clicking “more information” on the interface of R&D decisions, you will the information needed for your investment decisions.
-
-
-
-
-
-
-
-
-
-Sales Decisions
-===========
-
-### Sales Force Decisions 
- 
-
-The sales force budget expressed in $mln determines the number of field representatives in charge of the entire brand. An acceptable range of values is from 0 to A.I.B. 
-
-Changes in the distribution resulting from the modifications of sales force budget have direct impact on the following variables: 
-> - Brand and SKUs visibility in the Point of Sales measured with total shelf space allocated to a specific item. 
-> - Retailers’ volume orders. Retailers tend to “forget” ordering sufficient volumes of brands or SKUs if they are not constantly “reminded” by sales representatives. Trade expenses without substantial field force have limited impact.
-
-
-Portfolio Decisions
-===========
-
-### Launching a new Brand 
- 
-
-Each company can have up to five brands with five SKU‟s within each brand. 
-
-Following dimensions need to be decided when launching a new brand:
-
-**a)	Processing Technology:** which directly impacts product quality and production cost
-**b)	Quality of Ingredients:** no higher than Processing Technology index plus 2, which affects the same variables as processing technology. 
-**c)	Packaging Size:** STANDARD, SMALL (=½ of STANDARD) or LARGE (double of STANDARD). Selected pack size directly impacts Production cost and brand image. 
-
-> **NOTE:**
-> 
-> - By clicking “more information” on the interface of R&D decisions, you will the information needed for your investment decisions.
-
-
-### Modify an existing Brand 
-
-An existing brand can be modified by adjusting applied Processing Technology or Quality of Ingredients. The pack size for a specific SKU can only be set at the launch moment. 
-
-A new SKU needs to be launched if a company wishes to offer an alternative or additional item with a different pack size.
-
-### Discontinue?
-
-If “YES” is entered, the corresponding SKU is discontinued at the end of period. All remaining inventories at manufacturer, wholesalers and retailers are sold off at 25% of the purchase or production cost respectively. 
-
-The corresponding 75% charge is considered as a material cost and decreases manufacturer gross profit. The entire brand is removed from the market if “YES” is entered for all existing SKUs. 
-
-> **NOTE:**
-> 
-> - For more information on basic information on SKU costs, prices, previous investments and performances, check the "Future Projections Calculator" window on the right side of the decision panel.
-
-
-
-
-
-
-
-Production Volume Decisions
-===========
-
-### Overview
-
-It defines the planned production (in mln packs) for the entire period. It is subject to certain adjustments (increase or reduction). The scale of adjustments depends on previous investments in production and logistics efficiency. 
-
-Possible input values vary from 0 to maximum available capacity, which represents the actual physical capacity increased by 30% due to overtime. 
-
-You can ask for overtime shifts, which will increase the production cost by 27%.
-
-
-
-
-
-
-Pricing Decisions
-===========
-
-### Manufacturer Price 
-
-It is expressed in $ per actual pack size. For SMALL or LARGE packs, it is converted to the price per STANDARD pack in market studies reports. 
-
-Authorized input for Manufacturer Price values vary from 50% to 300% of manufacturer production cost. 
-
-### Apply New Manufacturer Price to Old Inventories at Factory
-
-
-In case there are some previously produced inventories, and their prices were different from the currently decided.
-
-
-
-
-
-
-
-
-Marketing Decisions
-===========
-
-Communication Decisions
---------------- 
-
-### Communication Overview
-
-It is an advertising budget expressed in $mln. Possible range of input values varies from 0 to A.I.B. The consumer communication decided at SKU levels has significant spill-over effects. 
-
-### Target Consumer Segment 
-
-If target segment is specified, the advertising budget is used to reposition SKU towards the indicated segment expectations. The specified value influences Value and Image Perceptions of an SKU. It may also affect perceptions of other SKUs marketed under the same brand name. 
-
-It may also be left without specifying any segment, in this case advertising budget “works” only to improve awareness.
-
-
-Promotion Decisions
---------------- 
-
-### Promotional Budget
-
-It is a budget expressed in $mln for consumer promotions in stores. Possible input values range from 0 to A.I.B. The list of variables directly influenced by promotional budget contains: 
-> - Display price 
-> - Price Ranking Index 
-> - Value perception
-> - Retailers orders 
-> - Shelf space
-> - Awareness 
-
-
-### Promotions Schedule
-
-Defines weeks when promotions occur. At least one week needs to be selected. In extreme case all 13 weeks can be selected. 
-
-The total promotional budget is actually divided by the number of promotional weeks. 
-If retailers still have inventory with reduced price, a residual effect may last longer than selected week(s).
-
-
-
-
-
-
-
-
-
-Trade Decisions
-===========
-
-### Trade Expenses 
-
-
-The budget expressed in $mln encompasses all investments to improve merchandising and to stimulate retailers. Possible input values range from 0 to A.I.B. It does not increase retailers’ margin, but covers costs of better display, in-store communication, product sampling, tasting, information booths, etc. 
-
-Trade investments influence Volume weighted distribution and shelf space mainly. Effectiveness depends on sales force employed.
-
-Significant spill-over effects can be observed across other SKUs of the same brand.
-
-
-### Additional Trade Margin
-
-Margin decided here is added on top of the regular one. Possible input range is from 0% to 25%. The actual maximal percentage is limited by A.I.B. (Average Investment Budget).
-
-Retailers’ inventory plus expected retailers purchases multiplied by absolute value of additional margin cannot exceed A.I.B.
-
-
-> **NOTE:**
-> 
-> - Additional trade margin is limited by A.I.B. 
-> - It does not influence consumer price but makes given SKU more profitable for retailers and therefore incentivizes them not only to allocate larger shelf space but also to increase volume orders. 
-
-
-### Wholesale Minimum Bonus Volume
-
-You can set purchase volume (in mln packs) threshold for wholesalers based on production volume and inventory. If their orders reach or exceed the required minimum, they will qualify for discount increasing their regular margin of 6%. Allowed input range varies from 0 to the volume of inventory at manufacturer increased by the current production. 
-
-When the bonus program is proposed, wholesalers’ purchases will be modified upwards if the difference between regular volume and the one qualifying for bonus is smaller than 15%. Direct result of bonus program is increase of wholesalers’ purchases. It may prove important to avoid out-of-stock situation in the marketplace.
-
-
-### Wholesale Bonus Rate
-
-Percentage specified here represents additional profit margin for wholesalers provided that their purchases reach or exceed defined above volume. Allowed range is from 0% to 6%, but absolute maximal percentage is limited by A.I.B. 
-
-Wholesale Bonus = Order Quantity x Manufacturer Price x Wholesale Bonus Rate.
-
-
-
-
-
-
-
-
-Final Remarks
-===========
-
-### Final Remarks
- 
-
-Although this manual tends to give a lot of information, for clarity and readability reasons, it does not cover all details. If you have any questions make a note of them so that you can ask the administrator during the introductory sessions at the beginning of your exercise. Hopefully, you have now some idea of how MarkSimos simulation works, and that you are ready to face its challenges. 
-
-Good luck!
+祝你们好运！
