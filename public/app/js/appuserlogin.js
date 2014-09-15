@@ -4,6 +4,9 @@
 
 // create module for custom directives
 
+'use strict';
+
+
 var marksimosapp = angular.module('marksimoslogin', ['pascalprecht.translate', 'marksimos.model', 'marksimos.websitecomponent',  'marksimos.filter', 'marksimos.translation']);
 
 

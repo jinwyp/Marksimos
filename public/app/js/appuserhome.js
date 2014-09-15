@@ -2,7 +2,7 @@
  * Created by jinwyp on 4/28/14.
  */
 
-"use strict";
+'use strict';
 
 
 // create module for custom directives

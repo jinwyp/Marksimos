@@ -1,6 +1,9 @@
 /**
  * Created by jinwyp on 4/28/14.
  */
+'use strict';
+
+
 
 // create module for custom directives
 var marksimosapp = angular.module('marksimosadmin', ['pascalprecht.translate', 'notifications', 'marksimos.websitecomponent', 'marksimos.commoncomponent']);
