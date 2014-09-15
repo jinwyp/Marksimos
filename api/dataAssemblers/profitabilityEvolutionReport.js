@@ -3,10 +3,10 @@ var utility = require('../../common/utility.js');
 var consts = require('../consts.js');
 var config = require('../../common/config.js');
 
-exports.getProfitabilityEvolutionReport = function(allResults){
+exports.getProfitabilityEvolutionReport = function(allResults, period){
     var allCompanyReport = [];
 
-    allResults[0].p_Companies.forEach(function(company){
+    allResults[period + 3].p_Companies.forEach(function(company){
         if(!isCompanyExist(company.c_CompanyID, allCompanyReport)){
             allCompanyReport.push({
                 companyId: company.c_CompanyID,
@@ -19,8 +19,8 @@ exports.getProfitabilityEvolutionReport = function(allResults){
     });
 
     allCompanyReport.forEach(function(companyReport){
-        companyReport.SKU = generateSKUReport(companyReport.companyId, allResults);
-        companyReport.brand = generateBrandReport(companyReport.companyId, allResults);
+        companyReport.SKU = generateSKUReport(companyReport.companyId, allResults, period);
+        companyReport.brand = generateBrandReport(companyReport.companyId, allResults, period);
         companyReport.global = generateGlobalReport(companyReport.companyId, allResults);
     });
 
@@ -28,12 +28,12 @@ exports.getProfitabilityEvolutionReport = function(allResults){
 
 };
 
-function generateSKUReport(companyId, allResults){
+function generateSKUReport(companyId, allResults, period){
     if(allResults === undefined) throw new Error("Invalid parameter allResult.");
 
     var allSKUReport = [];
 
-    allResults[0].p_SKUs.forEach(function(SKUResult){
+    allResults[period + 3].p_SKUs.forEach(function(SKUResult){
         if(SKUResult.u_ParentCompanyID === companyId){
             if(!isSKUExist(SKUResult.u_SKUID, allSKUReport)){
                 allSKUReport.push({
@@ -119,10 +119,10 @@ function generateSKUReport(companyId, allResults){
     }
 }
 
-function generateBrandReport(companyId, allResults){
+function generateBrandReport(companyId, allResults, period){
     var allBrandReport = [];
 
-    allResults[0].p_Brands.forEach(function(brand){
+    allResults[period + 3].p_Brands.forEach(function(brand){
         if(brand.b_ParentCompanyID === companyId){
             if(!isBrandExist(brand.b_BrandID, allBrandReport)){
                 allBrandReport.push({

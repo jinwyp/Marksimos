@@ -15,7 +15,7 @@ var tOneBrandDecisionSchema = new Schema({
     d_BrandName     : String,
     bs_PeriodOfBirth: {type: Number},    
     d_SalesForce    : {type: Number, default: 0},
-    d_SKUsDecisions : [Number]  //Array of d_SKUID
+    d_SKUsDecisions :  [Number]  //Array of d_SKUID
 });
 
 var BrandDecision = mongoose.model('BrandDecision', tOneBrandDecisionSchema);
@@ -157,6 +157,27 @@ exports.initCreate = function(decision){
     var deferred = Q.defer();
     var decision = new BrandDecision(decision);
     decision.bs_PeriodOfBirth = 0;
+    decision.modifiedField = 'skip';
+
+    decision.save(function(err, saveDecision, numAffected){
+        if(err){
+            deferred.reject(err);
+        }else{
+            deferred.resolve(saveDecision);
+        }
+    });
+    return deferred.promise;
+}
+
+//Run simulation process, create brand decision document based on last period decision, skip all the validations
+//copy bs_PeriodOfBirth from last period input 
+exports.createBrandDecisionBasedOnLastPeriodDecision = function(decision){
+    if(!mongoose.connection.readyState){
+        throw new Error("mongoose is not connected.");
+    }
+
+    var deferred = Q.defer();
+    var decision = new BrandDecision(decision);
     decision.modifiedField = 'skip';
 
     decision.save(function(err, saveDecision, numAffected){

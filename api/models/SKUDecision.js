@@ -555,6 +555,28 @@ exports.initCreate = function(decision){
     return deferred.promise;
 };
 
+//Run simulation process, create SKU decision document based on last period decision, skip all the validations
+//copy bs_PeriodOfBirth from last period input 
+exports.createSKUDecisionBasedOnLastPeriodDecision = function(decision){
+    if(!mongoose.connection.readyState){
+        throw new Error("mongoose is not connected.");
+    }
+
+    var deferred = Q.defer();
+    var d = new SKUDecision(decision);
+    d.modifiedField = 'skip';
+
+    d.save(function(err, result, numAffected){
+        if(err){
+            deferred.reject(err);
+        }else if(numAffected!==1){
+            deferred.reject(new Error("no result found in db"))
+        }else{
+            deferred.resolve(result);
+        }
+    });
+    return deferred.promise;
+}
 
 
 exports.findOne = function(seminarId, period, companyId, brandId, SKUID){

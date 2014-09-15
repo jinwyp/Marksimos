@@ -3,10 +3,11 @@ var utility = require('../../common/utility.js');
 var consts = require('../consts.js');
 var config = require('../../common/config.js');
 
-exports.getCompanyStatusReport = function(allResults, allExogenous){
+exports.getCompanyStatusReport = function(allResults, allExogenous, period){
     var allCompanyReport = [];
 
-    allResults[0].p_Companies.forEach(function(company){
+//    console.log('get SKU from period:' + period);
+    allResults[period + 3].p_Companies.forEach(function(company){
         if(!isCompanyExist(company.c_CompanyID, allCompanyReport)){
             allCompanyReport.push({
                 companyId: company.c_CompanyID,
@@ -19,21 +20,22 @@ exports.getCompanyStatusReport = function(allResults, allExogenous){
     })
 
     allCompanyReport.forEach(function(companyReport){
-        companyReport.SKU = generateSKUReport(companyReport.companyId, allResults, allExogenous);
-        companyReport.brand = generateBrandReport(companyReport.companyId, allResults);
+        companyReport.SKU = generateSKUReport(companyReport.companyId, allResults, allExogenous, period);
+        companyReport.brand = generateBrandReport(companyReport.companyId, allResults, period);
         companyReport.global = generateGlobalReport(companyReport.companyId, allResults);
     })
 
     return allCompanyReport;
 }
 
-function generateSKUReport(companyId, allResults, allExogenous){
+function generateSKUReport(companyId, allResults, allExogenous, period){
     if(allResults === undefined) throw new Error("Invalid parameter allResult.");
     if(allExogenous === undefined) throw new Error("Invalid parameter allExogenous.");
 
     var allSKUReport = [];
 
-    allResults[0].p_SKUs.forEach(function(SKUResult){
+    //console.log('result period)
+    allResults[period + 3].p_SKUs.forEach(function(SKUResult){
         if(SKUResult.u_ParentCompanyID === companyId){
             if(!isSKUExist(SKUResult.u_SKUID, allSKUReport)){
                 allSKUReport.push({
@@ -106,10 +108,10 @@ function generateSKUReport(companyId, allResults, allExogenous){
     }
 }
 
-function generateBrandReport(companyId, allResults){
+function generateBrandReport(companyId, allResults, period){
     var allBrandReport = [];
 
-    allResults[0].p_Brands.forEach(function(brand){
+    allResults[period + 3].p_Brands.forEach(function(brand){
         if(brand.b_ParentCompanyID === companyId){
             if(!isBrandExist(brand.b_BrandID, allBrandReport)){
                 allBrandReport.push({

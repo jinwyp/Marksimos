@@ -1,7 +1,10 @@
 /**
  * Created by raven on 9/8/14.
  */
-'use strict';
+(function () {
+    'use strict';
+
+
 
 // create module for custom directives
 var marksimosapp = angular.module('marksimoshelp', ['pascalprecht.translate', 'marksimos.model', 'marksimos.websitecomponent',  'marksimos.filter', 'marksimos.translation']);
@@ -74,7 +77,10 @@ marksimosapp.controller('userHelpController',['$rootScope', '$scope', '$translat
             case 'Video':$scope.isVideoShown=true;break;
             case 'Manual':$scope.isManualShown=true;break;
         }
-    }
+    };
 
 }]);
 
+
+
+}());

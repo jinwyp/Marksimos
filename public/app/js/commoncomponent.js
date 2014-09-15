@@ -406,20 +406,30 @@ app.directive('textFormInput', function() {
 
 
 // Prevent the backspace key from navigating back.
-app.directive('preventBackspaceNavigateBack', function() {
+app.directive('preventBackspaceNavigateBack', ['$document', function($document) {
     return {
-        restrict: 'A',
-        link: function (scope, element, attrs) {
+        restrict : 'A',
+        link  : function (element, attrs) {
 
-            element.unbind('keydown').bind('keydown', function (event) {
-                var doPrevent = false;
+            $(document).unbind('keydown').bind('keydown', function (event) {
 
+                var doPrevent = true;
                 if (event.keyCode === 8) {
+
                     var d = event.srcElement || event.target;
 
-                    var inputFlag = d.type.toUpperCase() === 'TEXT' || d.type.toUpperCase() === 'PASSWORD' || d.type.toUpperCase() === 'NUMBER' || d.type.toUpperCase() === 'FILE' || d.type.toUpperCase() === 'EMAIL' || d.type.toUpperCase() === 'SEARCH' || d.type.toUpperCase() === 'DATE';
-
-                    if ( (d.tagName.toUpperCase() === 'INPUT' && inputFlag )|| d.tagName.toUpperCase() === 'TEXTAREA') {
+                    // 注释, 此处很Bug 会很纠结
+                    if ((d.tagName.toUpperCase() === 'INPUT' &&
+                        (
+                            d.type.toUpperCase() === 'TEXT' ||
+                            d.type.toUpperCase() === 'PASSWORD' ||
+                            d.type.toUpperCase() === 'NUMBER' ||
+                            d.type.toUpperCase() === 'FILE' ||
+                            d.type.toUpperCase() === 'EMAIL' ||
+                            d.type.toUpperCase() === 'SEARCH' ||
+                            d.type.toUpperCase() === 'DATE' )
+                        ) ||
+                        d.tagName.toUpperCase() === 'TEXTAREA') {
                         doPrevent = d.readOnly || d.disabled;
                     }else {
                         doPrevent = true;
@@ -432,8 +442,11 @@ app.directive('preventBackspaceNavigateBack', function() {
 
             });
 
+
+
         }
 
     };
-});
+}]
+);
 
