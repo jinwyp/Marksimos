@@ -46,8 +46,8 @@ $color_main_body_product_target: #6f6f6f;
 $color_main_body_competitors: #2f4e9b;
 $color_main_body_user_clock: #373737;
 $color_main_body_user_decision_button: #19acfe;
-$color_main_body_user_muted: #999999;
-$color_main_body_user_muted_border : #dddddd;
+$color_main_body_user_muted: #999;
+$color_main_body_user_muted_border : #ddd;
 
 $color_main_body_user_period_bar: #9FA5BF;
 $color_main_body_user_period_bar_border: #dfe0e5;
@@ -261,7 +261,7 @@ $color_main_body_user_manual_table_2n:#f8f8f8;
     .table > tfoot > tr > td {
         vertical-align: middle;
         height: 45px;
-        border-top: 1px solid #ddd;
+        border-top: 1px solid $color_main_body_user_muted_border;
         font-family: $font_main_header2;
         font-size: 12px;
         color: $color_main_body_user_chart_leftmenu_title;
@@ -640,9 +640,20 @@ body{
                 color: $color_main_body_user_manual_h6;
                 font-size: 1em;
             }
+            blockquote {
+                border-left: 4px solid $color_main_body_user_muted_border;
+                color: $color_main_body_user_manual_blockquote;
+                padding: 0 15px;
+            }
             p, blockquote, ul, ol, dl, table, pre {
                 margin-bottom: 16px;
                 margin-top: 0;
+            }
+            blockquote > *:first-child {
+                margin-top: 0;
+            }
+            blockquote > *:last-child {
+                margin-bottom: 0;
             }
             ul, ol {
                 padding-left: 2em;
