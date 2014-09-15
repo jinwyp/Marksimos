@@ -229,3 +229,21 @@ Or, if you don't want/need launchctl, you can just run:
 # 运行
 NODE_ENV=production nodemon app.js
 
+
+Consumer Segment        | Description
+---------               | -----
+Price Sensitive         | Consumers accept that they cannot be too demanding on Image perception, since they care so much about price and the Value for money
+Pretenders              | Consumers are also very price sensitive but they want to show off; therefore they look for high Image perception. 
+Moderate                | Consumers are slightly less price sensitive than Segment 1, hence their expectations are slightly higher on both dimensions. 
+Good Life               | Consumers are even less price sensitive than Segment 3 and expect more on Value as well as on Image. 
+Ultimate                | Consumers are not really price sensitive. They can afford higher prices, but in exchange they ask for very high quality, hence they have high expectations on Value dimension. 
+Pragmatic               | Consumers are well-educated and practical people with their strong judgments. They don’t follow fashion. They want very good Value offer, but Image aspect is for them a bit shallow and futile, which doesn’t mean that they would be happy with entry level products. They look for something decent. 
+
+| Segment Name      | Expected  Value Perception | Expected Image Perception  |
+| :--------         | :--------:                 | :--:                       |
+| Price Sensitive   | 24                         |  24                        |
+| Pretenders        | 24                         |  45                        |
+| Moderate          | 32                         |  30                        |
+| Good Life         | 32                         |  36                        |
+| Ultimate          | 53                         |  53                        |
+| Pragmatic         | 52                         |  53                        |
