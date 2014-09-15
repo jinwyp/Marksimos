@@ -424,7 +424,7 @@ app.directive('preventBackspaceNavigateBack', function() {
                     }else {
                         doPrevent = true;
                     }
-
+                    console('按键:', event.keyCode,  '--- 阻止:', doPrevent);
                     if (doPrevent) {
                         event.preventDefault();
                     }
