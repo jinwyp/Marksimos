@@ -94,6 +94,17 @@ $color_main_body_user_feedback_warning:#FCFFD9;
 $color_main_body_user_feedback_info:#EAEFFF;
 
 
+$color_main_body_user_manual_h_boder_bottom:#eee;
+$color_main_body_user_manual_h6:#777;
+$color_main_body_user_manual_blockquote:#777;
+
+$color_main_body_user_manual_color:#333;
+$color_main_body_user_manual_hr:#e7e7e7;
+$color_main_body_user_manual_table_border:#ddd;
+$color_main_body_user_manual_table_tr:#fff;
+$color_main_body_user_manual_table_tr_border:#ccc;
+$color_main_body_user_manual_table_2n:#f8f8f8;
+
 
 /********************  自定义按钮样式  ********************/
 
@@ -531,28 +542,6 @@ body{
         }
 
         .bs-docs-section{
-            h1,.h1 {
-              font-size: 36px;
-              border-bottom: 1px solid $color_main_body_border;
-              font-weight:bold;
-              font-family:$font_main_header2;
-            }
-            h2,.h2 {
-              font-size: 21px;
-              font-family:$font_main_header2;
-              font-weight:300;
-            }
-            h3,.h3 {
-              font-size: 24px;
-              color:black;
-              padding-left: 0px;
-              font-weight:bold;
-              font-family:$font_main_header2;
-            }
-            p{
-                font-family:$font_main_header2;
-            }
-
             .bs_p {
                 color: $color_main_body_user_muted;
                 font-size: 14px;
@@ -577,6 +566,7 @@ body{
                 color: $color_login_title;
                 font-family: $font_login_title;
                 font-weight:500;
+                padding-left:0;
             }
             .manual_download{
                 color: $color_login_title;
@@ -605,37 +595,121 @@ body{
                 margin : 0 20px;
 
             }
+        }
+
+        .markdown-body{
+            font-size: 16px;
+            line-height: 1.6;
+            overflow: hidden;
+            word-wrap: break-word;
+            font-family: $font_main_header2;
+            color:$color_main_body_user_manual_color;
+            h1,h2,h3,h4,h5,h6{
+                font-weight: bold;
+                line-height: 1.4;
+                margin-bottom: 16px;
+                margin-top: 1em;
+                position: relative;
+                font-family: $font_main_header2;
+                color:$color_main_body_user_manual_color;
+                padding-left:0;
+            }
+            h1 {
+                border-bottom: 1px solid $color_main_body_user_manual_h_boder_bottom;
+                font-size: 2.25em;
+                line-height: 1.2;
+                padding-bottom: 0.3em;
+            }
+            h2 {
+                border-bottom: 1px solid $color_main_body_user_manual_h_boder_bottom;
+                font-size: 1.75em;
+                line-height: 1.225;
+                padding-bottom: 0.3em;
+            }
+            h3 {
+                font-size: 1.5em;
+                line-height: 1.43;
+            }
+            h4 {
+                font-size: 1.25em;
+            }
+            h5 {
+                font-size: 1em;
+            }
+            h6 {
+                color: $color_main_body_user_manual_h6;
+                font-size: 1em;
+            }
+            p, blockquote, ul, ol, dl, table, pre {
+                margin-bottom: 16px;
+                margin-top: 0;
+            }
+            blockquote{
+                ul, ol {
+                    padding-left: 2em;
+                    list-style-type: none;
+                }
+            }
+            ul, ol {
+                padding-left: 2em;
+                list-style-type: disc;
+            }
+            ul.no-list, ol.no-list {
+                list-style-type: none;
+                padding: 0;
+            }
+            ul ul, ul ol, ol ol, ol ul {
+                margin-bottom: 0;
+                margin-top: 0;
+            }
+            li > p {
+                margin-top: 16px;
+            }
+            dl {
+                padding: 0;
+            }
+            dl dt {
+                font-size: 1em;
+                font-style: italic;
+                font-weight: bold;
+                margin-top: 16px;
+                padding: 0;
+            }
+            dl dd {
+                margin-bottom: 16px;
+                padding: 0 16px;
+            }
             table {
+                display: block;
+                overflow: auto;
                 width: 100%;
-                margin-bottom: 20px;
-                background-color: transparent;
+                word-break: keep-all;
             }
-            table > thead > tr > th,
-            table > tbody > tr > th,
-            table > tfoot > tr > th,
-            table > thead > tr > td,
-            table > tbody > tr > td,
-            table > tfoot > tr > td {
-                padding: 8px;
-                line-height: 1.42857143;
-                vertical-align: top;
-                border-top: 1px solid $color_main_body_user_muted_border;
+            table th {
+                font-weight: bold;
             }
-            table > thead > tr > th {
-                vertical-align: bottom;
-                border-bottom: 2px solid $color_main_body_user_muted_border;
+            table th, table td {
+                border: 1px solid $color_main_body_user_manual_table_border;
+                padding: 6px 13px;
             }
-            table > caption + thead > tr:first-child > th,
-            table > colgroup + thead > tr:first-child > th,
-            table > thead:first-child > tr:first-child > th,
-            table > caption + thead > tr:first-child > td,
-            table > colgroup + thead > tr:first-child > td,
-            table > thead:first-child > tr:first-child > td {
-                border-top: 0;
+            table tr {
+                background-color: $color_main_body_user_manual_table_tr;
+                border-top: 1px solid $color_main_body_user_manual_table_tr_border;
             }
-            table > tbody + tbody {
-                border-top: 2px solid $color_main_body_user_muted_border;
+            table tr:nth-child(2n) {
+                background-color: $color_main_body_user_manual_table_2n;
             }
+            img {
+                box-sizing: border-box;
+                max-width: 100%;
+            }
+
+        }
+        .markdown-body > *:first-child {
+            margin-top: 0 !important;
+        }
+        .markdown-body > *:last-child {
+            margin-bottom: 0 !important;
         }
 
         .info_highlight {

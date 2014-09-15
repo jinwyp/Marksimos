@@ -103,8 +103,8 @@ As the simulation goes on, manufacturers launch new brands and their variants wi
 ### Product
 
 All companies manufacture products that are frequently bought by virtually every household, which are not presumed as food or non-food items. Important fact is that they usually **cannot be stored more than two periods** after their production period. Product production cost and quality is determined by two aspects: 
-**a)	Applied Technology Level**
-**b)	Quality of raw materials** 
+* **a)	Applied Technology Level**
+* **b)	Quality of raw materials** 
 
 **Processing Technology** reflects a company’s acquired know-how. It is an index ranging from 1 to 20, where 1 means “very primitive” and 20 refers to “ultimate state-of-art”. 
 
@@ -115,17 +115,17 @@ The simulation imposes the following constraint: a company cannot practically us
 
 There are three different kinds of products packaging sizes, which are STANDARD, SMALL and LARGE.
 
-a)	STANDARD PACKAGING
-b)	SMALL PACKAGING (=1/2 Standard Packaging)
-c)	LARGE PACKAGING (=2 Standard Packaging)
+* a)	STANDARD PACKAGING
+* b)	SMALL PACKAGING (=1/2 Standard Packaging)
+* c)	LARGE PACKAGING (=2 Standard Packaging)
 
 **Brands and SKUs**
 Each firm can have up to five different brands. Each brand can be marketed in five different variants, called stock-keeping-unit (SKU). SKUs sold under same brand name may differ considerably in terms of: 
-a.	Quality of used ingredients
-b.	Processing technology 
-c.	Packaging size
-d.	Price
-e.	Positioning 
+* a.	Quality of used ingredients
+* b.	Processing technology 
+* c.	Packaging size
+* d.	Price
+* e.	Positioning 
 
 These factors may significantly influence consumers‟ perception of a specific SKU, as well as the perception of the entire brand. 
 
@@ -133,9 +133,9 @@ Brands produced by a given manufacturer can be recognized by their names and the
 
 Production 
 The average production cost is a function of the following three factors: 
-**1.	Applied processing technology** 
-**2.	Ingredients quality** 
-**3.	Production efficiency**
+* **1.	Applied processing technology** 
+* **2.	Ingredients quality** 
+* **3.	Production efficiency**
 
 Generally, production cost raises correspondingly along with the high values of both applied technology level and ingredients quality. 
 
@@ -198,9 +198,7 @@ In each period, you’ll make a set of decisions. With the exception of investme
 > - Production Volume 
 > - Pricing 
 > - Communication 
-> - Trade 
-
-
+> - Trade
 
 
 
@@ -276,9 +274,9 @@ R&D Decisions
 ### Investment in Processing Technology 
 
 Improved technology allows: 
-a)	Utilization of better ingredients
-b)	Production of high quality and image goods
-c)	Extending inventory storage duration, 
+* a)	Utilization of better ingredients
+* b)	Production of high quality and image goods
+* c)	Extending inventory storage duration, 
 
 Technology enhancements take non-negligible part of T.I.B. Obtaining more significant improvements will require disproportionally higher investments as improving A.T.L. is substantially cheaper at the initial stages.
 
@@ -326,9 +324,9 @@ Each company can have up to five brands with five SKU‟s within each brand.
 
 Following dimensions need to be decided when launching a new brand:
 
-**a)	Processing Technology:** which directly impacts product quality and production cost
-**b)	Quality of Ingredients:** no higher than Processing Technology index plus 2, which affects the same variables as processing technology. 
-**c)	Packaging Size:** STANDARD, SMALL (=½ of STANDARD) or LARGE (double of STANDARD). Selected pack size directly impacts Production cost and brand image. 
+* **a)	Processing Technology:** which directly impacts product quality and production cost
+* **b)	Quality of Ingredients:** no higher than Processing Technology index plus 2, which affects the same variables as processing technology. 
+* **c)	Packaging Size:** STANDARD, SMALL (=½ of STANDARD) or LARGE (double of STANDARD). Selected pack size directly impacts Production cost and brand image. 
 
 > **NOTE:**
 > 
@@ -495,3 +493,4 @@ Final Remarks
 Although this manual tends to give a lot of information, for clarity and readability reasons, it does not cover all details. If you have any questions make a note of them so that you can ask the administrator during the introductory sessions at the beginning of your exercise. Hopefully, you have now some idea of how MarkSimos simulation works, and that you are ready to face its challenges. 
 
 Good luck!
+
