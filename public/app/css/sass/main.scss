@@ -984,7 +984,7 @@ body{
 
 .mainbody{
 
-    /***** MainUserHome 页面开始 *****/
+    /***** Main User Home 页面开始 *****/
 
     background-color: $color_main_body_background;
     border: 1px solid $color_main_body_border;
@@ -1186,8 +1186,6 @@ body{
         }
 
         @include spotlight_overlay;
-
-
 
     }
 
@@ -1496,181 +1494,7 @@ body{
     }
 
 
-    /**********  Score 页面开始  **********/
 
-    .score_box {
-        border:1px solid $color_login_panel_border;
-        margin: 20px 12.5% 0 12.5%;
-    }
-
-    .feedback_box {
-        border:1px solid $color_main_body_user_feedback_border;
-        color: $color_main_body_user_feedback;
-        margin: 20px 12.5%;
-    }
-    .support_box{
-        min-height:120px;
-        margin: 20px 12.5%;
-    }
-
-    .score_info {
-        background-color: $color_login_panel_background;
-        padding:40px 35px 20px;
-        .score_info_title{
-            @include icon_user_score;
-        }
-    }
-    .score_data {
-        background-color: $color_login_panel_background;
-        .table_report{
-            background-color: $color_login_panel_background;
-            padding: 20px;
-            .company{
-                width: 15px;
-                height: 15px;
-                padding:0;
-                margin:0;
-                display:-moz-inline-box; display:inline-block;
-            }
-            .company_1 {
-                background-color: $color_main_body_company_1_bg;
-            }
-            .company_2 {
-                background-color: $color_main_body_company_2_bg;
-            }
-            .company_3 {
-                background-color: $color_main_body_company_3_bg;
-            }
-            .company_4 {
-                background-color: $color_main_body_company_4_bg;
-            }
-            .company_5 {
-                background-color: $color_main_body_company_5_bg;
-            }
-            .company_6 {
-                background-color: $color_main_body_company_6_bg;
-            }
-
-            .table > thead > tr > th,
-            .table > tbody > tr > td,
-            .table > tfoot > tr > td {
-                text-align:right;
-            }
-
-            .table > thead > tr > th:first-child,
-            .table > tbody > tr > td:first-child,
-            .table > tfoot > tr > td:first-child {
-                text-align:left;
-            }
-            .td_info{
-                background-color:$color_main_body_user_feedback_info;
-            }
-            .tr_warning{
-                background-color:$color_main_body_user_feedback_warning;
-            }
-            .tr_warning td{
-                font-weight: bold;
-            }
-            .nav-pills li{
-                a{
-                    background-color: $color_login_background;
-                    color: $color_main_body_user_chart_leftmenu_title;
-                    font-family: $font_main_header2;
-                    @include border-top-radius(4px);
-                    @include border-bottom-radius(0px);
-
-                    &:hover,
-                    &:focus{
-                        background-color: $color_main_body_background_chart;
-                    }
-                }
-            }
-            .nav-pills li.active{
-                a,
-                a:hover,
-                a:focus{
-                    color: $color_main_body_company_a;
-                    font-family: $font_main_header2;
-                    background-color: $color_login_title;
-                }
-            }
-
-            @include divider_horizontal;
-
-        }
-
-        @include table_report;
-    }
-
-    .feedback_info {
-        background-color: $color_main_body_user_feedback_back;
-        padding:20px;
-        .provide_feedback{
-            margin:10px 0;
-        }
-        h4{
-            font-size:17px;
-        }
-    }
-    .feedback_data{
-        background-color: $color_login_panel_background;
-        padding:80px 0px;
-        h3 {
-            color: $color_main_body_user_feedback_title;
-            font-family: $font_main_header2;
-            font-weight: normal;
-            padding: 0 40px;
-            margin:0;
-        }
-        h4{
-            color:$color_main_body_user_feedback_subTitle;
-            font-family:$font_main_header2;
-            font-weight:normal;
-            padding:10px 40px;
-            margin:0;
-            font-size:18px;
-        }
-        h5{
-            font-family:$font_main_header2;
-            font-weight:normal;
-            padding:10px 68px;
-            font-size:15px;
-            margin:0;
-        }
-        p{
-            padding:0;
-            margin:0;
-        }
-        .table_feedback{
-            font-size:14px;
-            padding:0 40px;
-            .p_left_20{
-                padding-left:20px;
-            }
-            .table_feedback_left_title{
-                width:50%;
-            }
-            .table_feedback_right_data{   
-                width:10%;
-            }
-            @include divider_horizontal;
-
-        }
-
-        .feedback_others_p{
-            padding:0 68px;
-            .margin_left_10{
-                padding-left:20px;
-            }
-        }
-        .clear{
-            clear:both;
-        }
-    }
-    .submit_feedback_button{
-        font-size: 14px;
-        @include user_decision_button;
-    }
     /**********  Comparison 页面开始  **********/
 
     .comparison_box {
@@ -1988,6 +1812,185 @@ body{
             }
         }
     }
+
+
+
+    /**********  Score 页面开始  **********/
+
+    .score_box {
+        border:1px solid $color_login_panel_border;
+        margin: 20px 12.5% 0 12.5%;
+    }
+
+    .feedback_box {
+        border:1px solid $color_main_body_user_feedback_border;
+        color: $color_main_body_user_feedback;
+        margin: 20px 12.5%;
+    }
+    .support_box{
+        min-height:120px;
+        margin: 20px 12.5%;
+    }
+
+    .score_info {
+        background-color: $color_login_panel_background;
+        padding:40px 35px 20px;
+        .score_info_title{
+            @include icon_user_score;
+        }
+    }
+    .score_data {
+        background-color: $color_login_panel_background;
+        .table_report{
+            background-color: $color_login_panel_background;
+            padding: 20px;
+            .company{
+                width: 15px;
+                height: 15px;
+                padding:0;
+                margin:0;
+                display:-moz-inline-box; display:inline-block;
+            }
+            .company_1 {
+                background-color: $color_main_body_company_1_bg;
+            }
+            .company_2 {
+                background-color: $color_main_body_company_2_bg;
+            }
+            .company_3 {
+                background-color: $color_main_body_company_3_bg;
+            }
+            .company_4 {
+                background-color: $color_main_body_company_4_bg;
+            }
+            .company_5 {
+                background-color: $color_main_body_company_5_bg;
+            }
+            .company_6 {
+                background-color: $color_main_body_company_6_bg;
+            }
+
+            .table > thead > tr > th,
+            .table > tbody > tr > td,
+            .table > tfoot > tr > td {
+                text-align:right;
+            }
+
+            .table > thead > tr > th:first-child,
+            .table > tbody > tr > td:first-child,
+            .table > tfoot > tr > td:first-child {
+                text-align:left;
+            }
+            .td_info{
+                background-color:$color_main_body_user_feedback_info;
+            }
+            .tr_warning{
+                background-color:$color_main_body_user_feedback_warning;
+            }
+            .tr_warning td{
+                font-weight: bold;
+            }
+            .nav-pills li{
+                a{
+                    background-color: $color_login_background;
+                    color: $color_main_body_user_chart_leftmenu_title;
+                    font-family: $font_main_header2;
+                    @include border-top-radius(4px);
+                    @include border-bottom-radius(0px);
+
+                    &:hover,
+                    &:focus{
+                        background-color: $color_main_body_background_chart;
+                    }
+                }
+            }
+            .nav-pills li.active{
+                a,
+                a:hover,
+                a:focus{
+                    color: $color_main_body_company_a;
+                    font-family: $font_main_header2;
+                    background-color: $color_login_title;
+                }
+            }
+
+            @include divider_horizontal;
+
+        }
+
+        @include table_report;
+    }
+
+    .feedback_info {
+        background-color: $color_main_body_user_feedback_back;
+        padding:20px;
+        .provide_feedback{
+            margin:10px 0;
+        }
+        h4{
+            font-size:17px;
+        }
+    }
+    .feedback_data{
+        background-color: $color_login_panel_background;
+        padding:80px 0px;
+        h3 {
+            color: $color_main_body_user_feedback_title;
+            font-family: $font_main_header2;
+            font-weight: normal;
+            padding: 0 40px;
+            margin:0;
+        }
+        h4{
+            color:$color_main_body_user_feedback_subTitle;
+            font-family:$font_main_header2;
+            font-weight:normal;
+            padding:10px 40px;
+            margin:0;
+            font-size:18px;
+        }
+        h5{
+            font-family:$font_main_header2;
+            font-weight:normal;
+            padding:10px 68px;
+            font-size:15px;
+            margin:0;
+        }
+        p{
+            padding:0;
+            margin:0;
+        }
+        .table_feedback{
+            font-size:14px;
+            padding:0 40px;
+            .p_left_20{
+                padding-left:20px;
+            }
+            .table_feedback_left_title{
+                width:50%;
+            }
+            .table_feedback_right_data{
+                width:10%;
+            }
+            @include divider_horizontal;
+
+        }
+
+        .feedback_others_p{
+            padding:0 68px;
+            .margin_left_10{
+                padding-left:20px;
+            }
+        }
+        .clear{
+            clear:both;
+        }
+    }
+    .submit_feedback_button{
+        font-size: 14px;
+        @include user_decision_button;
+    }
+
 
 
 }
