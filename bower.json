@@ -36,6 +36,7 @@
     "google-code-prettify": "~1.0.3",
     "jsonkit": "~0.3.2",
     "marked": "~0.3.2",
-    "jquery": "1.8.3"
+    "jquery": "1.8.3",
+    "aight": "~1.2.5"
   }
 }
