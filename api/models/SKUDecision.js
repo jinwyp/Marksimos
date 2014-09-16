@@ -370,7 +370,8 @@ function validateAvailableBudget(field, curSKUDecision, done){
 //Pack size : 0 - small, 1 - standard 2 - big
 //TODO: need to test if "process.nextTick(done(err))" works
 function validatePackSize(field, curSKUDecision, done){
-    if((curSKUDecision[field] != 0) || (curSKUDecision[field] != 1) || (curSKUDecision[field] != 2)){
+    if((curSKUDecision[field] != 0) && (curSKUDecision[field] != 1) && (curSKUDecision[field] != 2)){
+
         var err = new Error('Input is out of range');
         err.message = 'Pack format must be SMALL/STANDARD/BIG';
         process.nextTick(done(err));
