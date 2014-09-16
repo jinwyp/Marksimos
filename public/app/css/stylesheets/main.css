@@ -1961,9 +1961,9 @@ body a, body button {
   color: #2f4e9b;
   font-size: 14px;
   /*change another picture*/
-  background-image: url(../images/userbrand.png);
+  background-image: url(../images/userscore.png);
   background-repeat: no-repeat;
-  background-position: 1px 0px;
+  background-position: 1px 7px;
   padding: 5px 25px;
   display: block;
 }
