@@ -7,7 +7,7 @@
 
 
 // create module for custom directives
-var marksimosapp = angular.module('marksimoshelp', ['pascalprecht.translate', 'marksimos.model', 'marksimos.websitecomponent',  'marksimos.filter', 'marksimos.translation']);
+var marksimosapp = angular.module('marksimoshelp', ['pascalprecht.translate',  'marksimos.filter']);
 
 
 

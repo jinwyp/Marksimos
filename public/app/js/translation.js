@@ -850,7 +850,16 @@ app.config(['$translateProvider', function($translateProvider){
 
         "ManualPageTitle":"Manual",
         "ManualPageDownload":"Download"
-
+		
+		"IntroPageSentence1":"Who am I?",
+		"IntroPageSentence2":"I am leading",
+		"IntroPageSentence3":"I manage",
+		"IntroPageSentence4":"products under",
+		"IntroPageSentence5":"brands",
+		"IntroPageSentence6":"I compete with",
+		"IntroPageSentence7":"other companies",
+		"IntroPageSentence8":"My company’s mission is to get the highest Market Share and Profit !"
+		
     });
 
 
@@ -1700,10 +1709,20 @@ app.config(['$translateProvider', function($translateProvider){
 
         //Labels for FAQ Page
         "FAQPageTitle":"常见问题",
-        "FAQPageSubTitle":"This FAQ will attempt to cover the most asked question about Marksimos.This FAQ will attempt to cover the most asked question about Marksimos.This FAQ will attempt to cover the most asked question about Marksimos .",
+        "FAQPageSubTitle":"该常见问题会包含一些常问的问题.",
         
         "ManualPageTitle":"使用手册",
         "ManualPageDownload":"下载"
+		
+		"IntroPageSentence1":"我的角色",
+		"IntroPageSentence2":"现在我将接管",
+		"IntroPageSentence3":"主要有",
+		"IntroPageSentence4":"品牌，旗下有",
+		"IntroPageSentence5":"个单品",
+		"IntroPageSentence6":"还要另外",
+		"IntroPageSentence7":"个对手竞争",
+		"IntroPageSentence8":"公司的最终目标是要获得最高的市场份额和净利润！"
+		
     });
 
     // Tell the module what language to use by default
