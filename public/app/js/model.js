@@ -128,7 +128,7 @@ app.factory('Company', ['$http', function($http){
         },
 
         getFinalScore : function(period){
-            return $http.get(apiPath + 'finalScore/' + period).then(function(result){
+            return $http.get(apiPath + 'finalscore/' + period).then(function(result){
 
                 result.data.highest_score = _.max(result.data.scores, function(companyScore){
                     return companyScore.finalScore;
