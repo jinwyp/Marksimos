@@ -10,6 +10,23 @@ app.config(['$translateProvider', function($translateProvider){
 // Adding a translation table for the English language
     $translateProvider.translations('en_US', {
 
+        //Labels for Introduction
+        "IntroPageSentence1" : "Who am I?",
+        "IntroPageSentence2" : "I am leading",
+        "IntroPageSentence3" : "I manage",
+        "IntroPageSentence4" : "products",
+        "IntroPageSentence5" : "under",
+        "IntroPageSentence6" : "brands",
+        "IntroPageSentence7" : "I compete with",
+        "IntroPageSentence8" : "other companies",
+
+        "IntroPageSentence21" : "My company’s mission is to get the",
+        "IntroPageSentence22" : "highest Market Share",
+        "IntroPageSentence23" : "and",
+        "IntroPageSentence24" : "Profit",
+
+
+
 		//Labels for Items on Home page - Top Menu Bar
         "HomePageMenuBarLabelsHome"     : "Home",
         "HomePageMenuBarLabelsReport"     : "Reports",
@@ -851,14 +868,7 @@ app.config(['$translateProvider', function($translateProvider){
         "ManualPageTitle":"Manual",
         "ManualPageDownload":"Download"
 		
-		"IntroPageSentence1":"Who am I?",
-		"IntroPageSentence2":"I am leading",
-		"IntroPageSentence3":"I manage",
-		"IntroPageSentence4":"products under",
-		"IntroPageSentence5":"brands",
-		"IntroPageSentence6":"I compete with",
-		"IntroPageSentence7":"other companies",
-		"IntroPageSentence8":"My company’s mission is to get the highest Market Share and Profit !"
+
 		
     });
 
@@ -873,8 +883,24 @@ app.config(['$translateProvider', function($translateProvider){
 
     // Adding a translation table for the Chinese language
     $translateProvider.translations('zh_CN', {
-	
-	
+
+        //Label for Introduction
+        "IntroPageSentence1" : "我的角色",
+        "IntroPageSentence2" : "现在我将接管",
+        "IntroPageSentence3" : "主要有",
+        "IntroPageSentence4" : "商品，",
+        "IntroPageSentence5" : "共",
+        "IntroPageSentence6" : "个品牌",
+        "IntroPageSentence7" : "还要与另外",
+        "IntroPageSentence8" : "个对手竞争",
+
+
+        "IntroPageSentence21" : "公司的最终目标是要获得",
+        "IntroPageSentence22" : "最高的市场份额",
+        "IntroPageSentence23" : "和",
+        "IntroPageSentence24" : "净利润",
+
+
 		//Labels for Items on Home page - Top Menu Bar
         "HomePageMenuBarLabelsHome"       : "首页",
         "HomePageMenuBarLabelsReport"     : "报告",
@@ -1714,14 +1740,7 @@ app.config(['$translateProvider', function($translateProvider){
         "ManualPageTitle":"使用手册",
         "ManualPageDownload":"下载"
 		
-		"IntroPageSentence1":"我的角色",
-		"IntroPageSentence2":"现在我将接管",
-		"IntroPageSentence3":"主要有",
-		"IntroPageSentence4":"品牌，旗下有",
-		"IntroPageSentence5":"个单品",
-		"IntroPageSentence6":"还要另外",
-		"IntroPageSentence7":"个对手竞争",
-		"IntroPageSentence8":"公司的最终目标是要获得最高的市场份额和净利润！"
+
 		
     });
 
