@@ -1,6 +1,4 @@
-module( "callbacks", {
-	teardown: moduleTeardown
-});
+module("callbacks", { teardown: moduleTeardown });
 
 (function() {
 
@@ -10,9 +8,9 @@ var output,
 			output += string;
 		};
 	},
-	outputA = addToOutput("A"),
-	outputB = addToOutput("B"),
-	outputC = addToOutput("C"),
+	outputA = addToOutput( "A" ),
+	outputB = addToOutput( "B" ),
+	outputC = addToOutput( "C" ),
 	tests = {
 		"":                   "XABC   X     XABCABCC  X  XBB X   XABA  X   XX",
 		"once":               "XABC   X     X         X  X   X   XABA  X   XX",
@@ -34,14 +32,14 @@ var output,
 			};
 		}
 	};
-
+	
 	function showFlags( flags ) {
 		if ( typeof flags === "string" ) {
-			return "'" + flags + "'";
+			return '"' + flags + '"';
 		}
 		var output = [], key;
 		for ( key in flags ) {
-			output.push( "'" + key + "': " + flags[ key ] );
+			output.push( '"' + key + '": ' + flags[ key ] );
 		}
 		return "{ " + output.join( ", " ) + " }";
 	}
@@ -58,10 +56,7 @@ jQuery.each( tests, function( strFlags, resultString ) {
 
 		jQuery.each( filters, function( filterLabel, filter ) {
 
-			jQuery.each({
-				"string": strFlags,
-				"object": objectFlags
-			}, function( flagsTypes, flags ) {
+			jQuery.each( { "string": strFlags, "object": objectFlags }, function( flagsTypes, flags ) {
 
 				test( "jQuery.Callbacks( " + showFlags( flags ) + " ) - " + filterLabel, function() {
 
@@ -80,7 +75,7 @@ jQuery.each( tests, function( strFlags, resultString ) {
 					cblist.add(function( str ) {
 						output += str;
 					});
-					cblist.fire("A");
+					cblist.fire( "A" );
 					strictEqual( output, "XA", "Basic binding and firing" );
 					strictEqual( cblist.fired(), true, ".fired() detects firing" );
 					output = "X";
@@ -89,7 +84,7 @@ jQuery.each( tests, function( strFlags, resultString ) {
 						output += str;
 					});
 					strictEqual( output, "X", "Adding a callback after disabling" );
-					cblist.fire("A");
+					cblist.fire( "A" );
 					strictEqual( output, "X", "Firing after disabling" );
 
 					// Basic binding and firing (context, arguments)
@@ -132,15 +127,15 @@ jQuery.each( tests, function( strFlags, resultString ) {
 					// Locking
 					output = "X";
 					cblist = jQuery.Callbacks( flags );
-					cblist.add(function( str ) {
+					cblist.add( function( str ) {
 						output += str;
 					});
 					cblist.lock();
-					cblist.add(function( str ) {
+					cblist.add( function( str ) {
 						output += str;
 					});
-					cblist.fire("A");
-					cblist.add(function( str ) {
+					cblist.fire( "A" );
+					cblist.add( function( str ) {
 						output += str;
 					});
 					strictEqual( output, "X", "Lock early" );
@@ -148,7 +143,7 @@ jQuery.each( tests, function( strFlags, resultString ) {
 					// Ordering
 					output = "X";
 					cblist = jQuery.Callbacks( flags );
-					cblist.add(function() {
+					cblist.add( function() {
 						cblist.add( outputC );
 						outputA();
 					}, outputB );
@@ -157,7 +152,7 @@ jQuery.each( tests, function( strFlags, resultString ) {
 
 					// Add and fire again
 					output = "X";
-					cblist.add(function() {
+					cblist.add( function() {
 						cblist.add( outputC );
 						outputA();
 					}, outputB );
@@ -170,23 +165,23 @@ jQuery.each( tests, function( strFlags, resultString ) {
 					// Multiple fire
 					output = "X";
 					cblist = jQuery.Callbacks( flags );
-					cblist.add(function( str ) {
+					cblist.add( function( str ) {
 						output += str;
-					});
-					cblist.fire("A");
+					} );
+					cblist.fire( "A" );
 					strictEqual( output, "XA", "Multiple fire (first fire)" );
 					output = "X";
-					cblist.add(function( str ) {
+					cblist.add( function( str ) {
 						output += str;
-					});
+					} );
 					strictEqual( output, results.shift(), "Multiple fire (first new callback)" );
 					output = "X";
-					cblist.fire("B");
+					cblist.fire( "B" );
 					strictEqual( output, results.shift(), "Multiple fire (second fire)" );
 					output = "X";
-					cblist.add(function( str ) {
+					cblist.add( function( str ) {
 						output += str;
-					});
+					} );
 					strictEqual( output, results.shift(), "Multiple fire (second new callback)" );
 
 					// Return false
@@ -243,8 +238,8 @@ test( "jQuery.Callbacks.fireWith - arguments are copied", function() {
 
 	expect( 1 );
 
-	var cb = jQuery.Callbacks("memory"),
-		args = ["hello"];
+	var cb = jQuery.Callbacks( "memory" ),
+		args = [ "hello" ];
 
 	cb.fireWith( null, args );
 	args[ 0 ] = "world";
@@ -267,53 +262,6 @@ test( "jQuery.Callbacks.remove - should remove all instances", function() {
 	cb.add( fn, fn, function() {
 		ok( true, "end of test" );
 	}).remove( fn ).fire();
-});
-
-test( "jQuery.Callbacks.has", function() {
-
-	expect( 13 );
-
-	var cb = jQuery.Callbacks();
-	function getA() {
-		return "A";
-	}
-	function getB() {
-		return "B";
-	}
-	function getC() {
-		return "C";
-	}
-	cb.add(getA, getB, getC);
-	strictEqual( cb.has(), true, "No arguments to .has() returns whether callback function(s) are attached or not" );
-	strictEqual( cb.has(getA), true, "Check if a specific callback function is in the Callbacks list" );
-
-	cb.remove(getB);
-	strictEqual( cb.has(getB), false, "Remove a specific callback function and make sure its no longer there" );
-	strictEqual( cb.has(getA), true, "Remove a specific callback function and make sure other callback function is still there" );
-
-	cb.empty();
-	strictEqual( cb.has(), false, "Empty list and make sure there are no callback function(s)" );
-	strictEqual( cb.has(getA), false, "Check for a specific function in an empty() list" );
-
-	cb.add(getA, getB, function(){
-		strictEqual( cb.has(), true, "Check if list has callback function(s) from within a callback function" );
-		strictEqual( cb.has(getA), true, "Check if list has a specific callback from within a callback function" );
-	}).fire();
-
-	strictEqual( cb.has(), true, "Callbacks list has callback function(s) after firing" );
-
-	cb.disable();
-	strictEqual( cb.has(), false, "disabled() list has no callback functions (returns false)" );
-	strictEqual( cb.has(getA), false, "Check for a specific function in a disabled() list" );
-
-	cb = jQuery.Callbacks("unique");
-	cb.add(getA);
-	cb.add(getA);
-	strictEqual( cb.has(), true, "Check if unique list has callback function(s) attached" );
-	cb.lock();
-	strictEqual( cb.has(), false, "locked() list is empty and returns false" );
-
-
 });
 
 test( "jQuery.Callbacks() - adding a string doesn't cause a stack overflow", function() {

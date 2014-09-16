@@ -17,13 +17,6 @@ test("Basic requirements", function() {
 	ok( $, "$" );
 });
 
-testIframeWithCallback( "Conditional compilation compatibility (#13274)", "core/cc_on.html", function( cc_on, errors, $ ) {
-	expect( 3 );
-	ok( true, "JScript conditional compilation " + ( cc_on ? "supported" : "not supported" ) );
-	deepEqual( errors, [], "No errors" );
-	ok( $(), "jQuery executes" );
-});
-
 test("jQuery()", function() {
 
 	var elem, i,
@@ -34,8 +27,9 @@ test("jQuery()", function() {
 		div = jQuery("<div/><hr/><code/><b/>"),
 		exec = false,
 		lng = "",
-		expected = 21,
+		expected = 26,
 		attrObj = {
+			"click": function() { ok( exec, "Click executed." ); },
 			"text": "test",
 			"class": "test2",
 			"id": "test3"
@@ -43,10 +37,6 @@ test("jQuery()", function() {
 
 	// The $(html, props) signature can stealth-call any $.fn method, check for a
 	// few here but beware of modular builds where these methods may be excluded.
-	if ( jQuery.fn.click ) {
-		expected++;
-		attrObj["click"] = function() { ok( exec, "Click executed." ); };
-	}
 	if ( jQuery.fn.width ) {
 		expected++;
 		attrObj["width"] = 10;
@@ -136,7 +126,7 @@ test("jQuery()", function() {
 	equal( elem[0].id, "test3", "jQuery() quick setter id");
 
 	exec = true;
-	elem.trigger("click");
+	elem.click();
 
 	// manually clean up detached elements
 	elem.remove();
@@ -149,25 +139,31 @@ test("jQuery()", function() {
 	// manually clean up detached elements
 	elem.remove();
 
+	equal( jQuery(" <div/> ").length, 1, "Make sure whitespace is trimmed." );
+	equal( jQuery(" a<div/>b ").length, 1, "Make sure whitespace and other characters are trimmed." );
+
 	for ( i = 0; i < 128; i++ ) {
 		lng += "12345678";
 	}
+
+	equal( jQuery(" <div>" + lng + "</div> ").length, 1, "Make sure whitespace is trimmed on long strings." );
+	equal( jQuery(" a<div>" + lng + "</div>b ").length, 1, "Make sure whitespace and other characters are trimmed on long strings." );
 });
 
-test( "selector state", function() {
-	expect( 18 );
+test("selector state", function() {
+	expect(31);
 
 	var test;
 
-	test = jQuery( undefined );
+	test = jQuery(undefined);
 	equal( test.selector, "", "Empty jQuery Selector" );
 	equal( test.context, undefined, "Empty jQuery Context" );
 
-	test = jQuery( document );
+	test = jQuery(document);
 	equal( test.selector, "", "Document Selector" );
 	equal( test.context, document, "Document Context" );
 
-	test = jQuery( document.body );
+	test = jQuery(document.body);
 	equal( test.selector, "", "Body Selector" );
 	equal( test.context, document.body, "Body Context" );
 
@@ -179,36 +175,73 @@ test( "selector state", function() {
 	equal( test.selector, "#notfoundnono", "#notfoundnono Selector" );
 	equal( test.context, document, "#notfoundnono Context" );
 
-	test = jQuery( "#qunit-fixture", document );
+	test = jQuery("#qunit-fixture", document);
 	equal( test.selector, "#qunit-fixture", "#qunit-fixture Selector" );
 	equal( test.context, document, "#qunit-fixture Context" );
 
-	test = jQuery( "#qunit-fixture", document.body );
+	test = jQuery("#qunit-fixture", document.body);
 	equal( test.selector, "#qunit-fixture", "#qunit-fixture Selector" );
 	equal( test.context, document.body, "#qunit-fixture Context" );
 
 	// Test cloning
-	test = jQuery( test );
+	test = jQuery(test);
 	equal( test.selector, "#qunit-fixture", "#qunit-fixture Selector" );
 	equal( test.context, document.body, "#qunit-fixture Context" );
 
-	test = jQuery( document.body ).find("#qunit-fixture");
+	test = jQuery(document.body).find("#qunit-fixture");
 	equal( test.selector, "#qunit-fixture", "#qunit-fixture find Selector" );
 	equal( test.context, document.body, "#qunit-fixture find Context" );
+
+	test = jQuery("#qunit-fixture").filter("div");
+	equal( test.selector, "#qunit-fixture.filter(div)", "#qunit-fixture filter Selector" );
+	equal( test.context, document, "#qunit-fixture filter Context" );
+
+	test = jQuery("#qunit-fixture").not("div");
+	equal( test.selector, "#qunit-fixture.not(div)", "#qunit-fixture not Selector" );
+	equal( test.context, document, "#qunit-fixture not Context" );
+
+	test = jQuery("#qunit-fixture").filter("div").not("div");
+	equal( test.selector, "#qunit-fixture.filter(div).not(div)", "#qunit-fixture filter, not Selector" );
+	equal( test.context, document, "#qunit-fixture filter, not Context" );
+
+	test = jQuery("#qunit-fixture").filter("div").not("div").end();
+	equal( test.selector, "#qunit-fixture.filter(div)", "#qunit-fixture filter, not, end Selector" );
+	equal( test.context, document, "#qunit-fixture filter, not, end Context" );
+
+	test = jQuery("#qunit-fixture").parent("body");
+	equal( test.selector, "#qunit-fixture.parent(body)", "#qunit-fixture parent Selector" );
+	equal( test.context, document, "#qunit-fixture parent Context" );
+
+	test = jQuery("#qunit-fixture").eq(0);
+	equal( test.selector, "#qunit-fixture.slice(0,1)", "#qunit-fixture eq Selector" );
+	equal( test.context, document, "#qunit-fixture eq Context" );
+
+	var d = "<div />";
+	equal(
+		jQuery(d).appendTo(jQuery(d)).selector,
+		jQuery(d).appendTo(d).selector,
+		"manipulation methods make same selector for jQuery objects"
+	);
 });
 
 test( "globalEval", function() {
+
 	expect( 3 );
-	Globals.register("globalEvalTest");
 
-	jQuery.globalEval("globalEvalTest = 1;");
-	equal( window.globalEvalTest, 1, "Test variable assignments are global" );
+	jQuery.globalEval( "var globalEvalTest = true;" );
+	ok( window.globalEvalTest, "Test variable declarations are global" );
 
-	jQuery.globalEval("var globalEvalTest = 2;");
-	equal( window.globalEvalTest, 2, "Test variable declarations are global" );
+	window.globalEvalTest = false;
 
-	jQuery.globalEval("this.globalEvalTest = 3;");
-	equal( window.globalEvalTest, 3, "Test context (this) is the window object" );
+	jQuery.globalEval( "globalEvalTest = true;" );
+	ok( window.globalEvalTest, "Test variable assignments are global" );
+
+	window.globalEvalTest = false;
+
+	jQuery.globalEval( "this.globalEvalTest = true;" );
+	ok( window.globalEvalTest, "Test context (this) is the window object" );
+
+	window.globalEvalTest = undefined;
 });
 
 test("noConflict", function() {
@@ -216,16 +249,16 @@ test("noConflict", function() {
 
 	var $$ = jQuery;
 
-	strictEqual( jQuery, jQuery.noConflict(), "noConflict returned the jQuery object" );
-	strictEqual( window["jQuery"], $$, "Make sure jQuery wasn't touched." );
-	strictEqual( window["$"], original$, "Make sure $ was reverted." );
+	equal( jQuery, jQuery.noConflict(), "noConflict returned the jQuery object" );
+	equal( window["jQuery"], $$, "Make sure jQuery wasn't touched." );
+	equal( window["$"], original$, "Make sure $ was reverted." );
 
 	jQuery = $ = $$;
 
-	strictEqual( jQuery.noConflict(true), $$, "noConflict returned the jQuery object" );
-	strictEqual( window["jQuery"], originaljQuery, "Make sure jQuery was reverted." );
-	strictEqual( window["$"], original$, "Make sure $ was reverted." );
-	ok( $$().pushStack([]), "Make sure that jQuery still works." );
+	equal( jQuery.noConflict(true), $$, "noConflict returned the jQuery object" );
+	equal( window["jQuery"], originaljQuery, "Make sure jQuery was reverted." );
+	equal( window["$"], original$, "Make sure $ was reverted." );
+	ok( $$("#qunit-fixture").html("test"), "Make sure that jQuery still works." );
 
 	window["jQuery"] = jQuery = $$;
 });
@@ -253,7 +286,7 @@ test("trim", function() {
 });
 
 test("type", function() {
-	expect( 28 );
+	expect(23);
 
 	equal( jQuery.type(null), "null", "null" );
 	equal( jQuery.type(undefined), "undefined", "undefined" );
@@ -273,88 +306,85 @@ test("type", function() {
 	equal( jQuery.type(new Date()), "date", "Date" );
 	equal( jQuery.type(new Function("return;")), "function", "Function" );
 	equal( jQuery.type(function(){}), "function", "Function" );
-	equal( jQuery.type(new Error()), "error", "Error" );
 	equal( jQuery.type(window), "object", "Window" );
 	equal( jQuery.type(document), "object", "Document" );
 	equal( jQuery.type(document.body), "object", "Element" );
 	equal( jQuery.type(document.createTextNode("foo")), "object", "TextNode" );
 	equal( jQuery.type(document.getElementsByTagName("*")), "object", "NodeList" );
-
-	// Avoid Lint complaints
-	var MyString = String;
-	var MyNumber = Number;
-	var MyBoolean = Boolean;
-	var MyObject = Object;
-	equal( jQuery.type(new MyBoolean(true)), "boolean", "Boolean" );
-	equal( jQuery.type(new MyNumber(1)), "number", "Number" );
-	equal( jQuery.type(new MyString("a")), "string", "String" );
-	equal( jQuery.type(new MyObject()), "object", "Object" );
 });
 
 asyncTest("isPlainObject", function() {
 	expect(15);
 
-	var pass, iframe, doc,
-		fn = function() {};
+	var iframe;
 
 	// The use case that we want to match
-	ok( jQuery.isPlainObject({}), "{}" );
+	ok(jQuery.isPlainObject({}), "{}");
 
 	// Not objects shouldn't be matched
-	ok( !jQuery.isPlainObject(""), "string" );
-	ok( !jQuery.isPlainObject(0) && !jQuery.isPlainObject(1), "number" );
-	ok( !jQuery.isPlainObject(true) && !jQuery.isPlainObject(false), "boolean" );
-	ok( !jQuery.isPlainObject(null), "null" );
-	ok( !jQuery.isPlainObject(undefined), "undefined" );
+	ok(!jQuery.isPlainObject(""), "string");
+	ok(!jQuery.isPlainObject(0) && !jQuery.isPlainObject(1), "number");
+	ok(!jQuery.isPlainObject(true) && !jQuery.isPlainObject(false), "boolean");
+	ok(!jQuery.isPlainObject(null), "null");
+	ok(!jQuery.isPlainObject(undefined), "undefined");
 
 	// Arrays shouldn't be matched
-	ok( !jQuery.isPlainObject([]), "array" );
+	ok(!jQuery.isPlainObject([]), "array");
 
 	// Instantiated objects shouldn't be matched
-	ok( !jQuery.isPlainObject(new Date()), "new Date" );
+	ok(!jQuery.isPlainObject(new Date()), "new Date");
+
+	var fnplain = function(){};
 
 	// Functions shouldn't be matched
-	ok( !jQuery.isPlainObject(fn), "fn" );
+	ok(!jQuery.isPlainObject(fnplain), "fn");
+
+	/** @constructor */
+	var fn = function() {};
 
 	// Again, instantiated objects shouldn't be matched
-	ok( !jQuery.isPlainObject(new fn()), "new fn (no methods)" );
+	ok(!jQuery.isPlainObject(new fn()), "new fn (no methods)");
 
 	// Makes the function a little more realistic
 	// (and harder to detect, incidentally)
 	fn.prototype["someMethod"] = function(){};
 
 	// Again, instantiated objects shouldn't be matched
-	ok( !jQuery.isPlainObject(new fn()), "new fn" );
+	ok(!jQuery.isPlainObject(new fn()), "new fn");
 
 	// DOM Element
-	ok( !jQuery.isPlainObject( document.createElement("div") ), "DOM Element" );
+	ok(!jQuery.isPlainObject(document.createElement("div")), "DOM Element");
 
 	// Window
-	ok( !jQuery.isPlainObject( window ), "window" );
+	ok(!jQuery.isPlainObject(window), "window");
 
-	pass = false;
 	try {
 		jQuery.isPlainObject( window.location );
-		pass = true;
-	} catch ( e ) {}
-	ok( pass, "Does not throw exceptions on host objects" );
-
-	// Objects from other windows should be matched
-	window.iframeCallback = function( otherObject, detail ) {
-		window.iframeCallback = undefined;
-		iframe.parentNode.removeChild( iframe );
-		ok( jQuery.isPlainObject(new otherObject()), "new otherObject" + ( detail ? " - " + detail : "" ) );
-		start();
-	};
+		ok( true, "Does not throw exceptions on host objects");
+	} catch ( e ) {
+		ok( false, "Does not throw exceptions on host objects -- FAIL");
+	}
 
 	try {
-		iframe = jQuery("#qunit-fixture")[0].appendChild( document.createElement("iframe") );
-		doc = iframe.contentDocument || iframe.contentWindow.document;
+		iframe = document.createElement("iframe");
+		document.body.appendChild(iframe);
+
+		window.iframeDone = function(otherObject){
+			// Objects from other windows should be matched
+			ok(jQuery.isPlainObject(new otherObject()), "new otherObject");
+			document.body.removeChild( iframe );
+			start();
+		};
+
+		var doc = iframe.contentDocument || iframe.contentWindow.document;
 		doc.open();
-		doc.write("<body onload='window.parent.iframeCallback(Object);'>");
+		doc.write("<body onload='window.parent.iframeDone(Object);'>");
 		doc.close();
 	} catch(e) {
-		window.iframeDone( Object, "iframes not supported" );
+		document.body.removeChild( iframe );
+
+		ok(true, "new otherObject - iframes not supported");
+		start();
 	}
 });
 
@@ -537,7 +567,7 @@ test("XSS via location.hash", function() {
 	};
 	try {
 		// This throws an error because it's processed like an id
-		jQuery( "#<img id='check9521' src='no-such-.gif' onerror='jQuery._check9521(false)'>" ).appendTo("#qunit-fixture");
+		jQuery( '#<img id="check9521" src="no-such-.gif" onerror="jQuery._check9521(false)">' ).appendTo("#qunit-fixture");
 	} catch (err) {
 		jQuery["_check9521"](true);
 	}
@@ -766,148 +796,79 @@ test("first()/last()", function() {
 });
 
 test("map()", function() {
-	expect( 2 );
+	expect(8);
 
 	deepEqual(
-		jQuery("#ap").map(function() {
-			return jQuery( this ).find("a").get();
+		jQuery("#ap").map(function(){
+			return jQuery(this).find("a").get();
 		}).get(),
-		q( "google", "groups", "anchor1", "mark" ),
+		q("google", "groups", "anchor1", "mark"),
 		"Array Map"
 	);
 
 	deepEqual(
-		jQuery("#ap > a").map(function() {
+		jQuery("#ap > a").map(function(){
 			return this.parentNode;
 		}).get(),
-		q( "ap","ap","ap" ),
+		q("ap","ap","ap"),
 		"Single Map"
 	);
-});
 
-test("jQuery.map", function() {
-	expect( 25 );
-
-	var i, label, result, callback;
-
-	result = jQuery.map( [ 3, 4, 5 ], function( v, k ) {
+	var keys, values, scripts, nonsense, mapped, flat;
+	//for #2616
+	keys = jQuery.map( {"a":1,"b":2}, function( v, k ){
 		return k;
 	});
-	equal( result.join(""), "012", "Map the keys from an array" );
+	equal( keys.join(""), "ab", "Map the keys from a hash to an array" );
 
-	result = jQuery.map( [ 3, 4, 5 ], function( v, k ) {
+	values = jQuery.map( {a:1,b:2}, function( v, k ){
 		return v;
 	});
-	equal( result.join(""), "345", "Map the values from an array" );
+	equal( values.join(""), "12", "Map the values from a hash to an array" );
 
-	result = jQuery.map( { a: 1, b: 2 }, function( v, k ) {
-		return k;
-	});
-	equal( result.join(""), "ab", "Map the keys from an object" );
-
-	result = jQuery.map( { a: 1, b: 2 }, function( v, k ) {
+	// object with length prop
+	values = jQuery.map( {a:1,b:2, length:3}, function( v, k ){
 		return v;
 	});
-	equal( result.join(""), "12", "Map the values from an object" );
+	equal( values.join(""), "123", "Map the values from a hash with a length property to an array" );
 
-	result = jQuery.map( [ "a", undefined, null, "b" ], function( v, k ) {
+	scripts = document.getElementsByTagName("script");
+	mapped = jQuery.map( scripts, function( v, k ){
 		return v;
 	});
-	equal( result.join(""), "ab", "Array iteration does not include undefined/null results" );
+	equal( mapped.length, scripts.length, "Map an array(-like) to a hash" );
 
-	result = jQuery.map( { a: "a", b: undefined, c: null, d: "b" }, function( v, k ) {
+	nonsense = document.getElementsByTagName("asdf");
+	mapped = jQuery.map( nonsense, function( v, k ){
 		return v;
 	});
-	equal( result.join(""), "ab", "Object iteration does not include undefined/null results" );
+	equal( mapped.length, nonsense.length, "Map an empty array(-like) to a hash" );
 
-	result = {
-		Zero: function() {},
-		One: function( a ) {},
-		Two: function( a, b ) {}
-	};
-	callback = function( v, k ) {
-		equal( k, "foo", label + "-argument function treated like object" );
-	};
-	for ( i in result ) {
-		label = i;
-		result[ i ].foo = "bar";
-		jQuery.map( result[ i ], callback );
-	}
-
-	result = {
-		"undefined": undefined,
-		"null": null,
-		"false": false,
-		"true": true,
-		"empty string": "",
-		"nonempty string": "string",
-		"string \"0\"": "0",
-		"negative": -1,
-		"excess": 1
-	};
-	callback = function( v, k ) {
-		equal( k, "length", "Object with " + label + " length treated like object" );
-	};
-	for ( i in result ) {
-		label = i;
-		jQuery.map( { length: result[ i ] }, callback );
-	}
-
-	result = {
-		"sparse Array": Array( 4 ),
-		"length: 1 plain object": { length: 1, "0": true },
-		"length: 2 plain object": { length: 2, "0": true, "1": true },
-		NodeList: document.getElementsByTagName("html")
-	};
-	callback = function( v, k ) {
-		if ( result[ label ] ) {
-			delete result[ label ];
-			equal( k, "0", label + " treated like array" );
-		}
-	};
-	for ( i in result ) {
-		label = i;
-		jQuery.map( result[ i ], callback );
-	}
-
-	result = false;
-	jQuery.map( { length: 0 }, function( v, k ) {
-		result = true;
+	flat = jQuery.map( Array(4), function( v, k ){
+		return k % 2 ? k : [k,k,k];//try mixing array and regular returns
 	});
-	ok( !result, "length: 0 plain object treated like array" );
-
-	result = false;
-	jQuery.map( document.getElementsByTagName("asdf"), function( v, k ) {
-		result = true;
-	});
-	ok( !result, "empty NodeList treated like array" );
-
-	result = jQuery.map( Array(4), function( v, k ){
-		return k % 2 ? k : [k,k,k];
-	});
-	equal( result.join(""), "00012223", "Array results flattened (#2616)" );
+	equal( flat.join(""), "00012223", "try the new flatten technique(#2616)" );
 });
 
 test("jQuery.merge()", function() {
 	expect(8);
 
-	deepEqual( jQuery.merge([],[]), [], "Empty arrays" );
+	var parse = jQuery.merge;
 
-	deepEqual( jQuery.merge([ 1 ],[ 2 ]), [ 1, 2 ], "Basic" );
-	deepEqual( jQuery.merge([ 1, 2 ], [ 3, 4 ]), [ 1, 2, 3, 4 ], "Basic" );
+	deepEqual( parse([],[]), [], "Empty arrays" );
 
-	deepEqual( jQuery.merge([ 1, 2 ],[]), [ 1, 2 ], "Second empty" );
-	deepEqual( jQuery.merge([],[ 1, 2 ]), [ 1, 2 ], "First empty" );
+	deepEqual( parse([1],[2]), [1,2], "Basic" );
+	deepEqual( parse([1,2],[3,4]), [1,2,3,4], "Basic" );
+
+	deepEqual( parse([1,2],[]), [1,2], "Second empty" );
+	deepEqual( parse([],[1,2]), [1,2], "First empty" );
 
 	// Fixed at [5998], #3641
-	deepEqual( jQuery.merge([ -2, -1 ], [ 0, 1, 2 ]), [ -2, -1 , 0, 1, 2 ],
-		"Second array including a zero (falsy)");
+	deepEqual( parse([-2,-1], [0,1,2]), [-2,-1,0,1,2], "Second array including a zero (falsy)");
 
 	// After fixing #5527
-	deepEqual( jQuery.merge([], [ null, undefined ]), [ null, undefined ],
-		"Second array including null and undefined values");
-	deepEqual( jQuery.merge({ length: 0 }, [ 1, 2 ] ), { length: 2, 0: 1, 1: 2},
-		"First array like");
+	deepEqual( parse([], [null, undefined]), [null, undefined], "Second array including null and undefined values");
+	deepEqual( parse({"length":0}, [1,2]), {length:2, 0:1, 1:2}, "First array like");
 });
 
 test("jQuery.extend(Object, Object)", function() {
@@ -1020,110 +981,54 @@ test("jQuery.extend(Object, Object)", function() {
 });
 
 test("jQuery.each(Object,Function)", function() {
-	expect( 23 );
-
-	var i, label, seen, callback;
-
-	seen = {};
-	jQuery.each( [ 3, 4, 5 ], function( k, v ) {
-		seen[ k ] = v;
+	expect(14);
+	jQuery.each( [0,1,2], function(i, n){
+		equal( i, n, "Check array iteration" );
 	});
-	deepEqual( seen, { "0": 3, "1": 4, "2": 5 }, "Array iteration" );
 
-	seen = {};
-	jQuery.each( { name: "name", lang: "lang" }, function( k, v ) {
-		seen[ k ] = v;
+	jQuery.each( [5,6,7], function(i, n){
+		equal( i, n - 5, "Check array iteration" );
 	});
-	deepEqual( seen, { name: "name", lang: "lang" }, "Object iteration" );
 
-	seen = [];
-	jQuery.each( [ 1, 2, 3 ], function( k, v ) {
-		seen.push( v );
-		if ( k === 1 ) {
+	jQuery.each( { name: "name", lang: "lang" }, function(i, n){
+		equal( i, n, "Check object iteration" );
+	});
+
+	var total = 0;
+	jQuery.each([1,2,3], function(i,v){ total += v; });
+	equal( total, 6, "Looping over an array" );
+	total = 0;
+	jQuery.each([1,2,3], function(i,v){
+		total += v;
+		if ( i == 1 ) {
 			return false;
 		}
 	});
-	deepEqual( seen, [ 1, 2 ] , "Broken array iteration" );
+	equal( total, 3, "Looping over an array, with break" );
+	total = 0;
+	jQuery.each({"a":1,"b":2,"c":3}, function(i,v){ total += v; });
+	equal( total, 6, "Looping over an object" );
+	total = 0;
+	jQuery.each({"a":3,"b":3,"c":3}, function(i,v){ total += v; return false; });
+	equal( total, 3, "Looping over an object, with break" );
 
-	seen = [];
-	jQuery.each( {"a": 1, "b": 2,"c": 3 }, function( k, v ) {
-		seen.push( v );
-		return false;
+	var f = function(){};
+	f.foo = "bar";
+	jQuery.each(f, function(i){
+		f[i] = "baz";
 	});
-	deepEqual( seen, [ 1 ], "Broken object iteration" );
+	equal( "baz", f.foo, "Loop over a function" );
 
-	seen = {
-		Zero: function() {},
-		One: function( a ) {},
-		Two: function( a, b ) {}
-	};
-	callback = function( k, v ) {
-		equal( k, "foo", label + "-argument function treated like object" );
-	};
-	for ( i in seen ) {
-		label = i;
-		seen[ i ].foo = "bar";
-		jQuery.each( seen[ i ], callback );
-	}
-
-	seen = {
-		"undefined": undefined,
-		"null": null,
-		"false": false,
-		"true": true,
-		"empty string": "",
-		"nonempty string": "string",
-		"string \"0\"": "0",
-		"negative": -1,
-		"excess": 1
-	};
-	callback = function( k, v ) {
-		equal( k, "length", "Object with " + label + " length treated like object" );
-	};
-	for ( i in seen ) {
-		label = i;
-		jQuery.each( { length: seen[ i ] }, callback );
-	}
-
-	seen = {
-		"sparse Array": Array( 4 ),
-		"length: 1 plain object": { length: 1, "0": true },
-		"length: 2 plain object": { length: 2, "0": true, "1": true },
-		NodeList: document.getElementsByTagName("html")
-	};
-	callback = function( k, v ) {
-		if ( seen[ label ] ) {
-			delete seen[ label ];
-			equal( k, "0", label + " treated like array" );
-			return false;
-		}
-	};
-	for ( i in seen ) {
-		label = i;
-		jQuery.each( seen[ i ], callback );
-	}
-
-	seen = false;
-	jQuery.each( { length: 0 }, function( k, v ) {
-		seen = true;
+	var stylesheet_count = 0;
+	jQuery.each(document.styleSheets, function(i){
+		stylesheet_count++;
 	});
-	ok( !seen, "length: 0 plain object treated like array" );
+	equal(stylesheet_count, 2, "should not throw an error in IE while looping over document.styleSheets and return proper amount");
 
-	seen = false;
-	jQuery.each( document.getElementsByTagName("asdf"), function( k, v ) {
-		seen = true;
-	});
-	ok( !seen, "empty NodeList treated like array" );
-
-	i = 0;
-	jQuery.each( document.styleSheets, function() {
-		i++;
-	});
-	equal( i, 2, "Iteration over document.styleSheets" );
 });
 
 test("jQuery.makeArray", function(){
-	expect(15);
+	expect(17);
 
 	equal( jQuery.makeArray(jQuery("html>*"))[0].nodeName.toUpperCase(), "HEAD", "Pass makeArray a jQuery object" );
 
@@ -1155,9 +1060,11 @@ test("jQuery.makeArray", function(){
 
 	equal( jQuery.makeArray(/a/)[0].constructor, RegExp, "Pass makeArray a regex" );
 
-	// Some nodes inherit traits of nodelists
-	ok( jQuery.makeArray(document.getElementById("form")).length >= 13,
-		"Pass makeArray a form (treat as elements)" );
+	ok( jQuery.makeArray(document.getElementById("form")).length >= 13, "Pass makeArray a form (treat as elements)" );
+
+	// For #5610
+	deepEqual( jQuery.makeArray({length: "0"}), [], "Make sure object is coerced properly.");
+	deepEqual( jQuery.makeArray({length: "5"}), [], "Make sure object is coerced properly.");
 });
 
 test("jQuery.inArray", function(){
@@ -1181,7 +1088,7 @@ test("jQuery.isEmptyObject", function(){
 });
 
 test("jQuery.proxy", function(){
-	expect( 9 );
+	expect(7);
 
 	var test = function(){ equal( this, thisObject, "Make sure that scope is set properly." ); };
 	var thisObject = { foo: "bar", method: test };
@@ -1209,75 +1116,62 @@ test("jQuery.proxy", function(){
 	// Test old syntax
 	var test4 = { "meth": function( a ){ equal( a, "boom", "Ensure old syntax works." ); } };
 	jQuery.proxy( test4, "meth" )( "boom" );
-
-	// jQuery 1.9 improved currying with `this` object
-	var fn = function() {
-		equal( Array.prototype.join.call( arguments, "," ), "arg1,arg2,arg3", "args passed" );
-		equal( this.foo, "bar", "this-object passed" );
-	};
-	var cb = jQuery.proxy( fn, null, "arg1", "arg2" );
-	cb.call( thisObject, "arg3" );
 });
 
 test("jQuery.parseHTML", function() {
-	expect( 17 );
-
-	var html, nodes;
+	expect( 11 );
 
 	equal( jQuery.parseHTML(), null, "Nothing in, null out." );
-	equal( jQuery.parseHTML( null ), null, "Null in, null out." );
-	equal( jQuery.parseHTML( "" ), null, "Empty string in, null out." );
+	equal( jQuery.parseHTML( null ), null, "Nothing in, null out." );
+	equal( jQuery.parseHTML( "" ), null, "Nothing in, null out." );
 	raises(function() {
-		jQuery.parseHTML( "<div></div>", document.getElementById("form") );
+		jQuery.parseHTML( "<div>", document.getElementById("form") );
 	}, "Passing an element as the context raises an exception (context should be a document)");
 
-	nodes = jQuery.parseHTML( jQuery("body")[0].innerHTML );
-	ok( nodes.length > 4, "Parse a large html string" );
-	equal( jQuery.type( nodes ), "array", "parseHTML returns an array rather than a nodelist" );
+	var elems = jQuery.parseHTML( jQuery("body").html() );
+	ok( elems.length > 10, "Parse a large html string" );
+	equal( jQuery.type( elems ), "array", "parseHTML returns an array rather than a nodelist" );
 
-	html = "<script>undefined()</script>";
-	equal( jQuery.parseHTML( html ).length, 0, "Ignore scripts by default" );
-	equal( jQuery.parseHTML( html, true )[0].nodeName.toLowerCase(), "script", "Preserve scripts when requested" );
+	var script = "<script>undefined()</script>";
+	equal( jQuery.parseHTML( script ).length, 0, "Passing a script is not allowed by default" );
+	raises(function() {
+		jQuery(jQuery.parseHTML( script, true )).appendTo("#qunit-fixture");
+	}, "Passing a script is allowed if allowScripts is true");
 
-	html += "<div></div>";
-	equal( jQuery.parseHTML( html )[0].nodeName.toLowerCase(), "div", "Preserve non-script nodes" );
-	equal( jQuery.parseHTML( html, true )[0].nodeName.toLowerCase(), "script", "Preserve script position");
+	var html = script + "<div></div>";
+	equal( jQuery.parseHTML( html )[0].nodeName.toLowerCase(), "div", "Ignore scripts by default" );
+	raises(function() {
+		jQuery(jQuery.parseHTML( html, true )).appendTo("#qunit-fixture");
+	}, "Passing a script is allowed if allowScripts is true");
 
 	equal( jQuery.parseHTML("text")[0].nodeType, 3, "Parsing text returns a text node" );
-	equal( jQuery.parseHTML( "\t<div></div>" )[0].nodeValue, "\t", "Preserve leading whitespace" );
-
-	equal( jQuery.parseHTML(" <div/> ")[0].nodeType, 3, "Leading spaces are treated as text nodes (#11290)" );
-
-	html = jQuery.parseHTML( "<div>test div</div>" );
-	equal( html[ 0 ].parentNode.nodeType, 11, "parentNode should be documentFragment" );
-	equal( html[ 0 ].innerHTML, "test div", "Content should be preserved" );
-
-	equal( jQuery.parseHTML("<span><span>").length, 1, "Incorrect html-strings should not break anything" );
-	equal( jQuery.parseHTML("<td><td>")[ 1 ].parentNode.nodeType, 11, "parentNode should be documentFragment" );
 });
 
 test("jQuery.parseJSON", function(){
-	expect( 9 );
+	expect(8);
 
-	equal( jQuery.parseJSON( null ), null, "Actual null returns null" );
-	equal( jQuery.isEmptyObject( jQuery.parseJSON("{}") ), true, "Empty object returns empty object" );
-	deepEqual( jQuery.parseJSON("{\"test\":1}"), { "test": 1 }, "Plain object parses" );
-	deepEqual( jQuery.parseJSON("\n{\"test\":1}"), { "test": 1 }, "Leading whitespaces are ignored." );
-	raises(function() {
-		jQuery.parseJSON();
-	}, null, "Undefined raises an error" );
-	raises( function() {
-		jQuery.parseJSON( "" );
-	}, null, "Empty string raises an error" );
-	raises(function() {
-		jQuery.parseJSON("''");
-	}, null, "Single-quoted string raises an error" );
-	raises(function() {
+	equal( jQuery.parseJSON(), null, "Nothing in, null out." );
+	equal( jQuery.parseJSON( null ), null, "Nothing in, null out." );
+	equal( jQuery.parseJSON( "" ), null, "Nothing in, null out." );
+
+	deepEqual( jQuery.parseJSON("{}"), {}, "Plain object parsing." );
+	deepEqual( jQuery.parseJSON("{\"test\":1}"), {"test":1}, "Plain object parsing." );
+
+	deepEqual( jQuery.parseJSON("\n{\"test\":1}"), {"test":1}, "Make sure leading whitespaces are handled." );
+
+	try {
 		jQuery.parseJSON("{a:1}");
-	}, null, "Unquoted property raises an error" );
-	raises(function() {
+		ok( false, "Test malformed JSON string." );
+	} catch( e ) {
+		ok( true, "Test malformed JSON string." );
+	}
+
+	try {
 		jQuery.parseJSON("{'a':1}");
-	}, null, "Single-quoted property raises an error" );
+		ok( false, "Test malformed JSON string." );
+	} catch( e ) {
+		ok( true, "Test malformed JSON string." );
+	}
 });
 
 test("jQuery.parseXML", 8, function(){
@@ -1311,6 +1205,128 @@ test("jQuery.parseXML", 8, function(){
 		ok( false, "empty input throws exception" );
 	}
 });
+
+// Skip this test because IE6 takes too long; reinstate in the compat plugin
+if ( jQuery.sub_runs_too_slow_in_IE6 ) {
+
+test("jQuery.sub() - Static Methods", function(){
+	expect(18);
+	var Subclass = jQuery.sub();
+	Subclass.extend({
+		"topLevelMethod": function() {return this.debug;},
+		"debug": false,
+		"config": {
+			"locale": "en_US"
+		},
+		"setup": function(config) {
+			this.extend(true, this["config"], config);
+		}
+	});
+	Subclass.fn.extend({"subClassMethod": function() { return this;}});
+
+	//Test Simple Subclass
+	ok(Subclass["topLevelMethod"]() === false, "Subclass.topLevelMethod thought debug was true");
+	ok(Subclass["config"]["locale"] == "en_US", Subclass["config"]["locale"] + " is wrong!");
+	deepEqual(Subclass["config"]["test"], undefined, "Subclass.config.test is set incorrectly");
+	equal(jQuery.ajax, Subclass.ajax, "The subclass failed to get all top level methods");
+
+	//Create a SubSubclass
+	var SubSubclass = Subclass.sub();
+
+	//Make Sure the SubSubclass inherited properly
+	ok(SubSubclass["topLevelMethod"]() === false, "SubSubclass.topLevelMethod thought debug was true");
+	ok(SubSubclass["config"]["locale"] == "en_US", SubSubclass["config"]["locale"] + " is wrong!");
+	deepEqual(SubSubclass["config"]["test"], undefined, "SubSubclass.config.test is set incorrectly");
+	equal(jQuery.ajax, SubSubclass.ajax, "The subsubclass failed to get all top level methods");
+
+	//Modify The Subclass and test the Modifications
+	SubSubclass.fn.extend({"subSubClassMethod": function() { return this;}});
+	SubSubclass["setup"]({"locale": "es_MX", "test": "worked"});
+	SubSubclass["debug"] = true;
+	SubSubclass.ajax = function() {return false;};
+	ok(SubSubclass["topLevelMethod"](), "SubSubclass.topLevelMethod thought debug was false");
+	deepEqual(SubSubclass(document)["subClassMethod"], Subclass.fn["subClassMethod"], "Methods Differ!");
+	ok(SubSubclass["config"]["locale"] == "es_MX", SubSubclass["config"]["locale"] + " is wrong!");
+	ok(SubSubclass["config"]["test"] == "worked", "SubSubclass.config.test is set incorrectly");
+	notEqual(jQuery.ajax, SubSubclass.ajax, "The subsubclass failed to get all top level methods");
+
+	//This shows that the modifications to the SubSubClass did not bubble back up to it's superclass
+	ok(Subclass["topLevelMethod"]() === false, "Subclass.topLevelMethod thought debug was true");
+	ok(Subclass["config"]["locale"] == "en_US", Subclass["config"]["locale"] + " is wrong!");
+	deepEqual(Subclass["config"]["test"], undefined, "Subclass.config.test is set incorrectly");
+	deepEqual(Subclass(document)["subSubClassMethod"], undefined, "subSubClassMethod set incorrectly");
+	equal(jQuery.ajax, Subclass.ajax, "The subclass failed to get all top level methods");
+});
+
+test("jQuery.sub() - .fn Methods", function(){
+	expect(378);
+
+	var Subclass = jQuery.sub(),
+			SubclassSubclass = Subclass.sub(),
+			jQueryDocument = jQuery(document),
+			selectors, contexts, methods, method, arg, description;
+
+	jQueryDocument.toString = function(){ return "jQueryDocument"; };
+
+	Subclass.fn.subclassMethod = function(){};
+	SubclassSubclass.fn.subclassSubclassMethod = function(){};
+
+	selectors = [
+		"body",
+		"html, body",
+		"<div></div>"
+	];
+
+	contexts = [undefined, document, jQueryDocument];
+
+	jQuery.expandedEach = jQuery.each;
+	jQuery.each(selectors, function(i, selector){
+
+		jQuery.expandedEach({ // all methods that return a new jQuery instance
+			"eq": 1 ,
+			"add": document,
+			"end": undefined,
+			"has": undefined,
+			"closest": "div",
+			"filter": document,
+			"find": "div"
+		}, function(method, arg){
+			jQuery.each(contexts, function(i, context){
+
+				description = "(\""+selector+"\", "+context+")."+method+"("+(arg||"")+")";
+
+				deepEqual(
+					(function(var_args){ return jQuery.fn[method].apply(jQuery(selector, context), arguments).subclassMethod; })(arg),
+					undefined, "jQuery"+description+" doesn't have Subclass methods"
+				);
+				deepEqual(
+					(function(var_args){ return jQuery.fn[method].apply(jQuery(selector, context), arguments).subclassSubclassMethod; })(arg),
+					undefined, "jQuery"+description+" doesn't have SubclassSubclass methods"
+				);
+				deepEqual(
+					Subclass(selector, context)[method](arg).subclassMethod, Subclass.fn.subclassMethod,
+					"Subclass"+description+" has Subclass methods"
+				);
+				deepEqual(
+					Subclass(selector, context)[method](arg).subclassSubclassMethod, undefined,
+					"Subclass"+description+" doesn't have SubclassSubclass methods"
+				);
+				deepEqual(
+					SubclassSubclass(selector, context)[method](arg).subclassMethod, Subclass.fn.subclassMethod,
+					"SubclassSubclass"+description+" has Subclass methods"
+				);
+				deepEqual(
+					SubclassSubclass(selector, context)[method](arg).subclassSubclassMethod, SubclassSubclass.fn.subclassSubclassMethod,
+					"SubclassSubclass"+description+" has SubclassSubclass methods"
+				);
+
+			});
+		});
+	});
+
+});
+
+} // jQuery.sub
 
 test("jQuery.camelCase()", function() {
 

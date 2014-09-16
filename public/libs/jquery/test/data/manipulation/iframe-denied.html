@@ -6,11 +6,11 @@
 	</head>
 	<body>
 		<div id="qunit-fixture"></div>
-		<script src="../../../dist/jquery.min.js"></script>
+		<script src="../../../dist/jquery.js"></script>
 		<script>
 			var script = document.getElementsByTagName( "script" )[ 0 ],
 				div = document.createElement( "div" ),
-				src = "http://" + window.parent.externalHost,
+				src = "http://google.com",
 				success = true,
 				error = "";
 
@@ -31,6 +31,6 @@
 						( error ? ": " + error : "" )
 				});
 			});
-		</script>
+			</script>
 	</body>
 </html>

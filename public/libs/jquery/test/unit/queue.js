@@ -119,6 +119,7 @@ test("callbacks keep their place in the queue", function() {
 
 	div.promise("fx").done(function() {
 		equal(counter, 4, "Deferreds resolved");
+		jQuery.removeData( div[0], "olddisplay", true );
 		start();
 	});
 });
@@ -259,16 +260,17 @@ if ( jQuery.fn.stop ) {
 		expect( 3 );
 		stop();
 
-		var done = {};
-		jQuery({})
+		var foo = jQuery({}), run = 0;
+
+		foo
 			.queue( "alternate", function( next ) {
-				done.alt1 = true;
+				run++;
 				ok( true, "This first function was dequeued" );
 				next();
 			})
 			.delay( 1000, "alternate" )
 			.queue( "alternate", function() {
-				done.alt2 = true;
+				run++;
 				ok( true, "The function was dequeued immediately, the delay was stopped" );
 			})
 			.dequeue( "alternate" )
@@ -277,20 +279,18 @@ if ( jQuery.fn.stop ) {
 			.stop( "alternate", false, false )
 
 			// this test
-			.delay( 1 )
+			.delay( 1000 )
 			.queue(function() {
-				done.default1 = true;
+				run++;
 				ok( false, "This queue should never run" );
 			})
 
 			// stop( clearQueue ) should clear the queue
 			.stop( true, false );
 
-		deepEqual( done, { alt1: true, alt2: true }, "Queue ran the proper functions" );
+		equal( run, 2, "Queue ran the proper functions" );
 
-		setTimeout(function() {
-			start();
-		}, 1500 );
+		setTimeout( start, 2000 );
 	});
 
 	asyncTest( "queue stop hooks", 2, function() {

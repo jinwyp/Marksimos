@@ -1,16 +1,14 @@
-/*jshint multistr:true, quotmark:false */
+/*jshint multistr:true */
 
-var amdDefined, fireNative,
-	originaljQuery = this.jQuery || "jQuery",
-	original$ = this.$ || "$",
+var jQuery = this.jQuery || "jQuery", // For testing .noConflict()
+	$ = this.$ || "$",
+	originaljQuery = jQuery,
+	original$ = $,
 	hasPHP = true,
+	// Disable Ajax tests to reduce network strain
+	// Re-enabled (at least the variable should be declared)
 	isLocal = window.location.protocol === "file:",
-	// see RFC 2606
-	externalHost = "example.com";
-
-// For testing .noConflict()
-this.jQuery = originaljQuery;
-this.$ = original$;
+	amdDefined;
 
 /**
  * Set up a mock AMD define function for testing AMD registration.
@@ -58,7 +56,7 @@ function t( a, b, c ) {
 	deepEqual(f, q.apply( q, c ), a + " (" + b + ")");
 }
 
-function createDashboardXML() {
+var createDashboardXML = function() {
 	var string = '<?xml version="1.0" encoding="UTF-8"?> \
 	<dashboard> \
 		<locations class="foo"> \
@@ -72,19 +70,19 @@ function createDashboardXML() {
 	</dashboard>';
 
 	return jQuery.parseXML(string);
-}
+};
 
-function createWithFriesXML() {
+var createWithFriesXML = function() {
 	var string = '<?xml version="1.0" encoding="UTF-8"?> \
 	<soap:Envelope xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/" \
 		xmlns:xsd="http://www.w3.org/2001/XMLSchema" \
 		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"> \
 		<soap:Body> \
-			<jsconf xmlns="http://{{ externalHost }}/ns1"> \
-				<response xmlns:ab="http://{{ externalHost }}/ns2"> \
+			<jsconf xmlns="http://www.example.com/ns1"> \
+				<response xmlns:ab="http://www.example.com/ns2"> \
 					<meta> \
 						<component id="seite1" class="component"> \
-							<properties xmlns:cd="http://{{ externalHost }}/ns3"> \
+							<properties xmlns:cd="http://www.example.com/ns3"> \
 								<property name="prop1"> \
 									<thing /> \
 									<value>1</value> \
@@ -101,34 +99,22 @@ function createWithFriesXML() {
 		</soap:Body> \
 	</soap:Envelope>';
 
-	return jQuery.parseXML( string.replace( /\{\{\s*externalHost\s*\}\}/g, externalHost ) );
-}
+	return jQuery.parseXML(string);
+};
 
-function createXMLFragment() {
-	var xml, frag;
-	if ( window.ActiveXObject ) {
-		xml = new ActiveXObject("msxml2.domdocument");
-	} else {
-		xml = document.implementation.createDocument( "", "", null );
-	}
-
-	if ( xml ) {
-		frag = xml.createElement("data");
-	}
-
-	return frag;
-}
-
-fireNative = document.createEvent ?
-	function( node, type ) {
+var fireNative;
+if ( document.createEvent ) {
+	fireNative = function( node, type ) {
 		var event = document.createEvent('HTMLEvents');
 		event.initEvent( type, true, true );
 		node.dispatchEvent( event );
-	} :
-	function( node, type ) {
+	};
+} else {
+	fireNative = function( node, type ) {
 		var event = document.createEventObject();
 		node.fireEvent( 'on' + type, event );
 	};
+}
 
 /**
  * Add random number to url to stop caching
@@ -143,73 +129,53 @@ function url( value ) {
 	return value + (/\?/.test(value) ? "&" : "?") + new Date().getTime() + "" + parseInt(Math.random() * 100000, 10);
 }
 
-// Ajax testing helper
-function ajaxTest( title, expect, options ) {
-	var requestOptions;
-	if ( jQuery.isFunction( options ) ) {
-		options = options();
-	}
-	options = options || [];
-	requestOptions = options.requests || options.request || options;
-	if ( !jQuery.isArray( requestOptions ) ) {
-		requestOptions = [ requestOptions ];
-	}
-	asyncTest( title, expect, function() {
-		if ( options.setup ) {
-			options.setup();
+(function () {
+	// Store the old counts so that we only assert on tests that have actually leaked,
+	// instead of asserting every time a test has leaked sometime in the past
+	var oldCacheLength = 0,
+		oldFragmentsLength = 0,
+		oldTimersLength = 0,
+		oldActive = 0;
+
+	/**
+	 * Ensures that tests have cleaned up properly after themselves. Should be passed as the
+	 * teardown function on all modules' lifecycle object.
+	 */
+	this.moduleTeardown = function () {
+		var i, fragmentsLength = 0, cacheLength = 0;
+
+		// Allow QUnit.reset to clean up any attached elements before checking for leaks
+		QUnit.reset();
+
+		for ( i in jQuery.cache ) {
+			++cacheLength;
 		}
 
-		var completed = false,
-			remaining = requestOptions.length,
-			complete = function() {
-				if ( !completed && --remaining === 0 ) {
-					completed = true;
-					delete ajaxTest.abort;
-					if ( options.teardown ) {
-						options.teardown();
-					}
-					start();
-				}
-			},
-			requests = jQuery.map( requestOptions, function( options ) {
-				var request = ( options.create || jQuery.ajax )( options ),
-					callIfDefined = function( deferType, optionType ) {
-						var handler = options[ deferType ] || !!options[ optionType ];
-						return function( _, status ) {
-							if ( !completed ) {
-								if ( !handler ) {
-									ok( false, "unexpected " + status );
-								} else if ( jQuery.isFunction( handler ) ) {
-									handler.apply( this, arguments );
-								}
-							}
-						};
-					};
+		jQuery.fragments = {};
 
-				if ( options.afterSend ) {
-					options.afterSend( request );
-				}
+		for ( i in jQuery.fragments ) {
+			++fragmentsLength;
+		}
 
-				return request
-					.done( callIfDefined( "done", "success" ) )
-					.fail( callIfDefined( "fail", "error" ) )
-					.always( complete );
-			});
-
-		ajaxTest.abort = function( reason ) {
-			if ( !completed ) {
-				completed = true;
-				delete ajaxTest.abort;
-				ok( false, "aborted " + reason );
-				jQuery.each( requests, function( i, request ) {
-					request.abort();
-				});
-			}
-		};
-	});
-}
-
-(function () {
+		// Because QUnit doesn't have a mechanism for retrieving the number of expected assertions for a test,
+		// if we unconditionally assert any of these, the test will fail with too many assertions :|
+		if ( cacheLength !== oldCacheLength ) {
+			equal( cacheLength, oldCacheLength, "No unit tests leak memory in jQuery.cache" );
+			oldCacheLength = cacheLength;
+		}
+		if ( fragmentsLength !== oldFragmentsLength ) {
+			equal( fragmentsLength, oldFragmentsLength, "No unit tests leak memory in jQuery.fragments" );
+			oldFragmentsLength = fragmentsLength;
+		}
+		if ( jQuery.timers && jQuery.timers.length !== oldTimersLength ) {
+			equal( jQuery.timers.length, oldTimersLength, "No timers are still running" );
+			oldTimersLength = jQuery.timers.length;
+		}
+		if ( jQuery.active !== undefined && jQuery.active !== oldActive ) {
+			equal( jQuery.active, 0, "No AJAX requests are still active" );
+			oldActive = jQuery.active;
+		}
+	};
 
 	this.testIframe = function( fileName, name, fn ) {
 
@@ -264,6 +230,12 @@ function ajaxTest( title, expect, options ) {
 			).appendTo( "body" );
 		});
 	};
-
-	window.iframeCallback = undefined;
 }());
+
+// Sandbox start for great justice
+(function() {
+	var oldStart = window.start;
+	window.start = function() {
+		oldStart();
+	};
+})();

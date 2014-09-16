@@ -6,17 +6,8 @@ test("boxModel", function() {
 	equal( jQuery.support.boxModel, document.compatMode === "CSS1Compat" , "jQuery.support.boxModel is sort of tied to quirks mode but unstable since 1.8" );
 });
 
-test( "zoom of doom (#13089)", function() {
-	expect( 1 );
-
-	if ( jQuery.support.inlineBlockNeedsLayout ) {
-		ok( document.body.style.zoom, "Added a zoom to the body (#11048, #12869)" );
-	} else {
-		ok( !document.body.style.zoom, "No zoom added to the body" );
-	}
-});
 if ( jQuery.css ) {
-	testIframeWithCallback( "body background is not lost if set prior to loading jQuery (#9239)", "support/bodyBackground.html", function( color, support ) {
+	testIframeWithCallback( "body background is not lost if set prior to loading jQuery (#9238)", "support/bodyBackground.html", function( color, support ) {
 		expect( 2 );
 		var i,
 			passed = true,
@@ -38,7 +29,6 @@ if ( jQuery.css ) {
 				strictEqual( jQuery.support[ i ], support[ i ], "Unexpected property: " + i );
 			}
 		}
-
 		ok( passed, "Same support properties" );
 	});
 }
@@ -48,18 +38,14 @@ testIframeWithCallback( "A background on the testElement does not cause IE8 to c
 	ok( true, "IE8 does not crash" );
 });
 
-testIframeWithCallback( "box-sizing does not affect jQuery.support.shrinkWrapBlocks", "support/shrinkWrapBlocks.html", function( shrinkWrapBlocks ) {
-	expect( 1 );
-	strictEqual( shrinkWrapBlocks, jQuery.support.shrinkWrapBlocks, "jQuery.support.shrinkWrapBlocks properties are the same" );
-});
-
 (function() {
-	var expected,
-		userAgent = window.navigator.userAgent;
+
+	var userAgent = window.navigator.userAgent,
+		expected;
 
 	// These tests do not have to stay
 	// They are here to help with upcoming support changes for 1.8
-	if ( /chrome/i.test( userAgent ) ) {
+	if ( /chrome\/19\.0/i.test(userAgent) ) {
 		expected = {
 			"leadingWhitespace":true,
 			"tbody":true,
@@ -90,112 +76,9 @@ testIframeWithCallback( "box-sizing does not affect jQuery.support.shrinkWrapBlo
 			"reliableHiddenOffsets":true,
 			"ajax":true,
 			"cors":true,
-			"doesNotIncludeMarginInBodyOffset":true,
-			"clearCloneStyle": true
+			"doesNotIncludeMarginInBodyOffset":true
 		};
-	} else if ( /opera.*version\/12\.1/i.test( userAgent ) ) {
-		expected = {
-			"leadingWhitespace":true,
-			"tbody":true,
-			"htmlSerialize":true,
-			"style":true,
-			"hrefNormalized":true,
-			"opacity":true,
-			"cssFloat":true,
-			"checkOn":true,
-			"optSelected":true,
-			"getSetAttribute":true,
-			"enctype":true,
-			"html5Clone":true,
-			"submitBubbles":true,
-			"changeBubbles":true,
-			"focusinBubbles":false,
-			"deleteExpando":true,
-			"noCloneEvent":true,
-			"inlineBlockNeedsLayout":false,
-			"shrinkWrapBlocks":false,
-			"reliableMarginRight":true,
-			"noCloneChecked":true,
-			"optDisabled":true,
-			"radioValue":false,
-			"checkClone":true,
-			"appendChecked":true,
-			"boxModel":true,
-			"reliableHiddenOffsets":true,
-			"ajax":true,
-			"cors":true,
-			"doesNotIncludeMarginInBodyOffset":true,
-			"clearCloneStyle": true
-		};
-	} else if ( /msie 10\.0/i.test( userAgent ) ) {
-		expected = {
-			"leadingWhitespace":true,
-			"tbody":true,
-			"htmlSerialize":true,
-			"style":true,
-			"hrefNormalized":true,
-			"opacity":true,
-			"cssFloat":true,
-			"checkOn":true,
-			"optSelected":false,
-			"getSetAttribute":true,
-			"enctype":true,
-			"html5Clone":true,
-			"submitBubbles":true,
-			"changeBubbles":true,
-			"focusinBubbles":true,
-			"deleteExpando":true,
-			"noCloneEvent":true,
-			"inlineBlockNeedsLayout":false,
-			"shrinkWrapBlocks":false,
-			"reliableMarginRight":true,
-			"noCloneChecked":false,
-			"optDisabled":true,
-			"radioValue":false,
-			"checkClone":true,
-			"appendChecked":true,
-			"boxModel":true,
-			"reliableHiddenOffsets":true,
-			"ajax":true,
-			"cors":true,
-			"doesNotIncludeMarginInBodyOffset":true,
-			"clearCloneStyle": false
-		};
-	} else if ( /msie 9\.0/i.test( userAgent ) ) {
-		expected = {
-			"leadingWhitespace":true,
-			"tbody":true,
-			"htmlSerialize":true,
-			"style":true,
-			"hrefNormalized":true,
-			"opacity":true,
-			"cssFloat":true,
-			"checkOn":true,
-			"optSelected":false,
-			"getSetAttribute":true,
-			"enctype":true,
-			"html5Clone":true,
-			"submitBubbles":true,
-			"changeBubbles":true,
-			"focusinBubbles":true,
-			"deleteExpando":true,
-			"noCloneEvent":true,
-			"inlineBlockNeedsLayout":false,
-			"shrinkWrapBlocks":false,
-			"reliableMarginRight":true,
-			"noCloneChecked":false,
-			"optDisabled":true,
-			"radioValue":false,
-			"checkClone":true,
-			"appendChecked":true,
-			"boxModel":true,
-			"reliableHiddenOffsets":true,
-			"ajax":true,
-			"cors":false,
-			"doesNotIncludeMarginInBodyOffset":true,
-			"clearCloneStyle": false
-		};
-	} else if ( /msie 8\.0/i.test( userAgent ) ) {
+	} else if ( /msie 8\.0/i.test(userAgent) ) {
 		expected = {
 			"leadingWhitespace":false,
 			"tbody":true,
@@ -226,10 +109,9 @@ testIframeWithCallback( "box-sizing does not affect jQuery.support.shrinkWrapBlo
 			"reliableHiddenOffsets":false,
 			"ajax":true,
 			"cors":false,
-			"doesNotIncludeMarginInBodyOffset":true,
-			"clearCloneStyle": true
+			"doesNotIncludeMarginInBodyOffset":true
 		};
-	} else if ( /msie 7\.0/i.test( userAgent ) ) {
+	} else if ( /msie 7\.0/i.test(userAgent) ) {
 		expected = {
 			"ajax": true,
 			"appendChecked": false,
@@ -260,10 +142,9 @@ testIframeWithCallback( "box-sizing does not affect jQuery.support.shrinkWrapBlo
 			"shrinkWrapBlocks": false,
 			"submitBubbles": false,
 			"tbody": false,
-			"style": false,
-			"clearCloneStyle": true
+			"style": false
 		};
-	} else if ( /msie 6\.0/i.test( userAgent ) ) {
+	} else if ( /msie 6\.0/i.test(userAgent) ) {
 		expected = {
 			"leadingWhitespace":false,
 			"tbody":false,
@@ -294,10 +175,9 @@ testIframeWithCallback( "box-sizing does not affect jQuery.support.shrinkWrapBlo
 			"reliableHiddenOffsets":false,
 			"ajax":true,
 			"cors":false,
-			"doesNotIncludeMarginInBodyOffset":true,
-			"clearCloneStyle": true
+			"doesNotIncludeMarginInBodyOffset":true
 		};
-	} else if ( /5\.1\.1 safari/i.test( userAgent ) ) {
+	} else if ( /5\.1\.1 safari/i.test(userAgent) ) {
 		expected = {
 			"leadingWhitespace":true,
 			"tbody":true,
@@ -328,10 +208,9 @@ testIframeWithCallback( "box-sizing does not affect jQuery.support.shrinkWrapBlo
 			"reliableHiddenOffsets":true,
 			"ajax":true,
 			"cors":true,
-			"doesNotIncludeMarginInBodyOffset":true,
-			"clearCloneStyle": true
+			"doesNotIncludeMarginInBodyOffset":true
 		};
-	} else if ( /firefox/i.test( userAgent ) ) {
+	} else if ( /firefox\/3\.6/i.test(userAgent) ) {
 		expected = {
 			"leadingWhitespace":true,
 			"tbody":true,
@@ -343,7 +222,7 @@ testIframeWithCallback( "box-sizing does not affect jQuery.support.shrinkWrapBlo
 			"checkOn":true,
 			"optSelected":true,
 			"getSetAttribute":true,
-			"enctype":true,
+			"enctype":false,
 			"html5Clone":true,
 			"submitBubbles":true,
 			"changeBubbles":true,
@@ -362,20 +241,15 @@ testIframeWithCallback( "box-sizing does not affect jQuery.support.shrinkWrapBlo
 			"reliableHiddenOffsets":true,
 			"ajax":true,
 			"cors":true,
-			"doesNotIncludeMarginInBodyOffset":true,
-			"clearCloneStyle": true
+			"doesNotIncludeMarginInBodyOffset":true
 		};
 	}
 
 	if ( expected ) {
 		test("Verify that the support tests resolve as expected per browser", function() {
-			expect( 31 );
-
 			for ( var i in expected ) {
 				if ( jQuery.ajax || i !== "ajax" && i !== "cors" ) {
 					equal( jQuery.support[i], expected[i], "jQuery.support['" + i + "']: " + jQuery.support[i] + ", expected['" + i + "']: " + expected[i]);
-				} else {
-					ok( true, "no ajax; skipping jQuery.support['" + i + "']" );
 				}
 			}
 		});

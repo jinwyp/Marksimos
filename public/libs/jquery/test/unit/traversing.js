@@ -1,23 +1,20 @@
 module("traversing", { teardown: moduleTeardown });
 
-test( "find(String)", function() {
-	expect( 7 );
+test("find(String)", function() {
+	expect(5);
 	equal( "Yahoo", jQuery("#foo").find(".blogTest").text(), "Check for find" );
 
 	// using contents will get comments regular, text, and comment nodes
 	var j = jQuery("#nonnodes").contents();
 	equal( j.find("div").length, 0, "Check node,textnode,comment to find zero divs" );
-	equal( j.find("div").andSelf().length, 3, "Check node,textnode,comment to find zero divs, but preserves pushStack" );
 
-	deepEqual( jQuery("#qunit-fixture").find("> div").get(), q( "foo", "nothiddendiv", "moretests", "tabindex-tests", "liveHandlerOrder", "siblingTest", "fx-test-group" ), "find child elements" );
-	deepEqual( jQuery("#qunit-fixture").find("> #foo, > #moretests").get(), q( "foo", "moretests" ), "find child elements" );
-	deepEqual( jQuery("#qunit-fixture").find("> #foo > p").get(), q( "sndp", "en", "sap" ), "find child elements" );
-
-	deepEqual( jQuery("#siblingTest, #siblingfirst").find("+ *").get(), q( "siblingnext", "fx-test-group" ), "ensure document order" );
+	deepEqual( jQuery("#qunit-fixture").find("> div").get(), q("foo", "moretests", "tabindex-tests", "liveHandlerOrder", "siblingTest"), "find child elements" );
+	deepEqual( jQuery("#qunit-fixture").find("> #foo, > #moretests").get(), q("foo", "moretests"), "find child elements" );
+	deepEqual( jQuery("#qunit-fixture").find("> #foo > p").get(), q("sndp", "en", "sap"), "find child elements" );
 });
 
-test( "find(node|jQuery object)", function() {
-	expect( 12 );
+test("find(node|jQuery object)", function() {
+	expect( 11 );
 
 	var $foo = jQuery("#foo"),
 		$blog = jQuery(".blogTest"),
@@ -26,19 +23,18 @@ test( "find(node|jQuery object)", function() {
 		$fooTwo = $foo.add( $blog );
 
 	equal( $foo.find( $blog ).text(), "Yahoo", "Find with blog jQuery object" );
-	equal( $foo.find( $blog[ 0 ] ).text(), "Yahoo", "Find with blog node" );
+	equal( $foo.find( $blog[0] ).text(), "Yahoo", "Find with blog node" );
 	equal( $foo.find( $first ).length, 0, "#first is not in #foo" );
-	equal( $foo.find( $first[ 0 ]).length, 0, "#first not in #foo (node)" );
+	equal( $foo.find( $first[0]).length, 0, "#first not in #foo (node)" );
 	ok( $foo.find( $two ).is(".blogTest"), "Find returns only nodes within #foo" );
 	ok( $fooTwo.find( $blog ).is(".blogTest"), "Blog is part of the collection, but also within foo" );
-	ok( $fooTwo.find( $blog[ 0 ] ).is(".blogTest"), "Blog is part of the collection, but also within foo(node)" );
+	ok( $fooTwo.find( $blog[0] ).is(".blogTest"), "Blog is part of the collection, but also within foo(node)" );
 
 	equal( $two.find( $foo ).length, 0, "Foo is not in two elements" );
-	equal( $two.find( $foo[ 0 ] ).length, 0, "Foo is not in two elements(node)" );
+	equal( $two.find( $foo[0] ).length, 0, "Foo is not in two elements(node)" );
 	equal( $two.find( $first ).length, 0, "first is in the collection and not within two" );
 	equal( $two.find( $first ).length, 0, "first is in the collection and not within two(node)" );
 
-	equal( $two.find( $foo[ 0 ] ).andSelf().length, 2, "find preserves the pushStack, see #12009" );
 });
 
 test("is(String|undefined)", function() {
@@ -111,10 +107,10 @@ test("is() with positional selectors", function() {
 	expect(23);
 
 	var html = jQuery(
-				"<p id='posp'><a class='firsta' href='#'><em>first</em></a><a class='seconda' href='#'><b>test</b></a><em></em></p>"
+				'<p id="posp"><a class="firsta" href="#"><em>first</em></a><a class="seconda" href="#"><b>test</b></a><em></em></p>'
 			).appendTo( "body" ),
 		isit = function(sel, match, expect) {
-			equal( jQuery( sel ).is( match ), expect, "jQuery('" + sel + "').is('" + match + "')" );
+			equal( jQuery( sel ).is( match ), expect, "jQuery( " + sel + " ).is( " + match + " )" );
 		};
 
 	isit( "#posp", "#posp:first", true );
@@ -238,16 +234,16 @@ test("filter(jQuery)", function() {
 test("filter() with positional selectors", function() {
 	expect(19);
 
-	var html = jQuery( "" +
-		"<p id='posp'>" +
-			"<a class='firsta' href='#'>" +
-				"<em>first</em>" +
-			"</a>" +
-			"<a class='seconda' href='#'>" +
-				"<b>test</b>" +
-			"</a>" +
-			"<em></em>" +
-		"</p>" ).appendTo( "body" ),
+	var html = jQuery('' +
+		'<p id="posp">' +
+			'<a class="firsta" href="#">' +
+				'<em>first</em>' +
+			'</a>' +
+			'<a class="seconda" href="#">' +
+				'<b>test</b>' +
+			'</a>' +
+			'<em></em>' +
+		'</p>').appendTo( "body" ),
 		filterit = function(sel, filter, length) {
 			equal( jQuery( sel ).filter( filter ).length, length, "jQuery( " + sel + " ).filter( " + filter + " )" );
 		};
@@ -286,8 +282,8 @@ test("closest()", function() {
 	deepEqual( jQuery("body").closest("div").get(), [], "closest(div)" );
 	deepEqual( jQuery("#qunit-fixture").closest("span,#html").get(), q("html"), "closest(span,#html)" );
 
-	deepEqual( jQuery("#qunit-fixture").closest("div:first").get(), [], "closest(div:first)" );
-	deepEqual( jQuery("#qunit-fixture div").closest("body:first div:last").get(), q("fx-tests"), "closest(body:first div:last)" );
+	deepEqual( jQuery("div:eq(1)").closest("div:first").get(), [], "closest(div:first)" );
+	deepEqual( jQuery("div").closest("body:first div:last").get(), q("fx-tests"), "closest(body:first div:last)" );
 
 	// Test .closest() limited by the context
 	var jq = jQuery("#nothiddendivchild");
@@ -312,15 +308,15 @@ test("closest(jQuery)", function() {
 	expect(8);
 	var $child = jQuery("#nothiddendivchild"),
 		$parent = jQuery("#nothiddendiv"),
-		$sibling = jQuery("#foo"),
+		$main = jQuery("#qunit-fixture"),
 		$body = jQuery("body");
 	ok( $child.closest( $parent ).is("#nothiddendiv"), "closest( jQuery('#nothiddendiv') )" );
 	ok( $child.closest( $parent[0] ).is("#nothiddendiv"), "closest( jQuery('#nothiddendiv') ) :: node" );
 	ok( $child.closest( $child ).is("#nothiddendivchild"), "child is included" );
 	ok( $child.closest( $child[0] ).is("#nothiddendivchild"), "child is included  :: node" );
 	equal( $child.closest( document.createElement("div") ).length, 0, "created element is not related" );
-	equal( $child.closest( $sibling ).length, 0, "Sibling not a parent of child" );
-	equal( $child.closest( $sibling[0] ).length, 0, "Sibling not a parent of child :: node" );
+	equal( $child.closest( $main ).length, 0, "Main not a parent of child" );
+	equal( $child.closest( $main[0] ).length, 0, "Main not a parent of child :: node" );
 	ok( $child.closest( $body.add($parent) ).is("#nothiddendiv"), "Closest ancestor retrieved." );
 });
 
@@ -329,11 +325,7 @@ test("not(Selector|undefined)", function() {
 	equal( jQuery("#qunit-fixture > p#ap > a").not("#google").length, 2, "not('selector')" );
 	deepEqual( jQuery("p").not(".result").get(), q("firstp", "ap", "sndp", "en", "sap", "first"), "not('.class')" );
 	deepEqual( jQuery("p").not("#ap, #sndp, .result").get(), q("firstp", "en", "sap", "first"), "not('selector, selector')" );
-	deepEqual(
-		jQuery("#form option").not("option.emptyopt:contains('Nothing'),optgroup *,[value='1']").get(),
-		q("option1c", "option1d", "option2c", "option2d", "option3c", "option3d", "option3e", "option4d", "option4e", "option5a", "option5b"),
-		"not('complex selector')"
-	);
+	deepEqual( jQuery("#form option").not("option.emptyopt:contains('Nothing'),[selected],[value='1']").get(), q("option1c", "option1d", "option2c", "option3d", "option3e", "option4e","option5b"), "not('complex selector')");
 
 	deepEqual( jQuery("#ap *").not("code").get(), q("google", "groups", "anchor1", "mark"), "not('tag selector')" );
 	deepEqual( jQuery("#ap *").not("code, #mark").get(), q("google", "groups", "anchor1"), "not('tag, ID selector')" );
@@ -354,8 +346,6 @@ test("not(Element)", function() {
 });
 
 test("not(Function)", function() {
-	expect(1);
-
 	deepEqual( jQuery("#qunit-fixture p").not(function() { return jQuery("a", this).length; }).get(), q("sndp", "first"), "not(Function)" );
 });
 
@@ -367,7 +357,7 @@ test("not(Array)", function() {
 });
 
 test("not(jQuery)", function() {
-	expect( 1 );
+	expect(1);
 
 	deepEqual( jQuery("p").not(jQuery("#ap, #sndp, .result")).get(), q("firstp", "en", "sap", "first"), "not(jQuery)" );
 });
@@ -590,7 +580,7 @@ test("contents()", function() {
 });
 
 test("add(String|Element|Array|undefined)", function() {
-	expect( 15 );
+	expect(16);
 	deepEqual( jQuery("#sndp").add("#en").add("#sap").get(), q("sndp", "en", "sap"), "Check elements from document" );
 	deepEqual( jQuery("#sndp").add( jQuery("#en")[0] ).add( jQuery("#sap") ).get(), q("sndp", "en", "sap"), "Check elements from document" );
 
@@ -605,10 +595,13 @@ test("add(String|Element|Array|undefined)", function() {
 	//equal( jQuery([]).add(jQuery("#form")[0].elements).length, jQuery(jQuery("#form")[0].elements).length, "Array in constructor must equals array in add()" );
 
 	var divs = jQuery("<div/>").add("#sndp");
-	ok( divs[0].parentNode, "Sort with the disconnected node last (started with disconnected first)." );
+	ok( !divs[0].parentNode, "Make sure the first element is still the disconnected node." );
+
+	divs = jQuery("<div>test</div>").add("#sndp");
+	equal( divs[0].parentNode.nodeType, 11, "Make sure the first element is still the disconnected node." );
 
 	divs = jQuery("#sndp").add("<div/>");
-	ok( !divs[1].parentNode, "Sort with the disconnected node last." );
+	ok( !divs[1].parentNode, "Make sure the first element is still the disconnected node." );
 
 	var tmp = jQuery("<div/>");
 
@@ -655,13 +648,4 @@ test("eq('-1') #10616", function() {
 	equal( $divs.eq( -1 ).length, 1, "The number -1 returns a selection that has length 1" );
 	equal( $divs.eq( "-1" ).length, 1, "The string '-1' returns a selection that has length 1" );
 	deepEqual( $divs.eq( "-1" ), $divs.eq( -1 ), "String and number -1 match" );
-});
-
-test("index(no arg) #10977", function() {
-	expect(1);
-	
-	var $list = jQuery("<ul id='indextest'><li>THIS ONE</li><li class='one'>a</li><li class='two'>b</li><li class='three'>c</li></ul>");
-	jQuery("#qunit-fixture").append( $list );
-	strictEqual ( jQuery( "#indextest li:not(.one,.two)" ).index() , 0, "No Argument Index Check" );
-	$list.remove();
 });

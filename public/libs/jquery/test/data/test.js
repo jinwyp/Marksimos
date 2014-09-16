@@ -1,3 +1,3 @@
-var testBar = "bar";
-jQuery("#ap").html("bar");
+var foobar = "bar";
+jQuery('#ap').html('bar');
 ok( true, "test.js executed");

@@ -1,7 +1,4 @@
-<?php
-	header("X-Content-Security-Policy: default-src localhost 'self';");
-	header("X-WebKit-CSP: script-src 'self'; style-src 'self' 'unsafe-inline'");
-?>
+<?php header("X-Content-Security-Policy-Report-Only: allow *"); ?>
 <!DOCTYPE html>
 <html>
 <head>

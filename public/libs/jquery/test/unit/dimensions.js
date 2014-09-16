@@ -7,9 +7,7 @@ var pass = function( val ) {
 };
 
 var fn = function( val ) {
-	return function() {
-		return val;
-	};
+	return function(){ return val; };
 };
 
 /*
@@ -52,7 +50,7 @@ var testWidth = function( val ) {
 
 	equal( jQuery(window).width(), document.documentElement.clientWidth, "Window width is equal to width reported by window/document." );
 
-	QUnit.expectJqData( $div[0], "olddisplay" );
+	jQuery.removeData($div[0], "olddisplay", true);
 };
 
 test("width()", function() {
@@ -103,7 +101,7 @@ var testHeight = function( val ) {
 
 	equal( jQuery(window).height(), document.documentElement.clientHeight, "Window width is equal to width reported by window/document." );
 
-	QUnit.expectJqData( $div[0], "olddisplay" );
+	jQuery.removeData($div[0], "olddisplay", true);
 };
 
 test("height()", function() {
@@ -158,7 +156,7 @@ test("innerWidth()", function() {
 	equal( div.innerWidth(), 0, "Make sure that disconnected nodes are handled." );
 
 	div.remove();
-	QUnit.expectJqData( $div[0], "olddisplay" );
+	jQuery.removeData($div[0], "olddisplay", true);
 });
 
 test("innerHeight()", function() {
@@ -193,7 +191,7 @@ test("innerHeight()", function() {
 	equal( div.innerHeight(), 0, "Make sure that disconnected nodes are handled." );
 
 	div.remove();
-	QUnit.expectJqData( $div[0], "olddisplay" );
+	jQuery.removeData($div[0], "olddisplay", true);
 });
 
 test("outerWidth()", function() {
@@ -231,7 +229,7 @@ test("outerWidth()", function() {
 	equal( div.outerWidth(), 0, "Make sure that disconnected nodes are handled." );
 
 	div.remove();
-	QUnit.expectJqData( $div[0], "olddisplay" );
+	jQuery.removeData($div[0], "olddisplay", true);
 });
 
 test("child of a hidden elem (or unconnected node) has accurate inner/outer/Width()/Height()  see #9441 #9300", function() {
@@ -377,7 +375,7 @@ test("outerHeight()", function() {
 	equal( div.outerHeight(), 0, "Make sure that disconnected nodes are handled." );
 
 	div.remove();
-	QUnit.expectJqData( $div[0], "olddisplay" );
+	jQuery.removeData($div[0], "olddisplay", true);
 });
 
 test("passing undefined is a setter #5571", function() {
