@@ -3016,6 +3016,9 @@
 
     <!----------  End Decision Page  ---------->
 
+
+
+
     <div class="row mainbody" ng-cloak ng-if="css.menu=='Score'">
         <div class="col-md-2 user_home_divider user_chart_box">
 
@@ -3098,7 +3101,9 @@
                     <div class="table_report">
 
                         <ul class="nav nav-pills">
-                            <li ng-class="{'active': n==css.selectFinalScorePeriod}" ng-repeat="n in css.finalReportPeriods"><a href="" ng-click="switchTableReportFinalScore(n)">{{'FinalScorePagePeriod' | translate}} {{n}}</a></li>
+                            <li ng-class="{'active': n==css.selectFinalScorePeriod}" ng-repeat="n in css.finalReportPeriods">
+                                <a href="" ng-click="switchTableReportFinalScore(n)">{{'FinalScorePagePeriod' | translate}} {{n}}</a>
+                            </li>
                         </ul>
 
                         <div class="divider_horizontal"></div>

@@ -323,7 +323,9 @@ app.directive('tableReportFinalScore', ['$translate', function($translate) {
             selectScore: '='
         },
         restrict: 'AE',
-        templateUrl: '/app/js/report/tablereportfinalscore.html'
+        templateUrl: '/app/js/report/tablereportfinalscore.html',
+        link : function(scope, element, attrs){
+        }
     };
 }]);
 
