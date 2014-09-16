@@ -1,8 +1,6 @@
 /**
  * Created by jinwyp on 5/29/14.
  */
-
-
 var app = angular.module('marksimos.model', []);
 
 app.factory('Student', ['$http', function($http){
@@ -127,8 +125,29 @@ app.factory('Company', ['$http', function($http){
 
         updateCompany : function(postdata){
             return $http.put(apiPath + 'company/decision', postdata);
-        }
+        },
 
+        getFinalScore : function(period){
+            return $http.get(apiPath + 'finalscore/' + period).then(function(result){
+
+                result.data.highest_score = _.max(result.data.scores, function(companyScore){
+                    return companyScore.finalScore;
+                }).finalScore;
+
+                for(var i=0;i<result.data.scores.length;i++){
+                    result.data.scores[i].companyName = String.fromCharCode( 64 + result.data.scores[i].companyId);
+                }
+                return result.data;
+            }).catch(errorHandler);
+        },
+
+        getQuestionnaire : function(){
+            return $http.get(apiPath + 'questionnaire');
+        },
+
+        updateQuestionnaire : function(postdata){
+            return $http.put(apiPath + 'questionnaire', postdata);
+        }
 
     };
 
@@ -712,3 +731,85 @@ app.factory('tableReport', ['$http', function($http){
 
 
 }]);
+
+
+
+
+
+
+app.factory('Help',['$http',function($http){
+    var apiPath = '/marksimos/api/';
+
+    var errorHandler = function(err){
+        console.log("Error 404 , Type : API Help", err );
+    };
+
+    var factory = {
+
+        getFAQ : function(){
+            return $http.get(apiPath + 'faq').then(function(result){
+                return result.data;
+            }).catch(errorHandler);
+        },
+        getManualChinese : function(){
+            return $http.get('/marksimos/manual/zh_CN').then(function(result){
+                return result.data;
+            }).catch(errorHandler);
+        },
+        getManualEnglish : function(){
+            return $http.get('/marksimos/manual/en_US').then(function(result){
+                return result.data;
+            }).catch(errorHandler);
+        }
+
+    };
+    return factory;
+}]);
+
+
+
+
+
+
+
+/*JSONKit pretty isVisible mdParse sanitize for markdown*/
+app.factory('JSONKit', function () {
+    return window.JSONKit;
+});
+app.factory('pretty', function () {
+    return window.prettyPrint;
+});
+app.factory('isVisible', function () {
+    return function (element) {
+        var rect = element[0].getBoundingClientRect();
+        return Boolean(rect.bottom - rect.top);
+    };
+});
+app.factory('mdParse', ['JSONKit',
+    function (JSONKit) {
+        return function (html) {
+            return window.marked(JSONKit.toStr(html));
+        };
+    }
+]);
+app.factory('sanitize', ['JSONKit',
+    function (JSONKit) {
+        var San = Sanitize,
+            config = San.Config,
+            sanitize = [
+                new San({}),
+                new San(config.RESTRICTED),
+                new San(config.BASIC),
+                new San(config.RELAXED)
+            ];
+        // level: 0, 1, 2, 3
+        return function (html, level) {
+            var innerDOM = document.createElement('div'),
+                outerDOM = document.createElement('div');
+            level = level >= 0 ? level : 3;
+            innerDOM.innerHTML = JSONKit.toStr(html);
+            outerDOM.appendChild(sanitize[level].clean_node(innerDOM));
+            return outerDOM.innerHTML;
+        };
+    }
+]);

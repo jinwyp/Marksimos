@@ -37,7 +37,6 @@ exports.getFinalScore = function(req, res, next){
             } else {
                 originalBudget = 0;
             }
-
             scores.push({
                 companyId      : requestedPeriodResult.p_Companies[i].c_CompanyID,
                 originalSOM    : originalSOM,
@@ -73,7 +72,7 @@ exports.getFinalScore = function(req, res, next){
             lowest_Profit = lowest_Profit + c;
             highest_Profit = highest_Profit + c;
         }
-        
+
         if(highest_SOM > lowest_SOM){
             a = 100 / (highest_SOM - lowest_SOM);
             b = 100 - (a * highest_SOM);
@@ -115,6 +114,7 @@ exports.getFinalScore = function(req, res, next){
     }).done();
     
 }
+
 
 exports.getReport = function(req, res, next){
     var seminarId = req.session.seminarId;

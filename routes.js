@@ -2,6 +2,9 @@ var userModel = require('./api/models/user.js');
 var logger = require('./common/logger.js');
 var authMiddleware = require('./middleware/auth.js');
 
+
+
+
 module.exports = function(app){
 
 
@@ -11,18 +14,17 @@ module.exports = function(app){
 
 
 
-
     /**********   Routes for MarkSimos User/Student   **********/
 
-    app.get('/marksimos', function(req, res, next){
-        res.render('user/userlogin.ejs', { title : 'MarkSimos - Welcome to the MarkSimos Game'});
-    });
-     
-    app.get('/marksimos/login', function(req, res, next){
-        res.render('user/userlogin.ejs', { title : 'MarkSimos - User Sign In'});
+    app.get('/marksimos', authMiddleware.needLogin, function(req, res, next){
+        res.redirect('/marksimos/intro');
     });
 
-    app.get('/marksimos/introduction', authMiddleware.needLogin, function(req, res, next){
+    app.get('/marksimos/login', function(req, res, next){
+        res.render('user/userlogin.ejs', { title : 'MarkSimos - Sign In'});
+    });
+
+    app.get('/marksimos/intro', authMiddleware.needLogin, function(req, res, next){
         res.render('user/userintroduction.ejs', { title : 'MarkSimos - Introduction Videos'});
     });
 
@@ -30,6 +32,28 @@ module.exports = function(app){
     app.get('/marksimos/home', authMiddleware.needLogin, function(req, res, next){
         res.render('user/userhome.ejs', { title : 'MarkSimos - User Home'});
     });
+
+
+
+    app.get('/marksimos/help', function(req, res, next){
+        res.render('user/userhelp.ejs', { title : 'MarkSimos - Help'});
+    });
+
+    //download file
+    app.get('/marksimos/download/manual', function(req, res, next){
+        res.download('./public/app/file/MarkSimos_Participants_Manual.pdf');
+    });
+
+    app.get('/marksimos/manual/zh_CN',function(req,res,next){
+        res.render('user/help/manual_cn.md',{layout:false});
+    });
+    app.get('/marksimos/manual/en_US',function(req,res,next){
+        res.render('user/help/manual_en.md',{layout:false});
+    });
+
+
+
+
 
     // app.get('/activate', function(req, res, next){
     //     var email = req.query.email;

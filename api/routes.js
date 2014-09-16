@@ -8,6 +8,9 @@ var facilitatorController = require('./controllers/facilitator.js');
 var studentController = require('./controllers/student.js');
 var seminarController = require('./controllers/seminar.js');
 var questionnaireController = require('./controllers/questionnaire.js');
+var faqController = require('./controllers/faq.js');
+
+
 
 var util = require('util');
 var express = require('express');
@@ -57,6 +60,11 @@ apiRouter.get('/marksimos/api/create_admin', function(req, res, next){
 });
 
 
+// get FAQ
+apiRouter.get('/marksimos/api/initfaq', faqController.initFAQ);
+apiRouter.get('/marksimos/api/faq', faqController.getFAQ);
+
+
 // get seminar
 apiRouter.get('/marksimos/api/user', requireLogin, userController.getUser);
 apiRouter.get('/marksimos/api/student/seminar', requireLogin, authorize('getSeminarOfStudent'), studentController.getSeminarOfStudent);
@@ -69,7 +77,8 @@ apiRouter.get('/marksimos/api/report/:report_name', requireLogin, reportControll
 apiRouter.get('/marksimos/api/adminreport/:report_name', requireLogin, reportController.getReport);
 apiRouter.get('/marksimos/api/choose_seminar', requireLogin, authorize('chooseSeminar'), seminarController.chooseSeminar);
 apiRouter.get('/marksimos/api/submitdecision', requireLogin, decisionController.submitDecision);
-apiRouter.get('/marksimos/api/finalScore/:period', requireLogin, reportController.getFinalScore);
+
+apiRouter.get('/marksimos/api/finalscore/:period', requireLogin, reportController.getFinalScore);
 
 //chart
 apiRouter.get('/marksimos/api/chart/:chart_name', requireLogin, chartController.getChart);

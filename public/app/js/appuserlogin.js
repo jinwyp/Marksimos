@@ -3,6 +3,12 @@
  */
 
 // create module for custom directives
+(function () {
+    'use strict';
+
+
+
+
 
 var marksimosapp = angular.module('marksimoslogin', ['pascalprecht.translate', 'marksimos.model', 'marksimos.websitecomponent',  'marksimos.filter', 'marksimos.translation']);
 
@@ -29,7 +35,7 @@ marksimosapp.controller('userLoginController', ['$scope', '$http', '$window', 'S
         if(form.$valid){
             Student.login($scope.data.newUser).success(function(data, status, headers, config){
 
-                $window.location.href = "/marksimos/introduction" ;
+                $window.location.href = "/marksimos/intro" ;
 
             }).error(function(data, status, headers, config){
                 form.password.$valid = false;
@@ -48,7 +54,7 @@ marksimosapp.controller('userLoginController', ['$scope', '$http', '$window', 'S
 marksimosapp.controller('userIntroController',['$scope', '$http', '$window', 'Student',  'Company', function($scope, $http, $window, Student, Company) {
 
     $scope.css = {
-        showBox : 'intro'
+        showBox : 'seminar'
     };
 
     $scope.data = {
@@ -63,12 +69,11 @@ marksimosapp.controller('userIntroController',['$scope', '$http', '$window', 'St
         }
     };
 
-
     $scope.initSeminar = function() {
+
 
         Student.getStudent().then(function(data, status, headers, config){
             $scope.data.currentStudent = data;
-            console.log($scope.data.currentStudent);
         });
 
         Student.getSeminar().then(function(data, status, headers, config){
@@ -77,12 +82,6 @@ marksimosapp.controller('userIntroController',['$scope', '$http', '$window', 'St
     };
 
     $scope.initSeminar();
-
-
-
-    $scope.introVideosNext = function(){
-        $scope.css.showBox = 'seminar';
-    };
 
 
 
@@ -108,7 +107,6 @@ marksimosapp.controller('userIntroController',['$scope', '$http', '$window', 'St
                         });
                     });
 
-
                     $scope.data.currentCompany = data;
                 });
 
@@ -123,3 +121,60 @@ marksimosapp.controller('userIntroController',['$scope', '$http', '$window', 'St
     };
 
 }]);
+
+
+
+
+
+marksimosapp.controller('userHelpController',['$scope', '$sce', '$http', '$window', 'FAQ', function($scope, $sce, $http, $window, FAQ) {
+
+
+    $scope.initPage = function() {
+
+
+
+        $scope.isFAQShown=true;
+        $scope.isVideoShown=false;
+        $scope.isManualShown=false;
+        $scope.questionsShown=[1,0,0,0,0,0,0,0];
+
+        FAQ.getFAQ().then(function(doc){
+            console.log(doc);
+            $scope.faqs=doc;
+            return $http({
+                url:'/marksimos/manual',
+                method:'GET'
+            });
+        }).then(function(data){
+            $scope.manual=data.data;
+        });
+    };
+
+    $scope.chickFAQ=function(index){
+        $scope.firstCategory = false;
+        $scope.questionsShown = [0, 0, 0, 0, 0, 0, 0, 0];
+        $scope.questionsShown[index] = 1;
+    };
+
+    $scope.trustAsHtml = function(data) {
+        return $sce.trustAsHtml(data);
+    };
+
+    $scope.initPage();
+
+
+    $scope.clickIntro=function(item){
+        $scope.isFAQShown=false;
+        $scope.isVideoShown=false;
+        $scope.isManualShown=false;
+        switch(item){
+            case 'FAQ':$scope.isFAQShown=true;break;
+            case 'Video':$scope.isVideoShown=true;break;
+            case 'Manual':$scope.isManualShown=true;break;
+        }
+    };
+
+}]);
+
+
+}());

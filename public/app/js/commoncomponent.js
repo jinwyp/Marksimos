@@ -301,6 +301,7 @@ app.directive('textFormInput', function() {
             label       : '@',
             labelclass  : '@',
             inputclass  : '@',
+            inputgroupprefix  : '@',
             placeholder : '@',
             data        : '=',
 
@@ -372,7 +373,8 @@ app.directive('textFormInput', function() {
 
             var tpltext = '<div class="form-group has-feedback" ng-class="{ \'has-success\':form.$dirty && form.$valid , \'has-error\': form.$dirty && form.$invalid}">' +
                             '<label class="' + labelclass + ' control-label" for="' + tAttrs.name + '" >' + tAttrs.label + '</label>' +
-                            '<div class="' + inputclass + '">' +
+                            '<div class=" ' + inputclass + '">'  +
+                                '<span class="form-input-prefix" ng-if="inputgroupprefix">{{inputgroupprefix}}</span>' +
                                 '<input type="' + type + '" class="form-control" id="ID' + tAttrs.name +'" name="' + tAttrs.name +'" placeholder="{{placeholder}}" ng-model="data" ' + required + minlength + maxlength + min + max + '>' +
                                 '<span ng-if="form.$dirty && form.$valid" class="glyphicon glyphicon-ok form-control-feedback"></span>' +
                                 '<span ng-if="form.$dirty && form.$invalid" class="glyphicon glyphicon-remove form-control-feedback"></span>' +
@@ -394,8 +396,57 @@ app.directive('textFormInput', function() {
 
             return function (scope, element, attributes, formController) {
                 scope.form = formController[scope.name];
+
+                scope.inputgroupprefix = angular.isUndefined(scope.inputgroupprefix) ? ""  : scope.inputgroupprefix;
             };
         }
     };
 });
+
+
+
+// Prevent the backspace key from navigating back.
+app.directive('preventBackspaceNavigateBack', ['$document', function($document) {
+    return {
+        restrict : 'A',
+        link  : function (element, attrs) {
+
+            $(document).unbind('keydown').bind('keydown', function (event) {
+
+                var doPrevent = true;
+                if (event.keyCode === 8) {
+
+                    var d = event.srcElement || event.target;
+
+                    // 注释, 此处很Bug 会很纠结
+                    if ((d.tagName.toUpperCase() === 'INPUT' &&
+                        (
+                            d.type.toUpperCase() === 'TEXT' ||
+                            d.type.toUpperCase() === 'PASSWORD' ||
+                            d.type.toUpperCase() === 'NUMBER' ||
+                            d.type.toUpperCase() === 'FILE' ||
+                            d.type.toUpperCase() === 'EMAIL' ||
+                            d.type.toUpperCase() === 'SEARCH' ||
+                            d.type.toUpperCase() === 'DATE' )
+                        ) ||
+                        d.tagName.toUpperCase() === 'TEXTAREA') {
+                        doPrevent = d.readOnly || d.disabled;
+                    }else {
+                        doPrevent = true;
+                    }
+
+                    if (doPrevent) {
+                        event.preventDefault();
+                    }
+                }
+
+            });
+
+
+
+        }
+
+    };
+}]
+);
 
