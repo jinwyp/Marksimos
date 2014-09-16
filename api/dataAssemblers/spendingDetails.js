@@ -91,25 +91,24 @@ exports.getSpendingDetails = function(seminarId, currentPeriod, companyId){
 
         //normal capacity
         companyData.normalCapacity = companyDataInAllResults.c_Capacity - utility.calculateTotalVolume(decision)
-        if(companyData.normalCapacity < -1){
+        console.log('narmalCapacity:' + companyData.normalCapacity);
+        if(companyData.normalCapacity < 0){
             companyData.normalCapacity = 0;
         }
 
         //company data in all results
         if(companyDataInAllResults.c_Capacity - utility.calculateTotalVolume(decision) < 0){
+            console.log('companyDataInAllResults.c_Capacity - utility.calculateTotalVolume(decision):' + companyDataInAllResults.c_Capacity - utility.calculateTotalVolume(decision));
             companyData.availableOvertimeCapacityExtension = companyDataInAllResults.c_Capacity - utility.calculateTotalVolume(decision) 
                 + companyDataInAllResults.c_Capacity * gameParameters.pgen.firm_OvertimeCapacity;
+            console.log('companyData.availableOvertimeCapacityExtension:' + companyData.availableOvertimeCapacityExtension);                
         }else{
             companyData.availableOvertimeCapacityExtension = companyDataInAllResults.c_Capacity * gameParameters.pgen.firm_OvertimeCapacity;
         }
-
-        companyData.availableOvertimeCapacityExtension = companyData.availableOvertimeCapacityExtension;
         
 
         companyData.acquiredEfficiency = companyDataInAllResults.c_AcquiredEfficiency*100;
-
         companyData.acquiredProductionVolumeFlexibility = companyDataInAllResults.c_AcquiredFlexibility * 100;
-
         companyData.acquiredTechnologyLevel = companyDataInAllResults.c_AcquiredTechnologyLevel;
 
         
