@@ -2521,11 +2521,26 @@
                                             </tr>
                                             <tr>
                                                 <td>{{'DecisionPageDecisionTabPackagingSize' | translate}}</td>
-                                                <td ng-repeat="sku in data.currentBrand.d_SKUsDecisions"  ng-focus="clickCurrentSku(sku)">
+                                                <td ng-repeat="sku in data.currentBrand.d_SKUsDecisions" ng-show="sku.bs_PeriodOfBirth!==data.currentStudent.currentPeriod" >
                                                     <span ng-if="sku.d_PackSize==0">{{'DecisionPageDecisionTabPackagingSizeSmall' | translate}}</span>
                                                     <span ng-if="sku.d_PackSize==1">{{'DecisionPageDecisionTabPackagingSizeStandard' | translate}}</span>
                                                     <span ng-if="sku.d_PackSize==2">{{'DecisionPageDecisionTabPackagingSizeLarge' | translate}}</span>
                                                  </td>
+                                                <td ng-repeat="sku in data.currentBrand.d_SKUsDecisions" ng-if="sku.bs_PeriodOfBirth==data.currentStudent.currentPeriod">
+                                                    <div class="btn-group">
+                                                        <button type="button" class="btn btn-default btn-sm dropdown-toggle" data-toggle="dropdown"  ng-focus="clickCurrentSku(sku)">
+                                                            <span ng-if="sku.d_PackSize==0">{{'DecisionPageDecisionTabPackagingSizeSmall' | translate}}</span>
+                                                            <span ng-if="sku.d_PackSize==1">{{'DecisionPageDecisionTabPackagingSizeStandard' | translate}}</span>
+                                                            <span ng-if="sku.d_PackSize==2">{{'DecisionPageDecisionTabPackagingSizeLarge' | translate}}</span>
+                                                            <span class="caret"></span>
+                                                        </button>
+                                                        <ul class="dropdown-menu" role="menu">
+                                                            <li ><a href="" ng-click="leaveSkuInput(sku, 'd_PackSize', 0)">{{'DecisionPageDecisionTabPackagingSizeSmall' | translate}}</a></li>
+                                                            <li ><a href="" ng-click="leaveSkuInput(sku, 'd_PackSize', 1)">{{'DecisionPageDecisionTabPackagingSizeStandard' | translate}}</a></li>
+                                                            <li ><a href="" ng-click="leaveSkuInput(sku, 'd_PackSize', 2)">{{'DecisionPageDecisionTabPackagingSizeLarge' | translate}}</a></li>
+                                                        </ul>
+                                                    </div>
+                                                </td>
                                             </tr>
                                             <tr>
                                                 <td class="tdgroup">{{'DecisionPageDecisionTabProductionVolume' | translate}}</td>
