@@ -858,7 +858,7 @@ app.config(['$translateProvider', function($translateProvider){
 		"IntroPageSentence5":"brands",
 		"IntroPageSentence6":"I compete with",
 		"IntroPageSentence7":"other companies",
-		"IntroPageSentence8":"My company’s mission is to get the highest Market Share and Profit !",
+		"IntroPageSentence8":"My company’s mission is to get the highest Market Share and Profit !"
 		
     });
 
@@ -1721,7 +1721,7 @@ app.config(['$translateProvider', function($translateProvider){
 		"IntroPageSentence5":"个单品",
 		"IntroPageSentence6":"还要另外",
 		"IntroPageSentence7":"个对手竞争",
-		"IntroPageSentence8":"公司的最终目标是要获得最高的市场份额和净利润！",
+		"IntroPageSentence8":"公司的最终目标是要获得最高的市场份额和净利润！"
 		
     });
 
