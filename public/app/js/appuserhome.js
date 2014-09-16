@@ -91,7 +91,7 @@ marksimosapp.controller('chartController', ['$translate', '$scope', '$rootScope'
         currentPeriod : 0,
         maxPeriodRound:0,
         finalReportPeriods: [],
-        isFeedbackShown : false,
+        isFeedbackShown : false
 
     };
 
