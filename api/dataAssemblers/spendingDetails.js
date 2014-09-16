@@ -74,7 +74,7 @@ exports.getSpendingDetails = function(seminarId, currentPeriod, companyId){
         companyData.investmentInProcessingTechnology = decision.d_InvestmentInTechnology;
 
         companyData.totalInvestment = total.salesForce + total.consumerCommunication + total.consumerPromotion
-        + total.tradeExpenses + total.estimatedAdditionalTradeMarginCost + total.estimatedWholesaleBonusCost;
+        + total.tradeExpenses + total.estimatedAdditionalTradeMarginCost + total.estimatedWholesaleBonusCost + companyData.investmentInProductionEfficiency + companyData.investmentInProcessingTechnology;
 
 
         var companyDataInAllResults = utility.findCompany(lastPeriodResult, companyId)
