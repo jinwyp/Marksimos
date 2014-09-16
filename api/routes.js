@@ -77,7 +77,7 @@ apiRouter.get('/marksimos/api/adminreport/:report_name', requireLogin, reportCon
 apiRouter.get('/marksimos/api/choose_seminar', requireLogin, authorize('chooseSeminar'), seminarController.chooseSeminar);
 apiRouter.get('/marksimos/api/submitdecision', requireLogin, decisionController.submitDecision);
 
-apiRouter.get('/marksimos/api/finalScore/:period', requireLogin, reportController.getFinalScore);
+apiRouter.get('/marksimos/api/finalscore/:period', requireLogin, reportController.getFinalScore);
 
 //chart
 apiRouter.get('/marksimos/api/chart/:chart_name', requireLogin, chartController.getChart);

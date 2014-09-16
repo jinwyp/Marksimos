@@ -1,7 +1,7 @@
 /**
  * Created by jinwyp on 4/28/14.
  */
-'use strict';
+
 
 
 

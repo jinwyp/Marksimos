@@ -678,6 +678,35 @@ marksimosapp.controller('chartController', ['$translate', '$scope', '$rootScope'
 
     /********************  获取Decision信息  ********************/
 
+    // 处理当前的公司名称
+    function showCompanyName(fieldname) {
+        var names = {
+            '1': function() {
+                return "A";
+            },
+            '2': function() {
+                return "B";
+            },
+            '3': function() {
+                return "C";
+            },
+            '4': function() {
+                return "D";
+            },
+            '5': function() {
+                return "E";
+            },
+            '6': function() {
+                return "F";
+            }
+
+        };
+        if (typeof names[fieldname] !== 'function') {
+            return false;
+        }
+        return names[fieldname]();
+    }
+
     $scope.companyInfoInit = function(){
 
         Company.getCurrentStudent().then(function(data, status, headers, config){
@@ -702,35 +731,7 @@ marksimosapp.controller('chartController', ['$translate', '$scope', '$rootScope'
 
 
 
-            // 处理当前的公司名称
 
-            function showCompanyName(fieldname) {
-                var names = {
-                    '1': function() {
-                        return "A";
-                    },
-                    '2': function() {
-                        return "B";
-                    },
-                    '3': function() {
-                        return "C";
-                    },
-                    '4': function() {
-                        return "D";
-                    },
-                    '5': function() {
-                        return "E";
-                    },
-                    '6': function() {
-                        return "F";
-                    }
-
-                };
-                if (typeof names[fieldname] !== 'function') {
-                    return false;
-                }
-                return names[fieldname]();
-            }
 
             $scope.data.currentCompanyNameCharacter = showCompanyName($scope.data.currentStudent.companyId);
 
@@ -1126,7 +1127,6 @@ marksimosapp.controller('chartController', ['$translate', '$scope', '$rootScope'
                 position : 'center'
             });
         }).error(function(data, status, headers, config){
-            console.log(data);
 
             form[formfieldname].$valid = false;
             form[formfieldname].$invalid = true;
@@ -1146,25 +1146,6 @@ marksimosapp.controller('chartController', ['$translate', '$scope', '$rootScope'
 
     /********************  get FinalScore  ********************/
 
-
-    $scope.translateCompany = function (companyId){
-        console.log('message');
-        switch(companyId){
-            case 1 : return 'A';
-                break;
-            case 2 : return 'B';
-                break;
-            case 3 : return 'C';
-                break;
-            case 4 : return 'D';
-                break;
-            case 5 : return 'E';
-                break;
-            case 6 : return 'F';
-                break;
-        }
-    };
-    
     $scope.switchTableReportFinalScore = function(period){
         $scope.css.selectFinalScorePeriod = period ;
         Company.getFinalScore(period)
@@ -1173,7 +1154,8 @@ marksimosapp.controller('chartController', ['$translate', '$scope', '$rootScope'
         });
     };
 
-    /********************  get getQuestionnaire  ********************/
+
+    /********************  获取 Questionnaire  ********************/
     Company.getQuestionnaire().success(function(data, status, headers, config){
         $scope.questionnaire = data;
         $scope.questionnaire.radio_OverallSatisfactionWithThePrograms={
