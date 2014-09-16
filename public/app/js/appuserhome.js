@@ -578,7 +578,7 @@ marksimosapp.controller('chartController', ['$translate', '$scope', '$rootScope'
 //        console.log(data);
         $scope.data.tableA2FinancialData.allData = data;
         $scope.data.tableA2FinancialData.currentCompany = data[0];
-        $scope.data.tableA2FinancialData.currentPeriod = $scope.data.tableA2FinancialData.currentCompany.periods[0];
+        $scope.data.tableA2FinancialData.currentPeriod = $scope.data.tableA2FinancialData.currentCompany.periods[$scope.data.tableA2FinancialData.currentCompany.periods.length -1];
         $scope.data.tableA2FinancialData.currentBrand = $scope.data.tableA2FinancialData.currentPeriod.brands[0];
     });
     $scope.switchTableReportPeriod = function(period){
