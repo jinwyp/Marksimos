@@ -111,7 +111,7 @@ app.factory('Company', ['$http', function($http){
         },
 
         delSku : function(skuid, brandid){
-            return $http.delete(apiPath + 'sku/decision/' + brandid + '/' + skuid);
+            return $http['delete'](apiPath + 'sku/decision/' + brandid + '/' + skuid);
         },
 
 
