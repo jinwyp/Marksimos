@@ -198,7 +198,8 @@ marksimosapp.controller('chartController', ['$translate', '$scope', '$rootScope'
 
         chartA31InventoryReport : {
             data : [],
-            color : ['#39b54a', '#ff983d', '#0087f0', '#8781bd', '#f26c4f', '#bd8cbf', '#000000']
+//            color : ['#39b54a', '#ff983d', '#0087f0', '#8781bd', '#f26c4f', '#bd8cbf', '#000000']
+            color : ['#004CE5', '#BB0000', '#FFBC01', '#339933', '#990099', '#FF5200', '#000000']
         },
 
         chartB11MarketShareInValue : {
@@ -422,7 +423,6 @@ marksimosapp.controller('chartController', ['$translate', '$scope', '$rootScope'
     /********************  Chart A3  ********************/
     chartReport.inventoryReport().then(function(data, status, headers, config){
         $scope.data.chartA31InventoryReport.data = data;
-//        console.log($scope.data.chartA31InventoryReport.data);
     });
 
 
