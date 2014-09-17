@@ -37,7 +37,6 @@ exports.getFinalScore = function(req, res, next){
             } else {
                 originalBudget = 0;
             }
-
             scores.push({
                 companyId      : requestedPeriodResult.p_Companies[i].c_CompanyID,
                 originalSOM    : originalSOM,
@@ -45,8 +44,6 @@ exports.getFinalScore = function(req, res, next){
                 originalBudget : originalBudget,                
             });
         };
-
-        console.log(scores);
 
         highest_SOM    = _.max(scores, function(companyScore){ return companyScore.originalSOM; }).originalSOM;
         lowest_SOM     = _.min(scores, function(companyScore){ return companyScore.originalSOM; }).originalSOM;
@@ -75,11 +72,6 @@ exports.getFinalScore = function(req, res, next){
             lowest_Profit = lowest_Profit + c;
             highest_Profit = highest_Profit + c;
         }
-
-        // console.log('highest_SOM:' + highest_SOM);
-        // console.log('lowest_SOM:' + lowest_SOM);
-        // console.log('highest_Profit:' + highest_Profit);
-        // console.log('lowest_Profit:' + lowest_Profit);
 
         if(highest_SOM > lowest_SOM){
             a = 100 / (highest_SOM - lowest_SOM);
@@ -122,6 +114,7 @@ exports.getFinalScore = function(req, res, next){
     }).done();
     
 }
+
 
 exports.getReport = function(req, res, next){
     var seminarId = req.session.seminarId;

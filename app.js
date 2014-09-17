@@ -15,6 +15,17 @@ var morgan = require('morgan');
 
 var app = express();
 
+app.engine('md', function(path, options, fn){
+  fs.readFile(path, 'utf8', function(err, str){
+    if (err) return fn(err);
+    fn(null, str);
+  });
+});
+//download file
+app.get('/marksimos/download', function(req, res, next){
+    res.download('./public/app/file/MarkSimos_Participants_Manual.pdf');
+});
+
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');

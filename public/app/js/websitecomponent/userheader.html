@@ -10,7 +10,7 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <a class="navbar-brand" href="">
+                <a class="navbar-brand" href="/marksimos/">
                     <img src="/app/css/images/logoheader.png" alt="MarkSimosLogo"> MarkSimos
                 </a>
             </div>
@@ -21,7 +21,7 @@
                     <li ng-class="{'active':currentMenu=='Home'}"><a href="" ng-click="clickMenu('Home')">{{'HomePageMenuBarLabelsHome' | translate}}</a></li>
                     <li ng-class="{'active':currentMenu=='Report'}"><a href="" ng-click="clickMenu('Report')">{{'HomePageMenuBarLabelsReport' | translate}}</a></li>
 
-                    <li ng-class="{'active':currentMenu=='Decision'}"><a href="" ng-click="clickMenu('Decision')">{{'HomePageMenuBarLabelsDecision' | translate}}</a></li>
+                    <li ng-class="{'active':currentMenu=='Decision'}"><a href="" ng-click="clickMenu('Decision')">{{'HomePageMenuBarLabelsDecision' | translate}}<span class="num" ng-if="currentRound">R{{currentRound}}</span></a></li>
                     <li ng-class="{'active':currentMenu=='Score'}"><a href="" ng-click="clickMenu('Score')">{{'HomePageMenuBarLabelsScore' | translate}} <span class="num">0</span></a></li>
                 </ul>
 
@@ -38,18 +38,19 @@
                     </li>
 
 
-                    <li class="dropdown">
+                    <!--<li class="dropdown">
                         <a href="" class="dropdown-toggle" data-toggle="dropdown">{{'HomePageMenuBarLabelsHelp' | translate}} <b class="caret"></b></a>
                         <ul class="dropdown-menu mk_dropdownlist">
-                            <li><a href="">{{'HomePageMenuBarLabelsHelpFAQ' | translate}}</a></li>
+                            <li><a href="" ng-click='clickHelpMenu("FAQ")'>{{'HomePageMenuBarLabelsHelpFAQ' | translate}}</a></li>
                             <li class="divider mk_dropdowndivider"></li>
-                            <li><a href="">{{'HomePageMenuBarLabelsHelpVideo' | translate}}</a></li>
+                            <li><a href="" ng-click='clickHelpMenu("Video")'>{{'HomePageMenuBarLabelsHelpVideo' | translate}}</a></li>
                             <li class="divider mk_dropdowndivider"></li>
-                            <li><a href="">{{'HomePageMenuBarLabelsHelpManual' | translate}}</a></li>
+                            <li><a href="" ng-click='clickHelpMenu("Manual")'>{{'HomePageMenuBarLabelsHelpManual' | translate}}</a></li>
                         </ul>
-                    </li>
+                    </li>-->
+                    <li><a href="/marksimos/help" target='_blank'>{{'HomePageMenuBarLabelsHelp' | translate}}</a></li>
 
-                    <li><a href="">{{'HomePageMenuBarLabelsAbout' | translate}}</a></li>
+                    <li><a href="/marksimos.html" target='_blank'>{{'HomePageMenuBarLabelsAbout' | translate}}</a></li>
                     <li ng-if="showlogout"><a href="" ng-click="clickLogout()">{{'HomePageMenuBarLabelsLogout' | translate}}</a></li>
                 </ul>
             </div><!-- /.navbar-collapse -->
