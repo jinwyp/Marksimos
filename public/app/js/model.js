@@ -437,7 +437,6 @@ app.factory('chartReport', ['$http', function($http){
             chartResult.dataSKU.push(oneSegment);
             chartResult.dataBrand.push(oneSegment);
 
-            console.log(chartResult);
             return angular.copy(chartResult);
         }
     };

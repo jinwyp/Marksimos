@@ -198,8 +198,9 @@ marksimosapp.controller('chartController', ['$translate', '$scope', '$rootScope'
 
         chartA31InventoryReport : {
             data : [],
-//            color : ['#39b54a', '#ff983d', '#0087f0', '#8781bd', '#f26c4f', '#bd8cbf', '#000000']
-            color : ['#004CE5', '#BB0000', '#FFBC01', '#339933', '#990099', '#FF5200', '#000000']
+//            color : ['#39b54a', '#ff983d', '#0087f0', '#8781bd', '#f26c4f', '#bd8cbf', '#000000'] // QIFEI 's color
+//            color : ['#004CE5', '#BB0000', '#FFBC01', '#339933', '#990099', '#FF5200', '#000000'] //Windows color
+            color : ['#999999', '#BB0000', '#99CC00', '#339933', '#990099', '#FF5200', '#000000']
         },
 
         chartB11MarketShareInValue : {
@@ -714,20 +715,24 @@ marksimosapp.controller('chartController', ['$translate', '$scope', '$rootScope'
 
             var currentDate = new Date();
 
-            var timer = $interval(function() {
-                currentDate = new Date();
-                if(currentDate.getHours() < 13 && currentDate.getHours() > 9){
-                    $scope.data.currentTime.hour = 12 - currentDate.getHours();
-                    $scope.data.currentTime.minute = 60 - currentDate.getMinutes();
-                    $scope.data.currentTime.second = 60 - currentDate.getSeconds() ;
-                }else if(currentDate.getHours() < 19 && currentDate.getHours() >= 13){
-                    $scope.data.currentTime.hour = 18 - currentDate.getHours();
-                    $scope.data.currentTime.minute = 60 - currentDate.getMinutes();
-                    $scope.data.currentTime.second = 60 - currentDate.getSeconds() ;
-                }else {
-                    $interval.cancel(timer);
-                }
-            }, 3000);
+            $scope.data.currentTime.hour = 6;
+            $scope.data.currentTime.minute = 59;
+            $scope.data.currentTime.second = 59 ;
+
+//            var timer = $interval(function() {
+//                currentDate = new Date();
+//                if(currentDate.getHours() < 13 && currentDate.getHours() > 9){
+//                    $scope.data.currentTime.hour = 12 - currentDate.getHours();
+//                    $scope.data.currentTime.minute = 60 - currentDate.getMinutes();
+//                    $scope.data.currentTime.second = 60 - currentDate.getSeconds() ;
+//                }else if(currentDate.getHours() < 19 && currentDate.getHours() >= 13){
+//                    $scope.data.currentTime.hour = 18 - currentDate.getHours();
+//                    $scope.data.currentTime.minute = 60 - currentDate.getMinutes();
+//                    $scope.data.currentTime.second = 60 - currentDate.getSeconds() ;
+//                }else {
+//                    $interval.cancel(timer);
+//                }
+//            }, 3000);
 
 
 
@@ -1146,6 +1151,16 @@ marksimosapp.controller('chartController', ['$translate', '$scope', '$rootScope'
 
     /********************  get FinalScore  ********************/
 
+    $scope.changeToReportPage = function(){
+        $scope.css.menu = 'Report';
+
+        $timeout(function() {
+            angular.element('#reportinput').focus();
+        });
+
+
+    };
+
     $scope.switchTableReportFinalScore = function(period){
         $scope.css.selectFinalScorePeriod = period ;
         Company.getFinalScore(period)
@@ -1200,6 +1215,8 @@ marksimosapp.controller('chartController', ['$translate', '$scope', '$rootScope'
             });
         });
     };
+
+
 
 
 
