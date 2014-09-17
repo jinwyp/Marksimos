@@ -2967,33 +2967,26 @@
                                         </tr>
                                     </thead>
                                     <tbody>
+
                                         <tr>
-                                            <td>{{'DecisionPageSpendingDetailsTable2InvestmentInProductionEfficiency' | translate}}</td>
-                                            <td>{{data.currentCompanySpendingDetails.companyData.investmentInProductionEfficiency}}</td>
-                                        </tr>
-                                        <tr>
-                                            <td>{{'DecisionPageSpendingDetailsTable2InvestmentInProcessingTechnology' | translate}}</td>
-                                            <td>{{data.currentCompanySpendingDetails.companyData.investmentInProcessingTechnology}}</td>
-                                        </tr>
-                                        <tr>
-                                            <td>{{'DecisionPageSpendingDetailsTable2TotalInvestment' | translate}}</td>
-                                            <td>{{data.currentCompanySpendingDetails.companyData.totalInvestment | number :2}}</td>
-                                        </tr>
-                                        <tr>
-                                            <td>{{'DecisionPageSpendingDetailsTable2AverageBudgetPerPeriod' | translate}}</td>
-                                            <td>{{data.currentCompanySpendingDetails.companyData.averageBudgetPerPeriod | number :2}}</td>
-                                        </tr>
-                                        <tr>
-                                            <td>{{'DecisionPageSpendingDetailsTable2TotalInvestmentBudget' | translate}}</td>
-                                            <td>{{data.currentCompanySpendingDetails.companyData.totalInvestmentBudget}}</td>
+                                            <td>{{'DecisionPageSpendingDetailsTable2TotalInvestmentBudget' | translate}} / {{'DecisionPageSpendingDetailsTable2AverageBudgetPerPeriod' | translate}}</td>
+                                            <td>{{data.currentCompanySpendingDetails.companyData.totalInvestmentBudget}} / {{data.currentCompanySpendingDetails.companyData.averageBudgetPerPeriod | number :2}}</td>
                                         </tr>
                                         <tr>
                                             <td>{{'DecisionPageSpendingDetailsTable2CumulatedPreviousInvestments' | translate}}</td>
                                             <td>{{data.currentCompanySpendingDetails.companyData.cumulatedPreviousInvestments}}</td>
                                         </tr>
                                         <tr>
+                                            <td>{{'DecisionPageSpendingDetailsTable2TotalInvestment' | translate}}</td>
+                                            <td>{{data.currentCompanySpendingDetails.companyData.totalInvestment | number :2}}</td>
+                                        </tr>
+                                        <tr>
                                             <td>{{'DecisionPageSpendingDetailsTable2AvailableBudget' | translate}}</td>
                                             <td>{{data.currentCompanySpendingDetails.companyData.availableBudget | number :2}}</td>
+                                        </tr>
+                                        <tr>
+                                            <td></td>
+                                            <td> </td>
                                         </tr>
                                         <tr>
                                             <td>{{'DecisionPageSpendingDetailsTable2NormalCapacity' | translate}}</td>
@@ -3004,16 +2997,20 @@
                                             <td>{{data.currentCompanySpendingDetails.companyData.availableOvertimeCapacityExtension | number :2}}</td>
                                         </tr>
                                         <tr>
+                                            <td></td>
+                                            <td> </td>
+                                        </tr>
+                                        <tr>
+                                            <td>{{'DecisionPageSpendingDetailsTable2AcquiredTechnologyLevel' | translate}}</td>
+                                            <td>{{data.currentCompanySpendingDetails.companyData.acquiredTechnologyLevel}}</td>
+                                        </tr>
+                                        <tr>
                                             <td>{{'DecisionPageSpendingDetailsTable2AcquiredEfficiency' | translate}}</td>
                                             <td>{{data.currentCompanySpendingDetails.companyData.acquiredEfficiency | number :2}}%</td>
                                         </tr>
                                         <tr>
                                             <td>{{'DecisionPageSpendingDetailsTable2AcquiredProductionVolumeFlexibility' | translate}}</td>
                                             <td>{{data.currentCompanySpendingDetails.companyData.acquiredProductionVolumeFlexibility | number :2}}%</td>
-                                        </tr>
-                                        <tr>
-                                            <td>{{'DecisionPageSpendingDetailsTable2AcquiredTechnologyLevel' | translate}}</td>
-                                            <td>{{data.currentCompanySpendingDetails.companyData.acquiredTechnologyLevel}}</td>
                                         </tr>
 
                                     </tbody>
