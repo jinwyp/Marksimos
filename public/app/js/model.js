@@ -323,7 +323,7 @@ app.factory('chartReport', ['$http', function($http){
     };
 
 
-    var chartFormatTool12 = function(chartHttpData, decimalNumber){
+    var chartFormatTool2 = function(chartHttpData, decimalNumber){
         // 使用angular-chart 插件的数据格式 Bar Chart  For Segment Leader Top Chart
 
         chartResult.series = ['justoneseries'];
@@ -399,7 +399,7 @@ app.factory('chartReport', ['$http', function($http){
 
 
 
-    var chartFormatTool2 = function(chartHttpData) {
+    var chartFormatTool4 = function(chartHttpData) {
         // 使用angular-nvd3 插件的数据格式 Stacked Multi Bar Chart
 
         chartResult.series = [];
@@ -439,7 +439,7 @@ app.factory('chartReport', ['$http', function($http){
         }
     };
 
-    var chartFormatTool3 = function(chartHttpData) {
+    var chartFormatTool5 = function(chartHttpData) {
         // 使用angular-nvd3 插件的数据格式   only for C2 Perception Maps Scatter Chart 散点图
 //        chartResult.series = [];
 //        chartResult.data = [];
@@ -536,7 +536,7 @@ app.factory('chartReport', ['$http', function($http){
         inventoryReport : function(){
             return $http.get(apiPath + 'chart/inventory_report').then(function(result){
 //                console.log(result.data);
-                return chartFormatTool2(result.data);
+                return chartFormatTool4(result.data);
             })["catch"](errorHandler);
         },
 
@@ -634,42 +634,42 @@ app.factory('chartReport', ['$http', function($http){
         segmentsLeadersByValuePriceSensitive : function(){
             return $http.get(apiPath + 'chart/segments_leaders_by_value_price_sensitive').then(function(result){
 //                console.log(result.data);
-                return chartFormatTool12(result.data, 2);
+                return chartFormatTool2(result.data, 2);
             })["catch"](errorHandler);
         },
 
         segmentsLeadersByValuePretenders : function(){
             return $http.get(apiPath + 'chart/segments_leaders_by_value_pretenders').then(function(result){
 //                console.log(result.data);
-                return chartFormatTool12(result.data, 2);
+                return chartFormatTool2(result.data, 2);
             })["catch"](errorHandler);
         },
 
         segmentsLeadersByValueModerate : function(){
             return $http.get(apiPath + 'chart/segments_leaders_by_value_moderate').then(function(result){
 //                console.log(result.data);
-                return chartFormatTool12(result.data, 2);
+                return chartFormatTool2(result.data, 2);
             })["catch"](errorHandler);
         },
 
         segmentsLeadersByValueGoodLife : function(){
             return $http.get(apiPath + 'chart/segments_leaders_by_value_good_life').then(function(result){
 //                console.log(result.data);
-                return chartFormatTool12(result.data, 2);
+                return chartFormatTool2(result.data, 2);
             })["catch"](errorHandler);
         },
 
         segmentsLeadersByValueUltimate : function(){
             return $http.get(apiPath + 'chart/segments_leaders_by_value_ultimate').then(function(result){
 //                console.log(result.data);
-                return chartFormatTool12(result.data, 2);
+                return chartFormatTool2(result.data, 2);
             })["catch"](errorHandler);
         },
 
         segmentsLeadersByValuePragmatic : function(){
             return $http.get(apiPath + 'chart/segments_leaders_by_value_pragmatic').then(function(result){
 //                console.log(result.data);
-                return chartFormatTool12(result.data, 2);
+                return chartFormatTool2(result.data, 2);
             })["catch"](errorHandler);
         },
 
@@ -678,7 +678,7 @@ app.factory('chartReport', ['$http', function($http){
         perceptionMap : function(){
             return $http.get(apiPath + 'chart/perception_map').then(function(result){
 //                console.log(result.data);
-                return chartFormatTool3(result.data);
+                return chartFormatTool5(result.data);
             })["catch"](errorHandler);
         },
 
