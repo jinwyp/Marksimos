@@ -802,6 +802,8 @@ app.config(['$translateProvider', function($translateProvider){
 		
         //Labels for final score page
         "FinalScorePageScore":"Score",
+        "FinalScorePageButtonOriginal":"Original",
+        "FinalScorePageButtonRescaled":"Rescaled",
         "FinalScorePageWeightFactor":"Weight / Factor",
         "FinalScorePageIncrementalMarketShare":"Incremental market share (value)",
         "FinalScorePageCumulatedNetProfit":"Cumulated net profit",
@@ -809,6 +811,7 @@ app.config(['$translateProvider', function($translateProvider){
         "FinalScorePageShareInBrandTotalSalesValue":"Share in Brand Total Sales Value",
         "FinalScorePageAchievementOfInitialObjectives":"Achievement of initial objectives",
         "FinalScorePageFinalScore":"Final Score",
+
         "FinalScorePageCompany":"Company",
         "FinalScorePagePeriod":"Period",
         "FinalScorePageCongratulations":"Congratulations ! You finish the game",
@@ -1675,18 +1678,24 @@ app.config(['$translateProvider', function($translateProvider){
 		
         //Labels for final score page
         "FinalScorePageScore":"最终得分",
-        "FinalScorePageWeightFactor":"Weight / Factor",
-        "FinalScorePageIncrementalMarketShare":"Incremental market share (value)",
-        "FinalScorePageCumulatedNetProfit":"Cumulated net profit",
-        "FinalScorePageSpendingVersusBudgets":"Spending versus budgets",
+        "FinalScorePageButtonOriginal":"原始",
+        "FinalScorePageButtonRescaled":"调整",
+        "FinalScorePageWeightFactor":"权重 / 因素",
+
+        "FinalScorePageIncrementalMarketShare":"增长的市场份额 (销售额)",
+        "FinalScorePageCumulatedNetProfit":"累计净利润",
+        "FinalScorePageSpendingVersusBudgets":"花销与预算对比",
+
         "FinalScorePageShareInBrandTotalSalesValue":"Share in Brand Total Sales Value",
         "FinalScorePageAchievementOfInitialObjectives":"Achievement of initial objectives",
-        "FinalScorePageFinalScore":"Final Score",
-        "FinalScorePageCompany":"Company",
-        "FinalScorePagePeriod":"Period",
-        "FinalScorePageCongratulations":"Congratulations ! You finish the game",
-        "FinalScorePageCongratulationsInfo":"Please take 5 minutes to provide feedback to MarkSimos. Your feedback will help us to improve our service",
+        "FinalScorePageFinalScore":"最终得分",
+        "FinalScorePageCompany":"公司",
+        "FinalScorePagePeriod":"阶段",
+        "FinalScorePageCongratulations":"祝贺 ! 你已完成游戏",
+        "FinalScorePageCongratulationsInfo":"麻烦您花一些时间填写反馈. 您的反馈将更好的改进我们的产品",
         "FinalScorePageProvideFeedback":"Provide Feedback",
+
+
         //Labels for Questionnaire Page
         "QuestionnairePageQuestionnaire":"问卷调查",
         "QuestionnairePageVeryPoor":"Very poor",
