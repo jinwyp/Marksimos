@@ -322,6 +322,83 @@ app.factory('chartReport', ['$http', function($http){
         }
     };
 
+
+    var chartFormatTool12 = function(chartHttpData, decimalNumber){
+        // 使用angular-chart 插件的数据格式 Bar Chart  For Segment Leader Top Chart
+
+        chartResult.series = ['justoneseries'];
+        chartResult.data = [];
+
+
+        function showSkuColor(fieldname) {
+
+            var colorsRGB =  [
+                'rgb(0,76,229)',
+                'rgb(187,0,0)',
+                'rgb(255,188,1)',
+                'rgb(51,153,51)',
+                'rgb(153,0,153)',
+                'rgb(255,82,0)'
+            ];
+
+            var names = {
+                'A': function() {
+                    return colorsRGB[0];
+                },
+                'B': function() {
+                    return colorsRGB[1];
+                },
+                'C': function() {
+                    return colorsRGB[2];
+                },
+                'D': function() {
+                    return colorsRGB[3];
+                },
+                'E': function() {
+                    return colorsRGB[4];
+                },
+                'F': function() {
+                    return colorsRGB[5];
+                }
+
+            };
+            if (typeof names[fieldname] !== 'function') {
+                return false;
+            }
+            return names[fieldname]();
+        }
+
+        if(angular.isUndefined(chartHttpData.periods)){
+            // 如果periods 没有定义则是普通的图表,不带有系列的图表
+
+            angular.forEach(chartHttpData.chartData, function(value, key) {
+                var oneBarData = {
+                    x : "", //SKU Name
+                    y : [],
+                    color : 'rgb(57,181,74)'
+                };
+
+                if(angular.isUndefined(value.segmentName) ){
+                    oneBarData.x = value.SKUName;
+
+                    if(decimalNumber === 0){
+                        oneBarData.y.push(Math.round(value.valueSegmentShare * 100) / 100 );
+                    }else{
+                        oneBarData.y.push(Math.round(value.valueSegmentShare * 10000) / Math.pow(10, Number(decimalNumber)) );
+                    }
+
+                    oneBarData.color = showSkuColor(value.SKUName.substring(0,1));
+                }
+
+                chartResult.data.push(oneBarData);
+            });
+        }
+        return angular.copy(chartResult);
+
+    };
+
+
+
     var chartFormatTool2 = function(chartHttpData) {
         // 使用angular-nvd3 插件的数据格式 Stacked Multi Bar Chart
 
@@ -557,42 +634,42 @@ app.factory('chartReport', ['$http', function($http){
         segmentsLeadersByValuePriceSensitive : function(){
             return $http.get(apiPath + 'chart/segments_leaders_by_value_price_sensitive').then(function(result){
 //                console.log(result.data);
-                return chartFormatTool1(result.data, 2);
+                return chartFormatTool12(result.data, 2);
             })["catch"](errorHandler);
         },
 
         segmentsLeadersByValuePretenders : function(){
             return $http.get(apiPath + 'chart/segments_leaders_by_value_pretenders').then(function(result){
 //                console.log(result.data);
-                return chartFormatTool1(result.data, 2);
+                return chartFormatTool12(result.data, 2);
             })["catch"](errorHandler);
         },
 
         segmentsLeadersByValueModerate : function(){
             return $http.get(apiPath + 'chart/segments_leaders_by_value_moderate').then(function(result){
 //                console.log(result.data);
-                return chartFormatTool1(result.data, 2);
+                return chartFormatTool12(result.data, 2);
             })["catch"](errorHandler);
         },
 
         segmentsLeadersByValueGoodLife : function(){
             return $http.get(apiPath + 'chart/segments_leaders_by_value_good_life').then(function(result){
 //                console.log(result.data);
-                return chartFormatTool1(result.data, 2);
+                return chartFormatTool12(result.data, 2);
             })["catch"](errorHandler);
         },
 
         segmentsLeadersByValueUltimate : function(){
             return $http.get(apiPath + 'chart/segments_leaders_by_value_ultimate').then(function(result){
 //                console.log(result.data);
-                return chartFormatTool1(result.data, 2);
+                return chartFormatTool12(result.data, 2);
             })["catch"](errorHandler);
         },
 
         segmentsLeadersByValuePragmatic : function(){
             return $http.get(apiPath + 'chart/segments_leaders_by_value_pragmatic').then(function(result){
 //                console.log(result.data);
-                return chartFormatTool1(result.data, 2);
+                return chartFormatTool12(result.data, 2);
             })["catch"](errorHandler);
         },
 
