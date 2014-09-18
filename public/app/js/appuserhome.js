@@ -396,7 +396,7 @@ marksimosapp.controller('chartController', ['$translate', '$scope', '$rootScope'
                     arrow7 = 'glyphicon-arrow-down';
                 }
 
-                htmlResult = '<div class="panel panel-default perception_panel"> <div class="panel-heading"><span class="perception_logo" style="background-color:' + iconColor + '"></span>' + key + ' - ' + e.point.name + '</div>' +
+                htmlResult = '<div class="panel panel-default perception_panel"> <div class="panel-heading"><span class="perception_logo" style="background-color:' + iconColor + '"></span>' + key + ' - ' + e.point.name + '  </div>' +
                     '<ul class="list-group">' +
                     '<li class="list-group-item perception_list"><span class="perception_info">Market Share (Value %)  </span><span class="perception_info_number">' + Math.round(e.point.tooltips[0].value * 10000) / 100 +
                     '</span><span class="glyphicon ' + arrow0 + ' "></span></li>' +
@@ -532,6 +532,7 @@ marksimosapp.controller('chartController', ['$translate', '$scope', '$rootScope'
             $scope.data.chartC21PerceptionMap.dataChart = $scope.data.chartC21PerceptionMap.data.dataBrand;
         }
     };
+
 
 
     /********************  Chart C4  ********************/

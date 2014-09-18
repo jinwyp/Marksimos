@@ -431,7 +431,8 @@ body{
     cursor: move;
 }
 
-
+//利用css解决绝对定位层遮挡的问题
+.xy-tooltip div{pointer-events:auto}
 
 
 
