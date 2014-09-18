@@ -192,7 +192,7 @@ $color_main_body_user_manual_table_2n:#f8f8f8;
     background-repeat: no-repeat;
     background-position: 1px 2px;
     padding-left: 20px;
-    width: 150px;
+//    width: 150px;
     height: 24px;
 
     span{
@@ -258,7 +258,6 @@ $color_main_body_user_manual_table_2n:#f8f8f8;
     .table > thead > tr > td,
     .table > tbody > tr > td,
     .table > tfoot > tr > td {
-        vertical-align: middle;
         height: 45px;
         border-top: 1px solid $color_main_body_user_muted_border;
         font-family: $font_main_header2;
@@ -836,7 +835,12 @@ body{
             margin-bottom: 50px;
         }
 
+        .table_seminar_list > tbody > tr > td{
+            vertical-align: middle;
+        }
+
         @include seminar_table_list;
+
 
         .first_intro{
             margin-top: 50px;
@@ -1023,7 +1027,7 @@ body{
     }
 
     .user_brandcolumn{
-        width: 19%;
+//        width: 19%;
         margin-left: 6px;
     }
 

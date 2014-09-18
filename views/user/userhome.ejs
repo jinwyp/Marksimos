@@ -38,12 +38,27 @@
 
         <div class="col-md-7 user_home_divider user_brand_box">
             <div class="row">
-                <div class="col-md-2 user_brandcolumn" ng-repeat="brand in data.currentCompany.d_BrandsDecisions">
-                    <span class="user_brand" ng-cloak>{{brand.d_BrandName}}</span>
-                    <ul>
-                        <li class="user_product" ng-cloak ng-repeat="sku in brand.d_SKUsDecisions">{{sku.d_SKUName}}-<span>{{sku.d_TargetConsumerSegment | usersegment}}</span></li>
-                    </ul>
+                <div class="col-md-12">
+                    <table class="table" >
+
+                        <tbody>
+                            <tr >
+                                <td ng-repeat="brand in data.currentCompany.d_BrandsDecisions">
+
+                                    <span class="user_brand" ng-cloak>{{brand.d_BrandName}}</span>
+                                    <ul>
+                                        <li class="user_product" ng-cloak ng-repeat="sku in brand.d_SKUsDecisions">{{brand.d_BrandName}}{{sku.d_SKUName}} <span>{{sku.d_TargetConsumerSegment | usersegment}}</span></li>
+                                    </ul>
+
+                                </td>
+
+                            </tr>
+                        </tbody>
+                    </table>
                 </div>
+
+
+
             </div>
         </div>
 
