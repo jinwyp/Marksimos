@@ -280,7 +280,8 @@ marksimosapp.controller('chartController', ['$translate', '$scope', '$rootScope'
         chartC21PerceptionMap : {
             data : [],
             dataChart : [],
-            color : ['#39b54a', '#ff983d', '#0087f0', '#8781bd', '#f26c4f', '#bd8cbf', '#000000']
+//            color : ['#39b54a', '#ff983d', '#0087f0', '#8781bd', '#f26c4f', '#bd8cbf', '#000000']
+            color : ['#004CE5', '#BB0000', '#FFBC01', '#339933', '#990099', '#FF5200', '#000000']
         },
         chartC41GrowthRateInVolume : {
             config : chartReport.getChartConfig1(),
@@ -311,9 +312,16 @@ marksimosapp.controller('chartController', ['$translate', '$scope', '$rootScope'
         };
     };
 
+
     $scope.A31ToolTipContent = function(){
         return function(key, x, y, e, graph) {
             return  '<h5>' + y + '</h5>';
+        };
+    };
+
+    $scope.C21ColorFunction = function(){
+        return function(d, i){
+            return $scope.data.chartC21PerceptionMap.color[i];
         };
     };
 
