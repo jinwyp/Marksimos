@@ -461,8 +461,8 @@ app.factory('chartReport', ['$http', function($http){
 
                 angular.forEach(value.SKUs, function(valueSku, keySku) {
                     var oneLineSku1 = {
-                        'x' : Math.round(valueSku.valuePerception * 100) / 100,
-                        'y' : Math.round(valueSku.imagePerception * 100) / 100,
+                        'x' : Math.round(valueSku.valuePerception * 10000000 + Math.random() * 1000 ) / 10000000,
+                        'y' : Math.round(valueSku.imagePerception * 10000000 + Math.random() * 1000 ) / 10000000,
                         'size' : 0.6,
                         'SKUName' : valueSku.SKUName,
                         'name' : valueSku.SKUName,
@@ -514,6 +514,7 @@ app.factory('chartReport', ['$http', function($http){
             chartResult.dataSKU.push(oneSegment);
             chartResult.dataBrand.push(oneSegment);
 
+            console.log(angular.copy(chartResult));
             return angular.copy(chartResult);
         }
     };
