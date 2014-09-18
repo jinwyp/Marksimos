@@ -27,9 +27,9 @@
 
                     for (j = 0; j < points; j++) {
                         data[i].values.push({
-                            x: random(),
-                            y: random(),
-                            size: Math.random()
+                            x: random()
+                            , y: random()
+                            , size: Math.random()
                             //, shape: shapes[j % 6]
                         });
                     }
@@ -37,7 +37,7 @@
                 return data;
             }
 
-            $scope.exampleData =  getData(1, 3);
+            $scope.exampleData =  getData(4, 40);
 
             $scope.tooltipXContentFunction = function(){
                 return function(key, x, y) {
