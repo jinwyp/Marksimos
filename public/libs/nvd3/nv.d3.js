@@ -11336,38 +11336,17 @@ nv.models.scatter = function() {
 
         var points = groups.selectAll('path.nv-point')
             .data(function(d) { return d.values });
-
-          var pointsEnter = points.enter().append('g')
+          points.enter().append('path')
+            .style('fill', function (d,i) { return d.color })
+            .style('stroke', function (d,i) { return d.color })
               .attr('transform', function(d,i) {
                   return 'translate(' + x0(getX(d,i)) + ',' + y0(getY(d,i)) + ')'
               })
-              ;
-
-          pointsEnter.append('path')
-            .style('fill', function (d,i) { return d.color })
-            .style('stroke', function (d,i) { return d.color })
-
             .attr('d',
               d3.svg.symbol()
                 .type(getShape)
                 .size(function(d,i) { return z(getSize(d,i)) })
             );
-
-          if (true) {
-              pointsEnter.append('text')
-                  .attr('text-anchor', 'middle')
-              ;
-
-              pointsEnter.select('text')
-                  .text(function(d,i) { console.log(d); return d.name })
-                  .transition()
-//                  .attr('x', x.rangeBand() * .9 / 2)
-//                  .attr('y', function(d,i) { return getY(d,i) < 0 ? y(getY(d,i)) - y(0) + 12 : -4 })
-
-              ;
-          } else {
-              bars.selectAll('text').remove();
-          }
 
         points.exit().remove();
         groups.exit().selectAll('path.nv-point')
@@ -11732,42 +11711,16 @@ nv.models.scatterChart = function() {
         xVal = xAxis.tickFormat()(scatter.x()(e.point, e.pointIndex)),
         yVal = yAxis.tickFormat()(scatter.y()(e.point, e.pointIndex));
 
-      console.log(e.pos[0], e.pos[1], e);
-      console.log(offsetElement.offsetLeft, offsetElement.offsetTop);
-
       if( tooltipX != null )
           nv.tooltip.show([leftX, topX], tooltipX(e.series.key, xVal, yVal, e, chart), 'n', 1, offsetElement, 'x-nvtooltip');
       if( tooltipY != null )
           nv.tooltip.show([leftY, topY], tooltipY(e.series.key, xVal, yVal, e, chart), 'e', 1, offsetElement, 'y-nvtooltip');
       if( tooltip != null ){
-//          nv.tooltip.show([left, top], tooltip(e.series.key, xVal, yVal, e, chart), e.value < 0 ? 'n' : 's', null, offsetElement);
-          showPointLabel(e, offsetElement);
+          nv.tooltip.show([left, top], tooltip(e.series.key, xVal, yVal, e, chart), e.value < 0 ? 'n' : 's', null, offsetElement);
       }
 
   };
 
-  var showPointLabel = function(e, offsetElement){
-      var left = e.pos[0] + ( offsetElement.offsetLeft || 0 ) - 8,
-          top = e.pos[1] + ( offsetElement.offsetTop || 0) - 25
-
-      //Create new Point Labe div if it doesn't exist on DOM.
-      var   container = document.createElement('div');
-      container.className = 'nvtooltiplabel ';
-
-      var body = offsetElement;
-      if ( !offsetElement || offsetElement.tagName.match(/g|svg/i)) {
-          //If the parent element is an SVG element, place tooltip in the <body> element.
-          body = document.getElementsByTagName('body')[0];
-      }
-
-      container.style.left = left+'px';
-      container.style.top = top+'px';
-      container.style.opacity = 1;
-      container.style.position = 'absolute';
-      container.innerHTML = '<p>' + e.point.SKUName + '</p>' ;  //Fixed Name
-      body.appendChild(container);
-
-  };
 
   var controlsData = [
     { key: 'Magnify', disabled: true }
@@ -11778,7 +11731,6 @@ nv.models.scatterChart = function() {
 
   function chart(selection) {
     selection.each(function(data) {
-        console.log(data);
       var container = d3.select(this),
           that = this;
 
