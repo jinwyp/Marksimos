@@ -23,7 +23,7 @@ function generateAverageNetMarketPriceStdPackReport(allResults){
         var onePeriodResult = allResults[i];
 
         result.push({
-            period: 'Quarter ' + onePeriodResult.period,
+            period:  onePeriodResult.period,
             priceSensitive: onePeriodResult.p_Market.m_AverageNetMarketPrice[0],
             pretenders: onePeriodResult.p_Market.m_AverageNetMarketPrice[1],
             moderate: onePeriodResult.p_Market.m_AverageNetMarketPrice[2],
@@ -44,7 +44,7 @@ function generateImagePerceptionReport(allExogenous, periods){
         var onePeriodExogenous = allExogenous[i];
 
         result.push({
-            period: 'Quarter ' + periods[i],
+            period:  periods[i],
             priceSensitive: onePeriodExogenous.exo_SegmentsIdealPoints[0][1],
             pretenders: onePeriodExogenous.exo_SegmentsIdealPoints[1][1],
             moderate: onePeriodExogenous.exo_SegmentsIdealPoints[2][1],
@@ -65,7 +65,7 @@ function generateValuePerceptionReport(allExogenous, periods){
         var onePeriodExogenous = allExogenous[i];
 
         result.push({
-            period: 'Quarter ' + periods[i],
+            period:  periods[i],
             priceSensitive: onePeriodExogenous.exo_SegmentsIdealPoints[0][0],
             pretenders: onePeriodExogenous.exo_SegmentsIdealPoints[1][0],
             moderate: onePeriodExogenous.exo_SegmentsIdealPoints[2][0],
@@ -86,7 +86,7 @@ function generateMarketSaleVolumeReport(allResults){
         var onePeriodResult = allResults[i];
 
         result.push({
-            period: 'Quarter ' + onePeriodResult.period,
+            period:  onePeriodResult.period,
             priceSensitive: onePeriodResult.p_Market.m_SegmentsSalesVolume[0],
             pretenders: onePeriodResult.p_Market.m_SegmentsSalesVolume[1],
             moderate: onePeriodResult.p_Market.m_SegmentsSalesVolume[2],
@@ -107,7 +107,7 @@ function generateMarketSaleValueReport(allResults){
         var onePeriodResult = allResults[i];
 
         result.push({
-            period: 'Quarter ' + onePeriodResult.period,
+            period:  onePeriodResult.period,
             priceSensitive: onePeriodResult.p_Market.m_SegmentsNetSalesValue[0],
             pretenders: onePeriodResult.p_Market.m_SegmentsNetSalesValue[1],
             moderate: onePeriodResult.p_Market.m_SegmentsNetSalesValue[2],
@@ -129,7 +129,7 @@ function generateMarketShareValueReport(allResults){
         var onePeriodResult = allResults[i];
 
         result.push({
-            period: 'Quarter ' + onePeriodResult.period,
+            period:  onePeriodResult.period,
             priceSensitive: onePeriodResult.p_Market.m_ValueSegmentShare[0],
             pretenders: onePeriodResult.p_Market.m_ValueSegmentShare[1],
             moderate: onePeriodResult.p_Market.m_ValueSegmentShare[2],
@@ -151,7 +151,7 @@ function genereateMarketShareVolumeReport(allResults){
         var onePeriodResult = allResults[i];
 
         result.push({
-            period: 'Quarter ' + onePeriodResult.period,
+            period:  onePeriodResult.period,
             priceSensitive: onePeriodResult.p_Market.m_VolumeSegmentShare[0],
             pretenders: onePeriodResult.p_Market.m_VolumeSegmentShare[1],
             moderate: onePeriodResult.p_Market.m_VolumeSegmentShare[2],
