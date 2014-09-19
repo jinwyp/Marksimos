@@ -22,7 +22,7 @@ app.factory('Student', ['$http', function($http){
             return $http.get(apiPath + 'user').then(function(result){
 
                 return result.data;
-            }).catch(function(err){
+            })["catch"](function(err){
                 console.log(err);
             });
         },
@@ -31,7 +31,7 @@ app.factory('Student', ['$http', function($http){
             return $http.get(apiPath + 'student/seminar').then(function(result){
 
                 return result.data;
-            }).catch(function(err){
+            })["catch"](function(err){
                 console.log(err);
             });
         }
@@ -62,7 +62,7 @@ app.factory('Company', ['$http', function($http){
 //                console.log(result.data);
 
                 return result.data;
-            }).catch(errorHandler);
+            })["catch"](errorHandler);
         },
 
         getCompany : function(){
@@ -70,35 +70,35 @@ app.factory('Company', ['$http', function($http){
 //                console.log(result.data);
 
                 return result.data;
-            }).catch(errorHandler);
+            })["catch"](errorHandler);
         },
         getCompanyOtherInfo : function(){
             return $http.get(apiPath + 'company/otherinfo').then(function(result){
 //                console.log(result.data);
 
                 return result.data;
-            }).catch(errorHandler);
+            })["catch"](errorHandler);
         },
         getCompanyFutureProjectionCalculator : function(id){
             return $http.get(apiPath + 'future_projection_calculator/' + id).then(function(result){
 //                console.log(result.data);
 
                 return result.data;
-            }).catch(errorHandler);
+            })["catch"](errorHandler);
         },
         getCompanyProductPortfolio : function(){
             return $http.get(apiPath + 'product_portfolio').then(function(result){
 //                console.log(result.data);
 
                 return result.data;
-            }).catch(errorHandler);
+            })["catch"](errorHandler);
         },
         getCompanySpendingDetails : function(){
             return $http.get(apiPath + 'spending_details').then(function(result){
 //                console.log(result.data);
 
                 return result.data;
-            }).catch(errorHandler);
+            })["catch"](errorHandler);
         },
 
 
@@ -111,7 +111,7 @@ app.factory('Company', ['$http', function($http){
         },
 
         delSku : function(skuid, brandid){
-            return $http.delete(apiPath + 'sku/decision/' + brandid + '/' + skuid);
+            return $http['delete'](apiPath + 'sku/decision/' + brandid + '/' + skuid);
         },
 
 
@@ -138,7 +138,7 @@ app.factory('Company', ['$http', function($http){
                     result.data.scores[i].companyName = String.fromCharCode( 64 + result.data.scores[i].companyId);
                 }
                 return result.data;
-            }).catch(errorHandler);
+            })["catch"](errorHandler);
         },
 
         getQuestionnaire : function(){
@@ -322,7 +322,84 @@ app.factory('chartReport', ['$http', function($http){
         }
     };
 
-    var chartFormatTool2 = function(chartHttpData) {
+
+    var chartFormatTool2 = function(chartHttpData, decimalNumber){
+        // 使用angular-chart 插件的数据格式 Bar Chart  For Segment Leader Top Chart
+
+        chartResult.series = ['justoneseries'];
+        chartResult.data = [];
+
+
+        function showSkuColor(fieldname) {
+
+            var colorsRGB =  [
+                'rgb(0,76,229)',
+                'rgb(187,0,0)',
+                'rgb(255,188,1)',
+                'rgb(51,153,51)',
+                'rgb(153,0,153)',
+                'rgb(255,82,0)'
+            ];
+
+            var names = {
+                'A': function() {
+                    return colorsRGB[0];
+                },
+                'B': function() {
+                    return colorsRGB[1];
+                },
+                'C': function() {
+                    return colorsRGB[2];
+                },
+                'D': function() {
+                    return colorsRGB[3];
+                },
+                'E': function() {
+                    return colorsRGB[4];
+                },
+                'F': function() {
+                    return colorsRGB[5];
+                }
+
+            };
+            if (typeof names[fieldname] !== 'function') {
+                return false;
+            }
+            return names[fieldname]();
+        }
+
+        if(angular.isUndefined(chartHttpData.periods)){
+            // 如果periods 没有定义则是普通的图表,不带有系列的图表
+
+            angular.forEach(chartHttpData.chartData, function(value, key) {
+                var oneBarData = {
+                    x : "", //SKU Name
+                    y : [],
+                    color : 'rgb(57,181,74)'
+                };
+
+                if(angular.isUndefined(value.segmentName) ){
+                    oneBarData.x = value.SKUName;
+
+                    if(decimalNumber === 0){
+                        oneBarData.y.push(Math.round(value.valueSegmentShare * 100) / 100 );
+                    }else{
+                        oneBarData.y.push(Math.round(value.valueSegmentShare * 10000) / Math.pow(10, Number(decimalNumber)) );
+                    }
+
+                    oneBarData.color = showSkuColor(value.SKUName.substring(0,1));
+                }
+
+                chartResult.data.push(oneBarData);
+            });
+        }
+        return angular.copy(chartResult);
+
+    };
+
+
+
+    var chartFormatTool4 = function(chartHttpData) {
         // 使用angular-nvd3 插件的数据格式 Stacked Multi Bar Chart
 
         chartResult.series = [];
@@ -362,7 +439,7 @@ app.factory('chartReport', ['$http', function($http){
         }
     };
 
-    var chartFormatTool3 = function(chartHttpData) {
+    var chartFormatTool5 = function(chartHttpData) {
         // 使用angular-nvd3 插件的数据格式   only for C2 Perception Maps Scatter Chart 散点图
 //        chartResult.series = [];
 //        chartResult.data = [];
@@ -384,8 +461,8 @@ app.factory('chartReport', ['$http', function($http){
 
                 angular.forEach(value.SKUs, function(valueSku, keySku) {
                     var oneLineSku1 = {
-                        'x' : Math.round(valueSku.valuePerception * 100) / 100,
-                        'y' : Math.round(valueSku.imagePerception * 100) / 100,
+                        'x' : Math.round(valueSku.valuePerception * 10000000 + Math.random() * 1000 ) / 10000000,
+                        'y' : Math.round(valueSku.imagePerception * 10000000 + Math.random() * 1000 ) / 10000000,
                         'size' : 0.6,
                         'SKUName' : valueSku.SKUName,
                         'name' : valueSku.SKUName,
@@ -437,6 +514,7 @@ app.factory('chartReport', ['$http', function($http){
             chartResult.dataSKU.push(oneSegment);
             chartResult.dataBrand.push(oneSegment);
 
+            console.log(angular.copy(chartResult));
             return angular.copy(chartResult);
         }
     };
@@ -459,8 +537,8 @@ app.factory('chartReport', ['$http', function($http){
         inventoryReport : function(){
             return $http.get(apiPath + 'chart/inventory_report').then(function(result){
 //                console.log(result.data);
-                return chartFormatTool2(result.data);
-            }).catch(errorHandler);
+                return chartFormatTool4(result.data);
+            })["catch"](errorHandler);
         },
 
         // Chart B1
@@ -468,28 +546,28 @@ app.factory('chartReport', ['$http', function($http){
             return $http.get(apiPath + 'chart/market_share_in_value').then(function(result){
 //                console.log(result.data);
                 return chartFormatTool1(result.data, 2);
-            }).catch(errorHandler);
+            })["catch"](errorHandler);
         },
 
         marketShareInVolume : function(){
             return $http.get(apiPath + 'chart/market_share_in_volume').then(function(result){
 //                console.log(result.data);
                 return chartFormatTool1(result.data, 2);
-            }).catch(errorHandler);
+            })["catch"](errorHandler);
         },
 
         mindSpaceShare : function(){
             return $http.get(apiPath + 'chart/mind_space_share').then(function(result){
 //                console.log(result.data);
                 return chartFormatTool1(result.data, 2);
-            }).catch(errorHandler);
+            })["catch"](errorHandler);
         },
 
         shelfSpaceShare : function(){
             return $http.get(apiPath + 'chart/shelf_space_share').then(function(result){
 //                console.log(result.data);
                 return chartFormatTool1(result.data, 2);
-            }).catch(errorHandler);
+            })["catch"](errorHandler);
         },
 
 
@@ -498,28 +576,28 @@ app.factory('chartReport', ['$http', function($http){
             return $http.get(apiPath + 'chart/total_investment').then(function(result){
 //                console.log(result.data);
                 return chartFormatTool1(result.data, 0);
-            }).catch(errorHandler);
+            })["catch"](errorHandler);
         },
 
         netProfitByCompanies : function(){
             return $http.get(apiPath + 'chart/net_profit_by_companies').then(function(result){
 //                console.log(result.data);
                 return chartFormatTool1(result.data, 0);
-            }).catch(errorHandler);
+            })["catch"](errorHandler);
         },
 
         returnOnInvestment : function(){
             return $http.get(apiPath + 'chart/return_on_investment').then(function(result){
 //                console.log(result.data);
                 return chartFormatTool1(result.data, 0);
-            }).catch(errorHandler);
+            })["catch"](errorHandler);
         },
 
         investmentsVersusBudget : function(){
             return $http.get(apiPath + 'chart/investments_versus_budget').then(function(result){
 //                console.log(result.data);
                 return chartFormatTool1(result.data, 0);
-            }).catch(errorHandler);
+            })["catch"](errorHandler);
         },
 
 
@@ -528,28 +606,28 @@ app.factory('chartReport', ['$http', function($http){
             return $http.get(apiPath + 'chart/market_sales_value').then(function(result){
 //                console.log(result.data);
                 return chartFormatTool1(result.data, 0);
-            }).catch(errorHandler);
+            })["catch"](errorHandler);
         },
 
         marketSalesVolume : function(){
             return $http.get(apiPath + 'chart/market_sales_volume').then(function(result){
 //                console.log(result.data);
                 return chartFormatTool1(result.data, 0);
-            }).catch(errorHandler);
+            })["catch"](errorHandler);
         },
 
         totalInventoryAtFactory : function(){
             return $http.get(apiPath + 'chart/total_inventory_at_factory').then(function(result){
 //                console.log(result.data);
                 return chartFormatTool1(result.data, 0);
-            }).catch(errorHandler);
+            })["catch"](errorHandler);
         },
 
         totalInventoryAtTrade : function(){
             return $http.get(apiPath + 'chart/total_inventory_at_trade').then(function(result){
 //                console.log(result.data);
                 return chartFormatTool1(result.data, 0);
-            }).catch(errorHandler);
+            })["catch"](errorHandler);
         },
 
 
@@ -557,43 +635,43 @@ app.factory('chartReport', ['$http', function($http){
         segmentsLeadersByValuePriceSensitive : function(){
             return $http.get(apiPath + 'chart/segments_leaders_by_value_price_sensitive').then(function(result){
 //                console.log(result.data);
-                return chartFormatTool1(result.data, 2);
-            }).catch(errorHandler);
+                return chartFormatTool2(result.data, 2);
+            })["catch"](errorHandler);
         },
 
         segmentsLeadersByValuePretenders : function(){
             return $http.get(apiPath + 'chart/segments_leaders_by_value_pretenders').then(function(result){
 //                console.log(result.data);
-                return chartFormatTool1(result.data, 2);
-            }).catch(errorHandler);
+                return chartFormatTool2(result.data, 2);
+            })["catch"](errorHandler);
         },
 
         segmentsLeadersByValueModerate : function(){
             return $http.get(apiPath + 'chart/segments_leaders_by_value_moderate').then(function(result){
 //                console.log(result.data);
-                return chartFormatTool1(result.data, 2);
-            }).catch(errorHandler);
+                return chartFormatTool2(result.data, 2);
+            })["catch"](errorHandler);
         },
 
         segmentsLeadersByValueGoodLife : function(){
             return $http.get(apiPath + 'chart/segments_leaders_by_value_good_life').then(function(result){
 //                console.log(result.data);
-                return chartFormatTool1(result.data, 2);
-            }).catch(errorHandler);
+                return chartFormatTool2(result.data, 2);
+            })["catch"](errorHandler);
         },
 
         segmentsLeadersByValueUltimate : function(){
             return $http.get(apiPath + 'chart/segments_leaders_by_value_ultimate').then(function(result){
 //                console.log(result.data);
-                return chartFormatTool1(result.data, 2);
-            }).catch(errorHandler);
+                return chartFormatTool2(result.data, 2);
+            })["catch"](errorHandler);
         },
 
         segmentsLeadersByValuePragmatic : function(){
             return $http.get(apiPath + 'chart/segments_leaders_by_value_pragmatic').then(function(result){
 //                console.log(result.data);
-                return chartFormatTool1(result.data, 2);
-            }).catch(errorHandler);
+                return chartFormatTool2(result.data, 2);
+            })["catch"](errorHandler);
         },
 
 
@@ -601,8 +679,8 @@ app.factory('chartReport', ['$http', function($http){
         perceptionMap : function(){
             return $http.get(apiPath + 'chart/perception_map').then(function(result){
 //                console.log(result.data);
-                return chartFormatTool3(result.data);
-            }).catch(errorHandler);
+                return chartFormatTool5(result.data);
+            })["catch"](errorHandler);
         },
 
 
@@ -611,28 +689,28 @@ app.factory('chartReport', ['$http', function($http){
             return $http.get(apiPath + 'chart/growth_rate_in_volume').then(function(result){
 //                console.log(result.data);
                 return chartFormatTool1(result.data, 0);
-            }).catch(errorHandler);
+            })["catch"](errorHandler);
         },
 
         growthRateInValue : function(){
             return $http.get(apiPath + 'chart/growth_rate_in_value').then(function(result){
 //                console.log(result.data);
                 return chartFormatTool1(result.data, 0);
-            }).catch(errorHandler);
+            })["catch"](errorHandler);
         },
 
         netMarketPrice : function(){
             return $http.get(apiPath + 'chart/net_market_price').then(function(result){
 //                console.log(result.data);
                 return chartFormatTool1(result.data, 0);
-            }).catch(errorHandler);
+            })["catch"](errorHandler);
         },
 
         segmentValueShareTotalMarket : function(){
             return $http.get(apiPath + 'chart/segment_value_share_total_market').then(function(result){
 //                console.log(result.data);
                 return chartFormatTool1(result.data, 2);
-            }).catch(errorHandler);
+            })["catch"](errorHandler);
         }
 
 
@@ -669,7 +747,7 @@ app.factory('tableReport', ['$http', function($http){
 //                console.log(result.data);
 
                 return result.data;
-            }).catch(errorHandler);
+            })["catch"](errorHandler);
         },
 
         // Table Report A2
@@ -678,7 +756,7 @@ app.factory('tableReport', ['$http', function($http){
 //                console.log(result.data);
 
                 return result.data;
-            }).catch(errorHandler);
+            })["catch"](errorHandler);
         },
 
         // Table Report B2
@@ -687,7 +765,7 @@ app.factory('tableReport', ['$http', function($http){
 //                console.log(result.data);
 
                 return result.data;
-            }).catch(errorHandler);
+            })["catch"](errorHandler);
         },
 
         // Table Report B2
@@ -696,7 +774,7 @@ app.factory('tableReport', ['$http', function($http){
 //                console.log(result.data);
 
                 return result.data;
-            }).catch(errorHandler);
+            })["catch"](errorHandler);
         },
 
         // Table Report C3
@@ -705,7 +783,7 @@ app.factory('tableReport', ['$http', function($http){
 //                console.log(result.data);
 
                 return result.data;
-            }).catch(errorHandler);
+            })["catch"](errorHandler);
         },
 
         // Table Report C5
@@ -714,7 +792,7 @@ app.factory('tableReport', ['$http', function($http){
 //                console.log(result.data);
 
                 return result.data;
-            }).catch(errorHandler);
+            })["catch"](errorHandler);
         },
 
         // Table Report C6
@@ -723,7 +801,7 @@ app.factory('tableReport', ['$http', function($http){
 //                console.log(result.data);
 
                 return result.data;
-            }).catch(errorHandler);
+            })["catch"](errorHandler);
         }
     };
 
@@ -749,17 +827,17 @@ app.factory('Help',['$http',function($http){
         getFAQ : function(){
             return $http.get(apiPath + 'faq').then(function(result){
                 return result.data;
-            }).catch(errorHandler);
+            })["catch"](errorHandler);
         },
         getManualChinese : function(){
             return $http.get('/marksimos/manual/zh_CN').then(function(result){
                 return result.data;
-            }).catch(errorHandler);
+            })["catch"](errorHandler);
         },
         getManualEnglish : function(){
             return $http.get('/marksimos/manual/en_US').then(function(result){
                 return result.data;
-            }).catch(errorHandler);
+            })["catch"](errorHandler);
         }
 
     };

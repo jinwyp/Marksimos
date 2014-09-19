@@ -663,6 +663,7 @@ exports.getOtherinfo = function(req, res, next){
         simulationResultModel.findOne(seminarId, currentPeriod - 1)
     ])
     .spread(function(spendingDetails, lastPeriodResult){
+        console.log('111');
         var totalInvestment = spendingDetails.companyData.totalInvestment;
         var companyResult = utility.findCompany(lastPeriodResult, companyId);
 
@@ -677,10 +678,10 @@ exports.getOtherinfo = function(req, res, next){
         var normalCapacity = parseFloat((spendingDetails.companyData.normalCapacity/companyResult.c_Capacity).toFixed(2));
         var normalCapacityValue = spendingDetails.companyData.normalCapacity;
         
-        var overtimeCapacity = parseFloat(((companyResult.c_Capacity * gameParameters.pgen.firm_OvertimeCapacity +  spendingDetails.companyData.normalCapacity
+        var overtimeCapacity = parseFloat(((spendingDetails.companyData.availableOvertimeCapacityExtension
             ) / (companyResult.c_Capacity * gameParameters.pgen.firm_OvertimeCapacity)).toFixed(2));
 
-        var overtimeCapacityValue = companyResult.c_Capacity * gameParameters.pgen.firm_OvertimeCapacity +  spendingDetails.companyData.normalCapacity;
+        var overtimeCapacityValue = spendingDetails.companyData.availableOvertimeCapacityExtension;
 
         //if normal capacity is not totally used, set overtime capacity to 1
         if(normalCapacityValue > 0){

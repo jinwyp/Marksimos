@@ -46,9 +46,9 @@ module.exports = (function(){
 
         inventoryNames: {
             'FMCG': [
-                'FreshInventory',
-                'PreviousInventory',
-                'CloseToEXpireInventory' 
+                'Fresh Inventory',
+                'Previous Inventory',
+                'Close to Expire Inventory'
             ],
             'DURABLES': [
                 'Latest Stock',
