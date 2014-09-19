@@ -91,17 +91,13 @@ exports.getSpendingDetails = function(seminarId, currentPeriod, companyId){
 
         //normal capacity
         companyData.normalCapacity = companyDataInAllResults.c_Capacity - utility.calculateTotalVolume(decision)
-  //      console.log('narmalCapacity:' + companyData.normalCapacity);
         if(companyData.normalCapacity < 0){
             companyData.normalCapacity = 0;
         }
 
         //company data in all results
         if(companyDataInAllResults.c_Capacity - utility.calculateTotalVolume(decision) < 0){
-//            console.log('companyDataInAllResults.c_Capacity - utility.calculateTotalVolume(decision):' + (companyDataInAllResults.c_Capacity - utility.calculateTotalVolume(decision)) );
             companyData.availableOvertimeCapacityExtension = companyDataInAllResults.c_Capacity * gameParameters.pgen.firm_OvertimeCapacity + (companyDataInAllResults.c_Capacity - utility.calculateTotalVolume(decision));
-            // console.log('companyData.availableOvertimeCapacityExtension:' + (companyDataInAllResults.c_Capacity * gameParameters.pgen.firm_OvertimeCapacity));                                
-            // console.log('companyData.availableOvertimeCapacityExtension:' + companyData.availableOvertimeCapacityExtension);                
         }else{
             companyData.availableOvertimeCapacityExtension = companyDataInAllResults.c_Capacity * gameParameters.pgen.firm_OvertimeCapacity;
         }

@@ -82,7 +82,10 @@ function validateBrandName(field, curBrandecision, done){
             }
         })
         
-        if(maxBrandID.toString()[maxBrandID.toString().length-1] === '5'){ return done(new Error("You already have 5 Brands."));}
+        if(maxBrandID.toString()[maxBrandID.toString().length-1] === '5'){ 
+            return done(new Error("You already have 5 Brands."));
+
+        }
                 
         //logger.log('d_BrandName:' + curBrandecision.d_BrandName + ', Brands:' + Brands);
         var isNameExisted = Brands.some(function(Brand){             
