@@ -51,10 +51,12 @@ function generateSKUFieldReport(allResults, period, getField){
     var result = [];
 
     allResults[period + 3].p_SKUs.forEach(function(SKU){
-        var SKUName = utility.findBrand(allResults[period + 3], SKU.u_ParentBrandID).b_BrandName + SKU.u_SKUName + ' ' + config.packsizeDescription[SKU.u_PackSize];
+        var SKUName = utility.findBrand(allResults[period + 3], SKU.u_ParentBrandID).b_BrandName + SKU.u_SKUName 
+        var PackSize = SKU.u_PackSize;
         result.push({
             SKUID: SKU.u_SKUID,
             SKUName: SKUName,
+            PackSize: PackSize,
             data: []
         })
     });
@@ -69,7 +71,7 @@ function generateSKUFieldReport(allResults, period, getField){
                 if(SKUResult.u_SKUID === SKU.SKUID){
                     foundValue = true;
                     SKU.data.push({
-                        name: 'Quarter ' + onePeriodResult.period,
+                        name:   onePeriodResult.period,
                         value: getField(SKUResult)
                     });
                 } 
@@ -77,7 +79,7 @@ function generateSKUFieldReport(allResults, period, getField){
 
             if(!foundValue){
                 SKU.data.push({
-                    name: 'Quarter ' + onePeriodResult.period,
+                    name:   onePeriodResult.period,
                     value: '/'
                 });                
             }
@@ -144,7 +146,7 @@ function generateBrandFieldReport(allResults, period, getField){
                 if(brandResult.b_BrandID === brand.brandId){
                     foundValue = true;
                     brand.data.push({
-                        name: 'Quarter ' + onePeriodResult.period,
+                        name:   onePeriodResult.period,
                         value: getField(brandResult)
                     });
                 } 
@@ -152,7 +154,7 @@ function generateBrandFieldReport(allResults, period, getField){
 
             if(!foundValue){
                 brand.data.push({
-                    name: 'Quarter ' + onePeriodResult.period,
+                    name:   onePeriodResult.period,
                     value: '/'
                 });                
             }
@@ -215,7 +217,7 @@ function generateCompanyFieldReport(allResults, getField){
                 var companyResult = onePeriodResult.p_Companies[j];
                 if(companyResult.c_CompanyID === company.companyId){
                     company.data.push({
-                        name: 'Quarter ' + onePeriodResult.period,
+                        name:   onePeriodResult.period,
                         value: getField(companyResult)
                     });
                 }

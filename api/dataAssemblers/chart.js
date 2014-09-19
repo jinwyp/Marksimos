@@ -364,7 +364,7 @@ exports.perceptionMap = function(allResults, exogenous){
         for(var p=0; p<exoSegmentsIdealPoints.length; p++){
             var point = exoSegmentsIdealPoints[p];
             companyData.exogenous.push({
-                segmentName: config.segmentNames[p],
+                segmentName: p,
                 imagePerception: point[1],
                 valuePerception: point[0]
             });
@@ -414,7 +414,19 @@ exports.inventoryReport = function(allResults){
             var totalStock = SKU.u_ps_FactoryStocks[i].s_ps_Volume;
             totalStock = totalStock * consts.ActualSize[SKU.u_PackSize];
             result.push({
-                inventoryName: config.inventoryNames.FMCG[i],
+            // 'FMCG': [
+            //   0:  'FreshInventory',
+            //   1:  'PreviousInventory',
+            //   2:  'CloseToEXpireInventory' 
+            // ],
+            // 'DURABLES': [
+            //   0:  'Latest Stock',
+            //   1:  'one-year old Stock',
+            //   2:  'Two-year old Stock',
+            //   3:  'Three-year old Stock',
+            //   4:  'Oldest Stock'
+            // ]
+                inventoryName: i,
                 inventoryValue: totalStock
             })
         }
@@ -620,6 +632,17 @@ function generateChartData(allResults, dataExtractor){
  * @param {Function} dataExtractor the function to get a certain field of JSON object
  * @return {Object} chart data
  */
+
+// segmentNames: [
+// 0 - 'priceSensitive',
+// 1 - 'pretenders',
+// 2 - 'moderate',
+// 3 - 'goodLife',
+// 4 - 'ultimate',
+// 5 - 'pragmatic',
+// 6 - 'allSegments'
+// ],
+
 function extractMarketEvolutionChartData(allResults, dataExtractor){
     var segmentNum = consts.ConsumerSegmentsMaxTotal;
     var periodNum = allResults.length;
@@ -641,10 +664,16 @@ function extractMarketEvolutionChartData(allResults, dataExtractor){
         result.periods.push(periodId);
         var segmentChartData = [];
         for(var j=0; j<segmentNum; j++){
-            var segmentName = segmentNames[j];
-            if(result.segmentNames.indexOf(segmentName) === -1){
-                result.segmentNames.push(segmentName);
-            }
+			// segmentNames: [
+			// 0 - 'priceSensitive',
+			// 1 - 'pretenders',
+			// 2 - 'moderate',
+			// 3 - 'goodLife',
+			// 4 - 'ultimate',
+			// 5 - 'pragmatic',
+			// 6 - 'allSegments'
+			// ],
+            result.segmentNames.push(j);
             segmentChartData.push(dataExtractor(market)[j]);
         }
         result.chartData.push(segmentChartData);

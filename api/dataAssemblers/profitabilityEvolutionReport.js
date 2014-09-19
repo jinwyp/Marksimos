@@ -51,10 +51,11 @@ function generateSKUReport(companyId, allResults, period){
             SKUResult.forEach(function(SKU){
                 if(SKU.u_SKUID === SKUReport.SKUID){
                     var brandName = utility.findBrand(onePeriodResult, SKU.u_ParentBrandID).b_BrandName;
-                    SKUReport.SKUName = brandName + SKU.u_SKUName + ' ' + config.packsizeDescription[SKU.u_PackSize];
+                    SKUReport.SKUName = brandName + SKU.u_SKUName 
+                    SKUReport.PackSize = SKU.u_PackSize;
 
                     var onePeriodReport = {};
-                    onePeriodReport.period = "Quarter " + onePeriodResult.period;
+                    onePeriodReport.period =  onePeriodResult.period;
                     
                     onePeriodReport.manufacturerSalesValue = SKU.u_FactorySalesValue;
                     onePeriodReport.costOfGoodsSold = -SKU.u_CostOfGoodsSold;
@@ -143,7 +144,7 @@ function generateBrandReport(companyId, allResults, period){
 
                     var onePeriodReport = {};
 
-                    onePeriodReport.period = "Quarter " + onePeriodResult.period;
+                    onePeriodReport.period =  onePeriodResult.period;
 
                     onePeriodReport.manufacturerSalesValue = brandResult.b_FactorySalesValue;
                     onePeriodReport.costOfGoodsSold = -brandResult.b_CostOfGoodsSold;
@@ -227,7 +228,7 @@ function generateGlobalReport(companyId, allResults){
             if(companyResult.c_CompanyID === companyId){
                 var onePeriodReport = {};
                 
-                onePeriodReport.period = 'Quarter ' + onePeriodResult.period;
+                onePeriodReport.period = onePeriodResult.period;
                 onePeriodReport.manufacturerSalesValue = companyResult.c_FactorySalesValue;
                 onePeriodReport.costOfGoodsSold = -companyResult.c_CostOfGoodsSold;
                 onePeriodReport.inventoryHoldingCost = -companyResult.c_InventoryHoldingCost;
