@@ -1,4 +1,4 @@
-var _ = require('underscore')
+// var _ = require('underscore')
 
 // setTimeout(function(){
 // 	console.log('close');
@@ -38,17 +38,20 @@ var _ = require('underscore')
 // a.sku = _.without(a.sku, 2);
 
 //console.log(a.sku);
-
-function test(){
-	var b = [];
-
-	b.push(1);
-
-	return function(){
+function test(a){
+    var b = [];
+    var self  = a;
+	return function(self){
+		b.push(a);
 		console.log('closure: ' + b);
 	}
 }
 
-test()();
-test()();
-test()();
+var buf = test(1);
+buf();
+buf();
+buf();
+
+// test(1)();
+// test(2)();
+// test(3)();
