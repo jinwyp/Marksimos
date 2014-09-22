@@ -332,9 +332,10 @@ function validateProductionVolume(field, curSKUDecision, done){
         var budgetLeft = parseFloat(spendingDetails.companyData.availableBudget);
         var err, lowerLimits = [],upperLimits = [];
         var preEstimatedCost = preSKUDecision[field] * preSKUDecision.d_AdditionalTradeMargin * preSKUDecision.d_ConsumerPrice;
+        var preProductionVolume = preSKUDecision[field] * consts.ActualSize[preSKUDecision.d_PackSize];
 
         lowerLimits.push({value : 0, message: 'Cannot accept negative number.'});        
-        upperLimits.push({value : spendingDetails.companyData.normalCapacity + parseFloat(spendingDetails.companyData.availableOvertimeCapacityExtension), message: 'Production capacity is not enough.'});
+        upperLimits.push({value : (preProductionVolume + spendingDetails.companyData.normalCapacity + parseFloat(spendingDetails.companyData.availableOvertimeCapacityExtension)), message: 'Production capacity is not enough.'});
         upperLimits.push({value : (budgetLeft + preEstimatedCost)/(preSKUDecision.d_AdditionalTradeMargin * preSKUDecision.d_ConsumerPrice), message : 'Budget left is not enough for traditional trade margin cost.'});
 
         err = rangeCheck(curSKUDecision[field],lowerLimits,upperLimits);      
@@ -497,6 +498,28 @@ exports.removeAllInBrand = function(seminarId, period, companyId){
     return deferred.promise;
 }
 
+
+//Run simulation process, create brand decision document based on last period decision, skip all the validations
+//copy bs_PeriodOfBirth from last period input 
+exports.createSKUDecisionBasedOnLastPeriodDecision = function(decision){
+    if(!mongoose.connection.readyState){
+        throw new Error("mongoose is not connected.");
+    }
+
+    var deferred = Q.defer();
+    var decision = new SKUDecision(decision);
+    decision.modifiedField = 'skip';
+
+    decision.save(function(err, saveDecision, numAffected){
+        if(err){
+            deferred.reject(err);
+        }else{
+            deferred.resolve(saveDecision);
+        }
+    });
+    return deferred.promise;
+}
+
 //User choose to launch new product, need name validations(also set up SKUID)
 exports.create = function(decision){
     if(!mongoose.connection.readyState){
@@ -556,28 +579,6 @@ exports.initCreate = function(decision){
     return deferred.promise;
 };
 
-//Run simulation process, create SKU decision document based on last period decision, skip all the validations
-//copy bs_PeriodOfBirth from last period input 
-exports.createSKUDecisionBasedOnLastPeriodDecision = function(decision){
-    if(!mongoose.connection.readyState){
-        throw new Error("mongoose is not connected.");
-    }
-
-    var deferred = Q.defer();
-    var d = new SKUDecision(decision);
-    d.modifiedField = 'skip';
-
-    d.save(function(err, result, numAffected){
-        if(err){
-            deferred.reject(err);
-        }else if(numAffected!==1){
-            deferred.reject(new Error("no result found in db"))
-        }else{
-            deferred.resolve(result);
-        }
-    });
-    return deferred.promise;
-}
 
 
 exports.findOne = function(seminarId, period, companyId, brandId, SKUID){

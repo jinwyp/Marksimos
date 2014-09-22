@@ -331,7 +331,7 @@ exports.createCompanyArray = function(companyNum){
 
     var letters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
     for(var j=0; j<companyNum; j++){
-        companies.push('Company'+letters[j]);
+        companies.push(letters[j]);
     } 
 
     return companies;

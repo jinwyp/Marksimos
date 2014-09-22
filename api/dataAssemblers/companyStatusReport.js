@@ -55,10 +55,11 @@ function generateSKUReport(companyId, allResults, allExogenous, period){
             SKUResult.forEach(function(SKU){
                 if(SKU.u_SKUID === SKUReport.SKUID){
                     var brandName = utility.findBrand(onePeriodResult, SKU.u_ParentBrandID).b_BrandName;
-                    SKUReport.SKUName = brandName + SKU.u_SKUName + ' ' + config.packsizeDescription[SKU.u_PackSize];
+                    SKUReport.SKUName = brandName + SKU.u_SKUName;
+                    SKUReport.PackSize = SKU.u_PackSize;
 
                     var onePeriodReport = {};
-                    onePeriodReport.period = "Quarter " + onePeriodResult.period;
+                    onePeriodReport.period = onePeriodResult.period;
                     onePeriodReport.marketShareValue = SKU.u_ValueSegmentShare[consts.ConsumerSegmentsMaxTotal-1] * 100.0;
                     onePeriodReport.marketShareVolume = SKU.u_VolumeSegmentShare[consts.ConsumerSegmentsMaxTotal-1] * 100.0;
                     onePeriodReport.marketSalesVolumeStdPack = SKU.u_MarketSalesVolume[consts.ConsumerSegmentsMaxTotal-1];
@@ -131,7 +132,7 @@ function generateBrandReport(companyId, allResults, period){
                     brandReport.brandName = brandResult.b_BrandName;
 
                     var onePeriodReport = {};
-                    onePeriodReport.period = "Quarter " + onePeriodResult.period;
+                    onePeriodReport.period = onePeriodResult.period;
                     onePeriodReport.marketShareValue = brandResult.b_ValueSegmentShare[consts.ConsumerSegmentsMaxTotal - 1] * 100;
                     onePeriodReport.marketShareVolume = brandResult.b_VolumeSegmentShare[consts.ConsumerSegmentsMaxTotal - 1] * 100;
                     onePeriodReport.marketSalesVolumeStdPack = brandResult.b_MarketSalesVolume[consts.ConsumerSegmentsMaxTotal - 1];
@@ -189,7 +190,7 @@ function generateGlobalReport(companyId, allResults){
 
             if(companyResult.c_CompanyID === companyId){
                 var onePeriodReport = {};
-                onePeriodReport.period = "Quarter " + onePeriodResult.period;
+                onePeriodReport.period = onePeriodResult.period;
                 onePeriodReport.marketShareValue = companyResult.c_ValueSegmentShare[consts.ConsumerSegmentsMaxTotal-1] * 100;
                 onePeriodReport.marketShareVolume = companyResult.c_VolumeSegmentShare[consts.ConsumerSegmentsMaxTotal -1] * 100;
                 onePeriodReport.marketSalesVolumeStdPack = companyResult.c_MarketSalesVolume[consts.ConsumerSegmentsMaxTotal-1];

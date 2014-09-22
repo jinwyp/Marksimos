@@ -11,6 +11,7 @@ var questionnaireController = require('./controllers/questionnaire.js');
 var faqController = require('./controllers/faq.js');
 
 
+
 var util = require('util');
 var express = require('express');
 var sessionOperation = require('../common/sessionOperation.js');
@@ -59,10 +60,10 @@ apiRouter.get('/marksimos/api/create_admin', function(req, res, next){
 });
 
 
+
 // get FAQ
 apiRouter.get('/marksimos/api/initfaq', faqController.initFAQ);
 apiRouter.get('/marksimos/api/faq', faqController.getFAQ);
-
 
 // get seminar
 apiRouter.get('/marksimos/api/user', requireLogin, userController.getUser);

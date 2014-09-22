@@ -31,8 +31,17 @@ exports.getProductPortfolioForOneCompany = function(seminarId, currentPeriod, co
                 var productPortfolioForSKU = {};
                 
                 productPortfolioForSKU.SKUName = brandDecision.d_BrandName + SKUDecision.d_SKUName;
-                productPortfolioForSKU.targetSegment = config.segmentNamesOnProductPortfolio[SKUDecision.d_TargetConsumerSegment - 1];
-
+                
+                productPortfolioForSKU.targetSegment = SKUDecision.d_TargetConsumerSegment - 1;
+            // segmentNames: [
+            // 0 - 'priceSensitive',
+            // 1 - 'pretenders',
+            // 2 - 'moderate',
+            // 3 - 'goodLife',
+            // 4 - 'ultimate',
+            // 5 - 'pragmatic',
+            // 6 - 'allSegments'
+            // ],
                 productPortfolioForSKU.factoryPrice = SKUDecision.d_FactoryPrice[0].toFixed(2) + ' / (' 
                     + (SKUDecision.d_FactoryPrice[0]/consts.ActualSize[SKUDecision.d_PackSize]).toFixed(2)
                     + ')';

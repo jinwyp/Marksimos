@@ -674,8 +674,8 @@ app.config(['$translateProvider', function($translateProvider){
 		//Labels for Items on Decision Page - Second Menu Bar
 
         "DecisionPageSecondMenuBarLabelsTotalAvailableBudget" : "Total Available Budget",
-        "DecisionPageSecondMenuBarLabelsNormalCapacity"       : "Normal Capacity",
-        "DecisionPageSecondMenuBarLabelsOvertimeCapacity"     : "Overtime Capacity",
+        "DecisionPageSecondMenuBarLabelsNormalCapacity"       : "Normal Capacity Left",
+        "DecisionPageSecondMenuBarLabelsOvertimeCapacity"     : "Overtime Capacity Left",
         "DecisionPageSecondMenuBarLabelsAdditionalBudget"     : "Additional Budget",
 
 
@@ -789,19 +789,21 @@ app.config(['$translateProvider', function($translateProvider){
 
         "DecisionPageSpendingDetailsTable2InvestmentInProductionEfficiency"    : "Investment in Production Efficiency ($ mln)",
         "DecisionPageSpendingDetailsTable2InvestmentInProcessingTechnology"    : "Investment in Processing Technology ($ mln)",
-        "DecisionPageSpendingDetailsTable2TotalInvestment"                     : "Total Investment ($ mln)",
+        "DecisionPageSpendingDetailsTable2TotalInvestment"                     : "(-) Estimated Spending this period ($ mln)",
         "DecisionPageSpendingDetailsTable2AverageBudgetPerPeriod"              : "Average Budget per Period ($ mln)",
         "DecisionPageSpendingDetailsTable2TotalInvestmentBudget"               : "Total Investment Budget ($ mln)",
-        "DecisionPageSpendingDetailsTable2CumulatedPreviousInvestments"        : "Cumulated Previous Investments ($ mln)",
-        "DecisionPageSpendingDetailsTable2AvailableBudget"                     : "Available Budget ($ mln)",
-        "DecisionPageSpendingDetailsTable2NormalCapacity"                      : "Normal Capacity (mln Packs)",
-        "DecisionPageSpendingDetailsTable2AvailableOvertimeCapacityExtension"  : "Available Overtime Capacity Extension (mln Packs)",
+        "DecisionPageSpendingDetailsTable2CumulatedPreviousInvestments"        : "(-) Cumulated Previous Investments ($ mln)",
+        "DecisionPageSpendingDetailsTable2AvailableBudget"                     : "(=) Estimated Total Budget Left ($ mln)",
+        "DecisionPageSpendingDetailsTable2NormalCapacity"                      : "Normal Capacity Left This Period (mln Packs)",
+        "DecisionPageSpendingDetailsTable2AvailableOvertimeCapacityExtension"  : "Available Overtime Capacity Extension Left This Period (mln Packs)",
         "DecisionPageSpendingDetailsTable2AcquiredEfficiency"                  : "Acquired Efficiency (%)",
         "DecisionPageSpendingDetailsTable2AcquiredProductionVolumeFlexibility" : "Acquired Production Volume Flexibility (%)",
         "DecisionPageSpendingDetailsTable2AcquiredTechnologyLevel"             : "Acquired Technology Level",
 		
         //Labels for final score page
         "FinalScorePageScore":"Score",
+        "FinalScorePageButtonOriginal":"Original",
+        "FinalScorePageButtonRescaled":"Rescaled",
         "FinalScorePageWeightFactor":"Weight / Factor",
         "FinalScorePageIncrementalMarketShare":"Incremental market share (value)",
         "FinalScorePageCumulatedNetProfit":"Cumulated net profit",
@@ -809,6 +811,7 @@ app.config(['$translateProvider', function($translateProvider){
         "FinalScorePageShareInBrandTotalSalesValue":"Share in Brand Total Sales Value",
         "FinalScorePageAchievementOfInitialObjectives":"Achievement of initial objectives",
         "FinalScorePageFinalScore":"Final Score",
+
         "FinalScorePageCompany":"Company",
         "FinalScorePagePeriod":"Period",
         "FinalScorePageCongratulations":"Congratulations ! You finish the game",
@@ -1550,8 +1553,8 @@ app.config(['$translateProvider', function($translateProvider){
 
         //Labels for Items on Decision Page - Second Menu Bar
         "DecisionPageSecondMenuBarLabelsTotalAvailableBudget" : "全部可用预算金额",
-        "DecisionPageSecondMenuBarLabelsNormalCapacity"       : "正常产能",
-        "DecisionPageSecondMenuBarLabelsOvertimeCapacity"     : "额外加班产能",
+        "DecisionPageSecondMenuBarLabelsNormalCapacity"       : "剩余正常产能",
+        "DecisionPageSecondMenuBarLabelsOvertimeCapacity"     : "剩余额外加班产能",
         "DecisionPageSecondMenuBarLabelsAdditionalBudget"     : "申请额外预算",
 
 
@@ -1662,31 +1665,37 @@ app.config(['$translateProvider', function($translateProvider){
         "DecisionPageSpendingDetailsTable2Total"                               : "总额",
         "DecisionPageSpendingDetailsTable2InvestmentInProductionEfficiency"    : "生产效率的投资 ($ mln)",
         "DecisionPageSpendingDetailsTable2InvestmentInProcessingTechnology"    : "生产技术的投资 ($ mln)",
-        "DecisionPageSpendingDetailsTable2TotalInvestment"                     : "预计的当期投资总额 ($ mln)",
+        "DecisionPageSpendingDetailsTable2TotalInvestment"                     : "(-) 预计的当期投资总额 ($ mln)",
         "DecisionPageSpendingDetailsTable2AverageBudgetPerPeriod"              : "每阶段平均预算 ($ mln)",
         "DecisionPageSpendingDetailsTable2TotalInvestmentBudget"               : "总预算 ($ mln)",
-        "DecisionPageSpendingDetailsTable2CumulatedPreviousInvestments"        : "累计前期投资 ($ mln)",
-        "DecisionPageSpendingDetailsTable2AvailableBudget"                     : "预计的剩余预算 ($ mln)",
-        "DecisionPageSpendingDetailsTable2NormalCapacity"                      : "正常产能 (mln Packs)",
-        "DecisionPageSpendingDetailsTable2AvailableOvertimeCapacityExtension"  : "额外加班产能 (mln Packs)",
+        "DecisionPageSpendingDetailsTable2CumulatedPreviousInvestments"        : "(-) 累计前期投资 ($ mln)",
+        "DecisionPageSpendingDetailsTable2AvailableBudget"                     : "(=) 预计的剩余预算 ($ mln)",
+        "DecisionPageSpendingDetailsTable2NormalCapacity"                      : "剩余正常产能 (mln Packs)",
+        "DecisionPageSpendingDetailsTable2AvailableOvertimeCapacityExtension"  : "剩余额外加班产能 (mln Packs)",
         "DecisionPageSpendingDetailsTable2AcquiredEfficiency"                 : "当前拥有的生产效率 (%)",
         "DecisionPageSpendingDetailsTable2AcquiredProductionVolumeFlexibility" : "当前拥有的生产灵活度 (%)",
         "DecisionPageSpendingDetailsTable2AcquiredTechnologyLevel"             : "最高技术水平",
 		
         //Labels for final score page
         "FinalScorePageScore":"最终得分",
-        "FinalScorePageWeightFactor":"Weight / Factor",
-        "FinalScorePageIncrementalMarketShare":"Incremental market share (value)",
-        "FinalScorePageCumulatedNetProfit":"Cumulated net profit",
-        "FinalScorePageSpendingVersusBudgets":"Spending versus budgets",
+        "FinalScorePageButtonOriginal":"原始",
+        "FinalScorePageButtonRescaled":"调整",
+        "FinalScorePageWeightFactor":"权重 / 因素",
+
+        "FinalScorePageIncrementalMarketShare":"增长的市场份额 (销售额)",
+        "FinalScorePageCumulatedNetProfit":"累计净利润",
+        "FinalScorePageSpendingVersusBudgets":"花销与预算对比",
+
         "FinalScorePageShareInBrandTotalSalesValue":"Share in Brand Total Sales Value",
         "FinalScorePageAchievementOfInitialObjectives":"Achievement of initial objectives",
-        "FinalScorePageFinalScore":"Final Score",
-        "FinalScorePageCompany":"Company",
-        "FinalScorePagePeriod":"Period",
-        "FinalScorePageCongratulations":"Congratulations ! You finish the game",
-        "FinalScorePageCongratulationsInfo":"Please take 5 minutes to provide feedback to MarkSimos. Your feedback will help us to improve our service",
+        "FinalScorePageFinalScore":"最终得分",
+        "FinalScorePageCompany":"公司",
+        "FinalScorePagePeriod":"阶段",
+        "FinalScorePageCongratulations":"祝贺 ! 你已完成游戏",
+        "FinalScorePageCongratulationsInfo":"麻烦您花一些时间填写反馈. 您的反馈将更好的改进我们的产品",
         "FinalScorePageProvideFeedback":"Provide Feedback",
+
+
         //Labels for Questionnaire Page
         "QuestionnairePageQuestionnaire":"问卷调查",
         "QuestionnairePageVeryPoor":"Very poor",
