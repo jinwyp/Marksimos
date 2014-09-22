@@ -38,12 +38,27 @@
 
         <div class="col-md-7 user_home_divider user_brand_box">
             <div class="row">
-                <div class="col-md-2 user_brandcolumn" ng-repeat="brand in data.currentCompany.d_BrandsDecisions">
-                    <span class="user_brand" ng-cloak>{{brand.d_BrandName}}</span>
-                    <ul>
-                        <li class="user_product" ng-cloak ng-repeat="sku in brand.d_SKUsDecisions">{{sku.d_SKUName}}-<span>{{sku.d_TargetConsumerSegment | usersegment}}</span></li>
-                    </ul>
+                <div class="col-md-12">
+                    <table class="table" >
+
+                        <tbody>
+                            <tr >
+                                <td ng-repeat="brand in data.currentCompany.d_BrandsDecisions">
+
+                                    <span class="user_brand" ng-cloak>{{brand.d_BrandName}}</span>
+                                    <ul>
+                                        <li class="user_product" ng-cloak ng-repeat="sku in brand.d_SKUsDecisions">{{brand.d_BrandName}}{{sku.d_SKUName}} <span>{{sku.d_TargetConsumerSegment | usersegment}}</span></li>
+                                    </ul>
+
+                                </td>
+
+                            </tr>
+                        </tbody>
+                    </table>
                 </div>
+
+
+
             </div>
         </div>
 
@@ -182,7 +197,7 @@
                         <span class="input-group-btn">
                             <button class="btn btn-default" type="button"><span class="glyphicon glyphicon-search"></span></button>
                         </span>
-                        <input type="text" class="form-control" placeholder="find report or chart" ng-model="data.reportName" ng-change="searchReport()">
+                        <input type="text" class="form-control" id="reportinput" placeholder="find report or chart" ng-model="data.reportName" ng-change="searchReport()">
                     </div><!-- /input-group -->
                 </div>
 
@@ -1558,7 +1573,7 @@
                     <nvd3-multi-bar-chart data="data.chartA31InventoryReport.data" tooltipcontent="A31ToolTipContent()" color="A31ColorFunction()" legendcolor="A31ColorFunction()"
                          height="600" xaxislabel="{{'ReportInventoryReportTableLabel' | translate}}" yaxislabel="Million Units" margin="{left:100}"
                          showXAxis="true" showYAxis="true" stacked="true" showLegend="true" reduceXTicks="false" tooltips="true" interactive="true">
-                        <svg></svg>
+                        <svg class="IE11_chart_A3"></svg>
                     </nvd3-multi-bar-chart>
                 </div>
             </div>
@@ -1610,7 +1625,7 @@
         </div>
 
 
-        <div class="col-md-10 user_chart_right" ng-if="css.chartMenu=='B1'">
+        <div class="col-md-10 user_chart_right IE11_chart_B1" ng-if="css.chartMenu=='B1'">
             <div class="row">
                 <div class="col-md-6 user_chart_single chart_2">
                     <h5>{{'ReportMarketShareChartTitleMarketShareInValue' | translate}}
@@ -1742,7 +1757,7 @@
         </div>
 
 
-        <div class="col-md-10 user_chart_right" ng-if="css.chartMenu=='B3'">
+        <div class="col-md-10 user_chart_right IE11_chart_B1" ng-if="css.chartMenu=='B3'">
             <div class="row">
                 <div class="col-md-6 user_chart_single chart_2">
                     <h5>{{'ReportInvestmentsAndProfitsChartTitleTotalInvestment' | translate}}
@@ -1787,7 +1802,7 @@
         </div>
 
 
-        <div class="col-md-10 user_chart_right" ng-if="css.chartMenu=='B4'">
+        <div class="col-md-10 user_chart_right IE11_chart_B1" ng-if="css.chartMenu=='B4'">
             <div class="row">
                 <div class="col-md-6 user_chart_single chart_2">
                     <h5>{{'ReportMarketSalesAndInventoryChartTitleMarketSalesValue' | translate}}
@@ -1832,64 +1847,62 @@
         </div>
 
 
-        <div class="col-md-10 user_chart_right" ng-if="css.chartMenu=='C1'">
+        <div class="col-md-10 user_chart_right IE11_chart_C1" ng-if="css.chartMenu=='C1'">
             <div class="row">
-                <div class="col-md-4 user_chart_single chart_2">
+                <div class="col-md-4 user_chart_single chart_3">
                     <h5>{{'ReportSegmentLeaderTop5ChartTitlePriceSensitive' | translate}}
                         <!--<span class="glyphicon glyphicon-info-sign"></span>-->
                         <!--<span class="glyphicon glyphicon-resize-full chart_icon"></span>-->
                         <!--<span class="glyphicon glyphicon-save chart_icon"></span>-->
                     </h5>
-                    <div ac-chart="'bar'" ac-data="data.chartC11SegmentsLeadersByValuePriceSensitive.data" ac-config="data.chartC11SegmentsLeadersByValuePriceSensitive.config" class="chartBox"></div>
+                    <div ac-chart="'bar2d'" ac-data="data.chartC11SegmentsLeadersByValuePriceSensitive.data" ac-config="data.chartC11SegmentsLeadersByValuePriceSensitive.config" class="chartBox"></div>
                 </div>
-                <div class="col-md-4 user_chart_single chart_2">
+                <div class="col-md-4 user_chart_single chart_3">
                     <h5>{{'ReportSegmentLeaderTop5ChartTitlePretenders' | translate}}
                         <!--<span class="glyphicon glyphicon-info-sign"></span>-->
                         <!--<span class="glyphicon glyphicon-resize-full chart_icon"></span>-->
                         <!--<span class="glyphicon glyphicon-save chart_icon"></span>-->
                     </h5>
-                    <div ac-chart="'bar'" ac-data="data.chartC12SegmentsLeadersByValuePretenders.data" ac-config="data.chartC12SegmentsLeadersByValuePretenders.config" class="chartBox"></div>
+                    <div ac-chart="'bar2d'" ac-data="data.chartC12SegmentsLeadersByValuePretenders.data" ac-config="data.chartC12SegmentsLeadersByValuePretenders.config" class="chartBox"></div>
                 </div>
-            </div>
-
-            <div class="row">
-                <div class="col-md-4 user_chart_single chart_2">
+                <div class="col-md-4 user_chart_single chart_3">
                     <h5>{{'ReportSegmentLeaderTop5ChartTitleModerate' | translate}}
                         <!--<span class="glyphicon glyphicon-info-sign"></span>-->
                         <!--<span class="glyphicon glyphicon-resize-full chart_icon"></span>-->
                         <!--<span class="glyphicon glyphicon-save chart_icon"></span>-->
                     </h5>
-                    <div ac-chart="'bar'" ac-data="data.chartC13SegmentsLeadersByValueModerate.data" ac-config="data.chartC13SegmentsLeadersByValueModerate.config" class="chartBox"></div>
-                </div>
-                <div class="col-md-4 user_chart_single chart_2">
-                    <h5>{{'ReportSegmentLeaderTop5ChartTitleGoodLife' | translate}}
-                        <!--<span class="glyphicon glyphicon-info-sign"></span>-->
-                        <!--<span class="glyphicon glyphicon-resize-full chart_icon"></span>-->
-                        <!--<span class="glyphicon glyphicon-save chart_icon"></span>-->
-                    </h5>
-                    <div ac-chart="'bar'" ac-data="data.chartC14SegmentsLeadersByValueGoodLife.data" ac-config="data.chartC14SegmentsLeadersByValueGoodLife.config" class="chartBox"></div>
+                    <div ac-chart="'bar2d'" ac-data="data.chartC13SegmentsLeadersByValueModerate.data" ac-config="data.chartC13SegmentsLeadersByValueModerate.config" class="chartBox"></div>
                 </div>
             </div>
 
             <div class="row">
 
-                <div class="col-md-4 user_chart_single chart_2">
+                <div class="col-md-4 user_chart_single chart_3">
+                    <h5>{{'ReportSegmentLeaderTop5ChartTitleGoodLife' | translate}}
+                        <!--<span class="glyphicon glyphicon-info-sign"></span>-->
+                        <!--<span class="glyphicon glyphicon-resize-full chart_icon"></span>-->
+                        <!--<span class="glyphicon glyphicon-save chart_icon"></span>-->
+                    </h5>
+                    <div ac-chart="'bar2d'" ac-data="data.chartC14SegmentsLeadersByValueGoodLife.data" ac-config="data.chartC14SegmentsLeadersByValueGoodLife.config" class="chartBox"></div>
+                </div>
+                <div class="col-md-4 user_chart_single chart_3">
                     <h5>{{'ReportSegmentLeaderTop5ChartTitleUltimate' | translate}}
                         <!--<span class="glyphicon glyphicon-info-sign"></span>-->
                         <!--<span class="glyphicon glyphicon-resize-full chart_icon"></span>-->
                         <!--<span class="glyphicon glyphicon-save chart_icon"></span>-->
                     </h5>
-                    <div ac-chart="'bar'" ac-data="data.chartC15SegmentsLeadersByValueUltimate.data" ac-config="data.chartC15SegmentsLeadersByValueUltimate.config" class="chartBox"></div>
+                    <div ac-chart="'bar2d'" ac-data="data.chartC15SegmentsLeadersByValueUltimate.data" ac-config="data.chartC15SegmentsLeadersByValueUltimate.config" class="chartBox"></div>
                 </div>
-                <div class="col-md-4 user_chart_single chart_2">
+                <div class="col-md-4 user_chart_single chart_3">
                     <h5>{{'ReportSegmentLeaderTop5ChartTitlePragmatic' | translate}}
                         <!--<span class="glyphicon glyphicon-info-sign"></span>-->
                         <!--<span class="glyphicon glyphicon-resize-full chart_icon"></span>-->
                         <!--<span class="glyphicon glyphicon-save chart_icon"></span>-->
                     </h5>
-                    <div ac-chart="'bar'" ac-data="data.chartC16SegmentsLeadersByValuePragmatic.data" ac-config="data.chartC16SegmentsLeadersByValuePragmatic.config" class="chartBox"></div>
+                    <div ac-chart="'bar2d'" ac-data="data.chartC16SegmentsLeadersByValuePragmatic.data" ac-config="data.chartC16SegmentsLeadersByValuePragmatic.config" class="chartBox"></div>
                 </div>
             </div>
+
         </div>
 
 
@@ -1907,9 +1920,9 @@
                         </div>
                     </h5>
                     <nvd3-scatter-chart data="data.chartC21PerceptionMap.dataChart"
-                        xaxislabel="{{'ReportPerceptionMapAxisTitleValuePerception' | translate}}" yaxislabel="{{'ReportPerceptionMapAxisTitleImagePerception' | translate}}" color="A31ColorFunction()" legendcolor="A31ColorFunction()" shape="C31shapeFunction()" tooltipContent="C31TooltipContent()"
+                        xaxislabel="{{'ReportPerceptionMapAxisTitleValuePerception' | translate}}" yaxislabel="{{'ReportPerceptionMapAxisTitleImagePerception' | translate}}" color="C21ColorFunction()" legendcolor="C21ColorFunction()" shape="C31shapeFunction()" tooltipContent="C31TooltipContent()"
                         height="600" margin="{left:100}" legendWidth="400" showXAxis="true" showYAxis="true"  showLegend="true"  tooltips="true" interactive="true" fisheye="1000" transitionDuration="500">
-                        <svg></svg>
+                        <svg class="IE11_chart_A3"></svg>
                     </nvd3-scatter-chart>
                 </div>
             </div>
@@ -1950,7 +1963,7 @@
         </div>
 
 
-        <div class="col-md-10 user_chart_right" ng-if="css.chartMenu=='C4'">
+        <div class="col-md-10 user_chart_right IE11_chart_B1" ng-if="css.chartMenu=='C4'">
             <div class="row">
                 <div class="col-md-6 user_chart_single chart_2">
                     <h5>{{'ReportMarketEvolutionChartTitleGrowthRateInVolume' | translate}}
@@ -2359,8 +2372,8 @@
 
             <form class="budget_form" role="form" name="updateCompanyForm2">
                 <div class="form-group text-center" ng-class="{ 'has-success':updateCompanyForm2.companyAdditionalBudget.$dirty && updateCompanyForm2.companyAdditionalBudget.$valid , 'has-error': updateCompanyForm2.companyAdditionalBudget.$dirty && updateCompanyForm2.companyAdditionalBudget.$invalid}">
-                    <label class="budget_title" for="additionalBudget" ng-show="css.additionalBudget" >${{data.currentCompany.d_RequestedAdditionalBudget}}</label>
-                    <label for="companyAdditionalBudget" ng-show="css.additionalBudget" ng-click="css.additionalBudget=true">{{'DecisionPageSecondMenuBarLabelsAdditionalBudget' | translate}}</label>
+                    <label class="budget_title" for="companyAdditionalBudget" ng-show="css.additionalBudget" ng-click="css.additionalBudget=false" >${{data.currentCompany.d_RequestedAdditionalBudget}}</label>
+                    <label for="companyAdditionalBudget" ng-show="css.additionalBudget" ng-click="css.additionalBudget=false">{{'DecisionPageSecondMenuBarLabelsAdditionalBudget' | translate}}</label>
                     <input type="number" class="form-control input-sm" id="companyAdditionalBudget" name="companyAdditionalBudget" ng-hide="css.additionalBudget" required ng-model="data.currentCompany.d_RequestedAdditionalBudget" ng-blur="updateCompany('d_RequestedAdditionalBudget', updateCompanyForm2, 'companyAdditionalBudget')">
                 </div>
             </form>
@@ -2521,11 +2534,26 @@
                                             </tr>
                                             <tr>
                                                 <td>{{'DecisionPageDecisionTabPackagingSize' | translate}}</td>
-                                                <td ng-repeat="sku in data.currentBrand.d_SKUsDecisions"  ng-focus="clickCurrentSku(sku)">
+                                                <td ng-repeat="sku in data.currentBrand.d_SKUsDecisions" ng-show="sku.bs_PeriodOfBirth!==data.currentStudent.currentPeriod" >
                                                     <span ng-if="sku.d_PackSize==0">{{'DecisionPageDecisionTabPackagingSizeSmall' | translate}}</span>
                                                     <span ng-if="sku.d_PackSize==1">{{'DecisionPageDecisionTabPackagingSizeStandard' | translate}}</span>
                                                     <span ng-if="sku.d_PackSize==2">{{'DecisionPageDecisionTabPackagingSizeLarge' | translate}}</span>
                                                  </td>
+                                                <td ng-repeat="sku in data.currentBrand.d_SKUsDecisions" ng-if="sku.bs_PeriodOfBirth==data.currentStudent.currentPeriod">
+                                                    <div class="btn-group">
+                                                        <button type="button" class="btn btn-default btn-sm dropdown-toggle" data-toggle="dropdown"  ng-focus="clickCurrentSku(sku)">
+                                                            <span ng-if="sku.d_PackSize==0">{{'DecisionPageDecisionTabPackagingSizeSmall' | translate}}</span>
+                                                            <span ng-if="sku.d_PackSize==1">{{'DecisionPageDecisionTabPackagingSizeStandard' | translate}}</span>
+                                                            <span ng-if="sku.d_PackSize==2">{{'DecisionPageDecisionTabPackagingSizeLarge' | translate}}</span>
+                                                            <span class="caret"></span>
+                                                        </button>
+                                                        <ul class="dropdown-menu" role="menu">
+                                                            <li ><a href="" ng-click="leaveSkuInput(sku, 'd_PackSize', 0)">{{'DecisionPageDecisionTabPackagingSizeSmall' | translate}}</a></li>
+                                                            <li ><a href="" ng-click="leaveSkuInput(sku, 'd_PackSize', 1)">{{'DecisionPageDecisionTabPackagingSizeStandard' | translate}}</a></li>
+                                                            <li ><a href="" ng-click="leaveSkuInput(sku, 'd_PackSize', 2)">{{'DecisionPageDecisionTabPackagingSizeLarge' | translate}}</a></li>
+                                                        </ul>
+                                                    </div>
+                                                </td>
                                             </tr>
                                             <tr>
                                                 <td class="tdgroup">{{'DecisionPageDecisionTabProductionVolume' | translate}}</td>
@@ -3034,7 +3062,7 @@
                         <span class="input-group-btn">
                             <button class="btn btn-default" type="button"><span class="glyphicon glyphicon-search"></span></button>
                         </span>
-                        <input type="text" class="form-control" placeholder="find report or chart" ng-model="data.reportName" >
+                        <input type="text" class="form-control" placeholder="find report or chart" ng-model="data.reportName" ng-change="changeToReportPage()">
                     </div><!-- /input-group -->
                 </div>
 
@@ -3068,6 +3096,7 @@
         </div>
     </div>
 
+
     <div class="row mainbody" ng-cloak ng-if="css.menu=='Score'">
 
         <div class="col-md-9 score_box" ng-if='!css.isFeedbackShown'>
@@ -3081,9 +3110,8 @@
                     <div class="pull-right">
 
                         <div class="btn-group btn-group-sm">
-                            <button type="button" class="btn btn-default" ng-class="{'active':css.selectScore=='Original'}" ng-click="css.selectScore='Original' ">Original</button>
-
-                            <button type="button" class="btn btn-default" ng-class="{'active':css.selectScore=='Rescaled'}" ng-click="css.selectScore='Rescaled' ">Rescaled</button>
+                            <button type="button" class="btn btn-default" ng-class="{'active':css.selectScore=='Original'}" ng-click="css.selectScore='Original' ">{{'FinalScorePageButtonOriginal' | translate}}</button>
+                            <button type="button" class="btn btn-default" ng-class="{'active':css.selectScore=='Rescaled'}" ng-click="css.selectScore='Rescaled' ">{{'FinalScorePageButtonRescaled' | translate}}</button>
 
                         </div>
                     </div>

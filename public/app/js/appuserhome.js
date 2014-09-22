@@ -91,7 +91,7 @@ marksimosapp.controller('chartController', ['$translate', '$scope', '$rootScope'
         currentPeriod : 0,
         maxPeriodRound:0,
         finalReportPeriods: [],
-        isFeedbackShown : false,
+        isFeedbackShown : false
 
     };
 
@@ -198,7 +198,9 @@ marksimosapp.controller('chartController', ['$translate', '$scope', '$rootScope'
 
         chartA31InventoryReport : {
             data : [],
-            color : ['#39b54a', '#ff983d', '#0087f0', '#8781bd', '#f26c4f', '#bd8cbf', '#000000']
+//            color : ['#39b54a', '#ff983d', '#0087f0', '#8781bd', '#f26c4f', '#bd8cbf', '#000000'] // QIFEI 's color
+//            color : ['#004CE5', '#BB0000', '#FFBC01', '#339933', '#990099', '#FF5200', '#000000'] //Windows color
+            color : ['#999999', '#BB0000', '#99CC00', '#339933', '#990099', '#FF5200', '#000000']
         },
 
         chartB11MarketShareInValue : {
@@ -278,7 +280,8 @@ marksimosapp.controller('chartController', ['$translate', '$scope', '$rootScope'
         chartC21PerceptionMap : {
             data : [],
             dataChart : [],
-            color : ['#39b54a', '#ff983d', '#0087f0', '#8781bd', '#f26c4f', '#bd8cbf', '#000000']
+//            color : ['#39b54a', '#ff983d', '#0087f0', '#8781bd', '#f26c4f', '#bd8cbf', '#000000']
+            color : ['#004CE5', '#BB0000', '#FFBC01', '#339933', '#990099', '#FF5200', '#000000']
         },
         chartC41GrowthRateInVolume : {
             config : chartReport.getChartConfig1(),
@@ -309,9 +312,16 @@ marksimosapp.controller('chartController', ['$translate', '$scope', '$rootScope'
         };
     };
 
+
     $scope.A31ToolTipContent = function(){
         return function(key, x, y, e, graph) {
             return  '<h5>' + y + '</h5>';
+        };
+    };
+
+    $scope.C21ColorFunction = function(){
+        return function(d, i){
+            return $scope.data.chartC21PerceptionMap.color[i];
         };
     };
 
@@ -386,7 +396,7 @@ marksimosapp.controller('chartController', ['$translate', '$scope', '$rootScope'
                     arrow7 = 'glyphicon-arrow-down';
                 }
 
-                htmlResult = '<div class="panel panel-default perception_panel"> <div class="panel-heading"><span class="perception_logo" style="background-color:' + iconColor + '"></span>' + key + ' - ' + e.point.name + '</div>' +
+                htmlResult = '<div class="panel panel-default perception_panel"> <div class="panel-heading"><span class="perception_logo" style="background-color:' + iconColor + '"></span>' + key + ' - ' + e.point.name + '  </div>' +
                     '<ul class="list-group">' +
                     '<li class="list-group-item perception_list"><span class="perception_info">Market Share (Value %)  </span><span class="perception_info_number">' + Math.round(e.point.tooltips[0].value * 10000) / 100 +
                     '</span><span class="glyphicon ' + arrow0 + ' "></span></li>' +
@@ -422,7 +432,6 @@ marksimosapp.controller('chartController', ['$translate', '$scope', '$rootScope'
     /********************  Chart A3  ********************/
     chartReport.inventoryReport().then(function(data, status, headers, config){
         $scope.data.chartA31InventoryReport.data = data;
-//        console.log($scope.data.chartA31InventoryReport.data);
     });
 
 
@@ -525,6 +534,7 @@ marksimosapp.controller('chartController', ['$translate', '$scope', '$rootScope'
     };
 
 
+
     /********************  Chart C4  ********************/
     $scope.data.chartC41GrowthRateInVolume.config.title = 'Growth Rate In Volume (Period -3 = 100)';
     $scope.data.chartC42GrowthRateInValue.config.title = 'Growth Rate In Value (Period -3 = 100)';
@@ -578,7 +588,7 @@ marksimosapp.controller('chartController', ['$translate', '$scope', '$rootScope'
 //        console.log(data);
         $scope.data.tableA2FinancialData.allData = data;
         $scope.data.tableA2FinancialData.currentCompany = data[0];
-        $scope.data.tableA2FinancialData.currentPeriod = $scope.data.tableA2FinancialData.currentCompany.periods[0];
+        $scope.data.tableA2FinancialData.currentPeriod = $scope.data.tableA2FinancialData.currentCompany.periods[$scope.data.tableA2FinancialData.currentCompany.periods.length -1];
         $scope.data.tableA2FinancialData.currentBrand = $scope.data.tableA2FinancialData.currentPeriod.brands[0];
     });
     $scope.switchTableReportPeriod = function(period){
@@ -714,20 +724,24 @@ marksimosapp.controller('chartController', ['$translate', '$scope', '$rootScope'
 
             var currentDate = new Date();
 
-            var timer = $interval(function() {
-                currentDate = new Date();
-                if(currentDate.getHours() < 13 && currentDate.getHours() > 9){
-                    $scope.data.currentTime.hour = 12 - currentDate.getHours();
-                    $scope.data.currentTime.minute = 60 - currentDate.getMinutes();
-                    $scope.data.currentTime.second = 60 - currentDate.getSeconds() ;
-                }else if(currentDate.getHours() < 19 && currentDate.getHours() >= 13){
-                    $scope.data.currentTime.hour = 18 - currentDate.getHours();
-                    $scope.data.currentTime.minute = 60 - currentDate.getMinutes();
-                    $scope.data.currentTime.second = 60 - currentDate.getSeconds() ;
-                }else {
-                    $interval.cancel(timer);
-                }
-            }, 3000);
+            $scope.data.currentTime.hour = 6;
+            $scope.data.currentTime.minute = 59;
+            $scope.data.currentTime.second = 59 ;
+
+//            var timer = $interval(function() {
+//                currentDate = new Date();
+//                if(currentDate.getHours() < 13 && currentDate.getHours() > 9){
+//                    $scope.data.currentTime.hour = 12 - currentDate.getHours();
+//                    $scope.data.currentTime.minute = 60 - currentDate.getMinutes();
+//                    $scope.data.currentTime.second = 60 - currentDate.getSeconds() ;
+//                }else if(currentDate.getHours() < 19 && currentDate.getHours() >= 13){
+//                    $scope.data.currentTime.hour = 18 - currentDate.getHours();
+//                    $scope.data.currentTime.minute = 60 - currentDate.getMinutes();
+//                    $scope.data.currentTime.second = 60 - currentDate.getSeconds() ;
+//                }else {
+//                    $interval.cancel(timer);
+//                }
+//            }, 3000);
 
 
 
@@ -1146,6 +1160,16 @@ marksimosapp.controller('chartController', ['$translate', '$scope', '$rootScope'
 
     /********************  get FinalScore  ********************/
 
+    $scope.changeToReportPage = function(){
+        $scope.css.menu = 'Report';
+
+        $timeout(function() {
+            angular.element('#reportinput').focus();
+        });
+
+
+    };
+
     $scope.switchTableReportFinalScore = function(period){
         $scope.css.selectFinalScorePeriod = period ;
         Company.getFinalScore(period)
@@ -1200,6 +1224,8 @@ marksimosapp.controller('chartController', ['$translate', '$scope', '$rootScope'
             });
         });
     };
+
+
 
 
 

@@ -715,7 +715,7 @@ window.nv.tooltip.* also has various helper methods.
         container.style.opacity = 0;
         container.innerHTML = content;
         body.appendChild(container);
-        
+
         //If the parent container is an overflow <div> with scrollbars, subtract the scroll offsets.
         if (parentContainer) {
            pos[0] = pos[0] - parentContainer.scrollLeft;
@@ -836,8 +836,11 @@ window.nv.tooltip.* also has various helper methods.
             container.style.left = left+'px';
             container.style.top = top+'px';
             container.style.opacity = 1;
-            container.style.position = 'absolute'; 
+            container.style.position = 'absolute';
 
+              $(container).mouseleave(function(event) {
+                  nv.tooltip.cleanup();
+              });
             return container;
     };
 
@@ -11333,17 +11336,18 @@ nv.models.scatter = function() {
 
         var points = groups.selectAll('path.nv-point')
             .data(function(d) { return d.values });
-        points.enter().append('path')
+          points.enter().append('path')
             .style('fill', function (d,i) { return d.color })
             .style('stroke', function (d,i) { return d.color })
-            .attr('transform', function(d,i) {
-              return 'translate(' + x0(getX(d,i)) + ',' + y0(getY(d,i)) + ')'
-            })
+              .attr('transform', function(d,i) {
+                  return 'translate(' + x0(getX(d,i)) + ',' + y0(getY(d,i)) + ')'
+              })
             .attr('d',
               d3.svg.symbol()
                 .type(getShape)
                 .size(function(d,i) { return z(getSize(d,i)) })
             );
+
         points.exit().remove();
         groups.exit().selectAll('path.nv-point')
             .transition()
@@ -11711,9 +11715,12 @@ nv.models.scatterChart = function() {
           nv.tooltip.show([leftX, topX], tooltipX(e.series.key, xVal, yVal, e, chart), 'n', 1, offsetElement, 'x-nvtooltip');
       if( tooltipY != null )
           nv.tooltip.show([leftY, topY], tooltipY(e.series.key, xVal, yVal, e, chart), 'e', 1, offsetElement, 'y-nvtooltip');
-      if( tooltip != null )
+      if( tooltip != null ){
           nv.tooltip.show([left, top], tooltip(e.series.key, xVal, yVal, e, chart), e.value < 0 ? 'n' : 's', null, offsetElement);
+      }
+
   };
+
 
   var controlsData = [
     { key: 'Magnify', disabled: true }
@@ -12074,7 +12081,7 @@ nv.models.scatterChart = function() {
   //------------------------------------------------------------
 
   scatter.dispatch.on('elementMouseout.tooltip', function(e) {
-    dispatch.tooltipHide(e);
+//    dispatch.tooltipHide(e);
 
     d3.select('.nv-chart-' + scatter.id() + ' .nv-series-' + e.seriesIndex + ' .nv-distx-' + e.pointIndex)
         .attr('y1', 0);
