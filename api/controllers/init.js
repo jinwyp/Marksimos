@@ -47,185 +47,76 @@ var _ = require('underscore');
  *
  */
 exports.init = function(req, res, next) {
-    //var seminarId = 'TTT'; //this parameter should be posted from client
-    var seminarId = req.body.seminar_id;
-    var simulationSpan; //should be posted from client
-    var companyNum;
-    var currentPeriod;
+    var status;
 
-    var companies = [];
-    var periods = [];
+    return function(req, res, next){        
+        if(status == 'pending'){
+            return res.send(400, {message: "Last request is still pending, please wait for runSimulation process complete..."})
+        } else {
+            status = 'pending';
+            //var seminarId = 'TTT'; //this parameter should be posted from client
+            var seminarId = req.body.seminar_id;
+            var simulationSpan; //should be posted from client
+            var companyNum;
+            var currentPeriod;
 
-    if(!seminarId){
-        return next(new Error("seminarId cannot be empty."));
-    }
+            var companies = [];
+            var periods = [];
 
-    seminarModel.findOne({seminarId: seminarId})
-    .then(function(dbSeminar){
-        if(!dbSeminar){
-            throw {message: "seminar doesn't exist."}
-        }
-
-        if(dbSeminar.currentPeriod !== consts.Period_0 + 1){
-            throw {message: "initialize a seminar that alreay starts."}
-        }
-
-        //before init, a new seminar should be created,
-        //and it's currentPeriod should be set correctly = 1
-        currentPeriod = dbSeminar.currentPeriod;
-        sessionOperation.setCurrentPeriod(req, dbSeminar.currentPeriod);
-
-        //create periods array
-        periods.push(-3);
-        periods.push(-2);
-        periods.push(-1);
-        periods.push(0);        
-        // var startPeriod = consts.History_3;
-
-        // for(var i=0; i<dbSeminar.simulationSpan; i++){
-        //     periods.push(startPeriod);
-        //     startPeriod+=1;
-        // }
-
-        //create company array
-        companies = utility.createCompanyArray(dbSeminar.companyNum);
-
-        simulationSpan = dbSeminar.simulationSpan;
-        companyNum = dbSeminar.companyNum;
-
-        return initBinaryFile(seminarId, simulationSpan, companies);
-        //return initBinaryFile('TTT', 3);
-    })
-    .then(function(initResult){
-        if(initResult.message !== 'init_success'){
-            return res.send(403, {message: 'init binary file failed. initResult = ' + initResult.message});
-        }
-
-        return Q.all([
-            simulationResultModel.removeAll(seminarId),
-            dbutility.removeExistedDecisions(seminarId),
-            chartModel.remove(seminarId),
-            reportModel.remove(seminarId)
-        ])
-        .then(function(){
-            return Q.all([
-                initSimulationResult(seminarId, periods),
-                initDecision(seminarId, periods, companyNum)
-            ])
-        })
-        .then(function(){
-            return Q.all([
-                simulationResultModel.findAll(seminarId)
-            ])
-            .spread(function(allResults){
-                return Q.all([
-                    initChartData(seminarId, allResults),
-                    
-                    initCompanyStatusReport(seminarId, allResults, 0),
-                    initFinancialReport(seminarId, allResults),
-                    initProfitabilityEvolutionReport(seminarId, allResults, 0),
-                    initSegmentDistributionReport(seminarId, allResults),
-                    initCompetitorIntelligenceReport(seminarId, allResults),
-                    initMarketTrendsReport(seminarId, allResults, 0),
-                    initMarketIndicatorReport(seminarId, currentPeriod)
-                ]);
-            });
-        })
-        .then(function(){
-            //copy decision of period (currentPeriod - 1 = 0)
-            return duplicateLastPeriodDecision(seminarId, currentPeriod - 1);
-            
-        })
-        .then(function(){
-            return seminarModel.update({seminarId: seminarId}, {
-                isInitialized: true
-            })
-        })
-        .then(function(numAffected){
-            if(numAffected!==1){
-                throw {message: "there's error during set isInitialized to true."};
+            if(!seminarId){
+                status = 'active';
+                return next(new Error("seminarId cannot be empty."));
             }
-            res.send({message: 'initialize success'});
-        }).done();
-    })
-    .fail(function(err){
-        logger.error(err);
-        res.send(500, {message: "failed to initialize game."})
-    })
-    .done();
-};
 
-/**
-* Write decision to binary file
-* Run simulation
-* Fetch current period allresults and save it to db
-* Generate current period reports and charts
-* Generate new period decision 
-*/
-exports.runSimulation = function(req, res, next){
-    var seminarId = req.body.seminar_id;
+            seminarModel.findOne({seminarId: seminarId})
+            .then(function(dbSeminar){
+                if(!dbSeminar){
+                    status = 'active';
+                    throw {message: "seminar doesn't exist."}
+                }
 
-    if(!seminarId){
-        return res.send(400, {message: "You have not choose a seminar."})
-    }
+                if(dbSeminar.currentPeriod !== consts.Period_0 + 1){
+                    status = 'active';
+                    throw {message: "initialize a seminar that alreay starts."}
+                }
 
-    var currentPeriod = sessionOperation.getCurrentPeriod(req);
-    console.log('currentPeriod: ' + currentPeriod);
+                //before init, a new seminar should be created,
+                //and it's currentPeriod should be set correctly = 1
+                currentPeriod = dbSeminar.currentPeriod;
+                sessionOperation.setCurrentPeriod(req, dbSeminar.currentPeriod);
 
-    //check if this seminar exists
-    seminarModel.findOne({
-        seminarId: seminarId
-    })
-    .then(function(dbSeminar){
-        if(!dbSeminar){
-            throw {message: "seminar doesn't exist."};
-        }
+                //create periods array
+                periods.push(-3);
+                periods.push(-2);
+                periods.push(-1);
+                periods.push(0);        
 
-        if(!dbSeminar.isInitialized){
-            throw {httpStatus: 400, message: "you have not initialized this seminar."}
-        }
+                //create company array
+                companies = utility.createCompanyArray(dbSeminar.companyNum);
 
-        //if all rounds are executed
-        if(dbSeminar.isSimulationFinised){
-            throw {httpStatus: 400, message: "the last round simulation has been executed."}
-        }
+                simulationSpan = dbSeminar.simulationSpan;
+                companyNum = dbSeminar.companyNum;
 
-        var companies = [];
-        for(var i=0; i<dbSeminar.companyNum; i++){
-            companies.push(i+1);
-        }
+                return initBinaryFile(seminarId, simulationSpan, companies);
+                //return initBinaryFile('TTT', 3);
+            })
+            .then(function(initResult){
+                if(initResult.message !== 'init_success'){
+                    status = 'active';
+                    return res.send(403, {message: 'init binary file failed. initResult = ' + initResult.message});
+                }
 
-        //write decision to binary file
-        return submitDecisionForAllCompany(companies, currentPeriod, seminarId)
-            .then(function(){
-                console.log('write decision finished.');
-                // if(submitDecisionResult.message!=='submit_decision_success'){
-                //     throw {message: submitDecisionResult.message};
-                // }
-
-                //run simulation
-                return cgiapi.runSimulation({
-                    seminarId: seminarId,
-                    simulationSpan: dbSeminar.simulationSpan,
-                    teams: utility.createCompanyArray(dbSeminar.companyNum),
-                    period: currentPeriod
-                })
-                .then(function(simulationResult){
-                    console.log('run simulation finished.');
-                    if(simulationResult.message !== 'run_simulation_success'){
-                        throw {message: simulationResult.message};
-                    }
-
-                    return Q.all[removeCurrentPeriodSimulationResult(seminarId, currentPeriod)
-                                , chartModel.remove(seminarId)
-                                , reportModel.remove(seminarId)
-                            ];
-                })
+                return Q.all([
+                    simulationResultModel.removeAll(seminarId),
+                    dbutility.removeExistedDecisions(seminarId),
+                    chartModel.remove(seminarId),
+                    reportModel.remove(seminarId)
+                ])
                 .then(function(){
-                    console.log('get current period simulation result finished.');
-                    //once removeCurrentPeriodSimulationResult success, 
-                    //query and save the current period simulation result
-                    return initCurrentPeriodSimulationResult(seminarId, currentPeriod);
+                    return Q.all([
+                        initSimulationResult(seminarId, periods),
+                        initDecision(seminarId, periods, companyNum)
+                    ])
                 })
                 .then(function(){
                     return Q.all([
@@ -235,66 +126,205 @@ exports.runSimulation = function(req, res, next){
                         return Q.all([
                             initChartData(seminarId, allResults),
                             
-                            initCompanyStatusReport(seminarId, allResults, currentPeriod),
+                            initCompanyStatusReport(seminarId, allResults, 0),
                             initFinancialReport(seminarId, allResults),
-                            initProfitabilityEvolutionReport(seminarId, allResults, currentPeriod),
+                            initProfitabilityEvolutionReport(seminarId, allResults, 0),
                             initSegmentDistributionReport(seminarId, allResults),
                             initCompetitorIntelligenceReport(seminarId, allResults),
-                            initMarketTrendsReport(seminarId, allResults, currentPeriod),
+                            initMarketTrendsReport(seminarId, allResults, 0),
                             initMarketIndicatorReport(seminarId, currentPeriod)
                         ]);
                     });
                 })
                 .then(function(){
-                    console.log('generate report/chart finished.');
-                    //for the last period, we don't create the next period decision automatically
-                    if(dbSeminar.currentPeriod < dbSeminar.simulationSpan){
-                        return createNewDecisionBasedOnLastPeriodDecision(seminarId, currentPeriod);
-                    }else{
-                        return undefined;
-                    }
+                    //copy decision of period (currentPeriod - 1 = 0)
+                    return duplicateLastPeriodDecision(seminarId, currentPeriod - 1);
+                    
                 })
                 .then(function(){
-                    console.log('create duplicate decision from last period finished.');
-                    if(dbSeminar.currentPeriod < dbSeminar.simulationSpan){
-                        //after simulation success, set currentPeriod to next period
-                        sessionOperation.setCurrentPeriod(req, sessionOperation.getCurrentPeriod(req)+1);
-
-                        return seminarModel.update({seminarId: seminarId}, {
-                            currentPeriod: dbSeminar.currentPeriod + 1
-                        })
-                        .then(function(numAffected){
-                            if(numAffected!==1){
-                                throw {message: "there's error during update seminar."}
-                            }else{
-                                return undefined;
-                            }
-                        })
-                    }else{
-                        return seminarModel.update({seminarId: seminarId}, {
-                            isSimulationFinised: true
-                        }).then(function(numAffected){
-                            if(numAffected!==1){
-                                throw {message: "there's error during update isSimulationFinised to true."}
-                            }else{
-                                return undefined;
-                            }
-                        });
-                    }
+                    return seminarModel.update({seminarId: seminarId}, {
+                        isInitialized: true
+                    })
                 })
-            });
-    })
-    .then(function(){
-        return res.send({message: "run simulation success."});
-    })
-    .fail(function(err){
-        logger.error(err);
-        if(err.httpStatus){
-            return res.send(err.httpStatus, {message: err.message});
+                .then(function(numAffected){
+                    status = 'active';
+                    if(numAffected!==1){
+                        throw {message: "there's error during set isInitialized to true."};
+                    }
+                    res.send(200, {message: 'initialize success'});
+                }).done();
+            })
+            .fail(function(err){
+                status = 'active';
+                logger.error(err);
+                res.send(500, {message: err.message})
+            })
+            .done();            
+        }        
+
+    }
+};
+
+/**
+* Write decision to binary file
+* Run simulation
+* Fetch current period allresults and save it to db
+* Generate current period reports and charts
+* Generate new period decision 
+*/
+exports.runSimulation = function(){
+    var status;
+
+    return function(req, res, next){
+        if(status == 'pending'){
+            return res.send(400, {message: "Last request is still pending, please wait for runSimulation process complete..."})
+        } else {
+            status = 'pending';
+            var seminarId = req.body.seminar_id;
+
+            if(!seminarId){
+                status = 'active';
+                return res.send(400, {message: "You have not choose a seminar."})
+            }
+
+            var currentPeriod = sessionOperation.getCurrentPeriod(req);
+
+            //check if this seminar exists
+            seminarModel.findOne({
+                seminarId: seminarId
+            })
+            .then(function(dbSeminar){
+                if(!dbSeminar){
+                     status = 'active';
+                    throw {message: "seminar doesn't exist."};
+                }
+
+                if(!dbSeminar.isInitialized){
+                     status = 'active';
+                    throw {httpStatus: 400, message: "you have not initialized this seminar."}
+                }
+
+                //if all rounds are executed
+                if(dbSeminar.isSimulationFinised){
+                     status = 'active';
+                    throw {httpStatus: 400, message: "the last round simulation has been executed."}
+                }
+
+                var companies = [];
+                for(var i=0; i<dbSeminar.companyNum; i++){
+                    companies.push(i+1);
+                }
+
+                //write decision to binary file
+                return submitDecisionForAllCompany(companies, currentPeriod, seminarId)
+                    .then(function(){
+                        console.log('write decision finished.');
+                        // if(submitDecisionResult.message!=='submit_decision_success'){
+                        //     throw {message: submitDecisionResult.message};
+                        // }
+
+                        //run simulation
+                        return cgiapi.runSimulation({
+                            seminarId: seminarId,
+                            simulationSpan: dbSeminar.simulationSpan,
+                            teams: utility.createCompanyArray(dbSeminar.companyNum),
+                            period: currentPeriod
+                        })
+                        .then(function(simulationResult){
+                            console.log('run simulation finished.');
+                            if(simulationResult.message !== 'run_simulation_success'){
+                                 status = 'active';
+                                throw {message: simulationResult.message};
+                            }
+
+                            return Q.all[removeCurrentPeriodSimulationResult(seminarId, currentPeriod)
+                                        , chartModel.remove(seminarId)
+                                        , reportModel.remove(seminarId)
+                                    ];
+                        })
+                        .then(function(){
+                            console.log('get current period simulation result finished.');
+                            //once removeCurrentPeriodSimulationResult success, 
+                            //query and save the current period simulation result
+                            return initCurrentPeriodSimulationResult(seminarId, currentPeriod);
+                        })
+                        .then(function(){
+                            return Q.all([
+                                simulationResultModel.findAll(seminarId)
+                            ])
+                            .spread(function(allResults){
+                                return Q.all([
+                                    initChartData(seminarId, allResults),
+                                    
+                                    initCompanyStatusReport(seminarId, allResults, currentPeriod),
+                                    initFinancialReport(seminarId, allResults),
+                                    initProfitabilityEvolutionReport(seminarId, allResults, currentPeriod),
+                                    initSegmentDistributionReport(seminarId, allResults),
+                                    initCompetitorIntelligenceReport(seminarId, allResults),
+                                    initMarketTrendsReport(seminarId, allResults, currentPeriod),
+                                    initMarketIndicatorReport(seminarId, currentPeriod)
+                                ]);
+                            });
+                        })
+                        .then(function(){
+                            console.log('generate report/chart finished.');
+                            //for the last period, we don't create the next period decision automatically
+                            if(dbSeminar.currentPeriod < dbSeminar.simulationSpan){
+                                return createNewDecisionBasedOnLastPeriodDecision(seminarId, currentPeriod);
+                            }else{
+                                 status = 'active';
+                                return undefined;
+                            }
+                        })
+                        .then(function(){
+                            console.log('create duplicate decision from last period finished.');
+                            if(dbSeminar.currentPeriod < dbSeminar.simulationSpan){
+                                //after simulation success, set currentPeriod to next period
+                                sessionOperation.setCurrentPeriod(req, sessionOperation.getCurrentPeriod(req)+1);
+
+                                return seminarModel.update({seminarId: seminarId}, {
+                                    currentPeriod: dbSeminar.currentPeriod + 1
+                                })
+                                .then(function(numAffected){
+                                    if(numAffected!==1){
+                                        throw {message: "there's error during update seminar."}
+                                    }else{
+                                         status = 'active';
+                                        return undefined;
+                                    }
+                                })
+                            }else{
+                                return seminarModel.update({seminarId: seminarId}, {
+                                    isSimulationFinised: true
+                                }).then(function(numAffected){
+                                    if(numAffected!==1){
+                                        throw {message: "there's error during update isSimulationFinised to true."}
+                                    }else{
+                                         status = 'active';
+                                        return undefined;
+                                    }
+                                });
+                            }
+                        })
+                    });
+            })
+            .then(function(){
+                 status = 'active';
+                return res.send({message: "run simulation success."});
+            })
+            .fail(function(err){
+                 status = 'active';
+                if(err.httpStatus){
+                    return res.send(err.httpStatus, {message: err.message});
+                }
+                res.send(500, {message: err.message})
+            })
+            .done();            
         }
-        res.send(500, {message: "run simulation failed."})
-    })
-    .done();
+
+    }
+
+
 };
 
 function initCurrentPeriodSimulationResult(seminarId, currentPeriod){
@@ -637,7 +667,8 @@ function duplicateLastPeriodDecision(seminarId, lastPeriod){
             tempCompanyDecision.d_InvestmentInServicing = 0;
             tempCompanyDecision.d_InvestmentInEfficiency = 0;
             tempCompanyDecision.d_InvestmentInTechnology = 0;
-            tempCompanyDecision.bs_additionalBudgetApplicationCounter = 0;
+            tempCompanyDecision.bs_AdditionalBudgetApplicationCounter = 0;
+            tempCompanyDecision.bs_BlockBudgetApplication = false;
             p = p.then(function(result){
                 if(!result){
                     throw new Error("save comanyDecision failed during create copy of last period decision.");
@@ -785,12 +816,19 @@ function createNewDecisionBasedOnLastPeriodDecision(seminarId, lastPeriod){
                 delete tempCompanyDecision._id;
                 delete tempCompanyDecision.__v;
 
+                if(companyDecision.bs_AdditionalBudgetApplicationCounter >= 2){
+                    tempCompanyDecision.bs_BlockBudgetApplication = true;
+                } else {
+                    tempCompanyDecision.bs_BlockBudgetApplication = false;
+                }
+
                 tempCompanyDecision.d_BrandsDecisions = _.difference(tempCompanyDecision.d_BrandsDecisions, discontinuedBrandId);
                 tempCompanyDecision.period = tempCompanyDecision.period + 1;
                 tempCompanyDecision.d_RequestedAdditionalBudget = 0;
+                tempCompanyDecision.d_IsAdditionalBudgetAccepted = false;
                 tempCompanyDecision.d_InvestmentInServicing = 0;
                 tempCompanyDecision.d_InvestmentInEfficiency = 0;
-                tempCompanyDecision.d_InvestmentInTechnology = 0;
+                tempCompanyDecision.d_InvestmentInTechnology = 0;                
                 p = p.then(function(result){
                     if(!result){
                         throw new Error("save comanyDecision failed during create copy of last period decision.");

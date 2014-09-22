@@ -129,8 +129,8 @@ apiRouter.post('/marksimos/api/admin/seminar', requireLogin, authorize('addSemin
 apiRouter.post('/marksimos/api/admin/assign_student_to_seminar', requireLogin, authorize('assignStudentToSeminar'), seminarController.assignStudentToSeminar);
 apiRouter.post('/marksimos/api/admin/remove_student_from_seminar', requireLogin, authorize('removeStudentFromSeminar'), seminarController.removeStudentFromSeminar);
 
-apiRouter.post('/marksimos/api/admin/init', requireLogin, initController.init);
-apiRouter.post('/marksimos/api/admin/runsimulation',  requireLogin, authorize('runSimulation'), initController.runSimulation);
+apiRouter.post('/marksimos/api/admin/init', requireLogin, initController.init());
+apiRouter.post('/marksimos/api/admin/runsimulation',  requireLogin, authorize('runSimulation'), initController.runSimulation());
 
 // get current admin role
 apiRouter.get('/marksimos/api/admin/user', requireLogin, userController.getUser);

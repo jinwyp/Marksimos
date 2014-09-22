@@ -16,7 +16,8 @@ var tDecisionSchema = new Schema({
     d_InvestmentInEfficiency              : {type: Number, default: 0},
     d_InvestmentInTechnology              : {type: Number, default: 0},
     d_InvestmentInServicing               : {type: Number, default: 0},
-    bs_additionalBudgetApplicationCounter : {type: Number, default: 0},
+    bs_AdditionalBudgetApplicationCounter : {type: Number, default: 0},
+    bs_BlockBudgetApplication             : {type: Boolean, default: false},
 });
 
 var CompanyDecision = mongoose.model('CompanyDecision', tDecisionSchema);
@@ -57,8 +58,8 @@ function validateAdditionalBudget(field, curCompanyDecisionInput, done){
         var budgetLeft = parseFloat(spendingDetails.companyData.availableBudget);
         var err, lowerLimits = [],upperLimits = [];
 
-        if(preCompanyDecisionInput.bs_additionalBudgetApplicationCounter == 2){
-            var err = new Error('You have applied budget for twice.');
+        if(preCompanyDecisionInput.bs_BlockBudgetApplication){
+            var err = new Error('You cannot applied budget more than twice.');
             done(err);
         } else {
             lowerLimits.push({value : 0, message: 'Cannot accept negative number.'});        
@@ -71,12 +72,12 @@ function validateAdditionalBudget(field, curCompanyDecisionInput, done){
                 //if user want to cancel application this period, reset counter make it = last period input
                 if(curCompanyDecisionInput.d_RequestedAdditionalBudget == 0){
                     curCompanyDecisionInput.d_IsAdditionalBudgetAccepted = false;
-                    if(prePeriodCompanyDecision.bs_additionalBudgetApplicationCounter != preCompanyDecisionInput.bs_additionalBudgetApplicationCounter){
-                        curCompanyDecisionInput.bs_additionalBudgetApplicationCounter = prePeriodCompanyDecision.bs_additionalBudgetApplicationCounter;
+                    if(prePeriodCompanyDecision.bs_AdditionalBudgetApplicationCounter != preCompanyDecisionInput.bs_AdditionalBudgetApplicationCounter){
+                        curCompanyDecisionInput.bs_AdditionalBudgetApplicationCounter = prePeriodCompanyDecision.bs_AdditionalBudgetApplicationCounter;
                     }
                 //if user input != 0 and counter hasn't been increased this period, do it                     
-                } else if(prePeriodCompanyDecision.bs_additionalBudgetApplicationCounter == preCompanyDecisionInput.bs_additionalBudgetApplicationCounter){
-                    curCompanyDecisionInput.bs_additionalBudgetApplicationCounter = curCompanyDecisionInput.bs_additionalBudgetApplicationCounter + 1;
+                } else if(prePeriodCompanyDecision.bs_AdditionalBudgetApplicationCounter == preCompanyDecisionInput.bs_AdditionalBudgetApplicationCounter){
+                    curCompanyDecisionInput.bs_AdditionalBudgetApplicationCounter = curCompanyDecisionInput.bs_AdditionalBudgetApplicationCounter + 1;
                     curCompanyDecisionInput.d_IsAdditionalBudgetAccepted = true;
                 }
 
