@@ -637,6 +637,7 @@ function duplicateLastPeriodDecision(seminarId, lastPeriod){
             tempCompanyDecision.d_InvestmentInServicing = 0;
             tempCompanyDecision.d_InvestmentInEfficiency = 0;
             tempCompanyDecision.d_InvestmentInTechnology = 0;
+            tempCompanyDecision.bs_additionalBudgetApplicationCounter = 0;
             p = p.then(function(result){
                 if(!result){
                     throw new Error("save comanyDecision failed during create copy of last period decision.");
