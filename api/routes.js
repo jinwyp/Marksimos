@@ -70,8 +70,6 @@ apiRouter.get('/marksimos/api/user', requireLogin, userController.getUser);
 apiRouter.get('/marksimos/api/student/seminar', requireLogin, authorize('getSeminarOfStudent'), studentController.getSeminarOfStudent);
 apiRouter.get('/marksimos/api/studentinfo', requireLogin, authorize('getStudent'),userController.getStudent);
 
-
-
 //report
 apiRouter.get('/marksimos/api/report/:report_name', requireLogin, reportController.getReport);
 apiRouter.get('/marksimos/api/adminreport/:report_name', requireLogin, reportController.getReport);
@@ -95,6 +93,7 @@ apiRouter.put('/marksimos/api/company/decision', requireLogin, decisionControlle
 
 
 apiRouter.get('/marksimos/api/company', requireLogin, decisionController.getDecision);
+
 apiRouter.get('/marksimos/api/product_portfolio', requireLogin, decisionController.getProductPortfolio);
 apiRouter.get('/marksimos/api/spending_details', requireLogin, decisionController.getSpendingDetails);
 apiRouter.get('/marksimos/api/future_projection_calculator/:sku_id', requireLogin, decisionController.getSKUInfo);
@@ -103,7 +102,6 @@ apiRouter.get('/marksimos/api/company/otherinfo', requireLogin, decisionControll
 
 
 /**********  API For Administrator  **********/
-
 apiRouter.get('/marksimos/api/admin/distributors', requireLogin, authorize('searchDistributor'), distributorController.searchDistributor);
 apiRouter.post('/marksimos/api/admin/distributors', requireLogin, authorize('addDistributor'), distributorController.addDistributor);
 apiRouter.put('/marksimos/api/admin/distributors/:distributor_id', requireLogin, authorize('updateDistributor'), distributorController.updateDistributor);

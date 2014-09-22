@@ -11,8 +11,11 @@ module.exports = function(app){
     /**********   Routes for HCD Learning Website   **********/
 
 
+    /**********   Routes for E4E Website   **********/
 
-
+    app.get('/e4e', function(req, res, next){
+        res.send(200, {message: 'E4E website'});
+    });
 
     /**********   Routes for MarkSimos User/Student   **********/
 
