@@ -227,7 +227,22 @@ uFormBrandDecision.pas
 
 
 
+# 服务器数据库配置
 
+启动
+```
+sudo service mongod start
+```
+停止
+```
+sudo service mongod stop
+```
+修改配置文件
+```
+sudo vi /etc/mongodb.conf
+```
+
+NODE_ENV=production nodemon app.js
 
 # 运行
 NODE_ENV=production nodemon app.js

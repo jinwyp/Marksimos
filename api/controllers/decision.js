@@ -663,14 +663,13 @@ exports.getOtherinfo = function(req, res, next){
         simulationResultModel.findOne(seminarId, currentPeriod - 1)
     ])
     .spread(function(spendingDetails, lastPeriodResult){
-        console.log('111');
         var totalInvestment = spendingDetails.companyData.totalInvestment;
         var companyResult = utility.findCompany(lastPeriodResult, companyId);
 
         var totalAvailableBudget = parseFloat(
                 (
                     (companyResult.c_TotalInvestmentBudget - companyResult.c_CumulatedInvestments - totalInvestment
-                    ) / (companyResult.c_TotalInvestmentBudget - companyResult.c_CumulatedInvestments)
+                    ) / (companyResult.c_TotalInvestmentBudget)
                 ).toFixed(2)
             );
         var totalAvailableBudgetValue = companyResult.c_TotalInvestmentBudget - companyResult.c_CumulatedInvestments - totalInvestment;
