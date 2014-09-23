@@ -41,13 +41,15 @@ app.config(['$translateProvider', function($translateProvider){
         "HomePageMenuBarLabelsLogout"     : "Log Out",
 
 
-        ////Labels for Segment
+        //Labels for Segment
         "HomePageSegmentLabelPriceSensitive"            : "1 Price Sensitive",
         "HomePageSegmentLabelPretenders"                : "2 Pretenders",
         "HomePageSegmentLabelModerate"                  : "3 Moderate",
         "HomePageSegmentLabelGoodLife"                  : "4 Good Life",
         "HomePageSegmentLabelUltimate"                  : "5 Ultimate",
         "HomePageSegmentLabelPragmatic"                 : "6 Pragmatic",
+
+
 
 
 		//Labels for Items on Home page - Second Menu Bar
@@ -102,6 +104,12 @@ app.config(['$translateProvider', function($translateProvider){
         "ReportMenuMarketTrends"           : "Market Trends",
         "ReportMenuMarketIndicator"        : "Market Indicator",
 
+
+
+        //Labels for Company Status Report Tab Menu
+        "ReportTabLabelSKU"    : "SKU",
+        "ReportTabLabelBrand"  : "Brand",
+        "ReportTabLabelGlobal" : "Global",
 
 		//Labels for Company Status Report - SKU Level
         "ReportCompanyStatusSKUQuarter" : "Quarters",
@@ -926,6 +934,8 @@ app.config(['$translateProvider', function($translateProvider){
         "HomePageSegmentLabelPragmatic"      : "6 实用型",
 
 
+
+
 		//Labels for Items on Home page - Second Menu Bar
         "HomePageSecondMenuBarLabelsCompany"           : "公司",
         "HomePageSecondMenuBarLabelsCompanies"         : "个公司",
@@ -975,8 +985,12 @@ app.config(['$translateProvider', function($translateProvider){
         "ReportMenuMarketEvolution"        : "市场演变趋势",
         "ReportMenuMarketTrends"           : "市场趋势",
         "ReportMenuMarketIndicator"        : "宏观市场参数",
-		
 
+
+        //Labels for Company Status Report Tab Menu
+        "ReportTabLabelSKU"    : "产品数据",
+        "ReportTabLabelBrand"  : "品牌数据",
+        "ReportTabLabelGlobal" : "全局数据",
 
 		//Labels for Company Status Report - SKU Level
         "ReportCompanyStatusSKUQuarter" : "阶段",
@@ -1570,9 +1584,9 @@ app.config(['$translateProvider', function($translateProvider){
         "DecisionPageDecisionTabProcessingTechnology"  : "生产技术",
         "DecisionPageDecisionTabIngredientsQuality"    : "原料质量",
         "DecisionPageDecisionTabPackagingSize"         : "包装规格",
-        "DecisionPageDecisionTabPackagingSizeSmall"    : "小",
-        "DecisionPageDecisionTabPackagingSizeStandard" : "标准",
-        "DecisionPageDecisionTabPackagingSizeLarge"    : "大",
+        "DecisionPageDecisionTabPackagingSizeSmall"    : "小包装",
+        "DecisionPageDecisionTabPackagingSizeStandard" : "标准包装",
+        "DecisionPageDecisionTabPackagingSizeLarge"    : "大包装",
 
         "DecisionPageDecisionTabProductionVolume"               : "产量(百万件)",
         "DecisionPageDecisionTabManufacturerPrice"              : "出厂价($)",
