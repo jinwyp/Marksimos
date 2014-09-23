@@ -21,10 +21,6 @@ app.engine('md', function(path, options, fn){
     fn(null, str);
   });
 });
-//download file
-app.get('/marksimos/download', function(req, res, next){
-    res.download('./public/app/file/MarkSimos_Participants_Manual.pdf');
-});
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));

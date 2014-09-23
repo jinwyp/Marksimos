@@ -1,0 +1,340 @@
+/* 浮动 */
+.float-left,
+.fl {
+    float: left !important;
+}
+
+.float-right,
+.fr {
+    float: right !important;
+}
+
+/* 清除浮动 */
+.clearfix,
+.row,
+.cf {
+    *zoom: 1;
+}
+
+.clearfix:before,
+.cf:before,
+.clearfix:after,
+.cf:after {
+    display: table;
+    content: " ";
+    line-height: 0;
+}
+
+.clearfix:after,
+.cf:after {
+    clear: both;
+}
+
+/* 隐藏文字 */
+.hidden-text,
+.ht {
+    font: 0/0 a;
+    color: transparent;
+    text-shadow: none;
+    background-color: transparent;
+    border: 0;
+}
+
+/* 加载 Google 字体 */
+@font-face {
+    font-family: 'Philosopher';
+    font-style: normal;
+    font-weight: 400;
+    src: local('Philosopher'), url(../fonts/Philosopher.woff) format('woff');
+}
+@font-face {
+    font-family: 'Titillium Web';
+    font-style: normal;
+    font-weight: 400;
+    src: local('Titillium Web'), local('TitilliumWeb-Regular'), url(../fonts/TitilliumWeb.woff) format('woff');
+}
+
+/* 重置 */
+body,
+div,
+span,
+object,
+iframe,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p,
+blockquote,
+pre,
+a,
+abbr,
+acronym,
+address,
+code,
+del,
+dfn,
+em,
+img,
+q,
+dl,
+dt,
+dd,
+ol,
+ul,
+li,
+fieldset,
+form,
+label,
+legend,
+table,
+caption,
+tbody,
+tfoot,
+thead,
+tr,
+th,
+td,
+article,
+aside,
+dialog,
+figure,
+footer,
+header,
+hgroup,
+nav,
+section {
+    margin: 0;
+    padding: 0;
+    border: 0;
+    font-size: 100%;
+    font: inherit;
+    vertical-align: baseline;
+}
+
+body {
+    font-size: 14px;
+    line-height: 1.5em;
+    font-family: "Titillium Web", "Helvetica Neue", Helvetica, "Microsoft Yahei", Arial, sans-serif;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+    font-weight: bold;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+    font-family: "Philosopher", "Helvetica Neue", Helvetica, "Microsoft Yahei", Arial, sans-serif;
+}
+
+input,
+textarea,
+.btn {
+    font-family: "Helvetica Neue", Helvetica, "Microsoft Yahei", Arial, sans-serif;
+}
+
+textarea {
+    resize: none;
+}
+
+ul,
+ol {
+    list-style: none;
+}
+
+a,
+a:hover {
+    text-decoration: none;
+}
+
+
+/*-------- 排版 --------*/
+/* 上外边距 */
+.prepend-top,
+.ppt {
+    margin-top: 1.5em;
+}
+
+.prepend-top-12,
+.ppt-12 {
+    margin-top: 12px;
+}
+
+.prepend-top-24,
+.ppt-24 {
+    margin-top: 24px;
+}
+
+.prepend-top-36,
+.ppt-36 {
+    margin-top: 36px;
+}
+
+.prepend-top-48,
+.ppt-48 {
+    margin-top: 48px;
+}
+
+.prepend-top-60,
+.ppt-60 {
+    margin-top: 60px;
+}
+
+/* 下外边距 */
+.append-bottom,
+.apb {
+    margin-bottom: 1.5em;
+}
+
+.append-bottom-12,
+.apb-12 {
+    margin-bottom: 12px;
+}
+
+.append-bottom-24,
+.apb-24 {
+    margin-bottom: 24px;
+}
+
+.append-bottom-36,
+.apb-36 {
+    margin-bottom: 36px;
+}
+
+.append-bottom-48,
+.apb-48 {
+    margin-bottom: 48px;
+}
+
+.append-bottom-60,
+.apb-60 {
+    margin-bottom: 60px;
+}
+
+
+/* 行分割线 */
+.colborder,
+.cb {
+    padding-right: 24px;
+    margin-right: 25px;
+    border-right: 1px solid #ddd;
+}
+
+.colborder-5,
+.cb-5 {
+    padding-right: 5px;
+    margin-right: 6px;
+    border-right: 1px solid #ddd;
+}
+
+.colborder-12,
+.cb-12 {
+    padding-right: 12px;
+    margin-right: 13px;
+    border-right: 1px solid #ddd;
+}
+
+/* 形状 */
+.triangle {
+    display: inline-block;
+    width: 0;
+    height: 0;
+    *zoom: 1;
+}
+
+.circle {
+    display: inline-block;
+    border-radius: 50%;
+}
+
+/* 圆角 */
+.border-radius-2,
+.br-2 {
+    border-radius: 2px;
+}
+
+.border-radius-3,
+.br-3 {
+    border-radius: 3px;
+}
+
+.border-radius-5,
+.br-5 {
+    border-radius: 5px;
+}
+
+.border-radius-bottom,
+.brb {
+    border-radius: 0 0 3px 3px;
+}
+
+/* 阴影 */
+.box-shadow-1,
+.bs-1 {
+    box-shadow: 0 1px 1px rgba(0,0,0,.3);
+}
+
+.box-shadow-3,
+.bs-3 {
+    box-shadow: 0 1px 3px rgba(0,0,0,.3);
+}
+
+.box-shadow-5,
+.bs-5 {
+    box-shadow: 0 1px 3px rgba(0,0,0,.3);
+}
+
+/* 模糊 */
+.blur {
+    -webkit-filter: blur(40px);
+    -moz-filter: blur(40px);
+    -ms-filter: blur(40px);
+    filter: blur(40px);
+    filter: progid:DXImageTransform.Microsoft.Blur(PixelRadius=40, MakeShadow=false);
+}
+
+/* 遮罩 */
+.banner .mask {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: -moz-linear-gradient(top, rgba(0,0,0,.5) 0%, rgba(0,0,0,0) 35%, rgba(0,0,0,0) 65%, rgba(0,0,0,.6) 100%); 
+    background: -webkit-linear-gradient(top, rgba(0,0,0,.5) 0%, rgba(0,0,0,0) 35%, rgba(0,0,0,0) 65%, rgba(0,0,0,.6) 100%);
+    background: -o-linear-gradient(top, rgba(0,0,0,.5) 0%, rgba(0,0,0,0) 35%, rgba(0,0,0,0) 65%, rgba(0,0,0,.6) 100%);
+    background: -ms-linear-gradient(top, rgba(0,0,0,.5) 0%, rgba(0,0,0,0) 35%, rgba(0,0,0,0) 65%, rgba(0,0,0,.6) 100%);
+    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#88000000', endColorstr='#00000000', GradientType=0);
+    background: linear-gradient(top, rgba(0,0,0,.5) 0%, rgba(0,0,0,0) 35%, rgba(0,0,0,0) 65%, rgba(0,0,0,.6) 100%);
+    z-index: 15;
+    -webkit-filter: blur(0px);
+    overflow: hidden;
+}
+
+/* 基本 */
+body {
+    position: relative;
+    background: #fff;
+}
+
+.last {
+    margin-right: 0 !important;
+}
+.wrap {
+    width: 1170px;
+    margin: 0 auto;
+}
+.wrap p {
+    line-height: 1.8em;
+}
