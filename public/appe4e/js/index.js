@@ -3,7 +3,7 @@ $(function(){
 		navigation: true,
 		navigationPosition: 'right',
 		anchors: ['firstPage', 'secondPage', '3rdPage'],
-		sectionsColor: ['#C63D0F', '#1BBC9B', '#7E8F7C'],
+		sectionsColor: ['#fff', '#1BBC9B', '#7E8F7C'],
 		css3: true,
 		scrollingSpeed: 1700,
 		easing: 'easeOutBack',

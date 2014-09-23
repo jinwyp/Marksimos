@@ -1,6 +1,7 @@
 .background-red{
 	background:'#FF0F00';
 }
+/********* header *********/
 #header{
 	/*background: url("../img/toolbar-bg-inverted.png") repeat-x;*/
 	background-color:#F93F14;
@@ -74,6 +75,103 @@
 	border :2px solid #fff;
 	padding: 3px 6px;
 }
+/********* section0 *********/
+.index-player{
+	float:left;
+	position: absolute;
+	width:800px;
+}
+.index-logo-info{
+	float:left;
+	margin-left: 800px;
+}
+.motion-item{
+	float:left;
+}
+#section-0-1 a{
+	width:132px;
+	height:273px;
+	display: inline-block;
+	background: url('../img/motion-item-1.png') no-repeat;
+}
+#section-0-1 a:active,#section-0-1 a:hover{
+	width:132px;
+	height:330px;
+	margin-top:-100px;
+	display:inline-block;
+	background: url('../img/motion-item-1-active.png') no-repeat;
+}
+#section-0-2 a{
+	width:132px;
+	height:273px;
+	display: inline-block;
+	background: url('../img/motion-item-2.png') no-repeat;
+}
+#section-0-2 a:active,#section-0-2 a:hover{
+	width:132px;
+	height:330px;
+	margin-top:-100px;
+	display:inline-block;
+	background: url('../img/motion-item-2-active.png') no-repeat;
+}
+#section-0-3 a{
+	width:132px;
+	height:273px;
+	display: inline-block;
+	background: url('../img/motion-item-3.png') no-repeat;
+}
+#section-0-3 a:active,#section-0-3 a:hover{
+	width:132px;
+	height:330px;
+	margin-top:-100px;
+	display:inline-block;
+	background: url('../img/motion-item-3-active.png') no-repeat;
+}
+#section-0-4 a{
+	width:132px;
+	height:273px;
+	display: inline-block;
+	background: url('../img/motion-item-4.png') no-repeat;
+}
+#section-0-4 a:active,#section-0-4 a:hover{
+	width:132px;
+	height:330px;
+	margin-top:-100px;
+	display:inline-block;
+	background: url('../img/motion-item-4-active.png') no-repeat;
+}
+#section-0-5 a{
+	width:132px;
+	height:273px;
+	display: inline-block;
+	background: url('../img/motion-item-5.png') no-repeat;
+}
+#section-0-5 a:active,#section-0-5 a:hover{
+	width:132px;
+	height:330px;
+	margin-top:-100px;
+	display:inline-block;
+	background: url('../img/motion-item-5-active.png') no-repeat;
+}
+#section-0-6 a{
+	width:132px;
+	height:273px;
+	display: inline-block;
+	background: url('../img/motion-item-6.png') no-repeat;
+}
+#section-0-6 a:active,#section-0-6 a:hover{
+	width:132px;
+	height:330px;
+	margin-top:-100px;
+	display:inline-block;
+	background: url('../img/motion-item-6-active.png') no-repeat;
+}
+
+
+
+/********* section1 *********/
+
+/********* section2 *********/
 
 	
 /*.language > a{
