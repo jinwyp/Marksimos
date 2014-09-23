@@ -24,10 +24,10 @@
 
 
 
-    /********************  Use This Module To Set New Filters ********************/
+    /********************  Use This Module To Set New Filters  ********************/
 
 
-    /********************  Normal Html Template Filters ********************/
+    /********************  Normal Html Template Filters  ********************/
 
     angular.module('marksimos.filter').filter('usersegment', userSegmentFilter);
     angular.module('marksimos.filter').filter('skupacksize', skuPackSizeFilter);
@@ -115,7 +115,7 @@
 
 
 
-    /********************  NgModel Filters ********************/
+    /********************  NgModel Filters  ********************/
 
     function percentageInputFilter () {
         return {

@@ -418,15 +418,15 @@ app.factory('chartReport', ['$http', function($http){
 
             angular.forEach(chartHttpData.SKUs, function(value, key) {
 
-                var oneLineData1 = []; // CloseToEXpireInventory
+                var oneLineData1 = []; // Close To EXpire Inventory
                 oneLineData1.push( value.SKUName );
                 oneLineData1.push( angular.copy(Math.round(value.inventoryData[0].inventoryValue * 100) / 100 ) );
 
-                var oneLineData2 = []; // PreviousInventory
+                var oneLineData2 = []; // Previous Inventory
                 oneLineData2.push( value.SKUName );
                 oneLineData2.push( angular.copy(Math.round(value.inventoryData[1].inventoryValue * 100) / 100 ) );
 
-                var oneLineData3 = []; // FreshInventory
+                var oneLineData3 = []; // Fresh Inventory
                 oneLineData3.push( value.SKUName );
                 oneLineData3.push( angular.copy(Math.round(value.inventoryData[2].inventoryValue * 100) / 100 ) );
 
