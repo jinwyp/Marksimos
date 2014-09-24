@@ -160,6 +160,73 @@ a:hover {
 
 
 /*-------- 排版 --------*/
+.row {
+  margin-right: -15px;
+  margin-left: -15px;
+}
+
+.row:before,
+.row:after {
+  display: table;
+  content: " ";
+}
+
+.row:after {
+  clear: both;
+}
+
+.row:before,
+.row:after {
+  display: table;
+  content: " ";
+}
+
+.row:after {
+  clear: both;
+}
+
+.col-lg-1,.col-lg-2,.col-lg-3,.col-lg-4,.col-lg-5,.col-lg-6,.col-lg-7,.col-lg-8,.col-lg-9,.col-lg-10,.col-lg-11,.col-lg-12 {
+    float: left;
+}
+.col-lg-12 {
+    width: 100%;
+}
+.col-lg-11 {
+    width: 91.66666666666666%;
+}
+.col-lg-10 {
+    width: 83.33333333333334%;
+}
+.col-lg-9 {
+    width: 75%;
+}
+.col-lg-8 {
+    width: 66.66666666666666%;
+}
+.col-lg-7 {
+    width: 58.333333333333336%;
+}
+.col-lg-6 {
+    width: 50%;
+}
+.col-lg-5 {
+    width: 41.66666666666667%;
+}
+.col-lg-4 {
+    width: 33.33333333333333%;
+}
+.col-lg-3 {
+    width: 25%;
+}
+.col-lg-2 {
+    width: 16.666666666666664%;
+}
+.margin-left-125{
+    margin-left: 12.5%;
+}
+.col-lg-1 {
+    width: 8.333333333333332%;
+}
 /* 上外边距 */
 .prepend-top,
 .ppt {
@@ -338,10 +405,18 @@ body {
 .wrap {
     width: 1170px;
     margin: 0 auto;
+    padding-left: 15px;
+    padding-right: 15px;
 }
 .wrap p {
     line-height: 1.8em;
 }
 .text-center{
     text-align: center;
+}
+.text-left{
+    text-align: left;
+}
+.text-right{
+    text-align: right;
 }

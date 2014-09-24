@@ -1,10 +1,10 @@
 .background-red{
-	background:'#FF0F00';
+	background:'#FF441C';
 }
 /********* header *********/
 #header{
 	/*background: url("../img/toolbar-bg-inverted.png") repeat-x;*/
-	background-color:#F93F14;
+	background-color:#FF441C;
 	height: 51px;
 	width: 100%;
 	position: fixed;
@@ -26,7 +26,7 @@
     padding: 5px 10px;
 }
 .other-web a:hover,.other-web a:active{
-	color:#B3B3B3;
+	color:#EAE5E6;
 	border-left: 2px solid #fff;
     border-right: 2px solid #fff;
     font-size: 16px;
@@ -166,18 +166,204 @@
 	display:inline-block;
 	background: url('../img/motion-item-6-active.png') no-repeat;
 }
-.section-1-info{
+.section-0-info{
 	width:800px;
 }
-.section-1-info p{
+.section-0-info p{
 	letter-spacing:4px;
 	font-size: 20px;
 }
 
-
 /********* section1 *********/
+/*.fp-controlArrow {
+	border: 0 none;
+    cursor: pointer;
+    height: 38px;
+    margin :0;
+    position: absolute;
+    top: 50%;
+    width: 38px;
+    z-index: 4;
+}
+.fp-controlArrow.fp-prev {
+	border: 0 none;
+    left: 50px;
+    width:38px;
+    height: 38px;
+}
+.fp-controlArrow.fp-next {
+	border: 0 none;
+    right: 50px;
+    width:38px;
+    height: 38px;
+}
+.fp-prev, .fp-next {
+    opacity: 0.75;
+    position: absolute;
+    top: 50%;
+    transition: all 0.3s ease 0s;
+}
+.fp-prev:hover, .fp-next:hover {
+    opacity: 1;
+}
+
+.fp-prev {
+    background-image: url("../img/switch-button.png");
+    background-repeat: no-repeat;
+    left: auto;
+}
+.fp-next {
+    background-image: url("../img/switch-button.png");
+    background-position: 0 -38px;
+    background-repeat: no-repeat;
+    right: auto;
+}*/
+
+/*nav*/
+.fp-controlArrow {
+    display: none;
+}
+.fp-slidesNav.top{
+	top: 105px;
+}
+.fp-slidesNav{
+	width: 980px;
+}
+.fp-slidesNav ul{
+	border-top: 4px solid #EAE5E6;
+}
+.fp-slidesNav li{
+	width: auto;
+}
+.fp-slidesNav li {
+	margin: 0 100px;
+}
+.fp-slidesNav li a{
+	border-top: 4px solid transparent;
+	font-size: 30px;
+	color: #EAE5E6;
+	padding-top: 10px;
+}
+.fp-slidesNav .active a{
+	border-top: 4px solid #EAE5E6;
+}
+
+.section-box{
+	width: 980px;
+	margin: 100px auto 0;
+}
+
+.inline-block{
+	display: inline-block;
+}
+
+.section-1-1{
+	background: url('../img/section-1-1.png') no-repeat;
+	width: 255px;
+	height: 255px;
+}
+.section-1-2{
+	background: url('../img/section-1-2.png') no-repeat;
+	width: 255px;
+	height: 255px;
+}
+.section-1-3{
+	background: url('../img/section-1-3.png') no-repeat;
+	width: 255px;
+	height: 255px;
+}
+.section-1-4{
+	background: url('../img/section-1-4.png') no-repeat;
+	width: 255px;
+	height: 255px;
+}
+.section-1-5{
+	background: url('../img/section-1-5.png') no-repeat;
+	width: 255px;
+	height: 255px;
+}
+.section-1-6{
+	background: url('../img/section-1-6.png') no-repeat;
+	width: 255px;
+	height: 255px;
+}
 
 /********* section2 *********/
+.absolute-item{
+	position: absolute;
+}
+.section-2-1{
+	width:420px;
+	height: 135px;
+	background: url('../img/cloud-1.png') no-repeat;
+	top: 51px;
+	left:0;
+}
+.section-2-2{
+	width:94px;
+	height: 60px;
+	background: url('../img/cloud-2.png') no-repeat;
+	right:25%;
+	top:100px;
+}
+.section-2-3{
+	width: 183px;
+	height: 77px;
+	background: url('../img/cloud-3.png') no-repeat;
+	right: 0;
+	top:51px;
+}
+.section-2-4{
+	background: url('../img/tree-1.png') no-repeat;
+	width: 720px;
+	height: 270px;
+	bottom: 21px;
+	left: 0;
+}
+.section-2-5{
+	background: url('../img/tree-2.png') no-repeat;
+	width: 190px;
+	height: 330px;
+	bottom: 21px;
+	right: 0;
+}
+.section-2-6{
+	background: url('../img/tree-3.png') no-repeat;
+	width: 151px;
+	height: 189px;
+	bottom: 21px;
+	right: 20%;
+}
+.section-2-7{
+	background: url('../img/man.png') no-repeat;
+	width: 282px;
+	height: 555px;
+	bottom: 21px;
+	left: 30%;
+}
+/************* Footer **************/
+.section-footer{
+	height: 21px;
+	bottom: 0;
+	line-height: 21px;
+}
+.section-footer-info-left{
+	left:0;
+	width: 100%;
+}
+.section-footer-info-right{
+	right: 0;
+}
+#footer{
+	background-color: #000;
+	color: #EAE5E6;
+	height: 21px;
+	position: absolute;
+	z-index: 1000;
+	bottom: 0;
+	width: 100%
+}
+
 
 	
 /*.language > a{
