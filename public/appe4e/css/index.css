@@ -236,16 +236,18 @@
 	width: auto;
 }
 .fp-slidesNav li {
-	margin: 0 100px;
+	margin: 0px 100px;
 }
 .fp-slidesNav li a{
 	border-top: 4px solid transparent;
 	font-size: 30px;
 	color: #EAE5E6;
 	padding-top: 10px;
+	[;margin-top: -4px;]
 }
 .fp-slidesNav .active a{
 	border-top: 4px solid #EAE5E6;
+	[;margin-top: -4px;]
 }
 
 .section-box{

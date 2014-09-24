@@ -121,7 +121,7 @@ html, body {
     display: block;
     width: 14px;
     height: 13px;
-    margin: 7px;
+    /*margin: 7px;*/
     position:relative;
 }
 .fp-slidesNav li {
