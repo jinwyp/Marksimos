@@ -172,11 +172,41 @@
 
     function chartReportModel ($http, $rootScope, $translate){
 
+        // 'FMCG': [
+        //   0:  'FreshInventory',
+        //   1:  'PreviousInventory',
+        //   2:  'CloseToEXpireInventory'
+        // ],
+        // 'DURABLES': [
+        //   0:  'Latest Stock',
+        //   1:  'one-year old Stock',
+        //   2:  'Two-year old Stock',
+        //   3:  'Three-year old Stock',
+        //   4:  'Oldest Stock'
+        // ]
+
+        // segmentNames: [
+        // 0 - 'priceSensitive',
+        // 1 - 'pretenders',
+        // 2 - 'moderate',
+        // 3 - 'goodLife',
+        // 4 - 'ultimate',
+        // 5 - 'pragmatic',
+        // 6 - 'allSegments'
+        // ],
+
         var translateText = {
             'ReportInventoryReportLabelCloseToExpireInventory' : '',
-            'ReportInventoryReportLabelPreviousInventory' : '',
-            'ReportInventoryReportLabelFreshInventory' : '',
-            'HomePageSecondMenuBarLabelsCompany' : ''
+            'ReportInventoryReportLabelPreviousInventory'      : '',
+            'ReportInventoryReportLabelFreshInventory'         : '',
+            'HomePageSecondMenuBarLabelsCompany'               : '',
+            'HomePageSegmentLabelPriceSensitive'               : '',
+            'HomePageSegmentLabelPretenders'                   : '',
+            'HomePageSegmentLabelModerate'                     : '',
+            'HomePageSegmentLabelGoodLife'                     : '',
+            'HomePageSegmentLabelUltimate'                     : '',
+            'HomePageSegmentLabelPragmatic'                    : '',
+            'HomePageSegmentLabelAllSegments'                  : ''
         };
 
         function showTranslateTextInventoryReport(fieldname) {
@@ -222,6 +252,41 @@
                 return false;
             }
             return names[fieldname]();
+        }
+
+        function showTranslateTextConsumerSegmentName(fieldname) {
+            var names = {
+                '0': function() {
+                    return translateText.HomePageSegmentLabelPriceSensitive;
+                },
+                '1': function() {
+                    return translateText.HomePageSegmentLabelPretenders;
+                },
+                '2': function() {
+                    return translateText.HomePageSegmentLabelModerate;
+                },
+                '3': function() {
+                    return translateText.HomePageSegmentLabelGoodLife;
+                },
+                '4': function() {
+                    return translateText.HomePageSegmentLabelUltimate;
+                },
+                '5': function() {
+                    return translateText.HomePageSegmentLabelPragmatic;
+                },
+                '6': function() {
+                    return translateText.HomePageSegmentLabelAllSegments;
+                }
+            };
+            if (typeof names[fieldname] !== 'function') {
+                return false;
+            }
+            return names[fieldname]();
+        }
+
+
+        function showTranslateTextSegmentName() {
+            return translateText.ReportPerceptionMapAxisLabelSegment ;
         }
 
 
@@ -343,7 +408,7 @@
 
 
             }else if(angular.isArray(chartHttpData.periods) ){
-                // 如果periods 有定义 则是带有系列的图表 包括图表 B1
+                // 如果periods 有定义 则是带有系列的图表 包括图表 B1 和 C4
                 angular.forEach(chartHttpData.periods, function(value, key) {
 
                     var oneLineData = {
@@ -365,7 +430,9 @@
 
                 // 判断是 company的图表还是 消费者群体的图表
                 if(angular.isUndefined(chartHttpData.companyNames)){
-                    chartResult.series = chartHttpData.segmentNames;
+                    angular.forEach(chartHttpData.segmentNames, function(value, key) {
+                        chartResult.series.push(showTranslateTextConsumerSegmentName(value));
+                    });
 
                 }else{
                     angular.forEach(chartHttpData.companyNames, function(value, key) {
@@ -509,12 +576,12 @@
 
                 angular.forEach(chartHttpData, function(value, key) {
                     var oneCompanySku = {
-                        "key" : value.companyName,
+                        "key" : showTranslateTextCompanyName(value.companyName),
                         "values" : []
                     };
 
                     var oneCompanyBrand = {
-                        "key" : value.companyName,
+                        "key" : showTranslateTextCompanyName(value.companyName),
                         "values" : []
                     };
 
@@ -553,7 +620,7 @@
                 });
 
                 var oneSegment = {
-                    "key" : 'Segment',
+                    "key" : showTranslateTextSegmentName(),
                     "values" : []
                 };
 
@@ -596,12 +663,29 @@
                 return $translate(['ReportInventoryReportLabelCloseToExpireInventory',
                     'ReportInventoryReportLabelPreviousInventory',
                     'ReportInventoryReportLabelFreshInventory',
-                    'HomePageSecondMenuBarLabelsCompany']).then(function (translations) {
+                    'HomePageSecondMenuBarLabelsCompany',
+                    'ReportPerceptionMapAxisLabelSegment',
+                    'HomePageSegmentLabelPriceSensitive',
+                    'HomePageSegmentLabelPretenders',
+                    'HomePageSegmentLabelModerate',
+                    'HomePageSegmentLabelGoodLife',
+                    'HomePageSegmentLabelUltimate',
+                    'HomePageSegmentLabelPragmatic',
+                    'HomePageSegmentLabelAllSegments'
+                ]).then(function (translations) {
 
                     translateText.ReportInventoryReportLabelCloseToExpireInventory = translations.ReportInventoryReportLabelCloseToExpireInventory;
                     translateText.ReportInventoryReportLabelPreviousInventory = translations.ReportInventoryReportLabelPreviousInventory;
                     translateText.ReportInventoryReportLabelFreshInventory = translations.ReportInventoryReportLabelFreshInventory;
                     translateText.HomePageSecondMenuBarLabelsCompany = translations.HomePageSecondMenuBarLabelsCompany;
+                    translateText.ReportPerceptionMapAxisLabelSegment = translations.ReportPerceptionMapAxisLabelSegment;
+                    translateText.HomePageSegmentLabelPriceSensitive = translations.HomePageSegmentLabelPriceSensitive;
+                    translateText.HomePageSegmentLabelPretenders = translations.HomePageSegmentLabelPretenders;
+                    translateText.HomePageSegmentLabelModerate = translations.HomePageSegmentLabelModerate;
+                    translateText.HomePageSegmentLabelGoodLife = translations.HomePageSegmentLabelGoodLife;
+                    translateText.HomePageSegmentLabelUltimate = translations.HomePageSegmentLabelUltimate;
+                    translateText.HomePageSegmentLabelPragmatic = translations.HomePageSegmentLabelPragmatic;
+                    translateText.HomePageSegmentLabelAllSegments = translations.HomePageSegmentLabelAllSegments;
 
                     return  $http.get(apiPath + 'chart/inventory_report');
                 }).then(function(result){

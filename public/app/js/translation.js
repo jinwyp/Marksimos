@@ -42,12 +42,13 @@ app.config(['$translateProvider', function($translateProvider){
 
 
         //Labels for Segment
-        "HomePageSegmentLabelPriceSensitive"            : "1 Price Sensitive",
-        "HomePageSegmentLabelPretenders"                : "2 Pretenders",
-        "HomePageSegmentLabelModerate"                  : "3 Moderate",
-        "HomePageSegmentLabelGoodLife"                  : "4 Good Life",
-        "HomePageSegmentLabelUltimate"                  : "5 Ultimate",
-        "HomePageSegmentLabelPragmatic"                 : "6 Pragmatic",
+        "HomePageSegmentLabelPriceSensitive" : "1 Price Sensitive",
+        "HomePageSegmentLabelPretenders"     : "2 Pretenders",
+        "HomePageSegmentLabelModerate"       : "3 Moderate",
+        "HomePageSegmentLabelGoodLife"       : "4 Good Life",
+        "HomePageSegmentLabelUltimate"       : "5 Ultimate",
+        "HomePageSegmentLabelPragmatic"      : "6 Pragmatic",
+        "HomePageSegmentLabelAllSegments"    : "7 All Segments",
 
 
 
@@ -112,7 +113,7 @@ app.config(['$translateProvider', function($translateProvider){
         "ReportTabLabelGlobal" : "Global",
 
 		//Labels for Company Status Report - SKU Level
-        "ReportCompanyStatusSKUQuarter" : "Quarters",
+        "ReportCompanyStatusSKUQuarter" : "Quarter",
 
         "ReportCompanyStatusSKUMarketShareValue"                             : "Market Share (value %)",
         "ReportCompanyStatusSKUMarketShareVolume"                            : "Market Share (volume %)",
@@ -317,7 +318,7 @@ app.config(['$translateProvider', function($translateProvider){
 
 
 		//Labels for Profitability Evolution - SKU Level
-        "ReportProfitabilityEvolutionSKUQuarter" : "Quarters",
+        "ReportProfitabilityEvolutionSKUQuarter" : "Quarter",
 
         "ReportProfitabilityEvolutionSKUManufacturerSalesValue" : "Manufacturer Sales Value ($ mln)",
 
@@ -556,8 +557,9 @@ app.config(['$translateProvider', function($translateProvider){
         "ReportSegmentLeaderTop5ChartTitlePragmatic"      : "6. Pragmatic (%)",
 
 		//Labels for Perception Map
-		"ReportPerceptionMapAxisTitleValuePerception"	:	"Value Perception",
-		"ReportPerceptionMapAxisTitleImagePerception"	:	"Image Perception",
+        "ReportPerceptionMapAxisLabelSegment"         : "Segment",
+        "ReportPerceptionMapAxisTitleValuePerception" : "Value Perception",
+        "ReportPerceptionMapAxisTitleImagePerception" : "Image Perception",
 
 		//Labels for Segment Distributions
         "ReportSegmentDistributionsTableTitleMarketShareValue"      : "Market Share (value %)",
@@ -928,12 +930,12 @@ app.config(['$translateProvider', function($translateProvider){
 
         //Labels for Segment
         "HomePageSegmentLabelPriceSensitive" : "1 价格敏感型",
-        "HomePageSegmentLabelPretenders"     : "2  虚荣型",
+        "HomePageSegmentLabelPretenders"     : "2 虚荣型",
         "HomePageSegmentLabelModerate"       : "3 适中型",
-        "HomePageSegmentLabelGoodLife"       : "4  享受生活型",
+        "HomePageSegmentLabelGoodLife"       : "4 享受生活型",
         "HomePageSegmentLabelUltimate"       : "5 追求极致型",
         "HomePageSegmentLabelPragmatic"      : "6 实用型",
-
+        "HomePageSegmentLabelAllSegments"    : "7 所有消费者类型",
 
 
 
@@ -1441,8 +1443,9 @@ app.config(['$translateProvider', function($translateProvider){
         "ReportSegmentLeaderTop5ChartTitlePragmatic"      : "6. 实用型 (%)",
 		
 		//Labels for Perception Map
-		"ReportPerceptionMapAxisTitleValuePerception"	:	"价值感知",
-		"ReportPerceptionMapAxisTitleImagePerception"	:	"形象感知",
+        "ReportPerceptionMapAxisLabelSegment"         : "消费者分布",
+        "ReportPerceptionMapAxisTitleValuePerception" : "价值感知",
+        "ReportPerceptionMapAxisTitleImagePerception" : "形象感知",
 		 
 		//Labels for Segment Distributions
         "ReportSegmentDistributionsTableTitleMarketShareValue"      : "市场份额 (销售额 %)",
@@ -1770,6 +1773,6 @@ app.config(['$translateProvider', function($translateProvider){
     });
 
     // Tell the module what language to use by default
-//    $translateProvider.preferredLanguage('en_US');
-    $translateProvider.preferredLanguage('zh_CN');
+    $translateProvider.preferredLanguage('en_US');
+//    $translateProvider.preferredLanguage('zh_CN');
 }]);
