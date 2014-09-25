@@ -16,32 +16,9 @@ var marksimosapp = angular.module('marksimos', ['pascalprecht.translate', 'angul
 marksimosapp.controller('chartController', ['$translate', '$scope', '$rootScope', '$document', '$timeout', '$interval', '$http', 'notify', 'chartReport', 'tableReport', 'Company',  function($translate, $scope, $rootScope, $document, $timeout, $interval, $http, notify, chartReport, tableReport, Company ) {
 
     $rootScope.$on('$translateChangeSuccess', function () {
-        $translate(['HomePageSegmentLabelPriceSensitive', 'HomePageSegmentLabelPretenders', 'HomePageSegmentLabelModerate',
-            'HomePageSegmentLabelGoodLife', 'HomePageSegmentLabelUltimate', 'HomePageSegmentLabelPragmatic']).then(function (translations) {
-            $scope.data.userSegment = [
-                {id:1, name: translations.HomePageSegmentLabelPriceSensitive},
-                {id:2, name: translations.HomePageSegmentLabelPretenders},
-                {id:3, name: translations.HomePageSegmentLabelModerate},
-                {id:4, name: translations.HomePageSegmentLabelGoodLife},
-                {id:5, name: translations.HomePageSegmentLabelUltimate},
-                {id:6, name: translations.HomePageSegmentLabelPragmatic}
-            ];
-        });
-
         app.loadingChartData();
     });
 
-    $translate(['HomePageSegmentLabelPriceSensitive', 'HomePageSegmentLabelPretenders', 'HomePageSegmentLabelModerate',
-        'HomePageSegmentLabelGoodLife', 'HomePageSegmentLabelUltimate', 'HomePageSegmentLabelPragmatic']).then(function (translations) {
-        $scope.data.userSegment = [
-            {id:1, name: translations.HomePageSegmentLabelPriceSensitive},
-            {id:2, name: translations.HomePageSegmentLabelPretenders},
-            {id:3, name: translations.HomePageSegmentLabelModerate},
-            {id:4, name: translations.HomePageSegmentLabelGoodLife},
-            {id:5, name: translations.HomePageSegmentLabelUltimate},
-            {id:6, name: translations.HomePageSegmentLabelPragmatic}
-        ];
-    });
 
 
     notify.config({
@@ -1022,8 +999,8 @@ marksimosapp.controller('chartController', ['$translate', '$scope', '$rootScope'
         $scope.data.currentModifiedSku.sku_data[fieldname] = fielddata;
 
         if(fieldname === 'd_TargetConsumerSegment'){
-            sku.d_TargetConsumerSegment = segmentOrWeek.id;
-            $scope.data.currentModifiedSku.sku_data[fieldname] = segmentOrWeek.id;
+            sku.d_TargetConsumerSegment = segmentOrWeek;
+            $scope.data.currentModifiedSku.sku_data[fieldname] = segmentOrWeek;
 
         }else if(fieldname === 'd_PromotionalEpisodes'){
             if(!angular.isUndefined(weekindex)){

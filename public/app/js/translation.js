@@ -10,7 +10,29 @@ app.config(['$translateProvider', function($translateProvider){
 // Adding a translation table for the English language
     $translateProvider.translations('en_US', {
 
+        //Labels for Login
+        "LoginPageLabelWelcome"           : "Welcome !",
+        "LoginPageLabelSignIn"            : "Sign In",
+        "LoginPageLabelEmail"             : "Email :",
+        "LoginPageLabelPassword"          : "Password :",
+        "LoginPageLabelPasswordErrorInfo" : "Password Incorrect !",
+        "LoginPageButtonSignIn"           : "Sign In",
+
+
         //Labels for Introduction
+        "IntroPageSeminarListTitle" : "List of the Game Enrolled :",
+        "IntroPageSeminarListLabelSeminarID" : "Seminar ID",
+        "IntroPageSeminarListLabelSeminarDescription" : "Seminar Description",
+        "IntroPageSeminarListLabelTotalRound" : "Total Round",
+        "IntroPageSeminarListLabelCompetitor" : "Competitor",
+        "IntroPageSeminarListLabelDateOfCommencement" : "Date of Commencement",
+        "IntroPageSeminarListLabelSeminarStatus" : "Seminar Status",
+        "IntroPageSeminarListLabelCountry" : "Country",
+        "IntroPageSeminarListLabelProvince" : "Province(State)",
+        "IntroPageSeminarListLabelCity" : "City",
+        "IntroPageSeminarListLabelVenue" : "Venue",
+
+
         "IntroPageSentence1" : "Who am I?",
         "IntroPageSentence2" : "I am leading",
         "IntroPageSentence3" : "I manage",
@@ -813,23 +835,25 @@ app.config(['$translateProvider', function($translateProvider){
         "DecisionPageSpendingDetailsTable2AcquiredProductionVolumeFlexibility" : "Acquired Production Volume Flexibility (%)",
         "DecisionPageSpendingDetailsTable2AcquiredTechnologyLevel"             : "Acquired Technology Level",
 		
-        //Labels for final score page
-        "FinalScorePageScore":"Score",
-        "FinalScorePageButtonOriginal":"Original",
-        "FinalScorePageButtonRescaled":"Rescaled",
-        "FinalScorePageWeightFactor":"Weight / Factor",
-        "FinalScorePageIncrementalMarketShare":"Incremental market share (value)",
-        "FinalScorePageCumulatedNetProfit":"Cumulated net profit",
-        "FinalScorePageSpendingVersusBudgets":"Spending versus budgets",
-        "FinalScorePageShareInBrandTotalSalesValue":"Share in Brand Total Sales Value",
-        "FinalScorePageAchievementOfInitialObjectives":"Achievement of initial objectives",
-        "FinalScorePageFinalScore":"Final Score",
+        //Labels for Final Score page
+        "FinalScorePageScore"          : "Score",
+        "FinalScorePageButtonOriginal" : "Original",
+        "FinalScorePageButtonRescaled" : "Rescaled",
+        "FinalScorePageWeightFactor"   : "Weight / Factor",
 
-        "FinalScorePageCompany":"Company",
-        "FinalScorePagePeriod":"Period",
-        "FinalScorePageCongratulations":"Congratulations ! You finish the game",
-        "FinalScorePageCongratulationsInfo":"Please take 5 minutes to provide feedback to MarkSimos. Your feedback will help us to improve our service",
-        "FinalScorePageProvideFeedback":"Provide Feedback",
+        "FinalScorePageIncrementalMarketShare"         : "Incremental market share (value)",
+        "FinalScorePageCumulatedNetProfit"             : "Cumulated net profit",
+        "FinalScorePageSpendingVersusBudgets"          : "Spending versus budgets",
+
+        "FinalScorePageShareInBrandTotalSalesValue"    : "Share in Brand Total Sales Value",
+        "FinalScorePageAchievementOfInitialObjectives" : "Achievement of initial objectives",
+        "FinalScorePageFinalScore"                     : "Final Score",
+
+        "FinalScorePageCompany"             : "Company",
+        "FinalScorePagePeriod"              : "Period",
+        "FinalScorePageCongratulations"     : "Congratulations ! You finish the game",
+        "FinalScorePageCongratulationsInfo" : "Please take 5 minutes to provide feedback to MarkSimos. Your feedback will help us to improve our service",
+        "FinalScorePageProvideFeedback"     : "Provide Feedback",
 
         
         //Labels for Questionnaire Page
@@ -900,7 +924,30 @@ app.config(['$translateProvider', function($translateProvider){
     // Adding a translation table for the Chinese language
     $translateProvider.translations('zh_CN', {
 
-        //Label for Introduction
+
+        //Labels for Login
+        "LoginPageLabelWelcome" : "欢迎使用MarkSimos !",
+        "LoginPageLabelSignIn" : "登录",
+        "LoginPageLabelEmail" : "邮箱 :",
+        "LoginPageLabelPassword" : "密码 :",
+        "LoginPageLabelPasswordErrorInfo" : "邮箱或密码错误 !",
+        "LoginPageButtonSignIn" : "点击登录",
+
+
+        //Labels for Introduction
+        "IntroPageSeminarListTitle" : "List of the Game Enrolled :xxx",
+        "IntroPageSeminarListLabelSeminarID" : "Seminar IDxxx",
+        "IntroPageSeminarListLabelSeminarDescription" : "Seminar Descriptionxx",
+        "IntroPageSeminarListLabelTotalRound" : "Total Roundxx",
+        "IntroPageSeminarListLabelCompetitor" : "Competitorxx",
+        "IntroPageSeminarListLabelDateOfCommencement" : "Date of Commencementxx",
+        "IntroPageSeminarListLabelSeminarStatus" : "Seminar Statusxx",
+        "IntroPageSeminarListLabelCountry" : "Country",
+        "IntroPageSeminarListLabelProvince" : "Province(State)",
+        "IntroPageSeminarListLabelCity" : "City",
+        "IntroPageSeminarListLabelVenue" : "Venue",
+
+
         "IntroPageSentence1" : "我的角色",
         "IntroPageSentence2" : "现在我将接管",
         "IntroPageSentence3" : "主要有",
@@ -1700,24 +1747,25 @@ app.config(['$translateProvider', function($translateProvider){
         "DecisionPageSpendingDetailsTable2AcquiredProductionVolumeFlexibility" : "当前拥有的生产灵活度 (%)",
         "DecisionPageSpendingDetailsTable2AcquiredTechnologyLevel"             : "最高技术水平",
 		
-        //Labels for final score page
-        "FinalScorePageScore":"最终得分",
-        "FinalScorePageButtonOriginal":"原始",
-        "FinalScorePageButtonRescaled":"调整",
-        "FinalScorePageWeightFactor":"权重 / 因素",
+        //Labels for Final Score page
+        "FinalScorePageScore"          : "最终得分",
+        "FinalScorePageButtonOriginal" : "原始",
+        "FinalScorePageButtonRescaled" : "调整",
+        "FinalScorePageWeightFactor"   : "权重 / 因素",
 
-        "FinalScorePageIncrementalMarketShare":"增长的市场份额 (销售额)",
-        "FinalScorePageCumulatedNetProfit":"累计净利润",
-        "FinalScorePageSpendingVersusBudgets":"花销与预算对比",
+        "FinalScorePageIncrementalMarketShare" : "增长的市场份额 (销售额)",
+        "FinalScorePageCumulatedNetProfit"     : "累计净利润",
+        "FinalScorePageSpendingVersusBudgets"  : "花销与预算对比",
 
-        "FinalScorePageShareInBrandTotalSalesValue":"Share in Brand Total Sales Value",
-        "FinalScorePageAchievementOfInitialObjectives":"Achievement of initial objectives",
-        "FinalScorePageFinalScore":"最终得分",
-        "FinalScorePageCompany":"公司",
-        "FinalScorePagePeriod":"阶段",
-        "FinalScorePageCongratulations":"祝贺 ! 你已完成游戏",
-        "FinalScorePageCongratulationsInfo":"麻烦您花一些时间填写反馈. 您的反馈将更好的改进我们的产品",
-        "FinalScorePageProvideFeedback":"Provide Feedback",
+        "FinalScorePageShareInBrandTotalSalesValue"    : "Share in Brand Total Sales Value",
+        "FinalScorePageAchievementOfInitialObjectives" : "Achievement of initial objectives",
+        "FinalScorePageFinalScore"                     : "最终得分",
+
+        "FinalScorePageCompany"                        : "公司",
+        "FinalScorePagePeriod"                         : "阶段",
+        "FinalScorePageCongratulations"                : "祝贺 ! 你已完成游戏",
+        "FinalScorePageCongratulationsInfo"            : "麻烦您花一些时间填写反馈. 您的反馈将更好的改进我们的产品",
+        "FinalScorePageProvideFeedback"                : "Provide Feedback",
 
 
         //Labels for Questionnaire Page

@@ -12,22 +12,22 @@
 
 
             <div class="row">
-                <div class="col-md-12"><h2 class="text-center game_list">List of the Game Enrolled : </h2></div>
+                <div class="col-md-12"><h2 class="text-center game_list">{{'IntroPageSeminarListTitle' | translate}} </h2></div>
             </div>
 
 
             <table class="table table-hover table-striped table-bordered table_seminar_list">
                 <thead>
                     <tr>
-                        <th>Seminar ID</th>
-                        <th>Seminar Description</th>
-                        <th>Total Round</th>
-                        <th>Competitor </th>
-                        <th>Date of Commencement</th>
-                        <th>Seminar Status</th>
+                        <th>{{'IntroPageSeminarListLabelSeminarID' | translate}}</th>
+                        <th>{{'IntroPageSeminarListLabelSeminarDescription' | translate}}</th>
+                        <th>{{'IntroPageSeminarListLabelTotalRound' | translate}}</th>
+                        <th>{{'IntroPageSeminarListLabelCompetitor' | translate}} </th>
+                        <th>{{'IntroPageSeminarListLabelDateOfCommencement' | translate}}</th>
+                        <th>{{'IntroPageSeminarListLabelSeminarStatus' | translate}}</th>
                         <!--<th>Facilitator</th>-->
-                        <th>Country / Province(State) / City</th>
-                        <th>Venue</th>
+                        <th>{{'IntroPageSeminarListLabelCountry' | translate}} / {{'IntroPageSeminarListLabelProvince' | translate}} / {{'IntroPageSeminarListLabelCity' | translate}}</th>
+                        <th>{{'IntroPageSeminarListLabelVenue' | translate}}</th>
                     </tr>
                 </thead>
 
@@ -96,7 +96,7 @@
 
                                         <span class="user_brand" ng-cloak>{{brand.d_BrandName}}</span>
                                         <ul>
-                                            <li class="user_product" ng-cloak ng-repeat="sku in brand.d_SKUsDecisions">{{brand.d_BrandName}}{{sku.d_SKUName}} - <span>{{sku.d_TargetConsumerSegment | usersegment}}</span></li>
+                                            <li class="user_product" ng-cloak ng-repeat="sku in brand.d_SKUsDecisions">{{brand.d_BrandName}}{{sku.d_SKUName}} - <span>{{sku.d_TargetConsumerSegment | usersegment | translate}}</span></li>
                                         </ul>
 
                                     </td>
