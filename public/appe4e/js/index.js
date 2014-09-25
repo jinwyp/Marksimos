@@ -10,9 +10,6 @@ $(function(){
 		easing: 'easeOutBack',
 		resize : false,
 		scrollOverflow: true,
-		loopBottom:true,
-		slidesNavigation:true,
-		slidesNavPosition:'top',
-		slidesNavigationTitle:["What's hcd learning","what can you expect"]
+		loopBottom:true
 	});
 });
