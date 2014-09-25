@@ -1,8 +1,8 @@
 <table class="table table-striped table-bordered table-hover" >
     <thead>
         <tr>
-            <th>Quarters</th>
-            <th ng-repeat="quarter in data[0].data">{{quarter.name}}</th>
+            <th>{{'ReportCompanyStatusSKUQuarter' | translate}}</th>
+            <th ng-repeat="quarter in data[0].data">{{'ReportCompanyStatusSKUQuarter' | translate}} {{quarter.name}}</th>
         </tr>
     </thead>
     <tbody>

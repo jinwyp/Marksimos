@@ -47,7 +47,7 @@
 
                                     <span class="user_brand" ng-cloak>{{brand.d_BrandName}}</span>
                                     <ul>
-                                        <li class="user_product" ng-cloak ng-repeat="sku in brand.d_SKUsDecisions">{{brand.d_BrandName}}{{sku.d_SKUName}} <span>{{sku.d_TargetConsumerSegment | usersegment}}</span></li>
+                                        <li class="user_product" ng-cloak ng-repeat="sku in brand.d_SKUsDecisions">{{brand.d_BrandName}}{{sku.d_SKUName}} <span>{{sku.d_TargetConsumerSegment | usersegment | translate}}</span></li>
                                     </ul>
 
                                 </td>
@@ -533,9 +533,9 @@
 
                                     <div class="pull-right">
                                         <div class="btn-group btn-group-sm">
-                                            <button type="button" class="btn btn-default" ng-class="{'active': css.tableReportTab=='SKU'}" ng-click="css.tableReportTab='SKU' ">SKU</button>
-                                            <button type="button" class="btn btn-default" ng-class="{'active': css.tableReportTab=='Brand'}" ng-click="css.tableReportTab='Brand' ">Brand</button>
-                                            <button type="button" class="btn btn-default" ng-class="{'active': css.tableReportTab=='Global'}" ng-click="css.tableReportTab='Global' ">Global</button>
+                                            <button type="button" class="btn btn-default" ng-class="{'active': css.tableReportTab=='SKU'}" ng-click="css.tableReportTab='SKU' ">{{'ReportTabLabelSKU' | translate}}</button>
+                                            <button type="button" class="btn btn-default" ng-class="{'active': css.tableReportTab=='Brand'}" ng-click="css.tableReportTab='Brand' ">{{'ReportTabLabelBrand' | translate}}</button>
+                                            <button type="button" class="btn btn-default" ng-class="{'active': css.tableReportTab=='Global'}" ng-click="css.tableReportTab='Global' ">{{'ReportTabLabelGlobal' | translate}}</button>
                                         </div>
                                     </div>
                                 </h5>
@@ -1112,9 +1112,9 @@
 
                             <div class="pull-right">
                                 <div class="btn-group btn-group-sm">
-                                    <button type="button" class="btn btn-default" ng-class="{'active': css.tableReportTab=='SKU'}" ng-click="css.tableReportTab='SKU' ">SKU</button>
-                                    <button type="button" class="btn btn-default" ng-class="{'active': css.tableReportTab=='Brand'}" ng-click="css.tableReportTab='Brand' ">Brand</button>
-                                    <button type="button" class="btn btn-default" ng-class="{'active': css.tableReportTab=='Global'}" ng-click="css.tableReportTab='Global' ">Global</button>
+                                    <button type="button" class="btn btn-default" ng-class="{'active': css.tableReportTab=='SKU'}" ng-click="css.tableReportTab='SKU' ">{{'ReportTabLabelSKU' | translate}}</button>
+                                    <button type="button" class="btn btn-default" ng-class="{'active': css.tableReportTab=='Brand'}" ng-click="css.tableReportTab='Brand' ">{{'ReportTabLabelBrand' | translate}}</button>
+                                    <button type="button" class="btn btn-default" ng-class="{'active': css.tableReportTab=='Global'}" ng-click="css.tableReportTab='Global' ">{{'ReportTabLabelGlobal' | translate}}</button>
                                 </div>
                             </div>
                         </h5>
@@ -1913,8 +1913,8 @@
                         <!--<span class="glyphicon glyphicon-save chart_icon"></span>-->
 
                         <div class="btn-group btn-group-sm perception_map_group">
-                            <button type="button" class="btn btn-default perception_map_button" ng-click="switchPerceptionMapsData('sku')">SKU</button>
-                            <button type="button" class="btn btn-default perception_map_button" ng-click="switchPerceptionMapsData('brand')">Brand</button>
+                            <button type="button" class="btn btn-default perception_map_button" ng-click="switchPerceptionMapsData('sku')">{{'ReportTabLabelSKU' | translate}}</button>
+                            <button type="button" class="btn btn-default perception_map_button" ng-click="switchPerceptionMapsData('brand')">{{'ReportTabLabelBrand' | translate}}</button>
                         </div>
                     </h5>
                     <nvd3-scatter-chart data="data.chartC21PerceptionMap.dataChart"
@@ -2013,9 +2013,9 @@
 
                         <div class="pull-right">
                             <div class="btn-group btn-group-sm">
-                                <button type="button" class="btn btn-default" ng-class="{'active': css.tableReportTab=='SKU'}" ng-click="css.tableReportTab='SKU' ">SKU</button>
-                                <button type="button" class="btn btn-default" ng-class="{'active': css.tableReportTab=='Brand'}" ng-click="css.tableReportTab='Brand' ">Brand</button>
-                                <button type="button" class="btn btn-default" ng-class="{'active': css.tableReportTab=='Global'}" ng-click="css.tableReportTab='Global' ">Global</button>
+                                <button type="button" class="btn btn-default" ng-class="{'active': css.tableReportTab=='SKU'}" ng-click="css.tableReportTab='SKU'">{{'ReportTabLabelSKU' | translate}}</button>
+                                <button type="button" class="btn btn-default" ng-class="{'active': css.tableReportTab=='Brand'}" ng-click="css.tableReportTab='Brand'">{{'ReportTabLabelBrand' | translate}}</button>
+                                <button type="button" class="btn btn-default" ng-class="{'active': css.tableReportTab=='Global'}" ng-click="css.tableReportTab='Global'">{{'ReportTabLabelGlobal' | translate}}</button>
                             </div>
                         </div>
                     </h5>
@@ -2419,8 +2419,8 @@
                                     </div>
                                 </div>
 
-                                <text-form-input type="text" name="brandName" label="Brand Name :" inputgroupclass="true" inputgroupprefix="{{data.currentCompanyNameCharacter}}"   data="data.newBrand.brand_name" required="true" minlength="1" maxlength="4" othererrorinfo="data.newBrand.othererrorinfo"></text-form-input>
-                                <text-form-input type="text" name="skuName" label="First SKU Name :"  data="data.newBrand.sku_name" required="true" minlength="1" maxlength="1"></text-form-input>
+                                <text-form-input type="text" name="brandName" label="{{'DecisionPageDecisionTabLabelBrandName' | translate}}" inputgroupclass="true" inputgroupprefix="{{data.currentCompanyNameCharacter}}"   data="data.newBrand.brand_name" required="true" minlength="1" maxlength="4" othererrorinfo="data.newBrand.othererrorinfo"></text-form-input>
+                                <text-form-input type="text" name="skuName" label="{{'DecisionPageDecisionTabLabelFirstSKUName' | translate}}"  data="data.newBrand.sku_name" required="true" minlength="1" maxlength="1"></text-form-input>
 
                                 <div class="form-group">
                                     <div class="col-sm-offset-4 col-sm-8">
@@ -2465,7 +2465,7 @@
                                             </div>
                                         </div>
 
-                                        <text-form-input type="text" name="skuName" label="SKU Name :"  data="data.newSku.sku_name" required="true" minlength="1" maxlength="1" othererrorinfo="data.newSku.othererrorinfo"></text-form-input>
+                                        <text-form-input type="text" name="skuName" label="{{'DecisionPageDecisionTabLabelSKUName' | translate}}"  data="data.newSku.sku_name" required="true" minlength="1" maxlength="1" othererrorinfo="data.newSku.othererrorinfo"></text-form-input>
 
                                         <!--<text-form-input type="checkbox" name="skuDiscontinue" label="Discontinue ?"  data="data.newSku.d_ToDrop" ></text-form-input>-->
                                         <!--<text-form-input type="number" name="skuProcessingTechnology" label="Processing Technology :" placeholder="" data="data.newSku.skuProcessingTechnology" required="true" min="1" max="14" ></text-form-input>-->
@@ -2865,7 +2865,7 @@
                                     <tbody>
                                         <tr ng-repeat="sku in data.currentCompanyProductPortfolio">
                                             <td>{{sku.SKUName}}</td>
-                                            <td>{{sku.targetSegment}}</td>
+                                            <td>{{sku.targetSegment | usersegment | translate}}</td>
                                             <td>{{sku.factoryPrice}}</td>
                                             <td>{{sku.ingredientsQuality}}</td>
                                             <td>{{sku.technologyLevel}}</td>

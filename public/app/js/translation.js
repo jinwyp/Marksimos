@@ -691,13 +691,15 @@ app.config(['$translateProvider', function($translateProvider){
 
 
 		//Labels for Items on Decision Page - DecisionTab
-        "DecisionPageDecisionTabMAKEDECISIONS" : "MAKE DECISIONS",
-        "DecisionPageDecisionTabMission"       : "Market Share + Profit",
-        "DecisionPageDecisionTabAddNewBrand"   : "Add New Brand",
-        "DecisionPageDecisionTabSalesForce"    : "Sales Force ($ mln)",
-        "DecisionPageDecisionTabAddNewSKU"     : "Add New SKU",
-        "DecisionPageDecisionTabName"          : "Name",
-
+        "DecisionPageDecisionTabMAKEDECISIONS"     : "MAKE DECISIONS",
+        "DecisionPageDecisionTabMission"           : "Market Share + Profit",
+        "DecisionPageDecisionTabAddNewBrand"       : "Add New Brand",
+        "DecisionPageDecisionTabSalesForce"        : "Sales Force ($ mln)",
+        "DecisionPageDecisionTabAddNewSKU"         : "Add New SKU",
+        "DecisionPageDecisionTabName"              : "SKU Name",
+        "DecisionPageDecisionTabLabelBrandName"    : "Brand Name :",
+        "DecisionPageDecisionTabLabelFirstSKUName" : "First SKU Name :",
+        "DecisionPageDecisionTabLabelSKUName"      : "SKU Name :",
 
         "DecisionPageDecisionTabDiscontinue"           : "Discontinue?",
         "DecisionPageDecisionTabProcessingTechnology"  : "Processing Technology",
@@ -1583,7 +1585,10 @@ app.config(['$translateProvider', function($translateProvider){
         "DecisionPageDecisionTabAddNewBrand"   : "添加新品牌",
         "DecisionPageDecisionTabSalesForce"    : "销售团队 ($ mln)",
         "DecisionPageDecisionTabAddNewSKU"     : "添加新产品",
-        "DecisionPageDecisionTabName"          : "名称",
+        "DecisionPageDecisionTabName"          : "产品名称",
+        "DecisionPageDecisionTabLabelBrandName"    : "新品牌名称 :",
+        "DecisionPageDecisionTabLabelFirstSKUName" : "首个新产品名称 :",
+        "DecisionPageDecisionTabLabelSKUName"      : "新产品名称 :",
 
         "DecisionPageDecisionTabDiscontinue"           : "是否停止运营?",
         "DecisionPageDecisionTabProcessingTechnology"  : "生产技术",
