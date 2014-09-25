@@ -293,6 +293,7 @@
 /********* section2 *********/
 .absolute-item{
 	position: absolute;
+	z-index: 1;
 }
 .section-2-1{
 	width:420px;
@@ -365,23 +366,61 @@
 	bottom: 0;
 	width: 100%
 }
-
-
-	
-/*.language > a{
-	padding: 5px 8px;
-	color:#fff;
+.login-box{
+	left:60%;
+	top:30%;
+	position: absolute;
+	z-index: 999;
 }
-*/
-
-/*.language .active > a{
-	border :2px solid #fff;
-	padding: 3px 6px
+.login-box h1{
+	font-size: 50px;
+	line-height: 50px;
 }
-.language a:hover,.language a:active{
-	border :2px solid #fff;
-	padding: 3px 6px
-}*/
+.login-box h3{
+	font-size: 14px;
+	line-height: 14px;
+}
+.sign-up{
+	background: url("../img/sign-up.png") no-repeat;
+    font-size: 16px;
+    padding: 4px 31px;
+    display: inline-block;
+}
+.sign-up a{
+	color: #fff;
+}
+.login{
+	background: url("../img/login.png") no-repeat;
+    font-size: 16px;
+    padding: 4px 38px;
+    display: inline-block;
+}
+.login a{
+    color: #FF441C;
+}
+.facebook,.sina,.baidu{
+/*	width: 32px;
+	height: 32px;*/
+	display: inline-block;
+}
+.facebook a{
+	background: url("../img/facebook.png") no-repeat;
+	width: 32px;
+	height: 32px;
+	display: inline-block;
+}
+.sina a{
+	background: url("../img/sina.png") no-repeat;
+	width: 32px;
+	height: 32px;
+	display: inline-block;
+}
+.baidu a{
+	background: url("../img/baidu.png") no-repeat;
+	width: 32px;
+	height: 32px;
+	display: inline-block;
+}
 
 
 /*动画效果*/
