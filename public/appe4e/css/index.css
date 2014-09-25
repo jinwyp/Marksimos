@@ -294,6 +294,8 @@
 .absolute-item{
 	position: absolute;
 	z-index: 1;
+	animation-duration: 2s;
+    animation-fill-mode: both;
 }
 .section-2-1{
 	width:420px;
@@ -420,6 +422,25 @@
 	width: 32px;
 	height: 32px;
 	display: inline-block;
+}
+
+
+/* animation */
+.absolute-item {
+	-webkit-animation-duration: 1s;
+	animation-duration: 1s;
+	-webkit-animation-fill-mode: both;
+	animation-fill-mode: both;
+}
+
+.absolute-item.infinite {
+	-webkit-animation-iteration-count: infinite;
+	animation-iteration-count: infinite;
+}
+
+.absolute-item.hinge {
+	-webkit-animation-duration: 2s;
+	animation-duration: 2s;
 }
 
 
@@ -776,3 +797,36 @@
 	-webkit-animation-name: big-to-small;
 	animation-name: big-to-small;
 }
+
+@-webkit-keyframes small-to-big {
+	0% {
+		-webkit-transform: scale(0.5);
+		transform: scale(0.5);
+	}
+
+	100% {
+		-webkit-transform: none;
+		transform: none;
+	}
+}
+
+@keyframes small-to-big {
+	0% {
+		-webkit-transform: scale(0.5);
+		-ms-transform: scale(0.5);
+		transform: scale(0.5);
+	}
+
+	100% {
+		-webkit-transform: none;
+		-ms-transform: none;
+		transform: none;
+	}
+}
+
+.active .small-to-big {
+	-webkit-animation-name: big-to-small;
+	animation-name: big-to-small;
+}
+
+
