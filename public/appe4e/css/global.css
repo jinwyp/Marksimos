@@ -1,0 +1,207 @@
+@charset "utf-8";
+/* 浮动 */
+.float-left,.fl { float: left !important;}
+.float-right,.fr { float: right !important;}
+
+/* 清除浮动 */
+.clearfix,.row,.cf { *zoom: 1;}
+.clearfix:before,.cf:before,.clearfix:after,.cf:after {display: table;content: " ";line-height: 0;}
+.clearfix:after,.cf:after {clear: both;}
+
+/* 隐藏文字 */
+.hidden-text,.ht {font: 0/0 a;color: transparent;text-shadow: none;background-color: transparent;border: 0;}
+
+/*字体*/
+@font-face {font-family: 'open';
+    src: url('../fonts/opensans-webfont.eot');
+    src: url('../fonts/opensans-webfont.eot?#iefix') format('embedded-opentype'),    
+         url('../fonts/opensans-webfont.woff') format('woff'),
+         url('../fonts/opensans-webfont.ttf') format('truetype'),
+         url('../fonts/opensans-webfont.svg#open_sansregular') format('svg');
+    font-weight: normal;
+    font-style: normal;
+}
+@font-face {font-family: 'open_light';
+    src: url('../fonts/opensans-light-webfont.eot');
+    src: url('../fonts/opensans-light-webfont.eot?#iefix') format('embedded-opentype'),
+         url('../fonts/opensans-light-webfont.woff') format('woff'),
+         url('../fonts/opensans-light-webfont.ttf') format('truetype'),
+         url('../fonts/opensans-light-webfont.svg#open_sanslight') format('svg');
+    font-weight: normal;
+    font-style: normal;
+}
+@font-face {
+    font-family: 'open_bold';
+    src: url('../fonts/opensans-bold-webfont.eot');
+    src: url('../fonts/opensans-bold-webfont.eot?#iefix') format('embedded-opentype'),
+         url('../fonts/opensans-bold-webfont.woff') format('woff'),
+         url('../fonts/opensans-bold-webfont.ttf') format('truetype'),
+         url('../fonts/opensans-bold-webfont.svg#open_sansbold') format('svg');
+    font-weight: normal;
+    font-style: normal;
+
+}
+@font-face {
+    font-family: 'open_semibold';
+    src: url('../fonts/opensans-semibold-webfont.eot');
+    src: url('../fonts/opensans-semibold-webfont.eot?#iefix') format('embedded-opentype'),
+         url('../fonts/opensans-semibold-webfont.woff') format('woff'),
+         url('../fonts/opensans-semibold-webfont.ttf') format('truetype'),
+         url('../fonts/opensans-semibold-webfont.svg#open_sanssemibold') format('svg');
+    font-weight: normal;
+    font-style: normal;
+
+}
+@font-face {font-family: 'Helvetica';
+    src: url('../fonts/Helvetica.eot');
+    src: url('../fonts/Helvetica.eot?#iefix') format('embedded-opentype'),
+         url('../fonts/Helvetica.woff') format('woff'),
+         url('../fonts/Helvetica.ttf') format('truetype'),
+         url('../fonts/Helvetica.svg#Helvetica') format('svg');
+    font-weight: normal;
+    font-style: normal;
+}
+
+/* 重置 */
+body,div,span,object,iframe,h1,h2,h3,h4,h5,h6,p,blockquote,pre,a,abbr,acronym,address,code,del,dfn,em,img,q,dl,dt,dd,ol,ul,li,fieldset,form,label,legend,table,caption,tbody,tfoot,thead,tr,th,td,article,aside,dialog,figure,footer,header,hgroup,nav,section {
+    margin: 0;
+    padding: 0;
+    border: 0;
+    font-size: 100%;
+    font: inherit;
+    vertical-align: baseline;
+}
+
+html{-webkit-font-smoothing:antialiased}/* 润滑字体 */
+body{font:14px/1.7 'open',arial; color: #373737;background-color: #fff;}
+
+h1,h2,h3,h4,h5,h6{font-size: 100%;font-weight: normal;}
+
+textarea {resize: none;}
+
+ul,ol {list-style: none;}
+
+a,a:hover {text-decoration: none;}
+
+/*字体设置*/
+.f-bold{font-family: 'open_bold'}
+.f-light{font-family: 'open_light'}
+.f-helvetica{font-family: 'Helvetica'}
+.f-semibold{font-family: 'open_semibold'}
+.f-yahei{font-family: 'Microsoft YaHei';}
+
+/*-------- 排版 --------*/
+.row {margin-right: -15px;margin-left: -15px;}
+
+.row:before,
+.row:after {display: table;content: " ";}
+
+.row:after {clear: both;}
+
+.row:before,
+.row:after {display: table;content: " ";}
+
+.row:after {clear: both;}
+
+.col-lg-1,.col-lg-2,.col-lg-3,.col-lg-4,.col-lg-5,.col-lg-6,.col-lg-7,.col-lg-8,.col-lg-9,.col-lg-10,.col-lg-11,.col-lg-12 {float: left;}
+.col-lg-12 {width: 100%;}
+.col-lg-11 {width: 91.66666666666666%;}
+.col-lg-10 {width: 83.33333333333334%;}
+.col-lg-9 {width: 75%;}
+.col-lg-8 {width: 66.66666666666666%;}
+.col-lg-7 {width: 58.333333333333336%;}
+.col-lg-6 {width: 50%;}
+.col-lg-5 {width: 41.66666666666667%;}
+.col-lg-4 {width: 33.33333333333333%;}
+.col-lg-3 {width: 25%;}
+.col-lg-2 {width: 16.666666666666664%;}
+.margin-left-125{margin-left: 12.5%;}
+.col-lg-1 {width: 8.333333333333332%;}
+/* 上外边距 */
+.prepend-top,.ppt {margin-top: 1.5em;}
+
+.prepend-top-12,.ppt-12 {margin-top: 12px;}
+
+.prepend-top-24,.ppt-24 {margin-top: 24px;}
+
+.prepend-top-36,.ppt-36 {margin-top: 36px;}
+
+.prepend-top-48,.ppt-48 {margin-top: 48px;}
+
+.prepend-top-60,.ppt-60 {margin-top: 60px;}
+
+#ppt-75 {margin-top: 75px;}
+
+/* 下外边距 */
+.append-bottom,.apb {margin-bottom: 1.5em;}
+
+.append-bottom-12,.apb-12 {margin-bottom: 12px;}
+
+.append-bottom-24,.apb-24 {margin-bottom: 24px;}
+
+.append-bottom-36,.apb-36 {margin-bottom: 36px;}
+
+.append-bottom-48,.apb-48 {margin-bottom: 48px;}
+
+.append-bottom-60,.apb-60 {margin-bottom: 60px;}
+
+/*左外边距*/
+.append-left-12,.apl-12 {margin-left: 12px;}
+.append-left-24,.apl-24 {margin-left: 24px;}
+.append-left-55,.apl-55 {margin-left: 55px;}
+.append-left-100,.apl-100 {margin-left: 100px;}
+.append-left-1p,.apl-1p {margin-left: 132px;}
+.append-left-2p,.apl-2p {margin-left: 264px;}
+.append-left-3p,.apl-3p {margin-left: 396px;}
+.append-left-4p,.apl-4p {margin-left: 528px;}
+.append-left-5p,.apl-5p {margin-left: 660px;}
+
+
+/*右外边距*/
+.append-right-12,.apr-12 {margin-right: 12px;}
+.append-right-24,.apr-24 {margin-right: 24px;}
+
+
+/* 行分割线 */
+.colborder,.cb {padding-right: 24px;margin-right: 25px;border-right: 1px solid #ddd;}
+
+.colborder-5,.cb-5 {padding-right: 5px;margin-right: 6px;border-right: 1px solid #ddd;}
+
+.colborder-12,.cb-12 {padding-right: 12px;margin-right: 13px;border-right: 1px solid #ddd;}
+
+/* 形状 */
+.triangle {display: inline-block;width: 0;height: 0;*zoom: 1;}
+
+.circle {display: inline-block;border-radius: 50%;}
+
+/* 圆角 */
+.border-radius-2,.br-2 {border-radius: 2px;}
+
+.border-radius-3,.br-3 {border-radius: 3px;}
+
+.border-radius-5,.br-5 {border-radius: 5px;}
+
+.border-radius-bottom,.brb {border-radius: 0 0 3px 3px;}
+
+/* 阴影 */
+.box-shadow-1,.bs-1 {box-shadow: 0 1px 1px rgba(0,0,0,.3);}
+
+.box-shadow-3,.bs-3 {box-shadow: 0 1px 3px rgba(0,0,0,.3);}
+
+.box-shadow-5,.bs-5 {box-shadow: 0 1px 3px rgba(0,0,0,.3);}
+
+/* 模糊 */
+.blur {-webkit-filter: blur(40px);-moz-filter: blur(40px);-ms-filter: blur(40px);filter: blur(40px);filter: progid:DXImageTransform.Microsoft.Blur(PixelRadius=40, MakeShadow=false);}
+
+/* 遮罩 */
+.banner .mask {position: absolute;top: 0;left: 0;width: 100%;height: 100%;background: -moz-linear-gradient(top, rgba(0,0,0,.5) 0%, rgba(0,0,0,0) 35%, rgba(0,0,0,0) 65%, rgba(0,0,0,.6) 100%); background: -webkit-linear-gradient(top, rgba(0,0,0,.5) 0%, rgba(0,0,0,0) 35%, rgba(0,0,0,0) 65%, rgba(0,0,0,.6) 100%);background: -o-linear-gradient(top, rgba(0,0,0,.5) 0%, rgba(0,0,0,0) 35%, rgba(0,0,0,0) 65%, rgba(0,0,0,.6) 100%);background: -ms-linear-gradient(top, rgba(0,0,0,.5) 0%, rgba(0,0,0,0) 35%, rgba(0,0,0,0) 65%, rgba(0,0,0,.6) 100%);filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#88000000', endColorstr='#00000000', GradientType=0);background: linear-gradient(top, rgba(0,0,0,.5) 0%, rgba(0,0,0,0) 35%, rgba(0,0,0,0) 65%, rgba(0,0,0,.6) 100%);z-index: 15;-webkit-filter: blur(0px);overflow: hidden;}
+
+/* 基本 */
+body {position: relative;background: #fff;}
+
+.last {margin-right: 0 !important;}
+.wrap {width: 1170px;margin: 0 auto;padding-left: 15px;padding-right: 15px;}
+.wrap p {line-height: 1.8em;}
+.text-center{text-align: center;}
+.text-left{text-align: left;}
+.text-right{text-align: right;}

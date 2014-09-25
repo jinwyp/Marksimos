@@ -70,8 +70,6 @@ apiRouter.get('/marksimos/api/user', requireLogin, userController.getUser);
 apiRouter.get('/marksimos/api/student/seminar', requireLogin, authorize('getSeminarOfStudent'), studentController.getSeminarOfStudent);
 apiRouter.get('/marksimos/api/studentinfo', requireLogin, authorize('getStudent'),userController.getStudent);
 
-
-
 //report
 apiRouter.get('/marksimos/api/report/:report_name', requireLogin, reportController.getReport);
 apiRouter.get('/marksimos/api/adminreport/:report_name', requireLogin, reportController.getReport);
@@ -95,6 +93,7 @@ apiRouter.put('/marksimos/api/company/decision', requireLogin, decisionControlle
 
 
 apiRouter.get('/marksimos/api/company', requireLogin, decisionController.getDecision);
+
 apiRouter.get('/marksimos/api/product_portfolio', requireLogin, decisionController.getProductPortfolio);
 apiRouter.get('/marksimos/api/spending_details', requireLogin, decisionController.getSpendingDetails);
 apiRouter.get('/marksimos/api/future_projection_calculator/:sku_id', requireLogin, decisionController.getSKUInfo);
@@ -103,7 +102,6 @@ apiRouter.get('/marksimos/api/company/otherinfo', requireLogin, decisionControll
 
 
 /**********  API For Administrator  **********/
-
 apiRouter.get('/marksimos/api/admin/distributors', requireLogin, authorize('searchDistributor'), distributorController.searchDistributor);
 apiRouter.post('/marksimos/api/admin/distributors', requireLogin, authorize('addDistributor'), distributorController.addDistributor);
 apiRouter.put('/marksimos/api/admin/distributors/:distributor_id', requireLogin, authorize('updateDistributor'), distributorController.updateDistributor);
@@ -129,8 +127,8 @@ apiRouter.post('/marksimos/api/admin/seminar', requireLogin, authorize('addSemin
 apiRouter.post('/marksimos/api/admin/assign_student_to_seminar', requireLogin, authorize('assignStudentToSeminar'), seminarController.assignStudentToSeminar);
 apiRouter.post('/marksimos/api/admin/remove_student_from_seminar', requireLogin, authorize('removeStudentFromSeminar'), seminarController.removeStudentFromSeminar);
 
-apiRouter.post('/marksimos/api/admin/init', requireLogin, initController.init);
-apiRouter.post('/marksimos/api/admin/runsimulation',  requireLogin, authorize('runSimulation'), initController.runSimulation);
+apiRouter.post('/marksimos/api/admin/init', requireLogin, initController.init());
+apiRouter.post('/marksimos/api/admin/runsimulation',  requireLogin, authorize('runSimulation'), initController.runSimulation());
 
 // get current admin role
 apiRouter.get('/marksimos/api/admin/user', requireLogin, userController.getUser);

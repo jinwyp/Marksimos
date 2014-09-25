@@ -17,7 +17,7 @@ exports.getQuestionnaire =function(req,res,next){
     var questionnaire={
     	seminarId:seminarId,
     	email:email,
-    }
+}
 
     questionnaireModel.findOne(seminarId,email)
     .then(function(result){

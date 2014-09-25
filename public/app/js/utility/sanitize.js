@@ -297,7 +297,7 @@ Sanitize.Config.RELAXED = {
     'table'     : ['summary', 'width'],
     'td'        : ['abbr', 'axis', 'colspan', 'rowspan', 'width'],
     'th'        : ['abbr', 'axis', 'colspan', 'rowspan', 'scope',
-                     'width'],
+                 `    'width'],
     'ul'        : ['type'],
     'div'      : ['class']
   },

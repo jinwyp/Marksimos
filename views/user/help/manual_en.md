@@ -1,4 +1,5 @@
-
+Manual
+===========
 
 
 
@@ -7,7 +8,7 @@ What is MarkSimos?
 
 ### Overview
 
-**MarkSimos** is Business Simulation Game that allows you to run a company in a realistic, yet risk-free virtual environment with an intensive time frame.
+MarkSimos is Business Simulation Game that allows you to run a company in a realistic, yet risk-free virtual environment with an intensive time frame.
 
 Through stimulating team sharing and experiential learning encourages participants to create a CEO perspective and to get a well-rounded view of the firm and its functions. 
 
@@ -59,8 +60,8 @@ The currency unit is $. The **inflation** itself remains relatively stable at ar
 
 All products are perceived by the consumers in terms of: 
 
- 1. **Value** - which reflects the trade-off between the final qualities of a product versus its market price. 
- 2. **Image** - which gauges acquired product equity, prestige, reliability and newness. 
+1. **Value** - which reflects the trade-off between the final qualities of a product versus its market price. 
+2. **Image** - which gauges acquired product equity, prestige, reliability and newness. 
 
 Six consumers segments with a different characterization have been identified in the market:
 

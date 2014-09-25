@@ -8,14 +8,16 @@ var util = require('util');
 var tDecisionSchema = new Schema({
     seminarId: String,
     period: Number,
-    d_CID                        : Number,
-    d_CompanyName                : String,
-    d_BrandsDecisions            : [Number], //Array of d_BrandID
-    d_IsAdditionalBudgetAccepted : {type: Boolean, default: true},
-    d_RequestedAdditionalBudget  : {type: Number, default: 0},
-    d_InvestmentInEfficiency     : {type: Number, default: 0},
-    d_InvestmentInTechnology     : {type: Number, default: 0},
-    d_InvestmentInServicing      : {type: Number, default: 0}
+    d_CID                                 : Number,
+    d_CompanyName                         : String,
+    d_BrandsDecisions                     : [Number], //Array of d_BrandID
+    d_IsAdditionalBudgetAccepted          : {type: Boolean, default: true},
+    d_RequestedAdditionalBudget           : {type: Number, default: 0},
+    d_InvestmentInEfficiency              : {type: Number, default: 0},
+    d_InvestmentInTechnology              : {type: Number, default: 0},
+    d_InvestmentInServicing               : {type: Number, default: 0},
+    bs_AdditionalBudgetApplicationCounter : {type: Number, default: 0},
+    bs_BlockBudgetApplication             : {type: Boolean, default: false},
 });
 
 var CompanyDecision = mongoose.model('CompanyDecision', tDecisionSchema);
@@ -45,39 +47,58 @@ tDecisionSchema.pre('save', true, function(next, done){
     next();
 })
 
-function validateAdditionalBudget(field, curCompanyDecision, done){
+function validateAdditionalBudget(field, curCompanyDecisionInput, done){
 
     Q.spread([
-        spendingDetailsAssembler.getSpendingDetails(curCompanyDecision.seminarId, curCompanyDecision.period, curCompanyDecision.d_CID),
-        exports.findOne(curCompanyDecision.seminarId, curCompanyDecision.period, curCompanyDecision.d_CID)
-    ], function(spendingDetails, preCompanyDecision){
+        spendingDetailsAssembler.getSpendingDetails(curCompanyDecisionInput.seminarId, curCompanyDecisionInput.period, curCompanyDecisionInput.d_CID),
+        exports.findOne(curCompanyDecisionInput.seminarId, curCompanyDecisionInput.period, curCompanyDecisionInput.d_CID),
+        exports.findOne(curCompanyDecisionInput.seminarId, curCompanyDecisionInput.period - 1, curCompanyDecisionInput.d_CID)        
+    ], function(spendingDetails, preCompanyDecisionInput, prePeriodCompanyDecision){
 
         var budgetLeft = parseFloat(spendingDetails.companyData.availableBudget);
         var err, lowerLimits = [],upperLimits = [];
 
-        lowerLimits.push({value : 0, message: 'Cannot accept negative number.'});        
-        upperLimits.push({value : parseFloat(spendingDetails.companyData.averageBudgetPerPeriod), message : 'Cannot accept number bigger than ' + spendingDetails.companyData.averageBudgetPerPeriod});
-        err = rangeCheck(curCompanyDecision[field],lowerLimits,upperLimits);      
-        if(err != undefined){
-            err.modifiedField = field;
+        if(preCompanyDecisionInput.bs_BlockBudgetApplication){
+            var err = new Error('You cannot applied budget more than twice.');
             done(err);
         } else {
-            done();
-        }         
+            lowerLimits.push({value : 0, message: 'Cannot accept negative number.'});        
+            upperLimits.push({value : parseFloat(spendingDetails.companyData.averageBudgetPerPeriod), message : 'Cannot accept number bigger than ' + spendingDetails.companyData.averageBudgetPerPeriod});
+            err = rangeCheck(curCompanyDecisionInput[field],lowerLimits,upperLimits);      
+            if(err != undefined){
+                err.modifiedField = field;
+                done(err);
+            } else {
+                //if user want to cancel application this period, reset counter make it = last period input
+                if(curCompanyDecisionInput.d_RequestedAdditionalBudget == 0){
+                    curCompanyDecisionInput.d_IsAdditionalBudgetAccepted = false;
+                    if(prePeriodCompanyDecision.bs_AdditionalBudgetApplicationCounter != preCompanyDecisionInput.bs_AdditionalBudgetApplicationCounter){
+                        curCompanyDecisionInput.bs_AdditionalBudgetApplicationCounter = prePeriodCompanyDecision.bs_AdditionalBudgetApplicationCounter;
+                    }
+                //if user input != 0 and counter hasn't been increased this period, do it                     
+                } else if(prePeriodCompanyDecision.bs_AdditionalBudgetApplicationCounter == preCompanyDecisionInput.bs_AdditionalBudgetApplicationCounter){
+                    curCompanyDecisionInput.bs_AdditionalBudgetApplicationCounter = curCompanyDecisionInput.bs_AdditionalBudgetApplicationCounter + 1;
+                    curCompanyDecisionInput.d_IsAdditionalBudgetAccepted = true;
+                }
+
+                done();
+            }         
+            
+        }
     }).done();
 }
 
-function validateAvailableBudget(field, curCompanyDecision, done){
+function validateAvailableBudget(field, curCompanyDecisionInput, done){
     Q.spread([
-        spendingDetailsAssembler.getSpendingDetails(curCompanyDecision.seminarId, curCompanyDecision.period, curCompanyDecision.d_CID),
-        exports.findOne(curCompanyDecision.seminarId, curCompanyDecision.period, curCompanyDecision.d_CID)
-    ], function(spendingDetails, preCompanyDecision){
+        spendingDetailsAssembler.getSpendingDetails(curCompanyDecisionInput.seminarId, curCompanyDecisionInput.period, curCompanyDecisionInput.d_CID),
+        exports.findOne(curCompanyDecisionInput.seminarId, curCompanyDecisionInput.period, curCompanyDecisionInput.d_CID)
+    ], function(spendingDetails, preCompanyDecisionInput){
         var budgetLeft = parseFloat(spendingDetails.companyData.availableBudget);
         var err, lowerLimits = [],upperLimits = [];
 
         lowerLimits.push({value : 0, message: 'Cannot accept negative number.'});
-        upperLimits.push({value : budgetLeft + preCompanyDecision[field], message : 'Budget Left is not enough.'});
-        err = rangeCheck(curCompanyDecision[field],lowerLimits,upperLimits);      
+        upperLimits.push({value : budgetLeft + preCompanyDecisionInput[field], message : 'Budget Left is not enough.'});
+        err = rangeCheck(curCompanyDecisionInput[field],lowerLimits,upperLimits);      
         if(err != undefined){
             err.modifiedField = field;
             done(err);
