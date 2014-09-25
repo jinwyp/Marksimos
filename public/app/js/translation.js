@@ -309,10 +309,11 @@ app.config(['$translateProvider', function($translateProvider){
         "ReportFinancialReportAllBrandInventoryValue" : "Inventory Value ($ mln)",
 
 		//Labels for Inventory Report
-        "ReportInventoryReportLabelCloseToExpireInventory" : "Close to expire Inventory",
+        "ReportInventoryReportLabelCloseToExpireInventory" : "Close to Expire Inventory",
         "ReportInventoryReportLabelPreviousInventory"      : "Previous Inventory",
         "ReportInventoryReportLabelFreshInventory"         : "Fresh Inventory",
-        "ReportInventoryReportTableLabel"                  : "Total Stock (millions of standard pack) = Factory Stock + Trade Stock + Retailer Stock",
+        "ReportInventoryReportTableLabelX"                 : "Total Stock (millions of standard pack) = Factory Stock + Trade Stock + Retailer Stock",
+        "ReportInventoryReportTableLabelY"                 : "Million Units",
 
 
 		//Labels for Profitability Evolution - SKU Level
@@ -1189,11 +1190,12 @@ app.config(['$translateProvider', function($translateProvider){
 		
 		
 		//Labels for Inventory Report
-		"ReportInventoryReportLabelCloseToExpireInventory"	:	"将要过期的库存",
-		"ReportInventoryReportLabelPreviousInventory"	:	"以前的库存",
-		"ReportInventoryReportLabelFreshInventory"	:	"新库存",
-		"ReportInventoryReportTableLabel"	:	"总库存 (百万标准包) = 工厂库存＋渠道以及零售商库存",
-		
+        "ReportInventoryReportLabelCloseToExpireInventory" : "将要过期的库存",
+        "ReportInventoryReportLabelPreviousInventory"      : "以前的库存",
+        "ReportInventoryReportLabelFreshInventory"         : "新库存",
+        "ReportInventoryReportTableLabelX"                 : "总库存 (百万标准包) = 工厂库存＋渠道以及零售商库存",
+        "ReportInventoryReportTableLabelY"                 : "百万件",
+
 
 		//Labels for Profitability Evolution - SKU Level
         "ReportProfitabilityEvolutionSKUQuarter"	:	"阶段",
@@ -1768,5 +1770,6 @@ app.config(['$translateProvider', function($translateProvider){
     });
 
     // Tell the module what language to use by default
-    $translateProvider.preferredLanguage('en_US');
+//    $translateProvider.preferredLanguage('en_US');
+    $translateProvider.preferredLanguage('zh_CN');
 }]);

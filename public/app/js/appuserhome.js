@@ -27,6 +27,12 @@ marksimosapp.controller('chartController', ['$translate', '$scope', '$rootScope'
                 {id:6, name: translations.HomePageSegmentLabelPragmatic}
             ];
         });
+
+
+        /********************  Chart A3  ********************/
+        chartReport.inventoryReport().then(function(data, status, headers, config){
+            $scope.data.chartA31InventoryReport.data = data;
+        });
     });
 
     $translate(['HomePageSegmentLabelPriceSensitive', 'HomePageSegmentLabelPretenders', 'HomePageSegmentLabelModerate',
