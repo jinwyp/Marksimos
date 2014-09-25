@@ -13,6 +13,6 @@ $(function(){
 		loopBottom:true,
 		slidesNavigation:true,
 		slidesNavPosition:'top',
-		slidesNavigationTitle:["What's hcd learning","what can you expct"]
+		slidesNavigationTitle:["What's hcd learning","what can you expect"]
 	});
 });

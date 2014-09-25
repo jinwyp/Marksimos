@@ -85,85 +85,74 @@
 	float:left;
 	margin-left: 800px;
 }
-.motion-item{
+/*.motion-item{
 	float:left;
 }
-#section-0-1 a{
+*/
+.section-0-1{
 	width:132px;
 	height:273px;
-	display: inline-block;
 	background: url('../img/motion-item-1.png') no-repeat;
 }
-#section-0-1 a:active,#section-0-1 a:hover{
+.section-0-1:hover{
 	width:132px;
 	height:330px;
 	margin-top:-100px;
-	display:inline-block;
 	background: url('../img/motion-item-1-active.png') no-repeat;
 }
-#section-0-2 a{
+.section-0-2 {
 	width:132px;
 	height:273px;
-	display: inline-block;
 	background: url('../img/motion-item-2.png') no-repeat;
 }
-#section-0-2 a:active,#section-0-2 a:hover{
+.section-0-2:hover{
 	width:132px;
 	height:330px;
 	margin-top:-100px;
-	display:inline-block;
 	background: url('../img/motion-item-2-active.png') no-repeat;
 }
-#section-0-3 a{
+.section-0-3 {
 	width:132px;
 	height:273px;
-	display: inline-block;
 	background: url('../img/motion-item-3.png') no-repeat;
 }
-#section-0-3 a:active,#section-0-3 a:hover{
+.section-0-3:hover{
 	width:132px;
 	height:330px;
 	margin-top:-100px;
-	display:inline-block;
 	background: url('../img/motion-item-3-active.png') no-repeat;
 }
-#section-0-4 a{
+.section-0-4 {
 	width:132px;
 	height:273px;
-	display: inline-block;
 	background: url('../img/motion-item-4.png') no-repeat;
 }
-#section-0-4 a:active,#section-0-4 a:hover{
+.section-0-4:hover{
 	width:132px;
 	height:330px;
 	margin-top:-100px;
-	display:inline-block;
 	background: url('../img/motion-item-4-active.png') no-repeat;
 }
-#section-0-5 a{
+.section-0-5 {
 	width:132px;
 	height:273px;
-	display: inline-block;
 	background: url('../img/motion-item-5.png') no-repeat;
 }
-#section-0-5 a:active,#section-0-5 a:hover{
+.section-0-5:hover{
 	width:132px;
 	height:330px;
 	margin-top:-100px;
-	display:inline-block;
 	background: url('../img/motion-item-5-active.png') no-repeat;
 }
-#section-0-6 a{
+.section-0-6 {
 	width:132px;
 	height:273px;
-	display: inline-block;
 	background: url('../img/motion-item-6.png') no-repeat;
 }
-#section-0-6 a:active,#section-0-6 a:hover{
+.section-0-6:hover{
 	width:132px;
 	height:330px;
 	margin-top:-100px;
-	display:inline-block;
 	background: url('../img/motion-item-6-active.png') no-repeat;
 }
 .section-0-info{
@@ -286,6 +275,36 @@
 }
 .section-1-6{
 	background: url('../img/section-1-6.png') no-repeat;
+	width: 255px;
+	height: 255px;
+}
+.section-1-1:hover{
+	background: url('../img/section-1-1-active.png') no-repeat;
+	width: 255px;
+	height: 255px;
+}
+.section-1-2:hover{
+	background: url('../img/section-1-2-active.png') no-repeat;
+	width: 255px;
+	height: 255px;
+}
+.section-1-3:hover{
+	background: url('../img/section-1-3-active.png') no-repeat;
+	width: 255px;
+	height: 255px;
+}
+.section-1-4:hover{
+	background: url('../img/section-1-4-active.png') no-repeat;
+	width: 255px;
+	height: 255px;
+}
+.section-1-5:hover{
+	background: url('../img/section-1-5-active.png') no-repeat;
+	width: 255px;
+	height: 255px;
+}
+.section-1-6:hover{
+	background: url('../img/section-1-6-active.png') no-repeat;
 	width: 255px;
 	height: 255px;
 }
