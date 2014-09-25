@@ -4,7 +4,7 @@
 /********* header *********/
 #header{
 	/*background: url("../img/toolbar-bg-inverted.png") repeat-x;*/
-	background-color:#FF441C;
+	background-color:#F93F14;
 	height: 51px;
 	width: 100%;
 	position: fixed;
@@ -38,16 +38,16 @@
 }
 
 .start-btn a{
-	background: url("../img/start-normal.png") no-repeat;
-    color: #ffffff;
+	background: url("../img/start.png") no-repeat;
+    color:#F93F14;
     font-size: 16px;
-    padding: 4px 20px 4px 50px;
+    padding: 5px 20px 5px 50px;
 }
 .start-btn a:hover,.start-btn a:active{
 	background: url("../img/start-active.png") no-repeat;
-	color:#F93F14;
+    color: #ffffff;
 	font-size: 16px;
-    padding: 4px 20px 4px 50px;
+    padding: 5px 20px 5px 50px;
 
 }
 
@@ -64,16 +64,16 @@
 	margin-left:5px;
 }
 .nav-header>ul>li>a{
-	padding: 5px 8px;
+	padding: 7px 8px;
 	color:#fff;
 }
 .nav-header .active >a{
 	border :2px solid #fff;
-	padding: 3px 6px;
+	padding: 5px 6px;
 }
 .nav-header>ul>li>a:hover{
 	border :2px solid #fff;
-	padding: 3px 6px;
+	padding: 5px 6px;
 }
 /********* section0 *********/
 .index-player{
@@ -404,7 +404,7 @@
 .sign-up{
 	background: url("../img/sign-up.png") no-repeat;
     font-size: 16px;
-    padding: 4px 31px;
+    padding: 6px 31px;
     display: inline-block;
 }
 .sign-up a{
@@ -413,41 +413,71 @@
 .login{
 	background: url("../img/login.png") no-repeat;
     font-size: 16px;
-    padding: 4px 38px;
+    padding: 6px 38px;
     display: inline-block;
 }
 .login a{
     color: #FF441C;
 }
-.facebook,.sina,.baidu{
-/*	width: 32px;
-	height: 32px;*/
+.facebook,.sina,.baidu,.douban{
 	display: inline-block;
 }
 .facebook a{
 	background: url("../img/facebook.png") no-repeat;
-	width: 32px;
-	height: 32px;
+	width: 37px;
+	height: 37px;
 	display: inline-block;
 }
 .sina a{
 	background: url("../img/sina.png") no-repeat;
-	width: 32px;
-	height: 32px;
+	width: 37px;
+	height: 37px;
 	display: inline-block;
 }
 .baidu a{
 	background: url("../img/baidu.png") no-repeat;
-	width: 32px;
-	height: 32px;
+	width: 37px;
+	height: 37px;
+	display: inline-block;
+}
+.douban a{
+	background: url("../img/douban.png") no-repeat;
+	width: 37px;
+	height: 37px;
+	display: inline-block;
+}
+
+.facebook a:hover,.facebook a:active{
+	background: url("../img/facebook-active.png") no-repeat;
+	width: 37px;
+	height: 37px;
+	display: inline-block;
+}
+.sina a:hover,.sina a:active{
+	background: url("../img/sina-active.png") no-repeat;
+	width: 37px;
+	height: 37px;
+	display: inline-block;
+}
+.baidu a:hover,.baidu a:active{
+	background: url("../img/baidu-active.png") no-repeat;
+	width: 37px;
+	height: 37px;
+	display: inline-block;
+}
+.douban a:hover,.douban a:active{
+	background: url("../img/douban-active.png") no-repeat;
+	width: 37px;
+	height: 37px;
 	display: inline-block;
 }
 
 
+
 /* animation */
 .absolute-item {
-	-webkit-animation-duration: 1s;
-	animation-duration: 1s;
+	-webkit-animation-duration: 2s;
+	animation-duration: 2s;
 	-webkit-animation-fill-mode: both;
 	animation-fill-mode: both;
 }
