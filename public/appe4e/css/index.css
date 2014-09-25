@@ -800,8 +800,8 @@
 
 @-webkit-keyframes small-to-big {
 	0% {
-		-webkit-transform: scale(0.5);
-		transform: scale(0.5);
+		-webkit-transform: scale(0);
+		transform: scale(0);
 	}
 
 	100% {
@@ -812,9 +812,9 @@
 
 @keyframes small-to-big {
 	0% {
-		-webkit-transform: scale(0.5);
-		-ms-transform: scale(0.5);
-		transform: scale(0.5);
+		-webkit-transform: scale(0);
+		-ms-transform: scale(0);
+		transform: scale(0);
 	}
 
 	100% {
@@ -825,8 +825,6 @@
 }
 
 .active .small-to-big {
-	-webkit-animation-name: big-to-small;
-	animation-name: big-to-small;
+	-webkit-animation-name: small-to-big;
+	animation-name: small-to-big;
 }
-
-
