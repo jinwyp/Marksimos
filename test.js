@@ -38,20 +38,27 @@
 // a.sku = _.without(a.sku, 2);
 
 //console.log(a.sku);
-function test(a){
-    var b = [];
-    var self  = a;
-	return function(self){
-		b.push(a);
-		console.log('closure: ' + b);
-	}
-}
+// function test(a){
+//     var b = [];
+//     var self  = a;
+// 	return function(self){
+// 		b.push(a);
+// 		console.log('closure: ' + b);
+// 	}
+// }
 
-var buf = test(1);
-buf();
-buf();
-buf();
+// var buf = test(1);
+// buf();
+// buf();
+// buf();
 
 // test(1)();
 // test(2)();
 // test(3)();
+
+var test = [1, 2, 3, 4, 5];
+
+var a = 1, b = 1;
+
+test.push(a+b);
+console.log(test);
