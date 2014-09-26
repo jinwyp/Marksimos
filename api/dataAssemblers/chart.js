@@ -297,16 +297,16 @@ exports.segmentValueShareTotalMarket = function(allResults){
 
     //there are only 6 segments
     var segmentNum = consts.ConsumerSegmentsMaxTotal - 1; 
-    var segmentNames = config.segmentNames;
+    //var segmentNames = config.segmentNames;
 
     var results = {
         chartData: []
     };
     
     for(var i=0; i<segmentNum; i++){
-        var segmentName = segmentNames[i];
+        //var segmentName = segmentNames[i];
         results.chartData.push({
-            segmentName: segmentName,
+            segmentName: i,
             value: market.m_ValueSegmentShare[i]
         });
     }
@@ -673,7 +673,10 @@ function extractMarketEvolutionChartData(allResults, dataExtractor){
 			// 5 - 'pragmatic',
 			// 6 - 'allSegments'
 			// ],
-            result.segmentNames.push(j);
+            if(result.segmentNames.indexOf(j) === -1){
+                result.segmentNames.push(j);            
+            }
+
             segmentChartData.push(dataExtractor(market)[j]);
         }
         result.chartData.push(segmentChartData);
