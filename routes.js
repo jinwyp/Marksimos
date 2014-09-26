@@ -17,6 +17,17 @@ module.exports = function(app){
         res.render('e4e/index.ejs',{title:'HCD E4E'});
     });
 
+    app.get('/e4e/register', function(req, res, next){        
+        res.render('e4e/register.ejs',{title:'HCD E4E'});
+    });
+
+    app.get('/e4e/company-success', function(req, res, next){        
+        res.render('e4e/company-success.ejs',{title:'HCD E4E'});
+    });
+    app.get('/e4e/student-success', function(req, res, next){        
+        res.render('e4e/student-success.ejs',{title:'HCD E4E'});
+    });
+
     /**********   Routes for MarkSimos User/Student   **********/
 
     app.get('/marksimos', authMiddleware.needLogin, function(req, res, next){

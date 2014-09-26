@@ -1,0 +1,223 @@
+/********* header *********/
+#header{
+	background: url("../img/bg-white.png") repeat-x;
+	height: 62px;
+	width: 100%;
+	position: fixed;
+	z-index: 1000;
+}
+
+.e4e-logo{
+	float: left;
+	height:38px;
+	padding: 12px 0;
+}
+.learning-logo{
+	float: left;
+	height: 38px;
+	margin: 12px;
+	border-left: 2px solid #ACACAC;
+	padding:0 12px;
+}
+
+.languages{
+	float:right;
+	height: 38px;
+}
+.nav-header{
+	float:left;
+	padding: 20px;
+}
+.nav-header>ul>li{
+	float:left;
+	margin-left:5px;
+}
+.nav-header>ul>li>a{
+	color:#ACACAC;
+	padding: 6px;
+}
+.nav-header .active >a{
+	background-color: #F93F14;
+	color: #fff;
+	padding: 6px;
+}
+.nav-header>ul>li>a:hover{
+	background-color: #F93F14;
+	color: #fff;
+	padding: 6px;
+}
+/********* section0 *********/
+#section0{
+	background: url("../img/bg-white-repeat.png");
+	background-color: red;
+}
+
+.section-0-1{
+	width:132px;
+	height:273px;
+	background: url('../img/motion-item-1.png') no-repeat;
+}
+.section-0-1:hover{
+	width:132px;
+	height:330px;
+	margin-top:-100px;
+	background: url('../img/motion-item-1-active.png') no-repeat;
+}
+.section-0-2 {
+	width:132px;
+	height:273px;
+	background: url('../img/motion-item-2.png') no-repeat;
+}
+.section-0-2:hover{
+	width:132px;
+	height:330px;
+	margin-top:-100px;
+	background: url('../img/motion-item-2-active.png') no-repeat;
+}
+.section-0-3 {
+	width:132px;
+	height:273px;
+	background: url('../img/motion-item-3.png') no-repeat;
+}
+.section-0-3:hover{
+	width:132px;
+	height:330px;
+	margin-top:-100px;
+	background: url('../img/motion-item-3-active.png') no-repeat;
+}
+.section-0-4 {
+	width:132px;
+	height:273px;
+	background: url('../img/motion-item-4.png') no-repeat;
+}
+.section-0-4:hover{
+	width:132px;
+	height:330px;
+	margin-top:-100px;
+	background: url('../img/motion-item-4-active.png') no-repeat;
+}
+.section-0-5 {
+	width:132px;
+	height:273px;
+	background: url('../img/motion-item-5.png') no-repeat;
+}
+.section-0-5:hover{
+	width:132px;
+	height:330px;
+	margin-top:-100px;
+	background: url('../img/motion-item-5-active.png') no-repeat;
+}
+.section-0-6 {
+	width:132px;
+	height:273px;
+	background: url('../img/motion-item-6.png') no-repeat;
+}
+.section-0-6:hover{
+	width:132px;
+	height:330px;
+	margin-top:-100px;
+	background: url('../img/motion-item-6-active.png') no-repeat;
+}
+.section-0-info{
+	width:800px;
+}
+.section-0-info p{
+	letter-spacing:4px;
+	font-size: 20px;
+}
+
+/********* section1 *********/
+
+
+
+/********* section2 *********/
+.absolute-item{
+	position: absolute;
+	z-index: 1;
+	animation-duration: 2s;
+    animation-fill-mode: both;
+}
+.section-register-clouds{
+	width: 1434px;
+	height: 648px;
+	background: url('../img/clouds.png') no-repeat;
+	top: -302px;
+	left:0;
+}
+.section-register-trees{
+	width: 1434px;
+	height: 648px;
+	background: url('../img/trees.png') no-repeat;
+	bottom: -150px;
+}
+
+.section-regisert-heart{
+	width: 114px;
+	height: 101px;
+	background: url('../img/heart.png') no-repeat;
+	top:170px;
+	right: 840px;
+	z-index: 999;
+}
+.section-company-success{
+	width: 925px;
+	height: 516px;
+	background: url('../img/company-success.png') no-repeat;
+	top: 0;
+	right: 0;
+	z-index: 99;
+}
+.section-student-success{
+	width: 925px;
+	height: 516px;
+	background: url('../img/student-success.png') no-repeat;
+	top: 0;
+	right: 0;
+	z-index: 99;
+}
+.congratulations{
+	font-size: 20px;
+    right: 580px;
+    top: 228px;
+    z-index: 999;
+    text-align: center;
+}
+.congratulations-info{
+	font-size: 20px;
+	line-height: 20px;
+	right: 500px;
+	top:302px;
+	z-index: 999;
+	text-align: center;
+}
+.company-success-color{
+	color: #5D88BD;
+}
+.student-success-color{
+	color: #FF0000;
+}
+.congratulations-end{
+	right: 300px;
+	top:520px;
+	z-index: 999;
+	width: 600px;
+}
+.f-size-20{
+	font-size: 20px;
+	line-height: 20px;
+}
+.f-size-16{
+	font-size: 16px;
+	line-height: 16px;
+}
+
+#footer{
+	background-color: #000;
+	color: #EAE5E6;
+	height: 21px;
+	position: fixed;
+	z-index: 1000;
+	bottom: 0;
+	width: 100%
+}
+
