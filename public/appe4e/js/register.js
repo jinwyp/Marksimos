@@ -1,7 +1,7 @@
 $(function(){
-	if($("#register").length!=0){
-		$("#register").fullpage({
-			sectionsColor: ['#fff'],
+	if($("#company-register").length!=0){
+		$("#company-register").fullpage({
+			sectionsColor: ['#fff','#fff','#fff'],
 			navigationColor:'#B3B3B3',
 			css3: true,
 			scrollingSpeed: 1700,

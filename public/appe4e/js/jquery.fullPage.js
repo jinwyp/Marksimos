@@ -1286,6 +1286,7 @@
 		}
 
 		function addTableClass(element){
+			console.log('message');
 			element.addClass('fp-table').wrapInner('<div class="fp-tableCell" style="height:' + getTableHeight(element) + 'px;" />');
 		}
 

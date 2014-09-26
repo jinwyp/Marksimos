@@ -17,8 +17,12 @@ module.exports = function(app){
         res.render('e4e/index.ejs',{title:'HCD E4E'});
     });
 
-    app.get('/e4e/register', function(req, res, next){        
-        res.render('e4e/register.ejs',{title:'HCD E4E'});
+    app.get('/e4e/register/company', function(req, res, next){        
+        res.render('e4e/company-register.ejs',{title:'HCD E4E'});
+    });
+
+    app.get('/e4e/register/student', function(req, res, next){        
+        res.render('e4e/student-register.ejs',{title:'HCD E4E'});
     });
 
     app.get('/e4e/company-success', function(req, res, next){        

@@ -47,90 +47,50 @@
 	padding: 6px;
 }
 /********* section0 *********/
-#section0{
-	background: url("../img/bg-white-repeat.png");
-	background-color: red;
+.section-gray{
+	/*margin-top:62px;*/
+	background-image: -moz-linear-gradient(top, #787878, #434343); /*火狐*/
+	background: -o-linear-gradient(top, #787878 0%,#434343 100%);/*Opera*/
+	background-image: -webkit-gradient(linear, left top, left bottom, color-stop(0, #787878), color-stop(1,#434343)); /*Chrome*/
+	filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#787878', endColorstr='#434343', GradientType='0'); /*IE*/
 }
 
-.section-0-1{
-	width:132px;
-	height:273px;
-	background: url('../img/motion-item-1.png') no-repeat;
+.section-red{
+	/*margin-top:62px;*/
+	background-image: -moz-linear-gradient(top, #ED3A2F, #C50000); /*火狐*/
+	background: -o-linear-gradient(top, #ED3A2F 0%,#C50000 100%);/*Opera*/
+	background-image: -webkit-gradient(linear, left top, left bottom, color-stop(0, #ED3A2F), color-stop(1,#C50000)); /*Chrome*/
+	filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#ED3A2F', endColorstr='#C50000', GradientType='0'); /*IE*/
 }
-.section-0-1:hover{
-	width:132px;
-	height:330px;
-	margin-top:-100px;
-	background: url('../img/motion-item-1-active.png') no-repeat;
+#fp-nav{
+	border-left: 1px dashed #fff;
+	height: 100%;
+	top:62px;
+	margin-top: 0px;
 }
-.section-0-2 {
-	width:132px;
-	height:273px;
-	background: url('../img/motion-item-2.png') no-repeat;
+#fp-nav li .active span, .fp-slidesNav .active span{
+   	background: url('../img/nav-button-active.png') no-repeat;
+
 }
-.section-0-2:hover{
-	width:132px;
-	height:330px;
-	margin-top:-100px;
-	background: url('../img/motion-item-2-active.png') no-repeat;
+#fp-nav li a, .fp-slidesNav li a{
+	margin-left: -23px;
+	margin-top: 75px;
 }
-.section-0-3 {
-	width:132px;
-	height:273px;
-	background: url('../img/motion-item-3.png') no-repeat;
+#fp-nav span, .fp-slidesNav span {
+    /*background: none repeat scroll 0 0 rgba(0, 0, 0, 0);*/
+   	background: url('../img/nav-button.png') no-repeat;
+   	width: 25px;
+   	height: 25px;
+    border: none;
+    border-radius: 0;
+    position: absolute;
+    top: 2px;
+    z-index: 1;
 }
-.section-0-3:hover{
-	width:132px;
-	height:330px;
-	margin-top:-100px;
-	background: url('../img/motion-item-3-active.png') no-repeat;
-}
-.section-0-4 {
-	width:132px;
-	height:273px;
-	background: url('../img/motion-item-4.png') no-repeat;
-}
-.section-0-4:hover{
-	width:132px;
-	height:330px;
-	margin-top:-100px;
-	background: url('../img/motion-item-4-active.png') no-repeat;
-}
-.section-0-5 {
-	width:132px;
-	height:273px;
-	background: url('../img/motion-item-5.png') no-repeat;
-}
-.section-0-5:hover{
-	width:132px;
-	height:330px;
-	margin-top:-100px;
-	background: url('../img/motion-item-5-active.png') no-repeat;
-}
-.section-0-6 {
-	width:132px;
-	height:273px;
-	background: url('../img/motion-item-6.png') no-repeat;
-}
-.section-0-6:hover{
-	width:132px;
-	height:330px;
-	margin-top:-100px;
-	background: url('../img/motion-item-6-active.png') no-repeat;
-}
-.section-0-info{
-	width:800px;
-}
-.section-0-info p{
-	letter-spacing:4px;
-	font-size: 20px;
+.fp-tooltip{
+	top:4px;
 }
 
-/********* section1 *********/
-
-
-
-/********* section2 *********/
 .absolute-item{
 	position: absolute;
 	z-index: 1;
