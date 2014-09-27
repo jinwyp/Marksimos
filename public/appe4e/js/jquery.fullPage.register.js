@@ -367,7 +367,7 @@
 					tooltip = '';
 				}
 
-				nav.find('ul').append('<li data-tooltip="' + tooltip + '"><a href="#' + link + '"><span></span></a><div class="fp-tooltip ' + options.navigationPosition +'">' + tooltip + '</div></li>');
+				nav.find('ul').append('<li><a href="#' + link + '"><span></span></a><div class="fp-tooltip ' + options.navigationPosition +'">' + tooltip + '</div></li>');
 			}
 			//nav.css('margin-top',0px);
 		}
@@ -1292,7 +1292,6 @@
 		}
 
 		function addTableClass(element){
-			console.log('message');
 			element.addClass('fp-table').wrapInner('<div class="fp-tableCell" style="height:' + getTableHeight(element) + 'px;" />');
 		}
 

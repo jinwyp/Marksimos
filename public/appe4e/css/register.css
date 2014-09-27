@@ -1,10 +1,15 @@
 /********* header *********/
 #header{
-	background: url("../img/bg-white.png") repeat-x;
 	height: 62px;
 	width: 100%;
 	position: fixed;
 	z-index: 1000;
+}
+.white-header{
+	background: url("../img/bg-white.png") repeat-x;
+}
+.transparent-header{
+	background: url("../img/bg-transparent.png") repeat-x;
 }
 
 .e4e-logo{
@@ -91,6 +96,39 @@
 	top:4px;
 }
 
+.company-bg{
+	background: url('../img/company-bg.png') no-repeat;
+    bottom: 21px;
+    height: 521px;
+    right: 317px;
+    position: absolute;
+    width: 481px;
+    z-index: 9;
+}
+.company-hand{
+	background: url('../img/company-hand.png') no-repeat;
+	z-index: 99;
+	width: 719px;
+	height: 322px;
+	bottom: 21px;
+	right: 200px;
+	position: absolute;
+}
+
+.register-title{
+	width: 719px;
+	margin: 100px auto 0;
+	color: #fff;
+}
+
+.company-back{
+	background: url('../img/company-hand.png') no-repeat;
+	width: 719px;
+    height: 521px;
+    margin: 20px auto;
+}
+
+
 .absolute-item{
 	position: absolute;
 	z-index: 1;
@@ -161,6 +199,11 @@
 	top:520px;
 	z-index: 999;
 	width: 600px;
+}
+
+.f-size-26{
+	font-size: 26px;
+	line-height: 26px;
 }
 .f-size-20{
 	font-size: 20px;

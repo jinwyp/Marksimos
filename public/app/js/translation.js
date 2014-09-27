@@ -869,8 +869,35 @@ app.config(['$translateProvider', function($translateProvider){
         "FAQPageSubTitle":"This FAQ will attempt to cover the most asked question about Marksimos.This FAQ will attempt to cover the most asked question about Marksimos.This FAQ will attempt to cover the most asked question about Marksimos .",
 
         "ManualPageTitle":"Manual",
-        "ManualPageDownload":"Download"
-		
+        "ManualPageDownload":"Download",
+
+
+        /*e4e register*/
+        "e4eCompanyRegisterTitle":"Company Registration",
+        "e4eCompanyFirstPageTitle":"Company Details",
+        "e4eCompanyUserName":"User Name",
+        "e4eCompanyCompanyName":"Company Name",
+		"e4eCompanyHoldingCompany":"Holding Company",
+        "e4eCompanyDivision":"Division",
+        "e4eCompanyNumberOfEmployees":"Number Of Employees",
+        "e4eCompmayCountry":"Country",
+        "e4eCompmayAddress":"Address",
+        "e4eCompanyNext":"NEXT",
+
+        "e4eCompanyNameOfContactPerson":"Name Of Contact Person",
+        "e4eCompanyDesignation":"Designation",
+        "e4eCompanyOfficalContactNumber":"Offical Contact Number",
+        "e4eCompanyMobileNumber":"Mobile Number",
+        "e4eCompanyEmailID":"Email ID",
+        "e4eCompanySecondPageTitle":"Communication Details",
+
+        "e4eCompanyThirdPageTitle":"Job Profiles",
+        "e4eCompanyDivision":"Division",
+        "e4eCompanyFunction":"Function",
+        "e4eCompanyRole":"Role",
+        "e4eCompanyNumberOfPositions":"Number Of Positions",
+        "e4eCompanyJobDescription":"Job Description",
+        "e4eCompanySubmit":"Submit"
 
 		
     });
@@ -1747,7 +1774,34 @@ app.config(['$translateProvider', function($translateProvider){
         "FAQPageSubTitle":"该常见问题会包含一些常问的问题.",
         
         "ManualPageTitle":"使用手册",
-        "ManualPageDownload":"下载"
+        "ManualPageDownload":"下载",
+
+        /*e4e register*/
+        "e4eCompanyRegisterTitle":"公司注册",
+        "e4eCompanyFirstPageTitle":"公司基本信息",
+        "e4eCompanyUserName":"User Name",
+        "e4eCompanyCompanyName":"Company Name",
+        "e4eCompanyHoldingCompany":"Holding Company",
+        "e4eCompanyDivision":"Division",
+        "e4eCompanyNumberOfEmployees":"Number Of Employees",
+        "e4eCompmayCountry":"Country",
+        "e4eCompmayAddress":"Address",
+        "e4eCompanyNext":"下一步",
+
+        "e4eCompanyNameOfContactPerson":"Name Of Contact Person",
+        "e4eCompanyDesignation":"Designation",
+        "e4eCompanyOfficalContactNumber":"Offical Contact Number",
+        "e4eCompanyMobileNumber":"Mobile Number",
+        "e4eCompanyEmailID":"Email ID",
+        "e4eCompanySecondPageTitle":"通信细节",
+
+        "e4eCompanyThirdPageTitle":"工作信息",
+        "e4eCompanyDivision":"Division",
+        "e4eCompanyFunction":"Function",
+        "e4eCompanyRole":"Role",
+        "e4eCompanyNumberOfPositions":"Number Of Positions",
+        "e4eCompanyJobDescription":"Job Description",
+        "e4eCompanySubmit":"提交"
 		
 
 		

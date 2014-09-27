@@ -22,7 +22,7 @@ $(function(){
 			anchors: ['step1', 'step2', 'step3'],
 			sectionsColor: ['#fff', '#fff', '#fff'],
 			navigationColor:'#B3B3B3',
-			navigationTooltips:['Company Details','Communication Details','Job Profiles'],
+			navigationTooltips:['','',''],
 			css3: true,
 			scrollingSpeed: 1700,
 			resize : false,
@@ -42,7 +42,7 @@ $(function(){
 			anchors: ['step1', 'step2'],
 			sectionsColor: ['#fff', '#fff'],
 			navigationColor:'#B3B3B3',
-			navigationTooltips:['Basic Details','Profile Details'],
+			navigationTooltips:['',''],
 
 			css3: true,
 			scrollingSpeed: 1700,
@@ -67,5 +67,9 @@ $(function(){
 			loopBottom:true
 		});
 	}
+
+	$(".next").click(function(){
+		$.fn.fullpage.moveSectionDown();
+	})
 
 });

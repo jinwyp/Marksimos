@@ -1,7 +1,7 @@
 <% include ./include/registerheader.html %>
-<body>
+<body ng-app="e4eregister">
 
-	<div id="header">
+	<div id="header" class="white-header" ng-controller="registerHeaderController">
 		<div class="wrap">
 			<div class="e4e-logo">
 				<a href="#">
@@ -13,14 +13,15 @@
 					<img src="/appe4e/img/LOGO-HCDLEARNING-white.png" alt="">
 				</a>
 			</div>
+
 			<div class="languages">
 				<nav class="nav-header">
 					<ul>
-						<li class="active">
-							<a href='#' class="f-bold">中</a>
+						<li ng-class="{'active':!isEnglish}">
+							<a href='' class="f-bold" ng-click="changeLanguage('zh_CN')">中</a>
 						</li>
-						<li>
-							<a href='#' class="f-bold">EN</a>
+						<li ng-class="{'active':isEnglish}">
+							<a href='' class="f-bold" ng-click="changeLanguage('en_US')">EN</a>
 						</li>
 					</ul>
 				</nav>
@@ -34,13 +35,160 @@
 		</div>
 	</div>
 
-	<div id="company-register">
-		<div class="section section-gray" id="section0">a
-		</div>
-		<div class="section section-gray" id="section1">b
-		</div>
-		<div class="section section-gray" id="section2">c
-		</div>
+	<div id="company-register"  ng-controller="companyRegisterController">
+		<form name="loginForm" role="form">
+			<div class="section section-gray" id="section0">
+				<div>
+					<div class="register-title">
+						<h3 class="f-semibold text-center f-size-26">{{'e4eCompanyRegisterTitle' | translate }}</h3>
+					</div>
+					<div class="company-back">
+						<h4 class="f-semibold text-center f-size-20">{{'e4eCompanySecondPageTitle' | translate }}</h4>
+						<div class="form-horizontal">
+							<div class="form-group">
+							    <label for="user-name" class="col-sm-4 control-label">{{'e4eCompanyUserName' | translate }}</label>
+							    <div class="col-sm-6">
+							      <input type="text" class="form-control" id="user-name" placeholder="xxxxxxx">
+							    </div>
+							</div>
+							<div class="form-group">
+							    <label for="company-name" class="col-sm-4 control-label">{{'e4eCompanyCompanyName' | translate }}</label>
+							    <div class="col-sm-6">
+							      <input type="text" class="form-control" id="company-name" placeholder="xxxxxxx">
+							    </div>
+							</div>
+							<div class="form-group">
+							    <label for="holding-company" class="col-sm-4 control-label">{{'e4eCompanyHoldingCompany' | translate }}</label>
+							    <div class="col-sm-6">
+							      <input type="text" class="form-control" id="holding-company" placeholder="xxxxxxx">
+							    </div>
+							</div>
+							<div class="form-group">
+							    <label for="dicision" class="col-sm-4 control-label">{{'e4eCompanyDivision' | translate }}</label>
+							    <div class="col-sm-6">
+							      <input type="text" class="form-control" id="dicision" placeholder="xxxxxxx">
+							    </div>
+							</div>
+							<div class="form-group">
+							    <label for="number-of-e" class="col-sm-4 control-label">{{'e4eCompanyNumberOfEmployees' | translate }}</label>
+							    <div class="col-sm-6">
+							      <input type="text" class="form-control" id="number-of-e" placeholder="xxxxxxx">
+							    </div>
+							</div>
+							<div class="form-group">
+							    <label for="company-address" class="col-sm-4 control-label">{{'e4eCompmayAddress' | translate }}</label>
+							    <div class="col-sm-6">
+							      <input type="text" class="form-control" id="company-address" placeholder="xxxxxxx">
+							    </div>
+							</div>
+							<div class="form-group">
+							    <div class="col-sm-offset-4 col-sm-6">
+							    	<button type="text" class="btn btn-default next">{{'e4eCompanyNext' | translate }}</button>
+							    </div>
+							</div>
+						</div>
+					</div>
+
+				</div>
+			</div>
+			<div class="section section-gray" id="section1">
+				
+				<div>
+					<div class="register-title">
+						<h3 class="f-semibold text-center f-size-26">{{'e4eCompanyRegisterTitle' | translate }}</h3>
+					</div>
+					<div class="company-back">
+						<h4 class="f-semibold text-center f-size-20">{{'e4eCompanyFirstPageTitle' | translate }}</h4>
+						<div class="form-horizontal">
+							<div class="form-group">
+							    <label for="number-of-contact" class="col-sm-4 control-label">{{'e4eCompanyNameOfContactPerson' | translate }}</label>
+							    <div class="col-sm-6">
+							      <input type="text" class="form-control" id="number-of-contact" placeholder="xxxxxxx">
+							    </div>
+							</div>
+							<div class="form-group">
+							    <label for="designation" class="col-sm-4 control-label">{{'e4eCompanyDesignation' | translate }}</label>
+							    <div class="col-sm-6">
+							      <input type="text" class="form-control" id="designation" placeholder="xxxxxxx">
+							    </div>
+							</div>
+							<div class="form-group">
+							    <label for="offical-contact-number" class="col-sm-4 control-label">{{'e4eCompanyOfficalContactNumber' | translate }}</label>
+							    <div class="col-sm-6">
+							      <input type="text" class="form-control" id="offical-contact-number" placeholder="xxxxxxx">
+							    </div>
+							</div>
+							<div class="form-group">
+							    <label for="mobile-number" class="col-sm-4 control-label">{{'e4eCompanyMobileNumber' | translate }}</label>
+							    <div class="col-sm-6">
+							      <input type="text" class="form-control" id="mobile-number" placeholder="xxxxxxx">
+							    </div>
+							</div>
+							<div class="form-group">
+							    <label for="email-id" class="col-sm-4 control-label">{{'e4eCompanyEmailID' | translate }}</label>
+							    <div class="col-sm-6">
+							      <input type="text" class="form-control" id="email-id" placeholder="xxxxxxx">
+							    </div>
+							</div>
+							<div class="form-group">
+							    <div class="col-sm-offset-4 col-sm-6">
+							    	<button type="text" class="btn btn-default next">{{'e4eCompanyNext' | translate }}</button>
+							    </div>
+							</div>
+						</div>
+					</div>
+
+				</div>
+			</div>
+			<div class="section section-gray" id="section2">
+				<div>
+					<div class="register-title">
+						<h3 class="f-semibold text-center f-size-26">{{'e4eCompanyRegisterTitle' | translate }}</h3>
+					</div>
+					<div class="company-back">
+						<h4 class="f-semibold text-center f-size-20">{{'e4eCompanyThirdPageTitle' | translate }}</h4>
+						<div class="form-horizontal">
+							<div class="form-group">
+							    <label for="user-name" class="col-sm-4 control-label">{{'e4eCompanyDivision' | translate }}</label>
+							    <div class="col-sm-6">
+							      <input type="text" class="form-control" id="user-name" placeholder="xxxxxxx">
+							    </div>
+							</div>
+							<div class="form-group">
+							    <label for="company-name" class="col-sm-4 control-label">{{'e4eCompanyFunction' | translate }}</label>
+							    <div class="col-sm-6">
+							      <input type="text" class="form-control" id="company-name" placeholder="xxxxxxx">
+							    </div>
+							</div>
+							<div class="form-group">
+							    <label for="holding-company" class="col-sm-4 control-label">{{'e4eCompanyRole' | translate }}</label>
+							    <div class="col-sm-6">
+							      <input type="text" class="form-control" id="holding-company" placeholder="xxxxxxx">
+							    </div>
+							</div>
+							<div class="form-group">
+							    <label for="dicision" class="col-sm-4 control-label">{{'e4eCompanyNumberOfPositions' | translate }}</label>
+							    <div class="col-sm-6">
+							      <input type="text" class="form-control" id="dicision" placeholder="xxxxxxx">
+							    </div>
+							</div>
+							<div class="form-group">
+							    <label for="number-of-e" class="col-sm-4 control-label">{{'e4eCompanyJobDescription' | translate }}</label>
+							    <div class="col-sm-6">
+							      <input type="text" class="form-control" id="number-of-e" placeholder="xxxxxxx">
+							    </div>
+							</div>
+							<div class="form-group">
+							    <div class="col-sm-offset-4 col-sm-6">
+							    	<button type="submit" class="btn btn-default">{{'e4eCompanySubmit' | translate }}</button>
+							    </div>
+							</div>
+						</div>
+					</div>
+
+				</div>
+			</div>
+		</form>
 	</div>
 </body>
 <% include ./include/registerfooter.html %>
