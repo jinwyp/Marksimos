@@ -897,7 +897,23 @@ app.config(['$translateProvider', function($translateProvider){
         "e4eCompanyRole":"Role",
         "e4eCompanyNumberOfPositions":"Number Of Positions",
         "e4eCompanyJobDescription":"Job Description",
-        "e4eCompanySubmit":"Submit"
+        "e4eCompanySubmit":"Submit",
+
+        "e4eStudentRegisterTitle":"Student Registration",
+        "e4eStudentFirstPageTitle":"Basic Details",
+        "e4eStudentUserName":"User Name",
+        "e4eStudentFirstName":"First Name",
+        "e4eStudentLastName":"Last Name",
+        "e4eStudentAge":"Age",
+        "e4eStudentCountry":"Country",
+        "e4eStudentAddress":"Address",
+        "e4eStudentCommDetail":"Communication Details",
+        "e4eStudentEmail":"Email ID",
+        "e4eStudentQQ":"QQ ID",
+        "e4eStudentNext":"Next",
+
+        "e4eStudentSecondPageTitle":"Profile Details",
+        "e4eStudentSubmit":"Submit"
 
 		
     });
@@ -1801,7 +1817,23 @@ app.config(['$translateProvider', function($translateProvider){
         "e4eCompanyRole":"Role",
         "e4eCompanyNumberOfPositions":"Number Of Positions",
         "e4eCompanyJobDescription":"Job Description",
-        "e4eCompanySubmit":"提交"
+        "e4eCompanySubmit":"提交",
+
+        "e4eStudentRegisterTitle":"学生注册",
+        "e4eStudentFirstPageTitle":"基本信息",
+        "e4eStudentUserName":"User Name",
+        "e4eStudentFirstName":"First Name",
+        "e4eStudentLastName":"Last Name",
+        "e4eStudentAge":"Age",
+        "e4eStudentCountry":"Country",
+        "e4eStudentAddress":"Address",
+        "e4eStudentCommDetail":"Communication Details",
+        "e4eStudentEmail":"Email ID",
+        "e4eStudentQQ":"QQ ID",
+        "e4eStudentNext":"下一步",
+
+        "e4eStudentSecondPageTitle":"Profile Details",
+        "e4eStudentSubmit":"提交"
 		
 
 		

@@ -1,7 +1,7 @@
 <% include ./include/registerheader.html %>
-<body>
+<body ng-app='e4eregister'>
 
-	<div id="header" class="white-header">
+	<div id="header" class="white-header" ng-controller="registerHeaderController">
 		<div class="wrap">
 			<div class="e4e-logo">
 				<a href="#">
@@ -16,11 +16,11 @@
 			<div class="languages">
 				<nav class="nav-header">
 					<ul>
-						<li class="active">
-							<a href='#' class="f-bold">中</a>
+						<li ng-class="{'active':!isEnglish}">
+							<a href='' class="f-bold" ng-click="changeLanguage('zh_CN')">中</a>
 						</li>
-						<li>
-							<a href='#' class="f-bold">EN</a>
+						<li ng-class="{'active':isEnglish}">
+							<a href='' class="f-bold" ng-click="changeLanguage('en_US')">EN</a>
 						</li>
 					</ul>
 				</nav>
@@ -34,10 +34,100 @@
 		</div>
 	</div>
 
-	<div id="student-register">
-		<div class="section section-red" id="section0">a
-		</div>
-		<div class="section section-red" id="section1">b
+	<div id="student-register" ng-controller='studentRegisterController'>
+		<form name="studentRegisterForm" role="form">
+			<div class="section section-red" id="section0">
+				<div>
+					<div class="register-title">
+						<h3 class="f-semibold text-center f-size-26">{{'e4eStudentRegisterTitle' | translate }}</h3>
+					</div>
+					<div class="student-back">
+						<h4 class="f-semibold text-center f-size-20">{{'e4eStudentFirstPageTitle' | translate }}</h4>
+						<div class="form-horizontal">
+							<div class="form-group">
+							    <label for="user-name" class="col-sm-4 control-label">{{'e4eStudentUserName' | translate }}</label>
+							    <div class="col-sm-6">
+							      <input type="text" class="form-control" id="user-name" ng-model='userName' placeholder="xxxxxxx">
+							    </div>
+							</div>
+
+							<div class="form-group">
+							    <label for="first-name" class="col-sm-4 control-label">{{'e4eStudentFirstName' | translate }}</label>
+							    <div class="col-sm-6">
+							      <input type="text" class="form-control" id="first-name" ng-model='firstName' placeholder="xxxxxxx">
+							    </div>
+							</div>
+							<div class="form-group">
+							    <label for="last-name" class="col-sm-4 control-label">{{'e4eStudentLastName' | translate }}</label>
+							    <div class="col-sm-6">
+							      <input type="text" class="form-control" id="last-name" ng-model='lastName' placeholder="xxxxxxx">
+							    </div>
+							</div>
+
+							<div class="form-group">
+							    <label for="age" class="col-sm-4 control-label">{{'e4eStudentAge' | translate }}</label>
+							    <div class="col-sm-6">
+							      <input type="text" class="form-control" id="age" ng-model='age' placeholder="xxxxxxx">
+							    </div>
+							</div>
+
+							<div class="form-group">
+							    <label for="country" class="col-sm-4 control-label">{{'e4eStudentCountry' | translate }}</label>
+							    <div class="col-sm-6">
+							      <input type="text" class="form-control" id="country" ng-model='country' placeholder="xxxxxxx">
+							    </div>
+							</div>
+
+							<div class="form-group">
+							    <label for="address" class="col-sm-4 control-label">{{'e4eStudentAddress' | translate }}</label>
+							    <div class="col-sm-6">
+							      <input type="text" class="form-control" id="address" ng-model='address' placeholder="xxxxxxx">
+							    </div>
+							</div>
+
+							<h4 class="f-semibold text-center f-size-20">{{'e4eStudentCommDetail' | translate }}</h4>
+
+							<div class="form-group">
+							    <label for="email" class="col-sm-4 control-label">{{'e4eStudentEmail' | translate }}</label>
+							    <div class="col-sm-6">
+							      <input type="text" class="form-control" id="email" ng-model='email' placeholder="xxxxxxx">
+							    </div>
+							</div>
+
+							<div class="form-group">
+							    <label for="qq" class="col-sm-4 control-label">{{'e4eStudentQQ' | translate }}</label>
+							    <div class="col-sm-6">
+							      <input type="text" class="form-control" id="qq" ng-model='qq' placeholder="xxxxxxx">
+							    </div>
+							</div>
+
+							<div class="form-group">
+							    <div class="col-sm-offset-4 col-sm-6">
+							    	<button type="text" class="btn btn-default next">{{'e4eCompanyNext' | translate }}</button>
+							    </div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="section section-red" id="section1">
+				<div>
+					<div class="register-title">
+						<h3 class="f-semibold text-center f-size-26">{{'e4eStudentRegisterTitle' | translate }}</h3>
+					</div>
+					<div class="student-back">
+						<h4 class="f-semibold text-center f-size-20">{{'e4eStudentSecondPageTitle' | translate }}</h4>
+						<div class="form-horizontal">
+							<div class="form-group">
+
+							    <div class="col-sm-offset-4 col-sm-6">
+							    	<button class="btn btn-default" ng-click='submitRegister()'>{{'e4eStudentSubmit' | translate }}</button>
+							    </div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
 		</div>
 	</div>
 </body>

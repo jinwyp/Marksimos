@@ -139,6 +139,11 @@ apiRouter.get('/marksimos/api/questionnaire',requireLogin,questionnaireControlle
 apiRouter.put('/marksimos/api/questionnaire',requireLogin,questionnaireController.updateQuestionnaire); 
 
 
+//e4e
+apiRouter.post('/e4e/register/company',require('./e4e/register').companyRegister);
+apiRouter.post('/e4e/register/student',require('./e4e/register').studentRegister);
+
+
 
 
 function requireLogin(req, res, next){
