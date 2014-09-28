@@ -524,7 +524,6 @@
         };
 
 
-
         var chartFormatTool4 = function(chartHttpData) {
             // 使用angular-nvd3 插件的数据格式 Stacked Multi Bar Chart
 
@@ -563,6 +562,7 @@
             }
 
         };
+
 
         var chartFormatTool5 = function(chartHttpData) {
             // 使用angular-nvd3 插件的数据格式   only for C2 Perception Maps Scatter Chart 散点图
@@ -630,7 +630,7 @@
                         'x' : Math.round(value.valuePerception * 100) / 100,
                         'y' : Math.round(value.imagePerception * 100) / 100,
                         'size' : 0.5,
-                        'name' : key + 1 + ' ' + value.segmentName,
+                        'name' : showTranslateTextConsumerSegmentName(value.segmentName),
                         'tooltips' : [],
                         'shape' : 'diamond'
                     };
@@ -833,7 +833,6 @@
             // Chart C2
             perceptionMap : function(){
                 return $http.get(apiPath + 'chart/perception_map').then(function(result){
-                console.log(result.data);
                     console.log(chartFormatTool5(result.data));
                     return chartFormatTool5(result.data);
                 })["catch"](errorHandler);

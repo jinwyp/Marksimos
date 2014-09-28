@@ -311,10 +311,40 @@ marksimosapp.controller('chartController', ['$translate', '$scope', '$rootScope'
         };
     };
 
+    // 处理当前的公司名称
+    function C31TooltipContentShowCompanyNameColor(fieldname) {
+        var names = {
+            'A': function() {
+                return $scope.data.chartC21PerceptionMap.color[0];
+            },
+            'B': function() {
+                return $scope.data.chartC21PerceptionMap.color[1];
+            },
+            'C': function() {
+                return $scope.data.chartC21PerceptionMap.color[2];
+            },
+            'D': function() {
+                return $scope.data.chartC21PerceptionMap.color[3];
+            },
+            'E': function() {
+                return $scope.data.chartC21PerceptionMap.color[4];
+            },
+            'F': function() {
+                return $scope.data.chartC21PerceptionMap.color[5];
+            }
+
+        };
+        if (typeof names[fieldname] !== 'function') {
+            return false;
+        }
+        return names[fieldname]();
+    }
+
     $scope.C31TooltipContent = function(){
         return function(key, x, y, e, graph) {
 
-            var iconColor = $scope.data.chartC21PerceptionMap.color[e.seriesIndex];
+            console.log(key, x, y, e);
+            var iconColor ;
             var htmlResult = '';
 
             var arrow0 = 'glyphicon-arrow-right';
@@ -327,6 +357,8 @@ marksimosapp.controller('chartController', ['$translate', '$scope', '$rootScope'
             var arrow7 = 'glyphicon-arrow-right';
 
             if(e.point.tooltips.length > 0){
+                iconColor = C31TooltipContentShowCompanyNameColor(e.point.CompanyName);
+
                 if(e.point.tooltips[0].compareWithPreviousPeriod === 1){
                     arrow0 = 'glyphicon-arrow-up';
                 }else if(e.point.tooltips[0].compareWithPreviousPeriod === -1){
@@ -396,7 +428,8 @@ marksimosapp.controller('chartController', ['$translate', '$scope', '$rootScope'
                     '</ul></div>' ;
 
             }else {
-                htmlResult = '<h5><span class="perception_logo" style="background-color:' + iconColor + '"></span>' + key + ' ' + e.point.name + '</h5>';
+                iconColor = $scope.data.chartC21PerceptionMap.color[6];
+                htmlResult = '<h5><span class="perception_logo" style="background-color:' + iconColor + '"></span>'  + ' ' + e.point.name + '</h5>';
             }
 
 
