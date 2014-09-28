@@ -360,7 +360,8 @@
                             chartResult.series.push(value.SKUName.substring(0,1));
                         }
                     }else{
-                        chartResult.series.push(value.segmentName);
+                        // C44 segment_value_share_total_market
+                        chartResult.series.push(showTranslateTextConsumerSegmentName(value.segmentName));
                     }
                 });
 
@@ -392,7 +393,7 @@
                         }
 
                     }else{
-                        oneBarData.x = value.segmentName;
+                        oneBarData.x = showTranslateTextConsumerSegmentName(value.segmentName);
 
                         if(decimalNumber === 0){
                             oneBarData.y.push(Math.round(value.value * 100) / 100 );
@@ -403,7 +404,6 @@
 
                     chartResult.data.push(oneBarData);
                 });
-
                 return angular.copy(chartResult);
 
 
@@ -439,7 +439,6 @@
                         chartResult.series.push(showTranslateTextCompanyName(value));
                     });
                 }
-
 
                 return angular.copy(chartResult);
 
@@ -571,6 +570,8 @@
 //        chartResult.data = [];
             chartResult.dataSKU = [];
             chartResult.dataBrand = [];
+            chartResult.series = [];
+            chartResult.data = [];
 
             if(angular.isArray(chartHttpData) ){
 
@@ -639,6 +640,7 @@
 
                 chartResult.dataSKU.push(oneSegment);
                 chartResult.dataBrand.push(oneSegment);
+
 
                 return angular.copy(chartResult);
             }
@@ -831,7 +833,8 @@
             // Chart C2
             perceptionMap : function(){
                 return $http.get(apiPath + 'chart/perception_map').then(function(result){
-//                console.log(result.data);
+                console.log(result.data);
+                    console.log(chartFormatTool5(result.data));
                     return chartFormatTool5(result.data);
                 })["catch"](errorHandler);
             },
