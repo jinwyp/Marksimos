@@ -138,6 +138,33 @@ $color_main_body_user_manual_table_2n:#f8f8f8;
 
 }
 
+@mixin icon_arrow_up {
+    background-image: url(../images/arrowup.png);
+    background-repeat: no-repeat;
+    background-position: 0px 0px;
+    @include inline-block;
+    width: 13px;
+    height: 13px;
+}
+@mixin icon_arrow_right {
+    background-image: url(../images/arrowright.png);
+    background-repeat: no-repeat;
+    background-position: 0px 0px;
+    @include inline-block;
+    width: 13px;
+    height: 13px;
+}
+
+@mixin icon_arrow_down {
+    background-image: url(../images/arrowdown.png);
+    background-repeat: no-repeat;
+    background-position: 0px 0px;
+    @include inline-block;
+    width: 13px;
+    height: 13px;
+}
+
+
 
 @mixin icon_user_brand {
     color: $color_main_body_brand;
@@ -1394,7 +1421,7 @@ body{
                 background-color: $color_main_body_user_chart_perception_map_bg;
             }
             .perception_info{
-                width: 180px;
+                width: 155px;
                 display: inline-block;
             }
             .perception_info_number{
@@ -1406,6 +1433,15 @@ body{
                 margin: 0px 5px 0px 0px ;
                 background-color: #0000FF;
                 display: inline-block;
+            }
+            .perception_arrow_up{
+                @include icon_arrow_up;
+            }
+            .perception_arrow_right{
+                @include icon_arrow_right;
+            }
+            .perception_arrow_down{
+                @include icon_arrow_down;
             }
         }
 

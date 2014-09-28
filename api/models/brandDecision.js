@@ -6,6 +6,7 @@ var logger = require('../../common/logger.js');
 var spendingDetailsAssembler = require('../dataAssemblers/spendingDetails.js');
 var util = require('util');
 var companyDecisionModel      = require('./companyDecision.js');
+var _                        = require('underscore');
 
 var tOneBrandDecisionSchema = new Schema({
     seminarId: String,
@@ -67,49 +68,62 @@ tOneBrandDecisionSchema.pre('save', true, function(next, done){
 });
 
 //not only validate name, but also validate if this brand is allowed to created 
-function validateBrandName(field, curBrandecision, done){
-    if(curBrandecision.d_BrandName.length > 5){
+function validateBrandName(field, curBrandDecision, done){
+    if(curBrandDecision.d_BrandName.length > 5){
         var err = new Error('Out of Brand name range');
         err.message = 'Out of Brand name range';
         return done(err);
     }
 
-    exports.findAllInCompany(curBrandecision.seminarId, curBrandecision.period, curBrandecision.d_CID).then(function(Brands){
-        var maxBrandID = 1;
-        Brands.forEach(function(Brand){
-            if(Brand.d_BrandID > maxBrandID){
-                maxBrandID = Brand.d_BrandID;
-            }
-        })
-        
-        if(maxBrandID.toString()[maxBrandID.toString().length-1] === '5'){ 
-            return done(new Error("You already have 5 Brands."));
 
+    Q.spread([
+        exports.findAllInCompany(curBrandDecision.seminarId, curBrandDecision.period, curBrandDecision.d_CID),       
+        companyDecisionModel.findOne(curBrandDecision.seminarId, curBrandDecision.period, curBrandDecision.d_CID)
+    ], function(Brands, parentCompany){
+        var allDefaultBrandIDs = [];
+        for (var i = 1; i < 6; i++) {
+            var ID = curBrandDecision.d_CID * 10 + parseInt(i);
+            allDefaultBrandIDs.push(ID);
+        };
+        
+        var availableBrandIDs = _.difference(allDefaultBrandIDs, parentCompany.d_BrandsDecisions);  
+
+        if(availableBrandIDs.length == 0){
+            return done(new Error("You already have 5 Brands."));
+        } else {
+            //ideally preferred ID should be existed biggest ID + 1
+            var preferredID = curBrandDecision.d_CID * 10;
+            parentCompany.d_BrandsDecisions.forEach(function(ID){
+                if(ID > preferredID){
+                    preferredID = ID;
+                }
+            })
+            preferredID = preferredID + 1;
+
+            //to see that if there is preferred in the available Brand list
+            if(availableBrandIDs.some(function(id){
+              return id == preferredID;  
+            })){
+                curBrandDecision.d_BrandID = preferredID;
+            } else {
+                curBrandDecision.d_BrandID = availableBrandIDs[0];
+            }
         }
-                
-        //logger.log('d_BrandName:' + curBrandecision.d_BrandName + ', Brands:' + Brands);
+               
         var isNameExisted = Brands.some(function(Brand){             
-            return Brand.d_BrandName == curBrandecision.d_BrandName; 
+            return Brand.d_BrandName == curBrandDecision.d_BrandName; 
         });
 
         if(isNameExisted){
-            return done(new Error('Name existed.'));            
+            return done(new Error('Name existed.'));    
         } else {
-            //TODO: if kernel discontinue some brand/sku without re-organise ID, logic below will get screwed             
-            if(maxBrandID != 1){
-                curBrandecision.d_BrandID = maxBrandID + 1;    
-            //curBrandecision.d_SKUsDecisions.push((maxBrandID+1)*10 + 1);
-            //this is first one Brand under company? 
-            } else {
-                done(new Error('This is first one Brand under company??'));
-            }
-            curBrandecision.bs_PeriodOfBirth = curBrandecision.period;
-            done();
-        }
-
+            curBrandDecision.bs_PeriodOfBirth = curBrandDecision.period;
+            done();                    
+        }        
     }, function(err){
         done(err);
-    });
+    }).done();
+
 }
 
 exports.remove =  function(seminarId, period, companyId, brandId){
@@ -213,6 +227,7 @@ exports.create = function(decision){
                 if(isIDExisted){ return deferred.reject(new Error('find Duplicate BrandID in the companyDecision.d_BrandsDecisions!')); }
 
                 companyDoc.d_BrandsDecisions.push(brandDoc.d_BrandID);
+                companyDoc.d_BrandsDecisions.sort(function(a, b){ return a - b; });
                 companyDoc.save(function(err){
                     if(err){ return deferred.reject(err); }
                     else{ return deferred.resolve(brandDoc.d_BrandID); }

@@ -17,7 +17,9 @@ marksimosapp.controller('chartController', ['$translate', '$scope', '$rootScope'
 
     $rootScope.$on('$translateChangeSuccess', function () {
         app.loadingChartData();
+
     });
+
 
 
 
@@ -311,92 +313,124 @@ marksimosapp.controller('chartController', ['$translate', '$scope', '$rootScope'
         };
     };
 
+    // 处理当前的公司名称的颜色
+    function C31TooltipContentShowCompanyNameColor(fieldname) {
+        var names = {
+            'A': function() {
+                return $scope.data.chartC21PerceptionMap.color[0];
+            },
+            'B': function() {
+                return $scope.data.chartC21PerceptionMap.color[1];
+            },
+            'C': function() {
+                return $scope.data.chartC21PerceptionMap.color[2];
+            },
+            'D': function() {
+                return $scope.data.chartC21PerceptionMap.color[3];
+            },
+            'E': function() {
+                return $scope.data.chartC21PerceptionMap.color[4];
+            },
+            'F': function() {
+                return $scope.data.chartC21PerceptionMap.color[5];
+            }
+
+        };
+        if (typeof names[fieldname] !== 'function') {
+            return false;
+        }
+        return names[fieldname]();
+    }
+
     $scope.C31TooltipContent = function(){
         return function(key, x, y, e, graph) {
 
-            var iconColor = $scope.data.chartC21PerceptionMap.color[e.seriesIndex];
+            var iconColor ;
             var htmlResult = '';
 
-            var arrow0 = 'glyphicon-arrow-right';
-            var arrow1 = 'glyphicon-arrow-right';
-            var arrow2 = 'glyphicon-arrow-right';
-            var arrow3 = 'glyphicon-arrow-right';
-            var arrow4 = 'glyphicon-arrow-right';
-            var arrow5 = 'glyphicon-arrow-right';
-            var arrow6 = 'glyphicon-arrow-right';
-            var arrow7 = 'glyphicon-arrow-right';
+            var arrow0 = 'perception_arrow_right';
+            var arrow1 = 'perception_arrow_right';
+            var arrow2 = 'perception_arrow_right';
+            var arrow3 = 'perception_arrow_right';
+            var arrow4 = 'perception_arrow_right';
+            var arrow5 = 'perception_arrow_right';
+            var arrow6 = 'perception_arrow_right';
+            var arrow7 = 'perception_arrow_right';
 
             if(e.point.tooltips.length > 0){
+                iconColor = C31TooltipContentShowCompanyNameColor(e.point.CompanyName);
+
                 if(e.point.tooltips[0].compareWithPreviousPeriod === 1){
-                    arrow0 = 'glyphicon-arrow-up';
+                    arrow0 = 'perception_arrow_up';
                 }else if(e.point.tooltips[0].compareWithPreviousPeriod === -1){
-                    arrow0 = 'glyphicon-arrow-down';
+                    arrow0 = 'perception_arrow_down';
                 }
 
                 if(e.point.tooltips[1].compareWithPreviousPeriod === 1){
-                    arrow1 = 'glyphicon-arrow-up';
+                    arrow1 = 'perception_arrow_up';
                 }else if(e.point.tooltips[1].compareWithPreviousPeriod === -1){
-                    arrow1 = 'glyphicon-arrow-down';
+                    arrow1 = 'perception_arrow_down';
                 }
 
                 if(e.point.tooltips[2].compareWithPreviousPeriod === 1){
-                    arrow2 = 'glyphicon-arrow-up';
+                    arrow2 = 'perception_arrow_up';
                 }else if(e.point.tooltips[2].compareWithPreviousPeriod === -1){
-                    arrow2 = 'glyphicon-arrow-down';
+                    arrow2 = 'perception_arrow_down';
                 }
 
                 if(e.point.tooltips[3].compareWithPreviousPeriod === 1){
-                    arrow3 = 'glyphicon-arrow-up';
+                    arrow3 = 'perception_arrow_up';
                 }else if(e.point.tooltips[3].compareWithPreviousPeriod === -1){
-                    arrow3 = 'glyphicon-arrow-down';
+                    arrow3 = 'perception_arrow_down';
                 }
 
                 if(e.point.tooltips[4].compareWithPreviousPeriod === 1){
-                    arrow4 = 'glyphicon-arrow-up';
+                    arrow4 = 'perception_arrow_up';
                 }else if(e.point.tooltips[4].compareWithPreviousPeriod === -1){
-                    arrow4 = 'glyphicon-arrow-down';
+                    arrow4 = 'perception_arrow_down';
                 }
 
                 if(e.point.tooltips[5].compareWithPreviousPeriod === 1){
-                    arrow5 = 'glyphicon-arrow-up';
+                    arrow5 = 'perception_arrow_up';
                 }else if(e.point.tooltips[5].compareWithPreviousPeriod === -1){
-                    arrow5 = 'glyphicon-arrow-down';
+                    arrow5 = 'perception_arrow_down';
                 }
 
                 if(e.point.tooltips[6].compareWithPreviousPeriod === 1){
-                    arrow6 = 'glyphicon-arrow-up';
+                    arrow6 = 'perception_arrow_up';
                 }else if(e.point.tooltips[6].compareWithPreviousPeriod === -1){
-                    arrow6 = 'glyphicon-arrow-down';
+                    arrow6 = 'perception_arrow_down';
                 }
 
                 if(e.point.tooltips[7].compareWithPreviousPeriod === 1){
-                    arrow7 = 'glyphicon-arrow-up';
+                    arrow7 = 'perception_arrow_up';
                 }else if(e.point.tooltips[7].compareWithPreviousPeriod === -1){
-                    arrow7 = 'glyphicon-arrow-down';
+                    arrow7 = 'perception_arrow_down';
                 }
 
                 htmlResult = '<div class="panel panel-default perception_panel"> <div class="panel-heading"><span class="perception_logo" style="background-color:' + iconColor + '"></span>' + key + ' - ' + e.point.name + '  </div>' +
                     '<ul class="list-group">' +
-                    '<li class="list-group-item perception_list"><span class="perception_info">Market Share (Value %)  </span><span class="perception_info_number">' + Math.round(e.point.tooltips[0].value * 10000) / 100 +
-                    '</span><span class="glyphicon ' + arrow0 + ' "></span></li>' +
-                    '<li class="list-group-item perception_list perception_list_bg"><span class="perception_info">Average Display Price   </span><span class="perception_info_number">' + Math.round(e.point.tooltips[1].value * 100) / 100 +
-                    '</span><span class="glyphicon ' + arrow1 + ' "></span></li>' +
-                    '<li class="list-group-item perception_list"><span class="perception_info">Applied Technology Index </span><span class="perception_info_number">' + e.point.tooltips[2].value +
-                    '</span><span class="glyphicon ' + arrow2 + ' "></span></li>' +
-                    '<li class="list-group-item perception_list perception_list_bg"><span class="perception_info">Ingredients Quality Index</span><span class="perception_info_number">' + e.point.tooltips[3].value +
-                    '</span><span class="glyphicon ' + arrow3 + ' "></span></li>' +
-                    '<li class="list-group-item perception_list"><span class="perception_info">Awareness (%)            </span><span class="perception_info_number">' + Math.round(e.point.tooltips[4].value * 10000) / 100 +
-                    '</span><span class="glyphicon ' + arrow4 + ' "></span></li>' +
-                    '<li class="list-group-item perception_list perception_list_bg"><span class="perception_info">Shelf Space (%)          </span><span class="perception_info_number">' + Math.round(e.point.tooltips[5].value * 10000) / 100 +
-                    '</span><span class="glyphicon ' + arrow5 + ' "></span></li>' +
-                    '<li class="list-group-item perception_list"><span class="perception_info">Value Perception Change </span><span class="perception_info_number">' + Math.round(e.point.tooltips[6].value * 100) / 100 +
-                    '</span><span class="glyphicon ' + arrow6 + ' "></span></li>' +
-                    '<li class="list-group-item perception_list perception_list_bg"><span class="perception_info">Image Perception Change </span><span class="perception_info_number">' + Math.round(e.point.tooltips[7].value * 100) / 100 +
-                    '</span><span class="glyphicon ' + arrow7 + ' "></span></li>' +
+                    '<li class="list-group-item perception_list"><span class="perception_info">' +  $translate.instant('ReportPerceptionMapHoverTooltipMarketShareValue') + '</span><span class="perception_info_number">' + Math.round(e.point.tooltips[0].value * 10000) / 100 +
+                    '%</span><span class=" ' + arrow0 + ' "></span></li>' +
+                    '<li class="list-group-item perception_list perception_list_bg"><span class="perception_info">' +  $translate.instant('ReportPerceptionMapHoverTooltipAverageDisplayPrice') + '</span><span class="perception_info_number">' + Math.round(e.point.tooltips[1].value * 100) / 100 +
+                    '</span><span class=" ' + arrow1 + ' "></span></li>' +
+                    '<li class="list-group-item perception_list"><span class="perception_info">' +  $translate.instant('ReportPerceptionMapHoverTooltipAppliedTechnologyIndex') + '</span><span class="perception_info_number">' + e.point.tooltips[2].value +
+                    '</span><span class=" ' + arrow2 + ' "></span></li>' +
+                    '<li class="list-group-item perception_list perception_list_bg"><span class="perception_info">' +  $translate.instant('ReportPerceptionMapHoverTooltipIngredientsQualityIndex') + '</span><span class="perception_info_number">' + e.point.tooltips[3].value +
+                    '</span><span class=" ' + arrow3 + ' "></span></li>' +
+                    '<li class="list-group-item perception_list"><span class="perception_info">' +  $translate.instant('ReportPerceptionMapHoverTooltipAwareness') + '</span><span class="perception_info_number">' + Math.round(e.point.tooltips[4].value * 10000) / 100 +
+                    '%</span><span class=" ' + arrow4 + ' "></span></li>' +
+                    '<li class="list-group-item perception_list perception_list_bg"><span class="perception_info">' +  $translate.instant('ReportPerceptionMapHoverTooltipShelfSpace') + '</span><span class="perception_info_number">' + Math.round(e.point.tooltips[5].value * 10000) / 100 +
+                    '%</span><span class=" ' + arrow5 + ' "></span></li>' +
+                    '<li class="list-group-item perception_list"><span class="perception_info">' +  $translate.instant('ReportPerceptionMapHoverTooltipValuePerceptionChange') + '</span><span class="perception_info_number">' + Math.round(e.point.tooltips[6].value * 100) / 100 +
+                    '</span><span class=" ' + arrow6 + ' "></span></li>' +
+                    '<li class="list-group-item perception_list perception_list_bg"><span class="perception_info">' +  $translate.instant('ReportPerceptionMapHoverTooltipImagePerceptionChange') + '</span><span class="perception_info_number">' + Math.round(e.point.tooltips[7].value * 100) / 100 +
+                    '</span><span class=" ' + arrow7 + ' "></span></li>' +
                     '</ul></div>' ;
 
             }else {
-                htmlResult = '<h5><span class="perception_logo" style="background-color:' + iconColor + '"></span>' + key + ' ' + e.point.name + '</h5>';
+                iconColor = $scope.data.chartC21PerceptionMap.color[6];
+                htmlResult = '<h5><span class="perception_logo" style="background-color:' + iconColor + '"></span>'  + ' ' + e.point.name + '</h5>';
             }
 
 

@@ -360,7 +360,8 @@
                             chartResult.series.push(value.SKUName.substring(0,1));
                         }
                     }else{
-                        chartResult.series.push(value.segmentName);
+                        // C44 segment_value_share_total_market
+                        chartResult.series.push(showTranslateTextConsumerSegmentName(value.segmentName));
                     }
                 });
 
@@ -392,7 +393,7 @@
                         }
 
                     }else{
-                        oneBarData.x = value.segmentName;
+                        oneBarData.x = showTranslateTextConsumerSegmentName(value.segmentName);
 
                         if(decimalNumber === 0){
                             oneBarData.y.push(Math.round(value.value * 100) / 100 );
@@ -403,7 +404,6 @@
 
                     chartResult.data.push(oneBarData);
                 });
-
                 return angular.copy(chartResult);
 
 
@@ -439,7 +439,6 @@
                         chartResult.series.push(showTranslateTextCompanyName(value));
                     });
                 }
-
 
                 return angular.copy(chartResult);
 
@@ -525,7 +524,6 @@
         };
 
 
-
         var chartFormatTool4 = function(chartHttpData) {
             // 使用angular-nvd3 插件的数据格式 Stacked Multi Bar Chart
 
@@ -565,12 +563,15 @@
 
         };
 
+
         var chartFormatTool5 = function(chartHttpData) {
             // 使用angular-nvd3 插件的数据格式   only for C2 Perception Maps Scatter Chart 散点图
 //        chartResult.series = [];
 //        chartResult.data = [];
             chartResult.dataSKU = [];
             chartResult.dataBrand = [];
+            chartResult.series = [];
+            chartResult.data = [];
 
             if(angular.isArray(chartHttpData) ){
 
@@ -629,7 +630,7 @@
                         'x' : Math.round(value.valuePerception * 100) / 100,
                         'y' : Math.round(value.imagePerception * 100) / 100,
                         'size' : 0.5,
-                        'name' : key + 1 + ' ' + value.segmentName,
+                        'name' : showTranslateTextConsumerSegmentName(value.segmentName),
                         'tooltips' : [],
                         'shape' : 'diamond'
                     };
@@ -639,6 +640,7 @@
 
                 chartResult.dataSKU.push(oneSegment);
                 chartResult.dataBrand.push(oneSegment);
+
 
                 return angular.copy(chartResult);
             }
@@ -831,7 +833,6 @@
             // Chart C2
             perceptionMap : function(){
                 return $http.get(apiPath + 'chart/perception_map').then(function(result){
-//                console.log(result.data);
                     return chartFormatTool5(result.data);
                 })["catch"](errorHandler);
             },
