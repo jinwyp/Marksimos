@@ -388,10 +388,9 @@ function validateAvailableBudget(field, curSKUDecision, done){
 //TODO: need to test if "process.nextTick(done(err))" works
 function validatePackSize(field, curSKUDecision, done){
     if((curSKUDecision[field] != 0) && (curSKUDecision[field] != 1) && (curSKUDecision[field] != 2)){
-
         var err = new Error('Input is out of range');
         err.message = 'Pack format must be SMALL/STANDARD/BIG';
-        process.nextTick(done(err));
+        done(err);
     } else {
         process.nextTick(done);
     }
@@ -410,7 +409,12 @@ function validateToDrop(field, curSKUDecision, done){
 }
 
 function validateTargetConsumerSegment(field, curSKUDecision, done){
-    process.nextTick(done);
+    if((curSKUDecision[field] < 1) || curSKUDecision[field] > 6){
+        var err = new Error('Input is out of range');
+        done(err);
+    } else {
+        process.nextTick(done);        
+    }
 }
 
 function validatePromotionalEpisodes(field, curSKUDecision, done){
