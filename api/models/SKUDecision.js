@@ -135,38 +135,54 @@ function validateSKUName(field, curSKUDecision, done){
         return done(err);
     }
 
-    exports.findAllInBrand(curSKUDecision.seminarId, curSKUDecision.period, curSKUDecision.d_CID, curSKUDecision.d_BrandID).then(function(SKUs){
-        var maxSKUID = 1;
-        SKUs.forEach(function(SKU){
-            if(SKU.d_SKUID > maxSKUID){
-                maxSKUID = SKU.d_SKUID;
+    Q.spread([
+        exports.findAllInBrand(curSKUDecision.seminarId, curSKUDecision.period, curSKUDecision.d_CID, curSKUDecision.d_BrandID),
+        brandDecisionModel.findOne(curSKUDecision.seminarId, curSKUDecision.period, curSKUDecision.d_CID, curSKUDecision.d_BrandID)
+    ], function(SKUs, parentBrand){
+        var allDefaultSKUIDs = [];
+        for (var i = 1; i < 6; i++) {
+            var ID = curSKUDecision.d_BrandID * 10 + parseInt(i);
+            allDefaultSKUIDs.push(ID);
+        };
+        var availableSKUIDs = _.difference(allDefaultSKUIDs, parentBrand.d_SKUsDecisions);     
+
+        if(availableSKUIDs.length == 0){
+            return done(new Error("You already have 5 SKUs."));
+        } else {
+            //ideally preferred ID should be existed biggest ID + 1
+            var preferredID = curSKUDecision.d_BrandID * 10;
+            parentBrand.d_SKUsDecisions.forEach(function(ID){
+                if(ID > preferredID){
+                    preferredID = ID;
+                }
+            })
+            preferredID = preferredID + 1;
+
+            //to see that if there is preferred in the available SKU list
+            if(availableSKUIDs.some(function(id){
+              return id == preferredID;  
+            })){
+                curSKUDecision.d_SKUID = preferredID;
+            } else {
+                curSKUDecision.d_SKUID = availableSKUIDs[0];
             }
-        })
-        
-        if(maxSKUID.toString()[maxSKUID.toString().length-1] === '5'){ return done(new Error("You already have 5 SKUs."));}
-                
-        //logger.log('d_SKUName:' + curSKUDecision.d_SKUName + ', SKUs:' + SKUs);
+        }
+               
         var isNameExisted = SKUs.some(function(sku){             
             return sku.d_SKUName == curSKUDecision.d_SKUName; 
         });
 
         if(isNameExisted){
-            return done(new Error('Name existed.'));            
+            return done(new Error('Name existed.'));    
         } else {
-            //TODO: if kernel discontinue some brand/sku without re-organise ID, logic below will get screwed                         
-            if(maxSKUID != 1){
-                curSKUDecision.d_SKUID = maxSKUID + 1;                
-            //this is first one SKU under brand 
-            } else {
-                curSKUDecision.d_SKUID = curSKUDecision.d_BrandID * 10 + maxSKUID;                
-            }
             curSKUDecision.bs_PeriodOfBirth = curSKUDecision.period;
-            done();
+            done();                    
         }
 
     }, function(err){
         done(err);
     });
+
 }
 
 //step 1: decide portfolio (UnitCost will be decide)
@@ -543,6 +559,7 @@ exports.create = function(decision){
 
                 //logger.log('push :' + skuDoc.d_SKUID + ', typeof:' + typeof skuDoc.d_SKUID);
                 brandDoc.d_SKUsDecisions.push(skuDoc.d_SKUID);
+                brandDoc.d_SKUsDecisions.sort(function(a, b){ return a - b; });
                 brandDoc.save(function(err){
                     if(err){ return deferred.reject(err); }
                     else { return deferred.resolve({message: 'SKU has been added.'}); }
