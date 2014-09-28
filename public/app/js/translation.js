@@ -959,7 +959,16 @@ app.config(['$translateProvider', function($translateProvider){
         "e4eStudentNext":"Next",
 
         "e4eStudentSecondPageTitle":"Profile Details",
-        "e4eStudentSubmit":"Submit"
+        "e4eStudentSubmit":"Submit",
+
+        "e4eSuccessCon":"Congratulations",
+        "e4eSuccessConInfo":"You have ssccessfully registered",
+        "e4eSuccessConInfoLast":"with HCD Learning",
+        "e4eSuccessPassword":"Password has been sent to your email",
+        "e4eSuccessProceed":"Please proceed to",
+        "e4eSuccessUpdate":"and update the jobprofiles and select winningstudents for your company",
+        "e4eSuccessLogin":"to login and participate the MarkSimos game"
+
 
 		
     });
@@ -1922,7 +1931,15 @@ app.config(['$translateProvider', function($translateProvider){
         "e4eStudentNext":"下一步",
 
         "e4eStudentSecondPageTitle":"Profile Details",
-        "e4eStudentSubmit":"提交"
+        "e4eStudentSubmit":"提交",
+
+        "e4eSuccessCon":"恭喜你",
+        "e4eSuccessConInfo":"你已经成功注册",
+        "e4eSuccessConInfoLast":"到 HCD Learning",
+        "e4eSuccessPassword":"Password has been sent to your email",
+        "e4eSuccessProceed":"Please proceed to",
+        "e4eSuccessUpdate":"and update the jobprofiles and select winningstudents for your company",
+        "e4eSuccessLogin":"to login and participate the MarkSimos game"
 		
 
 		
