@@ -179,6 +179,7 @@
     top: 212px;
     z-index: 999;
     text-align: center;
+    width: 166px;
 }
 .congratulations-info{
 	font-size: 20px;
@@ -187,6 +188,7 @@
 	top:280px;
 	z-index: 999;
 	text-align: center;
+	width: 320px;
 }
 .company-success-color{
 	color: #5D88BD;
