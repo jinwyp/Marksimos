@@ -873,6 +873,15 @@ app.config(['$translateProvider', function($translateProvider){
 
 
         /*e4e register*/
+        "e4eRegisterGetStart":"Get Start",
+        "e4eRegisterFindStage":"We Help Students find their own stage",
+        "e4eRegisterLetsStart":"Let's start",
+        "e4eRegisterRightNow":"Right now",
+        "e4eRegisterSignUp":"Sign Up",
+        "e4eRegisterLogin":"LOGIN",
+
+
+
         "e4eCompanyRegisterTitle":"Company Registration",
         "e4eCompanyFirstPageTitle":"Company Details",
         "e4eCompanyUserName":"User Name",
@@ -1793,6 +1802,14 @@ app.config(['$translateProvider', function($translateProvider){
         "ManualPageDownload":"下载",
 
         /*e4e register*/
+        "e4eRegisterGetStart":"现在开始",
+        "e4eRegisterFindStage":"我们帮助学生找到自己的舞台",
+        "e4eRegisterLetsStart":"开始",
+        "e4eRegisterRightNow":"现在",
+        "e4eRegisterSignUp":"注册",
+        "e4eRegisterLogin":"登录",
+
+
         "e4eCompanyRegisterTitle":"公司注册",
         "e4eCompanyFirstPageTitle":"公司基本信息",
         "e4eCompanyUserName":"User Name",

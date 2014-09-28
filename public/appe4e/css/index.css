@@ -412,7 +412,7 @@
 	line-height: 14px;
 }
 .sign-up{
-	background: url("../img/sign-up.png") no-repeat;
+    background-color: #FF441C;
     font-size: 16px;
     padding: 6px 31px;
     display: inline-block;
@@ -421,9 +421,10 @@
 	color: #fff;
 }
 .login{
-	background: url("../img/login.png") no-repeat;
+    border: 3px solid #FF441C;
+    background-color: #fff;
     font-size: 16px;
-    padding: 6px 38px;
+    padding: 3px 28px;
     display: inline-block;
 }
 .login a{

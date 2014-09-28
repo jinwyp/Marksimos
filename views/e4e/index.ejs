@@ -1,5 +1,5 @@
 <% include ./include/indexheader.html %>
-<body>
+<body ng-app='e4eregister'  ng-controller="registerHeaderController">
 
 	<div id="header">
 		<div class="wrap">
@@ -16,18 +16,18 @@
 			<div class="languages">
 				<nav class="nav-header">
 					<ul>
-						<li class="active">
-							<a href='#' class="f-bold">中</a>
+						<li ng-class="{'active':!isEnglish}">
+							<a href='' class="f-bold" ng-click="changeLanguage('zh_CN')">中</a>
 						</li>
-						<li>
-							<a href='#' class="f-bold">EN</a>
+						<li ng-class="{'active':isEnglish}">
+							<a href='' class="f-bold" ng-click="changeLanguage('en_US')">EN</a>
 						</li>
 					</ul>
 				</nav>
 			</div>
 
 			<div class="start-btn">
-				<a href="#" class="f-bold">Get Start</a>
+				<a href="#" class="f-bold">{{'e4eRegisterGetStart' | translate }}</a>
 			</div>
 
 		</div>
@@ -54,7 +54,7 @@
 				</div>
 				<div class="clearfix"></div>
 				<div class="section-0-info">
-					<p class="text-center f-semibold">We Help Students find their own stage</p>
+					<p class="text-center f-semibold">{{'e4eRegisterFindStage' | translate }}</p>
 				</div>
 			</div>
 		</div>
@@ -91,27 +91,28 @@
 			<div class="absolute-item section-2-6 fade-in-up"></div>
 			<div class="absolute-item section-2-7 fade-in-right"></div>
 			<div class="login-box">
-				<h1 class="f-bold">Let's start</h1>
-				<h1 class="f-bold append-bottom-12">Right now</h1>
-				<h3 class="f-bold">We Help Students find their own stage</h3>
+				<h1 class="f-bold" ng-show='isEnglish'>{{'e4eRegisterLetsStart' | translate }}</h1>
+				<h1 class="f-bold append-bottom-12" ng-show='isEnglish'>{{'e4eRegisterRightNow' | translate }}</h1>
+				<h1 class="f-bold append-bottom-12" ng-show='!isEnglish'>{{'e4eRegisterRightNow' | translate }}{{'e4eRegisterLetsStart' | translate }}</h1>
+				<h3 class="f-bold">{{'e4eRegisterFindStage' | translate }}</h3>
 				<div class="clear append-top-12 append-bottom-12"></div>
 				<div class="sign-up">
-					<a href="#" class="f-bold">SIGN UP</a>
+					<a href="#" class="f-bold">{{'e4eRegisterSignUp' | translate }}</a>
 				</div>
 				<div class="login">
-					<a href="#" class="f-bold">LOGIN</a>
+					<a href="#" class="f-bold">{{'e4eRegisterLogin' | translate }}</a>
 				</div>
 				<div class="clear append-top-12 append-bottom-12"></div>
-				<div class="facebook append-left-12">
+				<div class="facebook" ng-class="{true:'append-left-24',false:'append-left-6'}[isEnglish]">
 					<a href='#'></a>
 				</div>
-				<div class="baidu append-left-24">
+				<div class="baidu" ng-class="{true:'append-left-12',false:'append-left-6'}[isEnglish]">
 					<a href='#'></a>
 				</div>
-				<div class="sina append-left-24">
+				<div class="sina" ng-class="{true:'append-left-12',false:'append-left-6'}[isEnglish]">
 					<a href="#"></a>
 				</div>
-				<div class="douban append-left-24">
+				<div class="douban" ng-class="{true:'append-left-12',false:'append-left-6'}[isEnglish]">
 					<a href='#'></a>
 				</div>
 			</div>

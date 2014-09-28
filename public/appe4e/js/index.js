@@ -8,7 +8,6 @@ $(function(){
 			navigationColor:'#B3B3B3',
 			css3: true,
 			scrollingSpeed: 1700,
-			easing: 'easeOutBack',
 			resize : false,
 			scrollOverflow: true,
 			loopBottom:true
