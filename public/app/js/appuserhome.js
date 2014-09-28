@@ -311,7 +311,7 @@ marksimosapp.controller('chartController', ['$translate', '$scope', '$rootScope'
         };
     };
 
-    // 处理当前的公司名称
+    // 处理当前的公司名称的颜色
     function C31TooltipContentShowCompanyNameColor(fieldname) {
         var names = {
             'A': function() {

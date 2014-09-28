@@ -833,7 +833,6 @@
             // Chart C2
             perceptionMap : function(){
                 return $http.get(apiPath + 'chart/perception_map').then(function(result){
-                    console.log(chartFormatTool5(result.data));
                     return chartFormatTool5(result.data);
                 })["catch"](errorHandler);
             },
