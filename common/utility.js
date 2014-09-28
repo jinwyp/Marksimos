@@ -16,6 +16,22 @@ exports.setSize = function(num){
     return num;
 }
 
+//TODO: need to implement this function 
+//For Number of Out-of-stock Episodes goes wrong in the report company status SKU/Brand
+
+//MA0_MathFunctions.pas
+// Function SetSize( aSet : HCD_set ) : byte;
+// var
+//   i       : byte;
+//   Counter : integer;
+// begin
+//   Counter := 0;
+//   for i := 0 to 255 do
+//     if ( i in aSet ) then Inc(Counter);
+//   Result := Counter;
+
+// end; 
+
 /**
  * Find brand by brandId
  *

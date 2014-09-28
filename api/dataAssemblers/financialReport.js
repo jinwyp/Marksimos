@@ -142,7 +142,7 @@ function reportForSKU(onePeriodResult, brandId){
                 SKUName: SKUResult.u_SKUName + ' ' + config.packsizeDescription[SKUResult.u_PackSize],
                 salesValue: SKUResult.u_FactorySalesValue,
                 changeVersusPreviousPeriodSalesValue: SKUResult.u_FactorySalesValueChange * 100,
-                shareInBrandTotalSalesValue: SKUResult.u_ShareInBrandSalesValue,
+                shareInBrandTotalSalesValue: SKUResult.u_ShareInBrandSalesValue * 100,
                 costOfGoodsSold: -SKUResult.u_CostOfGoodsSold,
                 obsoleteGoodsCost: -SKUResult.u_ObsoleteGoodsCost,
                 discontinuedGoodsCost: -SKUResult.u_DroppedGoodsCost,
