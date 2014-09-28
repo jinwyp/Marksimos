@@ -116,14 +116,57 @@
 }
 
 .register-title{
-	width: 719px;
+	width: 870px;
 	margin: 100px auto 0;
 	color: #fff;
 }
 
 .company-back{
 	background: url('../img/company-hand.png') no-repeat;
-	width: 719px;
+	width: 870px;
+    height: 521px;
+    margin: 20px auto;
+}
+
+.student-back-1{
+	background: url('../img/student-hand-1.png') no-repeat;
+	width: 770px;
+    height: 521px;
+    margin: 20px auto 0 auto;
+}
+.col-sm-3-5{
+	width: 35%;
+	float: left;
+	min-height: 1px;
+    padding-left: 15px;
+    padding-right: 15px;
+    position: relative;
+}
+.col-sm-3-9{
+	width: 39%;
+	float: left;
+	min-height: 1px;
+    padding-left: 15px;
+    padding-right: 15px;
+    position: relative;
+}
+.col-sm-offset-3-5{
+	margin-left: 35%;
+}
+.col-sm-offset-3-9{
+	margin-left: 39%;
+}
+.col-sm-4-2{
+	width: 42%;
+	float: left;
+	min-height: 1px;
+    padding-left: 15px;
+    padding-right: 15px;
+    position: relative;
+}
+.student-back-2{
+	background: url('../img/student-hand-2.png') no-repeat;
+	width: 896px;
     height: 521px;
     margin: 20px auto;
 }
