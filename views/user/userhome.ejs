@@ -2581,7 +2581,7 @@
                                                 <td ng-repeat="sku in data.currentBrand.d_SKUsDecisions">
                                                     <div class="btn-group">
                                                         <button type="button" class="btn btn-default btn-sm dropdown-toggle" data-toggle="dropdown"  ng-focus="clickCurrentSku(sku)">
-                                                            {{sku.d_TargetConsumerSegment + 1}} <span class="caret"></span>
+                                                            {{sku.d_TargetConsumerSegment }} <span class="caret"></span>
                                                         </button>
                                                         <ul class="dropdown-menu" role="menu">
                                                             <li><a href="" ng-click="leaveSkuInput(sku, 'd_TargetConsumerSegment', sku.d_TargetConsumerSegment, 1)">{{'HomePageSegmentLabelPriceSensitive' | translate}}</a></li>
