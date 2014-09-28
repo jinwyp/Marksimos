@@ -966,6 +966,15 @@ app.config(['$translateProvider', function($translateProvider){
         "e4eStudentNext"           : "Next",
 
         "e4eStudentSecondPageTitle" : "Profile Details",
+        "e4eStudentHighestEDU":"Highest Educational Degree",
+        "e4eStudentMajors":"Majors",
+        "e4eStudentUniversity":"University",
+        "e4eStudentScoreGPA":"Score/GPA (out of 100)",
+        "e4eStudentAchievements":"Achievements",
+        "e4eStudentYearOfGraduation":"Year Of Graduation",
+        "e4eStudentMonthOfGraduation":"Month Of Graduation",
+        "e4eStudentCurrentYear":"Current Year in College",
+        "e4eStudentUploadResume":"Upload your resume",
         "e4eStudentSubmit"          : "Submit",
 
         "e4eSuccessCon"         : "Congratulations",
@@ -1943,6 +1952,15 @@ app.config(['$translateProvider', function($translateProvider){
         "e4eStudentNext"           : "下一步",
 
         "e4eStudentSecondPageTitle" : "Profile Details",
+        "e4eStudentHighestEDU":"Highest Educational Degree",
+        "e4eStudentMajors":"Majors",
+        "e4eStudentUniversity":"University",
+        "e4eStudentScoreGPA":"Score/GPA (out of 100)",
+        "e4eStudentAchievements":"Achievements",
+        "e4eStudentYearOfGraduation":"Year Of Graduation",
+        "e4eStudentMonthOfGraduation":"Month Of Graduation",
+        "e4eStudentCurrentYear":"Current Year in College",
+        "e4eStudentUploadResume":"Upload your resume",
         "e4eStudentSubmit"          : "提交",
 
         "e4eSuccessCon"         : "恭喜你",
