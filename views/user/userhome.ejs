@@ -47,7 +47,7 @@
 
                                     <span class="user_brand" ng-cloak>{{brand.d_BrandName}}</span>
                                     <ul>
-                                        <li class="user_product" ng-cloak ng-repeat="sku in brand.d_SKUsDecisions">{{brand.d_BrandName}}{{sku.d_SKUName}} <span>{{sku.d_TargetConsumerSegment | usersegment}}</span></li>
+                                        <li class="user_product" ng-cloak ng-repeat="sku in brand.d_SKUsDecisions">{{brand.d_BrandName}}{{sku.d_SKUName}} <span>{{sku.d_TargetConsumerSegment | usersegment | translate}}</span></li>
                                     </ul>
 
                                 </td>
@@ -280,18 +280,18 @@
                                         <div class="pull-right">
                                             <div class="btn-group">
                                                 <button type="button" class="btn btn-default btn-sm dropdown-toggle" data-toggle="dropdown">
-                                                    {{data.tableA1CompanyStatus.currentCompany.companyName}} <span class="caret"></span>
+                                                    {{'HomePageSecondMenuBarLabelsCompany' | translate}} {{data.tableA1CompanyStatus.currentCompany.companyName}} <span class="caret"></span>
                                                 </button>
                                                 <ul class="dropdown-menu" role="menu">
-                                                    <li ng-repeat="company in data.tableA1CompanyStatus.allCompanyData"><a href="" ng-click="switchTableReportCompany(company)">{{company.companyName}}</a></li>
+                                                    <li ng-repeat="company in data.tableA1CompanyStatus.allCompanyData"><a href="" ng-click="switchTableReportCompany(company)">{{'HomePageSecondMenuBarLabelsCompany' | translate}} {{company.companyName}}</a></li>
                                                 </ul>
                                             </div>
 
 
                                             <div class="btn-group btn-group-sm">
-                                                <button type="button" class="btn btn-default" ng-class="{'active': css.tableReportTab=='SKU'}" ng-click="css.tableReportTab='SKU' ">SKU</button>
-                                                <button type="button" class="btn btn-default" ng-class="{'active': css.tableReportTab=='Brand'}" ng-click="css.tableReportTab='Brand' ">Brand</button>
-                                                <button type="button" class="btn btn-default" ng-class="{'active': css.tableReportTab=='Global'}" ng-click="css.tableReportTab='Global' ">Global</button>
+                                                <button type="button" class="btn btn-default" ng-class="{'active': css.tableReportTab=='SKU'}" ng-click="css.tableReportTab='SKU' ">{{'ReportTabLabelSKU' | translate}}</button>
+                                                <button type="button" class="btn btn-default" ng-class="{'active': css.tableReportTab=='Brand'}" ng-click="css.tableReportTab='Brand' ">{{'ReportTabLabelBrand' | translate}}</button>
+                                                <button type="button" class="btn btn-default" ng-class="{'active': css.tableReportTab=='Global'}" ng-click="css.tableReportTab='Global' ">{{'ReportTabLabelGlobal' | translate}}</button>
                                             </div>
                                         </div>
                                     </h5>
@@ -299,12 +299,11 @@
                                     <div class="table_report" ng-if="css.tableReportTab=='SKU'">
 
                                         <ul class="nav nav-pills">
-                                            <li ng-class="{'active': data.tableA1CompanyStatus.currentSKU.SKUID==sku.SKUID}" ng-repeat="sku in data.tableA1CompanyStatus.currentCompany.SKU"><a href="" ng-click="switchTableReportA1SKU(sku)">{{sku.SKUName}}</a></li>
+                                            <li ng-class="{'active': data.tableA1CompanyStatus.currentSKU.SKUID==sku.SKUID}" ng-repeat="sku in data.tableA1CompanyStatus.currentCompany.SKU"><a href="" ng-click="switchTableReportA1SKU(sku)">{{sku.SKUName}} {{sku.PackSize | skupacksize | translate}}</a></li>
                                         </ul>
 
                                         <div class="divider_horizontal"></div>
                                         <div table-report-company-status-sku data="data.tableA1CompanyStatus.currentSKU.data"></div>
-
 
                                     </div>
 
@@ -335,10 +334,10 @@
                                         <div class="pull-right">
                                             <div class="btn-group">
                                                 <button type="button" class="btn btn-default btn-sm dropdown-toggle" data-toggle="dropdown">
-                                                    Period {{data.tableA2FinancialData.currentPeriod.period}} <span class="caret"></span>
+                                                    {{'HomePageSecondMenuBarCurrentPeriod' | translate}} {{data.tableA2FinancialData.currentPeriod.period}} <span class="caret"></span>
                                                 </button>
                                                 <ul class="dropdown-menu" role="menu">
-                                                    <li ng-repeat="period in data.tableA2FinancialData.currentCompany.periods"><a href="" ng-click="switchTableReportPeriod(period)">Period {{period.period}}</a></li>
+                                                    <li ng-repeat="period in data.tableA2FinancialData.currentCompany.periods"><a href="" ng-click="switchTableReportPeriod(period)">{{'HomePageSecondMenuBarCurrentPeriod' | translate}} {{period.period}}</a></li>
                                                 </ul>
                                             </div>
                                         </div>
@@ -367,9 +366,9 @@
                                     <h5>{{'ReportMenuProfitabilityEvolution' | translate}}
                                         <div class="pull-right">
                                             <div class="btn-group btn-group-sm">
-                                                <button type="button" class="btn btn-default" ng-class="{'active': css.tableReportTab=='SKU'}" ng-click="css.tableReportTab='SKU' ">SKU</button>
-                                                <button type="button" class="btn btn-default" ng-class="{'active': css.tableReportTab=='Brand'}" ng-click="css.tableReportTab='Brand' ">Brand</button>
-                                                <button type="button" class="btn btn-default" ng-class="{'active': css.tableReportTab=='Global'}" ng-click="css.tableReportTab='Global' ">Global</button>
+                                                <button type="button" class="btn btn-default" ng-class="{'active': css.tableReportTab=='SKU'}" ng-click="css.tableReportTab='SKU' ">{{'ReportTabLabelSKU' | translate}}</button>
+                                                <button type="button" class="btn btn-default" ng-class="{'active': css.tableReportTab=='Brand'}" ng-click="css.tableReportTab='Brand' ">{{'ReportTabLabelBrand' | translate}}</button>
+                                                <button type="button" class="btn btn-default" ng-class="{'active': css.tableReportTab=='Global'}" ng-click="css.tableReportTab='Global' ">{{'ReportTabLabelGlobal' | translate}}</button>
                                             </div>
                                         </div>
                                     </h5>
@@ -377,7 +376,7 @@
                                     <div class="table_report" ng-if="css.tableReportTab=='SKU'">
 
                                         <ul class="nav nav-pills">
-                                            <li ng-class="{'active': data.tableA4ProfitabilityEvolution.currentSKU.SKUID==sku.SKUID}" ng-repeat="sku in data.tableA4ProfitabilityEvolution.allData.SKU"><a href="" ng-click="switchTableReportA4SKU(sku)">{{sku.SKUName}}</a></li>
+                                            <li ng-class="{'active': data.tableA4ProfitabilityEvolution.currentSKU.SKUID==sku.SKUID}" ng-repeat="sku in data.tableA4ProfitabilityEvolution.allData.SKU"><a href="" ng-click="switchTableReportA4SKU(sku)">{{sku.SKUName}} {{sku.PackSize | skupacksize | translate}}</a></li>
                                         </ul>
 
                                         <div class="divider_horizontal"></div>
@@ -534,9 +533,9 @@
 
                                     <div class="pull-right">
                                         <div class="btn-group btn-group-sm">
-                                            <button type="button" class="btn btn-default" ng-class="{'active': css.tableReportTab=='SKU'}" ng-click="css.tableReportTab='SKU' ">SKU</button>
-                                            <button type="button" class="btn btn-default" ng-class="{'active': css.tableReportTab=='Brand'}" ng-click="css.tableReportTab='Brand' ">Brand</button>
-                                            <button type="button" class="btn btn-default" ng-class="{'active': css.tableReportTab=='Global'}" ng-click="css.tableReportTab='Global' ">Global</button>
+                                            <button type="button" class="btn btn-default" ng-class="{'active': css.tableReportTab=='SKU'}" ng-click="css.tableReportTab='SKU' ">{{'ReportTabLabelSKU' | translate}}</button>
+                                            <button type="button" class="btn btn-default" ng-class="{'active': css.tableReportTab=='Brand'}" ng-click="css.tableReportTab='Brand' ">{{'ReportTabLabelBrand' | translate}}</button>
+                                            <button type="button" class="btn btn-default" ng-class="{'active': css.tableReportTab=='Global'}" ng-click="css.tableReportTab='Global' ">{{'ReportTabLabelGlobal' | translate}}</button>
                                         </div>
                                     </div>
                                 </h5>
@@ -859,18 +858,18 @@
                                         <div class="pull-right">
                                             <div class="btn-group">
                                                 <button type="button" class="btn btn-default btn-sm dropdown-toggle" data-toggle="dropdown">
-                                                    {{data.tableA1CompanyStatus.currentCompany.companyName}} <span class="caret"></span>
+                                                    {{'HomePageSecondMenuBarLabelsCompany' | translate}} {{data.tableA1CompanyStatus.currentCompany.companyName}} <span class="caret"></span>
                                                 </button>
                                                 <ul class="dropdown-menu" role="menu">
-                                                    <li ng-repeat="company in data.tableA1CompanyStatus.allCompanyData"><a href="" ng-click="switchTableReportCompany(company)">{{company.companyName}}</a></li>
+                                                    <li ng-repeat="company in data.tableA1CompanyStatus.allCompanyData"><a href="" ng-click="switchTableReportCompany(company)">{{'HomePageSecondMenuBarLabelsCompany' | translate}} {{company.companyName}}</a></li>
                                                 </ul>
                                             </div>
 
 
                                             <div class="btn-group btn-group-sm">
-                                                <button type="button" class="btn btn-default" ng-class="{'active': css.tableReportTab=='SKU'}" ng-click="css.tableReportTab='SKU' ">SKU</button>
-                                                <button type="button" class="btn btn-default" ng-class="{'active': css.tableReportTab=='Brand'}" ng-click="css.tableReportTab='Brand' ">Brand</button>
-                                                <button type="button" class="btn btn-default" ng-class="{'active': css.tableReportTab=='Global'}" ng-click="css.tableReportTab='Global' ">Global</button>
+                                                <button type="button" class="btn btn-default" ng-class="{'active': css.tableReportTab=='SKU'}" ng-click="css.tableReportTab='SKU' ">{{'ReportTabLabelSKU' | translate}}</button>
+                                                <button type="button" class="btn btn-default" ng-class="{'active': css.tableReportTab=='Brand'}" ng-click="css.tableReportTab='Brand' ">{{'ReportTabLabelBrand' | translate}}</button>
+                                                <button type="button" class="btn btn-default" ng-class="{'active': css.tableReportTab=='Global'}" ng-click="css.tableReportTab='Global' ">{{'ReportTabLabelGlobal' | translate}}</button>
                                             </div>
                                         </div>
                                     </h5>
@@ -878,7 +877,7 @@
                                     <div class="table_report" ng-if="css.tableReportTab=='SKU'">
 
                                         <ul class="nav nav-pills">
-                                            <li ng-class="{'active': data.tableA1CompanyStatus.currentSKU.SKUID==sku.SKUID}" ng-repeat="sku in data.tableA1CompanyStatus.currentCompany.SKU"><a href="" ng-click="switchTableReportA1SKU(sku)">{{sku.SKUName}}</a></li>
+                                            <li ng-class="{'active': data.tableA1CompanyStatus.currentSKU.SKUID==sku.SKUID}" ng-repeat="sku in data.tableA1CompanyStatus.currentCompany.SKU"><a href="" ng-click="switchTableReportA1SKU(sku)">{{sku.SKUName}} {{sku.PackSize | skupacksize | translate}}</a></li>
                                         </ul>
 
                                         <div class="divider_horizontal"></div>
@@ -914,10 +913,10 @@
                                         <div class="pull-right">
                                             <div class="btn-group">
                                                 <button type="button" class="btn btn-default btn-sm dropdown-toggle" data-toggle="dropdown">
-                                                    Period {{data.tableA2FinancialData.currentPeriod.period}} <span class="caret"></span>
+                                                    {{'HomePageSecondMenuBarCurrentPeriod' | translate}} {{data.tableA2FinancialData.currentPeriod.period}} <span class="caret"></span>
                                                 </button>
                                                 <ul class="dropdown-menu" role="menu">
-                                                    <li ng-repeat="period in data.tableA2FinancialData.currentCompany.periods"><a href="" ng-click="switchTableReportPeriod(period)">Period {{period.period}}</a></li>
+                                                    <li ng-repeat="period in data.tableA2FinancialData.currentCompany.periods"><a href="" ng-click="switchTableReportPeriod(period)">{{'HomePageSecondMenuBarCurrentPeriod' | translate}} {{period.period}}</a></li>
                                                 </ul>
                                             </div>
                                         </div>
@@ -946,9 +945,9 @@
                                     <h5>{{'ReportMenuProfitabilityEvolution' | translate}}
                                         <div class="pull-right">
                                             <div class="btn-group btn-group-sm">
-                                                <button type="button" class="btn btn-default" ng-class="{'active': css.tableReportTab=='SKU'}" ng-click="css.tableReportTab='SKU' ">SKU</button>
-                                                <button type="button" class="btn btn-default" ng-class="{'active': css.tableReportTab=='Brand'}" ng-click="css.tableReportTab='Brand' ">Brand</button>
-                                                <button type="button" class="btn btn-default" ng-class="{'active': css.tableReportTab=='Global'}" ng-click="css.tableReportTab='Global' ">Global</button>
+                                                <button type="button" class="btn btn-default" ng-class="{'active': css.tableReportTab=='SKU'}" ng-click="css.tableReportTab='SKU' ">{{'ReportTabLabelSKU' | translate}}</button>
+                                                <button type="button" class="btn btn-default" ng-class="{'active': css.tableReportTab=='Brand'}" ng-click="css.tableReportTab='Brand' ">{{'ReportTabLabelBrand' | translate}}</button>
+                                                <button type="button" class="btn btn-default" ng-class="{'active': css.tableReportTab=='Global'}" ng-click="css.tableReportTab='Global' ">{{'ReportTabLabelGlobal' | translate}}</button>
                                             </div>
                                         </div>
                                     </h5>
@@ -956,7 +955,7 @@
                                     <div class="table_report" ng-if="css.tableReportTab=='SKU'">
 
                                         <ul class="nav nav-pills">
-                                            <li ng-class="{'active': data.tableA4ProfitabilityEvolution.currentSKU.SKUID==sku.SKUID}" ng-repeat="sku in data.tableA4ProfitabilityEvolution.allData.SKU"><a href="" ng-click="switchTableReportA4SKU(sku)">{{sku.SKUName}}</a></li>
+                                            <li ng-class="{'active': data.tableA4ProfitabilityEvolution.currentSKU.SKUID==sku.SKUID}" ng-repeat="sku in data.tableA4ProfitabilityEvolution.allData.SKU"><a href="" ng-click="switchTableReportA4SKU(sku)">{{sku.SKUName}} {{sku.PackSize | skupacksize | translate}}</a></li>
                                         </ul>
 
                                         <div class="divider_horizontal"></div>
@@ -1113,9 +1112,9 @@
 
                             <div class="pull-right">
                                 <div class="btn-group btn-group-sm">
-                                    <button type="button" class="btn btn-default" ng-class="{'active': css.tableReportTab=='SKU'}" ng-click="css.tableReportTab='SKU' ">SKU</button>
-                                    <button type="button" class="btn btn-default" ng-class="{'active': css.tableReportTab=='Brand'}" ng-click="css.tableReportTab='Brand' ">Brand</button>
-                                    <button type="button" class="btn btn-default" ng-class="{'active': css.tableReportTab=='Global'}" ng-click="css.tableReportTab='Global' ">Global</button>
+                                    <button type="button" class="btn btn-default" ng-class="{'active': css.tableReportTab=='SKU'}" ng-click="css.tableReportTab='SKU' ">{{'ReportTabLabelSKU' | translate}}</button>
+                                    <button type="button" class="btn btn-default" ng-class="{'active': css.tableReportTab=='Brand'}" ng-click="css.tableReportTab='Brand' ">{{'ReportTabLabelBrand' | translate}}</button>
+                                    <button type="button" class="btn btn-default" ng-class="{'active': css.tableReportTab=='Global'}" ng-click="css.tableReportTab='Global' ">{{'ReportTabLabelGlobal' | translate}}</button>
                                 </div>
                             </div>
                         </h5>
@@ -1481,18 +1480,18 @@
                         <div class="pull-right">
                             <div class="btn-group">
                                 <button type="button" class="btn btn-default btn-sm dropdown-toggle" data-toggle="dropdown">
-                                    {{data.tableA1CompanyStatus.currentCompany.companyName}} <span class="caret"></span>
+                                    {{'HomePageSecondMenuBarLabelsCompany' | translate}} {{data.tableA1CompanyStatus.currentCompany.companyName}} <span class="caret"></span>
                                 </button>
                                 <ul class="dropdown-menu" role="menu">
-                                    <li ng-repeat="company in data.tableA1CompanyStatus.allCompanyData"><a href="" ng-click="switchTableReportCompany(company)">{{company.companyName}}</a></li>
+                                    <li ng-repeat="company in data.tableA1CompanyStatus.allCompanyData"><a href="" ng-click="switchTableReportCompany(company)">{{'HomePageSecondMenuBarLabelsCompany' | translate}} {{company.companyName}}</a></li>
                                 </ul>
                             </div>
 
 
                             <div class="btn-group btn-group-sm">
-                                <button type="button" class="btn btn-default" ng-class="{'active': css.tableReportTab=='SKU'}" ng-click="css.tableReportTab='SKU' ">SKU</button>
-                                <button type="button" class="btn btn-default" ng-class="{'active': css.tableReportTab=='Brand'}" ng-click="css.tableReportTab='Brand' ">Brand</button>
-                                <button type="button" class="btn btn-default" ng-class="{'active': css.tableReportTab=='Global'}" ng-click="css.tableReportTab='Global' ">Global</button>
+                                <button type="button" class="btn btn-default" ng-class="{'active': css.tableReportTab=='SKU'}" ng-click="css.tableReportTab='SKU' ">{{'ReportTabLabelSKU' | translate}}</button>
+                                <button type="button" class="btn btn-default" ng-class="{'active': css.tableReportTab=='Brand'}" ng-click="css.tableReportTab='Brand' ">{{'ReportTabLabelBrand' | translate}}</button>
+                                <button type="button" class="btn btn-default" ng-class="{'active': css.tableReportTab=='Global'}" ng-click="css.tableReportTab='Global' ">{{'ReportTabLabelGlobal' | translate}}</button>
                             </div>
                         </div>
                     </h5>
@@ -1500,12 +1499,11 @@
                     <div class="table_report" ng-if="css.tableReportTab=='SKU'">
 
                         <ul class="nav nav-pills">
-                            <li ng-class="{'active': data.tableA1CompanyStatus.currentSKU.SKUID==sku.SKUID}" ng-repeat="sku in data.tableA1CompanyStatus.currentCompany.SKU"><a href="" ng-click="switchTableReportA1SKU(sku)">{{sku.SKUName}}</a></li>
+                            <li ng-class="{'active': data.tableA1CompanyStatus.currentSKU.SKUID==sku.SKUID}" ng-repeat="sku in data.tableA1CompanyStatus.currentCompany.SKU"><a href="" ng-click="switchTableReportA1SKU(sku)">{{sku.SKUName}} {{sku.PackSize | skupacksize | translate}}</a></li>
                         </ul>
 
                         <div class="divider_horizontal"></div>
                         <div table-report-company-status-sku data="data.tableA1CompanyStatus.currentSKU.data"></div>
-
 
                     </div>
 
@@ -1536,10 +1534,10 @@
                         <div class="pull-right">
                             <div class="btn-group">
                                 <button type="button" class="btn btn-default btn-sm dropdown-toggle" data-toggle="dropdown">
-                                    Period {{data.tableA2FinancialData.currentPeriod.period}} <span class="caret"></span>
+                                    {{'HomePageSecondMenuBarCurrentPeriod' | translate}} {{data.tableA2FinancialData.currentPeriod.period}} <span class="caret"></span>
                                 </button>
                                 <ul class="dropdown-menu" role="menu">
-                                    <li ng-repeat="period in data.tableA2FinancialData.currentCompany.periods"><a href="" ng-click="switchTableReportPeriod(period)">Period {{period.period}}</a></li>
+                                    <li ng-repeat="period in data.tableA2FinancialData.currentCompany.periods"><a href="" ng-click="switchTableReportPeriod(period)">{{'HomePageSecondMenuBarCurrentPeriod' | translate}} {{period.period}}</a></li>
                                 </ul>
                             </div>
                         </div>
@@ -1571,7 +1569,7 @@
                         <!--<span class="glyphicon glyphicon-save chart_icon"></span>-->
                     </h5>
                     <nvd3-multi-bar-chart data="data.chartA31InventoryReport.data" tooltipcontent="A31ToolTipContent()" color="A31ColorFunction()" legendcolor="A31ColorFunction()"
-                         height="600" xaxislabel="{{'ReportInventoryReportTableLabel' | translate}}" yaxislabel="Million Units" margin="{left:100}"
+                         height="600" xaxislabel="{{'ReportInventoryReportTableLabelX' | translate}}" yaxislabel="{{'ReportInventoryReportTableLabelY' | translate}}" margin="{left:100}"
                          showXAxis="true" showYAxis="true" stacked="true" showLegend="true" reduceXTicks="false" tooltips="true" interactive="true">
                         <svg class="IE11_chart_A3"></svg>
                     </nvd3-multi-bar-chart>
@@ -1586,9 +1584,9 @@
                     <h5>{{'ReportMenuProfitabilityEvolution' | translate}}
                         <div class="pull-right">
                             <div class="btn-group btn-group-sm">
-                                <button type="button" class="btn btn-default" ng-class="{'active': css.tableReportTab=='SKU'}" ng-click="css.tableReportTab='SKU' ">SKU</button>
-                                <button type="button" class="btn btn-default" ng-class="{'active': css.tableReportTab=='Brand'}" ng-click="css.tableReportTab='Brand' ">Brand</button>
-                                <button type="button" class="btn btn-default" ng-class="{'active': css.tableReportTab=='Global'}" ng-click="css.tableReportTab='Global' ">Global</button>
+                                <button type="button" class="btn btn-default" ng-class="{'active': css.tableReportTab=='SKU'}" ng-click="css.tableReportTab='SKU' ">{{'ReportTabLabelSKU' | translate}}</button>
+                                <button type="button" class="btn btn-default" ng-class="{'active': css.tableReportTab=='Brand'}" ng-click="css.tableReportTab='Brand' ">{{'ReportTabLabelBrand' | translate}}</button>
+                                <button type="button" class="btn btn-default" ng-class="{'active': css.tableReportTab=='Global'}" ng-click="css.tableReportTab='Global' ">{{'ReportTabLabelGlobal' | translate}}</button>
                             </div>
                         </div>
                     </h5>
@@ -1596,7 +1594,7 @@
                     <div class="table_report" ng-if="css.tableReportTab=='SKU'">
 
                         <ul class="nav nav-pills">
-                            <li ng-class="{'active': data.tableA4ProfitabilityEvolution.currentSKU.SKUID==sku.SKUID}" ng-repeat="sku in data.tableA4ProfitabilityEvolution.allData.SKU"><a href="" ng-click="switchTableReportA4SKU(sku)">{{sku.SKUName}}</a></li>
+                            <li ng-class="{'active': data.tableA4ProfitabilityEvolution.currentSKU.SKUID==sku.SKUID}" ng-repeat="sku in data.tableA4ProfitabilityEvolution.allData.SKU"><a href="" ng-click="switchTableReportA4SKU(sku)">{{sku.SKUName}} {{sku.PackSize | skupacksize | translate}}</a></li>
                         </ul>
 
                         <div class="divider_horizontal"></div>
@@ -1915,8 +1913,8 @@
                         <!--<span class="glyphicon glyphicon-save chart_icon"></span>-->
 
                         <div class="btn-group btn-group-sm perception_map_group">
-                            <button type="button" class="btn btn-default perception_map_button" ng-click="switchPerceptionMapsData('sku')">SKU</button>
-                            <button type="button" class="btn btn-default perception_map_button" ng-click="switchPerceptionMapsData('brand')">Brand</button>
+                            <button type="button" class="btn btn-default perception_map_button" ng-click="switchPerceptionMapsData('sku')">{{'ReportTabLabelSKU' | translate}}</button>
+                            <button type="button" class="btn btn-default perception_map_button" ng-click="switchPerceptionMapsData('brand')">{{'ReportTabLabelBrand' | translate}}</button>
                         </div>
                     </h5>
                     <nvd3-scatter-chart data="data.chartC21PerceptionMap.dataChart"
@@ -1972,7 +1970,7 @@
                         <!--<span class="glyphicon glyphicon-save chart_icon"></span>-->
                     </h5>
                     <div ac-chart="'line'" ac-data="data.chartC41GrowthRateInVolume.data" ac-config="data.chartC41GrowthRateInVolume.config" class="chartBox"></div>
-                    <p class="text-center">Period</p>
+                    <p class="text-center">{{'ReportMarketSalesAndInventoryChartBottomTextPeriod' | translate}}</p>
                 </div>
                 <div class="col-md-6 user_chart_single chart_2">
                     <h5>{{'ReportMarketEvolutionChartTitleGrowthRateInValue' | translate}}
@@ -1981,7 +1979,7 @@
                         <!--<span class="glyphicon glyphicon-save chart_icon"></span>-->
                     </h5>
                     <div ac-chart="'line'" ac-data="data.chartC42GrowthRateInValue.data" ac-config="data.chartC42GrowthRateInValue.config" class="chartBox"></div>
-                    <p class="text-center">Period</p>
+                    <p class="text-center">{{'ReportMarketSalesAndInventoryChartBottomTextPeriod' | translate}}</p>
                 </div>
             </div>
 
@@ -1993,7 +1991,7 @@
                         <!--<span class="glyphicon glyphicon-save chart_icon"></span>-->
                     </h5>
                     <div ac-chart="'line'" ac-data="data.chartC43NetMarketPrice.data" ac-config="data.chartC43NetMarketPrice.config" class="chartBox"></div>
-                    <p class="text-center">Period</p>
+                    <p class="text-center">{{'ReportMarketSalesAndInventoryChartBottomTextPeriod' | translate}}</p>
                 </div>
                 <div class="col-md-6 user_chart_single chart_2">
                     <h5>{{'ReportMarketEvolutionChartTitleSegmentValueShareInTotalMarket' | translate}}
@@ -2002,7 +2000,7 @@
                         <!--<span class="glyphicon glyphicon-save chart_icon"></span>-->
                     </h5>
                     <div ac-chart="'pie'" ac-data="data.chartC44SegmentValueShareTotalMarket.data" ac-config="data.chartC44SegmentValueShareTotalMarket.config" class="chartBox"></div>
-                    <p class="text-center">Period</p>
+                    <p class="text-center">{{'ReportMarketSalesAndInventoryChartBottomTextPeriod' | translate}}</p>
                 </div>
             </div>
         </div>
@@ -2015,9 +2013,9 @@
 
                         <div class="pull-right">
                             <div class="btn-group btn-group-sm">
-                                <button type="button" class="btn btn-default" ng-class="{'active': css.tableReportTab=='SKU'}" ng-click="css.tableReportTab='SKU' ">SKU</button>
-                                <button type="button" class="btn btn-default" ng-class="{'active': css.tableReportTab=='Brand'}" ng-click="css.tableReportTab='Brand' ">Brand</button>
-                                <button type="button" class="btn btn-default" ng-class="{'active': css.tableReportTab=='Global'}" ng-click="css.tableReportTab='Global' ">Global</button>
+                                <button type="button" class="btn btn-default" ng-class="{'active': css.tableReportTab=='SKU'}" ng-click="css.tableReportTab='SKU'">{{'ReportTabLabelSKU' | translate}}</button>
+                                <button type="button" class="btn btn-default" ng-class="{'active': css.tableReportTab=='Brand'}" ng-click="css.tableReportTab='Brand'">{{'ReportTabLabelBrand' | translate}}</button>
+                                <button type="button" class="btn btn-default" ng-class="{'active': css.tableReportTab=='Global'}" ng-click="css.tableReportTab='Global'">{{'ReportTabLabelGlobal' | translate}}</button>
                             </div>
                         </div>
                     </h5>
@@ -2421,8 +2419,8 @@
                                     </div>
                                 </div>
 
-                                <text-form-input type="text" name="brandName" label="Brand Name :" inputgroupclass="true" inputgroupprefix="{{data.currentCompanyNameCharacter}}"   data="data.newBrand.brand_name" required="true" minlength="1" maxlength="4" othererrorinfo="data.newBrand.othererrorinfo"></text-form-input>
-                                <text-form-input type="text" name="skuName" label="First SKU Name :"  data="data.newBrand.sku_name" required="true" minlength="1" maxlength="1"></text-form-input>
+                                <text-form-input type="text" name="brandName" label="{{'DecisionPageDecisionTabLabelBrandName' | translate}}" inputgroupclass="true" inputgroupprefix="{{data.currentCompanyNameCharacter}}"   data="data.newBrand.brand_name" required="true" minlength="1" maxlength="4" othererrorinfo="data.newBrand.othererrorinfo"></text-form-input>
+                                <text-form-input type="text" name="skuName" label="{{'DecisionPageDecisionTabLabelFirstSKUName' | translate}}"  data="data.newBrand.sku_name" required="true" minlength="1" maxlength="1"></text-form-input>
 
                                 <div class="form-group">
                                     <div class="col-sm-offset-4 col-sm-8">
@@ -2467,7 +2465,7 @@
                                             </div>
                                         </div>
 
-                                        <text-form-input type="text" name="skuName" label="SKU Name :"  data="data.newSku.sku_name" required="true" minlength="1" maxlength="1" othererrorinfo="data.newSku.othererrorinfo"></text-form-input>
+                                        <text-form-input type="text" name="skuName" label="{{'DecisionPageDecisionTabLabelSKUName' | translate}}"  data="data.newSku.sku_name" required="true" minlength="1" maxlength="1" othererrorinfo="data.newSku.othererrorinfo"></text-form-input>
 
                                         <!--<text-form-input type="checkbox" name="skuDiscontinue" label="Discontinue ?"  data="data.newSku.d_ToDrop" ></text-form-input>-->
                                         <!--<text-form-input type="number" name="skuProcessingTechnology" label="Processing Technology :" placeholder="" data="data.newSku.skuProcessingTechnology" required="true" min="1" max="14" ></text-form-input>-->
@@ -2535,16 +2533,12 @@
                                             <tr>
                                                 <td>{{'DecisionPageDecisionTabPackagingSize' | translate}}</td>
                                                 <td ng-repeat="sku in data.currentBrand.d_SKUsDecisions" ng-show="sku.bs_PeriodOfBirth!==data.currentStudent.currentPeriod" >
-                                                    <span ng-if="sku.d_PackSize==0">{{'DecisionPageDecisionTabPackagingSizeSmall' | translate}}</span>
-                                                    <span ng-if="sku.d_PackSize==1">{{'DecisionPageDecisionTabPackagingSizeStandard' | translate}}</span>
-                                                    <span ng-if="sku.d_PackSize==2">{{'DecisionPageDecisionTabPackagingSizeLarge' | translate}}</span>
+                                                    <span>{{sku.d_PackSize | skupacksize | translate}}</span>
                                                  </td>
                                                 <td ng-repeat="sku in data.currentBrand.d_SKUsDecisions" ng-if="sku.bs_PeriodOfBirth==data.currentStudent.currentPeriod">
                                                     <div class="btn-group">
                                                         <button type="button" class="btn btn-default btn-sm dropdown-toggle" data-toggle="dropdown"  ng-focus="clickCurrentSku(sku)">
-                                                            <span ng-if="sku.d_PackSize==0">{{'DecisionPageDecisionTabPackagingSizeSmall' | translate}}</span>
-                                                            <span ng-if="sku.d_PackSize==1">{{'DecisionPageDecisionTabPackagingSizeStandard' | translate}}</span>
-                                                            <span ng-if="sku.d_PackSize==2">{{'DecisionPageDecisionTabPackagingSizeLarge' | translate}}</span>
+                                                            <span>{{sku.d_PackSize | skupacksize | translate}}</span>
                                                             <span class="caret"></span>
                                                         </button>
                                                         <ul class="dropdown-menu" role="menu">
@@ -2587,10 +2581,15 @@
                                                 <td ng-repeat="sku in data.currentBrand.d_SKUsDecisions">
                                                     <div class="btn-group">
                                                         <button type="button" class="btn btn-default btn-sm dropdown-toggle" data-toggle="dropdown"  ng-focus="clickCurrentSku(sku)">
-                                                            {{sku.d_TargetConsumerSegment}} <span class="caret"></span>
+                                                            {{sku.d_TargetConsumerSegment + 1}} <span class="caret"></span>
                                                         </button>
                                                         <ul class="dropdown-menu" role="menu">
-                                                            <li ng-repeat="segment in data.userSegment"><a href="" ng-click="leaveSkuInput(sku, 'd_TargetConsumerSegment', sku.d_TargetConsumerSegment, segment)">{{segment.name}}</a></li>
+                                                            <li><a href="" ng-click="leaveSkuInput(sku, 'd_TargetConsumerSegment', sku.d_TargetConsumerSegment, 0)">{{'HomePageSegmentLabelPriceSensitive' | translate}}</a></li>
+                                                            <li><a href="" ng-click="leaveSkuInput(sku, 'd_TargetConsumerSegment', sku.d_TargetConsumerSegment, 1)">{{'HomePageSegmentLabelPretenders' | translate}}</a></li>
+                                                            <li><a href="" ng-click="leaveSkuInput(sku, 'd_TargetConsumerSegment', sku.d_TargetConsumerSegment, 2)">{{'HomePageSegmentLabelModerate' | translate}}</a></li>
+                                                            <li><a href="" ng-click="leaveSkuInput(sku, 'd_TargetConsumerSegment', sku.d_TargetConsumerSegment, 3)">{{'HomePageSegmentLabelGoodLife' | translate}}</a></li>
+                                                            <li><a href="" ng-click="leaveSkuInput(sku, 'd_TargetConsumerSegment', sku.d_TargetConsumerSegment, 4)">{{'HomePageSegmentLabelUltimate' | translate}}</a></li>
+                                                            <li><a href="" ng-click="leaveSkuInput(sku, 'd_TargetConsumerSegment', sku.d_TargetConsumerSegment, 5)">{{'HomePageSegmentLabelPragmatic' | translate}}</a></li>
                                                         </ul>
                                                     </div>
 
@@ -2871,7 +2870,7 @@
                                     <tbody>
                                         <tr ng-repeat="sku in data.currentCompanyProductPortfolio">
                                             <td>{{sku.SKUName}}</td>
-                                            <td>{{sku.targetSegment}}</td>
+                                            <td>{{sku.targetSegment | usersegment | translate}}</td>
                                             <td>{{sku.factoryPrice}}</td>
                                             <td>{{sku.ingredientsQuality}}</td>
                                             <td>{{sku.technologyLevel}}</td>

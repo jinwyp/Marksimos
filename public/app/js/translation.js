@@ -10,7 +10,29 @@ app.config(['$translateProvider', function($translateProvider){
 // Adding a translation table for the English language
     $translateProvider.translations('en_US', {
 
+        //Labels for Login
+        "LoginPageLabelWelcome"           : "Welcome !",
+        "LoginPageLabelSignIn"            : "Sign In",
+        "LoginPageLabelEmail"             : "Email :",
+        "LoginPageLabelPassword"          : "Password :",
+        "LoginPageLabelPasswordErrorInfo" : "Password Incorrect !",
+        "LoginPageButtonSignIn"           : "Sign In",
+
+
         //Labels for Introduction
+        "IntroPageSeminarListTitle" : "List of the Game Enrolled :",
+        "IntroPageSeminarListLabelSeminarID" : "Seminar ID",
+        "IntroPageSeminarListLabelSeminarDescription" : "Seminar Description",
+        "IntroPageSeminarListLabelTotalRound" : "Total Round",
+        "IntroPageSeminarListLabelCompetitor" : "Competitor",
+        "IntroPageSeminarListLabelDateOfCommencement" : "Date of Commencement",
+        "IntroPageSeminarListLabelSeminarStatus" : "Seminar Status",
+        "IntroPageSeminarListLabelCountry" : "Country",
+        "IntroPageSeminarListLabelProvince" : "Province(State)",
+        "IntroPageSeminarListLabelCity" : "City",
+        "IntroPageSeminarListLabelVenue" : "Venue",
+
+
         "IntroPageSentence1" : "Who am I?",
         "IntroPageSentence2" : "I am leading",
         "IntroPageSentence3" : "I manage",
@@ -41,13 +63,16 @@ app.config(['$translateProvider', function($translateProvider){
         "HomePageMenuBarLabelsLogout"     : "Log Out",
 
 
-        ////Labels for Segment
-        "HomePageSegmentLabelPriceSensitive"            : "1 Price Sensitive",
-        "HomePageSegmentLabelPretenders"                : "2 Pretenders",
-        "HomePageSegmentLabelModerate"                  : "3 Moderate",
-        "HomePageSegmentLabelGoodLife"                  : "4 Good Life",
-        "HomePageSegmentLabelUltimate"                  : "5 Ultimate",
-        "HomePageSegmentLabelPragmatic"                 : "6 Pragmatic",
+        //Labels for Segment
+        "HomePageSegmentLabelPriceSensitive" : "1 Price Sensitive",
+        "HomePageSegmentLabelPretenders"     : "2 Pretenders",
+        "HomePageSegmentLabelModerate"       : "3 Moderate",
+        "HomePageSegmentLabelGoodLife"       : "4 Good Life",
+        "HomePageSegmentLabelUltimate"       : "5 Ultimate",
+        "HomePageSegmentLabelPragmatic"      : "6 Pragmatic",
+        "HomePageSegmentLabelAllSegments"    : "7 All Segments",
+
+
 
 
 		//Labels for Items on Home page - Second Menu Bar
@@ -103,8 +128,14 @@ app.config(['$translateProvider', function($translateProvider){
         "ReportMenuMarketIndicator"        : "Market Indicator",
 
 
+
+        //Labels for Company Status Report Tab Menu
+        "ReportTabLabelSKU"    : "SKU",
+        "ReportTabLabelBrand"  : "Brand",
+        "ReportTabLabelGlobal" : "Global",
+
 		//Labels for Company Status Report - SKU Level
-        "ReportCompanyStatusSKUQuarter" : "Quarters",
+        "ReportCompanyStatusSKUQuarter" : "Quarter",
 
         "ReportCompanyStatusSKUMarketShareValue"                             : "Market Share (value %)",
         "ReportCompanyStatusSKUMarketShareVolume"                            : "Market Share (volume %)",
@@ -301,14 +332,15 @@ app.config(['$translateProvider', function($translateProvider){
         "ReportFinancialReportAllBrandInventoryValue" : "Inventory Value ($ mln)",
 
 		//Labels for Inventory Report
-        "ReportInventoryReportLabelCloseToExpireInventory" : "Close to expire Inventory",
+        "ReportInventoryReportLabelCloseToExpireInventory" : "Close to Expire Inventory",
         "ReportInventoryReportLabelPreviousInventory"      : "Previous Inventory",
         "ReportInventoryReportLabelFreshInventory"         : "Fresh Inventory",
-        "ReportInventoryReportTableLabel"                  : "Total Stock (millions of standard pack) = Factory Stock + Trade Stock + Retailer Stock",
+        "ReportInventoryReportTableLabelX"                 : "Total Stock (millions of standard pack) = Factory Stock + Trade Stock + Retailer Stock",
+        "ReportInventoryReportTableLabelY"                 : "Million Units",
 
 
 		//Labels for Profitability Evolution - SKU Level
-        "ReportProfitabilityEvolutionSKUQuarter" : "Quarters",
+        "ReportProfitabilityEvolutionSKUQuarter" : "Quarter",
 
         "ReportProfitabilityEvolutionSKUManufacturerSalesValue" : "Manufacturer Sales Value ($ mln)",
 
@@ -547,8 +579,9 @@ app.config(['$translateProvider', function($translateProvider){
         "ReportSegmentLeaderTop5ChartTitlePragmatic"      : "6. Pragmatic (%)",
 
 		//Labels for Perception Map
-		"ReportPerceptionMapAxisTitleValuePerception"	:	"Value Perception",
-		"ReportPerceptionMapAxisTitleImagePerception"	:	"Image Perception",
+        "ReportPerceptionMapAxisLabelSegment"         : "Segment",
+        "ReportPerceptionMapAxisTitleValuePerception" : "Value Perception",
+        "ReportPerceptionMapAxisTitleImagePerception" : "Image Perception",
 
 		//Labels for Segment Distributions
         "ReportSegmentDistributionsTableTitleMarketShareValue"      : "Market Share (value %)",
@@ -680,13 +713,15 @@ app.config(['$translateProvider', function($translateProvider){
 
 
 		//Labels for Items on Decision Page - DecisionTab
-        "DecisionPageDecisionTabMAKEDECISIONS" : "MAKE DECISIONS",
-        "DecisionPageDecisionTabMission"       : "Market Share + Profit",
-        "DecisionPageDecisionTabAddNewBrand"   : "Add New Brand",
-        "DecisionPageDecisionTabSalesForce"    : "Sales Force ($ mln)",
-        "DecisionPageDecisionTabAddNewSKU"     : "Add New SKU",
-        "DecisionPageDecisionTabName"          : "Name",
-
+        "DecisionPageDecisionTabMAKEDECISIONS"     : "MAKE DECISIONS",
+        "DecisionPageDecisionTabMission"           : "Market Share + Profit",
+        "DecisionPageDecisionTabAddNewBrand"       : "Add New Brand",
+        "DecisionPageDecisionTabSalesForce"        : "Sales Force ($ mln)",
+        "DecisionPageDecisionTabAddNewSKU"         : "Add New SKU",
+        "DecisionPageDecisionTabName"              : "SKU Name",
+        "DecisionPageDecisionTabLabelBrandName"    : "Brand Name :",
+        "DecisionPageDecisionTabLabelFirstSKUName" : "First SKU Name :",
+        "DecisionPageDecisionTabLabelSKUName"      : "SKU Name :",
 
         "DecisionPageDecisionTabDiscontinue"           : "Discontinue?",
         "DecisionPageDecisionTabProcessingTechnology"  : "Processing Technology",
@@ -800,23 +835,25 @@ app.config(['$translateProvider', function($translateProvider){
         "DecisionPageSpendingDetailsTable2AcquiredProductionVolumeFlexibility" : "Acquired Production Volume Flexibility (%)",
         "DecisionPageSpendingDetailsTable2AcquiredTechnologyLevel"             : "Acquired Technology Level",
 		
-        //Labels for final score page
-        "FinalScorePageScore":"Score",
-        "FinalScorePageButtonOriginal":"Original",
-        "FinalScorePageButtonRescaled":"Rescaled",
-        "FinalScorePageWeightFactor":"Weight / Factor",
-        "FinalScorePageIncrementalMarketShare":"Incremental market share (value)",
-        "FinalScorePageCumulatedNetProfit":"Cumulated net profit",
-        "FinalScorePageSpendingVersusBudgets":"Spending versus budgets",
-        "FinalScorePageShareInBrandTotalSalesValue":"Share in Brand Total Sales Value",
-        "FinalScorePageAchievementOfInitialObjectives":"Achievement of initial objectives",
-        "FinalScorePageFinalScore":"Final Score",
+        //Labels for Final Score page
+        "FinalScorePageScore"          : "Score",
+        "FinalScorePageButtonOriginal" : "Original",
+        "FinalScorePageButtonRescaled" : "Rescaled",
+        "FinalScorePageWeightFactor"   : "Weight / Factor",
 
-        "FinalScorePageCompany":"Company",
-        "FinalScorePagePeriod":"Period",
-        "FinalScorePageCongratulations":"Congratulations ! You finish the game",
-        "FinalScorePageCongratulationsInfo":"Please take 5 minutes to provide feedback to MarkSimos. Your feedback will help us to improve our service",
-        "FinalScorePageProvideFeedback":"Provide Feedback",
+        "FinalScorePageIncrementalMarketShare"         : "Incremental market share (value)",
+        "FinalScorePageCumulatedNetProfit"             : "Cumulated net profit",
+        "FinalScorePageSpendingVersusBudgets"          : "Spending versus budgets",
+
+        "FinalScorePageShareInBrandTotalSalesValue"    : "Share in Brand Total Sales Value",
+        "FinalScorePageAchievementOfInitialObjectives" : "Achievement of initial objectives",
+        "FinalScorePageFinalScore"                     : "Final Score",
+
+        "FinalScorePageCompany"             : "Company",
+        "FinalScorePagePeriod"              : "Period",
+        "FinalScorePageCongratulations"     : "Congratulations ! You finish the game",
+        "FinalScorePageCongratulationsInfo" : "Please take 5 minutes to provide feedback to MarkSimos. Your feedback will help us to improve our service",
+        "FinalScorePageProvideFeedback"     : "Provide Feedback",
 
         
         //Labels for Questionnaire Page
@@ -939,7 +976,30 @@ app.config(['$translateProvider', function($translateProvider){
     // Adding a translation table for the Chinese language
     $translateProvider.translations('zh_CN', {
 
-        //Label for Introduction
+
+        //Labels for Login
+        "LoginPageLabelWelcome" : "欢迎使用MarkSimos !",
+        "LoginPageLabelSignIn" : "登录",
+        "LoginPageLabelEmail" : "邮箱 :",
+        "LoginPageLabelPassword" : "密码 :",
+        "LoginPageLabelPasswordErrorInfo" : "邮箱或密码错误 !",
+        "LoginPageButtonSignIn" : "点击登录",
+
+
+        //Labels for Introduction
+        "IntroPageSeminarListTitle" : "List of the Game Enrolled :xxx",
+        "IntroPageSeminarListLabelSeminarID" : "Seminar IDxxx",
+        "IntroPageSeminarListLabelSeminarDescription" : "Seminar Descriptionxx",
+        "IntroPageSeminarListLabelTotalRound" : "Total Roundxx",
+        "IntroPageSeminarListLabelCompetitor" : "Competitorxx",
+        "IntroPageSeminarListLabelDateOfCommencement" : "Date of Commencementxx",
+        "IntroPageSeminarListLabelSeminarStatus" : "Seminar Statusxx",
+        "IntroPageSeminarListLabelCountry" : "Country",
+        "IntroPageSeminarListLabelProvince" : "Province(State)",
+        "IntroPageSeminarListLabelCity" : "City",
+        "IntroPageSeminarListLabelVenue" : "Venue",
+
+
         "IntroPageSentence1" : "我的角色",
         "IntroPageSentence2" : "现在我将接管",
         "IntroPageSentence3" : "主要有",
@@ -971,11 +1031,13 @@ app.config(['$translateProvider', function($translateProvider){
 
         //Labels for Segment
         "HomePageSegmentLabelPriceSensitive" : "1 价格敏感型",
-        "HomePageSegmentLabelPretenders"     : "2  虚荣型",
+        "HomePageSegmentLabelPretenders"     : "2 虚荣型",
         "HomePageSegmentLabelModerate"       : "3 适中型",
-        "HomePageSegmentLabelGoodLife"       : "4  享受生活型",
+        "HomePageSegmentLabelGoodLife"       : "4 享受生活型",
         "HomePageSegmentLabelUltimate"       : "5 追求极致型",
         "HomePageSegmentLabelPragmatic"      : "6 实用型",
+        "HomePageSegmentLabelAllSegments"    : "7 所有消费者类型",
+
 
 
 		//Labels for Items on Home page - Second Menu Bar
@@ -1027,8 +1089,12 @@ app.config(['$translateProvider', function($translateProvider){
         "ReportMenuMarketEvolution"        : "市场演变趋势",
         "ReportMenuMarketTrends"           : "市场趋势",
         "ReportMenuMarketIndicator"        : "宏观市场参数",
-		
 
+
+        //Labels for Company Status Report Tab Menu
+        "ReportTabLabelSKU"    : "产品数据",
+        "ReportTabLabelBrand"  : "品牌数据",
+        "ReportTabLabelGlobal" : "全局数据",
 
 		//Labels for Company Status Report - SKU Level
         "ReportCompanyStatusSKUQuarter" : "阶段",
@@ -1227,11 +1293,12 @@ app.config(['$translateProvider', function($translateProvider){
 		
 		
 		//Labels for Inventory Report
-		"ReportInventoryReportLabelCloseToExpireInventory"	:	"将要过期的库存",
-		"ReportInventoryReportLabelPreviousInventory"	:	"以前的库存",
-		"ReportInventoryReportLabelFreshInventory"	:	"新库存",
-		"ReportInventoryReportTableLabel"	:	"总库存 (百万标准包) = 工厂库存＋渠道以及零售商库存",
-		
+        "ReportInventoryReportLabelCloseToExpireInventory" : "将要过期的库存",
+        "ReportInventoryReportLabelPreviousInventory"      : "以前的库存",
+        "ReportInventoryReportLabelFreshInventory"         : "新库存",
+        "ReportInventoryReportTableLabelX"                 : "总库存 (百万标准包) = 工厂库存＋渠道以及零售商库存",
+        "ReportInventoryReportTableLabelY"                 : "百万件",
+
 
 		//Labels for Profitability Evolution - SKU Level
         "ReportProfitabilityEvolutionSKUQuarter"	:	"阶段",
@@ -1477,8 +1544,9 @@ app.config(['$translateProvider', function($translateProvider){
         "ReportSegmentLeaderTop5ChartTitlePragmatic"      : "6. 实用型 (%)",
 		
 		//Labels for Perception Map
-		"ReportPerceptionMapAxisTitleValuePerception"	:	"价值感知",
-		"ReportPerceptionMapAxisTitleImagePerception"	:	"形象感知",
+        "ReportPerceptionMapAxisLabelSegment"         : "消费者分布",
+        "ReportPerceptionMapAxisTitleValuePerception" : "价值感知",
+        "ReportPerceptionMapAxisTitleImagePerception" : "形象感知",
 		 
 		//Labels for Segment Distributions
         "ReportSegmentDistributionsTableTitleMarketShareValue"      : "市场份额 (销售额 %)",
@@ -1616,15 +1684,18 @@ app.config(['$translateProvider', function($translateProvider){
         "DecisionPageDecisionTabAddNewBrand"   : "添加新品牌",
         "DecisionPageDecisionTabSalesForce"    : "销售团队 ($ mln)",
         "DecisionPageDecisionTabAddNewSKU"     : "添加新产品",
-        "DecisionPageDecisionTabName"          : "名称",
+        "DecisionPageDecisionTabName"          : "产品名称",
+        "DecisionPageDecisionTabLabelBrandName"    : "新品牌名称 :",
+        "DecisionPageDecisionTabLabelFirstSKUName" : "首个新产品名称 :",
+        "DecisionPageDecisionTabLabelSKUName"      : "新产品名称 :",
 
         "DecisionPageDecisionTabDiscontinue"           : "是否停止运营?",
         "DecisionPageDecisionTabProcessingTechnology"  : "生产技术",
         "DecisionPageDecisionTabIngredientsQuality"    : "原料质量",
         "DecisionPageDecisionTabPackagingSize"         : "包装规格",
-        "DecisionPageDecisionTabPackagingSizeSmall"    : "小",
-        "DecisionPageDecisionTabPackagingSizeStandard" : "标准",
-        "DecisionPageDecisionTabPackagingSizeLarge"    : "大",
+        "DecisionPageDecisionTabPackagingSizeSmall"    : "小包装",
+        "DecisionPageDecisionTabPackagingSizeStandard" : "标准包装",
+        "DecisionPageDecisionTabPackagingSizeLarge"    : "大包装",
 
         "DecisionPageDecisionTabProductionVolume"               : "产量(百万件)",
         "DecisionPageDecisionTabManufacturerPrice"              : "出厂价($)",
@@ -1728,24 +1799,25 @@ app.config(['$translateProvider', function($translateProvider){
         "DecisionPageSpendingDetailsTable2AcquiredProductionVolumeFlexibility" : "当前拥有的生产灵活度 (%)",
         "DecisionPageSpendingDetailsTable2AcquiredTechnologyLevel"             : "最高技术水平",
 		
-        //Labels for final score page
-        "FinalScorePageScore":"最终得分",
-        "FinalScorePageButtonOriginal":"原始",
-        "FinalScorePageButtonRescaled":"调整",
-        "FinalScorePageWeightFactor":"权重 / 因素",
+        //Labels for Final Score page
+        "FinalScorePageScore"          : "最终得分",
+        "FinalScorePageButtonOriginal" : "原始",
+        "FinalScorePageButtonRescaled" : "调整",
+        "FinalScorePageWeightFactor"   : "权重 / 因素",
 
-        "FinalScorePageIncrementalMarketShare":"增长的市场份额 (销售额)",
-        "FinalScorePageCumulatedNetProfit":"累计净利润",
-        "FinalScorePageSpendingVersusBudgets":"花销与预算对比",
+        "FinalScorePageIncrementalMarketShare" : "增长的市场份额 (销售额)",
+        "FinalScorePageCumulatedNetProfit"     : "累计净利润",
+        "FinalScorePageSpendingVersusBudgets"  : "花销与预算对比",
 
-        "FinalScorePageShareInBrandTotalSalesValue":"Share in Brand Total Sales Value",
-        "FinalScorePageAchievementOfInitialObjectives":"Achievement of initial objectives",
-        "FinalScorePageFinalScore":"最终得分",
-        "FinalScorePageCompany":"公司",
-        "FinalScorePagePeriod":"阶段",
-        "FinalScorePageCongratulations":"祝贺 ! 你已完成游戏",
-        "FinalScorePageCongratulationsInfo":"麻烦您花一些时间填写反馈. 您的反馈将更好的改进我们的产品",
-        "FinalScorePageProvideFeedback":"Provide Feedback",
+        "FinalScorePageShareInBrandTotalSalesValue"    : "Share in Brand Total Sales Value",
+        "FinalScorePageAchievementOfInitialObjectives" : "Achievement of initial objectives",
+        "FinalScorePageFinalScore"                     : "最终得分",
+
+        "FinalScorePageCompany"                        : "公司",
+        "FinalScorePagePeriod"                         : "阶段",
+        "FinalScorePageCongratulations"                : "祝贺 ! 你已完成游戏",
+        "FinalScorePageCongratulationsInfo"            : "麻烦您花一些时间填写反馈. 您的反馈将更好的改进我们的产品",
+        "FinalScorePageProvideFeedback"                : "Provide Feedback",
 
 
         //Labels for Questionnaire Page
@@ -1858,4 +1930,5 @@ app.config(['$translateProvider', function($translateProvider){
 
     // Tell the module what language to use by default
     $translateProvider.preferredLanguage('en_US');
+//    $translateProvider.preferredLanguage('zh_CN');
 }]);

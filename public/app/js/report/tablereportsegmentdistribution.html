@@ -1,37 +1,37 @@
 <table class="table table-striped table-bordered table-hover" >
     <thead>
         <tr>
-            <th>Quarters</th>
-            <th ng-repeat="quarter in data">{{quarter.period}}</th>
+            <th>{{'ReportCompanyStatusSKUQuarter' | translate}}</th>
+            <th ng-repeat="quarter in data">{{'ReportCompanyStatusSKUQuarter' | translate}} {{quarter.period}}</th>
         </tr>
     </thead>
     <tbody>
         <tr>
-            <td>1. Price Sensitive</td>
+            <td>{{'HomePageSegmentLabelPriceSensitive' | translate}}</td>
             <td ng-repeat="quarter in data">{{quarter.priceSensitive * plus | number : 2}}{{unit}}</td>
         </tr>
         <tr>
-            <td>2. Pretenders</td>
+            <td>{{'HomePageSegmentLabelPretenders' | translate}}</td>
             <td ng-repeat="quarter in data">{{quarter.pretenders * plus| number : 2}}{{unit}}</td>
         </tr>
         <tr>
-            <td>3. Moderate</td>
+            <td>{{'HomePageSegmentLabelModerate' | translate}}</td>
             <td ng-repeat="quarter in data">{{quarter.moderate * plus| number : 2}}{{unit}}</td>
         </tr>
         <tr>
-            <td>4. Good Life</td>
+            <td>{{'HomePageSegmentLabelGoodLife' | translate}}</td>
             <td ng-repeat="quarter in data">{{quarter.goodLife * plus| number : 2}}{{unit}}</td>
         </tr>
         <tr>
-            <td>5. Ultimate</td>
+            <td>{{'HomePageSegmentLabelUltimate' | translate}}</td>
             <td ng-repeat="quarter in data">{{quarter.ultimate * plus| number : 2}}{{unit}}</td>
         </tr>
         <tr>
-            <td>6. Pragmatic</td>
+            <td>{{'HomePageSegmentLabelPragmatic' | translate}}</td>
             <td ng-repeat="quarter in data">{{quarter.pragmatic * plus| number : 2}}{{unit}}</td>
         </tr>
         <tr>
-            <td>7. All Segments</td>
+            <td>{{'HomePageSegmentLabelAllSegments' | translate}}</td>
             <td ng-repeat="quarter in data">{{quarter.allSegments * plus| number : 2}}{{unit}}</td>
         </tr>
     </tbody>

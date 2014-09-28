@@ -227,7 +227,32 @@ uFormBrandDecision.pas
 
 
 
+# 生产环境 部署问题Q&A
+
+## 解决80端口无法访问问题, 通过设置iptables 把80转发到3000
+### [From stackoverflow](http://stackoverflow.com/questions/16573668/best-practices-when-running-node-js-with-port-80-ubuntu-linode/23281401#23281401 "Port 80")
+
+
+Port 80
+What I do on my cloud instances is I redirect port 80 to port 3000 with this command:
+
+sudo iptables -t nat -A PREROUTING -i eth0 -p tcp --dport 80 -j REDIRECT --to-port 3000
+Then I launch my Node.js on port 3000. Requests to port 80 will get mapped to port 3000.
+
+You should also edit your /etc/rc.local file and add that line minus the sudo. That will add the redirect when the machine boots up. You don't need sudo in /etc/rc.local because the commands there are run as root when the system boots.
+
+Logs
+Use the forever module to launch your Node.js with. It will make sure that it restarts if it ever crashes and it will redirect console logs to a file.
+
+Launch on Boot
+Add your Node.js start script to the file you edited for port redirection, /etc/rc.local. That will run your Node.js launch script when the system starts.
+
+Digital Ocean & other VPS
+This not only applies to Linode, but Digital Ocean, AWS EC2 and other VPS providers as well. However, on RedHat based systems /etc/rc.local is /ect/rc.d/local.
+
+
 # 服务器数据库配置
+
 
 启动
 ```
@@ -242,7 +267,6 @@ sudo service mongod stop
 sudo vi /etc/mongodb.conf
 ```
 
-NODE_ENV=production nodemon app.js
 
 # 运行
 NODE_ENV=production nodemon app.js
@@ -250,23 +274,4 @@ NODE_ENV=production nodemon app.js
 
 
 
-# Markdown 格式范例
 
-Consumer Segment        | Description
----------               | -----
-Price Sensitive         | Consumers accept that they cannot be too demanding on Image perception, since they care so much about price and the Value for money
-Pretenders              | Consumers are also very price sensitive but they want to show off; therefore they look for high Image perception. 
-Moderate                | Consumers are slightly less price sensitive than Segment 1, hence their expectations are slightly higher on both dimensions. 
-Good Life               | Consumers are even less price sensitive than Segment 3 and expect more on Value as well as on Image. 
-Ultimate                | Consumers are not really price sensitive. They can afford higher prices, but in exchange they ask for very high quality, hence they have high expectations on Value dimension. 
-Pragmatic               | Consumers are well-educated and practical people with their strong judgments. They don’t follow fashion. They want very good Value offer, but Image aspect is for them a bit shallow and futile, which doesn’t mean that they would be happy with entry level products. They look for something decent. 
-
-| Segment Name      | Expected  Value Perception | Expected Image Perception  |
-| :--------         | :--------:                 | :--:                       |
-| Price Sensitive   | 24                         |  24                        |
-| Pretenders        | 24                         |  45                        |
-| Moderate          | 32                         |  30                        |
-| Good Life         | 32                         |  36                        |
-| Ultimate          | 53                         |  53                        |
-| Pragmatic         | 52                         |  53                        |
->>>>>>> 0915
