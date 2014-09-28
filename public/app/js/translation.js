@@ -918,6 +918,7 @@ app.config(['$translateProvider', function($translateProvider){
 
 
         /*e4e register*/
+
         "e4eRegisterGetStart"  : "Get Start",
         "e4eRegisterFindStage" : "We Help Students find their own stage",
         "e4eRegisterLetsStart" : "Let's start",
@@ -974,6 +975,7 @@ app.config(['$translateProvider', function($translateProvider){
         "e4eSuccessProceed"     : "Please proceed to",
         "e4eSuccessUpdate"      : "and update the jobprofiles and select winningstudents for your company",
         "e4eSuccessLogin"       : "to login and participate the MarkSimos game"
+
 
 
 		
@@ -1893,6 +1895,7 @@ app.config(['$translateProvider', function($translateProvider){
 
 
         /*e4e register*/
+
         "e4eRegisterGetStart"  : "现在开始",
         "e4eRegisterFindStage" : "我们帮助学生找到自己的舞台",
         "e4eRegisterLetsStart" : "开始",
@@ -1949,6 +1952,7 @@ app.config(['$translateProvider', function($translateProvider){
         "e4eSuccessProceed"     : "Please proceed to",
         "e4eSuccessUpdate"      : "and update the jobprofiles and select winningstudents for your company",
         "e4eSuccessLogin"       : "to login and participate the MarkSimos game"
+
 		
 
 		

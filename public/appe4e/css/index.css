@@ -24,19 +24,20 @@
 .start-btn{
 	float:right;
 	padding:18px;
+	width: 133px;
 }
 
 .start-btn a{
 	background: url("../img/start.png") no-repeat;
     color:#F93F14;
     font-size: 16px;
-    padding: 5px 20px 5px 50px;
+    padding: 4px 15px 5px 45px;
 }
 .start-btn a:hover,.start-btn a:active{
 	background: url("../img/start-active.png") no-repeat;
     color: #ffffff;
 	font-size: 16px;
-    padding: 5px 20px 5px 50px;
+    padding: 4px 15px 5px 45px;
 }
 
 .languages{
@@ -410,6 +411,7 @@
 .login-box h3{
 	font-size: 14px;
 	line-height: 14px;
+	text-align: center;
 }
 .sign-up{
     background-color: #FF441C;

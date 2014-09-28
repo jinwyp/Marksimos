@@ -47,41 +47,41 @@
 							<div class="form-group">
 							    <label for="user-name" class="col-sm-4 control-label">{{'e4eStudentUserName' | translate }}</label>
 							    <div class="col-sm-6">
-							      <input type="text" class="form-control" id="user-name" ng-model='userName' placeholder="xxxxxxx">
+							    	<input type="text" class="form-control" id="user-name" ng-model='userName' placeholder="xxxxxxx">
 							    </div>
 							</div>
 
 							<div class="form-group">
 							    <label for="first-name" class="col-sm-4 control-label">{{'e4eStudentFirstName' | translate }}</label>
 							    <div class="col-sm-6">
-							      <input type="text" class="form-control" id="first-name" ng-model='firstName' placeholder="xxxxxxx">
+							    	<input type="text" class="form-control" id="first-name" ng-model='firstName' placeholder="xxxxxxx">
 							    </div>
 							</div>
 							<div class="form-group">
 							    <label for="last-name" class="col-sm-4 control-label">{{'e4eStudentLastName' | translate }}</label>
 							    <div class="col-sm-6">
-							      <input type="text" class="form-control" id="last-name" ng-model='lastName' placeholder="xxxxxxx">
+							    	<input type="text" class="form-control" id="last-name" ng-model='lastName' placeholder="xxxxxxx">
 							    </div>
 							</div>
 
 							<div class="form-group">
 							    <label for="age" class="col-sm-4 control-label">{{'e4eStudentAge' | translate }}</label>
 							    <div class="col-sm-6">
-							      <input type="text" class="form-control" id="age" ng-model='age' placeholder="xxxxxxx">
+							    	<input type="text" class="form-control" id="age" ng-model='age' placeholder="xxxxxxx">
 							    </div>
 							</div>
 
 							<div class="form-group">
 							    <label for="country" class="col-sm-4 control-label">{{'e4eStudentCountry' | translate }}</label>
 							    <div class="col-sm-6">
-							      <input type="text" class="form-control" id="country" ng-model='country' placeholder="xxxxxxx">
+							    	<input type="text" class="form-control" id="country" ng-model='country' placeholder="xxxxxxx">
 							    </div>
 							</div>
 
 							<div class="form-group">
 							    <label for="address" class="col-sm-4 control-label">{{'e4eStudentAddress' | translate }}</label>
 							    <div class="col-sm-6">
-							      <input type="text" class="form-control" id="address" ng-model='address' placeholder="xxxxxxx">
+							    	<input type="text" class="form-control" id="address" ng-model='address' placeholder="xxxxxxx">
 							    </div>
 							</div>
 
@@ -90,14 +90,14 @@
 							<div class="form-group">
 							    <label for="email" class="col-sm-4 control-label">{{'e4eStudentEmail' | translate }}</label>
 							    <div class="col-sm-6">
-							      <input type="text" class="form-control" id="email" ng-model='email' placeholder="xxxxxxx">
+							    	<input type="text" class="form-control" id="email" ng-model='email' placeholder="xxxxxxx">
 							    </div>
 							</div>
 
 							<div class="form-group">
 							    <label for="qq" class="col-sm-4 control-label">{{'e4eStudentQQ' | translate }}</label>
 							    <div class="col-sm-6">
-							      <input type="text" class="form-control" id="qq" ng-model='qq' placeholder="xxxxxxx">
+							    	<input type="text" class="form-control" id="qq" ng-model='qq' placeholder="xxxxxxx">
 							    </div>
 							</div>
 
@@ -119,11 +119,55 @@
 						<h4 class="f-semibold text-center f-size-20">{{'e4eStudentSecondPageTitle' | translate }}</h4>
 						<div class="form-horizontal">
 							<div class="form-group">
-
-							    <div class="col-sm-offset-4 col-sm-6">
-							    	<button class="btn btn-default" ng-click='submitRegister()'>{{'e4eStudentSubmit' | translate }}</button>
+								<div class="col-sm-offset-3 col-sm-6">
+									<input type="text" class="form-control" id="highestEDU" ng-model='highestEDU' placeholder="{{'e4eStudentHighestEDU' | translate }}">
 							    </div>
 							</div>
+							<div class="form-group">
+								<div class="col-sm-offset-3 col-sm-6">
+									<input type="text" class="form-control" id="marjors" ng-model='marjors' placeholder="{{'e4eStudentMajors' | translate }}">
+							    </div>
+							</div>
+							<div class="form-group">
+								<div class="col-sm-offset-3 col-sm-6">
+									<input type="text" class="form-control" id="university" ng-model='university' placeholder="{{'e4eStudentUniversity' | translate }}">
+							    </div>
+							</div>
+							<div class="form-group">
+								<div class="col-sm-offset-3 col-sm-6">
+									<input type="text" class="form-control" id="scoreGPA" ng-model='scoreGPA' placeholder="{{'e4eStudentScoreGPA' | translate }}">
+							    </div>
+							</div>
+							<div class="form-group">
+								<div class="col-sm-offset-3 col-sm-6">
+									<input type="text" class="form-control" id="achievements" ng-model='achievements' placeholder="{{'e4eStudentAchievements' | translate }}">
+							    </div>
+							</div>
+							<div class="form-group">
+								<div class="col-sm-offset-3 col-sm-6">
+									<input type="text" class="form-control" id="year-of-graduation" ng-model='yearOfGraduation' placeholder="{{'e4eStudentYearOfGraduation' | translate }}">
+							    </div>
+							</div>
+							<div class="form-group">
+								<div class="col-sm-offset-3 col-sm-6">
+									<input type="text" class="form-control" id="month-of-graduation" ng-model='monthOfGraduation' placeholder="{{'e4eStudentMonthOfGraduation' | translate }}">
+							    </div>
+							</div>
+							<div class="form-group">
+								<div class="col-sm-offset-3 col-sm-6">
+									<input type="text" class="form-control" id="current-year" ng-model='currentYear' placeholder="{{'e4eStudentCurrentYear' | translate }}">
+							    </div>
+							</div>
+							<div class="form-group">
+								<div class="col-sm-offset-3 col-sm-6">
+									<input type="text" class="form-control" id="upload-resume" ng-model='uploadResume' placeholder="{{'e4eStudentUploadResume' | translate }}">
+							    </div>
+							</div>
+
+
+						    <div class="col-sm-offset-3 col-sm-6">
+						    	<button class="btn btn-default" ng-click='submitRegister()'>{{'e4eStudentSubmit' | translate }}</button>
+						    </div>
 						</div>
 					</div>
 				</div>
