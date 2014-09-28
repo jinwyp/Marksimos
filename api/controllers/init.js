@@ -317,6 +317,7 @@ exports.runSimulation = function(){
                 if(err.httpStatus){
                     return res.send(err.httpStatus, {message: err.message});
                 }
+                logger.error(err);
                 res.send(500, {message: err.message})
             })
             .done();            
