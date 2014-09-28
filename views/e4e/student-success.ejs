@@ -1,7 +1,7 @@
 <% include ./include/registerheader.html %>
-<body>
+<body ng-app='e4eregister'>
 
-	<div id="header" class="transparent-header">
+	<div id="header" class="transparent-header"  ng-controller="registerHeaderController">
 		<div class="wrap">
 			<div class="e4e-logo">
 				<a href="#">
@@ -16,11 +16,11 @@
 			<div class="languages">
 				<nav class="nav-header">
 					<ul>
-						<li class="active">
-							<a href='#' class="f-bold">中</a>
+						<li ng-class="{'active':!isEnglish}">
+							<a href='' class="f-bold" ng-click="changeLanguage('zh_CN')">中</a>
 						</li>
-						<li>
-							<a href='#' class="f-bold">EN</a>
+						<li ng-class="{'active':isEnglish}">
+							<a href='' class="f-bold" ng-click="changeLanguage('en_US')">EN</a>
 						</li>
 					</ul>
 				</nav>
