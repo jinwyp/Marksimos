@@ -343,7 +343,6 @@ marksimosapp.controller('chartController', ['$translate', '$scope', '$rootScope'
     $scope.C31TooltipContent = function(){
         return function(key, x, y, e, graph) {
 
-            console.log(key, x, y, e);
             var iconColor ;
             var htmlResult = '';
 
