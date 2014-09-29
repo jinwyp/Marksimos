@@ -336,11 +336,11 @@
 	height: 255px;
 }
 .section-1-1:hover,.section-1-3:hover,.section-1-5:hover{
-	-webkit-animation:1s ease;-moz-animation:1s ease;-ms-animation:1s ease;animation:1s ease;
+	-webkit-animation:0.1s ease;-moz-animation:0.1s ease;-ms-animation:0.1s ease;animation:0.1s ease;
 	-webkit-animation-name:flipinY;-moz-animation-name:flipinY;-ms-animation-name:flipinY;animation-name:flipinY;
 }
 .section-1-2:hover,.section-1-4:hover,.section-1-6:hover{
-	-webkit-animation:1s ease;-moz-animation:1s ease;-ms-animation:1s ease;animation:1s ease;
+	-webkit-animation:0.1s ease;-moz-animation:0.1s ease;-ms-animation:0.1s ease;animation:0.1s ease;
 	-webkit-animation-name:flipinX;-moz-animation-name:flipinX;-ms-animation-name:flipinX;animation-name:flipinX;
 }
 
