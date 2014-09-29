@@ -69,6 +69,40 @@ $(function(){
 
 	$(".next").click(function(){
 		$.fn.fullpage.moveSectionDown();
-	})
+	});
+
+	var startTime,endTime;
+	$('.my-flipin-x').hover(
+		function () {
+			startTime=new Date().getTime();
+			if(!$(this).hasClass('hover-flipin-x')){
+				$(this).addClass("hover-flipin-x");
+			}
+		},
+		function () {
+			endTime=new Date().getTime();
+			if(endTime-startTime>100){
+				setTimeout(function(){
+	               $('.my-flipin-x').removeClass("hover-flipin-x");
+	            },1200);
+			}
+		}
+	);
+	$('.my-flipin-y').hover(
+		function () {
+			startTime=new Date().getTime();
+			if(!$(this).hasClass('hover-flipin-y')){
+				$(this).addClass("hover-flipin-y");
+			}
+		},
+		function () {
+			endTime=new Date().getTime();
+			if(endTime-startTime>100){
+				setTimeout(function(){
+	               $('.my-flipin-y').removeClass("hover-flipin-y");
+	            },1200);
+			}
+		}
+	);
 
 });

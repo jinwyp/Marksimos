@@ -259,17 +259,6 @@
 	background: url('../img/title-learn.png');
 }
 
-.hover-show{
-    position: absolute;
-    text-align: center;
-    height: 220px;
-    display: none;
-    color: #fff;
-    margin: 40px 0 0 25px;
-    position: absolute;
-    text-align: center;
-    width: 203px;
-}
 .section-1-1{
 	background: url('../img/section-1-1-active.gif') no-repeat;
 	width: 255px;
@@ -300,41 +289,65 @@
 	width: 255px;
 	height: 255px;
 }
-.section-1-1:hover{
+
+.section-1-1:hover .hover-show,.section-1-2:hover .hover-show,.section-1-3:hover .hover-show,.section-1-4:hover .hover-show,.section-1-5:hover .hover-show,.section-1-6:hover .hover-show{
+	display: inline-block;
+}
+
+.hover-show{
+    color: #fff;
+    display: none;
+    height: 255px;
+    position: absolute;
+    width: 255px;
+}
+.hover-show-box{
+	width:203px;
+	height:210px;
+	margin:40px 26px 0 26px;
+	line-height: 24px;
+	text-align: center;
+}
+
+.section-1-1:hover,.section-1-2:hover,.section-1-3:hover,.section-1-4:hover,.section-1-5:hover,.section-1-6:hover{
+	background: transparent;
+	width: 255px;
+	height: 255px;
+}
+
+.section-1-1-hover{
 	background: url('../img/section-1-1-active.png') no-repeat;
 	width: 255px;
 	height: 255px;
 }
 
-.section-1-1:hover .hover-show,.section-1-2:hover .hover-show,.section-1-3:hover .hover-show,.section-1-4:hover .hover-show,.section-1-5:hover .hover-show,.section-1-6:hover .hover-show{
-	display: block;
-}
 
-.section-1-2:hover{
+.section-1-2-hover{
 	background: url('../img/section-1-2-active.png') no-repeat;
 	width: 255px;
 	height: 255px;
 }
-.section-1-3:hover{
+.section-1-3-hover{
 	background: url('../img/section-1-3-active.png') no-repeat;
 	width: 255px;
 	height: 255px;
 }
-.section-1-4:hover{
+.section-1-4-hover{
 	background: url('../img/section-1-4-active.png') no-repeat;
 	width: 255px;
 	height: 255px;
 }
-.section-1-5:hover{
+.section-1-5-hover{
 	background: url('../img/section-1-5-active.png') no-repeat;
 	width: 255px;
 	height: 255px;
 }
-.section-1-6:hover{
+.section-1-6-hover{
 	background: url('../img/section-1-6-active.png') no-repeat;
 	width: 255px;
 	height: 255px;
 }
+/*<<<<<<< HEAD
 .section-1-1:hover,.section-1-3:hover,.section-1-5:hover{
 	-webkit-animation:0.1s ease;-moz-animation:0.1s ease;-ms-animation:0.1s ease;animation:0.1s ease;
 	-webkit-animation-name:flipinY;-moz-animation-name:flipinY;-ms-animation-name:flipinY;animation-name:flipinY;
@@ -342,6 +355,14 @@
 .section-1-2:hover,.section-1-4:hover,.section-1-6:hover{
 	-webkit-animation:0.1s ease;-moz-animation:0.1s ease;-ms-animation:0.1s ease;animation:0.1s ease;
 	-webkit-animation-name:flipinX;-moz-animation-name:flipinX;-ms-animation-name:flipinX;animation-name:flipinX;
+=======*/
+.hover-flipin-y{
+	-webkit-animation:1s ease;-moz-animation:1s ease;-ms-animation:1s ease;animation:1s ease;
+	-webkit-animation-name:flipin-Y;-moz-animation-name:flipin-Y;-ms-animation-name:flipin-Y;animation-name:flipin-Y;
+}
+.hover-flipin-x{
+	-webkit-animation:1s ease;-moz-animation:1s ease;-ms-animation:1s ease;animation:1s ease;
+	-webkit-animation-name:flipin-X;-moz-animation-name:flipin-X;-ms-animation-name:flipin-X;animation-name:flipin-X;
 }
 
 /********* section2 *********/
@@ -508,53 +529,3 @@
 	height: 37px;
 	display: inline-block;
 }
-@-webkit-keyframes flipinX{
-    0%{-webkit-transform:perspective(400px) rotateX(90deg);opacity:0;}
-    40%{-webkit-transform:perspective(400px) rotateX(-10deg);}
-    70%{-webkit-transform:perspective(400px) rotateX(10deg);}
-    100%{-webkit-transform:perspective(400px) rotateX(0);opacity:1;}
-}
-@-moz-keyframes flipinX{
-    0%{-moz-transform:perspective(400px) rotateX(90deg);opacity:0;}
-    40%{-moz-transform:perspective(400px) rotateX(-10deg);}
-    70%{-moz-transform:perspective(400px) rotateX(10deg);}
-    100%{-moz-transform:perspective(400px) rotateX(0);opacity:1;}
-}
-@-ms-keyframes flipinX{
-    0%{-ms-transform:perspective(400px) rotateX(90deg);opacity:0;}
-    40%{-ms-transform:perspective(400px) rotateX(-10deg);}
-    70%{-ms-transform:perspective(400px) rotateX(10deg);}
-    100%{-ms-transform:perspective(400px) rotateX(0);opacity:1;}
-}
-@keyframes flipinX{
-    0%{transform:perspective(400px) rotateX(90deg);opacity:0;}
-    40%{transform:perspective(400px) rotateX(-10deg);}
-    70%{transform:perspective(400px) rotateX(10deg);}
-    100%{transform:perspective(400px) rotateX(0);opacity:1;}
-}
-
-@-webkit-keyframes flipinY{
-    0%{-webkit-transform:perspective(400px) rotateY(90deg);opacity:0;}
-    40%{-webkit-transform:perspective(400px) rotateY(-10deg);}
-    70%{-webkit-transform:perspective(400px) rotateY(10deg);}
-    100%{-webkit-transform:perspective(400px) rotateY(0);opacity:1;}
-}
-@-moz-keyframes flipinY{
-    0%{-moz-transform:perspective(400px) rotateY(90deg);opacity:0;}
-    40%{-moz-transform:perspective(400px) rotateY(-10deg);}
-    70%{-moz-transform:perspective(400px) rotateY(10deg);}
-    100%{-moz-transform:perspective(400px) rotateY(0);opacity:1;}
-}
-@-ms-keyframes flipinY{
-    0%{-ms-transform:perspective(400px) rotateY(90deg);opacity:0;}
-    40%{-ms-transform:perspective(400px) rotateY(-10deg);}
-    70%{-ms-transform:perspective(400px) rotateY(10deg);}
-    100%{-ms-transform:perspective(400px) rotateY(0);opacity:1;}
-}
-@keyframes flipinY{
-    0%{transform:perspective(400px) rotateY(90deg);opacity:0;}
-    40%{transform:perspective(400px) rotateY(-10deg);}
-    70%{transform:perspective(400px) rotateY(10deg);}
-    100%{transform:perspective(400px) rotateY(0);opacity:1;}
-}
-
