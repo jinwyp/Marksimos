@@ -69,6 +69,31 @@ $(function(){
 
 	$(".next").click(function(){
 		$.fn.fullpage.moveSectionDown();
-	})
+	});
+
+	$('.my-flipin-x').hover(
+		function () {
+			if(!$(this).hasClass('hover-flipin-x')){
+				$(this).addClass("hover-flipin-x");
+			}
+		},
+		function () {
+			setTimeout(function(){
+               $('.my-flipin-x').removeClass("hover-flipin-x");
+            },1200);
+		}
+	);
+	$('.my-flipin-y').hover(
+		function () {
+			if(!$(this).hasClass('hover-flipin-y')){
+				$(this).addClass("hover-flipin-y");
+			}
+		},
+		function () {
+			setTimeout(function(){
+               $('.my-flipin-y').removeClass("hover-flipin-y");
+            },1200);
+		}
+	);
 
 });
