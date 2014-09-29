@@ -308,6 +308,7 @@
 .section-1-1:hover .hover-show,.section-1-2:hover .hover-show,.section-1-3:hover .hover-show,.section-1-4:hover .hover-show,.section-1-5:hover .hover-show,.section-1-6:hover .hover-show{
 	display: block;
 }
+
 .section-1-2:hover{
 	background: url('../img/section-1-2-active.png') no-repeat;
 	width: 255px;
