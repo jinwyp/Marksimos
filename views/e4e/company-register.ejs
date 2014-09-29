@@ -45,10 +45,14 @@
 					<div class="company-back">
 						<h4 class="f-semibold text-center f-size-20 padding-10">{{'e4eCompanyFirstPageTitle' | translate }}</h4>
 						<div class="form-horizontal">
-							<div class="form-group">
+							<div class="form-group has-feedback" ng-class="{'has-success':companyRegisterForm.userName.$dirty && companyRegisterForm.userName.$valid, 'has-error': companyRegisterForm.userName.$dirty && companyRegisterForm.userName.$invalid}">
 							    <label for="user-name" class="col-sm-3-9 control-label">{{'e4eCompanyUserName' | translate }}</label>
 							    <div class="col-sm-4-2">
-							    	<input type="text" class="form-control" id="user-name" ng-model='userName' placeholder="xxxxxxx">
+							    	<input type="text" class="form-control" id="user-name" name="userName" ng-model='userName' placeholder="xxxxxxx" required>
+							    	
+
+							    	<span class="glyphicon glyphicon-ok form-control-feedback" ng-show="companyRegisterForm.userName.$dirty && companyRegisterForm.userName.$valid"></span>
+							    	<span class="glyphicon glyphicon-remove form-control-feedback" ng-show="companyRegisterForm.userName.$dirty && companyRegisterForm.userName.$invalid"></span>
 							    </div>
 							</div>
 							<div class="form-group">

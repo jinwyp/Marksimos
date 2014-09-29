@@ -295,12 +295,12 @@
 	height: 255px;
 }
 .section-1-2:hover{
-	background: url('../img/section-1-2-active.png') no-repeat;
+	background: url('../img/section-1-2-active.gif') no-repeat;
 	width: 255px;
 	height: 255px;
 }
 .section-1-3:hover{
-	background: url('../img/section-1-3-active.png') no-repeat;
+	background: url('../img/section-1-3-active.gif') no-repeat;
 	width: 255px;
 	height: 255px;
 }
