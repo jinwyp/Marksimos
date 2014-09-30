@@ -64,6 +64,12 @@ exports.getStudent = function(req, res, next){
 
 exports.logout = function(req, res, next){
     sessionOperation.setLoginStatus(req, false);
+    sessionOperation.setUserRole(req, "");
+    sessionOperation.setUserId(req, "");
+    sessionOperation.setEmail(req, "");
+    sessionOperation.setSeminarId(req, "");
+    sessionOperation.setCurrentPeriod(req, "");
+    sessionOperation.setCompanyId(req, "");
     res.send({message: 'Logout success'});
 }
 
