@@ -568,11 +568,11 @@
                                     </tr>
                                     <tr ng-repeat="seminar in data.seminars" >
                                         <td width="100px">
-                                                <button type="button" class="btn btn-danger" ng-click="initSeminar(seminar.seminarId)">Init</button>
+                                                <button type="button" class="btn btn-danger" ng-hide="seminar.isInitialized" ng-click="initSeminar(seminar.seminarId)" ng-disabled="css.runButtonDisabled">Init</button>
 
-                                                <div class="input-group input-group-sm ">
+                                                <div class="input-group input-group-sm " ng-show="seminar.isInitialized">
                                                     <span class="input-group-btn">
-                                                        <button type="button" class="btn btn-danger" ng-click="runSeminar(seminar.seminarId, seminar.currentPeriod)">Run</button>
+                                                        <button type="button" class="btn btn-danger" ng-click="runSeminar(seminar.seminarId, seminar.currentPeriod)" ng-disabled="css.runButtonDisabled">Run</button>
                                                     </span>
                                                     <input type="number" class="form-control" placeholder="current round" ng-model="seminar.currentPeriod" disabled>
                                                 </div>

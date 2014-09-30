@@ -52,7 +52,8 @@ marksimosapp.controller('adminHomeController', ['$scope', '$http', '$notificatio
     $scope.css = {
         leftmenu : 11,
         menuTabShow : [false,false,false,false,false,false], //从第二个false 开始第1个菜单
-        seminarId : 0
+        seminarId : 0,
+        runButtonDisabled : false
     };
 
     $scope.data = {
@@ -262,6 +263,7 @@ marksimosapp.controller('adminHomeController', ['$scope', '$http', '$notificatio
 
 
     /********************  获取信息  ********************/
+
     $scope.adminInit = function(){
 
         $http.get('/marksimos/api/admin/user').success(function(data, status, headers, config){
@@ -478,32 +480,34 @@ marksimosapp.controller('adminHomeController', ['$scope', '$http', '$notificatio
                 $notification.error('Save failed', data.message);
             });
         }
-
-
-
     };
+
+
 
     /********************  Init Seminar  ********************/
     $scope.initSeminar = function(seminarid){
+        $scope.css.runButtonDisabled = true;
         $http.post('/marksimos/api/admin/init', {seminar_id:seminarid}).success(function(data, status, headers, config){
             $scope.getSeminarInit();
             $notification.success('Save success', 'Init Seminar success');
-
+            $scope.css.runButtonDisabled = false;
         }).error(function(data, status, headers, config){
-            console.log(data);
             $notification.error('Save failed', data.message);
+            $scope.css.runButtonDisabled = false;
         });
     };
 
     /********************  Run Seminar  ********************/
     $scope.runSeminar = function(seminarid, round){
+        $scope.css.runButtonDisabled = true;
         $http.post('/marksimos/api/admin/runsimulation/' + seminarid + '/' + round).success(function(data, status, headers, config){
             $scope.getSeminarInit();
             $notification.success('Save success', 'Run Seminar success');
+            $scope.css.runButtonDisabled = false;
 
         }).error(function(data, status, headers, config){
-            console.log(data);
             $notification.error('Save failed', data.message);
+            $scope.css.runButtonDisabled = false;
         });
     };
 
