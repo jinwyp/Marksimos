@@ -52,12 +52,12 @@ app.config(['$translateProvider', function($translateProvider){
         "e4eCompmayAddress":"Address",
         "e4eCompanyNext":"NEXT",
 
+        "e4eCompanySecondPageTitle":"Communication Details",
         "e4eCompanyNameOfContactPerson":"Name Of Contact Person",
         "e4eCompanyDesignation":"Designation",
         "e4eCompanyOfficalContactNumber":"Offical Contact Number",
         "e4eCompanyMobileNumber":"Mobile Number",
         "e4eCompanyEmailID":"Email ID",
-        "e4eCompanySecondPageTitle":"Communication Details",
 
         "e4eCompanyThirdPageTitle":"Job Profiles",
         "e4eCompanyDivision":"Division",
@@ -155,12 +155,12 @@ app.config(['$translateProvider', function($translateProvider){
         "e4eCompmayAddress":"Address",
         "e4eCompanyNext":"下一步",
 
+        "e4eCompanySecondPageTitle":"通信细节",
         "e4eCompanyNameOfContactPerson":"Name Of Contact Person",
         "e4eCompanyDesignation":"Designation",
         "e4eCompanyOfficalContactNumber":"Offical Contact Number",
         "e4eCompanyMobileNumber":"Mobile Number",
         "e4eCompanyEmailID":"Email ID",
-        "e4eCompanySecondPageTitle":"通信细节",
 
         "e4eCompanyThirdPageTitle":"工作信息",
         "e4eCompanyDivision":"Division",
