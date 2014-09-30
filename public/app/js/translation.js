@@ -333,7 +333,8 @@ app.config(['$translateProvider', function($translateProvider){
 
 		//Labels for Inventory Report
         "ReportInventoryReportLabelCloseToExpireInventory" : "Close to Expire Inventory",
-        "ReportInventoryReportLabelPreviousInventory"      : "Previous Inventory",
+//        "ReportInventoryReportLabelPreviousInventory"      : "Previous Inventory",
+        "ReportInventoryReportLabelPreviousInventory"      : "Close to Expire Inventory",
         "ReportInventoryReportLabelFreshInventory"         : "Fresh Inventory",
         "ReportInventoryReportTableLabelX"                 : "Total Stock (millions of standard pack) = Factory Stock + Trade Stock + Retailer Stock",
         "ReportInventoryReportTableLabelY"                 : "Million Units",
@@ -1255,7 +1256,8 @@ app.config(['$translateProvider', function($translateProvider){
 		
 		//Labels for Inventory Report
         "ReportInventoryReportLabelCloseToExpireInventory" : "将要过期的库存",
-        "ReportInventoryReportLabelPreviousInventory"      : "以前的库存",
+//        "ReportInventoryReportLabelPreviousInventory"      : "以前的库存",
+        "ReportInventoryReportLabelPreviousInventory"      : "将要过期的库存",
         "ReportInventoryReportLabelFreshInventory"         : "新库存",
         "ReportInventoryReportTableLabelX"                 : "总库存 (百万标准包) = 工厂库存＋渠道以及零售商库存",
         "ReportInventoryReportTableLabelY"                 : "百万件",

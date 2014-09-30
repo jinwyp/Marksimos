@@ -536,14 +536,17 @@
                         "key": showTranslateTextInventoryReport(value.inventoryName),
                         "values": []
                     };
-                    chartResult.data.push(oneSeries);
-                    chartResult.series.push(showTranslateTextInventoryReport(value.inventoryName));
+                    if(key !== 0){
+                        chartResult.data.push(oneSeries);
+                        chartResult.series.push(showTranslateTextInventoryReport(value.inventoryName));
+                    }
+
                 });
 
                 angular.forEach(chartHttpData.SKUs, function(value, key) {
-                    var oneLineData1 = []; // Close To EXpire Inventory
-                    oneLineData1.push( value.SKUName );
-                    oneLineData1.push( angular.copy(Math.round(value.inventoryData[0].inventoryValue * 100) / 100 ) );
+//                    var oneLineData1 = []; // Close To EXpire Inventory
+//                    oneLineData1.push( value.SKUName );
+//                    oneLineData1.push( angular.copy(Math.round(value.inventoryData[0].inventoryValue * 100) / 100 ) );
 
                     var oneLineData2 = []; // Previous Inventory
                     oneLineData2.push( value.SKUName );
@@ -553,9 +556,9 @@
                     oneLineData3.push( value.SKUName );
                     oneLineData3.push( angular.copy(Math.round(value.inventoryData[2].inventoryValue * 100) / 100 ) );
 
-                    chartResult.data[0].values.push(oneLineData1);
-                    chartResult.data[1].values.push(oneLineData2);
-                    chartResult.data[2].values.push(oneLineData3);
+//                    chartResult.data[0].values.push(oneLineData1);
+                    chartResult.data[0].values.push(oneLineData2);
+                    chartResult.data[1].values.push(oneLineData3);
 
                 });
                 return angular.copy(chartResult.data);
