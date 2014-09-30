@@ -567,11 +567,15 @@
                                         <th>Add Students</th>
                                     </tr>
                                     <tr ng-repeat="seminar in data.seminars" >
-                                        <td>
-                                            <div class="btn-group-vertical">
+                                        <td width="100px">
                                                 <button type="button" class="btn btn-danger" ng-click="initSeminar(seminar.seminarId)">Init</button>
-                                                <button type="button" class="btn btn-danger" ng-click="runSeminar(seminar.seminarId)">Run</button>
-                                            </div>
+
+                                                <div class="input-group input-group-sm ">
+                                                    <span class="input-group-btn">
+                                                        <button type="button" class="btn btn-danger" ng-click="runSeminar(seminar.seminarId, seminar.currentPeriod)">Run</button>
+                                                    </span>
+                                                    <input type="number" class="form-control" placeholder="current round" ng-model="seminar.currentPeriod" disabled>
+                                                </div>
                                         </td>
                                         <td>{{seminar.seminarId}}</td>
                                         <td>{{seminar.description}}</td>

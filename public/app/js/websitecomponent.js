@@ -214,7 +214,7 @@
         return {
             scope: {
                 data : '=',
-                unit : '@'
+                unit : '='
             },
             restrict: 'AE',
             templateUrl: '/app/js/report/tablereportcompetitorintelligence.html',

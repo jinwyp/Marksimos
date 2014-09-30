@@ -34,7 +34,7 @@ app.config(['$translateProvider', function($translateProvider){
 
 
         "IntroPageSentence1" : "Who am I?",
-        "IntroPageSentence2" : "I am leading",
+        "IntroPageSentence2" : "I am leading company",
         "IntroPageSentence3" : "I manage",
         "IntroPageSentence4" : "products",
         "IntroPageSentence5" : "under",
@@ -948,22 +948,22 @@ app.config(['$translateProvider', function($translateProvider){
 
 
         //Labels for Introduction
-        "IntroPageSeminarListTitle" : "List of the Game Enrolled :xxx",
-        "IntroPageSeminarListLabelSeminarID" : "Seminar IDxxx",
-        "IntroPageSeminarListLabelSeminarDescription" : "Seminar Descriptionxx",
-        "IntroPageSeminarListLabelTotalRound" : "Total Roundxx",
-        "IntroPageSeminarListLabelCompetitor" : "Competitorxx",
-        "IntroPageSeminarListLabelDateOfCommencement" : "Date of Commencementxx",
-        "IntroPageSeminarListLabelSeminarStatus" : "Seminar Statusxx",
-        "IntroPageSeminarListLabelCountry" : "Country",
-        "IntroPageSeminarListLabelProvince" : "Province(State)",
-        "IntroPageSeminarListLabelCity" : "City",
-        "IntroPageSeminarListLabelVenue" : "Venue",
+        "IntroPageSeminarListTitle"                   : "目前已有的游戏列表",
+        "IntroPageSeminarListLabelSeminarID"          : "课程号",
+        "IntroPageSeminarListLabelSeminarDescription" : "课程说明",
+        "IntroPageSeminarListLabelTotalRound"         : "总阶段数",
+        "IntroPageSeminarListLabelCompetitor"         : "参与竞争者",
+        "IntroPageSeminarListLabelDateOfCommencement" : "开始时间",
+        "IntroPageSeminarListLabelSeminarStatus"      : "课程状态",
+        "IntroPageSeminarListLabelCountry"            : "国家",
+        "IntroPageSeminarListLabelProvince"           : "省(州)",
+        "IntroPageSeminarListLabelCity"               : "城市",
+        "IntroPageSeminarListLabelVenue"              : "地点或场所",
 
 
         "IntroPageSentence1" : "我的角色",
-        "IntroPageSentence2" : "现在我将接管",
-        "IntroPageSentence3" : "主要有",
+        "IntroPageSentence2" : "我正在接管公司",
+        "IntroPageSentence3" : "运营管理",
         "IntroPageSentence4" : "商品，",
         "IntroPageSentence5" : "共",
         "IntroPageSentence6" : "个品牌",

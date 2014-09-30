@@ -148,7 +148,9 @@ marksimosapp.controller('chartController', ['$translate', '$scope', '$rootScope'
         },
         tableB2CompetitorIntelligence : {
             allData : [],
-            currentTable : 1
+            currentTable : 1,
+            currentTableData : {},
+            currentTableUnit : "%"
         },
         tableC3SegmentDistribution : {
             allData : [],
@@ -843,7 +845,17 @@ marksimosapp.controller('chartController', ['$translate', '$scope', '$rootScope'
     tableReport.competitorIntelligence().then(function(data, status, headers, config){
 //        console.log(data);
         $scope.data.tableB2CompetitorIntelligence.allData = data;
+        $scope.data.tableB2CompetitorIntelligence.currentTableData = $scope.data.tableB2CompetitorIntelligence.allData.acquiredProductionAndLogisticsEfficiency;
     });
+    $scope.switchTableMenuLevel1B2 = function(menu, field, unit){
+        $scope.css.tableReportMenu = menu;
+        $scope.switchTableReportB2(1, field, unit);
+    };
+    $scope.switchTableReportB2 = function(order, field, unit){
+        $scope.data.tableB2CompetitorIntelligence.currentTable = order;
+        $scope.data.tableB2CompetitorIntelligence.currentTableData = $scope.data.tableB2CompetitorIntelligence.allData[field];
+        $scope.data.tableB2CompetitorIntelligence.currentTableUnit = unit;
+    };
 
     /********************  Table Report C3  ********************/
     tableReport.segmentDistribution().then(function(data, status, headers, config){

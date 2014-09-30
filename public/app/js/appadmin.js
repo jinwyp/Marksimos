@@ -496,8 +496,8 @@ marksimosapp.controller('adminHomeController', ['$scope', '$http', '$notificatio
     };
 
     /********************  Run Seminar  ********************/
-    $scope.runSeminar = function(seminarid){
-        $http.post('/marksimos/api/admin/runsimulation', {seminar_id:seminarid}).success(function(data, status, headers, config){
+    $scope.runSeminar = function(seminarid, round){
+        $http.post('/marksimos/api/admin/runsimulation/' + seminarid + '/' + round).success(function(data, status, headers, config){
             $scope.getSeminarInit();
             $notification.success('Save success', 'Run Seminar success');
 
