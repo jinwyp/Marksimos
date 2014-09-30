@@ -189,8 +189,9 @@ exports.runSimulation = function(){
             }
 
 //            var currentPeriod = sessionOperation.getCurrentPeriod(req);  // 原来的代码从session 取得的 当前round
-            var currentPeriod = req.params.round;
 
+            var currentPeriod = Number(req.params.round);
+            
             //check if this seminar exists
             seminarModel.findOne({
                 seminarId: seminarId
@@ -556,7 +557,7 @@ function initSimulationResult(seminarId, periods){
         queries.push(cgiapi.queryOnePeriodResult(seminarId, period));
     });
 
-    console.log(queries);
+    //console.log(queries);
     return Q.all(queries)
     .then(function(allResults){
         cleanAllResults(allResults);

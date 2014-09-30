@@ -51,14 +51,14 @@ function generateSKUReport(companyId, allResults, allExogenous, period){
         allResults.forEach(function(onePeriodResult){
             var SKUResult = onePeriodResult.p_SKUs;
             var exogenous = allExogenous[index];
-        console.log('exogenous.exo_SegmentsIdealPoints:' + exogenous.exo_SegmentsIdealPoints);
+        //console.log('exogenous.exo_SegmentsIdealPoints:' + exogenous.exo_SegmentsIdealPoints);
 
 
         SKUResult.forEach(function(SKU){
 
                 if(SKU.u_SKUID === SKUReport.SKUID){
 
-                    console.log('SKU.u_TargetConsumerSegment:' + SKU.u_TargetConsumerSegment);
+                    //console.log('SKU.u_TargetConsumerSegment:' + SKU.u_TargetConsumerSegment);
 
                     var brandName = utility.findBrand(onePeriodResult, SKU.u_ParentBrandID).b_BrandName;
                     SKUReport.SKUName = brandName + SKU.u_SKUName;
