@@ -22,6 +22,8 @@ $(function(){
 			sectionsColor: ['#fff', '#fff', '#fff'],
 			navigationColor:'#B3B3B3',
 			navigationTooltips:['','',''],
+			/*navigationTooltipsEN:['Company Details','Communication Details','Job Profiles'],
+			navigationTooltipsCN:['公司基本信息','通信细节','工作信息'],*/
 			css3: true,
 			scrollingSpeed: 1700,
 			resize : false,
@@ -42,7 +44,8 @@ $(function(){
 			sectionsColor: ['#fff', '#fff'],
 			navigationColor:'#B3B3B3',
 			navigationTooltips:['',''],
-
+			/*navigationTooltipsEN:['Basic Details','Profile Details'],
+			navigationTooltipsCN:['基本信息','个人资料'],*/
 			css3: true,
 			scrollingSpeed: 1700,
 			resize : false,
@@ -69,6 +72,40 @@ $(function(){
 
 	$(".next").click(function(){
 		$.fn.fullpage.moveSectionDown();
-	})
+	});
+
+	var startTime,endTime;
+	$('.my-flipin-x').hover(
+		function () {
+			startTime=new Date().getTime();
+			if(!$(this).hasClass('hover-flipin-x')){
+				$(this).addClass("hover-flipin-x");
+			}
+		},
+		function () {
+			endTime=new Date().getTime();
+			if(endTime-startTime>100){
+				setTimeout(function(){
+	               $('.my-flipin-x').removeClass("hover-flipin-x");
+	            },1200);
+			}
+		}
+	);
+	$('.my-flipin-y').hover(
+		function () {
+			startTime=new Date().getTime();
+			if(!$(this).hasClass('hover-flipin-y')){
+				$(this).addClass("hover-flipin-y");
+			}
+		},
+		function () {
+			endTime=new Date().getTime();
+			if(endTime-startTime>100){
+				setTimeout(function(){
+	               $('.my-flipin-y').removeClass("hover-flipin-y");
+	            },1200);
+			}
+		}
+	);
 
 });

@@ -58,7 +58,8 @@
                 data:postData
             }).then(function(data){
                 if(data.data.result=="success"){
-                    $window.location.href = "/e4e/company-success" ;
+                    $window.location.href="/e4e/register/company#step1";
+                    //$window.location.href = "/e4e/company-success" ;
                 }else{
                     console.log('fail');
                 }

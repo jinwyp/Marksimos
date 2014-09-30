@@ -699,3 +699,57 @@ body {position: relative;background: #fff;}
     0%{opacity:0;transform:translateX(-100px);}
     100%{opacity:1;transform:translateX(0);}
 }
+
+@-webkit-keyframes flipin-X{
+    0%{-webkit-transform:perspective(255px) rotateX(90deg);opacity:0;}
+    40%{-webkit-transform:perspective(255px) rotateX(-10deg);}
+    70%{-webkit-transform:perspective(255px) rotateX(10deg);}
+    100%{-webkit-transform:perspective(255px) rotateX(0);opacity:1;}
+}
+@-moz-keyframes flipin-X{
+    0%{-moz-transform:perspective(255px) rotateX(90deg);opacity:0;}
+    40%{-moz-transform:perspective(255px) rotateX(-10deg);}
+    70%{-moz-transform:perspective(255px) rotateX(10deg);}
+    100%{-moz-transform:perspective(255px) rotateX(0);opacity:1;}
+}
+@-ms-keyframes flipin-X{
+    0%{-ms-transform:perspective(255px) rotateX(90deg);opacity:0;}
+    40%{-ms-transform:perspective(255px) rotateX(-10deg);}
+    70%{-ms-transform:perspective(255px) rotateX(10deg);}
+    100%{-ms-transform:perspective(255px) rotateX(0);opacity:1;}
+}
+@keyframes flipin-X{
+    0%{transform:perspective(255px) rotateX(90deg);opacity:0;}
+    40%{transform:perspective(255px) rotateX(-10deg);}
+    70%{transform:perspective(255px) rotateX(10deg);}
+    100%{transform:perspective(255px) rotateX(0);opacity:1;}
+}
+
+@-webkit-keyframes flipin-Y{
+    0%{-webkit-transform:perspective(255px) rotateY(90deg);opacity:0;}
+    40%{-webkit-transform:perspective(255px) rotateY(-10deg);}
+    70%{-webkit-transform:perspective(255px) rotateY(10deg);}
+    100%{-webkit-transform:perspective(255px) rotateY(0);opacity:1;}
+}
+@-moz-keyframes flipin-Y{
+    0%{-moz-transform:perspective(255px) rotateY(90deg);opacity:0;}
+    40%{-moz-transform:perspective(255px) rotateY(-10deg);}
+    70%{-moz-transform:perspective(255px) rotateY(10deg);}
+    100%{-moz-transform:perspective(255px) rotateY(0);opacity:1;}
+}
+@-ms-keyframes flipin-Y{
+    0%{-ms-transform:perspective(255px) rotateY(90deg);opacity:0;}
+    40%{-ms-transform:perspective(255px) rotateY(-10deg);}
+    70%{-ms-transform:perspective(255px) rotateY(10deg);}
+    100%{-ms-transform:perspective(255px) rotateY(0);opacity:1;}
+}
+@keyframes flipin-Y{
+    0%{transform:perspective(255px) rotateY(90deg);opacity:0;}
+    40%{transform:perspective(255px) rotateY(-10deg);}
+    70%{transform:perspective(255px) rotateY(10deg);}
+    100%{transform:perspective(255px) rotateY(0);opacity:1;}
+}
+
+
+
+/*#animate{position:absolute;top:50%;left:50%;width:280px;height:100px;margin:-50px 0 0 -140px;border-radius:5px;line-height:100px;text-align:center;color:#fff;background:#71acb9;}*/

@@ -9,6 +9,28 @@ app.config(['$translateProvider', function($translateProvider){
 
 // Adding a translation table for the English language
     $translateProvider.translations('en_US', {
+
+        /*e4eIndex*/
+        "e4eIndexLearningByPlaying":"Learning by Playing",
+        "e4eIndexLearningByPlayingInfo":"HCD Learning strongly believes that the best learning comes through hands-on approach – by playing rather than passive learning",
+
+        "e4eIndexHelpStudentsDevelopSkills":"Help students develop skills",
+        "e4eIndexHelpStudentsDevelopSkillsInfo":"Through our state-of-art innovative learning games, we intend to help students develop skills to bridge skill gap between university learning and what the companies look for",
+
+        "e4eIndexSocialLearning":"Social Learning",
+        "e4eIndexSocialLearningInfo":"Learning is most effective when done in groups and that is the HCD Learning encourages social learning for maximum benefits",
+        
+        "e4eIndexDiscoverJobOpportunities":"Discover job opportunities",
+        "e4eIndexDiscoverJobOpportunitiesInfo":"HCD Learning’s student competition intends to help students find job opportunities with big company brands. All you to have to do is register for the game and win",
+
+        "e4eIndexDevelopBusinessSkills":"Develop business skills",
+        "e4eIndexDevelopBusinessSkillsInfo":"Our competition game is designed not only to test you, but also to help you equip with the business skills and knowledge required to perform job at big companies",
+
+        "e4eIndexAssessment":"Assessment",
+        "e4eIndexAssessmentInfo":"Through the HCD Learning competition, you can assess yourself against thousands of the participants from different universities all over China",
+
+
+
         /*e4e register*/
         "e4eRegisterGetStart":"Get Start",
         "e4eRegisterFindStage":"We Help Students find their own stage",
@@ -30,12 +52,12 @@ app.config(['$translateProvider', function($translateProvider){
         "e4eCompmayAddress":"Address",
         "e4eCompanyNext":"NEXT",
 
+        "e4eCompanySecondPageTitle":"Communication Details",
         "e4eCompanyNameOfContactPerson":"Name Of Contact Person",
         "e4eCompanyDesignation":"Designation",
         "e4eCompanyOfficalContactNumber":"Offical Contact Number",
         "e4eCompanyMobileNumber":"Mobile Number",
         "e4eCompanyEmailID":"Email ID",
-        "e4eCompanySecondPageTitle":"Communication Details",
 
         "e4eCompanyThirdPageTitle":"Job Profiles",
         "e4eCompanyDivision":"Division",
@@ -94,6 +116,24 @@ app.config(['$translateProvider', function($translateProvider){
     // Adding a translation table for the Chinese language
     $translateProvider.translations('zh_CN', {
 
+        /*e4eIndex*/
+        "e4eIndexLearningByPlaying":"Learning by Playing",
+        "e4eIndexLearningByPlayingInfo":"HCD Learning strongly believes that the best learning comes through hands-on approach – by playing rather than passive learning",
+
+        "e4eIndexHelpStudentsDevelopSkills":"Help students develop skills",
+        "e4eIndexHelpStudentsDevelopSkillsInfo":"Through our state-of-art innovative learning games, we intend to help students develop skills to bridge skill gap between university learning and what the companies look for",
+
+        "e4eIndexSocialLearning":"Social Learning",
+        "e4eIndexSocialLearningInfo":"Learning is most effective when done in groups and that is the HCD Learning encourages social learning for maximum benefits",
+        
+        "e4eIndexDiscoverJobOpportunities":"Discover job opportunities",
+        "e4eIndexDiscoverJobOpportunitiesInfo":"HCD Learning’s student competition intends to help students find job opportunities with big company brands. All you to have to do is register for the game and win",
+
+        "e4eIndexDevelopBusinessSkills":"Develop business skills",
+        "e4eIndexDevelopBusinessSkillsInfo":"Our competition game is designed not only to test you, but also to help you equip with the business skills and knowledge required to perform job at big companies",
+
+        "e4eIndexAssessment":"Assessment",
+        "e4eIndexAssessmentInfo":"Through the HCD Learning competition, you can assess yourself against thousands of the participants from different universities all over China",
 
         /*e4e register*/
         "e4eRegisterGetStart":"现在开始",
@@ -115,12 +155,12 @@ app.config(['$translateProvider', function($translateProvider){
         "e4eCompmayAddress":"Address",
         "e4eCompanyNext":"下一步",
 
+        "e4eCompanySecondPageTitle":"通信细节",
         "e4eCompanyNameOfContactPerson":"Name Of Contact Person",
         "e4eCompanyDesignation":"Designation",
         "e4eCompanyOfficalContactNumber":"Offical Contact Number",
         "e4eCompanyMobileNumber":"Mobile Number",
         "e4eCompanyEmailID":"Email ID",
-        "e4eCompanySecondPageTitle":"通信细节",
 
         "e4eCompanyThirdPageTitle":"工作信息",
         "e4eCompanyDivision":"Division",
