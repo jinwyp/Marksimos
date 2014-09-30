@@ -316,8 +316,45 @@ marksimosapp.controller('adminHomeController', ['$scope', '$http', '$notificatio
         });
     };
 
+    function showCompanyName(fieldname) {
+        var names = {
+            '0': function() {
+                return "A";
+            },
+            '1': function() {
+                return "B";
+            },
+            '2': function() {
+                return "C";
+            },
+            '3': function() {
+                return "D";
+            },
+            '4': function() {
+                return "E";
+            },
+            '5': function() {
+                return "F";
+            }
+
+        };
+        if (typeof names[fieldname] !== 'function') {
+            return false;
+        }
+        return names[fieldname]();
+    }
+
     $scope.getSeminarInit = function() {
         $http.get('/marksimos/api/admin/facilitator/seminar').success(function (data, status, headers, config) {
+            angular.forEach(data, function(seminar){
+                seminar.companyMember = [];
+                angular.forEach(seminar.companyAssignment, function(company, key){
+                    seminar.companyMember.push({
+                        name : showCompanyName(key),
+                        students : company
+                    });
+                })
+            });
             $scope.data.seminars = data;
         }).error(function (data, status, headers, config) {
             console.log(data);

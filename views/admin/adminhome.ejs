@@ -564,6 +564,7 @@
                                         <th>Venue</th>
                                         <th>CurrentPeriod / Rounds</th>
                                         <th>Teams</th>
+                                        <th>Team Member</th>
                                         <th>Add Students</th>
                                     </tr>
                                     <tr ng-repeat="seminar in data.seminars" >
@@ -585,6 +586,11 @@
                                         <td>{{seminar.venue}}</td>
                                         <td>{{seminar.currentPeriod}} / {{seminar.simulationSpan}} </td>
                                         <td>{{seminar.companyNum}} </td>
+                                        <td>
+                                            <p ng-repeat="company in seminar.companyMember">Company{{company.name}} :
+                                                <span ng-repeat="student in company.students">{{student}}, </span>
+                                            </p>
+                                        </td>
                                         <td width="460px">
                                                     <div class="input-group margin">
                                                         <div class="input-group-btn">

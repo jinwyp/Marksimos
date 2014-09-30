@@ -27,6 +27,23 @@ apiRouter.get('/viewsession', function(req, res){
 
 
 
+
+
+
+
+
+/**********  API For E2E  **********/
+apiRouter.post('/e4e/register/company',require('./e4e/register').companyRegister);
+apiRouter.post('/e4e/register/student',require('./e4e/register').studentRegister);
+
+
+
+
+
+
+
+
+
 /**********  API For Student  **********/
 
 apiRouter.post('/marksimos/api/register', userController.register);
@@ -64,6 +81,11 @@ apiRouter.get('/marksimos/api/create_admin', function(req, res, next){
 // get FAQ
 apiRouter.get('/marksimos/api/initfaq', faqController.initFAQ);
 apiRouter.get('/marksimos/api/faq', faqController.getFAQ);
+
+//getQuestionnaire
+apiRouter.get('/marksimos/api/questionnaire',requireLogin,questionnaireController.getQuestionnaire);
+apiRouter.put('/marksimos/api/questionnaire',requireLogin,questionnaireController.updateQuestionnaire);
+
 
 // get seminar
 apiRouter.get('/marksimos/api/user', requireLogin, userController.getUser);
@@ -112,6 +134,7 @@ apiRouter.post('/marksimos/api/admin/facilitators', requireLogin, authorize('add
 apiRouter.put('/marksimos/api/admin/facilitators/:facilitator_id', requireLogin, authorize('updateFacilitator'), facilitatorController.updateFacilitator);
 
 apiRouter.get('/marksimos/api/admin/facilitator/seminar', requireLogin, authorize('getSeminarOfFacilitator'), facilitatorController.getSeminarOfFacilitator);
+apiRouter.post('/marksimos/api/admin/seminar', requireLogin, authorize('addSeminar'), seminarController.addSeminar);
 
 
 apiRouter.get('/marksimos/api/admin/students', requireLogin, authorize('searchStudent'), studentController.searchStudent);
@@ -120,10 +143,6 @@ apiRouter.put('/marksimos/api/admin/students/:student_id', requireLogin, authori
 
 
 //get all seminars of the current student
-
-apiRouter.post('/marksimos/api/admin/seminar', requireLogin, authorize('addSeminar'), seminarController.addSeminar);
-
-
 apiRouter.post('/marksimos/api/admin/assign_student_to_seminar', requireLogin, authorize('assignStudentToSeminar'), seminarController.assignStudentToSeminar);
 apiRouter.post('/marksimos/api/admin/remove_student_from_seminar', requireLogin, authorize('removeStudentFromSeminar'), seminarController.removeStudentFromSeminar);
 
@@ -133,15 +152,10 @@ apiRouter.post('/marksimos/api/admin/runsimulation/:seminar_id/:round',  require
 // get current admin role
 apiRouter.get('/marksimos/api/admin/user', requireLogin, userController.getUser);
 
-//getQuestionnaire
-apiRouter.get('/marksimos/api/questionnaire',requireLogin,questionnaireController.getQuestionnaire); 
-//updateQuestionnaire
-apiRouter.put('/marksimos/api/questionnaire',requireLogin,questionnaireController.updateQuestionnaire); 
 
 
-//e4e
-apiRouter.post('/e4e/register/company',require('./e4e/register').companyRegister);
-apiRouter.post('/e4e/register/student',require('./e4e/register').studentRegister);
+
+
 
 
 
