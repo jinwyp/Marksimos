@@ -131,8 +131,14 @@
 .student-back-1{
 	background: url('../img/student-hand-1.png') no-repeat;
 	width: 770px;
-    height: 521px;
+    height: 551px;
     margin: 20px auto 0 auto;
+}
+.student-back-2{
+	background: url('../img/student-hand-2.png') no-repeat;
+	width: 996px;
+    height: 551px;
+    margin: 20px auto;
 }
 .col-sm-3-5{
 	width: 35%;
@@ -164,13 +170,6 @@
     padding-right: 15px;
     position: relative;
 }
-.student-back-2{
-	background: url('../img/student-hand-2.png') no-repeat;
-	width: 896px;
-    height: 521px;
-    margin: 20px auto;
-}
-
 
 .absolute-item{
 	position: absolute;

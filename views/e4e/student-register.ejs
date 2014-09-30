@@ -44,60 +44,76 @@
 					<div class="student-back-1">
 						<h4 class="f-semibold text-center f-size-20 padding-10">{{'e4eStudentFirstPageTitle' | translate }}</h4>
 						<div class="form-horizontal">
-							<div class="form-group">
+							<div class="form-group has-feedback" ng-class="{'has-success':studentRegisterForm.userName.$dirty && studentRegisterForm.userName.$valid, 'has-error': studentRegisterForm.userName.$dirty && studentRegisterForm.userName.$invalid}">
 							    <label for="user-name" class="col-sm-3-5 control-label">{{'e4eStudentUserName' | translate }}</label>
 							    <div class="col-sm-4-2">
-							    	<input type="text" class="form-control input-sm" id="user-name" ng-model='userName' placeholder="xxxxxxx">
+							    	<input type="text" class="form-control input-sm" id="user-name" name='userName' ng-model='userName' placeholder="xxxxxxx" required>
+							    	<span class="glyphicon glyphicon-ok form-control-feedback" ng-show="studentRegisterForm.userName.$dirty && studentRegisterForm.userName.$valid"></span>
+							    	<span class="glyphicon glyphicon-remove form-control-feedback" ng-show="studentRegisterForm.userName.$dirty && studentRegisterForm.userName.$invalid"></span>
 							    </div>
 							</div>
 
-							<div class="form-group">
+							<div class="form-group has-feedback" ng-class="{'has-success':studentRegisterForm.firstName.$dirty && studentRegisterForm.firstName.$valid, 'has-error': studentRegisterForm.firstName.$dirty && studentRegisterForm.firstName.$invalid}">
 							    <label for="first-name" class="col-sm-3-5 control-label">{{'e4eStudentFirstName' | translate }}</label>
 							    <div class="col-sm-4-2">
-							    	<input type="text" class="form-control input-sm" id="first-name" ng-model='firstName' placeholder="xxxxxxx">
+							    	<input type="text" class="form-control input-sm" id="first-name" name='firstName' ng-model='firstName' placeholder="xxxxxxx" required>
+							    	<span class="glyphicon glyphicon-ok form-control-feedback" ng-show="studentRegisterForm.firstName.$dirty && studentRegisterForm.firstName.$valid"></span>
+							    	<span class="glyphicon glyphicon-remove form-control-feedback" ng-show="studentRegisterForm.firstName.$dirty && studentRegisterForm.firstName.$invalid"></span>
 							    </div>
 							</div>
-							<div class="form-group">
+							<div class="form-group has-feedback" ng-class="{'has-success':studentRegisterForm.lastName.$dirty && studentRegisterForm.lastName.$valid, 'has-error': studentRegisterForm.lastName.$dirty && studentRegisterForm.lastName.$invalid}">
 							    <label for="last-name" class="col-sm-3-5 control-label">{{'e4eStudentLastName' | translate }}</label>
 							    <div class="col-sm-4-2">
-							    	<input type="text" class="form-control input-sm" id="last-name" ng-model='lastName' placeholder="xxxxxxx">
+							    	<input type="text" class="form-control input-sm" id="last-name" name='lastName' ng-model='lastName' placeholder="xxxxxxx" required>
+							    	<span class="glyphicon glyphicon-ok form-control-feedback" ng-show="studentRegisterForm.lastName.$dirty && studentRegisterForm.lastName.$valid"></span>
+							    	<span class="glyphicon glyphicon-remove form-control-feedback" ng-show="studentRegisterForm.lastName.$dirty && studentRegisterForm.lastName.$invalid"></span>
 							    </div>
 							</div>
 
-							<div class="form-group">
+							<div class="form-group has-feedback" ng-class="{'has-success':studentRegisterForm.age.$dirty && studentRegisterForm.age.$valid, 'has-error': studentRegisterForm.age.$dirty && studentRegisterForm.age.$invalid}">
 							    <label for="age" class="col-sm-3-5 control-label">{{'e4eStudentAge' | translate }}</label>
 							    <div class="col-sm-4-2">
-							    	<input type="text" class="form-control input-sm" id="age" ng-model='age' placeholder="xxxxxxx">
+							    	<input type="text" class="form-control input-sm" id="age" name='age' ng-model='age' placeholder="xxxxxxx" required>
+							    	<span class="glyphicon glyphicon-ok form-control-feedback" ng-show="studentRegisterForm.age.$dirty && studentRegisterForm.age.$valid"></span>
+							    	<span class="glyphicon glyphicon-remove form-control-feedback" ng-show="studentRegisterForm.age.$dirty && studentRegisterForm.age.$invalid"></span>
 							    </div>
 							</div>
 
-							<div class="form-group">
+							<div class="form-group has-feedback" ng-class="{'has-success':studentRegisterForm.country.$dirty && studentRegisterForm.country.$valid, 'has-error': studentRegisterForm.country.$dirty && studentRegisterForm.country.$invalid}">
 							    <label for="country" class="col-sm-3-5 control-label">{{'e4eStudentCountry' | translate }}</label>
 							    <div class="col-sm-4-2">
-							    	<input type="text" class="form-control input-sm" id="country" ng-model='country' placeholder="xxxxxxx">
+							    	<input type="text" class="form-control input-sm" id="country" name='country' ng-model='country' placeholder="xxxxxxx" required>
+							    	<span class="glyphicon glyphicon-ok form-control-feedback" ng-show="studentRegisterForm.country.$dirty && studentRegisterForm.country.$valid"></span>
+							    	<span class="glyphicon glyphicon-remove form-control-feedback" ng-show="studentRegisterForm.country.$dirty && studentRegisterForm.country.$invalid"></span>
 							    </div>
 							</div>
 
-							<div class="form-group">
+							<div class="form-group has-feedback" ng-class="{'has-success':studentRegisterForm.address.$dirty && studentRegisterForm.address.$valid, 'has-error': studentRegisterForm.address.$dirty && studentRegisterForm.address.$invalid}">
 							    <label for="address" class="col-sm-3-5 control-label">{{'e4eStudentAddress' | translate }}</label>
 							    <div class="col-sm-4-2">
-							    	<input type="text" class="form-control input-sm" id="address" ng-model='address' placeholder="xxxxxxx">
+							    	<input type="text" class="form-control input-sm" id="address" name='address' ng-model='address' placeholder="xxxxxxx" required>
+							    	<span class="glyphicon glyphicon-ok form-control-feedback" ng-show="studentRegisterForm.address.$dirty && studentRegisterForm.address.$valid"></span>
+							    	<span class="glyphicon glyphicon-remove form-control-feedback" ng-show="studentRegisterForm.address.$dirty && studentRegisterForm.address.$invalid"></span>
 							    </div>
 							</div>
 
 							<h4 class="f-semibold text-center f-size-20 append-bottom-24">{{'e4eStudentCommDetail' | translate }}</h4>
 
-							<div class="form-group">
+							<div class="form-group has-feedback" ng-class="{'has-success':studentRegisterForm.email.$dirty && studentRegisterForm.email.$valid, 'has-error': studentRegisterForm.email.$dirty && studentRegisterForm.email.$invalid}">
 							    <label for="email" class="col-sm-3-5 control-label">{{'e4eStudentEmail' | translate }}</label>
 							    <div class="col-sm-4-2">
-							    	<input type="text" class="form-control input-sm" id="email" ng-model='email' placeholder="xxxxxxx">
+							    	<input type="email" class="form-control input-sm" id="email" name='email' ng-model='email' placeholder="xxxxxxx" required>
+							    	<span class="glyphicon glyphicon-ok form-control-feedback" ng-show="studentRegisterForm.email.$dirty && studentRegisterForm.email.$valid"></span>
+							    	<span class="glyphicon glyphicon-remove form-control-feedback" ng-show="studentRegisterForm.email.$dirty && studentRegisterForm.email.$invalid"></span>
 							    </div>
 							</div>
 
-							<div class="form-group">
+							<div class="form-group has-feedback" ng-class="{'has-success':studentRegisterForm.qq.$dirty && studentRegisterForm.qq.$valid, 'has-error': studentRegisterForm.qq.$dirty && studentRegisterForm.qq.$invalid}">
 							    <label for="qq" class="col-sm-3-5 control-label">{{'e4eStudentQQ' | translate }}</label>
 							    <div class="col-sm-4-2">
-							    	<input type="text" class="form-control input-sm" id="qq" ng-model='qq' placeholder="xxxxxxx">
+							    	<input type="text" class="form-control input-sm" id="qq" name='qq' ng-model='qq' placeholder="xxxxxxx" required>
+							    	<span class="glyphicon glyphicon-ok form-control-feedback" ng-show="studentRegisterForm.qq.$dirty && studentRegisterForm.qq.$valid"></span>
+							    	<span class="glyphicon glyphicon-remove form-control-feedback" ng-show="studentRegisterForm.qq.$dirty && studentRegisterForm.qq.$invalid"></span>
 							    </div>
 							</div>
 
@@ -118,55 +134,73 @@
 					<div class="student-back-2">
 						<h4 class="f-semibold text-center f-size-20 padding-10">{{'e4eStudentSecondPageTitle' | translate }}</h4>
 						<div class="form-horizontal">
-							<div class="form-group">
+							<div class="form-group has-feedback" ng-class="{'has-success':studentRegisterForm.highestEDU.$dirty && studentRegisterForm.highestEDU.$valid, 'has-error': studentRegisterForm.highestEDU.$dirty && studentRegisterForm.highestEDU.$invalid}">
 								<div class="col-sm-offset-3 col-sm-6">
-									<input type="text" class="form-control input-sm" id="highestEDU" ng-model='highestEDU' placeholder="{{'e4eStudentHighestEDU' | translate }}">
+									<input type="text" class="form-control input-sm" id="highestEDU" name='highestEDU' ng-model='highestEDU' placeholder="{{'e4eStudentHighestEDU' | translate }}" required>
+									<span class="glyphicon glyphicon-ok form-control-feedback" ng-show="studentRegisterForm.highestEDU.$dirty && studentRegisterForm.highestEDU.$valid"></span>
+							    	<span class="glyphicon glyphicon-remove form-control-feedback" ng-show="studentRegisterForm.highestEDU.$dirty && studentRegisterForm.highestEDU.$invalid"></span>
 							    </div>
 							</div>
-							<div class="form-group">
+							<div class="form-group has-feedback" ng-class="{'has-success':studentRegisterForm.marjors.$dirty && studentRegisterForm.marjors.$valid, 'has-error': studentRegisterForm.marjors.$dirty && studentRegisterForm.marjors.$invalid}">
 								<div class="col-sm-offset-3 col-sm-6">
-									<input type="text" class="form-control input-sm" id="marjors" ng-model='marjors' placeholder="{{'e4eStudentMajors' | translate }}">
+									<input type="text" class="form-control input-sm" id="marjors" name='marjors' ng-model='marjors' placeholder="{{'e4eStudentMajors' | translate }}" required>
+									<span class="glyphicon glyphicon-ok form-control-feedback" ng-show="studentRegisterForm.marjors.$dirty && studentRegisterForm.marjors.$valid"></span>
+							    	<span class="glyphicon glyphicon-remove form-control-feedback" ng-show="studentRegisterForm.marjors.$dirty && studentRegisterForm.marjors.$invalid"></span>
 							    </div>
 							</div>
-							<div class="form-group">
+							<div class="form-group has-feedback" ng-class="{'has-success':studentRegisterForm.university.$dirty && studentRegisterForm.university.$valid, 'has-error': studentRegisterForm.university.$dirty && studentRegisterForm.university.$invalid}">
 								<div class="col-sm-offset-3 col-sm-6">
-									<input type="text" class="form-control input-sm" id="university" ng-model='university' placeholder="{{'e4eStudentUniversity' | translate }}">
+									<input type="text" class="form-control input-sm" id="university" name='university' ng-model='university' placeholder="{{'e4eStudentUniversity' | translate }}" required>
+									<span class="glyphicon glyphicon-ok form-control-feedback" ng-show="studentRegisterForm.university.$dirty && studentRegisterForm.university.$valid"></span>
+							    	<span class="glyphicon glyphicon-remove form-control-feedback" ng-show="studentRegisterForm.university.$dirty && studentRegisterForm.university.$invalid"></span>
 							    </div>
 							</div>
-							<div class="form-group">
+							<div class="form-group has-feedback" ng-class="{'has-success':studentRegisterForm.scoreGPA.$dirty && studentRegisterForm.scoreGPA.$valid, 'has-error': studentRegisterForm.scoreGPA.$dirty && studentRegisterForm.scoreGPA.$invalid}">
 								<div class="col-sm-offset-3 col-sm-6">
-									<input type="text" class="form-control input-sm" id="scoreGPA" ng-model='scoreGPA' placeholder="{{'e4eStudentScoreGPA' | translate }}">
+									<input type="text" class="form-control input-sm" id="scoreGPA" name='scoreGPA' ng-model='scoreGPA' placeholder="{{'e4eStudentScoreGPA' | translate }}" required>
+									<span class="glyphicon glyphicon-ok form-control-feedback" ng-show="studentRegisterForm.scoreGPA.$dirty && studentRegisterForm.scoreGPA.$valid"></span>
+							    	<span class="glyphicon glyphicon-remove form-control-feedback" ng-show="studentRegisterForm.scoreGPA.$dirty && studentRegisterForm.scoreGPA.$invalid"></span>
 							    </div>
 							</div>
-							<div class="form-group">
+							<div class="form-group has-feedback" ng-class="{'has-success':studentRegisterForm.achievements.$dirty && studentRegisterForm.achievements.$valid, 'has-error': studentRegisterForm.achievements.$dirty && studentRegisterForm.achievements.$invalid}">
 								<div class="col-sm-offset-3 col-sm-6">
-									<input type="text" class="form-control input-sm" id="achievements" ng-model='achievements' placeholder="{{'e4eStudentAchievements' | translate }}">
+									<input type="text" class="form-control input-sm" id="achievements" name='achievements' ng-model='achievements' placeholder="{{'e4eStudentAchievements' | translate }}" required>
+									<span class="glyphicon glyphicon-ok form-control-feedback" ng-show="studentRegisterForm.achievements.$dirty && studentRegisterForm.achievements.$valid"></span>
+							    	<span class="glyphicon glyphicon-remove form-control-feedback" ng-show="studentRegisterForm.achievements.$dirty && studentRegisterForm.achievements.$invalid"></span>
 							    </div>
 							</div>
-							<div class="form-group">
+							<div class="form-group has-feedback" ng-class="{'has-success':studentRegisterForm.yearOfGraduation.$dirty && studentRegisterForm.yearOfGraduation.$valid, 'has-error': studentRegisterForm.yearOfGraduation.$dirty && studentRegisterForm.yearOfGraduation.$invalid}">
 								<div class="col-sm-offset-3 col-sm-6">
-									<input type="text" class="form-control input-sm" id="year-of-graduation" ng-model='yearOfGraduation' placeholder="{{'e4eStudentYearOfGraduation' | translate }}">
+									<input type="text" class="form-control input-sm" id="year-of-graduation" name='yearOfGraduation' ng-model='yearOfGraduation' placeholder="{{'e4eStudentYearOfGraduation' | translate }}" required>
+									<span class="glyphicon glyphicon-ok form-control-feedback" ng-show="studentRegisterForm.yearOfGraduation.$dirty && studentRegisterForm.yearOfGraduation.$valid"></span>
+							    	<span class="glyphicon glyphicon-remove form-control-feedback" ng-show="studentRegisterForm.yearOfGraduation.$dirty && studentRegisterForm.yearOfGraduation.$invalid"></span>
 							    </div>
 							</div>
-							<div class="form-group">
+							<div class="form-group has-feedback" ng-class="{'has-success':studentRegisterForm.monthOfGraduation.$dirty && studentRegisterForm.monthOfGraduation.$valid, 'has-error': studentRegisterForm.monthOfGraduation.$dirty && studentRegisterForm.monthOfGraduation.$invalid}">
 								<div class="col-sm-offset-3 col-sm-6">
-									<input type="text" class="form-control input-sm" id="month-of-graduation" ng-model='monthOfGraduation' placeholder="{{'e4eStudentMonthOfGraduation' | translate }}">
+									<input type="text" class="form-control input-sm" id="month-of-graduation" name='monthOfGraduation' ng-model='monthOfGraduation' placeholder="{{'e4eStudentMonthOfGraduation' | translate }}" required>
+									<span class="glyphicon glyphicon-ok form-control-feedback" ng-show="studentRegisterForm.monthOfGraduation.$dirty && studentRegisterForm.monthOfGraduation.$valid"></span>
+							    	<span class="glyphicon glyphicon-remove form-control-feedback" ng-show="studentRegisterForm.monthOfGraduation.$dirty && studentRegisterForm.monthOfGraduation.$invalid"></span>
 							    </div>
 							</div>
-							<div class="form-group">
+							<div class="form-group has-feedback" ng-class="{'has-success':studentRegisterForm.currentYear.$dirty && studentRegisterForm.currentYear.$valid, 'has-error': studentRegisterForm.currentYear.$dirty && studentRegisterForm.currentYear.$invalid}">
 								<div class="col-sm-offset-3 col-sm-6">
-									<input type="text" class="form-control input-sm" id="current-year" ng-model='currentYear' placeholder="{{'e4eStudentCurrentYear' | translate }}">
+									<input type="text" class="form-control input-sm" id="current-year" name='currentYear' ng-model='currentYear' placeholder="{{'e4eStudentCurrentYear' | translate }}" required>
+									<span class="glyphicon glyphicon-ok form-control-feedback" ng-show="studentRegisterForm.currentYear.$dirty && studentRegisterForm.currentYear.$valid"></span>
+							    	<span class="glyphicon glyphicon-remove form-control-feedback" ng-show="studentRegisterForm.currentYear.$dirty && studentRegisterForm.currentYear.$invalid"></span>
 							    </div>
 							</div>
-							<div class="form-group">
+							<div class="form-group has-feedback" ng-class="{'has-success':studentRegisterForm.uploadResume.$dirty && studentRegisterForm.uploadResume.$valid, 'has-error': studentRegisterForm.uploadResume.$dirty && studentRegisterForm.uploadResume.$invalid}">
 								<div class="col-sm-offset-3 col-sm-6">
-									<input type="text" class="form-control input-sm" id="upload-resume" ng-model='uploadResume' placeholder="{{'e4eStudentUploadResume' | translate }}">
+									<input type="text" class="form-control input-sm" id="upload-resume" name='uploadResume' ng-model='uploadResume' placeholder="{{'e4eStudentUploadResume' | translate }}" required>
+									<span class="glyphicon glyphicon-ok form-control-feedback" ng-show="studentRegisterForm.uploadResume.$dirty && studentRegisterForm.uploadResume.$valid"></span>
+							    	<span class="glyphicon glyphicon-remove form-control-feedback" ng-show="studentRegisterForm.uploadResume.$dirty && studentRegisterForm.uploadResume.$invalid"></span>
 							    </div>
 							</div>
 
 							<div class="form-group">
 						    	<div class="col-sm-offset-3 col-sm-6">
-						    		<button class="btn btn-default" ng-click='submitRegister()'>{{'e4eStudentSubmit' | translate }}</button>
+						    		<button class="btn btn-default" ng-click='submitRegister()' ng-disabled='studentRegisterForm.$invalid'>{{'e4eStudentSubmit' | translate }}</button>
 						    	</div>
 						    </div>
 						</div>
