@@ -227,7 +227,9 @@
         return {
             scope: {
                 data : '=',
-                unit : '='
+                unit : '=',
+                chartdata : '=',
+                chartconfig : '='
             },
             restrict: 'AE',
             templateUrl: '/app/js/report/tablereportcompetitorintelligence.html',
@@ -250,7 +252,7 @@
         return {
             scope: {
                 data : '=',
-                unit : '@'
+                unit : '='
             },
             restrict: 'AE',
             templateUrl: '/app/js/report/tablereportsegmentdistribution.html',
@@ -272,7 +274,7 @@
         return {
             scope: {
                 data : '=',
-                unit : '@'
+                unit : '='
             },
             restrict: 'AE',
             templateUrl: '/app/js/report/tablereportmarkettrendssku.html',
@@ -292,7 +294,7 @@
         return {
             scope: {
                 data : '=',
-                unit : '@'
+                unit : '='
             },
             restrict: 'AE',
             templateUrl: '/app/js/report/tablereportmarkettrendsbrand.html',
@@ -312,7 +314,7 @@
         return {
             scope: {
                 data : '=',
-                unit : '@'
+                unit : '='
             },
             restrict: 'AE',
             templateUrl: '/app/js/report/tablereportmarkettrendsglobal.html',

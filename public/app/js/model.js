@@ -523,6 +523,41 @@
 
         };
 
+        var chartFormatTool3 = function(chartHttpData){
+            // 使用angular-chart 插件的数据格式  FOR Report B2 C3 C5
+
+            chartResult.series = [];
+            chartResult.data = [];
+
+            if(!angular.isUndefined(chartHttpData)){
+
+
+                angular.forEach(chartHttpData, function(value, key) {
+
+                    chartResult.series.push(showTranslateTextCompanyName(value.companyName));
+
+                    var oneBarData = {
+                        x : 0, //Round Name
+                        y : []
+                    };
+
+                    angular.forEach(value.data, function(period, key) {
+
+                        oneBarData.x = value.name;
+                        oneBarData.y.push(value.value);
+                    });
+                    chartResult.data.push(oneBarData);
+
+                });
+
+
+                return angular.copy(chartResult);
+
+
+            }
+        };
+
+
 
         var chartFormatTool4 = function(chartHttpData) {
             // 使用angular-nvd3 插件的数据格式 Stacked Multi Bar Chart
@@ -660,6 +695,10 @@
             },
             getChartConfig3 : function(){
                 return angular.copy(chartConfig3);
+            },
+            // Chart For Report B2, C3, C5
+            formatChartData : function(data){
+                return chartFormatTool1(data, 0);
             },
 
 
