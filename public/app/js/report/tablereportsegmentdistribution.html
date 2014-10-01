@@ -36,3 +36,17 @@
         </tr>
     </tbody>
 </table>
+
+
+<div class="pull-right">
+    <div class="btn-group-vertical btn-group-xs">
+        <button type="button" class="btn btn-default" ng-class="{'active': display=='line'}" ng-click="display='line'">{{'ReportTabLabelTableChartDisplayLine' | translate}}</button>
+        <button type="button" class="btn btn-default" ng-class="{'active': display=='bar'}" ng-click="display='bar'">{{'ReportTabLabelTableChartDisplayBar' | translate}}</button>
+        <button type="button" class="btn btn-default" ng-class="{'active': display=='bar'}" ng-click="display='point'">{{'ReportTabLabelTableChartDisplayPoint' | translate}}</button>
+        <button type="button" class="btn btn-default" ng-class="{'active': display=='bar'}" ng-click="display='area'">{{'ReportTabLabelTableChartDisplayArea' | translate}}</button>
+        <!--<button type="button" class="btn btn-default" ng-class="{'active': display=='bar'}" ng-click="display='pie'">{{'ReportTabLabelTableChartDisplayPie' | translate}}</button>-->
+    </div>
+</div>
+
+<div ac-chart="display" ac-data="chartdata" ac-config="chartconfig" class="chartBox"></div>
+<p class="text-center">{{'ReportMarketSalesAndInventoryChartBottomTextPeriod' | translate}}</p>

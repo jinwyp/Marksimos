@@ -276,6 +276,27 @@
                 },
                 '6': function() {
                     return translateText.HomePageSegmentLabelAllSegments;
+                },
+                'priceSensitive': function() {
+                    return translateText.HomePageSegmentLabelPriceSensitive;
+                },
+                'pretenders': function() {
+                    return translateText.HomePageSegmentLabelPretenders;
+                },
+                'moderate': function() {
+                    return translateText.HomePageSegmentLabelModerate;
+                },
+                'goodLife': function() {
+                    return translateText.HomePageSegmentLabelGoodLife;
+                },
+                'ultimate': function() {
+                    return translateText.HomePageSegmentLabelUltimate;
+                },
+                'pragmatic': function() {
+                    return translateText.HomePageSegmentLabelPragmatic;
+                },
+                'allSegments': function() {
+                    return translateText.HomePageSegmentLabelAllSegments;
                 }
             };
             if (typeof names[fieldname] !== 'function') {
@@ -529,12 +550,36 @@
 
         var chartFormatTool3 = function(chartHttpData){
             // 使用angular-chart 插件的数据格式  FOR Report B2 C3 C5
-
             chartResult.series = [];
             chartResult.data = [];
 
-            if(!angular.isUndefined(chartHttpData)){
+            if(angular.isUndefined(chartHttpData[0].data)){
+                // 这里处理C3  tableC3 Segment Distribution
+                angular.forEach(chartHttpData[0], function(value, key) {
+                    if(key !== 'period' && key !=='$$hashKey'){
+                        chartResult.series.push(showTranslateTextConsumerSegmentName(key));
+                    }
+                });
 
+                angular.forEach(chartHttpData, function(period, key) {
+
+                    var oneBarData = {
+                        x : 0, //Round Name
+                        y : []
+                    };
+
+                    oneBarData.x = period.period;
+                    angular.forEach(period, function(value, key) {
+                        if(key !== 'period' && key !=='$$hashKey'){
+                            oneBarData.y.push(Math.round(value * 10000 ) / 10000);
+                        }
+                    });
+
+                    chartResult.data.push(oneBarData);
+                });
+
+            }else{
+                // 这里处理B2  tableB2 Competitor Intelligence
                 angular.forEach(chartHttpData[0].data, function(period, key) {
 
                     var oneBarData = {
@@ -546,8 +591,6 @@
                     chartResult.data.push(oneBarData);
                 });
 
-
-
                 angular.forEach(chartHttpData, function(value, key) {
                     chartResult.series.push(showTranslateTextCompanyName(value.companyName));
 
@@ -556,12 +599,9 @@
                     });
 
                 });
-console.log(angular.copy(chartResult));
-
-                return angular.copy(chartResult);
-
-
             }
+            console.log(angular.copy(chartResult));
+            return angular.copy(chartResult);
         };
 
 

@@ -158,7 +158,9 @@ marksimosapp.controller('chartController', ['$translate', '$scope', '$rootScope'
             allData : [],
             currentTable : 1,
             currentTableData : {},
-            currentTableUnit : "%"
+            currentTableUnit : "%",
+            chartConfig : chartReport.getChartConfig1(),
+            chartData : $scope.dataChartSimple
 //            marketShareVolume : [],
 //            marketShareValue : [],
 //            marketSaleVolume : [],
@@ -867,10 +869,13 @@ marksimosapp.controller('chartController', ['$translate', '$scope', '$rootScope'
     tableReport.segmentDistribution().then(function(data, status, headers, config){
 //        console.log(data);
         $scope.data.tableC3SegmentDistribution.allData = data;
+        $scope.data.tableC3SegmentDistribution.currentTableData = $scope.data.tableC3SegmentDistribution.allData.marketShareVolume;
+        $scope.data.tableC3SegmentDistribution.chartData = chartReport.formatChartData($scope.data.tableC3SegmentDistribution.currentTableData);
     });
     $scope.switchTableReportC3 = function(order, field, unit){
         $scope.data.tableC3SegmentDistribution.currentTable = order;
         $scope.data.tableC3SegmentDistribution.currentTableData = $scope.data.tableC3SegmentDistribution.allData[field];
+        $scope.data.tableC3SegmentDistribution.chartData = chartReport.formatChartData($scope.data.tableC3SegmentDistribution.currentTableData);
         $scope.data.tableC3SegmentDistribution.currentTableUnit = unit;
     };
 

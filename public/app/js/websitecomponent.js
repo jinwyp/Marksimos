@@ -254,7 +254,9 @@
         return {
             scope: {
                 data : '=',
-                unit : '='
+                unit : '=',
+                chartdata : '=',
+                chartconfig : '='
             },
             restrict: 'AE',
             templateUrl: '/app/js/report/tablereportsegmentdistribution.html',
@@ -264,8 +266,10 @@
                 if(angular.isUndefined(scope.unit)) {
                     scope.unit = '';
                 }else if (scope.unit === "%"){
-                    scope.plus = 100;
+                    scope.plus = 1;
                 }
+
+                scope.display = 'line';
 
             }
         };
