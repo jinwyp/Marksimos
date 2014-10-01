@@ -850,7 +850,7 @@ marksimosapp.controller('chartController', ['$translate', '$scope', '$rootScope'
 //        console.log(data);
         $scope.data.tableB2CompetitorIntelligence.allData = data;
         $scope.data.tableB2CompetitorIntelligence.currentTableData = $scope.data.tableB2CompetitorIntelligence.allData.acquiredProductionAndLogisticsEfficiency;
-//        $scope.data.tableB2CompetitorIntelligence.chartData = chartReport.formatChartData ($scope.data.tableB2CompetitorIntelligence.allData.acquiredProductionAndLogisticsEfficiency);
+        $scope.data.tableB2CompetitorIntelligence.chartData = chartReport.formatChartData($scope.data.tableB2CompetitorIntelligence.allData.acquiredProductionAndLogisticsEfficiency);
     });
     $scope.switchTableMenuLevel1B2 = function(menu, field, unit){
         $scope.css.tableReportMenu = menu;
@@ -859,6 +859,7 @@ marksimosapp.controller('chartController', ['$translate', '$scope', '$rootScope'
     $scope.switchTableReportB2 = function(order, field, unit){
         $scope.data.tableB2CompetitorIntelligence.currentTable = order;
         $scope.data.tableB2CompetitorIntelligence.currentTableData = $scope.data.tableB2CompetitorIntelligence.allData[field];
+        $scope.data.tableB2CompetitorIntelligence.chartData = chartReport.formatChartData($scope.data.tableB2CompetitorIntelligence.currentTableData);
         $scope.data.tableB2CompetitorIntelligence.currentTableUnit = unit;
     };
 
@@ -866,7 +867,6 @@ marksimosapp.controller('chartController', ['$translate', '$scope', '$rootScope'
     tableReport.segmentDistribution().then(function(data, status, headers, config){
 //        console.log(data);
         $scope.data.tableC3SegmentDistribution.allData = data;
-        $scope.data.tableB2CompetitorIntelligence.currentTableData = $scope.data.tableB2CompetitorIntelligence.allData.marketShareVolume;
     });
     $scope.switchTableReportC3 = function(order, field, unit){
         $scope.data.tableC3SegmentDistribution.currentTable = order;

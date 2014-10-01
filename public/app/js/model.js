@@ -351,7 +351,7 @@
             chartResult.data = [];
 
             if(angular.isUndefined(chartHttpData.periods)){
-                // 如果periods 没有定义则是普通的图表,不带有系列的图表
+                // 如果periods 没有定义则是普通的图表,不带有系列的图表 目前仅仅有C44 和 B34
                 angular.forEach(chartHttpData.chartData, function(value, key) {
                     if(angular.isUndefined(value.segmentName)){
                         // 判断是否是Segment Leader Top5 的图表还是SKUName的图表
@@ -372,6 +372,7 @@
                     };
 
                     if(angular.isUndefined(value.segmentName) ){
+                        // 这里处理原本处理C1 但已不用, C1处理已放到 chartFormatTool2
                         oneBarData.x = value.SKUName;
 
                         var index = chartResult.series.indexOf(value.SKUName.substring(0,1));
@@ -393,6 +394,7 @@
                         }
 
                     }else{
+                        // 这里处理C44
                         oneBarData.x = showTranslateTextConsumerSegmentName(value.segmentName);
 
                         if(decimalNumber === 0){
@@ -408,7 +410,7 @@
 
 
             }else if(angular.isArray(chartHttpData.periods) ){
-                // 如果periods 有定义 则是带有系列的图表 包括图表 B1 和 C4
+                // 如果periods 有定义 则是带有系列的图表 包括图表 B1 B3 和 C4
                 angular.forEach(chartHttpData.periods, function(value, key) {
 
                     var oneLineData = {
@@ -523,6 +525,8 @@
 
         };
 
+
+
         var chartFormatTool3 = function(chartHttpData){
             // 使用angular-chart 插件的数据格式  FOR Report B2 C3 C5
 
@@ -531,25 +535,28 @@
 
             if(!angular.isUndefined(chartHttpData)){
 
-
-                angular.forEach(chartHttpData, function(value, key) {
-
-                    chartResult.series.push(showTranslateTextCompanyName(value.companyName));
+                angular.forEach(chartHttpData[0].data, function(period, key) {
 
                     var oneBarData = {
                         x : 0, //Round Name
                         y : []
                     };
 
-                    angular.forEach(value.data, function(period, key) {
-
-                        oneBarData.x = value.name;
-                        oneBarData.y.push(value.value);
-                    });
+                    oneBarData.x = period.name;
                     chartResult.data.push(oneBarData);
-
                 });
 
+
+
+                angular.forEach(chartHttpData, function(value, key) {
+                    chartResult.series.push(showTranslateTextCompanyName(value.companyName));
+
+                    angular.forEach(value.data, function(period, key) {
+                        chartResult.data[key].y.push(Math.round(period.value * 100 ) / 100);
+                    });
+
+                });
+console.log(angular.copy(chartResult));
 
                 return angular.copy(chartResult);
 
@@ -698,7 +705,8 @@
             },
             // Chart For Report B2, C3, C5
             formatChartData : function(data){
-                return chartFormatTool1(data, 0);
+
+                return chartFormatTool3(data);
             },
 
 

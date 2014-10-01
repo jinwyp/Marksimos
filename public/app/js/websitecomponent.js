@@ -243,6 +243,8 @@
                     scope.plus = 1;
                 }
 
+                scope.display = 'line';
+
             }
         };
     });

@@ -134,6 +134,12 @@ app.config(['$translateProvider', function($translateProvider){
         "ReportTabLabelBrand"  : "Brand",
         "ReportTabLabelGlobal" : "Global",
 
+        "ReportTabLabelTableChartDisplayLine"  : "Line Chart",
+        "ReportTabLabelTableChartDisplayBar"   : "Bar Chart",
+        "ReportTabLabelTableChartDisplayPoint" : "Point Chart",
+        "ReportTabLabelTableChartDisplayArea"  : "Area Chart",
+        "ReportTabLabelTableChartDisplayPie"   : "Pie Chart",
+
 		//Labels for Company Status Report - SKU Level
         "ReportCompanyStatusSKUQuarter" : "Quarter",
 
@@ -1057,6 +1063,12 @@ app.config(['$translateProvider', function($translateProvider){
         "ReportTabLabelSKU"    : "产品数据",
         "ReportTabLabelBrand"  : "品牌数据",
         "ReportTabLabelGlobal" : "全局数据",
+
+        "ReportTabLabelTableChartDisplayLine" : "折线图",
+        "ReportTabLabelTableChartDisplayBar" : "柱状图",
+        "ReportTabLabelTableChartDisplayPoint" : "散点图",
+        "ReportTabLabelTableChartDisplayArea"  : "面积图",
+        "ReportTabLabelTableChartDisplayPie"   : "饼图",
 
 		//Labels for Company Status Report - SKU Level
         "ReportCompanyStatusSKUQuarter" : "阶段",
