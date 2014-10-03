@@ -29,6 +29,7 @@ app.config(['$translateProvider', function($translateProvider){
         "e4eIndexAssessment":"Assessment",
         "e4eIndexAssessmentInfo":"Through the HCD Learning competition, you can assess yourself against thousands of the participants from different universities all over China",
 
+        "e4eIndexJoin":"JOIN E4E",
 
 
         /*e4e register*/
@@ -87,6 +88,8 @@ app.config(['$translateProvider', function($translateProvider){
         "e4eStudentScoreGPA":"Score/GPA (out of 100)",
         "e4eStudentAchievements":"Achievements",
         "e4eStudentYearOfGraduation":"Year Of Graduation",
+        "e4eStudentYearOfBirth":"Year Of Birth",
+        "e4eStudentDateOfGraduation":"Date Of Graduation",
         "e4eStudentMonthOfGraduation":"Month Of Graduation",
         "e4eStudentCurrentYear":"Current Year in College",
         "e4eStudentUpload":"Upload your resume",
@@ -134,6 +137,8 @@ app.config(['$translateProvider', function($translateProvider){
 
         "e4eIndexAssessment":"Assessment",
         "e4eIndexAssessmentInfo":"Through the HCD Learning competition, you can assess yourself against thousands of the participants from different universities all over China",
+
+        "e4eIndexJoin":"加入 E4E",
 
         /*e4e register*/
         "e4eRegisterGetStart":"现在开始",
@@ -190,10 +195,13 @@ app.config(['$translateProvider', function($translateProvider){
         "e4eStudentScoreGPA":"Score/GPA (out of 100)",
         "e4eStudentAchievements":"Achievements",
         "e4eStudentYearOfGraduation":"Year Of Graduation",
+        "e4eStudentYearOfBirth":"Year Of Birth",
+        "e4eStudentDateOfGraduation":"Date Of Graduation",
         "e4eStudentMonthOfGraduation":"Month Of Graduation",
         "e4eStudentCurrentYear":"Current Year in College",
         "e4eStudentUpload":"Upload your resume",
         "e4eStudentSubmit":"提交",
+
 
         "e4eSuccessCon":"恭喜你",
         "e4eSuccessConInfo":"你已经成功注册",

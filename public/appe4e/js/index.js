@@ -74,6 +74,14 @@ $(function(){
 		$.fn.fullpage.moveSectionDown();
 	});
 
+	$('.prev-step').click(function(){
+		$.fn.fullpage.moveSlideLeft();
+	});
+
+	$('.next-step').click(function(){
+		$.fn.fullpage.moveSlideRight();
+	});
+
 	var startTime,endTime;
 	$('.my-flipin-x').hover(
 		function () {

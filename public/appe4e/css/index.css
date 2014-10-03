@@ -40,6 +40,13 @@
     padding: 4px 15px 5px 45px;
 }
 
+.bold-label{
+	font-weight: 700;
+}
+.normal-label{
+	font-weight: normal;
+}
+
 .languages{
 	float:right;
 	height: 38px;
@@ -347,15 +354,6 @@
 	width: 255px;
 	height: 255px;
 }
-/*<<<<<<< HEAD
-.section-1-1:hover,.section-1-3:hover,.section-1-5:hover{
-	-webkit-animation:0.1s ease;-moz-animation:0.1s ease;-ms-animation:0.1s ease;animation:0.1s ease;
-	-webkit-animation-name:flipinY;-moz-animation-name:flipinY;-ms-animation-name:flipinY;animation-name:flipinY;
-}
-.section-1-2:hover,.section-1-4:hover,.section-1-6:hover{
-	-webkit-animation:0.1s ease;-moz-animation:0.1s ease;-ms-animation:0.1s ease;animation:0.1s ease;
-	-webkit-animation-name:flipinX;-moz-animation-name:flipinX;-ms-animation-name:flipinX;animation-name:flipinX;
-=======*/
 .hover-flipin-y{
 	-webkit-animation:1s ease;-moz-animation:1s ease;-ms-animation:1s ease;animation:1s ease;
 	-webkit-animation-name:flipin-Y;-moz-animation-name:flipin-Y;-ms-animation-name:flipin-Y;animation-name:flipin-Y;
@@ -419,7 +417,7 @@
 	width: 282px;
 	height: 555px;
 	bottom: 21px;
-	left: 30%;
+	left: 10%;
 }
 /************* Footer **************/
 .section-footer{
@@ -443,12 +441,43 @@
 	bottom: 0;
 	width: 100%
 }
-.login-box{
-	left:60%;
+.login-box .fp-slidesNav{
 	top:30%;
+	left: 0;
+	width: 100%;
+}
+.login-box .fp-slidesNav li {
+    width: 47%;
+    font-size: 16px;
+    text-align: center;
+}
+.login-box .fp-slidesNav .active>li {
+	font-size: 20px;
+}
+.login-box .fp-slidesNav li a {
+	color: black;
+}
+.login-box .fp-slidesNav .active a {
+	font-weight: bold;
+}
+.login-box .fp-controlArrow.fp-prev{
+	left: -50px;
+}
+.login-box .fp-controlArrow.fp-next{
+	right: -50px;
+}
+.login-box{
+	left:40%;
+	width: 50%;
 	position: absolute;
 	z-index: 999;
 }
+
+.login-box p{
+	float: left;
+	margin-left: 20px;
+}
+
 .login-box h1{
 	font-size: 50px;
 	line-height: 50px;
