@@ -58,7 +58,7 @@ app.config(['$translateProvider', function($translateProvider){
         "e4eCompanyDesignation":"Designation",
         "e4eCompanyOfficalContactNumber":"Offical Contact Number",
         "e4eCompanyMobileNumber":"Mobile Number",
-        "e4eCompanyEmailID":"Email ID",
+        "e4eCompanyEmail":"Email ID",
 
         "e4eCompanyThirdPageTitle":"Job Profiles",
         "e4eCompanyDivision":"Division",
@@ -165,7 +165,7 @@ app.config(['$translateProvider', function($translateProvider){
         "e4eCompanyDesignation":"Designation",
         "e4eCompanyOfficalContactNumber":"Offical Contact Number",
         "e4eCompanyMobileNumber":"Mobile Number",
-        "e4eCompanyEmailID":"Email ID",
+        "e4eCompanyEmail":"Email ID",
 
         "e4eCompanyThirdPageTitle":"工作信息",
         "e4eCompanyDivision":"Division",

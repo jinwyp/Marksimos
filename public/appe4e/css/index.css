@@ -472,10 +472,8 @@
 	position: absolute;
 	z-index: 999;
 }
-
-.login-box p{
+.input-group table th button{
 	float: left;
-	margin-left: 20px;
 }
 
 .login-box h1{

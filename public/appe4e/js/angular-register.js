@@ -9,7 +9,7 @@
 
 
 // create module for custom directives
-    var registerapp = angular.module('e4eregister', ['pascalprecht.translate', 'e4e.translation','e4e.directive']);
+    var registerapp = angular.module('e4eregister', ['pascalprecht.translate', 'e4e.translation','e4e.directive','ui.bootstrap']);
 
 
             
@@ -25,6 +25,21 @@
         $scope.changeLanguage = function (langKey) {
             $translate.use(langKey);
         };
+
+        $scope.today = function() {
+            $scope.yearOfBirth = new Date();
+        };
+
+        $scope.open = function(type,$event) {
+            $event.preventDefault();
+            $event.stopPropagation();
+            if(type=="Birth")$scope.isBirthOpened=true;
+            else $scope.isGradOpened=true;
+        };
+        $scope.dateOptions = {
+            showWeeks: false
+        };
+
     }]);
 
 
