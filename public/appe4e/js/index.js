@@ -82,6 +82,20 @@ $(function(){
 		$.fn.fullpage.moveSlideRight();
 	});
 
+	$('.form_date').click(function(){
+		$('.form_date').datetimepicker({
+	        //language:  'fr',
+	        weekStart: 1,
+	        todayBtn:  1,
+			autoclose: 1,
+			todayHighlight: 1,
+			startView: 2,
+			minView: 2,
+			forceParse: 0,
+			bootcssVer: 3
+	    });
+	})
+
 	var startTime,endTime;
 	$('.my-flipin-x').hover(
 		function () {
