@@ -35,16 +35,19 @@
 }
 .start-btn a:hover,.start-btn a:active{
 	background: url("../img/start-active.png") no-repeat;
-    color: #ffffff;
+    color: #fff;
 	font-size: 16px;
     padding: 4px 15px 5px 45px;
 }
 
 .bold-label{
 	font-weight: 700;
+	line-height: 29px;
+	font-size: 20px;
 }
 .normal-label{
 	font-weight: normal;
+	line-height: 29px;
 }
 
 .languages{
@@ -188,7 +191,7 @@
     height: 79px;
 }
 .fp-prev, .fp-next {
-    opacity: 0.75;
+    opacity: 0.5;
     position: absolute;
     top: 50%;
     transition: all 0.3s ease 0s;
@@ -207,7 +210,6 @@
     /*background-image: url("../img/switch-button.png");
     background-position: 0 -38px;*/
     background-image: url("../img/ARROW-next.png");
-    
     background-repeat: no-repeat;
     right: auto;
 }
@@ -460,6 +462,19 @@
 .login-box .fp-slidesNav .active a {
 	font-weight: bold;
 }
+
+.login-box .fp-prev {
+	width: 25px;
+	background-image: url("../img/ARROW-prev.png");
+    background-repeat: no-repeat;
+}
+.login-box .fp-next {
+	width: 25px;
+	background-image: url("../img/ARROW-next.png");
+    background-repeat: no-repeat;
+	background-position: -18px center;
+}
+
 .login-box .fp-controlArrow.fp-prev{
 	left: -50px;
 }
