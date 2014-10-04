@@ -18,7 +18,7 @@
 
 
     angular.module('marksimos.websitecomponent').directive('userHeader', ['$window', '$translate', 'Student', userHeaderComponent ]);
-    angular.module('marksimos.websitecomponent').directive('headerAdmin', [adminHeaderComponent]);
+    angular.module('marksimos.websitecomponent').directive('headerAdmin', ['$window', 'Student', adminHeaderComponent]);
     angular.module('marksimos.websitecomponent').directive('menuAdmin', [adminMenuComponent]);
 
 
@@ -73,13 +73,26 @@
     }
 
 
-    function adminHeaderComponent(){
+    function adminHeaderComponent($window, Student){
         return {
             scope: {
                 currentuser : '='
             },
             restrict: 'AE',
-            templateUrl: '/app/js/websitecomponent/adminheader.html'
+            templateUrl: '/app/js/websitecomponent/adminheader.html',
+            link: function (scope, element, attrs) {
+
+                scope.clickLogout = function () {
+                    Student.logOut().success(function(data, status, headers, config){
+
+                        $window.location.href = "/marksimos/admin/" ;
+
+                    }).error(function(data, status, headers, config){
+                        console.log(data);
+                    });
+                };
+
+            }
         };
     }
 
@@ -214,7 +227,9 @@
         return {
             scope: {
                 data : '=',
-                unit : '@'
+                unit : '=',
+                chartdata : '=',
+                chartconfig : '='
             },
             restrict: 'AE',
             templateUrl: '/app/js/report/tablereportcompetitorintelligence.html',
@@ -228,6 +243,8 @@
                     scope.plus = 1;
                 }
 
+                scope.display = 'line';
+
             }
         };
     });
@@ -237,7 +254,9 @@
         return {
             scope: {
                 data : '=',
-                unit : '@'
+                unit : '=',
+                chartdata : '=',
+                chartconfig : '='
             },
             restrict: 'AE',
             templateUrl: '/app/js/report/tablereportsegmentdistribution.html',
@@ -247,8 +266,10 @@
                 if(angular.isUndefined(scope.unit)) {
                     scope.unit = '';
                 }else if (scope.unit === "%"){
-                    scope.plus = 100;
+                    scope.plus = 1;
                 }
+
+                scope.display = 'line';
 
             }
         };
@@ -259,7 +280,7 @@
         return {
             scope: {
                 data : '=',
-                unit : '@'
+                unit : '='
             },
             restrict: 'AE',
             templateUrl: '/app/js/report/tablereportmarkettrendssku.html',
@@ -279,7 +300,7 @@
         return {
             scope: {
                 data : '=',
-                unit : '@'
+                unit : '='
             },
             restrict: 'AE',
             templateUrl: '/app/js/report/tablereportmarkettrendsbrand.html',
@@ -299,7 +320,7 @@
         return {
             scope: {
                 data : '=',
-                unit : '@'
+                unit : '='
             },
             restrict: 'AE',
             templateUrl: '/app/js/report/tablereportmarkettrendsglobal.html',

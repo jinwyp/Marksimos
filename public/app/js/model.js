@@ -276,6 +276,27 @@
                 },
                 '6': function() {
                     return translateText.HomePageSegmentLabelAllSegments;
+                },
+                'priceSensitive': function() {
+                    return translateText.HomePageSegmentLabelPriceSensitive;
+                },
+                'pretenders': function() {
+                    return translateText.HomePageSegmentLabelPretenders;
+                },
+                'moderate': function() {
+                    return translateText.HomePageSegmentLabelModerate;
+                },
+                'goodLife': function() {
+                    return translateText.HomePageSegmentLabelGoodLife;
+                },
+                'ultimate': function() {
+                    return translateText.HomePageSegmentLabelUltimate;
+                },
+                'pragmatic': function() {
+                    return translateText.HomePageSegmentLabelPragmatic;
+                },
+                'allSegments': function() {
+                    return translateText.HomePageSegmentLabelAllSegments;
                 }
             };
             if (typeof names[fieldname] !== 'function') {
@@ -351,7 +372,7 @@
             chartResult.data = [];
 
             if(angular.isUndefined(chartHttpData.periods)){
-                // 如果periods 没有定义则是普通的图表,不带有系列的图表
+                // 如果periods 没有定义则是普通的图表,不带有系列的图表 目前仅仅有C44 和 B34
                 angular.forEach(chartHttpData.chartData, function(value, key) {
                     if(angular.isUndefined(value.segmentName)){
                         // 判断是否是Segment Leader Top5 的图表还是SKUName的图表
@@ -372,6 +393,7 @@
                     };
 
                     if(angular.isUndefined(value.segmentName) ){
+                        // 这里处理原本处理C1 但已不用, C1处理已放到 chartFormatTool2
                         oneBarData.x = value.SKUName;
 
                         var index = chartResult.series.indexOf(value.SKUName.substring(0,1));
@@ -393,6 +415,7 @@
                         }
 
                     }else{
+                        // 这里处理C44
                         oneBarData.x = showTranslateTextConsumerSegmentName(value.segmentName);
 
                         if(decimalNumber === 0){
@@ -408,7 +431,7 @@
 
 
             }else if(angular.isArray(chartHttpData.periods) ){
-                // 如果periods 有定义 则是带有系列的图表 包括图表 B1 和 C4
+                // 如果periods 有定义 则是带有系列的图表 包括图表 B1 B3 和 C4
                 angular.forEach(chartHttpData.periods, function(value, key) {
 
                     var oneLineData = {
@@ -524,6 +547,65 @@
         };
 
 
+
+        var chartFormatTool3 = function(chartHttpData){
+            // 使用angular-chart 插件的数据格式  FOR Report B2 C3 C5
+            chartResult.series = [];
+            chartResult.data = [];
+
+            if(angular.isUndefined(chartHttpData[0].data)){
+                // 这里处理C3  tableC3 Segment Distribution
+                angular.forEach(chartHttpData[0], function(value, key) {
+                    if(key !== 'period' && key !=='$$hashKey'){
+                        chartResult.series.push(showTranslateTextConsumerSegmentName(key));
+                    }
+                });
+
+                angular.forEach(chartHttpData, function(period, key) {
+
+                    var oneBarData = {
+                        x : 0, //Round Name
+                        y : []
+                    };
+
+                    oneBarData.x = period.period;
+                    angular.forEach(period, function(value, key) {
+                        if(key !== 'period' && key !=='$$hashKey'){
+                            oneBarData.y.push(Math.round(value * 10000 ) / 10000);
+                        }
+                    });
+
+                    chartResult.data.push(oneBarData);
+                });
+
+            }else{
+                // 这里处理B2  tableB2 Competitor Intelligence
+                angular.forEach(chartHttpData[0].data, function(period, key) {
+
+                    var oneBarData = {
+                        x : 0, //Round Name
+                        y : []
+                    };
+
+                    oneBarData.x = period.name;
+                    chartResult.data.push(oneBarData);
+                });
+
+                angular.forEach(chartHttpData, function(value, key) {
+                    chartResult.series.push(showTranslateTextCompanyName(value.companyName));
+
+                    angular.forEach(value.data, function(period, key) {
+                        chartResult.data[key].y.push(Math.round(period.value * 100 ) / 100);
+                    });
+
+                });
+            }
+            console.log(angular.copy(chartResult));
+            return angular.copy(chartResult);
+        };
+
+
+
         var chartFormatTool4 = function(chartHttpData) {
             // 使用angular-nvd3 插件的数据格式 Stacked Multi Bar Chart
 
@@ -536,14 +618,17 @@
                         "key": showTranslateTextInventoryReport(value.inventoryName),
                         "values": []
                     };
-                    chartResult.data.push(oneSeries);
-                    chartResult.series.push(showTranslateTextInventoryReport(value.inventoryName));
+                    if(key !== 0){
+                        chartResult.data.push(oneSeries);
+                        chartResult.series.push(showTranslateTextInventoryReport(value.inventoryName));
+                    }
+
                 });
 
                 angular.forEach(chartHttpData.SKUs, function(value, key) {
-                    var oneLineData1 = []; // Close To EXpire Inventory
-                    oneLineData1.push( value.SKUName );
-                    oneLineData1.push( angular.copy(Math.round(value.inventoryData[0].inventoryValue * 100) / 100 ) );
+//                    var oneLineData1 = []; // Close To EXpire Inventory
+//                    oneLineData1.push( value.SKUName );
+//                    oneLineData1.push( angular.copy(Math.round(value.inventoryData[0].inventoryValue * 100) / 100 ) );
 
                     var oneLineData2 = []; // Previous Inventory
                     oneLineData2.push( value.SKUName );
@@ -553,9 +638,9 @@
                     oneLineData3.push( value.SKUName );
                     oneLineData3.push( angular.copy(Math.round(value.inventoryData[2].inventoryValue * 100) / 100 ) );
 
-                    chartResult.data[0].values.push(oneLineData1);
-                    chartResult.data[1].values.push(oneLineData2);
-                    chartResult.data[2].values.push(oneLineData3);
+//                    chartResult.data[0].values.push(oneLineData1);
+                    chartResult.data[0].values.push(oneLineData2);
+                    chartResult.data[1].values.push(oneLineData3);
 
                 });
                 return angular.copy(chartResult.data);
@@ -657,6 +742,11 @@
             },
             getChartConfig3 : function(){
                 return angular.copy(chartConfig3);
+            },
+            // Chart For Report B2, C3, C5
+            formatChartData : function(data){
+
+                return chartFormatTool3(data);
             },
 
 

@@ -148,11 +148,19 @@ marksimosapp.controller('chartController', ['$translate', '$scope', '$rootScope'
         },
         tableB2CompetitorIntelligence : {
             allData : [],
-            currentTable : 1
+            currentTable : 1,
+            currentTableData : {},
+            currentTableUnit : "%",
+            chartConfig : chartReport.getChartConfig1(),
+            chartData : $scope.dataChartSimple
         },
         tableC3SegmentDistribution : {
             allData : [],
-            currentTable : 1
+            currentTable : 1,
+            currentTableData : {},
+            currentTableUnit : "%",
+            chartConfig : chartReport.getChartConfig1(),
+            chartData : $scope.dataChartSimple
 //            marketShareVolume : [],
 //            marketShareValue : [],
 //            marketSaleVolume : [],
@@ -163,10 +171,9 @@ marksimosapp.controller('chartController', ['$translate', '$scope', '$rootScope'
         },
         tableC5MarketTrends : {
             allData : [],
-            dataSKU : {},
-            dataBrand : {},
-            dataGlobal : {},
-            currentTable : 1
+            currentTable : 1,
+            currentTableData : {},
+            currentTableUnit : ""
         },
         tableC6MarketIndicators : {
             allData : {}
@@ -181,7 +188,8 @@ marksimosapp.controller('chartController', ['$translate', '$scope', '$rootScope'
             data : [],
 //            color : ['#39b54a', '#ff983d', '#0087f0', '#8781bd', '#f26c4f', '#bd8cbf', '#000000'] // QIFEI 's color
 //            color : ['#004CE5', '#BB0000', '#FFBC01', '#339933', '#990099', '#FF5200', '#000000'] //Windows color
-            color : ['#999999', '#BB0000', '#99CC00', '#339933', '#990099', '#FF5200', '#000000']
+//            color : ['#999999', '#BB0000', '#99CC00', '#339933', '#990099', '#FF5200', '#000000']
+            color : ['#999999',  '#99CC00', '#BB0000', '#339933', '#990099', '#FF5200', '#000000']
         },
 
         chartB11MarketShareInValue : {
@@ -843,37 +851,71 @@ marksimosapp.controller('chartController', ['$translate', '$scope', '$rootScope'
     tableReport.competitorIntelligence().then(function(data, status, headers, config){
 //        console.log(data);
         $scope.data.tableB2CompetitorIntelligence.allData = data;
+        $scope.data.tableB2CompetitorIntelligence.currentTableData = $scope.data.tableB2CompetitorIntelligence.allData.acquiredProductionAndLogisticsEfficiency;
+        $scope.data.tableB2CompetitorIntelligence.chartData = chartReport.formatChartData($scope.data.tableB2CompetitorIntelligence.allData.acquiredProductionAndLogisticsEfficiency);
     });
+    $scope.switchTableMenuLevel1B2 = function(menu, field, unit){
+        $scope.css.tableReportMenu = menu;
+        $scope.switchTableReportB2(1, field, unit);
+    };
+    $scope.switchTableReportB2 = function(order, field, unit){
+        $scope.data.tableB2CompetitorIntelligence.currentTable = order;
+        $scope.data.tableB2CompetitorIntelligence.currentTableData = $scope.data.tableB2CompetitorIntelligence.allData[field];
+        $scope.data.tableB2CompetitorIntelligence.chartData = chartReport.formatChartData($scope.data.tableB2CompetitorIntelligence.currentTableData);
+        $scope.data.tableB2CompetitorIntelligence.currentTableUnit = unit;
+    };
 
     /********************  Table Report C3  ********************/
     tableReport.segmentDistribution().then(function(data, status, headers, config){
 //        console.log(data);
         $scope.data.tableC3SegmentDistribution.allData = data;
+        $scope.data.tableC3SegmentDistribution.currentTableData = $scope.data.tableC3SegmentDistribution.allData.marketShareVolume;
+        $scope.data.tableC3SegmentDistribution.chartData = chartReport.formatChartData($scope.data.tableC3SegmentDistribution.currentTableData);
     });
-    $scope.switchTableMenuLevel1 = function(menu){
-        $scope.css.tableReportMenu = menu;
-        $scope.data.tableB2CompetitorIntelligence.currentTable = 1;
-        $scope.data.tableC5MarketTrends.currentTable = 1;
-    };
-    $scope.switchTableReport = function(report){
-        $scope.data.tableC3SegmentDistribution.currentTable = report;
-        $scope.data.tableB2CompetitorIntelligence.currentTable = report;
-        $scope.data.tableC5MarketTrends.currentTable = report;
+    $scope.switchTableReportC3 = function(order, field, unit){
+        $scope.data.tableC3SegmentDistribution.currentTable = order;
+        $scope.data.tableC3SegmentDistribution.currentTableData = $scope.data.tableC3SegmentDistribution.allData[field];
+        $scope.data.tableC3SegmentDistribution.chartData = chartReport.formatChartData($scope.data.tableC3SegmentDistribution.currentTableData);
+        $scope.data.tableC3SegmentDistribution.currentTableUnit = unit;
     };
 
     /********************  Table Report C5  ********************/
     tableReport.marketTrends().then(function(data, status, headers, config){
 //        console.log(data);
         $scope.data.tableC5MarketTrends.allData = data;
-        $scope.data.tableC5MarketTrends.dataSKU = data.SKU;
-        $scope.data.tableC5MarketTrends.dataBrand = data.brand;
-        $scope.data.tableC5MarketTrends.dataGlobal = data.global;
+        $scope.data.tableC5MarketTrends.currentTableData = $scope.data.tableC5MarketTrends.allData.SKU.averageDisplayPriceStdPack;
 
     });
+    $scope.switchTableCategoryC5 = function(category, field, unit){
+        $scope.css.tableReportTab = category;
+        if(category === 'SKU'){
+            $scope.switchTableMenuLevel1C5($scope.css.tableReportMenu, 'SKU', field, unit);
+        }else if(category === 'Brand'){
+            $scope.switchTableMenuLevel1C5($scope.css.tableReportMenu, 'Brand', field, unit);
+        }else{
+            $scope.switchTableMenuLevel1C5($scope.css.tableReportMenu, 'Global', field, unit);
+        }
+    };
+    $scope.switchTableMenuLevel1C5 = function(menu, category, field, unit){
+        $scope.css.tableReportMenu = menu;
+        if(category === 'SKU'){
+            $scope.switchTableReportC5(1, 'SKU', field, unit);
+        }else if(category === 'Brand'){
+            $scope.switchTableReportC5(1, 'brand', field, unit);
+        }else{
+            $scope.switchTableReportC5(1, 'global', 'averageNetMarketPriceStdPack', unit);
+        }
+    };
+    $scope.switchTableReportC5 = function(order, category, field, unit){
+        $scope.data.tableC5MarketTrends.currentTable = order;
+        $scope.data.tableC5MarketTrends.currentTableData = $scope.data.tableC5MarketTrends.allData[category][field];
+        $scope.data.tableC5MarketTrends.currentTableUnit = unit;
+    };
 
     /********************  Table Report C6  ********************/
     tableReport.marketIndicators().then(function(data, status, headers, config){
         $scope.data.tableC6MarketIndicators.allData = data;
+
 
     });
 

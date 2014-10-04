@@ -180,15 +180,18 @@ exports.runSimulation = function(){
             return res.send(400, {message: "Last request is still pending, please wait for runSimulation process complete..."})
         } else {
             status = 'pending';
-            var seminarId = req.body.seminar_id;
+//            var seminarId = req.body.seminar_id; // 原来的代码从session 取得的 seminar_id
+            var seminarId = req.params.seminar_id;
 
             if(!seminarId){
                 status = 'active';
                 return res.send(400, {message: "You have not choose a seminar."})
             }
 
-            var currentPeriod = sessionOperation.getCurrentPeriod(req);
+//            var currentPeriod = sessionOperation.getCurrentPeriod(req);  // 原来的代码从session 取得的 当前round
 
+            var currentPeriod = Number(req.params.round);
+            
             //check if this seminar exists
             seminarModel.findOne({
                 seminarId: seminarId
@@ -554,7 +557,7 @@ function initSimulationResult(seminarId, periods){
         queries.push(cgiapi.queryOnePeriodResult(seminarId, period));
     });
 
-    console.log(queries);
+    //console.log(queries);
     return Q.all(queries)
     .then(function(allResults){
         cleanAllResults(allResults);

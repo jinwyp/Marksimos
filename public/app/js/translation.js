@@ -34,7 +34,7 @@ app.config(['$translateProvider', function($translateProvider){
 
 
         "IntroPageSentence1" : "Who am I?",
-        "IntroPageSentence2" : "I am leading",
+        "IntroPageSentence2" : "I am leading company",
         "IntroPageSentence3" : "I manage",
         "IntroPageSentence4" : "products",
         "IntroPageSentence5" : "under",
@@ -133,6 +133,12 @@ app.config(['$translateProvider', function($translateProvider){
         "ReportTabLabelSKU"    : "SKU",
         "ReportTabLabelBrand"  : "Brand",
         "ReportTabLabelGlobal" : "Global",
+
+        "ReportTabLabelTableChartDisplayLine"  : "Line Chart",
+        "ReportTabLabelTableChartDisplayBar"   : "Bar Chart",
+        "ReportTabLabelTableChartDisplayPoint" : "Point Chart",
+        "ReportTabLabelTableChartDisplayArea"  : "Area Chart",
+        "ReportTabLabelTableChartDisplayPie"   : "Pie Chart",
 
 		//Labels for Company Status Report - SKU Level
         "ReportCompanyStatusSKUQuarter" : "Quarter",
@@ -333,7 +339,8 @@ app.config(['$translateProvider', function($translateProvider){
 
 		//Labels for Inventory Report
         "ReportInventoryReportLabelCloseToExpireInventory" : "Close to Expire Inventory",
-        "ReportInventoryReportLabelPreviousInventory"      : "Previous Inventory",
+//        "ReportInventoryReportLabelPreviousInventory"      : "Previous Inventory",
+        "ReportInventoryReportLabelPreviousInventory"      : "Close to Expire Inventory",
         "ReportInventoryReportLabelFreshInventory"         : "Fresh Inventory",
         "ReportInventoryReportTableLabelX"                 : "Total Stock (millions of standard pack) = Factory Stock + Trade Stock + Retailer Stock",
         "ReportInventoryReportTableLabelY"                 : "Million Units",
@@ -948,22 +955,22 @@ app.config(['$translateProvider', function($translateProvider){
 
 
         //Labels for Introduction
-        "IntroPageSeminarListTitle" : "List of the Game Enrolled :xxx",
-        "IntroPageSeminarListLabelSeminarID" : "Seminar IDxxx",
-        "IntroPageSeminarListLabelSeminarDescription" : "Seminar Descriptionxx",
-        "IntroPageSeminarListLabelTotalRound" : "Total Roundxx",
-        "IntroPageSeminarListLabelCompetitor" : "Competitorxx",
-        "IntroPageSeminarListLabelDateOfCommencement" : "Date of Commencementxx",
-        "IntroPageSeminarListLabelSeminarStatus" : "Seminar Statusxx",
-        "IntroPageSeminarListLabelCountry" : "Country",
-        "IntroPageSeminarListLabelProvince" : "Province(State)",
-        "IntroPageSeminarListLabelCity" : "City",
-        "IntroPageSeminarListLabelVenue" : "Venue",
+        "IntroPageSeminarListTitle"                   : "目前已有的游戏列表",
+        "IntroPageSeminarListLabelSeminarID"          : "课程号",
+        "IntroPageSeminarListLabelSeminarDescription" : "课程说明",
+        "IntroPageSeminarListLabelTotalRound"         : "总阶段数",
+        "IntroPageSeminarListLabelCompetitor"         : "参与竞争者",
+        "IntroPageSeminarListLabelDateOfCommencement" : "开始时间",
+        "IntroPageSeminarListLabelSeminarStatus"      : "课程状态",
+        "IntroPageSeminarListLabelCountry"            : "国家",
+        "IntroPageSeminarListLabelProvince"           : "省(州)",
+        "IntroPageSeminarListLabelCity"               : "城市",
+        "IntroPageSeminarListLabelVenue"              : "地点或场所",
 
 
         "IntroPageSentence1" : "我的角色",
-        "IntroPageSentence2" : "现在我将接管",
-        "IntroPageSentence3" : "主要有",
+        "IntroPageSentence2" : "我正在接管公司",
+        "IntroPageSentence3" : "运营管理",
         "IntroPageSentence4" : "商品，",
         "IntroPageSentence5" : "共",
         "IntroPageSentence6" : "个品牌",
@@ -1056,6 +1063,12 @@ app.config(['$translateProvider', function($translateProvider){
         "ReportTabLabelSKU"    : "产品数据",
         "ReportTabLabelBrand"  : "品牌数据",
         "ReportTabLabelGlobal" : "全局数据",
+
+        "ReportTabLabelTableChartDisplayLine" : "折线图",
+        "ReportTabLabelTableChartDisplayBar" : "柱状图",
+        "ReportTabLabelTableChartDisplayPoint" : "散点图",
+        "ReportTabLabelTableChartDisplayArea"  : "面积图",
+        "ReportTabLabelTableChartDisplayPie"   : "饼图",
 
 		//Labels for Company Status Report - SKU Level
         "ReportCompanyStatusSKUQuarter" : "阶段",
@@ -1255,7 +1268,8 @@ app.config(['$translateProvider', function($translateProvider){
 		
 		//Labels for Inventory Report
         "ReportInventoryReportLabelCloseToExpireInventory" : "将要过期的库存",
-        "ReportInventoryReportLabelPreviousInventory"      : "以前的库存",
+//        "ReportInventoryReportLabelPreviousInventory"      : "以前的库存",
+        "ReportInventoryReportLabelPreviousInventory"      : "将要过期的库存",
         "ReportInventoryReportLabelFreshInventory"         : "新库存",
         "ReportInventoryReportTableLabelX"                 : "总库存 (百万标准包) = 工厂库存＋渠道以及零售商库存",
         "ReportInventoryReportTableLabelY"                 : "百万件",
