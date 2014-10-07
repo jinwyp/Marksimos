@@ -178,7 +178,7 @@
 							<div class="has-feedback col-xs-6" ng-class="{'has-success':studentRegisterForm.yearOfBirth.$dirty && studentRegisterForm.yearOfBirth.$valid, 'has-error': studentRegisterForm.yearOfBirth.$dirty && studentRegisterForm.yearOfBirth.$invalid}">
 								
 								<div class="input-group">
-									<input type="text" class="form-control" datepicker-popup="yyyy" name='yearOfBirth' ng-model="yearOfBirth" is-open="isBirthOpened" max-date="'2015-06-22'" datepicker-mode="'year'" show-button-bar='false' datepicker-options="birthOptions" close-text="Close" placeholder="{{'e4eStudentYearOfBirth' | translate }}" required>
+									<input type="text" class="form-control" datepicker-popup="yyyy-MM" name='yearOfBirth' ng-model="yearOfBirth" is-open="isBirthOpened" max-date="'2015-06-22'" datepicker-mode="'year'" show-button-bar='false' datepicker-options="birthOptions" close-text="Close" placeholder="{{'e4eStudentYearOfBirth' | translate }}" required>
 									<span class="input-group-btn">
 										<button type="button" class="btn btn-danger" ng-click="open('Birth',$event)"><i class="glyphicon glyphicon-calendar"></i></button>
 									</span>
@@ -251,7 +251,7 @@
 							</div>
 
 							<div class="col-xs-6">
-								<label for="qq" class="control-label normal-label prev-step">{{'e4eStudentRegisterTitle' | translate }}</label>
+								<label for="qq" class="control-label normal-label next-step">{{'e4eStudentRegisterTitle' | translate }}</label>
 							</div>
 						</div>
 

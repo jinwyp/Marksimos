@@ -25,7 +25,8 @@
 
         $scope.birthOptions={
             showWees:false,
-            'min-mode':"year"
+            'min-mode':"month"
+            //'min-mode':"year"
         }
 
         
