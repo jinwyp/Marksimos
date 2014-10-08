@@ -886,16 +886,17 @@ marksimosapp.controller('chartController', ['$translate', '$scope', '$rootScope'
 //        console.log(data);
         $scope.data.tableC5MarketTrends.allData = data;
         $scope.data.tableC5MarketTrends.currentTableData = $scope.data.tableC5MarketTrends.allData.SKU.averageDisplayPriceStdPack;
+        $scope.data.tableC5MarketTrends.chartData = chartReport.formatChartData($scope.data.tableC5MarketTrends.currentTableData);
 
     });
     $scope.switchTableCategoryC5 = function(category, field, unit){
         $scope.css.tableReportTab = category;
         if(category === 'SKU'){
-            $scope.switchTableMenuLevel1C5($scope.css.tableReportMenu, 'SKU', field, unit);
+            $scope.switchTableMenuLevel1C5(1, 'SKU', field, unit);
         }else if(category === 'Brand'){
-            $scope.switchTableMenuLevel1C5($scope.css.tableReportMenu, 'Brand', field, unit);
+            $scope.switchTableMenuLevel1C5(1, 'Brand', field, unit);
         }else{
-            $scope.switchTableMenuLevel1C5($scope.css.tableReportMenu, 'Global', field, unit);
+            $scope.switchTableMenuLevel1C5(1, 'Global', field, unit);
         }
     };
     $scope.switchTableMenuLevel1C5 = function(menu, category, field, unit){
@@ -912,6 +913,7 @@ marksimosapp.controller('chartController', ['$translate', '$scope', '$rootScope'
         $scope.data.tableC5MarketTrends.currentTable = order;
         $scope.data.tableC5MarketTrends.currentTableData = $scope.data.tableC5MarketTrends.allData[category][field];
         $scope.data.tableC5MarketTrends.currentTableUnit = unit;
+        $scope.data.tableC5MarketTrends.chartData = chartReport.formatChartData($scope.data.tableC5MarketTrends.currentTableData);
     };
 
     /********************  Table Report C6  ********************/

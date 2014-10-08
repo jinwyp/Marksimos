@@ -579,7 +579,7 @@
                 });
 
             }else{
-                // 这里处理B2  tableB2 Competitor Intelligence
+                // 这里处理B2  tableB2 Competitor Intelligence 或 C5 Market Trends
                 angular.forEach(chartHttpData[0].data, function(period, key) {
 
                     var oneBarData = {
@@ -592,7 +592,16 @@
                 });
 
                 angular.forEach(chartHttpData, function(value, key) {
-                    chartResult.series.push(showTranslateTextCompanyName(value.companyName));
+                    if(!angular.isUndefined(value.SKUName)){
+                        chartResult.series.push(value.SKUName);
+                    }
+                    if(!angular.isUndefined(value.brandName)){
+                        chartResult.series.push(value.brandName);
+                    }
+                    if(!angular.isUndefined(value.companyName)){
+                        chartResult.series.push(showTranslateTextCompanyName(value.companyName));
+                    }
+
 
                     angular.forEach(value.data, function(period, key) {
                         chartResult.data[key].y.push(Math.round(period.value * 100 ) / 100);

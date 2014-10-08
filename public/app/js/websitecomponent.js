@@ -236,6 +236,7 @@
             link: function (scope, element, attrs) {
 
                 scope.plus = 1;
+                scope.display = 'line';
 
                 if(angular.isUndefined(scope.unit)) {
                     scope.unit = '';
@@ -261,15 +262,15 @@
             restrict: 'AE',
             templateUrl: '/app/js/report/tablereportsegmentdistribution.html',
             link: function (scope, element, attrs) {
+
                 scope.plus = 1;
+                scope.display = 'line';
 
                 if(angular.isUndefined(scope.unit)) {
                     scope.unit = '';
                 }else if (scope.unit === "%"){
                     scope.plus = 1;
                 }
-
-                scope.display = 'line';
 
             }
         };
@@ -280,17 +281,21 @@
         return {
             scope: {
                 data : '=',
-                unit : '='
+                unit : '=',
+                chartdata : '=',
+                chartconfig : '='
             },
             restrict: 'AE',
             templateUrl: '/app/js/report/tablereportmarkettrendssku.html',
             link: function (scope, element, attrs) {
 
                 scope.plus = 1;
+                scope.display = 'line';
 
                 if(angular.isUndefined(scope.unit)) {
                     scope.unit = '';
                 }
+
             }
         };
     });
@@ -300,13 +305,16 @@
         return {
             scope: {
                 data : '=',
-                unit : '='
+                unit : '=',
+                chartdata : '=',
+                chartconfig : '='
             },
             restrict: 'AE',
             templateUrl: '/app/js/report/tablereportmarkettrendsbrand.html',
             link: function (scope, element, attrs) {
 
                 scope.plus = 1;
+                scope.display = 'line';
 
                 if(angular.isUndefined(scope.unit)) {
                     scope.unit = '';
@@ -320,13 +328,16 @@
         return {
             scope: {
                 data : '=',
-                unit : '='
+                unit : '=',
+                chartdata : '=',
+                chartconfig : '='
             },
             restrict: 'AE',
             templateUrl: '/app/js/report/tablereportmarkettrendsglobal.html',
             link: function (scope, element, attrs) {
 
                 scope.plus = 1;
+                scope.display = 'line';
 
                 if(angular.isUndefined(scope.unit)) {
                     scope.unit = '';

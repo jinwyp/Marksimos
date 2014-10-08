@@ -2302,4 +2302,9 @@ body a, body button {
   font-size: 10px;
 }
 
+/* line 2071, ../sass/main.scss */
+.chartBox2 {
+  height: 600px;
+}
+
 /*************************** admin ******************************/
