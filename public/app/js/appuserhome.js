@@ -173,7 +173,9 @@ marksimosapp.controller('chartController', ['$translate', '$scope', '$rootScope'
             allData : [],
             currentTable : 1,
             currentTableData : {},
-            currentTableUnit : ""
+            currentTableUnit : "",
+            chartConfig : chartReport.getChartConfig1(),
+            chartData : $scope.dataChartSimple
         },
         tableC6MarketIndicators : {
             allData : {}

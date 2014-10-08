@@ -8,7 +8,7 @@ exports.getSegmentDistributionReport = function(allResults, allExogenous){
     segmentDistributionReport.valuePerception = generateValuePerceptionReport(allExogenous, periods);
     
     segmentDistributionReport.marketSaleValue = generateMarketSaleValueReport(allResults);
-    segmentDistributionReport.marketSaleVolume = generateMarketSaleVolumeReport(allResults);;
+    segmentDistributionReport.marketSaleVolume = generateMarketSaleVolumeReport(allResults);
 
     segmentDistributionReport.marketShareValue = generateMarketShareValueReport(allResults);
     segmentDistributionReport.marketShareVolume = genereateMarketShareVolumeReport(allResults);
@@ -23,14 +23,14 @@ function generateAverageNetMarketPriceStdPackReport(allResults){
         var onePeriodResult = allResults[i];
 
         result.push({
-            period:  onePeriodResult.period,
-            priceSensitive: onePeriodResult.p_Market.m_AverageNetMarketPrice[0],
-            pretenders: onePeriodResult.p_Market.m_AverageNetMarketPrice[1],
-            moderate: onePeriodResult.p_Market.m_AverageNetMarketPrice[2],
-            goodLife: onePeriodResult.p_Market.m_AverageNetMarketPrice[3],
-            ultimate: onePeriodResult.p_Market.m_AverageNetMarketPrice[4],
-            pragmatic: onePeriodResult.p_Market.m_AverageNetMarketPrice[5],
-            allSegments: onePeriodResult.p_Market.m_AverageNetMarketPrice[6]
+            period         : onePeriodResult.period,
+            priceSensitive : onePeriodResult.p_Market.m_AverageNetMarketPrice[0],
+            pretenders     : onePeriodResult.p_Market.m_AverageNetMarketPrice[1],
+            moderate       : onePeriodResult.p_Market.m_AverageNetMarketPrice[2],
+            goodLife       : onePeriodResult.p_Market.m_AverageNetMarketPrice[3],
+            ultimate       : onePeriodResult.p_Market.m_AverageNetMarketPrice[4],
+            pragmatic      : onePeriodResult.p_Market.m_AverageNetMarketPrice[5],
+            allSegments    : onePeriodResult.p_Market.m_AverageNetMarketPrice[6]
         })
     }
 
@@ -44,14 +44,14 @@ function generateImagePerceptionReport(allExogenous, periods){
         var onePeriodExogenous = allExogenous[i];
 
         result.push({
-            period:  periods[i],
-            priceSensitive: onePeriodExogenous.exo_SegmentsIdealPoints[0][1],
-            pretenders: onePeriodExogenous.exo_SegmentsIdealPoints[1][1],
-            moderate: onePeriodExogenous.exo_SegmentsIdealPoints[2][1],
-            goodLife: onePeriodExogenous.exo_SegmentsIdealPoints[3][1],
-            ultimate: onePeriodExogenous.exo_SegmentsIdealPoints[4][1],
-            pragmatic: onePeriodExogenous.exo_SegmentsIdealPoints[5][1],
-            allSegments: 0
+            period         : periods[i],
+            priceSensitive : onePeriodExogenous.exo_SegmentsIdealPoints[0][1],
+            pretenders     : onePeriodExogenous.exo_SegmentsIdealPoints[1][1],
+            moderate       : onePeriodExogenous.exo_SegmentsIdealPoints[2][1],
+            goodLife       : onePeriodExogenous.exo_SegmentsIdealPoints[3][1],
+            ultimate       : onePeriodExogenous.exo_SegmentsIdealPoints[4][1],
+            pragmatic      : onePeriodExogenous.exo_SegmentsIdealPoints[5][1],
+            allSegments    : 0
         })
     }
 
@@ -65,14 +65,14 @@ function generateValuePerceptionReport(allExogenous, periods){
         var onePeriodExogenous = allExogenous[i];
 
         result.push({
-            period:  periods[i],
-            priceSensitive: onePeriodExogenous.exo_SegmentsIdealPoints[0][0],
-            pretenders: onePeriodExogenous.exo_SegmentsIdealPoints[1][0],
-            moderate: onePeriodExogenous.exo_SegmentsIdealPoints[2][0],
-            goodLife: onePeriodExogenous.exo_SegmentsIdealPoints[3][0],
-            ultimate: onePeriodExogenous.exo_SegmentsIdealPoints[4][0],
-            pragmatic: onePeriodExogenous.exo_SegmentsIdealPoints[5][0],
-            allSegments: 0
+            period         : periods[i],
+            priceSensitive : onePeriodExogenous.exo_SegmentsIdealPoints[0][0],
+            pretenders     : onePeriodExogenous.exo_SegmentsIdealPoints[1][0],
+            moderate       : onePeriodExogenous.exo_SegmentsIdealPoints[2][0],
+            goodLife       : onePeriodExogenous.exo_SegmentsIdealPoints[3][0],
+            ultimate       : onePeriodExogenous.exo_SegmentsIdealPoints[4][0],
+            pragmatic      : onePeriodExogenous.exo_SegmentsIdealPoints[5][0],
+            allSegments    : 0
         })
     }
 
@@ -86,14 +86,14 @@ function generateMarketSaleVolumeReport(allResults){
         var onePeriodResult = allResults[i];
 
         result.push({
-            period:  onePeriodResult.period,
-            priceSensitive: onePeriodResult.p_Market.m_SegmentsSalesVolume[0],
-            pretenders: onePeriodResult.p_Market.m_SegmentsSalesVolume[1],
-            moderate: onePeriodResult.p_Market.m_SegmentsSalesVolume[2],
-            goodLife: onePeriodResult.p_Market.m_SegmentsSalesVolume[3],
-            ultimate: onePeriodResult.p_Market.m_SegmentsSalesVolume[4],
-            pragmatic: onePeriodResult.p_Market.m_SegmentsSalesVolume[5],
-            allSegments: onePeriodResult.p_Market.m_SegmentsSalesVolume[6]
+            period         : onePeriodResult.period,
+            priceSensitive : onePeriodResult.p_Market.m_SegmentsSalesVolume[0],
+            pretenders     : onePeriodResult.p_Market.m_SegmentsSalesVolume[1],
+            moderate       : onePeriodResult.p_Market.m_SegmentsSalesVolume[2],
+            goodLife       : onePeriodResult.p_Market.m_SegmentsSalesVolume[3],
+            ultimate       : onePeriodResult.p_Market.m_SegmentsSalesVolume[4],
+            pragmatic      : onePeriodResult.p_Market.m_SegmentsSalesVolume[5],
+            allSegments    : onePeriodResult.p_Market.m_SegmentsSalesVolume[6]
         })
     }
 
@@ -107,14 +107,14 @@ function generateMarketSaleValueReport(allResults){
         var onePeriodResult = allResults[i];
 
         result.push({
-            period:  onePeriodResult.period,
-            priceSensitive: onePeriodResult.p_Market.m_SegmentsNetSalesValue[0],
-            pretenders: onePeriodResult.p_Market.m_SegmentsNetSalesValue[1],
-            moderate: onePeriodResult.p_Market.m_SegmentsNetSalesValue[2],
-            goodLife: onePeriodResult.p_Market.m_SegmentsNetSalesValue[3],
-            ultimate: onePeriodResult.p_Market.m_SegmentsNetSalesValue[4],
-            pragmatic: onePeriodResult.p_Market.m_SegmentsNetSalesValue[5],
-            allSegments: onePeriodResult.p_Market.m_SegmentsNetSalesValue[6]
+            period         : onePeriodResult.period,
+            priceSensitive : onePeriodResult.p_Market.m_SegmentsNetSalesValue[0],
+            pretenders     : onePeriodResult.p_Market.m_SegmentsNetSalesValue[1],
+            moderate       : onePeriodResult.p_Market.m_SegmentsNetSalesValue[2],
+            goodLife       : onePeriodResult.p_Market.m_SegmentsNetSalesValue[3],
+            ultimate       : onePeriodResult.p_Market.m_SegmentsNetSalesValue[4],
+            pragmatic      : onePeriodResult.p_Market.m_SegmentsNetSalesValue[5],
+            allSegments    : onePeriodResult.p_Market.m_SegmentsNetSalesValue[6]
         })
     }
 
@@ -129,14 +129,14 @@ function generateMarketShareValueReport(allResults){
         var onePeriodResult = allResults[i];
 
         result.push({
-            period:  onePeriodResult.period,
-            priceSensitive: onePeriodResult.p_Market.m_ValueSegmentShare[0],
-            pretenders: onePeriodResult.p_Market.m_ValueSegmentShare[1],
-            moderate: onePeriodResult.p_Market.m_ValueSegmentShare[2],
-            goodLife: onePeriodResult.p_Market.m_ValueSegmentShare[3],
-            ultimate: onePeriodResult.p_Market.m_ValueSegmentShare[4],
-            pragmatic: onePeriodResult.p_Market.m_ValueSegmentShare[5],
-            allSegments: onePeriodResult.p_Market.m_ValueSegmentShare[6]
+            period         : onePeriodResult.period,
+            priceSensitive : onePeriodResult.p_Market.m_ValueSegmentShare[0] * 100,
+            pretenders     : onePeriodResult.p_Market.m_ValueSegmentShare[1] * 100,
+            moderate       : onePeriodResult.p_Market.m_ValueSegmentShare[2] * 100,
+            goodLife       : onePeriodResult.p_Market.m_ValueSegmentShare[3] * 100,
+            ultimate       : onePeriodResult.p_Market.m_ValueSegmentShare[4] * 100,
+            pragmatic      : onePeriodResult.p_Market.m_ValueSegmentShare[5] * 100,
+            allSegments    : onePeriodResult.p_Market.m_ValueSegmentShare[6] * 100
         })
     }
 
@@ -151,14 +151,14 @@ function genereateMarketShareVolumeReport(allResults){
         var onePeriodResult = allResults[i];
 
         result.push({
-            period:  onePeriodResult.period,
-            priceSensitive: onePeriodResult.p_Market.m_VolumeSegmentShare[0],
-            pretenders: onePeriodResult.p_Market.m_VolumeSegmentShare[1],
-            moderate: onePeriodResult.p_Market.m_VolumeSegmentShare[2],
-            goodLife: onePeriodResult.p_Market.m_VolumeSegmentShare[3],
-            ultimate: onePeriodResult.p_Market.m_VolumeSegmentShare[4],
-            pragmatic: onePeriodResult.p_Market.m_VolumeSegmentShare[5],
-            allSegments: onePeriodResult.p_Market.m_VolumeSegmentShare[6]
+            period         : onePeriodResult.period,
+            priceSensitive : onePeriodResult.p_Market.m_VolumeSegmentShare[0] * 100,
+            pretenders     : onePeriodResult.p_Market.m_VolumeSegmentShare[1] * 100,
+            moderate       : onePeriodResult.p_Market.m_VolumeSegmentShare[2] * 100,
+            goodLife       : onePeriodResult.p_Market.m_VolumeSegmentShare[3] * 100,
+            ultimate       : onePeriodResult.p_Market.m_VolumeSegmentShare[4] * 100,
+            pragmatic      : onePeriodResult.p_Market.m_VolumeSegmentShare[5] * 100,
+            allSegments    : onePeriodResult.p_Market.m_VolumeSegmentShare[6] * 100
         })
     }
 

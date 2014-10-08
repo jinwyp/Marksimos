@@ -549,7 +549,7 @@
 
 
         var chartFormatTool3 = function(chartHttpData){
-            // 使用angular-chart 插件的数据格式  FOR Report B2 C3 C5
+            // 使用angular-chart 插件的数据格式  FOR Report B2 Competitor Intelligence , C3 Segment Distributions , C5 Market Trends
             chartResult.series = [];
             chartResult.data = [];
 
