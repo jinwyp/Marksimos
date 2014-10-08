@@ -609,7 +609,6 @@
 
                 });
             }
-            console.log(angular.copy(chartResult));
             return angular.copy(chartResult);
         };
 

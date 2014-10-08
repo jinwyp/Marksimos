@@ -550,7 +550,7 @@ marksimosapp.controller('chartController', ['$translate', '$scope', '$rootScope'
                 $scope.data.chartB33ReturnOnInvestment.data = data;
             });
             chartReport.investmentsVersusBudget().then(function(data, status, headers, config){
-//        console.log(data);
+        console.log(data);
                 $scope.data.chartB34InvestmentsVersusBudget.data = data;
             });
 
