@@ -190,16 +190,22 @@ exports.returnOnInvestment = function(allResults){
 exports.investmentsVersusBudget = function(allResults, simulationSpan){
     var companyNum = allResults[allResults.length - 1].p_Market.m_CompaniesCount;
 
-    var result = {};
+    var result = {
+        companyNames : [],
+        chartData : [],
+        periods : []
+    };
     for (var i = 4; i < allResults.length; i++) {
         var onePeriodResult = allResults[i];
+        result.chartData.push([]);
+        result.periods.push(i-4);
         for (var j = 0; j < companyNum; j++) {
             var company = onePeriodResult.p_Companies[j];
 
             var companyName = company.c_CompanyName;
 
-            if (!result[companyName]) {
-                result[companyName] = [];
+            if(result.companyNames.length <= j){
+                result.companyNames.push(companyName);
             }
 
             var percentage = (i+1)/simulationSpan
@@ -209,12 +215,12 @@ exports.investmentsVersusBudget = function(allResults, simulationSpan){
             }else{
                 percentage = 0;
             }
-            result[companyName].push(percentage);
+            result.chartData[i-4].push(percentage);
         }
     }
 
     return result;
-}
+};
 
 //Market Sales and Inventory
 exports.marketSalesValue = function(allResults){
