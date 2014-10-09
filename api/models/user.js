@@ -16,6 +16,8 @@ var userSchema = new Schema({
 
 
     activateToken: String,
+    //add for e4e
+    isE4EUser: {type: Boolean, default: false},
     isActivated: {type: Boolean, default: false},
     isDisabled: {type: Boolean, default: false},
     password: String,
@@ -38,7 +40,20 @@ var userSchema = new Schema({
     organization: String,
     highestEducationalDegree: String,
     facilitatorId: String,
-    companyRole: {type: String, default: 'Team Member'}  //description of the role of this student in this company, like CEO, Marketing
+    companyRole: {type: String, default: 'Team Member'},  //description of the role of this student in this company, like CEO, Marketing
+
+    //add for e4e student
+    yearOfBirth: Date,
+    majors: String,
+    university: String,
+    dateOfGraduation: Date,
+    qq: String,
+    //add for e4e company
+    designation: String,
+    officalContactNumber: String,
+    holdingCompany: String,
+    division: String
+
 });
 
 var User = mongoose.model("User", userSchema);

@@ -32,9 +32,9 @@ apiRouter.get('/viewsession', function(req, res){
 
 
 
-/**********  API For E2E  **********/
-apiRouter.post('/e4e/register/company',require('./e4e/register').companyRegister);
-apiRouter.post('/e4e/register/student',require('./e4e/register').studentRegister);
+/**********  API For E4E  **********/
+apiRouter.post('/e4e/register/company',userController.registerE4Ecompany);
+apiRouter.post('/e4e/register/student',userController.registerE4Estudent);
 
 
 

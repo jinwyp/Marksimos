@@ -59,6 +59,8 @@ app.config(['$translateProvider', function($translateProvider){
         "e4eCompanyOfficalContactNumber":"Offical Contact Number",
         "e4eCompanyMobileNumber":"Mobile Number",
         "e4eCompanyEmail":"Email ID",
+        "e4eCompanyEmailError":"Email is existed",
+
 
         "e4eCompanyThirdPageTitle":"Job Profiles",
         "e4eCompanyDivision":"Division",
@@ -78,6 +80,7 @@ app.config(['$translateProvider', function($translateProvider){
         "e4eStudentAddress":"Address",
         "e4eStudentCommDetail":"Communication Details",
         "e4eStudentEmail":"Email ID",
+        "e4eStudentEmailError":"Email is existed",
         "e4eStudentQQ":"QQ ID",
         "e4eStudentNext":"Next",
 
@@ -166,6 +169,7 @@ app.config(['$translateProvider', function($translateProvider){
         "e4eCompanyOfficalContactNumber":"Offical Contact Number",
         "e4eCompanyMobileNumber":"Mobile Number",
         "e4eCompanyEmail":"Email ID",
+        "e4eCompanyEmailError":"Email is existed",
 
         "e4eCompanyThirdPageTitle":"工作信息",
         "e4eCompanyDivision":"Division",
@@ -185,6 +189,7 @@ app.config(['$translateProvider', function($translateProvider){
         "e4eStudentAddress":"Address",
         "e4eStudentCommDetail":"Communication Details",
         "e4eStudentEmail":"Email ID",
+        "e4eStudentEmailError":"Email is existed",
         "e4eStudentQQ":"QQ ID",
         "e4eStudentNext":"下一步",
 

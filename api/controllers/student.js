@@ -142,6 +142,8 @@ exports.searchStudent = function(req, res, next){
     var state = req.query.state;
     var city = req.query.city;
     var isDisabled = req.query.user_status;
+    //add for e4e
+    var isE4EUser = req.query.user_ise4e;
 
     var query = {
         role: config.role.student
@@ -159,6 +161,10 @@ exports.searchStudent = function(req, res, next){
     if(state) query.state = state;
     if(city) query.city = city;
     if(isDisabled) query.isDisabled = isDisabled;
+    else query.isDisabled = false;
+    //add for e4e
+    if(isE4EUser) query.isE4EUser = isE4EUser;
+    else query.isE4EUser = false;
 
     userModel.find(query)
     .then(function(result){

@@ -116,7 +116,9 @@ marksimosapp.controller('adminHomeController', ['$scope', '$http', '$notificatio
         searchStudent : {
             username :'',
             email :'',
-            user_status :'false'
+            user_status :'false',
+            //add for e4e
+            user_ise4e : 'false'
         },
         students : [],
 

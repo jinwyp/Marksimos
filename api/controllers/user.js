@@ -132,6 +132,124 @@ exports.register = function(req, res, next){
     .done();
 }
 
+//registerE4Estudent
+exports.registerE4Estudent = function(req, res, next){
+    req.checkBody('email', 'Invalid email').notEmpty().isEmail();
+
+    var errors = req.validationErrors();
+    if(errors){
+        return res.send(400, {message: util.inspect(errors)});
+    }
+
+    var email = req.body.email;
+    var password = "hcd123456";
+    password = utility.hashPassword(password);
+
+    var user = {
+        email: email,
+        password: password
+    }
+
+    user.name = req.body.userName;
+    user.firstName = req.body.firstName;
+    user.lastName = req.body.lastName;
+    user.yearOfBirth = req.body.yearOfBirth;
+    user.majors = req.body.majors;
+    user.university = req.body.university;
+    user.dateOfGraduation = req.body.dateOfGraduation;
+    user.qq = req.body.qq;
+    user.isE4EUser = true;
+
+    var activateToken = utility.generateAcivateToken(email);
+    user.activateToken = activateToken;
+
+    userModel.findByEmail(email)
+    .then(function(findResult){
+        if(findResult){
+            return res.send({status:2, message: 'User is existed.'});
+        }
+        return userModel.register(user)
+        .then(function(result){
+            if(result){
+                return utility.sendActivateEmail(email, activateToken)
+                .then(function(sendEmailResult){
+                    if(sendEmailResult){
+                        return res.send({message: 'Register success'});
+                    }else{
+                        throw new Error('Send activate email failed.');
+                    }
+                })
+            }else{
+                throw new Error('Save user to db failed.');
+            }
+        })
+    })
+    .fail(function(err){
+        logger.error(err);
+        res.send(500, {message: 'register failed.'});
+    })
+    .done();
+}
+
+
+//registerE4Ecompany
+exports.registerE4Ecompany = function(req, res, next){
+    req.checkBody('email', 'Invalid email').notEmpty().isEmail();
+
+    var errors = req.validationErrors();
+    if(errors){
+        return res.send(400, {message: util.inspect(errors)});
+    }
+
+    var email = req.body.email;
+    var password = "hcd123456";
+    password = utility.hashPassword(password);
+
+    var user = {
+        email: email,
+        password: password
+    }
+
+    user.name = req.body.nameOfContactPerson;
+    user.designation = req.body.designation;
+    user.phoneNum = req.body.officalContactNumber;
+    user.holdingCompany = req.body.holdingCompany;
+    user.division = req.body.division;
+    user.mobileNumber = req.body.mobileNumber;
+    user.isE4EUser = true;
+
+    var activateToken = utility.generateAcivateToken(email);
+    user.activateToken = activateToken;
+
+
+    userModel.findByEmail(email)
+    .then(function(findResult){
+        if(findResult){
+            return res.send({status:2, message: 'User is existed.'});
+        }
+        return userModel.register(user)
+        .then(function(result){
+            if(result){
+                return utility.sendActivateEmail(email, activateToken)
+                .then(function(sendEmailResult){
+                    if(sendEmailResult){
+                        return res.send({message: 'Register success'});
+                    }else{
+                        throw new Error('Send activate email failed.');
+                    }
+                })
+            }else{
+                throw new Error('Save user to db failed.');
+            }
+        })
+    })
+    .fail(function(err){
+        logger.error(err);
+        res.send(500, {message: 'register failed.'});
+    })
+    .done();
+}
+
 exports.activate = function(req, res, next){
     var email = req.query.email;
     var token = req.query.token;
