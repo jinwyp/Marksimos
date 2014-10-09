@@ -80,7 +80,8 @@ angular.module('angularCharts').directive('acChart', [
             'rgb(0,128,0)'
           ],
           innerRadius: 0,
-          lineLegend: 'lineEnd'
+          lineLegend: 'lineEnd',
+          lineCurveType: 'cardinal'
         };
       var totalWidth = element.width(), totalHeight = element.height();
       var data, series, points, height, width, chartContainer, legendContainer, chartType, isAnimate = true, defaultColors = config.colors;
@@ -493,7 +494,7 @@ angular.module('angularCharts').directive('acChart', [
         var xAxis = d3.svg.axis().scale(x).orient('bottom');
         filterXAxis(xAxis, x);
         var yAxis = d3.svg.axis().scale(y).orient('left').ticks(6).tickFormat(d3.format('s'));
-        var line = d3.svg.line().interpolate('cardinal').x(function (d) {
+        var line = d3.svg.line().interpolate(config.lineCurveType).x(function (d) {
             return getX(d.x);
           }).y(function (d) {
             return y(d.y);
