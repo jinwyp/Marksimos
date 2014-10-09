@@ -21,8 +21,6 @@ marksimosapp.controller('chartController', ['$translate', '$scope', '$rootScope'
     });
 
 
-
-
     notify.config({
         duration : 10000
     }) ;
@@ -550,7 +548,6 @@ marksimosapp.controller('chartController', ['$translate', '$scope', '$rootScope'
                 $scope.data.chartB33ReturnOnInvestment.data = data;
             });
             chartReport.investmentsVersusBudget().then(function(data, status, headers, config){
-        console.log(data);
                 $scope.data.chartB34InvestmentsVersusBudget.data = data;
             });
 
@@ -637,7 +634,7 @@ marksimosapp.controller('chartController', ['$translate', '$scope', '$rootScope'
 
                 var currentDate = new Date();
 
-                $scope.data.currentTime.hour = 6;
+                $scope.data.currentTime.hour = 1;
                 $scope.data.currentTime.minute = 59;
                 $scope.data.currentTime.second = 59 ;
 
