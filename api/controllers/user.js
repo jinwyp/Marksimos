@@ -171,14 +171,16 @@ exports.registerE4Estudent = function(req, res, next){
         return userModel.register(user)
         .then(function(result){
             if(result){
-                return utility.sendActivateEmail(email, activateToken)
-                .then(function(sendEmailResult){
-                    if(sendEmailResult){
-                        return res.send({message: 'Register success'});
-                    }else{
-                        throw new Error('Send activate email failed.');
-                    }
-                })
+                return res.send({message: 'Register success'});
+
+                // return utility.sendActivateEmail(email, activateToken)
+                // .then(function(sendEmailResult){
+                //     if(sendEmailResult){
+                //         return res.send({message: 'Register success'});
+                //     }else{
+                //         throw new Error('Send activate email failed.');
+                //     }
+                // })
             }else{
                 throw new Error('Save user to db failed.');
             }
@@ -230,14 +232,16 @@ exports.registerE4Ecompany = function(req, res, next){
         return userModel.register(user)
         .then(function(result){
             if(result){
-                return utility.sendActivateEmail(email, activateToken)
-                .then(function(sendEmailResult){
-                    if(sendEmailResult){
-                        return res.send({message: 'Register success'});
-                    }else{
-                        throw new Error('Send activate email failed.');
-                    }
-                })
+                return res.send({message: 'Register success'});
+
+                // return utility.sendActivateEmail(email, activateToken)
+                // .then(function(sendEmailResult){
+                //     if(sendEmailResult){
+                //         return res.send({message: 'Register success'});
+                //     }else{
+                //         throw new Error('Send activate email failed.');
+                //     }
+                // })
             }else{
                 throw new Error('Save user to db failed.');
             }
