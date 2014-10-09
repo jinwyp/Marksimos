@@ -327,7 +327,7 @@
             },
             innerRadius: 0, // applicable on pieCharts, can be a percentage like '50%'
             lineLegend: 'traditional', // can be also 'lineEnd' or 'traditional', defaults to 'lineEnd'
-            lineCurveType: 'linear' // can be also 'linear', 'step', 'basis', 'bundle', 'cardinal', 'monotone', defaults to 'linear'
+            lineCurveType: 'monotone' // can be also 'linear', 'step', 'basis', 'bundle', 'cardinal', 'monotone', defaults to 'linear'
 //        mouseover: function() {},
 //        mouseout: function() {},
 //        click: function() {}
