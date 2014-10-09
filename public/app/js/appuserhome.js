@@ -634,7 +634,7 @@ marksimosapp.controller('chartController', ['$translate', '$scope', '$rootScope'
 
                 var currentDate = new Date();
 
-                $scope.data.currentTime.hour = 6;
+                $scope.data.currentTime.hour = 1;
                 $scope.data.currentTime.minute = 59;
                 $scope.data.currentTime.second = 59 ;
 
