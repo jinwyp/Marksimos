@@ -9,11 +9,7 @@ var utility = require('../../common/utility.js');
 
 
 exports.addSeminar = function(req, res, next){
-    console.log('in');
     var checkRequiredFieldResult = checkRequiredField(req);
-
-    console.log('checkRequiredFieldResult:'+checkRequiredFieldResult);
-    logger.log(checkRequiredFieldResult);
 
     if(checkRequiredFieldResult){
         return res.send(400, {message: checkRequiredFieldResult});

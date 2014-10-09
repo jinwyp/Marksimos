@@ -10,8 +10,6 @@ var utility = require('../../common/utility.js');
 exports.addFacilitator = function(req, res, next){
     var validateResult = utility.validateUser(req);
 
-    console.log(validateResult);
-
     if(validateResult){
         return res.send(400, {message: validateResult});
     }
