@@ -88,7 +88,7 @@ function generateSKUReport(companyId, allResults, period){
                     onePeriodReport.grossProfitMargin = SKU.u_GrossProfitMargin * 100;
                     onePeriodReport.tradeAndMarketingExpensesAsAPercentageOfSales = SKU.u_TradeAndMrktngSalesRatio * 100;
                     onePeriodReport.generalExpensesAsAPercentageOfSales = SKU.u_GeneralExpensesSalesRatio * 100;
-                    onePeriodReport.operatingProfitMargin = SKU.u_GrossProfitMargin * 100;
+                    onePeriodReport.operatingProfitMargin = SKU.u_OperatingProfitMargin * 100;
                     onePeriodReport.netProfitMargin = SKU.u_NetProfitMargin * 100;
                     onePeriodReport.returnOnInvestment = SKU.u_ReturnOnInvestment;
                     onePeriodReport.averageNetMarketPrice = SKU.u_AverageNetMarketPrice * consts.ActualSize[SKU.u_PackSize];
@@ -98,7 +98,7 @@ function generateSKUReport(companyId, allResults, period){
                     onePeriodReport.marketSalesValue = SKU.u_MarketSalesValue[consts.ConsumerSegmentsMaxTotal-1];
                     onePeriodReport.consumerProcePromotion = -SKU.u_PricePromotionsCost;
                     onePeriodReport.marketNetSalesValue = SKU.u_MarketNetSalesValue[consts.ConsumerSegmentsMaxTotal-1];
-                    onePeriodReport.additionalRetailerMargin = -SKU.u_AdditionalMarginValue;
+                    onePeriodReport.additionalRetailerMargin = SKU.u_AdditionalTradeMargin * 100;
                     onePeriodReport.wholesalersBonusRate = SKU.u_WholesalesBonusRate * 100;
                     onePeriodReport.minimalPurchaseQualifyingForBonusStdPack = SKU.u_ps_WholesalesBonusMinVolume * consts.ActualSize[SKU.u_PackSize];
                     onePeriodReport.productionCost = SKU.u_ProductionCost;
@@ -179,7 +179,7 @@ function generateBrandReport(companyId, allResults, period){
                     onePeriodReport.grossProfitMargin = brandResult.b_GrossProfitMargin * 100;
                     onePeriodReport.tradeAndMarketingExpensesAsAPercentageOfSales = brandResult.b_TradeAndMrktngSalesRatio * 100;
                     onePeriodReport.generalExpensesAsAPercentageOfSales = brandResult.b_GeneralExpensesSalesRatio * 100;
-                    onePeriodReport.operatingProfitMargin = brandResult.b_GrossProfitMargin * 100;
+                    onePeriodReport.operatingProfitMargin = brandResult.b_OperatingProfitMargin * 100;
                     onePeriodReport.netProfitMargin = brandResult.b_NetProfitMargin * 100;
                     onePeriodReport.returnOnInvestment = brandResult.b_ReturnOnInvestment;
 
@@ -263,7 +263,7 @@ function generateGlobalReport(companyId, allResults){
                 onePeriodReport.grossProfitMargin = companyResult.c_GrossProfitMargin * 100;
                 onePeriodReport.tradeAndMarketingExpensesAsAPercentageOfSales = companyResult.c_TradeAndMrktngSalesRatio * 100;
                 onePeriodReport.generalExpensesAsAPercentageOfSales = companyResult.c_GeneralExpensesSalesRatio * 100;
-                onePeriodReport.operatingProfitMargin = companyResult.c_GrossProfitMargin * 100;
+                onePeriodReport.operatingProfitMargin = companyResult.c_OperatingProfitMargin * 100;
                 onePeriodReport.netProfitMargin = companyResult.c_NetProfitMargin * 100;
                 onePeriodReport.returnOnInvestment = companyResult.c_ReturnOnInvestment;
 

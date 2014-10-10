@@ -26,7 +26,7 @@ function generateSKUReport(allResults, period){
         
         priceRankingIndex                  : generateSKUFieldReport(allResults, period, function(SKUResult){return SKUResult.u_PriceIndex}),
         shelfSpace                         : generateSKUFieldReport(allResults, period, function(SKUResult){return SKUResult.u_ShelfSpace * 100}),
-        totalInventoryAtTradeStdPack       : generateSKUFieldReport(allResults, period, function(SKUResult){return SKUResult.u_ps_WholesaleStocks[consts.StocksMaxTotal].s_ps_Volume + SKUResult.u_ps_RetailStocks[consts.StocksMaxTotal].s_ps_Volume}),
+        totalInventoryAtTradeStdPack       : generateSKUFieldReport(allResults, period, function(SKUResult){return consts.ActualSize[SKUResult.u_PackSize] * (SKUResult.u_ps_WholesaleStocks[consts.StocksMaxTotal].s_ps_Volume + SKUResult.u_ps_RetailStocks[consts.StocksMaxTotal].s_ps_Volume); }),
         valuePerception                    : generateSKUFieldReport(allResults, period, function(SKUResult){return SKUResult.u_Perception[0]}),
         
         valueShareInPriceSensitiveSegment  : generateSKUFieldReport(allResults, period, function(SKUResult){return SKUResult.u_ValueSegmentShare[0] * 100;}),
