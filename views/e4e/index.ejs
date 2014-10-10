@@ -298,9 +298,9 @@
 							<label for="mobileNumber" class="control-label">{{'e4eCompanyMobileNumber' | translate }}</label>
 						</div>
 
-						<div class="has-feedback col-xs-6" ng-class="{'has-success':companyRegisterForm.companyEmail.$dirty && companyRegisterForm.companyEmail.$valid, 'has-error': (companyRegisterForm.companyEmail.$dirty && companyRegisterForm.companyEmail.$invalid)||e4eCompanyEmailError}">
-							<label for="companyEmail" class="control-label">{{'e4eCompanyEmail' | translate }}</label>
-							<label for="companyEmail" class="control-label" ng-show="e4eCompanyEmailError">{{'e4eCompanyEmailError' | translate }}</label>
+						<div class="has-feedback col-xs-6" ng-class="{'has-success':companyRegisterForm.companyEmail.$dirty && companyRegisterForm.companyEmail.$valid, 'has-error': (companyRegisterForm.companyEmail.$dirty && companyRegisterForm.companyEmail.$invalid)||companyEmailError}">
+							<label for="companyEmail" class="control-label" ng-show='!companyEmailError'>{{'e4eCompanyEmail' | translate }}</label>
+							<label for="companyEmail" class="control-label" ng-show="companyEmailError">{{'e4eCompanyEmailError' | translate }}</label>
 						</div>
 						<div class="has-feedback col-xs-6" ng-class="{'has-success':companyRegisterForm.mobileNumber.$dirty && companyRegisterForm.mobileNumber.$valid, 'has-error': companyRegisterForm.mobileNumber.$dirty && companyRegisterForm.mobileNumber.$invalid}">
 				    		<input type="text" class="form-control"name="mobileNumber" ng-model='mobileNumber' required>
