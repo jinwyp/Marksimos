@@ -80,7 +80,7 @@ exports.getSpendingDetails = function(seminarId, currentPeriod, companyId){
         var companyDataInAllResults = utility.findCompany(lastPeriodResult, companyId)
         
         //average budget per period
-        companyData.averageBudgetPerPeriod = companyDataInAllResults.c_TotalInvestmentBudget / (seminar.simulationSpan + 1);
+        companyData.averageBudgetPerPeriod = companyDataInAllResults.c_TotalInvestmentBudget / (seminar.simulationSpan);
 
         companyData.totalInvestmentBudget = companyDataInAllResults.c_TotalInvestmentBudget;
 
