@@ -1,84 +1,103 @@
 /**
  * Created by raven on 9/8/14.
  */
+
+/**
+ * recommended
+ *
+ * no globals are left behind
+ */
+
+
 (function () {
     'use strict';
 
 
 
-// create module for custom directives
-var marksimosapp = angular.module('marksimoshelp', ['pascalprecht.translate', 'marksimos.model', 'marksimos.websitecomponent',  'marksimos.filter', 'marksimos.translation']);
+    /********************  Create New Module For Controllers ********************/
+    angular.module('marksimoshelp', ['pascalprecht.translate', 'marksimos.model', 'marksimos.websitecomponent',  'marksimos.filter', 'marksimos.translation']);
 
 
-marksimosapp.controller('userHelpController',['$rootScope', '$scope', '$translate', '$sce', '$http', '$window', 'Help',function($rootScope, $scope, $translate, $sce, $http, $window, Help) {
+    /********************  Use This Module To Set New Controllers  ********************/
+    angular.module('marksimoshelp').controller('userHelpController',['$rootScope', '$scope', '$translate', '$http', '$q', '$window', 'Help',function($rootScope, $scope, $translate,  $http, $q, $window, Help) {
 
-    $scope.data ={
-        faq : [],
-        manualChinese : {},
-        manualEnglish : {}
-    };
+        $scope.data ={
+            allFaq :[],
+            currentFaq : {},
+            currentFaqCategory : {},
+            currentManual : {},
+            manualChinese : {},
+            manualEnglish : {}
+        };
 
-    $rootScope.$on('$translateChangeSuccess', function () {
-        if($translate.use()=="zh_CN"){
-            $scope.faq = $scope.data.faq[1];
-            $scope.manual = $scope.data.manualChinese;
+        $scope.css = {
+            navTab : 'FAQ',
+            language : 'en_US'
+        };
 
-        }else if($translate.use()=="en_US"){
-            $scope.faq = $scope.data.faq[0];
-            $scope.manual = $scope.data.manualEnglish;
-        }
-    });
+        $rootScope.$on('$translateChangeSuccess', function () {
+            if($translate.use()=="zh_CN"){
+                $scope.data.currentFaq = $scope.data.allFaq[1];
+                $scope.data.currentManual = $scope.data.manualChinese;
+                $scope.css.language = "zh_CN";
 
-
-    $scope.initPage = function() {
-
-        $scope.isFAQShown=true;
-        $scope.isVideoShown=false;
-        $scope.isManualShown=false;
-        $scope.questionsShown=[1,0,0,0,0,0,0,0];
-
-        Help.getFAQ().then(function(faqResult){
-            $scope.data.faq = faqResult;
-
-            Help.getManualChinese().then(function(manualResult){
-                $scope.data.manualChinese = manualResult;
-
-                return Help.getManualEnglish();
-            })
-            .then(function(manualResult){
-                $scope.data.manualEnglish = manualResult;
-
-                if($translate.use()=="zh_CN"){
-                    $scope.faq = $scope.data.faq[1];
-                    $scope.manual = $scope.data.manualChinese;
-                }else if($translate.use()=="en_US"){
-                    $scope.faq = $scope.data.faq[0];
-                    $scope.manual = $scope.data.manualEnglish;
-                }
-            });
-
+            }else if($translate.use()=="en_US"){
+                $scope.data.currentFaq = $scope.data.allFaq[0];
+                $scope.data.currentManual = $scope.data.manualEnglish;
+                $scope.css.language = "en_US";
+            }
+            $scope.data.currentFaqCategory = $scope.data.currentFaq.categories[0];
         });
-    };
-
-    $scope.chickFAQ=function(index){
-        $scope.firstCategory=false;
-        $scope.questionsShown=[0,0,0,0,0,0,0,0];
-        $scope.questionsShown[index]=1;
-    };
-
-    $scope.initPage();
 
 
-    $scope.clickIntro=function(item){
-        $scope.isFAQShown=false;$scope.isVideoShown=false;$scope.isManualShown=false;
-        switch(item){
-            case 'FAQ':$scope.isFAQShown=true;break;
-            case 'Video':$scope.isVideoShown=true;break;
-            case 'Manual':$scope.isManualShown=true;break;
-        }
-    };
+        var app = {
+            initOnce : function(){
+                this.loadingData();
+            },
 
-}]);
+            loadingData : function(){
+                $scope.questionsShown=[1,0,0,0,0,0,0,0];
+
+                Help.getFAQ().then(function(faqResult){
+                    $scope.data.allFaq = faqResult;
+
+                    Help.getManualChinese().then(function(manualResult){
+                        $scope.data.manualChinese = manualResult;
+
+                        return Help.getManualEnglish();
+                    }).then(function(manualResult){
+                        $scope.data.manualEnglish = manualResult;
+
+                        if($translate.use()=="zh_CN"){
+                            $scope.data.currentFaq = $scope.data.allFaq[1];
+                            $scope.data.currentManual = $scope.data.manualChinese;
+                            $scope.css.language = "zh_CN";
+
+                        }else if($translate.use()=="en_US"){
+                            $scope.data.currentFaq = $scope.data.allFaq[0];
+                            $scope.data.currentManual = $scope.data.manualEnglish;
+                            $scope.css.language = "en_US";
+                        }
+                        $scope.data.currentFaqCategory = $scope.data.currentFaq.categories[0];
+                    });
+
+                });
+            }
+        };
+
+
+        app.initOnce();
+
+
+        $scope.clickMenuTab = function(menu){
+            $scope.css.navTab = menu;
+        };
+
+        $scope.chickFAQTab = function(category){
+            $scope.data.currentFaqCategory = category;
+        };
+
+    }]);
 
 
 

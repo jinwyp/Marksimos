@@ -58,8 +58,11 @@ module.exports = function(app){
     });
 
     //download file
-    app.get('/marksimos/download/manual', function(req, res, next){
+    app.get('/marksimos/download/manualeng', function(req, res, next){
         res.download('./public/app/file/MarkSimos_Participants_Manual.pdf');
+    });
+    app.get('/marksimos/download/manualchs', function(req, res, next){
+        res.download('./public/app/file/MarkSimos_Participants_Manual_chs.pdf');
     });
 
     app.get('/marksimos/manual/zh_CN',function(req,res,next){
