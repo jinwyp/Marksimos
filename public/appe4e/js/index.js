@@ -9,7 +9,8 @@ $(function(){
 			css3: true,
 			scrollOverflow: true,
 			loopBottom:true,
-			keyboardScrolling:false
+			keyboardScrolling:false,
+			scrollingSpeed: 500
 		}); 
 	}
 
