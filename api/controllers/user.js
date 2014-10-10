@@ -103,6 +103,7 @@ exports.register = function(req, res, next){
 
     var activateToken = utility.generateAcivateToken(email);
     user.activateToken = activateToken;
+    user.isE4EUser = false;
 
     userModel.findByEmail(email)
     .then(function(findResult){
@@ -130,18 +131,20 @@ exports.register = function(req, res, next){
         res.send(500, {message: 'register failed.'});
     })
     .done();
+};
+
+
+function randomString() {
+    len = len || 32;
+    var $chars = 'ABCDEFGHJKMNPQRSTWXYZabcdefhijkmnprstwxyz2345678';    /****默认去掉了容易混淆的字符oOLl,9gq,Vv,Uu,I1****/
+    var maxPos = $chars.length;
+    var pwd = '';
+    for (i = 0; i < len; i++) {
+        pwd += $chars.charAt(Math.floor(Math.random() * maxPos));
+    }
+    return pwd;
 }
 
-function randomString(len) {
-　　len = len || 32;
-　　var $chars = 'ABCDEFGHJKMNPQRSTWXYZabcdefhijkmnprstwxyz2345678';    /****默认去掉了容易混淆的字符oOLl,9gq,Vv,Uu,I1****/
-　　var maxPos = $chars.length;
-　　var pwd = '';
-　　for (i = 0; i < len; i++) {
-　　　　pwd += $chars.charAt(Math.floor(Math.random() * maxPos));
-　　}
-　　return pwd;
-}
 
 //registerE4Estudent
 exports.registerE4Estudent = function(req, res, next){
