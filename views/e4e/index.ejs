@@ -138,389 +138,191 @@
 			<div class="absolute-item section-2-6 fade-in-up"></div>
 			<div class="absolute-item section-2-7 fade-in-right"></div>
 			<div class="login-box">
-<!-- 				<div class="slide" id="slide3">
-					<form name="studentRegisterForm" class="form-horizontal">
-						<div class="row form-group">
-							<div class="col-xs-6">
-								<label for="email" class="control-label bold-label">{{'e4eStudentRegisterTitle' | translate }}</label>
-							</div>
+				<ul class="nav nav-tabs">
+					<li ng-class="{'active':studentRegisterShow}"><a href="" ng-click='clickItem("student")'>Student</a></li>
+					<li ng-class="{'active':companyRegisterShow}"><a href="" ng-click='clickItem("compamy")'>Company</a></li>
+				</ul>
 
-							<div class="col-xs-6">
-								<label for="qq" class="control-label normal-label next-step">{{'e4eCompanyRegisterTitle' | translate }}</label>
-							</div>
-						</div>
+				<form name="studentRegisterForm" class="form-horizontal" ng-show='studentRegisterShow'>
 
-						<div class="row form-group">
-							<div class="has-feedback col-xs-6" ng-class="{'has-success':studentRegisterForm.userName.$dirty && studentRegisterForm.userName.$valid, 'has-error': studentRegisterForm.userName.$dirty && studentRegisterForm.userName.$invalid}">
-					    		<input type="text" class="form-control"name="userName" ng-model='userName' placeholder="{{'e4eStudentUserName' | translate }}" required>
-						    	<span class="glyphicon glyphicon-ok form-control-feedback" ng-show="studentRegisterForm.userName.$dirty && studentRegisterForm.userName.$valid"></span>
-						    	<span class="glyphicon glyphicon-remove form-control-feedback" ng-show="studentRegisterForm.userName.$dirty && studentRegisterForm.userName.$invalid"></span>
-						    </div>
-						</div>
+					<div class="row form-group">
+						<div class="col-xs-6" style="padding:7px 0">&nbsp;</div>
+					</div>
 
-						<div class="row form-group">
+					<div class="row form-group">
+						<div class="has-feedback col-xs-6" ng-class="{'has-success':studentRegisterForm.userName.$dirty && studentRegisterForm.userName.$valid, 'has-error': studentRegisterForm.userName.$dirty && studentRegisterForm.userName.$invalid}">
+				    		<input type="text" class="form-control"name="userName" ng-model='userName' placeholder="{{'e4eStudentUserName' | translate }}" required>
+					    	<span class="glyphicon glyphicon-ok form-control-feedback" ng-show="studentRegisterForm.userName.$dirty && studentRegisterForm.userName.$valid"></span>
+					    	<span class="glyphicon glyphicon-remove form-control-feedback" ng-show="studentRegisterForm.userName.$dirty && studentRegisterForm.userName.$invalid"></span>
+					    </div>
+					</div>
 
-							<div class="has-feedback col-xs-6" ng-class="{'has-success':studentRegisterForm.firstName.$dirty && studentRegisterForm.firstName.$valid, 'has-error': studentRegisterForm.firstName.$dirty && studentRegisterForm.firstName.$invalid}">
-					    		<input type="text" class="form-control"name="firstName" ng-model='firstName' placeholder="{{'e4eStudentFirstName' | translate }}" required>
-						    	<span class="glyphicon glyphicon-ok form-control-feedback" ng-show="studentRegisterForm.firstName.$dirty && studentRegisterForm.firstName.$valid"></span>
-						    	<span class="glyphicon glyphicon-remove form-control-feedback" ng-show="studentRegisterForm.firstName.$dirty && studentRegisterForm.firstName.$invalid"></span>
-						    </div>
+					<div class="row form-group">
 
-						    <div class="has-feedback col-xs-6" ng-class="{'has-success':studentRegisterForm.lastName.$dirty && studentRegisterForm.lastName.$valid, 'has-error': studentRegisterForm.lastName.$dirty && studentRegisterForm.lastName.$invalid}">
-					    		<input type="text" class="form-control"name="lastName" ng-model='lastName' placeholder="{{'e4eStudentLastName' | translate }}" required>
-						    	<span class="glyphicon glyphicon-ok form-control-feedback" ng-show="studentRegisterForm.lastName.$dirty && studentRegisterForm.lastName.$valid"></span>
-						    	<span class="glyphicon glyphicon-remove form-control-feedback" ng-show="studentRegisterForm.lastName.$dirty && studentRegisterForm.lastName.$invalid"></span>
-						    </div>
+						<div class="has-feedback col-xs-6" ng-class="{'has-success':studentRegisterForm.firstName.$dirty && studentRegisterForm.firstName.$valid, 'has-error': studentRegisterForm.firstName.$dirty && studentRegisterForm.firstName.$invalid}">
+				    		<input type="text" class="form-control"name="firstName" ng-model='firstName' placeholder="{{'e4eStudentFirstName' | translate }}" required>
+					    	<span class="glyphicon glyphicon-ok form-control-feedback" ng-show="studentRegisterForm.firstName.$dirty && studentRegisterForm.firstName.$valid"></span>
+					    	<span class="glyphicon glyphicon-remove form-control-feedback" ng-show="studentRegisterForm.firstName.$dirty && studentRegisterForm.firstName.$invalid"></span>
+					    </div>
 
-						</div>
+					    <div class="has-feedback col-xs-6" ng-class="{'has-success':studentRegisterForm.lastName.$dirty && studentRegisterForm.lastName.$valid, 'has-error': studentRegisterForm.lastName.$dirty && studentRegisterForm.lastName.$invalid}">
+				    		<input type="text" class="form-control"name="lastName" ng-model='lastName' placeholder="{{'e4eStudentLastName' | translate }}" required>
+					    	<span class="glyphicon glyphicon-ok form-control-feedback" ng-show="studentRegisterForm.lastName.$dirty && studentRegisterForm.lastName.$valid"></span>
+					    	<span class="glyphicon glyphicon-remove form-control-feedback" ng-show="studentRegisterForm.lastName.$dirty && studentRegisterForm.lastName.$invalid"></span>
+					    </div>
 
-						<div class="row form-group">
-							<div class="has-feedback col-xs-6" ng-class="{'has-success':studentRegisterForm.yearOfBirth.$dirty && studentRegisterForm.yearOfBirth.$valid, 'has-error': studentRegisterForm.yearOfBirth.$dirty && studentRegisterForm.yearOfBirth.$invalid}">
-								
-								<div class="input-group">
-									<input type="text" class="form-control" datepicker-popup="yyyy-MM" name='yearOfBirth' ng-model="yearOfBirth" is-open="isBirthOpened" max-date="'2015-06-22'" datepicker-mode="'year'" show-button-bar='false' datepicker-options="birthOptions" close-text="Close" placeholder="{{'e4eStudentYearOfBirth' | translate }}" disabled='true' required>
-									<span class="input-group-btn">
-										<button type="button" class="btn btn-danger" ng-click="open('Birth',$event)"><i class="glyphicon glyphicon-calendar"></i></button>
-									</span>
-								</div>
+					</div>
 
-							</div>
-
-							<div class="has-feedback col-xs-6" ng-class="{'has-success':studentRegisterForm.majors.$dirty && studentRegisterForm.majors.$valid, 'has-error': studentRegisterForm.majors.$dirty && studentRegisterForm.majors.$invalid}">
-						    	<input type="text" class="form-control"name='majors' ng-model='majors' placeholder="{{'e4eStudentMajors' | translate }}" required>
-						    	<span class="glyphicon glyphicon-ok form-control-feedback" ng-show="studentRegisterForm.majors.$dirty && studentRegisterForm.majors.$valid"></span>
-						    	<span class="glyphicon glyphicon-remove form-control-feedback" ng-show="studentRegisterForm.majors.$dirty && studentRegisterForm.majors.$invalid"></span>
-						    </div>
-
-						</div>
-
-						<div class="row form-group">
-							<div class="has-feedback col-xs-6" ng-class="{'has-success':studentRegisterForm.university.$dirty && studentRegisterForm.university.$valid, 'has-error': studentRegisterForm.university.$dirty && studentRegisterForm.university.$invalid}">
-						    	<input type="text" class="form-control" name='university' ng-model='university' placeholder="{{'e4eStudentUniversity' | translate }}" required>
-						    	<span class="glyphicon glyphicon-ok form-control-feedback" ng-show="studentRegisterForm.university.$dirty && studentRegisterForm.university.$valid"></span>
-						    	<span class="glyphicon glyphicon-remove form-control-feedback" ng-show="studentRegisterForm.university.$dirty && studentRegisterForm.university.$invalid"></span>
-						    </div>
-
-						    <div class="has-feedback col-xs-6" ng-class="{'has-success':studentRegisterForm.dateOfGraduation.$dirty && studentRegisterForm.dateOfGraduation.$valid, 'has-error': studentRegisterForm.dateOfGraduation.$dirty && studentRegisterForm.dateOfGraduation.$invalid}">
-								<div class="input-group">
-									<input type="text" class="form-control" datepicker-popup="yyyy-MM" name='dateOfGraduation' ng-model="dateOfGraduation" is-open="isGradOpened" max-date="'2015-06-22'" datepicker-mode="'year'" show-button-bar='false' datepicker-options="dateOptions" close-text="Close" placeholder="{{'e4eStudentDateOfGraduation' | translate }}" ng-disabled='true' required>
-									<span class="input-group-btn">
-										<button type="button" class="btn btn-danger" ng-click="open('Graduation',$event)"><i class="glyphicon glyphicon-calendar"></i></button>
-									</span>
-								</div>
-								
+					<div class="row form-group">
+						<div class="has-feedback col-xs-6" ng-class="{'has-success':studentRegisterForm.yearOfBirth.$dirty && studentRegisterForm.yearOfBirth.$valid, 'has-error': studentRegisterForm.yearOfBirth.$dirty && studentRegisterForm.yearOfBirth.$invalid}">
+							
+							<div class="input-group">
+								<input type="text" class="form-control" datepicker-popup="yyyy-MM" name='yearOfBirth' ng-model="yearOfBirth" is-open="isBirthOpened" max-date="'2015-06-22'" datepicker-mode="'year'" show-button-bar='false' datepicker-options="birthOptions" close-text="Close" placeholder="{{'e4eStudentYearOfBirth' | translate }}" disabled='true' required>
+								<span class="input-group-btn">
+									<button type="button" class="btn btn-danger" ng-click="open('Birth',$event)"><i class="glyphicon glyphicon-calendar"></i></button>
+								</span>
 							</div>
 
 						</div>
 
-						<div class="row form-group">
-							<div class="has-feedback col-xs-6" ng-class="{'has-success':studentRegisterForm.studentEmail.$dirty && studentRegisterForm.studentEmail.$valid, 'has-error': (studentRegisterForm.studentEmail.$dirty && studentRegisterForm.studentEmail.$invalid)||studentEmailError}">
-								<label for="studentEmail" class="control-label" ng-show='!studentEmailError'>{{'e4eStudentEmail' | translate }}</label>
-								<label for="studentEmail" class="control-label" ng-show='studentEmailError'>{{'e4eStudentEmailError' | translate }}</label>
+						<div class="has-feedback col-xs-6" ng-class="{'has-success':studentRegisterForm.majors.$dirty && studentRegisterForm.majors.$valid, 'has-error': studentRegisterForm.majors.$dirty && studentRegisterForm.majors.$invalid}">
+					    	<input type="text" class="form-control"name='majors' ng-model='majors' placeholder="{{'e4eStudentMajors' | translate }}" required>
+					    	<span class="glyphicon glyphicon-ok form-control-feedback" ng-show="studentRegisterForm.majors.$dirty && studentRegisterForm.majors.$valid"></span>
+					    	<span class="glyphicon glyphicon-remove form-control-feedback" ng-show="studentRegisterForm.majors.$dirty && studentRegisterForm.majors.$invalid"></span>
+					    </div>
+
+					</div>
+
+					<div class="row form-group">
+						<div class="has-feedback col-xs-6" ng-class="{'has-success':studentRegisterForm.university.$dirty && studentRegisterForm.university.$valid, 'has-error': studentRegisterForm.university.$dirty && studentRegisterForm.university.$invalid}">
+					    	<input type="text" class="form-control" name='university' ng-model='university' placeholder="{{'e4eStudentUniversity' | translate }}" required>
+					    	<span class="glyphicon glyphicon-ok form-control-feedback" ng-show="studentRegisterForm.university.$dirty && studentRegisterForm.university.$valid"></span>
+					    	<span class="glyphicon glyphicon-remove form-control-feedback" ng-show="studentRegisterForm.university.$dirty && studentRegisterForm.university.$invalid"></span>
+					    </div>
+
+					    <div class="has-feedback col-xs-6" ng-class="{'has-success':studentRegisterForm.dateOfGraduation.$dirty && studentRegisterForm.dateOfGraduation.$valid, 'has-error': studentRegisterForm.dateOfGraduation.$dirty && studentRegisterForm.dateOfGraduation.$invalid}">
+							<div class="input-group">
+								<input type="text" class="form-control" datepicker-popup="yyyy-MM" name='dateOfGraduation' ng-model="dateOfGraduation" is-open="isGradOpened" max-date="'2015-06-22'" datepicker-mode="'year'" show-button-bar='false' datepicker-options="dateOptions" close-text="Close" placeholder="{{'e4eStudentDateOfGraduation' | translate }}" ng-disabled='true' required>
+								<span class="input-group-btn">
+									<button type="button" class="btn btn-danger" ng-click="open('Graduation',$event)"><i class="glyphicon glyphicon-calendar"></i></button>
+								</span>
 							</div>
-
-							<div class="has-feedback col-xs-6" ng-class="{'has-success':studentRegisterForm.qq.$dirty && studentRegisterForm.qq.$valid, 'has-error': studentRegisterForm.qq.$dirty && studentRegisterForm.qq.$invalid}">
-								<label for="qq" class="control-label">{{'e4eStudentQQ' | translate }}</label>
-							</div>
-
-							<div class="has-feedback col-xs-6" ng-class="{'has-success':studentRegisterForm.studentEmail.$dirty && studentRegisterForm.studentEmail.$valid, 'has-error': studentRegisterForm.studentEmail.$dirty && studentRegisterForm.studentEmail.$invalid}">
-					    		<input type="email" class="form-control"name="studentEmail" ng-model='studentEmail' required>
-						    	<span class="glyphicon glyphicon-ok form-control-feedback" ng-show="studentRegisterForm.studentEmail.$dirty && studentRegisterForm.studentEmail.$valid"></span>
-						    	<span class="glyphicon glyphicon-remove form-control-feedback" ng-show="studentRegisterForm.studentEmail.$dirty && studentRegisterForm.studentEmail.$invalid"></span>
-						    </div>
-
-						    <div class="has-feedback col-xs-6" ng-class="{'has-success':studentRegisterForm.qq.$dirty && studentRegisterForm.qq.$valid, 'has-error': studentRegisterForm.qq.$dirty && studentRegisterForm.qq.$invalid}">
-					    		<input type="text" class="form-control"name="qq" ng-model='qq' required>
-						    	<span class="glyphicon glyphicon-ok form-control-feedback" ng-show="studentRegisterForm.qq.$dirty && studentRegisterForm.qq.$valid"></span>
-						    	<span class="glyphicon glyphicon-remove form-control-feedback" ng-show="studentRegisterForm.qq.$dirty && studentRegisterForm.qq.$invalid"></span>
-						    </div>
-
+							
 						</div>
 
-						<div class="row form-group">
-							<div class="col-xs-6 col-xs-offset-6">
-								<button class="btn btn-danger" ng-click='submitStudentRegister()' ng-disabled='studentRegisterForm.$invalid'>{{'e4eIndexJoin' | translate }}</button>
-							</div>
+					</div>
+
+					<div class="row form-group">
+						<div class="has-feedback col-xs-6" ng-class="{'has-success':studentRegisterForm.studentEmail.$dirty && studentRegisterForm.studentEmail.$valid, 'has-error': (studentRegisterForm.studentEmail.$dirty && studentRegisterForm.studentEmail.$invalid)||studentEmailError}">
+							<label for="studentEmail" class="control-label" ng-show='!studentEmailError'>{{'e4eStudentEmail' | translate }}</label>
+							<label for="studentEmail" class="control-label" ng-show='studentEmailError'>{{'e4eStudentEmailError' | translate }}</label>
 						</div>
-					</form>
-				</div>
-				<div class="slide" id="slide4">
-						<form name="companyRegisterForm" class="form-horizontal">
-							<div class="row form-group">
-								<div class="col-xs-6">
-									<label for="email" class="control-label bold-label prev-step">{{'e4eCompanyRegisterTitle' | translate }}</label>
-								</div>
 
-								<div class="col-xs-6">
-									<label for="qq" class="control-label normal-label next-step">{{'e4eStudentRegisterTitle' | translate }}</label>
-								</div>
-							</div>
+						<div class="has-feedback col-xs-6" ng-class="{'has-success':studentRegisterForm.qq.$dirty && studentRegisterForm.qq.$valid, 'has-error': studentRegisterForm.qq.$dirty && studentRegisterForm.qq.$invalid}">
+							<label for="qq" class="control-label">{{'e4eStudentQQ' | translate }}</label>
+						</div>
 
-							<div class="row form-group">
+						<div class="has-feedback col-xs-6" ng-class="{'has-success':studentRegisterForm.studentEmail.$dirty && studentRegisterForm.studentEmail.$valid, 'has-error': studentRegisterForm.studentEmail.$dirty && studentRegisterForm.studentEmail.$invalid}">
+				    		<input type="email" class="form-control"name="studentEmail" ng-model='studentEmail' required>
+					    	<span class="glyphicon glyphicon-ok form-control-feedback" ng-show="studentRegisterForm.studentEmail.$dirty && studentRegisterForm.studentEmail.$valid"></span>
+					    	<span class="glyphicon glyphicon-remove form-control-feedback" ng-show="studentRegisterForm.studentEmail.$dirty && studentRegisterForm.studentEmail.$invalid"></span>
+					    </div>
 
-								<div class="has-feedback col-xs-6" ng-class="{'has-success':companyRegisterForm.nameOfContactPerson.$dirty && companyRegisterForm.nameOfContactPerson.$valid, 'has-error': companyRegisterForm.nameOfContactPerson.$dirty && companyRegisterForm.nameOfContactPerson.$invalid}">
-						    		<input type="text" class="form-control"name="nameOfContactPerson" ng-model='nameOfContactPerson' placeholder="{{'e4eCompanyNameOfContactPerson' | translate }}" required>
-							    	<span class="glyphicon glyphicon-ok form-control-feedback" ng-show="companyRegisterForm.nameOfContactPerson.$dirty && companyRegisterForm.nameOfContactPerson.$valid"></span>
-							    	<span class="glyphicon glyphicon-remove form-control-feedback" ng-show="companyRegisterForm.nameOfContactPerson.$dirty && companyRegisterForm.nameOfContactPerson.$invalid"></span>
-							    </div>
+					    <div class="has-feedback col-xs-6" ng-class="{'has-success':studentRegisterForm.qq.$dirty && studentRegisterForm.qq.$valid, 'has-error': studentRegisterForm.qq.$dirty && studentRegisterForm.qq.$invalid}">
+				    		<input type="text" class="form-control"name="qq" ng-model='qq' required>
+					    	<span class="glyphicon glyphicon-ok form-control-feedback" ng-show="studentRegisterForm.qq.$dirty && studentRegisterForm.qq.$valid"></span>
+					    	<span class="glyphicon glyphicon-remove form-control-feedback" ng-show="studentRegisterForm.qq.$dirty && studentRegisterForm.qq.$invalid"></span>
+					    </div>
 
-							</div>
+					</div>
 
-							<div class="row form-group">
+					<div class="row form-group">
+						<div class="col-xs-6 col-xs-offset-6">
+							<button class="btn btn-danger" ng-click='submitStudentRegister()' ng-disabled='studentRegisterForm.$invalid'>{{'e4eIndexJoin' | translate }}</button>
+						</div>
+					</div>
+				</form>
+				<form name="companyRegisterForm" class="form-horizontal" ng-show='companyRegisterShow'>
+					<div class="row form-group">
+						<div class="col-xs-6" style="padding:7px 0">&nbsp;</div>
+					</div>
 
-								<div class="has-feedback col-xs-6" ng-class="{'has-success':companyRegisterForm.designation.$dirty && companyRegisterForm.designation.$valid, 'has-error': companyRegisterForm.designation.$dirty && companyRegisterForm.designation.$invalid}">
-						    		<input type="text" class="form-control"name="designation" ng-model='designation' placeholder="{{'e4eCompanyDesignation' | translate }}" required>
-							    	<span class="glyphicon glyphicon-ok form-control-feedback" ng-show="companyRegisterForm.designation.$dirty && companyRegisterForm.designation.$valid"></span>
-							    	<span class="glyphicon glyphicon-remove form-control-feedback" ng-show="companyRegisterForm.designation.$dirty && companyRegisterForm.designation.$invalid"></span>
-							    </div>
+					<div class="row form-group">
 
-							    <div class="has-feedback col-xs-6" ng-class="{'has-success':companyRegisterForm.officalContactNumber.$dirty && companyRegisterForm.officalContactNumber.$valid, 'has-error': companyRegisterForm.officalContactNumber.$dirty && companyRegisterForm.officalContactNumber.$invalid}">
-						    		<input type="text" class="form-control"name="officalContactNumber" ng-model='officalContactNumber' placeholder="{{'e4eCompanyOfficalContactNumber' | translate }}" required>
-							    	<span class="glyphicon glyphicon-ok form-control-feedback" ng-show="companyRegisterForm.officalContactNumber.$dirty && companyRegisterForm.officalContactNumber.$valid"></span>
-							    	<span class="glyphicon glyphicon-remove form-control-feedback" ng-show="companyRegisterForm.officalContactNumber.$dirty && companyRegisterForm.officalContactNumber.$invalid"></span>
-							    </div>
+						<div class="has-feedback col-xs-6" ng-class="{'has-success':companyRegisterForm.nameOfContactPerson.$dirty && companyRegisterForm.nameOfContactPerson.$valid, 'has-error': companyRegisterForm.nameOfContactPerson.$dirty && companyRegisterForm.nameOfContactPerson.$invalid}">
+				    		<input type="text" class="form-control"name="nameOfContactPerson" ng-model='nameOfContactPerson' placeholder="{{'e4eCompanyNameOfContactPerson' | translate }}" required>
+					    	<span class="glyphicon glyphicon-ok form-control-feedback" ng-show="companyRegisterForm.nameOfContactPerson.$dirty && companyRegisterForm.nameOfContactPerson.$valid"></span>
+					    	<span class="glyphicon glyphicon-remove form-control-feedback" ng-show="companyRegisterForm.nameOfContactPerson.$dirty && companyRegisterForm.nameOfContactPerson.$invalid"></span>
+					    </div>
 
-							</div>
+					</div>
 
-							<div class="row form-group">
+					<div class="row form-group">
 
-								<div class="has-feedback col-xs-6" ng-class="{'has-success':companyRegisterForm.holdingCompany.$dirty && companyRegisterForm.holdingCompany.$valid, 'has-error': companyRegisterForm.holdingCompany.$dirty && companyRegisterForm.holdingCompany.$invalid}">
-						    		<input type="text" class="form-control"name="holdingCompany" ng-model='holdingCompany' placeholder="{{'e4eCompanyHoldingCompany' | translate }}" required>
-							    	<span class="glyphicon glyphicon-ok form-control-feedback" ng-show="companyRegisterForm.holdingCompany.$dirty && companyRegisterForm.holdingCompany.$valid"></span>
-							    	<span class="glyphicon glyphicon-remove form-control-feedback" ng-show="companyRegisterForm.holdingCompany.$dirty && companyRegisterForm.holdingCompany.$invalid"></span>
-							    </div>
+						<div class="has-feedback col-xs-6" ng-class="{'has-success':companyRegisterForm.designation.$dirty && companyRegisterForm.designation.$valid, 'has-error': companyRegisterForm.designation.$dirty && companyRegisterForm.designation.$invalid}">
+				    		<input type="text" class="form-control"name="designation" ng-model='designation' placeholder="{{'e4eCompanyDesignation' | translate }}" required>
+					    	<span class="glyphicon glyphicon-ok form-control-feedback" ng-show="companyRegisterForm.designation.$dirty && companyRegisterForm.designation.$valid"></span>
+					    	<span class="glyphicon glyphicon-remove form-control-feedback" ng-show="companyRegisterForm.designation.$dirty && companyRegisterForm.designation.$invalid"></span>
+					    </div>
 
-							    <div class="has-feedback col-xs-6" ng-class="{'has-success':companyRegisterForm.division.$dirty && companyRegisterForm.division.$valid, 'has-error': companyRegisterForm.division.$dirty && companyRegisterForm.division.$invalid}">
-						    		<input type="text" class="form-control"name="division" ng-model='division' placeholder="{{'e4eCompanyDivision' | translate }}" required>
-							    	<span class="glyphicon glyphicon-ok form-control-feedback" ng-show="companyRegisterForm.division.$dirty && companyRegisterForm.division.$valid"></span>
-							    	<span class="glyphicon glyphicon-remove form-control-feedback" ng-show="companyRegisterForm.division.$dirty && companyRegisterForm.division.$invalid"></span>
-							    </div>
+					    <div class="has-feedback col-xs-6" ng-class="{'has-success':companyRegisterForm.officalContactNumber.$dirty && companyRegisterForm.officalContactNumber.$valid, 'has-error': companyRegisterForm.officalContactNumber.$dirty && companyRegisterForm.officalContactNumber.$invalid}">
+				    		<input type="text" class="form-control"name="officalContactNumber" ng-model='officalContactNumber' placeholder="{{'e4eCompanyOfficalContactNumber' | translate }}" required>
+					    	<span class="glyphicon glyphicon-ok form-control-feedback" ng-show="companyRegisterForm.officalContactNumber.$dirty && companyRegisterForm.officalContactNumber.$valid"></span>
+					    	<span class="glyphicon glyphicon-remove form-control-feedback" ng-show="companyRegisterForm.officalContactNumber.$dirty && companyRegisterForm.officalContactNumber.$invalid"></span>
+					    </div>
 
-							</div>
+					</div>
 
-							<div class="row form-group">
-								<div class="col-xs-6" style="padding:7px 0">&nbsp;</div>
-							</div>
+					<div class="row form-group">
 
-							<div class="row form-group">
-								<div class="has-feedback col-xs-6" ng-class="{'has-success':companyRegisterForm.mobileNumber.$dirty && companyRegisterForm.mobileNumber.$valid, 'has-error': companyRegisterForm.mobileNumber.$dirty && companyRegisterForm.mobileNumber.$invalid}">
-									<label for="mobileNumber" class="control-label">{{'e4eCompanyMobileNumber' | translate }}</label>
-								</div>
+						<div class="has-feedback col-xs-6" ng-class="{'has-success':companyRegisterForm.holdingCompany.$dirty && companyRegisterForm.holdingCompany.$valid, 'has-error': companyRegisterForm.holdingCompany.$dirty && companyRegisterForm.holdingCompany.$invalid}">
+				    		<input type="text" class="form-control"name="holdingCompany" ng-model='holdingCompany' placeholder="{{'e4eCompanyHoldingCompany' | translate }}" required>
+					    	<span class="glyphicon glyphicon-ok form-control-feedback" ng-show="companyRegisterForm.holdingCompany.$dirty && companyRegisterForm.holdingCompany.$valid"></span>
+					    	<span class="glyphicon glyphicon-remove form-control-feedback" ng-show="companyRegisterForm.holdingCompany.$dirty && companyRegisterForm.holdingCompany.$invalid"></span>
+					    </div>
 
-								<div class="has-feedback col-xs-6" ng-class="{'has-success':companyRegisterForm.companyEmail.$dirty && companyRegisterForm.companyEmail.$valid, 'has-error': (companyRegisterForm.companyEmail.$dirty && companyRegisterForm.companyEmail.$invalid)||e4eCompanyEmailError}">
-									<label for="companyEmail" class="control-label">{{'e4eCompanyEmail' | translate }}</label>
-									<label for="companyEmail" class="control-label" ng-class="e4eCompanyEmailError">{{'e4eCompanyEmailError' | translate }}</label>
-								</div>
-								<div class="has-feedback col-xs-6" ng-class="{'has-success':companyRegisterForm.mobileNumber.$dirty && companyRegisterForm.mobileNumber.$valid, 'has-error': companyRegisterForm.mobileNumber.$dirty && companyRegisterForm.mobileNumber.$invalid}">
-						    		<input type="text" class="form-control"name="mobileNumber" ng-model='mobileNumber' required>
-							    	<span class="glyphicon glyphicon-ok form-control-feedback" ng-show="companyRegisterForm.mobileNumber.$dirty && companyRegisterForm.mobileNumber.$valid"></span>
-							    	<span class="glyphicon glyphicon-remove form-control-feedback" ng-show="companyRegisterForm.mobileNumber.$dirty && companyRegisterForm.mobileNumber.$invalid"></span>
-							    </div>
+					    <div class="has-feedback col-xs-6" ng-class="{'has-success':companyRegisterForm.division.$dirty && companyRegisterForm.division.$valid, 'has-error': companyRegisterForm.division.$dirty && companyRegisterForm.division.$invalid}">
+				    		<input type="text" class="form-control"name="division" ng-model='division' placeholder="{{'e4eCompanyDivision' | translate }}" required>
+					    	<span class="glyphicon glyphicon-ok form-control-feedback" ng-show="companyRegisterForm.division.$dirty && companyRegisterForm.division.$valid"></span>
+					    	<span class="glyphicon glyphicon-remove form-control-feedback" ng-show="companyRegisterForm.division.$dirty && companyRegisterForm.division.$invalid"></span>
+					    </div>
 
-								<div class="has-feedback col-xs-6" ng-class="{'has-success':companyRegisterForm.companyEmail.$dirty && companyRegisterForm.companyEmail.$valid, 'has-error': companyRegisterForm.companyEmail.$dirty && companyRegisterForm.companyEmail.$invalid}">
-						    		<input type="email" class="form-control"name="companyEmail" ng-model='companyEmail' required>
-							    	<span class="glyphicon glyphicon-ok form-control-feedback" ng-show="companyRegisterForm.companyEmail.$dirty && companyRegisterForm.companyEmail.$valid"></span>
-							    	<span class="glyphicon glyphicon-remove form-control-feedback" ng-show="companyRegisterForm.companyEmail.$dirty && companyRegisterForm.companyEmail.$invalid"></span>
-							    </div>
+					</div>
 
-							</div>
+					<div class="row form-group">
+						<div class="col-xs-6" style="padding:7px 0">&nbsp;</div>
+					</div>
 
-							<div class="row form-group">
-								<div class="col-xs-6 col-xs-offset-6">
-									<button class="btn btn-danger" ng-click='submitCompanyRegister()' ng-disabled='companyRegisterForm.$invalid'>{{'e4eIndexJoin' | translate }}</button>
-								</div>
-							</div>
+					<div class="row form-group">
+						<div class="has-feedback col-xs-6" ng-class="{'has-success':companyRegisterForm.mobileNumber.$dirty && companyRegisterForm.mobileNumber.$valid, 'has-error': companyRegisterForm.mobileNumber.$dirty && companyRegisterForm.mobileNumber.$invalid}">
+							<label for="mobileNumber" class="control-label">{{'e4eCompanyMobileNumber' | translate }}</label>
+						</div>
 
-						</form>
+						<div class="has-feedback col-xs-6" ng-class="{'has-success':companyRegisterForm.companyEmail.$dirty && companyRegisterForm.companyEmail.$valid, 'has-error': (companyRegisterForm.companyEmail.$dirty && companyRegisterForm.companyEmail.$invalid)||e4eCompanyEmailError}">
+							<label for="companyEmail" class="control-label">{{'e4eCompanyEmail' | translate }}</label>
+							<label for="companyEmail" class="control-label" ng-show="e4eCompanyEmailError">{{'e4eCompanyEmailError' | translate }}</label>
+						</div>
+						<div class="has-feedback col-xs-6" ng-class="{'has-success':companyRegisterForm.mobileNumber.$dirty && companyRegisterForm.mobileNumber.$valid, 'has-error': companyRegisterForm.mobileNumber.$dirty && companyRegisterForm.mobileNumber.$invalid}">
+				    		<input type="text" class="form-control"name="mobileNumber" ng-model='mobileNumber' required>
+					    	<span class="glyphicon glyphicon-ok form-control-feedback" ng-show="companyRegisterForm.mobileNumber.$dirty && companyRegisterForm.mobileNumber.$valid"></span>
+					    	<span class="glyphicon glyphicon-remove form-control-feedback" ng-show="companyRegisterForm.mobileNumber.$dirty && companyRegisterForm.mobileNumber.$invalid"></span>
+					    </div>
 
-				</div> -->
+						<div class="has-feedback col-xs-6" ng-class="{'has-success':companyRegisterForm.companyEmail.$dirty && companyRegisterForm.companyEmail.$valid, 'has-error': companyRegisterForm.companyEmail.$dirty && companyRegisterForm.companyEmail.$invalid}">
+				    		<input type="email" class="form-control"name="companyEmail" ng-model='companyEmail' required>
+					    	<span class="glyphicon glyphicon-ok form-control-feedback" ng-show="companyRegisterForm.companyEmail.$dirty && companyRegisterForm.companyEmail.$valid"></span>
+					    	<span class="glyphicon glyphicon-remove form-control-feedback" ng-show="companyRegisterForm.companyEmail.$dirty && companyRegisterForm.companyEmail.$invalid"></span>
+					    </div>
 
-				<tabset>
-					<tab heading="{{'e4eStudentRegisterTitle' | translate }}">
-						<form name="studentRegisterForm" class="form-horizontal">
+					</div>
 
-							<div class="row form-group">
-								<div class="col-xs-6" style="padding:7px 0">&nbsp;</div>
-							</div>
+					<div class="row form-group">
+						<div class="col-xs-6 col-xs-offset-6">
+							<button class="btn btn-danger" ng-click='submitCompanyRegister()' ng-disabled='companyRegisterForm.$invalid'>{{'e4eIndexJoin' | translate }}</button>
+						</div>
+					</div>
 
-							<div class="row form-group">
-								<div class="has-feedback col-xs-6" ng-class="{'has-success':studentRegisterForm.userName.$dirty && studentRegisterForm.userName.$valid, 'has-error': studentRegisterForm.userName.$dirty && studentRegisterForm.userName.$invalid}">
-						    		<input type="text" class="form-control"name="userName" ng-model='userName' placeholder="{{'e4eStudentUserName' | translate }}" required>
-							    	<span class="glyphicon glyphicon-ok form-control-feedback" ng-show="studentRegisterForm.userName.$dirty && studentRegisterForm.userName.$valid"></span>
-							    	<span class="glyphicon glyphicon-remove form-control-feedback" ng-show="studentRegisterForm.userName.$dirty && studentRegisterForm.userName.$invalid"></span>
-							    </div>
-							</div>
-
-							<div class="row form-group">
-
-								<div class="has-feedback col-xs-6" ng-class="{'has-success':studentRegisterForm.firstName.$dirty && studentRegisterForm.firstName.$valid, 'has-error': studentRegisterForm.firstName.$dirty && studentRegisterForm.firstName.$invalid}">
-						    		<input type="text" class="form-control"name="firstName" ng-model='firstName' placeholder="{{'e4eStudentFirstName' | translate }}" required>
-							    	<span class="glyphicon glyphicon-ok form-control-feedback" ng-show="studentRegisterForm.firstName.$dirty && studentRegisterForm.firstName.$valid"></span>
-							    	<span class="glyphicon glyphicon-remove form-control-feedback" ng-show="studentRegisterForm.firstName.$dirty && studentRegisterForm.firstName.$invalid"></span>
-							    </div>
-
-							    <div class="has-feedback col-xs-6" ng-class="{'has-success':studentRegisterForm.lastName.$dirty && studentRegisterForm.lastName.$valid, 'has-error': studentRegisterForm.lastName.$dirty && studentRegisterForm.lastName.$invalid}">
-						    		<input type="text" class="form-control"name="lastName" ng-model='lastName' placeholder="{{'e4eStudentLastName' | translate }}" required>
-							    	<span class="glyphicon glyphicon-ok form-control-feedback" ng-show="studentRegisterForm.lastName.$dirty && studentRegisterForm.lastName.$valid"></span>
-							    	<span class="glyphicon glyphicon-remove form-control-feedback" ng-show="studentRegisterForm.lastName.$dirty && studentRegisterForm.lastName.$invalid"></span>
-							    </div>
-
-							</div>
-
-							<div class="row form-group">
-								<div class="has-feedback col-xs-6" ng-class="{'has-success':studentRegisterForm.yearOfBirth.$dirty && studentRegisterForm.yearOfBirth.$valid, 'has-error': studentRegisterForm.yearOfBirth.$dirty && studentRegisterForm.yearOfBirth.$invalid}">
-									
-									<div class="input-group">
-										<input type="text" class="form-control" datepicker-popup="yyyy-MM" name='yearOfBirth' ng-model="yearOfBirth" is-open="isBirthOpened" max-date="'2015-06-22'" datepicker-mode="'year'" show-button-bar='false' datepicker-options="birthOptions" close-text="Close" placeholder="{{'e4eStudentYearOfBirth' | translate }}" disabled='true' required>
-										<span class="input-group-btn">
-											<button type="button" class="btn btn-danger" ng-click="open('Birth',$event)"><i class="glyphicon glyphicon-calendar"></i></button>
-										</span>
-									</div>
-
-								</div>
-
-								<div class="has-feedback col-xs-6" ng-class="{'has-success':studentRegisterForm.majors.$dirty && studentRegisterForm.majors.$valid, 'has-error': studentRegisterForm.majors.$dirty && studentRegisterForm.majors.$invalid}">
-							    	<input type="text" class="form-control"name='majors' ng-model='majors' placeholder="{{'e4eStudentMajors' | translate }}" required>
-							    	<span class="glyphicon glyphicon-ok form-control-feedback" ng-show="studentRegisterForm.majors.$dirty && studentRegisterForm.majors.$valid"></span>
-							    	<span class="glyphicon glyphicon-remove form-control-feedback" ng-show="studentRegisterForm.majors.$dirty && studentRegisterForm.majors.$invalid"></span>
-							    </div>
-
-							</div>
-
-							<div class="row form-group">
-								<div class="has-feedback col-xs-6" ng-class="{'has-success':studentRegisterForm.university.$dirty && studentRegisterForm.university.$valid, 'has-error': studentRegisterForm.university.$dirty && studentRegisterForm.university.$invalid}">
-							    	<input type="text" class="form-control" name='university' ng-model='university' placeholder="{{'e4eStudentUniversity' | translate }}" required>
-							    	<span class="glyphicon glyphicon-ok form-control-feedback" ng-show="studentRegisterForm.university.$dirty && studentRegisterForm.university.$valid"></span>
-							    	<span class="glyphicon glyphicon-remove form-control-feedback" ng-show="studentRegisterForm.university.$dirty && studentRegisterForm.university.$invalid"></span>
-							    </div>
-
-							    <div class="has-feedback col-xs-6" ng-class="{'has-success':studentRegisterForm.dateOfGraduation.$dirty && studentRegisterForm.dateOfGraduation.$valid, 'has-error': studentRegisterForm.dateOfGraduation.$dirty && studentRegisterForm.dateOfGraduation.$invalid}">
-									<div class="input-group">
-										<input type="text" class="form-control" datepicker-popup="yyyy-MM" name='dateOfGraduation' ng-model="dateOfGraduation" is-open="isGradOpened" max-date="'2015-06-22'" datepicker-mode="'year'" show-button-bar='false' datepicker-options="dateOptions" close-text="Close" placeholder="{{'e4eStudentDateOfGraduation' | translate }}" ng-disabled='true' required>
-										<span class="input-group-btn">
-											<button type="button" class="btn btn-danger" ng-click="open('Graduation',$event)"><i class="glyphicon glyphicon-calendar"></i></button>
-										</span>
-									</div>
-									
-								</div>
-
-							</div>
-
-							<div class="row form-group">
-								<div class="has-feedback col-xs-6" ng-class="{'has-success':studentRegisterForm.studentEmail.$dirty && studentRegisterForm.studentEmail.$valid, 'has-error': (studentRegisterForm.studentEmail.$dirty && studentRegisterForm.studentEmail.$invalid)||studentEmailError}">
-									<label for="studentEmail" class="control-label" ng-show='!studentEmailError'>{{'e4eStudentEmail' | translate }}</label>
-									<label for="studentEmail" class="control-label" ng-show='studentEmailError'>{{'e4eStudentEmailError' | translate }}</label>
-								</div>
-
-								<div class="has-feedback col-xs-6" ng-class="{'has-success':studentRegisterForm.qq.$dirty && studentRegisterForm.qq.$valid, 'has-error': studentRegisterForm.qq.$dirty && studentRegisterForm.qq.$invalid}">
-									<label for="qq" class="control-label">{{'e4eStudentQQ' | translate }}</label>
-								</div>
-
-								<div class="has-feedback col-xs-6" ng-class="{'has-success':studentRegisterForm.studentEmail.$dirty && studentRegisterForm.studentEmail.$valid, 'has-error': studentRegisterForm.studentEmail.$dirty && studentRegisterForm.studentEmail.$invalid}">
-						    		<input type="email" class="form-control"name="studentEmail" ng-model='studentEmail' required>
-							    	<span class="glyphicon glyphicon-ok form-control-feedback" ng-show="studentRegisterForm.studentEmail.$dirty && studentRegisterForm.studentEmail.$valid"></span>
-							    	<span class="glyphicon glyphicon-remove form-control-feedback" ng-show="studentRegisterForm.studentEmail.$dirty && studentRegisterForm.studentEmail.$invalid"></span>
-							    </div>
-
-							    <div class="has-feedback col-xs-6" ng-class="{'has-success':studentRegisterForm.qq.$dirty && studentRegisterForm.qq.$valid, 'has-error': studentRegisterForm.qq.$dirty && studentRegisterForm.qq.$invalid}">
-						    		<input type="text" class="form-control"name="qq" ng-model='qq' required>
-							    	<span class="glyphicon glyphicon-ok form-control-feedback" ng-show="studentRegisterForm.qq.$dirty && studentRegisterForm.qq.$valid"></span>
-							    	<span class="glyphicon glyphicon-remove form-control-feedback" ng-show="studentRegisterForm.qq.$dirty && studentRegisterForm.qq.$invalid"></span>
-							    </div>
-
-							</div>
-
-							<div class="row form-group">
-								<div class="col-xs-6 col-xs-offset-6">
-									<button class="btn btn-danger" ng-click='submitStudentRegister()' ng-disabled='studentRegisterForm.$invalid'>{{'e4eIndexJoin' | translate }}</button>
-								</div>
-							</div>
-						</form>
-					</tab>
-					<tab heading="{{'e4eCompanyRegisterTitle' | translate }}">
-						<form name="companyRegisterForm" class="form-horizontal">
-							<div class="row form-group">
-								<div class="col-xs-6" style="padding:7px 0">&nbsp;</div>
-							</div>
-
-							<div class="row form-group">
-
-								<div class="has-feedback col-xs-6" ng-class="{'has-success':companyRegisterForm.nameOfContactPerson.$dirty && companyRegisterForm.nameOfContactPerson.$valid, 'has-error': companyRegisterForm.nameOfContactPerson.$dirty && companyRegisterForm.nameOfContactPerson.$invalid}">
-						    		<input type="text" class="form-control"name="nameOfContactPerson" ng-model='nameOfContactPerson' placeholder="{{'e4eCompanyNameOfContactPerson' | translate }}" required>
-							    	<span class="glyphicon glyphicon-ok form-control-feedback" ng-show="companyRegisterForm.nameOfContactPerson.$dirty && companyRegisterForm.nameOfContactPerson.$valid"></span>
-							    	<span class="glyphicon glyphicon-remove form-control-feedback" ng-show="companyRegisterForm.nameOfContactPerson.$dirty && companyRegisterForm.nameOfContactPerson.$invalid"></span>
-							    </div>
-
-							</div>
-
-							<div class="row form-group">
-
-								<div class="has-feedback col-xs-6" ng-class="{'has-success':companyRegisterForm.designation.$dirty && companyRegisterForm.designation.$valid, 'has-error': companyRegisterForm.designation.$dirty && companyRegisterForm.designation.$invalid}">
-						    		<input type="text" class="form-control"name="designation" ng-model='designation' placeholder="{{'e4eCompanyDesignation' | translate }}" required>
-							    	<span class="glyphicon glyphicon-ok form-control-feedback" ng-show="companyRegisterForm.designation.$dirty && companyRegisterForm.designation.$valid"></span>
-							    	<span class="glyphicon glyphicon-remove form-control-feedback" ng-show="companyRegisterForm.designation.$dirty && companyRegisterForm.designation.$invalid"></span>
-							    </div>
-
-							    <div class="has-feedback col-xs-6" ng-class="{'has-success':companyRegisterForm.officalContactNumber.$dirty && companyRegisterForm.officalContactNumber.$valid, 'has-error': companyRegisterForm.officalContactNumber.$dirty && companyRegisterForm.officalContactNumber.$invalid}">
-						    		<input type="text" class="form-control"name="officalContactNumber" ng-model='officalContactNumber' placeholder="{{'e4eCompanyOfficalContactNumber' | translate }}" required>
-							    	<span class="glyphicon glyphicon-ok form-control-feedback" ng-show="companyRegisterForm.officalContactNumber.$dirty && companyRegisterForm.officalContactNumber.$valid"></span>
-							    	<span class="glyphicon glyphicon-remove form-control-feedback" ng-show="companyRegisterForm.officalContactNumber.$dirty && companyRegisterForm.officalContactNumber.$invalid"></span>
-							    </div>
-
-							</div>
-
-							<div class="row form-group">
-
-								<div class="has-feedback col-xs-6" ng-class="{'has-success':companyRegisterForm.holdingCompany.$dirty && companyRegisterForm.holdingCompany.$valid, 'has-error': companyRegisterForm.holdingCompany.$dirty && companyRegisterForm.holdingCompany.$invalid}">
-						    		<input type="text" class="form-control"name="holdingCompany" ng-model='holdingCompany' placeholder="{{'e4eCompanyHoldingCompany' | translate }}" required>
-							    	<span class="glyphicon glyphicon-ok form-control-feedback" ng-show="companyRegisterForm.holdingCompany.$dirty && companyRegisterForm.holdingCompany.$valid"></span>
-							    	<span class="glyphicon glyphicon-remove form-control-feedback" ng-show="companyRegisterForm.holdingCompany.$dirty && companyRegisterForm.holdingCompany.$invalid"></span>
-							    </div>
-
-							    <div class="has-feedback col-xs-6" ng-class="{'has-success':companyRegisterForm.division.$dirty && companyRegisterForm.division.$valid, 'has-error': companyRegisterForm.division.$dirty && companyRegisterForm.division.$invalid}">
-						    		<input type="text" class="form-control"name="division" ng-model='division' placeholder="{{'e4eCompanyDivision' | translate }}" required>
-							    	<span class="glyphicon glyphicon-ok form-control-feedback" ng-show="companyRegisterForm.division.$dirty && companyRegisterForm.division.$valid"></span>
-							    	<span class="glyphicon glyphicon-remove form-control-feedback" ng-show="companyRegisterForm.division.$dirty && companyRegisterForm.division.$invalid"></span>
-							    </div>
-
-							</div>
-
-							<div class="row form-group">
-								<div class="col-xs-6" style="padding:7px 0">&nbsp;</div>
-							</div>
-
-							<div class="row form-group">
-								<div class="has-feedback col-xs-6" ng-class="{'has-success':companyRegisterForm.mobileNumber.$dirty && companyRegisterForm.mobileNumber.$valid, 'has-error': companyRegisterForm.mobileNumber.$dirty && companyRegisterForm.mobileNumber.$invalid}">
-									<label for="mobileNumber" class="control-label">{{'e4eCompanyMobileNumber' | translate }}</label>
-								</div>
-
-								<div class="has-feedback col-xs-6" ng-class="{'has-success':companyRegisterForm.companyEmail.$dirty && companyRegisterForm.companyEmail.$valid, 'has-error': (companyRegisterForm.companyEmail.$dirty && companyRegisterForm.companyEmail.$invalid)||e4eCompanyEmailError}">
-									<label for="companyEmail" class="control-label">{{'e4eCompanyEmail' | translate }}</label>
-									<label for="companyEmail" class="control-label" ng-class="e4eCompanyEmailError">{{'e4eCompanyEmailError' | translate }}</label>
-								</div>
-								<div class="has-feedback col-xs-6" ng-class="{'has-success':companyRegisterForm.mobileNumber.$dirty && companyRegisterForm.mobileNumber.$valid, 'has-error': companyRegisterForm.mobileNumber.$dirty && companyRegisterForm.mobileNumber.$invalid}">
-						    		<input type="text" class="form-control"name="mobileNumber" ng-model='mobileNumber' required>
-							    	<span class="glyphicon glyphicon-ok form-control-feedback" ng-show="companyRegisterForm.mobileNumber.$dirty && companyRegisterForm.mobileNumber.$valid"></span>
-							    	<span class="glyphicon glyphicon-remove form-control-feedback" ng-show="companyRegisterForm.mobileNumber.$dirty && companyRegisterForm.mobileNumber.$invalid"></span>
-							    </div>
-
-								<div class="has-feedback col-xs-6" ng-class="{'has-success':companyRegisterForm.companyEmail.$dirty && companyRegisterForm.companyEmail.$valid, 'has-error': companyRegisterForm.companyEmail.$dirty && companyRegisterForm.companyEmail.$invalid}">
-						    		<input type="email" class="form-control"name="companyEmail" ng-model='companyEmail' required>
-							    	<span class="glyphicon glyphicon-ok form-control-feedback" ng-show="companyRegisterForm.companyEmail.$dirty && companyRegisterForm.companyEmail.$valid"></span>
-							    	<span class="glyphicon glyphicon-remove form-control-feedback" ng-show="companyRegisterForm.companyEmail.$dirty && companyRegisterForm.companyEmail.$invalid"></span>
-							    </div>
-
-							</div>
-
-							<div class="row form-group">
-								<div class="col-xs-6 col-xs-offset-6">
-									<button class="btn btn-danger" ng-click='submitCompanyRegister()' ng-disabled='companyRegisterForm.$invalid'>{{'e4eIndexJoin' | translate }}</button>
-								</div>
-							</div>
-
-						</form>
-					</tab>
-				</tabset>
+				</form>
 
 			</div>
 			<div id="footer">

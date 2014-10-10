@@ -65,8 +65,6 @@
             }
             else $timeout(function () {$scope.isGradOpened=true;});
 
-            
-
         };
 
         $scope.submitCompanyRegister = function(){
@@ -80,6 +78,7 @@
                 mobileNumber:$scope.mobileNumber,
                 email:$scope.companyEmail
             }
+            console.log(postData);
             $http({
                 method:'POST',
                 url:'/e4e/register/company',
@@ -119,8 +118,22 @@
             });
         }
 
+        $scope.studentRegisterShow = true
+
+        $scope.clickItem = function(item){
+            $scope.studentRegisterShow = false;
+            $scope.companyRegisterShow = false;
+
+            if(item == "student"){
+                $scope.studentRegisterShow = true;
+            }else{
+                $scope.companyRegisterShow = true;
+            }
+        }
+
 
     }]);
+
 
     registerapp.controller('registerSuccessController',['$scope','$translate','$rootScope','$http','$window','$locale','$timeout',function($scope,$translate,$rootScope,$http,$window,$locale,$timeout){
         function GetRequest() {
