@@ -154,6 +154,7 @@ exports.registerE4Estudent = function(req, res, next){
 
     var email = req.body.email;
     var password = randomString(6);
+    var oldPassword = password;
     password = utility.hashPassword(password);
 
     var user = {
@@ -182,7 +183,7 @@ exports.registerE4Estudent = function(req, res, next){
         return userModel.register(user)
         .then(function(result){
             if(result){
-                return res.send({message: 'Register success',password:password});
+                return res.send({message: 'Register success',password:oldPassword});
 
                 // return utility.sendActivateEmail(email, activateToken)
                 // .then(function(sendEmailResult){
@@ -216,6 +217,7 @@ exports.registerE4Ecompany = function(req, res, next){
 
     var email = req.body.email;
     var password = randomString(6);
+    var oldPassword = password;
     password = utility.hashPassword(password);
 
     var user = {
@@ -243,7 +245,7 @@ exports.registerE4Ecompany = function(req, res, next){
         return userModel.register(user)
         .then(function(result){
             if(result){
-                return res.send({message: 'Register success',password:password});
+                return res.send({message: 'Register success',password:oldPassword});
 
 
                 // return utility.sendActivateEmail(email, activateToken)
