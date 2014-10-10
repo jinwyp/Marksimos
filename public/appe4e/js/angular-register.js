@@ -86,7 +86,7 @@
                 data:postData
             }).then(function(data){
                 if(data.data.message=="Register success"){
-                    $window.location.href = "/e4e/company-success" ;
+                    $window.location.href = "/e4e/company-success?password="+data.data.password ;
                 }else{
                     $scope.companyEmailError=true;
                 }
@@ -112,7 +112,7 @@
                 data:postData
             }).then(function(data){
                 if(data.data.message=="Register success"){
-                    $window.location.href = "/e4e/student-success" ;
+                    $window.location.href = "/e4e/student-success?password="+data.data.password ;
                 }else{
                     $scope.studentEmailError=true;
                 }
@@ -120,6 +120,23 @@
         }
 
 
+    }]);
+
+    registerapp.controller('registerSuccessController',['$scope','$translate','$rootScope','$http','$window','$locale','$timeout',function($scope,$translate,$rootScope,$http,$window,$locale,$timeout){
+        function GetRequest() {
+           var url = document.location.search; //获取url中"?"符后的字串
+           var theRequest = new Object();
+           if (url.indexOf("?") != -1) {
+              var str = url.substr(1);
+              var strs = str.split("&");
+              for(var i = 0; i < strs.length; i ++) {
+                 theRequest[strs[i].split("=")[0]]=unescape(strs[i].split("=")[1]);
+              }
+           }
+           return theRequest;
+        }
+        var Request = GetRequest();
+        $scope.password=Request['password'];
     }]);
 
 

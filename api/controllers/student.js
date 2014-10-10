@@ -135,6 +135,51 @@ exports.updateStudent = function(req, res, next){
     .done();
 };
 
+exports.resetPassword = function(req, res, next){
+    var validateResult = utility.validateUser(req);
+
+    if(validateResult){
+        return res.send(400, {message: validateResult});
+    }
+
+    var student = {};
+    var password = 'hcd1234';
+
+    student.password = utility.hashPassword(password);
+
+    var student_id = req.body.student_id;
+
+    userModel.findOne({
+        _id: student_id
+    })
+    .then(function(dbStudent){
+        if(!dbStudent){
+            throw {httpStatus: 400, message: "student doesn't exist."}
+        }
+
+        return userModel.update({_id: student_id}, student);
+    })
+    .then(function(numAffected){
+        if(numAffected !== 1){
+            if(numAffected > 1){
+                throw {httpStatus:400, message: "more than one row are updated."};
+            }else{
+                throw {httpStatus:400, message: "no student is updated." + student_id};
+            }
+        }
+        res.send({message: "update student success."});
+    })
+    .fail(function(err){
+        logger.error(err);
+        if(err.httpStatus){
+            return res.send(err.httpStatus, {message: err.message});
+        }
+        res.send(500, {message: "failed to update student."});
+    })
+    .done();
+};
+
+
 exports.searchStudent = function(req, res, next){
     var name = req.query.username;
     var email = req.query.email;

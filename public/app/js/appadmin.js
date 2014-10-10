@@ -443,10 +443,25 @@ marksimosapp.controller('adminHomeController', ['$scope', '$http', '$notificatio
             });
         }
     };
+    /********************  Student 重置密码为hcd1234  ********************/
+    $scope.resetPassword =  function(id){
+        var postData = {
+            student_id:id
+        }
+        $http.post('/marksimos/api/admin/resetPassword', postData).success(function(data, status, headers, config){
+            $scope.getStudentsInit();
+            $scope.css.leftmenu = 41;
+            $notification.success('Save success', 'Reset Student Password success');
+
+        }).error(function(data, status, headers, config){
+            $notification.error('Save failed', data.message);
+        });
+    }
+
+
     /********************  创建新的 Student  ********************/
     $scope.createNewStudent = function(form){
         if(form.$valid){
-            console.log($scope.data.newStudent);
             $http.post('/marksimos/api/admin/students', $scope.data.newStudent).success(function(data, status, headers, config){
 
                 $scope.getStudentsInit();
@@ -455,7 +470,6 @@ marksimosapp.controller('adminHomeController', ['$scope', '$http', '$notificatio
                 $notification.success('Save success', 'Create Student success');
 
             }).error(function(data, status, headers, config){
-                console.log(data);
                 $notification.error('Save failed', data.message);
             });
         }

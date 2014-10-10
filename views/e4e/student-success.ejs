@@ -1,7 +1,7 @@
 <% include ./include/registerheader.html %>
 <body ng-app='e4eregister'>
 
-	<div id="header" class="transparent-header"  ng-controller="registerHeaderController">
+	<div id="header" class="transparent-header" ng-controller="registerHeaderController">
 		<div class="wrap">
 			<div class="e4e-logo">
 				<a href="#">
@@ -34,7 +34,7 @@
 		</div>
 	</div>
 
-	<div id="student-register">
+	<div id="student-register" ng-controller="registerSuccessController">
 		<div class="section" id="section0">
 			<div class="absolute-item section-register-clouds move-down"></div>
 			<div>
@@ -49,10 +49,10 @@
 				<div class="clear"></div>
 				<div>
 					<p class="absolute-item congratulations-end fade-in">
-						<em class="f-bold f-size-20">{{'e4eSuccessPassword' | translate}}</em>
+						<em class="f-bold f-size-20">{{'e4eSuccessPassword' | translate}} : {{password}}</em>
 						<br>
-						<em class="f-open f-size-16">{{'e4eSuccessProceed' | translate}}</em><em class="f-bold"> ww.hcdlearning.com/marksimosgame candidateselection</em><br>
-						<em class="f-open f-size-16">{{'e4eSuccessLogin' | translate}}</em>
+						<em class="f-open f-size-16">{{'e4eSuccessProceed' | translate}}</em><em class="f-bold"> ww.hcdlearning.com/marksimos</em><br>
+						<em class="f-open f-size-16">{{'e4eSuccessResetPassword' | translate}}</em>
 					</p>
 				</div>
 			</div>

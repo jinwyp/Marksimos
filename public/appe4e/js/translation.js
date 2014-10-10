@@ -101,7 +101,8 @@ app.config(['$translateProvider', function($translateProvider){
         "e4eSuccessCon":"Congratulations",
         "e4eSuccessConInfo":"You have ssccessfully registered",
         "e4eSuccessConInfoLast":"with HCD Learning",
-        "e4eSuccessPassword":"Password has been sent to your email",
+        "e4eSuccessPassword":"Password is",
+        "e4eSuccessResetPassword":"If you forget the password,please ask the admin to reset password.",
         "e4eSuccessProceed":"Please proceed to",
         "e4eSuccessUpdate":"and update the jobprofiles and select winningstudents for your company",
         "e4eSuccessLogin":"to login and participate the MarkSimos game"
@@ -211,7 +212,8 @@ app.config(['$translateProvider', function($translateProvider){
         "e4eSuccessCon":"恭喜你",
         "e4eSuccessConInfo":"你已经成功注册",
         "e4eSuccessConInfoLast":"到 HCD Learning",
-        "e4eSuccessPassword":"Password has been sent to your email",
+        "e4eSuccessPassword":"Password is",
+        "e4eSuccessResetPassword":"If you forget the password,please ask the admin to reset password.",
         "e4eSuccessProceed":"Please proceed to",
         "e4eSuccessUpdate":"and update the jobprofiles and select winningstudents for your company",
         "e4eSuccessLogin":"to login and participate the MarkSimos game"
