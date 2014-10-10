@@ -98,7 +98,7 @@ function generateSKUReport(companyId, allResults, period){
                     onePeriodReport.marketSalesValue = SKU.u_MarketSalesValue[consts.ConsumerSegmentsMaxTotal-1];
                     onePeriodReport.consumerProcePromotion = -SKU.u_PricePromotionsCost;
                     onePeriodReport.marketNetSalesValue = SKU.u_MarketNetSalesValue[consts.ConsumerSegmentsMaxTotal-1];
-                    onePeriodReport.additionalRetailerMargin = -SKU.u_AdditionalTradeMargin * 100;
+                    onePeriodReport.additionalRetailerMargin = SKU.u_AdditionalTradeMargin * 100;
                     onePeriodReport.wholesalersBonusRate = SKU.u_WholesalesBonusRate * 100;
                     onePeriodReport.minimalPurchaseQualifyingForBonusStdPack = SKU.u_ps_WholesalesBonusMinVolume * consts.ActualSize[SKU.u_PackSize];
                     onePeriodReport.productionCost = SKU.u_ProductionCost;

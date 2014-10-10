@@ -417,7 +417,7 @@ exports.inventoryReport = function(allResults){
 
         //FMCG can keep stocks in 3 periods
         for(var i=2; i>=0; i--){
-            var totalStock = SKU.u_ps_FactoryStocks[i].s_ps_Volume + SKUResult.u_ps_WholesaleStocks[consts.StocksMaxTotal].s_ps_Volume + SKUResult.u_ps_RetailStocks[consts.StocksMaxTotal].s_ps_Volume;
+            var totalStock = SKU.u_ps_FactoryStocks[i].s_ps_Volume + SKU.u_ps_WholesaleStocks[i].s_ps_Volume + SKU.u_ps_RetailStocks[i].s_ps_Volume;
             totalStock = totalStock * consts.ActualSize[SKU.u_PackSize];
             result.push({
             // 'FMCG': [

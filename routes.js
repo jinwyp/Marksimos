@@ -32,6 +32,7 @@ module.exports = function(app){
         res.render('e4e/student-success.ejs',{title:'HCD E4E'});
     });
 
+
     /**********   Routes for MarkSimos User/Student   **********/
 
     app.get('/marksimos', authMiddleware.needLogin, function(req, res, next){
