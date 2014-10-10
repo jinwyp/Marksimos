@@ -10,50 +10,51 @@ $(function(){
 			scrollOverflow: true,
 			loopBottom:true,
 			keyboardScrolling:false,
-			scrollingSpeed: 500
+			scrollingSpeed: 500,
+			resize:false
 		}); 
 	}
 
-	if($("#company-register").length!=0){
-		$("#company-register").fullpage({
-			navigation: true,
-			navigationPosition: 'left',
-			anchors: ['step1', 'step2', 'step3'],
-			sectionsColor: ['#fff', '#fff', '#fff'],
-			navigationColor:'#B3B3B3',
-			navigationTooltips:['','',''],
-			/*navigationTooltipsEN:['Company Details','Communication Details','Job Profiles'],
-			navigationTooltipsCN:['公司基本信息','通信细节','工作信息'],*/
-			css3: true,
-			scrollOverflow: true,
-			loopBottom:true,
-			keyboardScrolling:false,
-			afterResize:function(){
-				$('#fp-nav').css('left',($('.e4e-logo').offset().left+15)+'px');
-			}
-		});
-	}
+	// if($("#company-register").length!=0){
+	// 	$("#company-register").fullpage({
+	// 		navigation: true,
+	// 		navigationPosition: 'left',
+	// 		anchors: ['step1', 'step2', 'step3'],
+	// 		sectionsColor: ['#fff', '#fff', '#fff'],
+	// 		navigationColor:'#B3B3B3',
+	// 		navigationTooltips:['','',''],
+	// 		/*navigationTooltipsEN:['Company Details','Communication Details','Job Profiles'],
+	// 		navigationTooltipsCN:['公司基本信息','通信细节','工作信息'],*/
+	// 		css3: true,
+	// 		scrollOverflow: true,
+	// 		loopBottom:true,
+	// 		keyboardScrolling:false,
+	// 		afterResize:function(){
+	// 			$('#fp-nav').css('left',($('.e4e-logo').offset().left+15)+'px');
+	// 		}
+	// 	});
+	// }
 
 
-	if($("#student-register").length!=0){
-		$("#student-register").fullpage({
-			navigation: true,
-			navigationPosition: 'left',
-			anchors: ['step1', 'step2'],
-			sectionsColor: ['#fff', '#fff'],
-			navigationColor:'#B3B3B3',
-			navigationTooltips:['',''],
-			/*navigationTooltipsEN:['Basic Details','Profile Details'],
-			navigationTooltipsCN:['基本信息','个人资料'],*/
-			css3: true,
-			scrollOverflow: true,
-			loopBottom:true,
-			keyboardScrolling:false,
-			afterResize:function(){
-				$('#fp-nav').css('left',($('.e4e-logo').offset().left+15)+'px');
-			}
-		});
-	}
+	// if($("#student-register").length!=0){
+	// 	$("#student-register").fullpage({
+	// 		navigation: true,
+	// 		navigationPosition: 'left',
+	// 		anchors: ['step1', 'step2'],
+	// 		sectionsColor: ['#fff', '#fff'],
+	// 		navigationColor:'#B3B3B3',
+	// 		navigationTooltips:['',''],
+	// 		/*navigationTooltipsEN:['Basic Details','Profile Details'],
+	// 		navigationTooltipsCN:['基本信息','个人资料'],*/
+	// 		css3: true,
+	// 		scrollOverflow: true,
+	// 		loopBottom:true,
+	// 		keyboardScrolling:false,
+	// 		afterResize:function(){
+	// 			$('#fp-nav').css('left',($('.e4e-logo').offset().left+15)+'px');
+	// 		}
+	// 	});
+	// }
 
 	if($("#success").length!=0){
 		$("#success").fullpage({
