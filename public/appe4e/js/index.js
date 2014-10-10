@@ -10,7 +10,8 @@ $(function(){
 			scrollOverflow: true,
 			loopBottom:true,
 			keyboardScrolling:false,
-			scrollingSpeed: 500
+			scrollingSpeed: 500,
+			resize:false
 		}); 
 	}
 
@@ -28,6 +29,8 @@ $(function(){
 			scrollOverflow: true,
 			loopBottom:true,
 			keyboardScrolling:false,
+			scrollingSpeed: 500,
+			resize:false,
 			afterResize:function(){
 				$('#fp-nav').css('left',($('.e4e-logo').offset().left+15)+'px');
 			}
@@ -49,6 +52,8 @@ $(function(){
 			scrollOverflow: true,
 			loopBottom:true,
 			keyboardScrolling:false,
+			scrollingSpeed: 500,
+			resize:false,
 			afterResize:function(){
 				$('#fp-nav').css('left',($('.e4e-logo').offset().left+15)+'px');
 			}

@@ -44,16 +44,14 @@
 
 
         $scope.changeLanguage = function (langKey) {
-            angular.copy(locales[langKey], $locale);
             if($scope.dateOfGraduation!=undefined){
                 $scope.dateOfGraduation=new Date($scope.dateOfGraduation.getTime());
             }
+            if($scope.yearOfBirth!=undefined){
+                $scope.yearOfBirth=new Date($scope.yearOfBirth.getTime());
+            }
             $translate.use(langKey);
-            //angular.copy(locales[langKey], $locale);
-        };
-
-        $scope.today = function() {
-            $scope.yearOfBirth = new Date();
+            angular.copy(locales[langKey], $locale);
         };
 
         $scope.open = function(type) {
@@ -64,8 +62,6 @@
                 });
             }
             else $timeout(function () {$scope.isGradOpened=true;});
-
-            
 
         };
 
@@ -119,8 +115,22 @@
             });
         }
 
+        $scope.studentRegisterShow = true
+
+        $scope.clickItem = function(item){
+            $scope.studentRegisterShow = false;
+            $scope.companyRegisterShow = false;
+
+            if(item == "student"){
+                $scope.studentRegisterShow = true;
+            }else{
+                $scope.companyRegisterShow = true;
+            }
+        }
+
 
     }]);
+
 
     registerapp.controller('registerSuccessController',['$scope','$translate','$rootScope','$http','$window','$locale','$timeout',function($scope,$translate,$rootScope,$http,$window,$locale,$timeout){
         function GetRequest() {

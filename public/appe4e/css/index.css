@@ -489,6 +489,7 @@
 .login-box{
 	left:40%;
 	width: 50%;
+	top:20%;
 	position: absolute;
 	z-index: 999;
 }
