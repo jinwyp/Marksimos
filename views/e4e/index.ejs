@@ -142,12 +142,12 @@
 					<li ng-class="{'active':studentRegisterShow}"><a href="" ng-click='clickItem("student")'>{{'e4eStudentRegisterTitle' | translate }}</a></li>
 					<li ng-class="{'active':companyRegisterShow}"><a href="" ng-click='clickItem("compamy")'>{{'e4eCompanyRegisterTitle' | translate }}</a></li>
 				</ul>
+				<div class="bs-callout bs-callout-info">
+					<h4>No default class</h4>
+					<p>Alerts don't have default classes, only base and modifier classes. A default gray alert doesn't make too much sense, so you're required to specify a type via contextual class. Choose from success, info, warning, or danger.</p>
+				</div>
 
 				<form name="studentRegisterForm" class="form-horizontal" ng-show='studentRegisterShow'>
-
-					<div class="row form-group">
-						<div class="col-xs-6" style="padding:7px 0">&nbsp;</div>
-					</div>
 
 					<div class="row form-group">
 						<div class="has-feedback col-xs-6" ng-class="{'has-success':studentRegisterForm.userName.$dirty && studentRegisterForm.userName.$valid, 'has-error': studentRegisterForm.userName.$dirty && studentRegisterForm.userName.$invalid}">
@@ -243,9 +243,6 @@
 					</div>
 				</form>
 				<form name="companyRegisterForm" class="form-horizontal" ng-show='companyRegisterShow'>
-					<div class="row form-group">
-						<div class="col-xs-6" style="padding:7px 0">&nbsp;</div>
-					</div>
 
 					<div class="row form-group">
 
