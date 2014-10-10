@@ -44,16 +44,14 @@
 
 
         $scope.changeLanguage = function (langKey) {
-            angular.copy(locales[langKey], $locale);
             if($scope.dateOfGraduation!=undefined){
                 $scope.dateOfGraduation=new Date($scope.dateOfGraduation.getTime());
             }
+            if($scope.yearOfBirth!=undefined){
+                $scope.yearOfBirth=new Date($scope.yearOfBirth.getTime());
+            }
             $translate.use(langKey);
-            //angular.copy(locales[langKey], $locale);
-        };
-
-        $scope.today = function() {
-            $scope.yearOfBirth = new Date();
+            angular.copy(locales[langKey], $locale);
         };
 
         $scope.open = function(type) {
@@ -64,8 +62,6 @@
                 });
             }
             else $timeout(function () {$scope.isGradOpened=true;});
-
-            
 
         };
 
@@ -86,7 +82,7 @@
                 data:postData
             }).then(function(data){
                 if(data.data.message=="Register success"){
-                    $window.location.href = "/e4e/company-success" ;
+                    $window.location.href = "/e4e/company-success?password="+data.data.password ;
                 }else{
                     $scope.companyEmailError=true;
                 }
@@ -112,14 +108,45 @@
                 data:postData
             }).then(function(data){
                 if(data.data.message=="Register success"){
-                    $window.location.href = "/e4e/student-success" ;
+                    $window.location.href = "/e4e/student-success?password="+data.data.password ;
                 }else{
                     $scope.studentEmailError=true;
                 }
             });
         }
 
+        $scope.studentRegisterShow = true
 
+        $scope.clickItem = function(item){
+            $scope.studentRegisterShow = false;
+            $scope.companyRegisterShow = false;
+
+            if(item == "student"){
+                $scope.studentRegisterShow = true;
+            }else{
+                $scope.companyRegisterShow = true;
+            }
+        }
+
+
+    }]);
+
+
+    registerapp.controller('registerSuccessController',['$scope','$translate','$rootScope','$http','$window','$locale','$timeout',function($scope,$translate,$rootScope,$http,$window,$locale,$timeout){
+        function GetRequest() {
+           var url = document.location.search; //获取url中"?"符后的字串
+           var theRequest = new Object();
+           if (url.indexOf("?") != -1) {
+              var str = url.substr(1);
+              var strs = str.split("&");
+              for(var i = 0; i < strs.length; i ++) {
+                 theRequest[strs[i].split("=")[0]]=unescape(strs[i].split("=")[1]);
+              }
+           }
+           return theRequest;
+        }
+        var Request = GetRequest();
+        $scope.password=Request['password'];
     }]);
 
 

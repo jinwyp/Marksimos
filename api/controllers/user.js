@@ -132,6 +132,17 @@ exports.register = function(req, res, next){
     .done();
 }
 
+function randomString(len) {
+　　len = len || 32;
+　　var $chars = 'ABCDEFGHJKMNPQRSTWXYZabcdefhijkmnprstwxyz2345678';    /****默认去掉了容易混淆的字符oOLl,9gq,Vv,Uu,I1****/
+　　var maxPos = $chars.length;
+　　var pwd = '';
+　　for (i = 0; i < len; i++) {
+　　　　pwd += $chars.charAt(Math.floor(Math.random() * maxPos));
+　　}
+　　return pwd;
+}
+
 //registerE4Estudent
 exports.registerE4Estudent = function(req, res, next){
     req.checkBody('email', 'Invalid email').notEmpty().isEmail();
@@ -142,7 +153,8 @@ exports.registerE4Estudent = function(req, res, next){
     }
 
     var email = req.body.email;
-    var password = "hcd123456";
+    var password = randomString(6);
+    var oldPassword = password;
     password = utility.hashPassword(password);
 
     var user = {
@@ -171,14 +183,16 @@ exports.registerE4Estudent = function(req, res, next){
         return userModel.register(user)
         .then(function(result){
             if(result){
-                return utility.sendActivateEmail(email, activateToken)
-                .then(function(sendEmailResult){
-                    if(sendEmailResult){
-                        return res.send({message: 'Register success'});
-                    }else{
-                        throw new Error('Send activate email failed.');
-                    }
-                })
+                return res.send({message: 'Register success',password:oldPassword});
+
+                // return utility.sendActivateEmail(email, activateToken)
+                // .then(function(sendEmailResult){
+                //     if(sendEmailResult){
+                //         return res.send({message: 'Register success'});
+                //     }else{
+                //         throw new Error('Send activate email failed.');
+                //     }
+                // })
             }else{
                 throw new Error('Save user to db failed.');
             }
@@ -202,7 +216,8 @@ exports.registerE4Ecompany = function(req, res, next){
     }
 
     var email = req.body.email;
-    var password = "hcd123456";
+    var password = randomString(6);
+    var oldPassword = password;
     password = utility.hashPassword(password);
 
     var user = {
@@ -230,14 +245,17 @@ exports.registerE4Ecompany = function(req, res, next){
         return userModel.register(user)
         .then(function(result){
             if(result){
-                return utility.sendActivateEmail(email, activateToken)
-                .then(function(sendEmailResult){
-                    if(sendEmailResult){
-                        return res.send({message: 'Register success'});
-                    }else{
-                        throw new Error('Send activate email failed.');
-                    }
-                })
+                return res.send({message: 'Register success',password:oldPassword});
+
+
+                // return utility.sendActivateEmail(email, activateToken)
+                // .then(function(sendEmailResult){
+                //     if(sendEmailResult){
+                //         return res.send({message: 'Register success'});
+                //     }else{
+                //         throw new Error('Send activate email failed.');
+                //     }
+                // })
             }else{
                 throw new Error('Save user to db failed.');
             }

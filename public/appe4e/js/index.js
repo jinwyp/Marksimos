@@ -7,10 +7,11 @@ $(function(){
 			sectionsColor: ['#fff', '#FF441C', '#fff'],
 			navigationColor:'#B3B3B3',
 			css3: true,
-			scrollingSpeed: 1700,
-			resize : false,
 			scrollOverflow: true,
-			loopBottom:true
+			loopBottom:true,
+			keyboardScrolling:false,
+			scrollingSpeed: 500,
+			resize:false
 		}); 
 	}
 
@@ -25,10 +26,11 @@ $(function(){
 			/*navigationTooltipsEN:['Company Details','Communication Details','Job Profiles'],
 			navigationTooltipsCN:['公司基本信息','通信细节','工作信息'],*/
 			css3: true,
-			scrollingSpeed: 1700,
-			resize : false,
 			scrollOverflow: true,
 			loopBottom:true,
+			keyboardScrolling:false,
+			scrollingSpeed: 500,
+			resize:false,
 			afterResize:function(){
 				$('#fp-nav').css('left',($('.e4e-logo').offset().left+15)+'px');
 			}
@@ -47,10 +49,11 @@ $(function(){
 			/*navigationTooltipsEN:['Basic Details','Profile Details'],
 			navigationTooltipsCN:['基本信息','个人资料'],*/
 			css3: true,
-			scrollingSpeed: 1700,
-			resize : false,
 			scrollOverflow: true,
 			loopBottom:true,
+			keyboardScrolling:false,
+			scrollingSpeed: 500,
+			resize:false,
 			afterResize:function(){
 				$('#fp-nav').css('left',($('.e4e-logo').offset().left+15)+'px');
 			}
@@ -62,11 +65,10 @@ $(function(){
 			sectionsColor: ['#fff'],
 			navigationColor:'#B3B3B3',
 			css3: true,
-			scrollingSpeed: 1700,
 			easing: 'easeOutBack',
-			resize : false,
 			scrollOverflow: true,
-			loopBottom:true
+			loopBottom:true,
+			keyboardScrolling:false
 		});
 	}
 
