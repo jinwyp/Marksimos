@@ -40,6 +40,13 @@ $color_main_body_company_3_bg: #0087f0;
 $color_main_body_company_4_bg: #8781bd;
 $color_main_body_company_5_bg: #f26c4f;
 $color_main_body_company_6_bg: #bd8cbf;
+$color_main_body_company_a_bg_old: #004CE5;
+$color_main_body_company_b_bg_old: #BB0000;
+$color_main_body_company_c_bg_old: #FFBC01;
+$color_main_body_company_d_bg_old: #339933;
+$color_main_body_company_e_bg_old: #990099;
+$color_main_body_company_f_bg_old: #FF5200;
+
 $color_main_body_brand: #2f4e9b;
 $color_main_body_product: #464646;
 $color_main_body_product_target: #6f6f6f;
@@ -1912,22 +1919,22 @@ body{
                 display:-moz-inline-box; display:inline-block;
             }
             .company_1 {
-                background-color: $color_main_body_company_1_bg;
+                background-color: $color_main_body_company_a_bg_old;
             }
             .company_2 {
-                background-color: $color_main_body_company_2_bg;
+                background-color: $color_main_body_company_b_bg_old;
             }
             .company_3 {
-                background-color: $color_main_body_company_3_bg;
+                background-color: $color_main_body_company_c_bg_old;
             }
             .company_4 {
-                background-color: $color_main_body_company_4_bg;
+                background-color: $color_main_body_company_d_bg_old;
             }
             .company_5 {
-                background-color: $color_main_body_company_5_bg;
+                background-color: $color_main_body_company_e_bg_old;
             }
             .company_6 {
-                background-color: $color_main_body_company_6_bg;
+                background-color: $color_main_body_company_f_bg_old;
             }
 
             .table > thead > tr > th,
