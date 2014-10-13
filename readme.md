@@ -84,6 +84,20 @@ Or, if you don't want/need launchctl, you can just run:
 
 ```
 
+### 关闭Mongo
+* 使用mongo shell 关闭 命令如下
+use admin
+db.shutdownServer();
+
+* 使用kill -2 PID 关闭, Mac下查看mongo PID : ps aux | grep mongod
+
+
+
+[From 官方文档](http://docs.mongodb.org/manual/tutorial/manage-mongodb-processes/)
+
+
+
+
 
 ## 后端Delphi CGI环境配置
 

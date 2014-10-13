@@ -53,13 +53,32 @@ gulp.task('compass', function() {
 
 // 启动 Mongo DB
 gulp.task('mongo', function() {
-    childProcess.exec('mongod --config /usr/local/etc/mongod.conf', function(error, stdout, stderr){
+
+//    childProcess.exec('mongo --eval "db.getSiblingDB("admin").shutdownServer()"', function(error, stdout, stderr){
+//        console.log('stdout: ' + stdout);
+//        console.log('stderr: ' + stderr);
+//        if (error !== null) {
+//            console.log('exec error: ' + error);
+//        }
+//    });
+
+    childProcess.exec('mongo admin --eval "db.shutdownServer()"', function(error, stdout, stderr){
         console.log('stdout: ' + stdout);
         console.log('stderr: ' + stderr);
         if (error !== null) {
             console.log('exec error: ' + error);
         }
-    })
+
+        childProcess.exec('mongod --config /usr/local/etc/mongod.conf', function(error, stdout, stderr){
+            console.log('stdout: ' + stdout);
+            console.log('stderr: ' + stderr);
+            if (error !== null) {
+                console.log('exec error: ' + error);
+            }
+        })
+    });
+
+
 });
 
 

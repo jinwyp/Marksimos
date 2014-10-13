@@ -1,5 +1,6 @@
 @import "compass";
-@import "images/*.png";
+@import "icon/*.png";
+
 
 $font_main_header: 'Verdana', 'Geneva, sans-serif';
 $font_main_header2: 'Helvetica', 'Arial, sans-serif';
@@ -209,7 +210,7 @@ $color_main_body_user_manual_table_2n:#f8f8f8;
 
 @mixin icon_user_pdf {
     color: $color_login_title;
-    background-image: url(../images/file-pdf.png);
+    background-image: url(../images/filepdf.png);
     background-repeat: no-repeat;
     background-position: 1px 0px;
     padding-left: 37px;
