@@ -53,8 +53,12 @@ gulp.task('compass', function() {
 
 // 启动 Mongo DB
 gulp.task('mongo', function() {
-    childProcess.exec('start mongod --config /usr/local/etc/mongod.conf', function(){
-
+    childProcess.exec('mongod --config /usr/local/etc/mongod.conf', function(error, stdout, stderr){
+        console.log('stdout: ' + stdout);
+        console.log('stderr: ' + stderr);
+        if (error !== null) {
+            console.log('exec error: ' + error);
+        }
     })
 });
 
@@ -119,5 +123,5 @@ gulp.task('mocha', function () {
 // The default task (called when you run `gulp` from cli)
 gulp.task('default', ['nodemon', 'watch']);
 
-gulp.task('jin', ['nodemonjin', 'watch']);
+gulp.task('jin', ['mongo', 'nodemonjin', 'watch']);
 
