@@ -1060,9 +1060,9 @@ app.config(['$translateProvider', function($translateProvider){
 
 
         //Labels for Company Status Report Tab Menu
-        "ReportTabLabelSKU"    : "产品数据",
-        "ReportTabLabelBrand"  : "品牌数据",
-        "ReportTabLabelGlobal" : "全局数据",
+        "ReportTabLabelSKU"    : "按单品",
+        "ReportTabLabelBrand"  : "按品牌",
+        "ReportTabLabelGlobal" : "公司",
 
         "ReportTabLabelTableChartDisplayLine" : "折线图",
         "ReportTabLabelTableChartDisplayBar" : "柱状图",
@@ -1519,7 +1519,7 @@ app.config(['$translateProvider', function($translateProvider){
         "ReportSegmentLeaderTop5ChartTitlePragmatic"      : "6. 实用型 (%)",
 		
 		//Labels for Perception Map
-        "ReportPerceptionMapAxisLabelSegment"         : "消费者分布",
+        "ReportPerceptionMapAxisLabelSegment"         : "消费者细分",
         "ReportPerceptionMapAxisTitleValuePerception" : "价值感知",
         "ReportPerceptionMapAxisTitleImagePerception" : "形象感知",
         "ReportPerceptionMapHoverTooltipMarketShareValue"        : "市场份额 (销售额 %)",
@@ -1708,7 +1708,7 @@ app.config(['$translateProvider', function($translateProvider){
 		//Labels for Items on Decision Page - Future Projections Calculator
 		"DecisionPageFutureProjectionsTableTitleDATAREFERENCE"		:	"数据参考",
 
-        "DecisionPageFutureProjectionsCalculatorLabel"       : "未来预测计算器",
+        "DecisionPageFutureProjectionsCalculatorLabel"       : "预期数据计算器",
         "DecisionPageFutureProjectionsCalculatorTablePeriod" : "阶段",
 
         "DecisionPageFutureProjectionsCalculatorTable1InPackUnits"          : "按实际包装单位",
