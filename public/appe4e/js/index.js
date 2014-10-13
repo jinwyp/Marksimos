@@ -23,8 +23,6 @@ $(function(){
 			sectionsColor: ['#fff', '#fff', '#fff'],
 			navigationColor:'#B3B3B3',
 			navigationTooltips:['','',''],
-			/*navigationTooltipsEN:['Company Details','Communication Details','Job Profiles'],
-			navigationTooltipsCN:['公司基本信息','通信细节','工作信息'],*/
 			css3: true,
 			scrollOverflow: true,
 			loopBottom:true,
@@ -46,8 +44,6 @@ $(function(){
 			sectionsColor: ['#fff', '#fff'],
 			navigationColor:'#B3B3B3',
 			navigationTooltips:['',''],
-			/*navigationTooltipsEN:['Basic Details','Profile Details'],
-			navigationTooltipsCN:['基本信息','个人资料'],*/
 			css3: true,
 			scrollOverflow: true,
 			loopBottom:true,
