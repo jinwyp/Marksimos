@@ -31,6 +31,11 @@ app.config(['$translateProvider', function($translateProvider){
 
         "e4eIndexJoin":"JOIN E4E",
 
+        "e4eIndexCompanyRegistrationTitle" : "Discover the best talent",
+        "e4eIndexCompanyRegistration" : "Register to participate in our online student competition and access the best talent through HCD Learning’s corporate service",
+        "e4eIndexStudentRegistrationTitle" : "Play Marksimos. Discover your career",
+        "e4eIndexStudentRegistration" : "Register to participate in our online student competition and access HCD Learning’s student services",
+
 
         /*e4e register*/
         "e4eRegisterGetStart":"Get Start",
@@ -143,6 +148,11 @@ app.config(['$translateProvider', function($translateProvider){
         "e4eIndexAssessmentInfo":"Through the HCD Learning competition, you can assess yourself against thousands of the participants from different universities all over China",
 
         "e4eIndexJoin":"加入 E4E",
+
+        "e4eIndexCompanyRegistrationTitle" : "Discover the best talent",
+        "e4eIndexCompanyRegistration" : "Register to participate in our online student competition and access the best talent through HCD Learning’s corporate service",
+        "e4eIndexStudentRegistrationTitle" : "Play Marksimos. Discover your career",
+        "e4eIndexStudentRegistration" : "Register to participate in our online student competition and access HCD Learning’s student services",
 
         /*e4e register*/
         "e4eRegisterGetStart":"现在开始",
