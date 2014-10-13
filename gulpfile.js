@@ -3,8 +3,11 @@ var gulp = require('gulp'),
     livereload = require('gulp-livereload'),
     nodemon = require('gulp-nodemon'),
     jshint = require('gulp-jshint'),
-    compass = require('gulp-compass');
-    mocha = require('gulp-mocha');
+    compass = require('gulp-compass'),
+    mocha = require('gulp-mocha'),
+    childProcess = require('child_process');
+
+
 
 var paths = {
     app: './public/app/**',
@@ -45,6 +48,14 @@ gulp.task('compass', function() {
             comments : true
         }))
         .pipe(gulp.dest(paths.target_csspath))
+});
+
+
+// 启动 Mongo DB
+gulp.task('mongo', function() {
+    childProcess.exec('start mongod --config /usr/local/etc/mongod.conf', function(){
+
+    })
 });
 
 
