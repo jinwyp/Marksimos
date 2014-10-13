@@ -22,25 +22,27 @@ exports.addStudent = function(req, res, next){
     var facilitatorId = sessionOperation.getUserId(req);
 
     var student = {
-        name: req.body.firstname + ' ' + req.body.lastname,
-        email: req.body.email,
-        phone: req.body.phone,
-        country: req.body.country,
-        state: req.body.state,
-        city: req.body.city,
-        password: utility.hashPassword(req.body.password),
-        role: config.role.student,
-        facilitatorId: facilitatorId,
+        name          : req.body.firstname + ' ' + req.body.lastname,
+        email         : req.body.email,
+        phone         : req.body.phone,
+        country       : req.body.country,
+        state         : req.body.state,
+        city          : req.body.city,
+        password      : utility.hashPassword(req.body.password),
+        role          : config.role.student,
+        facilitatorId : facilitatorId,
 
-        pincode: req.body.pincode || '',
-        gender: req.body.gender || '',
-        occupation: req.body.occupation || '',
-        firstName: req.body.firstname,
-        lastName: req.body.lastname,
-        university: req.body.university || '',
-        organization: req.body.organization || '',
-        highestEducationalDegree: req.body.highest_educational_degree ||''
-    }
+        pincode                  : req.body.pincode || '',
+        gender                   : req.body.gender || '',
+        occupation               : req.body.occupation || '',
+        firstName                : req.body.firstname,
+        lastName                 : req.body.lastname,
+        university               : req.body.university || '',
+        organization             : req.body.organization || '',
+        highestEducationalDegree : req.body.highest_educational_degree || '',
+
+        isE4EUser : false
+    };
 
     userModel.findOne({
         email: req.body.email
@@ -205,11 +207,11 @@ exports.searchStudent = function(req, res, next){
     if(country) query.country = country;
     if(state) query.state = state;
     if(city) query.city = city;
-    if(isDisabled) query.isDisabled = isDisabled;
-    else query.isDisabled = false;
+    if(isDisabled) {
+        query.isDisabled = isDisabled;
+    }else query.isDisabled = false;
     //add for e4e
-    if(isE4EUser) query.isE4EUser = isE4EUser;
-    else query.isE4EUser = false;
+    if(isE4EUser !== '') query.isE4EUser = isE4EUser;
 
     userModel.find(query)
     .then(function(result){

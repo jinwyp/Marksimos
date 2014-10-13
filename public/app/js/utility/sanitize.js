@@ -271,12 +271,11 @@ Sanitize.Config.BASIC = {
    },
 
    protocols: {
-     'a'         : {'href': ['ftp', 'http', 'https', 'mailto',
-                                 Sanitize.RELATIVE]},
+     'a'         : {'href': ['ftp', 'http', 'https', 'mailto', Sanitize.RELATIVE]},
      'blockquote': {'cite': ['http', 'https', Sanitize.RELATIVE]},
      'q'         : {'cite': ['http', 'https', Sanitize.RELATIVE]}
    }
-}
+};
 
 Sanitize.Config.RELAXED = {
   elements: [
@@ -296,21 +295,19 @@ Sanitize.Config.RELAXED = {
     'q'         : ['cite'],
     'table'     : ['summary', 'width'],
     'td'        : ['abbr', 'axis', 'colspan', 'rowspan', 'width'],
-    'th'        : ['abbr', 'axis', 'colspan', 'rowspan', 'scope',
-                 `    'width'],
+    'th'        : ['abbr', 'axis', 'colspan', 'rowspan', 'scope',    'width'],
     'ul'        : ['type'],
-    'div'      : ['class']
+    'div'       : ['class']
   },
 
   protocols: {
-    'a'         : {'href': ['ftp', 'http', 'https', 'mailto',
-                                Sanitize.RELATIVE]},
+    'a'         : {'href': ['ftp', 'http', 'https', 'mailto', Sanitize.RELATIVE]},
     'blockquote': {'cite': ['http', 'https', Sanitize.RELATIVE]},
     'img'       : {'src' : ['http', 'https', Sanitize.RELATIVE]},
     'q'         : {'cite': ['http', 'https', Sanitize.RELATIVE]}
   }
-}
+};
 
 Sanitize.Config.RESTRICTED = {
   elements: ['b', 'em', 'i', 'strong', 'u']
-}
+};

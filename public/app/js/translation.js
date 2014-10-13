@@ -919,7 +919,7 @@ app.config(['$translateProvider', function($translateProvider){
 
         //Labels for FAQ Page
         "FAQPageTitle"                        : "Frequently Asked Questions",
-        "FAQPageSubTitle"                     : "This FAQ will attempt to cover the most asked question about Marksimos.This FAQ will attempt to cover the most asked question about Marksimos.This FAQ will attempt to cover the most asked question about Marksimos .",
+        "FAQPageSubTitle"                     : "This FAQ will attempt to cover the most asked questions about Marksimos game.",
 
         "ManualPageTitle"    : "Manual",
         "ManualPageDownload" : "Download"
@@ -1851,17 +1851,12 @@ app.config(['$translateProvider', function($translateProvider){
 
         //Labels for FAQ Page
         "FAQPageTitle"                        : "常见问题",
-        "FAQPageSubTitle"                     : "该常见问题会包含一些常问的问题.",
+        "FAQPageSubTitle"                     : '"常见问题"将包含在MarkSimos项目实施中学员问得最多的问题.',
 
         "ManualPageTitle"    : "使用手册",
         "ManualPageDownload" : "下载"
 
 
-
-
-
-
-		
 
 		
     });
