@@ -3,8 +3,11 @@ var gulp = require('gulp'),
     livereload = require('gulp-livereload'),
     nodemon = require('gulp-nodemon'),
     jshint = require('gulp-jshint'),
-    compass = require('gulp-compass');
-    mocha = require('gulp-mocha');
+    compass = require('gulp-compass'),
+    mocha = require('gulp-mocha'),
+    childProcess = require('child_process');
+
+
 
 var paths = {
     app: './public/app/**',
@@ -22,6 +25,10 @@ var paths = {
 };
 
 
+
+
+/********************  Creat Gulp Task  ********************/
+
 // 监视JS文件的变化
 gulp.task('jshint',function(){
     gulp.src(paths.javascript)
@@ -30,7 +37,7 @@ gulp.task('jshint',function(){
 });
 
 
-// 监视scss文件的变化
+// 监视scss文件的变化 目前没有开启compass
 gulp.task('compass', function() {
     gulp.src(paths.sassfiles)
         .pipe(compass({
@@ -43,7 +50,16 @@ gulp.task('compass', function() {
         .pipe(gulp.dest(paths.target_csspath))
 });
 
-// 自动重启服务器
+
+// 启动 Mongo DB
+gulp.task('mongo', function() {
+    childProcess.exec('start mongod --config /usr/local/etc/mongod.conf', function(){
+
+    })
+});
+
+
+// 使用nodemon 自动重启服务器
 gulp.task('nodemon', function () {
     nodemon({
         script: 'app.js',
@@ -51,12 +67,14 @@ gulp.task('nodemon', function () {
     });
 //        .on('restart', 'default')
 });
+
 gulp.task('nodemonraven', function () {
     nodemon({
         script: 'app.js',
         env: { 'NODE_ENV': 'raven' }
     });
 });
+
 gulp.task('nodemonjin', function () {
     nodemon({
         script: 'app.js',
