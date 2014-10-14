@@ -157,7 +157,7 @@
 	background: url('../img/motion-item-6-active.png') no-repeat;
 }
 .section-0-info{
-	width:100%;
+	width:800px;
 	text-align: center;
 }
 .section-0-info p{
@@ -621,6 +621,10 @@
 	.img-percent{
 		width: 90%;
 	}
+	.section-0-info{
+		width:100%;
+		text-align: center;
+	}
 
 	.section-box{
 		width: 80%;
@@ -637,10 +641,11 @@
     .img-percent{
         width: 90%;
     }
-
-    .index-logo-info{
-        display: none;
-    }
+    .section-0-info{
+		width:100%;
+		text-align: center;
+		margin-top: 300px;
+	}
 
     .section-box{
         width: 70%;
