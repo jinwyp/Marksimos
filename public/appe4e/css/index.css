@@ -157,7 +157,8 @@
 	background: url('../img/motion-item-6-active.png') no-repeat;
 }
 .section-0-info{
-	width:800px;
+	width:100%;
+	text-align: center;
 }
 .section-0-info p{
 	letter-spacing:4px;
@@ -654,10 +655,10 @@
         display: none;
     }
 
-    .section-0-info{
+/*    .section-0-info{
         width: 95%;
         margin-top: 300px;
-    }
+    }*/
 }
 
 
