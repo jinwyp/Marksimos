@@ -17,7 +17,7 @@ $(function(){
 
 	if($("#company-register").length!=0){
 		$("#company-register").fullpage({
-			navigation: true,
+			navigation: true ,
 			navigationPosition: 'left',
 			anchors: ['step1', 'step2', 'step3'],
 			sectionsColor: ['#fff', '#fff', '#fff'],
