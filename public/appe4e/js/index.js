@@ -82,7 +82,6 @@ $(function(){
 
 	$('.form_date').click(function(){
 		$('.form_date').datetimepicker({
-	        //language:  'fr',
 	        weekStart: 1,
 	        todayBtn:  1,
 			autoclose: 1,
