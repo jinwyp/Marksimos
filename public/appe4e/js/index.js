@@ -3,7 +3,7 @@ $(function(){
 		$('#index').fullpage({
 			navigation: true,
 			navigationPosition: 'right',
-			anchors: ['firstPage', 'secondPage', '3rdPage'],
+			anchors: ['firstPage', 'secondPage', 'thirdPage'],
 			sectionsColor: ['#fff', '#FF441C', '#fff'],
 			navigationColor:'#B3B3B3',
 			css3: true,
@@ -82,7 +82,6 @@ $(function(){
 
 	$('.form_date').click(function(){
 		$('.form_date').datetimepicker({
-	        //language:  'fr',
 	        weekStart: 1,
 	        todayBtn:  1,
 			autoclose: 1,

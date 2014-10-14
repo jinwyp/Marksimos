@@ -72,6 +72,7 @@
 	height: 100%;
 	top:62px;
 	margin-top: 0px;
+	display: none;
 }
 #fp-nav li .active span, .fp-slidesNav .active span{
    	background: url('../img/nav-button-active.png') no-repeat;
@@ -267,4 +268,43 @@
 	bottom: 0;
 	width: 100%
 }
+
+@media screen and (max-width: 1024px) {
+	.section-company-success,.section-student-success{
+		width: 760px;
+	}
+	.congratulations{
+		right: 420px;
+	}
+	.congratulations-info{
+		right: 340px;
+	}
+	.congratulations-end{
+		right: 136px;
+	}
+	.section-regisert-heart{
+		right: 676px;
+	}
+}
+
+@media screen and (max-width: 768px) {
+	.section-company-success,.section-student-success{
+		width: 660px;
+	}
+	.congratulations{
+		right: 320px;
+	}
+	.congratulations-info{
+		right: 240px;
+	}
+	.congratulations-end{
+		right: 36px;
+	}
+	.section-regisert-heart{
+		right: 576px;
+	}
+}
+
+
+
 

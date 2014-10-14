@@ -155,11 +155,11 @@ a,a:hover {text-decoration: none;}
 .append-left-24,.apl-24 {margin-left: 24px;}
 .append-left-55,.apl-55 {margin-left: 55px;}
 .append-left-100,.apl-100 {margin-left: 100px;}
-.append-left-1p,.apl-1p {margin-left: 132px;}
-.append-left-2p,.apl-2p {margin-left: 264px;}
-.append-left-3p,.apl-3p {margin-left: 396px;}
-.append-left-4p,.apl-4p {margin-left: 528px;}
-.append-left-5p,.apl-5p {margin-left: 660px;}
+.append-left-1p,.apl-1p {margin-left: 140px;}
+.append-left-2p,.apl-2p {margin-left: 280px;}
+.append-left-3p,.apl-3p {margin-left: 420px;}
+.append-left-4p,.apl-4p {margin-left: 560px;}
+.append-left-5p,.apl-5p {margin-left: 700px;}
 
 
 /*右外边距*/
@@ -754,6 +754,25 @@ body {position: relative;background: #fff;}
     70%{transform:perspective(255px) rotateY(10deg);}
     100%{transform:perspective(255px) rotateY(0);opacity:1;}
 }
+@media screen and (max-width: 1024px) {
+    .append-left-1p,.apl-1p {margin-left: 110px;}
+    .append-left-2p,.apl-2p {margin-left: 220px;}
+    .append-left-3p,.apl-3p {margin-left: 330px;}
+    .append-left-4p,.apl-4p {margin-left: 440px;}
+    .append-left-5p,.apl-5p {margin-left: 550px;}
+    .append-left-100,.apl-100 {margin-left: 20px;}
+    .wrap {width: 95%;margin: 0 auto;padding-left: 15px;padding-right: 15px;}
+}
+
+@media screen and (max-width: 768px) {
+    .append-left-1p,.apl-1p {margin-left: 110px;}
+    .append-left-2p,.apl-2p {margin-left: 220px;}
+    .append-left-3p,.apl-3p {margin-left: 330px;}
+    .append-left-4p,.apl-4p {margin-left: 440px;}
+    .append-left-5p,.apl-5p {margin-left: 550px;}
+    .wrap {width: 95%;margin: 0 auto;padding-left: 15px;padding-right: 15px;}
+}
+
 
 
 
