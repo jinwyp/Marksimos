@@ -650,6 +650,10 @@
         width: 80%;
     }
 
+    .index-logo-info{
+        display: none;
+    }
+
     .section-box{
         width: 70%;
         margin :50px auto;
