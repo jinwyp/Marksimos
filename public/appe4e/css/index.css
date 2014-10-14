@@ -85,6 +85,9 @@
 	float:left;
 	margin-left: 800px;
 }
+.img-percent{
+	width: 100%;
+}
 /*.motion-item{
 	float:left;
 }
@@ -246,7 +249,7 @@
 }*/
 
 .section-box{
-	width: 980px;
+	width: 77%;
 	margin :50px auto;
 	/*margin: 100px auto 0 auto;*/
 }
@@ -613,3 +616,24 @@
 	height: 37px;
 	display: inline-block;
 }
+
+@media screen and (max-width: 1024px) {
+
+	.index-player{
+		width: 700px;
+	}
+	.index-logo-info{
+		margin-left: 700px;
+	}
+
+	.img-percent{
+		width: 80%;
+	}
+
+	.section-box{
+		width: 80%;
+		margin :50px auto;
+		/*margin: 100px auto 0 auto;*/
+	}
+}
+
