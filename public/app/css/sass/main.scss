@@ -1,5 +1,21 @@
 @import "compass";
+$icon-spacing : 130px;
+//$icon-layout : diagonal;
 @import "icon/*.png";
+
+@mixin my_icon-sprite ($name, $repeat: no-repeat, $offset-x: 0, $offset-y: 0) {
+    background-image : $icon-sprites;
+    background-repeat : $repeat;
+    @include sprite-background-position($icon-sprites, $name, $offset-x, $offset-y);
+
+    // if no offsets given, set the dimensions of the element to match the image
+    @if $offset-x == 0 and $offset-y == 0{
+        @include sprite-dimensions($icon-sprites, $name);
+    }
+}
+
+
+
 
 
 $font_main_header: 'Verdana', 'Geneva, sans-serif';
@@ -147,27 +163,43 @@ $color_main_body_user_manual_table_2n:#f8f8f8;
 
 }
 
+
+
+
+
+@mixin icon_user_faq {
+    color: $color_login_title;
+    font-size: 30px;
+    @include icon-sprite(faq);
+
+    padding-left: 37px;
+    margin: 20px 0px;
+    display: block;
+
+}
+
+@mixin icon_user_pdf {
+    color: $color_login_title;
+    @include icon-sprite(filepdf);
+    padding-left: 37px;
+}
+
+
 @mixin icon_arrow_up {
-    background-image: url(../images/arrowup.png);
-    background-repeat: no-repeat;
-    background-position: 0px 0px;
+    @include icon-sprite(arrowup);
     @include inline-block;
     width: 13px;
     height: 13px;
 }
 @mixin icon_arrow_right {
-    background-image: url(../images/arrowright.png);
-    background-repeat: no-repeat;
-    background-position: 0px 0px;
+    @include icon-sprite(arrowright);
     @include inline-block;
     width: 13px;
     height: 13px;
 }
 
 @mixin icon_arrow_down {
-    background-image: url(../images/arrowdown.png);
-    background-repeat: no-repeat;
-    background-position: 0px 0px;
+    @include icon-sprite(arrowdown);
     @include inline-block;
     width: 13px;
     height: 13px;
@@ -175,55 +207,23 @@ $color_main_body_user_manual_table_2n:#f8f8f8;
 
 
 
+
+
+
 @mixin icon_user_brand {
     color: $color_main_body_brand;
     font-size: 14px;
-    background-image: url(../images/userbrand.png);
-    background-repeat: no-repeat;
-    background-position: 3px 2px;
+    @include my_icon-sprite(userbrand, no-repeat, 3px, 2px);
     padding-left: 25px;
     margin: 32px 5px 20px 3px;
     display: block;
 }
 
-@mixin icon_user_score {
-    color: $color_main_body_brand;
-    font-size: 14px;
-    /*change another picture*/
-    background-image: url(../images/userscore.png);
-    background-repeat: no-repeat;
-    background-position: 1px 7px;
-    padding: 5px 25px;
-    display: block;
-}
-
-@mixin icon_user_faq {
-    color: $color_login_title;
-    font-size: 30px;
-    background-image: url(../images/faq.png);
-    background-repeat: no-repeat;
-    background-position: 1px 0px;
-    padding-left: 37px;
-    margin: 20px 0px;
-    display: block;
-}
-
-@mixin icon_user_pdf {
-    color: $color_login_title;
-    background-image: url(../images/filepdf.png);
-    background-repeat: no-repeat;
-    background-position: 1px 0px;
-    padding-left: 37px;
-}
-
-
 @mixin icon_user_product{
     color: $color_main_body_product;
     -webkit-text-size-adjust:none;
     font-size: 11px;
-    background-image: url(../images/userproduct.png);
-    background-repeat: no-repeat;
-    background-position: 1px 2px;
+    @include my_icon-sprite(userproduct, no-repeat, 1px, 1px);
     padding-left: 20px;
 //    width: 150px;
     height: 24px;
@@ -232,6 +232,16 @@ $color_main_body_user_manual_table_2n:#f8f8f8;
         color: $color_main_body_product_target;
     }
 }
+
+
+@mixin icon_user_score {
+    color: $color_main_body_brand;
+    font-size: 14px;
+    @include my_icon-sprite(userscore, no-repeat, 1px, 7px);
+    padding: 5px 25px;
+    display: block;
+}
+
 
 
 @mixin table_report{
@@ -481,10 +491,7 @@ body{
     padding: 50px 0px 50px 0px;
 
     .bg_whoami {
-        background-image: url(../images/whoami.png);
-        background-repeat: no-repeat;
-        background-position: 0px 120px;
-
+        @include my_icon-sprite(whoami, no-repeat, 0px, 120px);
     }
 
 
@@ -507,9 +514,7 @@ body{
         }
 
         .contentbox {
-            background-image: url(../images/loginbg1.png);
-            background-repeat: no-repeat;
-            background-position: 20px 22px;
+            @include my_icon-sprite(loginbg1, no-repeat, 20px, 22px);
 
             background-color: $color_login_content_background;
             margin: 10px 20px 35px 20px;
@@ -1109,9 +1114,7 @@ body{
         color: $color_main_body_user_clock;
         -webkit-text-size-adjust:none;
         font-size: 11px;
-        background-image: url(../images/userclock.png);
-        background-repeat: no-repeat;
-        background-position: -3px -2px;
+        @include my_icon-sprite(userclock, no-repeat, -3px, -2px);
         padding-left: 62px;
         padding-top: 9px;
         margin: 25px 0px 20px 0px;
@@ -1215,9 +1218,7 @@ body{
         .list-group-item{
 
             background-color: $color_login_panel_background;
-            background-image: url(../images/userchartlist.png);
-            background-repeat: no-repeat;
-            background-position: 75px 20px;
+            @include my_icon-sprite(userchartlist, no-repeat, 75px, 20px);
             padding: 18px 1px 18px 95px;
 
             a {
@@ -1280,9 +1281,7 @@ body{
         
         font-size: 10px;
         text-align: center;
-        background-image: url(../images/chartvs.png);
-        background-repeat: no-repeat;
-        background-position: 12px 0px;
+        @include my_icon-sprite(chartvs, no-repeat, 12px, 0px);
         padding-top: 25px;
         margin: 16px 0px 1px 0px;
         display: block;
@@ -1337,9 +1336,7 @@ body{
         .list-group-item{
             border: 0px none $color_white;
             background-color: $color_main_body_background_brand;
-            background-image: url(../images/userchartlist.png);
-            background-repeat: no-repeat;
-            background-position: 30px 12px;
+            @include my_icon-sprite(userchartlist, no-repeat, 30px, 12px);
             padding: 11px 1px 13px 50px;
 
             a{
@@ -1350,7 +1347,7 @@ body{
         }
         .list-group-item-active{
             background-color: $color_main_body_user_chart_leftmenu_active_bg;
-            background-image: url(../images/userchartlist3.png);
+            @include my_icon-sprite(userchartlist3, no-repeat, 30px, 12px);
             a{
                 font-weight: bold;
                 color: $color_main_body_user_chart_title;
@@ -1493,9 +1490,7 @@ body{
                     @include border-radius(4px);
 
                     border: 1px solid $color_main_body_decision_brand_border;
-                    background-image: url(../images/userchartlist.png);
-                    background-repeat: no-repeat;
-                    background-position: 10px 8px;
+                    @include my_icon-sprite(userchartlist, no-repeat, 10px, 8px);
                     padding: 7px 15px 7px 27px;
                     margin-left: 5px;
 
@@ -1512,8 +1507,8 @@ body{
                 a:focus{
                     color: $color_main_body_company_a;
                     background-color: $color_main_body_user_table_menu_bg_active;
-                    background-image: url(../images/userchartlist2.png);
                     border: 1px solid $color_main_body_user_table_menu_bg_active;
+                    @include my_icon-sprite(userchartlist2, no-repeat, 10px, 8px);
                 }
             }
 
@@ -1612,9 +1607,7 @@ body{
 
         .list-group-item{
             background-color: $color_main_body_comparison_report_box_bg;
-            background-image: url(../images/userchartlist.png);
-            background-repeat: no-repeat;
-            background-position: 10px 10px;
+            @include my_icon-sprite(userchartlist, no-repeat, 10px, 10px);
             padding: 0px 0px 0px 0px;
             margin: 0px 11px 20px 0px;
 
@@ -1858,14 +1851,10 @@ body{
                     font-family: $font_main_header2;
                     color: $color_main_body_company;
                     padding: 5px 0px 8px 25px;
-                    background-image: url(../images/userbrand.png);
-                    background-repeat: no-repeat;
-                    background-position: 4px 4px;
+                    @include my_icon-sprite(userbrand, no-repeat, 4px, 4px);
                 }
                 .sku_bg{
-                    background-image: url(../images/userproduct.png);
-                    background-repeat: no-repeat;
-                    background-position: 4px 5px;
+                    @include my_icon-sprite(userproduct, no-repeat, 4px, 5px);
                 }
 
                 .panel-heading{
