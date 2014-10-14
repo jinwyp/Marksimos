@@ -622,6 +622,7 @@
 	.index-player{
 		width: 700px;
 	}
+
 	.index-logo-info{
 		margin-left: 700px;
 	}
@@ -633,7 +634,40 @@
 	.section-box{
 		width: 80%;
 		margin :50px auto;
-		/*margin: 100px auto 0 auto;*/
 	}
 }
+
+@media screen and (max-width: 768px) {
+    .index-player {
+        width: 700px;
+    }
+
+    .index-logo-info {
+        margin-left: 700px;
+    }
+
+    .img-percent{
+        width: 80%;
+    }
+
+    .section-box{
+        width: 70%;
+        margin :50px auto;
+    }
+
+    .append-left-100,.apl-100 {
+    	margin-left: 20px;
+    }
+
+    .section-1-3,.section-1-6{
+        display: none;
+    }
+
+    .section-0-info{
+        width: 95%;
+        margin-top: 300px;
+    }
+}
+
+
 

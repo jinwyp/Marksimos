@@ -754,7 +754,6 @@ body {position: relative;background: #fff;}
     70%{transform:perspective(255px) rotateY(10deg);}
     100%{transform:perspective(255px) rotateY(0);opacity:1;}
 }
-
 @media screen and (max-width: 1024px) {
     .append-left-1p,.apl-1p {margin-left: 110px;}
     .append-left-2p,.apl-2p {margin-left: 220px;}
@@ -763,6 +762,18 @@ body {position: relative;background: #fff;}
     .append-left-5p,.apl-5p {margin-left: 550px;}
     .append-left-100,.apl-100 {margin-left: 20px;}
 }
+
+@media screen and (max-width: 768px) {
+    .append-left-1p,.apl-1p {margin-left: 110px;}
+    .append-left-2p,.apl-2p {margin-left: 220px;}
+    .append-left-3p,.apl-3p {margin-left: 330px;}
+    .append-left-4p,.apl-4p {margin-left: 440px;}
+    .append-left-5p,.apl-5p {margin-left: 550px;}
+    .index-logo-info{
+        display: none;
+    }
+}
+
 
 
 
