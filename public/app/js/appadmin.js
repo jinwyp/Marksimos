@@ -356,7 +356,7 @@
                             name : showCompanyName(key),
                             students : company
                         });
-                    })
+                    });
                 });
                 $scope.data.seminars = data;
             }).error(function (data, status, headers, config) {

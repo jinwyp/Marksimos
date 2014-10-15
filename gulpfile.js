@@ -5,6 +5,7 @@ var gulp = require('gulp'),
     jshint = require('gulp-jshint'),
     compass = require('gulp-compass'),
     mocha = require('gulp-mocha'),
+    uglify = require('gulp-uglify'),
     childProcess = require('child_process');
 
 
@@ -13,13 +14,14 @@ var paths = {
     app: './public/app/**',
     views: './views/**',
     javascript: './public/app/js/*.js',
+    javascriptOutputDist: './public/app/dist/',
 
     compass_config : './public/app/css/config.rb',
     sassfiles: './public/app/css/sass/*.scss',
     csspath: './public/app/css/stylesheets',
     sasspath: './public/app/css/sass',
     imagespath : './public/app/css/images',
-    target_csspath: './public/app/css/stylesheets',
+    csspathOutput: './public/app/css/stylesheets',
 
     unit_test: './api/test/unit_test/*'
 };
@@ -29,7 +31,7 @@ var paths = {
 
 /********************  Creat Gulp Task  ********************/
 
-// 监视JS文件的变化
+// 监视JS文件的变化 并用jshint 检查语法 注: jshint 可能会伤害你的感情
 gulp.task('jshint',function(){
     gulp.src(paths.javascript)
         .pipe(jshint())
@@ -37,17 +39,25 @@ gulp.task('jshint',function(){
 });
 
 
-// 监视scss文件的变化 目前没有开启compass
+// Minify JavaScript with UglifyJS2.
+gulp.task('jscompress',function(){
+    gulp.src(paths.javascript)
+        .pipe(uglify())
+        .pipe(gulp.dest(paths.javascriptOutputDist))
+});
+
+
+// 监视scss文件的变化 目前没有使用该任务,用的是Ruby的compass
 gulp.task('compass', function() {
     gulp.src(paths.sassfiles)
         .pipe(compass({
             css : paths.csspath,
             sass : paths.sasspath,
             image : paths.imagespath,
-            style : 'nested',  //The output style for the compiled css. One of: nested, expanded, compact, or compressed.
+            style : 'compressed',  //The output style for the compiled css. One of: nested, expanded, compact, or compressed.
             comments : true
         }))
-        .pipe(gulp.dest(paths.target_csspath))
+        .pipe(gulp.dest(paths.csspathOutput))
 });
 
 
@@ -113,14 +123,15 @@ gulp.task('nodemonjin', function () {
 gulp.task('watch', function() {
     gulp.watch(paths.javascript, ['jshint']);
     //gulp.watch(paths.sassfiles, ['compass']);
+    gulp.watch(paths.javascript, ['jscompress']);
 
-    var server = livereload();
-    gulp.watch(paths.app).on('change', function(file) {
-        server.changed(file.path);
-    });
-    gulp.watch(paths.views).on('change', function(file) {
-        server.changed(file.path);
-    });
+//    var server = livereload();
+//    gulp.watch(paths.app).on('change', function(file) {
+//        server.changed(file.path);
+//    });
+//    gulp.watch(paths.views).on('change', function(file) {
+//        server.changed(file.path);
+//    });
 });
 
 

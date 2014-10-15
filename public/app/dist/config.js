@@ -1,0 +1,1 @@
+!function(){"use strict";angular.module("marksimos.config",[]),angular.module("marksimos.config").config(["$httpProvider",function(e){e.defaults.headers.common={},e.defaults.headers.post={},e.defaults.headers.put={},e.defaults.headers.patch={}}])}();

@@ -18,6 +18,7 @@ $icon-spacing : 130px;
 
 
 
+
 $font_main_header: 'Verdana', 'Geneva, sans-serif';
 $font_main_header2: 'Helvetica', 'Arial, sans-serif';
 $font_login_title: 'Georgia', 'Arial, sans-serif';
@@ -118,7 +119,7 @@ $color_main_body_user_feedback_subTitle:#5D67D2;
 $color_main_body_user_feedback_warning:#FCFFD9;
 $color_main_body_user_feedback_info:#EAEFFF;
 
-
+$color_main_body_user_faq_category_title : #e8e8e8;
 $color_main_body_user_manual_h_boder_bottom:#eee;
 $color_main_body_user_manual_h6:#777;
 $color_main_body_user_manual_blockquote:#777;
@@ -172,7 +173,7 @@ $color_main_body_user_manual_table_2n:#f8f8f8;
     font-size: 30px;
     @include icon-sprite(faq);
 
-    padding-left: 37px;
+    padding-left: 40px;
     margin: 20px 0px;
     display: block;
 
@@ -599,7 +600,7 @@ body{
                 font-family: $font_login_title;
                 font-weight:normal;
                 font-size:16px;
-                padding-left:35px;
+                padding-left:43px;
                 margin:0 0 30px 0;
                 color:$color_main_body_user_muted;
             }
@@ -837,32 +838,35 @@ body{
             }
             .list-inline{
                 padding:0px;
-                margin:0px;
+                margin: 10px 0px 15px 0px;
+                background-color: $color_main_body_user_faq_category_title;
                 li{
-                   padding:0px; 
+                   padding: 15px 0px 15px 10px;
                 }
             }
             .bs-faq-sidenav{
                 li{
                     a{
+                        font-family: $font_main_header2;
                         font-size: 14px;
-                        font-weight: 500;
-                        color: $color_main_body_product;
-                        padding: 4px 20px;
-                        border-radius:10px;
+                        font-weight: bold;
+                        color: $color_main_body_company;
+                        padding: 6px 12px;
+                        border-radius:15px;
                         border: 1px solid transparent;
+
                     }
                     a:hover,a:focus {
-                        color: $color_main_body_user_chart_leftmenu_active_bgbefore;
+                        color: $color_login_title;
                         text-decoration: none;
                         background-color: $color_login_panel_background;
-                        border: 1px solid $color_main_body_user_chart_leftmenu_active_bgbefore;
+                        border: 1px solid $color_login_title;
                     }
                 }
                 li.active,li.active:hover,li.active:focus{
                     a{
                         color: $color_login_panel_background;
-                        background-color: $color_main_body_user_chart_leftmenu_active_bgbefore;                      
+                        background-color: $color_login_title;
                     }
                 }
             }
