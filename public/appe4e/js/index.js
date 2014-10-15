@@ -1,5 +1,6 @@
 $(function(){
-	if($("#index").length!=0){
+
+	var initPage=function(){
 		$('#index').fullpage({
 			navigation: true ,
 			navigationPosition: 'right',
@@ -13,6 +14,14 @@ $(function(){
 			scrollingSpeed: 500,
 			resize:false
 		}); 
+		$('#section1').show();
+		$('#section2').show();
+	}
+
+	if($("#index").length!=0){
+		$('#section1').hide();
+		$('#section2').hide();
+		setTimeout(initPage, 100);
 	}
 
 	if($("#company-register").length!=0){
