@@ -1,7 +1,7 @@
 $(function(){
 	if($("#index").length!=0){
 		$('#index').fullpage({
-			navigation: true,
+			navigation: true ,
 			navigationPosition: 'right',
 			anchors: ['firstPage', 'secondPage', 'thirdPage'],
 			sectionsColor: ['#fff', '#FF441C', '#fff'],
