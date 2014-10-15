@@ -24,7 +24,7 @@ $(function(){
 		setTimeout(initPage, 100);
 	}
 
-	if($("#company-register").length!=0){
+	var companyInit=function(){
 		$("#company-register").fullpage({
 			navigation: true ,
 			navigationPosition: 'left',
@@ -37,15 +37,15 @@ $(function(){
 			loopBottom:true,
 			keyboardScrolling:false,
 			scrollingSpeed: 500,
-			resize:false,
-			afterResize:function(){
-				$('#fp-nav').css('left',($('.e4e-logo').offset().left+15)+'px');
-			}
+			resize:false
 		});
 	}
 
+	if($("#company-register").length!=0){
+		setTimeout(companyInit, 100);
+	}
 
-	if($("#student-register").length!=0){
+	var studentInit=function(){
 		$("#student-register").fullpage({
 			navigation: true,
 			navigationPosition: 'left',
@@ -58,11 +58,12 @@ $(function(){
 			loopBottom:true,
 			keyboardScrolling:false,
 			scrollingSpeed: 500,
-			resize:false,
-			afterResize:function(){
-				$('#fp-nav').css('left',($('.e4e-logo').offset().left+15)+'px');
-			}
+			resize:false
 		});
+	}
+
+	if($("#student-register").length!=0){
+		setTimeout(studentInit, 100);
 	}
 
 	if($("#success").length!=0){
