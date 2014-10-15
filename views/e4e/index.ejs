@@ -14,12 +14,12 @@
 				</a>
 			</div>
 			<div class="languages">
-				<nav class="nav-header">
+				<nav class="nav-header" ng-cloak>
 					<ul>
-						<li ng-class="{'active':!isEnglish}" ng-cloak>
+						<li ng-class="{'active':!isEnglish}">
 							<a href='' class="f-bold" ng-click="changeLanguage('zh_CN')">中</a>
 						</li>
-						<li ng-class="{'active':isEnglish}" ng-cloak>
+						<li ng-class="{'active':isEnglish}">
 							<a href='' class="f-bold" ng-click="changeLanguage('en_US')">EN</a>
 						</li>
 					</ul>
@@ -132,7 +132,7 @@
 			<div class="absolute-item section-2-5 fade-in-up"></div>
 			<div class="absolute-item section-2-6 fade-in-up"></div>
 			<div class="absolute-item section-2-7 fade-in-right"></div>
-			<div class="login-box" ng-cloak>
+			<div class="login-box">
 				<ul class="nav nav-tabs">
 					<li ng-class="{'active':studentRegisterShow}"><a href="" ng-click='clickItem("student")'>{{'e4eStudentRegisterTitle' | translate }}</a></li>
 					<li ng-class="{'active':companyRegisterShow}"><a href="" ng-click='clickItem("compamy")'>{{'e4eCompanyRegisterTitle' | translate }}</a></li>

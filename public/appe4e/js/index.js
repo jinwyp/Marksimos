@@ -1,7 +1,8 @@
 $(function(){
-	if($("#index").length!=0){
+
+	var initPage=function(){
 		$('#index').fullpage({
-			navigation: true,
+			navigation: true ,
 			navigationPosition: 'right',
 			anchors: ['firstPage', 'secondPage', 'thirdPage'],
 			sectionsColor: ['#fff', '#FF441C', '#fff'],
@@ -13,11 +14,19 @@ $(function(){
 			scrollingSpeed: 500,
 			resize:false
 		}); 
+		$('#section1').show();
+		$('#section2').show();
 	}
 
-	if($("#company-register").length!=0){
+	if($("#index").length!=0){
+		$('#section1').hide();
+		$('#section2').hide();
+		setTimeout(initPage, 100);
+	}
+
+	var companyInit=function(){
 		$("#company-register").fullpage({
-			navigation: true,
+			navigation: true ,
 			navigationPosition: 'left',
 			anchors: ['step1', 'step2', 'step3'],
 			sectionsColor: ['#fff', '#fff', '#fff'],
@@ -28,15 +37,15 @@ $(function(){
 			loopBottom:true,
 			keyboardScrolling:false,
 			scrollingSpeed: 500,
-			resize:false,
-			afterResize:function(){
-				$('#fp-nav').css('left',($('.e4e-logo').offset().left+15)+'px');
-			}
+			resize:false
 		});
 	}
 
+	if($("#company-register").length!=0){
+		setTimeout(companyInit, 100);
+	}
 
-	if($("#student-register").length!=0){
+	var studentInit=function(){
 		$("#student-register").fullpage({
 			navigation: true,
 			navigationPosition: 'left',
@@ -49,11 +58,12 @@ $(function(){
 			loopBottom:true,
 			keyboardScrolling:false,
 			scrollingSpeed: 500,
-			resize:false,
-			afterResize:function(){
-				$('#fp-nav').css('left',($('.e4e-logo').offset().left+15)+'px');
-			}
+			resize:false
 		});
+	}
+
+	if($("#student-register").length!=0){
+		setTimeout(studentInit, 100);
 	}
 
 	if($("#success").length!=0){

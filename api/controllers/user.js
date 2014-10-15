@@ -134,7 +134,7 @@ exports.register = function(req, res, next){
 };
 
 
-function randomString() {
+function randomString(len) {
     len = len || 32;
     var $chars = 'ABCDEFGHJKMNPQRSTWXYZabcdefhijkmnprstwxyz2345678';    /****默认去掉了容易混淆的字符oOLl,9gq,Vv,Uu,I1****/
     var maxPos = $chars.length;

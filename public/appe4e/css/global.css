@@ -761,7 +761,7 @@ body {position: relative;background: #fff;}
     .append-left-4p,.apl-4p {margin-left: 440px;}
     .append-left-5p,.apl-5p {margin-left: 550px;}
     .append-left-100,.apl-100 {margin-left: 20px;}
-    .wrap {width: 95%;margin: 0 auto;padding-left: 15px;padding-right: 15px;}
+    .wrap {width: 98%;margin: 0 auto;padding-left: 15px;padding-right: 15px;}
 }
 
 @media screen and (max-width: 768px) {
@@ -770,7 +770,7 @@ body {position: relative;background: #fff;}
     .append-left-3p,.apl-3p {margin-left: 330px;}
     .append-left-4p,.apl-4p {margin-left: 440px;}
     .append-left-5p,.apl-5p {margin-left: 550px;}
-    .wrap {width: 95%;margin: 0 auto;padding-left: 15px;padding-right: 15px;}
+    .wrap {width: 98%;margin: 0 auto;padding-left: 15px;padding-right: 15px;}
 }
 
 

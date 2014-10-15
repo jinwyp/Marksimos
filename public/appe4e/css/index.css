@@ -627,12 +627,12 @@
 	}
 
 	.section-box{
-		width: 80%;
+		width: 820px;
 		margin :50px auto;
 	}
 }
 
-@media screen and (max-width: 768px) {
+/*@media screen and (max-width: 768px) {
 
     .index-logo-info {
         display: none;
@@ -660,11 +660,7 @@
         display: none;
     }
 
-/*    .section-0-info{
-        width: 95%;
-        margin-top: 300px;
-    }*/
-}
+}*/
 
 
 
