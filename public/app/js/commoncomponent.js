@@ -14,7 +14,7 @@
 
 
     /********************  Create New Module For Directive ********************/
-    angular.module('marksimos.commoncomponent', ['pascalprecht.translate']);
+    angular.module('marksimos.commoncomponent', ['marksimos.templates', 'pascalprecht.translate']);
 
 
     /********************  Use This Module To Set New Controllers  ********************/
@@ -36,7 +36,7 @@
 
             },
             restrict: 'AE',
-            templateUrl: '/app/js/commoncomponent/formusernameinput.html',
+            templateUrl: 'formusernameinput.html',
             link: function (scope, element, attrs) {
 
                 if(angular.isUndefined(scope.required)  ){
@@ -74,7 +74,7 @@
 
             },
             restrict: 'AE',
-            templateUrl: '/app/js/commoncomponent/formemailinput.html',
+            templateUrl: 'formemailinput.html',
             link: function (scope, element, attrs) {
 
                 if(angular.isUndefined(scope.required)  ){
@@ -110,7 +110,7 @@
 
             },
             restrict: 'AE',
-            templateUrl: '/app/js/commoncomponent/formpasswordinput.html',
+            templateUrl: 'formpasswordinput.html',
             link: function (scope, element, attrs) {
 
                 if(angular.isUndefined(scope.required)  ){
@@ -148,7 +148,7 @@
                 maxlengtherrorinfo : '@'
             },
             restrict: 'AE',
-            templateUrl: '/app/js/commoncomponent/formphoneinput.html',
+            templateUrl: 'formphoneinput.html',
             link: function (scope, element, attrs) {
 
                 if(angular.isUndefined(scope.required)  ){
@@ -187,7 +187,7 @@
 
             },
             restrict: 'AE',
-            templateUrl: '/app/js/commoncomponent/formidcardinput.html',
+            templateUrl: 'formidcardinput.html',
             link: function (scope, element, attrs) {
 
                 if(angular.isUndefined(scope.required)  ){
@@ -229,7 +229,7 @@
 
             },
             restrict: 'AE',
-            templateUrl: '/app/js/commoncomponent/formlicenceinput.html',
+            templateUrl: 'formlicenceinput.html',
             link: function (scope, element, attrs) {
 
                 if(angular.isUndefined(scope.required)  ){
@@ -277,7 +277,7 @@
 
             },
             restrict: 'AE',
-            templateUrl: '/app/js/commoncomponent/formroundinput.html',
+            templateUrl: 'formroundinput.html',
             link: function (scope, element, attrs) {
 
                 if(angular.isUndefined(scope.required)  ){

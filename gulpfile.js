@@ -6,22 +6,28 @@ var gulp = require('gulp'),
     compass = require('gulp-compass'),
     mocha = require('gulp-mocha'),
     uglify = require('gulp-uglify'),
+    concat = require('gulp-concat'),
+    browserSync = require('browser-sync'),
+    ngAnnotate = require('gulp-ng-annotate'),
+    minifyHtml = require("gulp-minify-html"),
+    ngTemplateCache = require('gulp-angular-templatecache'),
     childProcess = require('child_process');
 
 
 
 var paths = {
+    base: './public',
     app: './public/app/**',
     views: './views/**',
     javascript: './public/app/js/*.js',
     javascriptOutputDist: './public/app/dist/',
+    angularTemplates: ['./public/app/js/commoncomponent/*.html', './public/app/js/report/*.html', './public/app/js/websitecomponent/*.html'],
 
     compass_config : './public/app/css/config.rb',
-    sassfiles: './public/app/css/sass/*.scss',
-    csspath: './public/app/css/stylesheets',
-    sasspath: './public/app/css/sass',
+    sassSourceFiles: './public/app/css/sass/*.scss',
+    cssOutputPath: './public/app/css/stylesheets',
+    sasspath: 'public/app/css/sass',  // removed the dot-slash from here  './public/app/css/sass' wrong format
     imagespath : './public/app/css/images',
-    csspathOutput: './public/app/css/stylesheets',
 
     unit_test: './api/test/unit_test/*'
 };
@@ -42,6 +48,10 @@ gulp.task('jshint',function(){
 // Minify JavaScript with UglifyJS2.
 gulp.task('jscompress',function(){
     gulp.src(paths.javascript)
+        .pipe(jshint())
+        .pipe(jshint.reporter('jshint-stylish'))
+        .pipe(ngAnnotate())
+        .pipe(concat('app.min.js'))
         .pipe(uglify())
         .pipe(gulp.dest(paths.javascriptOutputDist))
 });
@@ -49,15 +59,28 @@ gulp.task('jscompress',function(){
 
 // 监视scss文件的变化 目前没有使用该任务,用的是Ruby的compass
 gulp.task('compass', function() {
-    gulp.src(paths.sassfiles)
+    gulp.src(paths.sassSourceFiles)
         .pipe(compass({
-            css : paths.csspath,
+            css : paths.cssOutputPath,
             sass : paths.sasspath,
             image : paths.imagespath,
             style : 'compressed',  //The output style for the compiled css. One of: nested, expanded, compact, or compressed.
-            comments : true
+            comments : false
         }))
-        .pipe(gulp.dest(paths.csspathOutput))
+        .pipe(gulp.dest(paths.cssOutputPath))
+});
+
+
+// 合并 angular directive template
+gulp.task('templates', function () {
+    gulp.src(paths.angularTemplates)
+        .pipe(minifyHtml({
+//            empty: true, //do not remove empty attributes
+//            spare: true, //do not remove redundant attributes
+            quotes: true
+        }))
+        .pipe(ngTemplateCache('directivetemplates.js', { module:'marksimos.templates', standalone:true }))
+        .pipe(gulp.dest(paths.javascriptOutputDist));
 });
 
 
@@ -88,11 +111,21 @@ gulp.task('mongo', function() {
         })
     });
 
-
 });
 
 
-// 使用nodemon 自动重启服务器
+// 运行测试
+gulp.task('mocha', function () {
+    gulp.watch(paths.unit_test, ['mocha']);
+    return gulp.src(paths.unit_test, {read: false})
+        .pipe(mocha({reporter: 'nyan', timeout: 2000}));
+});
+
+
+
+
+/********************  使用nodemon 自动重启服务器  ********************/
+
 gulp.task('nodemon', function () {
     nodemon({
         script: 'app.js',
@@ -119,10 +152,12 @@ gulp.task('nodemonjin', function () {
 
 
 
-// Rerun the task when a file changes
+/********************  Rerun the task when a file changes  ********************/
+
 gulp.task('watch', function() {
-    gulp.watch(paths.javascript, ['jshint']);
-    //gulp.watch(paths.sassfiles, ['compass']);
+//    gulp.watch(paths.javascript, ['jshint']);
+    gulp.watch(paths.angularTemplates, ['templates']);
+    gulp.watch(paths.sassSourceFiles, ['compass']);
     gulp.watch(paths.javascript, ['jscompress']);
 
 //    var server = livereload();
@@ -136,22 +171,22 @@ gulp.task('watch', function() {
 
 
 
-
-
-
-// 运行测试
-gulp.task('mocha', function () {
-    gulp.watch(paths.unit_test, ['mocha']);
-    return gulp.src(paths.unit_test, {read: false})
-        .pipe(mocha({reporter: 'nyan', timeout: 2000}));
+// browser-sync task for starting the server.
+gulp.task('browser-sync', function() {
+    browserSync({
+        proxy: "localhost:3009"
+    });
 });
 
 
 
 
-// 默认任务
-// The default task (called when you run `gulp` from cli)
+
+
+/********************  默认任务 he default task (called when you run `gulp` from cli)  ********************/
+
 gulp.task('default', ['nodemon', 'watch']);
 
+//gulp.task('jin', ['mongo', 'browser-sync', 'nodemonjin', 'watch']);
 gulp.task('jin', ['mongo', 'nodemonjin', 'watch']);
 
