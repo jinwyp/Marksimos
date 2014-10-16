@@ -4,6 +4,7 @@ var gulp = require('gulp'),
     nodemon = require('gulp-nodemon'),
     jshint = require('gulp-jshint'),
     compass = require('gulp-compass'),
+    minifyCSS = require('gulp-minify-css'),
     mocha = require('gulp-mocha'),
     uglify = require('gulp-uglify'),
     concat = require('gulp-concat'),
@@ -20,6 +21,7 @@ var paths = {
     app: './public/app/**',
     views: './views/**',
     javascript: './public/app/js/*.js',
+    javascriptPath: './public/app/js/',
     javascriptOutputDist: './public/app/dist/',
     angularTemplates: ['./public/app/js/commoncomponent/*.html', './public/app/js/report/*.html', './public/app/js/websitecomponent/*.html'],
 
@@ -29,6 +31,7 @@ var paths = {
     sasspath: 'public/app/css/sass',  // removed the dot-slash from here  './public/app/css/sass' wrong format
     imagespath : './public/app/css/images',
 
+    cssSourcePath: ['./public/app/css/stylesheets/screen.css', './public/libs/bootstrap/dist/css/bootstrap.min.css', './public/app/css/stylesheets/main.css', './public/app/css/stylesheets/print.css', './public/app/css/stylesheets/ie.css', './public/libs/nvd3/nv.d3.css', './public/libs/angular-notify/dist/angular-notify.css'],
     unit_test: './api/test/unit_test/*'
 };
 
@@ -36,6 +39,19 @@ var paths = {
 
 
 /********************  Creat Gulp Task  ********************/
+
+// 合并 angular directive template
+gulp.task('templates', function () {
+    gulp.src(paths.angularTemplates)
+        .pipe(minifyHtml({
+//            empty: true, //do not remove empty attributes
+//            spare: true, //do not remove redundant attributes
+            quotes: true
+        }))
+        .pipe(ngTemplateCache('directivetemplates.js', { module:'marksimos.templates', standalone:true }))
+        .pipe(gulp.dest(paths.javascriptPath));
+});
+
 
 // 监视JS文件的变化 并用jshint 检查语法 注: jshint 可能会伤害你的感情
 gulp.task('jshint',function(){
@@ -57,7 +73,7 @@ gulp.task('jscompress',function(){
 });
 
 
-// 监视scss文件的变化 目前没有使用该任务,用的是Ruby的compass
+// 监视scss文件的变化
 gulp.task('compass', function() {
     gulp.src(paths.sassSourceFiles)
         .pipe(compass({
@@ -68,20 +84,21 @@ gulp.task('compass', function() {
             comments : false
         }))
         .pipe(gulp.dest(paths.cssOutputPath))
+
 });
 
 
-// 合并 angular directive template
-gulp.task('templates', function () {
-    gulp.src(paths.angularTemplates)
-        .pipe(minifyHtml({
-//            empty: true, //do not remove empty attributes
-//            spare: true, //do not remove redundant attributes
-            quotes: true
+// 合并css 并压缩
+gulp.task('minifycss', function() {
+    gulp.src(paths.cssSourcePath)
+        .pipe(concat('app.min.css'))
+        .pipe(minifyCSS({
+            keepBreaks:false,
+            keepSpecialComments:0 //* for keeping all (default), 1 for keeping first one only, 0 for removing all
         }))
-        .pipe(ngTemplateCache('directivetemplates.js', { module:'marksimos.templates', standalone:true }))
-        .pipe(gulp.dest(paths.javascriptOutputDist));
+        .pipe(gulp.dest(paths.cssOutputPath))
 });
+
 
 
 // 启动 Mongo DB
@@ -157,7 +174,7 @@ gulp.task('nodemonjin', function () {
 gulp.task('watch', function() {
 //    gulp.watch(paths.javascript, ['jshint']);
     gulp.watch(paths.angularTemplates, ['templates']);
-    gulp.watch(paths.sassSourceFiles, ['compass']);
+    gulp.watch(paths.sassSourceFiles, ['compass', 'minifycss']);
     gulp.watch(paths.javascript, ['jscompress']);
 
 //    var server = livereload();
@@ -188,5 +205,5 @@ gulp.task('browser-sync', function() {
 gulp.task('default', ['nodemon', 'watch']);
 
 //gulp.task('jin', ['mongo', 'browser-sync', 'nodemonjin', 'watch']);
-gulp.task('jin', ['mongo', 'nodemonjin', 'watch']);
+gulp.task('jin', ['mongo', 'compass', 'templates', 'minifycss', 'jscompress', 'nodemonjin', 'watch']);
 

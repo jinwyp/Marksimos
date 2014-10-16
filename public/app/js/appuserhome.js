@@ -11,7 +11,6 @@
 
 
 
-
     /********************  Use This Module To Set New Controllers  ********************/
     angular.module('marksimos').controller('chartController', ['$translate', '$scope', '$rootScope', '$document', '$timeout', '$interval', '$http', 'notify', 'chartReport', 'tableReport', 'Company',  function($translate, $scope, $rootScope, $document, $timeout, $interval, $http, notify, chartReport, tableReport, Company ) {
 
