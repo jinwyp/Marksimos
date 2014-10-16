@@ -684,8 +684,8 @@
 
                     angular.forEach(value.SKUs, function(valueSku, keySku) {
                         var oneLineSku1 = {
-                            'x' : Math.round(valueSku.valuePerception * 10000000 + Math.random() * 1000 ) / 10000000,
-                            'y' : Math.round(valueSku.imagePerception * 10000000 + Math.random() * 1000 ) / 10000000,
+                            'x' : Math.round(valueSku.valuePerception * 100 + Math.random() * 10 + Math.random()  ) / 100,
+                            'y' : Math.round(valueSku.imagePerception * 100 + Math.random() * 10 + Math.random()  ) / 100,
                             'size' : 0.6,
                             'SKUName' : valueSku.SKUName,
                             'name' : valueSku.SKUName,
