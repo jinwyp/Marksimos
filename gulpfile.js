@@ -27,6 +27,7 @@ var paths = {
 
     compass_config : './public/app/css/config.rb',
     sassSourceFiles: './public/app/css/sass/*.scss',
+    cssSourceFiles: './public/app/css/stylesheets/*.css',
     cssOutputPath: './public/app/css/stylesheets',
     sasspath: 'public/app/css/sass',  // removed the dot-slash from here  './public/app/css/sass' wrong format
     imagespath : './public/app/css/images',
@@ -80,7 +81,7 @@ gulp.task('compass', function() {
             css : paths.cssOutputPath,
             sass : paths.sasspath,
             image : paths.imagespath,
-            style : 'compressed',  //The output style for the compiled css. One of: nested, expanded, compact, or compressed.
+            style : 'expanded',  //The output style for the compiled css. One of: nested, expanded, compact, or compressed.
             comments : false
         }))
         .pipe(gulp.dest(paths.cssOutputPath))
@@ -174,7 +175,8 @@ gulp.task('nodemonjin', function () {
 gulp.task('watch', function() {
 //    gulp.watch(paths.javascript, ['jshint']);
     gulp.watch(paths.angularTemplates, ['templates']);
-    gulp.watch(paths.sassSourceFiles, ['compass', 'minifycss']);
+    gulp.watch(paths.sassSourceFiles, ['compass']);
+    gulp.watch(paths.cssSourceFiles, ['minifycss']);
     gulp.watch(paths.javascript, ['jscompress']);
 
 //    var server = livereload();

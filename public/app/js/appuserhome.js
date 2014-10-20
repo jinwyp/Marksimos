@@ -735,7 +735,7 @@
 
                     $scope.css.currentDecisionBrandId = $scope.data.currentCompany.d_BrandsDecisions[$scope.data.currentBrandIndex]._id;
                     $scope.data.currentBrand = $scope.data.currentCompany.d_BrandsDecisions[$scope.data.currentBrandIndex];
-
+//                    console.log("Brand :",$scope.data.currentBrand);
 
                     //记录上一次选中的SKU 并找到对应的Index 供本次查询使用
                     if($scope.data.currentSku !== null ){
