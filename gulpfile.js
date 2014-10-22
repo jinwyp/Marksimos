@@ -27,7 +27,7 @@ var paths = {
 
     compass_config : './public/app/css/config.rb',
     sassSourceFiles: './public/app/css/sass/*.scss',
-    cssSourceFiles: './public/app/css/stylesheets/*.css',
+    cssSourceFiles: './public/app/css/stylesheets/main.css',
     cssOutputPath: './public/app/css/stylesheets',
     sasspath: 'public/app/css/sass',  // removed the dot-slash from here  './public/app/css/sass' wrong format
     imagespath : './public/app/css/images',
@@ -207,5 +207,5 @@ gulp.task('browser-sync', function() {
 gulp.task('default', ['nodemon', 'watch']);
 
 //gulp.task('jin', ['mongo', 'browser-sync', 'nodemonjin', 'watch']);
-gulp.task('jin', ['mongo', 'compass', 'templates', 'minifycss', 'jscompress', 'nodemonjin', 'watch']);
+gulp.task('jin', ['mongo', 'compass', 'templates', 'nodemonjin', 'watch']);
 
