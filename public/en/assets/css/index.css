@@ -53,6 +53,7 @@ a.btn-mod:hover{background:#cb5a5a;}
 
 /*发展计划*/
 .project{float: left;width: 420px;}
+.project video{display: block;width: 100%;}
 
 /*满意度*/
 .satisfaction{background: #fbfbfb;margin-top: 96px;padding-bottom: 40px;}
