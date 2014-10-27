@@ -9,7 +9,9 @@ module.exports = function(app){
 
 
     /**********   Routes for HCD Learning Website   **********/
-
+    app.get('/', function(req, res, next){
+        res.redirect('/cn');
+    });
 
     /**********   Routes for E4E Website   **********/
 
