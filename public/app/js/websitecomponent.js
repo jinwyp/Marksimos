@@ -14,7 +14,7 @@
 (function () {
     'use strict';
 
-    angular.module('marksimos.websitecomponent', ['marksimos.model', 'pascalprecht.translate', 'marksimos.translation' ]);
+    angular.module('marksimos.websitecomponent', ['marksimos.templates', 'marksimos.model', 'pascalprecht.translate', 'marksimos.translation' ]);
 
 
     angular.module('marksimos.websitecomponent').directive('userHeader', ['$window', '$translate', 'Student', userHeaderComponent ]);
@@ -39,9 +39,8 @@
                 currentRound : '='
             },
             restrict: 'AE',
-            templateUrl: '/app/js/websitecomponent/userheader.html',
+            templateUrl: 'userheader.html',
             link: function (scope, element, attrs) {
-
 
 
                 scope.clickMenu = function(currentmenu){
@@ -79,7 +78,7 @@
                 currentuser : '='
             },
             restrict: 'AE',
-            templateUrl: '/app/js/websitecomponent/adminheader.html',
+            templateUrl: 'adminheader.html',
             link: function (scope, element, attrs) {
 
                 scope.clickLogout = function () {
@@ -105,7 +104,7 @@
                 currentuser : '='
             },
             restrict: 'AE',
-            templateUrl: '/app/js/websitecomponent/adminmenu.html',
+            templateUrl: 'adminmenu.html',
             link : function(scope, element){
 
                 scope.css = {
@@ -141,7 +140,7 @@
                 data : '='
             },
             restrict: 'AE',
-            templateUrl: '/app/js/report/tablereportcompanystatussku.html'
+            templateUrl: 'tablereportcompanystatussku.html'
         };
     });
 
@@ -152,7 +151,7 @@
                 data : '='
             },
             restrict: 'AE',
-            templateUrl: '/app/js/report/tablereportcompanystatusbrand.html'
+            templateUrl: 'tablereportcompanystatusbrand.html'
         };
     });
 
@@ -163,7 +162,7 @@
                 data : '='
             },
             restrict: 'AE',
-            templateUrl: '/app/js/report/tablereportcompanystatusglobal.html'
+            templateUrl: 'tablereportcompanystatusglobal.html'
         };
     });
 
@@ -174,7 +173,7 @@
                 data : '='
             },
             restrict: 'AE',
-            templateUrl: '/app/js/report/tablereportfinancialreportbrand.html'
+            templateUrl: 'tablereportfinancialreportbrand.html'
         };
     });
 
@@ -185,7 +184,7 @@
                 data : '='
             },
             restrict: 'AE',
-            templateUrl: '/app/js/report/tablereportfinancialreportallbrand.html'
+            templateUrl: 'tablereportfinancialreportallbrand.html'
         };
     });
 
@@ -196,7 +195,7 @@
                 data : '='
             },
             restrict: 'AE',
-            templateUrl: '/app/js/report/tablereportprofitabilityevolutionsku.html'
+            templateUrl: 'tablereportprofitabilityevolutionsku.html'
         };
     });
 
@@ -207,7 +206,7 @@
                 data : '='
             },
             restrict: 'AE',
-            templateUrl: '/app/js/report/tablereportprofitabilityevolutionbrand.html'
+            templateUrl: 'tablereportprofitabilityevolutionbrand.html'
         };
     });
 
@@ -218,7 +217,7 @@
                 data : '='
             },
             restrict: 'AE',
-            templateUrl: '/app/js/report/tablereportprofitabilityevolutionglobal.html'
+            templateUrl: 'tablereportprofitabilityevolutionglobal.html'
         };
     });
 
@@ -232,7 +231,7 @@
                 chartconfig : '='
             },
             restrict: 'AE',
-            templateUrl: '/app/js/report/tablereportcompetitorintelligence.html',
+            templateUrl: 'tablereportcompetitorintelligence.html',
             link: function (scope, element, attrs) {
 
                 scope.plus = 1;
@@ -260,7 +259,7 @@
                 chartconfig : '='
             },
             restrict: 'AE',
-            templateUrl: '/app/js/report/tablereportsegmentdistribution.html',
+            templateUrl: 'tablereportsegmentdistribution.html',
             link: function (scope, element, attrs) {
 
                 scope.plus = 1;
@@ -286,7 +285,7 @@
                 chartconfig : '='
             },
             restrict: 'AE',
-            templateUrl: '/app/js/report/tablereportmarkettrendssku.html',
+            templateUrl: 'tablereportmarkettrendssku.html',
             link: function (scope, element, attrs) {
 
                 scope.plus = 1;
@@ -310,7 +309,7 @@
                 chartconfig : '='
             },
             restrict: 'AE',
-            templateUrl: '/app/js/report/tablereportmarkettrendsbrand.html',
+            templateUrl: 'tablereportmarkettrendsbrand.html',
             link: function (scope, element, attrs) {
 
                 scope.plus = 1;
@@ -333,7 +332,7 @@
                 chartconfig : '='
             },
             restrict: 'AE',
-            templateUrl: '/app/js/report/tablereportmarkettrendsglobal.html',
+            templateUrl: 'tablereportmarkettrendsglobal.html',
             link: function (scope, element, attrs) {
 
                 scope.plus = 1;
@@ -355,7 +354,7 @@
                 unit : '@'
             },
             restrict: 'AE',
-            templateUrl: '/app/js/report/tablereportmarketindicator.html',
+            templateUrl: 'tablereportmarketindicator.html',
             link: function (scope, element, attrs) {
 
                 if(angular.isUndefined(scope.unit)) {
@@ -374,7 +373,7 @@
                 selectScore: '='
             },
             restrict: 'AE',
-            templateUrl: '/app/js/report/tablereportfinalscore.html',
+            templateUrl: 'tablereportfinalscore.html',
             link : function(scope, element, attrs){
             }
         };

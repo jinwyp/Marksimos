@@ -1,9 +1,10 @@
 $(function(){
-	if($("#index").length!=0){
+
+	var initPage=function(){
 		$('#index').fullpage({
-			navigation: true,
+			navigation: true ,
 			navigationPosition: 'right',
-			anchors: ['firstPage', 'secondPage', '3rdPage'],
+			anchors: ['firstPage', 'secondPage', 'thirdPage'],
 			sectionsColor: ['#fff', '#FF441C', '#fff'],
 			navigationColor:'#B3B3B3',
 			css3: true,
@@ -13,32 +14,38 @@ $(function(){
 			scrollingSpeed: 500,
 			resize:false
 		}); 
+		$('#section1').show();
+		$('#section2').show();
 	}
 
-	if($("#company-register").length!=0){
+	if($("#index").length!=0){
+		$('#section1').hide();
+		$('#section2').hide();
+		setTimeout(initPage, 100);
+	}
+
+	var companyInit=function(){
 		$("#company-register").fullpage({
-			navigation: true,
+			navigation: true ,
 			navigationPosition: 'left',
 			anchors: ['step1', 'step2', 'step3'],
 			sectionsColor: ['#fff', '#fff', '#fff'],
 			navigationColor:'#B3B3B3',
 			navigationTooltips:['','',''],
-			/*navigationTooltipsEN:['Company Details','Communication Details','Job Profiles'],
-			navigationTooltipsCN:['公司基本信息','通信细节','工作信息'],*/
 			css3: true,
 			scrollOverflow: true,
 			loopBottom:true,
 			keyboardScrolling:false,
 			scrollingSpeed: 500,
-			resize:false,
-			afterResize:function(){
-				$('#fp-nav').css('left',($('.e4e-logo').offset().left+15)+'px');
-			}
+			resize:false
 		});
 	}
 
+	if($("#company-register").length!=0){
+		setTimeout(companyInit, 100);
+	}
 
-	if($("#student-register").length!=0){
+	var studentInit=function(){
 		$("#student-register").fullpage({
 			navigation: true,
 			navigationPosition: 'left',
@@ -46,18 +53,17 @@ $(function(){
 			sectionsColor: ['#fff', '#fff'],
 			navigationColor:'#B3B3B3',
 			navigationTooltips:['',''],
-			/*navigationTooltipsEN:['Basic Details','Profile Details'],
-			navigationTooltipsCN:['基本信息','个人资料'],*/
 			css3: true,
 			scrollOverflow: true,
 			loopBottom:true,
 			keyboardScrolling:false,
 			scrollingSpeed: 500,
-			resize:false,
-			afterResize:function(){
-				$('#fp-nav').css('left',($('.e4e-logo').offset().left+15)+'px');
-			}
+			resize:false
 		});
+	}
+
+	if($("#student-register").length!=0){
+		setTimeout(studentInit, 100);
 	}
 
 	if($("#success").length!=0){
@@ -86,7 +92,6 @@ $(function(){
 
 	$('.form_date').click(function(){
 		$('.form_date').datetimepicker({
-	        //language:  'fr',
 	        weekStart: 1,
 	        todayBtn:  1,
 			autoclose: 1,

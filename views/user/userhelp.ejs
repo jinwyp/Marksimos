@@ -10,41 +10,26 @@
     <div class="row login" ng-cloak>
         <div class="col-md-10 col-md-offset-1 panelbox">
 
-
             <div class="row intro_box">
                 <div class="col-md-12">
                     <ul class="nav nav-pills">
-                        <li ng-class="{'active':isFAQShown}">
-                            <a href="" ng-click='clickIntro("FAQ")'>{{'HelpPageMenuFAQ' | translate}}</a>
+                        <li ng-class="{'active' : css.navTab =='FAQ'}">
+                            <a href="" ng-click='clickMenuTab("FAQ")'>{{'HelpPageMenuFAQ' | translate}}</a>
                         </li>
-                        <li ng-class="{'active':isVideoShown}">
-                            <a href="" ng-click='clickIntro("Video")'>{{'HelpPageMenuVideo' | translate}}</a>
+                        <li ng-class="{'active':css.navTab =='Video'}">
+                            <a href="" ng-click='clickMenuTab("Video")'>{{'HelpPageMenuVideo' | translate}}</a>
                         </li>
-                        <li ng-class="{'active':isManualShown}">
-                            <a href="" ng-click='clickIntro("Manual")'>{{'HelpPageMenuManual' | translate}}</a>
+                        <li ng-class="{'active':css.navTab =='Manual'}">
+                            <a href="" ng-click='clickMenuTab("Manual")'>{{'HelpPageMenuManual' | translate}}</a>
                         </li>
                     </ul>
                     <div class="divider_horizontal"></div>
                 </div>
-
-
             </div>
 
 
-            <div class="row intro_data" ng-show='isManualShown'>
-                <div class="col-md-12">
-                    <div class="bs-docs-section">
-                        <h3 class="manual_h3 col-md-9">{{'ManualPageTitle' | translate}}</h3>
-                        <h3 class="pull-right manual_download">
-                            <a href="/marksimos/download/manual">{{'ManualPageDownload' | translate}}</a>
-                        </h3>
-                        <div class="manual_clear"></div>
-                        <div gen-parse-md='manual' class="markdown-body"></div>
-                    </div>
-                </div>
-            </div>
 
-            <div class="row intro_data" ng-show='isFAQShown'>
+            <div class="row intro_data" ng-if="css.navTab =='FAQ'">
                 <div class="col-md-12">
                     <div class="bs-docs-section">
                         <h3 class="faq_h3">{{'FAQPageTitle' | translate}}</h3>
@@ -57,11 +42,9 @@
                         <div class="bs-docs-sidebar">
 
                             <ul class="list-inline bs-faq-sidenav">
-
-                                <li class="" ng-class="{'active':questionsShown[$index]}" ng-repeat='category in faq.categories'>
-                                    <a href="" ng-click='chickFAQ($index)'>{{category.name}}</a>
+                                <li class="" ng-class="{'active': category._id == data.currentFaqCategory._id}" ng-repeat='category in data.currentFaq.categories'>
+                                    <a href="" ng-click='chickFAQTab(category)'>{{category.name}}</a>
                                 </li>
-
                             </ul>
 
                         </div>
@@ -70,39 +53,56 @@
 
                 <div class="col-md-12">
                     <div class="bs-docs-section">
-                        <div ng-repeat='category in faq.categories' ng-show='questionsShown[$index]'>
-                            <h3 class="bs_h3">{{category.name}}</h3>
-                            <div ng-repeat='q in category.questions'>
-                                <h4 class="bs_h4">{{$index+1}}. {{q.title}}</h4>
+                        <div>
+
+                            <!--<h3 class="bs_h3">{{data.currentFaqCategory.name}}</h3>-->
+                            <div ng-repeat='question in data.currentFaqCategory.questions'>
+                                <h4 class="bs_h4">{{$index+1}}. {{question.title}}</h4>
                                 <div class="info_highlight">
-                                    <p class="bs_p">{{q.answer}}</p>
+                                    <p class="bs_p">{{question.answer}}</p>
                                 </div>
                             </div>
+
                         </div>
                     </div>
                 </div>
             </div>
 
-            <div class="row video_list" ng-show='isVideoShown'>
-                <div class="col-md-3 col-md-offset-1-5">
 
-                    <iframe width=100% src="http://player.youku.com/embed/XNzE0OTYyMTcy" frameborder=0 allowfullscreen></iframe>
+            <div class="row video_list" ng-if="css.navTab =='Video'">
+                <div class="col-md-4 ">
 
-                </div>
-
-                <div class="col-md-3">
-
-                    <iframe width=100% src="http://player.youku.com/embed/XNTY0ODgxMzAw" frameborder=0 allowfullscreen></iframe>
+                    <iframe width=100% height=240 src="http://player.youku.com/embed/XODAwNTY5NTM2" frameborder=0 allowfullscreen></iframe>
 
                 </div>
 
-                <div class="col-md-3">
+                <div class="col-md-4">
 
-                    <iframe width=100% src="http://player.youku.com/embed/XNzMxODUwODMy" frameborder=0 allowfullscreen></iframe>
+                    <iframe width=100% height=240 src="http://player.youku.com/embed/XNjY1MzU0MDA0" frameborder=0 allowfullscreen></iframe>
+
+                </div>
+
+                <div class="col-md-4">
+
+                    <iframe width=100% height=240 src="http://player.youku.com/embed/XNjQ2MzAyNDY4" frameborder=0 allowfullscreen></iframe>
 
                 </div>
             </div>
 
+
+            <div class="row intro_data" ng-if="css.navTab =='Manual'">
+                <div class="col-md-12">
+                    <div class="bs-docs-section">
+                        <h3 class="manual_h3 col-md-9">{{'ManualPageTitle' | translate}}</h3>
+                        <h3 class="pull-right manual_download">
+                            <a href="/marksimos/download/manualeng" ng-show="css.language=='en_US'"><span class="glyphicon glyphicon-download-alt"></span>{{'ManualPageDownload' | translate}}</a>
+                            <a href="/marksimos/download/manualchs" ng-show="css.language=='zh_CN'"><span class="glyphicon glyphicon-download-alt"></span>{{'ManualPageDownload' | translate}}</a>
+                        </h3>
+                        <div class="manual_clear"></div>
+                        <div gen-parse-md='data.currentManual' class="markdown-body"></div>
+                    </div>
+                </div>
+            </div>
 
         </div>
 

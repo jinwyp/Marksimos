@@ -16,8 +16,8 @@ exports.getQuestionnaire =function(req,res,next){
 
     var questionnaire={
     	seminarId:seminarId,
-    	email:email,
-}
+    	email:email
+};
 
     questionnaireModel.findOne(seminarId,email)
     .then(function(result){
@@ -39,7 +39,7 @@ exports.getQuestionnaire =function(req,res,next){
         res.send(500, {message: "get questionnaire failed."})
     })
     .done();
-}
+};
 
 exports.updateQuestionnaire=function(req,res,next){
     var seminarId=req.session.seminarId;

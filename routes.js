@@ -9,7 +9,9 @@ module.exports = function(app){
 
 
     /**********   Routes for HCD Learning Website   **********/
-
+    app.get('/', function(req, res, next){
+        res.redirect('/cn');
+    });
 
     /**********   Routes for E4E Website   **********/
 
@@ -59,8 +61,11 @@ module.exports = function(app){
     });
 
     //download file
-    app.get('/marksimos/download/manual', function(req, res, next){
+    app.get('/marksimos/download/manualeng', function(req, res, next){
         res.download('./public/app/file/MarkSimos_Participants_Manual.pdf');
+    });
+    app.get('/marksimos/download/manualchs', function(req, res, next){
+        res.download('./public/app/file/MarkSimos_Participants_Manual_chs.pdf');
     });
 
     app.get('/marksimos/manual/zh_CN',function(req,res,next){
