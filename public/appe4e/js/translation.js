@@ -31,6 +31,11 @@ app.config(['$translateProvider', function($translateProvider){
 
         "e4eIndexJoin":"JOIN E4E",
 
+        "e4eIndexCompanyRegistrationTitle" : "Discover the best talent",
+        "e4eIndexCompanyRegistration" : "Register to participate in our online student competition and access the best talent through HCD Learning’s corporate service",
+        "e4eIndexStudentRegistrationTitle" : "Play Marksimos. Discover your career",
+        "e4eIndexStudentRegistration" : "Register to participate in our online student competition and access HCD Learning’s student services",
+
 
         /*e4e register*/
         "e4eRegisterGetStart":"Get Start",
@@ -101,7 +106,8 @@ app.config(['$translateProvider', function($translateProvider){
         "e4eSuccessCon":"Congratulations",
         "e4eSuccessConInfo":"You have ssccessfully registered",
         "e4eSuccessConInfoLast":"with HCD Learning",
-        "e4eSuccessPassword":"Password has been sent to your email",
+        "e4eSuccessPassword":"Password is",
+        "e4eSuccessResetPassword":"If you forget the password,please ask the admin to reset password.",
         "e4eSuccessProceed":"Please proceed to",
         "e4eSuccessUpdate":"and update the jobprofiles and select winningstudents for your company",
         "e4eSuccessLogin":"to login and participate the MarkSimos game"
@@ -142,6 +148,11 @@ app.config(['$translateProvider', function($translateProvider){
         "e4eIndexAssessmentInfo":"Through the HCD Learning competition, you can assess yourself against thousands of the participants from different universities all over China",
 
         "e4eIndexJoin":"加入 E4E",
+
+        "e4eIndexCompanyRegistrationTitle" : "Discover the best talent",
+        "e4eIndexCompanyRegistration" : "Register to participate in our online student competition and access the best talent through HCD Learning’s corporate service",
+        "e4eIndexStudentRegistrationTitle" : "Play Marksimos. Discover your career",
+        "e4eIndexStudentRegistration" : "Register to participate in our online student competition and access HCD Learning’s student services",
 
         /*e4e register*/
         "e4eRegisterGetStart":"现在开始",
@@ -211,7 +222,8 @@ app.config(['$translateProvider', function($translateProvider){
         "e4eSuccessCon":"恭喜你",
         "e4eSuccessConInfo":"你已经成功注册",
         "e4eSuccessConInfoLast":"到 HCD Learning",
-        "e4eSuccessPassword":"Password has been sent to your email",
+        "e4eSuccessPassword":"Password is",
+        "e4eSuccessResetPassword":"If you forget the password,please ask the admin to reset password.",
         "e4eSuccessProceed":"Please proceed to",
         "e4eSuccessUpdate":"and update the jobprofiles and select winningstudents for your company",
         "e4eSuccessLogin":"to login and participate the MarkSimos game"

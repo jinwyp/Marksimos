@@ -10,12 +10,12 @@ var seminarController = require('./controllers/seminar.js');
 var questionnaireController = require('./controllers/questionnaire.js');
 var faqController = require('./controllers/faq.js');
 
-
+var userModel = require('./models/user.js');
+var logger = require('../common/logger.js');
 
 var util = require('util');
 var express = require('express');
 var sessionOperation = require('../common/sessionOperation.js');
-
 
 var config = require('../common/config.js');
 
@@ -27,6 +27,141 @@ apiRouter.get('/viewsession', function(req, res){
 
 
 
+
+
+
+/**********   Routes for rendering templates HCD Learning Website   **********/
+apiRouter.get('/', function(req, res, next){
+    res.redirect('/cn');
+});
+
+/**********   Routes for rendering templates E4E Website   **********/
+
+apiRouter.get('/e4e', function(req, res, next){
+    res.render('e4e/index.ejs',{title:'HCD E4E'});
+});
+
+apiRouter.get('/e4e/register/company', function(req, res, next){
+    res.render('e4e/company-register.ejs',{title:'HCD E4E'});
+});
+
+apiRouter.get('/e4e/register/student', function(req, res, next){
+    res.render('e4e/student-register.ejs',{title:'HCD E4E'});
+});
+
+apiRouter.get('/e4e/company-success', function(req, res, next){
+    res.render('e4e/company-success.ejs',{title:'HCD E4E'});
+});
+apiRouter.get('/e4e/student-success', function(req, res, next){
+    res.render('e4e/student-success.ejs',{title:'HCD E4E'});
+});
+
+
+/**********   Routes for rendering templates MarkSimos User/Student   **********/
+
+apiRouter.get('/marksimos', requireStudentLogin({ isRedirect : true }), function(req, res, next){
+    res.redirect('/marksimos/intro');
+});
+
+apiRouter.get('/marksimos/login', function(req, res, next){
+    res.render('user/userlogin.ejs', { title : 'MarkSimos - Sign In'});
+});
+
+apiRouter.get('/marksimos/intro', requireStudentLogin({ isRedirect : true }), function(req, res, next){
+    res.render('user/userintroduction.ejs', { title : 'MarkSimos - Introduction Videos'});
+});
+
+// requireStudentLogin({ isRedirect : true }),
+apiRouter.get('/marksimos/home', requireStudentLogin({ isRedirect : true }), function(req, res, next){
+    res.render('user/userhome.ejs', { title : 'MarkSimos - User Home'});
+});
+
+
+
+apiRouter.get('/marksimos/help', function(req, res, next){
+    res.render('user/userhelp.ejs', { title : 'MarkSimos - Help'});
+});
+
+//download file
+apiRouter.get('/marksimos/download/manualeng', function(req, res, next){
+    res.download('./public/app/file/MarkSimos_Participants_Manual.pdf');
+});
+apiRouter.get('/marksimos/download/manualchs', function(req, res, next){
+    res.download('./public/app/file/MarkSimos_Participants_Manual_chs.pdf');
+});
+
+apiRouter.get('/marksimos/manual/zh_CN',function(req,res,next){
+    res.render('user/help/manual_cn.md',{layout:false});
+});
+apiRouter.get('/marksimos/manual/en_US',function(req,res,next){
+    res.render('user/help/manual_en.md',{layout:false});
+});
+
+
+
+
+
+// apiRouter.get('/activate', function(req, res, next){
+//     var email = req.query.email;
+//     var token = req.query.token;
+
+//     if(!email){
+//         return res.send(400, {message: 'email is required.'})
+//     }
+
+//     if(!token){
+//         return res.send(400, {message: 'token is required.'})
+//     }
+
+//     userModel.findByEmailAndToken(email, token)
+//         .then(function(result){
+//             if(result){
+//                 return userModel.updateByEmail(email, {
+//                     isActivated: true
+//                 })
+//                     .then(function(numAffected){
+//                         if(numAffected === 1){
+//                             return res.redirect('/login');
+//                         }
+//                         throw new Error('more or less than 1 record is updated. it should be only one.')
+//                     });
+//             }else{
+//                 throw new Error('User does not exist.');
+//             }
+//         })
+//         .fail(function(err){
+//             logger.error(err);
+//             res.send(500, {message: 'activate failed.'})
+//         })
+//         .done();
+// });
+
+
+
+
+/**********   Routes for rendering templates Administrator   **********/
+
+
+
+apiRouter.get('/marksimos/admin', function(req, res, next){
+    res.render('admin/adminlogin.ejs', {title : 'Admin | Log in'});
+});
+
+apiRouter.get('/marksimos/adminhome', requireAdminLogin({isRedirect : true}), function(req, res, next){
+    res.render('admin/adminhome.ejs', {title : 'Admin | Dashboard'});
+});
+
+
+
+
+
+
+
+//set Content-Type for all API JSON resppnse
+apiRouter.all("/api/*", function(req, res, next){
+    res.set('Content-Type', 'application/json; charset=utf-8');
+    next();
+});
 
 
 
@@ -47,8 +182,8 @@ apiRouter.post('/e4e/register/student',userController.registerE4Estudent);
 /**********  API For Student  **********/
 
 apiRouter.post('/marksimos/api/register', userController.register);
-apiRouter.post('/marksimos/api/login', userController.login);
-apiRouter.get('/marksimos/api/logout', requireLogin, userController.logout);
+apiRouter.post('/marksimos/api/login', userController.studentLogin);
+apiRouter.get('/marksimos/api/logout', requireStudentLogin(true), userController.logout);
 
 
 apiRouter.get('/marksimos/api/create_admin', function(req, res, next){
@@ -83,90 +218,118 @@ apiRouter.get('/marksimos/api/initfaq', faqController.initFAQ);
 apiRouter.get('/marksimos/api/faq', faqController.getFAQ);
 
 //getQuestionnaire
-apiRouter.get('/marksimos/api/questionnaire',requireLogin,questionnaireController.getQuestionnaire);
-apiRouter.put('/marksimos/api/questionnaire',requireLogin,questionnaireController.updateQuestionnaire);
+apiRouter.get('/marksimos/api/questionnaire',requireStudentLogin({isRedirect : false}),questionnaireController.getQuestionnaire);
+apiRouter.put('/marksimos/api/questionnaire',requireStudentLogin({isRedirect : false}),questionnaireController.updateQuestionnaire);
 
 
 // get seminar
-apiRouter.get('/marksimos/api/user', requireLogin, userController.getUser);
-apiRouter.get('/marksimos/api/student/seminar', requireLogin, authorize('getSeminarOfStudent'), studentController.getSeminarOfStudent);
-apiRouter.get('/marksimos/api/studentinfo', requireLogin, authorize('getStudent'),userController.getStudent);
+apiRouter.get('/marksimos/api/user', requireStudentLogin({isRedirect : false}), userController.getUser);
+apiRouter.get('/marksimos/api/student/seminar', requireStudentLogin({isRedirect : false}), authorize('getSeminarOfStudent'), studentController.getSeminarOfStudent);
+apiRouter.get('/marksimos/api/studentinfo', requireStudentLogin({isRedirect : false}), authorize('getStudent'),userController.getStudent);
 
 //report
-apiRouter.get('/marksimos/api/report/:report_name', requireLogin, reportController.getReport);
-apiRouter.get('/marksimos/api/adminreport/:report_name', requireLogin, reportController.getReport);
-apiRouter.get('/marksimos/api/choose_seminar', requireLogin, authorize('chooseSeminar'), seminarController.chooseSeminar);
-apiRouter.get('/marksimos/api/submitdecision', requireLogin, decisionController.submitDecision);
+apiRouter.get('/marksimos/api/report/:report_name', requireStudentLogin({isRedirect : false}), reportController.getReport);
+apiRouter.get('/marksimos/api/choose_seminar', requireStudentLogin({isRedirect : false}), authorize('chooseSeminar'), seminarController.chooseSeminar);
+apiRouter.get('/marksimos/api/submitdecision', requireStudentLogin({isRedirect : false}), decisionController.submitDecision);
 
-apiRouter.get('/marksimos/api/finalscore/:period', requireLogin, reportController.getFinalScore);
+apiRouter.get('/marksimos/api/finalscore/:period', requireStudentLogin({isRedirect : false}), reportController.getFinalScore);
 
 //chart
-apiRouter.get('/marksimos/api/chart/:chart_name', requireLogin, chartController.getChart);
+apiRouter.get('/marksimos/api/chart/:chart_name', requireStudentLogin({isRedirect : false}), chartController.getChart);
 
 
 //make decision page
-apiRouter.put('/marksimos/api/sku/decision', requireLogin, decisionController.updateSKUDecision);
-apiRouter.post('/marksimos/api/sku/decision', requireLogin, decisionController.addSKU);
-apiRouter.delete('/marksimos/api/sku/decision/:brand_id/:sku_id', requireLogin, decisionController.deleteSKU);
-apiRouter.put('/marksimos/api/brand/decision', requireLogin, decisionController.updateBrandDecision);
-apiRouter.post('/marksimos/api/brand/decision', requireLogin, decisionController.addBrand);
-apiRouter.delete('/marksimos/api/brand/decision', requireLogin, decisionController.deleteBrand);
-apiRouter.put('/marksimos/api/company/decision', requireLogin, decisionController.updateCompanyDecision);
+apiRouter.put('/marksimos/api/sku/decision', requireStudentLogin({isRedirect : false}), decisionController.updateSKUDecision);
+apiRouter.post('/marksimos/api/sku/decision', requireStudentLogin({isRedirect : false}), decisionController.addSKU);
+apiRouter.delete('/marksimos/api/sku/decision/:brand_id/:sku_id', requireStudentLogin({isRedirect : false}), decisionController.deleteSKU);
+apiRouter.put('/marksimos/api/brand/decision', requireStudentLogin({isRedirect : false}), decisionController.updateBrandDecision);
+apiRouter.post('/marksimos/api/brand/decision', requireStudentLogin({isRedirect : false}), decisionController.addBrand);
+apiRouter.delete('/marksimos/api/brand/decision', requireStudentLogin({isRedirect : false}), decisionController.deleteBrand);
+apiRouter.put('/marksimos/api/company/decision', requireStudentLogin({isRedirect : false}), decisionController.updateCompanyDecision);
 
 
-apiRouter.get('/marksimos/api/company', requireLogin, decisionController.getDecision);
+apiRouter.get('/marksimos/api/company', requireStudentLogin({isRedirect : false}), decisionController.getDecision);
 
-apiRouter.get('/marksimos/api/product_portfolio', requireLogin, decisionController.getProductPortfolio);
-apiRouter.get('/marksimos/api/spending_details', requireLogin, decisionController.getSpendingDetails);
-apiRouter.get('/marksimos/api/future_projection_calculator/:sku_id', requireLogin, decisionController.getSKUInfo);
-apiRouter.get('/marksimos/api/company/otherinfo', requireLogin, decisionController.getOtherinfo);
+apiRouter.get('/marksimos/api/product_portfolio', requireStudentLogin({isRedirect : false}), decisionController.getProductPortfolio);
+apiRouter.get('/marksimos/api/spending_details', requireStudentLogin({isRedirect : false}), decisionController.getSpendingDetails);
+apiRouter.get('/marksimos/api/future_projection_calculator/:sku_id', requireStudentLogin({isRedirect : false}), decisionController.getSKUInfo);
+apiRouter.get('/marksimos/api/company/otherinfo', requireStudentLogin({isRedirect : false}), decisionController.getOtherinfo);
 
 
 
 /**********  API For Administrator  **********/
-apiRouter.get('/marksimos/api/admin/distributors', requireLogin, authorize('searchDistributor'), distributorController.searchDistributor);
-apiRouter.post('/marksimos/api/admin/distributors', requireLogin, authorize('addDistributor'), distributorController.addDistributor);
-apiRouter.put('/marksimos/api/admin/distributors/:distributor_id', requireLogin, authorize('updateDistributor'), distributorController.updateDistributor);
+apiRouter.post('/marksimos/api/admin/login', userController.adminLogin);
+
+apiRouter.get('/marksimos/api/admin/distributors', requireAdminLogin({isRedirect : false}), authorize('searchDistributor'), distributorController.searchDistributor);
+apiRouter.post('/marksimos/api/admin/distributors', requireAdminLogin({isRedirect : false}), authorize('addDistributor'), distributorController.addDistributor);
+apiRouter.put('/marksimos/api/admin/distributors/:distributor_id', requireAdminLogin({isRedirect : false}), authorize('updateDistributor'), distributorController.updateDistributor);
 
 
-apiRouter.get('/marksimos/api/admin/facilitators', requireLogin, authorize('searchFacilitator'), facilitatorController.searchFacilitator);
-apiRouter.post('/marksimos/api/admin/facilitators', requireLogin, authorize('addFacilitator'), facilitatorController.addFacilitator);
-apiRouter.put('/marksimos/api/admin/facilitators/:facilitator_id', requireLogin, authorize('updateFacilitator'), facilitatorController.updateFacilitator);
+apiRouter.get('/marksimos/api/admin/facilitators', requireAdminLogin({isRedirect : false}), authorize('searchFacilitator'), facilitatorController.searchFacilitator);
+apiRouter.post('/marksimos/api/admin/facilitators', requireAdminLogin({isRedirect : false}), authorize('addFacilitator'), facilitatorController.addFacilitator);
+apiRouter.put('/marksimos/api/admin/facilitators/:facilitator_id', requireAdminLogin({isRedirect : false}), authorize('updateFacilitator'), facilitatorController.updateFacilitator);
 
-apiRouter.get('/marksimos/api/admin/facilitator/seminar', requireLogin, authorize('getSeminarOfFacilitator'), facilitatorController.getSeminarOfFacilitator);
-apiRouter.post('/marksimos/api/admin/seminar', requireLogin, authorize('addSeminar'), seminarController.addSeminar);
+apiRouter.get('/marksimos/api/admin/facilitator/seminar', requireAdminLogin({isRedirect : false}), authorize('getSeminarOfFacilitator'), facilitatorController.getSeminarOfFacilitator);
+apiRouter.post('/marksimos/api/admin/seminar', requireAdminLogin({isRedirect : false}), authorize('addSeminar'), seminarController.addSeminar);
 
 
-apiRouter.get('/marksimos/api/admin/students', requireLogin, authorize('searchStudent'), studentController.searchStudent);
-apiRouter.post('/marksimos/api/admin/students', requireLogin, authorize('addStudent'), studentController.addStudent);
-apiRouter.put('/marksimos/api/admin/students/:student_id', requireLogin, authorize('updateStudent'), studentController.updateStudent);
+apiRouter.get('/marksimos/api/admin/students', requireAdminLogin({isRedirect : false}), authorize('searchStudent'), studentController.searchStudent);
+apiRouter.post('/marksimos/api/admin/students', requireAdminLogin({isRedirect : false}), authorize('addStudent'), studentController.addStudent);
+apiRouter.put('/marksimos/api/admin/students/:student_id', requireAdminLogin({isRedirect : false}), authorize('updateStudent'), studentController.updateStudent);
 
 
 //get all seminars of the current student
-apiRouter.post('/marksimos/api/admin/assign_student_to_seminar', requireLogin, authorize('assignStudentToSeminar'), seminarController.assignStudentToSeminar);
-apiRouter.post('/marksimos/api/admin/remove_student_from_seminar', requireLogin, authorize('removeStudentFromSeminar'), seminarController.removeStudentFromSeminar);
+apiRouter.post('/marksimos/api/admin/assign_student_to_seminar', requireAdminLogin({isRedirect : false}), authorize('assignStudentToSeminar'), seminarController.assignStudentToSeminar);
+apiRouter.post('/marksimos/api/admin/remove_student_from_seminar', requireAdminLogin({isRedirect : false}), authorize('removeStudentFromSeminar'), seminarController.removeStudentFromSeminar);
 
-apiRouter.post('/marksimos/api/admin/init', requireLogin, initController.init());
-apiRouter.post('/marksimos/api/admin/runsimulation/:seminar_id/:round',  requireLogin, authorize('runSimulation'), initController.runSimulation());
+apiRouter.post('/marksimos/api/admin/init', requireAdminLogin({isRedirect : false}), initController.init());
+apiRouter.post('/marksimos/api/admin/runsimulation/:seminar_id/:round',  requireAdminLogin({isRedirect : false}), authorize('runSimulation'), initController.runSimulation());
+
+//reset student password
+apiRouter.post('/marksimos/api/admin/resetPassword', requireAdminLogin({isRedirect : false}), authorize('updateStudent'), studentController.resetPassword);
+
 
 // get current admin role
-apiRouter.get('/marksimos/api/admin/user', requireLogin, userController.getUser);
+apiRouter.get('/marksimos/api/admin/user', requireAdminLogin({isRedirect : false}), userController.getUser);
 
 
+//facilitator report & chart view
+//note : To get full version of some reports, plz make sure user role != student
+//TODO: decision modification for facilitator 
+apiRouter.get('/marksimos/api/admin/report/:report_name', requireAdminLogin({isRedirect : false}), reportController.getReport);
+apiRouter.get('/marksimos/api/admin/chart/:chart_name', requireAdminLogin({isRedirect : false}), chartController.getChart);
+apiRouter.get('/marksimos/api/admin/finalscore/:period', requireAdminLogin({isRedirect : false}), reportController.getFinalScore);
+apiRouter.get('/marksimos/api/admin/choose_seminar', requireStudentLogin({isRedirect : false}), authorize('chooseSeminar'), seminarController.chooseSeminar);
 
 
-
-
-
-
-
-function requireLogin(req, res, next){
-    if(sessionOperation.getLoginStatus(req)){
-        next();
-    }else{
-        res.send(400, {message: 'Login required.'});
+function requireStudentLogin(params){   
+    return function(req, res, next){
+        if(sessionOperation.getStudentLoginStatus(req)){
+            next();
+        }else{
+            if(params.isRedirect){
+                res.redirect('/marksimos/login');
+            } else {
+                res.send(400, {message: 'Student Login required.'});                
+            }
+        }        
     }
 }
+
+function requireAdminLogin(params){
+    return function(req, res, next){
+        if(sessionOperation.getAdminLoginStatus(req)){
+            next();
+        }else{
+            if(params.isRedirect){
+                res.redirect('/marksimos/admin');
+            } else {
+                res.send(400, {message: 'Admin Login required.'});
+            }
+        }        
+    }    
+}
+
 
 /**
  * @param {String} resource identifier of url

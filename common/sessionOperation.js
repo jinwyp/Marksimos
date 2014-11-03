@@ -3,13 +3,25 @@
 *
 * @param {Boolean} loginStatus
 */
-exports.setLoginStatus = function(req, loginStatus){
-    req.session.loginStatus = loginStatus;
+exports.setStudentLoginStatus = function(req, loginStatus){
+    req.session.studentLoginStatus = loginStatus;
+    req.session.adminLoginStatus = false;    
 }
 
-exports.getLoginStatus = function(req){
-    return req.session.loginStatus;
+exports.getStudentLoginStatus = function(req){
+    return req.session.studentLoginStatus;
 }
+
+exports.setAdminLoginStatus = function(req, loginStatus){
+    req.session.adminLoginStatus = loginStatus;
+    req.session.studentLoginStatus = false;
+}
+
+exports.getAdminLoginStatus = function(req){
+    return req.session.adminLoginStatus;
+}
+
+
 
 exports.setUserRole = function(req, userRole){
     req.session.userRole = userRole;

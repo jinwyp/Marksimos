@@ -63,7 +63,9 @@ exports.getStudent = function(req, res, next){
 }
 
 exports.logout = function(req, res, next){
-    sessionOperation.setLoginStatus(req, false);
+    sessionOperation.setStudentLoginStatus(req, false);
+    sessionOperation.setAdminLoginStatus(req, false);
+
     sessionOperation.setUserRole(req, "");
     sessionOperation.setUserId(req, "");
     sessionOperation.setEmail(req, "");
@@ -103,6 +105,7 @@ exports.register = function(req, res, next){
 
     var activateToken = utility.generateAcivateToken(email);
     user.activateToken = activateToken;
+    user.isE4EUser = false;
 
     userModel.findByEmail(email)
     .then(function(findResult){
@@ -130,7 +133,20 @@ exports.register = function(req, res, next){
         res.send(500, {message: 'register failed.'});
     })
     .done();
+};
+
+
+function randomString(len) {
+    len = len || 32;
+    var $chars = 'ABCDEFGHJKMNPQRSTWXYZabcdefhijkmnprstwxyz2345678';    /****默认去掉了容易混淆的字符oOLl,9gq,Vv,Uu,I1****/
+    var maxPos = $chars.length;
+    var pwd = '';
+    for (i = 0; i < len; i++) {
+        pwd += $chars.charAt(Math.floor(Math.random() * maxPos));
+    }
+    return pwd;
 }
+
 
 //registerE4Estudent
 exports.registerE4Estudent = function(req, res, next){
@@ -142,7 +158,8 @@ exports.registerE4Estudent = function(req, res, next){
     }
 
     var email = req.body.email;
-    var password = "hcd123456";
+    var password = randomString(6);
+    var oldPassword = password;
     password = utility.hashPassword(password);
 
     var user = {
@@ -171,7 +188,7 @@ exports.registerE4Estudent = function(req, res, next){
         return userModel.register(user)
         .then(function(result){
             if(result){
-                return res.send({message: 'Register success'});
+                return res.send({message: 'Register success',password:oldPassword});
 
                 // return utility.sendActivateEmail(email, activateToken)
                 // .then(function(sendEmailResult){
@@ -204,7 +221,8 @@ exports.registerE4Ecompany = function(req, res, next){
     }
 
     var email = req.body.email;
-    var password = "hcd123456";
+    var password = randomString(6);
+    var oldPassword = password;
     password = utility.hashPassword(password);
 
     var user = {
@@ -232,7 +250,8 @@ exports.registerE4Ecompany = function(req, res, next){
         return userModel.register(user)
         .then(function(result){
             if(result){
-                return res.send({message: 'Register success'});
+                return res.send({message: 'Register success',password:oldPassword});
+
 
                 // return utility.sendActivateEmail(email, activateToken)
                 // .then(function(sendEmailResult){
@@ -289,7 +308,7 @@ exports.activate = function(req, res, next){
     .done();
 }
 
-exports.login = function(req, res, next){
+exports.studentLogin = function(req, res, next){
     req.checkBody('email', 'Invalid email.').notEmpty().isEmail();
     req.assert('password', '6 to 20 characters required').len(6, 20);
 
@@ -317,7 +336,51 @@ exports.login = function(req, res, next){
             return res.send(400, {message: 'Email or password is wrong.'})
         }
 
-        sessionOperation.setLoginStatus(req, true);
+        sessionOperation.setStudentLoginStatus(req, true);
+        sessionOperation.setUserRole(req, user.role);
+        sessionOperation.setUserId(req, user._id);
+        sessionOperation.setEmail(req, email);
+
+        return res.send({
+            userId: user._id
+        });
+    })
+    .fail(function(err){
+        logger.error(err);
+        return res.send(500, {message: 'Login failed.'});
+    })
+    .done();
+};
+
+exports.adminLogin = function(req, res, next){
+    req.checkBody('email', 'Invalid email.').notEmpty().isEmail();
+    req.assert('password', '6 to 20 characters required').len(6, 20);
+
+    var errors = req.validationErrors();
+    if(errors){
+        return res.send(400, {message: util.inspect(errors)});
+    }
+
+    var email = req.body.email;
+    var password = req.body.password;
+
+    //console.log(email, password);
+
+    userModel.findByEmail(email)
+    .then(function(user){
+        if(!user){
+            return res.send(400, {message: 'User does not exist.'});
+        }
+
+        // if(!user.isActivated){
+        //     return res.send(400, {message: 'User is not activated.'})
+        // }
+
+        if(!utility.comparePassword(password, user.password)){
+            return res.send(400, {message: 'Email or password is wrong.'})
+        }
+
+        sessionOperation.setAdminLoginStatus(req, true);
         sessionOperation.setUserRole(req, user.role);
         sessionOperation.setUserId(req, user._id);
         sessionOperation.setEmail(req, email);
