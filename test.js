@@ -56,9 +56,19 @@
 // test(2)();
 // test(3)();
 
-var test = [1, 2, 3, 4, 5];
 
-var a = 1, b = 1;
+var test = {
+	a : '1',
+	b : '2'
+}
 
-test.push(a+b);
-console.log(test);
+console.log('outside:' + test.a);
+for (var prop in test) {
+	if(test[prop] == '1'){ test[prop] = 3; }
+	console.log(test[prop]);
+};
+
+
+console.log(typeof({123 : '123'}));
+
+console.log('123'.abc);

@@ -25,7 +25,7 @@
 
         $scope.login = function(form){
             if(form.$valid){
-                $http.post('/marksimos/api/login', $scope.data.admin).success(function(data, status, headers, config){
+                $http.post('/marksimos/api/admin/login', $scope.data.admin).success(function(data, status, headers, config){
 
                     $window.location.href = "/marksimos/adminhome" ;
 
@@ -138,6 +138,7 @@
                 status :'false'
             },
             seminars : [],
+
 
             addStudentToSeminar : {
                 seminar_id : 0,
@@ -264,6 +265,10 @@
         $scope.data.newStudent.country = $scope.data.country[20].name;
         $scope.data.newSeminar.country = $scope.data.country[20].name;
 
+        $scope.data.newDistributor.country = $scope.data.country[20].name;
+        $scope.data.newFacilitator.country = $scope.data.country[20].name;
+        $scope.data.newStudent.country = $scope.data.country[20].name;
+        $scope.data.newSeminar.country = $scope.data.country[20].name;
 
         /********************  获取信息  ********************/
 
@@ -568,5 +573,6 @@
 
 
     }]);
+
 
 }());

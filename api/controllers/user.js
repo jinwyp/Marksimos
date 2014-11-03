@@ -63,7 +63,9 @@ exports.getStudent = function(req, res, next){
 }
 
 exports.logout = function(req, res, next){
-    sessionOperation.setLoginStatus(req, false);
+    sessionOperation.setStudentLoginStatus(req, false);
+    sessionOperation.setAdminLoginStatus(req, false);
+
     sessionOperation.setUserRole(req, "");
     sessionOperation.setUserId(req, "");
     sessionOperation.setEmail(req, "");
@@ -306,7 +308,7 @@ exports.activate = function(req, res, next){
     .done();
 }
 
-exports.login = function(req, res, next){
+exports.studentLogin = function(req, res, next){
     req.checkBody('email', 'Invalid email.').notEmpty().isEmail();
     req.assert('password', '6 to 20 characters required').len(6, 20);
 
@@ -334,7 +336,51 @@ exports.login = function(req, res, next){
             return res.send(400, {message: 'Email or password is wrong.'})
         }
 
-        sessionOperation.setLoginStatus(req, true);
+        sessionOperation.setStudentLoginStatus(req, true);
+        sessionOperation.setUserRole(req, user.role);
+        sessionOperation.setUserId(req, user._id);
+        sessionOperation.setEmail(req, email);
+
+        return res.send({
+            userId: user._id
+        });
+    })
+    .fail(function(err){
+        logger.error(err);
+        return res.send(500, {message: 'Login failed.'});
+    })
+    .done();
+};
+
+exports.adminLogin = function(req, res, next){
+    req.checkBody('email', 'Invalid email.').notEmpty().isEmail();
+    req.assert('password', '6 to 20 characters required').len(6, 20);
+
+    var errors = req.validationErrors();
+    if(errors){
+        return res.send(400, {message: util.inspect(errors)});
+    }
+
+    var email = req.body.email;
+    var password = req.body.password;
+
+    //console.log(email, password);
+
+    userModel.findByEmail(email)
+    .then(function(user){
+        if(!user){
+            return res.send(400, {message: 'User does not exist.'});
+        }
+
+        // if(!user.isActivated){
+        //     return res.send(400, {message: 'User is not activated.'})
+        // }
+
+        if(!utility.comparePassword(password, user.password)){
+            return res.send(400, {message: 'Email or password is wrong.'})
+        }
+
+        sessionOperation.setAdminLoginStatus(req, true);
         sessionOperation.setUserRole(req, user.role);
         sessionOperation.setUserId(req, user._id);
         sessionOperation.setEmail(req, email);

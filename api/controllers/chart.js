@@ -1,6 +1,8 @@
 var chartModel = require('../models/chart.js');
 var util = require('util');
 var logger = require('../../common/logger.js');
+var config           = require('../../common/config.js');
+
 
 exports.getChart = function(req, res, next){
     var seminarId = req.session.seminarId;
@@ -22,6 +24,7 @@ exports.getChart = function(req, res, next){
 
     //chart name saved in db doesn't contain _
     var chartNameTemp = chartName.replace(/_/g,'');
+    var userRole = req.session.userRole;
 
     chartModel.findOne(seminarId)
     .then(function(result){
@@ -39,7 +42,7 @@ exports.getChart = function(req, res, next){
             return res.send(500, {message: util.format("chart %s does not exist.", chartName)});
         }
 
-        if(chartName==='inventory_report'){
+        if(userRole === config.role.student && chartName==='inventory_report'){
             //this function changes data in chart object
             var chartData = filterChart(chart, companyId);
             return res.send(chartData);
