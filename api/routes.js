@@ -30,12 +30,12 @@ apiRouter.get('/viewsession', function(req, res){
 
 
 
-/**********   Routes for HCD Learning Website   **********/
+/**********   Routes for rendering templates HCD Learning Website   **********/
 apiRouter.get('/', function(req, res, next){
     res.redirect('/cn');
 });
 
-/**********   Routes for E4E Website   **********/
+/**********   Routes for rendering templates E4E Website   **********/
 
 apiRouter.get('/e4e', function(req, res, next){
     res.render('e4e/index.ejs',{title:'HCD E4E'});
@@ -57,7 +57,7 @@ apiRouter.get('/e4e/student-success', function(req, res, next){
 });
 
 
-/**********   Routes for MarkSimos User/Student   **********/
+/**********   Routes for rendering templates MarkSimos User/Student   **********/
 
 apiRouter.get('/marksimos', requireStudentLogin({ isRedirect : true }), function(req, res, next){
     res.redirect('/marksimos/intro');
@@ -139,7 +139,7 @@ apiRouter.get('/marksimos/manual/en_US',function(req,res,next){
 
 
 
-/**********   Routes for Administrator   **********/
+/**********   Routes for rendering templates Administrator   **********/
 
 
 
@@ -300,9 +300,6 @@ apiRouter.get('/marksimos/api/admin/report/:report_name', requireAdminLogin({isR
 apiRouter.get('/marksimos/api/admin/chart/:chart_name', requireAdminLogin({isRedirect : false}), chartController.getChart);
 apiRouter.get('/marksimos/api/admin/finalscore/:period', requireAdminLogin({isRedirect : false}), reportController.getFinalScore);
 apiRouter.get('/marksimos/api/admin/choose_seminar', requireStudentLogin({isRedirect : false}), authorize('chooseSeminar'), seminarController.chooseSeminar);
-
-
-
 
 
 function requireStudentLogin(params){   
