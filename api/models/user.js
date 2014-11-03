@@ -5,6 +5,10 @@ var Q = require('q');
 var userSchema = new Schema({
     name: String,
     email: String,
+
+
+
+
     phone: String,
 
     //address
@@ -14,8 +18,10 @@ var userSchema = new Schema({
     district: String,
     street: String,
 
-
     activateToken: String,
+
+
+
     //add for e4e
     isE4EUser: {type: Boolean, default: false},
     isActivated: {type: Boolean, default: false},
