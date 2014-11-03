@@ -1,19 +1,25 @@
 var express = require('express');
+var app = express();
+
 var path = require('path');
+
 var favicon = require('static-favicon');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 var mongoose = require('mongoose');
+
 var session = require('cookie-session');
 var expressValidator = require('express-validator');
 var sessionOperation = require('./common/sessionOperation.js');
 var config = require('./common/config.js');
 
+var router = require('./api/routes.js');				// get an instance of the express Router
+
 var fs = require('fs');
 var morgan = require('morgan');
 
 
-var app = express();
+
 
 app.engine('md', function(path, options, fn){
   fs.readFile(path, 'utf8', function(err, str){
@@ -32,10 +38,13 @@ app.use(favicon());
 var morganFileStream = fs.createWriteStream(config.logDirectory + 'access.log');
 app.use(morgan('dev', {stream: morganFileStream}));
 
-app.use(bodyParser.json());
-app.use(bodyParser.urlencoded());
-app.use(expressValidator());
 app.use(cookieParser());
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: true }));
+
+app.use(expressValidator());
+
+
 app.use(session({
     secret: 'marksimos',
     maxage: 24 * 60 * 60000
@@ -44,16 +53,9 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 
 
-//set Content-Type for all API JSON resppnse
-app.all("/api/*", function(req, res, next){
-    res.set('Content-Type', 'application/json; charset=utf-8');
-    next();
-});
 
+app.use('/', router);
 
-//require('./api/routes.js')(app);
-app.use( require('./api/routes.js'));
-require('./routes.js')(app);
 
 /// catch 404 and forwarding to error handler
 app.use(function(req, res, next) {
