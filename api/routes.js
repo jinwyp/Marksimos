@@ -17,9 +17,6 @@ var util = require('util');
 var express = require('express');
 var sessionOperation = require('../common/sessionOperation.js');
 
-
-var authMiddleware = require('../middleware/auth.js');
-
 var config = require('../common/config.js');
 
 var apiRouter = express.Router();
@@ -170,7 +167,6 @@ apiRouter.all("/api/*", function(req, res, next){
 
 
 
-
 /**********  API For E4E  **********/
 apiRouter.post('/e4e/register/company',userController.registerE4Ecompany);
 apiRouter.post('/e4e/register/student',userController.registerE4Estudent);
@@ -233,7 +229,6 @@ apiRouter.get('/marksimos/api/studentinfo', requireStudentLogin({isRedirect : fa
 
 //report
 apiRouter.get('/marksimos/api/report/:report_name', requireStudentLogin({isRedirect : false}), reportController.getReport);
-apiRouter.get('/marksimos/api/adminreport/:report_name', requireStudentLogin({isRedirect : false}), reportController.getReport);
 apiRouter.get('/marksimos/api/choose_seminar', requireStudentLogin({isRedirect : false}), authorize('chooseSeminar'), seminarController.chooseSeminar);
 apiRouter.get('/marksimos/api/submitdecision', requireStudentLogin({isRedirect : false}), decisionController.submitDecision);
 
@@ -298,6 +293,17 @@ apiRouter.post('/marksimos/api/admin/resetPassword', requireAdminLogin({isRedire
 apiRouter.get('/marksimos/api/admin/user', requireAdminLogin({isRedirect : false}), userController.getUser);
 
 
+//facilitator report & chart view
+//note : To get full version of some reports, plz make sure user role != student
+//TODO: decision modification for facilitator 
+apiRouter.get('/marksimos/api/admin/report/:report_name', requireAdminLogin({isRedirect : false}), reportController.getReport);
+apiRouter.get('/marksimos/api/admin/chart/:chart_name', requireAdminLogin({isRedirect : false}), chartController.getChart);
+apiRouter.get('/marksimos/api/admin/finalscore/:period', requireAdminLogin({isRedirect : false}), reportController.getFinalScore);
+apiRouter.get('/marksimos/api/admin/choose_seminar', requireStudentLogin({isRedirect : false}), authorize('chooseSeminar'), seminarController.chooseSeminar);
+
+
+
+
 
 function requireStudentLogin(params){   
     return function(req, res, next){
@@ -327,39 +333,6 @@ function requireAdminLogin(params){
     }    
 }
 
-
-// exports.needLogin = function(req, res, next){
-//     if(sessionOperation.getStudentLoginStatus(req)){
-//         next();
-//     }else{
-        
-//     }
-// };
-
-// exports.adminNeedLogin = function(req, res, next){
-//     if(sessionOperation.getAdminLoginStatus(req)){
-//         next();
-//     }else{
-//         res.redirect('/marksimos/admin');
-//     }
-// };
-
-
-// function requireStudentLogin(req, res, next){
-//     if(sessionOperation.getStudentLoginStatus(req)){
-//         next();
-//     }else{
-//         res.send(400, {message: 'Student Login required.'});
-//     }
-// }
-
-// function requireAdminLogin(req, res, next){
-//     if(sessionOperation.getAdminLoginStatus(req)){
-//         next();
-//     }else{
-//         res.send(400, {message: 'Admin Login required.'});
-//     }
-// }
 
 /**
  * @param {String} resource identifier of url
