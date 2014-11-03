@@ -158,7 +158,7 @@ apiRouter.get('/marksimos/adminhome', requireAdminLogin({isRedirect : true}), fu
 
 
 //set Content-Type for all API JSON resppnse
-apiRouter.all("/api/*", function(req, res, next){
+apiRouter.all("/marksimos/api/*", function(req, res, next){
     res.set('Content-Type', 'application/json; charset=utf-8');
     next();
 });
@@ -192,7 +192,7 @@ apiRouter.get('/marksimos/api/create_admin', function(req, res, next){
     userModel.remove({role: config.role.admin})
         .then(function(){
             return userModel.register({
-                name: 'hcdadmin',
+                username: 'hcdadmin',
                 password: require('../common/utility.js').hashPassword('123456'),
                 email: 'admin@hcdglobal.com',
                 role: config.role.admin,

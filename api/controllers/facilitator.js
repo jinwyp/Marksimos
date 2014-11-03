@@ -22,9 +22,9 @@ exports.addFacilitator = function(req, res, next){
     var distributorId = sessionOperation.getUserId(req);
 
     var facilitator = {
-        name: req.body.username,
+        username: req.body.username,
         email: req.body.email,
-        phone: req.body.phone,
+        mobilephone: req.body.phone,
         country: req.body.country,
         state: req.body.state,
         city: req.body.city,
@@ -87,8 +87,8 @@ exports.updateFacilitator = function(req, res, next){
 
     var facilitator = {};
 
-    if(req.body.username) facilitator.name = req.body.username;
-    if(req.body.phone) facilitator.phone = req.body.phone;
+    if(req.body.username) facilitator.username = req.body.username;
+    if(req.body.phone) facilitator.mobilephone = req.body.phone;
     if(req.body.country) facilitator.country = req.body.country;
     if(req.body.state) facilitator.state = req.body.state;
     if(req.body.city) facilitator.city = req.body.city;
@@ -190,7 +190,7 @@ exports.searchFacilitator = function(req, res, next){
         query.distributorId = sessionOperation.getUserId(req);
     }
 
-    if(name) query.name = name;
+    if(name) query.username = name;
     if(email) query.email = email;
     if(country) query.country = country;
     if(state) query.state = state;
@@ -213,7 +213,7 @@ exports.searchFacilitator = function(req, res, next){
                 if(!distributor){
                     return res.send(500, {message: "distributor " + facilitator.distributorId + " doesn't exist."})
                 }
-                facilitator.distributorName = distributor.name;
+                facilitator.distributorName = distributor.username;
             }
             
             res.send(allFacilitator);

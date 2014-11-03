@@ -18,9 +18,9 @@ exports.addDistributor = function(req, res, next){
     }
 
     var distributor = {
-        name: req.body.username,
+        username: req.body.username,
         email: req.body.email,
-        phone: req.body.phone,
+        mobilephone: req.body.phone,
         country: req.body.country,
         state: req.body.state,
         city: req.body.city,
@@ -63,8 +63,8 @@ exports.updateDistributor = function(req, res, next){
     }
 
     var distributor = {
-        name: req.body.name,
-        phone: req.body.phone,
+        username: req.body.name,
+        mobilephone: req.body.phone,
         country: req.body.country,
         state: req.body.state,
         city: req.body.city,
@@ -102,7 +102,7 @@ exports.searchDistributor = function(req, res, next){
     var query = {
         role: config.role.distributor
     };
-    if(name) query.name = name;
+    if(name) query.username = name;
     if(email) query.email = email;
     if(country) query.country = country;
     if(state) query.state = state;
