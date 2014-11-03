@@ -355,7 +355,7 @@ marksimosapp.controller('adminHomeController', ['$scope', '$http', '$notificatio
                         name : showCompanyName(key),
                         students : company
                     });
-                })
+                });
             });
             $scope.data.seminars = data;
         }).error(function (data, status, headers, config) {
@@ -366,7 +366,6 @@ marksimosapp.controller('adminHomeController', ['$scope', '$http', '$notificatio
 
 
     $scope.adminInit();
-
 
 
 
