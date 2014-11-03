@@ -22,9 +22,9 @@ exports.addStudent = function(req, res, next){
     var facilitatorId = sessionOperation.getUserId(req);
 
     var student = {
-        name          : req.body.firstname + ' ' + req.body.lastname,
+        username          : req.body.username,
         email         : req.body.email,
-        phone         : req.body.phone,
+        mobilephone         : req.body.phone,
         country       : req.body.country,
         state         : req.body.state,
         city          : req.body.city,
@@ -79,8 +79,8 @@ exports.updateStudent = function(req, res, next){
 
     var student = {};
 
-    if(req.body.name) student.name = req.body.firstname + ' ' + req.body.lastname;
-    if(req.body.phone) student.phone = req.body.phone;
+    if(req.body.username) student.username = req.body.username;
+    if(req.body.phone) student.mobilephone = req.body.phone;
     if(req.body.country) student.country = req.body.country;
     if(req.body.state) student.state = req.body.state;
     if(req.body.city) student.city = req.body.city;
@@ -183,7 +183,7 @@ exports.resetPassword = function(req, res, next){
 
 
 exports.searchStudent = function(req, res, next){
-    var name = req.query.username;
+    var username = req.query.username;
     var email = req.query.email;
     var country = req.query.country;
     var state = req.query.state;
@@ -202,7 +202,7 @@ exports.searchStudent = function(req, res, next){
         query.facilitatorId = sessionOperation.getUserId(req);
     }
 
-    if(name) query.name = name;
+    if(username) query.username = username;
     if(email) query.email = email;
     if(country) query.country = country;
     if(state) query.state = state;

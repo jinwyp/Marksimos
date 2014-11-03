@@ -94,9 +94,9 @@ exports.register = function(req, res, next){
     var user = {
         email: email,
         password: password
-    }
+    };
 
-    if(phoneNum) user.phoneNum = phoneNum;
+    if(phoneNum) user.mobilephone = phoneNum;
     if(country) user.country = country;
     if(state) user.state = state;
     if(city) user.city = city;
@@ -165,7 +165,7 @@ exports.registerE4Estudent = function(req, res, next){
         password: password
     }
 
-    user.name = req.body.userName;
+    user.username = req.body.userName;
     user.firstName = req.body.firstName;
     user.lastName = req.body.lastName;
     user.yearOfBirth = req.body.yearOfBirth;
@@ -228,9 +228,9 @@ exports.registerE4Ecompany = function(req, res, next){
         password: password
     }
 
-    user.name = req.body.nameOfContactPerson;
+    user.username = req.body.nameOfContactPerson;
     user.designation = req.body.designation;
-    user.phoneNum = req.body.officalContactNumber;
+    user.mobilephone = req.body.officalContactNumber;
     user.holdingCompany = req.body.holdingCompany;
     user.division = req.body.division;
     user.mobileNumber = req.body.mobileNumber;

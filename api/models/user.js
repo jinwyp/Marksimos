@@ -1,15 +1,34 @@
 var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
+var bcrypt   = require('bcrypt-nodejs');
 var Q = require('q');
 
 var userSchema = new Schema({
-    name: String,
+
+    // system field
+    username: String,
     email: String,
+    password: String,
+
+    createAt: { type: Date, default: Date.now },
 
 
+    // 3rd facebook auth
+    facebook         : {
+        id           : String,
+        token        : String,
+        email        : String,
+        username         : String
+    },
 
+    //user basic info
+    mobilephone: String,
+    pincode: String,
+    gender: Number,
+    firstName: String,
+    lastName: String,
+    qq: String,
 
-    phone: String,
 
     //address
     country: String,
@@ -18,15 +37,19 @@ var userSchema = new Schema({
     district: String,
     street: String,
 
+
+
+
     activateToken: String,
 
 
 
     //add for e4e
     isE4EUser: {type: Boolean, default: false},
+
     isActivated: {type: Boolean, default: false},
     isDisabled: {type: Boolean, default: false},
-    password: String,
+
     
     role: {type: Number, default: 4}, //1 admin, 2 distributor, 3 facilitator, 4 students
 
@@ -37,11 +60,9 @@ var userSchema = new Schema({
     distributorId: String,
     
     //student fileds
-    pincode: String,
-    gender: Number,
+
     occupation: String,
-    firstName: String,
-    lastName: String,
+
     university: String,
     organization: String,
     highestEducationalDegree: String,
@@ -53,7 +74,7 @@ var userSchema = new Schema({
     majors: String,
     university: String,
     dateOfGraduation: Date,
-    qq: String,
+
     //add for e4e company
     designation: String,
     officalContactNumber: String,
@@ -63,6 +84,9 @@ var userSchema = new Schema({
 });
 
 var User = mongoose.model("User", userSchema);
+
+exports.model = User;
+
 
 exports.insert = function(user){
     if(!mongoose.connection.readyState){
