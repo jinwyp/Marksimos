@@ -4,7 +4,7 @@ var cgiapi = require('../api/cgiapi.js');
 var consts = require('../api/consts.js');
 var config = require('./config.js');
 var nodemailer = require('nodemailer');
-var uuid = require('node-uuid');
+
 var Q = require('q');
 var bcrypt = require('bcrypt-nodejs');
 var validator = require('validator');
@@ -207,9 +207,7 @@ exports.calculateIngredientsQuality = function(SKUResult){
     }
 }
 
-exports.generateAcivateToken = function(email){
-    return uuid.v4();
-}
+
 
 exports.sendActivateEmail = function(toEmail, activateToken){
     var body = "Please click this link, blablabla"

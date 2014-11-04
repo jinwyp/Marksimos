@@ -38,10 +38,10 @@
                                         <label for="inputDistributorUserStatus" class="col-sm-2 control-label">User Status</label>
                                         <div class="col-sm-4">
                                             <label class="radio-inline">
-                                                <input type="radio" name="inputDistributorUserStatus" ng-model="data.searchDistributor.user_status" value="false">Active
+                                                <input type="radio" name="inputDistributorUserStatus" ng-model="data.searchDistributor.user_status" value="true">Active
                                             </label>
                                             <label class="radio-inline">
-                                                <input type="radio" name="inputDistributorUserStatus" ng-model="data.searchDistributor.user_status" value="true">Inactive
+                                                <input type="radio" name="inputDistributorUserStatus" ng-model="data.searchDistributor.user_status" value="false">Inactive
                                             </label>
                                         </div>
                                     </div>
@@ -194,10 +194,10 @@
                                         <label for="inputFacilitatorUserStatus" class="col-sm-2 control-label">User Status</label>
                                         <div class="col-sm-4">
                                             <label class="radio-inline">
-                                                <input type="radio" name="inputFacilitatorUserStatus" ng-model="data.searchFacilitator.user_status" value="false">Active
+                                                <input type="radio" name="inputFacilitatorUserStatus" ng-model="data.searchFacilitator.user_status" value="true">Active
                                             </label>
                                             <label class="radio-inline">
-                                                <input type="radio" name="inputFacilitatorUserStatus" ng-model="data.searchFacilitator.user_status" value="true">Inactive
+                                                <input type="radio" name="inputFacilitatorUserStatus" ng-model="data.searchFacilitator.user_status" value="false">Inactive
                                             </label>
                                         </div>
                                     </div>
@@ -363,13 +363,16 @@
                                         <label for="inputStudentUserFrom" class="col-sm-2 control-label">User From</label>
                                         <div class="col-sm-4">
                                             <label class="radio-inline">
-                                                <input type="radio" name="inputStudentUserFrom" ng-model="data.searchStudent.user_ise4e" value="">All
+                                                <input type="radio" name="inputStudentUserFrom" ng-model="data.searchStudent.user_role" value="">All
                                             </label>
                                             <label class="radio-inline">
-                                                <input type="radio" name="inputStudentUserFrom" ng-model="data.searchStudent.user_ise4e" value="false">B2B User
+                                                <input type="radio" name="inputStudentUserFrom" ng-model="data.searchStudent.user_role" value="4">B2B Student
                                             </label>
                                             <label class="radio-inline">
-                                                <input type="radio" name="inputStudentUserFrom" ng-model="data.searchStudent.user_ise4e" value="true">E4EUser
+                                                <input type="radio" name="inputStudentUserFrom" ng-model="data.searchStudent.user_role" value="5">E4E Student
+                                            </label>
+                                            <label class="radio-inline">
+                                                <input type="radio" name="inputStudentUserFrom" ng-model="data.searchStudent.user_role" value="6">B2B&B2C Student
                                             </label>
                                         </div>
                                     </div>
@@ -546,10 +549,10 @@
                                         <label for="inputSeminarUserStatus" class="col-sm-2 control-label">Initialized Status</label>
                                         <div class="col-sm-4">
                                             <label class="radio-inline">
-                                                <input type="radio" name="inputSeminarUserStatus" ng-model="data.searchSeminar.user_status" value="false">Active
+                                                <input type="radio" name="inputSeminarUserStatus" ng-model="data.searchSeminar.status" value="true">Active
                                             </label>
                                             <label class="radio-inline">
-                                                <input type="radio" name="inputSeminarUserStatus" ng-model="data.searchSeminar.user_status" value="true">Inactive
+                                                <input type="radio" name="inputSeminarUserStatus" ng-model="data.searchSeminar.status" value="false">Inactive
                                             </label>
                                         </div>
                                     </div>

@@ -2,32 +2,50 @@ var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
 var bcrypt   = require('bcrypt-nodejs');
 var Q = require('q');
+var uuid = require('node-uuid');
+
 
 var userSchema = new Schema({
 
     // system field
-    username: String,
-    email: String,
-    password: String,
+    username: { type: String, required: true },
+    email: { type: String, required: true },
+    password: { type: String, required: true },
 
     createAt: { type: Date, default: Date.now },
 
+    emailActivateToken: { type: String, default: uuid.v4() },
+    emailActivated: {type: Boolean, default: false},
+    activated: {type: Boolean, default: false},
+
+
+    role: {type: Number, default: 4},  //1 admin, 2 distributor, 3 facilitator, 4 B2B students,  5 B2C students, 6 Both B2C and B2B students, 9 B2C Enterprise
+
+
 
     // 3rd facebook auth
-    facebook         : {
-        id           : String,
-        token        : String,
-        email        : String,
-        username         : String
+    facebook : {
+        id       : String,
+        token    : String,
+        email    : String,
+        username : String
     },
 
     //user basic info
-    mobilephone: String,
-    pincode: String,
-    gender: Number,
-    firstName: String,
-    lastName: String,
-    qq: String,
+    gender       : Number,
+    birthday: Date,
+    firstName    : String,
+    lastName     : String,
+    idcardNumber : String,
+    mobilePhone  : String,
+    qq           : String,
+
+
+    //user degree info
+    majorsDegree: String,
+    dateOfGraduation: Date,
+    organizationOrUniversity: String,
+    occupation: String,
 
 
     //address
@@ -38,48 +56,19 @@ var userSchema = new Schema({
     street: String,
 
 
-
-
-    activateToken: String,
-
-
-
-    //add for e4e
-    isE4EUser: {type: Boolean, default: false},
-
-    isActivated: {type: Boolean, default: false},
-    isDisabled: {type: Boolean, default: false},
-
-    
-    role: {type: Number, default: 4}, //1 admin, 2 distributor, 3 facilitator, 4 students
-
-    numOfLicense: {type: Number, default: 0},
-    numOfUsedLicense: {type: Number, default: 0},
-
-    //facilitator field
-    distributorId: String,
-    
-    //student fileds
-
-    occupation: String,
-
-    university: String,
-    organization: String,
-    highestEducationalDegree: String,
-    facilitatorId: String,
-    companyRole: {type: String, default: 'Team Member'},  //description of the role of this student in this company, like CEO, Marketing
-
-    //add for e4e student
-    yearOfBirth: Date,
-    majors: String,
-    university: String,
-    dateOfGraduation: Date,
-
     //add for e4e company
     designation: String,
     officalContactNumber: String,
     holdingCompany: String,
-    division: String
+    division: String,
+
+
+    //distributor and facilitator info
+    numOfLicense: {type: Number, default: 0},
+    numOfUsedLicense: {type: Number, default: 0},
+
+    distributorId: String,
+    facilitatorId: String
 
 });
 
