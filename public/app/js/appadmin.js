@@ -76,7 +76,7 @@
             searchDistributor : {
                 username :'',
                 email :'',
-                user_status :'false'
+                user_status :'true'
             },
             distributors : [],
 
@@ -96,7 +96,7 @@
             searchFacilitator : {
                 username :'',
                 email :'',
-                user_status :'false'
+                user_status :'true'
             },
             facilitators : [],
 
@@ -117,9 +117,9 @@
             searchStudent : {
                 username :'',
                 email :'',
-                user_status :'false',
+                user_status :'true',
                 //add for e4e
-                user_ise4e : ''
+                user_role: ""
             },
             students : [],
 

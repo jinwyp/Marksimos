@@ -6,6 +6,8 @@ var util = require('util');
 var sessionOperation = require('../../common/sessionOperation.js');
 var companyDecisionModel = require('../models/companyDecision.js');
 var seminarModel = require('../models/seminar.js');
+var config = require('../../common/config.js');
+
 
 exports.getUser = function(req, res, next){
     var userId = sessionOperation.getUserId(req);
@@ -98,14 +100,11 @@ exports.register = function(req, res, next){
         password: password
     };
 
-    if(phoneNum) user.mobilephone = phoneNum;
+    if(phoneNum) user.mobilePhone = phoneNum;
     if(country) user.country = country;
     if(state) user.state = state;
     if(city) user.city = city;
 
-    var activateToken = utility.generateAcivateToken(email);
-    user.activateToken = activateToken;
-    user.isE4EUser = false;
 
     userModel.findByEmail(email)
     .then(function(findResult){
@@ -115,7 +114,7 @@ exports.register = function(req, res, next){
         return userModel.register(user)
         .then(function(result){
             if(result){
-                return utility.sendActivateEmail(email, activateToken)
+                return utility.sendActivateEmail(email, user.emailActivateToken)
                 .then(function(sendEmailResult){
                     if(sendEmailResult){
                         return res.send({message: 'Register success'});
@@ -165,20 +164,18 @@ exports.registerE4Estudent = function(req, res, next){
     var user = {
         email: email,
         password: password
-    }
+    };
 
     user.username = req.body.userName;
     user.firstName = req.body.firstName;
     user.lastName = req.body.lastName;
-    user.yearOfBirth = req.body.yearOfBirth;
-    user.majors = req.body.majors;
-    user.university = req.body.university;
+    user.birthday = req.body.yearOfBirth;
+    user.majorsDegree = req.body.majors;
+    user.organizationOrUniversity = req.body.university;
     user.dateOfGraduation = req.body.dateOfGraduation;
     user.qq = req.body.qq;
-    user.isE4EUser = true;
 
-    var activateToken = utility.generateAcivateToken(email);
-    user.activateToken = activateToken;
+    user.role = config.role.studentb2c;
 
     userModel.findByEmail(email)
     .then(function(findResult){
@@ -190,7 +187,7 @@ exports.registerE4Estudent = function(req, res, next){
             if(result){
                 return res.send({message: 'Register success',password:oldPassword});
 
-                // return utility.sendActivateEmail(email, activateToken)
+                // return utility.sendActivateEmail(email, user.emailActivateToken)
                 // .then(function(sendEmailResult){
                 //     if(sendEmailResult){
                 //         return res.send({message: 'Register success'});
@@ -232,15 +229,12 @@ exports.registerE4Ecompany = function(req, res, next){
 
     user.username = req.body.nameOfContactPerson;
     user.designation = req.body.designation;
-    user.mobilephone = req.body.officalContactNumber;
+    user.mobilePhone = req.body.officalContactNumber;
     user.holdingCompany = req.body.holdingCompany;
     user.division = req.body.division;
     user.mobileNumber = req.body.mobileNumber;
-    user.isE4EUser = true;
 
-    var activateToken = utility.generateAcivateToken(email);
-    user.activateToken = activateToken;
-
+    user.role = config.role.enterpriseb2c;
 
     userModel.findByEmail(email)
     .then(function(findResult){
@@ -253,7 +247,7 @@ exports.registerE4Ecompany = function(req, res, next){
                 return res.send({message: 'Register success',password:oldPassword});
 
 
-                // return utility.sendActivateEmail(email, activateToken)
+                // return utility.sendActivateEmail(email, user.emailActivateToken)
                 // .then(function(sendEmailResult){
                 //     if(sendEmailResult){
                 //         return res.send({message: 'Register success'});
@@ -289,7 +283,7 @@ exports.activate = function(req, res, next){
     .then(function(result){
         if(result){
             return userModel.updateByEmail(email, {
-                isActivated: true
+                emailActivated: true
             })
             .then(function(numAffected){
                 if(numAffected === 1){
@@ -328,7 +322,7 @@ exports.studentLogin = function(req, res, next){
             return res.send(400, {message: 'User does not exist.'});
         }
 
-        // if(!user.isActivated){
+        // if(!user.emailActivated){
         //     return res.send(400, {message: 'User is not activated.'})
         // }
 
@@ -372,7 +366,7 @@ exports.adminLogin = function(req, res, next){
             return res.send(400, {message: 'User does not exist.'});
         }
 
-        // if(!user.isActivated){
+        // if(!user.emailActivated){
         //     return res.send(400, {message: 'User is not activated.'})
         // }
 

@@ -117,7 +117,7 @@ apiRouter.get('/marksimos/manual/en_US',function(req,res,next){
 //         .then(function(result){
 //             if(result){
 //                 return userModel.updateByEmail(email, {
-//                     isActivated: true
+//                     emailActivated: true
 //                 })
 //                     .then(function(numAffected){
 //                         if(numAffected === 1){
@@ -196,7 +196,7 @@ apiRouter.get('/marksimos/api/create_admin', function(req, res, next){
                 password: require('../common/utility.js').hashPassword('123456'),
                 email: 'admin@hcdglobal.com',
                 role: config.role.admin,
-                isActivated: true
+                emailActivated: true
             });
         })
         .then(function(result){
