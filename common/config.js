@@ -6,9 +6,7 @@ module.exports = (function(){
             admin: 1,
             distributor: 2,
             facilitator: 3,
-            studentb2b: 4,
-            studentb2c: 5,
-            studentb2bAndb2c: 6,
+            student : 4,
             enterpriseb2c: 9
         },
 

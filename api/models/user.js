@@ -12,15 +12,14 @@ var userSchema = new Schema({
     email: { type: String, required: true },
     password: { type: String, required: true },
 
-    createAt: { type: Date, default: Date.now },
 
     emailActivateToken: { type: String, default: uuid.v4() },
     emailActivated: {type: Boolean, default: false},
     activated: {type: Boolean, default: false},
 
 
-    role: {type: Number, default: 4},  //1 admin, 2 distributor, 3 facilitator, 4 B2B students,  5 B2C students, 6 Both B2C and B2B students, 9 B2C Enterprise
-
+    role: {type: Number, default: 4},  //1 admin, 2 distributor, 3 facilitator, 4  students,   9 B2C Enterprise
+    studentType : {type: Number, default: 10}, //10 B2B students,  20 B2C students, 30 Both B2C and B2B students
 
 
     // 3rd facebook auth
@@ -90,10 +89,11 @@ exports.insert = function(user){
         }else{
             deferred.resolve(result);
         }
-    })
+    });
 
     return deferred.promise;
-}
+};
+
 
 exports.register = function(user){
     if(!mongoose.connection.readyState){
@@ -108,10 +108,11 @@ exports.register = function(user){
         }else{
             deferred.resolve(result);
         }
-    })
+    });
 
     return deferred.promise;
-}
+};
+
 
 exports.updateByEmail = function(email, user){
     if(!mongoose.connection.readyState){
@@ -133,7 +134,7 @@ exports.updateByEmail = function(email, user){
     });
 
     return deferred.promise; 
-}
+};
 
 exports.update = function(query, user){
     if(!mongoose.connection.readyState){

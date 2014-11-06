@@ -175,7 +175,8 @@ exports.registerE4Estudent = function(req, res, next){
     user.dateOfGraduation = req.body.dateOfGraduation;
     user.qq = req.body.qq;
 
-    user.role = config.role.studentb2c;
+    user.role = config.role.student;
+    user.studentType = 20;
 
     userModel.findByEmail(email)
     .then(function(findResult){

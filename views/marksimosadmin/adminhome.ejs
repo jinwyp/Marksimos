@@ -363,16 +363,16 @@
                                         <label for="inputStudentUserFrom" class="col-sm-2 control-label">User From</label>
                                         <div class="col-sm-4">
                                             <label class="radio-inline">
-                                                <input type="radio" name="inputStudentUserFrom" ng-model="data.searchStudent.user_role" value="">All
+                                                <input type="radio" name="inputStudentUserFrom" ng-model="data.searchStudent.student_type" value="">All
                                             </label>
                                             <label class="radio-inline">
-                                                <input type="radio" name="inputStudentUserFrom" ng-model="data.searchStudent.user_role" value="4">B2B Student
+                                                <input type="radio" name="inputStudentUserFrom" ng-model="data.searchStudent.student_type" value="10">B2B Student
                                             </label>
                                             <label class="radio-inline">
-                                                <input type="radio" name="inputStudentUserFrom" ng-model="data.searchStudent.user_role" value="5">E4E Student
+                                                <input type="radio" name="inputStudentUserFrom" ng-model="data.searchStudent.student_type" value="20">E4E Student
                                             </label>
                                             <label class="radio-inline">
-                                                <input type="radio" name="inputStudentUserFrom" ng-model="data.searchStudent.user_role" value="6">B2B&B2C Student
+                                                <input type="radio" name="inputStudentUserFrom" ng-model="data.searchStudent.student_type" value="30">B2B&B2C Student
                                             </label>
                                         </div>
                                     </div>
@@ -599,7 +599,7 @@
                                             <input type="number" class="form-control" ng-show="seminar.isInitialized" placeholder="current round" ng-model="seminar.currentPeriod" disabled>
 
                                         </td>
-                                        <td>{{seminar.seminarId}}</td>
+                                        <td><a href="adminhomereport/{{seminar.seminarId}}" target="_blank">{{seminar.seminarId}} Report</a></td>
                                         <td>{{seminar.description}}</td>
                                         <td>{{seminar.isInitialized}} </td>
                                         <td>{{seminar.isSimulationFinised}} </td>

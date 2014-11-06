@@ -47,7 +47,6 @@
 
 
 
-// controller business logic
     angular.module('marksimosadmin').controller('adminHomeController', ['$scope', '$http', '$notification', function($scope, $http, $notification) {
 
         $scope.css = {
@@ -119,7 +118,7 @@
                 email :'',
                 user_status :'true',
                 //add for e4e
-                user_role: ""
+                student_type : ""
             },
             students : [],
 
@@ -574,5 +573,16 @@
 
     }]);
 
+
+
+
+
+    angular.module('marksimosadmin').controller('adminMarksimosReportController', ['$scope', '$http', '$notification', function($scope, $http, $notification) {
+        $scope.css = {
+            reportMenu : 'A1',
+
+        };
+
+    }]);
 
 }());

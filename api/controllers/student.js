@@ -22,14 +22,15 @@ exports.addStudent = function(req, res, next){
     var facilitatorId = sessionOperation.getUserId(req);
 
     var student = {
-        username          : req.body.username,
+        username      : req.body.username,
         email         : req.body.email,
-        mobilePhone         : req.body.phone,
+        mobilePhone   : req.body.phone,
         country       : req.body.country,
         state         : req.body.state,
         city          : req.body.city,
         password      : utility.hashPassword(req.body.password),
-        role          : config.role.studentb2b,
+        role          : config.role.student,
+        studentType   : 10,
         facilitatorId : facilitatorId,
 
         idcardNumber             : req.body.pincode || '',
@@ -190,8 +191,8 @@ exports.searchStudent = function(req, res, next){
 
     var query = {};
 
-    if(req.query.user_role){
-        query.role = req.query.user_role;
+    if(req.query.student_type){
+        query.studentType = req.query.student_type;
     }
 
 

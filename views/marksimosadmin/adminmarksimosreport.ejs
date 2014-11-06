@@ -1,0 +1,121 @@
+
+
+<% include ./include/headcssadmin.html %>
+
+
+<body class="skin-blue" ng-app="marksimosadmin" ng-controller="adminMarksimosReportController">
+
+    <header-admin class="header" currentuser="data.currentUser"></header-admin>
+
+
+    <div class="wrapper row-offcanvas row-offcanvas-left">
+
+
+            <section class="content" >
+                <h2 class="page-header">MarkSimos Seminar <%= seminarId %> Report</h2>
+                <div class="btn-group">
+                    <button type="button" class="btn btn-default">Left</button>
+                    <button type="button" class="btn btn-default">Middle</button>
+                    <button type="button" class="btn btn-default">Right</button>
+                </div>
+            </section>
+
+
+            <section class="content" ng-if="css.reportMenu=='A1'">
+
+
+                <div class="row" >
+                    <div class="col-md-12">
+
+                        <div class="box box-primary">
+                            <form class="form-horizontal" role="form" name="searchDistributorForm">
+                                <div class="box-body">
+
+                                    <username-input labeltext="Distributor UserName :" placeholdertext="Distributor UserName" formname="searchDistributorForm" data="data.searchDistributor.username" required="false" requirederrorinfo="Username is required" minlength="6" minlengtherrorinfo="Username must be at least 6 characters" maxlength="20" maxlengtherrorinfo="Username is a maximum of 20 characters"></username-input>
+                                    <email-input labeltext="Distributor Email :" placeholdertext="Email" formname="searchDistributorForm" data="data.searchDistributor.email" required="false" requirederrorinfo="Email is required" emailerrorinfo="Doesn't look like a valid email !"></email-input>
+
+
+                                    <div class="form-group">
+                                        <label for="inputDistributorUserStatus" class="col-sm-2 control-label">User Status</label>
+                                        <div class="col-sm-4">
+                                            <label class="radio-inline">
+                                                <input type="radio" name="inputDistributorUserStatus" ng-model="data.searchDistributor.user_status" value="true">Active
+                                            </label>
+                                            <label class="radio-inline">
+                                                <input type="radio" name="inputDistributorUserStatus" ng-model="data.searchDistributor.user_status" value="false">Inactive
+                                            </label>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="box-footer">
+                                    <div class="form-group">
+                                        <div class="col-sm-offset-2 col-sm-10">
+                                            <button type="submit" class="btn btn-primary" ng-click="searchDistributor(searchDistributorForm)">Search</button>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </form>
+                        </div>
+
+                        <div class="box">
+                            <div class="box-header">
+                                <h3 class="box-title">Distributor List</h3>
+                            </div><!-- /.box-header -->
+                            <div class="box-body table-responsive no-padding">
+                                <table class="table table-striped table-hover">
+                                    <tbody>
+                                    <tr>
+                                        <th>ID</th>
+                                        <th>UserName</th>
+                                        <th>Email</th>
+                                        <th>Status</th>
+                                        <th>Licences Used / Granted</th>
+                                        <th>Cell Phone</th>
+                                        <th>Country / Province / City</th>
+                                        <th>Address</th>
+                                        <th>ID Card</th>
+                                    </tr>
+                                    <tr ng-repeat="user in data.distributors" >
+                                        <td>{{user._id}}</td>
+                                        <td>{{user.name}}</td>
+                                        <td>{{user.email}}</td>
+                                        <td>{{!user.isDisabled}}</td>
+                                        <td>{{user.numOfUsedLicense}}/{{user.numOfLicense}}</td>
+                                        <td>{{user.phone}}</td>
+                                        <td>{{user.country}} / {{user.state}} / {{user.city}} </td>
+                                        <td>{{user.district}} {{user.street}}</td>
+                                        <td>{{user.pincode}}</td>
+                                    </tr>
+                                    </tbody>
+                                </table>
+                            </div><!-- /.box-body -->
+                        </div>
+
+                    </div>
+                </div>
+            </section>
+
+
+
+
+
+
+
+
+    </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<% include ./include/footerscriptadminhome.html %>
