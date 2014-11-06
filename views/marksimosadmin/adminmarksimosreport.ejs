@@ -13,15 +13,38 @@
 
             <section class="content" >
                 <h2 class="page-header">MarkSimos Seminar <%= seminarId %> Report</h2>
+                {{'ReportYourCompany' | translate}} :
                 <div class="btn-group">
-                    <button type="button" class="btn btn-default">Left</button>
-                    <button type="button" class="btn btn-default">Middle</button>
-                    <button type="button" class="btn btn-default">Right</button>
+                    <button type="button" class="btn btn-default" ng-class="{'active': css.currentReportMenu=='A1'}" ng-click="clickChartMenu('A1')">{{'ReportMenuCompanyStatus' | translate}}</button>
+                    <button type="button" class="btn btn-default" ng-class="{'active': css.currentReportMenu=='A2'}" ng-click="clickChartMenu('A2')">{{'ReportMenuFinancialReport' | translate}}</button>
+                    <button type="button" class="btn btn-default" ng-class="{'active': css.currentReportMenu=='A3'}" ng-click="clickChartMenu('A3')">{{'ReportMenuInventoryReport' | translate}}</button>
+                    <button type="button" class="btn btn-default" ng-class="{'active': css.currentReportMenu=='A4'}" ng-click="clickChartMenu('A4')">{{'ReportMenuProfitabilityEvolution' | translate}}</button>
                 </div>
+                <br/>
+
+                {{'ReportYourCompetitors' | translate}} :
+                <div class="btn-group">
+                    <button type="button" class="btn btn-default" ng-class="{'active': css.currentReportMenu=='B1'}" ng-click="clickChartMenu('B1')">{{'ReportMenuMarketShare' | translate}}</button>
+                    <button type="button" class="btn btn-default" ng-class="{'active': css.currentReportMenu=='B2'}" ng-click="clickChartMenu('B2')">{{'ReportMenuCompetitorIntelligence' | translate}}</button>
+                    <button type="button" class="btn btn-default" ng-class="{'active': css.currentReportMenu=='B3'}" ng-click="clickChartMenu('B3')">{{'ReportMenuInvestmentProfits' | translate}}</button>
+                    <button type="button" class="btn btn-default" ng-class="{'active': css.currentReportMenu=='B4'}" ng-click="clickChartMenu('B4')">{{'ReportMenuMarketSalesInventory' | translate}}</button>
+                </div>
+                <br/>
+
+                {{'ReportMarketLandscape' | translate}} :
+                <div class="btn-group">
+                    <button type="button" class="btn btn-default" ng-class="{'active': css.currentReportMenu=='C1'}" ng-click="clickChartMenu('C1')">{{'ReportMenuSegmentLeaderTop5' | translate}}</button>
+                    <button type="button" class="btn btn-default" ng-class="{'active': css.currentReportMenu=='C2'}" ng-click="clickChartMenu('C2')">{{'ReportMenuPerceptionMap' | translate}}</button>
+                    <button type="button" class="btn btn-default" ng-class="{'active': css.currentReportMenu=='C3'}" ng-click="clickChartMenu('C3')">{{'ReportMenuSegmentDistributions' | translate}}</button>
+                    <button type="button" class="btn btn-default" ng-class="{'active': css.currentReportMenu=='C4'}" ng-click="clickChartMenu('C4')">{{'ReportMenuMarketEvolution' | translate}}</button>
+                    <button type="button" class="btn btn-default" ng-class="{'active': css.currentReportMenu=='C5'}" ng-click="clickChartMenu('C5')">{{'ReportMenuMarketTrends' | translate}}</button>
+                    <button type="button" class="btn btn-default" ng-class="{'active': css.currentReportMenu=='C6'}" ng-click="clickChartMenu('C6')">{{'ReportMenuMarketIndicator' | translate}}</button>
+                </div>
+
             </section>
 
 
-            <section class="content" ng-if="css.reportMenu=='A1'">
+            <section class="content" ng-if="css.currentReportMenu=='A1'">
 
 
                 <div class="row" >

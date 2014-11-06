@@ -579,7 +579,14 @@
 
     angular.module('marksimosadmin').controller('adminMarksimosReportController', ['$scope', '$http', '$notification', function($scope, $http, $notification) {
         $scope.css = {
-            reportMenu : 'A1',
+            currentReportMenu : 'A1'
+
+        };
+
+
+
+        $scope.clickChartMenu = function(report){
+            $scope.css.currentReportMenu = report;
 
         };
 
