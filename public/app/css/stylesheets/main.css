@@ -1219,7 +1219,7 @@ body a, body button {
 }
 .mainbody .user_chart_right .user_chart_single h5 .perception_map_group {
   float: right;
-  margin-right: 60px;
+  margin-right: 20px;
   margin-top: -5px;
 }
 .mainbody .user_chart_right .user_chart_single .nvtooltip {

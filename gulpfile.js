@@ -207,5 +207,5 @@ gulp.task('browser-sync', function() {
 gulp.task('default', ['nodemon', 'watch']);
 
 //gulp.task('jin', ['mongo', 'browser-sync', 'nodemonjin', 'watch']);
-gulp.task('jin', ['compass', 'templates', 'nodemonjin', 'watch']);
+gulp.task('jin', ['mongo', 'compass', 'templates', 'nodemonjin', 'watch']);
 

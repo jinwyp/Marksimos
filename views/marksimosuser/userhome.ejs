@@ -284,7 +284,7 @@
                                                     {{'HomePageSecondMenuBarLabelsCompany' | translate}} {{data.tableA1CompanyStatus.currentCompany.companyName}} <span class="caret"></span>
                                                 </button>
                                                 <ul class="dropdown-menu" role="menu">
-                                                    <li ng-repeat="company in data.tableA1CompanyStatus.allCompanyData"><a href="" ng-click="switchTableReportCompany(company)">{{'HomePageSecondMenuBarLabelsCompany' | translate}} {{company.companyName}}</a></li>
+                                                    <li ng-repeat="company in data.tableA1CompanyStatus.allCompanyData"><a href="" ng-click="switchTableReportA1Company(company)">{{'HomePageSecondMenuBarLabelsCompany' | translate}} {{company.companyName}}</a></li>
                                                 </ul>
                                             </div>
 
@@ -689,7 +689,7 @@
                                                     {{'HomePageSecondMenuBarLabelsCompany' | translate}} {{data.tableA1CompanyStatus.currentCompany.companyName}} <span class="caret"></span>
                                                 </button>
                                                 <ul class="dropdown-menu" role="menu">
-                                                    <li ng-repeat="company in data.tableA1CompanyStatus.allCompanyData"><a href="" ng-click="switchTableReportCompany(company)">{{'HomePageSecondMenuBarLabelsCompany' | translate}} {{company.companyName}}</a></li>
+                                                    <li ng-repeat="company in data.tableA1CompanyStatus.allCompanyData"><a href="" ng-click="switchTableReportA1Company(company)">{{'HomePageSecondMenuBarLabelsCompany' | translate}} {{company.companyName}}</a></li>
                                                 </ul>
                                             </div>
 
@@ -1137,7 +1137,7 @@
                                     {{'HomePageSecondMenuBarLabelsCompany' | translate}} {{data.tableA1CompanyStatus.currentCompany.companyName}} <span class="caret"></span>
                                 </button>
                                 <ul class="dropdown-menu" role="menu">
-                                    <li ng-repeat="company in data.tableA1CompanyStatus.allCompanyData"><a href="" ng-click="switchTableReportCompany(company)">{{'HomePageSecondMenuBarLabelsCompany' | translate}} {{company.companyName}}</a></li>
+                                    <li ng-repeat="company in data.tableA1CompanyStatus.allCompanyData"><a href="" ng-click="switchTableReportA1Company(company)">{{'HomePageSecondMenuBarLabelsCompany' | translate}} {{company.companyName}}</a></li>
                                 </ul>
                             </div>
 
@@ -1532,11 +1532,21 @@
                         <!--<span class="glyphicon glyphicon-info-sign"></span>-->
                         <!--<span class="glyphicon glyphicon-resize-full chart_icon"></span>-->
                         <!--<span class="glyphicon glyphicon-save chart_icon"></span>-->
-
                         <div class="btn-group btn-group-sm perception_map_group">
                             <button type="button" class="btn btn-default perception_map_button" ng-click="switchPerceptionMapsData('sku')">{{'ReportTabLabelSKU' | translate}}</button>
                             <button type="button" class="btn btn-default perception_map_button" ng-click="switchPerceptionMapsData('brand')">{{'ReportTabLabelBrand' | translate}}</button>
                         </div>
+
+                        <div class="btn-group btn-sm perception_map_group">
+                            <button type="button" class="btn btn-default btn-xs dropdown-toggle" data-toggle="dropdown">
+                                {{'HomePageSecondMenuBarCurrentPeriod' | translate}} {{data.chartC21PerceptionMap.currentPeriod}} <span class="caret"></span>
+                            </button>
+                            <ul class="dropdown-menu" role="menu">
+                                <li ng-repeat="period in data.chartC21PerceptionMap.allData"><a href="" ng-click="switchTableReportC2Period(period)">{{'HomePageSecondMenuBarCurrentPeriod' | translate}} {{period.period}}</a></li>
+                            </ul>
+                        </div>
+
+
                     </h5>
                     <nvd3-scatter-chart data="data.chartC21PerceptionMap.dataChart"
                         xaxislabel="{{'ReportPerceptionMapAxisTitleValuePerception' | translate}}" yaxislabel="{{'ReportPerceptionMapAxisTitleImagePerception' | translate}}" color="C21ColorFunction()" legendcolor="C21ColorFunction()" shape="C31shapeFunction()" tooltipContent="C31TooltipContent()"

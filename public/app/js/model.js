@@ -690,7 +690,7 @@
 
                 // 处理 periods 数据
                 angular.forEach(chartHttpData.periods, function(period, keyperiod) {
-                    var period = {
+                    var perioddata = {
                         period : period.period,
                         dataSKU : [],
                         dataBrand : []
@@ -737,14 +737,14 @@
                             oneCompanyBrand.values.push(oneLineBrand1);
                         });
 
-                        period.dataSKU.push(oneCompanySku);
-                        period.dataBrand.push(oneCompanyBrand);
+                        perioddata.dataSKU.push(oneCompanySku);
+                        perioddata.dataBrand.push(oneCompanyBrand);
                     });
 
-                    period.dataSKU.push(oneSegment);
-                    period.dataBrand.push(oneSegment);
+                    perioddata.dataSKU.push(oneSegment);
+                    perioddata.dataBrand.push(oneSegment);
 
-                    chartResult.data.push(period);
+                    chartResult.data.push(perioddata);
 
                 });
 
