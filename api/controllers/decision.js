@@ -113,7 +113,7 @@ exports.submitDecision = function(req, res, next){
 
         //return res.send(result);
         //return result;
-        var reqUrl = url.resolve(config.cgiService, '/cgi-bin/decisions.exe');
+        var reqUrl = url.resolve(config.cgiService, 'decisions.exe');
         return request.post(reqUrl, {
             decision: JSON.stringify(result),
             seminarId: seminarId,

@@ -250,32 +250,66 @@ exports.totalInventoryAtTrade = function(allResults){
 
 //segment leader top 5
 exports.segmentsLeadersByValue = function(allResults, segment){
-    var currentPeriodIndex = allResults.length-1;
-    var currentPeriodResult = allResults[currentPeriodIndex];
+    var result = [];
 
-    var segmentNameAndIndex = config.segmentNameAndIndex;
+    allResults.forEach(function(onePeriodResult){
+        var segmentNameAndIndex = config.segmentNameAndIndex;
+        var segmentIndex = segmentNameAndIndex[segment];
 
-    var segmentIndex = segmentNameAndIndex[segment];
+        var valueSegmentShare = onePeriodResult.p_SKUs.map(function(SKU){
+            var brand = utility.findBrand(onePeriodResult, SKU.u_ParentBrandID);
+            var brandName = brand.b_BrandName;
 
-    var valueSegmentShare = currentPeriodResult.p_SKUs.map(function(SKU){
-        var brand = utility.findBrand(currentPeriodResult, SKU.u_ParentBrandID);
-        var brandName = brand.b_BrandName;
+            var SKUName = brandName + SKU.u_SKUName;
+            return {
+                SKUName: SKUName,
+                valueSegmentShare: SKU.u_ValueSegmentShare[segmentIndex]
+            };
+        });
 
-        var SKUName = brandName + SKU.u_SKUName;
-        return {
-            SKUName: SKUName,
-            valueSegmentShare: SKU.u_ValueSegmentShare[segmentIndex]
-        };
+        valueSegmentShare.sort(function(a, b){
+            return b.valueSegmentShare - a.valueSegmentShare;
+        })
+
+        result.push({
+            chartData : valueSegmentShare.slice(0, 5),
+            period : onePeriodResult.period,
+        });
     });
 
-    valueSegmentShare.sort(function(a, b){
-        return b.valueSegmentShare - a.valueSegmentShare;
-    })
-
-    return {
-        chartData: valueSegmentShare.slice(0, 5)
-    };
+    return result;
+    
+    // var currentPeriodIndex = allResults.length-1;
+    // var onePeriodResult = allResults[currentPeriodIndex];
 }
+
+// exports.segmentsLeadersByValue = function(allResults, segment){
+//     var currentPeriodIndex = allResults.length-1;
+//     var currentPeriodResult = allResults[currentPeriodIndex];
+
+//     var segmentNameAndIndex = config.segmentNameAndIndex;
+
+//     var segmentIndex = segmentNameAndIndex[segment];
+
+//     var valueSegmentShare = currentPeriodResult.p_SKUs.map(function(SKU){
+//         var brand = utility.findBrand(currentPeriodResult, SKU.u_ParentBrandID);
+//         var brandName = brand.b_BrandName;
+
+//         var SKUName = brandName + SKU.u_SKUName;
+//         return {
+//             SKUName: SKUName,
+//             valueSegmentShare: SKU.u_ValueSegmentShare[segmentIndex]
+//         };
+//     });
+
+//     valueSegmentShare.sort(function(a, b){
+//         return b.valueSegmentShare - a.valueSegmentShare;
+//     })
+
+//     return {
+//         chartData: valueSegmentShare.slice(0, 5)
+//     };
+// }
 
 //Market evolution
 exports.growthRateInVolume = function(allResults){
@@ -325,61 +359,129 @@ exports.segmentValueShareTotalMarket = function(allResults){
  * @method perceptionMap
  * @param {Object} exogenous parameters of the game
  */
+
 exports.perceptionMap = function(allResults, exogenous){
-    var periodResult = allResults[allResults.length-1];
-
-    var result = [];
-    for(var i=0; i < periodResult.p_Companies.length; i++){
-        var company = periodResult.p_Companies[i];
-        var companyName = company.c_CompanyName;
-        var companyData = {
-            companyName: companyName,
-            brands: [],
-            SKUs: [],
-            exogenous: []
-        };
-        
-        //brands data
-        for(var j=0; j<periodResult.p_Brands.length; j++){
-            var brand = periodResult.p_Brands[j];
-            if(company.c_CompanyID === brand.b_ParentCompanyID){
-                companyData.brands.push({
-                    brandName: brand.b_BrandName,
-                    imagePerception: brand.b_Perception[1],
-                    valuePerception: brand.b_Perception[0]
-                })
-            }
-        }
-
-        //SKU data
-        for(var k=0; k<periodResult.p_SKUs.length; k++){
-            var SKU = periodResult.p_SKUs[k];
-            var brand = utility.findBrand(periodResult, SKU.u_ParentBrandID);
-            if(company.c_CompanyID === SKU.u_ParentCompanyID){
-                companyData.SKUs.push({
-                    SKUName: brand.b_BrandName + SKU.u_SKUName,
-                    imagePerception: SKU.u_Perception[1],
-                    valuePerception: SKU.u_Perception[0],
-                    tooltips: prepareSKUTooltips(allResults, SKU.u_SKUID)
-                })
-            }
-        }
-
-        //Exogenous
-        var exoSegmentsIdealPoints = exogenous.exo_SegmentsIdealPoints;
-        for(var p=0; p<exoSegmentsIdealPoints.length; p++){
-            var point = exoSegmentsIdealPoints[p];
-            companyData.exogenous.push({
-                segmentName: p,
-                imagePerception: point[1],
-                valuePerception: point[0]
-            });
-        }
-
-        result.push(companyData);
+    var result = {
+        periods : [],
+        exogenous : [],
     }
+
+    //Exogenous
+    var exoSegmentsIdealPoints = exogenous.exo_SegmentsIdealPoints;
+    for(var p=0; p<exoSegmentsIdealPoints.length; p++){
+        var point = exoSegmentsIdealPoints[p];
+        result.exogenous.push({
+            segmentName: p,
+            imagePerception: point[1],
+            valuePerception: point[0]
+        });
+    }
+
+    allResults.forEach(function(onePeriodResult){
+        var periodReport = {
+            period : onePeriodResult.period,
+            allCompanyData : []
+        }
+
+        for(var i=0; i < onePeriodResult.p_Companies.length; i++){
+            var company = onePeriodResult.p_Companies[i];
+            var companyName = company.c_CompanyName;
+            var companyData = {
+                companyName: companyName,
+                brands: [],
+                SKUs: [],
+            };
+            
+            //brands data
+            for(var j=0; j<onePeriodResult.p_Brands.length; j++){
+                var brand = onePeriodResult.p_Brands[j];
+                if(company.c_CompanyID === brand.b_ParentCompanyID){
+                    companyData.brands.push({
+                        brandName: brand.b_BrandName,
+                        imagePerception: brand.b_Perception[1],
+                        valuePerception: brand.b_Perception[0]
+                    })
+                }
+            }
+
+            //SKU data
+            for(var k=0; k<onePeriodResult.p_SKUs.length; k++){
+                var SKU = onePeriodResult.p_SKUs[k];
+                var brand = utility.findBrand(onePeriodResult, SKU.u_ParentBrandID);
+                if(company.c_CompanyID === SKU.u_ParentCompanyID){
+                    companyData.SKUs.push({
+                        SKUName: brand.b_BrandName + SKU.u_SKUName,
+                        imagePerception: SKU.u_Perception[1],
+                        valuePerception: SKU.u_Perception[0],
+                        tooltips: prepareSKUTooltips(allResults, SKU.u_SKUID)
+                    })
+                }
+            }
+            periodReport.allCompanyData.push(companyData);
+        }    
+
+        result.periods.push(periodReport);        
+    });
+
     return result;
 }
+
+
+// exports.perceptionMap = function(allResults, exogenous){
+//     var periodResult = allResults[allResults.length-1];
+
+//     var result = [];
+//     for(var i=0; i < periodResult.p_Companies.length; i++){
+//         var company = periodResult.p_Companies[i];
+//         var companyName = company.c_CompanyName;
+//         var companyData = {
+//             companyName: companyName,
+//             brands: [],
+//             SKUs: [],
+//             exogenous: []
+//         };
+        
+//         //brands data
+//         for(var j=0; j<periodResult.p_Brands.length; j++){
+//             var brand = periodResult.p_Brands[j];
+//             if(company.c_CompanyID === brand.b_ParentCompanyID){
+//                 companyData.brands.push({
+//                     brandName: brand.b_BrandName,
+//                     imagePerception: brand.b_Perception[1],
+//                     valuePerception: brand.b_Perception[0]
+//                 })
+//             }
+//         }
+
+//         //SKU data
+//         for(var k=0; k<periodResult.p_SKUs.length; k++){
+//             var SKU = periodResult.p_SKUs[k];
+//             var brand = utility.findBrand(periodResult, SKU.u_ParentBrandID);
+//             if(company.c_CompanyID === SKU.u_ParentCompanyID){
+//                 companyData.SKUs.push({
+//                     SKUName: brand.b_BrandName + SKU.u_SKUName,
+//                     imagePerception: SKU.u_Perception[1],
+//                     valuePerception: SKU.u_Perception[0],
+//                     tooltips: prepareSKUTooltips(allResults, SKU.u_SKUID)
+//                 })
+//             }
+//         }
+
+//         //Exogenous
+//         var exoSegmentsIdealPoints = exogenous.exo_SegmentsIdealPoints;
+//         for(var p=0; p<exoSegmentsIdealPoints.length; p++){
+//             var point = exoSegmentsIdealPoints[p];
+//             companyData.exogenous.push({
+//                 segmentName: p,
+//                 imagePerception: point[1],
+//                 valuePerception: point[0]
+//             });
+//         }
+
+//         result.push(companyData);
+//     }
+//     return result;
+// }
 
 exports.inventoryReport = function(allResults){
     var periodResult = allResults[allResults.length-1];
