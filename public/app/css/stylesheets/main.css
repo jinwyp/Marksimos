@@ -746,15 +746,37 @@ body a, body button {
   font-size: 24px;
   margin: 30px 1px 20px 28px;
 }
-.mainbody .user_maincompany .company_a {
-  color: #ffffff;
-  background-color: #39ae41;
+.mainbody .user_maincompany .company {
   width: 36px;
   height: 36px;
   padding: 5px 10px;
   -moz-border-radius: 4px;
   -webkit-border-radius: 4px;
   border-radius: 4px;
+}
+.mainbody .user_maincompany .company_a {
+  color: #ffffff;
+  background-color: #004CE5;
+}
+.mainbody .user_maincompany .company_b {
+  color: #ffffff;
+  background-color: #BB0000;
+}
+.mainbody .user_maincompany .company_c {
+  color: #ffffff;
+  background-color: #FFBC01;
+}
+.mainbody .user_maincompany .company_d {
+  color: #ffffff;
+  background-color: #339933;
+}
+.mainbody .user_maincompany .company_e {
+  color: #ffffff;
+  background-color: #990099;
+}
+.mainbody .user_maincompany .company_f {
+  color: #ffffff;
+  background-color: #FF5200;
 }
 .mainbody h5 {
   color: #373737;

@@ -22,7 +22,7 @@
         <div class="col-md-2 user_home_divider user_brand_box">
 
             <div class="row ">
-                <h4 class="user_maincompany">{{'HomePageSecondMenuBarLabelsCompany' | translate}} <span class="company_a">{{data.currentStudent.companyName | limitTo:-1}}</span> </h4>
+                <h4 class="user_maincompany">{{'HomePageSecondMenuBarLabelsCompany' | translate}} <span class="company" ng-class="{'company_a':data.currentCompanyNameCharacter=='A', 'company_b':data.currentCompanyNameCharacter=='B', 'company_c':data.currentCompanyNameCharacter=='C', 'company_d':data.currentCompanyNameCharacter=='D', 'company_e':data.currentCompanyNameCharacter=='E', 'company_f':data.currentCompanyNameCharacter=='F'}">{{data.currentStudent.companyName | limitTo:-1}}</span> </h4>
             </div>
             <div class="row">
                 <div class="col-md-5">
@@ -183,7 +183,7 @@
         <div class="col-md-2 user_home_divider user_chart_box">
 
             <div class="row ">
-                <h4 class="user_maincompany user_chart_company">{{'HomePageSecondMenuBarLabelsCompany' | translate}} <span class="company_a">{{data.currentStudent.companyName | limitTo:-1}}</span> </h4>
+                <h4 class="user_maincompany user_chart_company">{{'HomePageSecondMenuBarLabelsCompany' | translate}} <span class="company" ng-class="{'company_a':data.currentCompanyNameCharacter=='A', 'company_b':data.currentCompanyNameCharacter=='B', 'company_c':data.currentCompanyNameCharacter=='C', 'company_d':data.currentCompanyNameCharacter=='D', 'company_e':data.currentCompanyNameCharacter=='E', 'company_f':data.currentCompanyNameCharacter=='F'}">{{data.currentStudent.companyName | limitTo:-1}}</span> </h4>
 
             </div>
 
@@ -1808,7 +1808,7 @@
         <div class="col-md-2 user_home_divider user_chart_box">
 
             <div class="row ">
-                <h4 class="user_maincompany user_chart_company">{{'HomePageSecondMenuBarLabelsCompany' | translate}} <span class="company_a">{{data.currentStudent.companyName | limitTo:-1}}</span> </h4>
+                <h4 class="user_maincompany user_chart_company">{{'HomePageSecondMenuBarLabelsCompany' | translate}} <span class="company" ng-class="{'company_a':data.currentCompanyNameCharacter=='A', 'company_b':data.currentCompanyNameCharacter=='B', 'company_c':data.currentCompanyNameCharacter=='C', 'company_d':data.currentCompanyNameCharacter=='D', 'company_e':data.currentCompanyNameCharacter=='E', 'company_f':data.currentCompanyNameCharacter=='F'}">{{data.currentStudent.companyName | limitTo:-1}}</span> </h4>
             </div>
 
         </div>
@@ -2526,8 +2526,7 @@
         <div class="col-md-2 user_home_divider user_chart_box">
 
             <div class="row ">
-                <h4 class="user_maincompany user_chart_company">{{'HomePageSecondMenuBarLabelsCompany' | translate}} <span class="company_a">{{data.currentStudent.companyName | limitTo:-1}}</span> </h4>
-
+                <h4 class="user_maincompany user_chart_company">{{'HomePageSecondMenuBarLabelsCompany' | translate}} <span class="company" ng-class="{'company_a':data.currentCompanyNameCharacter=='A', 'company_b':data.currentCompanyNameCharacter=='B', 'company_c':data.currentCompanyNameCharacter=='C', 'company_d':data.currentCompanyNameCharacter=='D', 'company_e':data.currentCompanyNameCharacter=='E', 'company_f':data.currentCompanyNameCharacter=='F'}">{{data.currentStudent.companyName | limitTo:-1}}</span> </h4>
             </div>
 
         </div>

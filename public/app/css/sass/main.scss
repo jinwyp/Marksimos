@@ -1062,13 +1062,41 @@ body{
         font-size: 24px;
         margin: 30px 1px 20px 28px;
         
-        .company_a{
-            color: $color_main_body_company_a;
-            background-color: $color_main_body_company_1_bg;
+        .company{
             width: 36px;
             height: 36px;
             padding: 5px 10px;
             @include border-radius(4px);
+        }
+
+        .company_a{
+            color: $color_main_body_company_a;
+            background-color: $color_main_body_company_a_bg_old;
+        }
+
+        .company_b{
+            color: $color_main_body_company_a;
+            background-color: $color_main_body_company_b_bg_old;
+        }
+
+        .company_c{
+            color: $color_main_body_company_a;
+            background-color: $color_main_body_company_c_bg_old;
+        }
+
+        .company_d{
+            color: $color_main_body_company_a;
+            background-color: $color_main_body_company_d_bg_old;
+        }
+
+        .company_e{
+            color: $color_main_body_company_a;
+            background-color: $color_main_body_company_e_bg_old;
+        }
+
+        .company_f{
+            color: $color_main_body_company_a;
+            background-color: $color_main_body_company_f_bg_old;
         }
     }
 
