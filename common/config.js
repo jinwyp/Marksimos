@@ -6,7 +6,8 @@ module.exports = (function(){
             admin: 1,
             distributor: 2,
             facilitator: 3,
-            student: 4
+            student : 4,
+            enterpriseb2c: 9
         },
 
         mail: {

@@ -225,7 +225,7 @@ exports.removeStudentFromSeminar = function(req, res, next){
 * Populate seminar information to session
 * facilitator and student can call this API
 */
-exports.chooseSeminar = function(req, res, next){
+exports.chooseSeminarForStudent = function(req, res, next){
     var seminarId = req.query.seminar_id;
 
     if(!seminarId){
@@ -269,7 +269,41 @@ exports.chooseSeminar = function(req, res, next){
         return res.send(500, {message: "choose seminar faile."})
     })
     .done();
-}
+};
+
+
+exports.chooseSeminarForFacilitator = function(req, res, next){
+    var seminarId = req.params.seminar_id;
+
+    if(!seminarId){
+        return res.send(400, {message: "Invalid seminar_id"});
+    }
+
+    seminarModel.findOne({seminarId: seminarId})
+        .then(function(dbSeminar){
+            if(!dbSeminar){
+                return res.send(400, {message: "seminar " + seminarId + " doesn't exist."});
+            }
+
+            sessionOperation.setSeminarId(req, dbSeminar.seminarId);
+            sessionOperation.setCurrentPeriod(req, dbSeminar.currentPeriod);
+
+
+            res.render('marksimosadmin/adminmarksimosreport.ejs',{
+                title : 'Admin | Report',
+                seminarId: seminarId
+            });
+        })
+        .fail(function(err){
+            logger.error(err);
+            return res.send(500, {message: "choose seminar faile."})
+        })
+        .done();
+
+};
+
+
+
 
 exports.updateSeminar = function(req, res, next){
     var validateResult = validateSeminar(req);

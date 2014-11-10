@@ -78,7 +78,7 @@
             }
             $http({
                 method:'POST',
-                url:'/e4e/register/company',
+                url:'/e4e/api/registercompany',
                 data:postData
             }).then(function(data){
                 if(data.data.message=="Register success"){
@@ -104,7 +104,7 @@
             }
             $http({
                 method:'POST',
-                url:'/e4e/register/student',
+                url:'/e4e/api/registerstudent',
                 data:postData
             }).then(function(data){
                 if(data.data.message=="Register success"){

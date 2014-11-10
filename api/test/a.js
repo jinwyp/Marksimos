@@ -41,8 +41,8 @@ function addDistributor(){
     }).form({
         email: 'distributor1@hcdglobal.com',
         password: '123456',
-        name: 'hcd global',
-        phone: '631122021',
+        username: 'hcdglobal',
+        mobilePhone: '631122021',
         country: 'china',
         state: 'shanghai',
         city: 'shanghai',
@@ -60,8 +60,8 @@ function updateDistributor(){
     }).form({
         email: 'distributor@hcdglobal.com',
         password: '123456789',
-        name: 'hcd global',
-        phone: '631122021',
+        username: 'hcd global',
+        mobilePhone: '631122021',
         country: 'china',
         state: 'shanghai',
         city: 'shanghai',
@@ -80,8 +80,8 @@ function addFacilitator(){
     }).form({
         email: 'facilitator1@hcdglobal.com',
         password: '123456',
-        name: 'hcd global',
-        phone: '631122021',
+        username: 'hcd global',
+        mobilePhone: '631122021',
         country: 'china',
         state: 'shanghai',
         city: 'shanghai',
@@ -99,8 +99,8 @@ function updateFacilitator(){
     }).form({
         email: 'distributor@hcdglobal.com',
         password: '123456789',
-        name: 'hcd global',
-        phone: '631122021',
+        username: 'hcd global',
+        mobilePhone: '631122021',
         country: 'japan',
         state: 'shanghai',
         city: 'shanghai',
@@ -120,12 +120,12 @@ function addStudent(){
         password: '123456',
         first_name: 'Bruce',
         last_name: 'Lee',
-        phone: '631122021',
+        mobilePhone: '631122021',
         country: 'china',
         state: 'shanghai',
         city: 'shanghai',
         num_of_license: 1,
-        pincode: '13911123971123821X'
+        idcardNumber: '13911123971123821X'
     });
 }
 
@@ -141,11 +141,11 @@ function updateStudent(){
         password: '123456',
         first_name: 'Bruce',
         last_name: 'Lee',
-        phone: '631122021',
+        mobilePhone: '631122021',
         country: 'china',
         state: 'shanghai',
         city: 'hangzhou',
-        pincode: '13911123971123821X',
+        idcardNumber: '13911123971123821X',
         companyRole: 'Team Member'
     });
 }
@@ -207,8 +207,8 @@ function createTestData(){
         return userModel.insert({
             email: 'distributor@hcdglobal.com',
             password: '123456',
-            name: 'hcd distributor',
-            phone: '631122021',
+            username: 'hcd distributor',
+            mobilePhone: '631122021',
             country: 'china',
             state: 'shanghai',
             city: 'shanghai',
@@ -223,7 +223,7 @@ function createTestData(){
         return userModel.insert({
             email: 'facilitator@hcdglobal.com',
             password: '123456',
-            name: 'hcd facilitator',
+            username: 'hcd facilitator',
             numOfLicense: 50,
             role: 3,
             distributorId: distributor._id
@@ -233,7 +233,7 @@ function createTestData(){
         return userModel.insert({
             email: 'student@hcdglobal.com',
             password: '123456',
-            name: 'jim wozz',
+            username: 'jim wozz',
             role: 4,
             facilitatorId: facilitator._id
         })

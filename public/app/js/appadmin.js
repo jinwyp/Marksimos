@@ -47,7 +47,6 @@
 
 
 
-// controller business logic
     angular.module('marksimosadmin').controller('adminHomeController', ['$scope', '$http', '$notification', function($scope, $http, $notification) {
 
         $scope.css = {
@@ -76,7 +75,7 @@
             searchDistributor : {
                 username :'',
                 email :'',
-                user_status :'false'
+                user_status :'true'
             },
             distributors : [],
 
@@ -96,7 +95,7 @@
             searchFacilitator : {
                 username :'',
                 email :'',
-                user_status :'false'
+                user_status :'true'
             },
             facilitators : [],
 
@@ -117,9 +116,9 @@
             searchStudent : {
                 username :'',
                 email :'',
-                user_status :'false',
+                user_status :'true',
                 //add for e4e
-                user_ise4e : ''
+                student_type : ""
             },
             students : [],
 
@@ -574,5 +573,23 @@
 
     }]);
 
+
+
+
+
+    angular.module('marksimosadmin').controller('adminMarksimosReportController', ['$scope', '$http', '$notification', function($scope, $http, $notification) {
+        $scope.css = {
+            currentReportMenu : 'A1'
+
+        };
+
+
+
+        $scope.clickChartMenu = function(report){
+            $scope.css.currentReportMenu = report;
+
+        };
+
+    }]);
 
 }());

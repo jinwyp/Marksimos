@@ -1,11 +1,51 @@
 var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
+var bcrypt   = require('bcrypt-nodejs');
 var Q = require('q');
+var uuid = require('node-uuid');
+
 
 var userSchema = new Schema({
-    name: String,
-    email: String,
-    phone: String,
+
+    // system field
+    username: { type: String, required: true },
+    email: { type: String, required: true },
+    password: { type: String, required: true },
+
+
+    emailActivateToken: { type: String, default: uuid.v4() },
+    emailActivated: {type: Boolean, default: false},
+    activated: {type: Boolean, default: false},
+
+
+    role: {type: Number, default: 4},  //1 admin, 2 distributor, 3 facilitator, 4  students,   9 B2C Enterprise
+    studentType : {type: Number, default: 10}, //10 B2B students,  20 B2C students, 30 Both B2C and B2B students
+
+
+    // 3rd facebook auth
+    facebook : {
+        id       : String,
+        token    : String,
+        email    : String,
+        username : String
+    },
+
+    //user basic info
+    gender       : Number,
+    birthday: Date,
+    firstName    : String,
+    lastName     : String,
+    idcardNumber : String,
+    mobilePhone  : String,
+    qq           : String,
+
+
+    //user degree info
+    majorsDegree: String,
+    dateOfGraduation: Date,
+    organizationOrUniversity: String,
+    occupation: String,
+
 
     //address
     country: String,
@@ -15,48 +55,26 @@ var userSchema = new Schema({
     street: String,
 
 
-    activateToken: String,
-    //add for e4e
-    isE4EUser: {type: Boolean, default: false},
-    isActivated: {type: Boolean, default: false},
-    isDisabled: {type: Boolean, default: false},
-    password: String,
-    
-    role: {type: Number, default: 4}, //1 admin, 2 distributor, 3 facilitator, 4 students
-
-    numOfLicense: {type: Number, default: 0},
-    numOfUsedLicense: {type: Number, default: 0},
-
-    //facilitator field
-    distributorId: String,
-    
-    //student fileds
-    pincode: String,
-    gender: Number,
-    occupation: String,
-    firstName: String,
-    lastName: String,
-    university: String,
-    organization: String,
-    highestEducationalDegree: String,
-    facilitatorId: String,
-    companyRole: {type: String, default: 'Team Member'},  //description of the role of this student in this company, like CEO, Marketing
-
-    //add for e4e student
-    yearOfBirth: Date,
-    majors: String,
-    university: String,
-    dateOfGraduation: Date,
-    qq: String,
     //add for e4e company
     designation: String,
     officalContactNumber: String,
     holdingCompany: String,
-    division: String
+    division: String,
+
+
+    //distributor and facilitator info
+    numOfLicense: {type: Number, default: 0},
+    numOfUsedLicense: {type: Number, default: 0},
+
+    distributorId: String,
+    facilitatorId: String
 
 });
 
 var User = mongoose.model("User", userSchema);
+
+exports.model = User;
+
 
 exports.insert = function(user){
     if(!mongoose.connection.readyState){
@@ -71,10 +89,11 @@ exports.insert = function(user){
         }else{
             deferred.resolve(result);
         }
-    })
+    });
 
     return deferred.promise;
-}
+};
+
 
 exports.register = function(user){
     if(!mongoose.connection.readyState){
@@ -89,10 +108,11 @@ exports.register = function(user){
         }else{
             deferred.resolve(result);
         }
-    })
+    });
 
     return deferred.promise;
-}
+};
+
 
 exports.updateByEmail = function(email, user){
     if(!mongoose.connection.readyState){
@@ -114,7 +134,7 @@ exports.updateByEmail = function(email, user){
     });
 
     return deferred.promise; 
-}
+};
 
 exports.update = function(query, user){
     if(!mongoose.connection.readyState){

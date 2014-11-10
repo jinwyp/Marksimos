@@ -18,20 +18,20 @@ exports.addDistributor = function(req, res, next){
     }
 
     var distributor = {
-        name: req.body.username,
+        username: req.body.username,
         email: req.body.email,
-        phone: req.body.phone,
+        mobilePhone: req.body.phone,
         country: req.body.country,
         state: req.body.state,
         city: req.body.city,
         password: utility.hashPassword(req.body.password),
         role: config.role.distributor,
         numOfLicense: req.body.num_of_license_granted,
-        isActivated: true,
-        isDisabled: false,
+        emailActivated: true,
+        activated: true,
         district: req.body.district || '',
         street: req.body.street || '',
-        pincode: req.body.pincode || ''
+        idcardNumber: req.body.pincode || ''
     };
 
     userModel.findByEmail(req.body.email)
@@ -63,18 +63,18 @@ exports.updateDistributor = function(req, res, next){
     }
 
     var distributor = {
-        name: req.body.name,
-        phone: req.body.phone,
+        username: req.body.name,
+        mobilePhone: req.body.phone,
         country: req.body.country,
         state: req.body.state,
         city: req.body.city,
         password: utility.hashPassword(req.body.password),
         role: config.role.distributor,
         numOfLicense: req.body.num_of_license_granted,
-        isActivated: true,
+        emailActivated: true,
         district: req.body.district || '',
         street: req.body.street || '',
-        pincode: req.body.pincode || ''
+        idcardNumber: req.body.pincode || ''
     };
 
     userModel.update({_id: req.params.distributor_id}, distributor)
@@ -97,17 +97,17 @@ exports.searchDistributor = function(req, res, next){
     var country = req.query.country;
     var state = req.query.state;
     var city = req.query.city;
-    var isDisabled = req.query.user_status;
+    var activated = req.query.user_status;
 
     var query = {
         role: config.role.distributor
     };
-    if(name) query.name = name;
+    if(name) query.username = name;
     if(email) query.email = email;
     if(country) query.country = country;
     if(state) query.state = state;
     if(city) query.city = city;
-    if(isDisabled) query.isDisabled = isDisabled;
+    if(activated) query.activated = activated;
 
     userModel.find(query)
     .then(function(result){

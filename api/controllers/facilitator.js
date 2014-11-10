@@ -22,16 +22,16 @@ exports.addFacilitator = function(req, res, next){
     var distributorId = sessionOperation.getUserId(req);
 
     var facilitator = {
-        name: req.body.username,
+        username: req.body.username,
         email: req.body.email,
-        phone: req.body.phone,
+        mobilePhone: req.body.phone,
         country: req.body.country,
         state: req.body.state,
         city: req.body.city,
         password: utility.hashPassword(req.body.password),
         role: config.role.facilitator,
         numOfLicense: req.body.num_of_license_granted, //update distributor license when you update this field.
-        isActivated: true,
+        emailActivated: true,
         distributorId: distributorId
     };
 
@@ -87,8 +87,8 @@ exports.updateFacilitator = function(req, res, next){
 
     var facilitator = {};
 
-    if(req.body.username) facilitator.name = req.body.username;
-    if(req.body.phone) facilitator.phone = req.body.phone;
+    if(req.body.username) facilitator.username = req.body.username;
+    if(req.body.phone) facilitator.mobilePhone = req.body.phone;
     if(req.body.country) facilitator.country = req.body.country;
     if(req.body.state) facilitator.state = req.body.state;
     if(req.body.city) facilitator.city = req.body.city;
@@ -100,7 +100,7 @@ exports.updateFacilitator = function(req, res, next){
     }
     if(req.body.district) facilitator.district = req.body.district;
     if(req.body.street) facilitator.street = req.body.street;
-    if(req.body.pincode) facilitator.pincode = req.body.pincode;
+    if(req.body.pincode) facilitator.idcardNumber = req.body.pincode;
 
     if(Object.keys(facilitator).length === 0){
         return res.send(400, {message: "you have to provide at least one field to update."});
@@ -178,7 +178,7 @@ exports.searchFacilitator = function(req, res, next){
     var country = req.query.country;
     var state = req.query.state;
     var city = req.query.city;
-    var isDisabled = req.query.user_status;
+    var activated = req.query.user_status;
 
     var query = {
         role: config.role.facilitator
@@ -190,12 +190,12 @@ exports.searchFacilitator = function(req, res, next){
         query.distributorId = sessionOperation.getUserId(req);
     }
 
-    if(name) query.name = name;
+    if(name) query.username = name;
     if(email) query.email = email;
     if(country) query.country = country;
     if(state) query.state = state;
     if(city) query.city = city;
-    if(isDisabled) query.isDisabled = isDisabled;
+    if(activated) query.activated = activated;
 
     userModel.find(query)
     .then(function(allFacilitator){
@@ -213,7 +213,7 @@ exports.searchFacilitator = function(req, res, next){
                 if(!distributor){
                     return res.send(500, {message: "distributor " + facilitator.distributorId + " doesn't exist."})
                 }
-                facilitator.distributorName = distributor.name;
+                facilitator.distributorName = distributor.username;
             }
             
             res.send(allFacilitator);
@@ -246,7 +246,7 @@ exports.getSeminarOfFacilitator = function(req, res, next){
         res.send(500, {message: "get seminar list faile."})
     })
     .done();
-}
+};
 
 
 

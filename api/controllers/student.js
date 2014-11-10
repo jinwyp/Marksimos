@@ -22,26 +22,25 @@ exports.addStudent = function(req, res, next){
     var facilitatorId = sessionOperation.getUserId(req);
 
     var student = {
-        name          : req.body.firstname + ' ' + req.body.lastname,
+        username      : req.body.username,
         email         : req.body.email,
-        phone         : req.body.phone,
+        mobilePhone   : req.body.phone,
         country       : req.body.country,
         state         : req.body.state,
         city          : req.body.city,
         password      : utility.hashPassword(req.body.password),
         role          : config.role.student,
+        studentType   : 10,
         facilitatorId : facilitatorId,
 
-        pincode                  : req.body.pincode || '',
+        idcardNumber             : req.body.pincode || '',
         gender                   : req.body.gender || '',
         occupation               : req.body.occupation || '',
         firstName                : req.body.firstname,
         lastName                 : req.body.lastname,
-        university               : req.body.university || '',
-        organization             : req.body.organization || '',
-        highestEducationalDegree : req.body.highest_educational_degree || '',
+        organizationOrUniversity : req.body.university || '',
+        majorsDegree             : req.body.majorsDegree || ''
 
-        isE4EUser : false
     };
 
     userModel.findOne({
@@ -79,20 +78,19 @@ exports.updateStudent = function(req, res, next){
 
     var student = {};
 
-    if(req.body.name) student.name = req.body.firstname + ' ' + req.body.lastname;
-    if(req.body.phone) student.phone = req.body.phone;
+    if(req.body.username) student.username = req.body.username;
+    if(req.body.phone) student.mobilePhone = req.body.phone;
     if(req.body.country) student.country = req.body.country;
     if(req.body.state) student.state = req.body.state;
     if(req.body.city) student.city = req.body.city;
     if(req.body.password) student.password = utility.hashPassword(req.body.password);
-    if(req.body.pincode) student.pincode = req.body.pincode;
+    if(req.body.pincode) student.idcardNumber = req.body.pincode;
     if(req.body.gender) student.gender = req.body.gender;
     if(req.body.occupation) student.occupation = req.body.occupation;
     if(req.body.firstname) student.firstName = req.body.firstname;
     if(req.body.lastname) student.lastName = req.body.lastname;
-    if(req.body.university) student.university = req.body.university;
-    if(req.body.organization) student.organization = req.body.organization;
-    if(req.body.highestEducationalDegree) student.highestEducationalDegree = req.body.highestEducationalDegree;
+    if(req.body.university) student.organizationOrUniversity = req.body.university;
+    if(req.body.majorsDegree) student.majorsDegree = req.body.majorsDegree;
 
     if(Object.keys(student).length === 0){
         return res.send(400, {message: "You should at least provide one field to update."})
@@ -183,18 +181,20 @@ exports.resetPassword = function(req, res, next){
 
 
 exports.searchStudent = function(req, res, next){
-    var name = req.query.username;
+    var username = req.query.username;
     var email = req.query.email;
     var country = req.query.country;
     var state = req.query.state;
     var city = req.query.city;
-    var isDisabled = req.query.user_status;
+    var activated = req.query.user_status;
     //add for e4e
-    var isE4EUser = req.query.user_ise4e;
 
-    var query = {
-        role: config.role.student
-    };
+    var query = {};
+
+    if(req.query.student_type){
+        query.studentType = req.query.student_type;
+    }
+
 
     //only facilitator and admin can search students
     //facilitator can only view its own students
@@ -202,16 +202,12 @@ exports.searchStudent = function(req, res, next){
         query.facilitatorId = sessionOperation.getUserId(req);
     }
 
-    if(name) query.name = name;
+    if(username) query.username = username;
     if(email) query.email = email;
     if(country) query.country = country;
     if(state) query.state = state;
     if(city) query.city = city;
-    if(isDisabled) {
-        query.isDisabled = isDisabled;
-    }else query.isDisabled = false;
-    //add for e4e
-    if(isE4EUser !== '') query.isE4EUser = isE4EUser;
+    if(activated) query.activated = activated;
 
     userModel.find(query)
     .then(function(result){
