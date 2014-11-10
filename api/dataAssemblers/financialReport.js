@@ -290,7 +290,6 @@ function reportForBrand(onePeriodResult, companyId){
 }
 
 function reportForCompanyTotal(onePeriodResult, companyId){
-    console.log(companyId)
     var report = {};
     onePeriodResult.p_Companies.forEach(function(companyResult){
         if(companyId === companyResult.c_CompanyID){
