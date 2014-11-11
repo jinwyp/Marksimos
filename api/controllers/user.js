@@ -90,7 +90,7 @@ exports.register = function(req, res, next){
     var password = req.body.password;
     password = utility.hashPassword(password);
 
-    var phoneNum = req.body.phoneNum || '';
+    var phoneNum = req.body.mobilePhone || '';
     var country = req.body.country || '';
     var state = req.body.state || '';
     var city = req.body.city || '';
@@ -230,10 +230,10 @@ exports.registerE4Ecompany = function(req, res, next){
 
     user.username = req.body.nameOfContactPerson;
     user.designation = req.body.designation;
-    user.mobilePhone = req.body.officalContactNumber;
+    user.officalContactNumber = req.body.officalContactNumber;
     user.holdingCompany = req.body.holdingCompany;
     user.division = req.body.division;
-    user.mobileNumber = req.body.mobileNumber;
+    user.mobilePhone = req.body.mobileNumber;
 
     user.role = config.role.enterpriseb2c;
 

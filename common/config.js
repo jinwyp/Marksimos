@@ -10,6 +10,13 @@ module.exports = (function(){
             enterpriseb2c: 9
         },
 
+        studentType: {
+            B2Bstudents: 10,
+            B2Cstudents: 20,
+            B2CAndB2Bstudents: 30
+
+        },
+
         mail: {
             host: 'mail.hcdglobal.com',
             user: 'test@hcdglobal.com',

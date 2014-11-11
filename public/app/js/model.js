@@ -520,30 +520,39 @@
                 return names[fieldname]();
             }
 
-            if(angular.isUndefined(chartHttpData.periods)){
-                // 如果periods 没有定义则是普通的图表,不带有系列的图表
+            if(angular.isArray(chartHttpData)){
 
-                angular.forEach(chartHttpData.chartData, function(value, key) {
-                    var oneBarData = {
-                        x : "", //SKU Name
-                        y : [],
-                        color : 'rgb(57,181,74)'
+                angular.forEach(chartHttpData, function(period, keyperiod) {
+                    var periodData = {
+                        period : period.period,
+                        data : []
                     };
 
-                    if(angular.isUndefined(value.segmentName) ){
-                        oneBarData.x = value.SKUName;
+                    angular.forEach(period.chartData, function(value, key) {
+                        var oneBarData = {
+                            x : "", //SKU Name
+                            y : [],
+                            color : 'rgb(57,181,74)'
+                        };
 
-                        if(decimalNumber === 0){
-                            oneBarData.y.push(Math.round(value.valueSegmentShare * 100) / 100 );
-                        }else{
-                            oneBarData.y.push(Math.round(value.valueSegmentShare * 10000) / Math.pow(10, Number(decimalNumber)) );
+                        if(angular.isUndefined(value.segmentName) ){
+                            oneBarData.x = value.SKUName;
+
+                            if(decimalNumber === 0){
+                                oneBarData.y.push(Math.round(value.valueSegmentShare * 100) / 100 );
+                            }else{
+                                oneBarData.y.push(Math.round(value.valueSegmentShare * 10000) / Math.pow(10, Number(decimalNumber)) );
+                            }
+
+                            oneBarData.color = showSkuColor(value.SKUName.substring(0,1));
                         }
 
-                        oneBarData.color = showSkuColor(value.SKUName.substring(0,1));
-                    }
+                        periodData.data.push(oneBarData);
+                    });
 
-                    chartResult.data.push(oneBarData);
+                    chartResult.data.push(periodData);
                 });
+
             }
             return angular.copy(chartResult);
 

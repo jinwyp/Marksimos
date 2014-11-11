@@ -258,33 +258,40 @@
 
             chartC11SegmentsLeadersByValuePriceSensitive : {
                 config : chartReport.getChartConfig2(),
+                currentPeriod : 0,
+                allData : [],
                 data : $scope.dataChartSimple
             },
             chartC12SegmentsLeadersByValuePretenders : {
                 config : chartReport.getChartConfig2(),
+                allData : [],
                 data : $scope.dataChartSimple
             },
             chartC13SegmentsLeadersByValueModerate : {
                 config : chartReport.getChartConfig2(),
+                allData : [],
                 data : $scope.dataChartSimple
             },
             chartC14SegmentsLeadersByValueGoodLife : {
                 config : chartReport.getChartConfig2(),
+                allData : [],
                 data : $scope.dataChartSimple
             },
             chartC15SegmentsLeadersByValueUltimate : {
                 config : chartReport.getChartConfig2(),
+                allData : [],
                 data : $scope.dataChartSimple
             },
             chartC16SegmentsLeadersByValuePragmatic : {
                 config : chartReport.getChartConfig2(),
+                allData : [],
                 data : $scope.dataChartSimple
             },
             chartC21PerceptionMap : {
                 allData : [],
                 data : [],
                 dataChart : [],
-                currentPeriod : $scope.css.currentPeriod,
+                currentPeriod : 0,
     //            color : ['#39b54a', '#ff983d', '#0087f0', '#8781bd', '#f26c4f', '#bd8cbf', '#000000']
                 color : ['#004CE5', '#BB0000', '#FFBC01', '#339933', '#990099', '#FF5200', '#000000']
             },
@@ -567,35 +574,35 @@
                     $scope.data.chartB43TotalInventoryAtFactory.data = data;
                 });
                 chartReport.totalInventoryAtTrade().then(function(data, status, headers, config){
-    //        console.log(data);
                     $scope.data.chartB44TotalInventoryAtTrade.data = data;
                 });
 
 
                 /********************  Chart C1  ********************/
                 chartReport.segmentsLeadersByValuePriceSensitive().then(function(data, status, headers, config){
-    //        console.log(data);
-                    $scope.data.chartC11SegmentsLeadersByValuePriceSensitive.data = data;
+                    $scope.data.chartC11SegmentsLeadersByValuePriceSensitive.allData = data.data;
+                    $scope.data.chartC11SegmentsLeadersByValuePriceSensitive.currentPeriod = $scope.data.chartC11SegmentsLeadersByValuePriceSensitive.allData.length - 4 ;
+                    $scope.data.chartC11SegmentsLeadersByValuePriceSensitive.data = $scope.data.chartC11SegmentsLeadersByValuePriceSensitive.allData[$scope.data.chartC11SegmentsLeadersByValuePriceSensitive.currentPeriod + 3];
                 });
                 chartReport.segmentsLeadersByValuePretenders().then(function(data, status, headers, config){
-    //        console.log(data);
-                    $scope.data.chartC12SegmentsLeadersByValuePretenders.data = data;
+                    $scope.data.chartC12SegmentsLeadersByValuePretenders.allData = data.data;
+                    $scope.data.chartC12SegmentsLeadersByValuePretenders.data = $scope.data.chartC12SegmentsLeadersByValuePretenders.allData[$scope.data.chartC11SegmentsLeadersByValuePriceSensitive.currentPeriod + 3];
                 });
                 chartReport.segmentsLeadersByValueModerate().then(function(data, status, headers, config){
-    //        console.log(data);
-                    $scope.data.chartC13SegmentsLeadersByValueModerate.data = data;
+                    $scope.data.chartC13SegmentsLeadersByValueModerate.allData = data.data;
+                    $scope.data.chartC13SegmentsLeadersByValueModerate.data = $scope.data.chartC13SegmentsLeadersByValueModerate.allData[$scope.data.chartC11SegmentsLeadersByValuePriceSensitive.currentPeriod + 3];
                 });
                 chartReport.segmentsLeadersByValueGoodLife().then(function(data, status, headers, config){
-    //        console.log(data);
-                    $scope.data.chartC14SegmentsLeadersByValueGoodLife.data = data;
+                    $scope.data.chartC14SegmentsLeadersByValueGoodLife.allData = data.data;
+                    $scope.data.chartC14SegmentsLeadersByValueGoodLife.data = $scope.data.chartC14SegmentsLeadersByValueGoodLife.allData[$scope.data.chartC11SegmentsLeadersByValuePriceSensitive.currentPeriod + 3];
                 });
                 chartReport.segmentsLeadersByValueUltimate().then(function(data, status, headers, config){
-    //        console.log(data);
-                    $scope.data.chartC15SegmentsLeadersByValueUltimate.data = data;
+                    $scope.data.chartC15SegmentsLeadersByValueUltimate.allData = data.data;
+                    $scope.data.chartC15SegmentsLeadersByValueUltimate.data = $scope.data.chartC15SegmentsLeadersByValueUltimate.allData[$scope.data.chartC11SegmentsLeadersByValuePriceSensitive.currentPeriod + 3];
                 });
                 chartReport.segmentsLeadersByValuePragmatic().then(function(data, status, headers, config){
-    //        console.log(data);
-                    $scope.data.chartC16SegmentsLeadersByValuePragmatic.data = data;
+                    $scope.data.chartC16SegmentsLeadersByValuePragmatic.allData = data.data;
+                    $scope.data.chartC16SegmentsLeadersByValuePragmatic.data = $scope.data.chartC16SegmentsLeadersByValuePragmatic.allData[$scope.data.chartC11SegmentsLeadersByValuePriceSensitive.currentPeriod + 3];
                 });
 
 
@@ -603,7 +610,6 @@
                 chartReport.perceptionMap().then(function(data, status, headers, config){
                     $scope.data.chartC21PerceptionMap.allData = data.data;
                     $scope.data.chartC21PerceptionMap.currentPeriod = $scope.data.chartC21PerceptionMap.allData.length - 4;
-                    console.log(data, $scope.data.chartC21PerceptionMap.currentPeriod, $scope.data.chartC21PerceptionMap.allData.length);
                     $scope.data.chartC21PerceptionMap.data = $scope.data.chartC21PerceptionMap.allData[$scope.data.chartC21PerceptionMap.currentPeriod + 3];
                     $scope.data.chartC21PerceptionMap.dataChart = $scope.data.chartC21PerceptionMap.data.dataSKU;
                 });
@@ -792,6 +798,16 @@
         };
 
 
+        /********************  Chart C1  ********************/
+        $scope.switchTableReportC1Period = function(period){
+            $scope.data.chartC11SegmentsLeadersByValuePriceSensitive.currentPeriod = period.period;
+            $scope.data.chartC11SegmentsLeadersByValuePriceSensitive.data = $scope.data.chartC11SegmentsLeadersByValuePriceSensitive.allData[$scope.data.chartC11SegmentsLeadersByValuePriceSensitive.currentPeriod + 3];
+            $scope.data.chartC12SegmentsLeadersByValuePretenders.data = $scope.data.chartC12SegmentsLeadersByValuePretenders.allData[$scope.data.chartC11SegmentsLeadersByValuePriceSensitive.currentPeriod + 3];
+            $scope.data.chartC13SegmentsLeadersByValueModerate.data = $scope.data.chartC13SegmentsLeadersByValueModerate.allData[$scope.data.chartC11SegmentsLeadersByValuePriceSensitive.currentPeriod + 3];
+            $scope.data.chartC14SegmentsLeadersByValueGoodLife.data = $scope.data.chartC14SegmentsLeadersByValueGoodLife.allData[$scope.data.chartC11SegmentsLeadersByValuePriceSensitive.currentPeriod + 3];
+            $scope.data.chartC15SegmentsLeadersByValueUltimate.data = $scope.data.chartC15SegmentsLeadersByValueUltimate.allData[$scope.data.chartC11SegmentsLeadersByValuePriceSensitive.currentPeriod + 3];
+            $scope.data.chartC16SegmentsLeadersByValuePragmatic.data = $scope.data.chartC16SegmentsLeadersByValuePragmatic.allData[$scope.data.chartC11SegmentsLeadersByValuePriceSensitive.currentPeriod + 3];
+        };
 
 
         /********************  Chart C2  ********************/

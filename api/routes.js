@@ -218,10 +218,11 @@ apiRouter.get('/marksimos/api/create_admin', function(req, res, next){
         .then(function(){
             //创建admin
             return userModel.register({
-                username: 'hcdadmin',
-                password: require('../common/utility.js').hashPassword('123456'),
-                email: 'admin@hcdglobal.com',
+                username: 'hcd_administrator',
+                password: require('../common/utility.js').hashPassword('admin1234@hcd'),
+                email: 'hcd_administrator@hcdlearning.com',
                 role: config.role.admin,
+                activated: true,
                 emailActivated: true
             });
             //创建Distributor

@@ -255,7 +255,7 @@ exports.comparePassword = function(password, hashedPassword){
     return bcrypt.compareSync(password, hashedPassword);
 };
 
-exports.validatePincode = function(pincode){
+exports.validateIdcardNumber = function(pincode){
     return pincode && /^\d{17}([0-9]|X)$/.test(pincode);
 };
 
@@ -270,7 +270,7 @@ exports.validateUser = function(req){
     if(req.body.email) req.checkBody('email', 'Invalid email').notEmpty().isEmail();
     if(req.body.password) req.assert('password', '6 to 20 characters required').len(6, 20);
     if(req.body.username) req.checkBody('username', '6 to 100 characters required.').notEmpty().len(6, 100);
-    if(req.body.phone) req.checkBody('phone', 'phone is empty.').notEmpty();
+    if(req.body.mobilePhone) req.checkBody('mobilePhone', 'mobilePhone is empty.').notEmpty();
     if(req.body.country) req.checkBody('country', 'country is empty').notEmpty();
     if(req.body.state) req.checkBody('state', 'state is empty').notEmpty();
     if(req.body.city) req.checkBody('city', 'city is empty').notEmpty();
@@ -285,12 +285,12 @@ exports.validateUser = function(req){
     }
 
     //if phone contains characters other than number
-    if(req.body.phone && !validator.isNumeric(req.body.phone)){
-        return "Invalid phone.";
+    if(req.body.mobilePhone && !validator.isNumeric(req.body.mobilePhone)){
+        return "Invalid mobilePhone.";
     }
 
-    if(req.body.pincode && !exports.validatePincode(req.body.pincode)){
-        return 'Invalid pincode';
+    if(req.body.idcardNumber && !exports.validateIdcardNumber(req.body.idcardNumber)){
+        return 'Invalid idcardNumber';
     }
 
     if(req.body.gender && !exports.validateGender(req.body.gender)){
@@ -304,7 +304,7 @@ exports.validateUser = function(req){
 exports.checkRequiredFieldForAllUsers = function(req){
     if(!req.body.email) return "email can't be empty.";
     if(!req.body.password) return "password can't be empty.";
-    if(!req.body.phone) return "phone can't be empty.";
+    if(!req.body.mobilePhone) return "mobilePhone can't be empty.";
     if(!req.body.country) return "country can't be empty.";
     if(!req.body.state) return "state can't be empty.";
     if(!req.body.city) return "city can't be empty.";

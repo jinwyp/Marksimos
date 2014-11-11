@@ -196,6 +196,7 @@ gulp.task('watch', function() {
 
 
 
+
 // browser-sync task for starting the server.
 gulp.task('browser-sync', function() {
     browserSync({
@@ -213,6 +214,7 @@ gulp.task('browser-sync', function() {
 gulp.task('default', ['nodemon', 'watch']);
 
 //gulp.task('jin', ['mongo', 'browser-sync', 'nodemonjin', 'watch']);
-gulp.task('jin', ['mongo', 'compass', 'templates', 'nodemonjin', 'watch']);
+gulp.task('jin', [ 'compass', 'templates', 'nodemonjin', 'watch']);
+gulp.task('jingo', ['mongo', 'compass', 'templates', 'nodemonjin', 'watch']);
 
 gulp.task('sunyun', ['nodemonsunyun', 'watch']);

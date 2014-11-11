@@ -18,7 +18,7 @@
 
             <div class="form-group" ng-class="{'has-success':loginForm.password.$dirty && loginForm.password.$valid, 'has-error': loginForm.password.$dirty && loginForm.password.$invalid}">
 
-                <input type="password" name="password" class="form-control" placeholder="Password" ng-model="data.admin.password" required ng-minlength="5" ng-maxlength="12"/>
+                <input type="password" name="password" class="form-control" placeholder="Password" ng-model="data.admin.password" required ng-minlength="6" ng-maxlength="20"/>
                 <label class="control-label" for="inputError" ng-show="loginForm.password.$dirty && loginForm.password.$invalid">
                     <i class="fa fa-times-circle-o"></i> Email or password  wrong !
                 </label>
