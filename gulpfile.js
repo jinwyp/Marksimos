@@ -166,7 +166,13 @@ gulp.task('nodemonjin', function () {
     });
 //        .on('restart', 'default')
 });
-
+gulp.task('nodemonsunyun', function () {
+    nodemon({
+        script: 'app.js',
+        env: { 'NODE_ENV': 'sunyun' }
+    });
+//        .on('restart', 'default')
+});
 
 
 
@@ -209,3 +215,4 @@ gulp.task('default', ['nodemon', 'watch']);
 //gulp.task('jin', ['mongo', 'browser-sync', 'nodemonjin', 'watch']);
 gulp.task('jin', ['mongo', 'compass', 'templates', 'nodemonjin', 'watch']);
 
+gulp.task('sunyun', ['nodemonsunyun', 'watch']);

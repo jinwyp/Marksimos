@@ -216,6 +216,7 @@ apiRouter.get('/marksimos/api/create_admin', function(req, res, next){
 
     userModel.remove({role: config.role.admin})
         .then(function(){
+            //创建admin
             return userModel.register({
                 username: 'hcdadmin',
                 password: require('../common/utility.js').hashPassword('123456'),
@@ -223,6 +224,8 @@ apiRouter.get('/marksimos/api/create_admin', function(req, res, next){
                 role: config.role.admin,
                 emailActivated: true
             });
+            //创建Distributor
+
         })
         .then(function(result){
             if(!result){
@@ -236,9 +239,19 @@ apiRouter.get('/marksimos/api/create_admin', function(req, res, next){
         .done();
 });
 
-
+apiRouter.get('/marksimos/api/create_all', function (req,res,next) {
+    var userModel = require('./models/user.js');
+    var arr=[];
+    userModel.runOnce(arr).then(function () {
+        if(!arr.length){
+            return res.send(400,{message:"add users failed."})
+        }
+        return res.send(arr);
+    });
+})
 
 // get FAQ
+
 apiRouter.get('/marksimos/api/initfaq', faqController.initFAQ);
 apiRouter.get('/marksimos/api/faq', faqController.getFAQ);
 

@@ -69,8 +69,8 @@ module.exports = (function(){
 
     switch(process.env.NODE_ENV){
         case 'sunyun':
-            config.logDirectory = '/Users/ludwik/code/Marksimos/log/';
-            config.mongo_conn = 'mongodb://localhost/Marksimos';
+            config.logDirectory = 'D:/node_log/';
+            config.mongo_conn = 'mongodb://192.168.2.50/Marksimos';
             config.host = 'http://localhost:3000/';
             config.cgiService = 'http://192.168.2.50/cgi-bin/';
             break;
