@@ -217,10 +217,11 @@ apiRouter.get('/marksimos/api/create_admin', function(req, res, next){
     userModel.remove({role: config.role.admin})
         .then(function(){
             return userModel.register({
-                username: 'hcdadmin',
-                password: require('../common/utility.js').hashPassword('123456'),
-                email: 'admin@hcdglobal.com',
+                username: 'hcd_administrator',
+                password: require('../common/utility.js').hashPassword('admin1234@hcd'),
+                email: 'hcd_administrator@hcdlearning.com',
                 role: config.role.admin,
+                activated: true,
                 emailActivated: true
             });
         })
