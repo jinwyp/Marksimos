@@ -1436,11 +1436,20 @@ body{
                     font-size: 11px;
                     font-family: $font_main_header2;
                 }
-                .perception_map_group{
+
+                .perception_map_dropdown{
                     float: right;
                     margin-right: 20px;
-                    margin-top: -5px;
+                    margin-top: -6px;
                 }
+
+                .perception_map_group{
+                    float: right;
+                    margin-right: 50px;
+                    margin-top: -6px;
+                }
+
+
             }
 
             .nvtooltip{

@@ -1217,10 +1217,15 @@ body a, body button {
   font-size: 11px;
   font-family: "Helvetica", "Arial, sans-serif";
 }
-.mainbody .user_chart_right .user_chart_single h5 .perception_map_group {
+.mainbody .user_chart_right .user_chart_single h5 .perception_map_dropdown {
   float: right;
   margin-right: 20px;
-  margin-top: -5px;
+  margin-top: -6px;
+}
+.mainbody .user_chart_right .user_chart_single h5 .perception_map_group {
+  float: right;
+  margin-right: 50px;
+  margin-top: -6px;
 }
 .mainbody .user_chart_right .user_chart_single .nvtooltip {
   border: 0 none;
