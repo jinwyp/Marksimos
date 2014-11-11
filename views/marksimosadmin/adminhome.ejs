@@ -78,14 +78,14 @@
                                     </tr>
                                     <tr ng-repeat="user in data.distributors" >
                                         <td>{{user._id}}</td>
-                                        <td>{{user.name}}</td>
+                                        <td>{{user.username}}</td>
                                         <td>{{user.email}}</td>
-                                        <td>{{!user.isDisabled}}</td>
+                                        <td>{{user.activated}}</td>
                                         <td>{{user.numOfUsedLicense}}/{{user.numOfLicense}}</td>
-                                        <td>{{user.phone}}</td>
+                                        <td>{{user.mobilePhone}}</td>
                                         <td>{{user.country}} / {{user.state}} / {{user.city}} </td>
                                         <td>{{user.district}} {{user.street}}</td>
-                                        <td>{{user.pincode}}</td>
+                                        <td>{{user.idcardNumber}}</td>
                                     </tr>
                                     </tbody>
                                 </table>
@@ -110,8 +110,8 @@
                                     <username-input labeltext="Distributor UserName :" placeholdertext="Distributor UserName" formname="newDistributorForm" data="data.newDistributor.username" required="true" requirederrorinfo="Username is required" minlength="6" minlengtherrorinfo="Username must be at least 6 characters" maxlength="20" maxlengtherrorinfo="Username is a maximum of 20 characters"></username-input>
                                     <email-input labeltext="Distributor Email :" placeholdertext="Email" formname="newDistributorForm" data="data.newDistributor.email" required="true" requirederrorinfo="Email is required" emailerrorinfo="Doesn't look like a valid email !"></email-input>
                                     <password-input labeltext="Password :" placeholdertext="Password" formname="newDistributorForm" data="data.newDistributor.password" required="true" requirederrorinfo="Password is required" minlength="6" minlengtherrorinfo="Password must be at least 6 characters" maxlength="20" maxlengtherrorinfo="Password is a maximum of 20 characters"></password-input>
-                                    <phone-input labeltext="Phone :" placeholdertext="Cell Phone" formname="newDistributorForm" data="data.newDistributor.phone" required="false" requirederrorinfo="Phone is required" minlength="11" minlengtherrorinfo="Phone must be at least 11 characters" maxlength="15" maxlengtherrorinfo="Phone is a maximum of 15 characters"></phone-input>
-                                    <idcard-input labeltext="ID Card :" placeholdertext="Pin Code" formname="newDistributorForm" data="data.newDistributor.pincode" required="false" requirederrorinfo="ID Card is required" minlength="18" minlengtherrorinfo="ID Card must be at least 18 characters" maxlength="19" maxlengtherrorinfo="ID Card is a maximum of 19 characters"></idcard-input>
+                                    <phone-input labeltext="Phone :" placeholdertext="Cell Phone" formname="newDistributorForm" data="data.newDistributor.mobilePhone" required="false" requirederrorinfo="Phone is required" minlength="11" minlengtherrorinfo="Phone must be at least 11 characters" maxlength="15" maxlengtherrorinfo="Phone is a maximum of 15 characters"></phone-input>
+                                    <idcard-input labeltext="ID Card :" placeholdertext="Pin Code" formname="newDistributorForm" data="data.newDistributor.idcardNumber" required="false" requirederrorinfo="ID Card is required" minlength="18" minlengtherrorinfo="ID Card must be at least 18 characters" maxlength="19" maxlengtherrorinfo="ID Card is a maximum of 19 characters"></idcard-input>
 
                                     <div class="form-group">
                                         <label for="inputDistributorCountry" class="col-sm-2 control-label">Country/State/City : </label>
@@ -235,14 +235,14 @@
                                     </tr>
                                     <tr ng-repeat="user in data.facilitators" >
                                         <td>{{user._id}}</td>
-                                        <td>{{user.name}}</td>
+                                        <td>{{user.username}}</td>
                                         <td>{{user.email}}</td>
-                                        <td>{{!user.isDisabled}}</td>
+                                        <td>{{user.activated}}</td>
                                         <td>{{user.numOfUsedLicense}}/{{user.numOfLicense}}</td>
-                                        <td>{{user.phone}}</td>
+                                        <td>{{user.mobilePhone}}</td>
                                         <td>{{user.country}} / {{user.state}} / {{user.city}} </td>
                                         <td>{{user.district}} {{user.street}}</td>
-                                        <td>{{user.pincode}}</td>
+                                        <td>{{user.idcardNumber}}</td>
                                         <td title="{{user.distributorId}}">{{user.distributorName}}</td>
                                     </tr>
                                     </tbody>
@@ -268,8 +268,8 @@
                                     <username-input labeltext="Facilitator UserName :" placeholdertext="Facilitator UserName" formname="newFacilitatorForm" data="data.newFacilitator.username" required="true" requirederrorinfo="Username is required" minlength="6" minlengtherrorinfo="Username must be at least 6 characters" maxlength="20" maxlengtherrorinfo="Username is a maximum of 20 characters"></username-input>
                                     <email-input labeltext="Facilitator Email :" placeholdertext="Email" formname="newFacilitatorForm" data="data.newFacilitator.email" required="true" requirederrorinfo="Email is required" emailerrorinfo="Doesn't look like a valid email !"></email-input>
                                     <password-input labeltext="Password :" placeholdertext="Password" formname="newFacilitatorForm" data="data.newFacilitator.password" required="true" requirederrorinfo="Password is required" minlength="6" minlengtherrorinfo="Password must be at least 6 characters" maxlength="20" maxlengtherrorinfo="Password is a maximum of 20 characters"></password-input>
-                                    <phone-input labeltext="Phone :" placeholdertext="Cell Phone" formname="newFacilitatorForm" data="data.newFacilitator.phone" required="false" requirederrorinfo="Phone is required" minlength="11" minlengtherrorinfo="Phone must be at least 11 characters" maxlength="15" maxlengtherrorinfo="Phone is a maximum of 15 characters"></phone-input>
-                                    <idcard-input labeltext="ID Card :" placeholdertext="Pin Code" formname="newFacilitatorForm" data="data.newFacilitator.pincode" required="false" requirederrorinfo="ID Card is required" minlength="17" minlengtherrorinfo="ID Card must be at least 17 characters" maxlength="24" maxlengtherrorinfo="ID Card is a maximum of 24 characters"></idcard-input>
+                                    <phone-input labeltext="Phone :" placeholdertext="Cell Phone" formname="newFacilitatorForm" data="data.newFacilitator.mobilePhone" required="false" requirederrorinfo="Phone is required" minlength="11" minlengtherrorinfo="Phone must be at least 11 characters" maxlength="15" maxlengtherrorinfo="Phone is a maximum of 15 characters"></phone-input>
+                                    <idcard-input labeltext="ID Card :" placeholdertext="Pin Code" formname="newFacilitatorForm" data="data.newFacilitator.idcardNumber" required="false" requirederrorinfo="ID Card is required" minlength="17" minlengtherrorinfo="ID Card must be at least 17 characters" maxlength="24" maxlengtherrorinfo="ID Card is a maximum of 24 characters"></idcard-input>
 
                                     <div class="form-group">
                                         <label for="inputFacilitatorCountry" class="col-sm-2 control-label">Country/State/City : </label>
@@ -351,10 +351,10 @@
                                         <label for="inputStudentUserStatus" class="col-sm-2 control-label">User Status</label>
                                         <div class="col-sm-4">
                                             <label class="radio-inline">
-                                                <input type="radio" name="inputStudentUserStatus" ng-model="data.searchStudent.user_status" value="false">Active
+                                                <input type="radio" name="inputStudentUserStatus" ng-model="data.searchStudent.user_status" value="true">Active
                                             </label>
                                             <label class="radio-inline">
-                                                <input type="radio" name="inputStudentUserStatus" ng-model="data.searchStudent.user_status" value="true">Inactive
+                                                <input type="radio" name="inputStudentUserStatus" ng-model="data.searchStudent.user_status" value="false">Inactive
                                             </label>
                                         </div>
                                     </div>
@@ -369,7 +369,7 @@
                                                 <input type="radio" name="inputStudentUserFrom" ng-model="data.searchStudent.student_type" value="10">B2B Student
                                             </label>
                                             <label class="radio-inline">
-                                                <input type="radio" name="inputStudentUserFrom" ng-model="data.searchStudent.student_type" value="20">E4E Student
+                                                <input type="radio" name="inputStudentUserFrom" ng-model="data.searchStudent.student_type" value="20">B2C(E4E) Student
                                             </label>
                                             <label class="radio-inline">
                                                 <input type="radio" name="inputStudentUserFrom" ng-model="data.searchStudent.student_type" value="30">B2B&B2C Student
@@ -404,22 +404,20 @@
                                         <th>Status</th>
                                         <th>Cell Phone</th>
                                         <th>Country / Province / City</th>
+                                        <th>University / Organization</th>
                                         <th>Current Occupation</th>
-                                        <th>University</th>
-                                        <th>Organization</th>
                                         <th>Reset Password</th>
                                     </tr>
                                     <tr ng-repeat="user in data.students" >
                                         <!-- <td>{{user._id}}</td> -->
-                                        <td>{{user.name}}</td>
+                                        <td>{{user.username}}</td>
                                         <td>{{user.firstName}} {{user.lastName}}</td>
                                         <td>{{user.email}}</td>
-                                        <td>{{!user.isDisabled}}</td>
-                                        <td>{{user.phone}}</td>
+                                        <td>{{user.activated}}</td>
+                                        <td>{{user.mobilePhone}}</td>
                                         <td>{{user.country}} / {{user.state}} / {{user.city}} </td>
+                                        <td>{{user.organizationOrUniversity}}</td>
                                         <td>{{user.occupation}}</td>
-                                        <td>{{user.university}}</td>
-                                        <td>{{user.organization}}</td>
                                         <td>
                                             <button ng-click='resetPassword(user._id)'>Reset</button>
                                         </td>
@@ -447,7 +445,7 @@
                                     <username-input labeltext="Student UserName :" placeholdertext="Student UserName" formname="newStudentForm" data="data.newStudent.username" required="true" requirederrorinfo="Username is required" minlength="6" minlengtherrorinfo="Username must be at least 6 characters" maxlength="20" maxlengtherrorinfo="Username is a maximum of 20 characters"></username-input>
                                     <email-input labeltext="Student Email :" placeholdertext="Email" formname="newStudentForm" data="data.newStudent.email" required="true" requirederrorinfo="Email is required" emailerrorinfo="Doesn't look like a valid email !"></email-input>
                                     <password-input labeltext="Password :" placeholdertext="Password" formname="newStudentForm" data="data.newStudent.password" required="true" requirederrorinfo="Password is required" minlength="6" minlengtherrorinfo="Password must be at least 6 characters" maxlength="20" maxlengtherrorinfo="Password is a maximum of 20 characters"></password-input>
-                                    <phone-input labeltext="Phone :" placeholdertext="Cell Phone" formname="newStudentForm" data="data.newStudent.phone" required="false" requirederrorinfo="Phone is required" minlength="11" minlengtherrorinfo="Phone must be at least 11 characters" maxlength="15" maxlengtherrorinfo="Phone is a maximum of 15 characters"></phone-input>
+                                    <phone-input labeltext="Phone :" placeholdertext="Cell Phone" formname="newStudentForm" data="data.newStudent.mobilePhone" required="false" requirederrorinfo="Phone is required" minlength="11" minlengtherrorinfo="Phone must be at least 11 characters" maxlength="15" maxlengtherrorinfo="Phone is a maximum of 15 characters"></phone-input>
 
                                     <div class="form-group">
                                         <label for="inputStudentCountry" class="col-sm-2 control-label">Country/State/City : </label>
@@ -491,16 +489,9 @@
                                     </div>
 
                                     <div class="form-group" ng-class="{'has-success':newStudentForm.university.$dirty && newStudentForm.university.$valid, 'has-error': newStudentForm.university.$dirty && newStudentForm.university.$invalid}">
-                                        <label for="inputUniversity" class="col-sm-2 control-label">University : </label>
+                                        <label for="inputUniversity" class="col-sm-2 control-label">University / Organization: </label>
                                         <div class="col-sm-4">
-                                            <input type="text" class="form-control" id="inputUniversity" name="university"  ng-model="data.newSeminar.university">
-                                        </div>
-                                    </div>
-
-                                    <div class="form-group" ng-class="{'has-success':newStudentForm.university.$dirty && newStudentForm.university.$valid, 'has-error': newStudentForm.university.$dirty && newStudentForm.university.$invalid}">
-                                        <label for="inputOrganization" class="col-sm-2 control-label">Organization : </label>
-                                        <div class="col-sm-4">
-                                            <input type="text" class="form-control" id="inputOrganization" name="organization"  ng-model="data.newSeminar.organization">
+                                            <input type="text" class="form-control" id="inputUniversity" name="university"  ng-model="data.newStudent.university">
                                         </div>
                                     </div>
 

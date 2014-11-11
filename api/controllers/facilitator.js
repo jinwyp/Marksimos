@@ -24,14 +24,19 @@ exports.addFacilitator = function(req, res, next){
     var facilitator = {
         username: req.body.username,
         email: req.body.email,
-        mobilePhone: req.body.phone,
+        password: utility.hashPassword(req.body.password),
+        mobilePhone: req.body.mobilePhone,
         country: req.body.country,
         state: req.body.state,
         city: req.body.city,
-        password: utility.hashPassword(req.body.password),
+        district: req.body.district || '',
+        street: req.body.street || '',
+
         role: config.role.facilitator,
-        numOfLicense: req.body.num_of_license_granted, //update distributor license when you update this field.
+        activated: true,
         emailActivated: true,
+
+        numOfLicense: req.body.num_of_license_granted, //update distributor license when you update this field.
         distributorId: distributorId
     };
 
@@ -88,7 +93,7 @@ exports.updateFacilitator = function(req, res, next){
     var facilitator = {};
 
     if(req.body.username) facilitator.username = req.body.username;
-    if(req.body.phone) facilitator.mobilePhone = req.body.phone;
+    if(req.body.mobilePhone) facilitator.mobilePhone = req.body.mobilePhone;
     if(req.body.country) facilitator.country = req.body.country;
     if(req.body.state) facilitator.state = req.body.state;
     if(req.body.city) facilitator.city = req.body.city;
@@ -100,7 +105,7 @@ exports.updateFacilitator = function(req, res, next){
     }
     if(req.body.district) facilitator.district = req.body.district;
     if(req.body.street) facilitator.street = req.body.street;
-    if(req.body.pincode) facilitator.idcardNumber = req.body.pincode;
+    if(req.body.idcardNumber) facilitator.idcardNumber = req.body.idcardNumber;
 
     if(Object.keys(facilitator).length === 0){
         return res.send(400, {message: "you have to provide at least one field to update."});

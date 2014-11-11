@@ -20,18 +20,22 @@ exports.addDistributor = function(req, res, next){
     var distributor = {
         username: req.body.username,
         email: req.body.email,
-        mobilePhone: req.body.phone,
+        password: utility.hashPassword(req.body.password),
+        mobilePhone: req.body.mobilePhone,
+        idcardNumber: req.body.idcardNumber || '',
+
         country: req.body.country,
         state: req.body.state,
         city: req.body.city,
-        password: utility.hashPassword(req.body.password),
-        role: config.role.distributor,
-        numOfLicense: req.body.num_of_license_granted,
-        emailActivated: true,
-        activated: true,
         district: req.body.district || '',
         street: req.body.street || '',
-        idcardNumber: req.body.pincode || ''
+
+        role: config.role.distributor,
+        emailActivated: true,
+        activated: true,
+        numOfLicense: req.body.num_of_license_granted
+
+
     };
 
     userModel.findByEmail(req.body.email)
@@ -64,7 +68,7 @@ exports.updateDistributor = function(req, res, next){
 
     var distributor = {
         username: req.body.name,
-        mobilePhone: req.body.phone,
+        mobilePhone: req.body.mobilePhone,
         country: req.body.country,
         state: req.body.state,
         city: req.body.city,
@@ -74,7 +78,7 @@ exports.updateDistributor = function(req, res, next){
         emailActivated: true,
         district: req.body.district || '',
         street: req.body.street || '',
-        idcardNumber: req.body.pincode || ''
+        idcardNumber: req.body.idcardNumber || ''
     };
 
     userModel.update({_id: req.params.distributor_id}, distributor)
