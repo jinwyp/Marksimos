@@ -1,8 +1,4 @@
-# 环境设置
-
-
-
-## 基本环境配置
+# 开发环境设置
 
 
 ### 前端包与依赖管理 使用Bower工具
@@ -37,7 +33,7 @@
 
 
 
-### Mongo 数据库安装：
+### Mongodb 数据库Mac下安装：
 
 * Mac下使用 Homebrew 安装 ``` brew install mongodb ```
 
@@ -84,6 +80,10 @@ Or, if you don't want/need launchctl, you can just run:
 
 ```
 
+
+### Mongodb 数据库Windows下安装：
+
+
 ### 关闭Mongo
 * 使用mongo shell 关闭 命令如下
 use admin
@@ -99,9 +99,69 @@ db.shutdownServer();
 
 
 
+
+
+
+# 生产环境配置 以及部署问题Q&A
+
+
+## 服务器数据库配置
+
+
+启动
+```
+sudo service mongod start
+```
+停止
+```
+sudo service mongod stop
+```
+修改配置文件
+```
+sudo vi /etc/mongodb.conf
+```
+
+
+## 运行
+``` NODE_ENV=production nodemon app.js
+```
+
+
+## 解决80端口无法访问问题, 通过设置iptables 把80转发到3000
+### [From stackoverflow](http://stackoverflow.com/questions/16573668/best-practices-when-running-node-js-with-port-80-ubuntu-linode/23281401#23281401 "Port 80")
+
+
+Port 80
+What I do on my cloud instances is I redirect port 80 to port 3000 with this command:
+
+sudo iptables -t nat -A PREROUTING -i eth0 -p tcp --dport 80 -j REDIRECT --to-port 3000
+Then I launch my Node.js on port 3000. Requests to port 80 will get mapped to port 3000.
+
+You should also edit your /etc/rc.local file and add that line minus the sudo. That will add the redirect when the machine boots up. You don't need sudo in /etc/rc.local because the commands there are run as root when the system boots.
+
+Logs
+Use the forever module to launch your Node.js with. It will make sure that it restarts if it ever crashes and it will redirect console logs to a file.
+
+Launch on Boot
+Add your Node.js start script to the file you edited for port redirection, /etc/rc.local. That will run your Node.js launch script when the system starts.
+
+Digital Ocean & other VPS
+This not only applies to Linode, but Digital Ocean, AWS EC2 and other VPS providers as well. However, on RedHat based systems /etc/rc.local is /ect/rc.d/local.
+
+
+
+
+
+
+
 ## 后端Delphi CGI环境配置
 
 ### Delphi 部署时 配置 \cgi-bin\CgiConfig 需要更改 相应的配置 注意windows server 的64或32位路径不同
+
+
+## 后端Delphi CGI环境配置
+
+
 
 
 
@@ -116,7 +176,7 @@ db.shutdownServer();
 
 
 
-#Delphi 代码说明#
+##Delphi 代码说明#
 ##Directory layout##
 ```
 trunk
@@ -238,52 +298,6 @@ uFormBrandDecision.pas
 
 
 
-
-
-
-# 生产环境 部署问题Q&A
-
-## 解决80端口无法访问问题, 通过设置iptables 把80转发到3000
-### [From stackoverflow](http://stackoverflow.com/questions/16573668/best-practices-when-running-node-js-with-port-80-ubuntu-linode/23281401#23281401 "Port 80")
-
-
-Port 80
-What I do on my cloud instances is I redirect port 80 to port 3000 with this command:
-
-sudo iptables -t nat -A PREROUTING -i eth0 -p tcp --dport 80 -j REDIRECT --to-port 3000
-Then I launch my Node.js on port 3000. Requests to port 80 will get mapped to port 3000.
-
-You should also edit your /etc/rc.local file and add that line minus the sudo. That will add the redirect when the machine boots up. You don't need sudo in /etc/rc.local because the commands there are run as root when the system boots.
-
-Logs
-Use the forever module to launch your Node.js with. It will make sure that it restarts if it ever crashes and it will redirect console logs to a file.
-
-Launch on Boot
-Add your Node.js start script to the file you edited for port redirection, /etc/rc.local. That will run your Node.js launch script when the system starts.
-
-Digital Ocean & other VPS
-This not only applies to Linode, but Digital Ocean, AWS EC2 and other VPS providers as well. However, on RedHat based systems /etc/rc.local is /ect/rc.d/local.
-
-
-# 服务器数据库配置
-
-
-启动
-```
-sudo service mongod start
-```
-停止
-```
-sudo service mongod stop
-```
-修改配置文件
-```
-sudo vi /etc/mongodb.conf
-```
-
-
-# 运行
-NODE_ENV=production nodemon app.js
 
 
 
