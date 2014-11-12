@@ -1062,13 +1062,41 @@ body{
         font-size: 24px;
         margin: 30px 1px 20px 28px;
         
-        .company_a{
-            color: $color_main_body_company_a;
-            background-color: $color_main_body_company_1_bg;
+        .company{
             width: 36px;
             height: 36px;
             padding: 5px 10px;
             @include border-radius(4px);
+        }
+
+        .company_a{
+            color: $color_main_body_company_a;
+            background-color: $color_main_body_company_a_bg_old;
+        }
+
+        .company_b{
+            color: $color_main_body_company_a;
+            background-color: $color_main_body_company_b_bg_old;
+        }
+
+        .company_c{
+            color: $color_main_body_company_a;
+            background-color: $color_main_body_company_c_bg_old;
+        }
+
+        .company_d{
+            color: $color_main_body_company_a;
+            background-color: $color_main_body_company_d_bg_old;
+        }
+
+        .company_e{
+            color: $color_main_body_company_a;
+            background-color: $color_main_body_company_e_bg_old;
+        }
+
+        .company_f{
+            color: $color_main_body_company_a;
+            background-color: $color_main_body_company_f_bg_old;
         }
     }
 
@@ -1408,11 +1436,20 @@ body{
                     font-size: 11px;
                     font-family: $font_main_header2;
                 }
+
+                .perception_map_dropdown{
+                    float: right;
+                    margin-right: 20px;
+                    margin-top: -6px;
+                }
+
                 .perception_map_group{
                     float: right;
-                    margin-right: 60px;
-                    margin-top: -5px;
+                    margin-right: 50px;
+                    margin-top: -6px;
                 }
+
+
             }
 
             .nvtooltip{

@@ -8,11 +8,11 @@ var facilitatorController = require('./controllers/facilitator.js');
 var studentController = require('./controllers/student.js');
 var seminarController = require('./controllers/seminar.js');
 var questionnaireController = require('./controllers/questionnaire.js');
-var faqController = require('./controllers/faq.js');
-
+var faqController  =  require('./controllers/faq.js');
+var utility = require('../common/utility.js')
 var userModel = require('./models/user.js');
 var logger = require('../common/logger.js');
-
+var mongoose = require('mongoose');
 var util = require('util');
 var express = require('express');
 var sessionOperation = require('../common/sessionOperation.js');
@@ -210,35 +210,155 @@ apiRouter.post('/marksimos/api/register', userController.register);
 apiRouter.post('/marksimos/api/login', userController.studentLogin);
 apiRouter.get('/marksimos/api/logout', userController.logout);
 
+apiRouter.get('/marksimos/api/create_admin', function (req,res,next) {
 
-apiRouter.get('/marksimos/api/create_admin', function(req, res, next){
-    var userModel = require('./models/user.js');
-
-    userModel.remove({role: config.role.admin})
-        .then(function(){
-            return userModel.register({
-                username: 'hcdadmin',
-                password: require('../common/utility.js').hashPassword('123456'),
-                email: 'admin@hcdglobal.com',
-                role: config.role.admin,
-                emailActivated: true
+    var userList = [
+        {
+            "username": "hcd_administrator",
+            "password": utility.hashPassword("admin1234@hcd"),
+            "email": "hcd_administrator@hcdlearning.com",
+            "role": config.role.admin,
+            "activated": true,
+            "emailActivated": true,
+            "emailActivateToken": "efe5ceba-fd21-445e-86b6-c5fa64f3c694"
+        },
+        {
+            "_id": mongoose.Types.ObjectId("54609f0c700a570813b1353f"),
+            "username": "hcd_distributor",
+            "email": "hcd_distributor@hcdlearning.com",
+            "mobilePhone": "99999999999",
+            "country": "China",
+            "state": "shanghai",
+            "city": "shanghai",
+            "password": utility.hashPassword("distributor@hcd5678"),
+            "district": "Ren Min Lu",
+            "street": "",
+            "idcardNumber": "",
+            "numOfUsedLicense": 0,
+            "numOfLicense": 10000,
+            "role": config.role.distributor,
+            "activated": true,
+            "emailActivated": true,
+            "emailActivateToken": "efe5ceba-fd21-445e-86b6-c5fa64f3c694"
+        },
+        {
+            "_id": mongoose.Types.ObjectId("54609fb2700a570813b13540"),
+            "username": "hcd_facilitator",
+            "email": "hcd_facilitator@hcdlearning.com",
+            "mobilePhone": "99999999999",
+            "country": "China",
+            "state": "shanghai",
+            "city": "shanghai",
+            "password": utility.hashPassword("hcdfacilitator@9876"),
+            "distributorId": "54609f0c700a570813b1353f",
+            "numOfUsedLicense": 0,
+            "numOfLicense": 100,
+            "role": config.role.facilitator,
+            "activated": true,
+            "emailActivated": true,
+            "emailActivateToken": "efe5ceba-fd21-445e-86b6-c5fa64f3c694"
+        },
+        {
+            "username": "sunyun",
+            "email": "yunsun@hcdlearning.com",
+            "mobilePhone": "13817304511",
+            "country": "China",
+            "state": "shanghai",
+            "city": "shanghai",
+            "password": utility.hashPassword("123456"),
+            "facilitatorId": "54609fb2700a570813b13540",
+            "idcardNumber": "321181198502273515",
+            "occupation": "Student",
+            "firstName": "yun",
+            "lastName": "sun",
+            "organizationOrUniversity": "",
+            "majorsDegree": "",
+            "studentType": 10,
+            "role": config.role.student,
+            "activated": true,
+            "emailActivated": false
+        },
+        {
+            "username": "sunyun1",
+            "email": "yunsun1@hcdlearning.com",
+            "mobilePhone": "13817304511",
+            "country": "China",
+            "state": "shanghai",
+            "city": "shanghai",
+            "password": utility.hashPassword("123456"),
+            "facilitatorId": "54609fb2700a570813b13540",
+            "idcardNumber": "321181198502273515",
+            "occupation": "Student",
+            "firstName": "yun1",
+            "lastName": "sun",
+            "organizationOrUniversity": "",
+            "majorsDegree": "",
+            "studentType": 10,
+            "role": config.role.student,
+            "activated": true,
+            "emailActivated": false
+        },
+        {
+            "username": "sunyun2",
+            "email": "yunsun2@hcdlearning.com",
+            "mobilePhone": "13817304511",
+            "country": "China",
+            "state": "shanghai",
+            "city": "shanghai",
+            "password": utility.hashPassword("123456"),
+            "facilitatorId": "54609fb2700a570813b13540",
+            "idcardNumber": "321181198502273515",
+            "occupation": "Student",
+            "firstName": "yun2",
+            "lastName": "sun",
+            "organizationOrUniversity": "",
+            "majorsDegree": "",
+            "studentType": 10,
+            "role": config.role.student,
+            "activated": true,
+            "emailActivated": false
+        },
+        {
+            "username": "sunyun3",
+            "email": "yunsun3@hcdlearning.com",
+            "mobilePhone": "13817304511",
+            "country": "China",
+            "state": "shanghai",
+            "city": "shanghai",
+            "password": utility.hashPassword("123456"),
+            "facilitatorId": "54609fb2700a570813b13540",
+            "idcardNumber": "321181198502273515",
+            "occupation": "Student",
+            "firstName": "yun3",
+            "lastName": "sun",
+            "organizationOrUniversity": "",
+            "majorsDegree": "",
+            "studentType": 10,
+            "role": config.role.student,
+            "activated": true,
+            "emailActivated": false
+        }
+    ];
+    userModel.query.find({role: config.role.admin}).exec().then(function (userResult) {
+        if (userResult.length) {
+            //已经存在管理员了，不进行初始化，只列出这些用户
+            return res.send(400, {message: "already added."});
+        }
+        else {
+            //不存在管理员，需要初始化
+            userModel.query.create(userList, function (err, user) {
+                if (err) {
+                    return res.send(400, {message: "add users failed."});
+                } else {
+                    return res.send(userList);
+                }
             });
-        })
-        .then(function(result){
-            if(!result){
-                return res.send(400, {message: "add admin failed."});
-            }
-            return res.send(result);
-        })
-        .fail(function(err){
-            res.send(500, err);
-        })
-        .done();
-});
-
-
+        }
+    });
+})
 
 // get FAQ
+
 apiRouter.get('/marksimos/api/initfaq', faqController.initFAQ);
 apiRouter.get('/marksimos/api/faq', faqController.getFAQ);
 
@@ -328,7 +448,7 @@ apiRouter.get('/marksimos/api/admin/chart/:chart_name', requireAdminLogin({isRed
 apiRouter.get('/marksimos/api/admin/finalscore/:period', requireAdminLogin({isRedirect : false}), reportController.getFinalScore);
 
 
-function requireStudentLogin(params){   
+function requireStudentLogin(params){
     return function(req, res, next){
         if(sessionOperation.getStudentLoginStatus(req)){
             next();
@@ -336,9 +456,9 @@ function requireStudentLogin(params){
             if(params.isRedirect){
                 res.redirect('/marksimos/login');
             } else {
-                res.send(400, {message: 'Student Login required.'});                
+                res.send(400, {message: 'Student Login required.'});
             }
-        }        
+        }
     }
 }
 
@@ -352,8 +472,8 @@ function requireAdminLogin(params){
             } else {
                 res.send(400, {message: 'Admin Login required.'});
             }
-        }        
-    }    
+        }
+    }
 }
 
 

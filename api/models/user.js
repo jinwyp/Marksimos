@@ -73,26 +73,8 @@ var userSchema = new Schema({
 
 var User = mongoose.model("User", userSchema);
 
-exports.model = User;
 
-
-exports.insert = function(user){
-    if(!mongoose.connection.readyState){
-        throw new Error("mongoose is not connected.");
-    }
-
-    var deferred = Q.defer();
-
-    User.create(user, function(err, result){
-        if(err){
-            deferred.reject(err);
-        }else{
-            deferred.resolve(result);
-        }
-    });
-
-    return deferred.promise;
-};
+exports.query = User;
 
 
 exports.register = function(user){
@@ -101,7 +83,6 @@ exports.register = function(user){
     }
 
     var deferred = Q.defer();
-
     User.create(user, function(err, result){
         if(err){
             deferred.reject(err);
@@ -109,7 +90,6 @@ exports.register = function(user){
             deferred.resolve(result);
         }
     });
-
     return deferred.promise;
 };
 
@@ -254,8 +234,6 @@ exports.remove = function(query){
 
     return deferred.promise;
 }
-
-
 
 
 

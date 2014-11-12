@@ -24,16 +24,21 @@ exports.addStudent = function(req, res, next){
     var student = {
         username      : req.body.username,
         email         : req.body.email,
-        mobilePhone   : req.body.phone,
+        password      : utility.hashPassword(req.body.password),
+        mobilePhone   : req.body.mobilePhone,
+
         country       : req.body.country,
         state         : req.body.state,
         city          : req.body.city,
-        password      : utility.hashPassword(req.body.password),
+
+
         role          : config.role.student,
-        studentType   : 10,
+        emailActivated: true,
+        activated: true,
+        studentType   : config.studentType.B2Bstudents,
         facilitatorId : facilitatorId,
 
-        idcardNumber             : req.body.pincode || '',
+        idcardNumber             : req.body.idcardNumber || '',
         gender                   : req.body.gender || '',
         occupation               : req.body.occupation || '',
         firstName                : req.body.firstname,
@@ -79,12 +84,12 @@ exports.updateStudent = function(req, res, next){
     var student = {};
 
     if(req.body.username) student.username = req.body.username;
-    if(req.body.phone) student.mobilePhone = req.body.phone;
+    if(req.body.mobilePhone) student.mobilePhone = req.body.mobilePhone;
     if(req.body.country) student.country = req.body.country;
     if(req.body.state) student.state = req.body.state;
     if(req.body.city) student.city = req.body.city;
     if(req.body.password) student.password = utility.hashPassword(req.body.password);
-    if(req.body.pincode) student.idcardNumber = req.body.pincode;
+    if(req.body.idcardNumber) student.idcardNumber = req.body.idcardNumber;
     if(req.body.gender) student.gender = req.body.gender;
     if(req.body.occupation) student.occupation = req.body.occupation;
     if(req.body.firstname) student.firstName = req.body.firstname;

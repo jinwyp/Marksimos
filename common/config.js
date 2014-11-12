@@ -10,6 +10,13 @@ module.exports = (function(){
             enterpriseb2c: 9
         },
 
+        studentType: {
+            B2Bstudents: 10,
+            B2Cstudents: 20,
+            B2CAndB2Bstudents: 30
+
+        },
+
         mail: {
             host: 'mail.hcdglobal.com',
             user: 'test@hcdglobal.com',
@@ -68,17 +75,23 @@ module.exports = (function(){
     };
 
     switch(process.env.NODE_ENV){
+        case 'sunyun':
+            config.logDirectory = 'D:/node_log/';
+            config.mongo_conn = 'mongodb://192.168.2.50/Marksimos';
+            config.host = 'http://localhost:3000/';
+            config.cgiService = 'http://192.168.2.50/cgi-bin/';
+            break;
         case 'suyuan':
             config.logDirectory = '/Users/ludwik/code/Marksimos/log/';
             config.mongo_conn = 'mongodb://localhost/Marksimos';
             config.host = 'http://localhost:3000/';
-            config.cgiService = 'http://10.20.30.97/cgi-bin/'; 
+            config.cgiService = 'http://192.168.2.50/cgi-bin/';
             break;
         case 'jin':
             config.logDirectory = '/Users/jinwyp/Documents/github/Marksimos/log/';
             config.mongo_conn = 'mongodb://localhost/Marksimos';
             config.host = 'http://localhost:3000/';
-            config.cgiService = 'http://10.20.30.97/cgi-bin/';
+            config.cgiService = 'http://192.168.2.50/cgi-bin/';
             break;
         case 'ludwik':
             config.logDirectory = '/Users/ludwik/code/actived/Marksimos/log/';
@@ -90,7 +103,7 @@ module.exports = (function(){
             config.logDirectory = '/Users/ludwik/code/Marksimos/log/';
             config.mongo_conn = 'mongodb://localhost/Marksimos';
             config.host = 'http://localhost:3000/';
-            config.cgiService = 'http://10.20.30.97/cgi-bin/';
+            config.cgiService = 'http://192.168.2.50/cgi-bin/';
             break;
         case 'raven':
             config.logDirectory = '/Users/raven/desktop/Marksimos/log/';

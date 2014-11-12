@@ -520,30 +520,39 @@
                 return names[fieldname]();
             }
 
-            if(angular.isUndefined(chartHttpData.periods)){
-                // 如果periods 没有定义则是普通的图表,不带有系列的图表
+            if(angular.isArray(chartHttpData)){
 
-                angular.forEach(chartHttpData.chartData, function(value, key) {
-                    var oneBarData = {
-                        x : "", //SKU Name
-                        y : [],
-                        color : 'rgb(57,181,74)'
+                angular.forEach(chartHttpData, function(period, keyperiod) {
+                    var periodData = {
+                        period : period.period,
+                        data : []
                     };
 
-                    if(angular.isUndefined(value.segmentName) ){
-                        oneBarData.x = value.SKUName;
+                    angular.forEach(period.chartData, function(value, key) {
+                        var oneBarData = {
+                            x : "", //SKU Name
+                            y : [],
+                            color : 'rgb(57,181,74)'
+                        };
 
-                        if(decimalNumber === 0){
-                            oneBarData.y.push(Math.round(value.valueSegmentShare * 100) / 100 );
-                        }else{
-                            oneBarData.y.push(Math.round(value.valueSegmentShare * 10000) / Math.pow(10, Number(decimalNumber)) );
+                        if(angular.isUndefined(value.segmentName) ){
+                            oneBarData.x = value.SKUName;
+
+                            if(decimalNumber === 0){
+                                oneBarData.y.push(Math.round(value.valueSegmentShare * 100) / 100 );
+                            }else{
+                                oneBarData.y.push(Math.round(value.valueSegmentShare * 10000) / Math.pow(10, Number(decimalNumber)) );
+                            }
+
+                            oneBarData.color = showSkuColor(value.SKUName.substring(0,1));
                         }
 
-                        oneBarData.color = showSkuColor(value.SKUName.substring(0,1));
-                    }
+                        periodData.data.push(oneBarData);
+                    });
 
-                    chartResult.data.push(oneBarData);
+                    chartResult.data.push(periodData);
                 });
+
             }
             return angular.copy(chartResult);
 
@@ -664,64 +673,18 @@
             // 使用angular-nvd3 插件的数据格式   only for C2 Perception Maps Scatter Chart 散点图
 //        chartResult.series = [];
 //        chartResult.data = [];
-            chartResult.dataSKU = [];
-            chartResult.dataBrand = [];
+
             chartResult.series = [];
             chartResult.data = [];
 
-            if(angular.isArray(chartHttpData) ){
-
-                angular.forEach(chartHttpData, function(value, key) {
-                    var oneCompanySku = {
-                        "key" : showTranslateTextCompanyName(value.companyName),
-                        "values" : []
-                    };
-
-                    var oneCompanyBrand = {
-                        "key" : showTranslateTextCompanyName(value.companyName),
-                        "values" : []
-                    };
-
-                    angular.forEach(value.SKUs, function(valueSku, keySku) {
-                        var oneLineSku1 = {
-                            'x' : Math.round(valueSku.valuePerception * 100 + Math.random() * 10 + Math.random()  ) / 100,
-                            'y' : Math.round(valueSku.imagePerception * 100 + Math.random() * 10 + Math.random()  ) / 100,
-                            'size' : 0.6,
-                            'SKUName' : valueSku.SKUName,
-                            'name' : valueSku.SKUName,
-                            'CompanyName' : value.companyName,
-                            'tooltips' : valueSku.tooltips,
-                            'shape' : 'circle'
-                        };
-
-                        oneCompanySku.values.push(oneLineSku1);
-                    });
-
-                    angular.forEach(value.brands, function(valueBrand, keyBrand) {
-                        var oneLineBrand1 = {
-                            'x' : Math.round(valueBrand.valuePerception * 100) / 100,
-                            'y' : Math.round(valueBrand.imagePerception * 100) / 100,
-                            'size' : 0.6,
-                            'BrandName' : valueBrand.brandName,
-                            'name' : valueBrand.brandName,
-                            'CompanyName' : value.companyName,
-                            'tooltips' : [],
-                            'shape' : 'circle'
-                        };
-
-                        oneCompanyBrand.values.push(oneLineBrand1);
-                    });
-
-                    chartResult.dataSKU.push(oneCompanySku);
-                    chartResult.dataBrand.push(oneCompanyBrand);
-                });
-
+            if(angular.isArray(chartHttpData.periods) ){
+                // 处理 exogenous
                 var oneSegment = {
                     "key" : showTranslateTextSegmentName(),
                     "values" : []
                 };
 
-                angular.forEach(chartHttpData[0].exogenous, function(value, key) {
+                angular.forEach(chartHttpData.exogenous, function(value, key) {
                     var oneLineData = {
                         'x' : Math.round(value.valuePerception * 100) / 100,
                         'y' : Math.round(value.imagePerception * 100) / 100,
@@ -734,8 +697,65 @@
                     oneSegment.values.push(oneLineData);
                 });
 
-                chartResult.dataSKU.push(oneSegment);
-                chartResult.dataBrand.push(oneSegment);
+                // 处理 periods 数据
+                angular.forEach(chartHttpData.periods, function(period, keyperiod) {
+                    var perioddata = {
+                        period : period.period,
+                        dataSKU : [],
+                        dataBrand : []
+                    };
+
+                    angular.forEach(period.allCompanyData, function(value, key) {
+                        var oneCompanySku = {
+                            "key" : showTranslateTextCompanyName(value.companyName),
+                            "values" : []
+                        };
+
+                        var oneCompanyBrand = {
+                            "key" : showTranslateTextCompanyName(value.companyName),
+                            "values" : []
+                        };
+
+                        angular.forEach(value.SKUs, function(valueSku, keySku) {
+                            var oneLineSku1 = {
+                                'x' : Math.round(valueSku.valuePerception * 100 + Math.random() * 10 + Math.random()  ) / 100,
+                                'y' : Math.round(valueSku.imagePerception * 100 + Math.random() * 10 + Math.random()  ) / 100,
+                                'size' : 0.6,
+                                'SKUName' : valueSku.SKUName,
+                                'name' : valueSku.SKUName,
+                                'CompanyName' : value.companyName,
+                                'tooltips' : valueSku.tooltips,
+                                'shape' : 'circle'
+                            };
+
+                            oneCompanySku.values.push(oneLineSku1);
+                        });
+
+                        angular.forEach(value.brands, function(valueBrand, keyBrand) {
+                            var oneLineBrand1 = {
+                                'x' : Math.round(valueBrand.valuePerception * 100) / 100,
+                                'y' : Math.round(valueBrand.imagePerception * 100) / 100,
+                                'size' : 0.6,
+                                'BrandName' : valueBrand.brandName,
+                                'name' : valueBrand.brandName,
+                                'CompanyName' : value.companyName,
+                                'tooltips' : [],
+                                'shape' : 'circle'
+                            };
+
+                            oneCompanyBrand.values.push(oneLineBrand1);
+                        });
+
+                        perioddata.dataSKU.push(oneCompanySku);
+                        perioddata.dataBrand.push(oneCompanyBrand);
+                    });
+
+                    perioddata.dataSKU.push(oneSegment);
+                    perioddata.dataBrand.push(oneSegment);
+
+                    chartResult.data.push(perioddata);
+
+                });
 
 
                 return angular.copy(chartResult);

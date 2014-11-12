@@ -1484,7 +1484,7 @@ app.config(['$translateProvider', function($translateProvider){
         "ReportCompetitorIntelligenceMarketingSalesTradeInvestments"          : "零售终端费用 (RMB 百万)",
         "ReportCompetitorIntelligenceMarketingSalesVolumeDiscountCost"        : "经销商进货折扣成本 (RMB 百万)",
 
-        "ReportCompetitorIntelligenceTableTitleOperations"                      : "操作",
+        "ReportCompetitorIntelligenceTableTitleOperations"                      : "运营",
         "ReportCompetitorIntelligenceOperationsCapacityUtilisationRate"         : "产能利用率 (%)",
         "ReportCompetitorIntelligenceOperationsInventoryVolumeAtManufacturer"   : "厂商持有的库存量 (百万标准包)",
         "ReportCompetitorIntelligenceOperationsInventoryVolumeAtRetailers"      : "零售商持有的库存量 (百万标准包)",
@@ -1788,9 +1788,9 @@ app.config(['$translateProvider', function($translateProvider){
         "FinalScorePageButtonRescaled" : "调整",
         "FinalScorePageWeightFactor"   : "权重 / 因素",
 
-        "FinalScorePageIncrementalMarketShare" : "增长的市场份额 (销售额)",
+        "FinalScorePageIncrementalMarketShare" : "相对增长的市场份额 (按零售销售额计)",
         "FinalScorePageCumulatedNetProfit"     : "累计净利润",
-        "FinalScorePageSpendingVersusBudgets"  : "花销与预算对比",
+        "FinalScorePageSpendingVersusBudgets"  : "支出相对于预算",
 
         "FinalScorePageShareInBrandTotalSalesValue"    : "Share in Brand Total Sales Value",
         "FinalScorePageAchievementOfInitialObjectives" : "Achievement of initial objectives",
