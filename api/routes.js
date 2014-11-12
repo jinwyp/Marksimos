@@ -277,11 +277,71 @@ apiRouter.get('/marksimos/api/create_admin', function (req,res,next) {
             "role": config.role.student,
             "activated": true,
             "emailActivated": false
+        },
+        {
+            "username": "sunyun1",
+            "email": "yunsun1@hcdlearning.com",
+            "mobilePhone": "13817304511",
+            "country": "China",
+            "state": "shanghai",
+            "city": "shanghai",
+            "password": utility.hashPassword("123456"),
+            "facilitatorId": "54609fb2700a570813b13540",
+            "idcardNumber": "321181198502273515",
+            "occupation": "Student",
+            "firstName": "yun1",
+            "lastName": "sun",
+            "organizationOrUniversity": "",
+            "majorsDegree": "",
+            "studentType": 10,
+            "role": config.role.student,
+            "activated": true,
+            "emailActivated": false
+        },
+        {
+            "username": "sunyun2",
+            "email": "yunsun2@hcdlearning.com",
+            "mobilePhone": "13817304511",
+            "country": "China",
+            "state": "shanghai",
+            "city": "shanghai",
+            "password": utility.hashPassword("123456"),
+            "facilitatorId": "54609fb2700a570813b13540",
+            "idcardNumber": "321181198502273515",
+            "occupation": "Student",
+            "firstName": "yun2",
+            "lastName": "sun",
+            "organizationOrUniversity": "",
+            "majorsDegree": "",
+            "studentType": 10,
+            "role": config.role.student,
+            "activated": true,
+            "emailActivated": false
+        },
+        {
+            "username": "sunyun3",
+            "email": "yunsun3@hcdlearning.com",
+            "mobilePhone": "13817304511",
+            "country": "China",
+            "state": "shanghai",
+            "city": "shanghai",
+            "password": utility.hashPassword("123456"),
+            "facilitatorId": "54609fb2700a570813b13540",
+            "idcardNumber": "321181198502273515",
+            "occupation": "Student",
+            "firstName": "yun3",
+            "lastName": "sun",
+            "organizationOrUniversity": "",
+            "majorsDegree": "",
+            "studentType": 10,
+            "role": config.role.student,
+            "activated": true,
+            "emailActivated": false
         }
     ];
     userModel.query.find({role: config.role.admin}).exec().then(function (userResult) {
         if (userResult.length) {
-            //已经存在管理员了，不进行初始化，只例出这些用户
+            //已经存在管理员了，不进行初始化，只列出这些用户
             return res.send(400, {message: "already added."});
         }
         else {
