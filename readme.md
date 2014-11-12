@@ -82,7 +82,32 @@ Or, if you don't want/need launchctl, you can just run:
 
 
 ### Mongodb 数据库Windows下安装：
+*  到官网下载最新安装包http://www.mongodb.org/downloads，选择自己的版本（32位或64位）
+   zip包和msi的内容是一样的都有bin文件夹
+   
+*  新建setup.bat 拷贝如下内容并运行(win8下要以管理员运行，win+x,a)
+	::创建必要文件路径
+	mkdir "d:\mongo"
+	mkdir "D:\mongo\data"
+	mkdir "D:\mongo\data\log"
+	
+	::等待手动把bin文件拷贝到d:\mongo
+	echo 手动把bin文件夹所有东西拷贝到d:\mongo
+	pause
 
+	::把日志路径写到mongod.cfg
+	echo logpath=D:\mongo\data\log\mongod.log> "D:\mongo\mongod.cfg"
+	::把数据库路径写到mongod.cfg
+	echo dbpath=D:\mongo\data>> "D:\mongo\mongod.cfg"
+
+	::安装windows服务，并把服务设为自动启动
+	sc.exe create MongoDB binPath= "\"D:\mongo\bin\mongod.exe\" --service --config=\"D:\mongo\mongod.cfg\"" DisplayName= "MongoDB 2.6 Standard" start= "auto"
+
+	::启动windows服务
+	net start MongoDB
+	
+ *  手动把bin文件夹所有东西拷贝到d:\mongo,然后选中刚才打开的bat文件，按任意键安装完成
+ *  可以用命令行或在服务管理里关闭或启动服务
 
 ### 关闭Mongo
 * 使用mongo shell 关闭 命令如下
