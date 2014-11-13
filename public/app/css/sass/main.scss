@@ -3,6 +3,7 @@ $icon-spacing : 130px;
 //$icon-layout : diagonal;
 @import "icon/*.png";
 
+
 @mixin my_icon-sprite ($name, $repeat: no-repeat, $offset-x: 0, $offset-y: 0) {
     background-image : $icon-sprites;
     background-repeat : $repeat;
