@@ -92,6 +92,15 @@ Or, if you don't want/need launchctl, you can just run:
 
  gem install compass
 ```
+*   遇到的问题gulp compass编码问题
+```
+Error:     error public/app/css/sass/main.scss (Line 136: Invalid GBK character"\xE8")
+```
+参考[Sass UTF-8 encoding on Windows](http://blog.pixelastic.com/2014/09/06/compass-utf-8-encoding-on-windows/)
+解决:在main.css顶部加上
+```
+@charset "utf-8";
+```
 ### Mongodb 数据库Windows下安装：
 *  到官网[下载最新安装包](http://www.mongodb.org/downloads)，选择自己的版本（32位或64位）
    zip包和msi的内容是一样的都有bin文件夹
