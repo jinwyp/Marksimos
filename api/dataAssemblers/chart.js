@@ -198,7 +198,7 @@ exports.investmentsVersusBudget = function(allResults, simulationSpan){
     for (var i = 4; i < allResults.length; i++) {
         var onePeriodResult = allResults[i];
         result.chartData.push([]);
-        result.periods.push(i-4);
+        result.periods.push(onePeriodResult.period);
         for (var j = 0; j < companyNum; j++) {
             var company = onePeriodResult.p_Companies[j];
 
