@@ -16,15 +16,20 @@
 <script src="/libs/bootstrap/dist/js/bootstrap.min.js"></script>
 
 
-<!--<script src="/app/js/config.js"></script>-->
-<!--<script src="/app/js/translation.js"></script>-->
-<!--<script src="/app/js/commoncomponent.js"></script>-->
-<!--<script src="/app/js/websitecomponent.js"></script>-->
-<!--<script src="/app/js/model.js"></script>-->
-<!--<script src="/app/js/filter.js"></script>-->
-<!--<script src="/app/js/appuserhome.js"></script>-->
-
+<% if(settings.env == "production"){ %>
 <script src="/app/dist/app.min.js"></script>
+<% } else{ %>
+<script src="/app/js/directivetemplates.js"></script>
+<script src="/app/js/model.js"></script>
+<script src="/app/js/translation.js"></script>
+<script src="/app/js/websitecomponent.js"></script>
+
+<script src="/app/js/filter.js"></script>
+<script src="/app/js/appuserlogin.js"></script>
+<% } %>
+
+
+
 
 
 </body>

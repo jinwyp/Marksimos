@@ -54,10 +54,15 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 
 
+
+// Router for all URL
 app.use('/', router);
 
 
-/// catch 404 and forwarding to error handler
+
+
+
+// catch 404 and forwarding to error handler
 app.use(function(req, res, next) {
     var err = new Error('404 Page Not Found');
     err.status = 404;

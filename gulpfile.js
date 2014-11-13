@@ -69,7 +69,7 @@ gulp.task('jscompress',function(){
         .pipe(jshint.reporter('jshint-stylish'))
         .pipe(ngAnnotate())
         .pipe(concat('app.min.js'))
-        .pipe(uglify())
+//        .pipe(uglify())
         .pipe(gulp.dest(paths.javascriptOutputDist))
 });
 
@@ -144,7 +144,7 @@ gulp.task('mocha', function () {
 
 /********************  使用nodemon 自动重启服务器  ********************/
 
-gulp.task('nodemon', function () {
+gulp.task('nodemonludwik', function () {
     nodemon({
         script: 'app.js',
         env: { 'NODE_ENV': 'ludwik' }
@@ -211,9 +211,10 @@ gulp.task('browser-sync', function() {
 
 /********************  默认任务 he default task (called when you run `gulp` from cli)  ********************/
 
-gulp.task('default', ['nodemon', 'watch']);
+gulp.task('default', ['nodemonludwik', 'watch']);
 
 //gulp.task('jin', ['mongo', 'browser-sync', 'nodemonjin', 'watch']);
+gulp.task('jinpro', [ 'compass', 'templates', 'nodemonjin', 'watch']);
 gulp.task('jin', [ 'compass', 'templates', 'nodemonjin', 'watch']);
 gulp.task('jingo', ['mongo', 'compass', 'templates', 'nodemonjin', 'watch']);
 

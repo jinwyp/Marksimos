@@ -3,7 +3,6 @@ $icon-spacing : 130px;
 //$icon-layout : diagonal;
 @import "icon/*.png";
 
-
 @mixin my_icon-sprite ($name, $repeat: no-repeat, $offset-x: 0, $offset-y: 0) {
     background-image : $icon-sprites;
     background-repeat : $repeat;
@@ -133,7 +132,7 @@ $color_main_body_user_manual_table_tr_border:#ccc;
 $color_main_body_user_manual_table_2n:#f8f8f8;
 
 
-/********************  自定义按钮样式  ********************/
+/********************  Custom Button Style  ********************/
 
 
 @mixin user_decision_button{
@@ -378,7 +377,7 @@ $color_main_body_user_manual_table_2n:#f8f8f8;
 
 /*********************************************************/
 
-/** 仿 iOS 系统通知数字样式 **/
+/**  iOS System Notification Number Style 1  **/
 .num{
 
     color:#fff;
@@ -400,7 +399,7 @@ $color_main_body_user_manual_table_2n:#f8f8f8;
     z-index: 999;
 }
 
-/** 仿 iOS 系统通知数字样式 **/
+/**  iOS System Notification Number Style 2 **/
 .num2{
     background-color: $color_main_header_menu_num;
     background-image: -webkit-linear-gradient(top, $color_main_header_menu_num, $color_main_header_menu_num); /* Chrome 10+, Saf5.1+, iOS 5+ */

@@ -22,6 +22,7 @@
 
     angular.module('marksimos.model').factory('Student', ['$http', studentModel]);
     angular.module('marksimos.model').factory('Company', ['$http', companyModel]);
+    angular.module('marksimos.model').factory('Language', ['$http', languageStorage]);
 
     angular.module('marksimos.model').factory('chartReport', ['$http', '$rootScope', '$translate', chartReportModel]);
     angular.module('marksimos.model').factory('tableReport', ['$http', tableReportModel]);
@@ -165,6 +166,30 @@
             }
 
         };
+        return factory;
+    }
+
+
+
+    function languageStorage ($http){
+
+        var factory = {
+            set: function (name, value) {
+                console.log(name, value);
+                // store `value` under `name` somehow
+            },
+            get: function (name) {
+
+                $http.get(apiPath + 'studentinfo').then(function(result){
+//                console.log(result.data);
+
+                    return result.data.websiteLanguage;
+                    console.log(name, result.data.websiteLanguage);
+                });
+                // request value of `name` somehow
+            }
+        };
+
         return factory;
     }
 
