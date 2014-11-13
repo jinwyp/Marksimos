@@ -1874,8 +1874,8 @@
         });
 
         // Tell the module what language to use by default
-        $translateProvider.preferredLanguage('en_US');
-    //    $translateProvider.preferredLanguage('zh_CN');
+//        $translateProvider.preferredLanguage('en_US');
+        $translateProvider.preferredLanguage('zh_CN');
 
         $translateProvider.useCookieStorage();
     }]);
