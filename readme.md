@@ -80,11 +80,11 @@ Or, if you don't want/need launchctl, you can just run:
 
 ```
 ### ruby 环境windows下安装
-*到[rubyinstaller.org](http://rubyinstaller.org/)下载windows安装包,并默认安装就可以了
+*   到[rubyinstaller.org](http://rubyinstaller.org/)下载windows安装包,并默认安装就可以了
  打开Start Command Prompt with Ruby 输入ruby -v可以看到版本号
-*找到ruby安装目录并且把bin目录添加到用户变量path里面 (我的目录是C:\Ruby200-x64\bin)
+*   找到ruby安装目录并且把bin目录添加到用户变量path里面 (我的目录是C:\Ruby200-x64\bin)
  win+R 输入cmd 然后键入ruby -v 即可看到版本号
-*更换gem sources并安装compass
+*   更换gem sources并安装compass
 ```
  gem sources --remove https://rubygems.org/
  gem sources -a http://ruby.taobao.org/
