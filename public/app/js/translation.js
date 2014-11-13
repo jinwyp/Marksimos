@@ -14,7 +14,7 @@
     'use strict';
 
 
-    angular.module('marksimos.translation', ['marksimos.model']);
+    angular.module('marksimos.translation', ['ngCookies']);
 
 
     angular.module('marksimos.translation').config(['$translateProvider',  function($translateProvider){
@@ -1877,7 +1877,7 @@
         $translateProvider.preferredLanguage('en_US');
     //    $translateProvider.preferredLanguage('zh_CN');
 
-        $translateProvider.useStorage('Language');
+        $translateProvider.useCookieStorage();
     }]);
 
 

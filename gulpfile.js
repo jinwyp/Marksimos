@@ -69,7 +69,14 @@ gulp.task('jscompress',function(){
         .pipe(jshint.reporter('jshint-stylish'))
         .pipe(ngAnnotate())
         .pipe(concat('app.min.js'))
-//        .pipe(uglify())
+        .pipe(uglify())
+        .pipe(gulp.dest(paths.javascriptOutputDist))
+});
+gulp.task('jscompressdev',function(){
+    gulp.src(paths.javascript)
+        .pipe(jshint())
+        .pipe(jshint.reporter('jshint-stylish'))
+        .pipe(ngAnnotate())
         .pipe(gulp.dest(paths.javascriptOutputDist))
 });
 
@@ -194,6 +201,21 @@ gulp.task('watch', function() {
 //    });
 });
 
+gulp.task('watchdev', function() {
+//    gulp.watch(paths.javascript, ['jshint']);
+    gulp.watch(paths.angularTemplates, ['templates']);
+    gulp.watch(paths.sassSourceFiles, ['compass']);
+    gulp.watch(paths.cssSourceFiles, ['minifycss']);
+    gulp.watch(paths.javascript, ['jscompressdev']);
+
+//    var server = livereload();
+//    gulp.watch(paths.app).on('change', function(file) {
+//        server.changed(file.path);
+//    });
+//    gulp.watch(paths.views).on('change', function(file) {
+//        server.changed(file.path);
+//    });
+});
 
 
 
@@ -214,8 +236,7 @@ gulp.task('browser-sync', function() {
 gulp.task('default', ['nodemonludwik', 'watch']);
 
 //gulp.task('jin', ['mongo', 'browser-sync', 'nodemonjin', 'watch']);
-gulp.task('jinpro', [ 'compass', 'templates', 'nodemonjin', 'watch']);
-gulp.task('jin', [ 'compass', 'templates', 'nodemonjin', 'watch']);
+gulp.task('jin', [ 'compass', 'templates', 'nodemonjin', 'watchdev']);
 gulp.task('jingo', ['mongo', 'compass', 'templates', 'nodemonjin', 'watch']);
 
 gulp.task('sunyun', ['nodemonsunyun', 'watch']);

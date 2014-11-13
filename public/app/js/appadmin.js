@@ -7,7 +7,7 @@
     'use strict';
 
     /********************  Create New Module For Controllers ********************/
-    angular.module('marksimosadmin', ['pascalprecht.translate', 'notifications', 'marksimos.websitecomponent', 'marksimos.commoncomponent']);
+    angular.module('marksimosadmin', [ 'pascalprecht.translate', 'notifications', 'marksimos.websitecomponent', 'marksimos.commoncomponent']);
 
 
 
