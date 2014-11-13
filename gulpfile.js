@@ -239,4 +239,4 @@ gulp.task('default', ['nodemonludwik', 'watch']);
 gulp.task('jin', [ 'compass', 'templates', 'nodemonjin', 'watchdev']);
 gulp.task('jingo', ['mongo', 'compass', 'templates', 'nodemonjin', 'watch']);
 
-gulp.task('sunyun', ['nodemonsunyun', 'watch']);
+gulp.task('sunyun', ['nodemonsunyun','compass', 'watch']);
