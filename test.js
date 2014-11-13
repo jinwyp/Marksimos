@@ -57,18 +57,9 @@ hao
 // test(3)();
 
 
-var test = {
-	a : '1',
-	b : '2'
-}
+var teams = [true, false, true];
 
-console.log('outside:' + test.a);
-for (var prop in test) {
-	if(test[prop] == '1'){ test[prop] = 3; }
-	console.log(test[prop]);
-};
-
-
-console.log(typeof({123 : '123'}));
-
-console.log('123'.abc);
+console.log(teams[0]);
+console.log(teams[1]);
+console.log(teams[2]);
+console.log(teams[3]);

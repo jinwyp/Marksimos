@@ -171,7 +171,20 @@ exports.init = function(req, res, next) {
 * Fetch current period allresults and save it to db
 * Generate current period reports and charts
 * Generate new period decision 
+
+{
+    goingToNewPeriod : true/false 
+
+    //if true, after data re-generation, current period will be set into next period
+    decisionOverwriteSwitchers : [true, false, false, false] 
+
+    
+    //if decisionsOverwriteSwithcers[0] = true, selected period Team A decision will be overwrite
+    //if decisionsOverwriteSwithcers[1] = true, selected period Team B decision will be overwrite
+    //...
+}
 */
+
 exports.runSimulation = function(){
     var status;
 
@@ -221,7 +234,7 @@ exports.runSimulation = function(){
                 //write decision to binary file
                 return submitDecisionForAllCompany(companies, currentPeriod, seminarId)
                     .then(function(){
-                        console.log('write decision finished.');
+                        logger.log('write decision finished.');
                         // if(submitDecisionResult.message!=='submit_decision_success'){
                         //     throw {message: submitDecisionResult.message};
                         // }
@@ -234,7 +247,7 @@ exports.runSimulation = function(){
                             period: currentPeriod
                         })
                         .then(function(simulationResult){
-                            console.log('run simulation finished.');
+                            logger.log('run simulation finished.');
                             if(simulationResult.message !== 'run_simulation_success'){
                                  status = 'active';
                                 throw {message: simulationResult.message};
@@ -246,7 +259,7 @@ exports.runSimulation = function(){
                                     ];
                         })
                         .then(function(){
-                            console.log('get current period simulation result finished.');
+                            logger.log('get current period simulation result finished.');
                             //once removeCurrentPeriodSimulationResult success, 
                             //query and save the current period simulation result
                             return initCurrentPeriodSimulationResult(seminarId, currentPeriod);
@@ -257,8 +270,7 @@ exports.runSimulation = function(){
                             ])
                             .spread(function(allResults){
                                 return Q.all([
-                                    initChartData(seminarId, allResults),
-                                    
+                                    initChartData(seminarId, allResults),                                    
                                     initCompanyStatusReport(seminarId, allResults, currentPeriod),
                                     initFinancialReport(seminarId, allResults),
                                     initProfitabilityEvolutionReport(seminarId, allResults, currentPeriod),
@@ -270,7 +282,7 @@ exports.runSimulation = function(){
                             });
                         })
                         .then(function(){
-                            console.log('generate report/chart finished.');
+                            logger.log('generate report/chart finished.');
                             //for the last period, we don't create the next period decision automatically
                             if(dbSeminar.currentPeriod < dbSeminar.simulationSpan){
                                 return createNewDecisionBasedOnLastPeriodDecision(seminarId, currentPeriod);
@@ -280,8 +292,10 @@ exports.runSimulation = function(){
                             }
                         })
                         .then(function(){
-                            console.log('create duplicate decision from last period finished.');
+                            logger.log('create duplicate decision from last period finished.');
                             if(dbSeminar.currentPeriod < dbSeminar.simulationSpan){
+                                
+
                                 //after simulation success, set currentPeriod to next period
                                 sessionOperation.setCurrentPeriod(req, sessionOperation.getCurrentPeriod(req)+1);
 
@@ -359,7 +373,7 @@ function submitDecisionForAllCompany(companies, period, seminarId){
 
     companies.forEach(function(companyId){
         p = p.then(function(){
-            console.log("submit decision finished.");
+            //logger.log("submit decision finished.");
             return submitDecision(companyId, period, seminarId)
         })
     });
@@ -369,7 +383,7 @@ function submitDecisionForAllCompany(companies, period, seminarId){
 
 function submitDecision(companyId, period, seminarId){
     var result = {};
-    console.log('companyId:' + companyId + ', period:' + period + ', seminarId:' + seminarId);
+    //logger.log('companyId:' + companyId + ', period:' + period + ', seminarId:' + seminarId);
     return companyDecisionModel.findOne(seminarId, period, companyId)
     .then(function(decision){
         if(!decision){
@@ -557,7 +571,7 @@ function initSimulationResult(seminarId, periods){
         queries.push(cgiapi.queryOnePeriodResult(seminarId, period));
     });
 
-    //console.log(queries);
+    //logger.log(queries);
     return Q.all(queries)
     .then(function(allResults){
         cleanAllResults(allResults);
