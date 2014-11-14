@@ -575,7 +575,15 @@ function prepareSKUTooltips(allResults, SKUID){
     // } else {
     //     console.log(currentPeriodSKU);
     // }
-
+    if(!currentPeriodSKU){
+        currentPeriodSKU = {
+            u_AverageDisplayPrice : 0,
+            u_ValueSegmentShare : [0,0,0,0,0,0],
+            u_Awareness : 0,
+            u_ShelfSpace : 0,
+            u_Perception : [0,0]
+        };
+    } 
 
     if(!previousPeriodSKU){
         previousPeriodSKU = {
