@@ -194,7 +194,9 @@ exports.searchStudent = function(req, res, next){
     var activated = req.query.user_status;
     //add for e4e
 
-    var query = {};
+    var query = {
+        role : config.role.student
+    };
 
     if(req.query.student_type){
         query.studentType = req.query.student_type;
