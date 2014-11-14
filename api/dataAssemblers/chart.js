@@ -279,37 +279,8 @@ exports.segmentsLeadersByValue = function(allResults, segment){
 
     return result;
     
-    // var currentPeriodIndex = allResults.length-1;
-    // var onePeriodResult = allResults[currentPeriodIndex];
 }
 
-// exports.segmentsLeadersByValue = function(allResults, segment){
-//     var currentPeriodIndex = allResults.length-1;
-//     var currentPeriodResult = allResults[currentPeriodIndex];
-
-//     var segmentNameAndIndex = config.segmentNameAndIndex;
-
-//     var segmentIndex = segmentNameAndIndex[segment];
-
-//     var valueSegmentShare = currentPeriodResult.p_SKUs.map(function(SKU){
-//         var brand = utility.findBrand(currentPeriodResult, SKU.u_ParentBrandID);
-//         var brandName = brand.b_BrandName;
-
-//         var SKUName = brandName + SKU.u_SKUName;
-//         return {
-//             SKUName: SKUName,
-//             valueSegmentShare: SKU.u_ValueSegmentShare[segmentIndex]
-//         };
-//     });
-
-//     valueSegmentShare.sort(function(a, b){
-//         return b.valueSegmentShare - a.valueSegmentShare;
-//     })
-
-//     return {
-//         chartData: valueSegmentShare.slice(0, 5)
-//     };
-// }
 
 //Market evolution
 exports.growthRateInVolume = function(allResults){
@@ -378,6 +349,13 @@ exports.perceptionMap = function(allResults, exogenous){
     }
 
     allResults.forEach(function(onePeriodResult){
+
+        if(onePeriodResult.period != -3){
+            perviousPeriodResult = allResults[onePeriodResult.period + 2];
+        } else {
+            perviousPeriodResult = undefined;
+        }
+
         var periodReport = {
             period : onePeriodResult.period,
             allCompanyData : []
@@ -413,7 +391,7 @@ exports.perceptionMap = function(allResults, exogenous){
                         SKUName: brand.b_BrandName + SKU.u_SKUName,
                         imagePerception: SKU.u_Perception[1],
                         valuePerception: SKU.u_Perception[0],
-                        tooltips: prepareSKUTooltips(allResults, SKU.u_SKUID)
+                        tooltips: prepareSKUTooltips(onePeriodResult, perviousPeriodResult, SKU.u_SKUID)
                     })
                 }
             }
@@ -426,62 +404,6 @@ exports.perceptionMap = function(allResults, exogenous){
     return result;
 }
 
-
-// exports.perceptionMap = function(allResults, exogenous){
-//     var periodResult = allResults[allResults.length-1];
-
-//     var result = [];
-//     for(var i=0; i < periodResult.p_Companies.length; i++){
-//         var company = periodResult.p_Companies[i];
-//         var companyName = company.c_CompanyName;
-//         var companyData = {
-//             companyName: companyName,
-//             brands: [],
-//             SKUs: [],
-//             exogenous: []
-//         };
-        
-//         //brands data
-//         for(var j=0; j<periodResult.p_Brands.length; j++){
-//             var brand = periodResult.p_Brands[j];
-//             if(company.c_CompanyID === brand.b_ParentCompanyID){
-//                 companyData.brands.push({
-//                     brandName: brand.b_BrandName,
-//                     imagePerception: brand.b_Perception[1],
-//                     valuePerception: brand.b_Perception[0]
-//                 })
-//             }
-//         }
-
-//         //SKU data
-//         for(var k=0; k<periodResult.p_SKUs.length; k++){
-//             var SKU = periodResult.p_SKUs[k];
-//             var brand = utility.findBrand(periodResult, SKU.u_ParentBrandID);
-//             if(company.c_CompanyID === SKU.u_ParentCompanyID){
-//                 companyData.SKUs.push({
-//                     SKUName: brand.b_BrandName + SKU.u_SKUName,
-//                     imagePerception: SKU.u_Perception[1],
-//                     valuePerception: SKU.u_Perception[0],
-//                     tooltips: prepareSKUTooltips(allResults, SKU.u_SKUID)
-//                 })
-//             }
-//         }
-
-//         //Exogenous
-//         var exoSegmentsIdealPoints = exogenous.exo_SegmentsIdealPoints;
-//         for(var p=0; p<exoSegmentsIdealPoints.length; p++){
-//             var point = exoSegmentsIdealPoints[p];
-//             companyData.exogenous.push({
-//                 segmentName: p,
-//                 imagePerception: point[1],
-//                 valuePerception: point[0]
-//             });
-//         }
-
-//         result.push(companyData);
-//     }
-//     return result;
-// }
 
 exports.inventoryReport = function(allResults){
     var periodResult = allResults[allResults.length-1];
@@ -552,29 +474,23 @@ exports.inventoryReport = function(allResults){
  * @param {Function} the function to get a certain field of JSON object
  * @return {Object} chart data
  */
-function prepareSKUTooltips(allResults, SKUID){
-    if(!allResults){
-        throw new Error("allResults can't be empty.");
-    }
-
+function prepareSKUTooltips(currentPeriodResult, perviousPeriodResult, SKUID){
     if(!SKUID){
         throw new Error("SKUID can't be empty");
     }
 
-    var currentPeriodResult = allResults[allResults.length-1];
-    var perviousPeriodResult = allResults[allResults.length-2];
+    // var currentPeriodResult = allResults[allResults.length-1];
+    // var perviousPeriodResult = allResults[allResults.length-2];
 
     var tooltips = [];
-
     var currentPeriodSKU = utility.findSKU(currentPeriodResult, SKUID);
-    var previousPeriodSKU = utility.findSKU(perviousPeriodResult, SKUID);
 
-    // if(!currentPeriodSKU){ 
+    if(!perviousPeriodResult){
+        var previousPeriodSKU = undefined;
+    } else {
+        var previousPeriodSKU = utility.findSKU(perviousPeriodResult, SKUID);        
+    }
 
-    //     console.log('1');
-    // } else {
-    //     console.log(currentPeriodSKU);
-    // }
     if(!currentPeriodSKU){
         currentPeriodSKU = {
             u_AverageDisplayPrice : 0,
