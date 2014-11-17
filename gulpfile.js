@@ -72,13 +72,7 @@ gulp.task('jscompress',function(){
         .pipe(uglify())
         .pipe(gulp.dest(paths.javascriptOutputDist))
 });
-gulp.task('jscompressdev',function(){
-    gulp.src(paths.javascript)
-        .pipe(jshint())
-        .pipe(jshint.reporter('jshint-stylish'))
-        .pipe(ngAnnotate())
-        .pipe(gulp.dest(paths.javascriptOutputDist))
-});
+
 
 
 // 监视scss文件的变化
@@ -205,7 +199,7 @@ gulp.task('watchdev', function() {
     gulp.watch(paths.angularTemplates, ['templates']);
     gulp.watch(paths.sassSourceFiles, ['compass']);
     gulp.watch(paths.cssSourceFiles, ['minifycss']);
-    gulp.watch(paths.javascript, ['jscompressdev']);
+    gulp.watch(paths.javascript, ['jshint']);
 });
 
 
