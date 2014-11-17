@@ -186,7 +186,6 @@ gulp.task('nodemonsunyun', function () {
 /********************  Rerun the task when a file changes  ********************/
 
 gulp.task('watch', function() {
-//    gulp.watch(paths.javascript, ['jshint']);
     gulp.watch(paths.angularTemplates, ['templates']);
     gulp.watch(paths.sassSourceFiles, ['compass']);
     gulp.watch(paths.cssSourceFiles, ['minifycss']);
@@ -202,20 +201,11 @@ gulp.task('watch', function() {
 });
 
 gulp.task('watchdev', function() {
-//    gulp.watch(paths.javascript, ['jshint']);
     gulp.watch(paths.angularTemplates, ['templates']);
     gulp.watch(paths.sassSourceFiles, ['compass']);
     gulp.watch(paths.cssSourceFiles, ['minifycss']);
     gulp.watch(paths.javascript, ['jscompressdev']);
 
-//    var server = livereload();
-//    gulp.watch(paths.app).on('change', function(file) {
-//        server.changed(file.path);
-//    });
-//    gulp.watch(paths.views).on('change', function(file) {
-//        server.changed(file.path);
-//    });
-});
 
 
 
@@ -237,6 +227,6 @@ gulp.task('default', ['nodemonludwik', 'watch']);
 
 //gulp.task('jin', ['mongo', 'browser-sync', 'nodemonjin', 'watch']);
 gulp.task('jin', [ 'compass', 'templates', 'nodemonjin', 'watchdev']);
-gulp.task('jingo', ['mongo', 'compass', 'templates', 'nodemonjin', 'watch']);
+gulp.task('jingo', ['compass', 'templates', 'nodemonjin', 'watch']);
 
 gulp.task('sunyun', ['nodemonsunyun','compass', 'watch']);
