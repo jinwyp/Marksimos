@@ -200,12 +200,13 @@ gulp.task('watch', function() {
 //    });
 });
 
+
 gulp.task('watchdev', function() {
     gulp.watch(paths.angularTemplates, ['templates']);
     gulp.watch(paths.sassSourceFiles, ['compass']);
     gulp.watch(paths.cssSourceFiles, ['minifycss']);
     gulp.watch(paths.javascript, ['jscompressdev']);
-
+});
 
 
 
