@@ -166,12 +166,11 @@ exports.assignStudentToSeminar = function(req, res, next){
 
 exports.removeStudentFromSeminar = function(req, res, next){
     var email = req.body.email;
+    var seminarId = req.body.seminar_id;
 
     if(!email){
         return res.send(400, {message: "Invalid email."});
     }
-
-    var seminarId = sessionOperation.getSeminarId(req);
 
     if(!seminarId){
         return res.send(400, {message: "You don't choose a seminar."})
