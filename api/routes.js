@@ -471,10 +471,8 @@ function authorize(resource){
         'updateDistributor',
         'searchDistributor',
 
-        'updateFacilitator',
         'searchFacilitator',
 
-        'updateStudent',
         'searchStudent'
     ];
     authDefinition[config.role.distributor] = [
