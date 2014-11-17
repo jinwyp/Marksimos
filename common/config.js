@@ -14,7 +14,6 @@ module.exports = (function(){
             B2Bstudents: 10,
             B2Cstudents: 20,
             B2CAndB2Bstudents: 30
-
         },
 
         mail: {
@@ -89,7 +88,7 @@ module.exports = (function(){
             break;
         case 'jin':
             config.logDirectory = '/Users/jinwyp/Documents/github/Marksimos/log/';
-            config.mongo_conn = 'mongodb://localhost/Marksimos';
+            config.mongo_conn = 'mongodb://192.168.2.50/Marksimos';
             config.host = 'http://localhost:3000/';
             config.cgiService = 'http://192.168.2.50/cgi-bin/';
             break;

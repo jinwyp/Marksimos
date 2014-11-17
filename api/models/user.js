@@ -67,7 +67,9 @@ var userSchema = new Schema({
     numOfUsedLicense: {type: Number, default: 0},
 
     distributorId: String,
-    facilitatorId: String
+    facilitatorId: String,
+
+    websiteLanguage:{type: String, default: 'zh_CN'} // 'zh_CN'  'en_US'
 
 });
 

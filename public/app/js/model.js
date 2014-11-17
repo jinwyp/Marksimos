@@ -170,6 +170,9 @@
 
 
 
+
+
+
     function chartReportModel ($http, $rootScope, $translate){
 
         // 'FMCG': [

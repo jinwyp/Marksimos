@@ -1,6 +1,6 @@
 /*
-所有chart
-*/
+ 所有chart
+ */
 var consts = require('../consts.js');
 var config = require('../../common/config.js');
 var utility = require('../../common/utility.js');
@@ -17,7 +17,7 @@ exports.extractChartData = function(results, settings){
     var netProfitByCompanies = exports.netProfitByCompanies(results);
     var returnOnInvestment = exports.returnOnInvestment(results);
     var investmentsVersusBudget = exports.investmentsVersusBudget(results, settings.simulationSpan);
-    
+
     //market sales and inventory
     var marketSalesValue = exports.marketSalesValue(results);
     var marketSalesVolume = exports.marketSalesVolume(results);
@@ -25,7 +25,7 @@ exports.extractChartData = function(results, settings){
     var totalInventoryAtTrade = exports.totalInventoryAtTrade(results);
 
     //segment leaders top 5
-    var segmentsLeadersByValuePriceSensitive = exports.segmentsLeadersByValue(results, 'priceSensitive');    
+    var segmentsLeadersByValuePriceSensitive = exports.segmentsLeadersByValue(results, 'priceSensitive');
     var segmentsLeadersByValuePretenders = exports.segmentsLeadersByValue(results, 'pretenders');
     var segmentsLeadersByValueModerate = exports.segmentsLeadersByValue(results, 'moderate');
     var segmentsLeadersByValueGoodLife = exports.segmentsLeadersByValue(results, 'goodLife');
@@ -243,7 +243,7 @@ exports.totalInventoryAtFactory = function(allResults){
 
 exports.totalInventoryAtTrade = function(allResults){
     return generateChartData(allResults, function(company){
-        return company.c_RetailStocks[consts.StocksMaxTotal].s_Volume + 
+        return company.c_RetailStocks[consts.StocksMaxTotal].s_Volume +
             company.c_WholesalesStocks[consts.StocksMaxTotal].s_Volume;
     })
 }
@@ -278,7 +278,6 @@ exports.segmentsLeadersByValue = function(allResults, segment){
     });
 
     return result;
-    
 }
 
 
@@ -307,13 +306,13 @@ exports.segmentValueShareTotalMarket = function(allResults){
     var market = period.p_Market;
 
     //there are only 6 segments
-    var segmentNum = consts.ConsumerSegmentsMaxTotal - 1; 
+    var segmentNum = consts.ConsumerSegmentsMaxTotal - 1;
     //var segmentNames = config.segmentNames;
 
     var results = {
         chartData: []
     };
-    
+
     for(var i=0; i<segmentNum; i++){
         //var segmentName = segmentNames[i];
         results.chartData.push({
@@ -326,7 +325,7 @@ exports.segmentValueShareTotalMarket = function(allResults){
 
 /**
  * Generate perception map chart
- * 
+ *
  * @method perceptionMap
  * @param {Object} exogenous parameters of the game
  */
@@ -369,7 +368,7 @@ exports.perceptionMap = function(allResults, exogenous){
                 brands: [],
                 SKUs: [],
             };
-            
+
             //brands data
             for(var j=0; j<onePeriodResult.p_Brands.length; j++){
                 var brand = onePeriodResult.p_Brands[j];
@@ -396,9 +395,9 @@ exports.perceptionMap = function(allResults, exogenous){
                 }
             }
             periodReport.allCompanyData.push(companyData);
-        }    
+        }
 
-        result.periods.push(periodReport);        
+        result.periods.push(periodReport);
     });
 
     return result;
@@ -444,18 +443,18 @@ exports.inventoryReport = function(allResults){
             var totalStock = SKU.u_ps_FactoryStocks[i].s_ps_Volume + SKU.u_ps_WholesaleStocks[i].s_ps_Volume + SKU.u_ps_RetailStocks[i].s_ps_Volume;
             totalStock = totalStock * consts.ActualSize[SKU.u_PackSize];
             result.push({
-            // 'FMCG': [
-            //   0:  'FreshInventory',
-            //   1:  'PreviousInventory',
-            //   2:  'CloseToEXpireInventory' 
-            // ],
-            // 'DURABLES': [
-            //   0:  'Latest Stock',
-            //   1:  'one-year old Stock',
-            //   2:  'Two-year old Stock',
-            //   3:  'Three-year old Stock',
-            //   4:  'Oldest Stock'
-            // ]
+                // 'FMCG': [
+                //   0:  'FreshInventory',
+                //   1:  'PreviousInventory',
+                //   2:  'CloseToEXpireInventory'
+                // ],
+                // 'DURABLES': [
+                //   0:  'Latest Stock',
+                //   1:  'one-year old Stock',
+                //   2:  'Two-year old Stock',
+                //   3:  'Three-year old Stock',
+                //   4:  'Oldest Stock'
+                // ]
                 inventoryName: i,
                 inventoryValue: totalStock
             })
@@ -488,7 +487,7 @@ function prepareSKUTooltips(currentPeriodResult, perviousPeriodResult, SKUID){
     if(!perviousPeriodResult){
         var previousPeriodSKU = undefined;
     } else {
-        var previousPeriodSKU = utility.findSKU(perviousPeriodResult, SKUID);        
+        var previousPeriodSKU = utility.findSKU(perviousPeriodResult, SKUID);
     }
 
     if(!currentPeriodSKU){
@@ -509,10 +508,10 @@ function prepareSKUTooltips(currentPeriodResult, perviousPeriodResult, SKUID){
             u_ShelfSpace : 0,
             u_Perception : [0,0]
         };
-    } 
+    }
 
     //marke share
-    var marketShareChange = compare(currentPeriodSKU.u_ValueSegmentShare[consts.ConsumerSegmentsMax] 
+    var marketShareChange = compare(currentPeriodSKU.u_ValueSegmentShare[consts.ConsumerSegmentsMax]
         , previousPeriodSKU.u_ValueSegmentShare[consts.ConsumerSegmentsMax]);
     tooltips.push({
         name: 'Market Share(value %)',
@@ -696,17 +695,17 @@ function extractMarketEvolutionChartData(allResults, dataExtractor){
         result.periods.push(periodId);
         var segmentChartData = [];
         for(var j=0; j<segmentNum; j++){
-			// segmentNames: [
-			// 0 - 'priceSensitive',
-			// 1 - 'pretenders',
-			// 2 - 'moderate',
-			// 3 - 'goodLife',
-			// 4 - 'ultimate',
-			// 5 - 'pragmatic',
-			// 6 - 'allSegments'
-			// ],
+            // segmentNames: [
+            // 0 - 'priceSensitive',
+            // 1 - 'pretenders',
+            // 2 - 'moderate',
+            // 3 - 'goodLife',
+            // 4 - 'ultimate',
+            // 5 - 'pragmatic',
+            // 6 - 'allSegments'
+            // ],
             if(result.segmentNames.indexOf(j) === -1){
-                result.segmentNames.push(j);            
+                result.segmentNames.push(j);
             }
 
             segmentChartData.push(dataExtractor(market)[j]);

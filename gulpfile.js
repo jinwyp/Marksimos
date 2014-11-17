@@ -74,6 +74,7 @@ gulp.task('jscompress',function(){
 });
 
 
+
 // 监视scss文件的变化
 gulp.task('compass', function() {
     gulp.src(paths.sassSourceFiles)
@@ -144,7 +145,7 @@ gulp.task('mocha', function () {
 
 /********************  使用nodemon 自动重启服务器  ********************/
 
-gulp.task('nodemon', function () {
+gulp.task('nodemonludwik', function () {
     nodemon({
         script: 'app.js',
         env: { 'NODE_ENV': 'ludwik' }
@@ -179,7 +180,6 @@ gulp.task('nodemonsunyun', function () {
 /********************  Rerun the task when a file changes  ********************/
 
 gulp.task('watch', function() {
-//    gulp.watch(paths.javascript, ['jshint']);
     gulp.watch(paths.angularTemplates, ['templates']);
     gulp.watch(paths.sassSourceFiles, ['compass']);
     gulp.watch(paths.cssSourceFiles, ['minifycss']);
@@ -194,6 +194,13 @@ gulp.task('watch', function() {
 //    });
 });
 
+
+gulp.task('watchdev', function() {
+    gulp.watch(paths.angularTemplates, ['templates']);
+    gulp.watch(paths.sassSourceFiles, ['compass']);
+    gulp.watch(paths.cssSourceFiles, ['minifycss']);
+    gulp.watch(paths.javascript, ['jshint']);
+});
 
 
 
@@ -211,10 +218,10 @@ gulp.task('browser-sync', function() {
 
 /********************  默认任务 he default task (called when you run `gulp` from cli)  ********************/
 
-gulp.task('default', ['nodemon', 'watch']);
+gulp.task('default', ['nodemonludwik', 'watch']);
 
 //gulp.task('jin', ['mongo', 'browser-sync', 'nodemonjin', 'watch']);
-gulp.task('jin', [ 'compass', 'templates', 'nodemonjin', 'watch']);
-gulp.task('jingo', ['mongo', 'compass', 'templates', 'nodemonjin', 'watch']);
+gulp.task('jin', [ 'compass', 'templates', 'nodemonjin', 'watchdev']);
+gulp.task('jingo', ['compass', 'templates', 'nodemonjin', 'watch']);
 
-gulp.task('sunyun', ['nodemonsunyun', 'watch']);
+gulp.task('sunyun', ['nodemonsunyun','compass', 'watch']);

@@ -39,22 +39,22 @@
     function userSegmentFilter () {
         return function(input) {
             var names = {
-                '0': function() {
+                '1': function() {
                     return 'HomePageSegmentLabelPriceSensitive';
                 },
-                '1': function() {
+                '2': function() {
                     return 'HomePageSegmentLabelPretenders';
                 },
-                '2': function() {
+                '3': function() {
                     return 'HomePageSegmentLabelModerate';
                 },
-                '3': function() {
+                '4': function() {
                     return 'HomePageSegmentLabelGoodLife';
                 },
-                '4': function() {
+                '5': function() {
                     return 'HomePageSegmentLabelUltimate';
                 },
-                '5': function() {
+                '6': function() {
                     return 'HomePageSegmentLabelPragmatic';
                 }
             };

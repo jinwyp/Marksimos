@@ -15,7 +15,7 @@
 
 
     /********************  Create New Module For Controllers ********************/
-    angular.module('marksimoslogin', ['pascalprecht.translate', 'marksimos.model', 'marksimos.websitecomponent',  'marksimos.filter', 'marksimos.translation']);
+    angular.module('marksimoslogin', [ 'pascalprecht.translate', 'marksimos.model', 'marksimos.websitecomponent',  'marksimos.filter', 'marksimos.translation']);
 
 
 

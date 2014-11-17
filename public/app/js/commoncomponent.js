@@ -308,15 +308,15 @@
 
     angular.module('marksimos.commoncomponent').directive('textFormInput', function() {
         return {
-            scope: {
-                type        : '@',
-                name        : '@',
-                label       : '@',
-                labelclass  : '@',
-                inputclass  : '@',
-                inputgroupprefix  : '@',
-                placeholder : '@',
-                data        : '=',
+            scope : {
+                type             : '@',
+                name             : '@',
+                label            : '@',
+                labelclass       : '@',
+                inputclass       : '@',
+                inputgroupprefix : '@',
+                placeholder      : '@',
+                data             : '=',
 
                 required          : '=',
                 requirederrorinfo : '@',
@@ -330,6 +330,10 @@
                 min             : '@',
                 max             : '@',
 
+                pattern          : '@',
+                patternerrorinfo : '@',
+
+
                 othererrorinfo : '='
 
 
@@ -342,10 +346,11 @@
 
                 var type = tAttrs.type || 'text';
 
-                var required, requirederrorinfo, minlength, minlengtherrorinfo, maxlength, maxlengtherrorinfo, min, max, numbererrorinfo;
+                var required, requirederrorinfo, minlength, minlengtherrorinfo, maxlength, maxlengtherrorinfo, min, max, numbererrorinfo, pattern, patternerrorinfo;
 
                 required = tAttrs.hasOwnProperty('required') ? 'ng-required="' + tAttrs.required + '"' : "";
                 requirederrorinfo = tAttrs.hasOwnProperty('requirederrorinfo') ? tAttrs.requirederrorinfo  : "field is required";
+
 
                 if (type === 'checkbox'){
 
@@ -382,13 +387,16 @@
 
                     maxlength = tAttrs.hasOwnProperty('maxlength') ? 'ng-maxlength="' + tAttrs.maxlength + '"' : "";
                     maxlengtherrorinfo = tAttrs.hasOwnProperty('maxlengtherrorinfo') ? tAttrs.maxlengtherrorinfo  : 'field is a maximum of ' + tAttrs.maxlength + ' characters';
+
+                    pattern = tAttrs.hasOwnProperty('pattern') ? 'ng-pattern="' + tAttrs.pattern + '"' : "";
+                    patternerrorinfo = tAttrs.hasOwnProperty('patternerrorinfo') ? tAttrs.patternerrorinfo : 'wrong text format !';
                 }
 
                 var tpltext = '<div class="form-group has-feedback" ng-class="{ \'has-success\':form.$dirty && form.$valid , \'has-error\': form.$dirty && form.$invalid}">' +
                                 '<label class="' + labelclass + ' control-label" for="' + tAttrs.name + '" >' + tAttrs.label + '</label>' +
                                 '<div class=" ' + inputclass + '">'  +
                                     '<span class="form-input-prefix" ng-if="inputgroupprefix">{{inputgroupprefix}}</span>' +
-                                    '<input type="' + type + '" class="form-control" id="ID' + tAttrs.name +'" name="' + tAttrs.name +'" placeholder="{{placeholder}}" ng-model="data" ' + required + minlength + maxlength + min + max + '>' +
+                                    '<input type="' + type + '" class="form-control" id="ID' + tAttrs.name +'" name="' + tAttrs.name +'" placeholder="{{placeholder}}" ng-model="data" ' + required + minlength + maxlength + min + max + pattern + '>' +
                                     '<span ng-if="form.$dirty && form.$valid" class="glyphicon glyphicon-ok form-control-feedback"></span>' +
                                     '<span ng-if="form.$dirty && form.$invalid" class="glyphicon glyphicon-remove form-control-feedback"></span>' +
                                 '</div>' +
@@ -397,6 +405,7 @@
                                 '<label class="control-label" ng-if="form.$dirty && form.$error.maxlength" ><i class="fa fa-times-circle-o"></i>' + maxlengtherrorinfo + '</label>' +
                                 '<label class="control-label" ng-if="form.$dirty && form.$error.number" ><i class="fa fa-times-circle-o"></i>must be a number</label>' +
                                 '<label class="control-label" ng-if="form.$dirty && form.$error.min || form.$dirty && form.$error.max " ><i class="fa fa-times-circle-o"></i>' + numbererrorinfo + '</label>' +
+                                '<label class="control-label" ng-if="form.$dirty && form.$error.pattern" ><i class="fa fa-times-circle-o"></i>' + patternerrorinfo + '</label>' +
                                 '<label class="control-label" ng-if="form.$invalid" ><i class="fa fa-times-circle-o"></i>{{othererrorinfo}}</label>' +
 
                                 '</div>';
