@@ -140,8 +140,12 @@
 
             addStudentToSeminar : {
                 seminar_id : 0,
-                student_id : "",
                 company_id : 0,
+                email : ""
+            },
+            removedStudent : {
+                seminar_id : 0,
+                student_id : "",
                 email : ""
             },
 
@@ -495,7 +499,6 @@
         /********************  创建新的 Seminar  ********************/
         $scope.createNewSeminar = function(form){
             if(form.$valid){
-                console.log($scope.data.newSeminar);
                 $http.post('/marksimos/api/admin/seminar', $scope.data.newSeminar).success(function(data, status, headers, config){
 
                     $scope.getSeminarInit();
@@ -531,7 +534,28 @@
 
                     $scope.data.addStudentToSeminar.seminar_id = 0 ;
                     $scope.data.addStudentToSeminar.company_id = 0 ;
-                    $scope.data.addStudentToSeminar.student_id = 0 ;
+                    $scope.data.addStudentToSeminar.email = "" ;
+
+                }).error(function(data, status, headers, config){
+                    console.log(data);
+                    $notification.error('Save failed', data.message);
+                });
+            }
+        };
+        /********************  Remove Student To Seminar  ********************/
+        $scope.removeStudentToSeminar = function(seminarid, studentemail){
+
+            if(seminarid === "" || angular.isUndefined(studentemail) || studentemail === "" ){
+            }else{
+                $scope.data.removedStudent.email = studentemail;
+                $scope.data.removedStudent.seminar_id = seminarid;
+
+                $http.post('/marksimos/api/admin/remove_student_from_seminar', $scope.data.removedStudent).success(function(data, status, headers, config){
+                    $scope.getSeminarInit();
+                    $notification.success('Save success', 'Remove Student to Seminar success');
+
+                    $scope.data.removedStudent.seminar_id = 0 ;
+                    $scope.data.removedStudent.email = "" ;
 
                 }).error(function(data, status, headers, config){
                     console.log(data);

@@ -600,7 +600,8 @@
                                         <td>{{seminar.companyNum}} </td>
                                         <td>
                                             <p ng-repeat="company in seminar.companyMember">Company{{company.name}} :
-                                                <span ng-repeat="student in company.students">{{student}}, </span>
+                                                <br>
+                                                <span ng-repeat="student in company.students">{{student}} <a href="" ng-click="removeStudentToSeminar(seminar.seminarId, student)">remove</a>, </span>
                                             </p>
                                         </td>
                                         <td style="width:460px">
@@ -608,7 +609,7 @@
                                                 <div class="input-group-btn">
                                                     <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">{{seminar.currentCompanyName}} <span class="fa fa-caret-down"></span></button>
                                                     <ul class="dropdown-menu">
-                                                        <li ng-repeat="company in seminar.companies"><a href="" ng-click="chooseCompany(seminar, company)">{{company.companyName}}</a></li>
+                                                        <li ng-repeat="company in seminar.companies"><a href="" ng-click="chooseCompany(seminar, company)">Company {{company.companyName}}</a></li>
                                                     </ul>
                                                 </div><!-- /btn-group -->
                                                 <input type="email" class="form-control" placeholder="Student Email" ng-model="seminar.inputemail">
