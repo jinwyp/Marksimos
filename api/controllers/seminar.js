@@ -7,6 +7,7 @@ var consts = require('../consts.js');
 var config = require('../../common/config.js');
 var utility = require('../../common/utility.js');
 
+var colors = require('colors');
 
 exports.addSeminar = function(req, res, next){
     var checkRequiredFieldResult = checkRequiredField(req);
@@ -88,6 +89,7 @@ exports.addSeminar = function(req, res, next){
         if(!result){
             return res.send(500, {message: "save seminar to db failed."});
         }
+
         return res.send(result);
     })
     .fail(function(err){
@@ -98,7 +100,7 @@ exports.addSeminar = function(req, res, next){
         return res.send(500, {message: "add seminar failed."})
     })
     .done();
-}
+};
 
 
 
@@ -109,6 +111,7 @@ exports.addSeminar = function(req, res, next){
 exports.assignStudentToSeminar = function(req, res, next){
     var email = req.body.email;
     var seminarId = req.body.seminar_id;
+    var companyId = req.body.company_id;
 
     if(!email){
         return res.send(400, {message: "Invalid email."});
@@ -118,7 +121,7 @@ exports.assignStudentToSeminar = function(req, res, next){
         return res.send(400, {message: "Invalid seminar id."})
     }
 
-    var companyId = req.body.company_id;
+
     if(!companyId){
         return res.send(400, {message: "Invalid company_id."})
     }
@@ -138,7 +141,6 @@ exports.assignStudentToSeminar = function(req, res, next){
                 isStudentAssignedToSeminar = true;
             }
         }
-
         //if this student has not been added to this seminar, add it
         if(!isStudentAssignedToSeminar){
             companyAssignment[companyId-1].push(email);
@@ -162,25 +164,22 @@ exports.assignStudentToSeminar = function(req, res, next){
         return res.send(500, {message: "assign student to seminar failed."})
     })
     .done();
-}
+};
+
 
 exports.removeStudentFromSeminar = function(req, res, next){
     var email = req.body.email;
+    var seminarId = req.body.seminar_id;
 
     if(!email){
         return res.send(400, {message: "Invalid email."});
     }
 
-    var seminarId = sessionOperation.getSeminarId(req);
-
     if(!seminarId){
         return res.send(400, {message: "You don't choose a seminar."})
     }
 
-    var companyId = req.body.company_id;
-    if(!companyId){
-        return res.send(400, {message: "Invalid company_id."})
-    }
+
     
     seminarModel.findOne({seminarId: seminarId})
     .then(function(dbSeminar){
@@ -190,16 +189,19 @@ exports.removeStudentFromSeminar = function(req, res, next){
 
         var companyAssignment = dbSeminar.companyAssignment;
 
-        //if this student is in this company
-        if(companyAssignment[companyId-1].indexOf(email) > -1){
-            var companyMembers = [];
-            for(var i=0; i<companyAssignment[companyId-1].length; i++){
-                if(companyAssignment[companyId-1][i] !== email){
-                    companyMembers.push(email);
+
+        for(var i=0; i<companyAssignment.length; i++){
+            //if this student is in this company
+            if(companyAssignment[i].indexOf(email) > -1){
+
+                for(var j=0; j<companyAssignment[i].length; j++){
+                    if(companyAssignment[i][j] === email){
+                        companyAssignment[i].splice(j, 1);
+                    }
                 }
             }
-            companyAssignment[companyId-1] = companyMembers;
         }
+
 
         return seminarModel.update({seminarId: seminarId}, {
             companyAssignment: companyAssignment

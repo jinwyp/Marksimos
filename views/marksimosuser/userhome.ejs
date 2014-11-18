@@ -1924,8 +1924,8 @@
                                     </div>
                                 </div>
 
-                                <text-form-input type="text" name="brandName" label="{{'DecisionPageDecisionTabLabelBrandName' | translate}}" inputgroupclass="true" inputgroupprefix="{{data.currentCompanyNameCharacter}}"   data="data.newBrand.brand_name" required="true" minlength="1" maxlength="4" othererrorinfo="data.newBrand.othererrorinfo"></text-form-input>
-                                <text-form-input type="text" name="skuName" label="{{'DecisionPageDecisionTabLabelFirstSKUName' | translate}}"  data="data.newBrand.sku_name" required="true" minlength="1" maxlength="1"></text-form-input>
+                                <text-form-input type="text" name="brandName" label="{{'DecisionPageDecisionTabLabelBrandName' | translate}}" inputgroupclass="true" inputgroupprefix="{{data.currentCompanyNameCharacter}}"   data="data.newBrand.brand_name" required="true" minlength="1" maxlength="4" othererrorinfo="data.newBrand.othererrorinfo" pattern="/[a-zA-Z0-9]/" patternerrorinfo="only english characters or numbers"></text-form-input>
+                                <text-form-input type="text" name="skuName" label="{{'DecisionPageDecisionTabLabelFirstSKUName' | translate}}"  data="data.newBrand.sku_name" required="true" minlength="1" maxlength="1" pattern="/[a-zA-Z0-9]/" patternerrorinfo="only english characters or numbers"></text-form-input>
 
                                 <div class="form-group">
                                     <div class="col-sm-offset-4 col-sm-8">
@@ -1970,7 +1970,7 @@
                                             </div>
                                         </div>
 
-                                        <text-form-input type="text" name="skuName" label="{{'DecisionPageDecisionTabLabelSKUName' | translate}}"  data="data.newSku.sku_name" required="true" minlength="1" maxlength="1" othererrorinfo="data.newSku.othererrorinfo" pattern="/[a-zA-Z0-9]/" patternerrorinfo="only english characters or numbers "></text-form-input>
+                                        <text-form-input type="text" name="skuName" label="{{'DecisionPageDecisionTabLabelSKUName' | translate}}"  data="data.newSku.sku_name" required="true" minlength="1" maxlength="1" othererrorinfo="data.newSku.othererrorinfo" pattern="/[a-zA-Z0-9]/" patternerrorinfo="only english characters or numbers"></text-form-input>
 
                                         <div class="form-group">
                                             <div class="col-sm-offset-4 col-sm-8">
