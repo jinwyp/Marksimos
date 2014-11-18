@@ -29,7 +29,12 @@
     angular.module('marksimos.model').factory('Help', ['$http', helpModel]);
 
 
+    angular.module('marksimos.model').factory('Admin', ['$http', adminModel]);
+
+
+
     var apiPath = '/marksimos/api/';
+    var apiAdminPath = '/marksimos/api/admin/';
 
     var errorHandler = function(err){
         console.log("Error 404 , Type : API ", err );
@@ -1094,6 +1099,35 @@
                 return $http.get('/marksimos/manual/en_US').then(function(result){
                     return result.data;
                 })["catch"](errorHandler);
+            }
+
+        };
+        return factory;
+    }
+
+
+
+    function adminModel($http){
+
+        var factory = {
+
+            login : function(user){
+                return $http.post(apiAdminPath + 'login', user);
+            },
+            userInfo : function(){
+                return $http.get(apiAdminPath + '/user');
+            },
+            getDistributors : function(){
+                return $http.get(apiAdminPath + '/distributors');
+            },
+            getFacilitators : function(){
+                return $http.get(apiAdminPath + '/facilitators');
+            },
+            getStudents : function(){
+                return $http.get(apiAdminPath + '/students');
+            },
+            getSeminars : function(){
+                return $http.get(apiAdminPath + '/facilitator/seminar');
             }
 
         };
