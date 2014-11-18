@@ -22,6 +22,8 @@
 
     angular.module('marksimos.model').factory('Student', ['$http', studentModel]);
     angular.module('marksimos.model').factory('Company', ['$http', companyModel]);
+    //管理员
+    angular.module('marksimos.model').factory('AdminCompany', ['$http', adminCompanyModel]);
 
     angular.module('marksimos.model').factory('chartReport', ['$http', '$rootScope', '$translate', chartReportModel]);
     angular.module('marksimos.model').factory('tableReport', ['$http', tableReportModel]);
@@ -168,7 +170,15 @@
         return factory;
     }
 
-
+    function adminCompanyModel($http) {
+        return {
+            getCompany: function () {
+                return $http.get(apiPath + 'admin/report/company_status').then(function (result) {
+                    return result.data;
+                })["catch"](errorHandler);
+            }
+        };
+    }
 
 
 
