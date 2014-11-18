@@ -74,5 +74,7 @@ unit.xml
 # mongo
 *mongodbdata
 
-# axure
-Archive.zip
+# visual studio
+marksimos.sln
+marksimos.v12.suo
+Scripts/*
