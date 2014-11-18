@@ -7,7 +7,7 @@
     'use strict';
 
     /********************  Create New Module For Controllers ********************/
-    angular.module('marksimosadmin', [ 'pascalprecht.translate', 'notifications', 'marksimos.websitecomponent', 'marksimos.commoncomponent']);
+   angular.module('marksimosadmin', ['pascalprecht.translate', 'notifications', 'marksimos.websitecomponent', 'marksimos.commoncomponent', 'marksimos.filter']);
 
 
 
@@ -602,18 +602,61 @@
 
 
 
-    angular.module('marksimosadmin').controller('adminMarksimosReportController', ['$scope', '$http', '$notification', function($scope, $http, $notification) {
-        $scope.css = {
-            currentReportMenu : 'A1'
+      angular.module('marksimosadmin').controller('adminMarksimosReportController', ['$scope', '$http', '$notification', 'AdminCompany', function ($scope, $http, $notification, AdminCompany) {
+      $scope.css = {
+            currentReportMenu: 'A1'
 
         };
 
-
-
-        $scope.clickChartMenu = function(report){
-            $scope.css.currentReportMenu = report;
-
+        $scope.data = {          
+            tableA1CompanyStatus: {
+                allCompanyData: [],
+                currentCompany: {
+                    companyName: 'Company List'
+                },
+                currentSKU: {},
+                currentBrand: {},
+                currentGlobal: {}
+            },
         };
+
+        $scope.clickChartMenu = function (report) {
+            $scope.css.currentReportMenu = report;          
+           
+        };
+
+        $scope.switchTableReportA1Company = function (company) {
+            $scope.data.tableA1CompanyStatus.currentCompany = company;
+            $scope.data.tableA1CompanyStatus.currentSKU = $scope.data.tableA1CompanyStatus.currentCompany.SKU[0];
+            $scope.data.tableA1CompanyStatus.currentBrand = $scope.data.tableA1CompanyStatus.currentCompany.brand[0];
+            $scope.data.tableA1CompanyStatus.currentGlobal = $scope.data.tableA1CompanyStatus.currentCompany.global;
+        };
+        $scope.switchTableReportA1SKU = function (SKU) {
+            $scope.data.tableA1CompanyStatus.currentSKU = SKU;
+        };
+        $scope.switchTableReportA1Brand = function (brand) {
+            $scope.data.tableA1CompanyStatus.currentBrand = brand;
+        };
+
+        var app = {
+            initOnce: function () {
+                this.loadingCompanyData();
+            },
+            reRun: function () { },
+            loadingCompanyData: function () {
+                AdminCompany.getCompany().then(function (data, status, headers, config) {                    
+                    $scope.data.tableA1CompanyStatus.allCompanyData = data;
+                    $scope.data.tableA1CompanyStatus.currentCompany = data[0];
+                    $scope.data.tableA1CompanyStatus.currentSKU = $scope.data.tableA1CompanyStatus.currentCompany.SKU[0];
+                    $scope.data.tableA1CompanyStatus.currentBrand = $scope.data.tableA1CompanyStatus.currentCompany.brand[0];
+                    $scope.data.tableA1CompanyStatus.currentGlobal = $scope.data.tableA1CompanyStatus.currentCompany.global;
+
+                    $scope.css.tableReportTab = 'SKU';
+                });
+            }
+        };
+        //初始化程序
+        app.initOnce();
 
     }]);
 
