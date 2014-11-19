@@ -609,52 +609,119 @@
 
         };
 
-        $scope.data = {          
-            tableA1CompanyStatus: {
-                allCompanyData: [],
-                currentCompany: {
-                    companyName: 'Company List'
-                },
-                currentSKU: {},
-                currentBrand: {},
-                currentGlobal: {}
-            },
-        };
+      $scope.data = {
+          //A1
+          tableA1CompanyStatus: {
+              allCompanyData: [],
+              currentCompany: {
+                  companyName: 'Company List'
+              },
+              currentSKU: {},
+              currentBrand: {},
+              currentGlobal: {}
+          },
+          //A2
+          tableA2FinancialData: {
+              allData: [],
+              currentCompany: {},
+              currentPeriod: {
+                  period: 'Select Period'
+              },
+              currentBrand: {}
+          },
+          //A4
+          tableA4ProfitabilityEvolution: {
+              allData: [],
+              currentSKU: {},
+              currentBrand: {},
+              currentGlobal: {}
+          }
+      };
 
         $scope.clickChartMenu = function (report) {
-            $scope.css.currentReportMenu = report;          
-           
+            $scope.css.currentReportMenu = report;  
         };
+      
 
-        $scope.switchTableReportA1Company = function (company) {
-            $scope.data.tableA1CompanyStatus.currentCompany = company;
-            $scope.data.tableA1CompanyStatus.currentSKU = $scope.data.tableA1CompanyStatus.currentCompany.SKU[0];
-            $scope.data.tableA1CompanyStatus.currentBrand = $scope.data.tableA1CompanyStatus.currentCompany.brand[0];
-            $scope.data.tableA1CompanyStatus.currentGlobal = $scope.data.tableA1CompanyStatus.currentCompany.global;
-        };
-        $scope.switchTableReportA1SKU = function (SKU) {
-            $scope.data.tableA1CompanyStatus.currentSKU = SKU;
-        };
-        $scope.switchTableReportA1Brand = function (brand) {
-            $scope.data.tableA1CompanyStatus.currentBrand = brand;
-        };
 
+      
         var app = {
             initOnce: function () {
                 this.loadingCompanyData();
+                this.loadingFinancialData();
+                this.loadingProfitabilityData();
             },
             reRun: function () { },
             loadingCompanyData: function () {
+                /********************  Table A1  *******************/
+                $scope.switchTableReportA1Company = function (company) {
+                    var table = $scope.data.tableA1CompanyStatus;
+                    table.currentCompany = company;
+                    table.currentSKU = table.currentCompany.SKU[0];
+                    table.currentBrand = table.currentCompany.brand[0];
+                    table.currentGlobal = table.currentCompany.global;
+                };
+                $scope.switchTableReportA1SKU = function (SKU) {
+                    $scope.data.tableA1CompanyStatus.currentSKU = SKU;
+                };
+                $scope.switchTableReportA1Brand = function (brand) {
+                    $scope.data.tableA1CompanyStatus.currentBrand = brand;
+                };
+
                 AdminTable.getCompany().then(function (data, status, headers, config) {
+                    console.log(data);
                     $scope.data.tableA1CompanyStatus.allCompanyData = data;
-
-                    $scope.switchTableReportA1Company(data[0]);
-                    //$scope.data.tableA1CompanyStatus.currentCompany = data[0];
-                    //$scope.data.tableA1CompanyStatus.currentSKU = $scope.data.tableA1CompanyStatus.currentCompany.SKU[0];
-                    //$scope.data.tableA1CompanyStatus.currentBrand = $scope.data.tableA1CompanyStatus.currentCompany.brand[0];
-                    //$scope.data.tableA1CompanyStatus.currentGlobal = $scope.data.tableA1CompanyStatus.currentCompany.global;
-
+                    $scope.switchTableReportA1Company(data[0]); 
                     $scope.css.tableReportTab = 'SKU';
+                });
+            },
+            loadingFinancialData: function () {
+                /********************  Table A2  *******************/
+                $scope.switchTableReportPeriod = function (period) {
+                    var table = $scope.data.tableA2FinancialData;
+                    table.currentPeriod = period;
+                    table.currentBrand = table.currentPeriod.brands[0];
+                };
+                $scope.switchTableReportA2Brand = function (brand) {
+                    $scope.data.tableA2FinancialData.currentBrand = brand;
+                };
+                $scope.switchTableReportA2Company = function (index) {
+                    var data = $scope.data.tableA2FinancialData.allData;
+                    var table = $scope.data.tableA2FinancialData;
+                    table.currentCompany = data[index];
+                    table.currentPeriod = table.currentCompany.periods[table.currentCompany.periods.length - 1];
+                    table.currentBrand = table.currentPeriod.brands[0];
+                };
+                //获取数据
+                AdminTable.getFinancial().then(function (data, status, headers, config) {
+                    $scope.data.tableA2FinancialData.allData = data;
+                    //设置默认的公司
+                    $scope.switchTableReportA2Company(0);                   
+                });
+            },
+            loadingProfitabilityData: function () {
+                /********************  Table A4  *******************/
+               
+                $scope.switchTableReportA4SKU = function (SKU) {
+                    $scope.data.tableA4ProfitabilityEvolution.currentSKU = SKU;
+                };
+                $scope.switchTableReportA4Brand = function (brand) {
+                    $scope.data.tableA4ProfitabilityEvolution.currentBrand = brand;
+                };
+                $scope.switchTableReportA4Company = function (index) {
+                    var data = $scope.data.tableA4ProfitabilityEvolution.allData;
+                    var table = $scope.data.tableA4ProfitabilityEvolution;
+                    table.currentData = data[index];
+                    table.currentSKU = data[index].SKU[0];
+                    table.currentBrand = data[index].brand[0];
+                    table.currentGlobal = data[index].global;
+                };
+                //获取数据
+                AdminTable.getProfitability().then(function (data, status, headers, config) {
+                    $scope.data.tableA4ProfitabilityEvolution.allData = data;
+                    console.log(data);
+                    //设置默认的公司
+                    $scope.switchTableReportA4Company(0);
                 });
             }
         };

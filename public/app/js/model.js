@@ -1135,8 +1135,21 @@
 
     function adminTableModel($http) {
         return {
+            //Table A1
             getCompany: function () {
                 return $http.get(apiPath + 'admin/report/company_status').then(function (result) {
+                    return result.data;
+                })["catch"](errorHandler);
+            },
+            //Table A2
+            getFinancial: function () {
+                return $http.get(apiPath + 'admin/report/financial_report').then(function (result) {
+                    return result.data;
+                })["catch"](errorHandler);
+            },
+            //Table A4
+            getProfitability: function () {
+                return $http.get(apiPath + 'admin/report/profitability_evolution').then(function (result) {
                     return result.data;
                 })["catch"](errorHandler);
             }

@@ -1,5 +1,3 @@
-
-
 <% include ./include/headcssadmin.html %>
 
 
@@ -11,40 +9,41 @@
     <div class="wrapper row-offcanvas row-offcanvas-left">
 
 
-            <section class="content" >
-                <h2 class="page-header">MarkSimos Seminar <%= seminarId %> Report</h2>
-                {{'ReportYourCompany' | translate}} :
-                <div class="btn-group">
-                    <button type="button" class="btn btn-default" ng-class="{'active': css.currentReportMenu=='A1'}" ng-click="clickChartMenu('A1')">{{'ReportMenuCompanyStatus' | translate}}</button>
-                    <button type="button" class="btn btn-default" ng-class="{'active': css.currentReportMenu=='A2'}" ng-click="clickChartMenu('A2')">{{'ReportMenuFinancialReport' | translate}}</button>
-                    <button type="button" class="btn btn-default" ng-class="{'active': css.currentReportMenu=='A3'}" ng-click="clickChartMenu('A3')">{{'ReportMenuInventoryReport' | translate}}</button>
-                    <button type="button" class="btn btn-default" ng-class="{'active': css.currentReportMenu=='A4'}" ng-click="clickChartMenu('A4')">{{'ReportMenuProfitabilityEvolution' | translate}}</button>
-                </div>
-                <br/>
+        <section class="content">
+            <h2 class="page-header">MarkSimos Seminar <%= seminarId %> Report</h2>
+            {{'ReportYourCompany' | translate}} :
+            <div class="btn-group">
+                <button type="button" class="btn btn-default" ng-class="{'active': css.currentReportMenu=='A1'}" ng-click="clickChartMenu('A1')">{{'ReportMenuCompanyStatus' | translate}}</button>
+                <button type="button" class="btn btn-default" ng-class="{'active': css.currentReportMenu=='A2'}" ng-click="clickChartMenu('A2')">{{'ReportMenuFinancialReport' | translate}}</button>
+                <button type="button" class="btn btn-default" ng-class="{'active': css.currentReportMenu=='A3'}" ng-click="clickChartMenu('A3')">{{'ReportMenuInventoryReport' | translate}}</button>
+                <button type="button" class="btn btn-default" ng-class="{'active': css.currentReportMenu=='A4'}" ng-click="clickChartMenu('A4')">{{'ReportMenuProfitabilityEvolution' | translate}}</button>
+            </div>
+            <br />
 
-                {{'ReportYourCompetitors' | translate}} :
-                <div class="btn-group">
-                    <button type="button" class="btn btn-default" ng-class="{'active': css.currentReportMenu=='B1'}" ng-click="clickChartMenu('B1')">{{'ReportMenuMarketShare' | translate}}</button>
-                    <button type="button" class="btn btn-default" ng-class="{'active': css.currentReportMenu=='B2'}" ng-click="clickChartMenu('B2')">{{'ReportMenuCompetitorIntelligence' | translate}}</button>
-                    <button type="button" class="btn btn-default" ng-class="{'active': css.currentReportMenu=='B3'}" ng-click="clickChartMenu('B3')">{{'ReportMenuInvestmentProfits' | translate}}</button>
-                    <button type="button" class="btn btn-default" ng-class="{'active': css.currentReportMenu=='B4'}" ng-click="clickChartMenu('B4')">{{'ReportMenuMarketSalesInventory' | translate}}</button>
-                </div>
-                <br/>
+            {{'ReportYourCompetitors' | translate}} :
+            <div class="btn-group">
+                <button type="button" class="btn btn-default" ng-class="{'active': css.currentReportMenu=='B1'}" ng-click="clickChartMenu('B1')">{{'ReportMenuMarketShare' | translate}}</button>
+                <button type="button" class="btn btn-default" ng-class="{'active': css.currentReportMenu=='B2'}" ng-click="clickChartMenu('B2')">{{'ReportMenuCompetitorIntelligence' | translate}}</button>
+                <button type="button" class="btn btn-default" ng-class="{'active': css.currentReportMenu=='B3'}" ng-click="clickChartMenu('B3')">{{'ReportMenuInvestmentProfits' | translate}}</button>
+                <button type="button" class="btn btn-default" ng-class="{'active': css.currentReportMenu=='B4'}" ng-click="clickChartMenu('B4')">{{'ReportMenuMarketSalesInventory' | translate}}</button>
+            </div>
+            <br />
 
-                {{'ReportMarketLandscape' | translate}} :
-                <div class="btn-group">
-                    <button type="button" class="btn btn-default" ng-class="{'active': css.currentReportMenu=='C1'}" ng-click="clickChartMenu('C1')">{{'ReportMenuSegmentLeaderTop5' | translate}}</button>
-                    <button type="button" class="btn btn-default" ng-class="{'active': css.currentReportMenu=='C2'}" ng-click="clickChartMenu('C2')">{{'ReportMenuPerceptionMap' | translate}}</button>
-                    <button type="button" class="btn btn-default" ng-class="{'active': css.currentReportMenu=='C3'}" ng-click="clickChartMenu('C3')">{{'ReportMenuSegmentDistributions' | translate}}</button>
-                    <button type="button" class="btn btn-default" ng-class="{'active': css.currentReportMenu=='C4'}" ng-click="clickChartMenu('C4')">{{'ReportMenuMarketEvolution' | translate}}</button>
-                    <button type="button" class="btn btn-default" ng-class="{'active': css.currentReportMenu=='C5'}" ng-click="clickChartMenu('C5')">{{'ReportMenuMarketTrends' | translate}}</button>
-                    <button type="button" class="btn btn-default" ng-class="{'active': css.currentReportMenu=='C6'}" ng-click="clickChartMenu('C6')">{{'ReportMenuMarketIndicator' | translate}}</button>
-                </div>
+            {{'ReportMarketLandscape' | translate}} :
+            <div class="btn-group">
+                <button type="button" class="btn btn-default" ng-class="{'active': css.currentReportMenu=='C1'}" ng-click="clickChartMenu('C1')">{{'ReportMenuSegmentLeaderTop5' | translate}}</button>
+                <button type="button" class="btn btn-default" ng-class="{'active': css.currentReportMenu=='C2'}" ng-click="clickChartMenu('C2')">{{'ReportMenuPerceptionMap' | translate}}</button>
+                <button type="button" class="btn btn-default" ng-class="{'active': css.currentReportMenu=='C3'}" ng-click="clickChartMenu('C3')">{{'ReportMenuSegmentDistributions' | translate}}</button>
+                <button type="button" class="btn btn-default" ng-class="{'active': css.currentReportMenu=='C4'}" ng-click="clickChartMenu('C4')">{{'ReportMenuMarketEvolution' | translate}}</button>
+                <button type="button" class="btn btn-default" ng-class="{'active': css.currentReportMenu=='C5'}" ng-click="clickChartMenu('C5')">{{'ReportMenuMarketTrends' | translate}}</button>
+                <button type="button" class="btn btn-default" ng-class="{'active': css.currentReportMenu=='C6'}" ng-click="clickChartMenu('C6')">{{'ReportMenuMarketIndicator' | translate}}</button>
+            </div>
 
-            </section>
+        </section>
 
+        <!-- Table A1 -->
         <section class="content" ng-if="css.currentReportMenu=='A1'">
-            <div class="row">             
+            <div class="row">
                 <div class="col-md-12 user_table_single">
                     <h5>
                         {{'ReportMenuCompanyStatus' | translate}}
@@ -86,7 +85,50 @@
                 </div>
             </div>
         </section>
+
+        <!-- Table A2 -->
         <section class="content" ng-if="css.currentReportMenu=='A2'">
+            <div class="row">
+                <div class="col-md-12 user_table_single">
+                    <h5>
+                        {{'ReportMenuFinancialReport' | translate}}
+                        <div class="pull-right">                     
+                            <div class="btn-group">
+                                <button type="button" class="btn btn-default btn-sm dropdown-toggle" data-toggle="dropdown">
+                                    {{'HomePageSecondMenuBarLabelsCompany' | translate}} {{data.tableA2FinancialData.currentCompany.companyName}} <span class="caret"></span>
+                                </button>
+                                <ul class="dropdown-menu" role="menu">
+                                    <li ng-repeat="data in data.tableA2FinancialData.allData"><a href="" ng-click="switchTableReportA2Company($index)">{{'HomePageSecondMenuBarLabelsCompany' | translate}} {{data.companyName}}</a></li>
+                                </ul>
+
+                                <button type="button" class="btn btn-default btn-sm dropdown-toggle" data-toggle="dropdown">
+                                    {{'HomePageSecondMenuBarCurrentPeriod' | translate}} {{data.tableA2FinancialData.currentPeriod.period}} <span class="caret"></span>
+                                </button>                              
+                                <ul class="dropdown-menu" role="menu">
+                                    <li ng-repeat="period in data.tableA2FinancialData.currentCompany.periods"><a href="" ng-click="switchTableReportPeriod(period)">{{'HomePageSecondMenuBarLabelsCompany' | translate}} {{period.period}}</a></li>
+                                </ul>
+                            </div>
+                        </div>
+                    </h5>
+
+                    <div class="table_report">
+
+                        <ul class="nav nav-pills">
+                            <li ng-class="{'active': data.tableA2FinancialData.currentBrand.brandId==brand.brandId}" ng-repeat="brand in data.tableA2FinancialData.currentPeriod.brands"><a href="" ng-click="switchTableReportA2Brand(brand)">{{brand.brandName}}</a></li>
+                            <li ng-class="{'active': data.tableA2FinancialData.currentBrand=='allbrand'}"><a href="" ng-click="switchTableReportA2Brand('allbrand')">{{data.tableA2FinancialData.currentPeriod.allBrands.brandName}}</a></li>
+                        </ul>
+
+                        <div class="divider_horizontal"></div>
+                        <div table-report-financial-report-brand data="data.tableA2FinancialData.currentBrand.data" ng-if="data.tableA2FinancialData.currentBrand!=='allbrand'"></div>
+                        <div table-report-financial-report-all-brand data="data.tableA2FinancialData.currentPeriod.allBrands.data" ng-if="data.tableA2FinancialData.currentBrand=='allbrand'"></div>
+
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Table A3 -->
+        <section class="content" ng-if="css.currentReportMenu=='A3'">
 
             <div class="row">
                 <div class="col-md-12">
@@ -154,9 +196,57 @@
             </div>
         </section>
 
+        <!-- Table A4 -->
+        <section class="content" ng-if="css.currentReportMenu=='A4'">
+            <div class="row">
+                <div class="col-md-12 user_table_single">
+                    <h5>
+                        {{'ReportMenuProfitabilityEvolution' | translate}}
+                        <div class="pull-right">
+                            <div class="btn-group btn-group-sm">
+                                <button type="button" class="btn btn-default btn-sm dropdown-toggle" data-toggle="dropdown">
+                                    {{'HomePageSecondMenuBarLabelsCompany' | translate}} {{data.tableA4ProfitabilityEvolution.currentData.companyName}} <span class="caret"></span>
+                                </button>
+                                <ul class="dropdown-menu" role="menu">
+                                    <li ng-repeat="data in data.tableA4ProfitabilityEvolution.allData"><a href="" ng-click="switchTableReportA4Company($index)">{{'HomePageSecondMenuBarLabelsCompany' | translate}} {{data.companyName}}</a></li>
+                                </ul>
+                                <button type="button" class="btn btn-default" ng-class="{'active': css.tableReportTab=='SKU'}" ng-click="css.tableReportTab='SKU' ">{{'ReportTabLabelSKU' | translate}}</button>
+                                <button type="button" class="btn btn-default" ng-class="{'active': css.tableReportTab=='Brand'}" ng-click="css.tableReportTab='Brand' ">{{'ReportTabLabelBrand' | translate}}</button>
+                                <button type="button" class="btn btn-default" ng-class="{'active': css.tableReportTab=='Global'}" ng-click="css.tableReportTab='Global' ">{{'ReportTabLabelGlobal' | translate}}</button>
+                            </div>
+                        </div>
+                    </h5>
 
+                    <div class="table_report" ng-if="css.tableReportTab=='SKU'">
 
+                        <ul class="nav nav-pills">
+                            <li ng-class="{'active': data.tableA4ProfitabilityEvolution.currentSKU.SKUID==sku.SKUID}" ng-repeat="sku in data.tableA4ProfitabilityEvolution.allData.SKU"><a href="" ng-click="switchTableReportA4SKU(sku)">{{sku.SKUName}} {{sku.PackSize | skupacksize | translate}}</a></li>
+                        </ul>
 
+                        <div class="divider_horizontal"></div>
+                        <div table-report-profitability-evolution-sku data="data.tableA4ProfitabilityEvolution.currentSKU.data"></div>
+
+                    </div>
+
+                    <div class="table_report" ng-if="css.tableReportTab=='Brand'">
+
+                        <ul class="nav nav-pills">
+                            <li ng-class="{'active': data.tableA4ProfitabilityEvolution.currentBrand.brandId==brand.brandId}" ng-repeat="brand in data.tableA4ProfitabilityEvolution.allData.brand"><a href="" ng-click="switchTableReportA4Brand(brand)">{{brand.brandName}}</a></li>
+                        </ul>
+
+                        <div class="divider_horizontal"></div>
+                        <div table-report-profitability-evolution-brand data="data.tableA4ProfitabilityEvolution.currentBrand.data"></div>
+
+                    </div>
+
+                    <div class="table_report" ng-if="css.tableReportTab=='Global'">
+                        <div table-report-profitability-evolution-global data="data.tableA4ProfitabilityEvolution.currentGlobal"></div>
+                    </div>
+
+                </div>
+
+            </div>
+        </section>
 </div>
 
 
@@ -171,4 +261,4 @@
 
 
 
-<% include ./include/footerscriptadminhome.html %>
+    <% include ./include/footerscriptadminhome.html %>
