@@ -1135,27 +1135,32 @@
 
     function adminTableModel($http) {
         return {
-            //Table A1
+            //Table A1 Company Status
             getCompany: function () {
                 return $http.get(apiPath + 'admin/report/company_status').then(function (result) {
                     return result.data;
                 })["catch"](errorHandler);
             },
-            //Table A2
+            //Table A2 Financial Data
             getFinancial: function () {
                 return $http.get(apiPath + 'admin/report/financial_report').then(function (result) {
                     return result.data;
                 })["catch"](errorHandler);
             },
-            //Table A4
+            //Table A4 Profitability Evolution
             getProfitability: function () {
                 return $http.get(apiPath + 'admin/report/profitability_evolution').then(function (result) {
                     return result.data;
                 })["catch"](errorHandler);
             },
-            //Table C6
+            //Table C6 Market Indicators
             getMarketIndicators: function () {
                 return $http.get(apiPath + 'admin/report/market_indicators').then(function (result) {
+                    return result.data;
+                })["catch"](errorHandler);
+            },
+            getCompetitorIntelligence: function () {
+                return $http.get(apiPath + 'admin/report/competitor_intelligence').then(function (result) {
                     return result.data;
                 })["catch"](errorHandler);
             }
