@@ -1155,6 +1155,12 @@
                 return $http.get(apiAdminPath + 'report/profitability_evolution').then(function (result) {
                     return result.data;
                 })["catch"](errorHandler);
+            },
+            //Table C6
+            getMarketIndicators: function () {
+                return $http.get(apiPath + 'admin/report/market_indicators').then(function (result) {
+                    return result.data;
+                })["catch"](errorHandler);
             }
         };
     }
