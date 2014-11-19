@@ -7,14 +7,14 @@
     'use strict';
 
     /********************  Create New Module For Controllers ********************/
-    angular.module('marksimosadmin', [ 'pascalprecht.translate', 'notifications', 'marksimos.websitecomponent', 'marksimos.commoncomponent']);
+   angular.module('marksimosadmin', ['pascalprecht.translate', 'notifications', 'marksimos.websitecomponent', 'marksimos.commoncomponent', 'marksimos.filter']);
 
 
 
 
 
     /********************  Use This Module To Set New Controllers  ********************/
-    angular.module('marksimosadmin').controller('adminLoginController', ['$scope', '$timeout', '$http', '$window', function($scope, $timeout, $http, $window) {
+    angular.module('marksimosadmin').controller('adminLoginController', ['$scope', '$timeout', '$http', '$window', 'Admin', function($scope, $timeout, $http, $window, Admin) {
 
         $scope.data = {
             admin : {
@@ -25,9 +25,10 @@
 
         $scope.login = function(form){
             if(form.$valid){
-                $http.post('/marksimos/api/admin/login', $scope.data.admin).success(function(data, status, headers, config){
 
-                    $window.location.href = "/marksimos/adminhome" ;
+                Admin.login($scope.data.admin).success(function(data, status, headers, config){
+
+                    $window.location.href = "/marksimos/adminhome";
 
                 }).error(function(data, status, headers, config){
                     if(status == 400){
@@ -47,7 +48,7 @@
 
 
 
-    angular.module('marksimosadmin').controller('adminHomeController', ['$scope', '$http', '$notification', function($scope, $http, $notification) {
+    angular.module('marksimosadmin').controller('adminHomeController', ['$scope', '$http', '$notification', 'Admin', function($scope, $http, $notification, Admin) {
 
         $scope.css = {
             leftmenu : 11,
@@ -140,8 +141,12 @@
 
             addStudentToSeminar : {
                 seminar_id : 0,
-                student_id : "",
                 company_id : 0,
+                email : ""
+            },
+            removedStudent : {
+                seminar_id : 0,
+                student_id : "",
                 email : ""
             },
 
@@ -268,59 +273,8 @@
         $scope.data.newStudent.country = $scope.data.country[20].name;
         $scope.data.newSeminar.country = $scope.data.country[20].name;
 
-        /********************  获取信息  ********************/
+        /********************  初始化获取信息  ********************/
 
-        $scope.adminInit = function(){
-
-            $http.get('/marksimos/api/admin/user').success(function(data, status, headers, config){
-                $scope.data.currentUser = data;
-
-                if($scope.data.currentUser.role === 1){
-                    $scope.getDistributorsInit();
-                    $scope.getFacilitatorsInit();
-                    $scope.getStudentsInit();
-                    $scope.css.menuTabShow = [false, true, true, true, true, true, true];
-
-                }else if($scope.data.currentUser.role === 2){
-                    $scope.getFacilitatorsInit();
-                    $scope.css.menuTabShow = [false, true, false, true, false, false, false];
-
-                }else if($scope.data.currentUser.role === 3){
-                    $scope.getStudentsInit();
-                    $scope.getSeminarInit();
-                    $scope.css.menuTabShow = [false, true, false, false ,true, true, false];
-                }
-
-            }).error(function(data, status, headers, config) {
-                console.log(data);
-            });
-
-        };
-
-        $scope.getDistributorsInit = function(){
-            $http.get('/marksimos/api/admin/distributors').success(function(data, status, headers, config){
-                $scope.data.distributors = data;
-
-            }).error(function(data, status, headers, config) {
-                console.log(data);
-            });
-        };
-
-        $scope.getFacilitatorsInit = function() {
-            $http.get('/marksimos/api/admin/facilitators').success(function (data, status, headers, config) {
-                $scope.data.facilitators = data;
-            }).error(function (data, status, headers, config) {
-                console.log(data);
-            });
-        };
-
-        $scope.getStudentsInit = function() {
-            $http.get('/marksimos/api/admin/students').success(function (data, status, headers, config) {
-                $scope.data.students = data;
-            }).error(function (data, status, headers, config) {
-                console.log(data);
-            });
-        };
 
         function showCompanyName(fieldname) {
             var names = {
@@ -350,27 +304,85 @@
             return names[fieldname]();
         }
 
-        $scope.getSeminarInit = function() {
-            $http.get('/marksimos/api/admin/facilitator/seminar').success(function (data, status, headers, config) {
-                angular.forEach(data, function(seminar){
-                    seminar.companyMember = [];
-                    angular.forEach(seminar.companyAssignment, function(company, key){
-                        seminar.companyMember.push({
-                            name : showCompanyName(key),
-                            students : company
+
+        var app = {
+            initOnce: function () {
+                var self = this;
+                Admin.userInfo().success(function(data, status, headers, config){
+                    $scope.data.currentUser = data;
+
+                    if($scope.data.currentUser.role === 1){
+                        self.getDistributorsInit();
+                        self.getFacilitatorsInit();
+                        self.getStudentsInit();
+                        $scope.css.menuTabShow = [false, true, true, true, true, true, true];
+
+                    }else if($scope.data.currentUser.role === 2){
+                        self.getFacilitatorsInit();
+                        $scope.css.menuTabShow = [false, true, false, true, false, false, false];
+
+                    }else if($scope.data.currentUser.role === 3){
+                        self.getStudentsInit();
+                        self.getSeminarInit();
+                        $scope.css.menuTabShow = [false, true, false, false ,true, true, false];
+                    }
+
+                }).error(function(data, status, headers, config) {
+                    console.log(data);
+                });
+            },
+
+            reRun : function(){
+
+            },
+
+
+            getDistributorsInit : function(){
+                Admin.getDistributors().success(function(data, status, headers, config){
+                    $scope.data.distributors = data;
+
+                }).error(function(data, status, headers, config) {
+                    console.log(data);
+                });
+            },
+
+            getFacilitatorsInit : function() {
+                Admin.getFacilitators().success(function (data, status, headers, config) {
+                    $scope.data.facilitators = data;
+                }).error(function (data, status, headers, config) {
+                    console.log(data);
+                });
+            },
+
+            getStudentsInit : function() {
+                Admin.getStudents().success(function (data, status, headers, config) {
+                    $scope.data.students = data;
+                }).error(function (data, status, headers, config) {
+                    console.log(data);
+                });
+            },
+
+            getSeminarInit : function() {
+                Admin.getSeminars().success(function (data, status, headers, config) {
+                    angular.forEach(data, function(seminar){
+                        seminar.companyMember = [];
+                        angular.forEach(seminar.companyAssignment, function(company, key){
+                            seminar.companyMember.push({
+                                name : showCompanyName(key),
+                                students : company
+                            });
                         });
                     });
+                    $scope.data.seminars = data;
+                }).error(function (data, status, headers, config) {
+                    console.log(data);
                 });
-                $scope.data.seminars = data;
-            }).error(function (data, status, headers, config) {
-                console.log(data);
-            });
+            }
+
+
         };
 
-
-
-        $scope.adminInit();
-
+        app.initOnce();
 
 
 
@@ -394,7 +406,7 @@
                 console.log($scope.data.newDistributor);
                 $http.post('/marksimos/api/admin/distributors', $scope.data.newDistributor).success(function(data, status, headers, config){
 
-                    $scope.getDistributorsInit();
+                    app.getDistributorsInit();
                     $scope.css.leftmenu = 21;
 
                     $notification.success('Save success', 'Create Distributor success');
@@ -424,7 +436,7 @@
                 console.log($scope.data.newFacilitator);
                 $http.post('/marksimos/api/admin/facilitators', $scope.data.newFacilitator).success(function(data, status, headers, config){
 
-                    $scope.getFacilitatorsInit();
+                    app.getFacilitatorsInit();
                     $scope.css.leftmenu = 31;
 
                     $notification.success('Save success', 'Create Facilitator success');
@@ -447,29 +459,12 @@
                 });
             }
         };
-
-        /********************  Student 重置密码为hcd1234  ********************/
-        $scope.resetPassword =  function(id){
-            var postData = {
-                student_id:id
-            };
-            $http.post('/marksimos/api/admin/resetPassword', postData).success(function(data, status, headers, config){
-                $scope.getStudentsInit();
-                $scope.css.leftmenu = 41;
-                $notification.success('Save success', 'Reset Student Password success');
-
-            }).error(function(data, status, headers, config){
-                $notification.error('Save failed', data.message);
-            });
-        };
-
-
         /********************  创建新的 Student  ********************/
         $scope.createNewStudent = function(form){
             if(form.$valid){
                 $http.post('/marksimos/api/admin/students', $scope.data.newStudent).success(function(data, status, headers, config){
 
-                    $scope.getStudentsInit();
+                    app.getStudentsInit();
                     $scope.css.leftmenu = 41;
 
                     $notification.success('Save success', 'Create Student success');
@@ -479,7 +474,19 @@
                 });
             }
         };
+        /********************  Student 重置密码为hcd1234  ********************/
+        $scope.resetPassword =  function(id){
+            var postData = {
+                student_id:id
+            };
+            $http.post('/marksimos/api/admin/resetPassword', postData).success(function(data, status, headers, config){
+                $scope.css.leftmenu = 41;
+                $notification.success('Save success', 'Reset Student Password success');
 
+            }).error(function(data, status, headers, config){
+                $notification.error('Save failed', data.message);
+            });
+        };
 
         /********************  搜索 Seminars  ********************/
         $scope.searchSeminar = function(form){
@@ -495,10 +502,9 @@
         /********************  创建新的 Seminar  ********************/
         $scope.createNewSeminar = function(form){
             if(form.$valid){
-                console.log($scope.data.newSeminar);
                 $http.post('/marksimos/api/admin/seminar', $scope.data.newSeminar).success(function(data, status, headers, config){
 
-                    $scope.getSeminarInit();
+                    app.getSeminarInit();
                     $scope.css.leftmenu = 51;
 
                     $notification.success('Save success', 'Create Seminar success');
@@ -526,12 +532,33 @@
                 $scope.data.addStudentToSeminar.email = studentemail;
 
                 $http.post('/marksimos/api/admin/assign_student_to_seminar', $scope.data.addStudentToSeminar).success(function(data, status, headers, config){
-                    $scope.getSeminarInit();
+                    app.getSeminarInit();
                     $notification.success('Save success', 'Add Student to Seminar success');
 
                     $scope.data.addStudentToSeminar.seminar_id = 0 ;
                     $scope.data.addStudentToSeminar.company_id = 0 ;
-                    $scope.data.addStudentToSeminar.student_id = 0 ;
+                    $scope.data.addStudentToSeminar.email = "" ;
+
+                }).error(function(data, status, headers, config){
+                    console.log(data);
+                    $notification.error('Save failed', data.message);
+                });
+            }
+        };
+        /********************  Remove Student To Seminar  ********************/
+        $scope.removeStudentToSeminar = function(seminarid, studentemail){
+
+            if(seminarid === "" || angular.isUndefined(studentemail) || studentemail === "" ){
+            }else{
+                $scope.data.removedStudent.email = studentemail;
+                $scope.data.removedStudent.seminar_id = seminarid;
+
+                $http.post('/marksimos/api/admin/remove_student_from_seminar', $scope.data.removedStudent).success(function(data, status, headers, config){
+                    app.getSeminarInit();
+                    $notification.success('Save success', 'Remove Student to Seminar success');
+
+                    $scope.data.removedStudent.seminar_id = 0 ;
+                    $scope.data.removedStudent.email = "" ;
 
                 }).error(function(data, status, headers, config){
                     console.log(data);
@@ -546,7 +573,7 @@
         $scope.initSeminar = function(seminarid){
             $scope.css.runButtonDisabled = true;
             $http.post('/marksimos/api/admin/init', {seminar_id:seminarid}).success(function(data, status, headers, config){
-                $scope.getSeminarInit();
+                app.getSeminarInit();
                 $notification.success('Save success', 'Init Seminar success');
                 $scope.css.runButtonDisabled = false;
             }).error(function(data, status, headers, config){
@@ -559,7 +586,7 @@
         $scope.runSeminar = function(seminarid, round){
             $scope.css.runButtonDisabled = true;
             $http.post('/marksimos/api/admin/runsimulation/' + seminarid + '/' + round).success(function(data, status, headers, config){
-                $scope.getSeminarInit();
+                app.getSeminarInit();
                 $notification.success('Save success', 'Run Seminar success');
                 $scope.css.runButtonDisabled = false;
 
@@ -576,18 +603,63 @@
 
 
 
-    angular.module('marksimosadmin').controller('adminMarksimosReportController', ['$scope', '$http', '$notification', function($scope, $http, $notification) {
-        $scope.css = {
-            currentReportMenu : 'A1'
+    angular.module('marksimosadmin').controller('adminMarksimosReportController', ['$scope', '$http', '$notification', 'AdminTable', function ($scope, $http, $notification, AdminTable) {
+      $scope.css = {
+            currentReportMenu: 'A1'
 
         };
 
-
-
-        $scope.clickChartMenu = function(report){
-            $scope.css.currentReportMenu = report;
-
+        $scope.data = {          
+            tableA1CompanyStatus: {
+                allCompanyData: [],
+                currentCompany: {
+                    companyName: 'Company List'
+                },
+                currentSKU: {},
+                currentBrand: {},
+                currentGlobal: {}
+            },
         };
+
+        $scope.clickChartMenu = function (report) {
+            $scope.css.currentReportMenu = report;          
+           
+        };
+
+        $scope.switchTableReportA1Company = function (company) {
+            $scope.data.tableA1CompanyStatus.currentCompany = company;
+            $scope.data.tableA1CompanyStatus.currentSKU = $scope.data.tableA1CompanyStatus.currentCompany.SKU[0];
+            $scope.data.tableA1CompanyStatus.currentBrand = $scope.data.tableA1CompanyStatus.currentCompany.brand[0];
+            $scope.data.tableA1CompanyStatus.currentGlobal = $scope.data.tableA1CompanyStatus.currentCompany.global;
+        };
+        $scope.switchTableReportA1SKU = function (SKU) {
+            $scope.data.tableA1CompanyStatus.currentSKU = SKU;
+        };
+        $scope.switchTableReportA1Brand = function (brand) {
+            $scope.data.tableA1CompanyStatus.currentBrand = brand;
+        };
+
+        var app = {
+            initOnce: function () {
+                this.loadingCompanyData();
+            },
+            reRun: function () { },
+            loadingCompanyData: function () {
+                AdminTable.getCompany().then(function (data, status, headers, config) {
+                    $scope.data.tableA1CompanyStatus.allCompanyData = data;
+
+                    $scope.switchTableReportA1Company(data[0]);
+                    //$scope.data.tableA1CompanyStatus.currentCompany = data[0];
+                    //$scope.data.tableA1CompanyStatus.currentSKU = $scope.data.tableA1CompanyStatus.currentCompany.SKU[0];
+                    //$scope.data.tableA1CompanyStatus.currentBrand = $scope.data.tableA1CompanyStatus.currentCompany.brand[0];
+                    //$scope.data.tableA1CompanyStatus.currentGlobal = $scope.data.tableA1CompanyStatus.currentCompany.global;
+
+                    $scope.css.tableReportTab = 'SKU';
+                });
+            }
+        };
+        //初始化程序
+        app.initOnce();
 
     }]);
 

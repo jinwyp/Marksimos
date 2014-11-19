@@ -273,7 +273,7 @@ exports.segmentsLeadersByValue = function(allResults, segment){
 
         result.push({
             chartData : valueSegmentShare.slice(0, 5),
-            period : onePeriodResult.period,
+            period : onePeriodResult.period
         });
     });
 
@@ -333,7 +333,7 @@ exports.segmentValueShareTotalMarket = function(allResults){
 exports.perceptionMap = function(allResults, exogenous){
     var result = {
         periods : [],
-        exogenous : [],
+        exogenous : []
     }
 
     //Exogenous
@@ -366,7 +366,7 @@ exports.perceptionMap = function(allResults, exogenous){
             var companyData = {
                 companyName: companyName,
                 brands: [],
-                SKUs: [],
+                SKUs: []
             };
 
             //brands data

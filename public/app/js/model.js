@@ -22,6 +22,8 @@
 
     angular.module('marksimos.model').factory('Student', ['$http', studentModel]);
     angular.module('marksimos.model').factory('Company', ['$http', companyModel]);
+    //管理员报表-表格
+    angular.module('marksimos.model').factory('AdminTable', ['$http', adminTableModel]);
 
     angular.module('marksimos.model').factory('chartReport', ['$http', '$rootScope', '$translate', chartReportModel]);
     angular.module('marksimos.model').factory('tableReport', ['$http', tableReportModel]);
@@ -29,7 +31,12 @@
     angular.module('marksimos.model').factory('Help', ['$http', helpModel]);
 
 
+    angular.module('marksimos.model').factory('Admin', ['$http', adminModel]);
+
+
+
     var apiPath = '/marksimos/api/';
+    var apiAdminPath = '/marksimos/api/admin/';
 
     var errorHandler = function(err){
         console.log("Error 404 , Type : API ", err );
@@ -167,10 +174,6 @@
         };
         return factory;
     }
-
-
-
-
 
 
     function chartReportModel ($http, $rootScope, $translate){
@@ -1102,6 +1105,43 @@
 
 
 
+    function adminModel($http){
+
+        var factory = {
+
+            login : function(user){
+                return $http.post(apiAdminPath + 'login', user);
+            },
+            userInfo : function(){
+                return $http.get(apiAdminPath + 'user');
+            },
+            getDistributors : function(){
+                return $http.get(apiAdminPath + 'distributors');
+            },
+            getFacilitators : function(){
+                return $http.get(apiAdminPath + 'facilitators');
+            },
+            getStudents : function(){
+                return $http.get(apiAdminPath + 'students');
+            },
+            getSeminars : function(){
+                return $http.get(apiAdminPath + 'facilitator/seminar');
+            }
+
+        };
+        return factory;
+    }
+    /********************  管理员报表-表格  ********************/
+
+    function adminTableModel($http) {
+        return {
+            getCompany: function () {
+                return $http.get(apiPath + 'admin/report/company_status').then(function (result) {
+                    return result.data;
+                })["catch"](errorHandler);
+            }
+        };
+    }
 
 
 
