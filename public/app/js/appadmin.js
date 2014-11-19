@@ -306,23 +306,24 @@
 
 
         var app = {
-            initOnce : function(){
+            initOnce: function () {
+                var self = this;
                 Admin.userInfo().success(function(data, status, headers, config){
                     $scope.data.currentUser = data;
 
                     if($scope.data.currentUser.role === 1){
-                        this.getDistributorsInit();
-                        this.getFacilitatorsInit();
-                        this.getStudentsInit();
+                        self.getDistributorsInit();
+                        self.getFacilitatorsInit();
+                        self.getStudentsInit();
                         $scope.css.menuTabShow = [false, true, true, true, true, true, true];
 
                     }else if($scope.data.currentUser.role === 2){
-                        this.getFacilitatorsInit();
+                        self.getFacilitatorsInit();
                         $scope.css.menuTabShow = [false, true, false, true, false, false, false];
 
                     }else if($scope.data.currentUser.role === 3){
-                        this.getStudentsInit();
-                        this.getSeminarInit();
+                        self.getStudentsInit();
+                        self.getSeminarInit();
                         $scope.css.menuTabShow = [false, true, false, false ,true, true, false];
                     }
 
@@ -362,7 +363,7 @@
             },
 
             getSeminarInit : function() {
-                Admin.getSeminars()..success(function (data, status, headers, config) {
+                Admin.getSeminars().success(function (data, status, headers, config) {
                     angular.forEach(data, function(seminar){
                         seminar.companyMember = [];
                         angular.forEach(seminar.companyAssignment, function(company, key){
@@ -602,7 +603,7 @@
 
 
 
-      angular.module('marksimosadmin').controller('adminMarksimosReportController', ['$scope', '$http', '$notification', 'AdminCompany', function ($scope, $http, $notification, AdminCompany) {
+    angular.module('marksimosadmin').controller('adminMarksimosReportController', ['$scope', '$http', '$notification', 'AdminTable', function ($scope, $http, $notification, AdminTable) {
       $scope.css = {
             currentReportMenu: 'A1'
 
@@ -644,12 +645,14 @@
             },
             reRun: function () { },
             loadingCompanyData: function () {
-                AdminCompany.getCompany().then(function (data, status, headers, config) {                    
+                AdminTable.getCompany().then(function (data, status, headers, config) {
                     $scope.data.tableA1CompanyStatus.allCompanyData = data;
-                    $scope.data.tableA1CompanyStatus.currentCompany = data[0];
-                    $scope.data.tableA1CompanyStatus.currentSKU = $scope.data.tableA1CompanyStatus.currentCompany.SKU[0];
-                    $scope.data.tableA1CompanyStatus.currentBrand = $scope.data.tableA1CompanyStatus.currentCompany.brand[0];
-                    $scope.data.tableA1CompanyStatus.currentGlobal = $scope.data.tableA1CompanyStatus.currentCompany.global;
+
+                    $scope.switchTableReportA1Company(data[0]);
+                    //$scope.data.tableA1CompanyStatus.currentCompany = data[0];
+                    //$scope.data.tableA1CompanyStatus.currentSKU = $scope.data.tableA1CompanyStatus.currentCompany.SKU[0];
+                    //$scope.data.tableA1CompanyStatus.currentBrand = $scope.data.tableA1CompanyStatus.currentCompany.brand[0];
+                    //$scope.data.tableA1CompanyStatus.currentGlobal = $scope.data.tableA1CompanyStatus.currentCompany.global;
 
                     $scope.css.tableReportTab = 'SKU';
                 });
