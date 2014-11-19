@@ -307,23 +307,23 @@
 
         var app = {
             initOnce: function () {
-                var self = this;
+                var that = this;
                 Admin.userInfo().success(function(data, status, headers, config){
                     $scope.data.currentUser = data;
 
                     if($scope.data.currentUser.role === 1){
-                        self.getDistributorsInit();
-                        self.getFacilitatorsInit();
-                        self.getStudentsInit();
+                        that.getDistributorsInit();
+                        that.getFacilitatorsInit();
+                        that.getStudentsInit();
                         $scope.css.menuTabShow = [false, true, true, true, true, true, true];
 
                     }else if($scope.data.currentUser.role === 2){
-                        self.getFacilitatorsInit();
+                        that.getFacilitatorsInit();
                         $scope.css.menuTabShow = [false, true, false, true, false, false, false];
 
                     }else if($scope.data.currentUser.role === 3){
-                        self.getStudentsInit();
-                        self.getSeminarInit();
+                        that.getStudentsInit();
+                        that.getSeminarInit();
                         $scope.css.menuTabShow = [false, true, false, false ,true, true, false];
                     }
 
@@ -448,6 +448,7 @@
             }
         };
 
+
         /********************  搜索 Students  ********************/
         $scope.searchStudent = function(form){
             if(form.$valid){
@@ -488,6 +489,7 @@
             });
         };
 
+
         /********************  搜索 Seminars  ********************/
         $scope.searchSeminar = function(form){
             if(form.$valid){
@@ -515,6 +517,7 @@
                 });
             }
         };
+
 
         /********************  选择公司  ********************/
         $scope.chooseCompany = function(seminar, company){

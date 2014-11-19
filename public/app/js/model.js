@@ -22,8 +22,7 @@
 
     angular.module('marksimos.model').factory('Student', ['$http', studentModel]);
     angular.module('marksimos.model').factory('Company', ['$http', companyModel]);
-    //管理员报表-表格
-    angular.module('marksimos.model').factory('AdminTable', ['$http', adminTableModel]);
+
 
     angular.module('marksimos.model').factory('chartReport', ['$http', '$rootScope', '$translate', chartReportModel]);
     angular.module('marksimos.model').factory('tableReport', ['$http', tableReportModel]);
@@ -32,7 +31,8 @@
 
 
     angular.module('marksimos.model').factory('Admin', ['$http', adminModel]);
-
+    //管理员报表-表格
+    angular.module('marksimos.model').factory('AdminTable', ['$http', adminTableModel]);
 
 
     var apiPath = '/marksimos/api/';
@@ -174,6 +174,7 @@
         };
         return factory;
     }
+
 
 
     function chartReportModel ($http, $rootScope, $translate){
@@ -1104,7 +1105,7 @@
     }
 
 
-
+    /********************  管理员界面数据  ********************/
     function adminModel($http){
 
         var factory = {
@@ -1131,25 +1132,27 @@
         };
         return factory;
     }
-    /********************  管理员报表-表格  ********************/
 
+
+
+    /********************  管理员报表-表格  ********************/
     function adminTableModel($http) {
         return {
             //Table A1
             getCompany: function () {
-                return $http.get(apiPath + 'admin/report/company_status').then(function (result) {
+                return $http.get(apiAdminPath + 'report/company_status').then(function (result) {
                     return result.data;
                 })["catch"](errorHandler);
             },
             //Table A2
             getFinancial: function () {
-                return $http.get(apiPath + 'admin/report/financial_report').then(function (result) {
+                return $http.get(apiAdminPath + 'report/financial_report').then(function (result) {
                     return result.data;
                 })["catch"](errorHandler);
             },
             //Table A4
             getProfitability: function () {
-                return $http.get(apiPath + 'admin/report/profitability_evolution').then(function (result) {
+                return $http.get(apiAdminPath + 'report/profitability_evolution').then(function (result) {
                     return result.data;
                 })["catch"](errorHandler);
             }
