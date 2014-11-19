@@ -635,6 +635,10 @@
               currentSKU: {},
               currentBrand: {},
               currentGlobal: {}
+          },
+          //C6
+          tableC6MarketIndicators: {
+              allData: {}
           }
       };
 
@@ -647,9 +651,14 @@
       
         var app = {
             initOnce: function () {
+                //加载A1
                 this.loadingCompanyData();
+                //加载A2
                 this.loadingFinancialData();
+                //加载A4
                 this.loadingProfitabilityData();
+                //加载C6
+                this.loadingMarketIndicatorsData();
             },
             reRun: function () { },
             loadingCompanyData: function () {
@@ -667,11 +676,12 @@
                 $scope.switchTableReportA1Brand = function (brand) {
                     $scope.data.tableA1CompanyStatus.currentBrand = brand;
                 };
-
-                AdminTable.getCompany().then(function (data, status, headers, config) {
-                    console.log(data);
+                //获取数据
+                AdminTable.getCompany().then(function (data, status, headers, config) {                  
                     $scope.data.tableA1CompanyStatus.allCompanyData = data;
-                    $scope.switchTableReportA1Company(data[0]); 
+                    //设置默认公司
+                    $scope.switchTableReportA1Company(data[0]);
+                    //设置默认的报表
                     $scope.css.tableReportTab = 'SKU';
                 });
             },
@@ -718,10 +728,15 @@
                 };
                 //获取数据
                 AdminTable.getProfitability().then(function (data, status, headers, config) {
-                    $scope.data.tableA4ProfitabilityEvolution.allData = data;
-                    console.log(data);
+                    $scope.data.tableA4ProfitabilityEvolution.allData = data;                    
                     //设置默认的公司
                     $scope.switchTableReportA4Company(0);
+                });
+            },
+            loadingMarketIndicatorsData: function () {
+                /********************  Table C6  *******************/
+                AdminTable.getMarketIndicators().then(function (data, status, headers, config) {                    
+                    $scope.data.tableC6MarketIndicators.allData = data;
                 });
             }
         };
