@@ -32,11 +32,11 @@ exports.addStudent = function(req, res, next){
         city          : req.body.city,
 
 
-        role          : config.role.student,
-        emailActivated: true,
-        activated: true,
-        studentType   : config.studentType.B2Bstudents,
-        facilitatorId : facilitatorId,
+        role           : config.role.student,
+        emailActivated : true,
+        activated      : true,
+        studentType    : req.body.student_type,
+        facilitatorId  : facilitatorId,
 
         idcardNumber             : req.body.idcardNumber || '',
         gender                   : req.body.gender || '',

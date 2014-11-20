@@ -1116,17 +1116,21 @@
             userInfo : function(){
                 return $http.get(apiAdminPath + 'user');
             },
-            getDistributors : function(){
-                return $http.get(apiAdminPath + 'distributors');
+            getDistributors : function(urlparams){
+                urlparams = angular.isUndefined(urlparams) ? {}  : urlparams ;
+                return $http.get(apiAdminPath + 'distributors', {params : urlparams});
             },
-            getFacilitators : function(){
-                return $http.get(apiAdminPath + 'facilitators');
+            getFacilitators : function(urlparams){
+                urlparams = angular.isUndefined(urlparams) ? {}  : urlparams ;
+                return $http.get(apiAdminPath + 'facilitators', {params : urlparams});
             },
-            getStudents : function(){
-                return $http.get(apiAdminPath + 'students');
+            getStudents : function(urlparams){
+                urlparams = angular.isUndefined(urlparams) ? {}  : urlparams ;
+                return $http.get(apiAdminPath + 'students', {params : urlparams});
             },
-            getSeminars : function(){
-                return $http.get(apiAdminPath + 'facilitator/seminar');
+            getSeminars : function(urlparams){
+                urlparams = angular.isUndefined(urlparams) ? {}  : urlparams ;
+                return $http.get(apiAdminPath + 'facilitator/seminar', {params : urlparams});
             }
 
         };

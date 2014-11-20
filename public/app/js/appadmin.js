@@ -111,7 +111,8 @@
                 occupation : "",
                 university : "",
                 firstname : "",
-                lastname : ""
+                lastname : "",
+                student_type :  10 //10 B2B students,  20 B2C students, 30 Both B2C and B2B students
             },
             searchStudent : {
                 username :'',
@@ -391,7 +392,7 @@
         /********************  搜索 Distributor  ********************/
         $scope.searchDistributor = function(form){
             if(form.$valid){
-                $http.get('/marksimos/api/admin/distributors', {params : $scope.data.searchDistributor}).success(function(data, status, headers, config){
+                Admin.getDistributors($scope.data.searchDistributor).success(function(data, status, headers, config){
 
                     $scope.data.distributors = data;
 
@@ -403,7 +404,6 @@
         /********************  创建新的 Distributor  ********************/
         $scope.createNewDistributor = function(form){
             if(form.$valid){
-                console.log($scope.data.newDistributor);
                 $http.post('/marksimos/api/admin/distributors', $scope.data.newDistributor).success(function(data, status, headers, config){
 
                     app.getDistributorsInit();
@@ -422,7 +422,7 @@
         /********************  搜索 Facilitator  ********************/
         $scope.searchFacilitator = function(form){
             if(form.$valid){
-                $http.get('/marksimos/api/admin/facilitators', {params : $scope.data.searchFacilitator}).success(function(data, status, headers, config){
+                Admin.getFacilitators($scope.data.searchFacilitator).success(function(data, status, headers, config){
                     $scope.data.facilitators = data;
 
                 }).error(function(data, status, headers, config){
@@ -452,7 +452,7 @@
         /********************  搜索 Students  ********************/
         $scope.searchStudent = function(form){
             if(form.$valid){
-                $http.get('/marksimos/api/admin/students', {params : $scope.data.searchStudent}).success(function(data, status, headers, config){
+                Admin.getStudents($scope.data.searchStudent).success(function(data, status, headers, config){
                     $scope.data.students = data;
 
                 }).error(function(data, status, headers, config){
@@ -476,7 +476,7 @@
             }
         };
         /********************  Student 重置密码为hcd1234  ********************/
-        $scope.resetPassword =  function(id){
+        $scope.resetStudentPassword =  function(id){
             var postData = {
                 student_id:id
             };
@@ -493,7 +493,7 @@
         /********************  搜索 Seminars  ********************/
         $scope.searchSeminar = function(form){
             if(form.$valid){
-                $http.get('/marksimos/api/admin/facilitator/seminar', {params : $scope.data.searchSeminar}).success(function(data, status, headers, config){
+                Admin.getSeminars($scope.data.searchSeminar).success(function(data, status, headers, config){
                     $scope.data.seminars = data;
 
                 }).error(function(data, status, headers, config){
