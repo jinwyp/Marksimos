@@ -1137,35 +1137,38 @@
 
     /********************  管理员报表-表格  ********************/
     function adminTableModel($http) {
+        function getAdminRequest(url) {
+            return $http.get(apiAdminPath + url).then(function (result) {
+                return result.data;
+            })["catch"](errorHandler);
+        }
         return {
             //Table A1 Company Status
             getCompany: function () {
-                return $http.get(apiAdminPath + 'report/company_status').then(function (result) {
-                    return result.data;
-                })["catch"](errorHandler);
+                return getAdminRequest("report/company_status");
             },
             //Table A2 Financial Data
             getFinancial: function () {
-                return $http.get(apiAdminPath + 'report/financial_report').then(function (result) {
-                    return result.data;
-                })["catch"](errorHandler);
+                return getAdminRequest("report/financial_report");                
             },
             //Table A4 Profitability Evolution
             getProfitability: function () {
-                return $http.get(apiAdminPath + 'report/profitability_evolution').then(function (result) {
-                    return result.data;
-                })["catch"](errorHandler);
+                return getAdminRequest("report/profitability_evolution");              
             },
             //Table C6 Market Indicators
             getMarketIndicators: function () {
-                return $http.get(apiPath + 'admin/report/market_indicators').then(function (result) {
-                    return result.data;
-                })["catch"](errorHandler);
+                return getAdminRequest("report/market_indicators");              
             },
+            //Table B2 Competitor Intelligence
             getCompetitorIntelligence: function () {
-                return $http.get(apiPath + 'admin/report/competitor_intelligence').then(function (result) {
-                    return result.data;
-                })["catch"](errorHandler);
+                return getAdminRequest("report/competitor_intelligence");               
+            },
+            //Table C3 Segment Distribution
+            getSegmentDistribution: function () {
+                return getAdminRequest("report/segment_distribution");               
+            },
+            getMarketTrends: function () {
+                return getAdminRequest("report/market_trends");
             }
         };
     }

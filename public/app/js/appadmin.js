@@ -7,7 +7,7 @@
     'use strict';
 
     /********************  Create New Module For Controllers ********************/
-   angular.module('marksimosadmin', ['pascalprecht.translate', 'notifications', 'marksimos.websitecomponent', 'marksimos.commoncomponent', 'marksimos.filter']);
+    angular.module('marksimosadmin', ['pascalprecht.translate', 'notifications', 'marksimos.websitecomponent', 'marksimos.commoncomponent', 'marksimos.filter', 'angularCharts']);
 
 
 
@@ -633,6 +633,23 @@
                 currentBrand: {},
                 currentGlobal: {}
             },
+            //C3 Segment Distribution
+            tableC3SegmentDistribution : {
+                allData : [],
+                currentTable : 1,
+                currentTableData : {},
+                currentTableUnit : "%",
+                chartConfig : chartReport.getChartConfig1(),
+                chartData : $scope.dataChartSimple              
+            },
+            tableC5MarketTrends : {
+                allData : [],
+                currentTable : 1,
+                currentTableData : {},
+                currentTableUnit : "",
+                chartConfig : chartReport.getChartConfig1(),
+                chartData : $scope.dataChartSimple
+            },
             //C6 Market Indicators
             tableC6MarketIndicators: {
                 allData: {}
@@ -667,6 +684,10 @@
                 this.loadingMarketIndicatorsData();
                 //加载B2 Competitor Intelligence
                 this.loadingCompetitorIntelligenceData();
+                //加载C3 Segment Distribution
+                this.loadingSegmentDistributionData();
+                //加载C5 Market Trends
+                this.loadingMarketTrendsData();
             },
             runOnce: function () {
                 /********************  Table A1 Company Status  *******************/
@@ -683,6 +704,7 @@
                     $scope.data.tableA1CompanyStatus.currentBrand = brand;
                 };
 
+
                 /********************  Table A2 Financial Data  *******************/
                 $scope.switchTableReportPeriod = function (period) {
                     $scope.data.tableA2FinancialData.currentPeriod = period;
@@ -696,6 +718,7 @@
                     $scope.data.tableA2FinancialData.currentPeriod = $scope.data.tableA2FinancialData.currentCompany.periods[$scope.data.tableA2FinancialData.currentCompany.periods.length - 1];
                     $scope.data.tableA2FinancialData.currentBrand = $scope.data.tableA2FinancialData.currentPeriod.brands[0];
                 };
+
 
                 /********************  Table A4 Profitability Evolution  *******************/
                 $scope.switchTableReportA4SKU = function (SKU) {
@@ -711,6 +734,7 @@
                     $scope.data.tableA4ProfitabilityEvolution.currentGlobal = $scope.data.tableA4ProfitabilityEvolution.allData[index].global;
                 };
 
+
                 /********************  Table B2 Competitor Intelligence  *******************/              
                 $scope.switchTableMenuLevel1B2 = function (menu, field, unit) {
                     $scope.css.tableReportMenu = menu;
@@ -721,6 +745,44 @@
                     $scope.data.tableB2CompetitorIntelligence.currentTableData = $scope.data.tableB2CompetitorIntelligence.allData[field];
                     $scope.data.tableB2CompetitorIntelligence.chartData = chartReport.formatChartData($scope.data.tableB2CompetitorIntelligence.currentTableData);
                     $scope.data.tableB2CompetitorIntelligence.currentTableUnit = unit;
+                };
+
+
+                /********************  Table C3 Segment Distribution  *******************/
+                $scope.switchTableReportC3 = function (order, field, unit) {
+                    $scope.data.tableC3SegmentDistribution.currentTable = order;
+                    $scope.data.tableC3SegmentDistribution.currentTableData = $scope.data.tableC3SegmentDistribution.allData[field];
+                    $scope.data.tableC3SegmentDistribution.chartData = chartReport.formatChartData($scope.data.tableC3SegmentDistribution.currentTableData);
+                    $scope.data.tableC3SegmentDistribution.currentTableUnit = unit;
+                };
+
+
+                /********************  Table C5 Market Trends  *******************/
+                $scope.switchTableCategoryC5 = function (category, field, unit) {
+                    $scope.css.tableReportTab = category;
+                    if (category === 'SKU') {
+                        $scope.switchTableMenuLevel1C5(1, 'SKU', field, unit);
+                    } else if (category === 'Brand') {
+                        $scope.switchTableMenuLevel1C5(1, 'Brand', field, unit);
+                    } else {
+                        $scope.switchTableMenuLevel1C5(1, 'Global', field, unit);
+                    }
+                };
+                $scope.switchTableMenuLevel1C5 = function (menu, category, field, unit) {
+                    $scope.css.tableReportMenu = menu;
+                    if (category === 'SKU') {
+                        $scope.switchTableReportC5(1, 'SKU', field, unit);
+                    } else if (category === 'Brand') {
+                        $scope.switchTableReportC5(1, 'brand', field, unit);
+                    } else {
+                        $scope.switchTableReportC5(1, 'global', 'averageNetMarketPriceStdPack', unit);
+                    }
+                };
+                $scope.switchTableReportC5 = function (order, category, field, unit) {
+                    $scope.data.tableC5MarketTrends.currentTable = order;
+                    $scope.data.tableC5MarketTrends.currentTableData = $scope.data.tableC5MarketTrends.allData[category][field];
+                    $scope.data.tableC5MarketTrends.currentTableUnit = unit;
+                    $scope.data.tableC5MarketTrends.chartData = chartReport.formatChartData($scope.data.tableC5MarketTrends.currentTableData);
                 };
 
             },
@@ -761,11 +823,33 @@
             },
             loadingCompetitorIntelligenceData: function () {
                 /********************  Table B2 Competitor Intelligence  *******************/
-                AdminTable.getCompetitorIntelligence().then(function (data, status, headers, config) {                   
+                //获取数据
+                AdminTable.getCompetitorIntelligence().then(function (data, status, headers, config) {
                     $scope.data.tableB2CompetitorIntelligence.allData = data;
                     $scope.data.tableB2CompetitorIntelligence.currentTableData = $scope.data.tableB2CompetitorIntelligence.allData.acquiredProductionAndLogisticsEfficiency;
                     $scope.data.tableB2CompetitorIntelligence.chartData = chartReport.formatChartData($scope.data.tableB2CompetitorIntelligence.allData.acquiredProductionAndLogisticsEfficiency);
-                });               
+                });
+            },
+            loadingSegmentDistributionData: function () {
+                /********************  Table C3 Segment Distribution  *******************/
+                //获取数据
+                AdminTable.getSegmentDistribution().then(function (data, status, headers, config) {
+                    $scope.data.tableC3SegmentDistribution.allData = data;
+                    $scope.data.tableC3SegmentDistribution.currentTableData = $scope.data.tableC3SegmentDistribution.allData.marketShareVolume;
+                    $scope.data.tableC3SegmentDistribution.chartData = chartReport.formatChartData($scope.data.tableC3SegmentDistribution.currentTableData);
+                });
+            },
+            loadingMarketTrendsData: function () {
+                /********************  Table C5 Market Trends  *******************/
+                //获取数据
+                AdminTable.getMarketTrends().then(function (data, status, headers, config) {
+                    $scope.data.tableC5MarketTrends.allData = data;
+                    //$scope.data.tableC5MarketTrends.currentTableData = $scope.data.tableC5MarketTrends.allData.SKU.averageDisplayPriceStdPack;
+                    //$scope.data.tableC5MarketTrends.chartData = chartReport.formatChartData($scope.data.tableC5MarketTrends.currentTableData);
+                    //$scope.switchTableCategoryC5('SKU', 'averageDisplayPriceStdPack', '');
+                    $scope.switchTableMenuLevel1C5(1, $scope.css.tableReportTab, 'averageDisplayPriceStdPack', '');
+
+                }); 
             }
         };
         //初始化程序
