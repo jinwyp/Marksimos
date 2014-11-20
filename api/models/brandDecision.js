@@ -14,7 +14,7 @@ var tOneBrandDecisionSchema = new Schema({
     d_CID: Number,
     d_BrandID       : Number,
     d_BrandName     : String,
-    bs_PeriodOfBirth: {type: Number},    
+    bs_PeriodOfBirth: {type: Number},
     d_SalesForce    : {type: Number, default: 0},
     d_SKUsDecisions :  [Number]  //Array of d_SKUID
 });
@@ -35,19 +35,19 @@ tOneBrandDecisionSchema.pre('save', true, function(next, done){
                 var budgetLeft = spendingDetails.companyData.availableBudget;
                 var oldInput = oneBrandDecision.d_SalesForce;
 
-                if(budgetLeft + oldInput - self.d_SalesForce < 0){       
+                if(budgetLeft + oldInput - self.d_SalesForce < 0){
                     var validateErr = new Error('Available budget is not enough.');
                     validateErr.modifiedField = field;
                     validateErr.upper = budgetLeft - oldInput;
                     validateErr.lower = 0;
                     done(validateErr);
-                } else {   
+                } else {
                     done();
                 }
             }).fail(function(err){
                 done(err);
             }).done();
-        },        
+        },
         'skip'                       : function(field){ process.nextTick(done); }
 
     }
@@ -57,7 +57,7 @@ tOneBrandDecisionSchema.pre('save', true, function(next, done){
         if(typeof validateAction[field] != 'function'){
             throw new Error('Cannot find validate action for ' + field);
         }
-        validateAction[field](field);        
+        validateAction[field](field);
     }
 
     if(!this.modifiedField){ this.modifiedField = 'skip'; }
@@ -67,8 +67,15 @@ tOneBrandDecisionSchema.pre('save', true, function(next, done){
     next();
 });
 
-//not only validate name, but also validate if this brand is allowed to created 
+//not only validate name, but also validate if this brand is allowed to created
 function validateBrandName(field, curBrandDecision, done){
+    var reg = /[a-zA-Z0-9]/;
+
+    if(!reg.test(curBrandDecision.d_BrandName)){
+        var err = new Error('only english characters or numbers');
+        return done(err);
+    }
+
     if(curBrandDecision.d_BrandName.length > 5){
         var err = new Error('Out of Brand name range');
         err.message = 'Out of Brand name range';
@@ -77,7 +84,7 @@ function validateBrandName(field, curBrandDecision, done){
 
 
     Q.spread([
-        exports.findAllInCompany(curBrandDecision.seminarId, curBrandDecision.period, curBrandDecision.d_CID),       
+        exports.findAllInCompany(curBrandDecision.seminarId, curBrandDecision.period, curBrandDecision.d_CID),
         companyDecisionModel.findOne(curBrandDecision.seminarId, curBrandDecision.period, curBrandDecision.d_CID)
     ], function(Brands, parentCompany){
         var allDefaultBrandIDs = [];
@@ -85,8 +92,8 @@ function validateBrandName(field, curBrandDecision, done){
             var ID = curBrandDecision.d_CID * 10 + parseInt(i);
             allDefaultBrandIDs.push(ID);
         };
-        
-        var availableBrandIDs = _.difference(allDefaultBrandIDs, parentCompany.d_BrandsDecisions);  
+
+        var availableBrandIDs = _.difference(allDefaultBrandIDs, parentCompany.d_BrandsDecisions);
 
         if(availableBrandIDs.length == 0){
             return done(new Error("You already have 5 Brands."));
@@ -102,24 +109,24 @@ function validateBrandName(field, curBrandDecision, done){
 
             //to see that if there is preferred in the available Brand list
             if(availableBrandIDs.some(function(id){
-              return id == preferredID;  
+              return id == preferredID;
             })){
                 curBrandDecision.d_BrandID = preferredID;
             } else {
                 curBrandDecision.d_BrandID = availableBrandIDs[0];
             }
         }
-               
-        var isNameExisted = Brands.some(function(Brand){             
-            return Brand.d_BrandName == curBrandDecision.d_BrandName; 
+
+        var isNameExisted = Brands.some(function(Brand){
+            return Brand.d_BrandName == curBrandDecision.d_BrandName;
         });
 
         if(isNameExisted){
-            return done(new Error('Name existed.'));    
+            return done(new Error('Name existed.'));
         } else {
             curBrandDecision.bs_PeriodOfBirth = curBrandDecision.period;
-            done();                    
-        }        
+            done();
+        }
     }, function(err){
         done(err);
     }).done();
@@ -187,7 +194,7 @@ exports.initCreate = function(decision){
 }
 
 //Run simulation process, create brand decision document based on last period decision, skip all the validations
-//copy bs_PeriodOfBirth from last period input 
+//copy bs_PeriodOfBirth from last period input
 exports.createBrandDecisionBasedOnLastPeriodDecision = function(decision){
     if(!mongoose.connection.readyState){
         throw new Error("mongoose is not connected.");
@@ -221,7 +228,7 @@ exports.create = function(decision){
     decision.save(function(err, brandDoc, numAffected){
         if(err){
             deferred.reject(err);
-        }else{            
+        }else{
             companyDecisionModel.findOne(brandDoc.seminarId, brandDoc.period, brandDoc.d_CID).then(function(companyDoc){
                 var isIDExisted = companyDoc.d_BrandsDecisions.some(function(id){ return id == brandDoc.d_BrandID; })
                 if(isIDExisted){ return deferred.reject(new Error('find Duplicate BrandID in the companyDecision.d_BrandsDecisions!')); }
@@ -336,7 +343,7 @@ exports.updateBrand = function(seminarId, period, companyId, brandId, brand){
                 }
             });
 
-            doc.save(function(err, doc){         
+            doc.save(function(err, doc){
                 if(err){ return deferred.reject(err);}
                 else{ return deferred.resolve(doc);}
             });
@@ -353,7 +360,7 @@ exports.insertEmptyBrandDecision = function(seminarId, period){
     if(!mongoose.connection.readyState){
         throw new Error("mongoose is not connected.");
     }
-    
+
     return exports.findAllInPeriod(seminarId, period - 1)
     .then(function(allBrandDecisions){
         var p = Q();
@@ -362,8 +369,8 @@ exports.insertEmptyBrandDecision = function(seminarId, period){
                 return exports.save({
                     seminarId: seminarId,
                     period: period,
-                    d_CID: brandDecision.d_CID,  
-                    d_BrandID: brandDecision.d_BrandID, 
+                    d_CID: brandDecision.d_CID,
+                    d_BrandID: brandDecision.d_BrandID,
                     d_BrandName: brandDecision.d_BrandName,
                     d_SKUsDecisions: brandDecision.d_SKUsDecisions
                 })
