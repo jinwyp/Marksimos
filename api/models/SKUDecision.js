@@ -28,7 +28,7 @@ var tOneSKUDecisionSchema = new Schema({
     d_RepriceFactoryStocks     : {type: Boolean, default: 0},
     d_IngredientsQuality       : {type: Number, default: 1},
     d_PackSize                 : {type: Number, default: 1},
-    d_ProductionVolume         : {type: Number, default: 0}, 
+    d_ProductionVolume         : {type: Number, default: 0},
     d_PromotionalBudget        : {type: Number, default: 0}, //consumer promotions
     d_PromotionalEpisodes      : {type: [Boolean], default: [false, false,false,false,false,false,false,false,false,false,false,false,false]}, //consumer promotions schedule
     d_TargetConsumerSegment    : {type: Number, default: 1},
@@ -38,11 +38,11 @@ var tOneSKUDecisionSchema = new Schema({
     d_WholesalesBonusMinVolume : {type: Number, default: 0},
     d_WholesalesBonusRate      : {type: Number, default: 0},
     d_WarrantyLength           : {type: Number, default: 0}
-}); 
+});
 
 var SKUDecision = mongoose.model('SKUDecision', tOneSKUDecisionSchema);
 
-tOneSKUDecisionSchema.pre('save', true, function(next, done){    
+tOneSKUDecisionSchema.pre('save', true, function(next, done){
     //if save middle-ware is active by behavior adding SKU, use default values and skip validations
     if(this.modifiedField == 'addNewSKU'){
         return process.nextTick(done);
@@ -78,7 +78,7 @@ tOneSKUDecisionSchema.pre('save', true, function(next, done){
         //'d_WarrantyLength'           : function(field){ validateWarrantyLength(field, self, done); },
     }
 
-    function doValidate(field){        
+    function doValidate(field){
         if(typeof validateAction[field] != 'function'){
             var validateErr = new Error('Cannot find validate action for ' + field);
             validateErr.message = 'Cannot find validate action for ' + field;
@@ -86,7 +86,7 @@ tOneSKUDecisionSchema.pre('save', true, function(next, done){
             return done(validateErr);
         }
 
-        validateAction[field](field);        
+        validateAction[field](field);
     }
 //    logger.log('modifiedField:' + this.modifiedField);
     if(!this.modifiedField){ this.modifiedField = 'skip'; }
@@ -100,13 +100,13 @@ function rangeCheck(input, lowerLimits, upperLimits){
     var maxOfLower = { value : 0 };
     var minOfUpper = { value : Infinity };
     lowerLimits.forEach(function(limit){
-        if(limit.value > maxOfLower.value){ 
+        if(limit.value > maxOfLower.value){
             maxOfLower.value = limit.value, maxOfLower.message = limit.message
         };
     });
 
     upperLimits.forEach(function(limit){
-        if(limit.value < minOfUpper.value){ 
+        if(limit.value < minOfUpper.value){
             minOfUpper.value = limit.value, minOfUpper.message = limit.message
         };
     })
@@ -121,7 +121,7 @@ function rangeCheck(input, lowerLimits, upperLimits){
         var err = new Error('Input is out of range');
         err.message = minOfUpper.message;
         err.lower = maxOfLower.value;
-        err.upper = minOfUpper.value;        
+        err.upper = minOfUpper.value;
         return err;
     } else {
         return undefined;
@@ -129,6 +129,13 @@ function rangeCheck(input, lowerLimits, upperLimits){
 }
 
 function validateSKUName(field, curSKUDecision, done){
+    var reg = /[a-zA-Z0-9]/;
+
+    if(!reg.test(curSKUDecision.d_SKUName)){
+        var err = new Error('only english characters or numbers');
+        return done(err);
+    }
+
     if(curSKUDecision.d_SKUName.length > 2){
         var err = new Error('Out of SKU name range');
         err.message = 'Out of SKU name range';
@@ -144,7 +151,7 @@ function validateSKUName(field, curSKUDecision, done){
             var ID = curSKUDecision.d_BrandID * 10 + parseInt(i);
             allDefaultSKUIDs.push(ID);
         };
-        var availableSKUIDs = _.difference(allDefaultSKUIDs, parentBrand.d_SKUsDecisions);     
+        var availableSKUIDs = _.difference(allDefaultSKUIDs, parentBrand.d_SKUsDecisions);
 
         if(availableSKUIDs.length == 0){
             return done(new Error("You already have 5 SKUs."));
@@ -160,23 +167,23 @@ function validateSKUName(field, curSKUDecision, done){
 
             //to see that if there is preferred in the available SKU list
             if(availableSKUIDs.some(function(id){
-              return id == preferredID;  
+              return id == preferredID;
             })){
                 curSKUDecision.d_SKUID = preferredID;
             } else {
                 curSKUDecision.d_SKUID = availableSKUIDs[0];
             }
         }
-               
-        var isNameExisted = SKUs.some(function(sku){             
-            return sku.d_SKUName == curSKUDecision.d_SKUName; 
+
+        var isNameExisted = SKUs.some(function(sku){
+            return sku.d_SKUName == curSKUDecision.d_SKUName;
         });
 
         if(isNameExisted){
-            return done(new Error('Name existed.'));    
+            return done(new Error('Name existed.'));
         } else {
             curSKUDecision.bs_PeriodOfBirth = curSKUDecision.period;
-            done();                    
+            done();
         }
 
     }, function(err){
@@ -196,13 +203,13 @@ function validateTechnology(field, curSKUDecision, done){
         lowerLimits.push({value : 1, message: 'Cannot accept number smaller than 1'});
         lowerLimits.push({value : preSKUDecision.d_IngredientsQuality - gameParameters.pgen.sku_IngredientsTechnologyGap, message: 'Cannot accept number smaller than IngredientsQuality - ' + gameParameters.pgen.sku_IngredientsTechnologyGap});
         upperLimits.push({value : spendingDetails.companyData.acquiredTechnologyLevel, message: 'Company acquired technology level: ' + spendingDetails.companyData.acquiredTechnologyLevel});
-        err = rangeCheck(curSKUDecision[field],lowerLimits,upperLimits);      
+        err = rangeCheck(curSKUDecision[field],lowerLimits,upperLimits);
         if(err != undefined){
             err.modifiedField = field;
             done(err);
         } else {
             done();
-        }                   
+        }
     }).done();
 }
 
@@ -215,24 +222,24 @@ function validateIngredientsQuality(field, curSKUDecision, done){
 
         lowerLimits.push({value : 1, message: 'Cannot accept number smaller than 1'});
         upperLimits.push({value : preSKUDecision.d_Technology + gameParameters.pgen.sku_IngredientsTechnologyGap, message: 'Cannot accept number bigger than technology level + ' + gameParameters.pgen.sku_IngredientsTechnologyGap});
-        err = rangeCheck(curSKUDecision[field],lowerLimits,upperLimits);      
+        err = rangeCheck(curSKUDecision[field],lowerLimits,upperLimits);
         if(err != undefined){
             err.modifiedField = field;
             done(err);
         } else {
             done();
-        }                   
+        }
     }).done();
 }
 
-//step 2: Factory Price 
+//step 2: Factory Price
 //Lower limit: Max(UnitCost * (1 - pgen.man_MaxDumpingPercentage));
 //Upper limit: Min(UnitCost * (1 + pgen.man_MaxMarkup),
 //                 make sure cost of Additional trade margin cost < budget left,
 //                 mare sure cost of WholeSales Bonus exceeds < budget left)
 function validateFactoryPrice(field, curSKUDecision, done){
     simulationResultModel.findOne(curSKUDecision.seminarId, curSKUDecision.period - 1).then(function(result){
-//        logger.log(curSKUDecision.d_CID);  
+//        logger.log(curSKUDecision.d_CID);
         //logger.log(result);
         companyResult = utility.findCompany(result, curSKUDecision.d_CID);
         if(companyResult == undefined){
@@ -242,7 +249,7 @@ function validateFactoryPrice(field, curSKUDecision, done){
         }
 
         Q.spread([
-            spendingDetailsAssembler.getSpendingDetails(curSKUDecision.seminarId, curSKUDecision.period, curSKUDecision.d_CID),            
+            spendingDetailsAssembler.getSpendingDetails(curSKUDecision.seminarId, curSKUDecision.period, curSKUDecision.d_CID),
             utility.unitCost(curSKUDecision.period, curSKUDecision.d_PackSize, curSKUDecision.d_IngredientsQuality, curSKUDecision.d_Technology, companyResult.c_CumulatedProductionVolumes, companyResult.c_AcquiredEfficiency, curSKUDecision.d_ProductionVolume),
             exports.findOne(curSKUDecision.seminarId, curSKUDecision.period, curSKUDecision.d_CID, curSKUDecision.d_BrandID, curSKUDecision.d_SKUID)
         ], function(spendingDetails, unitProductionCost, preSKUDecision){
@@ -253,19 +260,19 @@ function validateFactoryPrice(field, curSKUDecision, done){
             upperLimits.push({value : unitProductionCost * (1 + gameParameters.pgen.man_MaxMarkup), message : 'Max Markup percentage : ' + (gameParameters.pgen.man_MaxMarkup * 100).toFixed(2) + '% of Unit Production Cost'});
             upperLimits.push({value : utility.getFactoryPriceByConsumberPrice( (budgetLeft + (preSKUDecision[field][0] * preSKUDecision.d_ProductionVolume * preSKUDecision.d_AdditionalTradeMargin)) / (curSKUDecision.d_ProductionVolume * curSKUDecision.d_AdditionalTradeMargin) ),             message : 'Budget left is not enough for traditional trade margin cost.'});
             upperLimits.push({value : utility.getFactoryPriceByConsumberPrice( (budgetLeft + (preSKUDecision[field][0] * preSKUDecision.d_WholesalesBonusMinVolume * preSKUDecision.d_WholesalesBonusRate)) / (curSKUDecision.d_WholesalesBonusRate * curSKUDecision.d_WholesalesBonusMinVolume) ), message : 'Budget left is not enough for WholeSales bonus cost.'});
-            err = rangeCheck(curSKUDecision[field][0],lowerLimits,upperLimits);      
+            err = rangeCheck(curSKUDecision[field][0],lowerLimits,upperLimits);
             if(err != undefined){
                 err.modifiedField = field;
                 done(err);
             } else {
-                //update consumer price automatically         
-                curSKUDecision.d_ConsumerPrice = utility.getConsumerPrice(curSKUDecision[field][0]);        
+                //update consumer price automatically
+                curSKUDecision.d_ConsumerPrice = utility.getConsumerPrice(curSKUDecision[field][0]);
                 done();
             }
         });
 
     }).fail(function(err){
-        done(err);  
+        done(err);
     }).done();
 }
 
@@ -283,13 +290,13 @@ function validateAdditionalTradeMargin(field, curSKUDecision, done){
         upperLimits.push({value : 1, message: 'Input should less than 100%.'});
         upperLimits.push({value : (gameParameters.pgen.retail_Markup)/(1 + gameParameters.pgen.retail_Markup), message: 'Input should less than - retailer markup / (1 + retailer markup)'});
         upperLimits.push({value : (budgetLeft + preEstimatedCost)/(preSKUDecision.d_ProductionVolume * preSKUDecision.d_ConsumerPrice), message : 'Budget left is not enough for traditional trade margin cost.'});
-        err = rangeCheck(curSKUDecision[field],lowerLimits,upperLimits);      
+        err = rangeCheck(curSKUDecision[field],lowerLimits,upperLimits);
         if(err != undefined){
             err.modifiedField = field;
             done(err);
         } else {
             done();
-        }                   
+        }
     }).done();
 }
 
@@ -306,14 +313,14 @@ function validateWholesalesBonusMinVolume(field, curSKUDecision, done){
         upperLimits.push({value : SKUHistoryInfo.currentPeriodInfo.stocksAtFactory[0] +  preSKUDecision.d_ProductionVolume, message : 'Minimum Order cannot exceed production volume + factory stock'});
         upperLimits.push({value : (budgetLeft + (preSKUDecision[field] * preSKUDecision.d_ConsumerPrice * preSKUDecision.d_WholesalesBonusRate)) / (curSKUDecision.d_WholesalesBonusRate * curSKUDecision.d_ConsumerPrice) , message : 'Budget left is not enough for WholeSales bonus cost.'});
 
-        err = rangeCheck(curSKUDecision[field],lowerLimits,upperLimits);      
+        err = rangeCheck(curSKUDecision[field],lowerLimits,upperLimits);
         if(err != undefined){
             err.modifiedField = field;
             done(err);
         } else {
             done();
-        }         
-    }).done();    
+        }
+    }).done();
 
 }
 
@@ -330,14 +337,14 @@ function validateWholesalesBonusRate(field, curSKUDecision, done){
         upperLimits.push({value : gameParameters.pgen.wholesale_Markup, message : 'Cannot accept number bigger than wholesale markup: ' + (gameParameters.pgen.wholesale_Markup * 100).toFixed(2)+ '%'});
         upperLimits.push({value : (budgetLeft + (preSKUDecision[field] * preSKUDecision.d_ConsumerPrice * preSKUDecision.d_WholesalesBonusMinVolume)) / (curSKUDecision.d_WholesalesBonusMinVolume * curSKUDecision.d_ConsumerPrice) , message : 'Budget left is not enough for WholeSales bonus cost.'});
 
-        err = rangeCheck(curSKUDecision[field],lowerLimits,upperLimits);      
+        err = rangeCheck(curSKUDecision[field],lowerLimits,upperLimits);
         if(err != undefined){
             err.modifiedField = field;
             done(err);
         } else {
             done();
-        }         
-    }).done();     
+        }
+    }).done();
 }
 
 function validateProductionVolume(field, curSKUDecision, done){
@@ -350,17 +357,17 @@ function validateProductionVolume(field, curSKUDecision, done){
         var preEstimatedCost = preSKUDecision[field] * preSKUDecision.d_AdditionalTradeMargin * preSKUDecision.d_ConsumerPrice;
         var preProductionVolume = preSKUDecision[field] * consts.ActualSize[preSKUDecision.d_PackSize];
 
-        lowerLimits.push({value : 0, message: 'Cannot accept negative number.'});        
+        lowerLimits.push({value : 0, message: 'Cannot accept negative number.'});
         upperLimits.push({value : (preProductionVolume + spendingDetails.companyData.normalCapacity + parseFloat(spendingDetails.companyData.availableOvertimeCapacityExtension)), message: 'Production capacity is not enough.'});
         upperLimits.push({value : (budgetLeft + preEstimatedCost)/(preSKUDecision.d_AdditionalTradeMargin * preSKUDecision.d_ConsumerPrice), message : 'Budget left is not enough for traditional trade margin cost.'});
 
-        err = rangeCheck(curSKUDecision[field],lowerLimits,upperLimits);      
+        err = rangeCheck(curSKUDecision[field],lowerLimits,upperLimits);
         if(err != undefined){
             err.modifiedField = field;
             done(err);
         } else {
             done();
-        }         
+        }
     }).done();
 }
 
@@ -374,13 +381,13 @@ function validateAvailableBudget(field, curSKUDecision, done){
 
         lowerLimits.push({value : 0, message: 'Cannot accept negative number.'});
         upperLimits.push({value : budgetLeft + preSKUDecision[field], message : 'Budget Left is not enough.'});
-        err = rangeCheck(curSKUDecision[field],lowerLimits,upperLimits);      
+        err = rangeCheck(curSKUDecision[field],lowerLimits,upperLimits);
         if(err != undefined){
             err.modifiedField = field;
             done(err);
         } else {
             done();
-        }         
+        }
     }).done();
 }
 
@@ -413,7 +420,7 @@ function validateTargetConsumerSegment(field, curSKUDecision, done){
         var err = new Error('Input is out of range');
         done(err);
     } else {
-        process.nextTick(done);        
+        process.nextTick(done);
     }
 }
 
@@ -452,16 +459,16 @@ exports.remove =  function(seminarId, period, companyId, brandId, SKUID){
                         brandDoc.remove(function(err){
                             if(err){ return deferred.reject(err); }
                             //Step 3.5: clear related BrandID in the array companyDecision.d_BrandsDecisions
-                            else { 
+                            else {
                                 companyDecisionModel.findOne(brandDoc.seminarId, brandDoc.period, brandDoc.d_CID).then(function(companyDoc){
-                                    companyDoc.d_BrandsDecisions = _.without(companyDoc.d_BrandsDecisions, brandDoc.d_BrandID);                     
+                                    companyDoc.d_BrandsDecisions = _.without(companyDoc.d_BrandsDecisions, brandDoc.d_BrandID);
                                     companyDoc.save(function(err){
                                         if(err){ return deferred.reject(err);}
-                                        else{  return deferred.resolve({message: 'SKU and related Brand have been removed.'});  }    
-                                    });                                    
+                                        else{  return deferred.resolve({message: 'SKU and related Brand have been removed.'});  }
+                                    });
                                 }).fail(function(err){
                                     return deferred.reject(err);
-                                }).done();                                    
+                                }).done();
                             }
                         })
                     } else {
@@ -469,14 +476,14 @@ exports.remove =  function(seminarId, period, companyId, brandId, SKUID){
                         brandDoc.save(function(err){
                             if(err){ return deferred.reject(err); }
                             else { return deferred.resolve({message: 'SKU has been removed.'}); }
-                        })                        
+                        })
                     }
                 }).fail(function(err){
                     return deferred.reject(err);
-                }).done();                
-            }            
+                }).done();
+            }
         });
-    });   
+    });
 
     return deferred.promise;
 }
@@ -507,7 +514,7 @@ exports.removeAllInBrand = function(seminarId, period, companyId){
     SKUDecision.remove({
         seminarId: seminarId,
         d_CID: companyId
-    }, 
+    },
     function(err){
         if(err){
             return deferred.reject(err);
@@ -520,7 +527,7 @@ exports.removeAllInBrand = function(seminarId, period, companyId){
 
 
 //Run simulation process, create brand decision document based on last period decision, skip all the validations
-//copy bs_PeriodOfBirth from last period input 
+//copy bs_PeriodOfBirth from last period input
 exports.createSKUDecisionBasedOnLastPeriodDecision = function(decision){
     if(!mongoose.connection.readyState){
         throw new Error("mongoose is not connected.");
@@ -567,10 +574,10 @@ exports.create = function(decision){
                 brandDoc.save(function(err){
                     if(err){ return deferred.reject(err); }
                     else { return deferred.resolve({message: 'SKU has been added.'}); }
-                });                      
+                });
             }).fail(function(err){
                 return deferred.reject(err);
-            }).done();  
+            }).done();
         }
     });
     return deferred.promise;
@@ -697,7 +704,7 @@ exports.updateSKU = function(seminarId, period, companyId, brandId, SKUID, SKU){
         throw new Error("mongoose is not connected.");
     }
 
-    var deferred = Q.defer(); 
+    var deferred = Q.defer();
     if(!seminarId){
         deferred.reject(new Error("Invalid argument seminarId."));
     }else if(period===undefined){
@@ -745,12 +752,12 @@ exports.updateSKU = function(seminarId, period, companyId, brandId, SKUID, SKU){
                 }
             });
 
-            doc.save(function(err, doc){         
+            doc.save(function(err, doc){
                 if(err){ deferred.reject(err);}
                 else{ return deferred.resolve(doc);}
             });
         });
-  
+
     }
     return deferred.promise;
 };
@@ -764,7 +771,7 @@ exports.insertEmptySKUDecision = function(seminarId, period){
     if(!mongoose.connection.readyState){
         throw new Error("mongoose is not connected.");
     }
-    
+
     return exports.findAllInPeriod(seminarId, period-1)
     .then(function(allSKUDecisions){
         var p = Q();
@@ -773,8 +780,8 @@ exports.insertEmptySKUDecision = function(seminarId, period){
                 return exports.save({
                     seminarId: seminarId,
                     period: period,
-                    d_CID: SKUDecision.d_CID,  
-                    d_BrandID: SKUDecision.d_BrandID, 
+                    d_CID: SKUDecision.d_CID,
+                    d_BrandID: SKUDecision.d_BrandID,
                     d_SKUID: SKUDecision.d_SKUID,
                     d_SKUName: SKUDecision.d_SKUName
                 })
