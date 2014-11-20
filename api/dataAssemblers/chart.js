@@ -278,7 +278,6 @@ exports.segmentsLeadersByValue = function(allResults, segment){
     });
 
     return result;
-
 }
 
 
@@ -488,8 +487,7 @@ function prepareSKUTooltips(currentPeriodResult, perviousPeriodResult, SKUID){
     if(!perviousPeriodResult){
         var previousPeriodSKU = undefined;
     } else {
-
-        var previousPeriodSKU = utility.findSKU(perviousPeriodResult, SKUID);        
+        var previousPeriodSKU = utility.findSKU(perviousPeriodResult, SKUID);
     }
 
     if(!currentPeriodSKU){
@@ -500,7 +498,6 @@ function prepareSKUTooltips(currentPeriodResult, perviousPeriodResult, SKUID){
             u_ShelfSpace : 0,
             u_Perception : [0,0]
         };
-
     } 
 
     if(!previousPeriodSKU){
