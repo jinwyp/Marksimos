@@ -174,7 +174,7 @@
                     <div ng-if="css.tableReportTab=='SKU'">
 
                         <ul class="nav nav-pills">
-                            <li ng-class="{'active': data.tableA4ProfitabilityEvolution.currentSKU.SKUID==sku.SKUID}" ng-repeat="sku in data.tableA4ProfitabilityEvolution.allData.SKU"><a href="" ng-click="switchTableReportA4SKU(sku)">{{sku.SKUName}} {{sku.PackSize | skupacksize | translate}}</a></li>
+                            <li ng-class="{'active': data.tableA4ProfitabilityEvolution.currentSKU.SKUID==sku.SKUID}" ng-repeat="sku in data.tableA4ProfitabilityEvolution.currentData.SKU"><a href="" ng-click="switchTableReportA4SKU(sku)">{{sku.SKUName}} {{sku.PackSize | skupacksize | translate}}</a></li>
                         </ul>
 
                         <div class="divider_horizontal"></div>
@@ -185,7 +185,7 @@
                     <div ng-if="css.tableReportTab=='Brand'">
 
                         <ul class="nav nav-pills">
-                            <li ng-class="{'active': data.tableA4ProfitabilityEvolution.currentBrand.brandId==brand.brandId}" ng-repeat="brand in data.tableA4ProfitabilityEvolution.allData.brand"><a href="" ng-click="switchTableReportA4Brand(brand)">{{brand.brandName}}</a></li>
+                            <li ng-class="{'active': data.tableA4ProfitabilityEvolution.currentBrand.brandId==brand.brandId}" ng-repeat="brand in data.tableA4ProfitabilityEvolution.currentData.brand"><a href="" ng-click="switchTableReportA4Brand(brand)">{{brand.brandName}}</a></li>
                         </ul>
 
                         <div class="divider_horizontal"></div>
