@@ -300,6 +300,7 @@
                             <button type="button" class="btn btn-default" ng-class="{'active': css.tableReportTab=='Brand'}" ng-click="switchTableCategoryC5('Brand', 'averageDisplayPriceStdPack', '')">{{'ReportTabLabelBrand' | translate}}</button>
                             <button type="button" class="btn btn-default" ng-class="{'active': css.tableReportTab=='Global'}" ng-click="switchTableCategoryC5('Global', 'averageNetMarketPriceStdPack', '')">{{'ReportTabLabelGlobal' | translate}}</button>
                         </div>
+                      
                     </div>
                     <i class="fa fa-table"></i>
                     <h3 class="box-title">
@@ -308,6 +309,12 @@
                 </div>
             </div>
             <div class="box-body no-padding">
+                <ul class="nav nav-pills table_multimenu">
+                    <li ng-class="{'active': css.tableReportMenu == 1}"><a href="" ng-click="switchTableMenuLevel1C5(1, css.tableReportTab, 'averageDisplayPriceStdPack', '')">{{'ReportMarketTrendsSKUTableTitleMarketFigures' | translate}}</a></li>
+                    <li ng-class="{'active': css.tableReportMenu == 2}"><a href="" ng-click="switchTableMenuLevel1C5(2, css.tableReportTab, 'lostSalesVolumeDueToOOSStdPack', '')">{{'ReportMarketTrendsSKUTableTitleMiscellaneous' | translate}}</a></li>
+                    <li ng-class="{'active': css.tableReportMenu == 3}"><a href="" ng-click="switchTableMenuLevel1C5(3, css.tableReportTab, 'valueShareInPriceSensitiveSegment', '%')">{{'ReportMarketTrendsSKUTableTitleSegmentWiseValueShare' | translate}}</a></li>
+                    <li ng-class="{'active': css.tableReportMenu == 4}"><a href="" ng-click="switchTableMenuLevel1C5(4, css.tableReportTab, 'volumeShareInPriceSensitiveSegment', '%')">{{'ReportMarketTrendsSKUTableTitleSegmentWiseVolumeShare' | translate}}</a></li>
+                </ul>
                 <!--  SKU  -->
                 <div ng-if="css.tableReportTab=='SKU'">
 
@@ -351,7 +358,7 @@
 
                     <div class="divider_horizontal"></div>
 
-                    <div table-report-market-trends-sku data="data.tableC5MarketTrends.currentTableData" unit="data.tableC5MarketTrends.currentTableUnit"></div>
+                    <div table-report-market-trends-sku data="data.tableC5MarketTrends.currentTableData" unit="data.tableC5MarketTrends.currentTableUnit" chartdata="data.tableC5MarketTrends.chartData" chartconfig="data.tableC5MarketTrends.chartConfig"></div>
 
                 </div>
 
@@ -399,7 +406,7 @@
 
                     <div class="divider_horizontal"></div>
 
-                    <div table-report-market-trends-brand data="data.tableC5MarketTrends.currentTableData" unit="data.tableC5MarketTrends.currentTableUnit"></div>
+                    <div table-report-market-trends-brand data="data.tableC5MarketTrends.currentTableData" unit="data.tableC5MarketTrends.currentTableUnit" chartdata="data.tableC5MarketTrends.chartData" chartconfig="data.tableC5MarketTrends.chartConfig"></div>
 
                 </div>
 
@@ -444,7 +451,7 @@
 
                     <div class="divider_horizontal"></div>
 
-                    <div table-report-market-trends-global data="data.tableC5MarketTrends.currentTableData" unit="data.tableC5MarketTrends.currentTableUnit"></div>
+                    <div table-report-market-trends-global data="data.tableC5MarketTrends.currentTableData" unit="data.tableC5MarketTrends.currentTableUnit" chartdata="data.tableC5MarketTrends.chartData" chartconfig="data.tableC5MarketTrends.chartConfig"></div>
 
                 </div>
             </div>
