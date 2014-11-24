@@ -672,22 +672,25 @@
 
         var app = {
             initOnce: function () {
-                //添加事件
-                this.runOnce();
-                //加载A1 Company Status
-                this.loadingCompanyData();
-                //加载A2 Financial Data
-                this.loadingFinancialData();
-                //加载A4 Profitability Evolution
-                this.loadingProfitabilityData();
-                //加载C6 Market Indicators
-                this.loadingMarketIndicatorsData();
-                //加载B2 Competitor Intelligence
-                this.loadingCompetitorIntelligenceData();
-                //加载C3 Segment Distribution
-                this.loadingSegmentDistributionData();
-                //加载C5 Market Trends
-                this.loadingMarketTrendsData();
+                var that = this;
+                chartReport.initTranslate().then(function () {
+                    //添加事件
+                    that.runOnce();
+                    //加载A1 Company Status
+                    that.loadingCompanyData();
+                    //加载A2 Financial Data
+                    that.loadingFinancialData();
+                    //加载A4 Profitability Evolution
+                    that.loadingProfitabilityData();
+                    //加载C6 Market Indicators
+                    that.loadingMarketIndicatorsData();
+                    //加载B2 Competitor Intelligence
+                    that.loadingCompetitorIntelligenceData();
+                    //加载C3 Segment Distribution
+                    that.loadingSegmentDistributionData();
+                    //加载C5 Market Trends
+                    that.loadingMarketTrendsData();
+                });
             },
             runOnce: function () {
                 /********************  Table A1 Company Status  *******************/

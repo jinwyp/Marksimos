@@ -786,8 +786,34 @@
 
                 return chartFormatTool3(data);
             },
-
-
+            initTranslate: function () {
+                return $translate(['ReportInventoryReportLabelCloseToExpireInventory',
+                    'ReportInventoryReportLabelPreviousInventory',
+                    'ReportInventoryReportLabelFreshInventory',
+                    'HomePageSecondMenuBarLabelsCompany',
+                    'ReportPerceptionMapAxisLabelSegment',
+                    'HomePageSegmentLabelPriceSensitive',
+                    'HomePageSegmentLabelPretenders',
+                    'HomePageSegmentLabelModerate',
+                    'HomePageSegmentLabelGoodLife',
+                    'HomePageSegmentLabelUltimate',
+                    'HomePageSegmentLabelPragmatic',
+                    'HomePageSegmentLabelAllSegments'
+                ]).then(function (translations) {
+                    translateText.ReportInventoryReportLabelCloseToExpireInventory = translations.ReportInventoryReportLabelCloseToExpireInventory;
+                    translateText.ReportInventoryReportLabelPreviousInventory = translations.ReportInventoryReportLabelPreviousInventory;
+                    translateText.ReportInventoryReportLabelFreshInventory = translations.ReportInventoryReportLabelFreshInventory;
+                    translateText.HomePageSecondMenuBarLabelsCompany = translations.HomePageSecondMenuBarLabelsCompany;
+                    translateText.ReportPerceptionMapAxisLabelSegment = translations.ReportPerceptionMapAxisLabelSegment;
+                    translateText.HomePageSegmentLabelPriceSensitive = translations.HomePageSegmentLabelPriceSensitive;
+                    translateText.HomePageSegmentLabelPretenders = translations.HomePageSegmentLabelPretenders;
+                    translateText.HomePageSegmentLabelModerate = translations.HomePageSegmentLabelModerate;
+                    translateText.HomePageSegmentLabelGoodLife = translations.HomePageSegmentLabelGoodLife;
+                    translateText.HomePageSegmentLabelUltimate = translations.HomePageSegmentLabelUltimate;
+                    translateText.HomePageSegmentLabelPragmatic = translations.HomePageSegmentLabelPragmatic;
+                    translateText.HomePageSegmentLabelAllSegments = translations.HomePageSegmentLabelAllSegments;
+                });
+            },
             // Chart A3
             inventoryReport : function(){
                 return $translate(['ReportInventoryReportLabelCloseToExpireInventory',
