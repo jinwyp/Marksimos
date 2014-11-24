@@ -727,6 +727,11 @@ exports.updateSKU = function(seminarId, period, companyId, brandId, SKUID, SKU){
         },function(err, doc){
             if(err){ return deferred.reject(err);}
 
+            if(!doc){
+                var validateErr = new Error('Cannot find related sku decision, sku might be deleted.');
+                return deferred.reject(validateErr);
+            }
+
             var fields = ['d_Advertising',
                           'd_AdditionalTradeMargin',
                           'd_FactoryPrice',
