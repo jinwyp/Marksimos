@@ -96,7 +96,8 @@
             "HomePageSecondMenuBarLabelsMakeDecision"      : "Make Decision",
             "HomePageSecondMenuBarCurrentPeriod"           : "Period",
 
-            "HomePageSecondMenuBarCompareData"           : "Compare Data",
+            "HomePageSecondMenuBarCompareData"     : "Compare Data",
+            "HomePageSecondMenuBarCompareDataBack" : "Back to Report",
 
             //Labels for Items on Home page - Three Boxes
             "HomePageYourCompanyTableLabel"                 : "Your Company",
@@ -1029,7 +1030,8 @@
             "HomePageSecondMenuBarLabelsMakeDecision"      : "做决策",
             "HomePageSecondMenuBarCurrentPeriod"           : "阶段",
 
-            "HomePageSecondMenuBarCompareData"           : "数据报告对比",
+            "HomePageSecondMenuBarCompareData"     : "数据报告对比",
+            "HomePageSecondMenuBarCompareDataBack" : "返回数据报告",
 
             //Labels for Items on Home page - Three Boxes
             "HomePageYourCompanyTableLabel"                 : "您的公司",

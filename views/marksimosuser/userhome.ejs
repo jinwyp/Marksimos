@@ -207,7 +207,8 @@
         <div class="col-md-1 user_home_divider user_chart_box">
             <div class="row">
                 <div class="col-md-12 " ng-click="showComparisonPage()">
-                    <span class="user_chart_vs"> {{'HomePageSecondMenuBarCompareData' | translate}}</span>
+                    <span class="user_chart_vs" ng-show="css.comparisonPage"> {{'HomePageSecondMenuBarCompareData' | translate}}</span>
+                    <span class="user_chart_vs" ng-hide="css.comparisonPage"> {{'HomePageSecondMenuBarCompareDataBack' | translate}}</span>
                 </div>
             </div>
         </div>
