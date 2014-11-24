@@ -195,6 +195,8 @@ gulp.task('watch', function() {
 });
 
 
+
+
 gulp.task('watchdev', function() {
     gulp.watch(paths.angularTemplates, ['templates']);
     gulp.watch(paths.sassSourceFiles, ['compass']);
@@ -218,10 +220,10 @@ gulp.task('browser-sync', function() {
 
 /********************  默认任务 he default task (called when you run `gulp` from cli)  ********************/
 
-gulp.task('default', ['nodemonludwik', 'watch']);
+gulp.task('default', ['nodemonludwik', 'watchdev']);
 
 //gulp.task('jin', ['mongo', 'browser-sync', 'nodemonjin', 'watch']);
 gulp.task('jin', [ 'compass', 'templates', 'nodemonjin', 'watchdev']);
 gulp.task('jingo', ['compass', 'templates', 'nodemonjin', 'watch']);
 
-gulp.task('sunyun', ['nodemonsunyun','compass', 'watch']);
+gulp.task('sunyun', ['nodemonsunyun', 'watchdev']);

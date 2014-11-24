@@ -1,5 +1,3 @@
-
-
 <% include ./include/headcssadmin.html %>
 
 
@@ -419,7 +417,7 @@
                                         <td>{{user.organizationOrUniversity}}</td>
                                         <td>{{user.occupation}}</td>
                                         <td>
-                                            <button ng-click='resetPassword(user._id)'>Reset</button>
+                                            <button ng-click='resetStudentPassword(user._id)'>Reset</button>
                                         </td>
                                     </tr>
                                     </tbody>
@@ -445,7 +443,7 @@
                                     <username-input labeltext="Student UserName :" placeholdertext="Student UserName" formname="newStudentForm" data="data.newStudent.username" required="true" requirederrorinfo="Username is required" minlength="6" minlengtherrorinfo="Username must be at least 6 characters" maxlength="20" maxlengtherrorinfo="Username is a maximum of 20 characters"></username-input>
                                     <email-input labeltext="Student Email :" placeholdertext="Email" formname="newStudentForm" data="data.newStudent.email" required="true" requirederrorinfo="Email is required" emailerrorinfo="Doesn't look like a valid email !"></email-input>
                                     <password-input labeltext="Password :" placeholdertext="Password" formname="newStudentForm" data="data.newStudent.password" required="true" requirederrorinfo="Password is required" minlength="6" minlengtherrorinfo="Password must be at least 6 characters" maxlength="20" maxlengtherrorinfo="Password is a maximum of 20 characters"></password-input>
-                                    <phone-input labeltext="Phone :" placeholdertext="Cell Phone" formname="newStudentForm" data="data.newStudent.mobilePhone" required="false" requirederrorinfo="Phone is required" minlength="11" minlengtherrorinfo="Phone must be at least 11 characters" maxlength="15" maxlengtherrorinfo="Phone is a maximum of 15 characters"></phone-input>
+                                    <phone-input labeltext="Phone :" placeholdertext="Cell Phone" formname="newStudentForm" data="data.newStudent.mobilePhone" required="true" requirederrorinfo="Phone is required" minlength="11" minlengtherrorinfo="Phone must be at least 11 characters" maxlength="15" maxlengtherrorinfo="Phone is a maximum of 15 characters"></phone-input>
 
                                     <div class="form-group">
                                         <label for="inputStudentCountry" class="col-sm-2 control-label">Country/State/City : </label>
@@ -492,6 +490,18 @@
                                         <label for="inputUniversity" class="col-sm-2 control-label">University / Organization: </label>
                                         <div class="col-sm-4">
                                             <input type="text" class="form-control" id="inputUniversity" name="university"  ng-model="data.newStudent.university">
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group" ng-class="{'has-success':newStudentForm.student_type.$dirty && newStudentForm.student_type.$valid, 'has-error': newStudentForm.student_type.$dirty && newStudentForm.student_type.$invalid}">
+                                        <label for="inputStudentUserFrom" class="col-sm-2 control-label">Student For</label>
+                                        <div class="col-sm-4">
+                                            <label class="radio-inline">
+                                                <input type="radio" name="inputStudentUserFrom" ng-model="data.newStudent.student_type" value="10">B2B Student
+                                            </label>
+                                            <label class="radio-inline">
+                                                <input type="radio" name="inputStudentUserFrom" ng-model="data.newStudent.student_type" value="20">B2C(E4E) Student
+                                            </label>
                                         </div>
                                     </div>
 

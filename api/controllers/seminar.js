@@ -7,7 +7,6 @@ var consts = require('../consts.js');
 var config = require('../../common/config.js');
 var utility = require('../../common/utility.js');
 
-var colors = require('colors');
 
 exports.addSeminar = function(req, res, next){
     var checkRequiredFieldResult = checkRequiredField(req);

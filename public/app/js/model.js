@@ -22,8 +22,7 @@
 
     angular.module('marksimos.model').factory('Student', ['$http', studentModel]);
     angular.module('marksimos.model').factory('Company', ['$http', companyModel]);
-    //管理员报表-表格
-    angular.module('marksimos.model').factory('AdminTable', ['$http', adminTableModel]);
+
 
     angular.module('marksimos.model').factory('chartReport', ['$http', '$rootScope', '$translate', chartReportModel]);
     angular.module('marksimos.model').factory('tableReport', ['$http', tableReportModel]);
@@ -32,7 +31,8 @@
 
 
     angular.module('marksimos.model').factory('Admin', ['$http', adminModel]);
-
+    //管理员报表-表格
+    angular.module('marksimos.model').factory('AdminTable', ['$http', adminTableModel]);
 
 
     var apiPath = '/marksimos/api/';
@@ -174,6 +174,7 @@
         };
         return factory;
     }
+
 
 
     function chartReportModel ($http, $rootScope, $translate){
@@ -785,8 +786,34 @@
 
                 return chartFormatTool3(data);
             },
-
-
+            initTranslate: function () {
+                return $translate(['ReportInventoryReportLabelCloseToExpireInventory',
+                    'ReportInventoryReportLabelPreviousInventory',
+                    'ReportInventoryReportLabelFreshInventory',
+                    'HomePageSecondMenuBarLabelsCompany',
+                    'ReportPerceptionMapAxisLabelSegment',
+                    'HomePageSegmentLabelPriceSensitive',
+                    'HomePageSegmentLabelPretenders',
+                    'HomePageSegmentLabelModerate',
+                    'HomePageSegmentLabelGoodLife',
+                    'HomePageSegmentLabelUltimate',
+                    'HomePageSegmentLabelPragmatic',
+                    'HomePageSegmentLabelAllSegments'
+                ]).then(function (translations) {
+                    translateText.ReportInventoryReportLabelCloseToExpireInventory = translations.ReportInventoryReportLabelCloseToExpireInventory;
+                    translateText.ReportInventoryReportLabelPreviousInventory = translations.ReportInventoryReportLabelPreviousInventory;
+                    translateText.ReportInventoryReportLabelFreshInventory = translations.ReportInventoryReportLabelFreshInventory;
+                    translateText.HomePageSecondMenuBarLabelsCompany = translations.HomePageSecondMenuBarLabelsCompany;
+                    translateText.ReportPerceptionMapAxisLabelSegment = translations.ReportPerceptionMapAxisLabelSegment;
+                    translateText.HomePageSegmentLabelPriceSensitive = translations.HomePageSegmentLabelPriceSensitive;
+                    translateText.HomePageSegmentLabelPretenders = translations.HomePageSegmentLabelPretenders;
+                    translateText.HomePageSegmentLabelModerate = translations.HomePageSegmentLabelModerate;
+                    translateText.HomePageSegmentLabelGoodLife = translations.HomePageSegmentLabelGoodLife;
+                    translateText.HomePageSegmentLabelUltimate = translations.HomePageSegmentLabelUltimate;
+                    translateText.HomePageSegmentLabelPragmatic = translations.HomePageSegmentLabelPragmatic;
+                    translateText.HomePageSegmentLabelAllSegments = translations.HomePageSegmentLabelAllSegments;
+                });
+            },
             // Chart A3
             inventoryReport : function(){
                 return $translate(['ReportInventoryReportLabelCloseToExpireInventory',
@@ -1104,7 +1131,7 @@
     }
 
 
-
+    /********************  管理员界面数据  ********************/
     function adminModel($http){
 
         var factory = {
@@ -1115,30 +1142,63 @@
             userInfo : function(){
                 return $http.get(apiAdminPath + 'user');
             },
-            getDistributors : function(){
-                return $http.get(apiAdminPath + 'distributors');
+            getDistributors : function(urlparams){
+                urlparams = angular.isUndefined(urlparams) ? {}  : urlparams ;
+                return $http.get(apiAdminPath + 'distributors', {params : urlparams});
             },
-            getFacilitators : function(){
-                return $http.get(apiAdminPath + 'facilitators');
+            getFacilitators : function(urlparams){
+                urlparams = angular.isUndefined(urlparams) ? {}  : urlparams ;
+                return $http.get(apiAdminPath + 'facilitators', {params : urlparams});
             },
-            getStudents : function(){
-                return $http.get(apiAdminPath + 'students');
+            getStudents : function(urlparams){
+                urlparams = angular.isUndefined(urlparams) ? {}  : urlparams ;
+                return $http.get(apiAdminPath + 'students', {params : urlparams});
             },
-            getSeminars : function(){
-                return $http.get(apiAdminPath + 'facilitator/seminar');
+            getSeminars : function(urlparams){
+                urlparams = angular.isUndefined(urlparams) ? {}  : urlparams ;
+                return $http.get(apiAdminPath + 'facilitator/seminar', {params : urlparams});
             }
 
         };
         return factory;
     }
-    /********************  管理员报表-表格  ********************/
 
+
+
+    /********************  管理员报表-表格  ********************/
     function adminTableModel($http) {
+        function getAdminRequest(url) {
+            return $http.get(apiAdminPath + url).then(function (result) {
+                return result.data;
+            })["catch"](errorHandler);
+        }
         return {
+            //Table A1 Company Status
             getCompany: function () {
-                return $http.get(apiPath + 'admin/report/company_status').then(function (result) {
-                    return result.data;
-                })["catch"](errorHandler);
+                return getAdminRequest("report/company_status");
+            },
+            //Table A2 Financial Data
+            getFinancial: function () {
+                return getAdminRequest("report/financial_report");                
+            },
+            //Table A4 Profitability Evolution
+            getProfitability: function () {
+                return getAdminRequest("report/profitability_evolution");              
+            },
+            //Table C6 Market Indicators
+            getMarketIndicators: function () {
+                return getAdminRequest("report/market_indicators");              
+            },
+            //Table B2 Competitor Intelligence
+            getCompetitorIntelligence: function () {
+                return getAdminRequest("report/competitor_intelligence");               
+            },
+            //Table C3 Segment Distribution
+            getSegmentDistribution: function () {
+                return getAdminRequest("report/segment_distribution");               
+            },
+            getMarketTrends: function () {
+                return getAdminRequest("report/market_trends");
             }
         };
     }

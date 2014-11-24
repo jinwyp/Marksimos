@@ -7,7 +7,7 @@
     'use strict';
 
     /********************  Create New Module For Controllers ********************/
-   angular.module('marksimosadmin', ['pascalprecht.translate', 'notifications', 'marksimos.websitecomponent', 'marksimos.commoncomponent', 'marksimos.filter']);
+    angular.module('marksimosadmin', ['pascalprecht.translate', 'notifications', 'marksimos.websitecomponent', 'marksimos.commoncomponent', 'marksimos.filter', 'angularCharts']);
 
 
 
@@ -111,7 +111,8 @@
                 occupation : "",
                 university : "",
                 firstname : "",
-                lastname : ""
+                lastname : "",
+                student_type :  10 //10 B2B students,  20 B2C students, 30 Both B2C and B2B students
             },
             searchStudent : {
                 username :'',
@@ -307,23 +308,23 @@
 
         var app = {
             initOnce: function () {
-                var self = this;
+                var that = this;
                 Admin.userInfo().success(function(data, status, headers, config){
                     $scope.data.currentUser = data;
 
                     if($scope.data.currentUser.role === 1){
-                        self.getDistributorsInit();
-                        self.getFacilitatorsInit();
-                        self.getStudentsInit();
+                        that.getDistributorsInit();
+                        that.getFacilitatorsInit();
+                        that.getStudentsInit();
                         $scope.css.menuTabShow = [false, true, true, true, true, true, true];
 
                     }else if($scope.data.currentUser.role === 2){
-                        self.getFacilitatorsInit();
+                        that.getFacilitatorsInit();
                         $scope.css.menuTabShow = [false, true, false, true, false, false, false];
 
                     }else if($scope.data.currentUser.role === 3){
-                        self.getStudentsInit();
-                        self.getSeminarInit();
+                        that.getStudentsInit();
+                        that.getSeminarInit();
                         $scope.css.menuTabShow = [false, true, false, false ,true, true, false];
                     }
 
@@ -391,7 +392,7 @@
         /********************  搜索 Distributor  ********************/
         $scope.searchDistributor = function(form){
             if(form.$valid){
-                $http.get('/marksimos/api/admin/distributors', {params : $scope.data.searchDistributor}).success(function(data, status, headers, config){
+                Admin.getDistributors($scope.data.searchDistributor).success(function(data, status, headers, config){
 
                     $scope.data.distributors = data;
 
@@ -403,7 +404,6 @@
         /********************  创建新的 Distributor  ********************/
         $scope.createNewDistributor = function(form){
             if(form.$valid){
-                console.log($scope.data.newDistributor);
                 $http.post('/marksimos/api/admin/distributors', $scope.data.newDistributor).success(function(data, status, headers, config){
 
                     app.getDistributorsInit();
@@ -422,7 +422,7 @@
         /********************  搜索 Facilitator  ********************/
         $scope.searchFacilitator = function(form){
             if(form.$valid){
-                $http.get('/marksimos/api/admin/facilitators', {params : $scope.data.searchFacilitator}).success(function(data, status, headers, config){
+                Admin.getFacilitators($scope.data.searchFacilitator).success(function(data, status, headers, config){
                     $scope.data.facilitators = data;
 
                 }).error(function(data, status, headers, config){
@@ -448,10 +448,11 @@
             }
         };
 
+
         /********************  搜索 Students  ********************/
         $scope.searchStudent = function(form){
             if(form.$valid){
-                $http.get('/marksimos/api/admin/students', {params : $scope.data.searchStudent}).success(function(data, status, headers, config){
+                Admin.getStudents($scope.data.searchStudent).success(function(data, status, headers, config){
                     $scope.data.students = data;
 
                 }).error(function(data, status, headers, config){
@@ -475,7 +476,7 @@
             }
         };
         /********************  Student 重置密码为hcd1234  ********************/
-        $scope.resetPassword =  function(id){
+        $scope.resetStudentPassword =  function(id){
             var postData = {
                 student_id:id
             };
@@ -488,10 +489,11 @@
             });
         };
 
+
         /********************  搜索 Seminars  ********************/
         $scope.searchSeminar = function(form){
             if(form.$valid){
-                $http.get('/marksimos/api/admin/facilitator/seminar', {params : $scope.data.searchSeminar}).success(function(data, status, headers, config){
+                Admin.getSeminars($scope.data.searchSeminar).success(function(data, status, headers, config){
                     $scope.data.seminars = data;
 
                 }).error(function(data, status, headers, config){
@@ -515,7 +517,6 @@
                 });
             }
         };
-
         /********************  选择公司  ********************/
         $scope.chooseCompany = function(seminar, company){
             seminar.currentCompanyName = company.companyName;
@@ -566,9 +567,6 @@
                 });
             }
         };
-
-
-
         /********************  Init Seminar  ********************/
         $scope.initSeminar = function(seminarid){
             $scope.css.runButtonDisabled = true;
@@ -581,7 +579,6 @@
                 $scope.css.runButtonDisabled = false;
             });
         };
-
         /********************  Run Seminar  ********************/
         $scope.runSeminar = function(seminarid, round){
             $scope.css.runButtonDisabled = true;
@@ -603,13 +600,14 @@
 
 
 
-    angular.module('marksimosadmin').controller('adminMarksimosReportController', ['$scope', '$http', '$notification', 'AdminTable', function ($scope, $http, $notification, AdminTable) {
-      $scope.css = {
-            currentReportMenu: 'A1'
-
+    angular.module('marksimosadmin').controller('adminMarksimosReportController', ['$scope', '$http', '$notification', 'AdminTable', 'chartReport', function ($scope, $http, $notification, AdminTable,chartReport) {
+        $scope.css = {
+            currentReportMenu: 'A1',
+            tableReportTab: 'SKU'
         };
 
-        $scope.data = {          
+        $scope.data = {
+            //A1 Company Status
             tableA1CompanyStatus: {
                 allCompanyData: [],
                 currentCompany: {
@@ -619,43 +617,242 @@
                 currentBrand: {},
                 currentGlobal: {}
             },
+            //A2 Financial Data
+            tableA2FinancialData: {
+                allData: [],
+                currentCompany: {},
+                currentPeriod: {
+                    period: 'Select Period'
+                },
+                currentBrand: {}
+            },
+            //A4 Profitability Evolution
+            tableA4ProfitabilityEvolution: {
+                allData: [],
+                currentSKU: {},
+                currentBrand: {},
+                currentGlobal: {}
+            },
+            //C3 Segment Distribution
+            tableC3SegmentDistribution : {
+                allData : [],
+                currentTable : 1,
+                currentTableData : {},
+                currentTableUnit : "%",
+                chartConfig : chartReport.getChartConfig1(),
+                chartData : $scope.dataChartSimple              
+            },
+            tableC5MarketTrends : {
+                allData : [],
+                currentTable : 1,
+                currentTableData : {},
+                currentTableUnit : "",
+                chartConfig : chartReport.getChartConfig1(),
+                chartData : $scope.dataChartSimple
+            },
+            //C6 Market Indicators
+            tableC6MarketIndicators: {
+                allData: {}
+            },
+            //B2 Competitor Intelligence
+            tableB2CompetitorIntelligence: {
+                allData: [],
+                currentTable: 1,
+                currentTableData: {},
+                currentTableUnit: "%",
+                chartConfig: chartReport.getChartConfig1(),
+                chartData: $scope.dataChartSimple
+            }
         };
 
         $scope.clickChartMenu = function (report) {
-            $scope.css.currentReportMenu = report;          
-           
+            $scope.css.currentReportMenu = report;
         };
 
-        $scope.switchTableReportA1Company = function (company) {
-            $scope.data.tableA1CompanyStatus.currentCompany = company;
-            $scope.data.tableA1CompanyStatus.currentSKU = $scope.data.tableA1CompanyStatus.currentCompany.SKU[0];
-            $scope.data.tableA1CompanyStatus.currentBrand = $scope.data.tableA1CompanyStatus.currentCompany.brand[0];
-            $scope.data.tableA1CompanyStatus.currentGlobal = $scope.data.tableA1CompanyStatus.currentCompany.global;
-        };
-        $scope.switchTableReportA1SKU = function (SKU) {
-            $scope.data.tableA1CompanyStatus.currentSKU = SKU;
-        };
-        $scope.switchTableReportA1Brand = function (brand) {
-            $scope.data.tableA1CompanyStatus.currentBrand = brand;
-        };
 
         var app = {
             initOnce: function () {
-                this.loadingCompanyData();
+                var that = this;
+                chartReport.initTranslate().then(function () {
+                    //添加事件
+                    that.runOnce();
+                    //加载A1 Company Status
+                    that.loadingCompanyData();
+                    //加载A2 Financial Data
+                    that.loadingFinancialData();
+                    //加载A4 Profitability Evolution
+                    that.loadingProfitabilityData();
+                    //加载C6 Market Indicators
+                    that.loadingMarketIndicatorsData();
+                    //加载B2 Competitor Intelligence
+                    that.loadingCompetitorIntelligenceData();
+                    //加载C3 Segment Distribution
+                    that.loadingSegmentDistributionData();
+                    //加载C5 Market Trends
+                    that.loadingMarketTrendsData();
+                });
+            },
+            runOnce: function () {
+                /********************  Table A1 Company Status  *******************/
+                $scope.switchTableReportA1Company = function (company) {
+                    $scope.data.tableA1CompanyStatus.currentCompany = company;
+                    $scope.data.tableA1CompanyStatus.currentSKU = $scope.data.tableA1CompanyStatus.currentCompany.SKU[0];
+                    $scope.data.tableA1CompanyStatus.currentBrand = $scope.data.tableA1CompanyStatus.currentCompany.brand[0];
+                    $scope.data.tableA1CompanyStatus.currentGlobal = $scope.data.tableA1CompanyStatus.currentCompany.global;
+                };
+                $scope.switchTableReportA1SKU = function (SKU) {
+                    $scope.data.tableA1CompanyStatus.currentSKU = SKU;
+                };
+                $scope.switchTableReportA1Brand = function (brand) {
+                    $scope.data.tableA1CompanyStatus.currentBrand = brand;
+                };
+
+
+                /********************  Table A2 Financial Data  *******************/
+                $scope.switchTableReportPeriod = function (period) {
+                    $scope.data.tableA2FinancialData.currentPeriod = period;
+                    $scope.data.tableA2FinancialData.currentBrand = $scope.data.tableA2FinancialData.currentPeriod.brands[0];
+                };
+                $scope.switchTableReportA2Brand = function (brand) {
+                    $scope.data.tableA2FinancialData.currentBrand = brand;
+                };
+                $scope.switchTableReportA2Company = function (index) {
+                    $scope.data.tableA2FinancialData.currentCompany = $scope.data.tableA2FinancialData.allData[index];
+                    $scope.data.tableA2FinancialData.currentPeriod = $scope.data.tableA2FinancialData.currentCompany.periods[$scope.data.tableA2FinancialData.currentCompany.periods.length - 1];
+                    $scope.data.tableA2FinancialData.currentBrand = $scope.data.tableA2FinancialData.currentPeriod.brands[0];
+                };
+
+
+                /********************  Table A4 Profitability Evolution  *******************/
+                $scope.switchTableReportA4SKU = function (SKU) {
+                    $scope.data.tableA4ProfitabilityEvolution.currentSKU = SKU;
+                };
+                $scope.switchTableReportA4Brand = function (brand) {
+                    $scope.data.tableA4ProfitabilityEvolution.currentBrand = brand;
+                };
+                $scope.switchTableReportA4Company = function (index) {
+                    $scope.data.tableA4ProfitabilityEvolution.currentData = $scope.data.tableA4ProfitabilityEvolution.allData[index];
+                    $scope.data.tableA4ProfitabilityEvolution.currentSKU = $scope.data.tableA4ProfitabilityEvolution.allData[index].SKU[0];
+                    $scope.data.tableA4ProfitabilityEvolution.currentBrand = $scope.data.tableA4ProfitabilityEvolution.allData[index].brand[0];
+                    $scope.data.tableA4ProfitabilityEvolution.currentGlobal = $scope.data.tableA4ProfitabilityEvolution.allData[index].global;
+                };
+
+
+                /********************  Table B2 Competitor Intelligence  *******************/              
+                $scope.switchTableMenuLevel1B2 = function (menu, field, unit) {
+                    $scope.css.tableReportMenu = menu;
+                    $scope.switchTableReportB2(1, field, unit);
+                };
+                $scope.switchTableReportB2 = function (order, field, unit) {
+                    $scope.data.tableB2CompetitorIntelligence.currentTable = order;
+                    $scope.data.tableB2CompetitorIntelligence.currentTableData = $scope.data.tableB2CompetitorIntelligence.allData[field];
+                    $scope.data.tableB2CompetitorIntelligence.chartData = chartReport.formatChartData($scope.data.tableB2CompetitorIntelligence.currentTableData);
+                    $scope.data.tableB2CompetitorIntelligence.currentTableUnit = unit;
+                };
+
+
+                /********************  Table C3 Segment Distribution  *******************/
+                $scope.switchTableReportC3 = function (order, field, unit) {
+                    $scope.data.tableC3SegmentDistribution.currentTable = order;
+                    $scope.data.tableC3SegmentDistribution.currentTableData = $scope.data.tableC3SegmentDistribution.allData[field];
+                    $scope.data.tableC3SegmentDistribution.chartData = chartReport.formatChartData($scope.data.tableC3SegmentDistribution.currentTableData);
+                    $scope.data.tableC3SegmentDistribution.currentTableUnit = unit;
+                };
+
+
+                /********************  Table C5 Market Trends  *******************/
+                $scope.switchTableCategoryC5 = function (category, field, unit) {
+                    $scope.css.tableReportTab = category;
+                    if (category === 'SKU') {
+                        $scope.switchTableMenuLevel1C5(1, 'SKU', field, unit);
+                    } else if (category === 'Brand') {
+                        $scope.switchTableMenuLevel1C5(1, 'Brand', field, unit);
+                    } else {
+                        $scope.switchTableMenuLevel1C5(1, 'Global', field, unit);
+                    }
+                };
+                $scope.switchTableMenuLevel1C5 = function (menu, category, field, unit) {
+                    $scope.css.tableReportMenu = menu;
+                    if (category === 'SKU') {
+                        $scope.switchTableReportC5(1, 'SKU', field, unit);
+                    } else if (category === 'Brand') {
+                        $scope.switchTableReportC5(1, 'brand', field, unit);
+                    } else {
+                        $scope.switchTableReportC5(1, 'global', 'averageNetMarketPriceStdPack', unit);
+                    }
+                };
+                $scope.switchTableReportC5 = function (order, category, field, unit) {
+                    $scope.data.tableC5MarketTrends.currentTable = order;
+                    $scope.data.tableC5MarketTrends.currentTableData = $scope.data.tableC5MarketTrends.allData[category][field];
+                    $scope.data.tableC5MarketTrends.currentTableUnit = unit;
+                    $scope.data.tableC5MarketTrends.chartData = chartReport.formatChartData($scope.data.tableC5MarketTrends.currentTableData);
+                };
+
             },
             reRun: function () { },
             loadingCompanyData: function () {
+                /********************  Table A1 Company Status  *******************/
+                //获取数据
                 AdminTable.getCompany().then(function (data, status, headers, config) {
                     $scope.data.tableA1CompanyStatus.allCompanyData = data;
-
+                    //设置默认公司
                     $scope.switchTableReportA1Company(data[0]);
-                    //$scope.data.tableA1CompanyStatus.currentCompany = data[0];
-                    //$scope.data.tableA1CompanyStatus.currentSKU = $scope.data.tableA1CompanyStatus.currentCompany.SKU[0];
-                    //$scope.data.tableA1CompanyStatus.currentBrand = $scope.data.tableA1CompanyStatus.currentCompany.brand[0];
-                    //$scope.data.tableA1CompanyStatus.currentGlobal = $scope.data.tableA1CompanyStatus.currentCompany.global;
-
-                    $scope.css.tableReportTab = 'SKU';
                 });
+            },
+            loadingFinancialData: function () {
+                /********************  Table A2 Financial Data  *******************/
+                //获取数据
+                AdminTable.getFinancial().then(function (data, status, headers, config) {
+                    $scope.data.tableA2FinancialData.allData = data;
+                    //设置默认的公司
+                    $scope.switchTableReportA2Company(0);
+                });
+            },
+            loadingProfitabilityData: function () {
+                /********************  Table A4 Profitability Evolution  *******************/
+                //获取数据
+                AdminTable.getProfitability().then(function (data, status, headers, config) {
+                    $scope.data.tableA4ProfitabilityEvolution.allData = data;
+                    //设置默认的公司
+                    $scope.switchTableReportA4Company(0);
+                });
+            },
+            loadingMarketIndicatorsData: function () {
+                /********************  Table C6 Market Indicators  *******************/
+                //获取数据
+                AdminTable.getMarketIndicators().then(function (data, status, headers, config) {
+                    $scope.data.tableC6MarketIndicators.allData = data;
+                });
+            },
+            loadingCompetitorIntelligenceData: function () {
+                /********************  Table B2 Competitor Intelligence  *******************/
+                //获取数据
+                AdminTable.getCompetitorIntelligence().then(function (data, status, headers, config) {
+                    $scope.data.tableB2CompetitorIntelligence.allData = data;
+                    $scope.data.tableB2CompetitorIntelligence.currentTableData = $scope.data.tableB2CompetitorIntelligence.allData.acquiredProductionAndLogisticsEfficiency;
+                    $scope.data.tableB2CompetitorIntelligence.chartData = chartReport.formatChartData($scope.data.tableB2CompetitorIntelligence.allData.acquiredProductionAndLogisticsEfficiency);
+                });
+            },
+            loadingSegmentDistributionData: function () {
+                /********************  Table C3 Segment Distribution  *******************/
+                //获取数据
+                AdminTable.getSegmentDistribution().then(function (data, status, headers, config) {
+                    $scope.data.tableC3SegmentDistribution.allData = data;
+                    $scope.data.tableC3SegmentDistribution.currentTableData = $scope.data.tableC3SegmentDistribution.allData.marketShareVolume;
+                    $scope.data.tableC3SegmentDistribution.chartData = chartReport.formatChartData($scope.data.tableC3SegmentDistribution.currentTableData);
+                });
+            },
+            loadingMarketTrendsData: function () {
+                /********************  Table C5 Market Trends  *******************/
+                //获取数据
+                AdminTable.getMarketTrends().then(function (data, status, headers, config) {
+                    $scope.data.tableC5MarketTrends.allData = data;
+                    //$scope.data.tableC5MarketTrends.currentTableData = $scope.data.tableC5MarketTrends.allData.SKU.averageDisplayPriceStdPack;
+                    //$scope.data.tableC5MarketTrends.chartData = chartReport.formatChartData($scope.data.tableC5MarketTrends.currentTableData);
+                    //$scope.switchTableCategoryC5('SKU', 'averageDisplayPriceStdPack', '');
+                    $scope.switchTableMenuLevel1C5(1, $scope.css.tableReportTab, 'averageDisplayPriceStdPack', '');
+
+                }); 
             }
         };
         //初始化程序

@@ -1029,6 +1029,7 @@
                 }, function(data){
                     form.brandName.$valid = false;
                     form.brandName.$invalid = true;
+                    form.brandName.$error.required = false;
                     $scope.data.newBrand.othererrorinfo = data.data.message ;
 
                 });
@@ -1201,6 +1202,7 @@
                     template : notifytemplate.failure,
                     position : 'center'
                 });
+                app.reRun();
             });
         };
 
@@ -1248,7 +1250,6 @@
             $scope.data.currentModifiedCompany.company_data[fieldname] = $scope.data.currentCompany[fieldname];
 
             Company.updateCompany($scope.data.currentModifiedCompany).success(function(data, status, headers, config){
-                console.log(data);
                 $scope.css.additionalBudget = true;
 
 
