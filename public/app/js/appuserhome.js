@@ -1250,7 +1250,6 @@
             $scope.data.currentModifiedCompany.company_data[fieldname] = $scope.data.currentCompany[fieldname];
 
             Company.updateCompany($scope.data.currentModifiedCompany).success(function(data, status, headers, config){
-                console.log(data);
                 $scope.css.additionalBudget = true;
 
 
