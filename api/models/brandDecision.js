@@ -335,6 +335,12 @@ exports.updateBrand = function(seminarId, period, companyId, brandId, brand){
         },function(err, doc) {
             if(err){ return deferred.reject(err);}
 
+            if(!doc){
+                var validateErr = new Error('Cannot find related brand decision, brand might be deleted.');
+                return deferred.reject(validateErr);
+            }
+
+
             var fields = ['d_SalesForce'];
             fields.forEach(function(field){
                 if(brand[field] !== undefined){
