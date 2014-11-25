@@ -177,6 +177,535 @@
 
 
 
+
+
+
+
+    /********************  Report Format and Translation  ********************/
+
+
+    var translateText = {
+        'ReportInventoryReportLabelCloseToExpireInventory' : '',
+        'ReportInventoryReportLabelPreviousInventory'      : '',
+        'ReportInventoryReportLabelFreshInventory'         : '',
+        'HomePageSecondMenuBarLabelsCompany'               : '',
+        'HomePageSegmentLabelPriceSensitive'               : '',
+        'HomePageSegmentLabelPretenders'                   : '',
+        'HomePageSegmentLabelModerate'                     : '',
+        'HomePageSegmentLabelGoodLife'                     : '',
+        'HomePageSegmentLabelUltimate'                     : '',
+        'HomePageSegmentLabelPragmatic'                    : '',
+        'HomePageSegmentLabelAllSegments'                  : ''
+    };
+
+    function showTranslateTextInventoryReport(fieldname) {
+        var names = {
+            '0': function() {
+                return translateText.ReportInventoryReportLabelFreshInventory;
+            },
+            '1': function() {
+                return translateText.ReportInventoryReportLabelPreviousInventory;
+            },
+            '2': function() {
+                return translateText.ReportInventoryReportLabelCloseToExpireInventory;
+            }
+        };
+        if (typeof names[fieldname] !== 'function') {
+            return false;
+        }
+        return names[fieldname]();
+    }
+
+    function showTranslateTextCompanyName(fieldname) {
+        var names = {
+            'A': function() {
+                return translateText.HomePageSecondMenuBarLabelsCompany + 'A';
+            },
+            'B': function() {
+                return translateText.HomePageSecondMenuBarLabelsCompany + 'B';
+            },
+            'C': function() {
+                return translateText.HomePageSecondMenuBarLabelsCompany + 'C';
+            },
+            'D': function() {
+                return translateText.HomePageSecondMenuBarLabelsCompany + 'D';
+            },
+            'E': function() {
+                return translateText.HomePageSecondMenuBarLabelsCompany + 'E';
+            },
+            'F': function() {
+                return translateText.HomePageSecondMenuBarLabelsCompany + 'F';
+            }
+        };
+        if (typeof names[fieldname] !== 'function') {
+            return false;
+        }
+        return names[fieldname]();
+    }
+
+    function showTranslateTextConsumerSegmentName(fieldname) {
+        var names = {
+            '0': function() {
+                return translateText.HomePageSegmentLabelPriceSensitive;
+            },
+            '1': function() {
+                return translateText.HomePageSegmentLabelPretenders;
+            },
+            '2': function() {
+                return translateText.HomePageSegmentLabelModerate;
+            },
+            '3': function() {
+                return translateText.HomePageSegmentLabelGoodLife;
+            },
+            '4': function() {
+                return translateText.HomePageSegmentLabelUltimate;
+            },
+            '5': function() {
+                return translateText.HomePageSegmentLabelPragmatic;
+            },
+            '6': function() {
+                return translateText.HomePageSegmentLabelAllSegments;
+            },
+            'priceSensitive': function() {
+                return translateText.HomePageSegmentLabelPriceSensitive;
+            },
+            'pretenders': function() {
+                return translateText.HomePageSegmentLabelPretenders;
+            },
+            'moderate': function() {
+                return translateText.HomePageSegmentLabelModerate;
+            },
+            'goodLife': function() {
+                return translateText.HomePageSegmentLabelGoodLife;
+            },
+            'ultimate': function() {
+                return translateText.HomePageSegmentLabelUltimate;
+            },
+            'pragmatic': function() {
+                return translateText.HomePageSegmentLabelPragmatic;
+            },
+            'allSegments': function() {
+                return translateText.HomePageSegmentLabelAllSegments;
+            }
+        };
+        if (typeof names[fieldname] !== 'function') {
+            return false;
+        }
+        return names[fieldname]();
+    }
+
+
+    function showTranslateTextSegmentName() {
+        return translateText.ReportPerceptionMapAxisLabelSegment ;
+    }
+
+
+    var chartResult = {
+        series: [],
+        data: []
+    };
+
+
+    var chartFormatTool1 = function(chartHttpData, decimalNumber){
+        // 使用angular-chart 插件的数据格式
+
+        chartResult.series = [];
+        chartResult.data = [];
+
+        if(angular.isUndefined(chartHttpData.periods)){
+            // 如果periods 没有定义则是普通的图表,不带有系列的图表 目前仅仅有C44 和 B34
+            angular.forEach(chartHttpData.chartData, function(value, key) {
+                if(angular.isUndefined(value.segmentName)){
+                    // 判断是否是Segment Leader Top5 的图表还是SKUName的图表
+
+                    if(chartResult.series.indexOf(value.SKUName.substring(0,1)) == -1 ){
+                        chartResult.series.push(value.SKUName.substring(0,1));
+                    }
+                }else{
+                    // C44 segment_value_share_total_market
+                    chartResult.series.push(showTranslateTextConsumerSegmentName(value.segmentName));
+                }
+            });
+
+            angular.forEach(chartHttpData.chartData, function(value, key) {
+                var oneBarData = {
+                    x : 0, //Round Name
+                    y : []
+                };
+
+                if(angular.isUndefined(value.segmentName) ){
+                    // 这里处理原本处理C1 但已不用, C1处理已放到 chartFormatTool2
+                    oneBarData.x = value.SKUName;
+
+                    var index = chartResult.series.indexOf(value.SKUName.substring(0,1));
+                    // 插入空数据占位, 用来显示不同颜色
+                    if( index !== -1){
+
+                        for (var i = 0; i <= index; i++) {
+                            if(i == index){
+                                if(decimalNumber === 0){
+                                    oneBarData.y.push(Math.round(value.valueSegmentShare * 100) / 100 );
+                                }else{
+                                    oneBarData.y.push(Math.round(value.valueSegmentShare * 10000) / Math.pow(10, Number(decimalNumber)) );
+                                }
+
+                            }else{
+                                oneBarData.y.push(0);
+                            }
+                        }
+                    }
+
+                }else{
+                    // 这里处理C44
+                    oneBarData.x = showTranslateTextConsumerSegmentName(value.segmentName);
+
+                    if(decimalNumber === 0){
+                        oneBarData.y.push(Math.round(value.value * 100) / 100 );
+                    }else{
+                        oneBarData.y.push( Math.round(value.value * 10000) / Math.pow(10, Number(decimalNumber)) );
+                    }
+                }
+
+                chartResult.data.push(oneBarData);
+            });
+            return angular.copy(chartResult);
+
+
+        }else if(angular.isArray(chartHttpData.periods) ){
+            // 如果periods 有定义 则是带有系列的图表 包括图表 B1 B3 和 C4
+            angular.forEach(chartHttpData.periods, function(value, key) {
+
+                var oneLineData = {
+//                    x : "period" + value.toString(), //Round Name
+                    x : value.toString(), //Round Name
+                    y : angular.copy(chartHttpData.chartData[key])
+                };
+
+                angular.forEach(oneLineData.y, function(value, key) {
+                    if(decimalNumber === 0){
+                        oneLineData.y[key] = Math.round(value * 100) / 100;
+                    }else{
+                        oneLineData.y[key] = Math.round(value * 10000 )/Math.pow(10, Number(decimalNumber));
+                    }
+                });
+
+                chartResult.data.push(oneLineData);
+            });
+
+            // 判断是 company的图表还是 消费者群体的图表
+            if(angular.isUndefined(chartHttpData.companyNames)){
+                angular.forEach(chartHttpData.segmentNames, function(value, key) {
+                    chartResult.series.push(showTranslateTextConsumerSegmentName(value));
+                });
+
+            }else{
+                angular.forEach(chartHttpData.companyNames, function(value, key) {
+                    chartResult.series.push(showTranslateTextCompanyName(value));
+                });
+            }
+
+            return angular.copy(chartResult);
+
+        }else{
+            console.log('chart Data format is wrong !');
+            return '';
+        }
+    };
+
+
+    var chartFormatTool2 = function(chartHttpData, decimalNumber){
+        // 使用angular-chart 插件的数据格式 Bar Chart  For Segment Leader Top Chart
+
+        chartResult.series = ['justoneseries'];
+        chartResult.data = [];
+
+
+        function showSkuColor(fieldname) {
+
+            var colorsRGB =  [
+                'rgb(0,76,229)',
+                'rgb(187,0,0)',
+                'rgb(255,188,1)',
+                'rgb(51,153,51)',
+                'rgb(153,0,153)',
+                'rgb(255,82,0)'
+            ];
+
+            var names = {
+                'A': function() {
+                    return colorsRGB[0];
+                },
+                'B': function() {
+                    return colorsRGB[1];
+                },
+                'C': function() {
+                    return colorsRGB[2];
+                },
+                'D': function() {
+                    return colorsRGB[3];
+                },
+                'E': function() {
+                    return colorsRGB[4];
+                },
+                'F': function() {
+                    return colorsRGB[5];
+                }
+
+            };
+            if (typeof names[fieldname] !== 'function') {
+                return false;
+            }
+            return names[fieldname]();
+        }
+
+        if(angular.isArray(chartHttpData)){
+
+            angular.forEach(chartHttpData, function(period, keyperiod) {
+                var periodData = {
+                    period : period.period,
+                    data : []
+                };
+
+                angular.forEach(period.chartData, function(value, key) {
+                    var oneBarData = {
+                        x : "", //SKU Name
+                        y : [],
+                        color : 'rgb(57,181,74)'
+                    };
+
+                    if(angular.isUndefined(value.segmentName) ){
+                        oneBarData.x = value.SKUName;
+
+                        if(decimalNumber === 0){
+                            oneBarData.y.push(Math.round(value.valueSegmentShare * 100) / 100 );
+                        }else{
+                            oneBarData.y.push(Math.round(value.valueSegmentShare * 10000) / Math.pow(10, Number(decimalNumber)) );
+                        }
+
+                        oneBarData.color = showSkuColor(value.SKUName.substring(0,1));
+                    }
+
+                    periodData.data.push(oneBarData);
+                });
+
+                chartResult.data.push(periodData);
+            });
+
+        }
+        return angular.copy(chartResult);
+
+    };
+
+
+
+    var chartFormatTool3 = function(chartHttpData){
+        // 使用angular-chart 插件的数据格式  FOR Report B2 Competitor Intelligence , C3 Segment Distributions , C5 Market Trends
+        chartResult.series = [];
+        chartResult.data = [];
+
+        if(angular.isUndefined(chartHttpData[0].data)){
+            // 这里处理C3  tableC3 Segment Distribution
+            angular.forEach(chartHttpData[0], function(value, key) {
+                if(key !== 'period' && key !=='$$hashKey'){
+                    chartResult.series.push(showTranslateTextConsumerSegmentName(key));
+                }
+            });
+
+            angular.forEach(chartHttpData, function(period, key) {
+
+                var oneBarData = {
+                    x : 0, //Round Name
+                    y : []
+                };
+
+                oneBarData.x = period.period;
+                angular.forEach(period, function(value, key) {
+                    if(key !== 'period' && key !=='$$hashKey'){
+                        oneBarData.y.push(Math.round(value * 10000 ) / 10000);
+                    }
+                });
+
+                chartResult.data.push(oneBarData);
+            });
+
+        }else{
+            // 这里处理B2  tableB2 Competitor Intelligence 或 C5 Market Trends
+            angular.forEach(chartHttpData[0].data, function(period, key) {
+
+                var oneBarData = {
+                    x : 0, //Round Name
+                    y : []
+                };
+
+                oneBarData.x = period.name;
+                chartResult.data.push(oneBarData);
+            });
+
+            angular.forEach(chartHttpData, function(value, key) {
+                if(!angular.isUndefined(value.SKUName)){
+                    chartResult.series.push(value.SKUName);
+                }
+                if(!angular.isUndefined(value.brandName)){
+                    chartResult.series.push(value.brandName);
+                }
+                if(!angular.isUndefined(value.companyName)){
+                    chartResult.series.push(showTranslateTextCompanyName(value.companyName));
+                }
+
+
+                angular.forEach(value.data, function(period, key) {
+                    chartResult.data[key].y.push(Math.round(period.value * 100 ) / 100);
+                });
+
+            });
+        }
+        return angular.copy(chartResult);
+    };
+
+
+
+    var chartFormatTool4 = function(chartHttpData) {
+        // 使用angular-nvd3 插件的数据格式 Stacked Multi Bar Chart
+
+        chartResult.series = [];
+        chartResult.data = [];
+
+        if(angular.isArray(chartHttpData.SKUs) ){
+            angular.forEach(chartHttpData.SKUs[0].inventoryData, function(value, key) {
+                var oneSeries = {
+                    "key": showTranslateTextInventoryReport(value.inventoryName),
+                    "values": []
+                };
+                if(key !== 0){
+                    chartResult.data.push(oneSeries);
+                    chartResult.series.push(showTranslateTextInventoryReport(value.inventoryName));
+                }
+
+            });
+
+            angular.forEach(chartHttpData.SKUs, function(value, key) {
+//                    var oneLineData1 = []; // Close To EXpire Inventory
+//                    oneLineData1.push( value.SKUName );
+//                    oneLineData1.push( angular.copy(Math.round(value.inventoryData[0].inventoryValue * 100) / 100 ) );
+
+                var oneLineData2 = []; // Previous Inventory
+                oneLineData2.push( value.SKUName );
+                oneLineData2.push( angular.copy(Math.round(value.inventoryData[1].inventoryValue * 100) / 100 ) );
+
+                var oneLineData3 = []; // Fresh Inventory
+                oneLineData3.push( value.SKUName );
+                oneLineData3.push( angular.copy(Math.round(value.inventoryData[2].inventoryValue * 100) / 100 ) );
+
+//                    chartResult.data[0].values.push(oneLineData1);
+                chartResult.data[0].values.push(oneLineData2);
+                chartResult.data[1].values.push(oneLineData3);
+
+            });
+            return angular.copy(chartResult.data);
+        }
+
+    };
+
+
+    var chartFormatTool5 = function(chartHttpData) {
+        // 使用angular-nvd3 插件的数据格式   only for C2 Perception Maps Scatter Chart 散点图
+//        chartResult.series = [];
+//        chartResult.data = [];
+
+        chartResult.series = [];
+        chartResult.data = [];
+
+        if(angular.isArray(chartHttpData.periods) ){
+            // 处理 exogenous
+            var oneSegment = {
+                "key" : showTranslateTextSegmentName(),
+                "values" : []
+            };
+
+            angular.forEach(chartHttpData.exogenous, function(value, key) {
+                var oneLineData = {
+                    'x' : Math.round(value.valuePerception * 100) / 100,
+                    'y' : Math.round(value.imagePerception * 100) / 100,
+                    'size' : 0.5,
+                    'name' : showTranslateTextConsumerSegmentName(value.segmentName),
+                    'tooltips' : [],
+                    'shape' : 'diamond'
+                };
+
+                oneSegment.values.push(oneLineData);
+            });
+
+            // 处理 periods 数据
+            angular.forEach(chartHttpData.periods, function(period, keyperiod) {
+                var perioddata = {
+                    period : period.period,
+                    dataSKU : [],
+                    dataBrand : []
+                };
+
+                angular.forEach(period.allCompanyData, function(value, key) {
+                    var oneCompanySku = {
+                        "key" : showTranslateTextCompanyName(value.companyName),
+                        "values" : []
+                    };
+
+                    var oneCompanyBrand = {
+                        "key" : showTranslateTextCompanyName(value.companyName),
+                        "values" : []
+                    };
+
+                    angular.forEach(value.SKUs, function(valueSku, keySku) {
+                        var oneLineSku1 = {
+                            'x' : Math.round(valueSku.valuePerception * 100 + Math.random() * 10 + Math.random()  ) / 100,
+                            'y' : Math.round(valueSku.imagePerception * 100 + Math.random() * 10 + Math.random()  ) / 100,
+                            'size' : 0.6,
+                            'SKUName' : valueSku.SKUName,
+                            'name' : valueSku.SKUName,
+                            'CompanyName' : value.companyName,
+                            'tooltips' : valueSku.tooltips,
+                            'shape' : 'circle'
+                        };
+
+                        oneCompanySku.values.push(oneLineSku1);
+                    });
+
+                    angular.forEach(value.brands, function(valueBrand, keyBrand) {
+                        var oneLineBrand1 = {
+                            'x' : Math.round(valueBrand.valuePerception * 100) / 100,
+                            'y' : Math.round(valueBrand.imagePerception * 100) / 100,
+                            'size' : 0.6,
+                            'BrandName' : valueBrand.brandName,
+                            'name' : valueBrand.brandName,
+                            'CompanyName' : value.companyName,
+                            'tooltips' : [],
+                            'shape' : 'circle'
+                        };
+
+                        oneCompanyBrand.values.push(oneLineBrand1);
+                    });
+
+                    perioddata.dataSKU.push(oneCompanySku);
+                    perioddata.dataBrand.push(oneCompanyBrand);
+                });
+
+                perioddata.dataSKU.push(oneSegment);
+                perioddata.dataBrand.push(oneSegment);
+
+                chartResult.data.push(perioddata);
+
+            });
+
+
+            return angular.copy(chartResult);
+        }
+    };
+
+
+
+
+
+    /********************  Report Model API  ********************/
+
     function chartReportModel ($http, $rootScope, $translate){
 
         // 'FMCG': [
@@ -202,126 +731,6 @@
         // 6 - 'allSegments'
         // ],
 
-        var translateText = {
-            'ReportInventoryReportLabelCloseToExpireInventory' : '',
-            'ReportInventoryReportLabelPreviousInventory'      : '',
-            'ReportInventoryReportLabelFreshInventory'         : '',
-            'HomePageSecondMenuBarLabelsCompany'               : '',
-            'HomePageSegmentLabelPriceSensitive'               : '',
-            'HomePageSegmentLabelPretenders'                   : '',
-            'HomePageSegmentLabelModerate'                     : '',
-            'HomePageSegmentLabelGoodLife'                     : '',
-            'HomePageSegmentLabelUltimate'                     : '',
-            'HomePageSegmentLabelPragmatic'                    : '',
-            'HomePageSegmentLabelAllSegments'                  : ''
-        };
-
-        function showTranslateTextInventoryReport(fieldname) {
-            var names = {
-                '0': function() {
-                    return translateText.ReportInventoryReportLabelFreshInventory;
-                },
-                '1': function() {
-                    return translateText.ReportInventoryReportLabelPreviousInventory;
-                },
-                '2': function() {
-                    return translateText.ReportInventoryReportLabelCloseToExpireInventory;
-                }
-            };
-            if (typeof names[fieldname] !== 'function') {
-                return false;
-            }
-            return names[fieldname]();
-        }
-
-        function showTranslateTextCompanyName(fieldname) {
-            var names = {
-                'A': function() {
-                    return translateText.HomePageSecondMenuBarLabelsCompany + 'A';
-                },
-                'B': function() {
-                    return translateText.HomePageSecondMenuBarLabelsCompany + 'B';
-                },
-                'C': function() {
-                    return translateText.HomePageSecondMenuBarLabelsCompany + 'C';
-                },
-                'D': function() {
-                    return translateText.HomePageSecondMenuBarLabelsCompany + 'D';
-                },
-                'E': function() {
-                    return translateText.HomePageSecondMenuBarLabelsCompany + 'E';
-                },
-                'F': function() {
-                    return translateText.HomePageSecondMenuBarLabelsCompany + 'F';
-                }
-            };
-            if (typeof names[fieldname] !== 'function') {
-                return false;
-            }
-            return names[fieldname]();
-        }
-
-        function showTranslateTextConsumerSegmentName(fieldname) {
-            var names = {
-                '0': function() {
-                    return translateText.HomePageSegmentLabelPriceSensitive;
-                },
-                '1': function() {
-                    return translateText.HomePageSegmentLabelPretenders;
-                },
-                '2': function() {
-                    return translateText.HomePageSegmentLabelModerate;
-                },
-                '3': function() {
-                    return translateText.HomePageSegmentLabelGoodLife;
-                },
-                '4': function() {
-                    return translateText.HomePageSegmentLabelUltimate;
-                },
-                '5': function() {
-                    return translateText.HomePageSegmentLabelPragmatic;
-                },
-                '6': function() {
-                    return translateText.HomePageSegmentLabelAllSegments;
-                },
-                'priceSensitive': function() {
-                    return translateText.HomePageSegmentLabelPriceSensitive;
-                },
-                'pretenders': function() {
-                    return translateText.HomePageSegmentLabelPretenders;
-                },
-                'moderate': function() {
-                    return translateText.HomePageSegmentLabelModerate;
-                },
-                'goodLife': function() {
-                    return translateText.HomePageSegmentLabelGoodLife;
-                },
-                'ultimate': function() {
-                    return translateText.HomePageSegmentLabelUltimate;
-                },
-                'pragmatic': function() {
-                    return translateText.HomePageSegmentLabelPragmatic;
-                },
-                'allSegments': function() {
-                    return translateText.HomePageSegmentLabelAllSegments;
-                }
-            };
-            if (typeof names[fieldname] !== 'function') {
-                return false;
-            }
-            return names[fieldname]();
-        }
-
-
-        function showTranslateTextSegmentName() {
-            return translateText.ReportPerceptionMapAxisLabelSegment ;
-        }
-
-
-        var chartResult = {
-            series: [],
-            data: []
-        };
 
 
         var chartConfig1 = {
@@ -375,399 +784,7 @@
 
 
 
-        var chartFormatTool1 = function(chartHttpData, decimalNumber){
-            // 使用angular-chart 插件的数据格式
 
-            chartResult.series = [];
-            chartResult.data = [];
-
-            if(angular.isUndefined(chartHttpData.periods)){
-                // 如果periods 没有定义则是普通的图表,不带有系列的图表 目前仅仅有C44 和 B34
-                angular.forEach(chartHttpData.chartData, function(value, key) {
-                    if(angular.isUndefined(value.segmentName)){
-                        // 判断是否是Segment Leader Top5 的图表还是SKUName的图表
-
-                        if(chartResult.series.indexOf(value.SKUName.substring(0,1)) == -1 ){
-                            chartResult.series.push(value.SKUName.substring(0,1));
-                        }
-                    }else{
-                        // C44 segment_value_share_total_market
-                        chartResult.series.push(showTranslateTextConsumerSegmentName(value.segmentName));
-                    }
-                });
-
-                angular.forEach(chartHttpData.chartData, function(value, key) {
-                    var oneBarData = {
-                        x : 0, //Round Name
-                        y : []
-                    };
-
-                    if(angular.isUndefined(value.segmentName) ){
-                        // 这里处理原本处理C1 但已不用, C1处理已放到 chartFormatTool2
-                        oneBarData.x = value.SKUName;
-
-                        var index = chartResult.series.indexOf(value.SKUName.substring(0,1));
-                        // 插入空数据占位, 用来显示不同颜色
-                        if( index !== -1){
-
-                            for (var i = 0; i <= index; i++) {
-                                if(i == index){
-                                    if(decimalNumber === 0){
-                                        oneBarData.y.push(Math.round(value.valueSegmentShare * 100) / 100 );
-                                    }else{
-                                        oneBarData.y.push(Math.round(value.valueSegmentShare * 10000) / Math.pow(10, Number(decimalNumber)) );
-                                    }
-
-                                }else{
-                                    oneBarData.y.push(0);
-                                }
-                            }
-                        }
-
-                    }else{
-                        // 这里处理C44
-                        oneBarData.x = showTranslateTextConsumerSegmentName(value.segmentName);
-
-                        if(decimalNumber === 0){
-                            oneBarData.y.push(Math.round(value.value * 100) / 100 );
-                        }else{
-                            oneBarData.y.push( Math.round(value.value * 10000) / Math.pow(10, Number(decimalNumber)) );
-                        }
-                    }
-
-                    chartResult.data.push(oneBarData);
-                });
-                return angular.copy(chartResult);
-
-
-            }else if(angular.isArray(chartHttpData.periods) ){
-                // 如果periods 有定义 则是带有系列的图表 包括图表 B1 B3 和 C4
-                angular.forEach(chartHttpData.periods, function(value, key) {
-
-                    var oneLineData = {
-//                    x : "period" + value.toString(), //Round Name
-                        x : value.toString(), //Round Name
-                        y : angular.copy(chartHttpData.chartData[key])
-                    };
-
-                    angular.forEach(oneLineData.y, function(value, key) {
-                        if(decimalNumber === 0){
-                            oneLineData.y[key] = Math.round(value * 100) / 100;
-                        }else{
-                            oneLineData.y[key] = Math.round(value * 10000 )/Math.pow(10, Number(decimalNumber));
-                        }
-                    });
-
-                    chartResult.data.push(oneLineData);
-                });
-
-                // 判断是 company的图表还是 消费者群体的图表
-                if(angular.isUndefined(chartHttpData.companyNames)){
-                    angular.forEach(chartHttpData.segmentNames, function(value, key) {
-                        chartResult.series.push(showTranslateTextConsumerSegmentName(value));
-                    });
-
-                }else{
-                    angular.forEach(chartHttpData.companyNames, function(value, key) {
-                        chartResult.series.push(showTranslateTextCompanyName(value));
-                    });
-                }
-
-                return angular.copy(chartResult);
-
-            }else{
-                console.log('chart Data format is wrong !');
-                return '';
-            }
-        };
-
-
-        var chartFormatTool2 = function(chartHttpData, decimalNumber){
-            // 使用angular-chart 插件的数据格式 Bar Chart  For Segment Leader Top Chart
-
-            chartResult.series = ['justoneseries'];
-            chartResult.data = [];
-
-
-            function showSkuColor(fieldname) {
-
-                var colorsRGB =  [
-                    'rgb(0,76,229)',
-                    'rgb(187,0,0)',
-                    'rgb(255,188,1)',
-                    'rgb(51,153,51)',
-                    'rgb(153,0,153)',
-                    'rgb(255,82,0)'
-                ];
-
-                var names = {
-                    'A': function() {
-                        return colorsRGB[0];
-                    },
-                    'B': function() {
-                        return colorsRGB[1];
-                    },
-                    'C': function() {
-                        return colorsRGB[2];
-                    },
-                    'D': function() {
-                        return colorsRGB[3];
-                    },
-                    'E': function() {
-                        return colorsRGB[4];
-                    },
-                    'F': function() {
-                        return colorsRGB[5];
-                    }
-
-                };
-                if (typeof names[fieldname] !== 'function') {
-                    return false;
-                }
-                return names[fieldname]();
-            }
-
-            if(angular.isArray(chartHttpData)){
-
-                angular.forEach(chartHttpData, function(period, keyperiod) {
-                    var periodData = {
-                        period : period.period,
-                        data : []
-                    };
-
-                    angular.forEach(period.chartData, function(value, key) {
-                        var oneBarData = {
-                            x : "", //SKU Name
-                            y : [],
-                            color : 'rgb(57,181,74)'
-                        };
-
-                        if(angular.isUndefined(value.segmentName) ){
-                            oneBarData.x = value.SKUName;
-
-                            if(decimalNumber === 0){
-                                oneBarData.y.push(Math.round(value.valueSegmentShare * 100) / 100 );
-                            }else{
-                                oneBarData.y.push(Math.round(value.valueSegmentShare * 10000) / Math.pow(10, Number(decimalNumber)) );
-                            }
-
-                            oneBarData.color = showSkuColor(value.SKUName.substring(0,1));
-                        }
-
-                        periodData.data.push(oneBarData);
-                    });
-
-                    chartResult.data.push(periodData);
-                });
-
-            }
-            return angular.copy(chartResult);
-
-        };
-
-
-
-        var chartFormatTool3 = function(chartHttpData){
-            // 使用angular-chart 插件的数据格式  FOR Report B2 Competitor Intelligence , C3 Segment Distributions , C5 Market Trends
-            chartResult.series = [];
-            chartResult.data = [];
-
-            if(angular.isUndefined(chartHttpData[0].data)){
-                // 这里处理C3  tableC3 Segment Distribution
-                angular.forEach(chartHttpData[0], function(value, key) {
-                    if(key !== 'period' && key !=='$$hashKey'){
-                        chartResult.series.push(showTranslateTextConsumerSegmentName(key));
-                    }
-                });
-
-                angular.forEach(chartHttpData, function(period, key) {
-
-                    var oneBarData = {
-                        x : 0, //Round Name
-                        y : []
-                    };
-
-                    oneBarData.x = period.period;
-                    angular.forEach(period, function(value, key) {
-                        if(key !== 'period' && key !=='$$hashKey'){
-                            oneBarData.y.push(Math.round(value * 10000 ) / 10000);
-                        }
-                    });
-
-                    chartResult.data.push(oneBarData);
-                });
-
-            }else{
-                // 这里处理B2  tableB2 Competitor Intelligence 或 C5 Market Trends
-                angular.forEach(chartHttpData[0].data, function(period, key) {
-
-                    var oneBarData = {
-                        x : 0, //Round Name
-                        y : []
-                    };
-
-                    oneBarData.x = period.name;
-                    chartResult.data.push(oneBarData);
-                });
-
-                angular.forEach(chartHttpData, function(value, key) {
-                    if(!angular.isUndefined(value.SKUName)){
-                        chartResult.series.push(value.SKUName);
-                    }
-                    if(!angular.isUndefined(value.brandName)){
-                        chartResult.series.push(value.brandName);
-                    }
-                    if(!angular.isUndefined(value.companyName)){
-                        chartResult.series.push(showTranslateTextCompanyName(value.companyName));
-                    }
-
-
-                    angular.forEach(value.data, function(period, key) {
-                        chartResult.data[key].y.push(Math.round(period.value * 100 ) / 100);
-                    });
-
-                });
-            }
-            return angular.copy(chartResult);
-        };
-
-
-
-        var chartFormatTool4 = function(chartHttpData) {
-            // 使用angular-nvd3 插件的数据格式 Stacked Multi Bar Chart
-
-            chartResult.series = [];
-            chartResult.data = [];
-
-            if(angular.isArray(chartHttpData.SKUs) ){
-                angular.forEach(chartHttpData.SKUs[0].inventoryData, function(value, key) {
-                    var oneSeries = {
-                        "key": showTranslateTextInventoryReport(value.inventoryName),
-                        "values": []
-                    };
-                    if(key !== 0){
-                        chartResult.data.push(oneSeries);
-                        chartResult.series.push(showTranslateTextInventoryReport(value.inventoryName));
-                    }
-
-                });
-
-                angular.forEach(chartHttpData.SKUs, function(value, key) {
-//                    var oneLineData1 = []; // Close To EXpire Inventory
-//                    oneLineData1.push( value.SKUName );
-//                    oneLineData1.push( angular.copy(Math.round(value.inventoryData[0].inventoryValue * 100) / 100 ) );
-
-                    var oneLineData2 = []; // Previous Inventory
-                    oneLineData2.push( value.SKUName );
-                    oneLineData2.push( angular.copy(Math.round(value.inventoryData[1].inventoryValue * 100) / 100 ) );
-
-                    var oneLineData3 = []; // Fresh Inventory
-                    oneLineData3.push( value.SKUName );
-                    oneLineData3.push( angular.copy(Math.round(value.inventoryData[2].inventoryValue * 100) / 100 ) );
-
-//                    chartResult.data[0].values.push(oneLineData1);
-                    chartResult.data[0].values.push(oneLineData2);
-                    chartResult.data[1].values.push(oneLineData3);
-
-                });
-                return angular.copy(chartResult.data);
-            }
-
-        };
-
-
-        var chartFormatTool5 = function(chartHttpData) {
-            // 使用angular-nvd3 插件的数据格式   only for C2 Perception Maps Scatter Chart 散点图
-//        chartResult.series = [];
-//        chartResult.data = [];
-
-            chartResult.series = [];
-            chartResult.data = [];
-
-            if(angular.isArray(chartHttpData.periods) ){
-                // 处理 exogenous
-                var oneSegment = {
-                    "key" : showTranslateTextSegmentName(),
-                    "values" : []
-                };
-
-                angular.forEach(chartHttpData.exogenous, function(value, key) {
-                    var oneLineData = {
-                        'x' : Math.round(value.valuePerception * 100) / 100,
-                        'y' : Math.round(value.imagePerception * 100) / 100,
-                        'size' : 0.5,
-                        'name' : showTranslateTextConsumerSegmentName(value.segmentName),
-                        'tooltips' : [],
-                        'shape' : 'diamond'
-                    };
-
-                    oneSegment.values.push(oneLineData);
-                });
-
-                // 处理 periods 数据
-                angular.forEach(chartHttpData.periods, function(period, keyperiod) {
-                    var perioddata = {
-                        period : period.period,
-                        dataSKU : [],
-                        dataBrand : []
-                    };
-
-                    angular.forEach(period.allCompanyData, function(value, key) {
-                        var oneCompanySku = {
-                            "key" : showTranslateTextCompanyName(value.companyName),
-                            "values" : []
-                        };
-
-                        var oneCompanyBrand = {
-                            "key" : showTranslateTextCompanyName(value.companyName),
-                            "values" : []
-                        };
-
-                        angular.forEach(value.SKUs, function(valueSku, keySku) {
-                            var oneLineSku1 = {
-                                'x' : Math.round(valueSku.valuePerception * 100 + Math.random() * 10 + Math.random()  ) / 100,
-                                'y' : Math.round(valueSku.imagePerception * 100 + Math.random() * 10 + Math.random()  ) / 100,
-                                'size' : 0.6,
-                                'SKUName' : valueSku.SKUName,
-                                'name' : valueSku.SKUName,
-                                'CompanyName' : value.companyName,
-                                'tooltips' : valueSku.tooltips,
-                                'shape' : 'circle'
-                            };
-
-                            oneCompanySku.values.push(oneLineSku1);
-                        });
-
-                        angular.forEach(value.brands, function(valueBrand, keyBrand) {
-                            var oneLineBrand1 = {
-                                'x' : Math.round(valueBrand.valuePerception * 100) / 100,
-                                'y' : Math.round(valueBrand.imagePerception * 100) / 100,
-                                'size' : 0.6,
-                                'BrandName' : valueBrand.brandName,
-                                'name' : valueBrand.brandName,
-                                'CompanyName' : value.companyName,
-                                'tooltips' : [],
-                                'shape' : 'circle'
-                            };
-
-                            oneCompanyBrand.values.push(oneLineBrand1);
-                        });
-
-                        perioddata.dataSKU.push(oneCompanySku);
-                        perioddata.dataBrand.push(oneCompanyBrand);
-                    });
-
-                    perioddata.dataSKU.push(oneSegment);
-                    perioddata.dataBrand.push(oneSegment);
-
-                    chartResult.data.push(perioddata);
-
-                });
-
-
-                return angular.copy(chartResult);
-            }
-        };
 
 
         var factory = {
@@ -1131,6 +1148,8 @@
         };
         return factory;
     }
+
+
 
 
     /********************  管理员界面数据  ********************/
