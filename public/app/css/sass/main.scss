@@ -308,6 +308,8 @@ $color_main_body_user_manual_table_2n:#f8f8f8;
         font-family: $font_main_header2;
         font-size: 12px;
         color: $color_main_body_user_chart_leftmenu_title;
+        padding-left: 3px;
+        padding-right: 3px;
     }
 
     .table-striped > tbody > tr:nth-child(odd) > td,
@@ -1047,6 +1049,14 @@ body{
     
     .user_brand_box{
         height: 200px;
+
+        
+        .table > thead > tr > td,
+        .table > tbody > tr > td,
+        .table > tfoot > tr > td {
+            padding-left: 3px;
+            padding-right: 3px;
+        }
     }
     
     .user_home_divider{
