@@ -654,6 +654,26 @@
             tableC6MarketIndicators: {
                 allData: {}
             },
+            //B1 Market Share In Value
+            chartB11MarketShareInValue: {
+                config: chartReport.getChartConfig1(),
+                data: $scope.dataChartSimple
+            },
+            //B1 Market Share In Volume
+            chartB12MarketShareInVolume: {
+                config: chartReport.getChartConfig1(),
+                data: $scope.dataChartSimple
+            },
+            //B1 Mind Space Share
+            chartB13MindSpaceShare: {
+                config: chartReport.getChartConfig1(),
+                data: $scope.dataChartSimple
+            },
+            //B1 Shelf Space Share
+            chartB14ShelfSpaceShare: {
+                config: chartReport.getChartConfig1(),
+                data: $scope.dataChartSimple
+            },
             //B2 Competitor Intelligence
             tableB2CompetitorIntelligence: {
                 allData: [],
@@ -662,6 +682,26 @@
                 currentTableUnit: "%",
                 chartConfig: chartReport.getChartConfig1(),
                 chartData: $scope.dataChartSimple
+            },
+            //B3 Total Investment
+            chartB31TotalInvestment: {
+                config: chartReport.getChartConfig1(),
+                data: $scope.dataChartSimple
+            },
+            //B3 Net Profit By Companies
+            chartB32NetProfitByCompanies: {
+                config: chartReport.getChartConfig1(),
+                data: $scope.dataChartSimple
+            },
+            //B3 Return On Investment
+            chartB33ReturnOnInvestment: {
+                config: chartReport.getChartConfig1(),
+                data: $scope.dataChartSimple
+            },
+            //B4 Investments Versus Budget
+            chartB34InvestmentsVersusBudget: {
+                config: chartReport.getChartConfig1(),
+                data: $scope.dataChartSimple
             }
         };
 
@@ -684,8 +724,12 @@
                     that.loadingProfitabilityData();
                     //加载C6 Market Indicators
                     that.loadingMarketIndicatorsData();
+                    //加载B1 Market Share In Value,Market Share In Volume,Mind SpaceShare,Shelf SpaceShare
+                    that.loadingChartB1Data();
                     //加载B2 Competitor Intelligence
                     that.loadingCompetitorIntelligenceData();
+                    //加载B3
+                    that.loadingChartB3Data();
                     //加载C3 Segment Distribution
                     that.loadingSegmentDistributionData();
                     //加载C5 Market Trends
@@ -824,6 +868,25 @@
                     $scope.data.tableC6MarketIndicators.allData = data;
                 });
             },
+            loadingChartB1Data: function () {
+                /********************  Table B1  *******************/
+                //B1 1 Market Share In Value
+                AdminTable.getMarketShareInValue().then(function (data, status, headers, config) {                   
+                    $scope.data.chartB11MarketShareInValue.data = data;
+                });
+                //B1 2 Market Share In Volume
+                AdminTable.getMarketShareInVolume().then(function (data, status, headers, config) {
+                    $scope.data.chartB12MarketShareInVolume.data = data;
+                });
+                //B1 3 Mind Space Share
+                AdminTable.getMindSpaceShare().then(function (data, status, headers, config) {
+                    $scope.data.chartB13MindSpaceShare.data = data;
+                });
+                //B1 4 Shelf Space Share
+                AdminTable.getShelfSpaceShare().then(function (data, status, headers, config) {
+                     $scope.data.chartB14ShelfSpaceShare.data = data;
+                });
+            },
             loadingCompetitorIntelligenceData: function () {
                 /********************  Table B2 Competitor Intelligence  *******************/
                 //获取数据
@@ -832,6 +895,26 @@
                     $scope.data.tableB2CompetitorIntelligence.currentTableData = $scope.data.tableB2CompetitorIntelligence.allData.acquiredProductionAndLogisticsEfficiency;
                     $scope.data.tableB2CompetitorIntelligence.chartData = chartReport.formatChartData($scope.data.tableB2CompetitorIntelligence.allData.acquiredProductionAndLogisticsEfficiency);
                 });
+            },
+            loadingChartB3Data: function () {
+                /********************  Table B3  *******************/
+                //Table B3 Total Investment
+                AdminTable.getTotalInvestment().then(function (data, status, headers, config) {
+                    $scope.data.chartB31TotalInvestment.data = data;
+                });
+                //Table B3 Net Profit By Companies
+                AdminTable.getNetProfitByCompanies().then(function (data, status, headers, config) {
+                    $scope.data.chartB32NetProfitByCompanies.data = data;
+                });
+                //Table B3 Return On Investment
+                AdminTable.getReturnOnInvestment().then(function (data, status, headers, config) {
+                    $scope.data.chartB33ReturnOnInvestment.data = data;
+                });
+                //Table B3 Investments Versus Budget
+                AdminTable.getInvestmentsVersusBudget().then(function (data, status, headers, config) {
+                    $scope.data.chartB34InvestmentsVersusBudget.data = data;
+                });
+
             },
             loadingSegmentDistributionData: function () {
                 /********************  Table C3 Segment Distribution  *******************/
@@ -846,12 +929,8 @@
                 /********************  Table C5 Market Trends  *******************/
                 //获取数据
                 AdminTable.getMarketTrends().then(function (data, status, headers, config) {
-                    $scope.data.tableC5MarketTrends.allData = data;
-                    //$scope.data.tableC5MarketTrends.currentTableData = $scope.data.tableC5MarketTrends.allData.SKU.averageDisplayPriceStdPack;
-                    //$scope.data.tableC5MarketTrends.chartData = chartReport.formatChartData($scope.data.tableC5MarketTrends.currentTableData);
-                    //$scope.switchTableCategoryC5('SKU', 'averageDisplayPriceStdPack', '');
+                    $scope.data.tableC5MarketTrends.allData = data;                    
                     $scope.switchTableMenuLevel1C5(1, $scope.css.tableReportTab, 'averageDisplayPriceStdPack', '');
-
                 }); 
             }
         };

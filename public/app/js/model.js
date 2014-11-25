@@ -32,7 +32,7 @@
 
     angular.module('marksimos.model').factory('Admin', ['$http', adminModel]);
     //管理员报表-表格
-    angular.module('marksimos.model').factory('AdminTable', ['$http', adminTableModel]);
+    angular.module('marksimos.model').factory('AdminTable', ['$http', 'chartReport', adminTableModel]);
 
 
     var apiPath = '/marksimos/api/';
@@ -771,7 +771,9 @@
 
 
         var factory = {
-
+            getTranslateText: function () {
+                return translateText;
+            },
             getChartConfig1 : function(){
                 return angular.copy(chartConfig1);
             },
@@ -1166,11 +1168,40 @@
 
 
     /********************  管理员报表-表格  ********************/
-    function adminTableModel($http) {
+    function adminTableModel($http,chartReport) {
         function getAdminRequest(url) {
             return $http.get(apiAdminPath + url).then(function (result) {
-                return result.data;
+                switch (url) {
+                    case "chart/market_share_in_value":
+                    case "chart/market_share_in_volume":
+                    case "chart/mind_space_share":
+                    case "chart/shelf_space_share":   
+                        return formatData(result.data, true);
+                    case "chart/total_investment":
+                    case "chart/net_profit_by_companies":
+                    case "chart/return_on_investment":
+                    case "chart/investments_versus_budget":
+                        return formatData(result.data);
+                    default:
+                        return result.data;                       
+                }
+               
             })["catch"](errorHandler);
+        }
+        var transText = chartReport.getTranslateText();
+        function formatData(data, needCalc) {
+            var r = { data: [], series: [] };
+            for (var k in data.periods) {
+                var y = [], arr = data.chartData[k];
+                for (var d in arr) {
+                    y.push(needCalc ? +((arr[d] * 100).toFixed(2)) : arr[d]);
+                }
+                r.data.push({ x: data.periods[k], y: y });
+            }
+            for (var k in data.companyNames) {
+                r.series.push(transText.HomePageSecondMenuBarLabelsCompany + data.companyNames[k]);
+            }
+            return r;
         }
         return {
             //Table A1 Company Status
@@ -1189,6 +1220,44 @@
             getMarketIndicators: function () {
                 return getAdminRequest("report/market_indicators");              
             },
+
+
+            //Table B1 Market Share In Value
+            getMarketShareInValue: function () {
+                return getAdminRequest("chart/market_share_in_value");
+            },
+            //Table B1 Market Share In Volume
+            getMarketShareInVolume: function () {
+                return getAdminRequest("chart/market_share_in_volume");
+            },
+            //Table B1 Mind SpaceShare
+            getMindSpaceShare: function () {
+                return getAdminRequest("chart/mind_space_share");
+            },
+            //Table B1 Shelf SpaceShare
+            getShelfSpaceShare: function () {
+                return getAdminRequest("chart/shelf_space_share");
+            },
+
+
+            //Table B3 Total Investment
+            getTotalInvestment: function () {
+                return getAdminRequest("chart/total_investment");
+            },
+            //Table B3 Net Profit By Companies
+            getNetProfitByCompanies: function () {
+                return getAdminRequest("chart/net_profit_by_companies");
+            },
+            //Table B3 Return On Investment
+            getReturnOnInvestment: function () {
+                return getAdminRequest("chart/return_on_investment");
+            },
+            //Table B3 Investments Versus Budget
+            getInvestmentsVersusBudget: function () {
+                return getAdminRequest("chart/investments_versus_budget");
+            },
+
+
             //Table B2 Competitor Intelligence
             getCompetitorIntelligence: function () {
                 return getAdminRequest("report/competitor_intelligence");               

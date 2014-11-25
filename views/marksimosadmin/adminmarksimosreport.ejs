@@ -12,18 +12,18 @@
             <h2 class="page-header">MarkSimos Seminar <%= seminarId %> Report</h2>
             {{'ReportYourCompany' | translate}} :
             <div class="btn-group">
-                <button type="button" class="btn btn-default" ng-class="{'active': css.currentReportMenu=='A1'}" ng-click="clickChartMenu('A1')">{{'ReportMenuCompanyStatus' | translate}}(X)</button>
-                <button type="button" class="btn btn-default" ng-class="{'active': css.currentReportMenu=='A2'}" ng-click="clickChartMenu('A2')">{{'ReportMenuFinancialReport' | translate}}(X)</button>
+                <button type="button" class="btn btn-default" ng-class="{'active': css.currentReportMenu=='A1'}" ng-click="clickChartMenu('A1')">{{'ReportMenuCompanyStatus' | translate}}<i class="fa  fa-check" style="color:red" ></i></button>
+                <button type="button" class="btn btn-default" ng-class="{'active': css.currentReportMenu=='A2'}" ng-click="clickChartMenu('A2')">{{'ReportMenuFinancialReport' | translate}}<i class="fa  fa-check" style="color:red"></i></button>
                 <button type="button" class="btn btn-default" ng-class="{'active': css.currentReportMenu=='A3'}" ng-click="clickChartMenu('A3')">{{'ReportMenuInventoryReport' | translate}}</button>
-                <button type="button" class="btn btn-default" ng-class="{'active': css.currentReportMenu=='A4'}" ng-click="clickChartMenu('A4')">{{'ReportMenuProfitabilityEvolution' | translate}}(X)</button>
+                <button type="button" class="btn btn-default" ng-class="{'active': css.currentReportMenu=='A4'}" ng-click="clickChartMenu('A4')">{{'ReportMenuProfitabilityEvolution' | translate}}<i class="fa  fa-check" style="color:red"></i></button>
             </div>
             <br />
 
             {{'ReportYourCompetitors' | translate}} :
             <div class="btn-group">
-                <button type="button" class="btn btn-default" ng-class="{'active': css.currentReportMenu=='B1'}" ng-click="clickChartMenu('B1')">{{'ReportMenuMarketShare' | translate}}</button>
-                <button type="button" class="btn btn-default" ng-class="{'active': css.currentReportMenu=='B2'}" ng-click="clickChartMenu('B2')">{{'ReportMenuCompetitorIntelligence' | translate}}(X)</button>
-                <button type="button" class="btn btn-default" ng-class="{'active': css.currentReportMenu=='B3'}" ng-click="clickChartMenu('B3')">{{'ReportMenuInvestmentProfits' | translate}}</button>
+                <button type="button" class="btn btn-default" ng-class="{'active': css.currentReportMenu=='B1'}" ng-click="clickChartMenu('B1')">{{'ReportMenuMarketShare' | translate}}<i class="fa  fa-check" style="color:red"></i></button>
+                <button type="button" class="btn btn-default" ng-class="{'active': css.currentReportMenu=='B2'}" ng-click="clickChartMenu('B2')">{{'ReportMenuCompetitorIntelligence' | translate}}<i class="fa  fa-check" style="color:red"></i></button>
+                <button type="button" class="btn btn-default" ng-class="{'active': css.currentReportMenu=='B3'}" ng-click="clickChartMenu('B3')">{{'ReportMenuInvestmentProfits' | translate}}<i class="fa  fa-check" style="color:red"></i></button>
                 <button type="button" class="btn btn-default" ng-class="{'active': css.currentReportMenu=='B4'}" ng-click="clickChartMenu('B4')">{{'ReportMenuMarketSalesInventory' | translate}}</button>
             </div>
             <br />
@@ -32,10 +32,10 @@
             <div class="btn-group">
                 <button type="button" class="btn btn-default" ng-class="{'active': css.currentReportMenu=='C1'}" ng-click="clickChartMenu('C1')">{{'ReportMenuSegmentLeaderTop5' | translate}}</button>
                 <button type="button" class="btn btn-default" ng-class="{'active': css.currentReportMenu=='C2'}" ng-click="clickChartMenu('C2')">{{'ReportMenuPerceptionMap' | translate}}</button>
-                <button type="button" class="btn btn-default" ng-class="{'active': css.currentReportMenu=='C3'}" ng-click="clickChartMenu('C3')">{{'ReportMenuSegmentDistributions' | translate}}(X)</button>
+                <button type="button" class="btn btn-default" ng-class="{'active': css.currentReportMenu=='C3'}" ng-click="clickChartMenu('C3')">{{'ReportMenuSegmentDistributions' | translate}}<i class="fa  fa-check" style="color:red"></i></button>
                 <button type="button" class="btn btn-default" ng-class="{'active': css.currentReportMenu=='C4'}" ng-click="clickChartMenu('C4')">{{'ReportMenuMarketEvolution' | translate}}</button>
-                <button type="button" class="btn btn-default" ng-class="{'active': css.currentReportMenu=='C5'}" ng-click="clickChartMenu('C5')">{{'ReportMenuMarketTrends' | translate}}(X)</button>
-                <button type="button" class="btn btn-default" ng-class="{'active': css.currentReportMenu=='C6'}" ng-click="clickChartMenu('C6')">{{'ReportMenuMarketIndicator' | translate}}(X)</button>
+                <button type="button" class="btn btn-default" ng-class="{'active': css.currentReportMenu=='C5'}" ng-click="clickChartMenu('C5')">{{'ReportMenuMarketTrends' | translate}}<i class="fa  fa-check" style="color:red"></i></button>
+                <button type="button" class="btn btn-default" ng-class="{'active': css.currentReportMenu=='C6'}" ng-click="clickChartMenu('C6')">{{'ReportMenuMarketIndicator' | translate}}<i class="fa  fa-check" style="color:red"></i></button>
             </div>
 
         </section>
@@ -203,6 +203,69 @@
 
 
         <!--  Table B1  -->
+        <section class="content" ng-if="css.currentReportMenu=='B1'">
+
+            <!--  row 1  -->
+            <div class="col-md-6">
+                <div class="box box-primary">
+                    <div class="box-header">
+                        <i class="fa fa-bar-chart-o"></i>
+                        <h3 class="box-title">
+                            {{'ReportMarketShareChartTitleMarketShareInValue' | translate}}
+                        </h3>
+                    </div>
+                    <div class="box-body no-padding">
+                        <div ac-chart="'line'" ac-data="data.chartB11MarketShareInValue.data" ac-config="data.chartB11MarketShareInValue.config" class="chartBox"></div>
+                        <p class="text-center">{{'ReportMarketSalesAndInventoryChartBottomTextPeriod' | translate}}</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="box box-primary">
+                    <div class="box-header">
+                        <i class="fa fa-bar-chart-o"></i>
+                        <h3 class="box-title">
+                            {{'ReportMarketShareChartTitleMarketShareInVolume' | translate}}
+                        </h3>
+                    </div>
+                    <div class="box-body no-padding">
+                        <div ac-chart="'line'" ac-data="data.chartB12MarketShareInVolume.data" ac-config="data.chartB12MarketShareInVolume.config" class="chartBox"></div>
+                        <p class="text-center">{{'ReportMarketSalesAndInventoryChartBottomTextPeriod' | translate}}</p>
+                    </div>
+                </div>
+            </div>
+            <!--  \row 1  -->
+            <!-- row 2  -->
+            <div class="col-md-6">
+                <div class="box box-primary">
+                    <div class="box-header">
+                        <i class="fa fa-bar-chart-o"></i>
+                        <h3 class="box-title">
+                            {{'ReportMarketShareChartTitleMindSpaceShare' | translate}}
+                        </h3>
+                    </div>
+                    <div class="box-body no-padding">
+                        <div ac-chart="'line'" ac-data="data.chartB13MindSpaceShare.data" ac-config="data.chartB13MindSpaceShare.config" class="chartBox"></div>
+                        <p class="text-center">{{'ReportMarketSalesAndInventoryChartBottomTextPeriod' | translate}}</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="box box-primary">
+                    <div class="box-header">
+                        <i class="fa fa-bar-chart-o"></i>
+                        <h3 class="box-title">
+                            {{'ReportMarketShareChartTitleShelfSpaceShare' | translate}}
+                        </h3>
+                    </div>
+                    <div class="box-body no-padding">
+                        <div ac-chart="'line'" ac-data="data.chartB14ShelfSpaceShare.data" ac-config="data.chartB14ShelfSpaceShare.config" class="chartBox"></div>
+                        <p class="text-center">{{'ReportMarketSalesAndInventoryChartBottomTextPeriod' | translate}}</p>
+                    </div>
+                </div>
+            </div>
+            <!--  \row 2  -->
+        </section>
        
 
 
@@ -260,6 +323,138 @@
             </div>
         </section>
 
+
+        <!--  Table B3  -->
+        <section class="content" ng-if="css.currentReportMenu=='B3'">
+            <!--  row 1  -->
+            <div class="col-md-6">
+                <div class="box box-primary">
+                    <div class="box-header">
+                        <i class="fa fa-bar-chart-o"></i>
+                        <h3 class="box-title">
+                            {{'ReportInvestmentsAndProfitsChartTitleTotalInvestment' | translate}}
+                        </h3>
+                    </div>
+                    <div class="box-body no-padding">
+                        <div ac-chart="'line'" ac-data="data.chartB31TotalInvestment.data" ac-config="data.chartB31TotalInvestment.config" class="chartBox"></div>
+                        <p class="text-center">{{'ReportMarketSalesAndInventoryChartBottomTextPeriod' | translate}}</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="box box-primary">
+                    <div class="box-header">
+                        <i class="fa fa-bar-chart-o"></i>
+                        <h3 class="box-title">
+                            {{'ReportInvestmentsAndProfitsChartTitleNetProfitByCompanies' | translate}}
+                        </h3>
+                    </div>
+                    <div class="box-body no-padding">
+                        <div ac-chart="'line'" ac-data="data.chartB32NetProfitByCompanies.data" ac-config="data.chartB32NetProfitByCompanies.config" class="chartBox"></div>
+                        <p class="text-center">{{'ReportMarketSalesAndInventoryChartBottomTextPeriod' | translate}}</p>
+                    </div>
+                </div>
+            </div>
+            <!--  /row 1  -->
+
+            <!-- row 2  -->
+            <div class="col-md-6">
+                <div class="box box-primary">
+                    <div class="box-header">
+                        <i class="fa fa-bar-chart-o"></i>
+                        <h3 class="box-title">
+                            {{'ReportInvestmentsAndProfitsChartTitleReturnOnInvestment' | translate}}
+                        </h3>
+                    </div>
+                    <div class="box-body no-padding">
+                        <div ac-chart="'line'" ac-data="data.chartB33ReturnOnInvestment.data" ac-config="data.chartB33ReturnOnInvestment.config" class="chartBox"></div>
+                        <p class="text-center">{{'ReportMarketSalesAndInventoryChartBottomTextPeriod' | translate}}</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="box box-primary">
+                    <div class="box-header">
+                        <i class="fa fa-bar-chart-o"></i>
+                        <h3 class="box-title">
+                            {{'ReportInvestmentsAndProfitsChartTitleInvestmentVersusBudget' | translate}}
+                        </h3>
+                    </div>
+                    <div class="box-body no-padding">
+                        <div ac-chart="'line'" ac-data="data.chartB34InvestmentsVersusBudget.data" ac-config="data.chartB34InvestmentsVersusBudget.config" class="chartBox"></div>
+                        <p class="text-center">{{'ReportMarketSalesAndInventoryChartBottomTextPeriod' | translate}}</p>
+                    </div>
+                </div>
+            </div>
+            <!--  /row 2  -->
+        </section>
+
+
+        <!--  Table B4  -->
+        <section class="content" ng-if="css.currentReportMenu=='B4'">
+            <!--  row 1  -->
+            <div class="col-md-6">
+                <div class="box box-primary">
+                    <div class="box-header">
+                        <i class="fa fa-bar-chart-o"></i>
+                        <h3 class="box-title">
+                            {{'ReportMarketSalesAndInventoryChartTitleMarketSalesValue' | translate}}
+                        </h3>
+                    </div>
+                    <div class="box-body no-padding">
+                        <div ac-chart="'line'" ac-data="data.chartB41MarketSalesValue.data" ac-config="data.chartB41MarketSalesValue.config" class="chartBox"></div>
+                        <p class="text-center">{{'ReportMarketSalesAndInventoryChartBottomTextPeriod' | translate}}</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="box box-primary">
+                    <div class="box-header">
+                        <i class="fa fa-bar-chart-o"></i>
+                        <h3 class="box-title">
+                            {{'ReportMarketSalesAndInventoryChartTitleMarketSalesVolume' | translate}}
+                        </h3>
+                    </div>
+                    <div class="box-body no-padding">
+                        <div ac-chart="'line'" ac-data="data.chartB42MarketSalesVolume.data" ac-config="data.chartB42MarketSalesVolume.config" class="chartBox"></div>
+                        <p class="text-center">{{'ReportMarketSalesAndInventoryChartBottomTextPeriod' | translate}}</p>
+                    </div>
+                </div>
+            </div>
+            <!--  /row 1  -->
+            <!-- row 2  -->
+            <div class="col-md-6">
+                <div class="box box-primary">
+                    <div class="box-header">
+                        <i class="fa fa-bar-chart-o"></i>
+                        <h3 class="box-title">
+                            {{'ReportMarketSalesAndInventoryChartTitleTotalInventoryAtFactory' | translate}}
+                        </h3>
+                    </div>
+                    <div class="box-body no-padding">
+                        <div ac-chart="'line'" ac-data="data.chartB43TotalInventoryAtFactory.data" ac-config="data.chartB43TotalInventoryAtFactory.config" class="chartBox"></div>
+                        <p class="text-center">{{'ReportMarketSalesAndInventoryChartBottomTextPeriod' | translate}}</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="box box-primary">
+                    <div class="box-header">
+                        <i class="fa fa-bar-chart-o"></i>
+                        <h3 class="box-title">
+                            {{'ReportMarketSalesAndInventoryChartTitleTotalInventoryAtTrade' | translate}}
+                        </h3>
+                    </div>
+                    <div class="box-body no-padding">
+                        <div ac-chart="'line'" ac-data="data.chartB44TotalInventoryAtTrade.data" ac-config="data.chartB44TotalInventoryAtTrade.config" class="chartBox"></div>
+                        <p class="text-center">{{'ReportMarketSalesAndInventoryChartBottomTextPeriod' | translate}}</p>
+                    </div>
+                </div>
+            </div>
+            <!--  /row 2  -->
+        </section>
+
+  
         <!--  Table C3  -->
         <section class="content" ng-if="css.currentReportMenu=='C3'">
             <div class="box box-primary">
