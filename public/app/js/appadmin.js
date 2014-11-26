@@ -600,7 +600,7 @@
 
 
 
-    angular.module('marksimosadmin').controller('adminMarksimosReportController', ['$scope', '$http', '$notification', 'AdminTable', 'chartReport', function ($scope, $http, $notification, AdminTable,chartReport) {
+    angular.module('marksimosadmin').controller('adminMarksimosReportController', ['$scope', '$http', '$notification', 'AdminTable', 'chartReport','AdminChart', function ($scope, $http, $notification, AdminTable,chartReport,AdminChart) {
         $scope.css = {
             currentReportMenu: 'A1',
             tableReportTab: 'SKU'
@@ -871,19 +871,19 @@
             loadingChartB1Data: function () {
                 /********************  Table B1  *******************/
                 //B1 1 Market Share In Value
-                AdminTable.getMarketShareInValue().then(function (data, status, headers, config) {                   
+                AdminChart.getMarketShareInValue().then(function (data, status, headers, config) {                   
                     $scope.data.chartB11MarketShareInValue.data = data;
                 });
                 //B1 2 Market Share In Volume
-                AdminTable.getMarketShareInVolume().then(function (data, status, headers, config) {
+                AdminChart.getMarketShareInVolume().then(function (data, status, headers, config) {
                     $scope.data.chartB12MarketShareInVolume.data = data;
                 });
                 //B1 3 Mind Space Share
-                AdminTable.getMindSpaceShare().then(function (data, status, headers, config) {
+                AdminChart.getMindSpaceShare().then(function (data, status, headers, config) {
                     $scope.data.chartB13MindSpaceShare.data = data;
                 });
                 //B1 4 Shelf Space Share
-                AdminTable.getShelfSpaceShare().then(function (data, status, headers, config) {
+                AdminChart.getShelfSpaceShare().then(function (data, status, headers, config) {
                      $scope.data.chartB14ShelfSpaceShare.data = data;
                 });
             },
@@ -899,19 +899,19 @@
             loadingChartB3Data: function () {
                 /********************  Table B3  *******************/
                 //Table B3 Total Investment
-                AdminTable.getTotalInvestment().then(function (data, status, headers, config) {
+                AdminChart.getTotalInvestment().then(function (data, status, headers, config) {
                     $scope.data.chartB31TotalInvestment.data = data;
                 });
                 //Table B3 Net Profit By Companies
-                AdminTable.getNetProfitByCompanies().then(function (data, status, headers, config) {
+                AdminChart.getNetProfitByCompanies().then(function (data, status, headers, config) {
                     $scope.data.chartB32NetProfitByCompanies.data = data;
                 });
                 //Table B3 Return On Investment
-                AdminTable.getReturnOnInvestment().then(function (data, status, headers, config) {
+                AdminChart.getReturnOnInvestment().then(function (data, status, headers, config) {
                     $scope.data.chartB33ReturnOnInvestment.data = data;
                 });
                 //Table B3 Investments Versus Budget
-                AdminTable.getInvestmentsVersusBudget().then(function (data, status, headers, config) {
+                AdminChart.getInvestmentsVersusBudget().then(function (data, status, headers, config) {
                     $scope.data.chartB34InvestmentsVersusBudget.data = data;
                 });
 
