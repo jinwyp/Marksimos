@@ -962,7 +962,7 @@
             // Chart C1
             segmentsLeadersByValuePriceSensitive : function(){
                 return $http.get(apiPath + 'chart/segments_leaders_by_value_price_sensitive').then(function(result){
-                console.log(result.data);
+                //console.log(result.data);
                     return chartFormatToolC1BarChart(result.data, 2);
                 })["catch"](errorHandler);
             },
@@ -1310,8 +1310,7 @@
 
             //Table C1-1 Segments Leader By Value Price Sensitive
             getSegmentsLeadersByValuePriceSensitive: function () {
-                return $http.get(apiAdminPath + 'chart/segments_leaders_by_value_price_sensitive').then(function (result) {
-                    console.log(result.data);
+                return $http.get(apiAdminPath + 'chart/segments_leaders_by_value_price_sensitive').then(function (result) {                    
                     return chartFormatToolC1BarChart(result.data, 2);
                 })["catch"](errorHandler);
             },
