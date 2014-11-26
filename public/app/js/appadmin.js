@@ -7,7 +7,7 @@
     'use strict';
 
     /********************  Create New Module For Controllers ********************/
-    angular.module('marksimosadmin', ['pascalprecht.translate', 'notifications', 'marksimos.websitecomponent', 'marksimos.commoncomponent', 'marksimos.filter', 'angularCharts']);
+    angular.module('marksimosadmin', ['pascalprecht.translate',  'angularCharts', 'nvd3ChartDirectives', 'notifications', 'marksimos.websitecomponent', 'marksimos.commoncomponent', 'marksimos.filter']);
 
 
 
@@ -654,22 +654,34 @@
             tableC6MarketIndicators: {
                 allData: {}
             },
-            //B1 Market Share In Value
+
+            //A3 Inventory Report
+            chartA3InventoryReport : {
+                allData : [],
+                currentCompany : {},
+                data : [],
+                //            color : ['#39b54a', '#ff983d', '#0087f0', '#8781bd', '#f26c4f', '#bd8cbf', '#000000'] // QIFEI 's color
+                //            color : ['#004CE5', '#BB0000', '#FFBC01', '#339933', '#990099', '#FF5200', '#000000'] //Windows color
+                //            color : ['#999999', '#BB0000', '#99CC00', '#339933', '#990099', '#FF5200', '#000000']
+                color : ['#999999',  '#99CC00', '#BB0000', '#339933', '#990099', '#FF5200', '#000000']
+            },
+
+            //B11 Market Share In Value
             chartB11MarketShareInValue: {
                 config: chartReport.getChartConfig1(),
                 data: $scope.dataChartSimple
             },
-            //B1 Market Share In Volume
+            //B12 Market Share In Volume
             chartB12MarketShareInVolume: {
                 config: chartReport.getChartConfig1(),
                 data: $scope.dataChartSimple
             },
-            //B1 Mind Space Share
+            //B13 Mind Space Share
             chartB13MindSpaceShare: {
                 config: chartReport.getChartConfig1(),
                 data: $scope.dataChartSimple
             },
-            //B1 Shelf Space Share
+            //B14 Shelf Space Share
             chartB14ShelfSpaceShare: {
                 config: chartReport.getChartConfig1(),
                 data: $scope.dataChartSimple
@@ -790,8 +802,10 @@
 
 
         var app = {
-            initOnce: function () {
-                var that = this;               
+            init: function () {
+
+                var that = this;
+
                 chartReport.initTranslate().then(function () {
                     //添加事件
                     that.runOnce();
@@ -799,10 +813,14 @@
                     that.loadingCompanyData();
                     //加载A2 Financial Data
                     that.loadingFinancialData();
+                    //加载A3 Inventory Report
+                    that.loadingChartA3InventoryReportData();
                     //加载A4 Profitability Evolution
                     that.loadingProfitabilityData();
                     //加载C6 Market Indicators
                     that.loadingMarketIndicatorsData();
+
+                    that.loadingChartA3InventoryReportData();
                     //加载B1 Market Share In Value,Market Share In Volume,Mind SpaceShare,Shelf SpaceShare
                     that.loadingChartB1Data();
                     //加载B2 Competitor Intelligence
@@ -919,6 +937,25 @@
                 };
 
 
+
+                /********************  Chart A3 Inventory Report  *******************/
+                $scope.A3ColorFunction = function(){
+                    return function(d, i){
+                        return $scope.data.chartA3InventoryReport.color[i];
+                    };
+                };
+
+                $scope.A3ToolTipContent = function(){
+                    return function(key, x, y, e, graph) {
+                        return  '<h5>' + y + '</h5>';
+                    };
+                };
+
+                $scope.switchChartA3Company = function (index) {
+                    $scope.data.chartA3InventoryReport.currentCompany = $scope.data.chartA3InventoryReport.allData[index];
+                    $scope.data.chartA3InventoryReport.data = $scope.data.chartA3InventoryReport.currentCompany.data;
+                };
+
                 /********************  Chart C1 Segments Leaders  ********************/
                 $scope.switchTableReportC1Period = function (period) {
                     $scope.data.chartC11SegmentsLeadersByValuePriceSensitive.currentPeriod = period.period;
@@ -929,6 +966,7 @@
                     $scope.data.chartC15SegmentsLeadersByValueUltimate.data = $scope.data.chartC15SegmentsLeadersByValueUltimate.allData[$scope.data.chartC11SegmentsLeadersByValuePriceSensitive.currentPeriod + 3];
                     $scope.data.chartC16SegmentsLeadersByValuePragmatic.data = $scope.data.chartC16SegmentsLeadersByValuePragmatic.allData[$scope.data.chartC11SegmentsLeadersByValuePriceSensitive.currentPeriod + 3];
                 };
+
 
             },
             reRun: function () { },
@@ -950,6 +988,7 @@
                     $scope.switchTableReportA2Company(0);
                 });
             },
+
             loadingProfitabilityData: function () {
                 /********************  Table A4 Profitability Evolution  *******************/
                 //获取数据
@@ -990,6 +1029,16 @@
                 //获取数据
                 AdminTable.getMarketIndicators().then(function (data, status, headers, config) {
                     $scope.data.tableC6MarketIndicators.allData = data;
+                });
+            },
+
+
+            loadingChartA3InventoryReportData: function () {
+                /********************  Chart A3  ********************/
+                AdminChart.getInventoryReport().then(function(data, status, headers, config){
+                    $scope.data.chartA3InventoryReport.allData = data;
+                    $scope.data.chartA3InventoryReport.currentCompany = $scope.data.chartA3InventoryReport.allData[0];
+                    $scope.data.chartA3InventoryReport.data = $scope.data.chartA3InventoryReport.allData[0].data;
                 });
             },
 
@@ -1105,7 +1154,7 @@
             }
         };
         //初始化程序
-        app.initOnce();
+        app.init();
 
     }]);
 

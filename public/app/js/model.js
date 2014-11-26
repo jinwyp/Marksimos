@@ -575,38 +575,60 @@
         chartResult.series = [];
         chartResult.data = [];
 
-        if(angular.isArray(chartHttpData.SKUs) ){
-            angular.forEach(chartHttpData.SKUs[0].inventoryData, function(value, key) {
-                var oneSeries = {
-                    "key": showTranslateTextInventoryReport(value.inventoryName),
-                    "values": []
-                };
-                if(key !== 0){
-                    chartResult.data.push(oneSeries);
-                    chartResult.series.push(showTranslateTextInventoryReport(value.inventoryName));
-                }
-            });
+        var companyList = [];
 
-            angular.forEach(chartHttpData.SKUs, function(value, key) {
+        // 根据对象还是数组判断是给学生的对象数据还是admin的数组有多个公司的数据
+        if(angular.isUndefined(chartHttpData.companyId)){
+            companyList = chartHttpData;
+        }else{
+            companyList.push(chartHttpData);
+        }
+
+        angular.forEach(companyList, function(company, companykey) {
+            var companyData = {
+                companyName : company.companyName,
+                companyId : company.companyId,
+                data : [],
+                series : []
+            };
+
+            if(angular.isArray(company.SKUs) ){
+                angular.forEach(company.SKUs[0].inventoryData, function(value, key) {
+                    var oneSeries = {
+                        "key": showTranslateTextInventoryReport(value.inventoryName),
+                        "values": []
+                    };
+                    if(key !== 0){
+                        companyData.data.push(oneSeries);
+                        companyData.series.push(showTranslateTextInventoryReport(value.inventoryName));
+                    }
+                });
+
+                angular.forEach(company.SKUs, function(value, key) {
 //                    var oneLineData1 = []; // Close To EXpire Inventory
 //                    oneLineData1.push( value.SKUName );
 //                    oneLineData1.push( angular.copy(Math.round(value.inventoryData[0].inventoryValue * 100) / 100 ) );
 
-                var oneLineData2 = []; // Previous Inventory
-                oneLineData2.push( value.SKUName );
-                oneLineData2.push( angular.copy(Math.round(value.inventoryData[1].inventoryValue * 100) / 100 ) );
+                    var oneLineData2 = []; // Previous Inventory
+                    oneLineData2.push( value.SKUName );
+                    oneLineData2.push( angular.copy(Math.round(value.inventoryData[1].inventoryValue * 100) / 100 ) );
 
-                var oneLineData3 = []; // Fresh Inventory
-                oneLineData3.push( value.SKUName );
-                oneLineData3.push( angular.copy(Math.round(value.inventoryData[2].inventoryValue * 100) / 100 ) );
+                    var oneLineData3 = []; // Fresh Inventory
+                    oneLineData3.push( value.SKUName );
+                    oneLineData3.push( angular.copy(Math.round(value.inventoryData[2].inventoryValue * 100) / 100 ) );
 
-//                    chartResult.data[0].values.push(oneLineData1);
-                chartResult.data[0].values.push(oneLineData2);
-                chartResult.data[1].values.push(oneLineData3);
+//                    companyData.data[0].values.push(oneLineData1);
+                    companyData.data[0].values.push(oneLineData2);
+                    companyData.data[1].values.push(oneLineData3);
 
-            });
-            return angular.copy(chartResult.data);
-        }
+                });
+            }
+            chartResult.data.push(angular.copy(companyData));
+
+        });
+
+        return angular.copy(chartResult.data);
+
     };
 
 
@@ -1055,7 +1077,6 @@
 
         var factory = {
 
-
             // Table Report A1
             companyStatus : function(){
                 return $http.get(apiPath + 'report/company_status').then(function(result){
@@ -1231,6 +1252,13 @@
     function adminChartModel($http) {  
     
         return {
+            // Chart A3 Inventory Report
+            getInventoryReport : function(){
+                return $http.get(apiAdminPath + 'chart/inventory_report').then(function(result){
+                    return chartFormatToolnvd3StackedMultiBarChart(result.data);
+                })["catch"](errorHandler);
+            },
+
             //Table B1 Market Share In Value
             getMarketShareInValue: function () {
                 return $http.get(apiAdminPath + "chart/market_share_in_value").then(function (result) {
