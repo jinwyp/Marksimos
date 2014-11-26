@@ -733,6 +733,7 @@
         var app = {
             initOnce: function () {
                 var that = this;
+                d3.svg.line().defined(function (d) { return d.y !== null; });
                 chartReport.initTranslate().then(function () {
                     //添加事件
                     that.runOnce();

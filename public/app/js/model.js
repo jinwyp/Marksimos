@@ -521,7 +521,7 @@
 
                 oneBarData.x = period.period;
                 angular.forEach(period, function(value, key) {
-                    if(key !== 'period' && key !=='$$hashKey'){
+                    if (key !== 'period' && key !== '$$hashKey') {
                         oneBarData.y.push(Math.round(value * 10000 ) / 10000);
                     }
                 });
@@ -554,7 +554,7 @@
                 }
 
 
-                angular.forEach(value.data, function(period, key) {
+                angular.forEach(value.data, function (period, key) {                   
                     chartResult.data[key].y.push(Math.round(period.value * 100 ) / 100);
                 });
 
