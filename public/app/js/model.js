@@ -30,11 +30,14 @@
     angular.module('marksimos.model').factory('Help', ['$http', helpModel]);
 
 
+
+    /********************  Administrator Model  ********************/
     angular.module('marksimos.model').factory('Admin', ['$http', adminModel]);
     //管理员报表-表格
     angular.module('marksimos.model').factory('AdminTable', ['$http', adminTableModel]);
     //管理员报表-图表
     angular.module('marksimos.model').factory('AdminChart',['$http',adminChartModel]);
+
 
     var apiPath = '/marksimos/api/';
     var apiAdminPath = '/marksimos/api/admin/';
@@ -1186,6 +1189,7 @@
 
     /********************  管理员报表-表格  ********************/
     function adminTableModel($http) {
+
         function getAdminRequest(url) {
             return $http.get(apiAdminPath + url).then(function (result) {
                 return result.data;    
