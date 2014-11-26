@@ -813,30 +813,30 @@
                     that.loadingCompanyData();
                     //加载A2 Financial Data
                     that.loadingFinancialData();
-                    //加载A3 Inventory Report
-                    that.loadingChartA3InventoryReportData();
                     //加载A4 Profitability Evolution
                     that.loadingProfitabilityData();
+                    //加载B2 Competitor Intelligence
+                    that.loadingCompetitorIntelligenceData();
+                    //加载C3 Segment Distribution
+                    that.loadingSegmentDistributionData();
+                    //加载C5 Market Trends
+                    that.loadingMarketTrendsData();
                     //加载C6 Market Indicators
                     that.loadingMarketIndicatorsData();
 
+                    //加载A3 Inventory Report
                     that.loadingChartA3InventoryReportData();
                     //加载B1 Market Share In Value,Market Share In Volume,Mind SpaceShare,Shelf SpaceShare
                     that.loadingChartB1Data();
-                    //加载B2 Competitor Intelligence
-                    that.loadingCompetitorIntelligenceData();
                     //加载B3
                     that.loadingChartB3Data();
                     //加载B4
                     that.loadingChartB4Data();
                     //加载C1
-                    that.loadingChartC1Data();                    
-                    //加载C3 Segment Distribution
-                    that.loadingSegmentDistributionData();
+                    that.loadingChartC1Data();
                     //加载C4
                     that.loadingChartC4Data();
-                    //加载C5 Market Trends
-                    that.loadingMarketTrendsData();
+
                    
                 });
             },
