@@ -1254,7 +1254,6 @@
             // Chart A3 Inventory Report
             getInventoryReport : function(){
                 return $http.get(apiAdminPath + 'chart/inventory_report').then(function(result){
-                    console.log(result.data);
                     return chartFormatToolnvd3StackedMultiBarChart(result.data);
                 })["catch"](errorHandler);
             },

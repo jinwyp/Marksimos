@@ -7,7 +7,7 @@
     'use strict';
 
     /********************  Create New Module For Controllers ********************/
-    angular.module('marksimosadmin', ['pascalprecht.translate', 'notifications', 'marksimos.websitecomponent', 'marksimos.commoncomponent', 'marksimos.filter', 'angularCharts']);
+    angular.module('marksimosadmin', ['pascalprecht.translate',  'angularCharts', 'nvd3ChartDirectives', 'notifications', 'marksimos.websitecomponent', 'marksimos.commoncomponent', 'marksimos.filter']);
 
 
 
@@ -657,6 +657,8 @@
 
             //A3 Inventory Report
             chartA3InventoryReport : {
+                allData : [],
+                currentCompany : {},
                 data : [],
                 //            color : ['#39b54a', '#ff983d', '#0087f0', '#8781bd', '#f26c4f', '#bd8cbf', '#000000'] // QIFEI 's color
                 //            color : ['#004CE5', '#BB0000', '#FFBC01', '#339933', '#990099', '#FF5200', '#000000'] //Windows color
@@ -882,6 +884,17 @@
                     };
                 };
 
+                $scope.switchChartA3Company = function (index) {
+                    $scope.data.chartA3InventoryReport.currentCompany = $scope.data.chartA3InventoryReport.allData[index];
+                    $scope.data.chartA3InventoryReport.data = $scope.data.chartA3InventoryReport.currentCompany.data;
+                };
+
+                $scope.switchTableReportC5 = function (order, category, field, unit) {
+                    $scope.data.tableC5MarketTrends.currentTable = order;
+                    $scope.data.tableC5MarketTrends.currentTableData = $scope.data.tableC5MarketTrends.allData[category][field];
+                    $scope.data.tableC5MarketTrends.currentTableUnit = unit;
+                    $scope.data.tableC5MarketTrends.chartData = chartReport.formatChartData($scope.data.tableC5MarketTrends.currentTableData);
+                };
 
             },
             reRun: function () { },
@@ -903,13 +916,6 @@
                     $scope.switchTableReportA2Company(0);
                 });
             },
-            loadingChartA3InventoryReportData: function () {
-                /********************  Chart A3  ********************/
-                AdminChart.getInventoryReport().then(function(data, status, headers, config){
-                    $scope.data.chartA31InventoryReport.data = data;
-                });
-            },
-
 
             loadingProfitabilityData: function () {
                 /********************  Table A4 Profitability Evolution  *******************/
@@ -927,6 +933,16 @@
                     $scope.data.tableC6MarketIndicators.allData = data;
                 });
             },
+
+            loadingChartA3InventoryReportData: function () {
+                /********************  Chart A3  ********************/
+                AdminChart.getInventoryReport().then(function(data, status, headers, config){
+                    $scope.data.chartA3InventoryReport.allData = data;
+                    $scope.data.chartA3InventoryReport.currentCompany = $scope.data.chartA3InventoryReport.allData[0];
+                    $scope.data.chartA3InventoryReport.data = $scope.data.chartA3InventoryReport.allData[0].data;
+                });
+            },
+
             loadingChartB1Data: function () {
                 /********************  Table B1  *******************/
                 //B1 1 Market Share In Value
