@@ -633,6 +633,15 @@
                 currentBrand: {},
                 currentGlobal: {}
             },
+            //B2 Competitor Intelligence
+            tableB2CompetitorIntelligence: {
+                allData: [],
+                currentTable: 1,
+                currentTableData: {},
+                currentTableUnit: "%",
+                chartConfig: chartReport.getChartConfig1(),
+                chartData: $scope.dataChartSimple
+            },
             //C3 Segment Distribution
             tableC3SegmentDistribution : {
                 allData : [],
@@ -685,15 +694,6 @@
             chartB14ShelfSpaceShare: {
                 config: chartReport.getChartConfig1(),
                 data: $scope.dataChartSimple
-            },
-            //B2 Competitor Intelligence
-            tableB2CompetitorIntelligence: {
-                allData: [],
-                currentTable: 1,
-                currentTableData: {},
-                currentTableUnit: "%",
-                chartConfig: chartReport.getChartConfig1(),
-                chartData: $scope.dataChartSimple
             },
             //B3-1 Total Investment
             chartB31TotalInvestment: {
