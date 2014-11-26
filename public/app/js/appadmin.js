@@ -760,6 +760,27 @@
                 config: chartReport.getChartConfig2(),
                 allData: [],
                 data: $scope.dataChartSimple
+            },
+
+            //C4-1 Growth Rate In Volume
+            chartC41GrowthRateInVolume: {
+                config: chartReport.getChartConfig1(),
+                data: $scope.dataChartSimple
+            },
+            //C4-2 Growth rate In Value
+            chartC42GrowthRateInValue: {
+                config: chartReport.getChartConfig1(),
+                data: $scope.dataChartSimple
+            },
+            //C4-3 Net market Price
+            chartC43NetMarketPrice: {
+                config: chartReport.getChartConfig1(),
+                data: $scope.dataChartSimple
+            },
+            //C4-4 Segment Value Share Total Market
+            chartC44SegmentValueShareTotalMarket: {
+                config: chartReport.getChartConfig3(),
+                data: $scope.dataChartSimple
             }
         };
 
@@ -794,6 +815,8 @@
                     that.loadingChartC1Data();                    
                     //加载C3 Segment Distribution
                     that.loadingSegmentDistributionData();
+                    //加载C4
+                    that.loadingChartC4Data();
                     //加载C5 Market Trends
                     that.loadingMarketTrendsData();
                    
@@ -894,6 +917,7 @@
                     $scope.data.tableC5MarketTrends.currentTableUnit = unit;
                     $scope.data.tableC5MarketTrends.chartData = chartReport.formatChartData($scope.data.tableC5MarketTrends.currentTableData);
                 };
+
 
                 /********************  Chart C1 Segments Leaders  ********************/
                 $scope.switchTableReportC1Period = function (period) {
@@ -1049,6 +1073,24 @@
                     $scope.data.tableC3SegmentDistribution.allData = data;
                     $scope.data.tableC3SegmentDistribution.currentTableData = $scope.data.tableC3SegmentDistribution.allData.marketShareVolume;
                     $scope.data.tableC3SegmentDistribution.chartData = chartReport.formatChartData($scope.data.tableC3SegmentDistribution.currentTableData);
+                });
+            },
+            loadingChartC4Data: function () {
+                //Table C4-1 Growth Rate In Volume
+                AdminChart.getGrowthRateInVolume().then(function (data, status, headers, config) {
+                    $scope.data.chartC41GrowthRateInVolume.data = data;
+                });
+                //Table C4-2 Growth rate In Value
+                AdminChart.getGrowthRateInValue().then(function (data, status, headers, config) {
+                    $scope.data.chartC42GrowthRateInValue.data = data;
+                });
+                //Table C4-3 Net market Price
+                AdminChart.getNetMarketPrice().then(function (data, status, headers, config) {
+                    $scope.data.chartC43NetMarketPrice.data = data;
+                });
+                //Table C4-4 Segment Value Share Total Market
+                AdminChart.getSegmentValueShareTotalMarket().then(function (data, status, headers, config) {
+                    $scope.data.chartC44SegmentValueShareTotalMarket.data = data;
                 });
             },
             loadingMarketTrendsData: function () {

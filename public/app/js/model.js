@@ -1343,6 +1343,31 @@
                 return $http.get(apiAdminPath + 'chart/segments_leaders_by_value_pragmatic').then(function (result) {
                     return chartFormatToolC1BarChart(result.data, 2);
                 })["catch"](errorHandler);
+            },
+
+            //Table C4-1 Growth Rate In Volume
+            getGrowthRateInVolume: function () {
+                return $http.get(apiAdminPath + 'chart/growth_rate_in_volume').then(function (result) {
+                    return chartFormatToolLineChart(result.data, 0);
+                })["catch"](errorHandler);
+            },
+            //Table C4-2 Growth rate In Value
+            getGrowthRateInValue: function () {
+                return $http.get(apiAdminPath + 'chart/growth_rate_in_value').then(function (result) {
+                    return chartFormatToolLineChart(result.data, 0);
+                })["catch"](errorHandler);
+            },
+            //Table C4-3 Net market Price
+            getNetMarketPrice: function () {
+                return $http.get(apiAdminPath + 'chart/net_market_price').then(function (result) {
+                    return chartFormatToolLineChart(result.data, 0);
+                })["catch"](errorHandler);
+            },
+            //Table C4-4 Segment Value Share Total Market
+            getSegmentValueShareTotalMarket: function () {
+                return $http.get(apiAdminPath + 'chart/segment_value_share_total_market').then(function (result) {
+                    return chartFormatToolLineChart(result.data, 2);
+                })["catch"](errorHandler);
             }
 
         };

@@ -456,7 +456,7 @@
                 <div class="col-md-12">
                     <div class="box box-primary">
                         <div class="box-header">
-                            <div class="pull-right box-tools">
+                            <div class="pull-right box-tools" style="margin-right:120px;">
                                 <div class="btn-group">
                                     <button type="button" class="btn btn-default btn-sm dropdown-toggle" data-toggle="dropdown">
                                         {{'HomePageSecondMenuBarCurrentPeriod' | translate}} {{data.chartC11SegmentsLeadersByValuePriceSensitive.currentPeriod}} <span class="caret"></span>
@@ -595,6 +595,69 @@
 
                 </div>
             </div>
+        </section>
+
+        <!--  Table C4  -->
+        <section class="content" ng-if="css.currentReportMenu=='C4'">
+            <!--  row 1  -->
+            <div class="col-md-6">
+                <div class="box box-primary">
+                    <div class="box-header">
+                        <i class="fa fa-bar-chart-o"></i>
+                        <h3 class="box-title">
+                            {{'ReportMarketEvolutionChartTitleGrowthRateInVolume' | translate}}
+                        </h3>
+                    </div>
+                    <div class="box-body no-padding">
+                        <div ac-chart="'line'" ac-data="data.chartC41GrowthRateInVolume.data" ac-config="data.chartC41GrowthRateInVolume.config" class="chartBox"></div>
+                        <p class="text-center">{{'ReportMarketSalesAndInventoryChartBottomTextPeriod' | translate}}</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="box box-primary">
+                    <div class="box-header">
+                        <i class="fa fa-bar-chart-o"></i>
+                        <h3 class="box-title">
+                            {{'ReportMarketEvolutionChartTitleGrowthRateInValue' | translate}}
+                        </h3>
+                    </div>
+                    <div class="box-body no-padding">
+                        <div ac-chart="'line'" ac-data="data.chartC42GrowthRateInValue.data" ac-config="data.chartC42GrowthRateInValue.config" class="chartBox"></div>
+                        <p class="text-center">{{'ReportMarketSalesAndInventoryChartBottomTextPeriod' | translate}}</p>
+                    </div>
+                </div>
+            </div>
+            <!--  \row 1  -->
+            <!-- row 2  -->
+            <div class="col-md-6">
+                <div class="box box-primary">
+                    <div class="box-header">
+                        <i class="fa fa-bar-chart-o"></i>
+                        <h3 class="box-title">
+                            {{'ReportMarketEvolutionChartTitleNetMarketPrice' | translate}}
+                        </h3>
+                    </div>
+                    <div class="box-body no-padding">
+                        <div ac-chart="'line'" ac-data="data.chartC43NetMarketPrice.data" ac-config="data.chartC43NetMarketPrice.config" class="chartBox"></div>
+                        <p class="text-center">{{'ReportMarketSalesAndInventoryChartBottomTextPeriod' | translate}}</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="box box-primary">
+                    <div class="box-header">
+                        <i class="fa fa-bar-chart-o"></i>
+                        <h3 class="box-title">
+                            {{'ReportMarketEvolutionChartTitleSegmentValueShareInTotalMarket' | translate}}
+                        </h3>
+                    </div>
+                    <div class="box-body no-padding">
+                        <div ac-chart="'pie'" ac-data="data.chartC44SegmentValueShareTotalMarket.data" ac-config="data.chartC44SegmentValueShareTotalMarket.config" class="chartBox"></div>
+                    </div>
+                </div>
+            </div>
+            <!--  \row 2  -->
         </section>
 
 
