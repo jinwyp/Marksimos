@@ -1253,31 +1253,56 @@
             },
 
 
-            //Table B3 Total Investment
+            //Table B3-1 Total Investment
             getTotalInvestment: function () {
                 return $http.get(apiAdminPath + "chart/total_investment").then(function (result) {
                     return chartFormatTool1(result.data, 0);
                 });               
             },
-            //Table B3 Net Profit By Companies
+            //Table B3-2 Net Profit By Companies
             getNetProfitByCompanies: function () {
                 return $http.get(apiAdminPath + "chart/net_profit_by_companies").then(function (result) {
                     return chartFormatTool1(result.data, 0);
                 });                
             },
-            //Table B3 Return On Investment
+            //Table B3-3 Return On Investment
             getReturnOnInvestment: function () {
                 return $http.get(apiAdminPath + "chart/return_on_investment").then(function (result) {
                     return chartFormatTool1(result.data, 0);
                 });              
             },
-            //Table B3 Investments Versus Budget
+            //Table B3-4 Investments Versus Budget
             getInvestmentsVersusBudget: function () {
                 return $http.get(apiAdminPath + "chart/investments_versus_budget").then(function (result) {
                     return chartFormatTool1(result.data, 0);
-                });
-               
+                });               
             },
+
+
+            //Table B4-1 Market Salues Value
+            getMarketSalesValue: function () {
+                return $http.get(apiAdminPath + "chart/investments_versus_budget").then(function (result) {
+                    return chartFormatTool1(result.data, 0);
+                });
+            },
+            //Table B4-2 Market Salues Volume
+            getMarketSalesVolume: function () {
+                return $http.get(apiAdminPath + "chart/investments_versus_budget").then(function (result) {
+                    return chartFormatTool1(result.data, 0);
+                });
+            },
+            //Table B4-3 Total Inventory At Facotry
+            getTotalInventoryAtFactory: function () {
+                return $http.get(apiAdminPath + "chart/investments_versus_budget").then(function (result) {
+                    return chartFormatTool1(result.data, 0);
+                });
+            },
+            //Table B4-4 Total Inventory At Trade
+            getTotalInventoryAtTrade: function () {
+                return $http.get(apiAdminPath + "chart/investments_versus_budget").then(function (result) {
+                    return chartFormatTool1(result.data, 0);
+                });
+            }
         };
     }
 

@@ -683,26 +683,46 @@
                 chartConfig: chartReport.getChartConfig1(),
                 chartData: $scope.dataChartSimple
             },
-            //B3 Total Investment
+            //B3-1 Total Investment
             chartB31TotalInvestment: {
                 config: chartReport.getChartConfig1(),
                 data: $scope.dataChartSimple
             },
-            //B3 Net Profit By Companies
+            //B3-2 Net Profit By Companies
             chartB32NetProfitByCompanies: {
                 config: chartReport.getChartConfig1(),
                 data: $scope.dataChartSimple
             },
-            //B3 Return On Investment
+            //B3-3 Return On Investment
             chartB33ReturnOnInvestment: {
                 config: chartReport.getChartConfig1(),
                 data: $scope.dataChartSimple
             },
-            //B4 Investments Versus Budget
+            //B3-4 Investments Versus Budget
             chartB34InvestmentsVersusBudget: {
                 config: chartReport.getChartConfig1(),
                 data: $scope.dataChartSimple
-            }
+            },
+            //B4-1 Market Sales Value
+            chartB41MarketSalesValue: {
+                config: chartReport.getChartConfig1(),
+                data: $scope.dataChartSimple
+            },
+            //B4-2 Market Sales Volume
+            chartB42MarketSalesVolume: {
+                config: chartReport.getChartConfig1(),
+                data: $scope.dataChartSimple
+            },
+            //B4-2 Total Inventory At Factory
+            chartB43TotalInventoryAtFactory: {
+                config: chartReport.getChartConfig1(),
+                data: $scope.dataChartSimple
+            },
+            //B4-2 Total Inventory At Trade
+            chartB44TotalInventoryAtTrade: {
+                config: chartReport.getChartConfig1(),
+                data: $scope.dataChartSimple
+            },
         };
 
         $scope.clickChartMenu = function (report) {
@@ -730,10 +750,13 @@
                     that.loadingCompetitorIntelligenceData();
                     //加载B3
                     that.loadingChartB3Data();
+                    //加载B4
+                    that.loadingChartB4Data();
                     //加载C3 Segment Distribution
                     that.loadingSegmentDistributionData();
                     //加载C5 Market Trends
                     that.loadingMarketTrendsData();
+                   
                 });
             },
             runOnce: function () {
@@ -898,23 +921,42 @@
             },
             loadingChartB3Data: function () {
                 /********************  Table B3  *******************/
-                //Table B3 Total Investment
+                //Table B3-1 Total Investment
                 AdminChart.getTotalInvestment().then(function (data, status, headers, config) {
                     $scope.data.chartB31TotalInvestment.data = data;
                 });
-                //Table B3 Net Profit By Companies
+                //Table B3-2 Net Profit By Companies
                 AdminChart.getNetProfitByCompanies().then(function (data, status, headers, config) {
                     $scope.data.chartB32NetProfitByCompanies.data = data;
                 });
-                //Table B3 Return On Investment
+                //Table B3-3 Return On Investment
                 AdminChart.getReturnOnInvestment().then(function (data, status, headers, config) {
                     $scope.data.chartB33ReturnOnInvestment.data = data;
                 });
-                //Table B3 Investments Versus Budget
+                //Table B3-4 Investments Versus Budget
                 AdminChart.getInvestmentsVersusBudget().then(function (data, status, headers, config) {
                     $scope.data.chartB34InvestmentsVersusBudget.data = data;
                 });
 
+            },
+            loadingChartB4Data: function () {
+               
+                //Table B4-1 Market Salues Value
+                AdminChart.getMarketSalesValue().then(function (data, status, headers, config) {
+                    $scope.data.chartB41MarketSalesValue.data = data;
+                });
+                //Table B4-2 Market Salues Volume
+                AdminChart.getMarketSalesVolume().then(function (data, status, headers, config) {
+                    $scope.data.chartB42MarketSalesVolume.data = data;
+                });
+                //Table B4-3 Total Inventory At Facotry
+                AdminChart.getTotalInventoryAtFactory().then(function (data, status, headers, config) {
+                    $scope.data.chartB43TotalInventoryAtFactory.data = data;
+                });
+                //Table B4-4 Total Inventory At Trade
+                AdminChart.getTotalInventoryAtTrade().then(function (data, status, headers, config) {
+                    $scope.data.chartB44TotalInventoryAtTrade.data = data;
+                });
             },
             loadingSegmentDistributionData: function () {
                 /********************  Table C3 Segment Distribution  *******************/
