@@ -654,22 +654,32 @@
             tableC6MarketIndicators: {
                 allData: {}
             },
-            //B1 Market Share In Value
+
+            //A3 Inventory Report
+            chartA3InventoryReport : {
+                data : [],
+                //            color : ['#39b54a', '#ff983d', '#0087f0', '#8781bd', '#f26c4f', '#bd8cbf', '#000000'] // QIFEI 's color
+                //            color : ['#004CE5', '#BB0000', '#FFBC01', '#339933', '#990099', '#FF5200', '#000000'] //Windows color
+                //            color : ['#999999', '#BB0000', '#99CC00', '#339933', '#990099', '#FF5200', '#000000']
+                color : ['#999999',  '#99CC00', '#BB0000', '#339933', '#990099', '#FF5200', '#000000']
+            },
+
+            //B11 Market Share In Value
             chartB11MarketShareInValue: {
                 config: chartReport.getChartConfig1(),
                 data: $scope.dataChartSimple
             },
-            //B1 Market Share In Volume
+            //B12 Market Share In Volume
             chartB12MarketShareInVolume: {
                 config: chartReport.getChartConfig1(),
                 data: $scope.dataChartSimple
             },
-            //B1 Mind Space Share
+            //B13 Mind Space Share
             chartB13MindSpaceShare: {
                 config: chartReport.getChartConfig1(),
                 data: $scope.dataChartSimple
             },
-            //B1 Shelf Space Share
+            //B14 Shelf Space Share
             chartB14ShelfSpaceShare: {
                 config: chartReport.getChartConfig1(),
                 data: $scope.dataChartSimple
@@ -733,7 +743,6 @@
         var app = {
             initOnce: function () {
                 var that = this;
-                d3.svg.line().defined(function (d) { return d.y !== null; });
                 chartReport.initTranslate().then(function () {
                     //添加事件
                     that.runOnce();
@@ -741,6 +750,8 @@
                     that.loadingCompanyData();
                     //加载A2 Financial Data
                     that.loadingFinancialData();
+                    //加载A3 Inventory Report
+                    that.loadingChartA3InventoryReportData();
                     //加载A4 Profitability Evolution
                     that.loadingProfitabilityData();
                     //加载C6 Market Indicators
@@ -856,6 +867,22 @@
                     $scope.data.tableC5MarketTrends.chartData = chartReport.formatChartData($scope.data.tableC5MarketTrends.currentTableData);
                 };
 
+
+
+                /********************  Chart A3 Inventory Report  *******************/
+                $scope.A3ColorFunction = function(){
+                    return function(d, i){
+                        return $scope.data.chartA3InventoryReport.color[i];
+                    };
+                };
+
+                $scope.A3ToolTipContent = function(){
+                    return function(key, x, y, e, graph) {
+                        return  '<h5>' + y + '</h5>';
+                    };
+                };
+
+
             },
             reRun: function () { },
             loadingCompanyData: function () {
@@ -876,6 +903,14 @@
                     $scope.switchTableReportA2Company(0);
                 });
             },
+            loadingChartA3InventoryReportData: function () {
+                /********************  Chart A3  ********************/
+                AdminChart.getInventoryReport().then(function(data, status, headers, config){
+                    $scope.data.chartA31InventoryReport.data = data;
+                });
+            },
+
+
             loadingProfitabilityData: function () {
                 /********************  Table A4 Profitability Evolution  *******************/
                 //获取数据
