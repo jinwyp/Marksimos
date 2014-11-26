@@ -723,6 +723,44 @@
                 config: chartReport.getChartConfig1(),
                 data: $scope.dataChartSimple
             },
+
+            //C1-1 Segments Leader By Value Price Sensitive
+            chartC11SegmentsLeadersByValuePriceSensitive: {
+                config: chartReport.getChartConfig2(),
+                currentPeriod: 0,
+                allData: [],
+                data: $scope.dataChartSimple
+            },
+            //C1-2 Segments Leaders By Value Pretenders
+            chartC12SegmentsLeadersByValuePretenders: {
+                config: chartReport.getChartConfig2(),
+                allData: [],
+                data: $scope.dataChartSimple
+            },
+            //C1-3 Segments Leaders By Value Moderate
+            chartC13SegmentsLeadersByValueModerate: {
+                config: chartReport.getChartConfig2(),
+                allData: [],
+                data: $scope.dataChartSimple
+            },
+            //C1-4 Segments Leaders By Value Good Life
+            chartC14SegmentsLeadersByValueGoodLife: {
+                config: chartReport.getChartConfig2(),
+                allData: [],
+                data: $scope.dataChartSimple
+            },
+            //C1-5 Segments Leaders By Value Ultimate
+            chartC15SegmentsLeadersByValueUltimate: {
+                config: chartReport.getChartConfig2(),
+                allData: [],
+                data: $scope.dataChartSimple
+            },
+            //C1-6 Segments Leaders By Value Pragmatic
+            chartC16SegmentsLeadersByValuePragmatic: {
+                config: chartReport.getChartConfig2(),
+                allData: [],
+                data: $scope.dataChartSimple
+            }
         };
 
         $scope.clickChartMenu = function (report) {
@@ -732,8 +770,7 @@
 
         var app = {
             initOnce: function () {
-                var that = this;
-                d3.svg.line().defined(function (d) { return d.y !== null; });
+                var that = this;               
                 chartReport.initTranslate().then(function () {
                     //添加事件
                     that.runOnce();
@@ -753,6 +790,8 @@
                     that.loadingChartB3Data();
                     //加载B4
                     that.loadingChartB4Data();
+                    //加载C1
+                    that.loadingChartC1Data();                    
                     //加载C3 Segment Distribution
                     that.loadingSegmentDistributionData();
                     //加载C5 Market Trends
@@ -856,6 +895,17 @@
                     $scope.data.tableC5MarketTrends.chartData = chartReport.formatChartData($scope.data.tableC5MarketTrends.currentTableData);
                 };
 
+                /********************  Chart C1 Segments Leaders  ********************/
+                $scope.switchTableReportC1Period = function (period) {
+                    $scope.data.chartC11SegmentsLeadersByValuePriceSensitive.currentPeriod = period.period;
+                    $scope.data.chartC11SegmentsLeadersByValuePriceSensitive.data = $scope.data.chartC11SegmentsLeadersByValuePriceSensitive.allData[$scope.data.chartC11SegmentsLeadersByValuePriceSensitive.currentPeriod + 3];
+                    $scope.data.chartC12SegmentsLeadersByValuePretenders.data = $scope.data.chartC12SegmentsLeadersByValuePretenders.allData[$scope.data.chartC11SegmentsLeadersByValuePriceSensitive.currentPeriod + 3];
+                    $scope.data.chartC13SegmentsLeadersByValueModerate.data = $scope.data.chartC13SegmentsLeadersByValueModerate.allData[$scope.data.chartC11SegmentsLeadersByValuePriceSensitive.currentPeriod + 3];
+                    $scope.data.chartC14SegmentsLeadersByValueGoodLife.data = $scope.data.chartC14SegmentsLeadersByValueGoodLife.allData[$scope.data.chartC11SegmentsLeadersByValuePriceSensitive.currentPeriod + 3];
+                    $scope.data.chartC15SegmentsLeadersByValueUltimate.data = $scope.data.chartC15SegmentsLeadersByValueUltimate.allData[$scope.data.chartC11SegmentsLeadersByValuePriceSensitive.currentPeriod + 3];
+                    $scope.data.chartC16SegmentsLeadersByValuePragmatic.data = $scope.data.chartC16SegmentsLeadersByValuePragmatic.allData[$scope.data.chartC11SegmentsLeadersByValuePriceSensitive.currentPeriod + 3];
+                };
+
             },
             reRun: function () { },
             loadingCompanyData: function () {
@@ -957,6 +1007,39 @@
                 //Table B4-4 Total Inventory At Trade
                 AdminChart.getTotalInventoryAtTrade().then(function (data, status, headers, config) {
                     $scope.data.chartB44TotalInventoryAtTrade.data = data;
+                });
+            },
+            loadingChartC1Data: function () {
+                //Table C1-1 Segments Leader By Value Price Sensitive
+                AdminChart.getSegmentsLeadersByValuePriceSensitive().then(function (data, status, headers, config) {
+                    $scope.data.chartC11SegmentsLeadersByValuePriceSensitive.allData = data.data;
+                    $scope.data.chartC11SegmentsLeadersByValuePriceSensitive.currentPeriod = $scope.data.chartC11SegmentsLeadersByValuePriceSensitive.allData.length - 4;
+                    $scope.data.chartC11SegmentsLeadersByValuePriceSensitive.data = $scope.data.chartC11SegmentsLeadersByValuePriceSensitive.allData[$scope.data.chartC11SegmentsLeadersByValuePriceSensitive.currentPeriod + 3];
+                });
+                //Table C1-2 Segments Leaders By Value Pretenders
+                AdminChart.getSegmentsLeadersByValuePretenders().then(function (data, status, headers, config) {
+                    $scope.data.chartC12SegmentsLeadersByValuePretenders.allData = data.data;
+                    $scope.data.chartC12SegmentsLeadersByValuePretenders.data = $scope.data.chartC12SegmentsLeadersByValuePretenders.allData[$scope.data.chartC11SegmentsLeadersByValuePriceSensitive.currentPeriod + 3];
+                });
+                //Table C1-3 Segments Leaders By Value Moderate
+                AdminChart.getSegmentsLeadersByValueModerate().then(function (data, status, headers, config) {
+                    $scope.data.chartC13SegmentsLeadersByValueModerate.allData = data.data;
+                    $scope.data.chartC13SegmentsLeadersByValueModerate.data = $scope.data.chartC13SegmentsLeadersByValueModerate.allData[$scope.data.chartC11SegmentsLeadersByValuePriceSensitive.currentPeriod + 3];
+                });
+                //Table C1-4 Segments Leaders By Value Good Life
+                AdminChart.getSegmentsLeadersByValueGoodLife().then(function (data, status, headers, config) {
+                    $scope.data.chartC14SegmentsLeadersByValueGoodLife.allData = data.data;
+                    $scope.data.chartC14SegmentsLeadersByValueGoodLife.data = $scope.data.chartC14SegmentsLeadersByValueGoodLife.allData[$scope.data.chartC11SegmentsLeadersByValuePriceSensitive.currentPeriod + 3];
+                });
+                //Table C1-5 Segments Leaders By Value Ultimate
+                AdminChart.getSegmentsLeadersByValueUltimate().then(function (data, status, headers, config) {
+                    $scope.data.chartC15SegmentsLeadersByValueUltimate.allData = data.data;
+                    $scope.data.chartC15SegmentsLeadersByValueUltimate.data = $scope.data.chartC15SegmentsLeadersByValueUltimate.allData[$scope.data.chartC11SegmentsLeadersByValuePriceSensitive.currentPeriod + 3];
+                });
+                //Table C1-6 Segments Leaders By Value Pragmatic
+                AdminChart.getSegmentsLeadersByValuePragmatic().then(function (data, status, headers, config) {
+                    $scope.data.chartC16SegmentsLeadersByValuePragmatic.allData = data.data;
+                    $scope.data.chartC16SegmentsLeadersByValuePragmatic.data = $scope.data.chartC16SegmentsLeadersByValuePragmatic.allData[$scope.data.chartC11SegmentsLeadersByValuePriceSensitive.currentPeriod + 3];
                 });
             },
             loadingSegmentDistributionData: function () {

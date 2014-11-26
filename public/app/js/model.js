@@ -962,7 +962,7 @@
             // Chart C1
             segmentsLeadersByValuePriceSensitive : function(){
                 return $http.get(apiPath + 'chart/segments_leaders_by_value_price_sensitive').then(function(result){
-//                console.log(result.data);
+                console.log(result.data);
                     return chartFormatToolC1BarChart(result.data, 2);
                 })["catch"](errorHandler);
             },
@@ -1305,7 +1305,47 @@
                 return $http.get(apiAdminPath + "chart/investments_versus_budget").then(function (result) {
                     return chartFormatToolLineChart(result.data, 0);
                 });
+            },
+
+
+            //Table C1-1 Segments Leader By Value Price Sensitive
+            getSegmentsLeadersByValuePriceSensitive: function () {
+                return $http.get(apiAdminPath + 'chart/segments_leaders_by_value_price_sensitive').then(function (result) {
+                    console.log(result.data);
+                    return chartFormatToolC1BarChart(result.data, 2);
+                })["catch"](errorHandler);
+            },
+            //Table C1-2 Segments Leaders By Value Pretenders
+            getSegmentsLeadersByValuePretenders: function () {
+                return $http.get(apiAdminPath + 'chart/segments_leaders_by_value_pretenders').then(function (result) {
+                    return chartFormatToolC1BarChart(result.data, 2);
+                })["catch"](errorHandler);
+            },
+            //Table C1-3 Segments Leaders By Value Moderate
+            getSegmentsLeadersByValueModerate: function () {
+                return $http.get(apiAdminPath + 'chart/segments_leaders_by_value_moderate').then(function (result) {
+                    return chartFormatToolC1BarChart(result.data, 2);
+                })["catch"](errorHandler);
+            },
+            //Table C1-4 Segments Leaders By Value Good Life
+            getSegmentsLeadersByValueGoodLife: function () {
+                return $http.get(apiAdminPath + 'chart/segments_leaders_by_value_good_life').then(function (result) {
+                    return chartFormatToolC1BarChart(result.data, 2);
+                })["catch"](errorHandler);
+            },
+            //Table C1-5 Segments Leaders By Value Ultimate
+            getSegmentsLeadersByValueUltimate: function () {
+                return $http.get(apiAdminPath + 'chart/segments_leaders_by_value_ultimate').then(function (result) {
+                    return chartFormatToolC1BarChart(result.data, 2);
+                })["catch"](errorHandler);
+            },
+            //Table C1-6 Segments Leaders By Value Pragmatic
+            getSegmentsLeadersByValuePragmatic: function () {
+                return $http.get(apiAdminPath + 'chart/segments_leaders_by_value_pragmatic').then(function (result) {
+                    return chartFormatToolC1BarChart(result.data, 2);
+                })["catch"](errorHandler);
             }
+
         };
     }
 
