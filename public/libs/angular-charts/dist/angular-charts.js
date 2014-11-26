@@ -559,8 +559,11 @@ angular.module('angularCharts').directive('acChart', [
           var points = svg.selectAll('.circle').data(value.values).enter();
           points.append('circle').attr('cx', function (d) {
             return getX(d.x);
-          }).attr('cy', function (d) {             
-            return y(d.y)||-(height-1);
+          }).attr('cy', function (d) {
+              if (isNaN(d.y)) {
+                  return -(height - 1);
+              }
+              return y(d.y);
           }).attr('r', 3).style('fill', getColor(linedata.indexOf(value))).style('stroke', getColor(linedata.indexOf(value))).on('mouseover', function (series) {
             return function (d) {
               makeToolTip({
@@ -834,7 +837,10 @@ angular.module('angularCharts').directive('acChart', [
           points.append('circle').attr('cx', function (d) {
             return getX(d.x);
           }).attr('cy', function (d) {
-            return y(d.y)||-(height-1);
+              if (isNaN(d.y)) {
+                  return -(height - 1);
+              }
+              return y(d.y);
           }).attr('r', 3).style('fill', getColor(linedata.indexOf(value))).style('stroke', getColor(linedata.indexOf(value))).on('mouseover', function (series) {
             return function (d) {
               makeToolTip({
