@@ -958,33 +958,7 @@
                     //设置默认的公司
                     $scope.switchTableReportA4Company(0);
                 });
-            },
-            loadingMarketIndicatorsData: function () {
-                /********************  Table C6 Market Indicators  *******************/
-                //获取数据
-                AdminTable.getMarketIndicators().then(function (data, status, headers, config) {
-                    $scope.data.tableC6MarketIndicators.allData = data;
-                });
-            },
-            loadingChartB1Data: function () {
-                /********************  Table B1  *******************/
-                //B1 1 Market Share In Value
-                AdminChart.getMarketShareInValue().then(function (data, status, headers, config) {                   
-                    $scope.data.chartB11MarketShareInValue.data = data;
-                });
-                //B1 2 Market Share In Volume
-                AdminChart.getMarketShareInVolume().then(function (data, status, headers, config) {
-                    $scope.data.chartB12MarketShareInVolume.data = data;
-                });
-                //B1 3 Mind Space Share
-                AdminChart.getMindSpaceShare().then(function (data, status, headers, config) {
-                    $scope.data.chartB13MindSpaceShare.data = data;
-                });
-                //B1 4 Shelf Space Share
-                AdminChart.getShelfSpaceShare().then(function (data, status, headers, config) {
-                     $scope.data.chartB14ShelfSpaceShare.data = data;
-                });
-            },
+            },            
             loadingCompetitorIntelligenceData: function () {
                 /********************  Table B2 Competitor Intelligence  *******************/
                 //获取数据
@@ -994,6 +968,51 @@
                     $scope.data.tableB2CompetitorIntelligence.chartData = chartReport.formatChartData($scope.data.tableB2CompetitorIntelligence.allData.acquiredProductionAndLogisticsEfficiency);
                 });
             },
+            loadingSegmentDistributionData: function () {
+                /********************  Table C3 Segment Distribution  *******************/
+                //获取数据
+                AdminTable.getSegmentDistribution().then(function (data, status, headers, config) {
+                    $scope.data.tableC3SegmentDistribution.allData = data;
+                    $scope.data.tableC3SegmentDistribution.currentTableData = $scope.data.tableC3SegmentDistribution.allData.marketShareVolume;
+                    $scope.data.tableC3SegmentDistribution.chartData = chartReport.formatChartData($scope.data.tableC3SegmentDistribution.currentTableData);
+                });
+            },
+            loadingMarketTrendsData: function () {
+                /********************  Table C5 Market Trends  *******************/
+                //获取数据
+                AdminTable.getMarketTrends().then(function (data, status, headers, config) {
+                    $scope.data.tableC5MarketTrends.allData = data;
+                    $scope.switchTableMenuLevel1C5(1, $scope.css.tableReportTab, 'averageDisplayPriceStdPack', '');
+                });
+            },
+            loadingMarketIndicatorsData: function () {
+                /********************  Table C6 Market Indicators  *******************/
+                //获取数据
+                AdminTable.getMarketIndicators().then(function (data, status, headers, config) {
+                    $scope.data.tableC6MarketIndicators.allData = data;
+                });
+            },
+
+
+            loadingChartB1Data: function () {
+                /********************  Table B1  *******************/
+                //Chart B1 1 Market Share In Value
+                AdminChart.getMarketShareInValue().then(function (data, status, headers, config) {                   
+                    $scope.data.chartB11MarketShareInValue.data = data;
+                });
+                //Chart B1 2 Market Share In Volume
+                AdminChart.getMarketShareInVolume().then(function (data, status, headers, config) {
+                    $scope.data.chartB12MarketShareInVolume.data = data;
+                });
+                //Chart B1 3 Mind Space Share
+                AdminChart.getMindSpaceShare().then(function (data, status, headers, config) {
+                    $scope.data.chartB13MindSpaceShare.data = data;
+                });
+                //Chart B1 4 Shelf Space Share
+                AdminChart.getShelfSpaceShare().then(function (data, status, headers, config) {
+                     $scope.data.chartB14ShelfSpaceShare.data = data;
+                });
+            },           
             loadingChartB3Data: function () {
                 /********************  Table B3  *******************/
                 //Table B3-1 Total Investment
@@ -1065,16 +1084,7 @@
                     $scope.data.chartC16SegmentsLeadersByValuePragmatic.allData = data.data;
                     $scope.data.chartC16SegmentsLeadersByValuePragmatic.data = $scope.data.chartC16SegmentsLeadersByValuePragmatic.allData[$scope.data.chartC11SegmentsLeadersByValuePriceSensitive.currentPeriod + 3];
                 });
-            },
-            loadingSegmentDistributionData: function () {
-                /********************  Table C3 Segment Distribution  *******************/
-                //获取数据
-                AdminTable.getSegmentDistribution().then(function (data, status, headers, config) {
-                    $scope.data.tableC3SegmentDistribution.allData = data;
-                    $scope.data.tableC3SegmentDistribution.currentTableData = $scope.data.tableC3SegmentDistribution.allData.marketShareVolume;
-                    $scope.data.tableC3SegmentDistribution.chartData = chartReport.formatChartData($scope.data.tableC3SegmentDistribution.currentTableData);
-                });
-            },
+            },           
             loadingChartC4Data: function () {
                 //Table C4-1 Growth Rate In Volume
                 AdminChart.getGrowthRateInVolume().then(function (data, status, headers, config) {
@@ -1092,14 +1102,6 @@
                 AdminChart.getSegmentValueShareTotalMarket().then(function (data, status, headers, config) {
                     $scope.data.chartC44SegmentValueShareTotalMarket.data = data;
                 });
-            },
-            loadingMarketTrendsData: function () {
-                /********************  Table C5 Market Trends  *******************/
-                //获取数据
-                AdminTable.getMarketTrends().then(function (data, status, headers, config) {
-                    $scope.data.tableC5MarketTrends.allData = data;                    
-                    $scope.switchTableMenuLevel1C5(1, $scope.css.tableReportTab, 'averageDisplayPriceStdPack', '');
-                }); 
             }
         };
         //初始化程序

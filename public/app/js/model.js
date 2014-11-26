@@ -1207,10 +1207,6 @@
             getProfitability: function () {
                 return getAdminRequest("report/profitability_evolution");              
             },
-            //Table C6 Market Indicators
-            getMarketIndicators: function () {
-                return getAdminRequest("report/market_indicators");              
-            },
             //Table B2 Competitor Intelligence
             getCompetitorIntelligence: function () {
                 return getAdminRequest("report/competitor_intelligence");               
@@ -1219,8 +1215,13 @@
             getSegmentDistribution: function () {
                 return getAdminRequest("report/segment_distribution");               
             },
+            //Table C5 Market Trends
             getMarketTrends: function () {
                 return getAdminRequest("report/market_trends");
+            },
+            //Table C6 Market Indicators
+            getMarketIndicators: function () {
+                return getAdminRequest("report/market_indicators");
             }
         };
     }
