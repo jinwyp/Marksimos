@@ -1299,72 +1299,72 @@
 
 
         /********************  获取 Questionnaire  ********************/
-        Company.getQuestionnaire().success(function(data, status, headers, config){
+        Company.getQuestionnaire().success(function(data, status, headers, config) {
             $scope.questionnaire = data;
-            $scope.questionnaire.radio_OverallSatisfactionWithThePrograms={
-                info:['ChallengeStrategicThinkingAbility','DevelopAnIntegratedPerspective','TestPersonalAbilityOfBalancingRisks','ChallengeLeadershipAndTeamworkAbility','ChallengeAnalysisAndDecisionMakingAbility','SimulationInteresting']
+            $scope.questionnaire.radio_OverallSatisfactionWithThePrograms = {
+                info: ['ChallengeStrategicThinkingAbility', 'DevelopAnIntegratedPerspective', 'TestPersonalAbilityOfBalancingRisks', 'ChallengeLeadershipAndTeamworkAbility', 'ChallengeAnalysisAndDecisionMakingAbility', 'SimulationInteresting']
             };
-            $scope.questionnaire.radio_TeachingTeams={
-                info:['FeedbackOnSimulationDecisions','ExpandingViewAndInspireThinking','Lectures']
+            $scope.questionnaire.radio_TeachingTeams = {
+                info: ['FeedbackOnSimulationDecisions', 'ExpandingViewAndInspireThinking', 'Lectures']
             };
-            $scope.questionnaire.radio_Products={
-                info:['OverallProductUsageExperience','UserInterfaceExperience','EaseOfNavigation','ClarityOfWordsUsed']
+            $scope.questionnaire.radio_Products = {
+                info: ['OverallProductUsageExperience', 'UserInterfaceExperience', 'EaseOfNavigation', 'ClarityOfWordsUsed']
             };
-            $scope.questionnaire.radio_TeachingSupports={
-                info:['Helpfulness','QualityOfTechnicalSupport']
+            $scope.questionnaire.radio_TeachingSupports = {
+                info: ['Helpfulness', 'QualityOfTechnicalSupport']
             };
-            $scope.questionnaire.radio_MostBenefits={
-                info:["JoinProgram","CompanyInHouse","OpenClass"]
+            $scope.questionnaire.radio_MostBenefits = {
+                info: ["JoinProgram", "CompanyInHouse", "OpenClass"]
             };
         });
-        $scope.showQuestionnaire = function(){
-            $scope.css.isFeedbackShown=true;
+        $scope.showQuestionnaire = function() {
+            $scope.css.isFeedbackShown = true;
         };
 
         /********************  更新 Questionnaire  ********************/
-        $scope.updateQuestionnaire = function(fieldname , index, form, formfieldname){
+        $scope.updateQuestionnaire = function(fieldname, index, form, formfieldname) {
 
-            var currentData={
-                'location':fieldname,
-                'data':$scope.questionnaire[fieldname]
+            var currentData = {
+                'location': fieldname,
+                'data': $scope.questionnaire[fieldname]
             };
 
-            Company.updateQuestionnaire(currentData).success(function(data, status, headers, config){
+            Company.updateQuestionnaire(currentData).success(function(data, status, headers, config) {
                 notify({
-                    message : 'Save Success !',
-                    template : notifytemplate.success,
-                    position : 'center'
+                    message: 'Save Success !',
+                    template: notifytemplate.success,
+                    position: 'center'
                 });
-            },function(data, status, headers, config){
+            }, function(data, status, headers, config) {
                 notify({
-                    message : data.message,
-                    template : notifytemplate.failure,
-                    position : 'center'
+                    message: data.message,
+                    template: notifytemplate.failure,
+                    position: 'center'
                 });
             });
         };
         /********************  提交 Questionnaire  ********************/
-        $scope.submitQuestionnaire = function(questionnaire){
+        $scope.submitQuestionnaire = function(questionnaire) {
 
-            $scope.isFeedbackSumbit = true ;
+            $scope.isFeedbackSumbit = true;
 
-            var currentData={
-                'questionnaire':questionnaire
+            var currentData = {
+                'questionnaire': questionnaire
             };
 
-            Company.submitQuestionnaire(currentData).success(function(data, status, headers, config){
+            Company.submitQuestionnaire(currentData).success(function(data, status, headers, config) {
                 notify({
-                    message : 'Save Success !',
-                    template : notifytemplate.success,
-                    position : 'center'
+                    message: 'Save Success !',
+                    template: notifytemplate.success,
+                    position: 'center'
                 });
-                $scope.css.isFeedbackShown=false;
+                $scope.css.isFeedbackShown = false;
 
-            },function(data, status, headers, config){
+            }, function(data, status, headers, config) {
                 notify({
-                    message : data.message,
-                    template : notifytemplate.failure,
-                    position : 'center'
+                    message: data.message,
+                    template: notifytemplate.failure,
+                    position: 'center'
                 });
                 $scope.isFeedbackSumbit = false;
 
