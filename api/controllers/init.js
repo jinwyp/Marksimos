@@ -222,7 +222,7 @@ exports.runSimulation = function(){
 
                 //if all rounds are executed
                 if(dbSeminar.isSimulationFinised){
-                     status = 'active';
+                    status = 'active';
                     throw {httpStatus: 400, message: "the last round simulation has been executed."}
                 }
 
@@ -293,12 +293,10 @@ exports.runSimulation = function(){
                         })
                         .then(function(){
                             logger.log('create duplicate decision from last period finished.');
-                            if(dbSeminar.currentPeriod <= dbSeminar.simulationSpan){
 
-
+                            if(dbSeminar.currentPeriod < dbSeminar.simulationSpan){
                                 //after simulation success, set currentPeriod to next period
                                 sessionOperation.setCurrentPeriod(req, sessionOperation.getCurrentPeriod(req)+1);
-
                                 return seminarModel.update({seminarId: seminarId}, {
                                     currentPeriod: dbSeminar.currentPeriod + 1
                                 })
@@ -306,13 +304,15 @@ exports.runSimulation = function(){
                                     if(numAffected!==1){
                                         throw {message: "there's error during update seminar."}
                                     }else{
-                                         status = 'active';
+                                        status = 'active';
                                         return undefined;
                                     }
                                 })
-                            }else{
+                            }else if(dbSeminar.currentPeriod = dbSeminar.simulationSpan){
+                                sessionOperation.setCurrentPeriod(req, sessionOperation.getCurrentPeriod(req)+1);
                                 return seminarModel.update({seminarId: seminarId}, {
-                                    isSimulationFinised: true
+                                    isSimulationFinised : true,
+                                    currentPeriod       : dbSeminar.currentPeriod + 1
                                 }).then(function(numAffected){
                                     if(numAffected!==1){
                                         throw {message: "there's error during update isSimulationFinised to true."}
@@ -321,6 +321,8 @@ exports.runSimulation = function(){
                                         return undefined;
                                     }
                                 });
+                            } else {
+                                throw {message: 'dbSeminar.currentPeriod > dbSeminar.simulationSpan, you cannot run into next period.'}
                             }
                         })
                     });
