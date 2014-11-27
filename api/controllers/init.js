@@ -289,7 +289,8 @@ exports.runSimulation = function(){
                             //for the last period, we don't create the next period decision automatically
                             if(dbSeminar.currentPeriod < dbSeminar.simulationSpan){
                                 status = 'active';
-                                return createNewDecisionBasedOnLastPeriodDecision(seminarId, currentPeriod);
+                                return undefined;
+                                //return createNewDecisionBasedOnLastPeriodDecision(seminarId, currentPeriod);
                             }else{
                                  status = 'active';
                                 return undefined;
