@@ -67,8 +67,6 @@
             selectFinalScorePeriod : 0,
             selectScore : 'Original',
             currentPeriod : 0,
-            //add by raven
-            maxPeriodRound : -1,
             seminarFinished : false,
             showFeedback : false,
             finalReportPeriods: []
@@ -671,8 +669,6 @@
                     $scope.data.currentCompanyNameCharacter = showCompanyName($scope.data.currentStudent.companyId);
 
                     $scope.css.currentPeriod = $scope.data.currentStudent.currentPeriod;
-                    //add by raven
-                    $scope.css.maxPeriodRound = $scope.data.currentStudent.maxPeriodRound;
 
                     $scope.css.seminarFinished = $scope.data.currentStudent.isSimulationFinised;
 
