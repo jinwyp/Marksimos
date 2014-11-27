@@ -67,10 +67,9 @@
             selectFinalScorePeriod : 0,
             selectScore : 'Original',
             currentPeriod : 0,
-            maxPeriodRound:0,
+            maxPeriodRound : -1,
             finalReportPeriods: [],
             isFeedbackShown : false
-
         };
 
 
@@ -641,7 +640,6 @@
             loadingStudentData : function(){
                 Company.getCurrentStudent().then(function(data, status, headers, config){
                     $scope.data.currentStudent = data;
-
                     var currentDate = new Date();
 
                     $scope.data.currentTime.hour = 1;
