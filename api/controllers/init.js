@@ -108,7 +108,7 @@ exports.init = function(req, res, next) {
 
                 return Q.all([
                     simulationResultModel.removeAll(seminarId),
-                    //dbutility.removeExistedDecisions(seminarId),
+                    dbutility.removeExistedDecisions(seminarId),
                     chartModel.remove(seminarId),
                     reportModel.remove(seminarId)
                 ])
@@ -138,8 +138,7 @@ exports.init = function(req, res, next) {
                 })
                 .then(function(){
                     //copy decision of period (currentPeriod - 1 = 0)
-                        return undefined;
-                    //return duplicateLastPeriodDecision(seminarId, currentPeriod - 1);
+                    return duplicateLastPeriodDecision(seminarId, currentPeriod - 1);
 
                 })
                 .then(function(){
@@ -289,8 +288,7 @@ exports.runSimulation = function(){
                             //for the last period, we don't create the next period decision automatically
                             if(dbSeminar.currentPeriod < dbSeminar.simulationSpan){
                                 status = 'active';
-                                return undefined;
-                                //return createNewDecisionBasedOnLastPeriodDecision(seminarId, currentPeriod);
+                                return createNewDecisionBasedOnLastPeriodDecision(seminarId, currentPeriod);
                             }else{
                                  status = 'active';
                                 return undefined;
