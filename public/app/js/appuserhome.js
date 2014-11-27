@@ -672,7 +672,6 @@
                     $scope.css.seminarFinished = $scope.data.currentStudent.isSimulationFinised;
 
                     $scope.css.periods = [];
-
                     $scope.css.finalReportPeriods = [];
 
                     // 处理显示当前第几回合进度条
@@ -704,7 +703,6 @@
                         for (var j = 0; j < $scope.data.currentStudent.currentPeriod; j++) {
                             $scope.css.finalReportPeriods.push(j);
                         }
-
                     }
 
 
