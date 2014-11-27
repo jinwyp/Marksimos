@@ -289,7 +289,7 @@ exports.runSimulation = function(){
                             if(dbSeminar.currentPeriod < dbSeminar.simulationSpan){
                                 status = 'active';
                                 return undefined;
-                                //return createNewDecisionBasedOnLastPeriodDecision(seminarId, currentPeriod);
+                                return createNewDecisionBasedOnLastPeriodDecision(seminarId, currentPeriod);
                             }else{
                                  status = 'active';
                                 return undefined;
