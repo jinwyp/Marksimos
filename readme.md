@@ -187,7 +187,7 @@ pm2 desc 0 查看pm2环境变量
 pm2的logs的存放路径在当前linux用户下的目录里面
 
 |error log path    | /home/hcd/.pm2/logs/app-err-0.log |
-| -------------    | ------------- |
+|:-------------    |:------------- |
 |out log path      | /home/hcd/.pm2/logs/app-out-0.log |
 |pid path          | /home/hcd/.pm2/pids/app-0.pid |
 
