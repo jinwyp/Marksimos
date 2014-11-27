@@ -108,7 +108,7 @@ exports.init = function(req, res, next) {
 
                 return Q.all([
                     simulationResultModel.removeAll(seminarId),
-                    dbutility.removeExistedDecisions(seminarId),
+                    //dbutility.removeExistedDecisions(seminarId),
                     chartModel.remove(seminarId),
                     reportModel.remove(seminarId)
                 ])
