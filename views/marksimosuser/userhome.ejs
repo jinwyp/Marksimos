@@ -79,7 +79,7 @@
             </div>
             <div class="row">
                 <span class="user_makedecision">{{'HomePageSecondMenuBarLabelsMission' | translate}}</span>
-                <button type="button" class="btn user_decisionbutton" ng-click="switchHeaderMenu('Decision')">{{'HomePageSecondMenuBarLabelsMakeDecision' | translate}}</button>
+                <button type="button" class="btn user_decisionbutton" ng-hide="css.seminarFinished" ng-click="switchHeaderMenu('Decision')">{{'HomePageSecondMenuBarLabelsMakeDecision' | translate}}</button>
             </div>
         </div>
 
@@ -225,10 +225,9 @@
             <div class="row">
                 <div class="col-md-12 ">
                     <span class="user_chart_make_decision">{{'HomePageSecondMenuBarLabelsMission' | translate}}</span>
-                    <button type="button" class="btn user_chart_decision_button" ng-click="switchHeaderMenu('Decision')">{{'HomePageSecondMenuBarLabelsMakeDecision' | translate}}</button>
+                    <button type="button" class="btn user_chart_decision_button" ng-hide="css.seminarFinished" ng-click="switchHeaderMenu('Decision')">{{'HomePageSecondMenuBarLabelsMakeDecision' | translate}}</button>
                 </div>
             </div>
-
         </div>
 
     </div>
@@ -2495,7 +2494,7 @@
                                         </tr>
                                         <tr>
                                             <td></td>
-                                            <td> </td>
+                                            <td></td>
                                         </tr>
                                         <tr>
                                             <td>{{'DecisionPageSpendingDetailsTable2AcquiredTechnologyLevel' | translate}}</td>
@@ -2522,7 +2521,6 @@
 
         </div>
     </div>
-
     <!----------  End Decision Page  ---------->
 
 
@@ -2572,7 +2570,7 @@
             <div class="row">
                 <div class="col-md-12 ">
                     <span class="user_chart_make_decision">{{'HomePageSecondMenuBarLabelsMission' | translate}}</span>
-                    <button type="button" class="btn user_chart_decision_button" ng-click="switchHeaderMenu('Decision')">{{'HomePageSecondMenuBarLabelsMakeDecision' | translate}}</button>
+                    <button type="button" class="btn user_chart_decision_button" ng-hide="css.seminarFinished" ng-click="switchHeaderMenu('Decision')">{{'HomePageSecondMenuBarLabelsMakeDecision' | translate}}</button>
                 </div>
             </div>
 
