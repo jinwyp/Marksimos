@@ -600,7 +600,7 @@
 
 
 
-    angular.module('marksimosadmin').controller('adminMarksimosReportController', ['$scope', '$http', '$notification', 'AdminTable', 'chartReport', 'AdminChart', function($scope, $http, $notification, AdminTable, chartReport, AdminChart) {
+    angular.module('marksimosadmin').controller('adminMarksimosReportController', ['$scope', '$http', '$notification', '$translate', 'AdminTable', 'chartReport', 'AdminChart', function($scope, $http, $notification,$translate, AdminTable, chartReport, AdminChart) {
         $scope.css = {
             currentReportMenu: 'A1',
             tableReportTab: 'SKU'
@@ -773,7 +773,14 @@
                 allData: [],
                 data: $scope.dataChartSimple
             },
-
+            //C2
+            chartC21PerceptionMap : {
+                allData : [],
+                data : [],
+                dataChart : [],
+                currentPeriod : 0,
+                color : ['#004CE5', '#BB0000', '#FFBC01', '#339933', '#990099', '#FF5200', '#000000']
+            },
             //C4-1 Growth Rate In Volume
             chartC41GrowthRateInVolume: {
                 config: chartReport.getChartConfig1(),
@@ -834,6 +841,8 @@
                     that.loadingChartB4Data();
                     //加载C1
                     that.loadingChartC1Data();
+                    //加载C2
+                    that.loadingChartC2Data();
                     //加载C4
                     that.loadingChartC4Data();
 
@@ -966,6 +975,157 @@
                     $scope.data.chartC15SegmentsLeadersByValueUltimate.data = $scope.data.chartC15SegmentsLeadersByValueUltimate.allData[$scope.data.chartC11SegmentsLeadersByValuePriceSensitive.currentPeriod + 3];
                     $scope.data.chartC16SegmentsLeadersByValuePragmatic.data = $scope.data.chartC16SegmentsLeadersByValuePragmatic.allData[$scope.data.chartC11SegmentsLeadersByValuePriceSensitive.currentPeriod + 3];
                 };
+
+                /********************  Chart C2  ********************/
+                $scope.switchPerceptionMapsData = function(flag) {
+                    if (flag === 'sku') {
+                        $scope.data.chartC21PerceptionMap.dataChart = $scope.data.chartC21PerceptionMap.data.dataSKU;
+                    } else {
+                        $scope.data.chartC21PerceptionMap.dataChart = $scope.data.chartC21PerceptionMap.data.dataBrand;
+                    }
+                };
+                $scope.switchTableReportC2Period = function(period) {
+                    $scope.data.chartC21PerceptionMap.currentPeriod = period.period;
+                    $scope.data.chartC21PerceptionMap.data = period;
+                    $scope.data.chartC21PerceptionMap.dataChart = $scope.data.chartC21PerceptionMap.data.dataSKU;
+                };
+                $scope.C2ColorFunction = function() {
+                    return function(d, i) {
+                        return $scope.data.chartC21PerceptionMap.color[i];
+                    };
+                };
+
+
+                $scope.C2shapeFunction = function() {
+                    return function(d) {
+                        return d.shape;
+                    };
+                };
+                // 处理当前的公司名称的颜色
+                function C2TooltipContentShowCompanyNameColor(fieldname) {
+                    var names = {
+                        'A': function() {
+                            return $scope.data.chartC21PerceptionMap.color[0];
+                        },
+                        'B': function() {
+                            return $scope.data.chartC21PerceptionMap.color[1];
+                        },
+                        'C': function() {
+                            return $scope.data.chartC21PerceptionMap.color[2];
+                        },
+                        'D': function() {
+                            return $scope.data.chartC21PerceptionMap.color[3];
+                        },
+                        'E': function() {
+                            return $scope.data.chartC21PerceptionMap.color[4];
+                        },
+                        'F': function() {
+                            return $scope.data.chartC21PerceptionMap.color[5];
+                        }
+
+                    };
+                    if (typeof names[fieldname] !== 'function') {
+                        return false;
+                    }
+                    return names[fieldname]();
+                }
+
+                $scope.C2TooltipContent = function() {
+                    return function(key, x, y, e, graph) {
+
+                        var iconColor;
+                        var htmlResult = '';
+
+                        var arrow0 = 'perception_arrow_right';
+                        var arrow1 = 'perception_arrow_right';
+                        var arrow2 = 'perception_arrow_right';
+                        var arrow3 = 'perception_arrow_right';
+                        var arrow4 = 'perception_arrow_right';
+                        var arrow5 = 'perception_arrow_right';
+                        var arrow6 = 'perception_arrow_right';
+                        var arrow7 = 'perception_arrow_right';
+
+                        if (e.point.tooltips.length > 0) {
+                            iconColor = C2TooltipContentShowCompanyNameColor(e.point.CompanyName);
+
+                            if (e.point.tooltips[0].compareWithPreviousPeriod === 1) {
+                                arrow0 = 'perception_arrow_up';
+                            } else if (e.point.tooltips[0].compareWithPreviousPeriod === -1) {
+                                arrow0 = 'perception_arrow_down';
+                            }
+
+                            if (e.point.tooltips[1].compareWithPreviousPeriod === 1) {
+                                arrow1 = 'perception_arrow_up';
+                            } else if (e.point.tooltips[1].compareWithPreviousPeriod === -1) {
+                                arrow1 = 'perception_arrow_down';
+                            }
+
+                            if (e.point.tooltips[2].compareWithPreviousPeriod === 1) {
+                                arrow2 = 'perception_arrow_up';
+                            } else if (e.point.tooltips[2].compareWithPreviousPeriod === -1) {
+                                arrow2 = 'perception_arrow_down';
+                            }
+
+                            if (e.point.tooltips[3].compareWithPreviousPeriod === 1) {
+                                arrow3 = 'perception_arrow_up';
+                            } else if (e.point.tooltips[3].compareWithPreviousPeriod === -1) {
+                                arrow3 = 'perception_arrow_down';
+                            }
+
+                            if (e.point.tooltips[4].compareWithPreviousPeriod === 1) {
+                                arrow4 = 'perception_arrow_up';
+                            } else if (e.point.tooltips[4].compareWithPreviousPeriod === -1) {
+                                arrow4 = 'perception_arrow_down';
+                            }
+
+                            if (e.point.tooltips[5].compareWithPreviousPeriod === 1) {
+                                arrow5 = 'perception_arrow_up';
+                            } else if (e.point.tooltips[5].compareWithPreviousPeriod === -1) {
+                                arrow5 = 'perception_arrow_down';
+                            }
+
+                            if (e.point.tooltips[6].compareWithPreviousPeriod === 1) {
+                                arrow6 = 'perception_arrow_up';
+                            } else if (e.point.tooltips[6].compareWithPreviousPeriod === -1) {
+                                arrow6 = 'perception_arrow_down';
+                            }
+
+                            if (e.point.tooltips[7].compareWithPreviousPeriod === 1) {
+                                arrow7 = 'perception_arrow_up';
+                            } else if (e.point.tooltips[7].compareWithPreviousPeriod === -1) {
+                                arrow7 = 'perception_arrow_down';
+                            }
+
+                            htmlResult = '<div class="panel panel-default perception_panel"> <div class="panel-heading"><span class="perception_logo" style="background-color:' + iconColor + '"></span>' + key + ' - ' + e.point.name + '  </div>' +
+                                '<ul class="list-group">' +
+                                '<li class="list-group-item perception_list"><span class="perception_info">' + $translate.instant('ReportPerceptionMapHoverTooltipMarketShareValue') + '</span><span class="perception_info_number">' + Math.round(e.point.tooltips[0].value * 10000) / 100 +
+                                '%</span><span class=" ' + arrow0 + ' "></span></li>' +
+                                '<li class="list-group-item perception_list perception_list_bg"><span class="perception_info">' + $translate.instant('ReportPerceptionMapHoverTooltipAverageDisplayPrice') + '</span><span class="perception_info_number">' + Math.round(e.point.tooltips[1].value * 100) / 100 +
+                                '</span><span class=" ' + arrow1 + ' "></span></li>' +
+                                '<li class="list-group-item perception_list"><span class="perception_info">' + $translate.instant('ReportPerceptionMapHoverTooltipAppliedTechnologyIndex') + '</span><span class="perception_info_number">' + e.point.tooltips[2].value +
+                                '</span><span class=" ' + arrow2 + ' "></span></li>' +
+                                '<li class="list-group-item perception_list perception_list_bg"><span class="perception_info">' + $translate.instant('ReportPerceptionMapHoverTooltipIngredientsQualityIndex') + '</span><span class="perception_info_number">' + e.point.tooltips[3].value +
+                                '</span><span class=" ' + arrow3 + ' "></span></li>' +
+                                '<li class="list-group-item perception_list"><span class="perception_info">' + $translate.instant('ReportPerceptionMapHoverTooltipAwareness') + '</span><span class="perception_info_number">' + Math.round(e.point.tooltips[4].value * 10000) / 100 +
+                                '%</span><span class=" ' + arrow4 + ' "></span></li>' +
+                                '<li class="list-group-item perception_list perception_list_bg"><span class="perception_info">' + $translate.instant('ReportPerceptionMapHoverTooltipShelfSpace') + '</span><span class="perception_info_number">' + Math.round(e.point.tooltips[5].value * 10000) / 100 +
+                                '%</span><span class=" ' + arrow5 + ' "></span></li>' +
+                                '<li class="list-group-item perception_list"><span class="perception_info">' + $translate.instant('ReportPerceptionMapHoverTooltipValuePerceptionChange') + '</span><span class="perception_info_number">' + Math.round(e.point.tooltips[6].value * 100) / 100 +
+                                '</span><span class=" ' + arrow6 + ' "></span></li>' +
+                                '<li class="list-group-item perception_list perception_list_bg"><span class="perception_info">' + $translate.instant('ReportPerceptionMapHoverTooltipImagePerceptionChange') + '</span><span class="perception_info_number">' + Math.round(e.point.tooltips[7].value * 100) / 100 +
+                                '</span><span class=" ' + arrow7 + ' "></span></li>' +
+                                '</ul></div>';
+
+                        } else {
+                            iconColor = $scope.data.chartC21PerceptionMap.color[6];
+                            htmlResult = '<h5><span class="perception_logo" style="background-color:' + iconColor + '"></span>' + ' ' + e.point.name + '</h5>';
+                        }
+
+
+                        return htmlResult;
+                    };
+                };
+
 
 
             },
@@ -1102,36 +1262,46 @@
                 });
             },
             loadingChartC1Data: function() {
-                //Table C1-1 Segments Leader By Value Price Sensitive
+                //Chart C1-1 Segments Leader By Value Price Sensitive
                 AdminChart.getSegmentsLeadersByValuePriceSensitive().then(function(data, status, headers, config) {
                     $scope.data.chartC11SegmentsLeadersByValuePriceSensitive.allData = data.data;
                     $scope.data.chartC11SegmentsLeadersByValuePriceSensitive.currentPeriod = $scope.data.chartC11SegmentsLeadersByValuePriceSensitive.allData.length - 4;
                     $scope.data.chartC11SegmentsLeadersByValuePriceSensitive.data = $scope.data.chartC11SegmentsLeadersByValuePriceSensitive.allData[$scope.data.chartC11SegmentsLeadersByValuePriceSensitive.currentPeriod + 3];
                 });
-                //Table C1-2 Segments Leaders By Value Pretenders
+                //Chart C1-2 Segments Leaders By Value Pretenders
                 AdminChart.getSegmentsLeadersByValuePretenders().then(function(data, status, headers, config) {
                     $scope.data.chartC12SegmentsLeadersByValuePretenders.allData = data.data;
                     $scope.data.chartC12SegmentsLeadersByValuePretenders.data = $scope.data.chartC12SegmentsLeadersByValuePretenders.allData[$scope.data.chartC11SegmentsLeadersByValuePriceSensitive.currentPeriod + 3];
                 });
-                //Table C1-3 Segments Leaders By Value Moderate
+                //Chart C1-3 Segments Leaders By Value Moderate
                 AdminChart.getSegmentsLeadersByValueModerate().then(function(data, status, headers, config) {
                     $scope.data.chartC13SegmentsLeadersByValueModerate.allData = data.data;
                     $scope.data.chartC13SegmentsLeadersByValueModerate.data = $scope.data.chartC13SegmentsLeadersByValueModerate.allData[$scope.data.chartC11SegmentsLeadersByValuePriceSensitive.currentPeriod + 3];
                 });
-                //Table C1-4 Segments Leaders By Value Good Life
+                //Chart C1-4 Segments Leaders By Value Good Life
                 AdminChart.getSegmentsLeadersByValueGoodLife().then(function(data, status, headers, config) {
                     $scope.data.chartC14SegmentsLeadersByValueGoodLife.allData = data.data;
                     $scope.data.chartC14SegmentsLeadersByValueGoodLife.data = $scope.data.chartC14SegmentsLeadersByValueGoodLife.allData[$scope.data.chartC11SegmentsLeadersByValuePriceSensitive.currentPeriod + 3];
                 });
-                //Table C1-5 Segments Leaders By Value Ultimate
+                //Chart C1-5 Segments Leaders By Value Ultimate
                 AdminChart.getSegmentsLeadersByValueUltimate().then(function(data, status, headers, config) {
                     $scope.data.chartC15SegmentsLeadersByValueUltimate.allData = data.data;
                     $scope.data.chartC15SegmentsLeadersByValueUltimate.data = $scope.data.chartC15SegmentsLeadersByValueUltimate.allData[$scope.data.chartC11SegmentsLeadersByValuePriceSensitive.currentPeriod + 3];
                 });
-                //Table C1-6 Segments Leaders By Value Pragmatic
+                //Chart C1-6 Segments Leaders By Value Pragmatic
                 AdminChart.getSegmentsLeadersByValuePragmatic().then(function(data, status, headers, config) {
                     $scope.data.chartC16SegmentsLeadersByValuePragmatic.allData = data.data;
                     $scope.data.chartC16SegmentsLeadersByValuePragmatic.data = $scope.data.chartC16SegmentsLeadersByValuePragmatic.allData[$scope.data.chartC11SegmentsLeadersByValuePriceSensitive.currentPeriod + 3];
+                });
+            },           
+            loadingChartC2Data: function() {
+                //Chart C2 Perception Map
+                AdminChart.getPerceptionMap().then(function(data, status, headers, config) {                   
+                    $scope.data.chartC21PerceptionMap.allData = data.data;
+                    $scope.data.chartC21PerceptionMap.currentPeriod = $scope.data.chartC21PerceptionMap.allData.length - 4;
+                    $scope.data.chartC21PerceptionMap.data = $scope.data.chartC21PerceptionMap.allData[$scope.data.chartC21PerceptionMap.currentPeriod + 3];
+                    $scope.data.chartC21PerceptionMap.dataChart = $scope.data.chartC21PerceptionMap.data.dataSKU;
+                    console.log($scope.data.chartC21PerceptionMap);
                 });
             },
             loadingChartC4Data: function() {

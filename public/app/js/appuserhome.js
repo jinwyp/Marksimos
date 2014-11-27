@@ -67,9 +67,12 @@
             selectFinalScorePeriod : 0,
             selectScore : 'Original',
             currentPeriod : 0,
+            //add by raven
             maxPeriodRound : -1,
-            finalReportPeriods: [],
-            isFeedbackShown : false
+            seminarFinished : false,
+            showFeedback : false,
+            finalReportPeriods: []
+
         };
 
 
@@ -506,8 +509,7 @@
             initOnce : function(){
                 this.loadingChartData();
                 this.loadingStudentData();
-                this.loadingCompanyDecisionData();
-                this.loadingCompanyOtherData();
+
             },
 
             reRun : function(){
@@ -610,7 +612,7 @@
                     $scope.data.chartC21PerceptionMap.allData = data.data;
                     $scope.data.chartC21PerceptionMap.currentPeriod = $scope.data.chartC21PerceptionMap.allData.length - 4;
                     $scope.data.chartC21PerceptionMap.data = $scope.data.chartC21PerceptionMap.allData[$scope.data.chartC21PerceptionMap.currentPeriod + 3];
-                    $scope.data.chartC21PerceptionMap.dataChart = $scope.data.chartC21PerceptionMap.data.dataSKU;
+                    $scope.data.chartC21PerceptionMap.dataChart = $scope.data.chartC21PerceptionMap.data.dataSKU;                   
                 });
 
                 /********************  Chart C4  ********************/
@@ -638,6 +640,7 @@
             },
 
             loadingStudentData : function(){
+                var that = this;
                 Company.getCurrentStudent().then(function(data, status, headers, config){
                     $scope.data.currentStudent = data;
                     var currentDate = new Date();
@@ -668,10 +671,12 @@
                     $scope.data.currentCompanyNameCharacter = showCompanyName($scope.data.currentStudent.companyId);
 
                     $scope.css.currentPeriod = $scope.data.currentStudent.currentPeriod;
+                    //add by raven
                     $scope.css.maxPeriodRound = $scope.data.currentStudent.maxPeriodRound;
 
-                    $scope.css.periods = [];
+                    $scope.css.seminarFinished = $scope.data.currentStudent.isSimulationFinised;
 
+                    $scope.css.periods = [];
                     $scope.css.finalReportPeriods = [];
 
                     // 处理显示当前第几回合进度条
@@ -703,7 +708,6 @@
                         for (var j = 0; j < $scope.data.currentStudent.currentPeriod; j++) {
                             $scope.css.finalReportPeriods.push(j);
                         }
-
                     }
 
 
@@ -713,6 +717,13 @@
                     Company.getFinalScore($scope.data.currentStudent.currentPeriod - 1).then(function(data, status, headers, config){
                         $scope.data.tableFinalScore.selectPeriodData = data;
                     });
+
+                    // 处理最后比赛结束后
+                    if($scope.data.currentStudent.isSimulationFinised === false){
+                        that.loadingCompanyDecisionData();
+                        that.loadingCompanyOtherData();
+                    }
+
                 });
             },
 
@@ -1317,8 +1328,9 @@
                 info: ["JoinProgram", "CompanyInHouse", "OpenClass"]
             };
         });
+
         $scope.showQuestionnaire = function() {
-            $scope.css.isFeedbackShown = true;
+            $scope.css.showFeedback = true;
         };
 
         /********************  更新 Questionnaire  ********************/
@@ -1358,7 +1370,7 @@
                     template: notifytemplate.success,
                     position: 'center'
                 });
-                $scope.css.isFeedbackShown = false;
+                $scope.css.showFeedback = false;
 
             }, function(data, status, headers, config) {
                 notify({
