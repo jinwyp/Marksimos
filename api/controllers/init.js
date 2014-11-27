@@ -49,7 +49,7 @@ var _ = require('underscore');
 exports.init = function(req, res, next) {
     var status;
 
-    return function(req, res, next){        
+    return function(req, res, next){
         if(status == 'pending'){
             return res.send(400, {message: "Last request is still pending, please wait for runSimulation process complete..."})
         } else {
@@ -89,7 +89,7 @@ exports.init = function(req, res, next) {
                 periods.push(-3);
                 periods.push(-2);
                 periods.push(-1);
-                periods.push(0);        
+                periods.push(0);
 
                 //create company array
                 companies = utility.createCompanyArray(dbSeminar.companyNum);
@@ -125,7 +125,7 @@ exports.init = function(req, res, next) {
                     .spread(function(allResults){
                         return Q.all([
                             initChartData(seminarId, allResults),
-                            
+
                             initCompanyStatusReport(seminarId, allResults, 0),
                             initFinancialReport(seminarId, allResults),
                             initProfitabilityEvolutionReport(seminarId, allResults, 0),
@@ -139,7 +139,7 @@ exports.init = function(req, res, next) {
                 .then(function(){
                     //copy decision of period (currentPeriod - 1 = 0)
                     return duplicateLastPeriodDecision(seminarId, currentPeriod - 1);
-                    
+
                 })
                 .then(function(){
                     return seminarModel.update({seminarId: seminarId}, {
@@ -159,8 +159,8 @@ exports.init = function(req, res, next) {
                 logger.error(err);
                 res.send(500, {message: err.message})
             })
-            .done();            
-        }        
+            .done();
+        }
 
     }
 };
@@ -170,15 +170,15 @@ exports.init = function(req, res, next) {
 * Run simulation
 * Fetch current period allresults and save it to db
 * Generate current period reports and charts
-* Generate new period decision 
+* Generate new period decision
 
 {
-    goingToNewPeriod : true/false 
+    goingToNewPeriod : true/false
 
     //if true, after data re-generation, current period will be set into next period
-    decisionOverwriteSwitchers : [true, false, false, false] 
+    decisionOverwriteSwitchers : [true, false, false, false]
 
-    
+
     //if decisionsOverwriteSwithcers[0] = true, selected period Team A decision will be overwrite
     //if decisionsOverwriteSwithcers[1] = true, selected period Team B decision will be overwrite
     //...
@@ -204,7 +204,7 @@ exports.runSimulation = function(){
 //            var currentPeriod = sessionOperation.getCurrentPeriod(req);  // 原来的代码从session 取得的 当前round
 
             var currentPeriod = Number(req.params.round);
-            
+
             //check if this seminar exists
             seminarModel.findOne({
                 seminarId: seminarId
@@ -260,7 +260,7 @@ exports.runSimulation = function(){
                         })
                         .then(function(){
                             logger.log('get current period simulation result finished.');
-                            //once removeCurrentPeriodSimulationResult success, 
+                            //once removeCurrentPeriodSimulationResult success,
                             //query and save the current period simulation result
                             return initCurrentPeriodSimulationResult(seminarId, currentPeriod);
                         })
@@ -270,7 +270,7 @@ exports.runSimulation = function(){
                             ])
                             .spread(function(allResults){
                                 return Q.all([
-                                    initChartData(seminarId, allResults),                                    
+                                    initChartData(seminarId, allResults),
                                     initCompanyStatusReport(seminarId, allResults, currentPeriod),
                                     initFinancialReport(seminarId, allResults),
                                     initProfitabilityEvolutionReport(seminarId, allResults, currentPeriod),
@@ -293,8 +293,8 @@ exports.runSimulation = function(){
                         })
                         .then(function(){
                             logger.log('create duplicate decision from last period finished.');
-                            if(dbSeminar.currentPeriod < dbSeminar.simulationSpan){
-                                
+                            if(dbSeminar.currentPeriod <= dbSeminar.simulationSpan){
+
 
                                 //after simulation success, set currentPeriod to next period
                                 sessionOperation.setCurrentPeriod(req, sessionOperation.getCurrentPeriod(req)+1);
@@ -337,7 +337,7 @@ exports.runSimulation = function(){
                 logger.error(err);
                 res.send(500, {message: err.message})
             })
-            .done();            
+            .done();
         }
 
     }
@@ -588,7 +588,7 @@ function initSimulationResult(seminarId, periods){
 
 function cleanAllResults(allResults){
     allResults.forEach(function(onePeriodResult){
-        //remove useless data like empty SKU, company    
+        //remove useless data like empty SKU, company
         allResultsCleaner.clean(onePeriodResult);
     })
 }
@@ -772,7 +772,7 @@ function createNewDecisionBasedOnLastPeriodDecision(seminarId, lastPeriod){
                 var tempSKUDecision = JSON.parse(JSON.stringify(SKUDecision));
 
                 if(tempSKUDecision.d_ToDrop){
-                    discontinuedSKUId.push(tempSKUDecision.d_SKUID); 
+                    discontinuedSKUId.push(tempSKUDecision.d_SKUID);
                 } else {
                     delete tempSKUDecision._id;
                     delete tempSKUDecision.__v;
@@ -790,7 +790,7 @@ function createNewDecisionBasedOnLastPeriodDecision(seminarId, lastPeriod){
                             throw new Error("save SKUDecision failed during create copy of last period decision.");
                         }
                         return SKUDecisionModel.createSKUDecisionBasedOnLastPeriodDecision(tempSKUDecision);
-                    })                    
+                    })
                 }
             })
             return p;
@@ -823,7 +823,7 @@ function createNewDecisionBasedOnLastPeriodDecision(seminarId, lastPeriod){
 
             })
             return p;
-        })        
+        })
     }).then(function(result){
         return companyDecisionModel.findAllInPeriod(seminarId, lastPeriod)
         .then(function(allCompanyDecision){
@@ -846,7 +846,7 @@ function createNewDecisionBasedOnLastPeriodDecision(seminarId, lastPeriod){
                 tempCompanyDecision.d_IsAdditionalBudgetAccepted = false;
                 tempCompanyDecision.d_InvestmentInServicing = 0;
                 tempCompanyDecision.d_InvestmentInEfficiency = 0;
-                tempCompanyDecision.d_InvestmentInTechnology = 0;                
+                tempCompanyDecision.d_InvestmentInTechnology = 0;
                 p = p.then(function(result){
                     if(!result){
                         throw new Error("save comanyDecision failed during create copy of last period decision.");
@@ -855,7 +855,7 @@ function createNewDecisionBasedOnLastPeriodDecision(seminarId, lastPeriod){
                 })
             })
             return p;
-        })        
+        })
     })
 
 }
