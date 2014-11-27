@@ -67,9 +67,10 @@
             selectFinalScorePeriod : 0,
             selectScore : 'Original',
             currentPeriod : 0,
-            maxPeriodRound : -1,
-            finalReportPeriods: [],
-            isFeedbackShown : false
+            seminarFinished : false,
+            showFeedback : false,
+            finalReportPeriods: []
+
         };
 
 
@@ -506,8 +507,7 @@
             initOnce : function(){
                 this.loadingChartData();
                 this.loadingStudentData();
-                this.loadingCompanyDecisionData();
-                this.loadingCompanyOtherData();
+
             },
 
             reRun : function(){
@@ -638,6 +638,7 @@
             },
 
             loadingStudentData : function(){
+                var that = this;
                 Company.getCurrentStudent().then(function(data, status, headers, config){
                     $scope.data.currentStudent = data;
                     var currentDate = new Date();
@@ -668,7 +669,7 @@
                     $scope.data.currentCompanyNameCharacter = showCompanyName($scope.data.currentStudent.companyId);
 
                     $scope.css.currentPeriod = $scope.data.currentStudent.currentPeriod;
-                    $scope.css.maxPeriodRound = $scope.data.currentStudent.maxPeriodRound;
+                    $scope.css.seminarFinished = $scope.data.currentStudent.isSimulationFinised;
 
                     $scope.css.periods = [];
 
@@ -713,6 +714,13 @@
                     Company.getFinalScore($scope.data.currentStudent.currentPeriod - 1).then(function(data, status, headers, config){
                         $scope.data.tableFinalScore.selectPeriodData = data;
                     });
+
+                    // 处理最后比赛结束后
+                    if($scope.data.currentStudent.isSimulationFinised === false){
+                        that.loadingCompanyDecisionData();
+                        that.loadingCompanyOtherData();
+                    }
+
                 });
             },
 
@@ -1318,7 +1326,7 @@
             };
         });
         $scope.showQuestionnaire = function(){
-            $scope.css.isFeedbackShown=true;
+            $scope.css.showFeedback = true;
         };
 
         /********************  更新 Questionnaire  ********************/

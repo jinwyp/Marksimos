@@ -11,7 +11,7 @@
 
 
 
-    <user-header showmenu="true" showlogout="true"  current-menu="css.menu" current-round="data.currentStudent.currentPeriod" is-feedback-shown='css.isFeedbackShown'></user-header>
+    <user-header showmenu="true" showlogout="true"  current-menu="css.menu" current-round="data.currentStudent.currentPeriod" is-feedback-shown='css.showFeedback'></user-header>
 
 
 
@@ -2582,7 +2582,7 @@
 
     <div class="row mainbody" ng-cloak ng-if="css.menu=='Score'">
 
-        <div class="col-md-9 score_box" ng-if='!css.isFeedbackShown'>
+        <div class="col-md-9 score_box" >
 
             <div class="row">
                 <div class="col-md-12 score_info">
@@ -2616,7 +2616,7 @@
             </div>
         </div>
 
-        <div class="col-md-9 feedback_box" ng-if='!css.isFeedbackShown&&css.currentPeriod==css.maxPeriodRound'>
+        <div class="col-md-9 feedback_box" ng-if='!css.showFeedback&&css.seminarFinished'>
 
             <div class="row">
                 <div class="col-md-12 feedback_info">
@@ -2628,14 +2628,10 @@
                     </p>
                 </div>
             </div>
-
         </div>
 
-        <div class="col-md-9 support_box" ng-if='!css.isFeedbackShown||css.currentPeriod!=css.maxPeriodRound'>
-            <div class="row"></div>
-        </div>
 
-        <div class="col-md-9 score_box fade in" ng-if='css.isFeedbackShown'>
+        <div class="col-md-9 score_box fade in" ng-if='css.showFeedback'>
 
             <div class="row">
                 <form role="form" name='questionnaireForm'>

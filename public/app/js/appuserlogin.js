@@ -95,23 +95,28 @@
 
             if($scope.data.selectSeminar.seminar_id !== 0 ){
                 $http.get('/marksimos/api/choose_seminar', {params : $scope.data.selectSeminar}).success(function(data, status, headers, config){
-                    $scope.css.showBox = 'whoami';
-
 
                     Company.getCurrentStudent().then(function(data, status, headers, config){
                         $scope.data.currentStudentSeminar = data;
-                    });
 
-                    Company.getCompany().then(function(data, status, headers, config){
-                        angular.forEach(data.d_BrandsDecisions, function(brand){
-                            $scope.data.brandNumber++;
+                        // 处理最后比赛结束后
+                        if($scope.data.currentStudentSeminar.isSimulationFinised === false){
+                            $scope.css.showBox = 'whoami';
 
-                            angular.forEach(brand.d_SKUsDecisions, function(sku){
-                                $scope.data.skuNumber++;
+                            Company.getCompany().then(function(data, status, headers, config){
+                                angular.forEach(data.d_BrandsDecisions, function(brand){
+                                    $scope.data.brandNumber++;
+
+                                    angular.forEach(brand.d_SKUsDecisions, function(sku){
+                                        $scope.data.skuNumber++;
+                                    });
+                                });
+
+                                $scope.data.currentCompany = data;
                             });
-                        });
-
-                        $scope.data.currentCompany = data;
+                        }else{
+                            $window.location.href = "/marksimos/home" ;
+                        }
                     });
 
                 }).error(function(data, status, headers, config){

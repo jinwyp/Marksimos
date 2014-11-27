@@ -38,7 +38,9 @@
                         <td><a href="" ng-click="chooseSeminar(seminar.seminarId )">{{seminar.simulationSpan}}</a></td>
                         <td><a href="" ng-click="chooseSeminar(seminar.seminarId )">{{seminar.companyNum}} </a></td>
                         <td><a href="" ng-click="chooseSeminar(seminar.seminarId )">no info  </a></td>
-                        <td> <a href="" ng-click="chooseSeminar(seminar.seminarId )" ng-if="seminar.isInitialized">Initialized, Current Round:{{seminar.currentPeriod}} </a>
+                        <td>
+                            <a href="" ng-click="chooseSeminar(seminar.seminarId )" ng-if="seminar.isSimulationFinised">Finished </a>
+                            <a href="" ng-click="chooseSeminar(seminar.seminarId )" ng-if="seminar.isInitialized&&!seminar.isSimulationFinised">Initialized, Current Round:{{seminar.currentPeriod}} </a>
                             <a href="" ng-click="chooseSeminar(seminar.seminarId )" ng-if="!seminar.isInitialized">Not Initialized </a>
                         </td>
                         <td><a href="" ng-click="chooseSeminar(seminar.seminarId )">{{seminar.country}} / {{seminar.state}} / {{seminar.city}}  </a></td>
