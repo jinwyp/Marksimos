@@ -1374,6 +1374,13 @@
                 })["catch"](errorHandler);
             },
 
+
+            //Table C2 Preception Map
+            getPerceptionMap: function() {
+                return $http.get(apiAdminPath + 'chart/perception_map').then(function(result) {
+                    return chartFormatToolnvd3ScatterChart(result.data);
+                })["catch"](errorHandler);
+            },
             //Table C4-1 Growth Rate In Volume
             getGrowthRateInVolume: function () {
                 return $http.get(apiAdminPath + 'chart/growth_rate_in_volume').then(function (result) {
