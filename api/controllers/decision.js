@@ -171,7 +171,7 @@ exports.getDecision = function(req, res, next){
     if(!seminarId){
         return res.send(403, {message: "You don't choose a seminar."});
     }
-    
+
     var period = req.session.currentPeriod;
     var companyId = req.session.companyId;
 
@@ -181,7 +181,7 @@ exports.getDecision = function(req, res, next){
     })
     .fail(function(err){
         logger.error(err);
-        res.send(500, {message: "get company data failed."});
+        res.send(404, {message: "get company data failed."});
     })
     .done();
 };
@@ -196,7 +196,7 @@ exports.updateSKUDecision = function(req, res, next){
     if(!seminarId){
         return res.send(403, {message: "You don't choose a seminar."});
     }
-    
+
     var companyId = req.session.companyId;
     var period = req.session.currentPeriod;
 
@@ -242,7 +242,7 @@ exports.updateSKUDecision = function(req, res, next){
     logger.log('!!!!: ' + message);
         res.send(403, message);
     })
-    .done(); 
+    .done();
 
     //res.send(400, 'bad request');
     function createSKU(postedSKU){
@@ -283,7 +283,7 @@ exports.updateBrandDecision = function(req, res, next){
     if(!seminarId){
         return res.send(403, {message: "You don't choose a seminar."});
     }
-    
+
     var companyId = req.session.companyId;
     var period = req.session.currentPeriod;
 
@@ -314,11 +314,11 @@ exports.updateBrandDecision = function(req, res, next){
     .then(function(doc){
         res.send({status: 1, message: 'update success.'});
     })
-    .fail(function(err){        
-        var message = JSON.stringify(err, ['message', 'lower', 'upper', 'modifiedField'], 2);        
+    .fail(function(err){
+        var message = JSON.stringify(err, ['message', 'lower', 'upper', 'modifiedField'], 2);
         res.send(403, message);
     })
-    .done(); 
+    .done();
 
     function createBrand(postedBrand){
         var result = {};
@@ -343,7 +343,7 @@ exports.updateCompanyDecision = function(req, res, next){
     if(!seminarId){
         return res.send(403, {message: "You don't choose a seminar."});
     }
-    
+
     var companyId = req.session.companyId;
     var period = req.session.currentPeriod;
 
@@ -373,9 +373,9 @@ exports.updateCompanyDecision = function(req, res, next){
     })
     .fail(function(err){
         var message = JSON.stringify(err, ['message', 'lower', 'upper', 'modifiedField'], 2);
-        res.send(403, message);        
+        res.send(403, message);
     })
-    .done(); 
+    .done();
 
 
     function createCompanyDecision(postedCompanyDecision){
@@ -394,7 +394,7 @@ exports.updateCompanyDecision = function(req, res, next){
 
 exports.addBrand = function(req, res, next){
     var seminarId = req.session.seminarId;
-    
+
     if(!seminarId){
         return res.send(403, {message: "You don't choose a seminar."});
     }
@@ -418,7 +418,7 @@ exports.addBrand = function(req, res, next){
         period          : period,
         d_CID           : companyId,
         d_BrandName     : brand_name,
-        d_SKUsDecisions : [] 
+        d_SKUsDecisions : []
     })
     .then(function(newBrandID){
         return SKUDecisionModel.create({
@@ -427,14 +427,14 @@ exports.addBrand = function(req, res, next){
             d_CID: companyId,
             d_BrandID: newBrandID,
             d_SKUName: '_' + sku_name
-        });        
+        });
     })
     .then(function(){
         res.send({message: "add brand and sku success."});
     })
     .fail(function(err){
         var message = JSON.stringify(err, ['message'], 2);
-        res.send(403, message);        
+        res.send(403, message);
     })
     .done();
 
@@ -453,7 +453,7 @@ exports.addBrand = function(req, res, next){
     //     }
 
     //     var nextBrandId = maxBrandId +1;
-    //     var firstSKUID = (maxBrandId+1)*10 + 1;//SKUID =  brandID * 10 + 1 
+    //     var firstSKUID = (maxBrandId+1)*10 + 1;//SKUID =  brandID * 10 + 1
 
     //     return SKUDecisionModel.create({
     //         seminarId: seminarId,
@@ -470,9 +470,9 @@ exports.addBrand = function(req, res, next){
     //             d_CID: companyId,
     //             d_BrandID: nextBrandId,
     //             d_BrandName     : brand_name,
-    //             d_SKUsDecisions : [firstSKUID] 
+    //             d_SKUsDecisions : [firstSKUID]
     //         })
-    //     })      
+    //     })
     // })
     // .then(function(){
     //     res.send({message: "add brand success."});
@@ -486,13 +486,13 @@ exports.addBrand = function(req, res, next){
 
 };
 
-exports.addSKU = function(req, res, next){    
+exports.addSKU = function(req, res, next){
     var seminarId = req.session.seminarId;
 
     if(!seminarId){
         return res.send(403, {message: "You don't choose a seminar."});
     }
-    
+
     var period = req.session.currentPeriod;
     var companyId = req.session.companyId;
 
@@ -558,7 +558,7 @@ exports.deleteBrand = function(req, res, next){
     var companyId = req.session.companyId;
 
     var brand_id = req.body.brand_id;
-    
+
     if(!brand_id){
         return res.send(403, {message: "Invalid parameter brand_id."});
     }
@@ -654,7 +654,7 @@ exports.getOtherinfo = function(req, res, next){
     if(!seminarId){
         return res.send(403, {message: "You don't choose a seminar."});
     }
-    
+
     var currentPeriod = req.session.currentPeriod;
     var companyId = req.session.companyId;
 
@@ -676,7 +676,7 @@ exports.getOtherinfo = function(req, res, next){
 
         var normalCapacity = parseFloat((spendingDetails.companyData.normalCapacity/companyResult.c_Capacity).toFixed(2));
         var normalCapacityValue = spendingDetails.companyData.normalCapacity;
-        
+
         var overtimeCapacity = parseFloat(((spendingDetails.companyData.availableOvertimeCapacityExtension
             ) / (companyResult.c_Capacity * gameParameters.pgen.firm_OvertimeCapacity)).toFixed(2));
 

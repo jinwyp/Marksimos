@@ -67,10 +67,9 @@
             selectFinalScorePeriod : 0,
             selectScore : 'Original',
             currentPeriod : 0,
-            maxPeriodRound:0,
+            maxPeriodRound : -1,
             finalReportPeriods: [],
             isFeedbackShown : false
-
         };
 
 
@@ -198,7 +197,7 @@
 
 
 
-            chartA31InventoryReport : {
+            chartA3InventoryReport : {
                 data : [],
     //            color : ['#39b54a', '#ff983d', '#0087f0', '#8781bd', '#f26c4f', '#bd8cbf', '#000000'] // QIFEI 's color
     //            color : ['#004CE5', '#BB0000', '#FFBC01', '#339933', '#990099', '#FF5200', '#000000'] //Windows color
@@ -318,34 +317,34 @@
 
 
 
-        $scope.A31ColorFunction = function(){
+        $scope.A3ColorFunction = function(){
             return function(d, i){
-                return $scope.data.chartA31InventoryReport.color[i];
+                return $scope.data.chartA3InventoryReport.color[i];
             };
         };
 
 
-        $scope.A31ToolTipContent = function(){
+        $scope.A3ToolTipContent = function(){
             return function(key, x, y, e, graph) {
                 return  '<h5>' + y + '</h5>';
             };
         };
 
-        $scope.C21ColorFunction = function(){
+        $scope.C2ColorFunction = function(){
             return function(d, i){
                 return $scope.data.chartC21PerceptionMap.color[i];
             };
         };
 
 
-        $scope.C31shapeFunction = function(){
+        $scope.C2shapeFunction = function(){
             return function(d) {
                 return d.shape;
             };
         };
 
         // 处理当前的公司名称的颜色
-        function C31TooltipContentShowCompanyNameColor(fieldname) {
+        function C2TooltipContentShowCompanyNameColor(fieldname) {
             var names = {
                 'A': function() {
                     return $scope.data.chartC21PerceptionMap.color[0];
@@ -373,7 +372,7 @@
             return names[fieldname]();
         }
 
-        $scope.C31TooltipContent = function(){
+        $scope.C2TooltipContent = function(){
             return function(key, x, y, e, graph) {
 
                 var iconColor ;
@@ -389,7 +388,7 @@
                 var arrow7 = 'perception_arrow_right';
 
                 if(e.point.tooltips.length > 0){
-                    iconColor = C31TooltipContentShowCompanyNameColor(e.point.CompanyName);
+                    iconColor = C2TooltipContentShowCompanyNameColor(e.point.CompanyName);
 
                     if(e.point.tooltips[0].compareWithPreviousPeriod === 1){
                         arrow0 = 'perception_arrow_up';
@@ -519,7 +518,7 @@
             loadingChartData : function(){
                 /********************  Chart A3  ********************/
                 chartReport.inventoryReport().then(function(data, status, headers, config){
-                    $scope.data.chartA31InventoryReport.data = data;
+                    $scope.data.chartA3InventoryReport.data = data[0].data;
                 });
 
 
@@ -641,7 +640,6 @@
             loadingStudentData : function(){
                 Company.getCurrentStudent().then(function(data, status, headers, config){
                     $scope.data.currentStudent = data;
-
                     var currentDate = new Date();
 
                     $scope.data.currentTime.hour = 1;

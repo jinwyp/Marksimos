@@ -264,7 +264,6 @@ exports.runSimulation = function(){
                         .then(function(simulationResult){
                             logger.log('run simulation finished.');
                             if(simulationResult.message !== 'run_simulation_success'){
-                                 status = 'active';
                                 throw {message: simulationResult.message};
                             }
 
@@ -303,7 +302,6 @@ exports.runSimulation = function(){
                             if(dbSeminar.currentPeriod < dbSeminar.simulationSpan){
                                 return createNewDecisionBasedOnLastPeriodDecision(seminarId, selectedPeriod, decisionsOverwriteSwitchers);
                             }else{
-                                 status = 'active';
                                 return undefined;
                             }
                         })
@@ -320,26 +318,31 @@ exports.runSimulation = function(){
                                         if(numAffected!==1){
                                             throw {message: "there's error during update seminar."}
                                         }else{
-                                            status = 'active';
                                             return undefined;
                                         }
                                     })
                                 } else {
-                                    status = 'active';
                                     return undefined;
                                 }
 
-                            }else{
-                                return seminarModel.update({seminarId: seminarId}, {
-                                    isSimulationFinised: true
-                                }).then(function(numAffected){
-                                    if(numAffected!==1){
-                                        throw {message: "there's error during update isSimulationFinised to true."}
-                                    }else{
-                                         status = 'active';
-                                        return undefined;
-                                    }
-                                });
+                            }else if(dbSeminar.currentPeriod = dbSeminar.simulationSpan){
+                                if(goingToNewPeriod){
+                                    sessionOperation.setCurrentPeriod(req, sessionOperation.getCurrentPeriod(req)+1);
+                                    return seminarModel.update({seminarId: seminarId}, {
+                                        isSimulationFinised : true,
+                                        currentPeriod       : dbSeminar.currentPeriod + 1
+                                    }).then(function(numAffected){
+                                        if(numAffected!==1){
+                                            throw {message: "there's error during update isSimulationFinised to true."}
+                                        }else{
+                                            return undefined;
+                                        }
+                                    });
+                                } else {
+                                    return undefined;
+                                }
+                            } else {
+                                throw {message: 'dbSeminar.currentPeriod > dbSeminar.simulationSpan, you cannot run into next period.'}
                             }
                         })
                     });
