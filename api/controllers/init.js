@@ -218,21 +218,21 @@ exports.runSimulation = function(){
             })
             .then(function(dbSeminar){
                 if(!dbSeminar){
-                     status = 'active';
                     throw {message: "seminar doesn't exist."};
                 }
 
                 if(!dbSeminar.isInitialized){
-                     status = 'active';
                     throw {httpStatus: 400, message: "you have not initialized this seminar."}
                 }
 
                 //if all rounds are executed
                 if(dbSeminar.isSimulationFinised){
-                     status = 'active';
                     throw {httpStatus: 400, message: "the last round simulation has been executed."}
                 }
 
+                if(decisionsOverwriteSwitchers.length != dbSeminar.companyNum){
+                    throw {httpStatus: 404, message: "Incorrect parameter decisionsOverwriteSwitchers in the post request."}
+                }
 
                 if(!goingToNewPeriod){
                     selectedPeriod = dbSeminar.currentPeriod;
@@ -353,7 +353,6 @@ exports.runSimulation = function(){
                 if(err.httpStatus){
                     return res.send(err.httpStatus, {message: err.message});
                 }
-                logger.error(err);
                 res.send(500, {message: err.message})
             })
             .done();
@@ -804,12 +803,16 @@ function createNewDecisionBasedOnLastPeriodDecision(seminarId, lastPeriod, decis
                     tempSKUDecision.d_TradeExpenses = 0;
                     tempSKUDecision.d_WholesalesBonusRate = 0;
                     tempSKUDecision.d_WholesalesBonusMinVolume = 0;
-                    p = p.then(function(result){
-                        if(!result){
-                            throw new Error("save SKUDecision failed during create copy of last period decision.");
-                        }
-                        return SKUDecisionModel.createSKUDecisionBasedOnLastPeriodDecision(tempSKUDecision);
-                    })
+
+                    //only when admin turn on the overwrite switchers, delete old & generate new decision for next period
+                    if(decisionsOverwriteSwitchers[tempSKUDecision.d_CID - 1]){
+                        p = p.then(function(result){
+                            if(!result){
+                                throw new Error("save SKUDecision failed during create copy of last period decision.");
+                            }
+                            return SKUDecisionModel.createSKUDecisionBasedOnLastPeriodDecision(tempSKUDecision);
+                        })
+                    }
                 }
             })
             return p;
@@ -832,12 +835,15 @@ function createNewDecisionBasedOnLastPeriodDecision(seminarId, lastPeriod, decis
                     delete tempBrandDecision.__v;
                     tempBrandDecision.period = tempBrandDecision.period + 1;
                     tempBrandDecision.d_SalesForce = 0;
-                    p = p.then(function(result){
-                        if(!result){
-                            throw new Error("save brandDecision failed during create copy of last period decision.");
-                        }
-                        return brandDecisionModel.createBrandDecisionBasedOnLastPeriodDecision(tempBrandDecision);
-                    })
+                    //only when admin turn on the overwrite switchers, delete old & generate new decision for next period
+                    if(decisionsOverwriteSwitchers[tempBrandDecision.d_CID - 1]){
+                        p = p.then(function(result){
+                            if(!result){
+                                throw new Error("save brandDecision failed during create copy of last period decision.");
+                            }
+                            return brandDecisionModel.createBrandDecisionBasedOnLastPeriodDecision(tempBrandDecision);
+                        })
+                    }
                 }
 
             })
@@ -866,12 +872,18 @@ function createNewDecisionBasedOnLastPeriodDecision(seminarId, lastPeriod, decis
                 tempCompanyDecision.d_InvestmentInServicing = 0;
                 tempCompanyDecision.d_InvestmentInEfficiency = 0;
                 tempCompanyDecision.d_InvestmentInTechnology = 0;
-                p = p.then(function(result){
-                    if(!result){
-                        throw new Error("save comanyDecision failed during create copy of last period decision.");
-                    }
-                    return companyDecisionModel.save(tempCompanyDecision);
-                })
+
+                //only when admin turn on the overwrite switchers, delete old & generate new decision for next period
+                if(decisionsOverwriteSwitchers[tempCompanyDecision.d_CID - 1]){
+                    p = p.then(function(result){
+                        if(!result){
+                            throw new Error("save comanyDecision failed during create copy of last period decision.");
+                        }
+                        return companyDecisionModel.save(tempCompanyDecision);
+                    })
+                }
+
+
             })
             return p;
         })

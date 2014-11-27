@@ -94,11 +94,9 @@ module.exports = (function(){
             break;
         case 'ludwik':
             config.logDirectory = '/Users/ludwik/code/actived/Marksimos/log/';
-            config.mongo_conn = 'mongodb://192.168.2.50/Marksimos';
             config.host = 'http://localhost:3000/';
-            config.cgiService = 'http://192.168.2.50/cgi-bin/';
-            //config.mongo_conn = 'mongodb://localhost/Marksimos';
-            //config.cgiService = 'http://localhost:8080/cgi-bin/marksimos/';
+            config.mongo_conn = 'mongodb://localhost/Marksimos';
+            config.cgiService = 'http://localhost:8080/cgi-bin/marksimos/';
             break;
         case 'development':
             config.logDirectory = '/Users/ludwik/code/Marksimos/log/';
