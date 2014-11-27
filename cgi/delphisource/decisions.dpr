@@ -22,12 +22,14 @@ var
   sTemp: string;
   resultCode: Integer;
 
+  responseMsg : AnsiString;
+
 begin
   SetMultiByteConversionCodePage(CP_UTF8);
 
   try
     WriteLn('Content-type: application/json');
-    WriteLn;
+
 
     ctx := TSuperRttiContext.Create;
 
@@ -46,10 +48,16 @@ begin
         //LoadConfigIni(DataDirectory, getSeminar(sListData));
 
         resultCode := ReadDecisionRecord(DataDirectory, params['seminar'], StrToInt(params['period']), StrToInt(params['team']), decision);
-        if (resultCode<>0) then raise Exception.Create('read decision failed, code:'+IntToStr(resultCode));
+        if (resultCode<>0) then
+        begin
+          raise Exception.Create('read decision failed, code:'+IntToStr(resultCode));
+        end
+        else
+        begin
+          jo := ctx.AsJson<TDecision>(decision);
+          responseMsg := jo.AsJSon(False, True);
+        end;
 
-        jo := ctx.AsJson<TDecision>(decision);
-        Writeln(jo.AsJSon(False, True));
     end
     else
     begin
@@ -76,8 +84,14 @@ begin
           StrToInt(params['period']),
           StrToInt(params['team']),
           decision);
-        if(resultCode<>0) then raise Exception.Create('Write decision failed, code:' + IntToStr(resultCode));
-        Writeln('{"message": "submit_decision_success"}');
+        if(resultCode<>0) then
+        begin
+          raise Exception.Create('Write decision failed, code:' + IntToStr(resultCode));
+        end
+        else
+        begin
+          responseMsg := '{"message": "submit_decision_success"}';
+        end;
         //Writeln(urlDecode(sDati));
         //Writeln('{"data": "' + params['decision'] + '"}');
       end;
@@ -85,7 +99,11 @@ begin
   except
     on E: Exception do
     begin
-      Writeln('{"message": "' + E.ClassName + ': ' + E.Message +'"}');
+      Writeln('Status: 400 Bad Request');
+      responseMsg := '{"message": "' + E.ClassName + ': ' + E.Message +'"}';
     end;
   end;
+
+  WriteLn;
+  Writeln(responseMsg);
 end.
