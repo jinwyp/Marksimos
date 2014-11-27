@@ -169,6 +169,31 @@ sudo vi /etc/mongodb.conf
 
 
 ## 运行
+## 是用PM2 启动nodejs
+NODE_ENV=production pm2 start 
+
+### pm2 常用命令
+pm2 list 查看进程
+pm2 logs 查看logs
+
+pm2 stop     <app_name|id|all>
+pm2 restart  <app_name|id|all>
+pm2 delete   <app_name|id|all>
+
+pm2 monit 监控
+
+pm2 desc 0 查看pm2环境变量
+
+pm2的logs的存放路径在当前linux用户下的目录里面
+error log path    │ /home/hcd/.pm2/logs/app-err-0.log │
+out log path      │ /home/hcd/.pm2/logs/app-out-0.log │
+pid path          │ /home/hcd/.pm2/pids/app-0.pid
+
+使用 linux nano 编辑器查看log文件
+
+
+
+## 使用 nodemon 启动nodejs
 ``` NODE_ENV=production nodemon app.js
 ```
 
