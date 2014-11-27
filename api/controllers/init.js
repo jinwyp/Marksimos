@@ -287,7 +287,9 @@ exports.runSimulation = function(){
                             logger.log('generate report/chart finished.');
                             //for the last period, we don't create the next period decision automatically
                             if(dbSeminar.currentPeriod < dbSeminar.simulationSpan){
-                                return createNewDecisionBasedOnLastPeriodDecision(seminarId, currentPeriod);
+                                status = 'active';
+                                return undefined;
+                                //return createNewDecisionBasedOnLastPeriodDecision(seminarId, currentPeriod);
                             }else{
                                  status = 'active';
                                 return undefined;
