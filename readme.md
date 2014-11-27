@@ -170,7 +170,7 @@ sudo vi /etc/mongodb.conf
 
 ## 运行
 ## 是用PM2 启动nodejs
-NODE_ENV=production pm2 start 
+NODE_ENV=production pm2 start app.js
 
 ### pm2 常用命令
 pm2 list 查看进程
