@@ -35,7 +35,7 @@
                 menuscore    : '&clickScore',
                 menudecision : '&clickDecision',
                 currentMenu : '=',
-                isFeedbackShown : '=',
+                seminarFinished : '=',
                 currentRound : '='
             },
             restrict: 'AE',
@@ -45,7 +45,6 @@
 
                 scope.clickMenu = function(currentmenu){
                     scope.currentMenu = currentmenu;
-                    scope.isFeedbackShown = false;
                 };
 
                 scope.clickHelpMenu = function(){
