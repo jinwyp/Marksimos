@@ -86,8 +86,7 @@
         };
 
         $scope.initSeminar();
-
-
+        
 
         $scope.chooseSeminar = function(seminarid){
 
