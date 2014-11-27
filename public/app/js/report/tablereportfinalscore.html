@@ -12,7 +12,7 @@
     <tbody>
         <tr>
             <td>{{'FinalScorePageIncrementalMarketShare' | translate}}</td>
-            <td class="td_info">50</td>
+            <td class="td_info">50%</td>
             <td ng-repeat="score in data.scores" ng-show="selectScore=='Rescaled'">{{score.scaledSOM | number :2}}
             </td>
             <td ng-repeat="score in data.scores" ng-show="selectScore=='Original'">{{score.originalSOM | number :2}}
@@ -20,7 +20,7 @@
         </tr>
         <tr>
             <td>{{'FinalScorePageCumulatedNetProfit' | translate}}</td>
-            <td class="td_info">50</td>
+            <td class="td_info">50%</td>
             <td ng-repeat="score in data.scores" ng-show="selectScore=='Rescaled'">{{score.scaledProfit | number :2}}
             </td>
             <td ng-repeat="score in data.scores" ng-show="selectScore=='Original'">{{score.originalProfit | number :2}}
@@ -28,7 +28,7 @@
         </tr>
         <tr>
             <td>{{'FinalScorePageSpendingVersusBudgets' | translate}}</td>
-            <td class="td_info">0</td>
+            <td class="td_info">200%</td>
             <td ng-repeat="score in data.scores" ng-show="selectScore=='Rescaled'">{{score.scaledBudget | number :2}}
             </td>
             <td ng-repeat="score in data.scores" ng-show="selectScore=='Original'">{{score.originalBudget | number :2}}
