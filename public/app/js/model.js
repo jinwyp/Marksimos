@@ -173,6 +173,10 @@
 
             updateQuestionnaire : function(postdata){
                 return $http.put(apiPath + 'questionnaire', postdata);
+            },
+
+            submitQuestionnaire : function(postdata){
+                return $http.put(apiPath + 'questionnaire', postdata);
             }
 
         };

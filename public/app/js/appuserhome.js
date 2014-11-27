@@ -1343,7 +1343,33 @@
                 });
             });
         };
+        /********************  提交 Questionnaire  ********************/
+        $scope.submitQuestionnaire = function(questionnaire){
 
+            $scope.isFeedbackSumbit = true ;
+
+            var currentData={
+                'questionnaire':questionnaire
+            };
+
+            Company.submitQuestionnaire(currentData).success(function(data, status, headers, config){
+                notify({
+                    message : 'Save Success !',
+                    template : notifytemplate.success,
+                    position : 'center'
+                });
+                $scope.css.isFeedbackShown=false;
+
+            },function(data, status, headers, config){
+                notify({
+                    message : data.message,
+                    template : notifytemplate.failure,
+                    position : 'center'
+                });
+                $scope.isFeedbackSumbit = false;
+
+            });
+        };
 
 
 

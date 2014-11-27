@@ -882,7 +882,8 @@
             "FinalScorePageCongratulations"     : "Congratulations ! You finish the game",
             "FinalScorePageCongratulationsInfo" : "Please take 5 minutes to provide feedback to MarkSimos. Your feedback will help us to improve our service",
             "FinalScorePageProvideFeedback"     : "Provide Feedback",
-
+            "FinalScorePageThank"               : "Thank you !",
+            "FinalScorePageThankInfo"           : "Thank you for your feedback",
 
             //Labels for Questionnaire Page
             "QuestionnairePageQuestionnaire"                             : "Questionnaire",
@@ -924,6 +925,7 @@
             "QuestionnairePageYes"                : "Yes",
             "QuestionnairePageNo"                 : "No",
             "QuestionnairePageBringYou"           : "What is the best benefit or experience MarkSimos bring to you ? Is there something special you learned that you like was unique / different compared to what you learned before",
+            "QuestionnaireSubmit"                 : "Submit Feedback",
 
             //Labels for Help page
             "HelpPageMenuFAQ"                     : "FAQ",
@@ -1815,6 +1817,8 @@
             "FinalScorePageCongratulations"                : "祝贺 ! 你已完成游戏",
             "FinalScorePageCongratulationsInfo"            : "麻烦您花一些时间填写反馈. 您的反馈将更好的改进我们的产品",
             "FinalScorePageProvideFeedback"                : "Provide Feedback",
+            "FinalScorePageThank"                          : "谢谢 !",
+            "FinalScorePageThankInfo"                      : "随便写点什么",
 
 
             //Labels for Questionnaire Page
@@ -1857,6 +1861,7 @@
             "QuestionnairePageYes"                : "Yes",
             "QuestionnairePageNo"                 : "No",
             "QuestionnairePageBringYou"           : "What is the best benefit or experience MarkSimos bring to you ? Is there something special you learned that you like was unique / different compared to what you learned before",
+            "QuestionnaireSubmit"                 : "提交反馈",
 
             //Labels for help page
             "HelpPageMenuFAQ"                     : "常见问题",
