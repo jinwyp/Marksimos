@@ -228,11 +228,20 @@ function aboutTeamPhoto(){
 // 显示新闻详细内容
 function newsDetail(){
 	var elems = $('.news-list .more'),
+		elems2 = $('.news-list .tit'),
 		target = $('#newsDetail');
 	if(!elems.length || !target.length) return ;
 	elems.click(function(){
 		if(target.is(':visible')) {
 			target.slideUp().slideDown();
+		} else {
+			target.slideDown();
+		}
+		return false;
+	});
+	elems2.click(function(){
+		if(target.is(':visible')) {
+			target.slideUp();
 		} else {
 			target.slideDown();
 		}
