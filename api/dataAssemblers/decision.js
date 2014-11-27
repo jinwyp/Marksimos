@@ -18,9 +18,13 @@ exports.getDecision = function(seminarId, period, companyId){
         brandDecisionList = JSON.parse(JSON.stringify(brandDecisionList));
         SKUDecisionList = JSON.parse(JSON.stringify(SKUDecisionList));
 
+        if(!companyDecision || !brandDecisionList || !SKUDecisionList){
+            throw {message: 'companyDecision/brandDecisionList/SKUDecisionList is empty.'}
+        }
+
         //combine decisions
         brandDecisionList.forEach(function(brandDecision){
-            
+
             var tempSKUDecisionList = [];
             for(var i=0; i<SKUDecisionList.length; i++){
                 var SKUDecision = SKUDecisionList[i];
@@ -34,7 +38,7 @@ exports.getDecision = function(seminarId, period, companyId){
 
         companyDecision.d_BrandsDecisions = brandDecisionList;
 
-        return companyDecision; 
+        return companyDecision;
     });
 }
 
