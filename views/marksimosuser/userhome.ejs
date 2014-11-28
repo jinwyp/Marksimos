@@ -2004,7 +2004,7 @@
                                                 <td class="tdgroup">{{'DecisionPageDecisionTabProcessingTechnology' | translate}}</td>
                                                 <td ng-repeat="sku in data.currentBrand.d_SKUsDecisions" >
                                                     <div class="alert alert-danger alert-tooltip" role="alert" ng-show="css.skuErrorField=='d_Technology' && sku.d_SKUID==data.currentSku.d_SKUID">Must be in range {{css.skuErrorInfo.lower}} to {{css.skuErrorInfo.upper.toFixed(0)}} !</div>
-                                                    <div class="alert alert-danger alert-tooltip" role="alert" ng-show="css.skuErrorFieldFrontEnd=='d_Technology' && sku.d_SKUID==data.currentSku.d_SKUID">{{'DecisionPageDecisionTabDiscontinueFrontendValidation' | translate}}</div>
+                                                    <div class="alert alert-danger alert-tooltip" role="alert" ng-show="css.skuErrorFieldFrontEnd=='d_Technology' && sku.d_SKUID==data.currentSku.d_SKUID">{{'DecisionPageDecisionTabProcessingTechnologyFrontendValidation' | translate}}</div>
                                                     <input type="text" class="form-control input-sm " ng-class="{'form-control-error':css.skuErrorField=='d_Technology' && sku.d_SKUID==data.currentSku.d_SKUID}" ng-model="sku.d_Technology" ng-blur="leaveSkuInput(sku, 'd_Technology', sku.d_Technology)"  ng-focus="clickCurrentSku(sku)">
                                                 </td>
                                             </tr>
