@@ -233,11 +233,13 @@ exports.runSimulation = function(){
 
                 //write decision to binary file
                 return submitDecisionForAllCompany(companies, currentPeriod, seminarId)
-                    .then(function(){
+                    .then(function(submitDecisionResult){
                         logger.log('write decision finished.');
-                        // if(submitDecisionResult.message!=='submit_decision_success'){
-                        //     throw {message: submitDecisionResult.message};
-                        // }
+                        console.log(submitDecisionResult);
+
+                        if(submitDecisionResult.message !== 'submit_decision_success'){
+                             throw {message: submitDecisionResult.message};
+                        }
 
                         //run simulation
                         return cgiapi.runSimulation({
@@ -285,6 +287,7 @@ exports.runSimulation = function(){
                             logger.log('generate report/chart finished.');
                             //for the last period, we don't create the next period decision automatically
                             if(dbSeminar.currentPeriod < dbSeminar.simulationSpan){
+                                status = 'active';
                                 return createNewDecisionBasedOnLastPeriodDecision(seminarId, currentPeriod);
                             }else{
                                  status = 'active';
@@ -336,7 +339,7 @@ exports.runSimulation = function(){
                 if(err.httpStatus){
                     return res.send(err.httpStatus, {message: err.message});
                 }
-                logger.error(err);
+                //logger.error(err);
                 res.send(500, {message: err.message})
             })
             .done();
@@ -373,6 +376,8 @@ function removeCurrentPeriodSimulationResult(seminarId, currentPeriod){
 function submitDecisionForAllCompany(companies, period, seminarId){
     var p = Q();
 
+    console.log('compnies:' + companies);
+
     companies.forEach(function(companyId){
         p = p.then(function(){
             //logger.log("submit decision finished.");
@@ -385,7 +390,7 @@ function submitDecisionForAllCompany(companies, period, seminarId){
 
 function submitDecision(companyId, period, seminarId){
     var result = {};
-    //logger.log('companyId:' + companyId + ', period:' + period + ', seminarId:' + seminarId);
+    logger.log('companyId:' + companyId + ', period:' + period + ', seminarId:' + seminarId);
     return companyDecisionModel.findOne(seminarId, period, companyId)
     .then(function(decision){
         if(!decision){
@@ -448,13 +453,16 @@ function submitDecision(companyId, period, seminarId){
             return res.send(500, {message: "fail to get decisions"})
         }
 
+
         insertEmptyBrandsAndSKUs(result);
         //convert result to data format that can be accepted by CGI service
         decisionConvertor.convert(result);
 
+
         //return res.send(result);
         //return result;
-        var reqUrl = url.resolve(config.cgiService, 'decisions.exe');
+
+            var reqUrl = url.resolve(config.cgiService, 'decisions.exe');
         return request.post(reqUrl, {
             decision: JSON.stringify(result),
             seminarId: seminarId,
