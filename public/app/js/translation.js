@@ -784,6 +784,20 @@
             "DecisionPageDecisionNewProductDevelopmentInvestmentNote"                                                   : "Note: Investment on Efficiency could increase Flexibility at the same time",
 
 
+            "DecisionPageDecisionTabProcessingTechnologyFrontendValidation" : "Must be integer",
+            "DecisionPageDecisionTabIngredientsQualityFrontendValidation"   : "Must be integer",
+            "DecisionPageDecisionTabProductionVolumeFrontendValidation"     : "Must be integer",
+            "DecisionPageDecisionTabManufacturerPriceFrontendValidation"    : "Must be float",
+
+            "DecisionPageDecisionTabConsumerCommunicationFrontendValidation"  : "Must be integer",
+            "DecisionPageDecisionTabConsumerPromotionsFrontendValidation"     : "Must be integer",
+            "DecisionPageDecisionTabTradeExpensesFrontendValidation"          : "Must be integer",
+            "DecisionPageDecisionTabAdditionalTradeMarginFrontendValidation"  : "Must be less than 100",
+            "DecisionPageDecisionTabWholesaleMinimumVolumeFrontendValidation" : "Must be integer",
+            "DecisionPageDecisionTabWholesaleBonusRateFrontendValidation"     : "Must be less than 100",
+
+
+
             //Labels for Items on Decision Page - Future Projections Calculator
             "DecisionPageFutureProjectionsTableTitleDATAREFERENCE"		:	"DATA REFERENCE",
 
@@ -882,7 +896,8 @@
             "FinalScorePageCongratulations"     : "Congratulations ! You finish the game",
             "FinalScorePageCongratulationsInfo" : "Please take 5 minutes to provide feedback to MarkSimos. Your feedback will help us to improve our service",
             "FinalScorePageProvideFeedback"     : "Provide Feedback",
-
+            "FinalScorePageThank"               : "Thank you !",
+            "FinalScorePageThankInfo"           : "Thank you for your feedback",
 
             //Labels for Questionnaire Page
             "QuestionnairePageQuestionnaire"                             : "Questionnaire",
@@ -924,6 +939,7 @@
             "QuestionnairePageYes"                : "Yes",
             "QuestionnairePageNo"                 : "No",
             "QuestionnairePageBringYou"           : "What is the best benefit or experience MarkSimos bring to you ? Is there something special you learned that you like was unique / different compared to what you learned before",
+            "QuestionnaireSubmit"                 : "Submit Feedback",
 
             //Labels for Help page
             "HelpPageMenuFAQ"                     : "FAQ",
@@ -1719,6 +1735,19 @@
             "DecisionPageDecisionNewProductDevelopmentInvestmentNote"                                                   : "注意: 在提高生产效率中的预算投入将等量影响生产灵活性 ",
 
 
+            "DecisionPageDecisionTabProcessingTechnologyFrontendValidation"   : "必须为整数",
+            "DecisionPageDecisionTabIngredientsQualityFrontendValidation"     : "必须为整数",
+            "DecisionPageDecisionTabProductionVolumeFrontendValidation"       : "必须为整数",
+            "DecisionPageDecisionTabManufacturerPriceFrontendValidation"      : "整数或两位小数",
+
+            "DecisionPageDecisionTabConsumerCommunicationFrontendValidation"  : "必须为整数",
+            "DecisionPageDecisionTabConsumerPromotionsFrontendValidation"     : "必须为整数",
+            "DecisionPageDecisionTabTradeExpensesFrontendValidation"          : "必须为整数",
+            "DecisionPageDecisionTabAdditionalTradeMarginFrontendValidation"  : "必须为100内整数",
+            "DecisionPageDecisionTabWholesaleMinimumVolumeFrontendValidation" : "必须为整数",
+            "DecisionPageDecisionTabWholesaleBonusRateFrontendValidation"     : "必须为100内整数",
+
+
             //Labels for Items on Decision Page - Future Projections Calculator
             "DecisionPageFutureProjectionsTableTitleDATAREFERENCE"		:	"数据参考",
 
@@ -1815,6 +1844,8 @@
             "FinalScorePageCongratulations"                : "祝贺 ! 你已完成游戏",
             "FinalScorePageCongratulationsInfo"            : "麻烦您花一些时间填写反馈. 您的反馈将更好的改进我们的产品",
             "FinalScorePageProvideFeedback"                : "Provide Feedback",
+            "FinalScorePageThank"                          : "谢谢 !",
+            "FinalScorePageThankInfo"                      : "您宝贵的意见会更好的改进我们的产品!",
 
 
             //Labels for Questionnaire Page
@@ -1857,6 +1888,7 @@
             "QuestionnairePageYes"                : "Yes",
             "QuestionnairePageNo"                 : "No",
             "QuestionnairePageBringYou"           : "What is the best benefit or experience MarkSimos bring to you ? Is there something special you learned that you like was unique / different compared to what you learned before",
+            "QuestionnaireSubmit"                 : "提交反馈",
 
             //Labels for help page
             "HelpPageMenuFAQ"                     : "常见问题",

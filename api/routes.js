@@ -348,7 +348,7 @@ apiRouter.get('/marksimos/api/faq', faqController.getFAQ);
 
 //getQuestionnaire
 apiRouter.get('/marksimos/api/questionnaire',requireStudentLogin({isRedirect : false}),questionnaireController.getQuestionnaire);
-apiRouter.put('/marksimos/api/questionnaire',requireStudentLogin({isRedirect : false}),questionnaireController.updateQuestionnaire);
+apiRouter.put('/marksimos/api/questionnaire',requireStudentLogin({isRedirect : false}),questionnaireController.submitQuestionnaire);
 
 
 // get seminar
