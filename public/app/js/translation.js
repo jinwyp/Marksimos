@@ -784,6 +784,20 @@
             "DecisionPageDecisionNewProductDevelopmentInvestmentNote"                                                   : "Note: Investment on Efficiency could increase Flexibility at the same time",
 
 
+            "DecisionPageDecisionTabProcessingTechnologyFrontendValidation" : "Must be integer",
+            "DecisionPageDecisionTabIngredientsQualityFrontendValidation"   : "Must be integer",
+            "DecisionPageDecisionTabProductionVolumeFrontendValidation"     : "Must be integer",
+            "DecisionPageDecisionTabManufacturerPriceFrontendValidation"    : "Must be float",
+
+            "DecisionPageDecisionTabConsumerCommunicationFrontendValidation"  : "Must be integer",
+            "DecisionPageDecisionTabConsumerPromotionsFrontendValidation"     : "Must be integer",
+            "DecisionPageDecisionTabTradeExpensesFrontendValidation"          : "Must be integer",
+            "DecisionPageDecisionTabAdditionalTradeMarginFrontendValidation"  : "Must be less than 100",
+            "DecisionPageDecisionTabWholesaleMinimumVolumeFrontendValidation" : "Must be integer",
+            "DecisionPageDecisionTabWholesaleBonusRateFrontendValidation"     : "Must be less than 100",
+
+
+
             //Labels for Items on Decision Page - Future Projections Calculator
             "DecisionPageFutureProjectionsTableTitleDATAREFERENCE"		:	"DATA REFERENCE",
 
@@ -1719,6 +1733,19 @@
             "DecisionPageDecisionNewProductDevelopmentInvestmentExtraBudgetRequiredToIncreaseFlexibilityBy25points"     : "提高2%/5%生产效率，预计所需的额外预算",
             "DecisionPageDecisionNewProductDevelopmentInvestmentExtraBudgetRequiredToIncreaseTechnologyLevelBy12points" : "每提高一个/两个级别的技术水平，预计所需的额外预算",
             "DecisionPageDecisionNewProductDevelopmentInvestmentNote"                                                   : "注意: 在提高生产效率中的预算投入将等量影响生产灵活性 ",
+
+
+            "DecisionPageDecisionTabProcessingTechnologyFrontendValidation"   : "必须为整数",
+            "DecisionPageDecisionTabIngredientsQualityFrontendValidation"     : "必须为整数",
+            "DecisionPageDecisionTabProductionVolumeFrontendValidation"       : "必须为整数",
+            "DecisionPageDecisionTabManufacturerPriceFrontendValidation"      : "整数或两位小数",
+
+            "DecisionPageDecisionTabConsumerCommunicationFrontendValidation"  : "必须为整数",
+            "DecisionPageDecisionTabConsumerPromotionsFrontendValidation"     : "必须为整数",
+            "DecisionPageDecisionTabTradeExpensesFrontendValidation"          : "必须为整数",
+            "DecisionPageDecisionTabAdditionalTradeMarginFrontendValidation"  : "必须为100内整数",
+            "DecisionPageDecisionTabWholesaleMinimumVolumeFrontendValidation" : "必须为整数",
+            "DecisionPageDecisionTabWholesaleBonusRateFrontendValidation"     : "必须为100内整数",
 
 
             //Labels for Items on Decision Page - Future Projections Calculator

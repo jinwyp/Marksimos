@@ -44,6 +44,7 @@
             addNewSku                : false,
             addNewBrand              : false,
             skuErrorField : '',
+            skuErrorFieldFrontEnd : '',
             skuErrorInfo  : '',
             brandErrorInfo  : '',
             companyErrorInfo  : '',
@@ -741,6 +742,7 @@
                     }
 
                     $scope.data.currentCompany = data;
+                    console.log(data);
 
                     //要处理删除SKU后,同时删除Brand后的问题 currentBrandIndex 要重置为零
                     if( angular.isUndefined($scope.data.currentCompany.d_BrandsDecisions[$scope.data.currentBrandIndex]) ){
@@ -1105,6 +1107,7 @@
 
         $scope.clickCurrentSku = function(sku){
             $scope.css.skuErrorField = '';
+            $scope.css.skuErrorFieldFrontEnd = '';
             $scope.data.currentSku = angular.copy(sku);
             Company.getCompanyFutureProjectionCalculator($scope.data.currentSku.d_SKUID).then(function(data, status, headers, config){
                 $scope.data.currentCompanyFutureProjectionCalculator = data;
@@ -1120,95 +1123,143 @@
                 sku_id : sku.d_SKUID,
                 sku_data : {}
             };
-            $scope.data.currentModifiedSku.sku_data[fieldname] = fielddata;
 
-            if(fieldname === 'd_TargetConsumerSegment'){
-                sku.d_TargetConsumerSegment = segmentOrWeek;
-                $scope.data.currentModifiedSku.sku_data[fieldname] = segmentOrWeek;
 
-            }else if(fieldname === 'd_PromotionalEpisodes'){
-                if(!angular.isUndefined(weekindex)){
-                    // 针对d_PromotionalEpisodes 字段需要特殊处理
-                    $scope.data.currentModifiedSku.sku_data[fieldname][weekindex] = segmentOrWeek;
+            //表单验证
+
+            var regexInteger = /^\d+$/;
+            var regexFloat = /^\d+(\.\d{1,2})?$/;
+            var regexFloat2 = /^0(\.\d{1,2})?$/;
+            var regexHundred = /^[1-9][0-9]?$|^0$|^100$/;
+
+            if(fieldname === 'd_Technology' &&  !regexInteger.test(fielddata)  ) {
+                $scope.css.skuErrorFieldFrontEnd = fieldname;
+
+            }else if(fieldname === 'd_IngredientsQuality' && !regexInteger.test(fielddata) ){
+                $scope.css.skuErrorFieldFrontEnd = fieldname;
+
+            }else if(fieldname === 'd_ProductionVolume' && !regexInteger.test(fielddata) ){
+                $scope.css.skuErrorFieldFrontEnd = fieldname;
+
+            }else if(fieldname === 'd_FactoryPrice' && !regexFloat.test(fielddata) ){
+                $scope.css.skuErrorFieldFrontEnd = fieldname;
+
+            }else if(fieldname === 'd_Advertising' && !regexInteger.test(fielddata) ){
+                $scope.css.skuErrorFieldFrontEnd = fieldname;
+
+            }else if(fieldname === 'd_PromotionalBudget' && !regexInteger.test(fielddata) ){
+                $scope.css.skuErrorFieldFrontEnd = fieldname;
+
+            }else if(fieldname === 'd_TradeExpenses' && !regexInteger.test(fielddata) ){
+                $scope.css.skuErrorFieldFrontEnd = fieldname;
+
+            }else if(fieldname === 'd_AdditionalTradeMargin' && !regexFloat2.test(fielddata) ){
+
+                $scope.css.skuErrorFieldFrontEnd = fieldname;
+
+            }else if(fieldname === 'd_WholesalesBonusMinVolume' && !regexInteger.test(fielddata) ){
+                $scope.css.skuErrorFieldFrontEnd = fieldname;
+
+            }else if(fieldname === 'd_WholesalesBonusRate' && !regexFloat2.test(fielddata) ){
+                console.log(fielddata, regexFloat.test(fielddata));
+                $scope.css.skuErrorFieldFrontEnd = fieldname;
+            }else{
+
+                // 表单验证成功 发送修改请求
+                $scope.data.currentModifiedSku.sku_data[fieldname] = fielddata;
+
+
+                if(fieldname === 'd_TargetConsumerSegment'){
+                    sku.d_TargetConsumerSegment = segmentOrWeek;
+                    $scope.data.currentModifiedSku.sku_data[fieldname] = segmentOrWeek;
+
+                }else if(fieldname === 'd_PromotionalEpisodes'){
+                    if(!angular.isUndefined(weekindex)){
+                        // 针对d_PromotionalEpisodes 字段需要特殊处理
+                        $scope.data.currentModifiedSku.sku_data[fieldname][weekindex] = segmentOrWeek;
+                    }
+                }else if(fieldname === 'd_FactoryPrice'){
+                    // 针对 d_FactoryPrice 字段需要特殊处理
+                    $scope.data.currentModifiedSku.sku_data[fieldname] = $scope.data.currentSku[fieldname];
+                    $scope.data.currentModifiedSku.sku_data[fieldname][0] = Number(fielddata);
+                }else if(fieldname === 'd_AdditionalTradeMargin'){
+                    // 针对 d_AdditionalTradeMargin 字段需要特殊处理
+                    $scope.data.currentModifiedSku.sku_data[fieldname][0] = Number(fielddata) / 100;
+                }else if(fieldname === 'd_WholesalesBonusRate'){
+                    // 针对 d_WholesalesBonusRate 字段需要特殊处理
+                    $scope.data.currentModifiedSku.sku_data[fieldname][0] = Number(fielddata) / 100;
                 }
-            }else if(fieldname === 'd_FactoryPrice'){
-                // 针对 d_FactoryPrice 字段需要特殊处理
-                $scope.data.currentModifiedSku.sku_data[fieldname] = $scope.data.currentSku[fieldname];
-                $scope.data.currentModifiedSku.sku_data[fieldname][0] = Number(fielddata);
-            }else if(fieldname === 'd_AdditionalTradeMargin'){
-                // 针对 d_AdditionalTradeMargin 字段需要特殊处理
-                $scope.data.currentModifiedSku.sku_data[fieldname][0] = Number(fielddata) / 100;
-            }else if(fieldname === 'd_WholesalesBonusRate'){
-                // 针对 d_WholesalesBonusRate 字段需要特殊处理
-                $scope.data.currentModifiedSku.sku_data[fieldname][0] = Number(fielddata) / 100;
+
+
+
+                Company.updateSku($scope.data.currentModifiedSku).then(function(data, status, headers, config){
+
+                    app.reRun();
+
+                    notify({
+                        message : 'Save Success !',
+                        template : notifytemplate.success,
+                        position : 'center'
+                    });
+                }, function(data){
+
+                    $scope.css.skuErrorField = data.data.modifiedField;
+
+                    // 使用命令对象
+                    function showSkuErrorInfo(fieldname) {
+                        var names = {
+                            'd_Technology': function() {
+                                return data.data;
+                            },
+                            'd_IngredientsQuality': function() {
+                                return data.data;
+                            },
+                            'd_ProductionVolume': function() {
+                                return data.data;
+                            },
+                            'd_FactoryPrice': function() {
+                                return data.data;
+                            },
+                            'd_Advertising': function() {
+                                return data.data;
+                            },
+                            'd_PromotionalBudget': function() {
+                                return data.data;
+                            },
+                            'd_TradeExpenses': function() {
+                                return data.data;
+                            },
+                            'd_AdditionalTradeMargin': function() {
+                                return data.data;
+                            },
+                            'd_WholesalesBonusMinVolume': function() {
+                                return data.data;
+                            },
+                            'd_WholesalesBonusRate': function() {
+                                return data.data;
+                            }
+
+                        };
+                        if (typeof names[fieldname] !== 'function') {
+                            return false;
+                        }
+                        return names[fieldname]();
+                    }
+
+                    $scope.css.skuErrorInfo = showSkuErrorInfo($scope.css.skuErrorField);
+
+
+                    notify({
+                        message : data.data.message,
+                        template : notifytemplate.failure,
+                        position : 'center'
+                    });
+                    app.reRun();
+                });
             }
 
 
 
-            Company.updateSku($scope.data.currentModifiedSku).then(function(data, status, headers, config){
-
-                app.reRun();
-
-                notify({
-                    message : 'Save Success !',
-                    template : notifytemplate.success,
-                    position : 'center'
-                });
-            }, function(data){
-
-                $scope.css.skuErrorField = data.data.modifiedField;
-
-                // 使用命令对象
-                function showSkuErrorInfo(fieldname) {
-                    var names = {
-                        'd_Technology': function() {
-                            return data.data;
-                        },
-                        'd_IngredientsQuality': function() {
-                            return data.data;
-                        },
-                        'd_ProductionVolume': function() {
-                            return data.data;
-                        },
-                        'd_FactoryPrice': function() {
-                            return data.data;
-                        },
-                        'd_Advertising': function() {
-                            return data.data;
-                        },
-                        'd_PromotionalBudget': function() {
-                            return data.data;
-                        },
-                        'd_TradeExpenses': function() {
-                            return data.data;
-                        },
-                        'd_AdditionalTradeMargin': function() {
-                            return data.data;
-                        },
-                        'd_WholesalesBonusMinVolume': function() {
-                            return data.data;
-                        },
-                        'd_WholesalesBonusRate': function() {
-                            return data.data;
-                        }
-
-                    };
-                    if (typeof names[fieldname] !== 'function') {
-                        return false;
-                    }
-                    return names[fieldname]();
-                }
-
-                $scope.css.skuErrorInfo = showSkuErrorInfo($scope.css.skuErrorField);
-
-
-                notify({
-                    message : data.data.message,
-                    template : notifytemplate.failure,
-                    position : 'center'
-                });
-                app.reRun();
-            });
         };
 
         /********************  更新 Brand  ********************/
