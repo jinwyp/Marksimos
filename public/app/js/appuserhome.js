@@ -742,7 +742,6 @@
                     }
 
                     $scope.data.currentCompany = data;
-                    console.log(data);
 
                     //要处理删除SKU后,同时删除Brand后的问题 currentBrandIndex 要重置为零
                     if( angular.isUndefined($scope.data.currentCompany.d_BrandsDecisions[$scope.data.currentBrandIndex]) ){
@@ -1161,7 +1160,6 @@
                 $scope.css.skuErrorFieldFrontEnd = fieldname;
 
             }else if(fieldname === 'd_WholesalesBonusRate' && !regexFloat2.test(fielddata) ){
-                console.log(fielddata, regexFloat.test(fielddata));
                 $scope.css.skuErrorFieldFrontEnd = fieldname;
             }else{
 
