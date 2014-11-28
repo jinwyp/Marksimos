@@ -782,8 +782,7 @@
             "DecisionPageDecisionNewProductDevelopmentInvestmentExtraBudgetRequiredToIncreaseFlexibilityBy25points"     : "Extra Budget Required to Increase Flexibility by 2% / 5% points",
             "DecisionPageDecisionNewProductDevelopmentInvestmentExtraBudgetRequiredToIncreaseTechnologyLevelBy12points" : "Extra Budget Required to Increase Technology Level by 1 / 2 Step(s)",
             "DecisionPageDecisionNewProductDevelopmentInvestmentNote"                                                   : "Note: Investment on Efficiency could increase Flexibility at the same time",
-
-
+            
             "DecisionPageDecisionTabProcessingTechnologyFrontendValidation" : "Must be integer",
             "DecisionPageDecisionTabIngredientsQualityFrontendValidation"   : "Must be integer",
             "DecisionPageDecisionTabProductionVolumeFrontendValidation"     : "Must be integer",
