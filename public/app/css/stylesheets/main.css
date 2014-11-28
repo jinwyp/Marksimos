@@ -1519,6 +1519,7 @@ body a, body button {
   left: 65px;
   padding: 5px;
   z-index: 999;
+  width: 75px;
 }
 .mainbody .alert-tooltip:after, .mainbody .alert-tooltip:before {
   top: 50%;
@@ -1768,10 +1769,6 @@ body a, body button {
 .mainbody .feedback_box {
   border: 1px solid #FF941F;
   color: #A07041;
-  margin: 20px 12.5%;
-}
-.mainbody .support_box {
-  min-height: 120px;
   margin: 20px 12.5%;
 }
 .mainbody .score_info {
