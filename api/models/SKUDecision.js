@@ -526,8 +526,9 @@ exports.removeAllInBrand = function(seminarId, period, companyId){
 }
 
 
-//Run simulation process, create brand decision document based on last period decision, skip all the validations
+//Run simulation process, create sku decision document based on last period decision, skip all the validations
 //copy bs_PeriodOfBirth from last period input
+//before creating : delete old one if it is existed
 exports.createSKUDecisionBasedOnLastPeriodDecision = function(decision){
     if(!mongoose.connection.readyState){
         throw new Error("mongoose is not connected.");
@@ -537,13 +538,24 @@ exports.createSKUDecisionBasedOnLastPeriodDecision = function(decision){
     var decision = new SKUDecision(decision);
     decision.modifiedField = 'skip';
 
-    decision.save(function(err, saveDecision, numAffected){
-        if(err){
-            deferred.reject(err);
-        }else{
-            deferred.resolve(saveDecision);
-        }
-    });
+    SKUDecision.remove({
+        seminarId   : decision.seminarId,
+        period      : decision.period,
+        d_CID       : decision.companyId,
+        d_BrandID   : decision.brandId,
+        d_SKUID     : decision.SKUID
+    }, function(err){
+        if(err){ return deferred.reject(err); }
+
+        decision.save(function(err, saveDecision, numAffected){
+            if(err){
+                deferred.reject(err);
+            }else{
+                deferred.resolve(saveDecision);
+            }
+        });
+    })
+
     return deferred.promise;
 }
 

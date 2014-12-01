@@ -26,13 +26,13 @@ tDecisionSchema.pre('save', true, function(next, done){
     var self = this;
     var validateAction = {
         'd_RequestedAdditionalBudget' : function(field){ validateAdditionalBudget(field, self, done); },
-        'd_InvestmentInEfficiency'    : function(field){ validateAvailableBudget(field, self, done); },         
-        'd_InvestmentInTechnology'    : function(field){ validateAvailableBudget(field, self, done); },         
+        'd_InvestmentInEfficiency'    : function(field){ validateAvailableBudget(field, self, done); },
+        'd_InvestmentInTechnology'    : function(field){ validateAvailableBudget(field, self, done); },
         'd_InvestmentInServicing'     : function(field){ validateAvailableBudget(field, self, done); },
-        'skip'                        : function(field){ process.nextTick(done); }                       
+        'skip'                        : function(field){ process.nextTick(done); }
     }
 
-    function doValidate(field){        
+    function doValidate(field){
         if(typeof validateAction[field] != 'function'){
             var validateErr = new Error('Cannot find validate action for ' + field);
             validateErr.message = 'Cannot find validate action for ' + field;
@@ -40,9 +40,9 @@ tDecisionSchema.pre('save', true, function(next, done){
             return done(validateErr);
         }
 
-        validateAction[field](field);        
+        validateAction[field](field);
     }
-    if(!this.modifiedField){ this.modifiedField = 'skip'; }    
+    if(!this.modifiedField){ this.modifiedField = 'skip'; }
     doValidate(this.modifiedField);
     next();
 })
@@ -52,7 +52,7 @@ function validateAdditionalBudget(field, curCompanyDecisionInput, done){
     Q.spread([
         spendingDetailsAssembler.getSpendingDetails(curCompanyDecisionInput.seminarId, curCompanyDecisionInput.period, curCompanyDecisionInput.d_CID),
         exports.findOne(curCompanyDecisionInput.seminarId, curCompanyDecisionInput.period, curCompanyDecisionInput.d_CID),
-        exports.findOne(curCompanyDecisionInput.seminarId, curCompanyDecisionInput.period - 1, curCompanyDecisionInput.d_CID)        
+        exports.findOne(curCompanyDecisionInput.seminarId, curCompanyDecisionInput.period - 1, curCompanyDecisionInput.d_CID)
     ], function(spendingDetails, preCompanyDecisionInput, prePeriodCompanyDecision){
 
         var budgetLeft = parseFloat(spendingDetails.companyData.availableBudget);
@@ -62,9 +62,9 @@ function validateAdditionalBudget(field, curCompanyDecisionInput, done){
             var err = new Error('You cannot applied budget more than twice.');
             done(err);
         } else {
-            lowerLimits.push({value : 0, message: 'Cannot accept negative number.'});        
+            lowerLimits.push({value : 0, message: 'Cannot accept negative number.'});
             upperLimits.push({value : parseFloat(spendingDetails.companyData.averageBudgetPerPeriod), message : 'Cannot accept number bigger than ' + spendingDetails.companyData.averageBudgetPerPeriod});
-            err = rangeCheck(curCompanyDecisionInput[field],lowerLimits,upperLimits);      
+            err = rangeCheck(curCompanyDecisionInput[field],lowerLimits,upperLimits);
             if(err != undefined){
                 err.modifiedField = field;
                 done(err);
@@ -75,15 +75,15 @@ function validateAdditionalBudget(field, curCompanyDecisionInput, done){
                     if(prePeriodCompanyDecision.bs_AdditionalBudgetApplicationCounter != preCompanyDecisionInput.bs_AdditionalBudgetApplicationCounter){
                         curCompanyDecisionInput.bs_AdditionalBudgetApplicationCounter = prePeriodCompanyDecision.bs_AdditionalBudgetApplicationCounter;
                     }
-                //if user input != 0 and counter hasn't been increased this period, do it                     
+                //if user input != 0 and counter hasn't been increased this period, do it
                 } else if(prePeriodCompanyDecision.bs_AdditionalBudgetApplicationCounter == preCompanyDecisionInput.bs_AdditionalBudgetApplicationCounter){
                     curCompanyDecisionInput.bs_AdditionalBudgetApplicationCounter = curCompanyDecisionInput.bs_AdditionalBudgetApplicationCounter + 1;
                     curCompanyDecisionInput.d_IsAdditionalBudgetAccepted = true;
                 }
 
                 done();
-            }         
-            
+            }
+
         }
     }).done();
 }
@@ -98,13 +98,13 @@ function validateAvailableBudget(field, curCompanyDecisionInput, done){
 
         lowerLimits.push({value : 0, message: 'Cannot accept negative number.'});
         upperLimits.push({value : budgetLeft + preCompanyDecisionInput[field], message : 'Budget Left is not enough.'});
-        err = rangeCheck(curCompanyDecisionInput[field],lowerLimits,upperLimits);      
+        err = rangeCheck(curCompanyDecisionInput[field],lowerLimits,upperLimits);
         if(err != undefined){
             err.modifiedField = field;
             done(err);
         } else {
             done();
-        }         
+        }
     }).done();
 }
 
@@ -113,13 +113,13 @@ function rangeCheck(input, lowerLimits, upperLimits){
     var maxOfLower = { value : 0 };
     var minOfUpper = { value : Infinity };
     lowerLimits.forEach(function(limit){
-        if(limit.value > maxOfLower.value){ 
+        if(limit.value > maxOfLower.value){
             maxOfLower.value = limit.value, maxOfLower.message = limit.message
         };
     });
 
     upperLimits.forEach(function(limit){
-        if(limit.value < minOfUpper.value){ 
+        if(limit.value < minOfUpper.value){
             minOfUpper.value = limit.value, minOfUpper.message = limit.message
         };
     })
@@ -134,7 +134,7 @@ function rangeCheck(input, lowerLimits, upperLimits){
         var err = new Error('Input is out of range');
         err.message = minOfUpper.message;
         err.lower = maxOfLower.value;
-        err.upper = minOfUpper.value;        
+        err.upper = minOfUpper.value;
         return err;
     } else {
         return undefined;
@@ -154,7 +154,7 @@ exports.remove =  function(seminarId, companyId){
         CompanyDecision.remove({
             seminarId: seminarId,
             d_CID: companyId
-        }, 
+        },
         function(err){
             if(err){
                 return deferred.reject(err);
@@ -200,15 +200,25 @@ exports.save = function(decision){
         deferred.reject(new Error("Invalid argument decision."));
     }else{
         var d = new CompanyDecision(decision);
-        d.save(function(err, savedDecision, numAffected){
-            if(err){
-                deferred.reject(err);
-            }else{
-                deferred.resolve(savedDecision);
-            }
-        });
+
+        CompanyDecision.remove({
+            seminarId   : d.seminarId,
+            period      : d.period,
+            d_CID       : d.companyId,
+        }, function(err){
+            if(err){ return deferred.reject(err); }
+
+            d.save(function(err, saveDecision, numAffected){
+                if(err){
+                    deferred.reject(err);
+                }else{
+                    deferred.resolve(saveDecision);
+                }
+            });
+        })
+
     }
-    
+
     return deferred.promise;
 };
 
@@ -274,7 +284,7 @@ exports.updateCompanyDecision = function(seminarId, period, companyId, companyDe
                 }
             });
 
-            doc.save(function(err, doc){         
+            doc.save(function(err, doc){
                 if(err){ deferred.reject(err);}
                 else{ return deferred.resolve(doc);}
             });
@@ -309,7 +319,7 @@ exports.insertEmptyCompanyDecision = function(seminarId, period){
     if(!mongoose.connection.readyState){
         throw new Error("mongoose is not connected.");
     }
-    
+
     //find all company decisions in the last period
     return exports.findAllInPeriod(seminarId, period - 1)
     .then(function(allCompanyDecisions){
@@ -319,7 +329,7 @@ exports.insertEmptyCompanyDecision = function(seminarId, period){
                 return exports.save({
                     seminarId: seminarId,
                     period: period,
-                    d_CID: companyDecision.d_CID,   
+                    d_CID: companyDecision.d_CID,
                     d_CompanyName: companyDecision.d_CompanyName,
                     d_BrandsDecisions: companyDecision.d_BrandsDecisions
                 });
