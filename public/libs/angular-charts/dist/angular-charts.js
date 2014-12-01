@@ -277,9 +277,9 @@ angular.module('angularCharts').directive('acChart', [
         }).attr('y', height).style('fill', function (d) {
           return getColor(d.s);
         }).attr('height', 0).transition().ease('cubic-in-out').duration(1000).attr('y', function (d) {
-          return y(Math.max(0, d.y));
+          return y(Math.max(0, d.y))||0;
         }).attr('height', function (d) {
-          return Math.abs(y(d.y) - y(0));
+          return Math.abs(y(d.y) - y(0))||0;
         });
         /**
        * Add events for tooltip
@@ -358,7 +358,7 @@ angular.module('angularCharts').directive('acChart', [
             ], 0.1);
             var yData = [0];
             points.forEach(function (d) {
-                d.nicedata = d.y.map(function (e, i) {
+                d.nicedata = d.y.map(function (e, i) {                  
                     yData.push(e);
                     return {
                         x: d.x,
@@ -421,7 +421,7 @@ angular.module('angularCharts').directive('acChart', [
                 return d.color;
             }).attr('height', 0).transition().ease('cubic-in-out').duration(1000).attr('y', function (d) {
                 return y(Math.max(0, d.y));
-            }).attr('height', function (d) {
+            }).attr('height', function (d) {                
                 return Math.abs(y(d.y) - y(0));
             });
             /**
@@ -494,7 +494,7 @@ angular.module('angularCharts').directive('acChart', [
         var xAxis = d3.svg.axis().scale(x).orient('bottom');
         filterXAxis(xAxis, x);
         var yAxis = d3.svg.axis().scale(y).orient('left').ticks(6).tickFormat(d3.format('s'));
-        var line = d3.svg.line().interpolate(config.lineCurveType).x(function (d) {
+        var line = d3.svg.line().defined(function (d) { return !isNaN(d.y); }).interpolate(config.lineCurveType).x(function (d) {
             return getX(d.x);
           }).y(function (d) {
             return y(d.y);
@@ -502,7 +502,7 @@ angular.module('angularCharts').directive('acChart', [
         var yData = [];
         var linedata = [];
         points.forEach(function (d) {
-          d.y.map(function (e, i) {
+            d.y.map(function (e, i) {             
             yData.push(e);
           });
         });
@@ -560,7 +560,10 @@ angular.module('angularCharts').directive('acChart', [
           points.append('circle').attr('cx', function (d) {
             return getX(d.x);
           }).attr('cy', function (d) {
-            return y(d.y);
+              if (isNaN(d.y)) {
+                  return -(height - 1);
+              }
+              return y(d.y);
           }).attr('r', 3).style('fill', getColor(linedata.indexOf(value))).style('stroke', getColor(linedata.indexOf(value))).on('mouseover', function (series) {
             return function (d) {
               makeToolTip({
@@ -834,7 +837,10 @@ angular.module('angularCharts').directive('acChart', [
           points.append('circle').attr('cx', function (d) {
             return getX(d.x);
           }).attr('cy', function (d) {
-            return y(d.y);
+              if (isNaN(d.y)) {
+                  return -(height - 1);
+              }
+              return y(d.y);
           }).attr('r', 3).style('fill', getColor(linedata.indexOf(value))).style('stroke', getColor(linedata.indexOf(value))).on('mouseover', function (series) {
             return function (d) {
               makeToolTip({
@@ -858,7 +864,7 @@ angular.module('angularCharts').directive('acChart', [
           if (config.labels) {
             points.append('text').attr('x', function (d) {
               return getX(d.x);
-            }).attr('y', function (d) {
+            }).attr('y', function (d) {               
               return y(d.y);
             }).text(function (d) {
               return d.y;

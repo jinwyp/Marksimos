@@ -8,7 +8,7 @@ var simulationResultModel = require('../models/simulationResult.js');
 
 /**
  * Assemble product portfolio data
- * 
+ *
  * @param {Number} currentPeriod the current period
  * @param {Number} companyId
  */
@@ -18,21 +18,21 @@ exports.getProductPortfolioForOneCompany = function(seminarId, currentPeriod, co
         decisionAssembler.getDecision(seminarId, currentPeriod, companyId)
     ])
     .spread(function(lastPeriodResult, decision){
-    
+
 
         var productPortfolioForOneCompany = [];
-        
+
         for(var i=0; i<decision.d_BrandsDecisions.length; i++){
             var brandDecision = decision.d_BrandsDecisions[i];
 
             for(var j=0; j<brandDecision.d_SKUsDecisions.length; j++){
                 var SKUDecision = brandDecision.d_SKUsDecisions[j];
-                
+
                 var productPortfolioForSKU = {};
-                
+
                 productPortfolioForSKU.SKUName = brandDecision.d_BrandName + SKUDecision.d_SKUName;
-                
-                productPortfolioForSKU.targetSegment = SKUDecision.d_TargetConsumerSegment - 1;
+
+                productPortfolioForSKU.targetSegment = SKUDecision.d_TargetConsumerSegment;
             // segmentNames: [
             // 0 - 'priceSensitive',
             // 1 - 'pretenders',
@@ -42,7 +42,7 @@ exports.getProductPortfolioForOneCompany = function(seminarId, currentPeriod, co
             // 5 - 'pragmatic',
             // 6 - 'allSegments'
             // ],
-                productPortfolioForSKU.factoryPrice = SKUDecision.d_FactoryPrice[0].toFixed(2) + ' / (' 
+                productPortfolioForSKU.factoryPrice = SKUDecision.d_FactoryPrice[0].toFixed(2) + ' / ('
                     + (SKUDecision.d_FactoryPrice[0]/consts.ActualSize[SKUDecision.d_PackSize]).toFixed(2)
                     + ')';
 
@@ -55,17 +55,17 @@ exports.getProductPortfolioForOneCompany = function(seminarId, currentPeriod, co
                 if(SKUInAllResults){
                     productPortfolioForSKU.averageFactoryPrice = (SKUInAllResults.u_AverageManufacturerPrice * consts.ActualSize[SKUInAllResults.u_PackSize]).toFixed(2)
                     + ' / (' + SKUInAllResults.u_AverageManufacturerPrice.toFixed(2) +")";
-                    
+
                     productPortfolioForSKU.averageIngredientsQuality = SKUInAllResults.u_ps_FactoryStocks[consts.StocksMaxTotal].s_IngredientsQuality;
                     productPortfolioForSKU.averageTechnologyLevel = SKUInAllResults.u_ps_FactoryStocks[consts.StocksMaxTotal].s_Technology;
                     productPortfolioForSKU.totalInventoryVolumeAtFactory = SKUInAllResults.u_ps_FactoryStocks[consts.StocksMaxTotal].s_ps_Volume.toFixed(2);
-                    productPortfolioForOneCompany.push(productPortfolioForSKU);                        
+                    productPortfolioForOneCompany.push(productPortfolioForSKU);
                 } else {
                     productPortfolioForSKU.averageFactoryPrice = '/';
                     productPortfolioForSKU.averageIngredientsQuality = '/';
                     productPortfolioForSKU.averageTechnologyLevel = '/';
                     productPortfolioForSKU.totalInventoryVolumeAtFactory = '/';
-                    productPortfolioForOneCompany.push(productPortfolioForSKU);                        
+                    productPortfolioForOneCompany.push(productPortfolioForSKU);
                 }
             }
         }

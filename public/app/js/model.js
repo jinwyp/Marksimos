@@ -30,9 +30,13 @@
     angular.module('marksimos.model').factory('Help', ['$http', helpModel]);
 
 
+
+    /********************  Administrator Model  ********************/
     angular.module('marksimos.model').factory('Admin', ['$http', adminModel]);
     //管理员报表-表格
     angular.module('marksimos.model').factory('AdminTable', ['$http', adminTableModel]);
+    //管理员报表-图表
+    angular.module('marksimos.model').factory('AdminChart',['$http',adminChartModel]);
 
 
     var apiPath = '/marksimos/api/';
@@ -169,6 +173,10 @@
 
             updateQuestionnaire : function(postdata){
                 return $http.put(apiPath + 'questionnaire', postdata);
+            },
+
+            submitQuestionnaire : function(postdata){
+                return $http.put(apiPath + 'questionnaire', postdata);
             }
 
         };
@@ -176,6 +184,556 @@
     }
 
 
+
+
+
+
+
+    /********************  Report Format and Translation  ********************/
+
+
+    var translateText = {
+        'ReportInventoryReportLabelCloseToExpireInventory' : '',
+        'ReportInventoryReportLabelPreviousInventory'      : '',
+        'ReportInventoryReportLabelFreshInventory'         : '',
+        'HomePageSecondMenuBarLabelsCompany'               : '',
+        'HomePageSegmentLabelPriceSensitive'               : '',
+        'HomePageSegmentLabelPretenders'                   : '',
+        'HomePageSegmentLabelModerate'                     : '',
+        'HomePageSegmentLabelGoodLife'                     : '',
+        'HomePageSegmentLabelUltimate'                     : '',
+        'HomePageSegmentLabelPragmatic'                    : '',
+        'HomePageSegmentLabelAllSegments'                  : ''
+    };
+
+    function showTranslateTextInventoryReport(fieldname) {
+        var names = {
+            '0': function() {
+                return translateText.ReportInventoryReportLabelFreshInventory;
+            },
+            '1': function() {
+                return translateText.ReportInventoryReportLabelPreviousInventory;
+            },
+            '2': function() {
+                return translateText.ReportInventoryReportLabelCloseToExpireInventory;
+            }
+        };
+        if (typeof names[fieldname] !== 'function') {
+            return false;
+        }
+        return names[fieldname]();
+    }
+
+    function showTranslateTextCompanyName(fieldname) {
+        var names = {
+            'A': function() {
+                return translateText.HomePageSecondMenuBarLabelsCompany + 'A';
+            },
+            'B': function() {
+                return translateText.HomePageSecondMenuBarLabelsCompany + 'B';
+            },
+            'C': function() {
+                return translateText.HomePageSecondMenuBarLabelsCompany + 'C';
+            },
+            'D': function() {
+                return translateText.HomePageSecondMenuBarLabelsCompany + 'D';
+            },
+            'E': function() {
+                return translateText.HomePageSecondMenuBarLabelsCompany + 'E';
+            },
+            'F': function() {
+                return translateText.HomePageSecondMenuBarLabelsCompany + 'F';
+            }
+        };
+        if (typeof names[fieldname] !== 'function') {
+            return false;
+        }
+        return names[fieldname]();
+    }
+
+    function showTranslateTextConsumerSegmentName(fieldname) {
+        var names = {
+            '0': function() {
+                return translateText.HomePageSegmentLabelPriceSensitive;
+            },
+            '1': function() {
+                return translateText.HomePageSegmentLabelPretenders;
+            },
+            '2': function() {
+                return translateText.HomePageSegmentLabelModerate;
+            },
+            '3': function() {
+                return translateText.HomePageSegmentLabelGoodLife;
+            },
+            '4': function() {
+                return translateText.HomePageSegmentLabelUltimate;
+            },
+            '5': function() {
+                return translateText.HomePageSegmentLabelPragmatic;
+            },
+            '6': function() {
+                return translateText.HomePageSegmentLabelAllSegments;
+            },
+            'priceSensitive': function() {
+                return translateText.HomePageSegmentLabelPriceSensitive;
+            },
+            'pretenders': function() {
+                return translateText.HomePageSegmentLabelPretenders;
+            },
+            'moderate': function() {
+                return translateText.HomePageSegmentLabelModerate;
+            },
+            'goodLife': function() {
+                return translateText.HomePageSegmentLabelGoodLife;
+            },
+            'ultimate': function() {
+                return translateText.HomePageSegmentLabelUltimate;
+            },
+            'pragmatic': function() {
+                return translateText.HomePageSegmentLabelPragmatic;
+            },
+            'allSegments': function() {
+                return translateText.HomePageSegmentLabelAllSegments;
+            }
+        };
+        if (typeof names[fieldname] !== 'function') {
+            return false;
+        }
+        return names[fieldname]();
+    }
+
+
+    function showTranslateTextSegmentName() {
+        return translateText.ReportPerceptionMapAxisLabelSegment ;
+    }
+
+
+    var chartResult = {
+        series: [],
+        data: []
+    };
+
+
+    var chartFormatToolLineChart = function(chartHttpData, decimalNumber){
+        // 使用angular-chart 插件的数据格式
+
+        chartResult.series = [];
+        chartResult.data = [];
+
+        if(angular.isUndefined(chartHttpData.periods)){
+            // 如果periods 没有定义则是普通的图表,不带有系列的图表 目前仅仅有C44 和 B34
+            angular.forEach(chartHttpData.chartData, function(value, key) {
+                if(angular.isUndefined(value.segmentName)){
+                    // 判断是否是Segment Leader Top5 的图表还是SKUName的图表
+
+                    if(chartResult.series.indexOf(value.SKUName.substring(0,1)) == -1 ){
+                        chartResult.series.push(value.SKUName.substring(0,1));
+                    }
+                }else{
+                    // C44 segment_value_share_total_market
+                    chartResult.series.push(showTranslateTextConsumerSegmentName(value.segmentName));
+                }
+            });
+
+            angular.forEach(chartHttpData.chartData, function(value, key) {
+                var oneBarData = {
+                    x : 0, //Round Name
+                    y : []
+                };
+
+                if(angular.isUndefined(value.segmentName) ){
+                    // 这里处理原本处理C1 但已不用, C1处理已放到 chartFormatTool2
+                    oneBarData.x = value.SKUName;
+
+                    var index = chartResult.series.indexOf(value.SKUName.substring(0,1));
+                    // 插入空数据占位, 用来显示不同颜色
+                    if( index !== -1){
+
+                        for (var i = 0; i <= index; i++) {
+                            if(i == index){
+                                if(decimalNumber === 0){
+                                    oneBarData.y.push(Math.round(value.valueSegmentShare * 100) / 100 );
+                                }else{
+                                    oneBarData.y.push(Math.round(value.valueSegmentShare * 10000) / Math.pow(10, Number(decimalNumber)) );
+                                }
+
+                            }else{
+                                oneBarData.y.push(0);
+                            }
+                        }
+                    }
+
+                }else{
+                    // 这里处理C44
+                    oneBarData.x = showTranslateTextConsumerSegmentName(value.segmentName);
+
+                    if(decimalNumber === 0){
+                        oneBarData.y.push(Math.round(value.value * 100) / 100 );
+                    }else{
+                        oneBarData.y.push( Math.round(value.value * 10000) / Math.pow(10, Number(decimalNumber)) );
+                    }
+                }
+
+                chartResult.data.push(oneBarData);
+            });
+            return angular.copy(chartResult);
+
+
+        }else if(angular.isArray(chartHttpData.periods) ){
+            // 如果periods 有定义 则是带有系列的图表 包括图表 B1 B3 和 C4
+            angular.forEach(chartHttpData.periods, function(value, key) {
+
+                var oneLineData = {
+//                    x : "period" + value.toString(), //Round Name
+                    x : value.toString(), //Round Name
+                    y : angular.copy(chartHttpData.chartData[key])
+                };
+
+                angular.forEach(oneLineData.y, function(value, key) {
+                    if(decimalNumber === 0){
+                        oneLineData.y[key] = Math.round(value * 100) / 100;
+                    }else{
+                        oneLineData.y[key] = Math.round(value * 10000 )/Math.pow(10, Number(decimalNumber));
+                    }
+                });
+
+                chartResult.data.push(oneLineData);
+            });
+
+            // 判断是 company的图表还是 消费者群体的图表
+            if(angular.isUndefined(chartHttpData.companyNames)){
+                angular.forEach(chartHttpData.segmentNames, function(value, key) {
+                    chartResult.series.push(showTranslateTextConsumerSegmentName(value));
+                });
+
+            }else{
+                angular.forEach(chartHttpData.companyNames, function(value, key) {
+                    chartResult.series.push(showTranslateTextCompanyName(value));
+                });
+            }
+
+            return angular.copy(chartResult);
+
+        }else{
+            console.log('chart Data format is wrong !');
+            return '';
+        }
+    };
+
+
+
+    var chartFormatToolC1BarChart = function(chartHttpData, decimalNumber){
+        // 使用angular-chart 插件的数据格式 Bar Chart  For Segment Leader Top Chart
+
+        chartResult.series = ['justoneseries'];
+        chartResult.data = [];
+
+
+        function showSkuColor(fieldname) {
+
+            var colorsRGB =  [
+                'rgb(0,76,229)',
+                'rgb(187,0,0)',
+                'rgb(255,188,1)',
+                'rgb(51,153,51)',
+                'rgb(153,0,153)',
+                'rgb(255,82,0)'
+            ];
+
+            var names = {
+                'A': function() {
+                    return colorsRGB[0];
+                },
+                'B': function() {
+                    return colorsRGB[1];
+                },
+                'C': function() {
+                    return colorsRGB[2];
+                },
+                'D': function() {
+                    return colorsRGB[3];
+                },
+                'E': function() {
+                    return colorsRGB[4];
+                },
+                'F': function() {
+                    return colorsRGB[5];
+                }
+
+            };
+            if (typeof names[fieldname] !== 'function') {
+                return false;
+            }
+            return names[fieldname]();
+        }
+
+        if(angular.isArray(chartHttpData)){
+
+            angular.forEach(chartHttpData, function(period, keyperiod) {
+                var periodData = {
+                    period : period.period,
+                    data : []
+                };
+
+                angular.forEach(period.chartData, function(value, key) {
+                    var oneBarData = {
+                        x : "", //SKU Name
+                        y : [],
+                        color : 'rgb(57,181,74)'
+                    };
+
+                    if(angular.isUndefined(value.segmentName) ){
+                        oneBarData.x = value.SKUName;
+
+                        if(decimalNumber === 0){
+                            oneBarData.y.push(Math.round(value.valueSegmentShare * 100) / 100 );
+                        }else{
+                            oneBarData.y.push(Math.round(value.valueSegmentShare * 10000) / Math.pow(10, Number(decimalNumber)) );
+                        }
+
+                        oneBarData.color = showSkuColor(value.SKUName.substring(0,1));
+                    }
+
+                    periodData.data.push(oneBarData);
+                });
+
+                chartResult.data.push(periodData);
+            });
+
+        }
+        return angular.copy(chartResult);
+
+    };
+
+
+
+    var chartFormatToolForTableData = function(chartHttpData){
+        // 使用angular-chart 插件的数据格式  FOR Report B2 Competitor Intelligence , C3 Segment Distributions , C5 Market Trends
+        chartResult.series = [];
+        chartResult.data = [];
+
+        if(angular.isUndefined(chartHttpData[0].data)){
+            // 这里处理C3  tableC3 Segment Distribution
+            angular.forEach(chartHttpData[0], function(value, key) {
+                if(key !== 'period' && key !=='$$hashKey'){
+                    chartResult.series.push(showTranslateTextConsumerSegmentName(key));
+                }
+            });
+
+            angular.forEach(chartHttpData, function(period, key) {
+
+                var oneBarData = {
+                    x : 0, //Round Name
+                    y : []
+                };
+
+                oneBarData.x = period.period;
+                angular.forEach(period, function(value, key) {
+                    if(key !== 'period' && key !== '$$hashKey') {
+                        oneBarData.y.push(Math.round(value * 10000 ) / 10000);
+                    }
+                });
+
+                chartResult.data.push(oneBarData);
+            });
+
+        }else{
+            // 这里处理B2  tableB2 Competitor Intelligence 或 C5 Market Trends
+            angular.forEach(chartHttpData[0].data, function(period, key) {
+
+                var oneBarData = {
+                    x : 0, //Round Name
+                    y : []
+                };
+
+                oneBarData.x = period.name;
+                chartResult.data.push(oneBarData);
+            });
+
+            angular.forEach(chartHttpData, function(value, key) {
+                if(!angular.isUndefined(value.SKUName)){
+                    chartResult.series.push(value.SKUName);
+                }
+                if(!angular.isUndefined(value.brandName)){
+                    chartResult.series.push(value.brandName);
+                }
+                if(!angular.isUndefined(value.companyName)){
+                    chartResult.series.push(showTranslateTextCompanyName(value.companyName));
+                }
+
+
+                angular.forEach(value.data, function(period, key) {
+                    chartResult.data[key].y.push(Math.round(period.value * 100 ) / 100);
+                });
+
+            });
+        }
+        return angular.copy(chartResult);
+    };
+
+
+
+    var chartFormatToolnvd3StackedMultiBarChart = function(chartHttpData) {
+        // 使用angular-nvd3 插件的数据格式 Stacked Multi Bar Chart
+
+        chartResult.series = [];
+        chartResult.data = [];
+
+        var companyList = [];
+
+        // 根据对象还是数组判断是给学生的对象数据还是admin的数组有多个公司的数据
+        if(angular.isUndefined(chartHttpData.companyId)){
+            companyList = chartHttpData;
+        }else{
+            companyList.push(chartHttpData);
+        }
+
+        angular.forEach(companyList, function(company, companykey) {
+            var companyData = {
+                companyName : company.companyName,
+                companyId : company.companyId,
+                data : [],
+                series : []
+            };
+
+            if(angular.isArray(company.SKUs) ){
+                angular.forEach(company.SKUs[0].inventoryData, function(value, key) {
+                    var oneSeries = {
+                        "key": showTranslateTextInventoryReport(value.inventoryName),
+                        "values": []
+                    };
+                    if(key !== 0){
+                        companyData.data.push(oneSeries);
+                        companyData.series.push(showTranslateTextInventoryReport(value.inventoryName));
+                    }
+                });
+
+                angular.forEach(company.SKUs, function(value, key) {
+//                    var oneLineData1 = []; // Close To EXpire Inventory
+//                    oneLineData1.push( value.SKUName );
+//                    oneLineData1.push( angular.copy(Math.round(value.inventoryData[0].inventoryValue * 100) / 100 ) );
+
+                    var oneLineData2 = []; // Previous Inventory
+                    oneLineData2.push( value.SKUName );
+                    oneLineData2.push( angular.copy(Math.round(value.inventoryData[1].inventoryValue * 100) / 100 ) );
+
+                    var oneLineData3 = []; // Fresh Inventory
+                    oneLineData3.push( value.SKUName );
+                    oneLineData3.push( angular.copy(Math.round(value.inventoryData[2].inventoryValue * 100) / 100 ) );
+
+//                    companyData.data[0].values.push(oneLineData1);
+                    companyData.data[0].values.push(oneLineData2);
+                    companyData.data[1].values.push(oneLineData3);
+
+                });
+            }
+            chartResult.data.push(angular.copy(companyData));
+
+        });
+
+        return angular.copy(chartResult.data);
+
+    };
+
+
+    var chartFormatToolnvd3ScatterChart = function(chartHttpData) {
+        // 使用angular-nvd3 插件的数据格式   only for C2 Perception Maps Scatter Chart 散点图
+//        chartResult.series = [];
+//        chartResult.data = [];
+
+        chartResult.series = [];
+        chartResult.data = [];
+
+        if(angular.isArray(chartHttpData.periods) ){
+            // 处理 exogenous
+            var oneSegment = {
+                "key" : showTranslateTextSegmentName(),
+                "values" : []
+            };
+
+            angular.forEach(chartHttpData.exogenous, function(value, key) {
+                var oneLineData = {
+                    'x' : Math.round(value.valuePerception * 100) / 100,
+                    'y' : Math.round(value.imagePerception * 100) / 100,
+                    'size' : 0.5,
+                    'name' : showTranslateTextConsumerSegmentName(value.segmentName),
+                    'tooltips' : [],
+                    'shape' : 'diamond'
+                };
+
+                oneSegment.values.push(oneLineData);
+            });
+
+            // 处理 periods 数据
+            angular.forEach(chartHttpData.periods, function(period, keyperiod) {
+                var perioddata = {
+                    period : period.period,
+                    dataSKU : [],
+                    dataBrand : []
+                };
+
+                angular.forEach(period.allCompanyData, function(value, key) {
+                    var oneCompanySku = {
+                        "key" : showTranslateTextCompanyName(value.companyName),
+                        "values" : []
+                    };
+
+                    var oneCompanyBrand = {
+                        "key" : showTranslateTextCompanyName(value.companyName),
+                        "values" : []
+                    };
+
+                    angular.forEach(value.SKUs, function(valueSku, keySku) {
+                        var oneLineSku1 = {
+                            'x' : Math.round(valueSku.valuePerception * 100 + Math.random() * 10 + Math.random()  ) / 100,
+                            'y' : Math.round(valueSku.imagePerception * 100 + Math.random() * 10 + Math.random()  ) / 100,
+                            'size' : 0.6,
+                            'SKUName' : valueSku.SKUName,
+                            'name' : valueSku.SKUName,
+                            'CompanyName' : value.companyName,
+                            'tooltips' : valueSku.tooltips,
+                            'shape' : 'circle'
+                        };
+
+                        oneCompanySku.values.push(oneLineSku1);
+                    });
+
+                    angular.forEach(value.brands, function(valueBrand, keyBrand) {
+                        var oneLineBrand1 = {
+                            'x' : Math.round(valueBrand.valuePerception * 100) / 100,
+                            'y' : Math.round(valueBrand.imagePerception * 100) / 100,
+                            'size' : 0.6,
+                            'BrandName' : valueBrand.brandName,
+                            'name' : valueBrand.brandName,
+                            'CompanyName' : value.companyName,
+                            'tooltips' : [],
+                            'shape' : 'circle'
+                        };
+
+                        oneCompanyBrand.values.push(oneLineBrand1);
+                    });
+
+                    perioddata.dataSKU.push(oneCompanySku);
+                    perioddata.dataBrand.push(oneCompanyBrand);
+                });
+
+                perioddata.dataSKU.push(oneSegment);
+                perioddata.dataBrand.push(oneSegment);
+
+                chartResult.data.push(perioddata);
+
+            });
+
+
+            return angular.copy(chartResult);
+        }
+    };
+
+
+
+
+
+    /********************  Report Model API  ********************/
 
     function chartReportModel ($http, $rootScope, $translate){
 
@@ -202,126 +760,6 @@
         // 6 - 'allSegments'
         // ],
 
-        var translateText = {
-            'ReportInventoryReportLabelCloseToExpireInventory' : '',
-            'ReportInventoryReportLabelPreviousInventory'      : '',
-            'ReportInventoryReportLabelFreshInventory'         : '',
-            'HomePageSecondMenuBarLabelsCompany'               : '',
-            'HomePageSegmentLabelPriceSensitive'               : '',
-            'HomePageSegmentLabelPretenders'                   : '',
-            'HomePageSegmentLabelModerate'                     : '',
-            'HomePageSegmentLabelGoodLife'                     : '',
-            'HomePageSegmentLabelUltimate'                     : '',
-            'HomePageSegmentLabelPragmatic'                    : '',
-            'HomePageSegmentLabelAllSegments'                  : ''
-        };
-
-        function showTranslateTextInventoryReport(fieldname) {
-            var names = {
-                '0': function() {
-                    return translateText.ReportInventoryReportLabelFreshInventory;
-                },
-                '1': function() {
-                    return translateText.ReportInventoryReportLabelPreviousInventory;
-                },
-                '2': function() {
-                    return translateText.ReportInventoryReportLabelCloseToExpireInventory;
-                }
-            };
-            if (typeof names[fieldname] !== 'function') {
-                return false;
-            }
-            return names[fieldname]();
-        }
-
-        function showTranslateTextCompanyName(fieldname) {
-            var names = {
-                'A': function() {
-                    return translateText.HomePageSecondMenuBarLabelsCompany + 'A';
-                },
-                'B': function() {
-                    return translateText.HomePageSecondMenuBarLabelsCompany + 'B';
-                },
-                'C': function() {
-                    return translateText.HomePageSecondMenuBarLabelsCompany + 'C';
-                },
-                'D': function() {
-                    return translateText.HomePageSecondMenuBarLabelsCompany + 'D';
-                },
-                'E': function() {
-                    return translateText.HomePageSecondMenuBarLabelsCompany + 'E';
-                },
-                'F': function() {
-                    return translateText.HomePageSecondMenuBarLabelsCompany + 'F';
-                }
-            };
-            if (typeof names[fieldname] !== 'function') {
-                return false;
-            }
-            return names[fieldname]();
-        }
-
-        function showTranslateTextConsumerSegmentName(fieldname) {
-            var names = {
-                '0': function() {
-                    return translateText.HomePageSegmentLabelPriceSensitive;
-                },
-                '1': function() {
-                    return translateText.HomePageSegmentLabelPretenders;
-                },
-                '2': function() {
-                    return translateText.HomePageSegmentLabelModerate;
-                },
-                '3': function() {
-                    return translateText.HomePageSegmentLabelGoodLife;
-                },
-                '4': function() {
-                    return translateText.HomePageSegmentLabelUltimate;
-                },
-                '5': function() {
-                    return translateText.HomePageSegmentLabelPragmatic;
-                },
-                '6': function() {
-                    return translateText.HomePageSegmentLabelAllSegments;
-                },
-                'priceSensitive': function() {
-                    return translateText.HomePageSegmentLabelPriceSensitive;
-                },
-                'pretenders': function() {
-                    return translateText.HomePageSegmentLabelPretenders;
-                },
-                'moderate': function() {
-                    return translateText.HomePageSegmentLabelModerate;
-                },
-                'goodLife': function() {
-                    return translateText.HomePageSegmentLabelGoodLife;
-                },
-                'ultimate': function() {
-                    return translateText.HomePageSegmentLabelUltimate;
-                },
-                'pragmatic': function() {
-                    return translateText.HomePageSegmentLabelPragmatic;
-                },
-                'allSegments': function() {
-                    return translateText.HomePageSegmentLabelAllSegments;
-                }
-            };
-            if (typeof names[fieldname] !== 'function') {
-                return false;
-            }
-            return names[fieldname]();
-        }
-
-
-        function showTranslateTextSegmentName() {
-            return translateText.ReportPerceptionMapAxisLabelSegment ;
-        }
-
-
-        var chartResult = {
-            series: [],
-            data: []
-        };
 
 
         var chartConfig1 = {
@@ -375,403 +813,10 @@
 
 
 
-        var chartFormatTool1 = function(chartHttpData, decimalNumber){
-            // 使用angular-chart 插件的数据格式
 
-            chartResult.series = [];
-            chartResult.data = [];
 
-            if(angular.isUndefined(chartHttpData.periods)){
-                // 如果periods 没有定义则是普通的图表,不带有系列的图表 目前仅仅有C44 和 B34
-                angular.forEach(chartHttpData.chartData, function(value, key) {
-                    if(angular.isUndefined(value.segmentName)){
-                        // 判断是否是Segment Leader Top5 的图表还是SKUName的图表
 
-                        if(chartResult.series.indexOf(value.SKUName.substring(0,1)) == -1 ){
-                            chartResult.series.push(value.SKUName.substring(0,1));
-                        }
-                    }else{
-                        // C44 segment_value_share_total_market
-                        chartResult.series.push(showTranslateTextConsumerSegmentName(value.segmentName));
-                    }
-                });
-
-                angular.forEach(chartHttpData.chartData, function(value, key) {
-                    var oneBarData = {
-                        x : 0, //Round Name
-                        y : []
-                    };
-
-                    if(angular.isUndefined(value.segmentName) ){
-                        // 这里处理原本处理C1 但已不用, C1处理已放到 chartFormatTool2
-                        oneBarData.x = value.SKUName;
-
-                        var index = chartResult.series.indexOf(value.SKUName.substring(0,1));
-                        // 插入空数据占位, 用来显示不同颜色
-                        if( index !== -1){
-
-                            for (var i = 0; i <= index; i++) {
-                                if(i == index){
-                                    if(decimalNumber === 0){
-                                        oneBarData.y.push(Math.round(value.valueSegmentShare * 100) / 100 );
-                                    }else{
-                                        oneBarData.y.push(Math.round(value.valueSegmentShare * 10000) / Math.pow(10, Number(decimalNumber)) );
-                                    }
-
-                                }else{
-                                    oneBarData.y.push(0);
-                                }
-                            }
-                        }
-
-                    }else{
-                        // 这里处理C44
-                        oneBarData.x = showTranslateTextConsumerSegmentName(value.segmentName);
-
-                        if(decimalNumber === 0){
-                            oneBarData.y.push(Math.round(value.value * 100) / 100 );
-                        }else{
-                            oneBarData.y.push( Math.round(value.value * 10000) / Math.pow(10, Number(decimalNumber)) );
-                        }
-                    }
-
-                    chartResult.data.push(oneBarData);
-                });
-                return angular.copy(chartResult);
-
-
-            }else if(angular.isArray(chartHttpData.periods) ){
-                // 如果periods 有定义 则是带有系列的图表 包括图表 B1 B3 和 C4
-                angular.forEach(chartHttpData.periods, function(value, key) {
-
-                    var oneLineData = {
-//                    x : "period" + value.toString(), //Round Name
-                        x : value.toString(), //Round Name
-                        y : angular.copy(chartHttpData.chartData[key])
-                    };
-
-                    angular.forEach(oneLineData.y, function(value, key) {
-                        if(decimalNumber === 0){
-                            oneLineData.y[key] = Math.round(value * 100) / 100;
-                        }else{
-                            oneLineData.y[key] = Math.round(value * 10000 )/Math.pow(10, Number(decimalNumber));
-                        }
-                    });
-
-                    chartResult.data.push(oneLineData);
-                });
-
-                // 判断是 company的图表还是 消费者群体的图表
-                if(angular.isUndefined(chartHttpData.companyNames)){
-                    angular.forEach(chartHttpData.segmentNames, function(value, key) {
-                        chartResult.series.push(showTranslateTextConsumerSegmentName(value));
-                    });
-
-                }else{
-                    angular.forEach(chartHttpData.companyNames, function(value, key) {
-                        chartResult.series.push(showTranslateTextCompanyName(value));
-                    });
-                }
-
-                return angular.copy(chartResult);
-
-            }else{
-                console.log('chart Data format is wrong !');
-                return '';
-            }
-        };
-
-
-        var chartFormatTool2 = function(chartHttpData, decimalNumber){
-            // 使用angular-chart 插件的数据格式 Bar Chart  For Segment Leader Top Chart
-
-            chartResult.series = ['justoneseries'];
-            chartResult.data = [];
-
-
-            function showSkuColor(fieldname) {
-
-                var colorsRGB =  [
-                    'rgb(0,76,229)',
-                    'rgb(187,0,0)',
-                    'rgb(255,188,1)',
-                    'rgb(51,153,51)',
-                    'rgb(153,0,153)',
-                    'rgb(255,82,0)'
-                ];
-
-                var names = {
-                    'A': function() {
-                        return colorsRGB[0];
-                    },
-                    'B': function() {
-                        return colorsRGB[1];
-                    },
-                    'C': function() {
-                        return colorsRGB[2];
-                    },
-                    'D': function() {
-                        return colorsRGB[3];
-                    },
-                    'E': function() {
-                        return colorsRGB[4];
-                    },
-                    'F': function() {
-                        return colorsRGB[5];
-                    }
-
-                };
-                if (typeof names[fieldname] !== 'function') {
-                    return false;
-                }
-                return names[fieldname]();
-            }
-
-            if(angular.isArray(chartHttpData)){
-
-                angular.forEach(chartHttpData, function(period, keyperiod) {
-                    var periodData = {
-                        period : period.period,
-                        data : []
-                    };
-
-                    angular.forEach(period.chartData, function(value, key) {
-                        var oneBarData = {
-                            x : "", //SKU Name
-                            y : [],
-                            color : 'rgb(57,181,74)'
-                        };
-
-                        if(angular.isUndefined(value.segmentName) ){
-                            oneBarData.x = value.SKUName;
-
-                            if(decimalNumber === 0){
-                                oneBarData.y.push(Math.round(value.valueSegmentShare * 100) / 100 );
-                            }else{
-                                oneBarData.y.push(Math.round(value.valueSegmentShare * 10000) / Math.pow(10, Number(decimalNumber)) );
-                            }
-
-                            oneBarData.color = showSkuColor(value.SKUName.substring(0,1));
-                        }
-
-                        periodData.data.push(oneBarData);
-                    });
-
-                    chartResult.data.push(periodData);
-                });
-
-            }
-            return angular.copy(chartResult);
-
-        };
-
-
-
-        var chartFormatTool3 = function(chartHttpData){
-            // 使用angular-chart 插件的数据格式  FOR Report B2 Competitor Intelligence , C3 Segment Distributions , C5 Market Trends
-            chartResult.series = [];
-            chartResult.data = [];
-
-            if(angular.isUndefined(chartHttpData[0].data)){
-                // 这里处理C3  tableC3 Segment Distribution
-                angular.forEach(chartHttpData[0], function(value, key) {
-                    if(key !== 'period' && key !=='$$hashKey'){
-                        chartResult.series.push(showTranslateTextConsumerSegmentName(key));
-                    }
-                });
-
-                angular.forEach(chartHttpData, function(period, key) {
-
-                    var oneBarData = {
-                        x : 0, //Round Name
-                        y : []
-                    };
-
-                    oneBarData.x = period.period;
-                    angular.forEach(period, function(value, key) {
-                        if(key !== 'period' && key !=='$$hashKey'){
-                            oneBarData.y.push(Math.round(value * 10000 ) / 10000);
-                        }
-                    });
-
-                    chartResult.data.push(oneBarData);
-                });
-
-            }else{
-                // 这里处理B2  tableB2 Competitor Intelligence 或 C5 Market Trends
-                angular.forEach(chartHttpData[0].data, function(period, key) {
-
-                    var oneBarData = {
-                        x : 0, //Round Name
-                        y : []
-                    };
-
-                    oneBarData.x = period.name;
-                    chartResult.data.push(oneBarData);
-                });
-
-                angular.forEach(chartHttpData, function(value, key) {
-                    if(!angular.isUndefined(value.SKUName)){
-                        chartResult.series.push(value.SKUName);
-                    }
-                    if(!angular.isUndefined(value.brandName)){
-                        chartResult.series.push(value.brandName);
-                    }
-                    if(!angular.isUndefined(value.companyName)){
-                        chartResult.series.push(showTranslateTextCompanyName(value.companyName));
-                    }
-
-
-                    angular.forEach(value.data, function(period, key) {
-                        chartResult.data[key].y.push(Math.round(period.value * 100 ) / 100);
-                    });
-
-                });
-            }
-            return angular.copy(chartResult);
-        };
-
-
-
-        var chartFormatTool4 = function(chartHttpData) {
-            // 使用angular-nvd3 插件的数据格式 Stacked Multi Bar Chart
-
-            chartResult.series = [];
-            chartResult.data = [];
-
-            if(angular.isArray(chartHttpData.SKUs) ){
-                angular.forEach(chartHttpData.SKUs[0].inventoryData, function(value, key) {
-                    var oneSeries = {
-                        "key": showTranslateTextInventoryReport(value.inventoryName),
-                        "values": []
-                    };
-                    if(key !== 0){
-                        chartResult.data.push(oneSeries);
-                        chartResult.series.push(showTranslateTextInventoryReport(value.inventoryName));
-                    }
-
-                });
-
-                angular.forEach(chartHttpData.SKUs, function(value, key) {
-//                    var oneLineData1 = []; // Close To EXpire Inventory
-//                    oneLineData1.push( value.SKUName );
-//                    oneLineData1.push( angular.copy(Math.round(value.inventoryData[0].inventoryValue * 100) / 100 ) );
-
-                    var oneLineData2 = []; // Previous Inventory
-                    oneLineData2.push( value.SKUName );
-                    oneLineData2.push( angular.copy(Math.round(value.inventoryData[1].inventoryValue * 100) / 100 ) );
-
-                    var oneLineData3 = []; // Fresh Inventory
-                    oneLineData3.push( value.SKUName );
-                    oneLineData3.push( angular.copy(Math.round(value.inventoryData[2].inventoryValue * 100) / 100 ) );
-
-//                    chartResult.data[0].values.push(oneLineData1);
-                    chartResult.data[0].values.push(oneLineData2);
-                    chartResult.data[1].values.push(oneLineData3);
-
-                });
-                return angular.copy(chartResult.data);
-            }
-
-        };
-
-
-        var chartFormatTool5 = function(chartHttpData) {
-            // 使用angular-nvd3 插件的数据格式   only for C2 Perception Maps Scatter Chart 散点图
-//        chartResult.series = [];
-//        chartResult.data = [];
-
-            chartResult.series = [];
-            chartResult.data = [];
-
-            if(angular.isArray(chartHttpData.periods) ){
-                // 处理 exogenous
-                var oneSegment = {
-                    "key" : showTranslateTextSegmentName(),
-                    "values" : []
-                };
-
-                angular.forEach(chartHttpData.exogenous, function(value, key) {
-                    var oneLineData = {
-                        'x' : Math.round(value.valuePerception * 100) / 100,
-                        'y' : Math.round(value.imagePerception * 100) / 100,
-                        'size' : 0.5,
-                        'name' : showTranslateTextConsumerSegmentName(value.segmentName),
-                        'tooltips' : [],
-                        'shape' : 'diamond'
-                    };
-
-                    oneSegment.values.push(oneLineData);
-                });
-
-                // 处理 periods 数据
-                angular.forEach(chartHttpData.periods, function(period, keyperiod) {
-                    var perioddata = {
-                        period : period.period,
-                        dataSKU : [],
-                        dataBrand : []
-                    };
-
-                    angular.forEach(period.allCompanyData, function(value, key) {
-                        var oneCompanySku = {
-                            "key" : showTranslateTextCompanyName(value.companyName),
-                            "values" : []
-                        };
-
-                        var oneCompanyBrand = {
-                            "key" : showTranslateTextCompanyName(value.companyName),
-                            "values" : []
-                        };
-
-                        angular.forEach(value.SKUs, function(valueSku, keySku) {
-                            var oneLineSku1 = {
-                                'x' : Math.round(valueSku.valuePerception * 100 + Math.random() * 10 + Math.random()  ) / 100,
-                                'y' : Math.round(valueSku.imagePerception * 100 + Math.random() * 10 + Math.random()  ) / 100,
-                                'size' : 0.6,
-                                'SKUName' : valueSku.SKUName,
-                                'name' : valueSku.SKUName,
-                                'CompanyName' : value.companyName,
-                                'tooltips' : valueSku.tooltips,
-                                'shape' : 'circle'
-                            };
-
-                            oneCompanySku.values.push(oneLineSku1);
-                        });
-
-                        angular.forEach(value.brands, function(valueBrand, keyBrand) {
-                            var oneLineBrand1 = {
-                                'x' : Math.round(valueBrand.valuePerception * 100) / 100,
-                                'y' : Math.round(valueBrand.imagePerception * 100) / 100,
-                                'size' : 0.6,
-                                'BrandName' : valueBrand.brandName,
-                                'name' : valueBrand.brandName,
-                                'CompanyName' : value.companyName,
-                                'tooltips' : [],
-                                'shape' : 'circle'
-                            };
-
-                            oneCompanyBrand.values.push(oneLineBrand1);
-                        });
-
-                        perioddata.dataSKU.push(oneCompanySku);
-                        perioddata.dataBrand.push(oneCompanyBrand);
-                    });
-
-                    perioddata.dataSKU.push(oneSegment);
-                    perioddata.dataBrand.push(oneSegment);
-
-                    chartResult.data.push(perioddata);
-
-                });
-
-
-                return angular.copy(chartResult);
-            }
-        };
-
-
-        var factory = {
-
+        var factory = {         
             getChartConfig1 : function(){
                 return angular.copy(chartConfig1);
             },
@@ -784,7 +829,7 @@
             // Chart For Report B2, C3, C5
             formatChartData : function(data){
 
-                return chartFormatTool3(data);
+                return chartFormatToolForTableData(data);
             },
             initTranslate: function () {
                 return $translate(['ReportInventoryReportLabelCloseToExpireInventory',
@@ -846,7 +891,7 @@
                     return  $http.get(apiPath + 'chart/inventory_report');
                 }).then(function(result){
 //                console.log(result.data);
-                    return chartFormatTool4(result.data);
+                    return chartFormatToolnvd3StackedMultiBarChart(result.data);
                 })["catch"](errorHandler);
             },
 
@@ -854,28 +899,28 @@
             marketShareInValue : function(){
                 return $http.get(apiPath + 'chart/market_share_in_value').then(function(result){
 //                console.log(result.data);
-                    return chartFormatTool1(result.data, 2);
+                    return chartFormatToolLineChart(result.data, 2);
                 })["catch"](errorHandler);
             },
 
             marketShareInVolume : function(){
                 return $http.get(apiPath + 'chart/market_share_in_volume').then(function(result){
 //                console.log(result.data);
-                    return chartFormatTool1(result.data, 2);
+                    return chartFormatToolLineChart(result.data, 2);
                 })["catch"](errorHandler);
             },
 
             mindSpaceShare : function(){
                 return $http.get(apiPath + 'chart/mind_space_share').then(function(result){
 //                console.log(result.data);
-                    return chartFormatTool1(result.data, 2);
+                    return chartFormatToolLineChart(result.data, 2);
                 })["catch"](errorHandler);
             },
 
             shelfSpaceShare : function(){
                 return $http.get(apiPath + 'chart/shelf_space_share').then(function(result){
 //                console.log(result.data);
-                    return chartFormatTool1(result.data, 2);
+                    return chartFormatToolLineChart(result.data, 2);
                 })["catch"](errorHandler);
             },
 
@@ -884,28 +929,28 @@
             totalInvestment : function(){
                 return $http.get(apiPath + 'chart/total_investment').then(function(result){
 //                console.log(result.data);
-                    return chartFormatTool1(result.data, 0);
+                    return chartFormatToolLineChart(result.data, 0);
                 })["catch"](errorHandler);
             },
 
             netProfitByCompanies : function(){
                 return $http.get(apiPath + 'chart/net_profit_by_companies').then(function(result){
 //                console.log(result.data);
-                    return chartFormatTool1(result.data, 0);
+                    return chartFormatToolLineChart(result.data, 0);
                 })["catch"](errorHandler);
             },
 
             returnOnInvestment : function(){
                 return $http.get(apiPath + 'chart/return_on_investment').then(function(result){
 //                console.log(result.data);
-                    return chartFormatTool1(result.data, 0);
+                    return chartFormatToolLineChart(result.data, 0);
                 })["catch"](errorHandler);
             },
 
             investmentsVersusBudget : function(){
                 return $http.get(apiPath + 'chart/investments_versus_budget').then(function(result){
 //                console.log(result.data);
-                    return chartFormatTool1(result.data, 0);
+                    return chartFormatToolLineChart(result.data, 0);
                 })["catch"](errorHandler);
             },
 
@@ -914,28 +959,28 @@
             marketSalesValue : function(){
                 return $http.get(apiPath + 'chart/market_sales_value').then(function(result){
 //                console.log(result.data);
-                    return chartFormatTool1(result.data, 0);
+                    return chartFormatToolLineChart(result.data, 0);
                 })["catch"](errorHandler);
             },
 
             marketSalesVolume : function(){
                 return $http.get(apiPath + 'chart/market_sales_volume').then(function(result){
 //                console.log(result.data);
-                    return chartFormatTool1(result.data, 0);
+                    return chartFormatToolLineChart(result.data, 0);
                 })["catch"](errorHandler);
             },
 
             totalInventoryAtFactory : function(){
                 return $http.get(apiPath + 'chart/total_inventory_at_factory').then(function(result){
 //                console.log(result.data);
-                    return chartFormatTool1(result.data, 0);
+                    return chartFormatToolLineChart(result.data, 0);
                 })["catch"](errorHandler);
             },
 
             totalInventoryAtTrade : function(){
                 return $http.get(apiPath + 'chart/total_inventory_at_trade').then(function(result){
 //                console.log(result.data);
-                    return chartFormatTool1(result.data, 0);
+                    return chartFormatToolLineChart(result.data, 0);
                 })["catch"](errorHandler);
             },
 
@@ -943,43 +988,43 @@
             // Chart C1
             segmentsLeadersByValuePriceSensitive : function(){
                 return $http.get(apiPath + 'chart/segments_leaders_by_value_price_sensitive').then(function(result){
-//                console.log(result.data);
-                    return chartFormatTool2(result.data, 2);
+                //console.log(result.data);
+                    return chartFormatToolC1BarChart(result.data, 2);
                 })["catch"](errorHandler);
             },
 
             segmentsLeadersByValuePretenders : function(){
                 return $http.get(apiPath + 'chart/segments_leaders_by_value_pretenders').then(function(result){
 //                console.log(result.data);
-                    return chartFormatTool2(result.data, 2);
+                    return chartFormatToolC1BarChart(result.data, 2);
                 })["catch"](errorHandler);
             },
 
             segmentsLeadersByValueModerate : function(){
                 return $http.get(apiPath + 'chart/segments_leaders_by_value_moderate').then(function(result){
 //                console.log(result.data);
-                    return chartFormatTool2(result.data, 2);
+                    return chartFormatToolC1BarChart(result.data, 2);
                 })["catch"](errorHandler);
             },
 
             segmentsLeadersByValueGoodLife : function(){
                 return $http.get(apiPath + 'chart/segments_leaders_by_value_good_life').then(function(result){
 //                console.log(result.data);
-                    return chartFormatTool2(result.data, 2);
+                    return chartFormatToolC1BarChart(result.data, 2);
                 })["catch"](errorHandler);
             },
 
             segmentsLeadersByValueUltimate : function(){
                 return $http.get(apiPath + 'chart/segments_leaders_by_value_ultimate').then(function(result){
 //                console.log(result.data);
-                    return chartFormatTool2(result.data, 2);
+                    return chartFormatToolC1BarChart(result.data, 2);
                 })["catch"](errorHandler);
             },
 
             segmentsLeadersByValuePragmatic : function(){
                 return $http.get(apiPath + 'chart/segments_leaders_by_value_pragmatic').then(function(result){
 //                console.log(result.data);
-                    return chartFormatTool2(result.data, 2);
+                    return chartFormatToolC1BarChart(result.data, 2);
                 })["catch"](errorHandler);
             },
 
@@ -987,7 +1032,7 @@
             // Chart C2
             perceptionMap : function(){
                 return $http.get(apiPath + 'chart/perception_map').then(function(result){
-                    return chartFormatTool5(result.data);
+                    return chartFormatToolnvd3ScatterChart(result.data);
                 })["catch"](errorHandler);
             },
 
@@ -996,28 +1041,28 @@
             growthRateInVolume : function(){
                 return $http.get(apiPath + 'chart/growth_rate_in_volume').then(function(result){
 //                console.log(result.data);
-                    return chartFormatTool1(result.data, 0);
+                    return chartFormatToolLineChart(result.data, 0);
                 })["catch"](errorHandler);
             },
 
             growthRateInValue : function(){
                 return $http.get(apiPath + 'chart/growth_rate_in_value').then(function(result){
 //                console.log(result.data);
-                    return chartFormatTool1(result.data, 0);
+                    return chartFormatToolLineChart(result.data, 0);
                 })["catch"](errorHandler);
             },
 
             netMarketPrice : function(){
                 return $http.get(apiPath + 'chart/net_market_price').then(function(result){
 //                console.log(result.data);
-                    return chartFormatTool1(result.data, 0);
+                    return chartFormatToolLineChart(result.data, 0);
                 })["catch"](errorHandler);
             },
 
             segmentValueShareTotalMarket : function(){
                 return $http.get(apiPath + 'chart/segment_value_share_total_market').then(function(result){
 //                console.log(result.data);
-                    return chartFormatTool1(result.data, 2);
+                    return chartFormatToolLineChart(result.data, 2);
                 })["catch"](errorHandler);
             }
         };
@@ -1035,7 +1080,6 @@
         };
 
         var factory = {
-
 
             // Table Report A1
             companyStatus : function(){
@@ -1131,6 +1175,8 @@
     }
 
 
+
+
     /********************  管理员界面数据  ********************/
     function adminModel($http){
 
@@ -1167,11 +1213,12 @@
 
     /********************  管理员报表-表格  ********************/
     function adminTableModel($http) {
+
         function getAdminRequest(url) {
             return $http.get(apiAdminPath + url).then(function (result) {
-                return result.data;
+                return result.data;    
             })["catch"](errorHandler);
-        }
+        }       
         return {
             //Table A1 Company Status
             getCompany: function () {
@@ -1185,10 +1232,6 @@
             getProfitability: function () {
                 return getAdminRequest("report/profitability_evolution");              
             },
-            //Table C6 Market Indicators
-            getMarketIndicators: function () {
-                return getAdminRequest("report/market_indicators");              
-            },
             //Table B2 Competitor Intelligence
             getCompetitorIntelligence: function () {
                 return getAdminRequest("report/competitor_intelligence");               
@@ -1197,12 +1240,178 @@
             getSegmentDistribution: function () {
                 return getAdminRequest("report/segment_distribution");               
             },
+            //Table C5 Market Trends
             getMarketTrends: function () {
                 return getAdminRequest("report/market_trends");
+            },
+            //Table C6 Market Indicators
+            getMarketIndicators: function () {
+                return getAdminRequest("report/market_indicators");
             }
         };
     }
 
+
+    /********************  管理员报表-图表  ********************/
+    function adminChartModel($http) {  
+    
+        return {
+            // Chart A3 Inventory Report
+            getInventoryReport : function(){
+                return $http.get(apiAdminPath + 'chart/inventory_report').then(function(result){
+                    return chartFormatToolnvd3StackedMultiBarChart(result.data);
+                })["catch"](errorHandler);
+            },
+
+            //Table B1 Market Share In Value
+            getMarketShareInValue: function () {
+                return $http.get(apiAdminPath + "chart/market_share_in_value").then(function (result) {
+                    return chartFormatToolLineChart(result.data, 2);
+                });                
+            },
+            //Table B1 Market Share In Volume
+            getMarketShareInVolume: function () {
+                return $http.get(apiAdminPath + "chart/market_share_in_volume").then(function (result) {
+                    return chartFormatToolLineChart(result.data, 2);
+                });               
+            },
+            //Table B1 Mind SpaceShare
+            getMindSpaceShare: function () {
+                return $http.get(apiAdminPath + "chart/mind_space_share").then(function (result) {
+                    return chartFormatToolLineChart(result.data, 2);
+                });               
+            },
+            //Table B1 Shelf SpaceShare
+            getShelfSpaceShare: function () {
+                return $http.get(apiAdminPath + "chart/shelf_space_share").then(function (result) {
+                    return chartFormatToolLineChart(result.data, 2);
+                });                
+            },
+
+
+            //Table B3-1 Total Investment
+            getTotalInvestment: function () {
+                return $http.get(apiAdminPath + "chart/total_investment").then(function (result) {
+                    return chartFormatToolLineChart(result.data, 0);
+                });               
+            },
+            //Table B3-2 Net Profit By Companies
+            getNetProfitByCompanies: function () {
+                return $http.get(apiAdminPath + "chart/net_profit_by_companies").then(function (result) {
+                    return chartFormatToolLineChart(result.data, 0);
+                });                
+            },
+            //Table B3-3 Return On Investment
+            getReturnOnInvestment: function () {
+                return $http.get(apiAdminPath + "chart/return_on_investment").then(function (result) {
+                    return chartFormatToolLineChart(result.data, 0);
+                });              
+            },
+            //Table B3-4 Investments Versus Budget
+            getInvestmentsVersusBudget: function () {
+                return $http.get(apiAdminPath + "chart/investments_versus_budget").then(function (result) {
+                    return chartFormatToolLineChart(result.data, 0);
+                });               
+            },
+
+
+            //Table B4-1 Market Salues Value
+            getMarketSalesValue: function () {
+                return $http.get(apiAdminPath + "chart/investments_versus_budget").then(function (result) {
+                    return chartFormatToolLineChart(result.data, 0);
+                });
+            },
+            //Table B4-2 Market Salues Volume
+            getMarketSalesVolume: function () {
+                return $http.get(apiAdminPath + "chart/investments_versus_budget").then(function (result) {
+                    return chartFormatToolLineChart(result.data, 0);
+                });
+            },
+            //Table B4-3 Total Inventory At Facotry
+            getTotalInventoryAtFactory: function () {
+                return $http.get(apiAdminPath + "chart/investments_versus_budget").then(function (result) {
+                    return chartFormatToolLineChart(result.data, 0);
+                });
+            },
+            //Table B4-4 Total Inventory At Trade
+            getTotalInventoryAtTrade: function () {
+                return $http.get(apiAdminPath + "chart/investments_versus_budget").then(function (result) {
+                    return chartFormatToolLineChart(result.data, 0);
+                });
+            },
+
+
+            //Table C1-1 Segments Leader By Value Price Sensitive
+            getSegmentsLeadersByValuePriceSensitive: function () {
+                return $http.get(apiAdminPath + 'chart/segments_leaders_by_value_price_sensitive').then(function (result) {                    
+                    return chartFormatToolC1BarChart(result.data, 2);
+                })["catch"](errorHandler);
+            },
+            //Table C1-2 Segments Leaders By Value Pretenders
+            getSegmentsLeadersByValuePretenders: function () {
+                return $http.get(apiAdminPath + 'chart/segments_leaders_by_value_pretenders').then(function (result) {
+                    return chartFormatToolC1BarChart(result.data, 2);
+                })["catch"](errorHandler);
+            },
+            //Table C1-3 Segments Leaders By Value Moderate
+            getSegmentsLeadersByValueModerate: function () {
+                return $http.get(apiAdminPath + 'chart/segments_leaders_by_value_moderate').then(function (result) {
+                    return chartFormatToolC1BarChart(result.data, 2);
+                })["catch"](errorHandler);
+            },
+            //Table C1-4 Segments Leaders By Value Good Life
+            getSegmentsLeadersByValueGoodLife: function () {
+                return $http.get(apiAdminPath + 'chart/segments_leaders_by_value_good_life').then(function (result) {
+                    return chartFormatToolC1BarChart(result.data, 2);
+                })["catch"](errorHandler);
+            },
+            //Table C1-5 Segments Leaders By Value Ultimate
+            getSegmentsLeadersByValueUltimate: function () {
+                return $http.get(apiAdminPath + 'chart/segments_leaders_by_value_ultimate').then(function (result) {
+                    return chartFormatToolC1BarChart(result.data, 2);
+                })["catch"](errorHandler);
+            },
+            //Table C1-6 Segments Leaders By Value Pragmatic
+            getSegmentsLeadersByValuePragmatic: function () {
+                return $http.get(apiAdminPath + 'chart/segments_leaders_by_value_pragmatic').then(function (result) {
+                    return chartFormatToolC1BarChart(result.data, 2);
+                })["catch"](errorHandler);
+            },
+
+
+            //Table C2 Preception Map
+            getPerceptionMap: function() {
+                return $http.get(apiAdminPath + 'chart/perception_map').then(function(result) {
+                    return chartFormatToolnvd3ScatterChart(result.data);
+                })["catch"](errorHandler);
+            },
+            //Table C4-1 Growth Rate In Volume
+            getGrowthRateInVolume: function () {
+                return $http.get(apiAdminPath + 'chart/growth_rate_in_volume').then(function (result) {
+                    return chartFormatToolLineChart(result.data, 0);
+                })["catch"](errorHandler);
+            },
+            //Table C4-2 Growth rate In Value
+            getGrowthRateInValue: function () {
+                return $http.get(apiAdminPath + 'chart/growth_rate_in_value').then(function (result) {
+                    return chartFormatToolLineChart(result.data, 0);
+                })["catch"](errorHandler);
+            },
+            //Table C4-3 Net market Price
+            getNetMarketPrice: function () {
+                return $http.get(apiAdminPath + 'chart/net_market_price').then(function (result) {
+                    return chartFormatToolLineChart(result.data, 0);
+                })["catch"](errorHandler);
+            },
+            //Table C4-4 Segment Value Share Total Market
+            getSegmentValueShareTotalMarket: function () {
+                return $http.get(apiAdminPath + 'chart/segment_value_share_total_market').then(function (result) {
+                    return chartFormatToolLineChart(result.data, 2);
+                })["catch"](errorHandler);
+            }
+
+        };
+    }
 
 
     /*JSONKit pretty isVisible mdParse sanitize for markdown*/

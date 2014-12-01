@@ -11,7 +11,7 @@
 
 
 
-    <user-header showmenu="true" showlogout="true"  current-menu="css.menu" current-round="data.currentStudent.currentPeriod" is-feedback-shown='css.isFeedbackShown'></user-header>
+    <user-header showmenu="true" showlogout="true"  current-menu="css.menu" current-round="data.currentStudent.currentPeriod" seminar-finished="css.seminarFinished"></user-header>
 
 
 
@@ -79,7 +79,7 @@
             </div>
             <div class="row">
                 <span class="user_makedecision">{{'HomePageSecondMenuBarLabelsMission' | translate}}</span>
-                <button type="button" class="btn user_decisionbutton" ng-click="switchHeaderMenu('Decision')">{{'HomePageSecondMenuBarLabelsMakeDecision' | translate}}</button>
+                <button type="button" class="btn user_decisionbutton" ng-hide="css.seminarFinished" ng-click="switchHeaderMenu('Decision')">{{'HomePageSecondMenuBarLabelsMakeDecision' | translate}}</button>
             </div>
         </div>
 
@@ -225,10 +225,9 @@
             <div class="row">
                 <div class="col-md-12 ">
                     <span class="user_chart_make_decision">{{'HomePageSecondMenuBarLabelsMission' | translate}}</span>
-                    <button type="button" class="btn user_chart_decision_button" ng-click="switchHeaderMenu('Decision')">{{'HomePageSecondMenuBarLabelsMakeDecision' | translate}}</button>
+                    <button type="button" class="btn user_chart_decision_button" ng-hide="css.seminarFinished" ng-click="switchHeaderMenu('Decision')">{{'HomePageSecondMenuBarLabelsMakeDecision' | translate}}</button>
                 </div>
             </div>
-
         </div>
 
     </div>
@@ -1223,7 +1222,7 @@
                         <!--<span class="glyphicon glyphicon-resize-full chart_icon"></span>-->
                         <!--<span class="glyphicon glyphicon-save chart_icon"></span>-->
                     </h5>
-                    <nvd3-multi-bar-chart data="data.chartA31InventoryReport.data" tooltipcontent="A31ToolTipContent()" color="A31ColorFunction()" legendcolor="A31ColorFunction()"
+                    <nvd3-multi-bar-chart data="data.chartA3InventoryReport.data" tooltipcontent="A3ToolTipContent()" color="A3ColorFunction()" legendcolor="A3ColorFunction()"
                          height="600" xaxislabel="{{'ReportInventoryReportTableLabelX' | translate}}" yaxislabel="{{'ReportInventoryReportTableLabelY' | translate}}" margin="{left:100}"
                          showXAxis="true" showYAxis="true" stacked="true" showLegend="true" reduceXTicks="false" tooltips="true" interactive="true">
                         <svg class="IE11_chart_A3"></svg>
@@ -1566,7 +1565,7 @@
 
                     </h5>
                     <nvd3-scatter-chart data="data.chartC21PerceptionMap.dataChart"
-                        xaxislabel="{{'ReportPerceptionMapAxisTitleValuePerception' | translate}}" yaxislabel="{{'ReportPerceptionMapAxisTitleImagePerception' | translate}}" color="C21ColorFunction()" legendcolor="C21ColorFunction()" shape="C31shapeFunction()" tooltipContent="C31TooltipContent()"
+                        xaxislabel="{{'ReportPerceptionMapAxisTitleValuePerception' | translate}}" yaxislabel="{{'ReportPerceptionMapAxisTitleImagePerception' | translate}}" color="C2ColorFunction()" legendcolor="C2ColorFunction()" shape="C2shapeFunction()" tooltipContent="C2TooltipContent()"
                         height="600" margin="{left:100}" legendWidth="400" showXAxis="true" showYAxis="true"  showLegend="true"  tooltips="true" interactive="true" fisheye="1000" transitionDuration="500">
                         <svg class="IE11_chart_A3"></svg>
                     </nvd3-scatter-chart>
@@ -2005,6 +2004,7 @@
                                                 <td class="tdgroup">{{'DecisionPageDecisionTabProcessingTechnology' | translate}}</td>
                                                 <td ng-repeat="sku in data.currentBrand.d_SKUsDecisions" >
                                                     <div class="alert alert-danger alert-tooltip" role="alert" ng-show="css.skuErrorField=='d_Technology' && sku.d_SKUID==data.currentSku.d_SKUID">Must be in range {{css.skuErrorInfo.lower}} to {{css.skuErrorInfo.upper.toFixed(0)}} !</div>
+                                                    <div class="alert alert-danger alert-tooltip" role="alert" ng-show="css.skuErrorFieldFrontEnd=='d_Technology' && sku.d_SKUID==data.currentSku.d_SKUID">{{'DecisionPageDecisionTabProcessingTechnologyFrontendValidation' | translate}}</div>
                                                     <input type="text" class="form-control input-sm " ng-class="{'form-control-error':css.skuErrorField=='d_Technology' && sku.d_SKUID==data.currentSku.d_SKUID}" ng-model="sku.d_Technology" ng-blur="leaveSkuInput(sku, 'd_Technology', sku.d_Technology)"  ng-focus="clickCurrentSku(sku)">
                                                 </td>
                                             </tr>
@@ -2012,6 +2012,7 @@
                                                 <td>{{'DecisionPageDecisionTabIngredientsQuality' | translate}}</td>
                                                 <td ng-repeat="sku in data.currentBrand.d_SKUsDecisions">
                                                     <div class="alert alert-danger alert-tooltip" role="alert" ng-show="css.skuErrorField=='d_IngredientsQuality' && sku.d_SKUID==data.currentSku.d_SKUID">Must be in range {{css.skuErrorInfo.lower}} to {{css.skuErrorInfo.upper.toFixed(0)}} !</div>
+                                                    <div class="alert alert-danger alert-tooltip" role="alert" ng-show="css.skuErrorFieldFrontEnd=='d_IngredientsQuality' && sku.d_SKUID==data.currentSku.d_SKUID">{{'DecisionPageDecisionTabIngredientsQualityFrontendValidation' | translate}}</div>
                                                     <input type="text" class="form-control input-sm" ng-class="{'form-control-error':css.skuError=='d_IngredientsQuality' && sku.d_SKUID==data.currentSku.d_SKUID}" ng-model="sku.d_IngredientsQuality" ng-blur="leaveSkuInput(sku, 'd_IngredientsQuality', sku.d_IngredientsQuality)"  ng-focus="clickCurrentSku(sku)">
                                                 </td>
                                             </tr>
@@ -2038,6 +2039,7 @@
                                                 <td class="tdgroup">{{'DecisionPageDecisionTabProductionVolume' | translate}}</td>
                                                 <td ng-repeat="sku in data.currentBrand.d_SKUsDecisions">
                                                     <div class="alert alert-danger alert-tooltip" role="alert" ng-show="css.skuErrorField=='d_ProductionVolume' && sku.d_SKUID==data.currentSku.d_SKUID">Must be in range {{css.skuErrorInfo.lower}} to {{css.skuErrorInfo.upper.toFixed(0)}} !</div>
+                                                    <div class="alert alert-danger alert-tooltip" role="alert" ng-show="css.skuErrorFieldFrontEnd=='d_ProductionVolume' && sku.d_SKUID==data.currentSku.d_SKUID">{{'DecisionPageDecisionTabProductionVolumeFrontendValidation' | translate}}</div>
                                                     <input type="text" class="form-control input-sm" ng-class="{'form-control-error':css.skuError=='d_ProductionVolume' && sku.d_SKUID==data.currentSku.d_SKUID}" ng-model="sku.d_ProductionVolume" ng-blur="leaveSkuInput(sku, 'd_ProductionVolume', sku.d_ProductionVolume)"  ng-focus="clickCurrentSku(sku)">
                                                 </td>
                                             </tr>
@@ -2045,6 +2047,7 @@
                                                 <td>{{'DecisionPageDecisionTabManufacturerPrice' | translate}}</td>
                                                 <td ng-repeat="sku in data.currentBrand.d_SKUsDecisions">
                                                     <div class="alert alert-danger alert-tooltip" role="alert" ng-show="css.skuErrorField=='d_FactoryPrice' && sku.d_SKUID==data.currentSku.d_SKUID">Must be in range {{css.skuErrorInfo.lower}} to {{css.skuErrorInfo.upper.toFixed(0)}} !</div>
+                                                    <div class="alert alert-danger alert-tooltip" role="alert" ng-show="css.skuErrorFieldFrontEnd=='d_FactoryPrice' && sku.d_SKUID==data.currentSku.d_SKUID">{{'DecisionPageDecisionTabManufacturerPriceFrontendValidation' | translate}}</div>
                                                     <input type="text" class="form-control input-sm" ng-class="{'form-control-error':css.skuError=='d_FactoryPrice' && sku.d_SKUID==data.currentSku.d_SKUID}" filternumber ng-model="sku.d_FactoryPrice[0]" ng-blur="leaveSkuInput(sku, 'd_FactoryPrice', sku.d_FactoryPrice[0] )"  ng-focus="clickCurrentSku(sku)">
                                                 </td>
                                             </tr>
@@ -2058,6 +2061,7 @@
                                                 <td class="tdgroup">{{'DecisionPageDecisionTabConsumerCommunication' | translate}}</td>
                                                 <td ng-repeat="sku in data.currentBrand.d_SKUsDecisions">
                                                     <div class="alert alert-danger alert-tooltip" role="alert" ng-show="css.skuErrorField=='d_Advertising' && sku.d_SKUID==data.currentSku.d_SKUID">Must be in range {{css.skuErrorInfo.lower}} to {{css.skuErrorInfo.upper.toFixed(0)}} !</div>
+                                                    <div class="alert alert-danger alert-tooltip" role="alert" ng-show="css.skuErrorFieldFrontEnd=='d_Advertising' && sku.d_SKUID==data.currentSku.d_SKUID">{{'DecisionPageDecisionTabConsumerCommunicationFrontendValidation' | translate}}</div>
                                                     <input type="text" class="form-control input-sm" ng-class="{'form-control-error':css.skuError=='d_Advertising' && sku.d_SKUID==data.currentSku.d_SKUID}" ng-model="sku.d_Advertising" ng-blur="leaveSkuInput(sku, 'd_Advertising', sku.d_Advertising)"  ng-focus="clickCurrentSku(sku)">
                                                 </td>
                                             </tr>
@@ -2085,6 +2089,7 @@
                                                 <td class="tdgroup">{{'DecisionPageDecisionTabConsumerPromotions' | translate}}</td>
                                                 <td ng-repeat="sku in data.currentBrand.d_SKUsDecisions">
                                                     <div class="alert alert-danger alert-tooltip" role="alert" ng-show="css.skuErrorField=='d_PromotionalBudget' && sku.d_SKUID==data.currentSku.d_SKUID">Must be in range {{css.skuErrorInfo.lower}} to {{css.skuErrorInfo.upper.toFixed(0)}} !</div>
+                                                    <div class="alert alert-danger alert-tooltip" role="alert" ng-show="css.skuErrorFieldFrontEnd=='d_PromotionalBudget' && sku.d_SKUID==data.currentSku.d_SKUID">{{'DecisionPageDecisionTabConsumerPromotionsFrontendValidation' | translate}}</div>
                                                     <input type="text" class="form-control input-sm" ng-class="{'form-control-error':css.skuError=='d_PromotionalBudget' && sku.d_SKUID==data.currentSku.d_SKUID}" ng-model="sku.d_PromotionalBudget" ng-blur="leaveSkuInput(sku, 'd_PromotionalBudget', sku.d_PromotionalBudget)"  ng-focus="clickCurrentSku(sku)">
                                                 </td>
                                             </tr>
@@ -2100,6 +2105,7 @@
                                                 <td class="tdgroup">{{'DecisionPageDecisionTabTradeExpenses' | translate}}</td>
                                                 <td ng-repeat="sku in data.currentBrand.d_SKUsDecisions">
                                                     <div class="alert alert-danger alert-tooltip" role="alert" ng-show="css.skuErrorField=='d_TradeExpenses' && sku.d_SKUID==data.currentSku.d_SKUID">Must be in range {{css.skuErrorInfo.lower}} to {{css.skuErrorInfo.upper.toFixed(0)}} !</div>
+                                                    <div class="alert alert-danger alert-tooltip" role="alert" ng-show="css.skuErrorFieldFrontEnd=='d_TradeExpenses' && sku.d_SKUID==data.currentSku.d_SKUID">{{'DecisionPageDecisionTabTradeExpensesFrontendValidation' | translate}}</div>
                                                     <input type="text" class="form-control input-sm" ng-class="{'form-control-error':css.skuError=='d_TradeExpenses' && sku.d_SKUID==data.currentSku.d_SKUID}" ng-model="sku.d_TradeExpenses" ng-blur="leaveSkuInput(sku, 'd_TradeExpenses', sku.d_TradeExpenses)"  ng-focus="clickCurrentSku(sku)">
                                                 </td>
                                             </tr>
@@ -2107,6 +2113,7 @@
                                                 <td>{{'DecisionPageDecisionTabAdditionalTradeMargin' | translate}}</td>
                                                 <td ng-repeat="sku in data.currentBrand.d_SKUsDecisions">
                                                     <div class="alert alert-danger alert-tooltip" role="alert" ng-show="css.skuErrorField=='d_AdditionalTradeMargin' && sku.d_SKUID==data.currentSku.d_SKUID">Must be in range {{css.skuErrorInfo.lower}} to {{css.skuErrorInfo.upper.toFixed(0)}} !</div>
+                                                    <div class="alert alert-danger alert-tooltip" role="alert" ng-show="css.skuErrorFieldFrontEnd=='d_AdditionalTradeMargin' && sku.d_SKUID==data.currentSku.d_SKUID">{{'DecisionPageDecisionTabAdditionalTradeMarginFrontendValidation' | translate}}</div>
                                                     <input type="text" class="form-control input-sm" ng-class="{'form-control-error':css.skuError=='d_AdditionalTradeMargin' && sku.d_SKUID==data.currentSku.d_SKUID}"  filterpercentage ng-model="sku.d_AdditionalTradeMargin"  ng-blur="leaveSkuInput(sku, 'd_AdditionalTradeMargin', sku.d_AdditionalTradeMargin)"  ng-focus="clickCurrentSku(sku)">
                                                 </td>
                                             </tr>
@@ -2114,6 +2121,7 @@
                                                 <td class="tdgroup">{{'DecisionPageDecisionTabWholesaleMinimumVolume' | translate}}</td>
                                                 <td ng-repeat="sku in data.currentBrand.d_SKUsDecisions">
                                                     <div class="alert alert-danger alert-tooltip" role="alert" ng-show="css.skuErrorField=='d_WholesalesBonusMinVolume' && sku.d_SKUID==data.currentSku.d_SKUID">Must be in range {{css.skuErrorInfo.lower}} to {{css.skuErrorInfo.upper.toFixed(0)}} !</div>
+                                                    <div class="alert alert-danger alert-tooltip" role="alert" ng-show="css.skuErrorFieldFrontEnd=='d_WholesalesBonusMinVolume' && sku.d_SKUID==data.currentSku.d_SKUID">{{'DecisionPageDecisionTabWholesaleMinimumVolumeFrontendValidation' | translate}}</div>
                                                     <input type="text" class="form-control input-sm" ng-class="{'form-control-error':css.skuError=='d_WholesalesBonusMinVolume' && sku.d_SKUID==data.currentSku.d_SKUID}"  ng-model="sku.d_WholesalesBonusMinVolume" ng-blur="leaveSkuInput(sku, 'd_WholesalesBonusMinVolume', sku.d_WholesalesBonusMinVolume)"  ng-focus="clickCurrentSku(sku)">
                                                 </td>
                                             </tr>
@@ -2121,6 +2129,7 @@
                                                 <td>{{'DecisionPageDecisionTabWholesaleBonusRate' | translate}}</td>
                                                 <td ng-repeat="sku in data.currentBrand.d_SKUsDecisions">
                                                     <div class="alert alert-danger alert-tooltip" role="alert" ng-show="css.skuErrorField=='d_WholesalesBonusRate' && sku.d_SKUID==data.currentSku.d_SKUID">Must be in range {{css.skuErrorInfo.lower}} to {{css.skuErrorInfo.upper.toFixed(0)}} !</div>
+                                                    <div class="alert alert-danger alert-tooltip" role="alert" ng-show="css.skuErrorFieldFrontEnd=='d_WholesalesBonusRate' && sku.d_SKUID==data.currentSku.d_SKUID">{{'DecisionPageDecisionTabWholesaleBonusRateFrontendValidation' | translate}}</div>
                                                     <input type="text" class="form-control input-sm" ng-class="{'form-control-error':css.skuError=='d_WholesalesBonusRate' && sku.d_SKUID==data.currentSku.d_SKUID}"  filterpercentage ng-model="sku.d_WholesalesBonusRate" ng-blur="leaveSkuInput(sku, 'd_WholesalesBonusRate', sku.d_WholesalesBonusRate)"  ng-focus="clickCurrentSku(sku)">
                                                 </td>
                                             </tr>
@@ -2495,7 +2504,7 @@
                                         </tr>
                                         <tr>
                                             <td></td>
-                                            <td> </td>
+                                            <td></td>
                                         </tr>
                                         <tr>
                                             <td>{{'DecisionPageSpendingDetailsTable2AcquiredTechnologyLevel' | translate}}</td>
@@ -2522,7 +2531,6 @@
 
         </div>
     </div>
-
     <!----------  End Decision Page  ---------->
 
 
@@ -2572,7 +2580,7 @@
             <div class="row">
                 <div class="col-md-12 ">
                     <span class="user_chart_make_decision">{{'HomePageSecondMenuBarLabelsMission' | translate}}</span>
-                    <button type="button" class="btn user_chart_decision_button" ng-click="switchHeaderMenu('Decision')">{{'HomePageSecondMenuBarLabelsMakeDecision' | translate}}</button>
+                    <button type="button" class="btn user_chart_decision_button" ng-hide="css.seminarFinished" ng-click="switchHeaderMenu('Decision')">{{'HomePageSecondMenuBarLabelsMakeDecision' | translate}}</button>
                 </div>
             </div>
 
@@ -2582,32 +2590,26 @@
 
     <div class="row mainbody" ng-cloak ng-if="css.menu=='Score'">
 
-        <div class="col-md-9 score_box" ng-if='!css.isFeedbackShown'>
+        <div class="col-md-9 score_box" ng-if='!css.showFeedback'>
 
             <div class="row">
-
                 <div class="col-md-12 score_info">
 
                     <span class="score_info_title col-md-9">{{'FinalScorePageScore' | translate}}</span>
 
                     <div class="pull-right">
-
                         <div class="btn-group btn-group-sm">
                             <button type="button" class="btn btn-default" ng-class="{'active':css.selectScore=='Original'}" ng-click="css.selectScore='Original' ">{{'FinalScorePageButtonOriginal' | translate}}</button>
                             <button type="button" class="btn btn-default" ng-class="{'active':css.selectScore=='Rescaled'}" ng-click="css.selectScore='Rescaled' ">{{'FinalScorePageButtonRescaled' | translate}}</button>
-
                         </div>
                     </div>
-
                 </div>
-
             </div>
 
             <div class="row">
                 <div class="col-md-12 score_data">
                     
                     <div class="table_report">
-
                         <ul class="nav nav-pills">
                             <li ng-class="{'active': n==css.selectFinalScorePeriod}" ng-repeat="n in css.finalReportPeriods">
                                 <a href="" ng-click="switchTableReportFinalScore(n)">{{'FinalScorePagePeriod' | translate}} {{n}}</a>
@@ -2616,18 +2618,17 @@
 
                         <div class="divider_horizontal"></div>
                         <div table-report-final-score data="data.tableFinalScore.selectPeriodData" select-score="css.selectScore"></div>
-
                     </div>
 
                 </div>
             </div>
-
         </div>
 
-        <div class="col-md-9 feedback_box" ng-if='!css.isFeedbackShown&&css.currentPeriod==css.maxPeriodRound'>
+
+        <div class="col-md-9 feedback_box" ng-if="!css.showFeedback&&css.seminarFinished">
 
             <div class="row">
-                <div class="col-md-12 feedback_info">
+                <div class="col-md-12 feedback_info" ng-show='!isFeedbackSumbit'>
                     <h4 class="text-center">
                     {{'FinalScorePageCongratulations' | translate}} !</h4>
                     <h4 class="text-center">{{'FinalScorePageCongratulationsInfo' | translate}} .</h4>
@@ -2635,15 +2636,16 @@
                         <button class="btn btn-warning" ng-click='showQuestionnaire()' ng-disabled='isFeedbackSumbit'>{{'FinalScorePageProvideFeedback' | translate}}</button>
                     </p>
                 </div>
+                <div class="col-md-12 feedback_info" ng-show='isFeedbackSumbit'>
+                    <h4 class="text-center">
+                    {{'FinalScorePageThank' | translate}} !</h4>
+                    <h4 class="text-center">{{'FinalScorePageThankInfo' | translate}} </h4>
+                </div>
             </div>
-
         </div>
 
-        <div class="col-md-9 support_box" ng-if='!css.isFeedbackShown||css.currentPeriod!=css.maxPeriodRound'>
-            <div class="row"></div>
-        </div>
 
-        <div class="col-md-9 score_box fade in" ng-if='css.isFeedbackShown'>
+        <div class="col-md-9 score_box fade in" ng-if="css.showFeedback">
 
             <div class="row">
                 <form role="form" name='questionnaireForm'>
@@ -2687,7 +2689,7 @@
                                         </td>
                                         <td ng-repeat='n in [1,2,3,4,5]'>
                                             <p class="text-center">
-                                            <input value={{n}} type="radio" ng-model="questionnaire.q_OverallSatisfactionWithTheProgram[index]" name="{{radio}}" id="{{radio+($index+1)}}" ng-blur="updateQuestionnaire('q_OverallSatisfactionWithTheProgram',index, questionnaireForm,radio)">
+                                            <input value={{n}} type="radio" ng-model="questionnaire.q_OverallSatisfactionWithTheProgram[index]" name="{{radio}}" id="{{radio+($index+1)}}">
                                                 <label>{{n}}</label>
                                             </p>
                                         </td>
@@ -2731,7 +2733,7 @@
                                         </td>
                                         <td ng-repeat='n in [1,2,3,4,5]'>
                                             <p class="text-center">
-                                            <input value={{n}} type="radio" ng-model="questionnaire.q_TeachingTeam[index]" name="{{radio}}" id="{{radio+($index+1)}}" ng-blur="updateQuestionnaire('q_TeachingTeam',index, questionnaireForm,radio)">
+                                            <input value={{n}} type="radio" ng-model="questionnaire.q_TeachingTeam[index]" name="{{radio}}" id="{{radio+($index+1)}}">
                                                 <label>{{n}}</label>
                                             </p>
                                         </td>
@@ -2775,7 +2777,7 @@
                                         </td>
                                         <td ng-repeat='n in [1,2,3,4,5]'>
                                             <p class="text-center">
-                                            <input value={{n}} type="radio" ng-model="questionnaire.q_Product[index]" name="{{radio}}" id="{{radio+($index+1)}}" ng-blur="updateQuestionnaire('q_Product',index, questionnaireForm,radio)">
+                                            <input value={{n}} type="radio" ng-model="questionnaire.q_Product[index]" name="{{radio}}" id="{{radio+($index+1)}}">
                                                 <label>{{n}}</label>
                                             </p>
                                         </td>
@@ -2819,7 +2821,7 @@
                                         </td>
                                         <td ng-repeat='n in [1,2,3,4,5]'>
                                             <p class="text-center">
-                                            <input value={{n}} type="radio" ng-model="questionnaire.q_Interpreter" name="AccuracyAndPresentation" id="{{'AccuracyAndPresentation'+$index}}" ng-blur="updateQuestionnaire('q_Interpreter',-1, questionnaireForm,'AccuracyAndPresentation')">
+                                            <input value={{n}} type="radio" ng-model="questionnaire.q_Interpreter" name="AccuracyAndPresentation" id="{{'AccuracyAndPresentation'+$index}}">
                                                 <label>{{n}}</label>
                                             </p>
                                         </td>
@@ -2863,7 +2865,7 @@
                                         </td>
                                         <td ng-repeat='n in [1,2,3,4,5]'>
                                             <p class="text-center">
-                                            <input value={{n}} type="radio" ng-model="questionnaire.q_TeachingSupport[index]" name="{{radio}}" id="{{radio+($index+1)}}" ng-blur="updateQuestionnaire('q_TeachingSupport',index, questionnaireForm,radio)">
+                                            <input value={{n}} type="radio" ng-model="questionnaire.q_TeachingSupport[index]" name="{{radio}}" id="{{radio+($index+1)}}">
                                                 <label>{{n}}</label>
                                             </p>
                                         </td>
@@ -2876,27 +2878,33 @@
 
                         <h5>1.{{'QuestionnairePageMostBenefit' | translate}} ?</h5>
                         <p class="feedback_others_p text-muted" ng-repeat="radio in questionnaire.radio_MostBenefits.info">
-                           <input type="radio" id="{{radio+($index+1)}}" name="mostBenefits" value="{{$index+1}}" ng-model='questionnaire.q_MostBenefit' ng-blur="updateQuestionnaire('q_MostBenefit',$index, questionnaireForm,radio)">
+                           <input type="radio" id="{{radio+($index+1)}}" name="mostBenefits" value="{{$index+1}}" ng-model='questionnaire.q_MostBenefit'>
                            <label for="{{radio+($index+1)}}">{{$index+1}} . {{'QuestionnairePage'+radio | translate}}</label>
                         </p>
                         <h4 class="clear"></h4>
                         <h5>2.{{'QuestionnairePageRecommendMarkSimos' | translate}} ?</h5>
                         <p class="feedback_others_p">
-                            <input type="radio" id="RecommendMarkSimos1" name="RecommendMarkSimos" value="1" ng-model='questionnaire.q_WillRecommend' ng-blur="updateQuestionnaire('q_WillRecommend',$index, questionnaireForm,radio)">
+                            <input type="radio" id="RecommendMarkSimos1" name="RecommendMarkSimos" value="1" ng-model='questionnaire.q_WillRecommend'>
                             <label for="RecommendMarkSimos1">{{'QuestionnairePageYes' | translate}}</label>
-                            <input type="radio" class="margin_left_10" id="RecommendMarkSimos2" name="RecommendMarkSimos" value="0" ng-model='questionnaire.q_WillRecommend' ng-blur="updateQuestionnaire('q_WillRecommend',$index, questionnaireForm,radio)">
+                            <input type="radio" class="margin_left_10" id="RecommendMarkSimos2" name="RecommendMarkSimos" value="0" ng-model='questionnaire.q_WillRecommend'>
                             <label for="RecommendMarkSimos2">{{'QuestionnairePageNo' | translate}}</label>
                         </p>
                         <p class="feedback_others_p">
-                            <textarea class="form-control" rows="3" id="QuestionnairePageYes" name='QuestionnairePageYes' ng-model='questionnaire.q_ReasonForRecommendOrNot' ng-blur="updateQuestionnaire('q_ReasonForRecommendOrNot',-1, questionnaireForm,'QuestionnairePageYes')"></textarea>
+                            <textarea class="form-control" rows="3" id="QuestionnairePageYes" name='QuestionnairePageYes' ng-model='questionnaire.q_ReasonForRecommendOrNot'></textarea>
                         </p>
                         <h4 class="clear"></h4>
                         <h5>3.{{'QuestionnairePageBringYou' | translate}} ?</h5>
                         <p class="feedback_others_p">
-                            <textarea class="form-control" rows="3" id="QuestionnairePageBringYou" name='QuestionnairePageBringYou' ng-model='questionnaire.q_FeelAboutMarkSimos' ng-blur="updateQuestionnaire('q_FeelAboutMarkSimos',-1, questionnaireForm,'QuestionnairePageBringYou')"></textarea>
+                            <textarea class="form-control" rows="3" id="QuestionnairePageBringYou" name='QuestionnairePageBringYou' ng-model='questionnaire.q_FeelAboutMarkSimos'></textarea>
+                        </p>
+                        <h4 class="clear"></h4>
+                        <p class="text-center provide_feedback">
+                            <button class="btn btn-warning" ng-click='submitQuestionnaire(questionnaire)' ng-disabled='isFeedbackSumbit'>{{'QuestionnaireSubmit' | translate}}</button>
                         </p>
 
                     </div>
+                    
+
                 </form>
 
             </div>

@@ -308,6 +308,8 @@ $color_main_body_user_manual_table_2n:#f8f8f8;
         font-family: $font_main_header2;
         font-size: 12px;
         color: $color_main_body_user_chart_leftmenu_title;
+        padding-left: 3px;
+        padding-right: 3px;
     }
 
     .table-striped > tbody > tr:nth-child(odd) > td,
@@ -1047,6 +1049,14 @@ body{
     
     .user_brand_box{
         height: 200px;
+
+        
+        .table > thead > tr > td,
+        .table > tbody > tr > td,
+        .table > tfoot > tr > td {
+            padding-left: 3px;
+            padding-right: 3px;
+        }
     }
     
     .user_home_divider{
@@ -1717,6 +1727,7 @@ body{
         left : 65px;
         padding : 5px;
         z-index: 999;
+        width: 75px;
     }
     .alert-tooltip:after, .alert-tooltip:before {
         top: 50%;
@@ -1935,10 +1946,7 @@ body{
         color: $color_main_body_user_feedback;
         margin: 20px 12.5%;
     }
-    .support_box{
-        min-height:120px;
-        margin: 20px 12.5%;
-    }
+
 
     .score_info {
         background-color: $color_login_panel_background;

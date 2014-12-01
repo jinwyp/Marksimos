@@ -44,6 +44,7 @@
             addNewSku                : false,
             addNewBrand              : false,
             skuErrorField : '',
+            skuErrorFieldFrontEnd : '',
             skuErrorInfo  : '',
             brandErrorInfo  : '',
             companyErrorInfo  : '',
@@ -67,9 +68,9 @@
             selectFinalScorePeriod : 0,
             selectScore : 'Original',
             currentPeriod : 0,
-            maxPeriodRound:0,
-            finalReportPeriods: [],
-            isFeedbackShown : false
+            seminarFinished : false,
+            showFeedback : false,
+            finalReportPeriods: []
 
         };
 
@@ -198,7 +199,7 @@
 
 
 
-            chartA31InventoryReport : {
+            chartA3InventoryReport : {
                 data : [],
     //            color : ['#39b54a', '#ff983d', '#0087f0', '#8781bd', '#f26c4f', '#bd8cbf', '#000000'] // QIFEI 's color
     //            color : ['#004CE5', '#BB0000', '#FFBC01', '#339933', '#990099', '#FF5200', '#000000'] //Windows color
@@ -318,34 +319,34 @@
 
 
 
-        $scope.A31ColorFunction = function(){
+        $scope.A3ColorFunction = function(){
             return function(d, i){
-                return $scope.data.chartA31InventoryReport.color[i];
+                return $scope.data.chartA3InventoryReport.color[i];
             };
         };
 
 
-        $scope.A31ToolTipContent = function(){
+        $scope.A3ToolTipContent = function(){
             return function(key, x, y, e, graph) {
                 return  '<h5>' + y + '</h5>';
             };
         };
 
-        $scope.C21ColorFunction = function(){
+        $scope.C2ColorFunction = function(){
             return function(d, i){
                 return $scope.data.chartC21PerceptionMap.color[i];
             };
         };
 
 
-        $scope.C31shapeFunction = function(){
+        $scope.C2shapeFunction = function(){
             return function(d) {
                 return d.shape;
             };
         };
 
         // 处理当前的公司名称的颜色
-        function C31TooltipContentShowCompanyNameColor(fieldname) {
+        function C2TooltipContentShowCompanyNameColor(fieldname) {
             var names = {
                 'A': function() {
                     return $scope.data.chartC21PerceptionMap.color[0];
@@ -373,7 +374,7 @@
             return names[fieldname]();
         }
 
-        $scope.C31TooltipContent = function(){
+        $scope.C2TooltipContent = function(){
             return function(key, x, y, e, graph) {
 
                 var iconColor ;
@@ -389,7 +390,7 @@
                 var arrow7 = 'perception_arrow_right';
 
                 if(e.point.tooltips.length > 0){
-                    iconColor = C31TooltipContentShowCompanyNameColor(e.point.CompanyName);
+                    iconColor = C2TooltipContentShowCompanyNameColor(e.point.CompanyName);
 
                     if(e.point.tooltips[0].compareWithPreviousPeriod === 1){
                         arrow0 = 'perception_arrow_up';
@@ -507,8 +508,7 @@
             initOnce : function(){
                 this.loadingChartData();
                 this.loadingStudentData();
-                this.loadingCompanyDecisionData();
-                this.loadingCompanyOtherData();
+
             },
 
             reRun : function(){
@@ -519,7 +519,7 @@
             loadingChartData : function(){
                 /********************  Chart A3  ********************/
                 chartReport.inventoryReport().then(function(data, status, headers, config){
-                    $scope.data.chartA31InventoryReport.data = data;
+                    $scope.data.chartA3InventoryReport.data = data[0].data;
                 });
 
 
@@ -611,7 +611,7 @@
                     $scope.data.chartC21PerceptionMap.allData = data.data;
                     $scope.data.chartC21PerceptionMap.currentPeriod = $scope.data.chartC21PerceptionMap.allData.length - 4;
                     $scope.data.chartC21PerceptionMap.data = $scope.data.chartC21PerceptionMap.allData[$scope.data.chartC21PerceptionMap.currentPeriod + 3];
-                    $scope.data.chartC21PerceptionMap.dataChart = $scope.data.chartC21PerceptionMap.data.dataSKU;
+                    $scope.data.chartC21PerceptionMap.dataChart = $scope.data.chartC21PerceptionMap.data.dataSKU;                   
                 });
 
                 /********************  Chart C4  ********************/
@@ -639,9 +639,9 @@
             },
 
             loadingStudentData : function(){
+                var that = this;
                 Company.getCurrentStudent().then(function(data, status, headers, config){
                     $scope.data.currentStudent = data;
-
                     var currentDate = new Date();
 
                     $scope.data.currentTime.hour = 1;
@@ -670,10 +670,10 @@
                     $scope.data.currentCompanyNameCharacter = showCompanyName($scope.data.currentStudent.companyId);
 
                     $scope.css.currentPeriod = $scope.data.currentStudent.currentPeriod;
-                    $scope.css.maxPeriodRound = $scope.data.currentStudent.maxPeriodRound;
+
+                    $scope.css.seminarFinished = $scope.data.currentStudent.isSimulationFinised;
 
                     $scope.css.periods = [];
-
                     $scope.css.finalReportPeriods = [];
 
                     // 处理显示当前第几回合进度条
@@ -705,7 +705,6 @@
                         for (var j = 0; j < $scope.data.currentStudent.currentPeriod; j++) {
                             $scope.css.finalReportPeriods.push(j);
                         }
-
                     }
 
 
@@ -715,6 +714,13 @@
                     Company.getFinalScore($scope.data.currentStudent.currentPeriod - 1).then(function(data, status, headers, config){
                         $scope.data.tableFinalScore.selectPeriodData = data;
                     });
+
+                    // 处理最后比赛结束后
+                    if($scope.data.currentStudent.isSimulationFinised === false){
+                        that.loadingCompanyDecisionData();
+                        that.loadingCompanyOtherData();
+                    }
+
                 });
             },
 
@@ -1100,6 +1106,7 @@
 
         $scope.clickCurrentSku = function(sku){
             $scope.css.skuErrorField = '';
+            $scope.css.skuErrorFieldFrontEnd = '';
             $scope.data.currentSku = angular.copy(sku);
             Company.getCompanyFutureProjectionCalculator($scope.data.currentSku.d_SKUID).then(function(data, status, headers, config){
                 $scope.data.currentCompanyFutureProjectionCalculator = data;
@@ -1115,95 +1122,142 @@
                 sku_id : sku.d_SKUID,
                 sku_data : {}
             };
-            $scope.data.currentModifiedSku.sku_data[fieldname] = fielddata;
 
-            if(fieldname === 'd_TargetConsumerSegment'){
-                sku.d_TargetConsumerSegment = segmentOrWeek;
-                $scope.data.currentModifiedSku.sku_data[fieldname] = segmentOrWeek;
 
-            }else if(fieldname === 'd_PromotionalEpisodes'){
-                if(!angular.isUndefined(weekindex)){
-                    // 针对d_PromotionalEpisodes 字段需要特殊处理
-                    $scope.data.currentModifiedSku.sku_data[fieldname][weekindex] = segmentOrWeek;
+            //表单验证
+
+            var regexInteger = /^\d+$/;
+            var regexFloat = /^\d+(\.\d{1,2})?$/;
+            var regexFloat2 = /^0(\.\d{1,2})?$/;
+            var regexHundred = /^[1-9][0-9]?$|^0$|^100$/;
+
+            if(fieldname === 'd_Technology' &&  !regexInteger.test(fielddata)  ) {
+                $scope.css.skuErrorFieldFrontEnd = fieldname;
+
+            }else if(fieldname === 'd_IngredientsQuality' && !regexInteger.test(fielddata) ){
+                $scope.css.skuErrorFieldFrontEnd = fieldname;
+
+            }else if(fieldname === 'd_ProductionVolume' && !regexInteger.test(fielddata) ){
+                $scope.css.skuErrorFieldFrontEnd = fieldname;
+
+            }else if(fieldname === 'd_FactoryPrice' && !regexFloat.test(fielddata) ){
+                $scope.css.skuErrorFieldFrontEnd = fieldname;
+
+            }else if(fieldname === 'd_Advertising' && !regexInteger.test(fielddata) ){
+                $scope.css.skuErrorFieldFrontEnd = fieldname;
+
+            }else if(fieldname === 'd_PromotionalBudget' && !regexInteger.test(fielddata) ){
+                $scope.css.skuErrorFieldFrontEnd = fieldname;
+
+            }else if(fieldname === 'd_TradeExpenses' && !regexInteger.test(fielddata) ){
+                $scope.css.skuErrorFieldFrontEnd = fieldname;
+
+            }else if(fieldname === 'd_AdditionalTradeMargin' && !regexFloat2.test(fielddata) ){
+
+                $scope.css.skuErrorFieldFrontEnd = fieldname;
+
+            }else if(fieldname === 'd_WholesalesBonusMinVolume' && !regexInteger.test(fielddata) ){
+                $scope.css.skuErrorFieldFrontEnd = fieldname;
+
+            }else if(fieldname === 'd_WholesalesBonusRate' && !regexFloat2.test(fielddata) ){
+                $scope.css.skuErrorFieldFrontEnd = fieldname;
+            }else{
+
+                // 表单验证成功 发送修改请求
+                $scope.data.currentModifiedSku.sku_data[fieldname] = fielddata;
+
+
+                if(fieldname === 'd_TargetConsumerSegment'){
+                    sku.d_TargetConsumerSegment = segmentOrWeek;
+                    $scope.data.currentModifiedSku.sku_data[fieldname] = segmentOrWeek;
+
+                }else if(fieldname === 'd_PromotionalEpisodes'){
+                    if(!angular.isUndefined(weekindex)){
+                        // 针对d_PromotionalEpisodes 字段需要特殊处理
+                        $scope.data.currentModifiedSku.sku_data[fieldname][weekindex] = segmentOrWeek;
+                    }
+                }else if(fieldname === 'd_FactoryPrice'){
+                    // 针对 d_FactoryPrice 字段需要特殊处理
+                    $scope.data.currentModifiedSku.sku_data[fieldname] = $scope.data.currentSku[fieldname];
+                    $scope.data.currentModifiedSku.sku_data[fieldname][0] = Number(fielddata);
+                }else if(fieldname === 'd_AdditionalTradeMargin'){
+                    // 针对 d_AdditionalTradeMargin 字段需要特殊处理
+                    $scope.data.currentModifiedSku.sku_data[fieldname][0] = Number(fielddata) / 100;
+                }else if(fieldname === 'd_WholesalesBonusRate'){
+                    // 针对 d_WholesalesBonusRate 字段需要特殊处理
+                    $scope.data.currentModifiedSku.sku_data[fieldname][0] = Number(fielddata) / 100;
                 }
-            }else if(fieldname === 'd_FactoryPrice'){
-                // 针对 d_FactoryPrice 字段需要特殊处理
-                $scope.data.currentModifiedSku.sku_data[fieldname] = $scope.data.currentSku[fieldname];
-                $scope.data.currentModifiedSku.sku_data[fieldname][0] = Number(fielddata);
-            }else if(fieldname === 'd_AdditionalTradeMargin'){
-                // 针对 d_AdditionalTradeMargin 字段需要特殊处理
-                $scope.data.currentModifiedSku.sku_data[fieldname][0] = Number(fielddata) / 100;
-            }else if(fieldname === 'd_WholesalesBonusRate'){
-                // 针对 d_WholesalesBonusRate 字段需要特殊处理
-                $scope.data.currentModifiedSku.sku_data[fieldname][0] = Number(fielddata) / 100;
+
+
+
+                Company.updateSku($scope.data.currentModifiedSku).then(function(data, status, headers, config){
+
+                    app.reRun();
+
+                    notify({
+                        message : 'Save Success !',
+                        template : notifytemplate.success,
+                        position : 'center'
+                    });
+                }, function(data){
+
+                    $scope.css.skuErrorField = data.data.modifiedField;
+
+                    // 使用命令对象
+                    function showSkuErrorInfo(fieldname) {
+                        var names = {
+                            'd_Technology': function() {
+                                return data.data;
+                            },
+                            'd_IngredientsQuality': function() {
+                                return data.data;
+                            },
+                            'd_ProductionVolume': function() {
+                                return data.data;
+                            },
+                            'd_FactoryPrice': function() {
+                                return data.data;
+                            },
+                            'd_Advertising': function() {
+                                return data.data;
+                            },
+                            'd_PromotionalBudget': function() {
+                                return data.data;
+                            },
+                            'd_TradeExpenses': function() {
+                                return data.data;
+                            },
+                            'd_AdditionalTradeMargin': function() {
+                                return data.data;
+                            },
+                            'd_WholesalesBonusMinVolume': function() {
+                                return data.data;
+                            },
+                            'd_WholesalesBonusRate': function() {
+                                return data.data;
+                            }
+
+                        };
+                        if (typeof names[fieldname] !== 'function') {
+                            return false;
+                        }
+                        return names[fieldname]();
+                    }
+
+                    $scope.css.skuErrorInfo = showSkuErrorInfo($scope.css.skuErrorField);
+
+
+                    notify({
+                        message : data.data.message,
+                        template : notifytemplate.failure,
+                        position : 'center'
+                    });
+                    app.reRun();
+                });
             }
 
 
 
-            Company.updateSku($scope.data.currentModifiedSku).then(function(data, status, headers, config){
-
-                app.reRun();
-
-                notify({
-                    message : 'Save Success !',
-                    template : notifytemplate.success,
-                    position : 'center'
-                });
-            }, function(data){
-
-                $scope.css.skuErrorField = data.data.modifiedField;
-
-                // 使用命令对象
-                function showSkuErrorInfo(fieldname) {
-                    var names = {
-                        'd_Technology': function() {
-                            return data.data;
-                        },
-                        'd_IngredientsQuality': function() {
-                            return data.data;
-                        },
-                        'd_ProductionVolume': function() {
-                            return data.data;
-                        },
-                        'd_FactoryPrice': function() {
-                            return data.data;
-                        },
-                        'd_Advertising': function() {
-                            return data.data;
-                        },
-                        'd_PromotionalBudget': function() {
-                            return data.data;
-                        },
-                        'd_TradeExpenses': function() {
-                            return data.data;
-                        },
-                        'd_AdditionalTradeMargin': function() {
-                            return data.data;
-                        },
-                        'd_WholesalesBonusMinVolume': function() {
-                            return data.data;
-                        },
-                        'd_WholesalesBonusRate': function() {
-                            return data.data;
-                        }
-
-                    };
-                    if (typeof names[fieldname] !== 'function') {
-                        return false;
-                    }
-                    return names[fieldname]();
-                }
-
-                $scope.css.skuErrorInfo = showSkuErrorInfo($scope.css.skuErrorField);
-
-
-                notify({
-                    message : data.data.message,
-                    template : notifytemplate.failure,
-                    position : 'center'
-                });
-                app.reRun();
-            });
         };
 
         /********************  更新 Brand  ********************/
@@ -1301,51 +1355,78 @@
 
 
         /********************  获取 Questionnaire  ********************/
-        Company.getQuestionnaire().success(function(data, status, headers, config){
+        Company.getQuestionnaire().success(function(data, status, headers, config) {
             $scope.questionnaire = data;
-            $scope.questionnaire.radio_OverallSatisfactionWithThePrograms={
-                info:['ChallengeStrategicThinkingAbility','DevelopAnIntegratedPerspective','TestPersonalAbilityOfBalancingRisks','ChallengeLeadershipAndTeamworkAbility','ChallengeAnalysisAndDecisionMakingAbility','SimulationInteresting']
+            $scope.questionnaire.radio_OverallSatisfactionWithThePrograms = {
+                info: ['ChallengeStrategicThinkingAbility', 'DevelopAnIntegratedPerspective', 'TestPersonalAbilityOfBalancingRisks', 'ChallengeLeadershipAndTeamworkAbility', 'ChallengeAnalysisAndDecisionMakingAbility', 'SimulationInteresting']
             };
-            $scope.questionnaire.radio_TeachingTeams={
-                info:['FeedbackOnSimulationDecisions','ExpandingViewAndInspireThinking','Lectures']
+            $scope.questionnaire.radio_TeachingTeams = {
+                info: ['FeedbackOnSimulationDecisions', 'ExpandingViewAndInspireThinking', 'Lectures']
             };
-            $scope.questionnaire.radio_Products={
-                info:['OverallProductUsageExperience','UserInterfaceExperience','EaseOfNavigation','ClarityOfWordsUsed']
+            $scope.questionnaire.radio_Products = {
+                info: ['OverallProductUsageExperience', 'UserInterfaceExperience', 'EaseOfNavigation', 'ClarityOfWordsUsed']
             };
-            $scope.questionnaire.radio_TeachingSupports={
-                info:['Helpfulness','QualityOfTechnicalSupport']
+            $scope.questionnaire.radio_TeachingSupports = {
+                info: ['Helpfulness', 'QualityOfTechnicalSupport']
             };
-            $scope.questionnaire.radio_MostBenefits={
-                info:["JoinProgram","CompanyInHouse","OpenClass"]
+            $scope.questionnaire.radio_MostBenefits = {
+                info: ["JoinProgram", "CompanyInHouse", "OpenClass"]
             };
         });
-        $scope.showQuestionnaire = function(){
-            $scope.css.isFeedbackShown=true;
+
+        $scope.showQuestionnaire = function() {
+            $scope.css.showFeedback = true;
         };
 
         /********************  更新 Questionnaire  ********************/
-        $scope.updateQuestionnaire = function(fieldname , index, form, formfieldname){
+        $scope.updateQuestionnaire = function(fieldname, index, form, formfieldname) {
 
-            var currentData={
-                'location':fieldname,
-                'data':$scope.questionnaire[fieldname]
+            var currentData = {
+                'location': fieldname,
+                'data': $scope.questionnaire[fieldname]
             };
 
-            Company.updateQuestionnaire(currentData).success(function(data, status, headers, config){
+            Company.updateQuestionnaire(currentData).success(function(data, status, headers, config) {
                 notify({
-                    message : 'Save Success !',
-                    template : notifytemplate.success,
-                    position : 'center'
+                    message: 'Save Success !',
+                    template: notifytemplate.success,
+                    position: 'center'
                 });
-            },function(data, status, headers, config){
+            }, function(data, status, headers, config) {
                 notify({
-                    message : data.message,
-                    template : notifytemplate.failure,
-                    position : 'center'
+                    message: data.message,
+                    template: notifytemplate.failure,
+                    position: 'center'
                 });
             });
         };
+        /********************  提交 Questionnaire  ********************/
+        $scope.submitQuestionnaire = function(questionnaire) {
 
+            $scope.isFeedbackSumbit = true;
+
+            var currentData = {
+                'questionnaire': questionnaire
+            };
+
+            Company.submitQuestionnaire(currentData).success(function(data, status, headers, config) {
+                notify({
+                    message: 'Save Success !',
+                    template: notifytemplate.success,
+                    position: 'center'
+                });
+                $scope.css.showFeedback = false;
+
+            }, function(data, status, headers, config) {
+                notify({
+                    message: data.message,
+                    template: notifytemplate.failure,
+                    position: 'center'
+                });
+                $scope.isFeedbackSumbit = false;
+
+            });
+        };
 
 
 

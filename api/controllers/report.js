@@ -7,7 +7,7 @@ var Q                = require('q');
 var _                = require('underscore');
 
 exports.getFinalScore = function(req, res, next){
-    var seminarId = req.session.seminarId;    
+    var seminarId = req.session.seminarId;
     var period = req.params.period;
 
     if(!seminarId){
@@ -17,12 +17,12 @@ exports.getFinalScore = function(req, res, next){
     Q.all([
         simulationResult.findOne(seminarId, period),
         simulationResult.findOne(seminarId, 0),
-        seminarModel.findOne(seminarId)
+        seminarModel.findOne({seminarId: seminarId})
     ]).spread(function(requestedPeriodResult, initialPeriodResult, seminarInfo){
         var scores = [];
         var highest_SOM, lowest_SOM, highest_Profit, lowest_Profit;
         var a, b, c, d;
-        
+
         for (var i = 0; i < requestedPeriodResult.p_Companies.length; i++) {
             var originalSOM, originalProfit, originalBudget;
             var scaledSOM, scaledProfit, scaledBudget, finalScore;
@@ -41,7 +41,7 @@ exports.getFinalScore = function(req, res, next){
                 companyId      : requestedPeriodResult.p_Companies[i].c_CompanyID,
                 originalSOM    : originalSOM,
                 originalProfit : originalProfit,
-                originalBudget : originalBudget,                
+                originalBudget : originalBudget,
             });
         };
 
@@ -49,7 +49,7 @@ exports.getFinalScore = function(req, res, next){
         lowest_SOM     = _.min(scores, function(companyScore){ return companyScore.originalSOM; }).originalSOM;
         highest_Profit = _.max(scores, function(companyScore){ return companyScore.originalProfit; }).originalProfit;
         lowest_Profit  = _.min(scores, function(companyScore){ return companyScore.originalProfit; }).originalProfit;
-        
+
         a = highest_SOM - lowest_SOM;
         c = highest_Profit - lowest_Profit;
 
@@ -61,7 +61,7 @@ exports.getFinalScore = function(req, res, next){
             else { companyScore.scaledProfit = companyScore.originalProfit; }
         })
 
-        
+
 
         if(lowest_SOM < 0){
             lowest_SOM = lowest_SOM + a;
@@ -79,14 +79,14 @@ exports.getFinalScore = function(req, res, next){
         } else {
             a = 0;
             b = 50;
-        }        
+        }
 
         if (highest_Profit > lowest_Profit){
             c = 100 / (highest_Profit - lowest_Profit);
             d = 100 - (c * highest_Profit);
         } else {
             c = 0;
-            d = 50;            
+            d = 50;
         }
 
         scores.forEach(function(companyScore){
@@ -104,7 +104,7 @@ exports.getFinalScore = function(req, res, next){
 
             companyScore.finalScore =  initialPeriodResult.p_Market.m_fs_DeltaSOM_Weight * companyScore.scaledSOM + initialPeriodResult.p_Market.m_fs_Profits_Weight * companyScore.scaledProfit;
             //a = 1 + initialPeriodResult.p_Market.m_fs_BudgetExcess_ScalingFactor * companyScore.scaledBudget / 100;
-            companyScore.finalScore = companyScore.finalScore + 2 * companyScore.scaledBudget;          
+            companyScore.finalScore = companyScore.finalScore + 2 * companyScore.scaledBudget;
         });
 
         res.send(200, { period : period, seminarId : seminarId, scores : scores } );
@@ -112,7 +112,7 @@ exports.getFinalScore = function(req, res, next){
     }).fail(function(err){
         res.send(403, err.message);
     }).done();
-    
+
 }
 
 
@@ -122,7 +122,7 @@ exports.getReport = function(req, res, next){
     if(!seminarId){
         return res.send(400, {message: "You don't choose a seminar."});
     }
-    
+
     var companyId = req.session.companyId;
     var reportName = req.params.report_name;
 
@@ -165,9 +165,9 @@ function extractReportOfOneCompany(report, companyId){
     var tempReportData = [];
     for(var i=0; i<report.reportData.length; i++){
         if(report.reportData[i].companyId === companyId){
-            tempReportData.push(report.reportData[i]); 
+            tempReportData.push(report.reportData[i]);
         }
     }
-    
+
     return tempReportData;
 }

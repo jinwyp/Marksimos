@@ -18,6 +18,7 @@
     <link href="/libs/AdminLTE/css/AdminLTE.css" rel="stylesheet" type="text/css" />
 
     <link rel="stylesheet" href="/libs/angular-notifications/notification.min.css">
+    <link rel="stylesheet" href="/libs/nvd3/nv.d3.css"/>
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
     <!--[if lt IE 9]>
@@ -29,6 +30,14 @@
             width: 99%;
             height: 350px;
             margin: 0;
+        }
+
+        .xy-tooltip div {
+            pointer-events: auto;
+        }
+
+        .IE11_chart_A3 {
+            height: 600px;
         }
 
         .nav.nav-pills.table_multimenu li a{
@@ -43,6 +52,116 @@
 
         }
 
+
+        /**********  Chart C2  **********/
+     
+         .nvtooltip h5 .perception_map_button {
+            -webkit-text-size-adjust: none;
+            font-size: 11px;
+            font-family: "Helvetica", "Arial, sans-serif";
+        }
+
+         .nvtooltip h5 .perception_map_dropdown {
+            float: right;
+            margin-right: 20px;
+            margin-top: -6px;
+        }
+
+         .nvtooltip h5 .perception_map_group {
+            float: right;
+            margin-right: 50px;
+            margin-top: -6px;
+        }
+
+         .nvtooltip .nvtooltip {
+            border: 0 none;
+        }
+
+             .nvtooltip .nvtooltip h5 {
+                border: 1px solid #bdbdbd;
+                -moz-border-radius: 4px;
+                -webkit-border-radius: 4px;
+                border-radius: 4px;
+                padding: 8px 10px;
+            }
+
+         .nvtooltip .perception_panel {
+            margin-bottom: 0px;
+        }
+
+             .nvtooltip .perception_panel .panel-heading {
+                font-size: 12px;
+                font-weight: bold;
+                font-family: "Helvetica", "Arial, sans-serif";
+                color: #6f6f6f;
+            }
+
+         .nvtooltip .perception_list {
+            padding: 5px 10px;
+            font-size: 12px;
+            font-family: "Helvetica", "Arial, sans-serif";
+            color: #373737;
+        }
+
+         .nvtooltip .perception_list_bg {
+            background-color: #f9f9f9;
+        }
+
+         .nvtooltip .perception_info {
+            width: 155px;
+            display: inline-block;
+        }
+
+         .nvtooltip .perception_info_number {
+            width: 40px;
+            display: inline-block;
+        }
+
+         .nvtooltip .perception_logo {
+            padding: 6px 6px;
+            margin: 0px 5px 0px 0px;
+            background-color: #0000FF;
+            display: inline-block;
+        }
+
+        .nvtooltip .perception_arrow_up {
+            background-image: url(/app/css/images/icon-admin.png);
+            background-repeat: no-repeat;
+            background-position: 0 -283px;
+            display: inline-block;
+            vertical-align: middle;
+            *vertical-align: auto;
+            *zoom: 1;
+            *display: inline;
+            width: 13px;
+            height: 13px;
+        }
+
+        .nvtooltip .perception_arrow_right {
+            background-image: url(/app/css/images/icon-admin.png);
+            background-repeat: no-repeat;
+            background-position: 0 -142px;
+            display: inline-block;
+            vertical-align: middle;
+            *vertical-align: auto;
+            *zoom: 1;
+            *display: inline;
+            width: 13px;
+            height: 13px;
+        }
+
+         .nvtooltip .perception_arrow_down {
+            background-image: url(/app/css/images/icon-admin.png);
+            background-repeat: no-repeat;
+            background-position: 0 0;
+            display: inline-block;
+            vertical-align: middle;
+            *vertical-align: auto;
+            *zoom: 1;
+            *display: inline;
+            width: 13px;
+            height: 13px;
+        }
 
     </style>
 </head>
