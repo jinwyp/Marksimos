@@ -138,6 +138,7 @@ exports.init = function(req, res, next) {
                 })
                 .then(function(){
                     //copy decision of period (currentPeriod - 1 = 0)
+                    //    return undefined;
                     return duplicateLastPeriodDecision(seminarId, currentPeriod - 1);
 
                 })
