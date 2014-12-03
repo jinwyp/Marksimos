@@ -60,36 +60,44 @@ app.use('/', router);
 
 
 
-
-
 // catch 404 and forwarding to error handler
-app.use(function(req, res, next) {
-    var err = new Error('404 Page Not Found');
-    err.status = 404;
-    next(err);
+app.use(function(req, res, next){
+    res.status(404);
+
+    if (app.get('env') !== 'production') {
+
+    }
+
+    // respond with html page
+    if (req.accepts('html')) {
+        res.render('page404.ejs', {
+            'title' : '404 Page Not Found',
+            'url': req.url });
+        return;
+    }
+
+    // respond with json
+    if (req.accepts('json')) {
+        res.send({ error: '404 Not found' });
+        return;
+    }
+
+    // default to plain-text. send()
+    res.type('txt').send('Not found');
 });
 
-/// error handlers
 
-// development error handler
-// will print stacktrace
-if (app.get('env') === 'development') {
-    app.use(function(err, req, res, next) {
-        res.json(404, {
-            message: err.message,
-            error: err
-        });
-    });
-}
 
-// production error handler
-// no stacktraces leaked to user
-app.use(function(err, req, res, next) {
-    res.json(404, {
-        message: err.message,
-        error: {}
-    });
+app.use(function(err, req, res, next){
+    // we may use properties of the error object
+    // here and next(err) appropriately, or if
+    // we possibly recovered from the error, simply next().
+    res.status(err.status || 500);
+    res.render('page500.ejs', {
+        'title' : '500 System Error',
+        'error': err });
 });
+
 
 
 app.set('port', process.env.PORT || 3000);

@@ -187,7 +187,7 @@ apiRouter.get('/marksimos/adminhome', requireAdminLogin({isRedirect : true}), fu
     res.render('marksimosadmin/adminhome.ejs', {title : 'Admin | Dashboard'});
 });
 
-apiRouter.get('/marksimos/adminhomereport/:seminar_id', requireAdminLogin({isRedirect : true}), authorize('chooseSeminar'), seminarController.chooseSeminarForFacilitator);
+apiRouter.get('/marksimos/adminhomereport/:seminar_id', requireAdminLogin({isRedirect : true}), authorize('runSimulation'), seminarController.chooseSeminarForFacilitator);
 
 
 
@@ -342,7 +342,6 @@ apiRouter.get('/marksimos/api/create_admin', function (req,res,next) {
 })
 
 // get FAQ
-
 apiRouter.get('/marksimos/api/initfaq', faqController.initFAQ);
 apiRouter.get('/marksimos/api/faq', faqController.getFAQ);
 
@@ -409,12 +408,15 @@ apiRouter.post('/marksimos/api/admin/students', requireAdminLogin({isRedirect : 
 apiRouter.put('/marksimos/api/admin/students/:student_id', requireAdminLogin({isRedirect : false}), authorize('updateStudent'), studentController.updateStudent);
 
 
-//get all seminars of the current student
+//Facilitator manager seminars
 apiRouter.post('/marksimos/api/admin/assign_student_to_seminar', requireAdminLogin({isRedirect : false}), authorize('assignStudentToSeminar'), seminarController.assignStudentToSeminar);
 apiRouter.post('/marksimos/api/admin/remove_student_from_seminar', requireAdminLogin({isRedirect : false}), authorize('removeStudentFromSeminar'), seminarController.removeStudentFromSeminar);
 
-apiRouter.post('/marksimos/api/admin/init', requireAdminLogin({isRedirect : false}), initController.init());
+apiRouter.post('/marksimos/api/admin/init', requireAdminLogin({isRedirect : false}),  authorize('runSimulation'), initController.init());
 apiRouter.post('/marksimos/api/admin/runsimulation/:seminar_id/:round',  requireAdminLogin({isRedirect : false}), authorize('runSimulation'), initController.runSimulation());
+
+apiRouter.get('/marksimos/api/admin/seminar/:seminar_id', requireAdminLogin({isRedirect : false}), authorize('runSimulation'), decisionController.getDecisionForFacilitator);
+
 
 //reset student password
 apiRouter.post('/marksimos/api/admin/resetPassword', requireAdminLogin({isRedirect : false}), authorize('updateStudent'), studentController.resetPassword);
@@ -490,7 +492,6 @@ function authorize(resource){
         'searchStudent',
 
         'addSeminar',
-        'chooseSeminar',
 
         'assignStudentToSeminar',
         'removeStudentFromSeminar',

@@ -186,6 +186,46 @@ exports.getDecision = function(req, res, next){
     .done();
 };
 
+
+exports.getDecisionForFacilitator = function(req, res, next){
+    var seminarId = req.params.seminar_id;
+
+    if(!seminarId){
+        return res.send(403, {message: "You don't choose a seminar."});
+    }else{
+        seminarModel.findOne({seminarId: seminarId})
+            .then(function(dbSeminar){
+                if(!dbSeminar){
+                    return res.send(400, {message: "seminar " + seminarId + " doesn't exist."});
+                }else{
+
+                }
+
+
+            })
+            .fail(function(err){
+                logger.error(err);
+                return res.send(500, {message: "choose seminar faile."})
+            })
+            .done();
+    }
+
+    var period = req.session.currentPeriod;
+    var companyId = req.session.companyId;
+
+    decisionAssembler.getDecision(seminarId, period, companyId)
+        .then(function(result){
+            res.send(result)
+        })
+        .fail(function(err){
+            logger.error(err);
+            res.send(404, {message: "get company data failed."});
+        })
+        .done();
+};
+
+
+
 exports.updateSKUDecision = function(req, res, next){
     var brandId = req.body.brand_id;
     var SKUID = req.body.sku_id;
