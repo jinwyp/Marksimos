@@ -252,7 +252,7 @@ exports.chooseSeminarForStudent = function(req, res, next){
             }
 
             if(!sessionOperation.getCompanyId(req)){
-                throw {message: "this student is not assigned to a seminar."}
+                res.send(400, {message: "this student is not assigned to a seminar."});
             }
 
             //if companyId is not set, this student can't attend this seminar

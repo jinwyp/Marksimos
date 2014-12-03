@@ -53,7 +53,7 @@ exports.addStudent = function(req, res, next){
     })
     .then(function(result){
         if(result){
-            throw {httpStatus: 400, message: 'Email has been used, please choose another email.'};
+            return res.send(400, {message: 'Email has been used, please choose another email.'});
         }else{
             return userModel.register(student);
         }

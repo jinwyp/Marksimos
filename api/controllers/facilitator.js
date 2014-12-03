@@ -43,7 +43,7 @@ exports.addFacilitator = function(req, res, next){
     userModel.findByEmail(req.body.email)
     .then(function(result){
         if(result){
-            throw {httpStatus: 400, message: 'Email has been used, please choose another email.'};
+            return res.send(400, {message: 'Email has been used, please choose another email.'});
         }else{
             return userModel.findOne({_id: distributorId})
         }
