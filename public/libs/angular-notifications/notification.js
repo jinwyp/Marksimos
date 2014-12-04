@@ -8,9 +8,9 @@ angular.module('notifications', []).
         queue = [];
 
     var settings = {
-      info: { duration: 5000, enabled: true },
-      warning: { duration: 5000, enabled: true },
-      error: { duration: 5000, enabled: true },
+      info: { duration: 8000, enabled: true },
+      warning: { duration: 8000, enabled: true },
+      error: { duration: 10000, enabled: true },
       success: { duration: 5000, enabled: true },
       progress: { duration: 0, enabled: true },
       custom: { duration: 35000, enabled: true },

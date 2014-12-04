@@ -16,7 +16,6 @@ var config = require('./common/config.js');
 var router = require('./api/routes.js');				// get an instance of the express Router
 
 var fs = require('fs');
-var morgan = require('morgan');
 
 
 
@@ -35,8 +34,6 @@ app.set('view engine', 'ejs');
 
 app.use(favicon());
 
-var morganFileStream = fs.createWriteStream(config.logDirectory + 'access.log');
-app.use(morgan('dev', {stream: morganFileStream}));
 
 app.use(cookieParser());
 app.use(bodyParser.json());
@@ -62,6 +59,7 @@ app.use('/', router);
 
 // catch 404 and forwarding to error handler
 app.use(function(req, res, next){
+
     res.status(404);
 
     if (app.get('env') !== 'production') {
@@ -93,9 +91,19 @@ app.use(function(err, req, res, next){
     // here and next(err) appropriately, or if
     // we possibly recovered from the error, simply next().
     res.status(err.status || 500);
-    res.render('page500.ejs', {
-        'title' : '500 System Error',
-        'error': err });
+
+    // respond with html page
+    if (req.accepts('html')) {
+        res.render('page500.ejs', {
+            'title' : '500 System Error',
+            'error': err });
+    }
+
+    // respond with json
+    if (req.accepts('json')) {
+        res.send({ error: '500 System Error' });
+    }
+
 });
 
 
