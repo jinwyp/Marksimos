@@ -69,6 +69,15 @@ exports.getDecisionsOfAllPeriod = function(seminarId){
 
                 brandDecisionList.forEach(function(brandDecision){
 
+
+                    if(brandDecision.d_CID === company.d_CID && brandDecision.period === company.period){
+
+                        
+
+                        brandDecision.brandbrandDecisions
+                    }
+
+
                     var tempSKUDecisionList = [];
                     for(var i=0; i<SKUDecisionList.length; i++){
                         var SKUDecision = SKUDecisionList[i];
@@ -78,7 +87,7 @@ exports.getDecisionsOfAllPeriod = function(seminarId){
                         }
                     }
                     brandDecision.d_SKUsDecisions = tempSKUDecisionList;
-                })
+                });
 
 
                 if(periodcounter === company.period){
@@ -96,8 +105,7 @@ exports.getDecisionsOfAllPeriod = function(seminarId){
                 }
             });
 
-            console.log("info:", companyDecision);
-            brandDecisionList = JSON.parse(JSON.stringify(brandDecisionList));
+            console.log("info:", brandDecisionList);
             SKUDecisionList = JSON.parse(JSON.stringify(SKUDecisionList));
 
 
