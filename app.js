@@ -8,6 +8,8 @@ var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 var mongoose = require('mongoose');
 
+var morgan = require('morgan');
+
 var session = require('cookie-session');
 var expressValidator = require('express-validator');
 var sessionOperation = require('./common/sessionOperation.js');
@@ -34,6 +36,8 @@ app.set('view engine', 'ejs');
 
 app.use(favicon());
 
+var morganFileStream = fs.createWriteStream(config.logDirectory + 'access.log');
+app.use(morgan('dev', {stream: morganFileStream}));
 
 app.use(cookieParser());
 app.use(bodyParser.json());

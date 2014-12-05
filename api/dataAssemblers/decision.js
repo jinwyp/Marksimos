@@ -55,8 +55,11 @@ exports.getDecisionsOfAllPeriod = function(seminarId){
 
             var periodlist = [];
 
-            Underscore.each(companyDecision, function(){
-
+            Underscore.each(companyDecision, function(company, companyindex){
+                var period ={
+                    name: company.period,
+                    companyDecision : company
+                }
             });
 
             console.log("info:", companyDecision);
