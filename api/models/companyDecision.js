@@ -22,6 +22,9 @@ var tDecisionSchema = new Schema({
 
 var CompanyDecision = mongoose.model('CompanyDecision', tDecisionSchema);
 
+exports.query = CompanyDecision;
+
+
 tDecisionSchema.pre('save', true, function(next, done){
     var self = this;
     var validateAction = {

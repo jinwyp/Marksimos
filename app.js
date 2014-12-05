@@ -101,7 +101,7 @@ app.use(function(err, req, res, next){
 
     // respond with json
     if (req.accepts('json')) {
-        res.send({ error: '500 System Error' });
+        res.send({ title: '500 System Error', message: err });
     }
 
 });

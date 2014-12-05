@@ -8,14 +8,14 @@ exports.error = function(err){
     if(!err) return;
 
     if(err.message){
-        winston.info("Error: " + err.message);
+        winston.info("Error: ",  err.message);
     }
     
     if(err.stack){
         winston.info(err.stack)
     }
-}
+};
 
 exports.log = function(message){
-    winston.info(message);
-}
+    winston.info("Debug Info: ", message);
+};

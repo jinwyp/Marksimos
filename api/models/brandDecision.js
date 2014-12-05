@@ -21,6 +21,8 @@ var tOneBrandDecisionSchema = new Schema({
 
 var BrandDecision = mongoose.model('BrandDecision', tOneBrandDecisionSchema);
 
+exports.query = BrandDecision;
+
 tOneBrandDecisionSchema.pre('save', true, function(next, done){
     var self = this;
     var validateAction = {

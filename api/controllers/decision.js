@@ -191,37 +191,26 @@ exports.getDecisionForFacilitator = function(req, res, next){
     var seminarId = req.params.seminar_id;
 
     if(!seminarId){
-        return res.send(403, {message: "You don't choose a seminar."});
+        return res.send(400, {message: "Please choose a seminar ID."});
     }else{
         seminarModel.findOne({seminarId: seminarId})
             .then(function(dbSeminar){
                 if(!dbSeminar){
                     return res.send(400, {message: "seminar " + seminarId + " doesn't exist."});
-                }else{
-
                 }
+                return decisionAssembler.getDecisionsOfAllPeriod(dbSeminar.seminarId);
 
+            }).then(function(result){
+                return res.send(result);
 
-            })
-            .fail(function(err){
+            }).fail(function(err){
                 logger.error(err);
-                return res.send(500, {message: "choose seminar faile."})
+                return res.send(500, {message: "get Decision Of Facilitator seminar error."})
             })
             .done();
     }
 
-    var period = req.session.currentPeriod;
-    var companyId = req.session.companyId;
 
-    decisionAssembler.getDecision(seminarId, period, companyId)
-        .then(function(result){
-            res.send(result)
-        })
-        .fail(function(err){
-            logger.error(err);
-            res.send(404, {message: "get company data failed."});
-        })
-        .done();
 };
 
 
