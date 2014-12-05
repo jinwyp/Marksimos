@@ -45,15 +45,15 @@ apiRouter.get('/', function(req, res, next){
 
 /**********    set Content-Type for all API JSON resppnse    **********/
 
-apiRouter.all("/e4e/api/*", function(req, res, next){
-    res.set('Content-Type', 'application/json; charset=utf-8');
-    next();
-});
-
-apiRouter.all("/marksimos/api/*", function(req, res, next){
-    res.set('Content-Type', 'application/json; charset=utf-8');
-    next();
-});
+//apiRouter.all("/e4e/api/*", function(req, res, next){
+//    res.set('Content-Type', 'application/json; charset=utf-8');
+//    next();
+//});
+//
+//apiRouter.all("/marksimos/api/*", function(req, res, next){
+//    res.set('Content-Type', 'application/json; charset=utf-8');
+//    next();
+//});
 
 
 
@@ -415,7 +415,7 @@ apiRouter.post('/marksimos/api/admin/remove_student_from_seminar', requireAdminL
 apiRouter.post('/marksimos/api/admin/init', requireAdminLogin({isRedirect : false}),  authorize('runSimulation'), initController.init());
 apiRouter.post('/marksimos/api/admin/runsimulation/:seminar_id/:round',  requireAdminLogin({isRedirect : false}), authorize('runSimulation'), initController.runSimulation());
 
-apiRouter.get('/marksimos/api/admin/seminar/:seminar_id', requireAdminLogin({isRedirect : false}), authorize('runSimulation'), decisionController.getDecisionForFacilitator);
+apiRouter.get('/marksimos/api/admin/seminar/:seminar_id/decisions', requireAdminLogin({isRedirect : false}), authorize('runSimulation'), decisionController.getDecisionForFacilitator);
 
 
 //reset student password

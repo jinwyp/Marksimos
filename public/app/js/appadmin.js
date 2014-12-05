@@ -601,13 +601,16 @@
 
 
 
-    angular.module('marksimosadmin').controller('adminMarksimosReportController', ['$scope', '$http', '$notification', '$translate', 'AdminTable', 'chartReport', 'AdminChart', function($scope, $http, $notification,$translate, AdminTable, chartReport, AdminChart) {
+    angular.module('marksimosadmin').controller('adminMarksimosReportController', ['$scope', '$http', '$notification', '$translate', 'Admin', 'AdminTable', 'chartReport', 'AdminChart', function($scope, $http, $notification,$translate, Admin,  AdminTable, chartReport, AdminChart) {
         $scope.css = {
             currentReportMenu: 'A1',
             tableReportTab: 'SKU'
         };
 
         $scope.data = {
+
+            allDecisions:[],
+
             //A1 Company Status
             tableA1CompanyStatus: {
                 allCompanyData: [],
@@ -813,6 +816,8 @@
             init: function() {
 
                 var that = this;
+                //加载 All Comapany Decisions
+                that.loadingAllDecisions();
 
                 chartReport.initTranslate().then(function() {
                     //添加事件
@@ -846,6 +851,7 @@
                     that.loadingChartC2Data();
                     //加载C4
                     that.loadingChartC4Data();
+
 
 
                 });
@@ -1131,6 +1137,15 @@
 
             },
             reRun: function() { },
+
+            loadingAllDecisions: function() {
+
+                Admin.getAllCompanyDecisionsOfAllPeriods('10007').success(function(data, status, headers, config) {
+                    $scope.data.allDecisions = data;
+                    console.log(data);
+                });
+            },
+
             loadingCompanyData: function() {
                 /********************  Table A1 Company Status  *******************/
                 //获取数据

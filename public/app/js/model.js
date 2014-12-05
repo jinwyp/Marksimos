@@ -1203,6 +1203,9 @@
             getSeminars : function(urlparams){
                 urlparams = angular.isUndefined(urlparams) ? {}  : urlparams ;
                 return $http.get(apiAdminPath + 'facilitator/seminar', {params : urlparams});
+            },
+            getAllCompanyDecisionsOfAllPeriods : function(seminarId){
+                return $http.get(apiAdminPath + 'seminar/' + seminarId + '/decisions') ;
             }
 
         };

@@ -7,9 +7,12 @@
 
     <div class="wrapper row-offcanvas row-offcanvas-left">
 
-
         <section class="content">
-            <h2 class="page-header">MarkSimos Seminar <%= seminarId %> Report</h2>
+            <h2 class="page-header">MarkSimos Seminar <%= seminarId %> Report
+                <button type="button" class="btn btn-default" ng-click="clickChartMenu('AllDecisions')"> Show All Decisions</button>
+            </h2>
+
+
             {{'ReportYourCompany' | translate}} :
             <div class="btn-group">
                 <button type="button" class="btn btn-default" ng-class="{'active': css.currentReportMenu=='A1'}" ng-click="clickChartMenu('A1')">{{'ReportMenuCompanyStatus' | translate}}</button>
@@ -905,7 +908,103 @@
                 </div>
             </div>
         </section>
+
+
+
+
+
+
+
+        <!--  All Decisions   -->
+        <section class="content" ng-if="css.currentReportMenu=='AllDecisions'">
+            <!-- Report box -->
+            <div class="box box-primary">
+                <div class="box-header">
+
+                    <i class="fa fa-table"></i>
+                    <h3 class="box-title">
+                        {{'DecisionPageDecisionTabMAKEDECISIONS' | translate}}
+                    </h3>
+                </div>
+
+                <div class="box-body no-padding">
+                    <!-- .table - -->
+                    <table class="table table-striped">
+                        <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Name</th>
+                            <th>Period</th>
+                            <th>Requested Additional Budget</th>
+                            <th>Brand</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr ng-repeat="company in data.allDecisions">
+                            <td>{{company.d_CID}}</td>
+                            <td>{{company.d_CompanyName}}</td>
+                            <td>{{company.period}}</td>
+                            <td>{{company.d_RequestedAdditionalBudget}}</td>
+                            <td>
+
+                                <table class="table table-striped" >
+                                    <thead>
+                                    <tr>
+                                        <th>ID</th>
+                                        <th>Name</th>
+                                        <th>Sales Force</th>
+                                        <th>SKU</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    <tr ng-repeat="brand in company.brandDecisions">
+                                        <td>{{brand.d_BrandID}}</td>
+                                        <td>{{brand.d_BrandName}}</td>
+                                        <td>{{brand.d_SalesForce}}</td>
+                                        <td>
+                                            <table class="table table-striped" >
+                                                <thead>
+                                                <tr>
+                                                    <th>ID</th>
+                                                    <th>Name</th>
+                                                    <th>Technology</th>
+                                                </tr>
+                                                </thead>
+                                                <tbody>
+                                                <tr ng-repeat="sku in brand.SKUDecisions">
+                                                    <td>{{sku.d_SKUID}}</td>
+                                                    <td>{{sku.d_SKUName}}</td>
+                                                    <td>{{sku.d_Technology}}</td>
+                                                </tr>
+
+                                                </tbody>
+                                            </table>
+                                        </td>
+                                    </tr>
+
+                                    </tbody>
+                                </table>
+
+
+
+
+
+
+                            </td>
+                        </tr>
+
+                        </tbody>
+                    </table>
+
+                </div><!-- /.box-body-->
+
+            </div>
+            <!-- /.box -->
+        </section>
+
     </div>
+
+
 
 
 
