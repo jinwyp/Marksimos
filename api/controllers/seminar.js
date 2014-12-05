@@ -290,14 +290,14 @@ exports.chooseSeminarForFacilitator = function(req, res, next){
             sessionOperation.setCurrentPeriod(req, dbSeminar.currentPeriod);
 
 
-            res.render('marksimosadmin/adminmarksimosreport.ejs',{
+            return res.render('marksimosadmin/adminmarksimosreport.ejs',{
                 title : 'Admin | Report',
                 seminarId: seminarId
             });
         })
         .fail(function(err){
             logger.error(err);
-            return res.send(500, {message: "choose seminar faile."})
+            return res.send(500, {message: "choose seminar fails."})
         })
         .done();
 
