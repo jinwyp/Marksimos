@@ -2,7 +2,6 @@ var companyDecisionModel = require('../models/companyDecision.js');
 var brandDecisionModel = require('../models/brandDecision.js');
 var SKUDecisionModel = require('../models/SKUDecision.js');
 var Q = require('q');
-var Underscore = require('underscore');
 
 /**
  * Get decision of one period
@@ -53,23 +52,55 @@ exports.getDecisionsOfAllPeriod = function(seminarId){
     ])
         .spread(function(companyDecision, brandDecisionList, SKUDecisionList){
 
-            var periodlist = [];
+            if(!companyDecision || !brandDecisionList || !SKUDecisionList){
+                throw {message: 'companyDecision / brandDecisionList / SKUDecisionList is empty.'}
+            }
 
-            Underscore.each(companyDecision, function(company, companyindex){
-                var period ={
-                    name: company.period,
-                    companyDecision : company
+            var periodlist = [];
+            var periodcounter = -3;
+            var period ={
+                period: periodcounter,
+                companyDecisions : []
+            };
+
+            companyDecision.forEach(function(company){
+
+
+
+                brandDecisionList.forEach(function(brandDecision){
+
+                    var tempSKUDecisionList = [];
+                    for(var i=0; i<SKUDecisionList.length; i++){
+                        var SKUDecision = SKUDecisionList[i];
+                        if(SKUDecision.d_BrandID === brandDecision.d_BrandID){
+
+                            tempSKUDecisionList.push(SKUDecision);
+                        }
+                    }
+                    brandDecision.d_SKUsDecisions = tempSKUDecisionList;
+                })
+
+
+                if(periodcounter === company.period){
+                    period.companyDecisions.push(company);
+                }else{
+                    periodcounter++;
+                    periodlist.push(period);
+
+                    period = {
+                        period: periodcounter,
+                        companyDecisions : []
+                    };
+
+                    period.companyDecisions.push(company);
                 }
             });
 
             console.log("info:", companyDecision);
-            companyDecision = JSON.parse(JSON.stringify(companyDecision));
             brandDecisionList = JSON.parse(JSON.stringify(brandDecisionList));
             SKUDecisionList = JSON.parse(JSON.stringify(SKUDecisionList));
 
-            if(!companyDecision || !brandDecisionList || !SKUDecisionList){
-                throw {message: 'companyDecision/brandDecisionList/SKUDecisionList is empty.'}
-            }
+
 
             //combine decisions
             brandDecisionList.forEach(function(brandDecision){
@@ -87,7 +118,7 @@ exports.getDecisionsOfAllPeriod = function(seminarId){
 
             companyDecision.d_BrandsDecisions = brandDecisionList;
 
-            return companyDecision;
+            return periodlist;
         });
 };
 
