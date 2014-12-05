@@ -46,9 +46,9 @@ exports.getDecision = function(seminarId, period, companyId){
  */
 exports.getDecisionsOfAllPeriod = function(seminarId){
     return Q.all([
-        companyDecisionModel.query.find({seminarId:seminarId}).exec(),
-        brandDecisionModel.query.find({seminarId:seminarId}).exec(),
-        SKUDecisionModel.query.find({seminarId:seminarId}).exec()
+        companyDecisionModel.query.find({seminarId:seminarId}).lean().exec(),
+        brandDecisionModel.query.find({seminarId:seminarId}).lean().exec(),
+        SKUDecisionModel.query.find({seminarId:seminarId}).lean().exec()
     ])
         .spread(function(companyDecision, brandDecisionList, SKUDecisionList){
 
@@ -56,77 +56,41 @@ exports.getDecisionsOfAllPeriod = function(seminarId){
                 throw {message: 'companyDecision / brandDecisionList / SKUDecisionList is empty.'}
             }
 
-            var periodlist = [];
-            var periodcounter = -3;
-            var period ={
-                period: periodcounter,
-                companyDecisions : []
-            };
+            //combine decisions
 
             companyDecision.forEach(function(company){
 
+                company.brandDecisions = [];
+                company.SKUDecisions = [];
 
 
-                brandDecisionList.forEach(function(brandDecision){
+                SKUDecisionList.forEach(function(SKUDecision){
+                    if(SKUDecision.d_CID === company.d_CID && SKUDecision.period === company.period){
 
-
-                    if(brandDecision.d_CID === company.d_CID && brandDecision.period === company.period){
-
-                        
-
-                        brandDecision.brandbrandDecisions
+                        company.SKUDecisions.push(SKUDecision);
                     }
-
-
-                    var tempSKUDecisionList = [];
-                    for(var i=0; i<SKUDecisionList.length; i++){
-                        var SKUDecision = SKUDecisionList[i];
-                        if(SKUDecision.d_BrandID === brandDecision.d_BrandID){
-
-                            tempSKUDecisionList.push(SKUDecision);
-                        }
-                    }
-                    brandDecision.d_SKUsDecisions = tempSKUDecisionList;
                 });
 
+                brandDecisionList.forEach(function(brandDecision){
+                    brandDecision.SKUDecisions = [];
 
-                if(periodcounter === company.period){
-                    period.companyDecisions.push(company);
-                }else{
-                    periodcounter++;
-                    periodlist.push(period);
+                    if(brandDecision.d_CID === company.d_CID && brandDecision.period === company.period){
+                        company.brandDecisions.push(brandDecision);
+                    }
 
-                    period = {
-                        period: periodcounter,
-                        companyDecisions : []
-                    };
+                    company.SKUDecisions.forEach(function(SKUDecision2){
 
-                    period.companyDecisions.push(company);
-                }
+                        if(SKUDecision2.d_BrandID === brandDecision.d_BrandID){
+                            brandDecision.SKUDecisions.push(SKUDecision2);
+                        }
+                    })
+
+                });
+
             });
 
-            console.log("info:", brandDecisionList);
-            SKUDecisionList = JSON.parse(JSON.stringify(SKUDecisionList));
 
-
-
-            //combine decisions
-            brandDecisionList.forEach(function(brandDecision){
-
-                var tempSKUDecisionList = [];
-                for(var i=0; i<SKUDecisionList.length; i++){
-                    var SKUDecision = SKUDecisionList[i];
-                    if(SKUDecision.d_BrandID === brandDecision.d_BrandID){
-
-                        tempSKUDecisionList.push(SKUDecision);
-                    }
-                }
-                brandDecision.d_SKUsDecisions = tempSKUDecisionList;
-            })
-
-            companyDecision.d_BrandsDecisions = brandDecisionList;
-
-            return periodlist;
+            return companyDecision;
         });
 };
 
