@@ -1317,25 +1317,25 @@
 
             //Table B4-1 Market Salues Value
             getMarketSalesValue: function () {
-                return $http.get(apiAdminPath + "chart/investments_versus_budget").then(function (result) {
+                return $http.get(apiAdminPath + "chart/market_sales_value").then(function(result) {
                     return chartFormatToolLineChart(result.data, 0);
                 });
             },
             //Table B4-2 Market Salues Volume
             getMarketSalesVolume: function () {
-                return $http.get(apiAdminPath + "chart/investments_versus_budget").then(function (result) {
+                return $http.get(apiAdminPath + "chart/market_sales_volume").then(function(result) {
                     return chartFormatToolLineChart(result.data, 0);
                 });
             },
             //Table B4-3 Total Inventory At Facotry
             getTotalInventoryAtFactory: function () {
-                return $http.get(apiAdminPath + "chart/investments_versus_budget").then(function (result) {
+                return $http.get(apiAdminPath + "chart/total_inventory_at_factory").then(function(result) {
                     return chartFormatToolLineChart(result.data, 0);
                 });
             },
             //Table B4-4 Total Inventory At Trade
             getTotalInventoryAtTrade: function () {
-                return $http.get(apiAdminPath + "chart/investments_versus_budget").then(function (result) {
+                return $http.get(apiAdminPath + "chart/total_inventory_at_trade").then(function(result) {
                     return chartFormatToolLineChart(result.data, 0);
                 });
             },
