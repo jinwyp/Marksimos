@@ -11513,10 +11513,12 @@ nv.models.scatter = function() {
           pointPaths.exit().remove();
           pointPaths
               .attr('d', function(d) {
-                  if (d && d.data && d.data.length === 0)
-                      return 'M 0 0'
-                  else
-                      return 'M' + d.data.join('L') + 'Z';
+                  if (d) {
+                      if (d.data && d.data.length === 0)
+                          return 'M 0 0'
+                      else
+                          return 'M' + d.data.join('L') + 'Z';
+                  }
               });
 
           var mouseEventCallback = function(d,mDispatch) {
