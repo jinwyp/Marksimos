@@ -2,6 +2,7 @@ var companyDecisionModel = require('../models/companyDecision.js');
 var brandDecisionModel = require('../models/brandDecision.js');
 var SKUDecisionModel = require('../models/SKUDecision.js');
 var Q = require('q');
+var Underscore = require('underscore');
 
 /**
  * Get decision of one period
@@ -51,6 +52,13 @@ exports.getDecisionsOfAllPeriod = function(seminarId){
         SKUDecisionModel.query.find({seminarId:seminarId}).exec()
     ])
         .spread(function(companyDecision, brandDecisionList, SKUDecisionList){
+
+            var periodlist = [];
+
+            Underscore.each(companyDecision, function(){
+
+            });
+
             console.log("info:", companyDecision);
             companyDecision = JSON.parse(JSON.stringify(companyDecision));
             brandDecisionList = JSON.parse(JSON.stringify(brandDecisionList));

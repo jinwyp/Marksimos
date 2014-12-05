@@ -97,11 +97,13 @@ app.use(function(err, req, res, next){
         res.render('page500.ejs', {
             'title' : '500 System Error',
             'error': err });
+        return;
     }
 
     // respond with json
     if (req.accepts('json')) {
         res.send({ title: '500 System Error', message: err });
+        return;
     }
 
 });
