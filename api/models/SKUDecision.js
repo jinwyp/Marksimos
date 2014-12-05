@@ -42,6 +42,8 @@ var tOneSKUDecisionSchema = new Schema({
 
 var SKUDecision = mongoose.model('SKUDecision', tOneSKUDecisionSchema);
 
+exports.query = SKUDecision;
+
 tOneSKUDecisionSchema.pre('save', true, function(next, done){
     //if save middle-ware is active by behavior adding SKU, use default values and skip validations
     if(this.modifiedField == 'addNewSKU'){

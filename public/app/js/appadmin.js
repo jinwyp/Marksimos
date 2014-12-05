@@ -525,7 +525,7 @@
         };
         /********************  Add Student To Seminar  ********************/
         $scope.addStudentToSeminar = function(seminarid, studentemail) {
-
+            $notification.success('Save success', 'Init Seminar success');
             if ($scope.data.addStudentToSeminar.company_id === 0 || angular.isUndefined(studentemail) || studentemail === "") {
                 $scope.css.seminarId = seminarid;
             } else {
@@ -592,6 +592,7 @@
                 $scope.css.runButtonDisabled = false;
             });
         };
+
 
 
     }]);

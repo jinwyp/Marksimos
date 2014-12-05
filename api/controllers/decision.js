@@ -186,6 +186,35 @@ exports.getDecision = function(req, res, next){
     .done();
 };
 
+
+exports.getDecisionForFacilitator = function(req, res, next){
+    var seminarId = req.params.seminar_id;
+
+    if(!seminarId){
+        return res.send(400, {message: "Please choose a seminar ID."});
+    }else{
+        seminarModel.findOne({seminarId: seminarId})
+            .then(function(dbSeminar){
+                if(!dbSeminar){
+                    return res.send(400, {message: "seminar " + seminarId + " doesn't exist."});
+                }
+                return decisionAssembler.getDecisionsOfAllPeriod(dbSeminar.seminarId);
+
+            }).then(function(result){
+                return res.send(result);
+
+            }).fail(function(err){
+                logger.error(err);
+                return res.send(500, {message: "get Decision Of Facilitator seminar error."})
+            })
+            .done();
+    }
+
+
+};
+
+
+
 exports.updateSKUDecision = function(req, res, next){
     var brandId = req.body.brand_id;
     var SKUID = req.body.sku_id;

@@ -42,7 +42,7 @@ exports.saveDecision = function(seminarId, allDecisions){
         })
     })
     return p;
-}
+};
 
 exports.saveCompanyDecision = function(decision, seminarId, period){
     var companyDecision = decisionAssembler.getCompanyDecision(decision);
@@ -50,7 +50,7 @@ exports.saveCompanyDecision = function(decision, seminarId, period){
     companyDecision.period = period;
 
     return companyDecisionModel.save(companyDecision);
-}
+};
 
 exports.saveBrandDecision = function(decision, seminarId, period){
     var brandDecisions = decisionAssembler.getBrandDecisions(decision);

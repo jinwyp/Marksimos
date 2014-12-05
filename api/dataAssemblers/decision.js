@@ -7,7 +7,6 @@ var Q = require('q');
  * Get decision of one period
  */
 exports.getDecision = function(seminarId, period, companyId){
-    console.log(seminarId, period, companyId);
     return Q.all([
         companyDecisionModel.findOne(seminarId, period, companyId),
         brandDecisionModel.findAllInCompany(seminarId, period, companyId),
@@ -40,7 +39,47 @@ exports.getDecision = function(seminarId, period, companyId){
 
         return companyDecision;
     });
-}
+};
+
+/**
+ * Get decision of all period
+ */
+exports.getDecisionsOfAllPeriod = function(seminarId){
+    return Q.all([
+        companyDecisionModel.query.find({seminarId:seminarId}).exec(),
+        brandDecisionModel.query.find({seminarId:seminarId}).exec(),
+        SKUDecisionModel.query.find({seminarId:seminarId}).exec()
+    ])
+        .spread(function(companyDecision, brandDecisionList, SKUDecisionList){
+            console.log("info:", companyDecision);
+            companyDecision = JSON.parse(JSON.stringify(companyDecision));
+            brandDecisionList = JSON.parse(JSON.stringify(brandDecisionList));
+            SKUDecisionList = JSON.parse(JSON.stringify(SKUDecisionList));
+
+            if(!companyDecision || !brandDecisionList || !SKUDecisionList){
+                throw {message: 'companyDecision/brandDecisionList/SKUDecisionList is empty.'}
+            }
+
+            //combine decisions
+            brandDecisionList.forEach(function(brandDecision){
+
+                var tempSKUDecisionList = [];
+                for(var i=0; i<SKUDecisionList.length; i++){
+                    var SKUDecision = SKUDecisionList[i];
+                    if(SKUDecision.d_BrandID === brandDecision.d_BrandID){
+
+                        tempSKUDecisionList.push(SKUDecision);
+                    }
+                }
+                brandDecision.d_SKUsDecisions = tempSKUDecisionList;
+            })
+
+            companyDecision.d_BrandsDecisions = brandDecisionList;
+
+            return companyDecision;
+        });
+};
+
 
 /**
  * Convert decision to a companyDecision object which can be saved to db
