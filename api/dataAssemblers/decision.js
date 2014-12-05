@@ -44,7 +44,7 @@ exports.getDecision = function(seminarId, period, companyId){
 /**
  * Get decision of all period
  */
-exports.getDecisionsOfAllPeriod = function(seminarId){
+exports.getAllCompanyDecisionsOfAllPeriod = function(seminarId){
     return Q.all([
         companyDecisionModel.query.find({seminarId:seminarId}).lean().exec(),
         brandDecisionModel.query.find({seminarId:seminarId}).lean().exec(),
