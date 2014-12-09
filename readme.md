@@ -167,6 +167,14 @@ sudo service mongod stop
 sudo vi /etc/mongodb.conf
 ```
 
+配置文件 mongodb.conf 中加入 以下配置用来验证
+```
+# auth
+auth = true   # true or false. Whether or not authentication is required.
+```
+
+
+
 
 ## 运行
 ## 使用PM2 启动nodejs

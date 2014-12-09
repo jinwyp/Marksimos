@@ -197,15 +197,17 @@ exports.getDecisionForFacilitator = function(req, res, next){
             .then(function(dbSeminar){
                 if(!dbSeminar){
                     return res.send(400, {message: "seminar " + seminarId + " doesn't exist."});
+                }else{
+                    decisionAssembler.getAllCompanyDecisionsOfAllPeriod(dbSeminar.seminarId)
+                        .then(function(result){
+                            return res.send(result);
+                        })
+                        .done();;
                 }
-                return decisionAssembler.getAllCompanyDecisionsOfAllPeriod(dbSeminar.seminarId);
-
-            }).then(function(result){
-                return res.send(result);
 
             }).fail(function(err){
                 logger.error(err);
-                return res.send(500, {message: "get Decision Of Facilitator seminar error."})
+                next(err);
             })
             .done();
     }

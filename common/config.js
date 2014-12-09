@@ -89,6 +89,7 @@ module.exports = (function(){
         case 'jin':
             config.logDirectory = '/Users/jinwyp/Documents/github/Marksimos/log/';
             config.mongo_conn = 'mongodb://192.168.2.50/Marksimos';
+            //config.mongo_conn = 'mongodb://marksimosdbadmin:marksimossunhao@127.0.0.1:27017/Marksimos';
             config.host = 'http://localhost:3000/';
             config.cgiService = 'http://192.168.2.50/cgi-bin/';
             break;
