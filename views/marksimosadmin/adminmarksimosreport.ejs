@@ -916,91 +916,124 @@
 
 
         <!--  All Decisions   -->
-        <section class="content" ng-if="css.currentReportMenu=='AllDecisions'">
-            <!-- Report box -->
-            <div class="box box-primary">
-                <div class="box-header">
-
-                    <i class="fa fa-table"></i>
-                    <h3 class="box-title">
-                        {{'DecisionPageDecisionTabMAKEDECISIONS' | translate}}
-                    </h3>
-                </div>
-
-                <div class="box-body no-padding">
-                    <!-- .table - -->
+        <div class="box-body no-padding" ng-repeat="decisions in data.allDecisions.data | period:data.allDecisions.currentPeriod | company:data.allDecisions.currentCompany">
                     <table class="table table-striped">
                         <thead>
-                        <tr>
-                            <th>ID</th>
-                            <th>Name</th>
-                            <th>Period</th>
-                            <th>Requested Additional Budget</th>
-                            <th>Brand</th>
-                        </tr>
+                            <tr>
+                                <th>seminarId</th>
+                                <th>{{'HomePageSecondMenuBarLabelsCompany' | translate}}</th>
+                                <th>{{'HomePageSecondMenuBarCurrentPeriod' | translate}}</th>
+                                <th>{{'DecisionPageSecondMenuBarLabelsAdditionalBudget' | translate}}</th>
+                            </tr>
                         </thead>
                         <tbody>
-                        <tr ng-repeat="company in data.allDecisions">
-                            <td>{{company.d_CID}}</td>
-                            <td>{{company.d_CompanyName}}</td>
-                            <td>{{company.period}}</td>
-                            <td>{{company.d_RequestedAdditionalBudget}}</td>
-                            <td>
-
-                                <table class="table table-striped" >
-                                    <thead>
-                                    <tr>
-                                        <th>ID</th>
-                                        <th>Name</th>
-                                        <th>Sales Force</th>
-                                        <th>SKU</th>
-                                    </tr>
-                                    </thead>
-                                    <tbody>
-                                    <tr ng-repeat="brand in company.brandDecisions">
-                                        <td>{{brand.d_BrandID}}</td>
-                                        <td>{{brand.d_BrandName}}</td>
-                                        <td>{{brand.d_SalesForce}}</td>
-                                        <td>
-                                            <table class="table table-striped" >
-                                                <thead>
-                                                <tr>
-                                                    <th>ID</th>
-                                                    <th>Name</th>
-                                                    <th>Technology</th>
-                                                </tr>
-                                                </thead>
-                                                <tbody>
-                                                <tr ng-repeat="sku in brand.SKUDecisions">
-                                                    <td>{{sku.d_SKUID}}</td>
-                                                    <td>{{sku.d_SKUName}}</td>
-                                                    <td>{{sku.d_Technology}}</td>
-                                                </tr>
-
-                                                </tbody>
-                                            </table>
-                                        </td>
-                                    </tr>
-
-                                    </tbody>
-                                </table>
-
-
-
-
-
-
-                            </td>
-                        </tr>
-
+                            <tr>
+                                <td>{{decisions.seminarId}}</td>
+                                <td>{{decisions.d_CID | companyName}}</td>
+                                <td>{{decisions.period}}</td>
+                                <td>{{decisions.d_RequestedAdditionalBudget}}</td>
+                            </tr>
                         </tbody>
+                        <tfoot>
+                            <tr>
+                                <td colspan="4">&nbsp;</td>
+                            </tr>
+                        </tfoot>
+                    </table>
+                    <table class="table" data-toggle="table">
+                        <thead>
+                            <tr style="background-color: #efefef;">
+                                <th>ID</th>
+                                <th>{{'DecisionPageDecisionTabName' | translate}}</th>
+                                <th>{{'DecisionPageDecisionTabSalesForce' | translate}}</th>
+                                <th>SKU</th>
+                            </tr>
+                        </thead>
+                        <tbody ng-repeat="brand in decisions.brandDecisions">
+                            <tr>
+                                <td>{{brand.d_BrandID}}</td>
+                                <td>{{brand.d_BrandName}}</td>
+                                <td>{{brand.d_SalesForce}}</td>
+                                <td>
+                                    <table class="table table-striped" data-toggle="table">
+                                        <tr ng-repeat-start="sku in decisions.SKUDecisions  | brand:brand.d_BrandID">
+                                            <td>ID</td>
+                                            <td>{{sku.d_SKUID}}</td>
+                                            <td style="border-left: 1px solid #dedede;">&nbsp;</td>
+                                            <td>{{'DecisionPageDecisionTabName' | translate}} </td>
+                                            <td>{{brand.d_BrandName}}{{sku.d_SKUName}}</td>
+                                            <td style="border-left: 1px solid #dedede;">&nbsp;</td>
+                                            <td>{{'DecisionPageDecisionTabDiscontinue' | translate}} </td>
+                                            <td>{{sku.d_ToDrop}}</td>
+                                        </tr>
+                                        <tr>
+                                            <td>{{'DecisionPageDecisionTabProcessingTechnology' | translate}}</td>
+                                            <td>{{sku.d_Technology}}</td>
+                                            <td style="border-left: 1px solid #dedede;">&nbsp;</td>
+                                            <td>{{'DecisionPageDecisionTabIngredientsQuality' | translate}} </td>
+                                            <td>{{sku.d_IngredientsQuality}}</td>
+                                            <td style="border-left: 1px solid #dedede;">&nbsp;</td>
+                                            <td>{{'DecisionPageDecisionTabPackagingSize' | translate}} </td>
+                                            <td>{{sku.d_PackSize | skupacksize | translate}}</td>
+                                        </tr>
+                                        <tr>
+                                            <td>{{'DecisionPageDecisionTabProductionVolume' | translate}}</td>
+                                            <td>{{sku.d_ProductionVolume}}</td>
+                                            <td style="border-left: 1px solid #dedede;">&nbsp;</td>
+                                            <td>{{'DecisionPageDecisionTabManufacturerPrice' | translate}}</td>
+                                            <td>{{sku.d_FactoryPrice[0] | toFloat}}</td>
+                                            <td style="border-left: 1px solid #dedede;">&nbsp;</td>
+                                            <td>{{'DecisionPageDecisionTabRepriceFactoryStock' | translate}}</td>
+                                            <td>{{sku.d_RepriceFactoryStocks}}</td>
+                                        </tr>
+                                        <tr>
+                                            <td>{{'DecisionPageDecisionTabConsumerCommunication' | translate}}</td>
+                                            <td>{{sku.d_Advertising}}</td>
+                                            <td style="border-left: 1px solid #dedede;">&nbsp;</td>
+                                            <td>{{'DecisionPageDecisionTabTargetConsumerSegment' | translate}}</td>
+                                            <td>{{sku.d_TargetConsumerSegment }}</td>
+                                            <td style="border-left: 1px solid #dedede;">&nbsp;</td>
+                                            <td>{{'DecisionPageDecisionTabConsumerPromotions' | translate}}</td>
+                                            <td>{{sku.d_PromotionalBudget}}</td>
+                                        </tr>
+                                        <tr>
+                                            <td>{{'DecisionPageDecisionTabConsumerPromotionsSchedule' | translate}}</td>
+                                            <td>&nbsp;</td>
+                                            <td style="border-left: 1px solid #dedede;">&nbsp;</td>
+                                            <td>{{'DecisionPageDecisionTabTradeExpenses' | translate}}</td>
+                                            <td>{{sku.d_TradeExpenses}}</td>
+                                            <td style="border-left: 1px solid #dedede;">&nbsp;</td>
+                                            <td>{{'DecisionPageDecisionTabAdditionalTradeMargin' | translate}}</td>
+                                            <td>{{(sku.d_AdditionalTradeMargin | toFloat)*100}}</td>
+                                        </tr>
+                                        <tr>
+                                            <td>{{'DecisionPageDecisionTabWholesaleMinimumVolume' | translate}}</td>
+                                            <td>{{sku.d_WholesalesBonusMinVolume}}</td>
+                                            <td style="border-left: 1px solid #dedede;">&nbsp;</td>
+                                            <td>{{'DecisionPageDecisionTabWholesaleBonusRate' | translate}}</td>
+                                            <td>{{sku.d_WholesalesBonusRate}}</td>
+                                            <td style="border-left: 1px solid #dedede;">&nbsp;</td>
+                                            <td></td>
+                                            <td></td>
+                                        </tr>
+                                        <tr ng-repeat-end ng-if="!$last">
+                                            <td colspan="8" style="background-color: #fff;"></td>
+                                        </tr>
+                                    </table>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td colspan="4"></td>
+                            </tr>
+                        </tbody>
+                        <tfoot>
+                            <tr>
+                                <td colspan="4">&nbsp;</td>
+                            </tr>
+                        </tfoot>
                     </table>
 
-                </div><!-- /.box-body-->
-
-            </div>
-            <!-- /.box -->
-        </section>
+                </div>
 
     </div>
 

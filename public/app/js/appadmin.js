@@ -603,13 +603,18 @@
 
     angular.module('marksimosadmin').controller('adminMarksimosReportController', ['$scope', '$http', '$notification', '$translate', 'Admin', 'AdminTable', 'chartReport', 'AdminChart', function($scope, $http, $notification,$translate, Admin,  AdminTable, chartReport, AdminChart) {
         $scope.css = {
-            currentReportMenu: 'A1',
+            // currentReportMenu: 'A1',
+            currentReportMenu:'AllDecisions',//测试用
             tableReportTab: 'SKU'
         };
 
         $scope.data = {
 
-            allDecisions:[],
+            allDecisions: {
+                data: [],
+                allCompany: [],
+                allPeriod: []
+            },
 
             //A1 Company Status
             tableA1CompanyStatus: {
@@ -851,8 +856,6 @@
                     that.loadingChartC2Data();
                     //加载C4
                     that.loadingChartC4Data();
-
-
 
                 });
             },
@@ -1139,10 +1142,28 @@
             reRun: function() { },
 
             loadingAllDecisions: function() {
-
-                Admin.getAllCompanyDecisionsOfAllPeriods('10007').success(function(data, status, headers, config) {
-                    $scope.data.allDecisions = data;
-                    console.log(data);
+                var seminerID = /.+\/adminhomereport\/(\d+).*/.exec(window.location.href)[1] || 0;
+                Admin.getAllCompanyDecisionsOfAllPeriods(seminerID).success(function(data, status, headers, config) {                  
+                    $scope.data.allDecisions.data = data;
+                    console.log(data[0]);
+                    //去重标记
+                    var allPeriod = {}, allCompany = {};
+                    //获取所有的公司及阶段
+                    for (var i = 0; i < data.length; i++) {
+                        var companyKey = data[i].d_CID;
+                        if (!allCompany[companyKey]) {
+                            allCompany[companyKey] = true;
+                            $scope.data.allDecisions.allCompany.push(companyKey);
+                        }
+                        var periodKey = data[i].period;
+                        if (!allPeriod[periodKey]) {
+                            allPeriod[periodKey] = true;
+                            $scope.data.allDecisions.allPeriod.push(periodKey);
+                        }
+                    }
+                    //设置默认的公司及阶段
+                    $scope.data.allDecisions.currentCompany = $scope.data.allDecisions.allCompany[0];
+                    $scope.data.allDecisions.currentPeriod = $scope.data.allDecisions.allPeriod[0];
                 });
             },
 

@@ -31,10 +31,17 @@
 
     angular.module('marksimos.filter').filter('usersegment', userSegmentFilter);
     angular.module('marksimos.filter').filter('skupacksize', skuPackSizeFilter);
+    angular.module('marksimos.filter').filter('companyName', companyNameFilter);
+
+    angular.module('marksimos.filter').filter('company', companyFilter);
+    angular.module('marksimos.filter').filter('period', periodFilter);
+    angular.module('marksimos.filter').filter('toFloat', toFixedFilter);
+    angular.module('marksimos.filter').filter('brand', brandFilter);
 
     angular.module('marksimos.filter').directive('filterpercentage', percentageInputFilter);
     angular.module('marksimos.filter').directive('filternumber', numberInputFilter);
-
+   
+ 
 
     function userSegmentFilter () {
         return function(input) {
@@ -102,9 +109,61 @@
         };
     }
 
-
-
-
+    function companyNameFilter() {
+        return function(input) {
+            input = input || [];
+            //根据公司编号，显示公司名称
+            var companyID = +input || -1;
+            if (companyID > 0) {
+                return String.fromCharCode('A'.charCodeAt(0) + companyID - 1);
+            }
+            return 'unknown';
+        };
+    }
+   
+    function companyFilter() {
+        return function(input, cid) {
+            input = input || [];
+            var data = [];
+            for (var i = 0; i < input.length; i++) {
+                var cur = input[i];
+                if (cur.d_CID === cid) {
+                    data.push(cur);
+                }
+            }
+            return data;
+        }
+    }
+    function periodFilter() {
+        return function(input, period) {
+            var data = [];
+            for (var i = 0; i < input.length; i++) {
+                var cur = input[i];
+                if (cur.period === period) {
+                    data.push(cur);
+                }
+            }
+            return data;
+        }
+    }
+    function toFixedFilter() {
+        return function(input, num) {
+            return +(parseFloat(input) || 0.0).toFixed(+num || 2);
+        }
+    }
+    function brandFilter() {
+        return function(input, brandID) {
+            input = input || [];
+            var data = [];
+            for (var i = 0; i < input.length; i++) {
+                var cur = input[i];
+                if (cur.d_BrandID === brandID) {
+                    data.push(cur);
+                }
+            }
+            return data;
+        }
+    }
     /********************  NgModel Filters  ********************/
 
     function percentageInputFilter () {
