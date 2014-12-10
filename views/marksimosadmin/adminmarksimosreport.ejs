@@ -922,18 +922,18 @@
                 <div class="box-header">
                     <div class="btn-group pull-right">
                         <button type="button" class="btn btn-default btn-sm dropdown-toggle" data-toggle="dropdown">
-                            {{'HomePageSecondMenuBarLabelsCompany' | translate}} {{data.allDecisions.currentCompany | companyName}} <span class="caret"></span>
+                            {{'HomePageSecondMenuBarLabelsCompany' | translate}} {{data.allDecisions.current.d_CID | companyName}} <span class="caret"></span>
                         </button>
                         <ul class="dropdown-menu" role="menu">
-                            <li ng-repeat="company in data.allDecisions.allCompany"><a href="" ng-click="data.allDecisions.currentCompany=company">{{'HomePageSecondMenuBarLabelsCompany' | translate}} {{company | companyName}}</a></li>
+                            <li ng-repeat="company in data.allDecisions.allCompany"><a href="" ng-click="data.allDecisions.current.d_CID=company">{{'HomePageSecondMenuBarLabelsCompany' | translate}} {{company | companyName}}</a></li>
                         </ul>
                     </div>
                     <div class="btn-group pull-right">
                         <button type="button" class="btn btn-default btn-sm dropdown-toggle" data-toggle="dropdown">
-                            {{'HomePageSecondMenuBarCurrentPeriod' | translate}} {{data.allDecisions.currentPeriod}} <span class="caret"></span>
+                            {{'HomePageSecondMenuBarCurrentPeriod' | translate}} {{data.allDecisions.current.period}} <span class="caret"></span>
                         </button>
                         <ul class="dropdown-menu" role="menu">
-                            <li ng-repeat="period in data.allDecisions.allPeriod"><a href="" ng-click="data.allDecisions.currentPeriod=period">{{'HomePageSecondMenuBarCurrentPeriod' | translate}}  {{period}}</a></li>
+                            <li ng-repeat="period in data.allDecisions.allPeriod"><a href="" ng-click="data.allDecisions.current.period=period">{{'HomePageSecondMenuBarCurrentPeriod' | translate}}  {{period}}</a></li>
                         </ul>
                     </div>
                     <i class="fa fa-table"></i>
@@ -942,7 +942,7 @@
                     </h3>
                 </div>
 
-               <div class="box-body no-padding" ng-repeat="decisions in data.allDecisions.data | period:data.allDecisions.currentPeriod | company:data.allDecisions.currentCompany">
+               <div class="box-body no-padding" ng-repeat="decisions in data.allDecisions.data | filter:data.allDecisions.current">
                     <table class="table table-striped">
                         <thead>
                             <tr>
@@ -982,7 +982,7 @@
                                 <td>{{brand.d_SalesForce}}</td>
                                 <td>
                                     <table class="table table-striped" data-toggle="table">
-                                        <tr ng-repeat-start="sku in decisions.SKUDecisions  | brand:brand.d_BrandID">
+                                        <tr ng-repeat-start="sku in decisions.SKUDecisions  | filter:{d_BrandID:brand.d_BrandID}">
                                             <td>ID</td>
                                             <td>{{sku.d_SKUID}}</td>
                                             <td style="border-left: 1px solid #dedede;">&nbsp;</td>
