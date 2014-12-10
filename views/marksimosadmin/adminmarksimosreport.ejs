@@ -922,18 +922,18 @@
                 <div class="box-header">
                     <div class="btn-group pull-right">
                         <button type="button" class="btn btn-default btn-sm dropdown-toggle" data-toggle="dropdown">
-                            {{'HomePageSecondMenuBarLabelsCompany' | translate}} {{data.allDecisions.current.d_CID | companyName}} <span class="caret"></span>
+                            {{'HomePageSecondMenuBarLabelsCompany' | translate}} {{data.allDecisions.currentCompany| companyName}} <span class="caret"></span>
                         </button>
                         <ul class="dropdown-menu" role="menu">
-                            <li ng-repeat="company in data.allDecisions.allCompany"><a href="" ng-click="data.allDecisions.current.d_CID=company">{{'HomePageSecondMenuBarLabelsCompany' | translate}} {{company | companyName}}</a></li>
+                            <li ng-repeat="company in data.allDecisions.allCompany"><a href="" ng-click="data.allDecisions.currentCompany=company">{{'HomePageSecondMenuBarLabelsCompany' | translate}} {{company | companyName}}</a></li>
                         </ul>
                     </div>
                     <div class="btn-group pull-right">
                         <button type="button" class="btn btn-default btn-sm dropdown-toggle" data-toggle="dropdown">
-                            {{'HomePageSecondMenuBarCurrentPeriod' | translate}} {{data.allDecisions.current.period}} <span class="caret"></span>
+                            {{'HomePageSecondMenuBarCurrentPeriod' | translate}} {{data.allDecisions.currentPeriod}} <span class="caret"></span>
                         </button>
                         <ul class="dropdown-menu" role="menu">
-                            <li ng-repeat="period in data.allDecisions.allPeriod"><a href="" ng-click="data.allDecisions.current.period=period">{{'HomePageSecondMenuBarCurrentPeriod' | translate}}  {{period}}</a></li>
+                            <li ng-repeat="period in data.allDecisions.allPeriod"><a href="" ng-click="data.allDecisions.currentPeriod=period">{{'HomePageSecondMenuBarCurrentPeriod' | translate}}  {{period}}</a></li>
                         </ul>
                     </div>
                     <i class="fa fa-table"></i>
@@ -942,7 +942,7 @@
                     </h3>
                 </div>
 
-               <div class="box-body no-padding" ng-repeat="decisions in data.allDecisions.data | filter:data.allDecisions.current">
+               <div class="box-body no-padding" ng-repeat="decisions in data.allDecisions.data | filter:{period: data.allDecisions.currentPeriod,d_CID:data.allDecisions.currentCompany}">
                     <table class="table table-striped">
                         <thead>
                             <tr>
@@ -1007,7 +1007,7 @@
                                             <td>{{sku.d_ProductionVolume}}</td>
                                             <td style="border-left: 1px solid #dedede;">&nbsp;</td>
                                             <td>{{'DecisionPageDecisionTabManufacturerPrice' | translate}}</td>
-                                            <td>{{sku.d_FactoryPrice[0] | toFloat}}</td>
+                                            <td>{{sku.d_FactoryPrice[0]}}</td>
                                             <td style="border-left: 1px solid #dedede;">&nbsp;</td>
                                             <td>{{'DecisionPageDecisionTabRepriceFactoryStock' | translate}}</td>
                                             <td>{{sku.d_RepriceFactoryStocks}}</td>
@@ -1030,7 +1030,7 @@
                                             <td>{{sku.d_TradeExpenses}}</td>
                                             <td style="border-left: 1px solid #dedede;">&nbsp;</td>
                                             <td>{{'DecisionPageDecisionTabAdditionalTradeMargin' | translate}}</td>
-                                            <td>{{(sku.d_AdditionalTradeMargin | toFloat)*100}}</td>
+                                            <td>{{sku.d_AdditionalTradeMargin}}</td>
                                         </tr>
                                         <tr>
                                             <td>{{'DecisionPageDecisionTabWholesaleMinimumVolume' | translate}}</td>

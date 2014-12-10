@@ -33,8 +33,7 @@
     angular.module('marksimos.filter').filter('skupacksize', skuPackSizeFilter);
     angular.module('marksimos.filter').filter('companyName', companyNameFilter);
     
-     angular.module('marksimos.filter').filter('toFloat', toFixedFilter);
-  
+   
 
     angular.module('marksimos.filter').directive('filterpercentage', percentageInputFilter);
     angular.module('marksimos.filter').directive('filternumber', numberInputFilter);
@@ -119,12 +118,6 @@
         };
     }
    
-
-    function toFixedFilter() {
-        return function(input, num) {
-            return +(parseFloat(input) || 0.0).toFixed(+num || 2);
-        }
-    }
 
     /********************  NgModel Filters  ********************/
 

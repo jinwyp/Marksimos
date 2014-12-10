@@ -613,9 +613,8 @@
             allDecisions: {
                 data: [],
                 allCompany: [],
-                allPeriod: [],
-                current: {}
-            },
+                allPeriod: []
+           },
 
             //A1 Company Status
             tableA1CompanyStatus: {
@@ -1163,8 +1162,8 @@
                         }
                     }
                     //设置默认的公司及阶段
-                    $scope.data.allDecisions.current.d_CID = $scope.data.allDecisions.allCompany[0];
-                    $scope.data.allDecisions.current.period = $scope.data.allDecisions.allPeriod[0];
+                    $scope.data.allDecisions.currentCompany = $scope.data.allDecisions.allCompany[0];
+                    $scope.data.allDecisions.currentPeriod = $scope.data.allDecisions.allPeriod[0];
                 });
             },
 
