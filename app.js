@@ -70,17 +70,20 @@ app.use(function(req, res, next){
 
     }
 
-    // respond with html page
-    if (req.accepts('html')) {
-        res.render('page404.ejs', {
-            'title' : '404 Page Not Found',
-            'url': req.url });
+    // respond with json
+    if (/application\/json/.test(req.get('accept'))) {
+        res.send({ error: '404 Not found! URL: ' + req.url });
         return;
     }
 
-    // respond with json
-    if (req.accepts('json')) {
-        res.send({ error: '404 Not found' });
+
+    // respond with html page
+    res.set('Content-Type', 'text/html; charset=utf-8');
+    if (req.accepts('html')) {
+
+        res.render('page404.ejs', {
+            'title' : '404 Page Not Found',
+            'url': req.url });
         return;
     }
 
@@ -94,21 +97,55 @@ app.use(function(err, req, res, next){
     // we may use properties of the error object
     // here and next(err) appropriately, or if
     // we possibly recovered from the error, simply next().
-    res.status(err.status || 500);
 
-    // respond with html page
-    if (req.accepts('html')) {
-        res.render('page500.ejs', {
-            'title' : '500 System Error',
-            'error': err });
-        return;
+    console.log(typeof err.message,  err.message);
+    if(typeof err.message !== 'undefined' && err.message.toLowerCase().substr(0, 6) == 'cancel' ){
+        // respond promise stop chains info with no system error
+        res.status(err.status || 400);
+
+        // respond with json
+        if (/application\/json/.test(req.get('accept'))) {
+            res.send({
+                title: '400 Data Error',
+                message: err.message });
+            return;
+        }
+
+        res.set('Content-Type', 'text/html; charset=utf-8');
+        // respond with html page
+        if (req.accepts('html')) {
+            res.render('page500.ejs', {
+                'title' : '400 Data Error',
+                'error': err.message });
+            return;
+        }
+
+    }else{
+        // respond 500 system error
+        res.status(err.status || 500);
+
+        // respond with json
+        if (/application\/json/.test(req.get('accept'))) {
+            res.send({
+                title: '500 System Error',
+                message: err });
+            return;
+        }
+
+        res.set('Content-Type', 'text/html; charset=utf-8');
+        // respond with html page
+        if (req.accepts('html')) {
+            res.render('page500.ejs', {
+                'title' : '500 System Error',
+                'error': err });
+            return;
+        }
+
+
+
     }
 
-    // respond with json
-    if (req.accepts('json')) {
-        res.send({ title: '500 System Error', message: err });
-        return;
-    }
+
 
 });
 

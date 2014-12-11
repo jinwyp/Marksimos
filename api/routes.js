@@ -45,15 +45,15 @@ apiRouter.get('/', function(req, res, next){
 
 /**********    set Content-Type for all API JSON resppnse    **********/
 
-//apiRouter.all("/e4e/api/*", function(req, res, next){
-//    res.set('Content-Type', 'application/json; charset=utf-8');
-//    next();
-//});
-//
-//apiRouter.all("/marksimos/api/*", function(req, res, next){
-//    res.set('Content-Type', 'application/json; charset=utf-8');
-//    next();
-//});
+apiRouter.all("/e4e/api/*", function(req, res, next){
+    res.set('Content-Type', 'application/json; charset=utf-8');
+    next();
+});
+
+apiRouter.all("/marksimos/api/*", function(req, res, next){
+    res.set('Content-Type', 'application/json; charset=utf-8');
+    next();
+});
 
 
 

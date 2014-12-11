@@ -195,17 +195,16 @@ exports.getDecisionForFacilitator = function(req, res, next){
     }else{
         seminarModel.findOne({seminarId: seminarId})
             .then(function(dbSeminar){
-                if(!dbSeminar){
-                    return res.send(400, {message: "seminar " + seminarId + " doesn't exist."});
-                }else{
-                    decisionAssembler.getAllCompanyDecisionsOfAllPeriod(dbSeminar.seminarId)
-                        .then(function(result){
-                            return res.send(result);
-                        })
-                        .done();;
-                }
 
-            }).fail(function(err){
+                if(!dbSeminar) {
+                    throw {message: "Cancel promise chains. Because " + "seminar " + seminarId + " doesn't exist."}
+                }
+                return decisionAssembler.getAllCompanyDecisionsOfAllPeriod(dbSeminar.seminarId);
+
+            }).then(function(result){
+                return res.send(result);
+            })
+            .fail(function(err){
                 logger.error(err);
                 next(err);
             })

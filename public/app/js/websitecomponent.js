@@ -374,6 +374,8 @@
             restrict: 'AE',
             templateUrl: 'tablereportfinalscore.html',
             link : function(scope, element, attrs){
+
+
             }
         };
     }]);
