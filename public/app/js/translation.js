@@ -899,6 +899,12 @@
             "FinalScorePageThank"               : "Thank you !",
             "FinalScorePageThankInfo"           : "Thank you for your feedback",
 
+            "FinalScoreAdminPanelLabel"           : "Decisions and Results",
+            "FinalScoreAdminPanelDecisionsButton" : "Show All Decisions",
+            "FinalScoreAdminPanelResultsButton"   : "Show All Results",
+
+
+
             //Labels for Questionnaire Page
             "QuestionnairePageQuestionnaire"                             : "Questionnaire",
             "QuestionnairePageVeryPoor"                                  : "Very poor",
@@ -1847,6 +1853,9 @@
             "FinalScorePageThank"                          : "谢谢 !",
             "FinalScorePageThankInfo"                      : "您宝贵的意见会更好的改进我们的产品!",
 
+            "FinalScoreAdminPanelLabel"           : "公司决策和结果",
+            "FinalScoreAdminPanelDecisionsButton" : "显示所有阶段所有公司的决策",
+            "FinalScoreAdminPanelResultsButton"   : "显示结果",
 
             //Labels for Questionnaire Page
             "QuestionnairePageQuestionnaire"                             : "问卷调查",
