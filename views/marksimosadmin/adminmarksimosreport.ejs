@@ -1003,21 +1003,7 @@
                                                        <th>{{'DecisionPageDecisionTabManufacturerPrice' | translate}}</th>
                                                        <th>{{'DecisionPageDecisionTabRepriceFactoryStock' | translate}}</th>
                                                        <th>{{'DecisionPageDecisionTabConsumerCommunication' | translate}}</th>
-                                                   </tr>
 
-                                                   <tr ng-repeat-start="sku in brand.SKUDecisions ">
-                                                       <td rowspan="3" ng-if="$first">{{brand.d_BrandName}}{{sku.d_SKUName}}/ {{sku.d_ToDrop}}</td>
-                                                       <td rowspan="2" ng-if="!$first">{{brand.d_BrandName}}{{sku.d_SKUName}}/ {{sku.d_ToDrop}}</td>
-                                                       <td>{{sku.d_Technology}}</td>
-                                                       <td>{{sku.d_IngredientsQuality}}</td>
-                                                       <td>{{sku.d_PackSize | skupacksize | translate}}</td>
-                                                       <td>{{sku.d_ProductionVolume}}</td>
-                                                       <td>{{sku.d_FactoryPrice[0]}}</td>
-                                                       <td>{{sku.d_RepriceFactoryStocks}}</td>
-                                                       <td>{{sku.d_Advertising}}</td>
-                                                   </tr>
-
-                                                   <tr ng-if="$first" class="active">
                                                        <th>{{'DecisionPageDecisionTabTargetConsumerSegment' | translate}}</th>
                                                        <th>{{'DecisionPageDecisionTabConsumerPromotions' | translate}}</th>
                                                        <th>{{'DecisionPageDecisionTabConsumerPromotionsSchedule' | translate}}</th>
@@ -1027,7 +1013,16 @@
                                                        <th>{{'DecisionPageDecisionTabWholesaleBonusRate' | translate}}</th>
                                                    </tr>
 
-                                                   <tr ng-repeat-end>
+                                                   <tr ng-repeat="sku in brand.SKUDecisions ">
+                                                       <td >{{brand.d_BrandName}}{{sku.d_SKUName}}/ {{sku.d_ToDrop}}</td>
+                                                       <td>{{sku.d_Technology}}</td>
+                                                       <td>{{sku.d_IngredientsQuality}}</td>
+                                                       <td>{{sku.d_PackSize | skupacksize | translate}}</td>
+                                                       <td>{{sku.d_ProductionVolume}}</td>
+                                                       <td>{{sku.d_FactoryPrice[0] | number:2 }}</td>
+                                                       <td>{{sku.d_RepriceFactoryStocks}}</td>
+                                                       <td>{{sku.d_Advertising}}</td>
+
                                                        <td>{{sku.d_TargetConsumerSegment }}</td>
                                                        <td>{{sku.d_PromotionalBudget}}</td>
                                                        <!--<td>{{sku.d_PromotionalEpisodes}}</td>-->
