@@ -135,7 +135,7 @@ exports.getFinalScore = function(req, res, next) {
             } else if (requestedPeriodResult.period > 0) {
                 //当阶段大于0时，为有效数据
                 var period = requestedPeriodResult.period;
-                var scores = [], scoresScaled=[];
+                var scores = [];
                 var highest_SOM, lowest_SOM, highest_Profit, lowest_Profit;
                 var a, b, c, d;
 
@@ -222,7 +222,7 @@ exports.getFinalScore = function(req, res, next) {
                     companyScore.finalScore = initialPeriodResult.p_Market.m_fs_DeltaSOM_Weight * companyScore.scaledSOM + initialPeriodResult.p_Market.m_fs_Profits_Weight * companyScore.scaledProfit;                   
                     companyScore.finalScore = companyScore.finalScore + 2 * companyScore.scaledBudget;
                 });
-                resultArr.push({ period: period, seminarId: seminarId, scores: scores, scoresScaled: scoresScaled });
+                resultArr.push({ period: period, seminarId: seminarId, scores: scores });
             }
 
         });
