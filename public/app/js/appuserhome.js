@@ -193,10 +193,6 @@
             tableC6MarketIndicators : {
                 allData : {}
             },
-            tableFinalScore:{
-                selectPeriodData : {}
-            },
-
 
 
             chartA3InventoryReport : {
@@ -711,8 +707,9 @@
                     //get Final Score Data  of current period
                     $scope.css.selectFinalScorePeriod = $scope.data.currentStudent.currentPeriod - 1;
 
-                    Company.getFinalScore($scope.data.currentStudent.currentPeriod - 1).then(function(data, status, headers, config){
-                        $scope.data.tableFinalScore.selectPeriodData = data;
+                    Company.getFinalScore().then(function(data, status, headers, config) {
+                        console.log(data);
+                        $scope.data.tableFinalScore = { data: data.data };
                     });
 
                     // 处理最后比赛结束后
@@ -1337,21 +1334,6 @@
 
         /********************  get FinalScore  ********************/
 
-        $scope.changeToReportPage = function(){
-            $scope.css.menu = 'Report';
-
-            $timeout(function() {
-                angular.element('#reportinput').focus();
-            });
-        };
-
-        $scope.switchTableReportFinalScore = function(period){
-            $scope.css.selectFinalScorePeriod = period ;
-            Company.getFinalScore(period)
-            .then(function(data, status, headers, config){
-                $scope.data.tableFinalScore.selectPeriodData = data;
-            });
-        };
 
 
         /********************  获取 Questionnaire  ********************/

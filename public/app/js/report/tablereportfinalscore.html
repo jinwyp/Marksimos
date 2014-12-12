@@ -1,57 +1,157 @@
-<table class="table table-bordered">
-    <thead>
-        <tr>
-            <th>&nbsp;</th>
-            <th>{{'FinalScorePageWeightFactor' | translate}} </th>
-            <th ng-repeat="company in data.scores">
-                <span class="company {{'company_'+company.companyId}}">&nbsp;</span>
-                {{'FinalScorePageCompany' | translate}} {{company.companyName}}
-            </th>
-        </tr>
-    </thead>
-    <tbody>
-        <tr>
-            <td>{{'FinalScorePageIncrementalMarketShare' | translate}}</td>
-            <td class="td_info">50%</td>
-            <td ng-repeat="score in data.scores" ng-show="selectScore=='Rescaled'">{{score.scaledSOM | number :2}}
-            </td>
-            <td ng-repeat="score in data.scores" ng-show="selectScore=='Original'">{{score.originalSOM | number :2}}
-            </td>
-        </tr>
-        <tr>
-            <td>{{'FinalScorePageCumulatedNetProfit' | translate}}</td>
-            <td class="td_info">50%</td>
-            <td ng-repeat="score in data.scores" ng-show="selectScore=='Rescaled'">{{score.scaledProfit | number :2}}
-            </td>
-            <td ng-repeat="score in data.scores" ng-show="selectScore=='Original'">{{score.originalProfit | number :2}}
-            </td>
-        </tr>
-        <tr>
-            <td>{{'FinalScorePageSpendingVersusBudgets' | translate}}</td>
-            <td class="td_info">200%</td>
-            <td ng-repeat="score in data.scores" ng-show="selectScore=='Rescaled'">{{score.scaledBudget | number :2}}
-            </td>
-            <td ng-repeat="score in data.scores" ng-show="selectScore=='Original'">{{score.originalBudget | number :2}}
-            </td>
-        </tr>
-        <!-- <tr>
-            <td>{{'FinalScorePageShareInBrandTotalSalesValue' | translate}}</td>
-            <td class="td_info">?</td>
-            <td ng-repeat="score in data.scores">{{score.originalSOM | number :2}}
-            </td>
-        </tr>
-        <tr>
-            <td>{{'FinalScorePageAchievementOfInitialObjectives' | translate}}</td>
-            <td class="td_info">?</td>
-            <td ng-repeat="score in data.scores">{{score.originalProfit | number :2}}
-            </td>
-        </tr> -->
-        <tr class="tr_warning" ng-show="selectScore=='Rescaled'">
-            <td>{{'FinalScorePageFinalScore' | translate}}</td>
-            <td>&nbsp;</td>
-            <td ng-repeat="score in data.scores">{{score.finalScore | number :2}}
-            </td>
-        </tr>
+<div class="panel panel-default" ng-if="admin">
+    <div class="panel-heading">
+        <h3 class="panel-title text-blue"><i class="fa fa-table"></i><span class="margin_left_10">{{'FinalScorePageScore' | translate}}</span></h3>
+    </div>
+    <div class="panel-body">
+        <div class="btn-group btn-group-sm pull-right">
+            <button type="button" class="btn btn-default" ng-class="{false:'active'}[showScaled]" ng-click="showScaled=false">{{'FinalScorePageButtonOriginal' | translate}}</button>
+            <button type="button" class="btn btn-default" ng-class="{true:'active'}[showScaled]" ng-click="showScaled=true">{{'FinalScorePageButtonRescaled' | translate}}</button>
+        </div>
+        <ul class="nav  nav-pills">
+            <li ng-class="{true:'active'}[$index===selectIndex]" ng-repeat="score in data">
+                <a role="tab" href="" ng-click="changeIndex($index);">{{'FinalScorePagePeriod' | translate}}&nbsp;{{score.period}}</a>
+            </li>
+        </ul>
+        <div class="tab-content">
+            <div class="tab-pane" ng-repeat="val in data" ng-class="{true:'fade in active'}[$index===selectIndex]">
+                <table class="table table-bordered">
+                    <thead>
+                        <tr>
+                            <th>&nbsp;</th>
+                            <th>{{'FinalScorePageWeightFactor' | translate}} </th>
+                            <th ng-repeat="company in val.scores">
+                                <i class="fa fa-flag fa-2x" ng-style="{color:colors[company.companyId]}"></i>                              
+                                {{'FinalScorePageCompany' | translate}} {{company.companyId | companyName}}
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>{{'FinalScorePageIncrementalMarketShare' | translate}}</td>
+                            <td class="td_info">50%</td>
+                            <td ng-repeat="score in val.scores" ng-if="showScaled">
+                                {{score.scaledSOM | number :2}}
+                            </td>
+                            <td ng-repeat="score in val.scores" ng-if="!showScaled">
+                                {{score.originalSOM | number :2}}
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>{{'FinalScorePageCumulatedNetProfit' | translate}}</td>
+                            <td class="td_info">50%</td>
+                            <td ng-repeat="score in val.scores" ng-if="showScaled">
+                                {{score.scaledProfit | number :2}}
+                            </td>
+                            <td ng-repeat="score in val.scores" ng-if="!showScaled">
+                                {{score.originalProfit | number :2}}
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>{{'FinalScorePageSpendingVersusBudgets' | translate}}</td>
+                            <td class="td_info">200%</td>
+                            <td ng-repeat="score in val.scores" ng-if="showScaled">
+                                {{score.scaledBudget | number :2}}
+                            </td>
+                            <td ng-repeat="score in val.scores" ng-if="!showScaled">
+                                {{score.originalBudget | number :2}}
+                            </td>
+                        </tr>
+                        <tr class="tr_warning" ng-if="showScaled">
+                            <td>{{'FinalScorePageFinalScore' | translate}}</td>
+                            <td>&nbsp;</td>
+                            <td ng-repeat="score in val.scores">
+                                {{score.finalScore | number :2}}
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
 
-    </tbody>
-</table>
+    </div>
+
+</div>
+
+
+<div ng-if="!admin">
+    <div class="row">
+        <div class="col-md-12 score_info">
+
+            <span class="score_info_title col-md-9 ">{{'FinalScorePageScore' | translate}}</span>
+
+            <div class="pull-right">
+                <div class="btn-group btn-group-sm">
+                    <button type="button" class="btn btn-default" ng-class="{false:'active'}[showScaled]" ng-click="showScaled=false">{{'FinalScorePageButtonOriginal' | translate}}</button>
+                    <button type="button" class="btn btn-default"       ng-class="{true:'active'}[showScaled]"   ng-click="showScaled=true">{{'FinalScorePageButtonRescaled' | translate}}</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-12 score_data">
+
+            <div class="table_report">
+                <ul class="nav nav-pills">                    
+                    <li ng-class="{true:'active'}[$index===selectIndex]" ng-repeat="score in data">
+                        <a href="" ng-click="changeIndex($index);" class="ng-binding">{{'FinalScorePagePeriod' | translate}}&nbsp;{{score.period}}</a>
+                    </li>                    
+                </ul>
+
+                <div class="divider_horizontal"></div>                
+                <table class="table table-bordered" ng-repeat="val in data" ng-if="$index===selectIndex">
+                    <thead>
+                        <tr>
+                            <th>&nbsp;</th>
+                            <th>{{'FinalScorePageWeightFactor' | translate}}</th>
+
+                            <th ng-repeat="company in val.scores">
+                                <span class="company company_{{company.companyId}}">&nbsp;</span>  {{'FinalScorePageCompany' | translate}} {{company.companyId | companyName}}
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>{{'FinalScorePageIncrementalMarketShare' | translate}}</td>
+                            <td class="td_info">50%</td>
+                            <td ng-repeat="score in val.scores" ng-if="showScaled">
+                                {{score.scaledSOM | number :2}}
+                            </td>
+                            <td ng-repeat="score in val.scores" ng-if="!showScaled">
+                                {{score.originalSOM | number :2}}
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>{{'FinalScorePageCumulatedNetProfit' | translate}}</td>
+                            <td class="td_info">50%</td>
+                            <td ng-repeat="score in val.scores" ng-if="showScaled">
+                                {{score.scaledProfit | number :2}}
+                            </td>
+                            <td ng-repeat="score in val.scores" ng-if="!showScaled">
+                                {{score.originalProfit | number :2}}
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>{{'FinalScorePageSpendingVersusBudgets' | translate}}</td>
+                            <td class="td_info">200%</td>
+                            <td ng-repeat="score in val.scores" ng-if="showScaled">
+                                {{score.scaledBudget | number :2}}
+                            </td>
+                            <td ng-repeat="score in val.scores" ng-if="!showScaled">
+                                {{score.originalBudget | number :2}}
+                            </td>
+                        </tr>
+                        <tr class="tr_warning ng-hide" ng-show="selectScore=='Rescaled'">
+                            <td>{{'FinalScorePageFinalScore' | translate}}</td>
+                            <td>&nbsp;</td>
+                            <td ng-repeat="score in val.scores">
+                                {{score.finalScore | number :2}}
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+           </div>
+
+        </div>
+    </div>
+</div>

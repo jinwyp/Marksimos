@@ -1174,7 +1174,40 @@
             loadingFinalScoresData: function() {
                 var seminerID = /.+\/adminhomereport\/(\d+).*/.exec(window.location.href)[1] || 0;
                 Admin.getFinalScores(seminerID).success(function(data, status, headers, config) {
-                    $scope.data.finalScores.data = data;
+                    //$scope.data.finalScores.data = data;
+                    $scope.data.finalScores.nav = ['阶段1', '阶段2', '阶段3'];
+                    $scope.data.finalScores.leftData = [];
+                    $scope.data.finalScores.selectIndex = 0;
+                    $scope.data.finalScores.headData = [
+                        { text: '公司1', color: '#004CE5' },
+                        { text: '公司2' },
+                        { text: '公司3', color: '#FFBC01' },
+                        { text: '公司4', color: '#393' },
+                        { text: '公司5', color: '#909' },
+                        { text: '公司6', color: '#FF5200' }];
+                    $scope.data.finalScores.data = [
+                        [
+                            ['1-a1', 'a2', 'a3', 'a4', 'a5', 'a6'],
+                            ['1-b1', 'b2', 'b3', 'b4', 'b5', 'b6'],
+                            ['1-c1', 'c2', 'c3', 'c4', 'c5', 'c6'],
+                            ['1-d1', 'd2', 'd3', 'd4', 'd5', 'd6'],
+                            ['1-e1', 'e2', 'e3', 'e4', 'e5', 'e6']
+                        ],
+                        [
+                            ['2-a1', 'a2', 'a3', 'a4', 'a5', 'a6'],
+                            ['2-b1', 'b2', 'b3', 'b4', 'b5', 'b6'],
+                            ['2-c1', 'c2', 'c3', 'c4', 'c5', 'c6'],
+                            ['2-d1', 'd2', 'd3', 'd4', 'd5', 'd6'],
+                            ['2-e1', 'e2', 'e3', 'e4', 'e5', 'e6']
+                        ],
+                        [
+                            ['3-a1', 'a2', 'a3', 'a4', 'a5', 'a6'],
+                            ['3-b1', 'b2', 'b3', 'b4', 'b5', 'b6'],
+                            ['3-c1', 'c2', 'c3', 'c4', 'c5', 'c6'],
+                            ['3-d1', 'd2', 'd3', 'd4', 'd5', 'd6'],
+                            ['3-e1', 'e2', 'e3', 'e4', 'e5', 'e6']
+                        ]
+                    ];
                 });
             },
             loadingCompanyData: function() {
