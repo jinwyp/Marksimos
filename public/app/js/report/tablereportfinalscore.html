@@ -21,7 +21,7 @@
                             <th>{{'FinalScorePageWeightFactor' | translate}} </th>
                             <th ng-repeat="company in val.scores">
                                 <i class="fa fa-flag fa-2x" ng-style="{color:colors[company.companyId]}"></i>                              
-                                {{'FinalScorePageCompany' | translate}} {{company.companyId | companyName}}
+                                {{'FinalScorePageCompany' | translate}} {{company.companyId | companyname}}
                             </th>
                         </tr>
                     </thead>
@@ -106,7 +106,7 @@
                             <th>{{'FinalScorePageWeightFactor' | translate}}</th>
 
                             <th ng-repeat="company in val.scores">
-                                <span class="company company_{{company.companyId}}">&nbsp;</span>  {{'FinalScorePageCompany' | translate}} {{company.companyId | companyName}}
+                                <span class="company company_{{company.companyId}}">&nbsp;</span>  {{'FinalScorePageCompany' | translate}} {{company.companyId | companyname}}
                             </th>
                         </tr>
                     </thead>
