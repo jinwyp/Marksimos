@@ -210,8 +210,6 @@ exports.getDecisionForFacilitator = function(req, res, next){
             })
             .done();
     }
-
-
 };
 
 
