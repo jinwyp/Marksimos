@@ -2591,37 +2591,7 @@
     <div class="row mainbody" ng-cloak ng-if="css.menu=='Score'">
 
         <div class="col-md-9 score_box" ng-if='!css.showFeedback'>
-
-            <div class="row">
-                <div class="col-md-12 score_info">
-
-                    <span class="score_info_title col-md-9">{{'FinalScorePageScore' | translate}}</span>
-
-                    <div class="pull-right">
-                        <div class="btn-group btn-group-sm">
-                            <button type="button" class="btn btn-default" ng-class="{'active':css.selectScore=='Original'}" ng-click="css.selectScore='Original' ">{{'FinalScorePageButtonOriginal' | translate}}</button>
-                            <button type="button" class="btn btn-default" ng-class="{'active':css.selectScore=='Rescaled'}" ng-click="css.selectScore='Rescaled' ">{{'FinalScorePageButtonRescaled' | translate}}</button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="row">
-                <div class="col-md-12 score_data">
-                    
-                    <div class="table_report">
-                        <ul class="nav nav-pills">
-                            <li ng-class="{'active': n==css.selectFinalScorePeriod}" ng-repeat="n in css.finalReportPeriods">
-                                <a href="" ng-click="switchTableReportFinalScore(n)">{{'FinalScorePagePeriod' | translate}} {{n}}</a>
-                            </li>
-                        </ul>
-
-                        <div class="divider_horizontal"></div>
-                        <div table-report-final-score data="data.tableFinalScore.selectPeriodData" select-score="css.selectScore"></div>
-                    </div>
-
-                </div>
-            </div>
+            <x:table-report-final-score data="data.tableFinalScore.data"></x:table-report-final-score>
         </div>
 
 

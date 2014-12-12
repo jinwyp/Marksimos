@@ -360,7 +360,7 @@ apiRouter.get('/marksimos/api/report/:report_name', requireStudentLogin({isRedir
 apiRouter.get('/marksimos/api/choose_seminar', requireStudentLogin({isRedirect : false}), authorize('chooseSeminar'), seminarController.chooseSeminarForStudent);
 apiRouter.get('/marksimos/api/submitdecision', requireStudentLogin({isRedirect : false}), decisionController.submitDecision);
 
-apiRouter.get('/marksimos/api/finalscore/:period', requireStudentLogin({isRedirect : false}), reportController.getFinalScore);
+apiRouter.get('/marksimos/api/finalscore/:seminarId', requireStudentLogin({isRedirect : false}), reportController.getFinalScore);
 
 //chart
 apiRouter.get('/marksimos/api/chart/:chart_name', requireStudentLogin({isRedirect : false}), chartController.getChart);
@@ -431,7 +431,7 @@ apiRouter.get('/marksimos/api/admin/user', requireAdminLogin({isRedirect : false
 //TODO: decision modification for facilitator 
 apiRouter.get('/marksimos/api/admin/report/:report_name', requireAdminLogin({isRedirect : false}), reportController.getReport);
 apiRouter.get('/marksimos/api/admin/chart/:chart_name', requireAdminLogin({isRedirect : false}), chartController.getChart);
-apiRouter.get('/marksimos/api/admin/finalscore/:period', requireAdminLogin({isRedirect : false}), reportController.getFinalScore);
+apiRouter.get('/marksimos/api/admin/finalscore/:seminarId', requireAdminLogin({isRedirect : false}), reportController.getFinalScore);
 
 
 function requireStudentLogin(params){

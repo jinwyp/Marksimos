@@ -9,8 +9,6 @@
 
         <section class="content">
             <h2 class="page-header">MarkSimos Seminar <%= seminarId %> Report </h2>
-
-
             {{'ReportYourCompany' | translate}} :
             <div class="btn-group">
                 <button type="button" class="btn btn-default" ng-class="{'active': css.currentReportMenu=='A1'}" ng-click="clickChartMenu('A1')">{{'ReportMenuCompanyStatus' | translate}}</button>
@@ -55,7 +53,7 @@
                     <div class="pull-right box-tools">
                         <div class="btn-group">
                             <button type="button" class="btn btn-default btn-sm dropdown-toggle" data-toggle="dropdown">
-                                {{'HomePageSecondMenuBarLabelsCompany' | translate}} {{data.tableA1CompanyStatus.currentCompany.companyName}} <span class="caret"></span>
+                                {{'HomePageSecondMenuBarLabelsCompany' | translate}} {{data.tableA1CompanyStatus.currentCompany.companyname}} <span class="caret"></span>
                             </button>
                             <ul class="dropdown-menu" role="menu">
                                 <li ng-repeat="company in data.tableA1CompanyStatus.allCompanyData"><a href="" ng-click="switchTableReportA1Company(company)">{{'HomePageSecondMenuBarLabelsCompany' | translate}} {{company.companyName}}</a></li>
@@ -965,6 +963,7 @@
                     </h3>
                 </div>
 
+
                <div class="box-body no-padding" ng-repeat="company in data.allDecisions.data | filter:{period: data.allDecisions.currentPeriod, d_CID:data.allDecisions.currentCompanyId}">
 
                    <div class="row">
@@ -1045,13 +1044,23 @@
                    </div>
 
 
+
                 </div>
 
             </div>
             <!-- /.box -->
         </section>
 
-    </div>
+        <section class="content" ng-if="css.currentReportMenu=='AllResults'">
+            <div class="box box-primary">
+                <div class="box-body no-padding">
+                    <x:table-report-final-score data="data.finalScores.data" admin="true"></x:table-report-final-score>
+                </div>
+            </div>
+
+        </section>
+        
+         </div>
 
 
 

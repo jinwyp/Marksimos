@@ -398,7 +398,6 @@
 
                 }).error(function(data, status, headers, config) {
                     console.log(data);
-                    $notification.error('Failed', data.message);
                 });
             }
         };
@@ -414,7 +413,7 @@
 
                 }).error(function(data, status, headers, config) {
                     console.log(data);
-                    $notification.error('Failed', data.message);
+                    $notification.error('Save failed', data.message);
                 });
             }
         };
@@ -428,7 +427,6 @@
 
                 }).error(function(data, status, headers, config) {
                     console.log(data);
-                    $notification.error('Failed', data.message);
                 });
             }
         };
@@ -445,7 +443,7 @@
 
                 }).error(function(data, status, headers, config) {
                     console.log(data);
-                    $notification.error('Failed', data.message);
+                    $notification.error('Save failed', data.message);
                 });
             }
         };
@@ -459,7 +457,6 @@
 
                 }).error(function(data, status, headers, config) {
                     console.log(data);
-                    $notification.error('Failed', data.message);
                 });
             }
         };
@@ -474,8 +471,7 @@
                     $notification.success('Save success', 'Create Student success');
 
                 }).error(function(data, status, headers, config) {
-                    console.log(data);
-                    $notification.error('Failed', data.message);
+                    $notification.error('Save failed', data.message);
                 });
             }
         };
@@ -489,8 +485,7 @@
                 $notification.success('Save success', 'Reset Student Password success');
 
             }).error(function(data, status, headers, config) {
-                console.log(data);
-                $notification.error('Failed', data.message);
+                $notification.error('Save failed', data.message);
             });
         };
 
@@ -503,7 +498,6 @@
 
                 }).error(function(data, status, headers, config) {
                     console.log(data);
-                    $notification.error('Failed', data.message);
                 });
             }
         };
@@ -519,7 +513,7 @@
 
                 }).error(function(data, status, headers, config) {
                     console.log(data);
-                    $notification.error('Failed', data.message);
+                    $notification.error('Save failed', data.message);
                 });
             }
         };
@@ -531,15 +525,14 @@
         };
         /********************  Add Student To Seminar  ********************/
         $scope.addStudentToSeminar = function(seminarid, studentemail) {
-
+            $notification.success('Save success', 'Init Seminar success');
             if ($scope.data.addStudentToSeminar.company_id === 0 || angular.isUndefined(studentemail) || studentemail === "") {
                 $scope.css.seminarId = seminarid;
-            }else{
+            } else {
                 $scope.css.seminarId = 0;
                 $scope.data.addStudentToSeminar.email = studentemail;
 
                 $http.post('/marksimos/api/admin/assign_student_to_seminar', $scope.data.addStudentToSeminar).success(function(data, status, headers, config) {
-
                     app.getSeminarInit();
                     $notification.success('Save success', 'Add Student to Seminar success');
 
@@ -549,7 +542,7 @@
 
                 }).error(function(data, status, headers, config) {
                     console.log(data);
-                    $notification.error('Failed', data.message);
+                    $notification.error('Save failed', data.message);
                 });
             }
         };
@@ -570,7 +563,7 @@
 
                 }).error(function(data, status, headers, config) {
                     console.log(data);
-                    $notification.error('Failed', data.message);
+                    $notification.error('Save failed', data.message);
                 });
             }
         };
@@ -582,8 +575,7 @@
                 $notification.success('Save success', 'Init Seminar success');
                 $scope.css.runButtonDisabled = false;
             }).error(function(data, status, headers, config) {
-                console.log(data);
-                $notification.error('Failed', data.message);
+                $notification.error('Save failed', data.message);
                 $scope.css.runButtonDisabled = false;
             });
         };
@@ -596,8 +588,7 @@
                 $scope.css.runButtonDisabled = false;
 
             }).error(function(data, status, headers, config) {
-                console.log(data);
-                $notification.error('Failed', data.message);
+                $notification.error('Save failed', data.message);
                 $scope.css.runButtonDisabled = false;
             });
         };
@@ -612,25 +603,22 @@
 
     angular.module('marksimosadmin').controller('adminMarksimosReportController', ['$scope', '$http', '$notification', '$translate', 'Admin', 'AdminTable', 'chartReport', 'AdminChart', function($scope, $http, $notification,$translate, Admin,  AdminTable, chartReport, AdminChart) {
         $scope.css = {
-            currentReportMenu:'AllDecisions',
+            // currentReportMenu: 'A1',
+            currentReportMenu:'FinalScore',//测试用
             tableReportTab: 'SKU'
         };
 
         $scope.data = {
 
             allDecisions: {
-                data           : [],
-                allCompanyId   : [1, 2, 3, 4, 5, 6, 7, 8, 9],
-                allPeriod      : [1, 2, 3, 4, 5, 6, 7, 8, 9],
-                currentCompanyId : 1,
-                currentPeriod  : 1
+                data: [],
+                allCompany: [],
+                allPeriod: []
             },
-
             finalScores: {
                 showHead: true,
                 data:null
             },
-
             //A1 Company Status
             tableA1CompanyStatus: {
                 allCompanyData: [],
@@ -1161,24 +1149,64 @@
 
             loadingAllDecisions: function() {
                 var seminerID = /.+\/adminhomereport\/(\d+).*/.exec(window.location.href)[1] || 0;
-
-                if(seminerID){
-                    Admin.getAllCompanyDecisionsOfAllPeriods(seminerID).success(function(data, status, headers, config) {
-                        $scope.data.allDecisions.data = data;
-
-                        $scope.data.allDecisions.allCompanyId = $scope.data.allDecisions.allCompanyId.slice(0, data[data.length - 1].d_CID);
-                        $scope.data.allDecisions.allPeriod = $scope.data.allDecisions.allPeriod.slice(0, data[data.length - 1].period);
-
-                        $scope.data.allDecisions.currentPeriod = $scope.data.allDecisions.allPeriod[$scope.data.allDecisions.allPeriod.length - 1];
-
-                    });
-                }
-
+                Admin.getAllCompanyDecisionsOfAllPeriods(seminerID).success(function(data, status, headers, config) {                  
+                    $scope.data.allDecisions.data = data;                   
+                    //去重标记
+                    var allPeriod = {}, allCompany = {};
+                    //获取所有的公司及阶段
+                    for (var i = 0; i < data.length; i++) {
+                        var companyKey = data[i].d_CID;
+                        if (!allCompany[companyKey]) {
+                            allCompany[companyKey] = true;
+                            $scope.data.allDecisions.allCompany.push(companyKey);
+                        }
+                        var periodKey = data[i].period;
+                        if (!allPeriod[periodKey]) {
+                            allPeriod[periodKey] = true;
+                            $scope.data.allDecisions.allPeriod.push(periodKey);
+                        }
+                    }
+                    //设置默认的公司及阶段
+                    $scope.data.allDecisions.currentCompany = $scope.data.allDecisions.allCompany[0];
+                    $scope.data.allDecisions.currentPeriod = $scope.data.allDecisions.allPeriod[0];
+                });
             },
             loadingFinalScoresData: function() {
                 var seminerID = /.+\/adminhomereport\/(\d+).*/.exec(window.location.href)[1] || 0;
                 Admin.getFinalScores(seminerID).success(function(data, status, headers, config) {
-                    $scope.data.finalScores.data = data;
+                    //$scope.data.finalScores.data = data;
+                    $scope.data.finalScores.nav = ['阶段1', '阶段2', '阶段3'];
+                    $scope.data.finalScores.selectIndex = 0;
+                    $scope.data.finalScores.headData = [
+                        { text: '公司1', color: '#004CE5' },
+                        { text: '公司2',  },
+                        { text: '公司3', color: '#FFBC01' },
+                        { text: '公司4', color: '#393' },
+                        { text: '公司5', color: '#909' },
+                        { text: '公司6', color: '#FF5200' }];
+                    $scope.data.finalScores.data = [
+                        [
+                            ['1-a1', 'a2', 'a3', 'a4', 'a5', 'a6'],
+                            ['1-b1', 'b2', 'b3', 'b4', 'b5', 'b6'],
+                            ['1-c1', 'c2', 'c3', 'c4', 'c5', 'c6'],
+                            ['1-d1', 'd2', 'd3', 'd4', 'd5', 'd6'],
+                            ['1-e1', 'e2', 'e3', 'e4', 'e5', 'e6']
+                        ],
+                        [
+                            ['2-a1', 'a2', 'a3', 'a4', 'a5', 'a6'],
+                            ['2-b1', 'b2', 'b3', 'b4', 'b5', 'b6'],
+                            ['2-c1', 'c2', 'c3', 'c4', 'c5', 'c6'],
+                            ['2-d1', 'd2', 'd3', 'd4', 'd5', 'd6'],
+                            ['2-e1', 'e2', 'e3', 'e4', 'e5', 'e6']
+                        ],
+                        [
+                            ['3-a1', 'a2', 'a3', 'a4', 'a5', 'a6'],
+                            ['3-b1', 'b2', 'b3', 'b4', 'b5', 'b6'],
+                            ['3-c1', 'c2', 'c3', 'c4', 'c5', 'c6'],
+                            ['3-d1', 'd2', 'd3', 'd4', 'd5', 'd6'],
+                            ['3-e1', 'e2', 'e3', 'e4', 'e5', 'e6']
+                        ]
+                    ];
                 });
             },
             loadingCompanyData: function() {
