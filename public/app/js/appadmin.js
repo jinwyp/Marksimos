@@ -619,9 +619,11 @@
         $scope.data = {
 
             allDecisions: {
-                data: [],
-                allCompany: [],
-                allPeriod: []
+                data           : [],
+                allCompanyId   : [1, 2, 3, 4, 5, 6, 7, 8, 9],
+                allPeriod      : [1, 2, 3, 4, 5, 6, 7, 8, 9],
+                currentCompanyId : 1,
+                currentPeriod  : 1
             },
 
             //A1 Company Status
@@ -1151,28 +1153,18 @@
 
             loadingAllDecisions: function() {
                 var seminerID = /.+\/adminhomereport\/(\d+).*/.exec(window.location.href)[1] || 0;
-                Admin.getAllCompanyDecisionsOfAllPeriods(seminerID).success(function(data, status, headers, config) {                  
-                    $scope.data.allDecisions.data = data;
-                    console.log(data[0]);
-                    //去重标记
-                    var allPeriod = {}, allCompany = {};
-                    //获取所有的公司及阶段
-                    for (var i = 0; i < data.length; i++) {
-                        var companyKey = data[i].d_CID;
-                        if (!allCompany[companyKey]) {
-                            allCompany[companyKey] = true;
-                            $scope.data.allDecisions.allCompany.push(companyKey);
-                        }
-                        var periodKey = data[i].period;
-                        if (!allPeriod[periodKey]) {
-                            allPeriod[periodKey] = true;
-                            $scope.data.allDecisions.allPeriod.push(periodKey);
-                        }
-                    }
-                    //设置默认的公司及阶段
-                    $scope.data.allDecisions.currentCompany = $scope.data.allDecisions.allCompany[0];
-                    $scope.data.allDecisions.currentPeriod = $scope.data.allDecisions.allPeriod[0];
-                });
+
+                if(seminerID){
+                    Admin.getAllCompanyDecisionsOfAllPeriods(seminerID).success(function(data, status, headers, config) {
+                        $scope.data.allDecisions.data = data;
+
+                        $scope.data.allDecisions.allCompanyId = $scope.data.allDecisions.allCompanyId.slice(0, data[data.length - 1].d_CID);
+                        $scope.data.allDecisions.allPeriod = $scope.data.allDecisions.allPeriod.slice(0, data[data.length - 1].period);
+
+                        $scope.data.allDecisions.currentPeriod = $scope.data.allDecisions.allPeriod[$scope.data.allDecisions.allPeriod.length - 1];
+
+                    });
+                }
             },
 
             loadingCompanyData: function() {
