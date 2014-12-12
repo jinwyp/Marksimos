@@ -398,6 +398,7 @@
 
                 }).error(function(data, status, headers, config) {
                     console.log(data);
+                    $notification.error('Failed', data.message);
                 });
             }
         };
@@ -413,7 +414,7 @@
 
                 }).error(function(data, status, headers, config) {
                     console.log(data);
-                    $notification.error('Save failed', data.message);
+                    $notification.error('Failed', data.message);
                 });
             }
         };
@@ -427,6 +428,7 @@
 
                 }).error(function(data, status, headers, config) {
                     console.log(data);
+                    $notification.error('Failed', data.message);
                 });
             }
         };
@@ -443,7 +445,7 @@
 
                 }).error(function(data, status, headers, config) {
                     console.log(data);
-                    $notification.error('Save failed', data.message);
+                    $notification.error('Failed', data.message);
                 });
             }
         };
@@ -457,6 +459,7 @@
 
                 }).error(function(data, status, headers, config) {
                     console.log(data);
+                    $notification.error('Failed', data.message);
                 });
             }
         };
@@ -471,7 +474,8 @@
                     $notification.success('Save success', 'Create Student success');
 
                 }).error(function(data, status, headers, config) {
-                    $notification.error('Save failed', data.message);
+                    console.log(data);
+                    $notification.error('Failed', data.message);
                 });
             }
         };
@@ -485,7 +489,8 @@
                 $notification.success('Save success', 'Reset Student Password success');
 
             }).error(function(data, status, headers, config) {
-                $notification.error('Save failed', data.message);
+                console.log(data);
+                $notification.error('Failed', data.message);
             });
         };
 
@@ -498,6 +503,7 @@
 
                 }).error(function(data, status, headers, config) {
                     console.log(data);
+                    $notification.error('Failed', data.message);
                 });
             }
         };
@@ -513,7 +519,7 @@
 
                 }).error(function(data, status, headers, config) {
                     console.log(data);
-                    $notification.error('Save failed', data.message);
+                    $notification.error('Failed', data.message);
                 });
             }
         };
@@ -525,14 +531,15 @@
         };
         /********************  Add Student To Seminar  ********************/
         $scope.addStudentToSeminar = function(seminarid, studentemail) {
-            $notification.success('Save success', 'Init Seminar success');
+
             if ($scope.data.addStudentToSeminar.company_id === 0 || angular.isUndefined(studentemail) || studentemail === "") {
                 $scope.css.seminarId = seminarid;
-            } else {
+            }else{
                 $scope.css.seminarId = 0;
                 $scope.data.addStudentToSeminar.email = studentemail;
 
                 $http.post('/marksimos/api/admin/assign_student_to_seminar', $scope.data.addStudentToSeminar).success(function(data, status, headers, config) {
+
                     app.getSeminarInit();
                     $notification.success('Save success', 'Add Student to Seminar success');
 
@@ -542,7 +549,7 @@
 
                 }).error(function(data, status, headers, config) {
                     console.log(data);
-                    $notification.error('Save failed', data.message);
+                    $notification.error('Failed', data.message);
                 });
             }
         };
@@ -563,7 +570,7 @@
 
                 }).error(function(data, status, headers, config) {
                     console.log(data);
-                    $notification.error('Save failed', data.message);
+                    $notification.error('Failed', data.message);
                 });
             }
         };
@@ -575,7 +582,8 @@
                 $notification.success('Save success', 'Init Seminar success');
                 $scope.css.runButtonDisabled = false;
             }).error(function(data, status, headers, config) {
-                $notification.error('Save failed', data.message);
+                console.log(data);
+                $notification.error('Failed', data.message);
                 $scope.css.runButtonDisabled = false;
             });
         };
@@ -588,7 +596,8 @@
                 $scope.css.runButtonDisabled = false;
 
             }).error(function(data, status, headers, config) {
-                $notification.error('Save failed', data.message);
+                console.log(data);
+                $notification.error('Failed', data.message);
                 $scope.css.runButtonDisabled = false;
             });
         };
@@ -603,8 +612,7 @@
 
     angular.module('marksimosadmin').controller('adminMarksimosReportController', ['$scope', '$http', '$notification', '$translate', 'Admin', 'AdminTable', 'chartReport', 'AdminChart', function($scope, $http, $notification,$translate, Admin,  AdminTable, chartReport, AdminChart) {
         $scope.css = {
-            // currentReportMenu: 'A1',
-            currentReportMenu:'FinalScore',//测试用
+            currentReportMenu:'AllDecisions',
             tableReportTab: 'SKU'
         };
 
@@ -615,10 +623,14 @@
                 allCompany: [],
                 allPeriod: []
             },
+<<<<<<< HEAD
             finalScores: {
                 showHead: true,
                 data:null
             },
+=======
+
+>>>>>>> e6b558b330dfb0553fb2ec14c1d20fc29da5005b
             //A1 Company Status
             tableA1CompanyStatus: {
                 allCompanyData: [],

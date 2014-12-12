@@ -370,8 +370,9 @@
             scope: {
                 data: '='
             },
+
             restrict: 'AEC',
-            templateUrl: '/app/js/report/tablereportfinalscore.html',
+            templateUrl: 'tablereportfinalscore.html',
             link: function($scope, $element, $attrs) {
                 $scope.changeIndex = function(index) {
                     $scope.selectIndex = index;

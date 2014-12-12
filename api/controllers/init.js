@@ -65,19 +65,19 @@ exports.init = function(req, res, next) {
 
             if(!seminarId){
                 status = 'active';
-                return next(new Error("seminarId cannot be empty."));
+                return res.send(400, {message: "seminarId cannot be empty."});
             }
 
             seminarModel.findOne({seminarId: seminarId})
             .then(function(dbSeminar){
                 if(!dbSeminar){
                     status = 'active';
-                    throw {message: "seminar doesn't exist."}
+                    throw {message: "Cancel promise chains. Because seminar doesn't exist."}
                 }
 
                 if(dbSeminar.currentPeriod !== consts.Period_0 + 1){
                     status = 'active';
-                    throw {message: "initialize a seminar that alreay starts."}
+                    throw {message: "Cancel promise chains. Because initialize a seminar that alreay starts."}
                 }
 
                 //before init, a new seminar should be created,
@@ -150,7 +150,7 @@ exports.init = function(req, res, next) {
                 .then(function(numAffected){
                     status = 'active';
                     if(numAffected!==1){
-                        throw {message: "there's error during set isInitialized to true."};
+                        throw {message: "Cancel promise chains. Because there's error during set isInitialized to true."};
                     }
                     res.send(200, {message: 'initialize success'});
                 }).done();
@@ -219,20 +219,20 @@ exports.runSimulation = function(){
             })
             .then(function(dbSeminar){
                 if(!dbSeminar){
-                    throw {message: "seminar doesn't exist."};
+                    throw {message: "Cancel promise chains. Because seminar doesn't exist."};
                 }
 
                 if(!dbSeminar.isInitialized){
-                    throw {httpStatus: 400, message: "you have not initialized this seminar."}
+                    throw {message: "Cancel promise chains. Because you have not initialized this seminar."}
                 }
 
                 //if all rounds are executed
                 if(dbSeminar.isSimulationFinised){
-                    throw {httpStatus: 400, message: "the last round simulation has been executed."}
+                    throw {message: "the last round simulation has been executed."}
                 }
 
                 if(decisionsOverwriteSwitchers.length != dbSeminar.companyNum){
-                    throw {httpStatus: 404, message: "Incorrect parameter decisionsOverwriteSwitchers in the post request."}
+                    throw {message: "Cancel promise chains. Because Incorrect parameter decisionsOverwriteSwitchers in the post request."}
                 }
 
                 if(!goingToNewPeriod){
@@ -254,7 +254,7 @@ exports.runSimulation = function(){
                         console.log(submitDecisionResult);
 
                         if(submitDecisionResult.message !== 'submit_decision_success'){
-                             throw {message: submitDecisionResult.message};
+                             throw {message: 'Cancel promise chains. Because ' + submitDecisionResult.message};
                         }
 
                         //run simulation
@@ -267,7 +267,7 @@ exports.runSimulation = function(){
                         .then(function(simulationResult){
                             logger.log('run simulation finished.');
                             if(simulationResult.message !== 'run_simulation_success'){
-                                throw {message: simulationResult.message};
+                                throw {message: 'Cancel promise chains. Because ' + simulationResult.message};
                             }
 
                             return Q.all[removeCurrentPeriodSimulationResult(seminarId, selectedPeriod)
@@ -320,7 +320,7 @@ exports.runSimulation = function(){
                                     })
                                     .then(function(numAffected){
                                         if(numAffected!==1){
-                                            throw {message: "there's error during update seminar."}
+                                            throw {message: "Cancel promise chains. Because there's error during update seminar."}
                                         }else{
                                             return undefined;
                                         }
@@ -337,7 +337,7 @@ exports.runSimulation = function(){
                                         currentPeriod       : dbSeminar.currentPeriod + 1
                                     }).then(function(numAffected){
                                         if(numAffected!==1){
-                                            throw {message: "there's error during update isSimulationFinised to true."}
+                                            throw {message: "Cancel promise chains. Because there's error during update isSimulationFinised to true."}
                                         }else{
                                             return undefined;
                                         }
@@ -346,7 +346,7 @@ exports.runSimulation = function(){
                                     return undefined;
                                 }
                             } else {
-                                throw {message: 'dbSeminar.currentPeriod > dbSeminar.simulationSpan, you cannot run into next period.'}
+                                throw {message: 'Cancel promise chains. Because dbSeminar.currentPeriod > dbSeminar.simulationSpan, you cannot run into next period.'}
                             }
                         })
                     });
@@ -374,7 +374,7 @@ function initCurrentPeriodSimulationResult(seminarId, currentPeriod){
     return cgiapi.queryOnePeriodResult(seminarId, currentPeriod)
     .then(function(currentPeriodResult){
         if(currentPeriodResult && currentPeriodResult.message){
-            throw currentPeriodResult;
+            throw {message: 'Cancel promise chains. Because ' + currentPeriodResult};
         }
 
         allResultsCleaner.clean(currentPeriodResult);
@@ -414,7 +414,7 @@ function submitDecision(companyId, period, seminarId){
     return companyDecisionModel.findOne(seminarId, period, companyId)
     .then(function(decision){
         if(!decision){
-            throw new Error("decision doesn't exist.");
+            throw {message: "Cancel promise chains. Because decision doesn't exist."};
         }
 
         result.d_CID = decision.d_CID;
@@ -690,7 +690,7 @@ function initMarketIndicatorReport(seminarId, currentPeriod){
     return cgiapi.getExogenous(currentPeriod)
     .then(function(exogenouse){
         if(!exogenouse || exogenouse.message){
-            throw new Error(exogenouse.message);
+            throw {message: 'Cancel promise chains. Because ' + exogenouse.message};
         }
 
         return reportModel.insert({
@@ -719,7 +719,7 @@ function duplicateLastPeriodDecision(seminarId, lastPeriod){
             tempCompanyDecision.bs_BlockBudgetApplication = false;
             p = p.then(function(result){
                 if(!result){
-                    throw new Error("save comanyDecision failed during create copy of last period decision.");
+                    throw {message: "Cancel promise chains. Because save comanyDecision failed during create copy of last period decision."};
                 }
                 return companyDecisionModel.save(tempCompanyDecision);
             })
@@ -728,7 +728,7 @@ function duplicateLastPeriodDecision(seminarId, lastPeriod){
     })
     .then(function(result){
         if(!result){
-            throw new Error("save comanyDecision failed during create copy of last period decision.");
+            throw {message: "save comanyDecision failed during create copy of last period decision."};
         }
         return brandDecisionModel.findAllInPeriod(seminarId, lastPeriod)
         .then(function(allBrandDecision){
@@ -742,7 +742,7 @@ function duplicateLastPeriodDecision(seminarId, lastPeriod){
                 tempBrandDecision.d_SalesForce = 0;
                 p = p.then(function(result){
                     if(!result){
-                        throw new Error("save brandDecision failed during create copy of last period decision.");
+                        throw {message: "Cancel promise chains. Because save brandDecision failed during create copy of last period decision."};
                     }
                     return brandDecisionModel.initCreate(tempBrandDecision);
                 })
@@ -752,7 +752,7 @@ function duplicateLastPeriodDecision(seminarId, lastPeriod){
     })
     .then(function(result){
         if(!result){
-            throw new Error("save comanyDecision failed during create copy of last period decision.");
+            throw {message: "Cancel promise chains. Because save comanyDecision failed during create copy of last period decision."};
         }
         return SKUDecisionModel.findAllInPeriod(seminarId, lastPeriod)
         .then(function(allSKUDecision){
@@ -774,7 +774,7 @@ function duplicateLastPeriodDecision(seminarId, lastPeriod){
                 tempSKUDecision.d_WholesalesBonusMinVolume = 0;
                 p = p.then(function(result){
                     if(!result){
-                        throw new Error("save SKUDecision failed during create copy of last period decision.");
+                        {message: "Cancel promise chains. Because save SKUDecision failed during create copy of last period decision."};
                     }
                     return SKUDecisionModel.initCreate(tempSKUDecision);
                 })
@@ -820,7 +820,7 @@ function createNewDecisionBasedOnLastPeriodDecision(seminarId, lastPeriod, decis
                     if(decisionsOverwriteSwitchers[tempSKUDecision.d_CID - 1]){
                         p = p.then(function(result){
                             if(!result){
-                                throw new Error("save SKUDecision failed during create copy of last period decision.");
+                                throw {message: "Cancel promise chains. Because save SKUDecision failed during create copy of last period decision."};
                             }
                             return SKUDecisionModel.createSKUDecisionBasedOnLastPeriodDecision(tempSKUDecision);
                         })
@@ -831,7 +831,7 @@ function createNewDecisionBasedOnLastPeriodDecision(seminarId, lastPeriod, decis
     })
     .then(function(result){
         if(!result){
-            throw new Error("save comanyDecision failed during create copy of last period decision.");
+            throw {message: "Cancel promise chains. Because save comanyDecision failed during create copy of last period decision."};
         }
         return brandDecisionModel.findAllInPeriod(seminarId, lastPeriod)
         .then(function(allBrandDecision){
@@ -851,7 +851,7 @@ function createNewDecisionBasedOnLastPeriodDecision(seminarId, lastPeriod, decis
                     if(decisionsOverwriteSwitchers[tempBrandDecision.d_CID - 1]){
                         p = p.then(function(result){
                             if(!result){
-                                throw new Error("save brandDecision failed during create copy of last period decision.");
+                                throw {message: "Cancel promise chains. Because save brandDecision failed during create copy of last period decision."};
                             }
                             return brandDecisionModel.createBrandDecisionBasedOnLastPeriodDecision(tempBrandDecision);
                         })
@@ -889,7 +889,7 @@ function createNewDecisionBasedOnLastPeriodDecision(seminarId, lastPeriod, decis
                 if(decisionsOverwriteSwitchers[tempCompanyDecision.d_CID - 1]){
                     p = p.then(function(result){
                         if(!result){
-                            throw new Error("save comanyDecision failed during create copy of last period decision.");
+                            throw {message: "Cancel promise chains. Because save comanyDecision failed during create copy of last period decision."};
                         }
                         return companyDecisionModel.save(tempCompanyDecision);
                     })

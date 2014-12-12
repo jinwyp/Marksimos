@@ -31,7 +31,7 @@
 
     angular.module('marksimos.filter').filter('usersegment', userSegmentFilter);
     angular.module('marksimos.filter').filter('skupacksize', skuPackSizeFilter);
-    angular.module('marksimos.filter').filter('companyName', companyNameFilter);
+    angular.module('marksimos.filter').filter('companyname', companyNameFilter);
     
    
 
@@ -106,15 +106,19 @@
         };
     }
 
+
     function companyNameFilter() {
         return function(input) {
-            input = input || [];
-            //根据公司编号，显示公司名称
-            var companyID = +input || -1;
-            if (companyID > 0) {
-                return String.fromCharCode('A'.charCodeAt(0) + companyID - 1);
+
+            //根据公司数值编号，显示公司字母名称 A, B, C, D, E, F
+            if(angular.isNumber(input)){
+                input = +input || 0;
+                if (input > 0) {
+                    return String.fromCharCode('A'.charCodeAt(0) + input - 1);
+                }
             }
-            return 'unknown';
+            return input;
+
         };
     }
    

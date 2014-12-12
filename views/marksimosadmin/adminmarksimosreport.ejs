@@ -8,12 +8,7 @@
     <div class="wrapper row-offcanvas row-offcanvas-left">
 
         <section class="content">
-            <h2 class="page-header">MarkSimos Seminar <%= seminarId %> Report
-                <button type="button" class="btn btn-default" ng-click="clickChartMenu('AllDecisions')"> Show All Decisions</button>
-                <button type="button" class="btn btn-default" ng-click="clickChartMenu('FinalScore')"> Show All Decisions</button>
-            </h2>
-
-
+            <h2 class="page-header">MarkSimos Seminar <%= seminarId %> Report </h2>
             {{'ReportYourCompany' | translate}} :
             <div class="btn-group">
                 <button type="button" class="btn btn-default" ng-class="{'active': css.currentReportMenu=='A1'}" ng-click="clickChartMenu('A1')">{{'ReportMenuCompanyStatus' | translate}}</button>
@@ -42,7 +37,12 @@
                 <button type="button" class="btn btn-default" ng-class="{'active': css.currentReportMenu=='C6'}" ng-click="clickChartMenu('C6')">{{'ReportMenuMarketIndicator' | translate}}</button>
             </div>
 
+            <br />
+            {{'FinalScoreAdminPanelLabel' | translate}} :
+            <button type="button" class="btn btn-default" ng-click="clickChartMenu('AllDecisions')"> {{'FinalScoreAdminPanelDecisionsButton' | translate}}</button>
+            <button type="button" class="btn btn-default" ng-click="clickChartMenu('AllResults')"> {{'FinalScoreAdminPanelResultsButton' | translate}}</button>
         </section>
+
 
 
         <!--  Table A1  -->
@@ -97,6 +97,7 @@
             </div>
             <!-- /.box -->
         </section>
+
 
 
         <!--  Table A2  -->
@@ -235,6 +236,7 @@
         </section>
 
 
+
         <!--  Table B1  -->
         <section class="content" ng-if="css.currentReportMenu=='B1'">
 
@@ -357,6 +359,7 @@
         </section>
 
 
+
         <!--  Table B3  -->
         <section class="content" ng-if="css.currentReportMenu=='B3'">
             <!--  row 1  -->
@@ -422,6 +425,7 @@
         </section>
 
 
+
         <!--  Table B4  -->
         <section class="content" ng-if="css.currentReportMenu=='B4'">
             <!--  row 1  -->
@@ -485,6 +489,8 @@
             </div>
             <!--  /row 2  -->
         </section>
+
+
 
         <!--  Table C1  -->
         <section class="content" ng-if="css.currentReportMenu=='C1'">
@@ -601,6 +607,8 @@
 
         </section>
 
+
+
         <!-- Chart C2  -->
         <section class="content" ng-if="css.currentReportMenu=='C2'">
             <div class="box box-primary">
@@ -631,7 +639,8 @@
                 </div>
             </div>
         </section>
-      
+
+
 
         <!--  Table C3  -->
         <section class="content" ng-if="css.currentReportMenu=='C3'">
@@ -663,6 +672,8 @@
                 </div>
             </div>
         </section>
+
+
 
         <!--  Table C4  -->
         <section class="content" ng-if="css.currentReportMenu=='C4'">
@@ -726,6 +737,7 @@
             </div>
             <!--  \row 2  -->
         </section>
+
 
 
         <!--  Table C5  -->
@@ -897,6 +909,7 @@
         </section>
 
 
+
         <!--  Table C6  -->
         <section class="content" ng-if="css.currentReportMenu=='C6'">
             <div class="box box-primary">
@@ -923,10 +936,10 @@
                 <div class="box-header">
                     <div class="btn-group pull-right">
                         <button type="button" class="btn btn-default btn-sm dropdown-toggle" data-toggle="dropdown">
-                            {{'HomePageSecondMenuBarLabelsCompany' | translate}} {{data.allDecisions.currentCompany| companyName}} <span class="caret"></span>
+                            {{'HomePageSecondMenuBarLabelsCompany' | translate}} {{data.allDecisions.currentCompany | companyname}} <span class="caret"></span>
                         </button>
                         <ul class="dropdown-menu" role="menu">
-                            <li ng-repeat="company in data.allDecisions.allCompany"><a href="" ng-click="data.allDecisions.currentCompany=company">{{'HomePageSecondMenuBarLabelsCompany' | translate}} {{company | companyName}}</a></li>
+                            <li ng-repeat="company in data.allDecisions.allCompany"><a href="" ng-click="data.allDecisions.currentCompany=company">{{'HomePageSecondMenuBarLabelsCompany' | translate}} {{company | companyname}}</a></li>
                         </ul>
                     </div>
                     <div class="btn-group pull-right">
@@ -937,6 +950,7 @@
                             <li ng-repeat="period in data.allDecisions.allPeriod"><a href="" ng-click="data.allDecisions.currentPeriod=period">{{'HomePageSecondMenuBarCurrentPeriod' | translate}}  {{period}}</a></li>
                         </ul>
                     </div>
+
                     <i class="fa fa-table"></i>
                     <h3 class="box-title">
                         {{'DecisionPageDecisionTabMAKEDECISIONS' | translate}}
@@ -957,7 +971,7 @@
                         <tbody>
                             <tr>
                                 <td>{{decisions.seminarId}}</td>
-                                <td>{{decisions.d_CID | companyName}}</td>
+                                <td>{{decisions.d_CID | companyname}}</td>
                                 <td>{{decisions.period}}</td>
                                 <td>{{decisions.d_RequestedAdditionalBudget}}</td>
                             </tr>
