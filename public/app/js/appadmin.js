@@ -623,14 +623,10 @@
                 allCompany: [],
                 allPeriod: []
             },
-<<<<<<< HEAD
             finalScores: {
                 showHead: true,
                 data:null
             },
-=======
-
->>>>>>> e6b558b330dfb0553fb2ec14c1d20fc29da5005b
             //A1 Company Status
             tableA1CompanyStatus: {
                 allCompanyData: [],
