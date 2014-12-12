@@ -5,7 +5,7 @@ var simulationResult = require('../models/simulationResult.js');
 var seminarModel     = require('../models/seminar.js');
 var Q                = require('q');
 var _                = require('underscore');
-//±¸·İÔ­À´µÄ·½·¨
+//å¤‡ä»½åŸæ¥çš„æ–¹æ³•
 //exports.getFinalScore_Backup = function(req, res, next){
     //var seminarId = req.session.seminarId;
     //var period = req.params.period;
@@ -116,7 +116,7 @@ var _                = require('underscore');
 //}
 
 exports.getFinalScore = function(req, res, next) {
-    //ÓÅÏÈ»ñÈ¡´«ÈëµÄ»áÒé±àºÅ(ºÏ·¨µÄ±àºÅ²»»áÎª0)
+    //ä¼˜å…ˆè·å–ä¼ å…¥çš„ä¼šè®®ç¼–å·(åˆæ³•çš„ç¼–å·ä¸ä¼šä¸º0)
     var seminarId = +req.params.seminarId || req.session.seminarId || 0;
     console.log(seminarId);
     if (!seminarId) {
@@ -130,10 +130,10 @@ exports.getFinalScore = function(req, res, next) {
         var initialPeriodResult;        
         requestedPeriodResultArr.forEach(function(requestedPeriodResult) {          
             if (requestedPeriodResult.period == 0) {
-                //Ô­À´×÷Îª±È½ÏµÄ½×¶Î0
+                //åŸæ¥ä½œä¸ºæ¯”è¾ƒçš„é˜¶æ®µ0
                 initialPeriodResult = requestedPeriodResult;
             } else if (requestedPeriodResult.period > 0) {
-                //µ±½×¶Î´óÓÚ0Ê±£¬ÎªÓĞĞ§Êı¾İ
+                //å½“é˜¶æ®µå¤§äº0æ—¶ï¼Œä¸ºæœ‰æ•ˆæ•°æ®
                 var period = requestedPeriodResult.period;
                 var scores = [];
                 var highest_SOM, lowest_SOM, highest_Profit, lowest_Profit;
