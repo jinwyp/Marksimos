@@ -72,23 +72,27 @@ exports.getAllCompanyDecisionsOfAllPeriod = function(seminarId){
                 });
 
                 brandDecisionList.forEach(function(brandDecision){
-                    brandDecision.SKUDecisions = [];
 
                     if(brandDecision.d_CID === company.d_CID && brandDecision.period === company.period){
                         company.brandDecisions.push(brandDecision);
                     }
+                });
+
+                company.brandDecisions.forEach(function(brandDecision2){
+                    brandDecision2.SKUDecisions = [];
 
                     company.SKUDecisions.forEach(function(SKUDecision2){
 
-                        if(SKUDecision2.d_BrandID === brandDecision.d_BrandID){
-                            brandDecision.SKUDecisions.push(SKUDecision2);
+                        if(SKUDecision2.d_BrandID === brandDecision2.d_BrandID){
+                            brandDecision2.SKUDecisions.push(SKUDecision2);
                         }
                     })
 
                 });
 
-            });
+                company.SKUDecisions = null;
 
+            });
 
             return companyDecision;
         });

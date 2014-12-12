@@ -116,7 +116,10 @@
                 if (input > 0) {
                     return String.fromCharCode('A'.charCodeAt(0) + input - 1);
                 }
+            }else if(input === '!!'){
+                return 'All';
             }
+
             return input;
 
         };
