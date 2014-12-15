@@ -493,22 +493,22 @@
                                     <h5>{{'ReportMenuMarketTrends' | translate}}
                                         <div class="pull-right">
                                             <div class="btn-group btn-group-sm">
-                                                <button type="button" class="btn btn-default" ng-class="{'active': css.tableReportTab=='SKU'}" ng-click="switchTableCategoryC5('SKU', 'averageDisplayPriceStdPack', '')">{{'ReportTabLabelSKU' | translate}}</button>
-                                                <button type="button" class="btn btn-default" ng-class="{'active': css.tableReportTab=='Brand'}" ng-click="switchTableCategoryC5('Brand', 'averageDisplayPriceStdPack', '')">{{'ReportTabLabelBrand' | translate}}</button>
-                                                <button type="button" class="btn btn-default" ng-class="{'active': css.tableReportTab=='Global'}" ng-click="switchTableCategoryC5('Global', 'averageNetMarketPriceStdPack', '')">{{'ReportTabLabelGlobal' | translate}}</button>
+                                                <button type="button" class="btn btn-default" ng-class="{'active': data.tableC5MarketTrends.tableReportTab=='SKU'}" ng-click="switchTableCategoryC5('SKU', 'averageDisplayPriceStdPack', '')">{{'ReportTabLabelSKU' | translate}}</button>
+                                                <button type="button" class="btn btn-default" ng-class="{'active': data.tableC5MarketTrends.tableReportTab=='Brand'}" ng-click="switchTableCategoryC5('Brand', 'averageDisplayPriceStdPack', '')">{{'ReportTabLabelBrand' | translate}}</button>
+                                                <button type="button" class="btn btn-default" ng-class="{'active': data.tableC5MarketTrends.tableReportTab=='Global'}" ng-click="switchTableCategoryC5('Global', 'averageNetMarketPriceStdPack', '')">{{'ReportTabLabelGlobal' | translate}}</button>
                                             </div>
                                         </div>
                                     </h5>
 
                                     <ul class="nav nav-pills table_multimenu">
-                                        <li ng-class="{'active': css.tableReportMenu == 1}"><a href="" ng-click="switchTableMenuLevel1C5(1, css.tableReportTab, 'averageDisplayPriceStdPack', '')">{{'ReportMarketTrendsSKUTableTitleMarketFigures' | translate}}</a></li>
-                                        <li ng-class="{'active': css.tableReportMenu == 2}"><a href="" ng-click="switchTableMenuLevel1C5(2, css.tableReportTab, 'lostSalesVolumeDueToOOSStdPack', '')">{{'ReportMarketTrendsSKUTableTitleMiscellaneous' | translate}}</a></li>
-                                        <li ng-class="{'active': css.tableReportMenu == 3}"><a href="" ng-click="switchTableMenuLevel1C5(3, css.tableReportTab, 'valueShareInPriceSensitiveSegment', '%')">{{'ReportMarketTrendsSKUTableTitleSegmentWiseValueShare' | translate}}</a></li>
-                                        <li ng-class="{'active': css.tableReportMenu == 4}"><a href="" ng-click="switchTableMenuLevel1C5(4, css.tableReportTab, 'volumeShareInPriceSensitiveSegment', '%')">{{'ReportMarketTrendsSKUTableTitleSegmentWiseVolumeShare' | translate}}</a></li>
+                                        <li ng-class="{'active': css.tableReportMenu == 1}"><a href="" ng-click="switchTableMenuLevel1C5(1, data.tableC5MarketTrends.tableReportTab, 'averageDisplayPriceStdPack', '')">{{'ReportMarketTrendsSKUTableTitleMarketFigures' | translate}}</a></li>
+                                        <li ng-class="{'active': css.tableReportMenu == 2}"><a href="" ng-click="switchTableMenuLevel1C5(2, data.tableC5MarketTrends.tableReportTab, 'lostSalesVolumeDueToOOSStdPack', '')">{{'ReportMarketTrendsSKUTableTitleMiscellaneous' | translate}}</a></li>
+                                        <li ng-class="{'active': css.tableReportMenu == 3}"><a href="" ng-click="switchTableMenuLevel1C5(3, data.tableC5MarketTrends.tableReportTab, 'valueShareInPriceSensitiveSegment', '%')">{{'ReportMarketTrendsSKUTableTitleSegmentWiseValueShare' | translate}}</a></li>
+                                        <li ng-class="{'active': css.tableReportMenu == 4}"><a href="" ng-click="switchTableMenuLevel1C5(4, data.tableC5MarketTrends.tableReportTab, 'volumeShareInPriceSensitiveSegment', '%')">{{'ReportMarketTrendsSKUTableTitleSegmentWiseVolumeShare' | translate}}</a></li>
                                     </ul>
 
                                     <!--  SKU  -->
-                                    <div class="table_report" ng-if="css.tableReportTab=='SKU'">
+                                    <div class="table_report" ng-if="data.tableC5MarketTrends.tableReportTab=='SKU'">
 
                                         <ul class="nav nav-pills" ng-if="css.tableReportMenu == 1">
                                             <li ng-class="{'active': data.tableC5MarketTrends.currentTable==1}"><a href="" ng-click="switchTableReportC5(1, 'SKU', 'averageDisplayPriceStdPack', '')">{{'ReportMarketTrendsSKUMarketFiguresAverageDisplayPrice' | translate}}</a></li>
@@ -556,7 +556,7 @@
 
 
                                     <!--  Brand  -->
-                                    <div class="table_report" ng-if="css.tableReportTab=='Brand'">
+                                    <div class="table_report" ng-if="data.tableC5MarketTrends.tableReportTab=='Brand'">
 
                                         <ul class="nav nav-pills" ng-if="css.tableReportMenu == 1">
                                             <li ng-class="{'active': data.tableC5MarketTrends.currentTable==1}"><a href="" ng-click="switchTableReportC5(1, 'brand', 'averageDisplayPriceStdPack', '')">{{'ReportMarketTrendsBrandMarketFiguresAverageDisplayPrice' | translate}}</a></li>
@@ -604,7 +604,7 @@
 
 
                                     <!--  Global  -->
-                                    <div class="table_report" ng-if="css.tableReportTab=='Global'">
+                                    <div class="table_report" ng-if="data.tableC5MarketTrends.tableReportTab=='Global'">
 
                                         <ul class="nav nav-pills" ng-if="css.tableReportMenu == 1">
                                             <li ng-class="{'active': data.tableC5MarketTrends.currentTable==1}"><a href="" ng-click="switchTableReportC5(1, 'global', 'averageNetMarketPriceStdPack', '')">{{'ReportMarketTrendsGlobalMarketFiguresAverageNetMarketPrice' | translate}}</a></li>
@@ -899,22 +899,22 @@
                                     <h5>{{'ReportMenuMarketTrends' | translate}}
                                         <div class="pull-right">
                                             <div class="btn-group btn-group-sm">
-                                                <button type="button" class="btn btn-default" ng-class="{'active': css.tableReportTab=='SKU'}" ng-click="switchTableCategoryC5('SKU', 'averageDisplayPriceStdPack', '')">{{'ReportTabLabelSKU' | translate}}</button>
-                                                <button type="button" class="btn btn-default" ng-class="{'active': css.tableReportTab=='Brand'}" ng-click="switchTableCategoryC5('Brand', 'averageDisplayPriceStdPack', '')">{{'ReportTabLabelBrand' | translate}}</button>
-                                                <button type="button" class="btn btn-default" ng-class="{'active': css.tableReportTab=='Global'}" ng-click="switchTableCategoryC5('Global', 'averageNetMarketPriceStdPack', '')">{{'ReportTabLabelGlobal' | translate}}</button>
+                                                <button type="button" class="btn btn-default" ng-class="{'active': data.tableC5MarketTrends.tableReportTab=='SKU'}" ng-click="switchTableCategoryC5('SKU', 'averageDisplayPriceStdPack', '')">{{'ReportTabLabelSKU' | translate}}</button>
+                                                <button type="button" class="btn btn-default" ng-class="{'active': data.tableC5MarketTrends.tableReportTab=='Brand'}" ng-click="switchTableCategoryC5('Brand', 'averageDisplayPriceStdPack', '')">{{'ReportTabLabelBrand' | translate}}</button>
+                                                <button type="button" class="btn btn-default" ng-class="{'active': data.tableC5MarketTrends.tableReportTab=='Global'}" ng-click="switchTableCategoryC5('Global', 'averageNetMarketPriceStdPack', '')">{{'ReportTabLabelGlobal' | translate}}</button>
                                             </div>
                                         </div>
                                     </h5>
 
                                     <ul class="nav nav-pills table_multimenu">
-                                        <li ng-class="{'active': css.tableReportMenu == 1}"><a href="" ng-click="switchTableMenuLevel1C5(1, css.tableReportTab, 'averageDisplayPriceStdPack', '')">{{'ReportMarketTrendsSKUTableTitleMarketFigures' | translate}}</a></li>
-                                        <li ng-class="{'active': css.tableReportMenu == 2}"><a href="" ng-click="switchTableMenuLevel1C5(2, css.tableReportTab, 'lostSalesVolumeDueToOOSStdPack', '')">{{'ReportMarketTrendsSKUTableTitleMiscellaneous' | translate}}</a></li>
-                                        <li ng-class="{'active': css.tableReportMenu == 3}"><a href="" ng-click="switchTableMenuLevel1C5(3, css.tableReportTab, 'valueShareInPriceSensitiveSegment', '%')">{{'ReportMarketTrendsSKUTableTitleSegmentWiseValueShare' | translate}}</a></li>
-                                        <li ng-class="{'active': css.tableReportMenu == 4}"><a href="" ng-click="switchTableMenuLevel1C5(4, css.tableReportTab, 'volumeShareInPriceSensitiveSegment', '%')">{{'ReportMarketTrendsSKUTableTitleSegmentWiseVolumeShare' | translate}}</a></li>
+                                        <li ng-class="{'active': css.tableReportMenu == 1}"><a href="" ng-click="switchTableMenuLevel1C5(1, data.tableC5MarketTrends.tableReportTab, 'averageDisplayPriceStdPack', '')">{{'ReportMarketTrendsSKUTableTitleMarketFigures' | translate}}</a></li>
+                                        <li ng-class="{'active': css.tableReportMenu == 2}"><a href="" ng-click="switchTableMenuLevel1C5(2, data.tableC5MarketTrends.tableReportTab, 'lostSalesVolumeDueToOOSStdPack', '')">{{'ReportMarketTrendsSKUTableTitleMiscellaneous' | translate}}</a></li>
+                                        <li ng-class="{'active': css.tableReportMenu == 3}"><a href="" ng-click="switchTableMenuLevel1C5(3, data.tableC5MarketTrends.tableReportTab, 'valueShareInPriceSensitiveSegment', '%')">{{'ReportMarketTrendsSKUTableTitleSegmentWiseValueShare' | translate}}</a></li>
+                                        <li ng-class="{'active': css.tableReportMenu == 4}"><a href="" ng-click="switchTableMenuLevel1C5(4, data.tableC5MarketTrends.tableReportTab, 'volumeShareInPriceSensitiveSegment', '%')">{{'ReportMarketTrendsSKUTableTitleSegmentWiseVolumeShare' | translate}}</a></li>
                                     </ul>
 
                                     <!--  SKU  -->
-                                    <div class="table_report" ng-if="css.tableReportTab=='SKU'">
+                                    <div class="table_report" ng-if="data.tableC5MarketTrends.tableReportTab=='SKU'">
 
                                         <ul class="nav nav-pills" ng-if="css.tableReportMenu == 1">
                                             <li ng-class="{'active': data.tableC5MarketTrends.currentTable==1}"><a href="" ng-click="switchTableReportC5(1, 'SKU', 'averageDisplayPriceStdPack', '')">{{'ReportMarketTrendsSKUMarketFiguresAverageDisplayPrice' | translate}}</a></li>
@@ -962,7 +962,7 @@
 
 
                                     <!--  Brand  -->
-                                    <div class="table_report" ng-if="css.tableReportTab=='Brand'">
+                                    <div class="table_report" ng-if="data.tableC5MarketTrends.tableReportTab=='Brand'">
 
                                         <ul class="nav nav-pills" ng-if="css.tableReportMenu == 1">
                                             <li ng-class="{'active': data.tableC5MarketTrends.currentTable==1}"><a href="" ng-click="switchTableReportC5(1, 'brand', 'averageDisplayPriceStdPack', '')">{{'ReportMarketTrendsBrandMarketFiguresAverageDisplayPrice' | translate}}</a></li>
@@ -1010,7 +1010,7 @@
 
 
                                     <!--  Global  -->
-                                    <div class="table_report" ng-if="css.tableReportTab=='Global'">
+                                    <div class="table_report" ng-if="data.tableC5MarketTrends.tableReportTab=='Global'">
 
                                         <ul class="nav nav-pills" ng-if="css.tableReportMenu == 1">
                                             <li ng-class="{'active': data.tableC5MarketTrends.currentTable==1}"><a href="" ng-click="switchTableReportC5(1, 'global', 'averageNetMarketPriceStdPack', '')">{{'ReportMarketTrendsGlobalMarketFiguresAverageNetMarketPrice' | translate}}</a></li>
@@ -1549,8 +1549,8 @@
                         <!--<span class="glyphicon glyphicon-resize-full chart_icon"></span>-->
                         <!--<span class="glyphicon glyphicon-save chart_icon"></span>-->
                         <div class="btn-group btn-group-sm perception_map_group">
-                            <button type="button" class="btn btn-default perception_map_button" ng-click="switchPerceptionMapsData('sku')">{{'ReportTabLabelSKU' | translate}}</button>
-                            <button type="button" class="btn btn-default perception_map_button" ng-click="switchPerceptionMapsData('brand')">{{'ReportTabLabelBrand' | translate}}</button>
+                            <button type="button" class="btn btn-default perception_map_button" ng-class="{'active':tableReportTabC2=='SKU'}" ng-click="switchPerceptionMapsData('SKU')">{{'ReportTabLabelSKU' | translate}}</button>
+                            <button type="button" class="btn btn-default perception_map_button" ng-class="{'active':tableReportTabC2=='Brand'}" ng-click="switchPerceptionMapsData('Brand')">{{'ReportTabLabelBrand' | translate}}</button>
                         </div>
 
                         <div class="btn-group perception_map_dropdown">
@@ -1651,22 +1651,22 @@
                     <h5>{{'ReportMenuMarketTrends' | translate}}
                         <div class="pull-right">
                             <div class="btn-group btn-group-sm">
-                                <button type="button" class="btn btn-default" ng-class="{'active': css.tableReportTab=='SKU'}" ng-click="switchTableCategoryC5('SKU', 'averageDisplayPriceStdPack', '')">{{'ReportTabLabelSKU' | translate}}</button>
-                                <button type="button" class="btn btn-default" ng-class="{'active': css.tableReportTab=='Brand'}" ng-click="switchTableCategoryC5('Brand', 'averageDisplayPriceStdPack', '')">{{'ReportTabLabelBrand' | translate}}</button>
-                                <button type="button" class="btn btn-default" ng-class="{'active': css.tableReportTab=='Global'}" ng-click="switchTableCategoryC5('Global', 'averageNetMarketPriceStdPack', '')">{{'ReportTabLabelGlobal' | translate}}</button>
+                                <button type="button" class="btn btn-default" ng-class="{'active': data.tableC5MarketTrends.tableReportTab=='SKU'}" ng-click="switchTableCategoryC5('SKU', 'averageDisplayPriceStdPack', '')">{{'ReportTabLabelSKU' | translate}}</button>
+                                <button type="button" class="btn btn-default" ng-class="{'active': data.tableC5MarketTrends.tableReportTab=='Brand'}" ng-click="switchTableCategoryC5('Brand', 'averageDisplayPriceStdPack', '')">{{'ReportTabLabelBrand' | translate}}</button>
+                                <button type="button" class="btn btn-default" ng-class="{'active': data.tableC5MarketTrends.tableReportTab=='Global'}" ng-click="switchTableCategoryC5('Global', 'averageNetMarketPriceStdPack', '')">{{'ReportTabLabelGlobal' | translate}}</button>
                             </div>
                         </div>
                     </h5>
 
                     <ul class="nav nav-pills table_multimenu">
-                        <li ng-class="{'active': css.tableReportMenu == 1}"><a href="" ng-click="switchTableMenuLevel1C5(1, css.tableReportTab, 'averageDisplayPriceStdPack', '')">{{'ReportMarketTrendsSKUTableTitleMarketFigures' | translate}}</a></li>
-                        <li ng-class="{'active': css.tableReportMenu == 2}"><a href="" ng-click="switchTableMenuLevel1C5(2, css.tableReportTab, 'lostSalesVolumeDueToOOSStdPack', '')">{{'ReportMarketTrendsSKUTableTitleMiscellaneous' | translate}}</a></li>
-                        <li ng-class="{'active': css.tableReportMenu == 3}"><a href="" ng-click="switchTableMenuLevel1C5(3, css.tableReportTab, 'valueShareInPriceSensitiveSegment', '%')">{{'ReportMarketTrendsSKUTableTitleSegmentWiseValueShare' | translate}}</a></li>
-                        <li ng-class="{'active': css.tableReportMenu == 4}"><a href="" ng-click="switchTableMenuLevel1C5(4, css.tableReportTab, 'volumeShareInPriceSensitiveSegment', '%')">{{'ReportMarketTrendsSKUTableTitleSegmentWiseVolumeShare' | translate}}</a></li>
+                        <li ng-class="{'active': css.tableReportMenu == 1}"><a href="" ng-click="switchTableMenuLevel1C5(1, data.tableC5MarketTrends.tableReportTab, 'averageDisplayPriceStdPack', '')">{{'ReportMarketTrendsSKUTableTitleMarketFigures' | translate}}</a></li>
+                        <li ng-class="{'active': css.tableReportMenu == 2}"><a href="" ng-click="switchTableMenuLevel1C5(2, data.tableC5MarketTrends.tableReportTab, 'lostSalesVolumeDueToOOSStdPack', '')">{{'ReportMarketTrendsSKUTableTitleMiscellaneous' | translate}}</a></li>
+                        <li ng-class="{'active': css.tableReportMenu == 3}"><a href="" ng-click="switchTableMenuLevel1C5(3, data.tableC5MarketTrends.tableReportTab, 'valueShareInPriceSensitiveSegment', '%')">{{'ReportMarketTrendsSKUTableTitleSegmentWiseValueShare' | translate}}</a></li>
+                        <li ng-class="{'active': css.tableReportMenu == 4}"><a href="" ng-click="switchTableMenuLevel1C5(4, data.tableC5MarketTrends.tableReportTab, 'volumeShareInPriceSensitiveSegment', '%')">{{'ReportMarketTrendsSKUTableTitleSegmentWiseVolumeShare' | translate}}</a></li>
                     </ul>
 
                     <!--  SKU  -->
-                    <div class="table_report" ng-if="css.tableReportTab=='SKU'">
+                    <div class="table_report" ng-if="data.tableC5MarketTrends.tableReportTab=='SKU'">
 
                         <ul class="nav nav-pills" ng-if="css.tableReportMenu == 1">
                             <li ng-class="{'active': data.tableC5MarketTrends.currentTable==1}"><a href="" ng-click="switchTableReportC5(1, 'SKU', 'averageDisplayPriceStdPack', '')">{{'ReportMarketTrendsSKUMarketFiguresAverageDisplayPrice' | translate}}</a></li>
@@ -1714,7 +1714,7 @@
 
 
                     <!--  Brand  -->
-                    <div class="table_report" ng-if="css.tableReportTab=='Brand'">
+                    <div class="table_report" ng-if="data.tableC5MarketTrends.tableReportTab=='Brand'">
 
                         <ul class="nav nav-pills" ng-if="css.tableReportMenu == 1">
                             <li ng-class="{'active': data.tableC5MarketTrends.currentTable==1}"><a href="" ng-click="switchTableReportC5(1, 'brand', 'averageDisplayPriceStdPack', '')">{{'ReportMarketTrendsBrandMarketFiguresAverageDisplayPrice' | translate}}</a></li>
@@ -1762,7 +1762,7 @@
 
 
                     <!--  Global  -->
-                    <div class="table_report" ng-if="css.tableReportTab=='Global'">
+                    <div class="table_report" ng-if="data.tableC5MarketTrends.tableReportTab=='Global'">
 
                         <ul class="nav nav-pills" ng-if="css.tableReportMenu == 1">
                             <li ng-class="{'active': data.tableC5MarketTrends.currentTable==1}"><a href="" ng-click="switchTableReportC5(1, 'global', 'averageNetMarketPriceStdPack', '')">{{'ReportMarketTrendsGlobalMarketFiguresAverageNetMarketPrice' | translate}}</a></li>

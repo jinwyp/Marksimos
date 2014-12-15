@@ -35,7 +35,8 @@
         $scope.css = {
             menu                     : 'Home',
             chartMenu                : 'A1',
-            tableReportTab           : 'Global',
+            tableReportTab           : 'SKU',
+            tableReportTabC2           : 'SKU',
             tableReportMenu          : 1,
             additionalBudget         : true,
             currentDecisionBrandId   : 0,
@@ -182,12 +183,13 @@
     //            imagePerception : []
             },
             tableC5MarketTrends : {
-                allData : [],
-                currentTable : 1,
+                allData          : [],
+                currentTable     : 1,
                 currentTableData : {},
                 currentTableUnit : "",
-                chartConfig : chartReport.getChartConfig1(),
-                chartData : $scope.dataChartSimple
+                chartConfig      : chartReport.getChartConfig1(),
+                chartData        : $scope.dataChartSimple,
+                tableReportTab   : 'Global'
             },
             tableC6MarketIndicators : {
                 allData : {}
@@ -803,7 +805,8 @@
 
         /********************  Chart C2  ********************/
         $scope.switchPerceptionMapsData = function(flag){
-            if(flag === 'sku'){
+            $scope.css.tableReportTabC2 = flag;
+            if(flag === 'SKU'){
                 $scope.data.chartC21PerceptionMap.dataChart = $scope.data.chartC21PerceptionMap.data.dataSKU;
             }else{
                 $scope.data.chartC21PerceptionMap.dataChart = $scope.data.chartC21PerceptionMap.data.dataBrand;
@@ -919,7 +922,7 @@
 
         });
         $scope.switchTableCategoryC5 = function(category, field, unit){
-            $scope.css.tableReportTab = category;
+            $scope.data.tableC5MarketTrends.tableReportTab = category;
             if(category === 'SKU'){
                 $scope.switchTableMenuLevel1C5(1, 'SKU', field, unit);
             }else if(category === 'Brand'){
@@ -929,7 +932,7 @@
             }
         };
         $scope.switchTableMenuLevel1C5 = function(menu, category, field, unit){
-            $scope.css.tableReportMenu = menu;
+            $scope.data.tableC5MarketTrends.tableReportMenu = menu;
             if(category === 'SKU'){
                 $scope.switchTableReportC5(1, 'SKU', field, unit);
             }else if(category === 'Brand'){
