@@ -2596,8 +2596,8 @@
                     <span class="score_info_title col-md-9 ">{{'FinalScorePageScore' | translate}}</span>
                     <div class="pull-right">
                         <div class="btn-group btn-group-sm">
-                            <button type="button" class="btn btn-default" ng-class="{'active':data.tableFinalScore.showScaled=='false'}" ng-click="data.tableFinalScore.showScaled=false">{{'FinalScorePageButtonOriginal' | translate}}</button>
-                            <button type="button" class="btn btn-default" ng-class="{'active':data.tableFinalScore.showScaled=='true'}" ng-click="data.tableFinalScore.showScaled=true">{{'FinalScorePageButtonRescaled' | translate}}</button>
+                            <button type="button" class="btn btn-default" ng-class="{'active':data.tableFinalScore.showScaled==false}" ng-click="data.tableFinalScore.showScaled=false">{{'FinalScorePageButtonOriginal' | translate}}</button>
+                            <button type="button" class="btn btn-default" ng-class="{'active':data.tableFinalScore.showScaled==true}" ng-click="data.tableFinalScore.showScaled=true">{{'FinalScorePageButtonRescaled' | translate}}</button>
                         </div>
                     </div>
                 </div>
