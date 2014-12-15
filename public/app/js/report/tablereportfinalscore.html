@@ -7,12 +7,12 @@
                 </li>
             </ul>
             <div class="divider_horizontal"></div>
-            <table class="table table-bordered" ng-repeat="val in data" ng-if="$index===selectIndex">
+            <table class="table table-bordered">
                 <thead>
                     <tr>
                         <th>&nbsp;</th>
                         <th>{{'FinalScorePageWeightFactor' | translate}}</th>
-                        <th ng-repeat="company in val.scores">
+                        <th ng-repeat="company in data[selectIndex].scores">
                             <span class="company" ng-class="{1:'company_1',2:'company_2',3:'company_3',4:'company_4',5:'company_5',6:'company_6'}[company.companyId]">&nbsp;</span>  {{'FinalScorePageCompany' | translate}} {{company.companyId | companyname}}
                         </th>
                     </tr>
@@ -21,37 +21,37 @@
                     <tr>
                         <td>{{'FinalScorePageIncrementalMarketShare' | translate}}</td>
                         <td class="td_info">50%</td>
-                        <td ng-repeat="score in val.scores" ng-if="showScaled">
+                        <td ng-repeat="score in data[selectIndex].scores" ng-if="showScaled">
                             {{score.scaledSOM | number :2}}
                         </td>
-                        <td ng-repeat="score in val.scores" ng-if="!showScaled">
+                        <td ng-repeat="score in data[selectIndex].scores" ng-if="!showScaled">
                             {{score.originalSOM | number :2}}
                         </td>
                     </tr>
                     <tr>
                         <td>{{'FinalScorePageCumulatedNetProfit' | translate}}</td>
                         <td class="td_info">50%</td>
-                        <td ng-repeat="score in val.scores" ng-if="showScaled">
+                        <td ng-repeat="score in data[selectIndex].scores" ng-if="showScaled">
                             {{score.scaledProfit | number :2}}
                         </td>
-                        <td ng-repeat="score in val.scores" ng-if="!showScaled">
+                        <td ng-repeat="score in data[selectIndex].scores" ng-if="!showScaled">
                             {{score.originalProfit | number :2}}
                         </td>
                     </tr>
                     <tr>
                         <td>{{'FinalScorePageSpendingVersusBudgets' | translate}}</td>
                         <td class="td_info">200%</td>
-                        <td ng-repeat="score in val.scores" ng-if="showScaled">
+                        <td ng-repeat="score in data[selectIndex].scores" ng-if="showScaled">
                             {{score.scaledBudget | number :2}}
                         </td>
-                        <td ng-repeat="score in val.scores" ng-if="!showScaled">
+                        <td ng-repeat="score in data[selectIndex].scores" ng-if="!showScaled">
                             {{score.originalBudget | number :2}}
                         </td>
                     </tr>
                     <tr class="tr_warning" ng-if="showScaled">
                         <td>{{'FinalScorePageFinalScore' | translate}}</td>
                         <td>&nbsp;</td>
-                        <td ng-repeat="score in val.scores">
+                        <td ng-repeat="score in data[selectIndex].scores">
                             {{score.finalScore | number :2}}
                         </td>
                     </tr>
