@@ -64,13 +64,8 @@
             dragSourceReportId : '',
             dragHaveLeftReport : false,
             dragHaveRightReport : false,
-            //score
-            selectFinalScorePeriod : 0,
-            selectScore : 'Original',
-            currentPeriod : 0,
             seminarFinished : false,
-            showFeedback : false,
-            finalReportPeriods: []
+            showFeedback : false
 
         };
 
@@ -105,7 +100,7 @@
         $scope.data = {
             tableFinalScore: {
                 data: [],
-                showScaled:true
+                showScaled : true
             },
             currentTime : {
                 hour : 0,
@@ -669,12 +664,9 @@
 
                     $scope.data.currentCompanyNameCharacter = showCompanyName($scope.data.currentStudent.companyId);
 
-                    $scope.css.currentPeriod = $scope.data.currentStudent.currentPeriod;
-
                     $scope.css.seminarFinished = $scope.data.currentStudent.isSimulationFinised;
 
                     $scope.css.periods = [];
-                    $scope.css.finalReportPeriods = [];
 
                     // 处理显示当前第几回合进度条
                     if(angular.isNumber($scope.data.currentStudent.currentPeriod)){
@@ -701,10 +693,7 @@
                                 });
                             }
                         }
-                        //get periods of finalScore
-                        for (var j = 0; j < $scope.data.currentStudent.currentPeriod; j++) {
-                            $scope.css.finalReportPeriods.push(j);
-                        }
+
                     }
 
 
@@ -1359,9 +1348,7 @@
             };
         });
 
-        $scope.showQuestionnaire = function() {
-            $scope.css.showFeedback = true;
-        };
+
 
         /********************  更新 Questionnaire  ********************/
         $scope.updateQuestionnaire = function(fieldname, index, form, formfieldname) {
@@ -1388,8 +1375,6 @@
         /********************  提交 Questionnaire  ********************/
         $scope.submitQuestionnaire = function(questionnaire) {
 
-            $scope.isFeedbackSumbit = true;
-
             var currentData = {
                 'questionnaire': questionnaire
             };
@@ -1401,6 +1386,7 @@
                     position: 'center'
                 });
                 $scope.css.showFeedback = false;
+                $scope.isFeedbackSumbit = true;
 
             }, function(data, status, headers, config) {
                 notify({
