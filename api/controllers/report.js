@@ -5,20 +5,95 @@ var simulationResult = require('../models/simulationResult.js');
 var seminarModel     = require('../models/seminar.js');
 var Q                = require('q');
 var _                = require('underscore');
+//学生获取得分
+exports.getStudentFinalScore = function(req, res, next) {
 
-exports.getFinalScore = function(req, res, next) {
-    //优先获取传入的会议编号(合法的编号不会为0)
-    var seminarId = +req.params.seminarId || req.session.seminarId || 0;
+    //得到seminarId,学生从session中获取
+    var seminarId = +req.session.seminarId;
+
+    //获取并处理分数
+    getFinalScore(seminarId, function(result) {
+        //成功操作
+        if (result.showLastPeriodScore) {
+            //如果显示最后一阶段的分数，则正常输出
+            res.send(200, result);
+        }
+        else {
+            //如果不显示最后一阶段的分数，则数据length-1,原数据为排过序的数据
+            res.send(200, {
+                scoreData: result.scoreData.slice(0, result.scoreData.length - 1),
+                showLastPeriodScore: result.showLastPeriodScore
+            });
+        }
+       
+    }, function(err) {
+        //失败操作
+        res.send(403, err.message);
+    });
+
+}
+//老师获取得分
+exports.getAdminFinalScore = function(req, res, next) {
+
+    //得到seminarId,老师由参数传入
+    var seminarId = +req.params.seminarId;
+
+    //获取并处理分数
+    getFinalScore(seminarId, function(result) {
+        //成功操作
+        res.send(200, result);
+    }, function(err) {
+        //失败操作
+        res.send(403, err.message);
+    });
+
+}
+exports.getReport = function(req, res, next){
+    var seminarId = req.session.seminarId;
+
+    if(!seminarId){
+        return res.send(400, {message: "You don't choose a seminar."});
+    }
+
+    var companyId = req.session.companyId;
+    var reportName = req.params.report_name;
+
+    if(reportName === undefined){
+        return res.send(400, {message: "Invalid parameter reportName."});
+    }
+
+    var userRole = req.session.userRole;
+
+    reportModel.findOne(seminarId, reportName)
+    .then(function(report){
+        if(report===null || report===undefined){
+            return res.send(400, {message: "Report doesn't exist."})
+        }
+
+        if(userRole === config.role.student && isReportNeedFilter(reportName)){
+            return res.send(extractReportOfOneCompany(report, companyId));
+        }
+
+        res.send(report.reportData);
+    })
+    .fail(function(err){
+        logger.error(err);
+        res.send(500, {message: "fail to get report."});
+    })
+    .done();
+
+}
+function getFinalScore(seminarId, successCallback, failCallback) {
     if (!seminarId) {
         return res.send(400, { message: "You don't choose a seminar." });
     }
     Q.all([
-        simulationResult.findAll(seminarId),        
+        simulationResult.findAll(seminarId),
         seminarModel.findOne({ seminarId: seminarId })
     ]).spread(function(requestedPeriodResultArr, seminarInfo) {
         var resultArr = [];
-        var initialPeriodResult;        
-        requestedPeriodResultArr.forEach(function(requestedPeriodResult) {          
+        var initialPeriodResult;
+        requestedPeriodResultArr.forEach(function(requestedPeriodResult) {
             if (requestedPeriodResult.period == 0) {
                 //原来作为比较的阶段0
                 initialPeriodResult = requestedPeriodResult;
@@ -109,56 +184,24 @@ exports.getFinalScore = function(req, res, next) {
                         companyScore.scaledBudget = 100 - companyScore.originalBudget;
                     }
 
-                    companyScore.finalScore = initialPeriodResult.p_Market.m_fs_DeltaSOM_Weight * companyScore.scaledSOM + initialPeriodResult.p_Market.m_fs_Profits_Weight * companyScore.scaledProfit;                   
+                    companyScore.finalScore = initialPeriodResult.p_Market.m_fs_DeltaSOM_Weight * companyScore.scaledSOM + initialPeriodResult.p_Market.m_fs_Profits_Weight * companyScore.scaledProfit;
                     companyScore.finalScore = companyScore.finalScore + 2 * companyScore.scaledBudget;
                 });
                 resultArr.push({ period: period, seminarId: seminarId, scores: scores });
             }
 
         });
-        res.send(200, resultArr);
+        //成功回调
+        if (successCallback) {
+            successCallback({ scoreData: resultArr, showLastPeriodScore: seminarInfo.showLastPeriodScore });
+        }
     }).fail(function(err) {
-        res.send(403, err.message);
+        //失败回调
+        if (failCallback) {
+            failCallback(err);
+        }
     }).done();
-
 }
-
-exports.getReport = function(req, res, next){
-    var seminarId = req.session.seminarId;
-
-    if(!seminarId){
-        return res.send(400, {message: "You don't choose a seminar."});
-    }
-
-    var companyId = req.session.companyId;
-    var reportName = req.params.report_name;
-
-    if(reportName === undefined){
-        return res.send(400, {message: "Invalid parameter reportName."});
-    }
-
-    var userRole = req.session.userRole;
-
-    reportModel.findOne(seminarId, reportName)
-    .then(function(report){
-        if(report===null || report===undefined){
-            return res.send(400, {message: "Report doesn't exist."})
-        }
-
-        if(userRole === config.role.student && isReportNeedFilter(reportName)){
-            return res.send(extractReportOfOneCompany(report, companyId));
-        }
-
-        res.send(report.reportData);
-    })
-    .fail(function(err){
-        logger.error(err);
-        res.send(500, {message: "fail to get report."});
-    })
-    .done();
-
-}
-
 function isReportNeedFilter(report_name){
     return report_name==='financial_report' || report_name==='profitability_evolution';
 }
