@@ -1053,10 +1053,23 @@
 
         <section class="content" ng-if="css.currentReportMenu=='AllResults'">
             <div class="box box-primary">
-                <div class="box-body no-padding">
-                    <x:table-report-final-score data="data.finalScores.data" admin="true"></x:table-report-final-score>
+                <div class="box box-primary">
+                    <div class="box-body no-padding">
+                        <div class="row">
+                            <div class="col-md-12 score_info">
+                              
+                                <h3><i class="fa fa-table"></i>{{'FinalScorePageScore' | translate}}</h3>
+                                <div class="pull-right">
+                                    <div class="btn-group btn-group-sm">
+                                        <button type="button" class="btn btn-default" ng-class="{false:'active'}[data.tableFinalScore.showScaled]" ng-click="data.tableFinalScore.showScaled=false">{{'FinalScorePageButtonOriginal' | translate}}</button>
+                                        <button type="button" class="btn btn-default" ng-class="{true:'active'}[data.tableFinalScore.showScaled]" ng-click="data.tableFinalScore.showScaled=true">{{'FinalScorePageButtonRescaled' | translate}}</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <table-report-final-score data="data.tableFinalScore.data" show-scaled="data.tableFinalScore.showScaled"></table-report-final-score>
+                    </div>
                 </div>
-            </div>
 
         </section>
         

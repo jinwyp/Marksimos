@@ -368,31 +368,26 @@
     angular.module('marksimos.websitecomponent').directive('tableReportFinalScore', [function() {
         return {
             scope: {
-                data: '='
+                data: '=',
+                showScaled:'='
             },
 
             restrict: 'AEC',
             templateUrl: 'tablereportfinalscore.html',
-            link: function($scope, $element, $attrs) {
-                $scope.changeIndex = function(index) {
-                    $scope.selectIndex = index;
+            link: function(scope, element, attrs) {
+                scope.changeIndex = function(index) {
+                    scope.selectIndex = index;                   
                 };
-
-                $scope.$watch("data", function(val) {
-                    //值有效时(非严格检验)
-                    if (val && val.length) {
-                        $scope.selectIndex = 0;
-                        $scope.showScaled = true;
-                        $scope.admin = !!$attrs.admin;
-                        $scope.colors = {
-                            1: "#004CE5",
-                            2: "#B00",
-                            3: "#FFBC01",
-                            4: "#393",
-                            5: "#909",
-                            6: "#FF5200"
-                        };
+                scope.$watch("showScaled", function(val) {                  
+                    if (val === undefined) {
+                        val = true;
                     }
+                });
+               scope.$watch("data", function(val) {
+                    //值有效时(非严格检验)
+                   if (val && val.length) {
+                       scope.selectIndex = val.length - 1;
+                   }
                 });
             }
         }; 

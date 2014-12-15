@@ -626,9 +626,9 @@
                 currentPeriod  : 1
             },
 
-            finalScores: {
-                showHead: true,
-                data:null
+            tableFinalScore: {
+                data: [],
+                showScaled: true
             },
 
             //A1 Company Status
@@ -1178,7 +1178,7 @@
             loadingFinalScoresData: function() {
                 var seminerID = /.+\/adminhomereport\/(\d+).*/.exec(window.location.href)[1] || 0;
                 Admin.getFinalScores(seminerID).success(function(data, status, headers, config) {
-                    $scope.data.finalScores.data = data;
+                    $scope.data.tableFinalScore.data = data;
                 });
             },
             loadingCompanyData: function() {
