@@ -16,14 +16,16 @@ exports.getStudentFinalScore = function(req, res, next) {
         //成功操作
         if (result.showLastPeriodScore) {
             //如果显示最后一阶段的分数，则正常输出
-            res.send(200, result);
+            res.send(200, result.scoreData);
         }
         else {
             //如果不显示最后一阶段的分数，则数据length-1,原数据为排过序的数据
-            res.send(200, {
-                scoreData: result.scoreData.slice(0, result.scoreData.length - 1),
-                showLastPeriodScore: result.showLastPeriodScore
-            });
+            if (result.scoreData && result.scoreData.length > 1) {
+                res.send(200, result.scoreData.slice(0, result.scoreData.length - 1));
+            }
+            else {
+                res.send(200, []);
+            }
         }
        
     }, function(err) {
@@ -41,7 +43,7 @@ exports.getAdminFinalScore = function(req, res, next) {
     //获取并处理分数
     getFinalScore(seminarId, function(result) {
         //成功操作
-        res.send(200, result);
+        res.send(200, result.scoreData);
     }, function(err) {
         //失败操作
         res.send(403, err.message);
