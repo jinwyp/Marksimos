@@ -1178,7 +1178,9 @@
             loadingFinalScoresData: function() {
                 var seminerID = /.+\/adminhomereport\/(\d+).*/.exec(window.location.href)[1] || 0;
                 Admin.getFinalScores(seminerID).success(function(data, status, headers, config) {
-                    $scope.data.tableFinalScore.data = data;
+                    $scope.data.tableFinalScore.data = data.scoreData;
+                    //是否显示最后一阶段
+                    $scope.data.tableFinalScore.showLastPeriodScore = data.showLastPeriodScore;
                 });
             },
             loadingCompanyData: function() {

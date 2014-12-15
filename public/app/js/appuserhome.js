@@ -99,7 +99,7 @@
 
         $scope.data = {
             tableFinalScore: {
-                data: [],
+                data : [],
                 showScaled : true
             },
             currentTime : {
@@ -700,8 +700,9 @@
                     //get Final Score Data  of current period
                     $scope.css.selectFinalScorePeriod = $scope.data.currentStudent.currentPeriod - 1;
 
+
                     Company.getFinalScore().then(function(data, status, headers, config) {                       
-                        $scope.data.tableFinalScore.data = data.data;
+                        $scope.data.tableFinalScore.data = data.data.scoreData;
                     });
 
                     // 处理最后比赛结束后

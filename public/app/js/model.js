@@ -154,7 +154,7 @@
             },
 
             getFinalScore: function() {
-                return $http.get(apiPath + 'finalscore/0');
+                return $http.get(apiPath + 'finalscore');
             },
 
             getQuestionnaire : function(){
