@@ -35,7 +35,7 @@
         $scope.css = {
             menu                     : 'Home',
             chartMenu                : 'A1',
-            tableReportTab           : 'SKU',
+            tableReportTab           : 'Global',
             tableReportMenu          : 1,
             additionalBudget         : true,
             currentDecisionBrandId   : 0,

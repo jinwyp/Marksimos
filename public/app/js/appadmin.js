@@ -613,7 +613,7 @@
     angular.module('marksimosadmin').controller('adminMarksimosReportController', ['$scope', '$http', '$notification', '$translate', 'Admin', 'AdminTable', 'chartReport', 'AdminChart', function($scope, $http, $notification,$translate, Admin,  AdminTable, chartReport, AdminChart) {
         $scope.css = {
             currentReportMenu:'AllDecisions',
-            tableReportTab: 'SKU'
+            tableReportTab: 'Global'
         };
 
         $scope.data = {

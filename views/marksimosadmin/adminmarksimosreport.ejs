@@ -1051,22 +1051,25 @@
             <!-- /.box -->
         </section>
 
+
         <!-- Final Score  -->
         <section class="content" ng-if="css.currentReportMenu=='AllResults'">
             <div class="box box-primary">
-              <div class="box-header">
-                  <i class="fa fa-table"></i>
-                  <h3 class="box-title">{{'FinalScorePageScore' | translate}}</h3>
-                  <div class="pull-right">
-                      <div class="btn-group btn-group-sm">
+                <div class="box-header">
+                    <div class="pull-right">
+                        <div class="btn-group btn-group-sm">
                           <button type="button" class="btn btn-default" ng-class="{false:'active'}[data.tableFinalScore.showScaled]" ng-click="data.tableFinalScore.showScaled=false">{{'FinalScorePageButtonOriginal' | translate}}</button>
                           <button type="button" class="btn btn-default" ng-class="{true:'active'}[data.tableFinalScore.showScaled]" ng-click="data.tableFinalScore.showScaled=true">{{'FinalScorePageButtonRescaled' | translate}}</button>
-                      </div>
-                  </div>
-              </div>
-                    <div class="box-body no-padding">                       
-                        <table-report-final-score data="data.tableFinalScore.data" show-scaled="data.tableFinalScore.showScaled"></table-report-final-score>
+                        </div>
                     </div>
+
+                    <i class="fa fa-table"></i>
+                    <h3 class="box-title">{{'FinalScorePageScore' | translate}}</h3>
+                </div>
+
+                <div class="box-body no-padding">
+                    <table-report-final-score data="data.tableFinalScore.data" show-scaled="data.tableFinalScore.showScaled"></table-report-final-score>
+                </div>
                 
             </div>
         </section>
