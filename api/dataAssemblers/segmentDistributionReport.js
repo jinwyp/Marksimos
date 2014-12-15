@@ -11,7 +11,7 @@ exports.getSegmentDistributionReport = function(allResults, allExogenous){
     segmentDistributionReport.marketSaleVolume = generateMarketSaleVolumeReport(allResults);
 
     segmentDistributionReport.marketShareValue = generateMarketShareValueReport(allResults);
-    segmentDistributionReport.marketShareVolume = genereateMarketShareVolumeReport(allResults);
+    segmentDistributionReport.marketShareVolume = generateMarketShareVolumeReport(allResults);
 
     return segmentDistributionReport;
 }
@@ -29,8 +29,8 @@ function generateAverageNetMarketPriceStdPackReport(allResults){
             moderate       : onePeriodResult.p_Market.m_AverageNetMarketPrice[2],
             goodLife       : onePeriodResult.p_Market.m_AverageNetMarketPrice[3],
             ultimate       : onePeriodResult.p_Market.m_AverageNetMarketPrice[4],
-            pragmatic      : onePeriodResult.p_Market.m_AverageNetMarketPrice[5]
-            //allSegments    : onePeriodResult.p_Market.m_AverageNetMarketPrice[6]
+            pragmatic      : onePeriodResult.p_Market.m_AverageNetMarketPrice[5],
+            allSegments    : onePeriodResult.p_Market.m_AverageNetMarketPrice[6]
         })
     }
 
@@ -92,8 +92,8 @@ function generateMarketSaleVolumeReport(allResults){
             moderate       : onePeriodResult.p_Market.m_SegmentsSalesVolume[2],
             goodLife       : onePeriodResult.p_Market.m_SegmentsSalesVolume[3],
             ultimate       : onePeriodResult.p_Market.m_SegmentsSalesVolume[4],
-            pragmatic      : onePeriodResult.p_Market.m_SegmentsSalesVolume[5]
-            //allSegments    : onePeriodResult.p_Market.m_SegmentsSalesVolume[6]
+            pragmatic      : onePeriodResult.p_Market.m_SegmentsSalesVolume[5],
+            allSegments    : onePeriodResult.p_Market.m_SegmentsSalesVolume[6]
         })
     }
 
@@ -113,8 +113,8 @@ function generateMarketSaleValueReport(allResults){
             moderate       : onePeriodResult.p_Market.m_SegmentsNetSalesValue[2],
             goodLife       : onePeriodResult.p_Market.m_SegmentsNetSalesValue[3],
             ultimate       : onePeriodResult.p_Market.m_SegmentsNetSalesValue[4],
-            pragmatic      : onePeriodResult.p_Market.m_SegmentsNetSalesValue[5]
-            //allSegments    : onePeriodResult.p_Market.m_SegmentsNetSalesValue[6]
+            pragmatic      : onePeriodResult.p_Market.m_SegmentsNetSalesValue[5],
+            allSegments    : onePeriodResult.p_Market.m_SegmentsNetSalesValue[6]
         })
     }
 
@@ -144,7 +144,7 @@ function generateMarketShareValueReport(allResults){
 }
 
 
-function genereateMarketShareVolumeReport(allResults){
+function generateMarketShareVolumeReport(allResults){
     var result = [];
 
     for(var i=0; i<allResults.length; i++){
