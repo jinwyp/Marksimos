@@ -36,6 +36,7 @@
             menu                     : 'Home',
             chartMenu                : 'A1',
             tableReportTab           : 'SKU',
+            tableReportTabC2           : 'SKU',
             tableReportMenu          : 1,
             additionalBudget         : true,
             currentDecisionBrandId   : 0,
@@ -64,13 +65,8 @@
             dragSourceReportId : '',
             dragHaveLeftReport : false,
             dragHaveRightReport : false,
-            //score
-            selectFinalScorePeriod : 0,
-            selectScore : 'Original',
-            currentPeriod : 0,
             seminarFinished : false,
-            showFeedback : false,
-            finalReportPeriods: []
+            showFeedback : false
 
         };
 
@@ -104,8 +100,8 @@
 
         $scope.data = {
             tableFinalScore: {
-                data: [],
-                showScaled: true              
+                data : [],
+                showScaled : true
             },
             currentTime : {
                 hour : 0,
@@ -187,12 +183,13 @@
     //            imagePerception : []
             },
             tableC5MarketTrends : {
-                allData : [],
-                currentTable : 1,
+                allData          : [],
+                currentTable     : 1,
                 currentTableData : {},
                 currentTableUnit : "",
-                chartConfig : chartReport.getChartConfig1(),
-                chartData : $scope.dataChartSimple
+                chartConfig      : chartReport.getChartConfig1(),
+                chartData        : $scope.dataChartSimple,
+                tableReportTab   : 'Global'
             },
             tableC6MarketIndicators : {
                 allData : {}
@@ -669,12 +666,9 @@
 
                     $scope.data.currentCompanyNameCharacter = showCompanyName($scope.data.currentStudent.companyId);
 
-                    $scope.css.currentPeriod = $scope.data.currentStudent.currentPeriod;
-
                     $scope.css.seminarFinished = $scope.data.currentStudent.isSimulationFinised;
 
                     $scope.css.periods = [];
-                    $scope.css.finalReportPeriods = [];
 
                     // 处理显示当前第几回合进度条
                     if(angular.isNumber($scope.data.currentStudent.currentPeriod)){
@@ -701,18 +695,11 @@
                                 });
                             }
                         }
-                        //get periods of finalScore
-                        for (var j = 0; j < $scope.data.currentStudent.currentPeriod; j++) {
-                            $scope.css.finalReportPeriods.push(j);
-                        }
+
                     }
 
-
-                    //get Final Score Data  of current period
-                    $scope.css.selectFinalScorePeriod = $scope.data.currentStudent.currentPeriod - 1;
-
                     Company.getFinalScore().then(function(data, status, headers, config) {                       
-                        $scope.data.tableFinalScore.data = data.data;                       
+                        $scope.data.tableFinalScore.data = data.data;
                     });
 
                     // 处理最后比赛结束后
@@ -818,7 +805,8 @@
 
         /********************  Chart C2  ********************/
         $scope.switchPerceptionMapsData = function(flag){
-            if(flag === 'sku'){
+            $scope.css.tableReportTabC2 = flag;
+            if(flag === 'SKU'){
                 $scope.data.chartC21PerceptionMap.dataChart = $scope.data.chartC21PerceptionMap.data.dataSKU;
             }else{
                 $scope.data.chartC21PerceptionMap.dataChart = $scope.data.chartC21PerceptionMap.data.dataBrand;
@@ -934,7 +922,7 @@
 
         });
         $scope.switchTableCategoryC5 = function(category, field, unit){
-            $scope.css.tableReportTab = category;
+            $scope.data.tableC5MarketTrends.tableReportTab = category;
             if(category === 'SKU'){
                 $scope.switchTableMenuLevel1C5(1, 'SKU', field, unit);
             }else if(category === 'Brand'){
@@ -944,7 +932,7 @@
             }
         };
         $scope.switchTableMenuLevel1C5 = function(menu, category, field, unit){
-            $scope.css.tableReportMenu = menu;
+            $scope.data.tableC5MarketTrends.tableReportMenu = menu;
             if(category === 'SKU'){
                 $scope.switchTableReportC5(1, 'SKU', field, unit);
             }else if(category === 'Brand'){
@@ -1359,9 +1347,7 @@
             };
         });
 
-        $scope.showQuestionnaire = function() {
-            $scope.css.showFeedback = true;
-        };
+
 
         /********************  更新 Questionnaire  ********************/
         $scope.updateQuestionnaire = function(fieldname, index, form, formfieldname) {
@@ -1388,8 +1374,6 @@
         /********************  提交 Questionnaire  ********************/
         $scope.submitQuestionnaire = function(questionnaire) {
 
-            $scope.isFeedbackSumbit = true;
-
             var currentData = {
                 'questionnaire': questionnaire
             };
@@ -1401,6 +1385,7 @@
                     position: 'center'
                 });
                 $scope.css.showFeedback = false;
+                $scope.isFeedbackSumbit = true;
 
             }, function(data, status, headers, config) {
                 notify({

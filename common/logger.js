@@ -1,7 +1,7 @@
 var winston = require('winston');
 var config = require('./config.js');
 
-winston.add(winston.transports.File, { filename: config.logDirectory + 'app.log' });
+winston.add(winston.transports.File, { filename: config.logDirectory + 'appwinston.log' });
 //winston.remove(winston.transports.Console);
 
 exports.error = function(err){

@@ -613,7 +613,8 @@
     angular.module('marksimosadmin').controller('adminMarksimosReportController', ['$scope', '$http', '$notification', '$translate', 'Admin', 'AdminTable', 'chartReport', 'AdminChart', function($scope, $http, $notification,$translate, Admin,  AdminTable, chartReport, AdminChart) {
         $scope.css = {
             currentReportMenu:'AllDecisions',
-            tableReportTab: 'SKU'
+            tableReportTab: 'Global',
+            tableReportTabC2 : 'SKU'
         };
 
         $scope.data = {
@@ -1012,7 +1013,8 @@
 
                 /********************  Chart C2  ********************/
                 $scope.switchPerceptionMapsData = function(flag) {
-                    if (flag === 'sku') {
+                    $scope.css.tableReportTabC2 = flag;
+                    if (flag === 'SKU') {
                         $scope.data.chartC21PerceptionMap.dataChart = $scope.data.chartC21PerceptionMap.data.dataSKU;
                     } else {
                         $scope.data.chartC21PerceptionMap.dataChart = $scope.data.chartC21PerceptionMap.data.dataBrand;
