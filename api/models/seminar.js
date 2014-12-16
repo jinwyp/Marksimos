@@ -26,8 +26,11 @@ var seminarSchema = new Schema({
 
     companies: [],
 
+
+
     isInitialized: {type: Boolean, default: false}, //if seminar is initialized
-    isSimulationFinised: {type: Boolean, default: false} //if all simulation has been executed.
+    isSimulationFinished: {type: Boolean, default: false}, //if all simulation has been executed.
+    showLastPeriodScore: {type: Boolean, default: true}
 });
 
 var teamSchema = new Schema({

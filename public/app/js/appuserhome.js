@@ -172,6 +172,7 @@
                 currentTable : 1,
                 currentTableData : {},
                 currentTableUnit : "%",
+                currentTableShowAllSegments : false,
                 chartConfig : chartReport.getChartConfig1(),
                 chartData : $scope.dataChartSimple
     //            marketShareVolume : [],
@@ -666,7 +667,7 @@
 
                     $scope.data.currentCompanyNameCharacter = showCompanyName($scope.data.currentStudent.companyId);
 
-                    $scope.css.seminarFinished = $scope.data.currentStudent.isSimulationFinised;
+                    $scope.css.seminarFinished = $scope.data.currentStudent.isSimulationFinished;
 
                     $scope.css.periods = [];
 
@@ -698,14 +699,19 @@
 
                     }
 
-                    Company.getFinalScore().then(function(data, status, headers, config) {                       
+
+                    /********************  Loading FinalScore  ********************/
+                    Company.getFinalScore().then(function(data, status, headers, config) {
                         $scope.data.tableFinalScore.data = data.data;
                     });
 
+                    that.loadingCompanyDecisionData();
+
                     // 处理最后比赛结束后
-                    if($scope.data.currentStudent.isSimulationFinised === false){
-                        that.loadingCompanyDecisionData();
+                    if($scope.data.currentStudent.isSimulationFinished === false){
                         that.loadingCompanyOtherData();
+                    }else{
+                        that.loadingFeedBackData();
                     }
 
                 });
@@ -756,9 +762,14 @@
 
                     $scope.data.currentSku = $scope.data.currentCompany.d_BrandsDecisions[$scope.data.currentBrandIndex].d_SKUsDecisions[$scope.data.currentSkuIndex];
 
-                    Company.getCompanyFutureProjectionCalculator($scope.data.currentSku.d_SKUID).then(function(data, status, headers, config){
-                        $scope.data.currentCompanyFutureProjectionCalculator = data;
-                    });
+
+                    if($scope.data.currentStudent.isSimulationFinished === false){
+                        Company.getCompanyFutureProjectionCalculator($scope.data.currentSku.d_SKUID).then(function(data, status, headers, config){
+                            $scope.data.currentCompanyFutureProjectionCalculator = data;
+                        });
+                    }
+
+
 
                 });
             },
@@ -785,6 +796,27 @@
 
                 Company.getCompanySpendingDetails().then(function(data, status, headers, config){
                     $scope.data.currentCompanySpendingDetails = data;
+                });
+            },
+            loadingFeedBackData : function(){
+                /********************  获取 Questionnaire  ********************/
+                Company.getQuestionnaire().success(function(data, status, headers, config) {
+                    $scope.questionnaire = data;
+                    $scope.questionnaire.radio_OverallSatisfactionWithThePrograms = {
+                        info: ['ChallengeStrategicThinkingAbility', 'DevelopAnIntegratedPerspective', 'TestPersonalAbilityOfBalancingRisks', 'ChallengeLeadershipAndTeamworkAbility', 'ChallengeAnalysisAndDecisionMakingAbility', 'SimulationInteresting']
+                    };
+                    $scope.questionnaire.radio_TeachingTeams = {
+                        info: ['FeedbackOnSimulationDecisions', 'ExpandingViewAndInspireThinking', 'Lectures']
+                    };
+                    $scope.questionnaire.radio_Products = {
+                        info: ['OverallProductUsageExperience', 'UserInterfaceExperience', 'EaseOfNavigation', 'ClarityOfWordsUsed']
+                    };
+                    $scope.questionnaire.radio_TeachingSupports = {
+                        info: ['Helpfulness', 'QualityOfTechnicalSupport']
+                    };
+                    $scope.questionnaire.radio_MostBenefits = {
+                        info: ["JoinProgram", "CompanyInHouse", "OpenClass"]
+                    };
                 });
             }
 
@@ -906,8 +938,9 @@
             $scope.data.tableC3SegmentDistribution.currentTableData = $scope.data.tableC3SegmentDistribution.allData.marketShareVolume;
             $scope.data.tableC3SegmentDistribution.chartData = chartReport.formatChartData($scope.data.tableC3SegmentDistribution.currentTableData);
         });
-        $scope.switchTableReportC3 = function(order, field, unit){
+        $scope.switchTableReportC3 = function(order, field, unit, showAllSegments){
             $scope.data.tableC3SegmentDistribution.currentTable = order;
+            $scope.data.tableC3SegmentDistribution.currentTableShowAllSegments = showAllSegments;
             $scope.data.tableC3SegmentDistribution.currentTableData = $scope.data.tableC3SegmentDistribution.allData[field];
             $scope.data.tableC3SegmentDistribution.chartData = chartReport.formatChartData($scope.data.tableC3SegmentDistribution.currentTableData);
             $scope.data.tableC3SegmentDistribution.currentTableUnit = unit;
@@ -1323,29 +1356,10 @@
 
 
 
-        /********************  get FinalScore  ********************/
 
 
 
-        /********************  获取 Questionnaire  ********************/
-        Company.getQuestionnaire().success(function(data, status, headers, config) {
-            $scope.questionnaire = data;
-            $scope.questionnaire.radio_OverallSatisfactionWithThePrograms = {
-                info: ['ChallengeStrategicThinkingAbility', 'DevelopAnIntegratedPerspective', 'TestPersonalAbilityOfBalancingRisks', 'ChallengeLeadershipAndTeamworkAbility', 'ChallengeAnalysisAndDecisionMakingAbility', 'SimulationInteresting']
-            };
-            $scope.questionnaire.radio_TeachingTeams = {
-                info: ['FeedbackOnSimulationDecisions', 'ExpandingViewAndInspireThinking', 'Lectures']
-            };
-            $scope.questionnaire.radio_Products = {
-                info: ['OverallProductUsageExperience', 'UserInterfaceExperience', 'EaseOfNavigation', 'ClarityOfWordsUsed']
-            };
-            $scope.questionnaire.radio_TeachingSupports = {
-                info: ['Helpfulness', 'QualityOfTechnicalSupport']
-            };
-            $scope.questionnaire.radio_MostBenefits = {
-                info: ["JoinProgram", "CompanyInHouse", "OpenClass"]
-            };
-        });
+
 
 
 

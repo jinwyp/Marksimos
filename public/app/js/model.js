@@ -1204,6 +1204,13 @@
             getQuestionnaire: function(seminarId) {
                 //获取反馈
                 return $http.get(apiAdminPath + 'questionnaire/' + seminarId);
+            },
+            initSeminar: function(seminarId) {
+                return $http.post(apiAdminPath + 'seminar/' + seminarId + '/init' );
+            },
+            runSeminar: function(seminarId, round, runNextPeriod, decisions) {
+                return $http.post(apiAdminPath + 'seminar/' + seminarId + '/runsimulation/' + round, {goingToNewPeriod : runNextPeriod, decisionsOverwriteSwitchers:decisions});
+
             }
 
 
