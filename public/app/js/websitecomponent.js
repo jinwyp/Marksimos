@@ -375,20 +375,22 @@
             restrict: 'AEC',
             templateUrl: 'tablereportfinalscore.html',
             link: function(scope, element, attrs) {
-                scope.changeIndex = function(index) {
-                    scope.selectIndex = index;                   
-                };
-                scope.$watch("showScaled", function(val) {                  
-                    if (val === undefined) {
-                        val = true;
+                console.log(scope.data);
+                console.log(scope.showScaled);
+
+                if (scope.data && scope.data.length) {
+                    scope.selectedIndex = scope.data.length - 1;
+                }
+
+                attrs.$observe('showScaled', function(value){
+                    if (value === undefined) {
+                        value = true;
                     }
                 });
-               scope.$watch("data", function(val) {
-                    //值有效时(非严格检验)
-                   if (val && val.length) {
-                       scope.selectIndex = val.length - 1;
-                   }
-                });
+
+                scope.changeIndex = function(index) {
+                    scope.selectedIndex = index;
+                };
             }
         }; 
     }]);

@@ -213,7 +213,6 @@ function getFinalScore(seminarId) {
         });
 
         return resultArr;
-
     });
 }
 
