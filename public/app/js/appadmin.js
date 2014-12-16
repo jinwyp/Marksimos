@@ -591,9 +591,10 @@
             });
         };
         /********************  Run Seminar  ********************/
-        $scope.runSeminar = function(seminarId, round) {
+        $scope.runSeminar = function(seminarId, round, decisions) {
             $scope.css.runButtonDisabled = true;
-            Admin.runSeminar(seminarId, round, true).success(function(data, status, headers, config) {
+
+            Admin.runSeminar(seminarId, round, true, []).success(function(data, status, headers, config) {
                 app.getSeminarInit();
                 $notification.success('Save success', 'Run Seminar success');
                 $scope.css.runButtonDisabled = false;

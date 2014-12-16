@@ -403,9 +403,6 @@ function removeCurrentPeriodSimulationResult(seminarId, currentPeriod){
 function submitDecisionForAllCompany(companies, period, seminarId){
     var p = Q();
 
-    console.log('compnies:' + companies);
-    console.log('period:' + period);
-
     companies.forEach(function(companyId){
         p = p.then(function(){
             //logger.log("submit decision finished.");

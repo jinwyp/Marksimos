@@ -594,7 +594,7 @@
                                         <td style="width:100px">
                                             <button type="button" class="btn btn-danger" ng-hide="seminar.isInitialized" ng-click="initSeminar(seminar.seminarId)" ng-disabled="css.runButtonDisabled">Init</button>
 
-                                            <button type="button" class="btn btn-danger" ng-show="seminar.isInitialized" ng-click="runSeminar(seminar.seminarId, seminar.currentPeriod)" ng-disabled="css.runButtonDisabled">Run Period{{seminar.currentPeriod}}</button>
+                                            <button type="button" class="btn btn-danger" ng-show="seminar.isInitialized" ng-click="runSeminar(seminar.seminarId, seminar.currentPeriod, seminar.companyMember)" ng-disabled="css.runButtonDisabled">Run Period{{seminar.currentPeriod}}</button>
 
                                         </td>
                                         <td><a href="adminhomereport/{{seminar.seminarId}}" target="_blank">{{seminar.seminarId}} Report</a></td>
