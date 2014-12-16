@@ -54,8 +54,7 @@ exports.init = function(req, res, next) {
             return res.send(400, {message: "Last request is still pending, please wait for runSimulation process complete..."})
         } else {
             status = 'pending';
-            //var seminarId = 'TTT'; //this parameter should be posted from client
-            var seminarId = req.body.seminar_id;
+            var seminarId = req.params.seminar_id;
             var simulationSpan; //should be posted from client
             var companyNum;
             var currentPeriod;
@@ -77,7 +76,7 @@ exports.init = function(req, res, next) {
 
                 if(dbSeminar.currentPeriod !== consts.Period_0 + 1){
                     status = 'active';
-                    throw {message: "Cancel promise chains. Because initialize a seminar that alreay starts."}
+                    throw {message: "Cancel promise chains. Because initialize a seminar that already starts."}
                 }
 
                 //before init, a new seminar should be created,
@@ -198,20 +197,27 @@ exports.runSimulation = function(){
         } else {
             status = 'pending';
             var seminarId = req.params.seminar_id;
-            var selectedPeriod = undefined;
+            var selectedPeriod = req.params.round;
             var goingToNewPeriod = req.body.goingToNewPeriod;
             var decisionsOverwriteSwitchers = req.body.decisionsOverwriteSwitchers || [];
 
 
-            if((decisionsOverwriteSwitchers == []) || (goingToNewPeriod == undefined)){
-                status = 'active';
-                return res.send(400, {message : 'need parameter decisionsOverwriteSwitchers/goingToNewPeriod'});
-            }
 
             if(!seminarId){
                 status = 'active';
                 return res.send(400, {message: "You have not choose a seminar."})
             }
+
+            if(!goingToNewPeriod || !selectedPeriod){
+                status = 'active';
+                return res.send(400, {message: "Which period need to run?"})
+            }
+
+            if((decisionsOverwriteSwitchers == [])){
+                status = 'active';
+                return res.send(400, {message : 'need parameter decisionsOverwriteSwitchers'});
+            }
+
 
             //check if this seminar exists
             seminarModel.findOne({
@@ -227,7 +233,7 @@ exports.runSimulation = function(){
                 }
 
                 //if all rounds are executed
-                if(dbSeminar.isSimulationFinised){
+                if(dbSeminar.isSimulationFinished){
                     throw {message: "the last round simulation has been executed."}
                 }
 
@@ -237,6 +243,7 @@ exports.runSimulation = function(){
 
                 if(!goingToNewPeriod){
                     selectedPeriod = dbSeminar.currentPeriod;
+
                 } else {
                     selectedPeriod = dbSeminar.currentPeriod - 1;
                 }
@@ -248,7 +255,7 @@ exports.runSimulation = function(){
                 }
 
                 //write decision to binary file
-                return submitDecisionForAllCompany(companies, currentPeriod, seminarId)
+                return submitDecisionForAllCompany(companies, selectedPeriod, seminarId)
                     .then(function(submitDecisionResult){
                         logger.log('write decision finished.');
                         console.log(submitDecisionResult);
@@ -333,11 +340,11 @@ exports.runSimulation = function(){
                                 if(goingToNewPeriod){
                                     sessionOperation.setCurrentPeriod(req, sessionOperation.getCurrentPeriod(req)+1);
                                     return seminarModel.update({seminarId: seminarId}, {
-                                        isSimulationFinised : true,
+                                        isSimulationFinished : true,
                                         currentPeriod       : dbSeminar.currentPeriod + 1
                                     }).then(function(numAffected){
                                         if(numAffected!==1){
-                                            throw {message: "Cancel promise chains. Because there's error during update isSimulationFinised to true."}
+                                            throw {message: "Cancel promise chains. Because there's error during update isSimulationFinished to true."}
                                         }else{
                                             return undefined;
                                         }
@@ -397,6 +404,7 @@ function submitDecisionForAllCompany(companies, period, seminarId){
     var p = Q();
 
     console.log('compnies:' + companies);
+    console.log('period:' + period);
 
     companies.forEach(function(companyId){
         p = p.then(function(){
@@ -410,7 +418,7 @@ function submitDecisionForAllCompany(companies, period, seminarId){
 
 function submitDecision(companyId, period, seminarId){
     var result = {};
-    logger.log('companyId:' + companyId + ', period:' + period + ', seminarId:' + seminarId);
+    logger.log('Submit Decision For companyId:' + companyId + ', period:' + period + ', seminarId:' + seminarId);
     return companyDecisionModel.findOne(seminarId, period, companyId)
     .then(function(decision){
         if(!decision){

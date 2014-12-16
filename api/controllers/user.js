@@ -53,7 +53,7 @@ exports.getStudent = function(req, res, next){
             tempUser.numOfCompany = dbSeminar.companyNum;
             tempUser.currentPeriod = dbSeminar.currentPeriod;
             tempUser.maxPeriodRound = dbSeminar.simulationSpan;
-            tempUser.isSimulationFinised = dbSeminar.isSimulationFinised;
+            tempUser.isSimulationFinished = dbSeminar.isSimulationFinished;
             res.send(tempUser);
         });
     })

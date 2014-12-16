@@ -72,7 +72,7 @@ app.use(function(req, res, next){
 
     // respond with json
     if (/application\/json/.test(req.get('accept'))) {
-        res.send({ error: '404 Not found! URL: ' + req.url });
+        res.send({ message: '404 Not found! URL: ' + req.url });
         return;
     }
 

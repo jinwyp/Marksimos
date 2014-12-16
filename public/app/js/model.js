@@ -1199,6 +1199,12 @@
             },
             getFinalScores: function(seminarId) {
                 return $http.get(apiAdminPath + 'finalscore/' + seminarId);
+            },
+            initSeminar: function(seminarId) {
+                return $http.post(apiAdminPath + 'seminar/' + seminarId + '/init' );
+            },
+            runSeminar: function(seminarId, round, runNextPeriod) {
+                return $http.post(apiAdminPath + 'seminar/' + seminarId + '/runsimulation/' + round, {goingToNewPeriod : runNextPeriod});
             }
 
         };

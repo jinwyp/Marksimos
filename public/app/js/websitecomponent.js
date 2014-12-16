@@ -255,7 +255,8 @@
                 data : '=',
                 unit : '=',
                 chartdata : '=',
-                chartconfig : '='
+                chartconfig : '=',
+                showAllSegments : '=allsegments'
             },
             restrict: 'AE',
             templateUrl: 'tablereportsegmentdistribution.html',
@@ -269,6 +270,12 @@
                 }else if (scope.unit === "%"){
                     scope.plus = 1;
                 }
+
+                attrs.$observe('showAllSegments', function(value){
+                    if (angular.isUndefined(value)) {
+                        value = false;
+                    }
+                });
 
             }
         };
@@ -375,8 +382,6 @@
             restrict: 'AEC',
             templateUrl: 'tablereportfinalscore.html',
             link: function(scope, element, attrs) {
-                console.log(scope.data);
-                console.log(scope.showScaled);
 
                 if (scope.data && scope.data.length) {
                     scope.selectedIndex = scope.data.length - 1;
@@ -394,6 +399,11 @@
             }
         }; 
     }]);
+
+
+
+
+
 
 
     angular.module('marksimos.websitecomponent').directive('genParseMd', ['mdParse', 'sanitize', 'pretty', 'isVisible', '$timeout',

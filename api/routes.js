@@ -360,10 +360,12 @@ apiRouter.get('/marksimos/api/report/:report_name', requireStudentLogin({isRedir
 apiRouter.get('/marksimos/api/choose_seminar', requireStudentLogin({isRedirect : false}), authorize('chooseSeminar'), seminarController.chooseSeminarForStudent);
 apiRouter.get('/marksimos/api/submitdecision', requireStudentLogin({isRedirect : false}), decisionController.submitDecision);
 
-apiRouter.get('/marksimos/api/finalscore', requireStudentLogin({ isRedirect: false }), reportController.getStudentFinalScore);
 
 //chart
 apiRouter.get('/marksimos/api/chart/:chart_name', requireStudentLogin({isRedirect : false}), chartController.getChart);
+
+//final score
+apiRouter.get('/marksimos/api/finalscore', requireStudentLogin({ isRedirect: false }), reportController.getStudentFinalScore);
 
 
 //make decision page
@@ -412,8 +414,8 @@ apiRouter.put('/marksimos/api/admin/students/:student_id', requireAdminLogin({is
 apiRouter.post('/marksimos/api/admin/assign_student_to_seminar', requireAdminLogin({isRedirect : false}), authorize('assignStudentToSeminar'), seminarController.assignStudentToSeminar);
 apiRouter.post('/marksimos/api/admin/remove_student_from_seminar', requireAdminLogin({isRedirect : false}), authorize('removeStudentFromSeminar'), seminarController.removeStudentFromSeminar);
 
-apiRouter.post('/marksimos/api/admin/init', requireAdminLogin({isRedirect : false}),  authorize('runSimulation'), initController.init());
-apiRouter.post('/marksimos/api/admin/runsimulation/:seminar_id/:round',  requireAdminLogin({isRedirect : false}), authorize('runSimulation'), initController.runSimulation());
+apiRouter.post('/marksimos/api/admin/seminar/:seminar_id/init', requireAdminLogin({isRedirect : false}),  authorize('runSimulation'), initController.init());
+apiRouter.post('/marksimos/api/admin/seminar/:seminar_id/runsimulation/:round',  requireAdminLogin({isRedirect : false}), authorize('runSimulation'), initController.runSimulation());
 
 apiRouter.get('/marksimos/api/admin/seminar/:seminar_id/decisions', requireAdminLogin({isRedirect : false}), authorize('runSimulation'), decisionController.getDecisionForFacilitator);
 

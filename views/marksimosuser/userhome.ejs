@@ -468,18 +468,18 @@
                                     <div class="table_report">
 
                                         <ul class="nav nav-pills">
-                                            <li ng-class="{'active': data.tableC3SegmentDistribution.currentTable==1}"><a href="" ng-click="switchTableReportC3(1, 'marketShareValue', '%')">{{'ReportSegmentDistributionsTableTitleMarketShareValue' | translate}}</a></li>
-                                            <li ng-class="{'active': data.tableC3SegmentDistribution.currentTable==2}"><a href="" ng-click="switchTableReportC3(2, 'marketShareVolume', '%')">{{'ReportSegmentDistributionsTableTitleMarketShareVolume' | translate}}</a></li>
-                                            <li ng-class="{'active': data.tableC3SegmentDistribution.currentTable==3}"><a href="" ng-click="switchTableReportC3(3, 'marketSaleValue', '')">{{'ReportSegmentDistributionsTableTitleMarketSalesValue' | translate}}</a></li>
-                                            <li ng-class="{'active': data.tableC3SegmentDistribution.currentTable==4}"><a href="" ng-click="switchTableReportC3(4, 'marketSaleVolume', '')">{{'ReportSegmentDistributionsTableTitleMarketSalesVolume' | translate}}</a></li>
-                                            <li ng-class="{'active': data.tableC3SegmentDistribution.currentTable==5}"><a href="" ng-click="switchTableReportC3(5, 'averageNetMarketPriceStdPack', '')">{{'ReportSegmentDistributionsTableTitleAverageNetMarketPrice' | translate}}</a></li>
-                                            <li ng-class="{'active': data.tableC3SegmentDistribution.currentTable==6}"><a href="" ng-click="switchTableReportC3(6, 'valuePerception', '')">{{'ReportSegmentDistributionsTableTitleValuePerception' | translate}}</a></li>
-                                            <li ng-class="{'active': data.tableC3SegmentDistribution.currentTable==7}"><a href="" ng-click="switchTableReportC3(7, 'imagePerception', '')">{{'ReportSegmentDistributionsTableTitleImagePerception' | translate}}</a></li>
+                                            <li ng-class="{'active': data.tableC3SegmentDistribution.currentTable==1}"><a href="" ng-click="switchTableReportC3(1, 'marketShareValue', '%', false)">{{'ReportSegmentDistributionsTableTitleMarketShareValue' | translate}}</a></li>
+                                            <li ng-class="{'active': data.tableC3SegmentDistribution.currentTable==2}"><a href="" ng-click="switchTableReportC3(2, 'marketShareVolume', '%', false)">{{'ReportSegmentDistributionsTableTitleMarketShareVolume' | translate}}</a></li>
+                                            <li ng-class="{'active': data.tableC3SegmentDistribution.currentTable==3}"><a href="" ng-click="switchTableReportC3(3, 'marketSaleValue', '', true)">{{'ReportSegmentDistributionsTableTitleMarketSalesValue' | translate}}</a></li>
+                                            <li ng-class="{'active': data.tableC3SegmentDistribution.currentTable==4}"><a href="" ng-click="switchTableReportC3(4, 'marketSaleVolume', '', true)">{{'ReportSegmentDistributionsTableTitleMarketSalesVolume' | translate}}</a></li>
+                                            <li ng-class="{'active': data.tableC3SegmentDistribution.currentTable==5}"><a href="" ng-click="switchTableReportC3(5, 'averageNetMarketPriceStdPack', '', true)">{{'ReportSegmentDistributionsTableTitleAverageNetMarketPrice' | translate}}</a></li>
+                                            <li ng-class="{'active': data.tableC3SegmentDistribution.currentTable==6}"><a href="" ng-click="switchTableReportC3(6, 'valuePerception', '', false)">{{'ReportSegmentDistributionsTableTitleValuePerception' | translate}}</a></li>
+                                            <li ng-class="{'active': data.tableC3SegmentDistribution.currentTable==7}"><a href="" ng-click="switchTableReportC3(7, 'imagePerception', '', false)">{{'ReportSegmentDistributionsTableTitleImagePerception' | translate}}</a></li>
                                         </ul>
 
                                         <div class="divider_horizontal"></div>
 
-                                        <div table-report-segment-distribution data="data.tableC3SegmentDistribution.currentTableData" unit="data.tableC3SegmentDistribution.currentTableUnit" chartdata="data.tableC3SegmentDistribution.chartData" chartconfig="data.tableC3SegmentDistribution.chartConfig"></div>
+                                        <div table-report-segment-distribution data="data.tableC3SegmentDistribution.currentTableData" unit="data.tableC3SegmentDistribution.currentTableUnit" allsegments="data.tableC3SegmentDistribution.currentTableShowAllSegments" chartdata="data.tableC3SegmentDistribution.chartData" chartconfig="data.tableC3SegmentDistribution.chartConfig"></div>
                                     </div>
 
                                 </div>
@@ -874,18 +874,18 @@
                                     <div class="table_report">
 
                                         <ul class="nav nav-pills">
-                                            <li ng-class="{'active': data.tableC3SegmentDistribution.currentTable==1}"><a href="" ng-click="switchTableReportC3(1, 'marketShareValue', '%')">{{'ReportSegmentDistributionsTableTitleMarketShareValue' | translate}}</a></li>
-                                            <li ng-class="{'active': data.tableC3SegmentDistribution.currentTable==2}"><a href="" ng-click="switchTableReportC3(2, 'marketShareVolume', '%')">{{'ReportSegmentDistributionsTableTitleMarketShareVolume' | translate}}</a></li>
-                                            <li ng-class="{'active': data.tableC3SegmentDistribution.currentTable==3}"><a href="" ng-click="switchTableReportC3(3, 'marketSaleValue', '')">{{'ReportSegmentDistributionsTableTitleMarketSalesValue' | translate}}</a></li>
-                                            <li ng-class="{'active': data.tableC3SegmentDistribution.currentTable==4}"><a href="" ng-click="switchTableReportC3(4, 'marketSaleVolume', '')">{{'ReportSegmentDistributionsTableTitleMarketSalesVolume' | translate}}</a></li>
-                                            <li ng-class="{'active': data.tableC3SegmentDistribution.currentTable==5}"><a href="" ng-click="switchTableReportC3(5, 'averageNetMarketPriceStdPack', '')">{{'ReportSegmentDistributionsTableTitleAverageNetMarketPrice' | translate}}</a></li>
-                                            <li ng-class="{'active': data.tableC3SegmentDistribution.currentTable==6}"><a href="" ng-click="switchTableReportC3(6, 'valuePerception', '')">{{'ReportSegmentDistributionsTableTitleValuePerception' | translate}}</a></li>
-                                            <li ng-class="{'active': data.tableC3SegmentDistribution.currentTable==7}"><a href="" ng-click="switchTableReportC3(7, 'imagePerception', '')">{{'ReportSegmentDistributionsTableTitleImagePerception' | translate}}</a></li>
+                                            <li ng-class="{'active': data.tableC3SegmentDistribution.currentTable==1}"><a href="" ng-click="switchTableReportC3(1, 'marketShareValue', '%', false)">{{'ReportSegmentDistributionsTableTitleMarketShareValue' | translate}}</a></li>
+                                            <li ng-class="{'active': data.tableC3SegmentDistribution.currentTable==2}"><a href="" ng-click="switchTableReportC3(2, 'marketShareVolume', '%', false)">{{'ReportSegmentDistributionsTableTitleMarketShareVolume' | translate}}</a></li>
+                                            <li ng-class="{'active': data.tableC3SegmentDistribution.currentTable==3}"><a href="" ng-click="switchTableReportC3(3, 'marketSaleValue', '', true)">{{'ReportSegmentDistributionsTableTitleMarketSalesValue' | translate}}</a></li>
+                                            <li ng-class="{'active': data.tableC3SegmentDistribution.currentTable==4}"><a href="" ng-click="switchTableReportC3(4, 'marketSaleVolume', '', true)">{{'ReportSegmentDistributionsTableTitleMarketSalesVolume' | translate}}</a></li>
+                                            <li ng-class="{'active': data.tableC3SegmentDistribution.currentTable==5}"><a href="" ng-click="switchTableReportC3(5, 'averageNetMarketPriceStdPack', '', true)">{{'ReportSegmentDistributionsTableTitleAverageNetMarketPrice' | translate}}</a></li>
+                                            <li ng-class="{'active': data.tableC3SegmentDistribution.currentTable==6}"><a href="" ng-click="switchTableReportC3(6, 'valuePerception', '', false)">{{'ReportSegmentDistributionsTableTitleValuePerception' | translate}}</a></li>
+                                            <li ng-class="{'active': data.tableC3SegmentDistribution.currentTable==7}"><a href="" ng-click="switchTableReportC3(7, 'imagePerception', '', false)">{{'ReportSegmentDistributionsTableTitleImagePerception' | translate}}</a></li>
                                         </ul>
 
                                         <div class="divider_horizontal"></div>
 
-                                        <div table-report-segment-distribution data="data.tableC3SegmentDistribution.currentTableData" unit="data.tableC3SegmentDistribution.currentTableUnit" chartdata="data.tableC3SegmentDistribution.chartData" chartconfig="data.tableC3SegmentDistribution.chartConfig"></div>
+                                        <div table-report-segment-distribution data="data.tableC3SegmentDistribution.currentTableData" unit="data.tableC3SegmentDistribution.currentTableUnit" allsegments="data.tableC3SegmentDistribution.currentTableShowAllSegments" chartdata="data.tableC3SegmentDistribution.chartData" chartconfig="data.tableC3SegmentDistribution.chartConfig"></div>
                                     </div>
 
                                 </div>
@@ -1582,18 +1582,18 @@
                     <div class="table_report">
 
                         <ul class="nav nav-pills">
-                            <li ng-class="{'active': data.tableC3SegmentDistribution.currentTable==1}"><a href="" ng-click="switchTableReportC3(1, 'marketShareValue', '%')">{{'ReportSegmentDistributionsTableTitleMarketShareValue' | translate}}</a></li>
-                            <li ng-class="{'active': data.tableC3SegmentDistribution.currentTable==2}"><a href="" ng-click="switchTableReportC3(2, 'marketShareVolume', '%')">{{'ReportSegmentDistributionsTableTitleMarketShareVolume' | translate}}</a></li>
-                            <li ng-class="{'active': data.tableC3SegmentDistribution.currentTable==3}"><a href="" ng-click="switchTableReportC3(3, 'marketSaleValue', '')">{{'ReportSegmentDistributionsTableTitleMarketSalesValue' | translate}}</a></li>
-                            <li ng-class="{'active': data.tableC3SegmentDistribution.currentTable==4}"><a href="" ng-click="switchTableReportC3(4, 'marketSaleVolume', '')">{{'ReportSegmentDistributionsTableTitleMarketSalesVolume' | translate}}</a></li>
-                            <li ng-class="{'active': data.tableC3SegmentDistribution.currentTable==5}"><a href="" ng-click="switchTableReportC3(5, 'averageNetMarketPriceStdPack', '')">{{'ReportSegmentDistributionsTableTitleAverageNetMarketPrice' | translate}}</a></li>
-                            <li ng-class="{'active': data.tableC3SegmentDistribution.currentTable==6}"><a href="" ng-click="switchTableReportC3(6, 'valuePerception', '')">{{'ReportSegmentDistributionsTableTitleValuePerception' | translate}}</a></li>
-                            <li ng-class="{'active': data.tableC3SegmentDistribution.currentTable==7}"><a href="" ng-click="switchTableReportC3(7, 'imagePerception', '')">{{'ReportSegmentDistributionsTableTitleImagePerception' | translate}}</a></li>
+                            <li ng-class="{'active': data.tableC3SegmentDistribution.currentTable==1}"><a href="" ng-click="switchTableReportC3(1, 'marketShareValue', '%', false)">{{'ReportSegmentDistributionsTableTitleMarketShareValue' | translate}}</a></li>
+                            <li ng-class="{'active': data.tableC3SegmentDistribution.currentTable==2}"><a href="" ng-click="switchTableReportC3(2, 'marketShareVolume', '%', false)">{{'ReportSegmentDistributionsTableTitleMarketShareVolume' | translate}}</a></li>
+                            <li ng-class="{'active': data.tableC3SegmentDistribution.currentTable==3}"><a href="" ng-click="switchTableReportC3(3, 'marketSaleValue', '', true)">{{'ReportSegmentDistributionsTableTitleMarketSalesValue' | translate}}</a></li>
+                            <li ng-class="{'active': data.tableC3SegmentDistribution.currentTable==4}"><a href="" ng-click="switchTableReportC3(4, 'marketSaleVolume', '', true)">{{'ReportSegmentDistributionsTableTitleMarketSalesVolume' | translate}}</a></li>
+                            <li ng-class="{'active': data.tableC3SegmentDistribution.currentTable==5}"><a href="" ng-click="switchTableReportC3(5, 'averageNetMarketPriceStdPack', '', true)">{{'ReportSegmentDistributionsTableTitleAverageNetMarketPrice' | translate}}</a></li>
+                            <li ng-class="{'active': data.tableC3SegmentDistribution.currentTable==6}"><a href="" ng-click="switchTableReportC3(6, 'valuePerception', '', false)">{{'ReportSegmentDistributionsTableTitleValuePerception' | translate}}</a></li>
+                            <li ng-class="{'active': data.tableC3SegmentDistribution.currentTable==7}"><a href="" ng-click="switchTableReportC3(7, 'imagePerception', '', false)">{{'ReportSegmentDistributionsTableTitleImagePerception' | translate}}</a></li>
                         </ul>
 
                         <div class="divider_horizontal"></div>
 
-                        <div table-report-segment-distribution data="data.tableC3SegmentDistribution.currentTableData" unit="data.tableC3SegmentDistribution.currentTableUnit" chartdata="data.tableC3SegmentDistribution.chartData" chartconfig="data.tableC3SegmentDistribution.chartConfig"></div>
+                        <div table-report-segment-distribution data="data.tableC3SegmentDistribution.currentTableData" unit="data.tableC3SegmentDistribution.currentTableUnit" allsegments="data.tableC3SegmentDistribution.currentTableShowAllSegments" chartdata="data.tableC3SegmentDistribution.chartData" chartconfig="data.tableC3SegmentDistribution.chartConfig"></div>
                     </div>
 
                 </div>

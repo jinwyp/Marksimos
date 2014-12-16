@@ -574,13 +574,16 @@
                 });
             }
         };
+
+
         /********************  Init Seminar  ********************/
-        $scope.initSeminar = function(seminarid) {
+        $scope.initSeminar = function(seminarId) {
             $scope.css.runButtonDisabled = true;
-            $http.post('/marksimos/api/admin/init', { seminar_id: seminarid }).success(function(data, status, headers, config) {
+            Admin.initSeminar(seminarId).success(function(data, status, headers, config) {
                 app.getSeminarInit();
                 $notification.success('Save success', 'Init Seminar success');
                 $scope.css.runButtonDisabled = false;
+
             }).error(function(data, status, headers, config) {
                 console.log(data);
                 $notification.error('Failed', data.message);
@@ -588,9 +591,9 @@
             });
         };
         /********************  Run Seminar  ********************/
-        $scope.runSeminar = function(seminarid, round) {
+        $scope.runSeminar = function(seminarId, round) {
             $scope.css.runButtonDisabled = true;
-            $http.post('/marksimos/api/admin/runsimulation/' + seminarid + '/' + round).success(function(data, status, headers, config) {
+            Admin.runSeminar(seminarId, round, true).success(function(data, status, headers, config) {
                 app.getSeminarInit();
                 $notification.success('Save success', 'Run Seminar success');
                 $scope.css.runButtonDisabled = false;
@@ -673,6 +676,7 @@
                 currentTable: 1,
                 currentTableData: {},
                 currentTableUnit: "%",
+                currentTableShowAllSegments : false,
                 chartConfig: chartReport.getChartConfig1(),
                 chartData: $scope.dataChartSimple
             },
@@ -938,8 +942,9 @@
 
 
                 /********************  Table C3 Segment Distribution  *******************/
-                $scope.switchTableReportC3 = function(order, field, unit) {
+                $scope.switchTableReportC3 = function(order, field, unit, showAllSegments) {
                     $scope.data.tableC3SegmentDistribution.currentTable = order;
+                    $scope.data.tableC3SegmentDistribution.currentTableShowAllSegments = showAllSegments;
                     $scope.data.tableC3SegmentDistribution.currentTableData = $scope.data.tableC3SegmentDistribution.allData[field];
                     $scope.data.tableC3SegmentDistribution.chartData = chartReport.formatChartData($scope.data.tableC3SegmentDistribution.currentTableData);
                     $scope.data.tableC3SegmentDistribution.currentTableUnit = unit;

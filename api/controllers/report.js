@@ -116,9 +116,9 @@ function getFinalScore(seminarId) {
             if (requestedPeriodResult.period == 0) {
                 //原来作为比较的阶段0
                 initialPeriodResult = requestedPeriodResult;
+            }
 
-            } else if (requestedPeriodResult.period > 0) {
-                //当阶段大于0时，为有效数据
+            if (requestedPeriodResult.period >= 0) {
                 var period = requestedPeriodResult.period;
                 var scores = [];
                 var highest_SOM, lowest_SOM, highest_Profit, lowest_Profit;
