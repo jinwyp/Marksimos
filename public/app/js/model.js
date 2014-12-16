@@ -1198,8 +1198,14 @@
                 return $http.get(apiAdminPath + 'seminar/' + seminarId + '/decisions') ;
             },
             getFinalScores: function(seminarId) {
+                //获取得分
                 return $http.get(apiAdminPath + 'finalscore/' + seminarId);
+            },
+            getQuestionnaire: function(seminarId) {
+                //获取反馈
+                return $http.get(apiAdminPath + 'questionnaire/' + seminarId);
             }
+
 
         };
         return factory;

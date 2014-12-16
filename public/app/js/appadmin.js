@@ -630,7 +630,11 @@
                 data: [],
                 showScaled: true
             },
-
+            questionnaire: {
+                data: [],
+                companyList: [],
+                studentList: []
+            },
             //A1 Company Status
             tableA1CompanyStatus: {
                 allCompanyData: [],
@@ -842,6 +846,8 @@
                 //加载final scores
                 that.loadingFinalScoresData();
 
+                //加载Questionnaire
+                that.loadingQuestionnaireData();
                 chartReport.initTranslate().then(function() {
                     //添加事件
                     that.runOnce();
@@ -1179,6 +1185,15 @@
                 var seminerID = /.+\/adminhomereport\/(\d+).*/.exec(window.location.href)[1] || 0;
                 Admin.getFinalScores(seminerID).success(function(data, status, headers, config) {
                     $scope.data.tableFinalScore.data = data;                   
+                });
+            },
+            loadingQuestionnaireData: function() {
+                var seminerID = /.+\/adminhomereport\/(\d+).*/.exec(window.location.href)[1] || 0;
+                Admin.getQuestionnaire(seminerID).success(function(data, status, headers, config) {
+                    console.log(data);
+                    $scope.data.questionnaire.data = data.questionnaire;
+                    $scope.data.questionnaire.studentList = data.studentList;
+                    $scope.data.questionnaire.companyList = data.companyList;
                 });
             },
             loadingCompanyData: function() {

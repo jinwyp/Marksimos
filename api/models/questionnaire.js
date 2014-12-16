@@ -19,7 +19,7 @@ var questionnaireSchema = new Schema({
 
 
 var Questionnaire = mongoose.model("Questionnaire", questionnaireSchema);
-
+exports.query = Questionnaire;
 exports.findOne = function(seminarId, email) {
 	if (!mongoose.connection.readyState) {
 		throw new Error("mongoose is not connected.");
