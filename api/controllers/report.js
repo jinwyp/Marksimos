@@ -5,51 +5,63 @@ var simulationResult = require('../models/simulationResult.js');
 var seminarModel     = require('../models/seminar.js');
 var Q                = require('q');
 var _                = require('underscore');
-//学生获取得分
+
+
+
+
 exports.getStudentFinalScore = function(req, res, next) {
 
     //得到seminarId,学生从session中获取
     var seminarId = +req.session.seminarId;
 
-    //获取并处理分数
-    getFinalScore(seminarId, function(result) {
-        //成功操作
-        if (result.showLastPeriodScore) {
-            //如果显示最后一阶段的分数，则正常输出
-            res.send(200, result.scoreData);
-        }
-        else {
-            //如果不显示最后一阶段的分数，则数据length-1,原数据为排过序的数据
-            if (result.scoreData && result.scoreData.length > 1) {
-                res.send(200, result.scoreData.slice(0, result.scoreData.length - 1));
+    if (!seminarId) {
+        return res.send(400, { message: "You don't choose a seminar." });
+    }else{
+        //获取并处理分数
+        getFinalScore(seminarId).then(function(result) {
+            //成功操作
+            if (result.showLastPeriodScore) {
+                //如果显示最后一阶段的分数，则正常输出
+                res.send(200, result.scoreData);
+            } else {
+                //如果不显示最后一阶段的分数，则数据length-1,原数据为排过序的数据
+                if (result.scoreData && result.scoreData.length > 1) {
+                    res.send(200, result.scoreData.slice(0, result.scoreData.length - 1));
+                }
+                else {
+                    res.send(200, result.scoreData);
+                }
             }
-            else {
-                res.send(200, []);
-            }
-        }
-       
-    }, function(err) {
-        //失败操作
-        res.send(403, err.message);
-    });
 
-}
-//老师获取得分
+        }).fail(function(err){
+            logger.error(err);
+            next(err);
+        }).done();
+    }
+};
+
+
 exports.getAdminFinalScore = function(req, res, next) {
 
     //得到seminarId,老师由参数传入
     var seminarId = +req.params.seminarId;
 
-    //获取并处理分数
-    getFinalScore(seminarId, function(result) {
-        //成功操作
-        res.send(200, result.scoreData);
-    }, function(err) {
-        //失败操作
-        res.send(403, err.message);
-    });
+    if (!seminarId) {
+        return res.send(400, { message: "You don't choose a seminar." });
+    }else{
+        //获取并处理分数
+        getFinalScore(seminarId).then(function(result) {
+            //成功操作
+            res.send(200, result.scoreData);
+        }).fail(function(err){
+            logger.error(err);
+            next(err);
+        }).done();
+    }
 
-}
+};
+
+
 exports.getReport = function(req, res, next){
     var seminarId = req.session.seminarId;
 
@@ -84,21 +96,27 @@ exports.getReport = function(req, res, next){
     })
     .done();
 
-}
-function getFinalScore(seminarId, successCallback, failCallback) {
-    if (!seminarId) {
-        return res.send(400, { message: "You don't choose a seminar." });
-    }
-    Q.all([
+};
+
+
+function getFinalScore(seminarId) {
+
+    return Q.all([
         simulationResult.findAll(seminarId),
         seminarModel.findOne({ seminarId: seminarId })
     ]).spread(function(requestedPeriodResultArr, seminarInfo) {
-        var resultArr = [];
+        var resultArr = {
+            scoreData: [],
+            showLastPeriodScore: seminarInfo.showLastPeriodScore
+        };
+
         var initialPeriodResult;
         requestedPeriodResultArr.forEach(function(requestedPeriodResult) {
+
             if (requestedPeriodResult.period == 0) {
                 //原来作为比较的阶段0
                 initialPeriodResult = requestedPeriodResult;
+
             } else if (requestedPeriodResult.period > 0) {
                 //当阶段大于0时，为有效数据
                 var period = requestedPeriodResult.period;
@@ -124,7 +142,7 @@ function getFinalScore(seminarId, successCallback, failCallback) {
                         companyId: requestedPeriodResult.p_Companies[i].c_CompanyID,
                         originalSOM: originalSOM,
                         originalProfit: originalProfit,
-                        originalBudget: originalBudget,
+                        originalBudget: originalBudget
                     });
                 };
 
@@ -173,7 +191,6 @@ function getFinalScore(seminarId, successCallback, failCallback) {
                 }
 
                 scores.forEach(function(companyScore) {
-                    var scaled = {};
                     companyScore.scaledSOM = a * companyScore.scaledSOM + b;
                     if (companyScore.scaledSOM < 0) { companyScore.scaledSOM = 0; }
 
@@ -189,21 +206,17 @@ function getFinalScore(seminarId, successCallback, failCallback) {
                     companyScore.finalScore = initialPeriodResult.p_Market.m_fs_DeltaSOM_Weight * companyScore.scaledSOM + initialPeriodResult.p_Market.m_fs_Profits_Weight * companyScore.scaledProfit;
                     companyScore.finalScore = companyScore.finalScore + 2 * companyScore.scaledBudget;
                 });
-                resultArr.push({ period: period, seminarId: seminarId, scores: scores });
+
+                resultArr.scoreData.push({ period: period, seminarId: seminarId, scores: scores });
             }
 
         });
-        //成功回调
-        if (successCallback) {
-            successCallback({ scoreData: resultArr, showLastPeriodScore: seminarInfo.showLastPeriodScore });
-        }
-    }).fail(function(err) {
-        //失败回调
-        if (failCallback) {
-            failCallback(err);
-        }
-    }).done();
+
+        return resultArr;
+
+    });
 }
+
 function isReportNeedFilter(report_name){
     return report_name==='financial_report' || report_name==='profitability_evolution';
 }
