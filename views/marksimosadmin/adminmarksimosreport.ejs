@@ -1083,259 +1083,121 @@
                     <h3 class="box-title">{{'QuestionnairePageQuestionnaire' | translate}}</h3>
                 </div>
                 <div class="box-body no-padding">
-                    <ul class="list-group col-md-2">
-                        <li class="list-group-item" ng-repeat="company in data.questionnaire.companyList">
-                           
-                            <ul class="list-group">
-                                <li class="list-group-item list-group-item-info"> {{company}}</li>
-                                <li class="list-group-item" ng-repeat="student in data.questionnaire.studentList | filter:{companyName:company}">
-                                    <a href="javascript:void(0);">{{student.email}}</a>
-                                </li>
-                            </ul>
-                        </li>
-                    </ul>
-                    <div class="col-md-10">
-                        <div class="col-md-12 feedback_data">
-                            <h3 class="text-center">
-                                {{'QuestionnairePageQuestionnaire' | translate}}
-                            </h3>
-                            <h4>
-                                A {{'QuestionnairePageOverallSatisfactionWiththeProgram' | translate}}
-                            </h4>
-                            <div class="table_feedback">
-                                <table class="table table-hover">
+                    <div class="row">
+                        <div class="col-md-2">
+                            <div class="panel panel-default" ng-repeat="company in data.questionnaire.companyList">
+                                <div class="panel panel-heading">{{'HomePageSecondMenuBarLabelsCompany' | translate}}{{company}}</div>
+                                <div class="list-group panel-body no-padding">
+                                    <a href="javascript:void(0);" ng-click="data.questionnaire.currentEmail=student.email" class="list-group-item" ng-class="{'active':data.questionnaire.currentEmail==student.email}" ng-repeat="student in data.questionnaire.studentList | filter:{companyName:company}">{{student.email}}</a>
+                                </div>
+                            </div>
+                        </div>                      
+                        <div class="col-md-9">
+                            <div class="row">
+                                <table class="table table-bordered table-striped">
                                     <thead>
-                                        <tr>
-                                            <th class="table_feedback_left_title">
-                                                <p>&nbsp;</p>
-                                            </th>
-                                            <th class="table_feedback_right_data">
-                                                <p>{{'QuestionnairePageVeryPoor' | translate}}</p>
-                                            </th>
-                                            <th class="table_feedback_right_data">
-                                                <p>&nbsp;</p>
-                                            </th>
-                                            <th class="table_feedback_right_data">
-                                                <p>{{'QuestionnairePageAverage' | translate}}</p>
-                                            </th>
-                                            <th class="table_feedback_right_data">
-                                                <p>&nbsp;</p>
-                                            </th></th>
-                                            <th class="table_feedback_right_data">
-                                                <p>{{'QuestionnairePageExcellent' | translate}}</p>
-                                            </th>
+                                        <tr class="bg-success">
+                                            <th colspan="2"><h4> 1. {{'QuestionnairePageOverallSatisfactionWiththeProgram' | translate}}</h4></th>
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        <tr ng-repeat='radio in questionnaire.radio_OverallSatisfactionWithThePrograms.info' ng-init="index=$index">
-                                            <td>
-                                                <p class="p_left_20">{{'QuestionnairePage'+radio | translate}}</p>
-                                            </td>
-                                            <td ng-repeat='n in [1,2,3,4,5]'>
-                                                <p class="text-center">
-                                                    <input value={{n}} type="radio" ng-model="questionnaire.q_OverallSatisfactionWithTheProgram[index]" name="{{radio}}" id="{{radio+($index+1)}}">
-                                                    <label>{{n}}</label>
-                                                </p>
-                                            </td>
+                                        <tr ng-repeat="radio in data.questionnaire.radio_OverallSatisfactionWithThePrograms.info">
+                                            <td class="col-md-6">{{'QuestionnairePage'+radio | translate}}</td>
+                                            <td>{{data.questionnaire.data[data.questionnaire.currentEmail].q_OverallSatisfactionWithTheProgram[$index]}}</td>
                                         </tr>
                                     </tbody>
                                 </table>
                             </div>
-                            <h4>
-                                B {{'QuestionnairePageTeachingTeam' | translate}}
-                            </h4>
-                            <div class="table_feedback">
-                                <table class="table table-hover">
+                            <div class="row">
+                                <table class="table table-bordered table-striped">
                                     <thead>
-                                        <tr>
-                                            <th class="table_feedback_left_title">
-                                                <p>{{'QuestionnairePageFacilitator' | translate}} : {{'QuestionnairePageNormanYen' | translate}}</p>
-                                            </th>
-                                            <th class="table_feedback_right_data">
-                                                <p>{{'QuestionnairePageVeryPoor' | translate}}</p>
-                                            </th>
-                                            <th class="table_feedback_right_data">
-                                                <p>&nbsp;</p>
-                                            </th>
-                                            <th class="table_feedback_right_data">
-                                                <p>{{'QuestionnairePageAverage' | translate}}</p>
-                                            </th>
-                                            <th class="table_feedback_right_data">
-                                                <p>&nbsp;</p>
-                                            </th></th>
-                                            <th class="table_feedback_right_data">
-                                                <p>{{'QuestionnairePageExcellent' | translate}}</p>
-                                            </th>
+                                        <tr class="bg-success">
+                                            <th colspan="2"><h4> 2. {{'QuestionnairePageTeachingTeam' | translate}}</h4></th>
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        <tr ng-repeat='radio in questionnaire.radio_TeachingTeams.info' ng-init="index=$index">
-                                            <td>
-                                                <p class="p_left_20">{{'QuestionnairePage'+radio | translate}}</p>
-                                            </td>
-                                            <td ng-repeat='n in [1,2,3,4,5]'>
-                                                <p class="text-center">
-                                                    <input value={{n}} type="radio" ng-model="questionnaire.q_TeachingTeam[index]" name="{{radio}}" id="{{radio+($index+1)}}">
-                                                    <label>{{n}}</label>
-                                                </p>
-                                            </td>
+                                        <tr ng-repeat="radio in data.questionnaire.radio_TeachingTeams.info">
+                                            <td class="col-md-6">{{'QuestionnairePage'+radio | translate}}</td>
+                                            <td>{{data.questionnaire.data[data.questionnaire.currentEmail].q_TeachingTeam[$index]}}</td>
                                         </tr>
                                     </tbody>
                                 </table>
                             </div>
-                            <h4>
-                                C {{'QuestionnairePageProduct' | translate}}
-                            </h4>
-                            <div class="table_feedback">
-                                <table class="table table-hover">
+                            <div class="row">
+                                <table class="table table-bordered table-striped">
                                     <thead>
-                                        <tr>
-                                            <th class="table_feedback_left_title">
-                                                <p>&nbsp;</p>
-                                            </th>
-                                            <th class="table_feedback_right_data">
-                                                <p>{{'QuestionnairePageVeryPoor' | translate}}</p>
-                                            </th>
-                                            <th class="table_feedback_right_data">
-                                                <p>&nbsp;</p>
-                                            </th>
-                                            <th class="table_feedback_right_data">
-                                                <p>{{'QuestionnairePageAverage' | translate}}</p>
-                                            </th>
-                                            <th class="table_feedback_right_data">
-                                                <p>&nbsp;</p>
-                                            </th></th>
-                                            <th class="table_feedback_right_data">
-                                                <p>{{'QuestionnairePageExcellent' | translate}}</p>
-                                            </th>
+                                        <tr class="bg-success">
+                                            <th colspan="2"><h4> 3. {{'QuestionnairePageProduct' | translate}}</h4></th>
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        <tr ng-repeat='radio in questionnaire.radio_Products.info' ng-init="index=$index">
-                                            <td>
-                                                <p class="p_left_20">{{'QuestionnairePage'+radio | translate}}</p>
-                                            </td>
-                                            <td ng-repeat='n in [1,2,3,4,5]'>
-                                                <p class="text-center">
-                                                    <input value={{n}} type="radio" ng-model="questionnaire.q_Product[index]" name="{{radio}}" id="{{radio+($index+1)}}">
-                                                    <label>{{n}}</label>
-                                                </p>
-                                            </td>
+                                        <tr ng-repeat="radio in data.questionnaire.radio_Products.info">
+                                            <td class="col-md-6">{{'QuestionnairePage'+radio | translate}}</td>
+                                            <td>{{data.questionnaire.data[data.questionnaire.currentEmail].q_Product[$index]}}</td>
+                                        </tr>
+                                        <tr>
+                                            <td colspan="2">&nbsp;</td>
+                                        </tr>
+                                        <tr>
+                                            <td colspan="2">&nbsp;</td>
                                         </tr>
                                     </tbody>
                                 </table>
                             </div>
-                            <h4>
-                                D {{'QuestionnairePageInterpreter' | translate}}
-                            </h4>
-                            <div class="table_feedback">
-                                <table class="table table-hover">
+                            <div class="row">
+                                <table class="table table-bordered table-striped">
                                     <thead>
-                                        <tr>
-                                            <th class="table_feedback_left_title">
-                                                <p>{{'QuestionnairePageOlive' | translate}}</p>
-                                            </th>
-                                            <th class="table_feedback_right_data">
-                                                <p>{{'QuestionnairePageVeryPoor' | translate}}</p>
-                                            </th>
-                                            <th class="table_feedback_right_data">
-                                                <p>&nbsp;</p>
-                                            </th>
-                                            <th class="table_feedback_right_data">
-                                                <p>{{'QuestionnairePageAverage' | translate}}</p>
-                                            </th>
-                                            <th class="table_feedback_right_data">
-                                                <p>&nbsp;</p>
-                                            </th></th>
-                                            <th class="table_feedback_right_data">
-                                                <p>{{'QuestionnairePageExcellent' | translate}}</p>
-                                            </th>
+                                        <tr class="bg-success">
+                                            <th colspan="2"><h4> 4. {{'QuestionnairePageInterpreter' | translate}}</h4></th>
                                         </tr>
                                     </thead>
                                     <tbody>
                                         <tr>
-                                            <td>
-                                                <p class="p_left_20">{{'QuestionnairePageAccuracyAndPresentation' | translate}}</p>
-                                            </td>
-                                            <td ng-repeat='n in [1,2,3,4,5]'>
-                                                <p class="text-center">
-                                                    <input value={{n}} type="radio" ng-model="questionnaire.q_Interpreter" name="AccuracyAndPresentation" id="{{'AccuracyAndPresentation'+$index}}">
-                                                    <label>{{n}}</label>
-                                                </p>
-                                            </td>
-                                        </tr>
+                                            <td class="col-md-6">{{'QuestionnairePageAccuracyAndPresentation' | translate}}</td>
+                                            <td>{{data.questionnaire.data[data.questionnaire.currentEmail].q_Interpreter}}</td>
+                                        </tr>                                       
                                     </tbody>
                                 </table>
                             </div>
-                            <h4>
-                                E {{'QuestionnairePageTeachingSupport' | translate}}
-                            </h4>
-                            <div class="table_feedback">
-                                <table class="table table-hover">
+                            <div class="row">
+                                <table class="table table-bordered table-striped">
                                     <thead>
-                                        <tr>
-                                            <th class="table_feedback_left_title">
-                                                <p>{{'QuestionnairePageMayYu' | translate}}</p>
-                                            </th>
-                                            <th class="table_feedback_right_data">
-                                                <p>{{'QuestionnairePageVeryPoor' | translate}}</p>
-                                            </th>
-                                            <th class="table_feedback_right_data">
-                                                <p>&nbsp;</p>
-                                            </th>
-                                            <th class="table_feedback_right_data">
-                                                <p>{{'QuestionnairePageAverage' | translate}}</p>
-                                            </th>
-                                            <th class="table_feedback_right_data">
-                                                <p>&nbsp;</p>
-                                            </th>
-                                            <th class="table_feedback_right_data">
-                                                <p>{{'QuestionnairePageExcellent' | translate}}</p>
-                                            </th>
+                                        <tr class="bg-success">
+                                            <th colspan="2"><h4>  5. {{'QuestionnairePageTeachingSupport' | translate}}</h4></th>
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        <tr ng-repeat='radio in questionnaire.radio_TeachingSupports.info' ng-init="index=$index">
-                                            <td>
-                                                <p class="p_left_20">{{'QuestionnairePage'+radio | translate}}</p>
-                                            </td>
-                                            <td ng-repeat='n in [1,2,3,4,5]'>
-                                                <p class="text-center">
-                                                    <input value={{n}} type="radio" ng-model="questionnaire.q_TeachingSupport[index]" name="{{radio}}" id="{{radio+($index+1)}}">
-                                                    <label>{{n}}</label>
-                                                </p>
-                                            </td>
+                                        <tr ng-repeat="radio in data.questionnaire.radio_TeachingSupports.info">
+                                            <td class="col-md-6">{{'QuestionnairePage'+radio | translate}}</td>
+                                            <td>{{data.questionnaire.data[data.questionnaire.currentEmail].q_TeachingSupport[$index]}}</td>
                                         </tr>
                                     </tbody>
                                 </table>
                             </div>
-                            <h4>{{'QuestionnairePageOthers' | translate}}</h4>
-                            <h5>1.{{'QuestionnairePageMostBenefit' | translate}} ?</h5>
-                            <p class="feedback_others_p text-muted" ng-repeat="radio in questionnaire.radio_MostBenefits.info">
-                                <input type="radio" id="{{radio+($index+1)}}" name="mostBenefits" value="{{$index+1}}" ng-model='questionnaire.q_MostBenefit'>
-                                <label for="{{radio+($index+1)}}">{{$index+1}} . {{'QuestionnairePage'+radio | translate}}</label>
-                            </p>
-                            <h4 class="clear"></h4>
-                            <h5>2.{{'QuestionnairePageRecommendMarkSimos' | translate}} ?</h5>
-                            <p class="feedback_others_p">
-                                <input type="radio" id="RecommendMarkSimos1" name="RecommendMarkSimos" value="1" ng-model='questionnaire.q_WillRecommend'>
-                                <label for="RecommendMarkSimos1">{{'QuestionnairePageYes' | translate}}</label>
-                                <input type="radio" class="margin_left_10" id="RecommendMarkSimos2" name="RecommendMarkSimos" value="0" ng-model='questionnaire.q_WillRecommend'>
-                                <label for="RecommendMarkSimos2">{{'QuestionnairePageNo' | translate}}</label>
-                            </p>
-                            <p class="feedback_others_p">
-                                <textarea class="form-control" rows="3" id="QuestionnairePageYes" name='QuestionnairePageYes' ng-model='questionnaire.q_ReasonForRecommendOrNot'></textarea>
-                            </p>
-                            <h4 class="clear"></h4>
-                            <h5>3.{{'QuestionnairePageBringYou' | translate}} ?</h5>
-                            <p class="feedback_others_p">
-                                <textarea class="form-control" rows="3" id="QuestionnairePageBringYou" name='QuestionnairePageBringYou' ng-model='questionnaire.q_FeelAboutMarkSimos'></textarea>
-                            </p>
-                            <h4 class="clear"></h4>
-                            <p class="text-center provide_feedback">
-                                <button class="btn btn-warning" ng-click='submitQuestionnaire(questionnaire)' ng-disabled='isFeedbackSumbit'>{{'QuestionnaireSubmit' | translate}}</button>
-                            </p>
-                        </div>
+                            <div class="row">
+                                <table class="table table-bordered table-striped">
+                                    <thead>
+                                        <tr class="bg-success">
+                                            <th colspan="2"><h4>  6. {{'QuestionnairePageOthers' | translate}}</h4></th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td class="col-md-9">1.{{'QuestionnairePageMostBenefit' | translate}} ?</td>
+                                            <td>{{data.questionnaire.data[data.questionnaire.currentEmail].q_MostBenefit}}</td>
+                                        </tr>
+                                        <tr>
+                                            <td class="col-md-9">2.{{'QuestionnairePageRecommendMarkSimos' | translate}} ?</td>
+                                            <td>{{data.questionnaire.data[data.questionnaire.currentEmail].q_WillRecommend?"yes":"no"}}{{data.questionnaire.data[data.questionnaire.currentEmail].q_ReasonForRecommendOrNot}}</td>
+                                        </tr>
+                                        <tr>
+                                            <td class="col-md-9">3.{{'QuestionnairePageBringYou' | translate}} ?</td>
+                                            <td>{{data.questionnaire.data[data.questionnaire.currentEmail].q_FeelAboutMarkSimos}}</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>                      
                     </div>
                 </div>
             </div>

@@ -149,7 +149,7 @@ exports.getQuestionnaireList = function(req, res, next) {
         if (seminarResult) {
 
             //处理结果，使之类似['A','B','C'......]
-            var companyNameList = [],studentList=[];
+            var companyNameList = [], studentList = [], questionnaire = {};
             seminarResult.companies.forEach(function(companyInfo) {
                 companyNameList.push(companyInfo.companyName);
             });
@@ -160,9 +160,12 @@ exports.getQuestionnaireList = function(req, res, next) {
                     studentList.push({ companyName: companyNameList[index], email: student });
                 });
             });
-
+            //处理结果，使之类似{'s1@A.com':{...},...}
+            questionnaireResult.forEach(function(question) {
+                questionnaire[question.email] = question;
+            });
             //返回成功的数据
-            res.send(200, { companyList: companyNameList, studentList: studentList, questionnaire: questionnaireResult });
+            res.send(200, { companyList: companyNameList, studentList: studentList, questionnaire: questionnaire });
         }
         else {
             //未得到seminar，则很有可能是输入的seminarId无效

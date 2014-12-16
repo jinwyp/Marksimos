@@ -612,7 +612,7 @@
 
     angular.module('marksimosadmin').controller('adminMarksimosReportController', ['$scope', '$http', '$notification', '$translate', 'Admin', 'AdminTable', 'chartReport', 'AdminChart', function($scope, $http, $notification,$translate, Admin,  AdminTable, chartReport, AdminChart) {
         $scope.css = {
-            currentReportMenu:'AllDecisions',
+            currentReportMenu: 'Questionnaire',
             tableReportTab: 'Global',
             tableReportTabC2 : 'SKU'
         };
@@ -1195,7 +1195,24 @@
                     console.log(data);
                     $scope.data.questionnaire.data = data.questionnaire;
                     $scope.data.questionnaire.studentList = data.studentList;
-                    $scope.data.questionnaire.companyList = data.companyList;
+                    $scope.data.questionnaire.companyList = data.companyList;                  
+                    $scope.data.questionnaire.currentEmail = data.studentList[0].email;
+
+                    $scope.data.questionnaire.radio_OverallSatisfactionWithThePrograms = {
+                        info: ['ChallengeStrategicThinkingAbility', 'DevelopAnIntegratedPerspective', 'TestPersonalAbilityOfBalancingRisks', 'ChallengeLeadershipAndTeamworkAbility', 'ChallengeAnalysisAndDecisionMakingAbility', 'SimulationInteresting']
+                    };
+                    $scope.data.questionnaire.radio_TeachingTeams = {
+                        info: ['FeedbackOnSimulationDecisions', 'ExpandingViewAndInspireThinking', 'Lectures']
+                    };
+                    $scope.data.questionnaire.radio_Products = {
+                        info: ['OverallProductUsageExperience', 'UserInterfaceExperience', 'EaseOfNavigation', 'ClarityOfWordsUsed']
+                    };
+                    $scope.data.questionnaire.radio_TeachingSupports = {
+                        info: ['Helpfulness', 'QualityOfTechnicalSupport']
+                    };
+                    $scope.data.questionnaire.radio_MostBenefits = {
+                        info: ["JoinProgram", "CompanyInHouse", "OpenClass"]
+                    };
                 });
             },
             loadingCompanyData: function() {
