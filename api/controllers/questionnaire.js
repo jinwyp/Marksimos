@@ -135,7 +135,7 @@ exports.submitQuestionnaire = function(req,res,next){
             res.send(403, message);
         })
         .done();
-}
+};
 
 exports.getQuestionnaireList = function(req, res, next) {
     //去除非法的seminarId

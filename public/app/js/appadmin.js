@@ -628,11 +628,15 @@
                 data           : [],
                 allCompanyId   : [1, 2, 3, 4, 5, 6, 7, 8, 9],
                 allPeriod      : [1, 2, 3, 4, 5, 6, 7, 8, 9],
-                currentCompanyId : 1,
+                currentCompanyId : '!!',
                 currentPeriod  : 1
             },
 
             reRunCompanies : [false, false, false, false, false, false, false, false, false],
+            reRunDecision : {
+                name : '',
+                value : ''
+            },
 
             tableFinalScore: {
                 data: [],
