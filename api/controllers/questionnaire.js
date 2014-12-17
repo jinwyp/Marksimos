@@ -174,6 +174,6 @@ exports.getQuestionnaireList = function(req, res, next) {
     }, function(err) {
         //如果有异常，记录异常
         logger.error(err);
-        res.send(500, { message: "get questionnaire list failed." });
+        next(err);
     }).done();
 };

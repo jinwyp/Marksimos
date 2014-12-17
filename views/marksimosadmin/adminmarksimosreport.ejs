@@ -1100,7 +1100,11 @@
                             <div class="panel panel-default" ng-repeat="company in data.questionnaire.companyList">
                                 <div class="panel panel-heading">{{'HomePageSecondMenuBarLabelsCompany' | translate}}{{company}}</div>
                                 <div class="list-group panel-body no-padding">
-                                    <a href="javascript:void(0);" ng-click="data.questionnaire.currentEmail=student.email" class="list-group-item" ng-class="{'active':data.questionnaire.currentEmail==student.email}" ng-repeat="student in data.questionnaire.studentList | filter:{companyName:company}">{{student.email}}</a>
+                                    <a href="javascript:void(0);" 
+                                       ng-click="data.questionnaire.currentEmail=student.email" 
+                                       class="list-group-item" 
+                                       ng-class="{'active':data.questionnaire.currentEmail==student.email}" 
+                                       ng-repeat="student in data.questionnaire.studentList | filter:{companyName:company}"><span>{{student.email}}</span><span class="badge" ng-if="data.questionnaire.data[student.email]"><i class="fa fa-info"></i></span></a>
                                 </div>
                             </div>
                         </div>                      
@@ -1116,8 +1120,13 @@
                                         <tr ng-repeat="radio in data.questionnaire.radio_OverallSatisfactionWithThePrograms.info">
                                             <td class="col-md-6">{{'QuestionnairePage'+radio | translate}}</td>
                                             <td>{{data.questionnaire.data[data.questionnaire.currentEmail].q_OverallSatisfactionWithTheProgram[$index]}}</td>
-                                        </tr>
+                                        </tr>                          
                                     </tbody>
+                                    <tfoot>
+                                        <tr>
+                                            <td colspan="2">&nbsp;</td>
+                                        </tr>
+                                    </tfoot>
                                 </table>
                             </div>
                             <div class="row">
@@ -1131,8 +1140,13 @@
                                         <tr ng-repeat="radio in data.questionnaire.radio_TeachingTeams.info">
                                             <td class="col-md-6">{{'QuestionnairePage'+radio | translate}}</td>
                                             <td>{{data.questionnaire.data[data.questionnaire.currentEmail].q_TeachingTeam[$index]}}</td>
-                                        </tr>
+                                        </tr>          
                                     </tbody>
+                                    <tfoot>
+                                        <tr>
+                                            <td colspan="2">&nbsp;</td>
+                                        </tr>
+                                    </tfoot>
                                 </table>
                             </div>
                             <div class="row">
@@ -1146,14 +1160,13 @@
                                         <tr ng-repeat="radio in data.questionnaire.radio_Products.info">
                                             <td class="col-md-6">{{'QuestionnairePage'+radio | translate}}</td>
                                             <td>{{data.questionnaire.data[data.questionnaire.currentEmail].q_Product[$index]}}</td>
-                                        </tr>
-                                        <tr>
-                                            <td colspan="2">&nbsp;</td>
-                                        </tr>
-                                        <tr>
-                                            <td colspan="2">&nbsp;</td>
-                                        </tr>
+                                        </tr>                                                           
                                     </tbody>
+                                    <tfoot>
+                                        <tr>
+                                            <td colspan="2">&nbsp;</td>
+                                        </tr>
+                                    </tfoot>
                                 </table>
                             </div>
                             <div class="row">
@@ -1167,8 +1180,13 @@
                                         <tr>
                                             <td class="col-md-6">{{'QuestionnairePageAccuracyAndPresentation' | translate}}</td>
                                             <td>{{data.questionnaire.data[data.questionnaire.currentEmail].q_Interpreter}}</td>
-                                        </tr>                                       
+                                        </tr>             
                                     </tbody>
+                                    <tfoot>
+                                        <tr>
+                                            <td colspan="2">&nbsp;</td>
+                                        </tr>
+                                    </tfoot>
                                 </table>
                             </div>
                             <div class="row">
@@ -1182,8 +1200,13 @@
                                         <tr ng-repeat="radio in data.questionnaire.radio_TeachingSupports.info">
                                             <td class="col-md-6">{{'QuestionnairePage'+radio | translate}}</td>
                                             <td>{{data.questionnaire.data[data.questionnaire.currentEmail].q_TeachingSupport[$index]}}</td>
-                                        </tr>
+                                        </tr>                                   
                                     </tbody>
+                                    <tfoot>
+                                        <tr>
+                                            <td colspan="2">&nbsp;</td>
+                                        </tr>
+                                    </tfoot>
                                 </table>
                             </div>
                             <div class="row">
@@ -1200,13 +1223,21 @@
                                         </tr>
                                         <tr>
                                             <td class="col-md-9">2.{{'QuestionnairePageRecommendMarkSimos' | translate}} ?</td>
-                                            <td>{{data.questionnaire.data[data.questionnaire.currentEmail].q_WillRecommend?"yes":"no"}}{{data.questionnaire.data[data.questionnaire.currentEmail].q_ReasonForRecommendOrNot}}</td>
+                                            <td>
+                                                <span ng-if="data.questionnaire.data[data.questionnaire.currentEmail]">{{data.questionnaire.data[data.questionnaire.currentEmail].q_WillRecommend?"yes.":"no."}}</span>
+                                                {{data.questionnaire.data[data.questionnaire.currentEmail].q_ReasonForRecommendOrNot}}
+                                            </td>
                                         </tr>
                                         <tr>
                                             <td class="col-md-9">3.{{'QuestionnairePageBringYou' | translate}} ?</td>
                                             <td>{{data.questionnaire.data[data.questionnaire.currentEmail].q_FeelAboutMarkSimos}}</td>
                                         </tr>
                                     </tbody>
+                                    <tfoot>
+                                        <tr>
+                                            <td colspan="2">&nbsp;</td>
+                                        </tr>
+                                    </tfoot>
                                 </table>
                             </div>
                         </div>                      
