@@ -197,8 +197,7 @@ exports.runSimulation = function(){
         } else {
             status = 'pending';
             var seminarId = req.params.seminar_id;
-            var selectedPeriod = req.params.round;
-            var goingToNewPeriod = req.body.goingToNewPeriod;
+            var goingToNewPeriod = req.body.goingToNewPeriod || true;
             var decisionsOverwriteSwitchers = req.body.decisionsOverwriteSwitchers || [];
 
 
@@ -208,7 +207,7 @@ exports.runSimulation = function(){
                 return res.send(400, {message: "You have not choose a seminar."})
             }
 
-            if(!goingToNewPeriod || !selectedPeriod){
+            if(!goingToNewPeriod){
                 status = 'active';
                 return res.send(400, {message: "Which period need to run?"})
             }
@@ -237,15 +236,22 @@ exports.runSimulation = function(){
                     throw {message: "the last round simulation has been executed."}
                 }
 
-                if(decisionsOverwriteSwitchers.length != dbSeminar.companyNum){
-                    throw {message: "Cancel promise chains. Because Incorrect parameter decisionsOverwriteSwitchers in the post request."}
-                }
 
-                if(!goingToNewPeriod){
+
+                if(goingToNewPeriod){
                     selectedPeriod = dbSeminar.currentPeriod;
 
+                    decisionsOverwriteSwitchers = [];
+                    for(var i=0; i<dbSeminar.companyNum; i++){
+                        decisionsOverwriteSwitchers.push(true);
+                    }
                 } else {
                     selectedPeriod = dbSeminar.currentPeriod - 1;
+
+                    if(decisionsOverwriteSwitchers.length != dbSeminar.companyNum){
+                        throw {message: "Cancel promise chains. Because Incorrect parameter decisionsOverwriteSwitchers in the post request."}
+                    }
+
                 }
 
 
