@@ -1,7 +1,8 @@
-var questionnaireModel = require('../models/questionnaire.js');
+﻿var questionnaireModel = require('../models/questionnaire.js');
+var seminarModel = require('../models/seminar.js');
 var logger = require('../../common/logger.js');
 var config = require('../../common/config.js');
-
+var Q = require('q');
 exports.getQuestionnaire = function(req, res, next) {
     var seminarId = req.session.seminarId;
     var email = req.session.email;
@@ -135,3 +136,44 @@ exports.submitQuestionnaire = function(req,res,next){
         })
         .done();
 }
+
+exports.getQuestionnaireList = function(req, res, next) {
+    //去除非法的seminarId
+    var seminarId = +req.params.seminarId || 0;
+
+    //查询数据库
+    Q.all([
+        seminarModel.query.findOne({ seminarId: seminarId }).select({ 'companies': true, 'companyAssignment': true }).exec(),
+        questionnaireModel.query.find({ seminarId: seminarId }).exec()
+    ]).spread(function(seminarResult, questionnaireResult) {
+        if (seminarResult) {
+
+            //处理结果，使之类似['A','B','C'......]
+            var companyNameList = [], studentList = [], questionnaire = {};
+            seminarResult.companies.forEach(function(companyInfo) {
+                companyNameList.push(companyInfo.companyName);
+            });
+
+            //处理结果，使之类似[{companyName:'A',email:'s1@A.com'},......]
+            seminarResult.companyAssignment.forEach(function(listStudent, index) {
+                listStudent.forEach(function(student) {
+                    studentList.push({ companyName: companyNameList[index], email: student });
+                });
+            });
+            //处理结果，使之类似{'s1@A.com':{...},...}
+            questionnaireResult.forEach(function(question) {
+                questionnaire[question.email] = question;
+            });
+            //返回成功的数据
+            res.send(200, { companyList: companyNameList, studentList: studentList, questionnaire: questionnaire });
+        }
+        else {
+            //未得到seminar，则很有可能是输入的seminarId无效
+            res.send(400, { message: "Invalid seminarId." });
+        }
+    }, function(err) {
+        //如果有异常，记录异常
+        logger.error(err);
+        next(err);
+    }).done();
+};

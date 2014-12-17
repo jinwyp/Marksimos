@@ -41,6 +41,7 @@
             {{'FinalScoreAdminPanelLabel' | translate}} :
             <button type="button" class="btn btn-default" ng-click="clickChartMenu('AllDecisions')"> {{'FinalScoreAdminPanelDecisionsButton' | translate}}</button>
             <button type="button" class="btn btn-default" ng-click="clickChartMenu('AllResults')"> {{'FinalScoreAdminPanelResultsButton' | translate}}</button>
+            <button type="button" class="btn btn-default" ng-click="clickChartMenu('Questionnaire')"> {{'QuestionnairePageQuestionnaire' | translate}}</button>
         </section>
 
 
@@ -1086,7 +1087,166 @@
             </div>
         </section>
         
-         </div>
+        <!--  Questionnaire--> 
+        <section class="content" ng-if="css.currentReportMenu=='Questionnaire'">
+            <div class="box box-primary">
+                <div class="box-header">
+                    <i class="fa fa-pencil-square-o"></i>
+                    <h3 class="box-title">{{'QuestionnairePageQuestionnaire' | translate}}</h3>
+                </div>
+                <div class="box-body no-padding">
+                    <div class="row">
+                        <div class="col-md-2">
+                            <div class="panel panel-default" ng-repeat="company in data.questionnaire.companyList">
+                                <div class="panel panel-heading">{{'HomePageSecondMenuBarLabelsCompany' | translate}}{{company}}</div>
+                                <div class="list-group panel-body no-padding">
+                                    <a href="javascript:void(0);" 
+                                       ng-click="data.questionnaire.currentEmail=student.email" 
+                                       class="list-group-item" 
+                                       ng-class="{'active':data.questionnaire.currentEmail==student.email}" 
+                                       ng-repeat="student in data.questionnaire.studentList | filter:{companyName:company}"><span>{{student.email}}</span><span class="badge" ng-if="data.questionnaire.data[student.email]"><i class="fa fa-info"></i></span></a>
+                                </div>
+                            </div>
+                        </div>                      
+                        <div class="col-md-9">
+                            <div class="row">
+                                <table class="table table-bordered table-striped">
+                                    <thead>
+                                        <tr class="bg-success">
+                                            <th colspan="2"><h4> 1. {{'QuestionnairePageOverallSatisfactionWiththeProgram' | translate}}</h4></th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr ng-repeat="radio in data.questionnaire.radio_OverallSatisfactionWithThePrograms.info">
+                                            <td class="col-md-6">{{'QuestionnairePage'+radio | translate}}</td>
+                                            <td>{{data.questionnaire.data[data.questionnaire.currentEmail].q_OverallSatisfactionWithTheProgram[$index]}}</td>
+                                        </tr>                          
+                                    </tbody>
+                                    <tfoot>
+                                        <tr>
+                                            <td colspan="2">&nbsp;</td>
+                                        </tr>
+                                    </tfoot>
+                                </table>
+                            </div>
+                            <div class="row">
+                                <table class="table table-bordered table-striped">
+                                    <thead>
+                                        <tr class="bg-success">
+                                            <th colspan="2"><h4> 2. {{'QuestionnairePageTeachingTeam' | translate}}</h4></th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr ng-repeat="radio in data.questionnaire.radio_TeachingTeams.info">
+                                            <td class="col-md-6">{{'QuestionnairePage'+radio | translate}}</td>
+                                            <td>{{data.questionnaire.data[data.questionnaire.currentEmail].q_TeachingTeam[$index]}}</td>
+                                        </tr>          
+                                    </tbody>
+                                    <tfoot>
+                                        <tr>
+                                            <td colspan="2">&nbsp;</td>
+                                        </tr>
+                                    </tfoot>
+                                </table>
+                            </div>
+                            <div class="row">
+                                <table class="table table-bordered table-striped">
+                                    <thead>
+                                        <tr class="bg-success">
+                                            <th colspan="2"><h4> 3. {{'QuestionnairePageProduct' | translate}}</h4></th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr ng-repeat="radio in data.questionnaire.radio_Products.info">
+                                            <td class="col-md-6">{{'QuestionnairePage'+radio | translate}}</td>
+                                            <td>{{data.questionnaire.data[data.questionnaire.currentEmail].q_Product[$index]}}</td>
+                                        </tr>                                                           
+                                    </tbody>
+                                    <tfoot>
+                                        <tr>
+                                            <td colspan="2">&nbsp;</td>
+                                        </tr>
+                                    </tfoot>
+                                </table>
+                            </div>
+                            <div class="row">
+                                <table class="table table-bordered table-striped">
+                                    <thead>
+                                        <tr class="bg-success">
+                                            <th colspan="2"><h4> 4. {{'QuestionnairePageInterpreter' | translate}}</h4></th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td class="col-md-6">{{'QuestionnairePageAccuracyAndPresentation' | translate}}</td>
+                                            <td>{{data.questionnaire.data[data.questionnaire.currentEmail].q_Interpreter}}</td>
+                                        </tr>             
+                                    </tbody>
+                                    <tfoot>
+                                        <tr>
+                                            <td colspan="2">&nbsp;</td>
+                                        </tr>
+                                    </tfoot>
+                                </table>
+                            </div>
+                            <div class="row">
+                                <table class="table table-bordered table-striped">
+                                    <thead>
+                                        <tr class="bg-success">
+                                            <th colspan="2"><h4>  5. {{'QuestionnairePageTeachingSupport' | translate}}</h4></th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr ng-repeat="radio in data.questionnaire.radio_TeachingSupports.info">
+                                            <td class="col-md-6">{{'QuestionnairePage'+radio | translate}}</td>
+                                            <td>{{data.questionnaire.data[data.questionnaire.currentEmail].q_TeachingSupport[$index]}}</td>
+                                        </tr>                                   
+                                    </tbody>
+                                    <tfoot>
+                                        <tr>
+                                            <td colspan="2">&nbsp;</td>
+                                        </tr>
+                                    </tfoot>
+                                </table>
+                            </div>
+                            <div class="row">
+                                <table class="table table-bordered table-striped">
+                                    <thead>
+                                        <tr class="bg-success">
+                                            <th colspan="2"><h4>  6. {{'QuestionnairePageOthers' | translate}}</h4></th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td class="col-md-9">1.{{'QuestionnairePageMostBenefit' | translate}} ?</td>
+                                            <td>{{data.questionnaire.data[data.questionnaire.currentEmail].q_MostBenefit}}</td>
+                                        </tr>
+                                        <tr>
+                                            <td class="col-md-9">2.{{'QuestionnairePageRecommendMarkSimos' | translate}} ?</td>
+                                            <td>
+                                                <span ng-if="data.questionnaire.data[data.questionnaire.currentEmail]">{{data.questionnaire.data[data.questionnaire.currentEmail].q_WillRecommend?"yes.":"no."}}</span>
+                                                {{data.questionnaire.data[data.questionnaire.currentEmail].q_ReasonForRecommendOrNot}}
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td class="col-md-9">3.{{'QuestionnairePageBringYou' | translate}} ?</td>
+                                            <td>{{data.questionnaire.data[data.questionnaire.currentEmail].q_FeelAboutMarkSimos}}</td>
+                                        </tr>
+                                    </tbody>
+                                    <tfoot>
+                                        <tr>
+                                            <td colspan="2">&nbsp;</td>
+                                        </tr>
+                                    </tfoot>
+                                </table>
+                            </div>
+                        </div>                      
+                    </div>
+                </div>
+            </div>
+        </section>   
+    
+     </div>
 
 
 

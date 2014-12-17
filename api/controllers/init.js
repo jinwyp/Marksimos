@@ -184,6 +184,9 @@ exports.init = function(req, res, next) {
     //if decisionsOverwriteSwithcers[0] = true, selected period Team A decision will be overwrite
     //if decisionsOverwriteSwithcers[1] = true, selected period Team B decision will be overwrite
     //...
+
+    //if rerun(goingToNewPeriod : false),           default values should be [false, false, false, false]
+    //if goingToNewPeriod(goingToNewPeriod : true), default values should be [true, true, true, true]
 }
 
  */
@@ -201,7 +204,6 @@ exports.runSimulation = function(){
             var decisionsOverwriteSwitchers = req.body.decisionsOverwriteSwitchers || [];
 
 
-
             if(!seminarId){
                 status = 'active';
                 return res.send(400, {message: "You have not choose a seminar."})
@@ -216,7 +218,6 @@ exports.runSimulation = function(){
                 status = 'active';
                 return res.send(400, {message : 'need parameter decisionsOverwriteSwitchers'});
             }
-
 
             //check if this seminar exists
             seminarModel.findOne({
@@ -237,7 +238,6 @@ exports.runSimulation = function(){
                 }
 
 
-
                 if(goingToNewPeriod){
                     selectedPeriod = dbSeminar.currentPeriod;
 
@@ -253,7 +253,6 @@ exports.runSimulation = function(){
                     }
 
                 }
-
 
                 var companies = [];
                 for(var i=0; i<dbSeminar.companyNum; i++){

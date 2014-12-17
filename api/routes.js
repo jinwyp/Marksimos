@@ -434,7 +434,8 @@ apiRouter.get('/marksimos/api/admin/user', requireAdminLogin({isRedirect : false
 apiRouter.get('/marksimos/api/admin/report/:report_name', requireAdminLogin({isRedirect : false}), reportController.getReport);
 apiRouter.get('/marksimos/api/admin/chart/:chart_name', requireAdminLogin({isRedirect : false}), chartController.getChart);
 apiRouter.get('/marksimos/api/admin/finalscore/:seminarId', requireAdminLogin({ isRedirect: false }), reportController.getAdminFinalScore);
-
+//管理员获取 feedback 列表
+apiRouter.get('/marksimos/api/admin/questionnaire/:seminarId', requireAdminLogin({ isRedirect: false }), questionnaireController.getQuestionnaireList);
 
 function requireStudentLogin(params){
     return function(req, res, next){

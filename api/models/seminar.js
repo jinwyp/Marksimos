@@ -39,7 +39,7 @@ var teamSchema = new Schema({
 });
 
 var Seminar = mongoose.model("Seminar", seminarSchema);
-
+exports.query = Seminar;
 
 exports.update = function(query, seminar){
     if(!mongoose.connection.readyState){

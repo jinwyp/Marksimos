@@ -616,7 +616,7 @@
 
     angular.module('marksimosadmin').controller('adminMarksimosReportController', ['$scope', '$http', '$notification', '$translate', 'Admin', 'AdminTable', 'chartReport', 'AdminChart', function($scope, $http, $notification,$translate, Admin,  AdminTable, chartReport, AdminChart) {
         $scope.css = {
-            currentReportMenu:'AllDecisions',
+            currentReportMenu: 'Questionnaire',
             tableReportTab: 'Global',
             tableReportTabC2 : 'SKU'
         };
@@ -635,7 +635,11 @@
                 data: [],
                 showScaled: true
             },
-
+            questionnaire: {
+                data: [],
+                companyList: [],
+                studentList: []
+            },
             //A1 Company Status
             tableA1CompanyStatus: {
                 allCompanyData: [],
@@ -848,6 +852,8 @@
                 //加载final scores
                 that.loadingFinalScoresData();
 
+                //加载Questionnaire
+                that.loadingQuestionnaireData();
                 chartReport.initTranslate().then(function() {
                     //添加事件
                     that.runOnce();
@@ -1187,6 +1193,32 @@
                 var seminerID = /.+\/adminhomereport\/(\d+).*/.exec(window.location.href)[1] || 0;
                 Admin.getFinalScores(seminerID).success(function(data, status, headers, config) {
                     $scope.data.tableFinalScore.data = data;                   
+                });
+            },
+            loadingQuestionnaireData: function() {
+                var seminerID = /.+\/adminhomereport\/(\d+).*/.exec(window.location.href)[1] || 0;
+                Admin.getQuestionnaire(seminerID).success(function(data, status, headers, config) {
+                    console.log(data);
+                    $scope.data.questionnaire.data = data.questionnaire;
+                    $scope.data.questionnaire.studentList = data.studentList;
+                    $scope.data.questionnaire.companyList = data.companyList;                  
+                    $scope.data.questionnaire.currentEmail = data.studentList[0].email;
+
+                    $scope.data.questionnaire.radio_OverallSatisfactionWithThePrograms = {
+                        info: ['ChallengeStrategicThinkingAbility', 'DevelopAnIntegratedPerspective', 'TestPersonalAbilityOfBalancingRisks', 'ChallengeLeadershipAndTeamworkAbility', 'ChallengeAnalysisAndDecisionMakingAbility', 'SimulationInteresting']
+                    };
+                    $scope.data.questionnaire.radio_TeachingTeams = {
+                        info: ['FeedbackOnSimulationDecisions', 'ExpandingViewAndInspireThinking', 'Lectures']
+                    };
+                    $scope.data.questionnaire.radio_Products = {
+                        info: ['OverallProductUsageExperience', 'UserInterfaceExperience', 'EaseOfNavigation', 'ClarityOfWordsUsed']
+                    };
+                    $scope.data.questionnaire.radio_TeachingSupports = {
+                        info: ['Helpfulness', 'QualityOfTechnicalSupport']
+                    };
+                    $scope.data.questionnaire.radio_MostBenefits = {
+                        info: ["JoinProgram", "CompanyInHouse", "OpenClass"]
+                    };
                 });
             },
             loadingCompanyData: function() {

@@ -1198,7 +1198,12 @@
                 return $http.get(apiAdminPath + 'seminar/' + seminarId + '/decisions') ;
             },
             getFinalScores: function(seminarId) {
+                //获取得分
                 return $http.get(apiAdminPath + 'finalscore/' + seminarId);
+            },
+            getQuestionnaire: function(seminarId) {
+                //获取反馈
+                return $http.get(apiAdminPath + 'questionnaire/' + seminarId);
             },
             initSeminar: function(seminarId) {
                 return $http.post(apiAdminPath + 'seminar/' + seminarId + '/init' );
@@ -1206,7 +1211,7 @@
             runSeminar: function(seminarId, runNextPeriod, decisions) {
                 return $http.post(apiAdminPath + 'seminar/' + seminarId + '/runsimulation', {goingToNewPeriod : runNextPeriod, decisionsOverwriteSwitchers:decisions});
             }
-
+            
         };
         return factory;
     }
