@@ -591,7 +591,7 @@
             });
         };
         /********************  Run Seminar  ********************/
-        $scope.runSeminar = function(seminarId, decisions) {
+        $scope.runSeminar = function(seminarId) {
             $scope.css.runButtonDisabled = true;
 
             Admin.runSeminar(seminarId, true, []).success(function(data, status, headers, config) {
@@ -614,11 +614,12 @@
 
 
 
-    angular.module('marksimosadmin').controller('adminMarksimosReportController', ['$scope', '$http', '$notification', '$translate', 'Admin', 'AdminTable', 'chartReport', 'AdminChart', function($scope, $http, $notification,$translate, Admin,  AdminTable, chartReport, AdminChart) {
+    angular.module('marksimosadmin').controller('adminMarksimosReportController', ['$scope', '$http', '$notification', '$translate', 'Admin', 'AdminTable', 'chartReport', 'AdminChart', function($scope, $http, $notification, $translate, Admin,  AdminTable, chartReport, AdminChart) {
         $scope.css = {
-            currentReportMenu: 'Questionnaire',
+            currentReportMenu: 'AllDecisions',
             tableReportTab: 'Global',
-            tableReportTabC2 : 'SKU'
+            tableReportTabC2 : 'SKU',
+            currentSeminarId : 0
         };
 
         $scope.data = {
@@ -630,6 +631,8 @@
                 currentCompanyId : 1,
                 currentPeriod  : 1
             },
+
+            reRunCompanies : [false, false, false, false, false, false, false, false, false],
 
             tableFinalScore: {
                 data: [],
@@ -1170,17 +1173,28 @@
 
 
 
+                /********************  Run Seminar  ********************/
+                $scope.reRunSeminar = function() {
+
+                    Admin.runSeminar($scope.css.currentSeminarId, false, $scope.data.reRunCompanies).success(function(data, status, headers, config) {
+                        $notification.success('Save success', 'Rerun Seminar Decisions Success');
+
+                    }).error(function(data, status, headers, config) {
+                        console.log(data);
+                        $notification.error('Failed', data.message);
+                    });
+                };
             },
-            reRun: function() { },
 
             loadingAllDecisions: function() {
-                var seminerID = /.+\/adminhomereport\/(\d+).*/.exec(window.location.href)[1] || 0;
+                $scope.css.currentSeminarId = /.+\/adminhomereport\/(\d+).*/.exec(window.location.href)[1] || 0;
 
-                if(seminerID){
-                    Admin.getAllCompanyDecisionsOfAllPeriods(seminerID).success(function(data, status, headers, config) {
+                if($scope.css.currentSeminarId){
+                    Admin.getAllCompanyDecisionsOfAllPeriods($scope.css.currentSeminarId).success(function(data, status, headers, config) {
                         $scope.data.allDecisions.data = data;
 
                         $scope.data.allDecisions.allCompanyId = $scope.data.allDecisions.allCompanyId.slice(0, data[data.length - 1].d_CID);
+                        $scope.data.reRunCompanies = $scope.data.reRunCompanies.slice(0, data[data.length - 1].d_CID);
                         $scope.data.allDecisions.allPeriod = $scope.data.allDecisions.allPeriod.slice(0, data[data.length - 1].period);
 
                         $scope.data.allDecisions.currentPeriod = $scope.data.allDecisions.allPeriod[$scope.data.allDecisions.allPeriod.length - 1];
@@ -1198,7 +1212,6 @@
             loadingQuestionnaireData: function() {
                 var seminerID = /.+\/adminhomereport\/(\d+).*/.exec(window.location.href)[1] || 0;
                 Admin.getQuestionnaire(seminerID).success(function(data, status, headers, config) {
-                    console.log(data);
                     $scope.data.questionnaire.data = data.questionnaire;
                     $scope.data.questionnaire.studentList = data.studentList;
                     $scope.data.questionnaire.companyList = data.companyList;                  
@@ -1413,6 +1426,8 @@
                 });
             }
         };
+
+
         //初始化程序
         app.init();
 

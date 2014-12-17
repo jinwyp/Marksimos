@@ -902,7 +902,7 @@
             "FinalScoreAdminPanelLabel"           : "Decisions and Results",
             "FinalScoreAdminPanelDecisionsButton" : "Show All Decisions",
             "FinalScoreAdminPanelResultsButton"   : "Show All Results",
-
+            "FinalScoreAdminPanelResultsReRunButton" : "Rerun Last Period Decisions",
 
 
             //Labels for Questionnaire Page
@@ -1856,6 +1856,7 @@
             "FinalScoreAdminPanelLabel"           : "公司决策和结果",
             "FinalScoreAdminPanelDecisionsButton" : "显示所有阶段所有公司的决策",
             "FinalScoreAdminPanelResultsButton"   : "显示结果",
+            "FinalScoreAdminPanelResultsReRunButton"   : "重新运行上一轮决策",
 
             //Labels for Questionnaire Page
             "QuestionnairePageQuestionnaire"                             : "问卷调查",
