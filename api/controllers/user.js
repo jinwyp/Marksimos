@@ -51,7 +51,7 @@ exports.getCurrnetStudentSeminar = function(req, res, next){
                 throw {message: "seminar " + seminarId +" doesn't exist."}
             }
             tempUser.seminarId = dbSeminar.seminarId;
-            tempUser.numOfTeamMember = dbSeminar.companyAssignment[companyId-1].studentList.length;
+
             tempUser.numOfCompany = dbSeminar.companyNum;
             tempUser.currentPeriod = dbSeminar.currentPeriod;
             tempUser.maxPeriodRound = dbSeminar.simulationSpan;
@@ -59,10 +59,11 @@ exports.getCurrnetStudentSeminar = function(req, res, next){
 
             for(var i=0; i<dbSeminar.companyAssignment.length; i++){
                 //if this student is in this company
-                if(dbSeminar.companyAssignment[i].studentList.indexOf(email) > -1){
+                if(dbSeminar.companyAssignment[i].studentList.indexOf(user.email) > -1){
 
                     tempUser.companyId = dbSeminar.companyAssignment[i].companyId;
                     tempUser.companyName = dbSeminar.companyAssignment[i].companyName;
+                    tempUser.numOfTeamMember = dbSeminar.companyAssignment[i].studentList.length;
                 }
             }
 
