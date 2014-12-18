@@ -353,7 +353,7 @@ apiRouter.put('/marksimos/api/questionnaire',requireStudentLogin({isRedirect : f
 // get seminar
 apiRouter.get('/marksimos/api/user', requireStudentLogin({isRedirect : false}), userController.getUser);
 apiRouter.get('/marksimos/api/student/seminar', requireStudentLogin({isRedirect : false}), authorize('getSeminarOfStudent'), studentController.getSeminarOfStudent);
-apiRouter.get('/marksimos/api/studentinfo', requireStudentLogin({isRedirect : false}), authorize('getStudent'),userController.getStudent);
+apiRouter.get('/marksimos/api/studentinfo', requireStudentLogin({isRedirect : false}), authorize('getStudent'),userController.getCurrnetStudentSeminar);
 
 //report
 apiRouter.get('/marksimos/api/report/:report_name', requireStudentLogin({isRedirect : false}), reportController.getReport);

@@ -233,13 +233,17 @@ exports.getSeminarOfStudent = function(req, res, next){
     seminarModel.find({},{})
     .then(function(allSeminars){
         var assignedSeminars = [];
+
         for(var i=0; i<allSeminars.length; i++){
             var seminar = allSeminars[i];
             for(var j=0; j<seminar.companyAssignment.length; j++){
-                if(seminar.companyAssignment[j]&&seminar.companyAssignment[j].toString().indexOf(email) > -1){
-                    if(seminar.isInitialized ){
-                        assignedSeminars.push(seminar);
-                        break;
+
+                if( typeof seminar.companyAssignment[j].studentList  !== 'undefined'){
+                    if(seminar.companyAssignment[j].studentList.indexOf(email) > -1){
+                        if(seminar.isInitialized ){
+                            assignedSeminars.push(seminar);
+                            break;
+                        }
                     }
                 }
             }
@@ -249,7 +253,8 @@ exports.getSeminarOfStudent = function(req, res, next){
     })
     .fail(function(err){
         logger.error(err);
-        return res.send(500, {message: "get seminar list failed."})
+        err.message = "get seminar list failed.";
+        next(err);
     })
     .done();
 };

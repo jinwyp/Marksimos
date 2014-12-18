@@ -26,7 +26,9 @@ exports.getUser = function(req, res, next){
     .done();
 };
 
-exports.getStudent = function(req, res, next){
+
+
+exports.getCurrnetStudentSeminar = function(req, res, next){
     var userId = sessionOperation.getUserId(req);
 
     userModel.findOne({_id: userId})
@@ -35,12 +37,10 @@ exports.getStudent = function(req, res, next){
             return res.send(500, {message: "user doesn't exist."});
         }
 
-        var companyId = sessionOperation.getCompanyId(req);
         var seminarId = sessionOperation.getSeminarId(req);
 
         var tempUser = JSON.parse(JSON.stringify(user));
-        tempUser.companyId = companyId;
-        tempUser.companyName = utility.createCompanyArray(companyId)[companyId-1];
+
 
         return seminarModel.findOne({
             seminarId: seminarId
@@ -49,17 +49,29 @@ exports.getStudent = function(req, res, next){
             if(!dbSeminar){
                 throw {message: "seminar " + seminarId +" doesn't exist."}
             }
-            tempUser.numOfTeamMember = dbSeminar.companyAssignment[companyId-1].length;
+            tempUser.seminarId = dbSeminar.seminarId;
+
             tempUser.numOfCompany = dbSeminar.companyNum;
             tempUser.currentPeriod = dbSeminar.currentPeriod;
             tempUser.maxPeriodRound = dbSeminar.simulationSpan;
             tempUser.isSimulationFinished = dbSeminar.isSimulationFinished;
+
+            for(var i=0; i<dbSeminar.companyAssignment.length; i++){
+                //if this student is in this company
+                if(dbSeminar.companyAssignment[i].studentList.indexOf(user.email) > -1){
+
+                    tempUser.companyId = dbSeminar.companyAssignment[i].companyId;
+                    tempUser.companyName = dbSeminar.companyAssignment[i].companyName;
+                    tempUser.numOfTeamMember = dbSeminar.companyAssignment[i].studentList.length;
+                }
+            }
+
             res.send(tempUser);
         });
     })
     .fail(function(err){
         logger.error(err);
-        res.send(500, {message: "get user failed."})
+        next(err);
     })
     .done();
 }
@@ -73,7 +85,6 @@ exports.logout = function(req, res, next){
     sessionOperation.setEmail(req, "");
     sessionOperation.setSeminarId(req, "");
     sessionOperation.setCurrentPeriod(req, "");
-    sessionOperation.setCompanyId(req, "");
     res.send({message: 'Logout success'});
 }
 

@@ -248,7 +248,7 @@ function createTestData(){
                 simulationSpan: 4,
                 companyNum: 6,
                 seminarId: '10000',
-                companyAssignment: [[student._id],[],[],[]],
+                companyAssignment: [],
                 isFinished: false
             })
         })
