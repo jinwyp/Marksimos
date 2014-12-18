@@ -10,10 +10,10 @@ var userSchema = new Schema({
     // system field
     username: { type: String, required: true },
     email: { type: String, required: true },
-    password: { type: String, required: true },
+    password: { type: String, required: true, select: false},
 
 
-    emailActivateToken: { type: String, default: uuid.v4() },
+    emailActivateToken: { type: String, default: uuid.v4() , select: false},
     emailActivated: {type: Boolean, default: false},
     activated: {type: Boolean, default: false},
 
@@ -66,8 +66,8 @@ var userSchema = new Schema({
     numOfLicense: {type: Number, default: 0},
     numOfUsedLicense: {type: Number, default: 0},
 
-    distributorId: String,
-    facilitatorId: String,
+    distributorId: {type: String, default: ''},
+    facilitatorId: {type: String, default: ''},
 
     websiteLanguage:{type: String, default: 'zh_CN'} // 'zh_CN'  'en_US'
 
@@ -207,7 +207,7 @@ exports.findOne = function(query){
 
     var deferred = Q.defer();
 
-    User.findOne(query, 
+    User.findOne(query,
     function(err, result){
         if(err){
             deferred.reject(err);

@@ -37,7 +37,6 @@ exports.getCurrnetStudentSeminar = function(req, res, next){
             return res.send(500, {message: "user doesn't exist."});
         }
 
-        //var companyId = sessionOperation.getCompanyId(req);
         var seminarId = sessionOperation.getSeminarId(req);
 
         var tempUser = JSON.parse(JSON.stringify(user));
@@ -86,7 +85,6 @@ exports.logout = function(req, res, next){
     sessionOperation.setEmail(req, "");
     sessionOperation.setSeminarId(req, "");
     sessionOperation.setCurrentPeriod(req, "");
-    sessionOperation.setCompanyId(req, "");
     res.send({message: 'Logout success'});
 }
 

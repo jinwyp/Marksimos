@@ -332,24 +332,7 @@ exports.chooseSeminarForStudent = function(req, res, next){
             sessionOperation.setCurrentPeriod(req, dbSeminar.currentPeriod);
 
             if(sessionOperation.getUserRole(req) === config.role.student){
-                var email = sessionOperation.getEmail(req);
-                for(var i=0; i<dbSeminar.companyAssignment.length; i++){
-                    if(dbSeminar.companyAssignment[i].studentList.indexOf(email) > -1){
-                        sessionOperation.setCompanyId(req, i+1);
-                        break;
-                    }
-                }
 
-                if(!sessionOperation.getCompanyId(req)){
-                    res.send(400, {message: "this student is not assigned to a seminar."});
-                }
-
-                //if companyId is not set, this student can't attend this seminar
-                if(!sessionOperation.getCompanyId(req)){
-                    sessionOperation.setSeminarId(req, undefined);
-                    sessionOperation.setCurrentPeriod(req, undefined);
-                    return res.send(400, {message: "You are not authorized to attend this seminar."});
-                }
             }
 
             return res.send({message: "choose seminar success."});
