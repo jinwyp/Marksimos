@@ -228,8 +228,15 @@ exports.updateSKUDecision = function(req, res, next){
     }
 
     var companyId = +req.body.companyId;
+
     var period = req.session.currentPeriod;
 
+
+    var userRole = req.session.userRole;
+
+    if(userRole !== config.role.student){
+        period = req.body.periodId
+    }
 
     if(!brandId){
         return res.send(403, {message: "Invalid parameter brand_id."});

@@ -65,11 +65,11 @@
             <form class="form-inline" role="form" ng-if="css.currentReportMenu=='AllDecisions'">
                 <div class="form-group">
                     <div class="input-group">
-                        <input type="text" class="form-control"  placeholder="{{data.reRunDecision.name}}" ng-model="data.reRunDecision.value">
+                        <input type="text" class="form-control"  placeholder="{{data.reRunDecision.sku_fieldname}}" ng-model="data.reRunDecision.sku_fieldvalue">
                     </div>
                 </div>
                 <button type="submit" class="btn btn-default" ng-click="updateSkuDecision()">
-                    {{'FinalScoreAdminPanelReRunSaveButton' | translate}} For  {{'HomePageSecondMenuBarCurrentPeriod' | translate}}{{data.allDecisions.currentPeriod}} {{'HomePageSecondMenuBarLabelsCompany' | translate}}{{data.allDecisions.currentCompanyId | companyname}} SKU Field {{data.reRunDecision.name}}
+                    {{'FinalScoreAdminPanelReRunSaveButton' | translate}} For  {{'HomePageSecondMenuBarCurrentPeriod' | translate}}{{data.reRunDecision.periodId}} {{'HomePageSecondMenuBarLabelsCompany' | translate}}{{data.reRunDecision.companyId | companyname}} SKU {{data.reRunDecision.sku_fieldname}}
                 </button>
             </form>
 
@@ -1061,8 +1061,8 @@
 
                                                    <tr ng-repeat="sku in brand.SKUDecisions ">
                                                        <td >{{brand.d_BrandName}}{{sku.d_SKUName}}/ {{sku.d_ToDrop}}</td>
-                                                       <td ng-click="clickSkuField('d_Technology', sku.d_Technology)">{{sku.d_Technology}}</td>
-                                                       <td ng-click="clickSkuField('d_IngredientsQuality', sku.d_IngredientsQuality)">{{sku.d_IngredientsQuality}}</td>
+                                                       <td ng-click="clickSkuField(company.period, company.d_CID, brand.d_BrandID, sku.d_SKUID, 'd_Technology', sku.d_Technology)">{{sku.d_Technology}}</td>
+                                                       <td ng-click="clickSkuField(company.period, company.d_CID, brand.d_BrandID, sku.d_SKUID, 'd_IngredientsQuality', sku.d_IngredientsQuality)">{{sku.d_IngredientsQuality}}</td>
                                                        <td>{{sku.d_PackSize | skupacksize | translate}}</td>
                                                        <td>{{sku.d_ProductionVolume}}</td>
                                                        <td>{{sku.d_FactoryPrice[0] | number:2 }}</td>

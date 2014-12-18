@@ -1177,8 +1177,11 @@
             },
             runSeminar: function(seminarId, runNextPeriod, companyOverwrite) {
                 return $http.post(apiAdminPath + 'seminar/' + seminarId + '/runsimulation', {goingToNewPeriod : runNextPeriod, decisionsOverwriteSwitchers:companyOverwrite});
+            },
+            updateSkuDecision: function(postdata) {
+                return $http.put(apiAdminPath + 'sku/decision', postdata);
             }
-            
+
         };
         return factory;
     }

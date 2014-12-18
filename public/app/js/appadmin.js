@@ -634,8 +634,14 @@
 
             reRunCompanies : [false, false, false, false, false, false, false, false, false],
             reRunDecision : {
-                name : '',
-                value : ''
+                seminarId : '',
+                periodId : 1,
+                companyId : 1,
+                brand_id : '',
+                sku_id : '',
+                sku_fieldname : '',
+                sku_fieldvalue : '',
+                sku_data : {}
             },
 
             tableFinalScore: {
@@ -1188,12 +1194,32 @@
                     });
                 };
 
-                $scope.clickSkuField = function(skuFieldName, skuValue) {
-                    $scope.data.reRunDecision.name = skuFieldName;
-                    $scope.data.reRunDecision.value = skuValue;
+                $scope.clickSkuField = function(period, company_id, brand_id, sku_id, skuFieldName, skuValue) {
+                    $scope.data.reRunDecision.seminarId = $scope.css.currentSeminarId;
+                    $scope.data.reRunDecision.periodId = period;
+                    $scope.data.reRunDecision.companyId = company_id;
+
+                    $scope.data.reRunDecision.brand_id = brand_id;
+                    $scope.data.reRunDecision.sku_id = sku_id;
+
+                    $scope.data.reRunDecision.sku_fieldname= skuFieldName;
+                    $scope.data.reRunDecision.sku_fieldvalue= skuValue;
 
                 };
 
+                $scope.updateSkuDecision = function() {
+
+                    $scope.data.reRunDecision.sku_data[$scope.data.reRunDecision.sku_fieldname] = $scope.data.reRunDecision.sku_fieldvalue;
+
+                    Admin.updateSkuDecision($scope.data.reRunDecision).success(function(data, status, headers, config) {
+                        $notification.success('Save success', 'Update SKU Decision Success');
+
+                    }).error(function(data, status, headers, config) {
+                        console.log(data);
+                        $notification.error('Failed', data.message);
+                    });
+
+                };
 
 
             },
