@@ -14,7 +14,11 @@
     "ejs": "~1.0.0",
     "express": "~4.0.0",
     "express-session": "~1.6.5",
+<<<<<<< HEAD
+    "express-validator": "~2.7",
+=======
     "express-validator": "~2.7.0",
+>>>>>>> 1e2dec9ed27ec85b4250e5c8f1a8b360b40c3dd2
     "mongoose": "~3.8.8",
     "node-uuid": "~1.4.1",
     "nodemailer": "~0.7.0",
@@ -25,7 +29,7 @@
     "static-favicon": "~1.0.0",
     "swagger-node-express": "~2.0",
     "underscore": "^1.7.0",
-    "validator": "~3.16.0",
+    "validator": "~3.25.0",
     "winston": "~0.7.3"
   },
   "devDependencies": {

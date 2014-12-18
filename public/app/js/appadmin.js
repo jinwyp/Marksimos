@@ -591,10 +591,10 @@
             });
         };
         /********************  Run Seminar  ********************/
-        $scope.runSeminar = function(seminarId) {
+        $scope.runSeminar = function(seminarId, round, decisions) {
             $scope.css.runButtonDisabled = true;
 
-            Admin.runSeminar(seminarId, true, []).success(function(data, status, headers, config) {
+            Admin.runSeminar(seminarId, round, true, []).success(function(data, status, headers, config) {
                 app.getSeminarInit();
                 $notification.success('Save success', 'Run Seminar success');
                 $scope.css.runButtonDisabled = false;
@@ -614,12 +614,11 @@
 
 
 
-    angular.module('marksimosadmin').controller('adminMarksimosReportController', ['$scope', '$http', '$notification', '$translate', 'Admin', 'AdminTable', 'chartReport', 'AdminChart', function($scope, $http, $notification, $translate, Admin,  AdminTable, chartReport, AdminChart) {
+    angular.module('marksimosadmin').controller('adminMarksimosReportController', ['$scope', '$http', '$notification', '$translate', 'Admin', 'AdminTable', 'chartReport', 'AdminChart', function($scope, $http, $notification,$translate, Admin,  AdminTable, chartReport, AdminChart) {
         $scope.css = {
-            currentReportMenu: 'AllDecisions',
+            currentReportMenu: 'Questionnaire',
             tableReportTab: 'Global',
-            tableReportTabC2 : 'SKU',
-            currentSeminarId : 0
+            tableReportTabC2 : 'SKU'
         };
 
         $scope.data = {
@@ -628,14 +627,8 @@
                 data           : [],
                 allCompanyId   : [1, 2, 3, 4, 5, 6, 7, 8, 9],
                 allPeriod      : [1, 2, 3, 4, 5, 6, 7, 8, 9],
-                currentCompanyId : '!!',
+                currentCompanyId : 1,
                 currentPeriod  : 1
-            },
-
-            reRunCompanies : [false, false, false, false, false, false, false, false, false],
-            reRunDecision : {
-                name : '',
-                value : ''
             },
 
             tableFinalScore: {
@@ -644,8 +637,7 @@
             },
             questionnaire: {
                 data: [],
-                companyList: [],
-                studentList: []
+                currentQuestionnaire:null
             },
             //A1 Company Status
             tableA1CompanyStatus: {
@@ -1177,28 +1169,17 @@
 
 
 
-                /********************  Run Seminar  ********************/
-                $scope.reRunSeminar = function() {
-
-                    Admin.runSeminar($scope.css.currentSeminarId, false, $scope.data.reRunCompanies).success(function(data, status, headers, config) {
-                        $notification.success('Save success', 'Rerun Seminar Decisions Success');
-
-                    }).error(function(data, status, headers, config) {
-                        console.log(data);
-                        $notification.error('Failed', data.message);
-                    });
-                };
             },
+            reRun: function() { },
 
             loadingAllDecisions: function() {
-                $scope.css.currentSeminarId = /.+\/adminhomereport\/(\d+).*/.exec(window.location.href)[1] || 0;
+                var seminerID = /.+\/adminhomereport\/(\d+).*/.exec(window.location.href)[1] || 0;
 
-                if($scope.css.currentSeminarId){
-                    Admin.getAllCompanyDecisionsOfAllPeriods($scope.css.currentSeminarId).success(function(data, status, headers, config) {
+                if(seminerID){
+                    Admin.getAllCompanyDecisionsOfAllPeriods(seminerID).success(function(data, status, headers, config) {
                         $scope.data.allDecisions.data = data;
 
                         $scope.data.allDecisions.allCompanyId = $scope.data.allDecisions.allCompanyId.slice(0, data[data.length - 1].d_CID);
-                        $scope.data.reRunCompanies = $scope.data.reRunCompanies.slice(0, data[data.length - 1].d_CID);
                         $scope.data.allDecisions.allPeriod = $scope.data.allDecisions.allPeriod.slice(0, data[data.length - 1].period);
 
                         $scope.data.allDecisions.currentPeriod = $scope.data.allDecisions.allPeriod[$scope.data.allDecisions.allPeriod.length - 1];
@@ -1216,11 +1197,10 @@
             loadingQuestionnaireData: function() {
                 var seminerID = /.+\/adminhomereport\/(\d+).*/.exec(window.location.href)[1] || 0;
                 Admin.getQuestionnaire(seminerID).success(function(data, status, headers, config) {
-                    $scope.data.questionnaire.data = data.questionnaire;
-                    $scope.data.questionnaire.studentList = data.studentList;
-                    $scope.data.questionnaire.companyList = data.companyList;                  
-                    $scope.data.questionnaire.currentEmail = data.studentList[0].email;
-
+                  
+                    $scope.data.questionnaire.data = data;
+                    $scope.data.questionnaire.currentQuestionnaire = data[0].studentList[0].questionnaire;
+                    console.log(data);
                     $scope.data.questionnaire.radio_OverallSatisfactionWithThePrograms = {
                         info: ['ChallengeStrategicThinkingAbility', 'DevelopAnIntegratedPerspective', 'TestPersonalAbilityOfBalancingRisks', 'ChallengeLeadershipAndTeamworkAbility', 'ChallengeAnalysisAndDecisionMakingAbility', 'SimulationInteresting']
                     };
@@ -1430,8 +1410,6 @@
                 });
             }
         };
-
-
         //初始化程序
         app.init();
 

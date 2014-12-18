@@ -14,7 +14,7 @@ var session = require('cookie-session');
 var expressValidator = require('express-validator');
 var sessionOperation = require('./common/sessionOperation.js');
 var config = require('./common/config.js');
-
+var customValidator = require('./common/express-custom-validator.js');
 var router = require('./api/routes.js');				// get an instance of the express Router
 
 var fs = require('fs');
@@ -43,7 +43,9 @@ app.use(cookieParser());
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
-app.use(expressValidator());
+app.use(expressValidator({
+    customValidators: customValidator
+}));
 
 
 app.use(session({
