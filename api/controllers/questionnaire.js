@@ -116,7 +116,7 @@ exports.submitQuestionnaire = function(req, res, next) {
 
     //客户端提交的变量验证 
     //q_OverallSatisfactionWithTheProgram   
-    req.checkBody(['questionnaire', 'q_OverallSatisfactionWithTheProgram'], 'Ivalid q_OverallSatisfactionWithTheProgram.').isArrayLen(6).eachBetween(1, 5);
+    req.checkBody(['questionnaire', 'q_OverallSatisfactionWithTheProgram'], 'Ivalid q_OverallSatisfactionWithTheProgram.').isArrayLen(6).eachInt().eachBetween(1, 5);
     //q_Product   
     req.checkBody(['questionnaire', 'q_Product', ], 'Ivalid q_Product.').isArrayLen(4).eachInt().eachBetween(1, 5);
     //q_TeachingSupport    

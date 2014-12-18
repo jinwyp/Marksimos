@@ -1,5 +1,5 @@
 ﻿module.exports = (function() {
-    function _between(value, min, max) {
+    function _between(value, min, max,option) {
         switch (option) {
             //不包括大于那边的等于
             case "g":
@@ -63,12 +63,12 @@
             return value <= num;
         },
         //包括两边等于
-        between: function(value, num1, num2, option) {
+        between: function(value, num1, num2, option) {           
             var minMax = _minMax(num1, num2);
-            return _between(value, minMax.min, minMax.max);
+            return _between(value, minMax.min, minMax.max,option);
         },
         //数据所有元素都包括在两数之间
-        eachBetween: function(value, num1, num2, option) {           
+        eachBetween: function(value, num1, num2, option) {          
             var minMax = _minMax(num1, num2);
             if (value) {
                 for (var i = 0; i < value.length; i++) {

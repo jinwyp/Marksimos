@@ -184,6 +184,9 @@ exports.init = function(req, res, next) {
     //if decisionsOverwriteSwithcers[0] = true, selected period Team A decision will be overwrite
     //if decisionsOverwriteSwithcers[1] = true, selected period Team B decision will be overwrite
     //...
+
+    //if rerun(goingToNewPeriod : false),           default values should be [false, false, false, false]
+    //if goingToNewPeriod(goingToNewPeriod : true), default values should be [true, true, true, true]
 }
 
  */
@@ -197,10 +200,8 @@ exports.runSimulation = function(){
         } else {
             status = 'pending';
             var seminarId = req.params.seminar_id;
-            var selectedPeriod = req.params.round;
-            var goingToNewPeriod = req.body.goingToNewPeriod;
+            var goingToNewPeriod = req.body.goingToNewPeriod || true;
             var decisionsOverwriteSwitchers = req.body.decisionsOverwriteSwitchers || [];
-
 
 
             if(!seminarId){
@@ -208,7 +209,7 @@ exports.runSimulation = function(){
                 return res.send(400, {message: "You have not choose a seminar."})
             }
 
-            if(!goingToNewPeriod || !selectedPeriod){
+            if(!goingToNewPeriod){
                 status = 'active';
                 return res.send(400, {message: "Which period need to run?"})
             }
@@ -217,7 +218,6 @@ exports.runSimulation = function(){
                 status = 'active';
                 return res.send(400, {message : 'need parameter decisionsOverwriteSwitchers'});
             }
-
 
             //check if this seminar exists
             seminarModel.findOne({
@@ -237,17 +237,22 @@ exports.runSimulation = function(){
                     throw {message: "the last round simulation has been executed."}
                 }
 
-                if(decisionsOverwriteSwitchers.length != dbSeminar.companyNum){
-                    throw {message: "Cancel promise chains. Because Incorrect parameter decisionsOverwriteSwitchers in the post request."}
-                }
 
-                if(!goingToNewPeriod){
+                if(goingToNewPeriod){
                     selectedPeriod = dbSeminar.currentPeriod;
 
+                    decisionsOverwriteSwitchers = [];
+                    for(var i=0; i<dbSeminar.companyNum; i++){
+                        decisionsOverwriteSwitchers.push(true);
+                    }
                 } else {
                     selectedPeriod = dbSeminar.currentPeriod - 1;
-                }
 
+                    if(decisionsOverwriteSwitchers.length != dbSeminar.companyNum){
+                        throw {message: "Cancel promise chains. Because Incorrect parameter decisionsOverwriteSwitchers in the post request."}
+                    }
+
+                }
 
                 var companies = [];
                 for(var i=0; i<dbSeminar.companyNum; i++){

@@ -415,7 +415,7 @@ apiRouter.post('/marksimos/api/admin/assign_student_to_seminar', requireAdminLog
 apiRouter.post('/marksimos/api/admin/remove_student_from_seminar', requireAdminLogin({isRedirect : false}), authorize('removeStudentFromSeminar'), seminarController.removeStudentFromSeminar);
 
 apiRouter.post('/marksimos/api/admin/seminar/:seminar_id/init', requireAdminLogin({isRedirect : false}),  authorize('runSimulation'), initController.init());
-apiRouter.post('/marksimos/api/admin/seminar/:seminar_id/runsimulation/:round',  requireAdminLogin({isRedirect : false}), authorize('runSimulation'), initController.runSimulation());
+apiRouter.post('/marksimos/api/admin/seminar/:seminar_id/runsimulation',  requireAdminLogin({isRedirect : false}), authorize('runSimulation'), initController.runSimulation());
 
 apiRouter.get('/marksimos/api/admin/seminar/:seminar_id/decisions', requireAdminLogin({isRedirect : false}), authorize('runSimulation'), decisionController.getDecisionForFacilitator);
 

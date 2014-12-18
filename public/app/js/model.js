@@ -1208,12 +1208,10 @@
             initSeminar: function(seminarId) {
                 return $http.post(apiAdminPath + 'seminar/' + seminarId + '/init' );
             },
-            runSeminar: function(seminarId, round, runNextPeriod, decisions) {
-                return $http.post(apiAdminPath + 'seminar/' + seminarId + '/runsimulation/' + round, {goingToNewPeriod : runNextPeriod, decisionsOverwriteSwitchers:decisions});
-
+            runSeminar: function(seminarId, runNextPeriod, companyOverwrite) {
+                return $http.post(apiAdminPath + 'seminar/' + seminarId + '/runsimulation', {goingToNewPeriod : runNextPeriod, decisionsOverwriteSwitchers:companyOverwrite});
             }
-
-
+            
         };
         return factory;
     }
