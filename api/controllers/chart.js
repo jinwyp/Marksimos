@@ -14,7 +14,7 @@ exports.getChart = function(req, res, next){
     var chartName = req.params.chart_name;
     var companyId = +req.query.companyId;
 
-    if(!seminarId || !companyId){
+    if(!seminarId ){
         return res.send(500, {message: 'seminarId cannot be empty.'});
     }
 

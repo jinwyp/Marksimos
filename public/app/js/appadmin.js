@@ -1200,7 +1200,6 @@
                   
                     $scope.data.questionnaire.data = data;
                     $scope.data.questionnaire.currentQuestionnaire = data[0].studentList[0].questionnaire;
-                    console.log(data);
                     $scope.data.questionnaire.radio_OverallSatisfactionWithThePrograms = {
                         info: ['ChallengeStrategicThinkingAbility', 'DevelopAnIntegratedPerspective', 'TestPersonalAbilityOfBalancingRisks', 'ChallengeLeadershipAndTeamworkAbility', 'ChallengeAnalysisAndDecisionMakingAbility', 'SimulationInteresting']
                     };

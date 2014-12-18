@@ -72,7 +72,7 @@ exports.getReport = function(req, res, next){
     var companyId = +req.query.companyId;
     var reportName = req.params.report_name;
 
-    if(!reportName || !companyId){
+    if(!reportName){
         return res.send(400, {message: "Invalid parameter reportName."});
     }
 
