@@ -637,8 +637,7 @@
             },
             questionnaire: {
                 data: [],
-                companyList: [],
-                studentList: []
+                currentQuestionnaire:null
             },
             //A1 Company Status
             tableA1CompanyStatus: {
@@ -1198,11 +1197,9 @@
             loadingQuestionnaireData: function() {
                 var seminerID = /.+\/adminhomereport\/(\d+).*/.exec(window.location.href)[1] || 0;
                 Admin.getQuestionnaire(seminerID).success(function(data, status, headers, config) {
-                    console.log(data);
-                    $scope.data.questionnaire.data = data.questionnaire;
-                    $scope.data.questionnaire.studentList = data.studentList;
-                    $scope.data.questionnaire.companyList = data.companyList;                  
-                    $scope.data.questionnaire.currentEmail = data.studentList[0].email;
+                  
+                    $scope.data.questionnaire.data = data;
+                    $scope.data.questionnaire.currentQuestionnaire = data[0].studentList[0].questionnaire;
 
                     $scope.data.questionnaire.radio_OverallSatisfactionWithThePrograms = {
                         info: ['ChallengeStrategicThinkingAbility', 'DevelopAnIntegratedPerspective', 'TestPersonalAbilityOfBalancingRisks', 'ChallengeLeadershipAndTeamworkAbility', 'ChallengeAnalysisAndDecisionMakingAbility', 'SimulationInteresting']

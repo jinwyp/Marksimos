@@ -105,6 +105,7 @@ exports.submitQuestionnaire = function(req,res,next){
     var seminarId = req.session.seminarId;
     var email = req.session.email;
     var questionnaire = req.body.questionnaire;
+
      if (!seminarId) {
         return res.send(400, {
             message: "You don't choose a seminar."
@@ -147,25 +148,21 @@ exports.getQuestionnaireList = function(req, res, next) {
         questionnaireModel.query.find({ seminarId: seminarId }).exec()
     ]).spread(function(seminarResult, questionnaireResult) {
         if (seminarResult) {
-
-            //处理结果，使之类似['A','B','C'......]
-            var companyNameList = [], studentList = [], questionnaire = {};
-            seminarResult.companies.forEach(function(companyInfo) {
-                companyNameList.push(companyInfo.companyName);
-            });
-
-            //处理结果，使之类似[{companyName:'A',email:'s1@A.com'},......]
-            seminarResult.companyAssignment.forEach(function(listStudent, index) {
-                listStudent.forEach(function(student) {
-                    studentList.push({ companyName: companyNameList[index], email: student });
-                });
-            });
-            //处理结果，使之类似{'s1@A.com':{...},...}
+            var result = seminarResult.companies, questionDic = {};
+            //生成字典
             questionnaireResult.forEach(function(question) {
-                questionnaire[question.email] = question;
+                questionDic[question.email] = question;
+            });
+            //拼接数据      
+            seminarResult.companyAssignment.forEach(function(emailList, index) {
+                var studentList = [];
+                emailList.forEach(function(email) {
+                    studentList.push({ email: email, questionnaire: questionDic[email] })
+                });
+                result[index].studentList = studentList;
             });
             //返回成功的数据
-            res.send(200, { companyList: companyNameList, studentList: studentList, questionnaire: questionnaire });
+            res.send(200, result);
         }
         else {
             //未得到seminar，则很有可能是输入的seminarId无效
