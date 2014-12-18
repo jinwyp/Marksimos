@@ -225,7 +225,7 @@ exports.updateSKUDecision = function(req, res, next){
         return res.send(403, {message: "You don't choose a seminar."});
     }
 
-    var companyId = req.session.companyId;
+    var companyId = req.body.companyId;
     var period = req.session.currentPeriod;
 
 

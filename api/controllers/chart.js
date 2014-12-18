@@ -12,9 +12,9 @@ exports.getChart = function(req, res, next){
     }
 
     var chartName = req.params.chart_name;
-    var companyId = req.session.companyId;
+    var companyId = +req.query.companyId;
 
-    if(!seminarId){
+    if(!seminarId || !companyId){
         return res.send(500, {message: 'seminarId cannot be empty.'});
     }
 
@@ -68,8 +68,9 @@ exports.getChart = function(req, res, next){
      * @param {Number} companyId
      */
     function filterChart(chart, companyId){
-        if(!chart) throw new Error("invalid parameter chart");
-        if(!companyId) throw new Error("invalid parameter companyId");
+        if(!chart || !companyId) {
+            throw new Error("invalid parameter chart or invalid parameter companyId");
+        }
 
         var chartData = chart.chartData;
         var chartOfCurrentCompany;
@@ -79,7 +80,6 @@ exports.getChart = function(req, res, next){
                 break;
             }
         }
-
         if(chartOfCurrentCompany){
             return chartOfCurrentCompany;
         }

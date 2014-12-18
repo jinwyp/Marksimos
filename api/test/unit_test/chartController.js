@@ -12,10 +12,9 @@ req.params = {};
 
 var res = {};
 
-describe('/api/chart/:chart_name', function(){
+describe('/api/chart/:chart_name?companyId=1', function(){
     it('should return right data', function(done){
         req.session.seminarId = '10000';
-        req.session.companyId = 1;
 
         req.params.chart_name = 'market_share_in_value';
 
@@ -33,7 +32,6 @@ describe('/api/chart/:chart_name', function(){
 
     it('should return 500 error', function(done){
         req.session.seminarId = undefined;
-        req.session.companyId = 1;
 
         req.params.chart_name = 'market_share_in_value';
 
