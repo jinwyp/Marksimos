@@ -99,10 +99,6 @@
 
 
         $scope.data = {
-            tableFinalScore: {
-                data : [],
-                showScaled : true
-            },
             currentTime : {
                 hour : 0,
                 minute : 0,
@@ -135,7 +131,10 @@
                 brand_id : "",
                 othererrorinfo : ""
             },
-
+            tableFinalScore: {
+                data : [],
+                showScaled : true
+            },
             tableA1CompanyStatus : {
                 allCompanyData : [],
                 currentCompany : {
@@ -641,7 +640,7 @@
                 Company.getCurrentStudent().then(function(data, status, headers, config){
                     $scope.data.currentStudent = data;
                     var currentDate = new Date();
-
+                        console.log(data);
                     $scope.data.currentTime.hour = 1;
                     $scope.data.currentTime.minute = 59;
                     $scope.data.currentTime.second = 59 ;
@@ -1139,6 +1138,7 @@
         /********************  更新 SKU  ********************/
         $scope.leaveSkuInput = function(sku, fieldname, fielddata, segmentOrWeek, weekindex){
             $scope.data.currentModifiedSku = {
+                seminarId : sku.d_BrandID,
                 brand_id : sku.d_BrandID,
                 sku_id : sku.d_SKUID,
                 sku_data : {}

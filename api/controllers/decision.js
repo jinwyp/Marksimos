@@ -219,7 +219,7 @@ exports.updateSKUDecision = function(req, res, next){
     var SKUID = req.body.sku_id;
     var SKU = req.body.sku_data;
 
-    var seminarId = req.session.seminarId;
+    var seminarId = req.body.seminarId;
 
     if(!seminarId){
         return res.send(403, {message: "You don't choose a seminar."});

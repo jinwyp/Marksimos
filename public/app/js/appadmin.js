@@ -370,7 +370,7 @@
                         angular.forEach(seminar.companyAssignment, function(company, key) {
                             seminar.companyMember.push({
                                 name: showCompanyName(key),
-                                students: company
+                                students: company.studentList
                             });
                         });
                     });
