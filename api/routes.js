@@ -358,7 +358,6 @@ apiRouter.get('/marksimos/api/studentinfo', requireStudentLogin({isRedirect : fa
 //report
 apiRouter.get('/marksimos/api/report/:report_name', requireStudentLogin({isRedirect : false}), reportController.getReport);
 apiRouter.get('/marksimos/api/choose_seminar', requireStudentLogin({isRedirect : false}), authorize('chooseSeminar'), seminarController.chooseSeminarForStudent);
-apiRouter.get('/marksimos/api/submitdecision', requireStudentLogin({isRedirect : false}), decisionController.submitDecision);
 
 
 //chart
@@ -371,18 +370,18 @@ apiRouter.get('/marksimos/api/finalscore', requireStudentLogin({ isRedirect: fal
 //make decision page
 apiRouter.put('/marksimos/api/sku/decision', requireStudentLogin({isRedirect : false}), decisionController.updateSKUDecision);
 apiRouter.post('/marksimos/api/sku/decision', requireStudentLogin({isRedirect : false}), decisionController.addSKU);
-apiRouter.delete('/marksimos/api/sku/decision/:brand_id/:sku_id', requireStudentLogin({isRedirect : false}), decisionController.deleteSKU);
+apiRouter.delete('/marksimos/api/sku/decision/:company_id/:brand_id/:sku_id', requireStudentLogin({isRedirect : false}), decisionController.deleteSKU);
+
 apiRouter.put('/marksimos/api/brand/decision', requireStudentLogin({isRedirect : false}), decisionController.updateBrandDecision);
 apiRouter.post('/marksimos/api/brand/decision', requireStudentLogin({isRedirect : false}), decisionController.addBrand);
-apiRouter.delete('/marksimos/api/brand/decision', requireStudentLogin({isRedirect : false}), decisionController.deleteBrand);
+
 apiRouter.put('/marksimos/api/company/decision', requireStudentLogin({isRedirect : false}), decisionController.updateCompanyDecision);
 
 
 apiRouter.get('/marksimos/api/company', requireStudentLogin({isRedirect : false}), decisionController.getDecision);
-
 apiRouter.get('/marksimos/api/product_portfolio', requireStudentLogin({isRedirect : false}), decisionController.getProductPortfolio);
 apiRouter.get('/marksimos/api/spending_details', requireStudentLogin({isRedirect : false}), decisionController.getSpendingDetails);
-apiRouter.get('/marksimos/api/future_projection_calculator/:sku_id', requireStudentLogin({isRedirect : false}), decisionController.getSKUInfo);
+apiRouter.get('/marksimos/api/future_projection_calculator/:sku_id', requireStudentLogin({isRedirect : false}), decisionController.getSKUInfoFutureProjection);
 apiRouter.get('/marksimos/api/company/otherinfo', requireStudentLogin({isRedirect : false}), decisionController.getOtherinfo);
 
 

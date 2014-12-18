@@ -234,7 +234,6 @@ exports.removeStudentFromSeminar = function(req, res, next){
     }
 
 
-
     seminarModel.findOne({seminarId: seminarId})
         .then(function(dbSeminar){
             if(!dbSeminar){

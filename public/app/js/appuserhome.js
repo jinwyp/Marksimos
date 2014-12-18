@@ -857,7 +857,7 @@
             },
 
             loadingCompanyDecisionData : function(){
-                Company.getCompany().then(function(data, status, headers, config){
+                Company.getCompany($scope.data.currentStudent.companyId).then(function(data, status, headers, config){
 
                     //记录上一次选中的Brand  并找到对应的Index 供本次查询使用
                     if($scope.data.currentBrand !== null ){
@@ -903,7 +903,7 @@
 
 
                     if($scope.data.currentStudent.isSimulationFinished === false){
-                        Company.getCompanyFutureProjectionCalculator($scope.data.currentSku.d_SKUID).then(function(data, status, headers, config){
+                        Company.getCompanyFutureProjectionCalculator($scope.data.currentSku.d_SKUID, $scope.data.currentStudent.companyId).then(function(data, status, headers, config){
                             $scope.data.currentCompanyFutureProjectionCalculator = data;
                         });
                     }
@@ -914,7 +914,7 @@
             },
 
             loadingCompanyOtherData : function(){
-                Company.getCompanyOtherInfo().then(function(data, status, headers, config){
+                Company.getCompanyOtherInfo($scope.data.currentStudent.companyId).then(function(data, status, headers, config){
                     $scope.data.currentCompanyOtherInfo = {
                         totalAvailableBudget : parseInt(data.totalAvailableBudget * 10000) / 100,
                         totalAvailableBudgetCSS : data.totalAvailableBudget.toFixed(4)  * 100 + '%',
@@ -929,11 +929,11 @@
 
                 });
 
-                Company.getCompanyProductPortfolio().then(function(data, status, headers, config){
+                Company.getCompanyProductPortfolio($scope.data.currentStudent.companyId).then(function(data, status, headers, config){
                     $scope.data.currentCompanyProductPortfolio = data;
                 });
 
-                Company.getCompanySpendingDetails().then(function(data, status, headers, config){
+                Company.getCompanySpendingDetails($scope.data.currentStudent.companyId).then(function(data, status, headers, config){
                     $scope.data.currentCompanySpendingDetails = data;
                 });
             },
@@ -1034,12 +1034,17 @@
 
 
 
+
+
+
+
         /********************  点击添加一个新的Brand 显示添加Brand的表单  ********************/
         $scope.showAddNewBrandForm = function(){
             $scope.css.addNewBrand = true;
             $scope.data.newBrand.brand_name = "";
             $scope.data.newBrand.sku_name = "";
             $scope.data.newBrand.othererrorinfo = "";
+            $scope.data.newBrand.companyId = $scope.data.currentStudent.companyId;
         };
 
         $scope.addNewBrand = function(form){
@@ -1048,6 +1053,7 @@
 
                 // 自动给品牌名称增加公司前缀
                 $scope.data.newBrand.brand_name = $scope.data.currentCompanyNameCharacter + $scope.data.newBrand.brand_name;
+
 
                 Company.addBrand($scope.data.newBrand).then(function(data, status, headers, config){
 
@@ -1070,6 +1076,43 @@
             }
         };
 
+        /********************  更新 Brand  ********************/
+        $scope.updateBrand = function(form){
+            $scope.data.currentModifiedBrand = {
+                companyId : $scope.data.currentStudent.companyId,
+                brand_id : $scope.data.currentBrand.d_BrandID,
+                brand_data : {
+                    d_SalesForce : $scope.data.currentBrand.d_SalesForce
+                }
+            };
+
+            Company.updateBrand($scope.data.currentModifiedBrand).then(function(data, status, headers, config){
+                form.brandSalesForce.$valid = true;
+                form.brandSalesForce.$invalid = false;
+
+                app.reRun();
+
+                notify({
+                    message : 'Save Success !',
+                    template : notifytemplate.success,
+                    position : 'center'
+                });
+            }, function(data){
+                console.log(data);
+
+                form.brandSalesForce.$valid = false;
+                form.brandSalesForce.$invalid = true;
+
+                $scope.css.brandErrorInfo = data.data;
+
+                notify({
+                    message : data.data.message,
+                    template : notifytemplate.failure,
+                    position : 'center'
+                });
+            });
+        };
+
 
         /********************  点击添加一个新的SKU 显示添加SKU的表单  ********************/
         $scope.showAddNewSkuForm = function(){
@@ -1077,6 +1120,7 @@
             $scope.data.newSku.sku_name = "";
             $scope.data.newSku.brand_id = "";
             $scope.data.newSku.othererrorinfo = "";
+            $scope.data.newSku.companyId = $scope.data.currentStudent.companyId;
         };
 
         $scope.addNewSku = function(form){
@@ -1103,26 +1147,6 @@
             }
         };
 
-        /********************  删除一个SKU  注意该SKU必须是本回合添加的SKU才可以删除 ********************/
-        $scope.delSku = function(sku){
-            Company.delSku(sku.d_SKUID, sku.d_BrandID).then(function(data, status, headers, config){
-
-                app.reRun();
-
-                notify({
-                    message  : 'Delete Sku Success !',
-                    template : notifytemplate.success,
-                    position : 'center'
-                });
-            }, function(data){
-                notify({
-                    message  : data.data.message,
-                    template : notifytemplate.failure,
-                    position : 'center'
-                });
-            });
-        };
-
 
         /********************  点击选中Brand 或 SKU  ********************/
         $scope.clickBrand = function(brand){
@@ -1136,9 +1160,8 @@
             $scope.css.skuErrorField = '';
             $scope.css.skuErrorFieldFrontEnd = '';
             $scope.data.currentSku = angular.copy(sku);
-            Company.getCompanyFutureProjectionCalculator($scope.data.currentSku.d_SKUID).then(function(data, status, headers, config){
+            Company.getCompanyFutureProjectionCalculator($scope.data.currentSku.d_SKUID, $scope.data.currentStudent.companyId).then(function(data, status, headers, config){
                 $scope.data.currentCompanyFutureProjectionCalculator = data;
-
             });
         };
 
@@ -1147,6 +1170,7 @@
         $scope.leaveSkuInput = function(sku, fieldname, fielddata, segmentOrWeek, weekindex){
             $scope.data.currentModifiedSku = {
                 seminarId : sku.d_BrandID,
+                companyId : $scope.data.currentStudent.companyId,
                 brand_id : sku.d_BrandID,
                 sku_id : sku.d_SKUID,
                 sku_data : {}
@@ -1285,40 +1309,23 @@
                 });
             }
 
-
-
         };
 
-        /********************  更新 Brand  ********************/
-        $scope.updateBrand = function(form){
-            $scope.data.currentModifiedBrand = {
-                brand_id : $scope.data.currentBrand.d_BrandID,
-                brand_data : {
-                    d_SalesForce : $scope.data.currentBrand.d_SalesForce
-                }
-            };
 
-            Company.updateBrand($scope.data.currentModifiedBrand).then(function(data, status, headers, config){
-                form.brandSalesForce.$valid = true;
-                form.brandSalesForce.$invalid = false;
+        /********************  删除一个SKU  注意该SKU必须是本回合添加的SKU才可以删除 ********************/
+        $scope.delSku = function(sku){
+            Company.delSku($scope.data.currentStudent.companyId, sku.d_BrandID, sku.d_SKUID).then(function(data, status, headers, config){
 
                 app.reRun();
 
                 notify({
-                    message : 'Save Success !',
+                    message  : 'Delete Sku Success !',
                     template : notifytemplate.success,
                     position : 'center'
                 });
             }, function(data){
-                console.log(data);
-
-                form.brandSalesForce.$valid = false;
-                form.brandSalesForce.$invalid = true;
-
-                $scope.css.brandErrorInfo = data.data;
-
                 notify({
-                    message : data.data.message,
+                    message  : data.data.message,
                     template : notifytemplate.failure,
                     position : 'center'
                 });
@@ -1329,7 +1336,11 @@
         /********************  更新 Company  ********************/
         $scope.updateCompany = function(fieldname, form, formfieldname){
 
-            $scope.data.currentModifiedCompany.company_data = {};
+            $scope.data.currentModifiedCompany = {
+                companyId : $scope.data.currentStudent.companyId,
+                company_data : {}
+            };
+
             $scope.data.currentModifiedCompany.company_data[fieldname] = $scope.data.currentCompany[fieldname];
 
             Company.updateCompany($scope.data.currentModifiedCompany).success(function(data, status, headers, config){
@@ -1371,28 +1382,6 @@
 
 
 
-        /********************  更新 Questionnaire  ********************/
-        $scope.updateQuestionnaire = function(fieldname, index, form, formfieldname) {
-
-            var currentData = {
-                'location': fieldname,
-                'data': $scope.questionnaire[fieldname]
-            };
-
-            Company.updateQuestionnaire(currentData).success(function(data, status, headers, config) {
-                notify({
-                    message: 'Save Success !',
-                    template: notifytemplate.success,
-                    position: 'center'
-                });
-            }, function(data, status, headers, config) {
-                notify({
-                    message: data.message,
-                    template: notifytemplate.failure,
-                    position: 'center'
-                });
-            });
-        };
         /********************  提交 Questionnaire  ********************/
         $scope.submitQuestionnaire = function(questionnaire) {
 

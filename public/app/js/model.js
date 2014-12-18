@@ -91,36 +91,36 @@
                 })["catch"](errorHandler);
             },
 
-            getCompany : function(){
-                return $http.get(apiPath + 'company').then(function(result){
+            getCompany : function(companyId){
+                return $http.get(apiPath + 'company', {params : {companyId : companyId }}).then(function(result){
 //                console.log(result.data);
 
                     return result.data;
                 })["catch"](errorHandler);
             },
-            getCompanyOtherInfo : function(){
-                return $http.get(apiPath + 'company/otherinfo').then(function(result){
+            getCompanyOtherInfo : function(companyId){
+                return $http.get(apiPath + 'company/otherinfo', {params : {companyId : companyId }}).then(function(result){
 //                console.log(result.data);
 
                     return result.data;
                 })["catch"](errorHandler);
             },
-            getCompanyFutureProjectionCalculator : function(id){
-                return $http.get(apiPath + 'future_projection_calculator/' + id).then(function(result){
+            getCompanyFutureProjectionCalculator : function(skuId, companyId){
+                return $http.get(apiPath + 'future_projection_calculator/' + skuId, {params : {companyId : companyId }}).then(function(result){
 //                console.log(result.data);
 
                     return result.data;
                 })["catch"](errorHandler);
             },
-            getCompanyProductPortfolio : function(){
-                return $http.get(apiPath + 'product_portfolio').then(function(result){
+            getCompanyProductPortfolio : function(companyId){
+                return $http.get(apiPath + 'product_portfolio', {params : {companyId : companyId }}).then(function(result){
 //                console.log(result.data);
 
                     return result.data;
                 })["catch"](errorHandler);
             },
-            getCompanySpendingDetails : function(){
-                return $http.get(apiPath + 'spending_details').then(function(result){
+            getCompanySpendingDetails : function(companyId){
+                return $http.get(apiPath + 'spending_details', {params : {companyId : companyId }}).then(function(result){
 //                console.log(result.data);
 
                     return result.data;
@@ -136,10 +136,9 @@
                 return $http.put(apiPath + 'sku/decision/', postdata);
             },
 
-            delSku : function(skuid, brandid){
-                return $http['delete'](apiPath + 'sku/decision/' + brandid + '/' + skuid);
+            delSku : function(companyId, brandId, skuId){
+                return $http['delete'](apiPath + 'sku/decision/' + companyId + brandId + '/' + skuId);
             },
-
 
             addBrand : function(postdata){
                 return $http.post(apiPath + 'brand/decision/', postdata);
@@ -159,10 +158,6 @@
 
             getQuestionnaire : function(){
                 return $http.get(apiPath + 'questionnaire');
-            },
-
-            updateQuestionnaire : function(postdata){
-                return $http.put(apiPath + 'questionnaire', postdata);
             },
 
             submitQuestionnaire : function(postdata){

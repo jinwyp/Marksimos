@@ -102,7 +102,7 @@
                         if($scope.data.currentStudentSeminar.isSimulationFinished === false){
                             $scope.css.showBox = 'whoami';
 
-                            Company.getCompany().then(function(data, status, headers, config){
+                            Company.getCompany($scope.data.currentStudentSeminar.companyId).then(function(data, status, headers, config){
                                 angular.forEach(data.d_BrandsDecisions, function(brand){
                                     $scope.data.brandNumber++;
 
