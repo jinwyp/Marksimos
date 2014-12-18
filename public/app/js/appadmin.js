@@ -1196,10 +1196,11 @@
             },
             loadingQuestionnaireData: function() {
                 var seminerID = /.+\/adminhomereport\/(\d+).*/.exec(window.location.href)[1] || 0;
-                Admin.getQuestionnaire(seminerID).success(function(data, status, headers, config) {
-                  
+                Admin.getQuestionnaire(seminerID).success(function(data, status, headers, config) {                  
                     $scope.data.questionnaire.data = data;
-                    $scope.data.questionnaire.currentQuestionnaire = data[0].studentList[0].questionnaire;
+                    if (data[0].studentList.length) {
+                        $scope.data.questionnaire.currentQuestionnaire = data[0].studentList[0].questionnaire;
+                    }                    
                     $scope.data.questionnaire.radio_OverallSatisfactionWithThePrograms = {
                         info: ['ChallengeStrategicThinkingAbility', 'DevelopAnIntegratedPerspective', 'TestPersonalAbilityOfBalancingRisks', 'ChallengeLeadershipAndTeamworkAbility', 'ChallengeAnalysisAndDecisionMakingAbility', 'SimulationInteresting']
                     };
