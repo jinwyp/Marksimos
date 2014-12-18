@@ -68,10 +68,10 @@
                         <input type="text" class="form-control"  placeholder="{{data.reRunDecision.name}}" ng-model="data.reRunDecision.value">
                     </div>
                 </div>
-                <button type="submit" class="btn btn-default" ng-click="updateSkuDecision()">{{'FinalScoreAdminPanelReRunSaveButton' | translate}}</button>
+                <button type="submit" class="btn btn-default" ng-click="updateSkuDecision()">
+                    {{'FinalScoreAdminPanelReRunSaveButton' | translate}} For  {{'HomePageSecondMenuBarCurrentPeriod' | translate}}{{data.allDecisions.currentPeriod}} {{'HomePageSecondMenuBarLabelsCompany' | translate}}{{data.allDecisions.currentCompanyId | companyname}} SKU Field {{data.reRunDecision.name}}
+                </button>
             </form>
-
-
 
 
 
@@ -1061,8 +1061,8 @@
 
                                                    <tr ng-repeat="sku in brand.SKUDecisions ">
                                                        <td >{{brand.d_BrandName}}{{sku.d_SKUName}}/ {{sku.d_ToDrop}}</td>
-                                                       <td>{{sku.d_Technology}}</td>
-                                                       <td>{{sku.d_IngredientsQuality}}</td>
+                                                       <td ng-click="clickSkuField('d_Technology', sku.d_Technology)">{{sku.d_Technology}}</td>
+                                                       <td ng-click="clickSkuField('d_IngredientsQuality', sku.d_IngredientsQuality)">{{sku.d_IngredientsQuality}}</td>
                                                        <td>{{sku.d_PackSize | skupacksize | translate}}</td>
                                                        <td>{{sku.d_ProductionVolume}}</td>
                                                        <td>{{sku.d_FactoryPrice[0] | number:2 }}</td>
@@ -1099,6 +1099,7 @@
         </section>
 
 
+
         <!-- Final Score  -->
         <section class="content" ng-if="css.currentReportMenu=='AllResults'">
             <div class="box box-primary">
@@ -1120,7 +1121,9 @@
                 
             </div>
         </section>
-        
+
+
+
         <!--  Questionnaire--> 
         <section class="content" ng-if="css.currentReportMenu=='Questionnaire'">
             <div class="box box-primary">

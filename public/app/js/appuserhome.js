@@ -1169,7 +1169,7 @@
         /********************  更新 SKU  ********************/
         $scope.leaveSkuInput = function(sku, fieldname, fielddata, segmentOrWeek, weekindex){
             $scope.data.currentModifiedSku = {
-                seminarId : sku.d_BrandID,
+                seminarId : $scope.data.currentStudent.seminarId,
                 companyId : $scope.data.currentStudent.companyId,
                 brand_id : sku.d_BrandID,
                 sku_id : sku.d_SKUID,

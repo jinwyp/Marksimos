@@ -1188,6 +1188,14 @@
                     });
                 };
 
+                $scope.clickSkuField = function(skuFieldName, skuValue) {
+                    $scope.data.reRunDecision.name = skuFieldName;
+                    $scope.data.reRunDecision.value = skuValue;
+
+                };
+
+
+
             },
 
 
