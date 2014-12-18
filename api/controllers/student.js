@@ -236,7 +236,7 @@ exports.getSeminarOfStudent = function(req, res, next){
         for(var i=0; i<allSeminars.length; i++){
             var seminar = allSeminars[i];
             for(var j=0; j<seminar.companyAssignment.length; j++){
-                if(seminar.companyAssignment[j].indexOf(email) > -1){
+                if(seminar.companyAssignment[j]&&seminar.companyAssignment[j].toString().indexOf(email) > -1){
                     if(seminar.isInitialized ){
                         assignedSeminars.push(seminar);
                         break;

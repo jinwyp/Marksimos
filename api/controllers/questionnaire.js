@@ -3,6 +3,7 @@ var seminarModel = require('../models/seminar.js');
 var logger = require('../../common/logger.js');
 var config = require('../../common/config.js');
 var Q = require('q');
+util = require('util');
 exports.getQuestionnaire = function(req, res, next) {
     var seminarId = req.session.seminarId;
     var email = req.session.email;
@@ -101,41 +102,49 @@ exports.updateQuestionnaire = function(req, res, next) {
 
 }
 
-exports.submitQuestionnaire = function(req,res,next){
+exports.submitQuestionnaire = function(req, res, next) {
+
+   
     var seminarId = req.session.seminarId;
     var email = req.session.email;
     var questionnaire = req.body.questionnaire;
-
-     if (!seminarId) {
-        return res.send(400, {
-            message: "You don't choose a seminar."
-        });
+    var errorMsg = "";
+    //服务器端变量不存在则要重新登录
+    if (!seminarId || !email) {
+        errorMsg = "Please re login.";
     }
 
-    if (!email) {
-        return res.send(400, {
-            message: "Invalid email."
-        });
+    //客户端提交的变量验证 
+    //q_OverallSatisfactionWithTheProgram   
+    req.checkBody(['questionnaire', 'q_OverallSatisfactionWithTheProgram'], 'Ivalid q_OverallSatisfactionWithTheProgram.').isArrayLen(6).eachBetween(1, 5);
+    //q_Product   
+    req.checkBody(['questionnaire', 'q_Product', ], 'Ivalid q_Product.').isArrayLen(4).eachInt().eachBetween(1, 5);
+    //q_TeachingSupport    
+    req.checkBody(['questionnaire', 'q_TeachingSupport', ], 'Ivalid q_TeachingSupport.').isArrayLen(2).eachInt().eachBetween(1, 5);
+    //q_TeachingTeam    
+    req.checkBody(['questionnaire', 'q_TeachingTeam', ], 'Ivalid q_TeachingTeam.').isArrayLen(3).eachInt().eachBetween(1, 5);
+
+
+    var errors = req.validationErrors() || errorMsg;
+    if (errors) {
+        res.send('There have been validation errors: ' + util.inspect(errors), 400);
+        return;
     }
-
-
-    if (!questionnaire) {
-        return res.send(400, {
-            message: 'Invalid questionnaire'
+ 
+    questionnaireModel.query.update(
+        { seminarId: seminarId, email: email },
+        questionnaire,
+        { upsert: true },
+        function(err, numAffected) {
+            if (err) {
+                var message = Array.isArray(err)
+                res.send(403, message);
+            } else {
+                res.send({
+                    message: 'Update success.'
+                });
+            }
         });
-    }
-
-    questionnaireModel.update(seminarId, email, questionnaire)
-        .then(function(result) {
-            res.send({
-                message: 'update success.'
-            });
-        })
-        .fail(function(err) {
-            var message = JSON.stringify(err, ['message', 'lower', 'upper', 'modifiedField'], 2);
-            res.send(403, message);
-        })
-        .done();
 }
 
 exports.getQuestionnaireList = function(req, res, next) {
@@ -171,6 +180,7 @@ exports.getQuestionnaireList = function(req, res, next) {
     }, function(err) {
         //如果有异常，记录异常
         logger.error(err);
+        //传递异常到异常处理代码
         next(err);
     }).done();
 };
