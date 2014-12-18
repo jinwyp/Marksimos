@@ -117,12 +117,23 @@ exports.submitQuestionnaire = function(req, res, next) {
     //客户端提交的变量验证 
     //q_OverallSatisfactionWithTheProgram   
     req.checkBody(['questionnaire', 'q_OverallSatisfactionWithTheProgram'], 'Ivalid q_OverallSatisfactionWithTheProgram.').isArrayLen(6).eachInt().eachBetween(1, 5);
-    //q_Product   
-    req.checkBody(['questionnaire', 'q_Product', ], 'Ivalid q_Product.').isArrayLen(4).eachInt().eachBetween(1, 5);
-    //q_TeachingSupport    
-    req.checkBody(['questionnaire', 'q_TeachingSupport', ], 'Ivalid q_TeachingSupport.').isArrayLen(2).eachInt().eachBetween(1, 5);
+
     //q_TeachingTeam    
     req.checkBody(['questionnaire', 'q_TeachingTeam', ], 'Ivalid q_TeachingTeam.').isArrayLen(3).eachInt().eachBetween(1, 5);
+
+    //q_Product   
+    req.checkBody(['questionnaire', 'q_Product', ], 'Ivalid q_Product.').isArrayLen(4).eachInt().eachBetween(1, 5);
+
+    //q_Product   
+    req.checkBody(['questionnaire', 'q_Interpreter', ], 'Ivalid q_Interpreter.').isInt().between(1,5);
+
+    //q_TeachingSupport    
+    req.checkBody(['questionnaire', 'q_TeachingSupport', ], 'Ivalid q_TeachingSupport.').isArrayLen(2).eachInt().eachBetween(1, 5);
+  
+
+    //q_TeachingSupport    
+    req.checkBody(['questionnaire', 'q_MostBenefit', ], 'Ivalid q_MostBenefit.').isInt().between(1, 3);
+
 
 
     var errors = req.validationErrors() || errorMsg;
@@ -163,11 +174,11 @@ exports.getQuestionnaireList = function(req, res, next) {
                 questionDic[question.email] = question;
             });
             //拼接数据      
-            seminarResult.companyAssignment.forEach(function(emailList, index) {
-                var studentList = [];
-                emailList.forEach(function(email) {
+            seminarResult.companyAssignment.forEach(function(company, index) {
+                var studentList = [];               
+                company.studentList.forEach(function(email) {
                     studentList.push({ email: email, questionnaire: questionDic[email] })
-                });
+                });               
                 result[index].studentList = studentList;
             });
             //返回成功的数据

@@ -42,7 +42,7 @@ app.use(morgan('dev', {stream: morganFileStream}));
 app.use(cookieParser());
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
-console.log(customValidator);
+
 app.use(expressValidator({
     customValidators: customValidator
 }));
