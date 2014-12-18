@@ -370,8 +370,6 @@ exports.adminLogin = function(req, res, next){
     var email = req.body.email;
     var password = req.body.password;
 
-    //console.log(email, password);
-
     userModel.findByEmail(email)
     .then(function(user){
         if(!user){

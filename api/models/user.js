@@ -10,10 +10,10 @@ var userSchema = new Schema({
     // system field
     username: { type: String, required: true },
     email: { type: String, required: true },
-    password: { type: String, required: true, select: false},
+    password: { type: String, required: true, select: true},
 
 
-    emailActivateToken: { type: String, default: uuid.v4() , select: false},
+    emailActivateToken: { type: String, default: uuid.v4() , select: true},
     emailActivated: {type: Boolean, default: false},
     activated: {type: Boolean, default: false},
 
