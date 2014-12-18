@@ -23,7 +23,7 @@ var SKUInfoAssembler          = require('../dataAssemblers/SKUInfo.js');
  * Sumit decision to CGI service  Not Used Now
  */
 exports.submitDecision = function(req, res, next){
-    var companyId = req.session.companyId;
+    var companyId = +req.query.companyId;
     var period = req.session.currentPeriod;
     var seminarId = req.session.seminarId;
 
@@ -227,7 +227,7 @@ exports.updateSKUDecision = function(req, res, next){
         return res.send(403, {message: "You don't choose a seminar."});
     }
 
-    var companyId = req.body.companyId;
+    var companyId = +req.body.companyId;
     var period = req.session.currentPeriod;
 
 
@@ -314,7 +314,7 @@ exports.updateBrandDecision = function(req, res, next){
         return res.send(403, {message: "You don't choose a seminar."});
     }
 
-    var companyId = req.body.companyId;
+    var companyId = +req.body.companyId;
     var period = req.session.currentPeriod;
 
 
@@ -374,7 +374,7 @@ exports.updateCompanyDecision = function(req, res, next){
         return res.send(403, {message: "You don't choose a seminar."});
     }
 
-    var companyId = req.body.companyId;
+    var companyId = +req.body.companyId;
     var period = req.session.currentPeriod;
 
 
@@ -430,7 +430,7 @@ exports.addBrand = function(req, res, next){
     }
 
     var period = req.session.currentPeriod;
-    var companyId = req.body.companyId;
+    var companyId = +req.body.companyId;
 
     var brand_name = req.body.brand_name;
     var sku_name = req.body.sku_name;
@@ -524,7 +524,7 @@ exports.addSKU = function(req, res, next){
     }
 
     var period = req.session.currentPeriod;
-    var companyId = req.body.companyId;
+    var companyId = +req.body.companyId;
 
     var brand_id = req.body.brand_id;
     var sku_name = req.body.sku_name;
@@ -559,7 +559,7 @@ exports.deleteSKU = function(req, res, next){
 
     var period = req.session.currentPeriod;
 
-    var companyId = req.params.company_id;
+    var companyId = +req.params.company_id;
     var brand_id = req.params.brand_id;
     var sku_id = req.params.sku_id;
 
@@ -590,7 +590,7 @@ exports.getProductPortfolio = function(req, res, next){
     }
 
     var period = req.session.currentPeriod;
-    var companyId = req.query.companyId;
+    var companyId = +req.query.companyId;
 
     productPortfolioAssembler.getProductPortfolioForOneCompany(seminarId, period, companyId)
     .then(function(productPortfolioForOneCompany){
@@ -611,7 +611,7 @@ exports.getSpendingDetails = function(req, res, next){
     }
 
     var period = req.session.currentPeriod;
-    var companyId = req.query.companyId;
+    var companyId = +req.query.companyId;
 
     spendingDetailsAssembler.getSpendingDetails(seminarId, period, companyId)
     .then(function(spendingDetails){
@@ -633,7 +633,7 @@ exports.getSKUInfoFutureProjection = function(req, res, next){
     }
 
     var period = req.session.currentPeriod;
-    var companyId = req.query.companyId;
+    var companyId = +req.query.companyId;
 
     var SKUID = req.params.sku_id;
 
@@ -661,7 +661,7 @@ exports.getOtherinfo = function(req, res, next){
     }
 
     var currentPeriod = req.session.currentPeriod;
-    var companyId = req.query.companyId;
+    var companyId = +req.query.companyId;
 
     Q.all([
         spendingDetailsAssembler.getSpendingDetails(seminarId, currentPeriod, companyId),
