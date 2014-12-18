@@ -176,7 +176,7 @@ exports.getQuestionnaireList = function(req, res, next) {
             //拼接数据      
             seminarResult.companyAssignment.forEach(function(company, index) {
                 var studentList = [];               
-                company.studentList.forEach(function(email) {
+                (company.studentList||[]).forEach(function(email) {
                     studentList.push({ email: email, questionnaire: questionDic[email] })
                 });               
                 result[index].studentList = studentList;
