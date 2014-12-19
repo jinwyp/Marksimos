@@ -12,8 +12,9 @@ var gulp = require('gulp'),
     ngAnnotate = require('gulp-ng-annotate'),
     minifyHtml = require("gulp-minify-html"),
     ngTemplateCache = require('gulp-angular-templatecache'),
+    jasmine = require('gulp-jasmine'),
     childProcess = require('child_process');
-var jasmine = require('gulp-jasmine');
+
 var customReportor = require('./api/test/customReportor.js');
 
 var paths = {
@@ -218,7 +219,7 @@ gulp.task('browser-sync', function() {
 gulp.task('test', function() {
     return gulp.src('api/test/marksimos/admin/seminar.js')
         .pipe(jasmine({
-            reporter: customReportor
+            reporter: new customReportor.JUnitXmlReporter()
         }));
 });
 
