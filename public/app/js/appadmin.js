@@ -638,10 +638,11 @@
                 periodId : 1,
                 companyId : 1,
                 brand_id : '',
+                sku : {},
                 sku_id : '',
                 sku_fieldname : '',
                 sku_fieldvalue : '',
-                sku_data : {}
+                sku_postdata : {}
             },
 
             tableFinalScore: {
@@ -1194,22 +1195,39 @@
                     });
                 };
 
-                $scope.clickSkuField = function(period, company_id, brand_id, sku_id, skuFieldName, skuValue) {
+                $scope.clickSkuField = function(period, company_id, brand_id, sku, sku_id, skuFieldName, skuValue) {
                     $scope.data.reRunDecision.seminarId = $scope.css.currentSeminarId;
                     $scope.data.reRunDecision.periodId = period;
                     $scope.data.reRunDecision.companyId = company_id;
 
                     $scope.data.reRunDecision.brand_id = brand_id;
+                    $scope.data.reRunDecision.sku = sku;
                     $scope.data.reRunDecision.sku_id = sku_id;
 
                     $scope.data.reRunDecision.sku_fieldname= skuFieldName;
                     $scope.data.reRunDecision.sku_fieldvalue= skuValue;
 
+
+
                 };
 
                 $scope.updateSkuDecision = function() {
 
-                    $scope.data.reRunDecision.sku_data[$scope.data.reRunDecision.sku_fieldname] = $scope.data.reRunDecision.sku_fieldvalue;
+                    $scope.data.reRunDecision.sku_postdata[$scope.data.reRunDecision.sku_fieldname] = $scope.data.reRunDecision.sku_fieldvalue;
+
+
+                    if($scope.data.reRunDecision.sku_fieldname === 'd_PromotionalEpisodes'){
+                        //if(!angular.isUndefined(weekindex)){
+                        //    // 针对d_PromotionalEpisodes 字段需要特殊处理
+                        //    $scope.data.currentModifiedSku.sku_postdata[$scope.data.reRunDecision.sku_fieldname][weekindex] = segmentOrWeek;
+                        //}
+
+                    }else if($scope.data.reRunDecision.sku_fieldname === 'd_FactoryPrice'){
+                        // 针对 d_FactoryPrice 字段需要特殊处理
+                        $scope.data.reRunDecision.sku_postdata[$scope.data.reRunDecision.sku_fieldname] = $scope.data.reRunDecision.sku[$scope.data.reRunDecision.sku_fieldname];
+                        $scope.data.reRunDecision.sku_postdata[$scope.data.reRunDecision.sku_fieldname][0] = Number($scope.data.reRunDecision.sku_fieldvalue);
+
+                    }
 
                     Admin.updateSkuDecision($scope.data.reRunDecision).success(function(data, status, headers, config) {
                         $notification.success('Save success', 'Update SKU Decision Success');
