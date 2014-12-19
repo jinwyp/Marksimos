@@ -177,7 +177,7 @@ exports.getQuestionnaireList = function(req, res, next) {
             seminarResult.companyAssignment.forEach(function(company, index) {
                 var studentList = [];               
                 (company.studentList||[]).forEach(function(email) {
-                    studentList.push({ email: email, questionnaire: questionDic[email] })
+                    studentList.push({ email: email, questionnaire: questionDic[email] });
                 });               
                 result[index].studentList = studentList;
             });
