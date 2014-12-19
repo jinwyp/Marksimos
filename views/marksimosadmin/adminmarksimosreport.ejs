@@ -8,72 +8,77 @@
     <div class="wrapper row-offcanvas row-offcanvas-left">
 
         <section class="content">
-            <h2 class="page-header">MarkSimos Seminar <%= seminarId %> Report </h2>
-            {{'ReportYourCompany' | translate}} :
-            <div class="btn-group">
-                <button type="button" class="btn btn-default" ng-class="{'active': css.currentReportMenu=='A1'}" ng-click="clickChartMenu('A1')">{{'ReportMenuCompanyStatus' | translate}}</button>
-                <button type="button" class="btn btn-default" ng-class="{'active': css.currentReportMenu=='A2'}" ng-click="clickChartMenu('A2')">{{'ReportMenuFinancialReport' | translate}}</button>
-                <button type="button" class="btn btn-default" ng-class="{'active': css.currentReportMenu=='A3'}" ng-click="clickChartMenu('A3')">{{'ReportMenuInventoryReport' | translate}}</button>
-                <button type="button" class="btn btn-default" ng-class="{'active': css.currentReportMenu=='A4'}" ng-click="clickChartMenu('A4')">{{'ReportMenuProfitabilityEvolution' | translate}}</button>
-            </div>
-            <br />
 
-            {{'ReportYourCompetitors' | translate}} :
-            <div class="btn-group">
-                <button type="button" class="btn btn-default" ng-class="{'active': css.currentReportMenu=='B1'}" ng-click="clickChartMenu('B1')">{{'ReportMenuMarketShare' | translate}}</button>
-                <button type="button" class="btn btn-default" ng-class="{'active': css.currentReportMenu=='B2'}" ng-click="clickChartMenu('B2')">{{'ReportMenuCompetitorIntelligence' | translate}}</button>
-                <button type="button" class="btn btn-default" ng-class="{'active': css.currentReportMenu=='B3'}" ng-click="clickChartMenu('B3')">{{'ReportMenuInvestmentProfits' | translate}}</button>
-                <button type="button" class="btn btn-default" ng-class="{'active': css.currentReportMenu=='B4'}" ng-click="clickChartMenu('B4')">{{'ReportMenuMarketSalesInventory' | translate}}</button>
-            </div>
-            <br />
-
-            {{'ReportMarketLandscape' | translate}} :
-            <div class="btn-group">
-                <button type="button" class="btn btn-default" ng-class="{'active': css.currentReportMenu=='C1'}" ng-click="clickChartMenu('C1')">{{'ReportMenuSegmentLeaderTop5' | translate}}</button>
-                <button type="button" class="btn btn-default" ng-class="{'active': css.currentReportMenu=='C2'}" ng-click="clickChartMenu('C2')">{{'ReportMenuPerceptionMap' | translate}}</button>
-                <button type="button" class="btn btn-default" ng-class="{'active': css.currentReportMenu=='C3'}" ng-click="clickChartMenu('C3')">{{'ReportMenuSegmentDistributions' | translate}}</button>
-                <button type="button" class="btn btn-default" ng-class="{'active': css.currentReportMenu=='C4'}" ng-click="clickChartMenu('C4')">{{'ReportMenuMarketEvolution' | translate}}</button>
-                <button type="button" class="btn btn-default" ng-class="{'active': css.currentReportMenu=='C5'}" ng-click="clickChartMenu('C5')">{{'ReportMenuMarketTrends' | translate}}</button>
-                <button type="button" class="btn btn-default" ng-class="{'active': css.currentReportMenu=='C6'}" ng-click="clickChartMenu('C6')">{{'ReportMenuMarketIndicator' | translate}}</button>
-            </div>
-
-            <br />
-            {{'FinalScoreAdminPanelLabel' | translate}} :
-            <button type="button" class="btn btn-default" ng-click="clickChartMenu('AllDecisions')"> {{'FinalScoreAdminPanelDecisionsButton' | translate}}</button>
-            <button type="button" class="btn btn-default" ng-click="clickChartMenu('AllResults')"> {{'FinalScoreAdminPanelResultsButton' | translate}}</button>
-            <button type="button" class="btn btn-default" ng-click="clickChartMenu('Questionnaire')"> {{'QuestionnairePageQuestionnaire' | translate}}</button>
-
-            <br />
-            <br />
-
-            <form class="form-inline" role="form" ng-if="css.currentReportMenu=='AllDecisions'">
-                <div class="form-group">
-
-                    <div class="col-md-12">
-                        <button type="submit" class="btn btn-default" ng-click="reRunSeminar()">{{'FinalScoreAdminPanelReRunButton' | translate}}</button>
-
-                        <label class="checkbox-inline" ng-repeat="companyid in data.allDecisions.allCompanyId">
-                            <input type="checkbox" id="inlineCheckbox1" value="option1" ng-model="data.reRunCompanies[$index]"> {{'HomePageSecondMenuBarLabelsCompany' | translate}} {{companyid | companyname}}
-                        </label>
-
-                    </div>
+            <div class="row">
+                <div class="col-md-12">
+                    <h2 class="page-header">MarkSimos Seminar <%= seminarId %> Report </h2>
                 </div>
-            </form>
+            </div>
 
-            <br />
-
-            <form class="form-inline" role="form" ng-if="css.currentReportMenu=='AllDecisions'">
-                <div class="form-group">
-                    <div class="input-group">
-                        <input type="text" class="form-control"  placeholder="{{data.reRunDecision.sku_fieldname}}" ng-model="data.reRunDecision.sku_fieldvalue">
+            <div class="row">
+                <div class="col-md-7">
+                    {{'ReportYourCompany' | translate}} :
+                    <div class="btn-group">
+                        <button type="button" class="btn btn-default" ng-class="{'active': css.currentReportMenu=='A1'}" ng-click="clickChartMenu('A1')">{{'ReportMenuCompanyStatus' | translate}}</button>
+                        <button type="button" class="btn btn-default" ng-class="{'active': css.currentReportMenu=='A2'}" ng-click="clickChartMenu('A2')">{{'ReportMenuFinancialReport' | translate}}</button>
+                        <button type="button" class="btn btn-default" ng-class="{'active': css.currentReportMenu=='A3'}" ng-click="clickChartMenu('A3')">{{'ReportMenuInventoryReport' | translate}}</button>
+                        <button type="button" class="btn btn-default" ng-class="{'active': css.currentReportMenu=='A4'}" ng-click="clickChartMenu('A4')">{{'ReportMenuProfitabilityEvolution' | translate}}</button>
                     </div>
+                    <br />
+
+                    {{'ReportYourCompetitors' | translate}} :
+                    <div class="btn-group">
+                        <button type="button" class="btn btn-default" ng-class="{'active': css.currentReportMenu=='B1'}" ng-click="clickChartMenu('B1')">{{'ReportMenuMarketShare' | translate}}</button>
+                        <button type="button" class="btn btn-default" ng-class="{'active': css.currentReportMenu=='B2'}" ng-click="clickChartMenu('B2')">{{'ReportMenuCompetitorIntelligence' | translate}}</button>
+                        <button type="button" class="btn btn-default" ng-class="{'active': css.currentReportMenu=='B3'}" ng-click="clickChartMenu('B3')">{{'ReportMenuInvestmentProfits' | translate}}</button>
+                        <button type="button" class="btn btn-default" ng-class="{'active': css.currentReportMenu=='B4'}" ng-click="clickChartMenu('B4')">{{'ReportMenuMarketSalesInventory' | translate}}</button>
+                    </div>
+                    <br />
+
+                    {{'ReportMarketLandscape' | translate}} :
+                    <div class="btn-group">
+                        <button type="button" class="btn btn-default" ng-class="{'active': css.currentReportMenu=='C1'}" ng-click="clickChartMenu('C1')">{{'ReportMenuSegmentLeaderTop5' | translate}}</button>
+                        <button type="button" class="btn btn-default" ng-class="{'active': css.currentReportMenu=='C2'}" ng-click="clickChartMenu('C2')">{{'ReportMenuPerceptionMap' | translate}}</button>
+                        <button type="button" class="btn btn-default" ng-class="{'active': css.currentReportMenu=='C3'}" ng-click="clickChartMenu('C3')">{{'ReportMenuSegmentDistributions' | translate}}</button>
+                        <button type="button" class="btn btn-default" ng-class="{'active': css.currentReportMenu=='C4'}" ng-click="clickChartMenu('C4')">{{'ReportMenuMarketEvolution' | translate}}</button>
+                        <button type="button" class="btn btn-default" ng-class="{'active': css.currentReportMenu=='C5'}" ng-click="clickChartMenu('C5')">{{'ReportMenuMarketTrends' | translate}}</button>
+                        <button type="button" class="btn btn-default" ng-class="{'active': css.currentReportMenu=='C6'}" ng-click="clickChartMenu('C6')">{{'ReportMenuMarketIndicator' | translate}}</button>
+                    </div>
+
+                    <br />
+                    {{'FinalScoreAdminPanelLabel' | translate}} :
+                    <button type="button" class="btn btn-default" ng-click="clickChartMenu('AllDecisions')"> {{'FinalScoreAdminPanelDecisionsButton' | translate}}</button>
+                    <button type="button" class="btn btn-default" ng-click="clickChartMenu('AllResults')"> {{'FinalScoreAdminPanelResultsButton' | translate}}</button>
+                    <button type="button" class="btn btn-default" ng-click="clickChartMenu('Questionnaire')"> {{'QuestionnairePageQuestionnaire' | translate}}</button>
                 </div>
-                <button type="submit" class="btn btn-default" ng-click="updateSkuDecision()">
-                    {{'FinalScoreAdminPanelReRunSaveButton' | translate}} For  {{'HomePageSecondMenuBarCurrentPeriod' | translate}}{{data.reRunDecision.periodId}} {{'HomePageSecondMenuBarLabelsCompany' | translate}}{{data.reRunDecision.companyId | companyname}} SKU {{data.reRunDecision.sku_fieldname}}
-                </button>
-            </form>
 
 
+                <div class="col-md-5">
+                    <form class="form-inline" role="form" ng-if="css.currentReportMenu=='AllDecisions'">
+                        <div class="form-group">
+                            <button type="submit" class="btn btn-default" ng-click="reRunSeminar()">{{'FinalScoreAdminPanelReRunButton' | translate}}</button>
+
+                            <label class="checkbox-inline" ng-repeat="companyid in data.allDecisions.allCompanyId">
+                                <input type="checkbox" ng-model="data.reRunCompanies[$index]"> {{'HomePageSecondMenuBarLabelsCompany' | translate}} {{companyid | companyname}}
+                            </label>
+                        </div>
+                    </form>
+
+                    <br />
+
+                    <form class="form-inline" role="form" name="skuForm" ng-if="css.currentReportMenu=='AllDecisions'">
+                        <div class="form-group" ng-class="{'has-success':skuForm.$valid&&skuForm.SKUField.$dirty, 'has-error':skuForm.$invalid&&skuForm.SKUField.$dirty}">
+                            <label class="sr-only" for="SKUField">{{data.reRunDecision.sku_fieldname}}</label>
+                            <label class="control-label" for="SKUField" ng-show="skuForm.SKUField.$error.required&&skuForm.$dirty"><i class="fa fa-times-circle-o"></i> Required !</label>
+                            <input type="text" class="form-control" id="SKUField" name="SKUField" placeholder="{{data.reRunDecision.sku_fieldname}}" ng-model="data.reRunDecision.sku_fieldvalue" required>
+                        </div>
+
+                        <button type="submit" class="btn btn-default" ng-click="updateSkuDecision()" ng-disabled="skuForm.$invalid">
+                            {{'FinalScoreAdminPanelReRunSaveButton' | translate}}  {{'HomePageSecondMenuBarCurrentPeriod' | translate}}{{data.reRunDecision.periodId}} {{'HomePageSecondMenuBarLabelsCompany' | translate}}{{data.reRunDecision.companyId | companyname}} SKU {{data.reRunDecision.sku_fieldname}}
+                        </button>
+                    </form>
+                </div>
+            </div>
 
 
         </section>
@@ -1061,27 +1066,29 @@
 
                                                    <tr ng-repeat="sku in brand.SKUDecisions ">
                                                        <td >{{brand.d_BrandName}}{{sku.d_SKUName}}/ {{sku.d_ToDrop}}</td>
-                                                       <td ng-click="clickSkuField(company.period, company.d_CID, brand.d_BrandID, sku.d_SKUID, 'd_Technology', sku.d_Technology)">{{sku.d_Technology}}</td>
-                                                       <td ng-click="clickSkuField(company.period, company.d_CID, brand.d_BrandID, sku.d_SKUID, 'd_IngredientsQuality', sku.d_IngredientsQuality)">{{sku.d_IngredientsQuality}}</td>
+                                                       <td ng-click="clickSkuField(company.period, company.d_CID, brand.d_BrandID, sku, sku.d_SKUID, 'd_Technology', sku.d_Technology)">{{sku.d_Technology}}</td>
+                                                       <td ng-click="clickSkuField(company.period, company.d_CID, brand.d_BrandID, sku, sku.d_SKUID, 'd_IngredientsQuality', sku.d_IngredientsQuality)">{{sku.d_IngredientsQuality}}</td>
                                                        <td>{{sku.d_PackSize | skupacksize | translate}}</td>
-                                                       <td>{{sku.d_ProductionVolume}}</td>
-                                                       <td>{{sku.d_FactoryPrice[0] | number:2 }}</td>
+                                                       <td ng-click="clickSkuField(company.period, company.d_CID, brand.d_BrandID, sku, sku.d_SKUID, 'd_ProductionVolume', sku.d_ProductionVolume)">{{sku.d_ProductionVolume}}</td>
+                                                       <td ng-click="clickSkuField(company.period, company.d_CID, brand.d_BrandID, sku, sku.d_SKUID, 'd_FactoryPrice', sku.d_FactoryPrice[0])">{{sku.d_FactoryPrice[0] | number:2 }}</td>
                                                        <td>{{sku.d_RepriceFactoryStocks}}</td>
-                                                       <td>{{sku.d_Advertising}}</td>
+                                                       <td ng-click="clickSkuField(company.period, company.d_CID, brand.d_BrandID, sku, sku.d_SKUID, 'd_Advertising', sku.d_Advertising)">{{sku.d_Advertising}}</td>
 
-                                                       <td>{{sku.d_TargetConsumerSegment }}</td>
-                                                       <td>{{sku.d_PromotionalBudget}}</td>
-                                                       <!--<td>{{sku.d_PromotionalEpisodes}}</td>-->
-                                                       <td></td>
-                                                       <td>{{sku.d_TradeExpenses}}</td>
-                                                       <td>{{sku.d_AdditionalTradeMargin}}</td>
-                                                       <td>{{sku.d_WholesalesBonusMinVolume}}</td>
-                                                       <td>{{sku.d_WholesalesBonusRate}}</td>
+                                                       <td ng-click="clickSkuField(company.period, company.d_CID, brand.d_BrandID, sku, sku.d_SKUID, 'd_TargetConsumerSegment', sku.d_TargetConsumerSegment)">{{sku.d_TargetConsumerSegment }}</td>
+                                                       <td ng-click="clickSkuField(company.period, company.d_CID, brand.d_BrandID, sku, sku.d_SKUID, 'd_PromotionalBudget', sku.d_PromotionalBudget)">{{sku.d_PromotionalBudget}}</td>
+                                                       <td>
+                                                           <span ng-repeat="week in sku.d_PromotionalEpisodes track by $index">
+                                                               <input type="checkbox" ng-model="week" >
+                                                           </span>
+                                                       </td>
+                                                       <td ng-click="clickSkuField(company.period, company.d_CID, brand.d_BrandID, sku, sku.d_SKUID, 'd_TradeExpenses', sku.d_TradeExpenses)">{{sku.d_TradeExpenses}}</td>
+                                                       <td ng-click="clickSkuField(company.period, company.d_CID, brand.d_BrandID, sku, sku.d_SKUID, 'd_AdditionalTradeMargin', sku.d_AdditionalTradeMargin)">{{sku.d_AdditionalTradeMargin}}</td>
+                                                       <td ng-click="clickSkuField(company.period, company.d_CID, brand.d_BrandID, sku, sku.d_SKUID, 'd_WholesalesBonusMinVolume', sku.d_WholesalesBonusMinVolume)">{{sku.d_WholesalesBonusMinVolume}}</td>
+                                                       <td ng-click="clickSkuField(company.period, company.d_CID, brand.d_BrandID, sku, sku.d_SKUID, 'd_WholesalesBonusRate', sku.d_WholesalesBonusRate)">{{sku.d_WholesalesBonusRate}}</td>
                                                    </tr>
 
                                                </tbody>
                                            </table>
-
 
 
                                    </div>

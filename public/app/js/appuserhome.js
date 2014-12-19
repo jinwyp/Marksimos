@@ -1235,10 +1235,10 @@
                     $scope.data.currentModifiedSku.sku_data[fieldname][0] = Number(fielddata);
                 }else if(fieldname === 'd_AdditionalTradeMargin'){
                     // 针对 d_AdditionalTradeMargin 字段需要特殊处理
-                    $scope.data.currentModifiedSku.sku_data[fieldname][0] = Number(fielddata) / 100;
+                    //$scope.data.currentModifiedSku.sku_data[fieldname] = Number(fielddata) / 100;
                 }else if(fieldname === 'd_WholesalesBonusRate'){
                     // 针对 d_WholesalesBonusRate 字段需要特殊处理
-                    $scope.data.currentModifiedSku.sku_data[fieldname][0] = Number(fielddata) / 100;
+                    //$scope.data.currentModifiedSku.sku_data[fieldname] = Number(fielddata) / 100;
                 }
 
 
