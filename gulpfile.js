@@ -13,8 +13,8 @@ var gulp = require('gulp'),
     minifyHtml = require("gulp-minify-html"),
     ngTemplateCache = require('gulp-angular-templatecache'),
     childProcess = require('child_process');
-
-
+var jasmine = require('gulp-jasmine');
+var customReportor = require('./api/test/customReportor.js');
 
 var paths = {
     base: './public',
@@ -215,7 +215,12 @@ gulp.task('browser-sync', function() {
 
 
 
-
+gulp.task('test', function() {
+    return gulp.src('api/test/marksimos/admin/seminar.js')
+        .pipe(jasmine({
+            reporter: customReportor
+        }));
+});
 
 
 /********************  默认任务 he default task (called when you run `gulp` from cli)  ********************/
