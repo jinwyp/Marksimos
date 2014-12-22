@@ -1,4 +1,4 @@
-﻿/// <reference path="../../../node_modules/jasmine/lib/jasmine.js" />
+/// <reference path="../../../node_modules/jasmine/lib/jasmine.js" />
 var request = require('request').defaults({ jar: true });
 var adminApiPath = "http://localhost:3000/marksimos/api/admin/";
 var utility = require('../../testUtility.js');
@@ -74,16 +74,17 @@ describe("admin api 测试", function() {
             return studentInfoList;
         }).then(function(studentInfoList) {          
             return Q.all([
-                Q.nfcall(request.post, adminApiPath + "assign_student_to_seminar", { form: studentInfoList[0] }),
-                Q.nfcall(request.post, adminApiPath + "assign_student_to_seminar", { form: studentInfoList[1] }),
-                Q.nfcall(request.post, adminApiPath + "assign_student_to_seminar", { form: studentInfoList[2] }),
+                //Q.nfcall(request.post, adminApiPath + "assign_student_to_seminar", { form: studentInfoList[0] }),
+                //Q.nfcall(request.post, adminApiPath + "assign_student_to_seminar", { form: studentInfoList[1] }),
+                //Q.nfcall(request.post, adminApiPath + "assign_student_to_seminar", { form: studentInfoList[2] }),
                 Q.nfcall(request.post, adminApiPath + "assign_student_to_seminar", { form: studentInfoList[3] })
             ]);
-        }).spread(function(res1, res2, res3, res4) {           
+        }).spread(function(res1, res2, res3, res4) {
+            console.log(res1[1]);
             expect(res1[1]).toMatch(/.+success.+/);
-            expect(res2[1]).toMatch(/.+success.+/);
-            expect(res3[1]).toMatch(/.+success.+/);
-            expect(res4[1]).toMatch(/.+success.+/);
+            //expect(res2[1]).toMatch(/.+success.+/);
+            //expect(res3[1]).toMatch(/.+success.+/);
+            //expect(res4[1]).toMatch(/.+success.+/);
         }).fail(function(err) {
             expect(err).toBe(null);
         }).done(done);
