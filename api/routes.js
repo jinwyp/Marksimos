@@ -324,8 +324,8 @@ apiRouter.get('/marksimos/api/create_admin', function (req,res,next) {
         },
          {
             "username": "anil",
-            "email": "anil@hcdlearning.com",
-            "mobilePhone": "18019419955",
+            "email": "anilraparla@hcdlearning.com",
+            "mobilePhone": "13916502743",
             "country": "China",
             "state": "shanghai",
             "city": "shanghai",
