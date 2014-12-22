@@ -56,7 +56,7 @@ exports.update = function(query, seminar){
         }
     });
     return deferred.promise;
-}
+};
 
 exports.insert = function(seminar){
     if(!mongoose.connection.readyState){

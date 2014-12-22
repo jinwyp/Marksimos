@@ -152,7 +152,7 @@ exports.updateSeminar = function(req, res, next){
         return res.send(500, {message: ""})
     })
     .done();
-}
+};
 
 
 
@@ -186,7 +186,7 @@ exports.assignStudentToSeminar = function(req, res, next){
             throw {message: "Email not exist, assign student to seminar failed."};
         }
 
-        return useminarModel.findOne({seminarId: seminarId});
+        return seminarModel.findOne({seminarId: seminarId});
     })
     .then(function(dbSeminar){
         if(!dbSeminar){
@@ -194,21 +194,22 @@ exports.assignStudentToSeminar = function(req, res, next){
         }
 
         var companyAssignment = dbSeminar.companyAssignment;
-
         var isStudentAssignedToSeminar = false;
 
         for(var i=0; i < companyAssignment.length; i++){
             if(companyAssignment[i].studentList.indexOf(email) > -1){
                 isStudentAssignedToSeminar = true;
+                throw {message: "Email have already assigned to this seminar."};
             }
         }
+
         //if this student has not been added to this seminar, add it
         if(!isStudentAssignedToSeminar){
             companyAssignment[companyId-1].studentList.push(email);
         }
 
-        return seminarModel.update({seminarId: seminarId}, {
-            companyAssignment: companyAssignment
+        return seminarModel.update({'seminarId': seminarId, 'companyAssignment.companyId': companyId }, {
+            '$set': { 'companyAssignment.$.studentList': companyAssignment[companyId-1].studentList }
         });
     })
     .then(function(numAffected){

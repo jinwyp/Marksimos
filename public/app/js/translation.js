@@ -1736,8 +1736,8 @@
 
             "DecisionPageDecisionNewProductDevelopmentInvestmentName"                                                   : "名称",
             "DecisionPageDecisionNewProductDevelopmentInvestmentRequiredAmount"                                         : "所需投资金额 (RMB 百万)",
-            "DecisionPageDecisionNewProductDevelopmentInvestmentExtraBudgetRequiredToIncreaseEfficiencyBy25points"      : "提高2%/5%生产效率，预计所需的额外预算",
-            "DecisionPageDecisionNewProductDevelopmentInvestmentExtraBudgetRequiredToIncreaseFlexibilityBy25points"     : "提高2%/5%生产效率，预计所需的额外预算",
+            "DecisionPageDecisionNewProductDevelopmentInvestmentExtraBudgetRequiredToIncreaseEfficiencyBy25points"      : "提高 2% / 5%生产效率，预计所需的额外预算",
+            "DecisionPageDecisionNewProductDevelopmentInvestmentExtraBudgetRequiredToIncreaseFlexibilityBy25points"     : "提高 2% / 5%生产灵活性，预计所需的额外预算",
             "DecisionPageDecisionNewProductDevelopmentInvestmentExtraBudgetRequiredToIncreaseTechnologyLevelBy12points" : "每提高一个/两个级别的技术水平，预计所需的额外预算",
             "DecisionPageDecisionNewProductDevelopmentInvestmentNote"                                                   : "注意: 在提高生产效率中的预算投入将等量影响生产灵活性 ",
 

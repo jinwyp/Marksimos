@@ -142,10 +142,7 @@ exports.submitQuestionnaire = function(req, res, next) {
         return;
     }
  
-    questionnaireModel.query.update(
-        { seminarId: seminarId, email: email },
-        questionnaire,
-        { upsert: true },
+    questionnaireModel.query.update({ seminarId: seminarId, email: email }, questionnaire, { upsert: true },
         function(err, numAffected) {
             if (err) {
                 var message = Array.isArray(err)
