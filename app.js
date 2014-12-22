@@ -130,7 +130,7 @@ app.use(function(err, req, res, next){
         if (/application\/json/.test(req.get('accept'))) {
             res.send({
                 title: '500 System Error',
-                message: err });
+                message: err.message  });
             return;
         }
 
@@ -139,7 +139,7 @@ app.use(function(err, req, res, next){
         if (req.accepts('html')) {
             res.render('page500.ejs', {
                 'title' : '500 System Error',
-                'error': err });
+                'error': err.message  });
             return;
         }
 

@@ -137,7 +137,7 @@
             },
 
             delSku : function(companyId, brandId, skuId){
-                return $http['delete'](apiPath + 'sku/decision/' + companyId + brandId + '/' + skuId);
+                return $http['delete'](apiPath + 'sku/decision/' + companyId + '/' + brandId + '/' + skuId);
             },
 
             addBrand : function(postdata){

@@ -180,44 +180,48 @@ exports.assignStudentToSeminar = function(req, res, next){
         return res.send(400, {message: "Invalid company_id."})
     }
 
-    seminarModel.findOne({seminarId: seminarId})
-        .then(function(dbSeminar){
-            if(!dbSeminar){
-                throw {httpStatus: 400, message: "seminar "+ seminarId + " doesn't exist."}
-            }
+    userModel.findOne({email: email})
+    .then(function(student){
+        if(!student){
+            throw {message: "Email not exist, assign student to seminar failed."};
+        }
 
-            var companyAssignment = dbSeminar.companyAssignment;
+        return useminarModel.findOne({seminarId: seminarId});
+    })
+    .then(function(dbSeminar){
+        if(!dbSeminar){
+            throw {httpStatus: 400, message: "seminar "+ seminarId + " doesn't exist."}
+        }
 
-            var isStudentAssignedToSeminar = false;
+        var companyAssignment = dbSeminar.companyAssignment;
 
-            for(var i=0; i < companyAssignment.length; i++){
-                if(companyAssignment[i].studentList.indexOf(email) > -1){
-                    isStudentAssignedToSeminar = true;
-                }
-            }
-            //if this student has not been added to this seminar, add it
-            if(!isStudentAssignedToSeminar){
-                companyAssignment[companyId-1].studentList.push(email);
-            }
+        var isStudentAssignedToSeminar = false;
 
-            return seminarModel.update({seminarId: seminarId}, {
-                companyAssignment: companyAssignment
-            });
-        })
-        .then(function(numAffected){
-            if(numAffected!==1){
-                return res.send({message: "there's error during update seminar."});
+        for(var i=0; i < companyAssignment.length; i++){
+            if(companyAssignment[i].studentList.indexOf(email) > -1){
+                isStudentAssignedToSeminar = true;
             }
-            return res.send({message: "assign student to seminar success."})
-        })
-        .fail(function(err){
-            logger.error(err);
-            if(err.httpStatus){
-                return res.send(err.httpStatus, {message: err.message});
-            }
-            return res.send(500, {message: "assign student to seminar failed."})
-        })
-        .done();
+        }
+        //if this student has not been added to this seminar, add it
+        if(!isStudentAssignedToSeminar){
+            companyAssignment[companyId-1].studentList.push(email);
+        }
+
+        return seminarModel.update({seminarId: seminarId}, {
+            companyAssignment: companyAssignment
+        });
+    })
+    .then(function(numAffected){
+        if(numAffected!==1){
+            return res.send({message: "there's error during update seminar."});
+        }
+        return res.send({message: "assign student to seminar success."})
+    })
+    .fail(function(err){
+        logger.error(err);
+        next (err);
+    })
+    .done();
 };
 
 

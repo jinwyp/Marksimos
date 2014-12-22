@@ -200,16 +200,15 @@ exports.runSimulation = function(){
         } else {
             status = 'pending';
             var seminarId = req.params.seminar_id;
-            var goingToNewPeriod = req.body.goingToNewPeriod || true;
+            var goingToNewPeriod = req.body.goingToNewPeriod;
             var decisionsOverwriteSwitchers = req.body.decisionsOverwriteSwitchers || [];
-
 
             if(!seminarId){
                 status = 'active';
                 return res.send(400, {message: "You have not choose a seminar."})
             }
 
-            if(!goingToNewPeriod){
+            if(goingToNewPeriod == undefined){
                 status = 'active';
                 return res.send(400, {message: "Which period need to run?"})
             }

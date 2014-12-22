@@ -18,7 +18,7 @@
 
 
     angular.module('marksimos.websitecomponent').directive('userHeader', ['$window', '$translate', 'Student', userHeaderComponent ]);
-    angular.module('marksimos.websitecomponent').directive('headerAdmin', ['$window', 'Student', adminHeaderComponent]);
+    angular.module('marksimos.websitecomponent').directive('headerAdmin', ['$window', '$translate', 'Student', adminHeaderComponent]);
     angular.module('marksimos.websitecomponent').directive('menuAdmin', [adminMenuComponent]);
 
 
@@ -71,7 +71,7 @@
     }
 
 
-    function adminHeaderComponent($window, Student){
+    function adminHeaderComponent($window, $translate, Student){
         return {
             scope: {
                 currentuser : '='
@@ -79,6 +79,9 @@
             restrict: 'AE',
             templateUrl: 'adminheader.html',
             link: function (scope, element, attrs) {
+                scope.changeLanguage = function (langKey) {
+                    $translate.use(langKey);
+                };
 
                 scope.clickLogout = function () {
                     Student.logOut().success(function(data, status, headers, config){
