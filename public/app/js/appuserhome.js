@@ -775,7 +775,6 @@
                 var that = this;
                 Company.getCurrentStudent().then(function(data, status, headers, config){
                     $scope.data.currentStudent = data;
-                    console.dir(data);
 
                     var currentDate = new Date();
 
