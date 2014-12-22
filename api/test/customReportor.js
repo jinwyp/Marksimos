@@ -16,7 +16,7 @@
         }
     },
     suiteDone: function(result) {
-        
+
         console.log(result.description + '  :  ' + result.status);
         if (result.failedExpectations) {
             for (var i = 0; i < result.failedExpectations.length; i++) {
