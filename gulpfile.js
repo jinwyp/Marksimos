@@ -217,9 +217,7 @@ gulp.task('browser-sync', function() {
 
 gulp.task('test', function() {
     return gulp.src('api/test/marksimos/admin/seminar.js')
-        .pipe(jasmine({
-            reporter: customReportor
-        }));
+        .pipe(jasmine());
 });
 
 
