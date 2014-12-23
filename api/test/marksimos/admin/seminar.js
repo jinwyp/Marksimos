@@ -4,7 +4,7 @@ var adminApiPath = "http://localhost:3000/marksimos/api/admin/";
 var utility = require('../../testUtility.js');
 var Q = require('q');
 
-describe("admin api 测试", function() {
+describe("Admin API Create Seminar", function() {
 
     beforeEach(function(done) {
         var account = {
@@ -33,6 +33,7 @@ describe("admin api 测试", function() {
             done();
         });
     });
+
 
     it("创建新的seminar,并分配学生到seminar", function(done) {
         var seminarInfo = {
@@ -96,4 +97,7 @@ describe("admin api 测试", function() {
         }).done(done);
     });
 });
+
+
+
 

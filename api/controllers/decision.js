@@ -177,8 +177,6 @@ exports.getDecision = function(req, res, next){
     }
 
 
-
-
     decisionAssembler.getDecision(seminarId, period, companyId)
     .then(function(result){
         res.send(result)
@@ -266,7 +264,7 @@ exports.updateSKUDecision = function(req, res, next){
 
     var jsonSKU = SKU;
     //create a SKU object using the data posted by the client
-    var tempSKU = createSKU(jsonSKU);
+    var tempSKU = filterSKUField(jsonSKU);
 
 
 
@@ -276,15 +274,15 @@ exports.updateSKUDecision = function(req, res, next){
     })
     .fail(function(err){
 
-    var message = JSON.stringify(err, ['message', 'lower', 'upper', 'modifiedField'], 2);
+        var message = JSON.stringify(err, ['message', 'lower', 'upper', 'modifiedField'], 2);
 
-    logger.log('!!!!: ' + message);
+        logger.log('!!!!: ' + message);
         res.send(403, message);
     })
     .done();
 
     //res.send(400, 'bad request');
-    function createSKU(postedSKU){
+    function filterSKUField(postedSKU){
         var result = {};
 
         var fields = ['d_SKUName','d_Advertising','d_AdditionalTradeMargin','d_FactoryPrice','d_RepriceFactoryStocks','d_IngredientsQuality','d_PackSize','d_ProductionVolume','d_PromotionalBudget','d_PromotionalEpisodes','d_TargetConsumerSegment','d_Technology','d_ToDrop','d_TradeExpenses','d_WholesalesBonusMinVolume','d_WholesalesBonusRate','d_WarrantyLength'];
@@ -298,7 +296,7 @@ exports.updateSKUDecision = function(req, res, next){
                 //         * (gameParameters.pgen.retail_Markup + 1);
                 // }
             }
-        })
+        });
 
         return result;
     }
@@ -405,7 +403,7 @@ exports.updateCompanyDecision = function(req, res, next){
 
     var tempCompanyDecision = createCompanyDecision(company_data);
 
-    logger.log('tempCompanyDecision:' + util.inspect(tempCompanyDecision));
+    //logger.log('tempCompanyDecision:' + util.inspect(tempCompanyDecision));
     companyDecisionModel.updateCompanyDecision(seminarId, period, companyId, tempCompanyDecision)
     .then(function(result){
         res.send({message: 'update success.'});

@@ -35,7 +35,9 @@ var paths = {
 
     cssSourcePath: ['./public/app/css/stylesheets/screen.css', './public/libs/bootstrap/dist/css/bootstrap.min.css', './public/app/css/stylesheets/main.css', './public/app/css/stylesheets/print.css', './public/app/css/stylesheets/ie.css', './public/libs/nvd3/nv.d3.css', './public/libs/angular-notify/dist/angular-notify.css'],
     unit_test: './api/test/marksimos/*',
-    scenario_test: './api/test/marksimos/**/*.js'
+    scenario_test: './api/test/marksimos/**/*.js',
+    scenario_test2: './api/test/marksimos/student/*.js',
+
 };
 
 
@@ -221,6 +223,12 @@ gulp.task('test', function() {
     return gulp.src(paths.scenario_test)
         .pipe(jasmine());
 });
+
+gulp.task('test2', function() {
+    return gulp.src(paths.scenario_test2)
+        .pipe(jasmine());
+});
+
 
 
 /********************  默认任务 he default task (called when you run `gulp` from cli)  ********************/
