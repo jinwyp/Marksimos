@@ -30,14 +30,20 @@ exports.getQuestionnaire = function(req, res, next) {
             if (result) {
                 return res.send(result);
             } else {
-                return questionnaireModel.insert(questionnaire).then(function(result) {
-                    if (!result) {
-                        throw {
-                            message: "failed to save questionnaire to db."
-                        }
-                    }
-                    res.send(result);
-                })
+                return {                  
+                    "seminarId": seminarId.toString(),
+                    "email": "guest1@hcdlearning.com",
+                    "q_FeelAboutMarkSimos": "",
+                    "q_ReasonForRecommendOrNot": "",
+                    "q_WillRecommend": true,
+                    "q_MostBenefit": 1,
+                    "q_TeachingSupport": [5, 5],
+                    "q_Interpreter": 5,
+                    "q_Product": [5, 5, 5, 5],
+                    "q_TeachingTeam": [5, 5, 5],
+                    "q_OverallSatisfactionWithTheProgram": [5, 5, 5, 5, 5, 5]
+                }
+
             }
         })
         .fail(function(err) {
@@ -116,19 +122,19 @@ exports.submitQuestionnaire = function(req, res, next) {
 
     //客户端提交的变量验证 
     //q_OverallSatisfactionWithTheProgram   
-    req.checkBody(['questionnaire', 'q_OverallSatisfactionWithTheProgram'], 'Ivalid q_OverallSatisfactionWithTheProgram.').isArrayLen(6).eachInt().eachBetween(1, 5);
+    req.checkBody(['questionnaire', 'q_OverallSatisfactionWithTheProgram'], 'Ivalid q_OverallSatisfactionWithTheProgram.').isArrayLen(6).eachEqualInt().eachBetween(1, 5);
 
     //q_TeachingTeam    
-    req.checkBody(['questionnaire', 'q_TeachingTeam', ], 'Ivalid q_TeachingTeam.').isArrayLen(3).eachInt().eachBetween(1, 5);
+    req.checkBody(['questionnaire', 'q_TeachingTeam', ], 'Ivalid q_TeachingTeam.').isArrayLen(3).eachEqualInt().eachBetween(1, 5);
 
     //q_Product   
-    req.checkBody(['questionnaire', 'q_Product', ], 'Ivalid q_Product.').isArrayLen(4).eachInt().eachBetween(1, 5);
+    req.checkBody(['questionnaire', 'q_Product', ], 'Ivalid q_Product.').isArrayLen(4).eachEqualInt().eachBetween(1, 5);
 
     //q_Product   
     req.checkBody(['questionnaire', 'q_Interpreter', ], 'Ivalid q_Interpreter.').isInt().between(1,5);
 
     //q_TeachingSupport    
-    req.checkBody(['questionnaire', 'q_TeachingSupport', ], 'Ivalid q_TeachingSupport.').isArrayLen(2).eachInt().eachBetween(1, 5);
+    req.checkBody(['questionnaire', 'q_TeachingSupport', ], 'Ivalid q_TeachingSupport.').isArrayLen(2).eachEqualInt().eachBetween(1, 5);
   
 
     //q_TeachingSupport    
