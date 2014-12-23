@@ -116,19 +116,19 @@ exports.submitQuestionnaire = function(req, res, next) {
 
     //客户端提交的变量验证 
     //q_OverallSatisfactionWithTheProgram   
-    req.checkBody(['questionnaire', 'q_OverallSatisfactionWithTheProgram'], 'Ivalid q_OverallSatisfactionWithTheProgram.').isArrayLen(6).eachInt().eachBetween(1, 5);
+    req.checkBody(['questionnaire', 'q_OverallSatisfactionWithTheProgram'], 'Ivalid q_OverallSatisfactionWithTheProgram.').isArrayLen(6).eachEqualInt().eachBetween(1, 5);
 
     //q_TeachingTeam    
-    req.checkBody(['questionnaire', 'q_TeachingTeam', ], 'Ivalid q_TeachingTeam.').isArrayLen(3).eachInt().eachBetween(1, 5);
+    req.checkBody(['questionnaire', 'q_TeachingTeam', ], 'Ivalid q_TeachingTeam.').isArrayLen(3).eachEqualInt().eachBetween(1, 5);
 
     //q_Product   
-    req.checkBody(['questionnaire', 'q_Product', ], 'Ivalid q_Product.').isArrayLen(4).eachInt().eachBetween(1, 5);
+    req.checkBody(['questionnaire', 'q_Product', ], 'Ivalid q_Product.').isArrayLen(4).eachEqualInt().eachBetween(1, 5);
 
     //q_Product   
     req.checkBody(['questionnaire', 'q_Interpreter', ], 'Ivalid q_Interpreter.').isInt().between(1,5);
 
     //q_TeachingSupport    
-    req.checkBody(['questionnaire', 'q_TeachingSupport', ], 'Ivalid q_TeachingSupport.').isArrayLen(2).eachInt().eachBetween(1, 5);
+    req.checkBody(['questionnaire', 'q_TeachingSupport', ], 'Ivalid q_TeachingSupport.').isArrayLen(2).eachEqualInt().eachBetween(1, 5);
   
 
     //q_TeachingSupport    

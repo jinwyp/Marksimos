@@ -1,5 +1,5 @@
 ﻿module.exports = (function() {
-    function _between(value, min, max,option) {
+    function _between(value, min, max, option) {
         switch (option) {
             //不包括大于那边的等于
             case "g":
@@ -27,8 +27,12 @@
         }
         return { min: min, max: max };
     }
-    function _isInt(value) {
+    function _toBeInt(value) {       
         return value << 0 === value;
+    }
+    //是整数或者是能转换成整数的数字
+    function _isEqualInt(value) {
+        return value << 0 == value
     }
     return {
         //判断是否为数组
@@ -43,7 +47,10 @@
             return value.length === num;
         },
         //等于
-        eq: function(value,num) {
+        equal: function(value,num) {
+            return value == num;
+        },
+        toBe: function(value, num) {
             return value === num;
         },
         //大于
@@ -79,16 +86,27 @@
             }           
             return true;
         },
-        //是否全部为整数
+        //是否全部为整数,严格
         eachInt: function(value) {
             if (value) {
                 for (var i = 0; i < value.length; i++) {
-                    if (!_isInt(value[i])) {
+                    if (!_toBeInt(value[i])) {
                         return false;
                     }
                 }
             }
             return true;
-        }  
+        },
+        //是否全部为整数，非严格
+        eachEqualInt: function(value) {
+            if (value) {
+                for (var i = 0; i < value.length; i++) {
+                    if (!_isEqualInt(value[i])) {
+                        return false;
+                    }
+                }
+            }
+            return true;
+        }
     };
 })();
