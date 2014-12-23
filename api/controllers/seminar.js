@@ -196,6 +196,7 @@ exports.assignStudentToSeminar = function(req, res, next){
         var companyAssignment = dbSeminar.companyAssignment;
         var isStudentAssignedToSeminar = false;
 
+
         for(var i=0; i < companyAssignment.length; i++){
             if(companyAssignment[i].studentList.indexOf(email) > -1){
                 isStudentAssignedToSeminar = true;
@@ -208,8 +209,12 @@ exports.assignStudentToSeminar = function(req, res, next){
             companyAssignment[companyId-1].studentList.push(email);
         }
 
+        var companyIdUpdate = companyId-1;
+
+        console.log(companyAssignment[companyId-1]);
+
         return seminarModel.update({'seminarId': seminarId, 'companyAssignment.companyId': companyId }, {
-            '$set': { 'companyAssignment.$.studentList': companyAssignment[companyId-1].studentList }
+            '$set': { 'companyAssignment.$.studentList': companyAssignment[companyIdUpdate].studentList }
         });
     })
     .then(function(numAffected){
@@ -333,7 +338,13 @@ exports.chooseSeminarForStudent = function(req, res, next){
             }
 
             sessionOperation.setSeminarId(req, dbSeminar.seminarId);
-            sessionOperation.setCurrentPeriod(req, dbSeminar.currentPeriod);
+
+            if(dbSeminar.currentPeriod > dbSeminar.simulationSpan){
+                sessionOperation.setCurrentPeriod(req, dbSeminar.simulationSpan); // very important
+            }else{
+                sessionOperation.setCurrentPeriod(req, dbSeminar.currentPeriod); // very important
+            }
+
 
             if(sessionOperation.getUserRole(req) === config.role.student){
 

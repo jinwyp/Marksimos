@@ -45,7 +45,13 @@ exports.getCurrnetStudentSeminar = function(req, res, next){
                 throw {message: "seminar " + seminarId +" doesn't exist."}
             }
 
-            sessionOperation.setCurrentPeriod(req, dbSeminar.currentPeriod); // very important
+            if(dbSeminar.currentPeriod > dbSeminar.simulationSpan){
+                sessionOperation.setCurrentPeriod(req, dbSeminar.simulationSpan); // very important
+            }else{
+                sessionOperation.setCurrentPeriod(req, dbSeminar.currentPeriod); // very important
+            }
+
+
             tempUser.seminarId = dbSeminar.seminarId;
 
             tempUser.numOfCompany = dbSeminar.companyNum;

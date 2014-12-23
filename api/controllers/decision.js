@@ -177,6 +177,8 @@ exports.getDecision = function(req, res, next){
     }
 
 
+
+
     decisionAssembler.getDecision(seminarId, period, companyId)
     .then(function(result){
         res.send(result)
