@@ -516,7 +516,7 @@
                 tableReport.companyStatus($scope.data.currentStudent.companyId).then(function(data, status, headers, config){
                     //        console.log(data);
                     $scope.data.tableA1CompanyStatus.allCompanyData = data;
-                    $scope.data.tableA1CompanyStatus.currentCompany = data[0];
+                    $scope.data.tableA1CompanyStatus.currentCompany = data[$scope.data.currentStudent.companyId-1];
                     $scope.data.tableA1CompanyStatus.currentSKU = $scope.data.tableA1CompanyStatus.currentCompany.SKU[0];
                     $scope.data.tableA1CompanyStatus.currentBrand = $scope.data.tableA1CompanyStatus.currentCompany.brand[0];
                     $scope.data.tableA1CompanyStatus.currentGlobal = $scope.data.tableA1CompanyStatus.currentCompany.global;
@@ -605,11 +605,9 @@
 
                 /********************  Table Report C5  ********************/
                 tableReport.marketTrends($scope.data.currentStudent.companyId).then(function(data, status, headers, config){
-                    //        console.log(data);
                     $scope.data.tableC5MarketTrends.allData = data;
-                    $scope.data.tableC5MarketTrends.currentTableData = $scope.data.tableC5MarketTrends.allData.SKU.averageDisplayPriceStdPack;
+                    $scope.data.tableC5MarketTrends.currentTableData = $scope.data.tableC5MarketTrends.allData.global.averageNetMarketPriceStdPack;
                     $scope.data.tableC5MarketTrends.chartData = chartReport.formatChartData($scope.data.tableC5MarketTrends.currentTableData);
-
                 });
                 $scope.switchTableCategoryC5 = function(category, field, unit){
                     $scope.data.tableC5MarketTrends.tableReportTab = category;
