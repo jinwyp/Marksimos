@@ -31,8 +31,7 @@ exports.getUser = function(req, res, next){
 exports.getCurrnetStudentSeminar = function(req, res, next){
     var userId = sessionOperation.getUserId(req);
 
-    userModel.findOne({_id: userId})
-    .then(function(user){
+    userModel.findOne({_id: userId}).then(function(user){
         if(!user){
             return res.send(500, {message: "user doesn't exist."});
         }
@@ -41,14 +40,18 @@ exports.getCurrnetStudentSeminar = function(req, res, next){
 
         var tempUser = JSON.parse(JSON.stringify(user));
 
-
-        return seminarModel.findOne({
-            seminarId: seminarId
-        })
-        .then(function(dbSeminar){
+        return seminarModel.findOne({seminarId: seminarId}).then(function(dbSeminar){
             if(!dbSeminar){
                 throw {message: "seminar " + seminarId +" doesn't exist."}
             }
+
+            if(dbSeminar.currentPeriod > dbSeminar.simulationSpan){
+                sessionOperation.setCurrentPeriod(req, dbSeminar.simulationSpan); // very important
+            }else{
+                sessionOperation.setCurrentPeriod(req, dbSeminar.currentPeriod); // very important
+            }
+
+
             tempUser.seminarId = dbSeminar.seminarId;
 
             tempUser.numOfCompany = dbSeminar.companyNum;

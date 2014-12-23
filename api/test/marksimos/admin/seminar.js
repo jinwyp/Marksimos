@@ -77,7 +77,7 @@ describe("admin api 测试", function() {
 
             ];
             return studentInfoList;
-        }).then(function(studentInfoList) {          
+        }).then(function(studentInfoList) {
             return Q.all([
                 Q.nfcall(request.post, adminApiPath + "assign_student_to_seminar", { json: studentInfoList[0] }),
                 Q.nfcall(request.post, adminApiPath + "assign_student_to_seminar", { json: studentInfoList[1] }),

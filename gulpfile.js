@@ -34,7 +34,8 @@ var paths = {
     imagespath : './public/app/css/images',
 
     cssSourcePath: ['./public/app/css/stylesheets/screen.css', './public/libs/bootstrap/dist/css/bootstrap.min.css', './public/app/css/stylesheets/main.css', './public/app/css/stylesheets/print.css', './public/app/css/stylesheets/ie.css', './public/libs/nvd3/nv.d3.css', './public/libs/angular-notify/dist/angular-notify.css'],
-    unit_test: './api/test/unit_test/*'
+    unit_test: './api/test/marksimos/*',
+    scenario_test: './api/test/marksimos/**/*.js'
 };
 
 
@@ -214,8 +215,10 @@ gulp.task('browser-sync', function() {
     });
 });
 
+
+
 gulp.task('test', function() {
-    return gulp.src('api/test/marksimos/admin/seminar.js')
+    return gulp.src(paths.scenario_test)
         .pipe(jasmine());
 });
 

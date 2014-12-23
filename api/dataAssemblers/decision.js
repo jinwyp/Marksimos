@@ -22,6 +22,7 @@ exports.getDecision = function(seminarId, period, companyId){
         }
 
         //combine decisions
+            console.log(brandDecisionList);
         brandDecisionList.forEach(function(brandDecision){
 
             var tempSKUDecisionList = [];
@@ -33,7 +34,7 @@ exports.getDecision = function(seminarId, period, companyId){
                 }
             }
             brandDecision.d_SKUsDecisions = tempSKUDecisionList;
-        })
+        });
 
         companyDecision.d_BrandsDecisions = brandDecisionList;
 

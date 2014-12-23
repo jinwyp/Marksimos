@@ -361,6 +361,8 @@ apiRouter.get('/marksimos/api/create_admin', function (req,res,next) {
     });
 })
 
+
+
 // get FAQ
 apiRouter.get('/marksimos/api/initfaq', faqController.initFAQ);
 apiRouter.get('/marksimos/api/faq', faqController.getFAQ);
@@ -436,7 +438,21 @@ apiRouter.post('/marksimos/api/admin/remove_student_from_seminar', requireAdminL
 apiRouter.post('/marksimos/api/admin/seminar/:seminar_id/init', requireAdminLogin({isRedirect : false}),  authorize('runSimulation'), initController.init());
 apiRouter.post('/marksimos/api/admin/seminar/:seminar_id/runsimulation',  requireAdminLogin({isRedirect : false}), authorize('runSimulation'), initController.runSimulation());
 
+
+
+//facilitator decisions, report, chart
+//note : To get full version of some reports, plz make sure user role != student
 apiRouter.get('/marksimos/api/admin/seminar/:seminar_id/decisions', requireAdminLogin({isRedirect : false}), authorize('runSimulation'), decisionController.getDecisionForFacilitator);
+
+apiRouter.get('/marksimos/api/admin/report/:report_name', requireAdminLogin({isRedirect : false}), reportController.getReport);
+apiRouter.get('/marksimos/api/admin/chart/:chart_name', requireAdminLogin({isRedirect : false}), chartController.getChart);
+apiRouter.get('/marksimos/api/admin/finalscore/:seminarId', requireAdminLogin({ isRedirect: false }), reportController.getAdminFinalScore);
+apiRouter.put('/marksimos/api/admin/sku/decision', requireAdminLogin({isRedirect : false}), decisionController.updateSKUDecision);
+
+
+//feedback
+apiRouter.get('/marksimos/api/admin/questionnaire/:seminarId', requireAdminLogin({ isRedirect: false }), questionnaireController.getQuestionnaireList);
+
 
 
 //reset student password
@@ -447,17 +463,6 @@ apiRouter.post('/marksimos/api/admin/resetPassword', requireAdminLogin({isRedire
 apiRouter.get('/marksimos/api/admin/user', requireAdminLogin({isRedirect : false}), userController.getUser);
 
 
-//facilitator report & chart view
-//note : To get full version of some reports, plz make sure user role != student
-
-apiRouter.get('/marksimos/api/admin/report/:report_name', requireAdminLogin({isRedirect : false}), reportController.getReport);
-apiRouter.get('/marksimos/api/admin/chart/:chart_name', requireAdminLogin({isRedirect : false}), chartController.getChart);
-apiRouter.get('/marksimos/api/admin/finalscore/:seminarId', requireAdminLogin({ isRedirect: false }), reportController.getAdminFinalScore);
-apiRouter.put('/marksimos/api/admin/sku/decision', requireAdminLogin({isRedirect : false}), decisionController.updateSKUDecision);
-
-
-//管理员获取 feedback 列表
-apiRouter.get('/marksimos/api/admin/questionnaire/:seminarId', requireAdminLogin({ isRedirect: false }), questionnaireController.getQuestionnaireList);
 
 function requireStudentLogin(params){
     return function(req, res, next){
