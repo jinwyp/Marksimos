@@ -31,6 +31,30 @@ describe("Student API Submit Decisions : ", function() {
     var period1 =[
         {
             companyId : 1,
+            "d_InvestmentInServicing": 0,
+            "d_InvestmentInTechnology": 110,
+            "d_InvestmentInEfficiency": 190,
+            "d_RequestedAdditionalBudget": 50,
+            brandDecisions:[
+                {
+                    "brand_id": 11,
+                    "brandName": "APONE",
+                    "seminarId": semanerId,
+                    "d_SalesForce": 40
+                },
+                {
+                    "brand_id": 12,
+                    "brandName": "ACOOP",
+                    "seminarId": semanerId,
+                    "d_SalesForce": 40
+                },
+                {
+                    "brand_id": 13,
+                    "brandName": "AOLIV",
+                    "seminarId": semanerId,
+                    "d_SalesForce": 40
+                }
+            ],
             skuDecisions :[
                 {
                     seminarId : semanerId,
@@ -296,6 +320,30 @@ describe("Student API Submit Decisions : ", function() {
         },
         {
             companyId : 2,
+            "d_InvestmentInServicing": 0,
+            "d_InvestmentInTechnology": 190,
+            "d_InvestmentInEfficiency": 200,
+            "d_RequestedAdditionalBudget": 0,
+            brandDecisions:[
+                {
+                    "brand_id": 21,
+                    "brandName": "BOBOB",
+                    "seminarId": semanerId,
+                    "d_SalesForce": 60
+                },
+                {
+                    "brand_id": 22,
+                    "brandName": "BSOFE",
+                    "seminarId": semanerId,
+                    "d_SalesForce": 60
+                },
+                {
+                    "brand_id": 23,
+                    "brandName": "BJUNE",
+                    "seminarId": semanerId,
+                    "d_SalesForce": 50
+                }
+            ],
             skuDecisions :[
                 {
                     seminarId : semanerId,
@@ -563,6 +611,30 @@ describe("Student API Submit Decisions : ", function() {
         },
         {
             companyId : 3,
+            "d_InvestmentInServicing": 0,
+            "d_InvestmentInTechnology": 200,
+            "d_InvestmentInEfficiency": 450,
+            "d_RequestedAdditionalBudget": 0,
+            brandDecisions:[
+                {
+                    "brand_id": 31,
+                    "brandName": "CASAH",
+                    "seminarId": semanerId,
+                    "d_SalesForce": 0
+                },
+                {
+                    "brand_id": 32,
+                    "brandName": "CEEKE",
+                    "seminarId": semanerId,
+                    "d_SalesForce": 0
+                },
+                {
+                    "brand_id": 33,
+                    "brandName": "CCHIN",
+                    "seminarId": semanerId,
+                    "d_SalesForce": 0
+                }
+            ],
             skuDecisions :[
                 {
                     seminarId : semanerId,
@@ -828,6 +900,30 @@ describe("Student API Submit Decisions : ", function() {
         },
         {
             companyId : 4,
+            "d_InvestmentInServicing": 0,
+            "d_InvestmentInTechnology": 0,
+            "d_InvestmentInEfficiency": 0,
+            "d_RequestedAdditionalBudget": 0,
+            brandDecisions:[
+                {
+                    "brand_id": 41,
+                    "brandName": "DOPOL",
+                    "seminarId": semanerId,
+                    "d_SalesForce": 0
+                },
+                {
+                    "brand_id": 42,
+                    "brandName": "DOOOP",
+                    "seminarId": semanerId,
+                    "d_SalesForce": 0
+                },
+                {
+                    "brand_id": 43,
+                    "brandName": "DOYAL",
+                    "seminarId": semanerId,
+                    "d_SalesForce": 0
+                }
+            ],
             skuDecisions :[
                 {
                     seminarId : semanerId,
@@ -1129,8 +1225,33 @@ describe("Student API Submit Decisions : ", function() {
 
         var resultPromise = [];
 
+        function companyAsync(company) {
+            request.put(studentApiPath + "company/decision", { json: company }, function(err, response, seminar) {
+                if (!err && response.statusCode == 200) {
 
-        function requestAsync(sku) {
+                    deferred.resolve(response);
+                }else{
+                    deferred.reject(new Error(err));
+                }
+            });
+
+            return deferred.promise;
+        }
+
+        function brandAsync(brand) {
+            request.put(studentApiPath + "brand/decision", { json: brand }, function(err, response, seminar) {
+                if (!err && response.statusCode == 200) {
+
+                    deferred.resolve(response);
+                }else{
+                    deferred.reject(new Error(err));
+                }
+            });
+
+            return deferred.promise;
+        }
+
+        function skuAsync(sku) {
             request.put(studentApiPath + "sku/decision", { json: sku }, function(err, response, seminar) {
                 if (!err && response.statusCode == 200) {
 
@@ -1144,7 +1265,39 @@ describe("Student API Submit Decisions : ", function() {
         }
 
 
+
+
+
+
+
         period1.forEach(function(company){
+
+            var companyModify = {
+                companyId : company.companyId,
+                company_data : {
+                    "d_InvestmentInServicing": company.d_InvestmentInServicing,
+                    "d_InvestmentInTechnology": company.d_InvestmentInTechnology,
+                    "d_InvestmentInEfficiency": company.d_InvestmentInEfficiency,
+                    "d_RequestedAdditionalBudget": company.d_RequestedAdditionalBudget,
+                }
+            };
+
+            resultPromise.push(companyAsync(companyModify));
+
+
+            company.brandDecisions.forEach(function(brand){
+
+                var brandModify = {
+                    companyId : company.companyId,
+                    brand_id : brand.brand_id,
+                    brand_data : {
+                        d_SalesForce : brand.d_SalesForce
+                    }
+                };
+
+                resultPromise.push(brandAsync(brandModify));
+
+            });
 
             company.skuDecisions.forEach(function(sku){
 
@@ -1159,10 +1312,11 @@ describe("Student API Submit Decisions : ", function() {
                     }
                 }
 
-                resultPromise.push(requestAsync(skuModify));
+                resultPromise.push(skuAsync(skuModify));
 
-                //console.log(period1[i].skuDecisions[j]);
             })
+
+
 
         });
 

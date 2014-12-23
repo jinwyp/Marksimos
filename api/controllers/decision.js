@@ -345,7 +345,7 @@ exports.updateBrandDecision = function(req, res, next){
         return res.send(403, {message: "Invalid period in session."});
     }
 
-    var tempBrand = createBrand(brand_data);
+    var tempBrand = filterBrandField(brand_data);
 
     brandDecisionModel.updateBrand(seminarId, period, companyId, brandId, tempBrand)
     .then(function(doc){
@@ -357,7 +357,7 @@ exports.updateBrandDecision = function(req, res, next){
     })
     .done();
 
-    function createBrand(postedBrand){
+    function filterBrandField(postedBrand){
         var result = {};
 
         var fields = ['d_SalesForce'];
