@@ -30,14 +30,20 @@ exports.getQuestionnaire = function(req, res, next) {
             if (result) {
                 return res.send(result);
             } else {
-                return questionnaireModel.insert(questionnaire).then(function(result) {
-                    if (!result) {
-                        throw {
-                            message: "failed to save questionnaire to db."
-                        }
-                    }
-                    res.send(result);
-                })
+                return {                  
+                    "seminarId": seminarId.toString(),
+                    "email": "guest1@hcdlearning.com",
+                    "q_FeelAboutMarkSimos": "",
+                    "q_ReasonForRecommendOrNot": "",
+                    "q_WillRecommend": true,
+                    "q_MostBenefit": 1,
+                    "q_TeachingSupport": [5, 5],
+                    "q_Interpreter": 5,
+                    "q_Product": [5, 5, 5, 5],
+                    "q_TeachingTeam": [5, 5, 5],
+                    "q_OverallSatisfactionWithTheProgram": [5, 5, 5, 5, 5, 5]
+                }
+
             }
         })
         .fail(function(err) {
