@@ -163,21 +163,24 @@ exports.updateSeminar = function(req, res, next){
  * Facilitator can call this API
  */
 exports.assignStudentToSeminar = function(req, res, next){
+   
+  
+
+    req.checkBody('email', 'Invalid email.').notEmpty().isEmail();
+
+    req.checkBody('seminarId', 'Invalid seminar id.').notEmpty().isInt();
+
+    req.checkBody('companyId', 'Invalid seminar id.').notEmpty().isInt();
+
+ 
     var email = req.body.email;
-    var seminarId = req.body.seminar_id;
-    var companyId = req.body.company_id;
-
-    if(!email){
-        return res.send(400, {message: "Invalid email."});
-    }
-
-    if(!seminarId){
-        return res.send(400, {message: "Invalid seminar id."})
-    }
+    var seminarId = req.body.seminar_id.toString();
+    var companyId = +req.body.company_id;
 
 
-    if(!companyId){
-        return res.send(400, {message: "Invalid company_id."})
+    if (req.validationErr) {
+        res.send(400, { message: "Invalid company_id." });
+        return;
     }
 
     userModel.findOne({email: email})
@@ -205,12 +208,12 @@ exports.assignStudentToSeminar = function(req, res, next){
 
         //if this student has not been added to this seminar, add it
         if(!isStudentAssignedToSeminar){
-            companyAssignment[companyId-1].studentList.push(email);
+            return seminarModel.update({ 'seminarId': seminarId, 'companyAssignment.companyId': companyId }, {
+                '$addToSet': { 'companyAssignment.$.studentList': email }
+            });
         }
-
-        return seminarModel.update({'seminarId': seminarId, 'companyAssignment.companyId': companyId }, {
-            '$set': { 'companyAssignment.$.studentList': companyAssignment[companyId-1].studentList }
-        });
+        return 0;
+      
     })
     .then(function(numAffected){
         if(numAffected!==1){
