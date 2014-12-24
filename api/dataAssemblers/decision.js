@@ -181,7 +181,7 @@ exports.getSKUDecisions = function(decision){
                 d_TradeExpenses: SKUDecision.d_TradeExpenses,
                 d_WholesalesBonusMinVolume: SKUDecision.d_WholesalesBonusMinVolume,
                 d_WholesalesBonusRate: SKUDecision.d_WholesalesBonusRate,
-                d_WarrantyLength: SKUDecision.d_WarrantyLength,
+                d_WarrantyLength: SKUDecision.d_WarrantyLength
             })
         }
     }
