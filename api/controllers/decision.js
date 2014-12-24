@@ -286,11 +286,6 @@ exports.updateSKUDecision = function(req, res, next){
             if(postedSKU[field] !== undefined){
                 result[field] = postedSKU[field];
 
-                // //update consumer price automatically if user try to update factory price
-                // if(field === 'd_FactoryPrice'){
-                //     result.d_ConsumerPrice = result.d_FactoryPrice[0] * (gameParameters.pgen.wholesale_Markup + 1)
-                //         * (gameParameters.pgen.retail_Markup + 1);
-                // }
             }
         });
 
@@ -316,6 +311,12 @@ exports.updateBrandDecision = function(req, res, next){
     var seminarId = req.session.seminarId;
     var period = req.session.currentPeriod;
 
+    var userRole = req.session.userRole;
+
+    if(userRole !== config.role.student){
+        period = req.body.periodId;
+        seminarId = req.body.seminarId;
+    }
 
     if(!brandId){
         return res.send(403, {message: "Invalid parameter brand_id."});
@@ -370,6 +371,13 @@ exports.updateCompanyDecision = function(req, res, next){
 
     var period = req.session.currentPeriod;
     var seminarId = req.session.seminarId;
+
+    var userRole = req.session.userRole;
+
+    if(userRole !== config.role.student){
+        period = req.body.periodId;
+        seminarId = req.body.seminarId;
+    }
 
     if(!company_data){
         return res.send(403, {message: "Invalid parameter company_data"});
