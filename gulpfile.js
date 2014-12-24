@@ -12,9 +12,10 @@ var gulp = require('gulp'),
     ngAnnotate = require('gulp-ng-annotate'),
     minifyHtml = require("gulp-minify-html"),
     ngTemplateCache = require('gulp-angular-templatecache'),
+    jasmine = require('gulp-jasmine'),
     childProcess = require('child_process');
 
-
+var customReportor = require('./api/test/customReportor.js');
 
 var paths = {
     base: './public',
@@ -33,7 +34,10 @@ var paths = {
     imagespath : './public/app/css/images',
 
     cssSourcePath: ['./public/app/css/stylesheets/screen.css', './public/libs/bootstrap/dist/css/bootstrap.min.css', './public/app/css/stylesheets/main.css', './public/app/css/stylesheets/print.css', './public/app/css/stylesheets/ie.css', './public/libs/nvd3/nv.d3.css', './public/libs/angular-notify/dist/angular-notify.css'],
-    unit_test: './api/test/unit_test/*'
+    unit_test: './api/test/marksimos/*',
+    scenario_testAdmin: './api/test/marksimos/admin/*.js',
+    scenario_testStudent: './api/test/marksimos/student/*.js'
+
 };
 
 
@@ -215,6 +219,15 @@ gulp.task('browser-sync', function() {
 
 
 
+gulp.task('teststudent', function() {
+    return gulp.src(paths.scenario_testStudent)
+        .pipe(jasmine());
+});
+
+gulp.task('testadmin', function() {
+    return gulp.src(paths.scenario_testAdmin)
+        .pipe(jasmine());
+});
 
 
 
@@ -227,3 +240,5 @@ gulp.task('jin', [ 'compass', 'templates', 'nodemonjin', 'watchdev']);
 gulp.task('jingo', ['compass', 'templates', 'nodemonjin', 'watch']);
 
 gulp.task('sunyun', ['nodemonsunyun', 'watchdev']);
+
+

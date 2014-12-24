@@ -1020,6 +1020,9 @@ body a, body button {
 .mainbody .IE11_chart_A3 {
   height: 600px;
 }
+.mainbody .IE11_chart_C2 {
+  height: 800px;
+}
 .mainbody .IE11_chart_B1 svg {
   width: 400px;
   height: 330px;

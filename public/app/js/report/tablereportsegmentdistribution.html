@@ -30,13 +30,12 @@
             <td>{{'HomePageSegmentLabelPragmatic' | translate}}</td>
             <td ng-repeat="quarter in data">{{quarter.pragmatic * plus| number : 2}}{{unit}}</td>
         </tr>
-        <tr>
+        <tr ng-if="showAllSegments">
             <td>{{'HomePageSegmentLabelAllSegments' | translate}}</td>
             <td ng-repeat="quarter in data">{{quarter.allSegments * plus| number : 2}}{{unit}}</td>
         </tr>
     </tbody>
 </table>
-
 
 <div class="pull-right">
     <div class="btn-group-vertical btn-group-xs">

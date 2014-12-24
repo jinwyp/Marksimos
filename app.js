@@ -8,15 +8,16 @@ var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 var mongoose = require('mongoose');
 
+var morgan = require('morgan');
+
 var session = require('cookie-session');
 var expressValidator = require('express-validator');
 var sessionOperation = require('./common/sessionOperation.js');
 var config = require('./common/config.js');
-
+var customValidator = require('./common/express-custom-validator.js');
 var router = require('./api/routes.js');				// get an instance of the express Router
 
 var fs = require('fs');
-var morgan = require('morgan');
 
 
 
@@ -42,7 +43,9 @@ app.use(cookieParser());
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
-app.use(expressValidator());
+app.use(expressValidator({
+    customValidators: customValidator
+}));
 
 
 app.use(session({
@@ -60,36 +63,94 @@ app.use('/', router);
 
 
 
-
-
 // catch 404 and forwarding to error handler
-app.use(function(req, res, next) {
-    var err = new Error('404 Page Not Found');
-    err.status = 404;
-    next(err);
+app.use(function(req, res, next){
+
+    res.status(404);
+
+    if (app.get('env') !== 'production') {
+
+    }
+
+    // respond with json
+    if (/application\/json/.test(req.get('accept'))) {
+        res.send({ message: '404 Not found! URL: ' + req.url });
+        return;
+    }
+
+
+    // respond with html page
+    res.set('Content-Type', 'text/html; charset=utf-8');
+    if (req.accepts('html')) {
+
+        res.render('page404.ejs', {
+            'title' : '404 Page Not Found',
+            'url': req.url });
+        return;
+    }
+
+    // default to plain-text. send()
+    res.type('txt').send('Not found');
 });
 
-/// error handlers
 
-// development error handler
-// will print stacktrace
-if (app.get('env') === 'development') {
-    app.use(function(err, req, res, next) {
-        res.json(500, {
-            message: err.message,
-            error: err
-        });
-    });
-}
 
-// production error handler
-// no stacktraces leaked to user
-app.use(function(err, req, res, next) {
-    res.json(500, {
-        message: err.message,
-        error: {}
-    });
+app.use(function(err, req, res, next){
+    // we may use properties of the error object
+    // here and next(err) appropriately, or if
+    // we possibly recovered from the error, simply next().
+
+    console.log(typeof err.message,  err.message);
+    if(typeof err.message !== 'undefined' && err.message.toLowerCase().substr(0, 6) == 'cancel' ){
+        // respond promise stop chains info with no system error
+        res.status(err.status || 400);
+
+        // respond with json
+        if (/application\/json/.test(req.get('accept'))) {
+            res.send({
+                title: '400 Data Error',
+                message: err.message });
+            return;
+        }
+
+        res.set('Content-Type', 'text/html; charset=utf-8');
+        // respond with html page
+        if (req.accepts('html')) {
+            res.render('page500.ejs', {
+                'title' : '400 Data Error',
+                'error': err.message });
+            return;
+        }
+
+    }else{
+        // respond 500 system error
+        res.status(err.status || 500);
+
+        // respond with json
+        if (/application\/json/.test(req.get('accept'))) {
+            res.send({
+                title: '500 System Error',
+                message: err.message  });
+            return;
+        }
+
+        res.set('Content-Type', 'text/html; charset=utf-8');
+        // respond with html page
+        if (req.accepts('html')) {
+            res.render('page500.ejs', {
+                'title' : '500 System Error',
+                'error': err.message  });
+            return;
+        }
+
+
+
+    }
+
+
+
 });
+
 
 
 app.set('port', process.env.PORT || 3000);
@@ -103,6 +164,8 @@ db.once('open', function(response,request) {
       console.log('Express server listening on port ' + server.address().port);
     });
 });
+
+
 
 
 module.exports = app;

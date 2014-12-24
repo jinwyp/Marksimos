@@ -370,7 +370,7 @@
                         angular.forEach(seminar.companyAssignment, function(company, key) {
                             seminar.companyMember.push({
                                 name: showCompanyName(key),
-                                students: company
+                                students: company.studentList
                             });
                         });
                     });
@@ -398,6 +398,7 @@
 
                 }).error(function(data, status, headers, config) {
                     console.log(data);
+                    $notification.error('Failed', data.message);
                 });
             }
         };
@@ -413,7 +414,7 @@
 
                 }).error(function(data, status, headers, config) {
                     console.log(data);
-                    $notification.error('Save failed', data.message);
+                    $notification.error('Failed', data.message);
                 });
             }
         };
@@ -427,6 +428,7 @@
 
                 }).error(function(data, status, headers, config) {
                     console.log(data);
+                    $notification.error('Failed', data.message);
                 });
             }
         };
@@ -443,7 +445,7 @@
 
                 }).error(function(data, status, headers, config) {
                     console.log(data);
-                    $notification.error('Save failed', data.message);
+                    $notification.error('Failed', data.message);
                 });
             }
         };
@@ -457,6 +459,7 @@
 
                 }).error(function(data, status, headers, config) {
                     console.log(data);
+                    $notification.error('Failed', data.message);
                 });
             }
         };
@@ -471,7 +474,8 @@
                     $notification.success('Save success', 'Create Student success');
 
                 }).error(function(data, status, headers, config) {
-                    $notification.error('Save failed', data.message);
+                    console.log(data);
+                    $notification.error('Failed', data.message);
                 });
             }
         };
@@ -485,7 +489,8 @@
                 $notification.success('Save success', 'Reset Student Password success');
 
             }).error(function(data, status, headers, config) {
-                $notification.error('Save failed', data.message);
+                console.log(data);
+                $notification.error('Failed', data.message);
             });
         };
 
@@ -498,6 +503,7 @@
 
                 }).error(function(data, status, headers, config) {
                     console.log(data);
+                    $notification.error('Failed', data.message);
                 });
             }
         };
@@ -513,7 +519,7 @@
 
                 }).error(function(data, status, headers, config) {
                     console.log(data);
-                    $notification.error('Save failed', data.message);
+                    $notification.error('Failed', data.message);
                 });
             }
         };
@@ -528,11 +534,12 @@
 
             if ($scope.data.addStudentToSeminar.company_id === 0 || angular.isUndefined(studentemail) || studentemail === "") {
                 $scope.css.seminarId = seminarid;
-            } else {
+            }else{
                 $scope.css.seminarId = 0;
                 $scope.data.addStudentToSeminar.email = studentemail;
 
                 $http.post('/marksimos/api/admin/assign_student_to_seminar', $scope.data.addStudentToSeminar).success(function(data, status, headers, config) {
+
                     app.getSeminarInit();
                     $notification.success('Save success', 'Add Student to Seminar success');
 
@@ -542,7 +549,7 @@
 
                 }).error(function(data, status, headers, config) {
                     console.log(data);
-                    $notification.error('Save failed', data.message);
+                    $notification.error('Failed', data.message);
                 });
             }
         };
@@ -563,35 +570,42 @@
 
                 }).error(function(data, status, headers, config) {
                     console.log(data);
-                    $notification.error('Save failed', data.message);
+                    $notification.error('Failed', data.message);
                 });
             }
         };
+
+
         /********************  Init Seminar  ********************/
-        $scope.initSeminar = function(seminarid) {
+        $scope.initSeminar = function(seminarId) {
             $scope.css.runButtonDisabled = true;
-            $http.post('/marksimos/api/admin/init', { seminar_id: seminarid }).success(function(data, status, headers, config) {
+            Admin.initSeminar(seminarId).success(function(data, status, headers, config) {
                 app.getSeminarInit();
                 $notification.success('Save success', 'Init Seminar success');
                 $scope.css.runButtonDisabled = false;
+
             }).error(function(data, status, headers, config) {
-                $notification.error('Save failed', data.message);
+                console.log(data);
+                $notification.error('Failed', data.message);
                 $scope.css.runButtonDisabled = false;
             });
         };
         /********************  Run Seminar  ********************/
-        $scope.runSeminar = function(seminarid, round) {
+        $scope.runSeminar = function(seminarId) {
             $scope.css.runButtonDisabled = true;
-            $http.post('/marksimos/api/admin/runsimulation/' + seminarid + '/' + round).success(function(data, status, headers, config) {
+
+            Admin.runSeminar(seminarId, true, []).success(function(data, status, headers, config) {
                 app.getSeminarInit();
                 $notification.success('Save success', 'Run Seminar success');
                 $scope.css.runButtonDisabled = false;
 
             }).error(function(data, status, headers, config) {
-                $notification.error('Save failed', data.message);
+                console.log(data);
+                $notification.error('Failed', data.message);
                 $scope.css.runButtonDisabled = false;
             });
         };
+
 
 
     }]);
@@ -600,13 +614,46 @@
 
 
 
-    angular.module('marksimosadmin').controller('adminMarksimosReportController', ['$scope', '$http', '$notification', '$translate', 'AdminTable', 'chartReport', 'AdminChart', function($scope, $http, $notification,$translate, AdminTable, chartReport, AdminChart) {
+    angular.module('marksimosadmin').controller('adminMarksimosReportController', ['$scope', '$http', '$notification', '$translate', 'Admin', 'AdminTable', 'chartReport', 'AdminChart', function($scope, $http, $notification,$translate, Admin,  AdminTable, chartReport, AdminChart) {
         $scope.css = {
-            currentReportMenu: 'A1',
-            tableReportTab: 'SKU'
+            currentReportMenu: 'AllDecisions',
+            tableReportTab: 'Global',
+            tableReportTabC2 : 'SKU',
+            currentSeminarId : 0
         };
 
         $scope.data = {
+
+            allDecisions: {
+                data           : [],
+                allCompanyId   : [1, 2, 3, 4, 5, 6, 7, 8, 9],
+                allPeriod      : [1, 2, 3, 4, 5, 6, 7, 8, 9],
+                currentCompanyId : '!!',
+                currentPeriod  : 1
+            },
+
+            reRunCompanies : [false, false, false, false, false, false, false, false, false],
+            reRunDecision : {
+                seminarId : '',
+                periodId : 1,
+                companyId : 1,
+                brand_id : '',
+                sku : {},
+                sku_id : '',
+                sku_fieldname : '',
+                sku_fieldvalue : '',
+                sku_data : {}
+            },
+
+            tableFinalScore: {
+                data: [],
+                showScaled: true
+            },
+            questionnaire: {
+                data: [],
+                currentQuestionnaire:null
+            },
+
             //A1 Company Status
             tableA1CompanyStatus: {
                 allCompanyData: [],
@@ -648,6 +695,7 @@
                 currentTable: 1,
                 currentTableData: {},
                 currentTableUnit: "%",
+                currentTableShowAllSegments : false,
                 chartConfig: chartReport.getChartConfig1(),
                 chartData: $scope.dataChartSimple
             },
@@ -812,7 +860,14 @@
             init: function() {
 
                 var that = this;
+                //加载 All Comapany Decisions
+                that.loadingAllDecisions();
 
+                //加载final scores
+                that.loadingFinalScoresData();
+
+                //加载Questionnaire
+                that.loadingQuestionnaireData();
                 chartReport.initTranslate().then(function() {
                     //添加事件
                     that.runOnce();
@@ -845,7 +900,6 @@
                     that.loadingChartC2Data();
                     //加载C4
                     that.loadingChartC4Data();
-
 
                 });
             },
@@ -909,8 +963,9 @@
 
 
                 /********************  Table C3 Segment Distribution  *******************/
-                $scope.switchTableReportC3 = function(order, field, unit) {
+                $scope.switchTableReportC3 = function(order, field, unit, showAllSegments) {
                     $scope.data.tableC3SegmentDistribution.currentTable = order;
+                    $scope.data.tableC3SegmentDistribution.currentTableShowAllSegments = showAllSegments;
                     $scope.data.tableC3SegmentDistribution.currentTableData = $scope.data.tableC3SegmentDistribution.allData[field];
                     $scope.data.tableC3SegmentDistribution.chartData = chartReport.formatChartData($scope.data.tableC3SegmentDistribution.currentTableData);
                     $scope.data.tableC3SegmentDistribution.currentTableUnit = unit;
@@ -978,7 +1033,8 @@
 
                 /********************  Chart C2  ********************/
                 $scope.switchPerceptionMapsData = function(flag) {
-                    if (flag === 'sku') {
+                    $scope.css.tableReportTabC2 = flag;
+                    if (flag === 'SKU') {
                         $scope.data.chartC21PerceptionMap.dataChart = $scope.data.chartC21PerceptionMap.data.dataSKU;
                     } else {
                         $scope.data.chartC21PerceptionMap.dataChart = $scope.data.chartC21PerceptionMap.data.dataBrand;
@@ -1127,9 +1183,113 @@
                 };
 
 
+                /********************  Run Seminar  ********************/
+                $scope.reRunSeminar = function() {
+
+                    Admin.runSeminar($scope.css.currentSeminarId, false, $scope.data.reRunCompanies).success(function(data, status, headers, config) {
+                        $notification.success('Save success', 'Rerun Seminar Decisions Success');
+
+                    }).error(function(data, status, headers, config) {
+                        console.log(data);
+                        $notification.error('Failed', data.message);
+                    });
+                };
+
+                $scope.clickSkuField = function(period, company_id, brand_id, sku, sku_id, skuFieldName, skuValue) {
+                    $scope.data.reRunDecision.seminarId = $scope.css.currentSeminarId;
+                    $scope.data.reRunDecision.periodId = period;
+                    $scope.data.reRunDecision.companyId = company_id;
+
+                    $scope.data.reRunDecision.brand_id = brand_id;
+                    $scope.data.reRunDecision.sku = sku;
+                    $scope.data.reRunDecision.sku_id = sku_id;
+
+                    $scope.data.reRunDecision.sku_fieldname= skuFieldName;
+                    $scope.data.reRunDecision.sku_fieldvalue= skuValue;
+
+
+
+                };
+
+                $scope.updateSkuDecision = function() {
+
+                    $scope.data.reRunDecision.sku_data[$scope.data.reRunDecision.sku_fieldname] = $scope.data.reRunDecision.sku_fieldvalue;
+
+
+                    if($scope.data.reRunDecision.sku_fieldname === 'd_PromotionalEpisodes'){
+                        //if(!angular.isUndefined(weekindex)){
+                        //    // 针对d_PromotionalEpisodes 字段需要特殊处理
+                        //    $scope.data.currentModifiedSku.sku_data[$scope.data.reRunDecision.sku_fieldname][weekindex] = segmentOrWeek;
+                        //}
+
+                    }else if($scope.data.reRunDecision.sku_fieldname === 'd_FactoryPrice'){
+                        // 针对 d_FactoryPrice 字段需要特殊处理
+                        $scope.data.reRunDecision.sku_data[$scope.data.reRunDecision.sku_fieldname] = $scope.data.reRunDecision.sku[$scope.data.reRunDecision.sku_fieldname];
+                        $scope.data.reRunDecision.sku_data[$scope.data.reRunDecision.sku_fieldname][0] = Number($scope.data.reRunDecision.sku_fieldvalue);
+
+                    }
+
+                    Admin.updateSkuDecision($scope.data.reRunDecision).success(function(data, status, headers, config) {
+                        $notification.success('Save success', 'Update SKU Decision Success');
+
+                    }).error(function(data, status, headers, config) {
+                        console.log(data);
+                        $notification.error('Failed', data.message);
+                    });
+
+                };
+
 
             },
-            reRun: function() { },
+
+
+            loadingAllDecisions: function() {
+                $scope.css.currentSeminarId = /.+\/adminhomereport\/(\d+).*/.exec(window.location.href)[1] || 0;
+
+                if($scope.css.currentSeminarId){
+                    Admin.getAllCompanyDecisionsOfAllPeriods($scope.css.currentSeminarId).success(function(data, status, headers, config) {
+                        $scope.data.allDecisions.data = data;
+
+                        $scope.data.allDecisions.allCompanyId = $scope.data.allDecisions.allCompanyId.slice(0, data[data.length - 1].d_CID);
+                        $scope.data.reRunCompanies = $scope.data.reRunCompanies.slice(0, data[data.length - 1].d_CID);
+                        $scope.data.allDecisions.allPeriod = $scope.data.allDecisions.allPeriod.slice(0, data[data.length - 1].period);
+
+                        $scope.data.allDecisions.currentPeriod = $scope.data.allDecisions.allPeriod[$scope.data.allDecisions.allPeriod.length - 1];
+
+                    });
+                }
+
+            },
+            loadingFinalScoresData: function() {
+                var seminerID = /.+\/adminhomereport\/(\d+).*/.exec(window.location.href)[1] || 0;
+                Admin.getFinalScores(seminerID).success(function(data, status, headers, config) {
+                    $scope.data.tableFinalScore.data = data;                   
+                });
+            },
+            loadingQuestionnaireData: function() {
+                var seminerID = /.+\/adminhomereport\/(\d+).*/.exec(window.location.href)[1] || 0;
+                Admin.getQuestionnaire(seminerID).success(function(data, status, headers, config) {                  
+                    $scope.data.questionnaire.data = data;
+                    if (data[0].studentList.length) {
+                        $scope.data.questionnaire.currentQuestionnaire = data[0].studentList[0].questionnaire;
+                    }                    
+                    $scope.data.questionnaire.radio_OverallSatisfactionWithThePrograms = {
+                        info: ['ChallengeStrategicThinkingAbility', 'DevelopAnIntegratedPerspective', 'TestPersonalAbilityOfBalancingRisks', 'ChallengeLeadershipAndTeamworkAbility', 'ChallengeAnalysisAndDecisionMakingAbility', 'SimulationInteresting']
+                    };
+                    $scope.data.questionnaire.radio_TeachingTeams = {
+                        info: ['FeedbackOnSimulationDecisions', 'ExpandingViewAndInspireThinking', 'Lectures']
+                    };
+                    $scope.data.questionnaire.radio_Products = {
+                        info: ['OverallProductUsageExperience', 'UserInterfaceExperience', 'EaseOfNavigation', 'ClarityOfWordsUsed']
+                    };
+                    $scope.data.questionnaire.radio_TeachingSupports = {
+                        info: ['Helpfulness', 'QualityOfTechnicalSupport']
+                    };
+                    $scope.data.questionnaire.radio_MostBenefits = {
+                        info: ["JoinProgram", "CompanyInHouse", "OpenClass"]
+                    };
+                });
+            },
             loadingCompanyData: function() {
                 /********************  Table A1 Company Status  *******************/
                 //获取数据
@@ -1301,7 +1461,6 @@
                     $scope.data.chartC21PerceptionMap.currentPeriod = $scope.data.chartC21PerceptionMap.allData.length - 4;
                     $scope.data.chartC21PerceptionMap.data = $scope.data.chartC21PerceptionMap.allData[$scope.data.chartC21PerceptionMap.currentPeriod + 3];
                     $scope.data.chartC21PerceptionMap.dataChart = $scope.data.chartC21PerceptionMap.data.dataSKU;
-                    console.log($scope.data.chartC21PerceptionMap);
                 });
             },
             loadingChartC4Data: function() {
@@ -1323,6 +1482,7 @@
                 });
             }
         };
+
         //初始化程序
         app.init();
 

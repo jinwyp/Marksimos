@@ -18,7 +18,7 @@
 
 
     angular.module('marksimos.websitecomponent').directive('userHeader', ['$window', '$translate', 'Student', userHeaderComponent ]);
-    angular.module('marksimos.websitecomponent').directive('headerAdmin', ['$window', 'Student', adminHeaderComponent]);
+    angular.module('marksimos.websitecomponent').directive('headerAdmin', ['$window', '$translate', 'Student', adminHeaderComponent]);
     angular.module('marksimos.websitecomponent').directive('menuAdmin', [adminMenuComponent]);
 
 
@@ -71,7 +71,7 @@
     }
 
 
-    function adminHeaderComponent($window, Student){
+    function adminHeaderComponent($window, $translate, Student){
         return {
             scope: {
                 currentuser : '='
@@ -79,6 +79,9 @@
             restrict: 'AE',
             templateUrl: 'adminheader.html',
             link: function (scope, element, attrs) {
+                scope.changeLanguage = function (langKey) {
+                    $translate.use(langKey);
+                };
 
                 scope.clickLogout = function () {
                     Student.logOut().success(function(data, status, headers, config){
@@ -255,7 +258,8 @@
                 data : '=',
                 unit : '=',
                 chartdata : '=',
-                chartconfig : '='
+                chartconfig : '=',
+                showAllSegments : '=allsegments'
             },
             restrict: 'AE',
             templateUrl: 'tablereportsegmentdistribution.html',
@@ -269,6 +273,12 @@
                 }else if (scope.unit === "%"){
                     scope.plus = 1;
                 }
+
+                attrs.$observe('showAllSegments', function(value){
+                    if (angular.isUndefined(value)) {
+                        value = false;
+                    }
+                });
 
             }
         };
@@ -368,15 +378,35 @@
     angular.module('marksimos.websitecomponent').directive('tableReportFinalScore', [function() {
         return {
             scope: {
-                data : '=',
-                selectScore: '='
+                data: '=',
+                showScaled:'='
             },
-            restrict: 'AE',
+
+            restrict: 'AEC',
             templateUrl: 'tablereportfinalscore.html',
-            link : function(scope, element, attrs){
+            link: function(scope, element, attrs) {
+
+                if (scope.data && scope.data.length) {
+                    scope.selectedIndex = scope.data.length - 1;
+                }
+
+                attrs.$observe('showScaled', function(value){
+                    if (value === undefined) {
+                        value = true;
+                    }
+                });
+
+                scope.changeIndex = function(index) {
+                    scope.selectedIndex = index;
+                };
             }
-        };
+        }; 
     }]);
+
+
+
+
+
 
 
     angular.module('marksimos.websitecomponent').directive('genParseMd', ['mdParse', 'sanitize', 'pretty', 'isVisible', '$timeout',

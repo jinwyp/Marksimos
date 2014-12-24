@@ -7,7 +7,6 @@ var Q = require('q');
  * Get decision of one period
  */
 exports.getDecision = function(seminarId, period, companyId){
-    console.log(seminarId, period, companyId);
     return Q.all([
         companyDecisionModel.findOne(seminarId, period, companyId),
         brandDecisionModel.findAllInCompany(seminarId, period, companyId),
@@ -34,13 +33,71 @@ exports.getDecision = function(seminarId, period, companyId){
                 }
             }
             brandDecision.d_SKUsDecisions = tempSKUDecisionList;
-        })
+        });
 
         companyDecision.d_BrandsDecisions = brandDecisionList;
 
         return companyDecision;
     });
-}
+};
+
+/**
+ * Get decision of all period
+ */
+exports.getAllCompanyDecisionsOfAllPeriod = function(seminarId){
+    return Q.all([
+        companyDecisionModel.query.find({seminarId:seminarId}).where('period').gt(0).lean().exec(),
+        brandDecisionModel.query.find({seminarId:seminarId}).where('period').gt(0).lean().exec(),
+        SKUDecisionModel.query.find({seminarId:seminarId}).where('period').gt(0).lean().exec()
+    ])
+        .spread(function(companyDecision, brandDecisionList, SKUDecisionList){
+
+            if(!companyDecision || !brandDecisionList || !SKUDecisionList){
+                throw {message: 'companyDecision / brandDecisionList / SKUDecisionList is empty.'}
+            }
+
+            //combine decisions
+
+            companyDecision.forEach(function(company){
+
+                company.brandDecisions = [];
+                company.SKUDecisions = [];
+
+
+                SKUDecisionList.forEach(function(SKUDecision){
+                    if(SKUDecision.d_CID === company.d_CID && SKUDecision.period === company.period){
+
+                        company.SKUDecisions.push(SKUDecision);
+                    }
+                });
+
+                brandDecisionList.forEach(function(brandDecision){
+
+                    if(brandDecision.d_CID === company.d_CID && brandDecision.period === company.period){
+                        company.brandDecisions.push(brandDecision);
+                    }
+                });
+
+                company.brandDecisions.forEach(function(brandDecision2){
+                    brandDecision2.SKUDecisions = [];
+
+                    company.SKUDecisions.forEach(function(SKUDecision2){
+
+                        if(SKUDecision2.d_BrandID === brandDecision2.d_BrandID){
+                            brandDecision2.SKUDecisions.push(SKUDecision2);
+                        }
+                    })
+
+                });
+
+                company.SKUDecisions = null;
+
+            });
+
+            return companyDecision;
+        });
+};
+
 
 /**
  * Convert decision to a companyDecision object which can be saved to db
@@ -124,7 +181,7 @@ exports.getSKUDecisions = function(decision){
                 d_TradeExpenses: SKUDecision.d_TradeExpenses,
                 d_WholesalesBonusMinVolume: SKUDecision.d_WholesalesBonusMinVolume,
                 d_WholesalesBonusRate: SKUDecision.d_WholesalesBonusRate,
-                d_WarrantyLength: SKUDecision.d_WarrantyLength,
+                d_WarrantyLength: SKUDecision.d_WarrantyLength
             })
         }
     }

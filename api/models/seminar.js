@@ -26,8 +26,11 @@ var seminarSchema = new Schema({
 
     companies: [],
 
+
+
     isInitialized: {type: Boolean, default: false}, //if seminar is initialized
-    isSimulationFinised: {type: Boolean, default: false} //if all simulation has been executed.
+    isSimulationFinished: {type: Boolean, default: false}, //if all simulation has been executed.
+    showLastPeriodScore: {type: Boolean, default: true}
 });
 
 var teamSchema = new Schema({
@@ -36,7 +39,7 @@ var teamSchema = new Schema({
 });
 
 var Seminar = mongoose.model("Seminar", seminarSchema);
-
+exports.query = Seminar;
 
 exports.update = function(query, seminar){
     if(!mongoose.connection.readyState){
@@ -53,7 +56,7 @@ exports.update = function(query, seminar){
         }
     });
     return deferred.promise;
-}
+};
 
 exports.insert = function(seminar){
     if(!mongoose.connection.readyState){

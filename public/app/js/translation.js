@@ -899,6 +899,13 @@
             "FinalScorePageThank"               : "Thank you !",
             "FinalScorePageThankInfo"           : "Thank you for your feedback",
 
+            "FinalScoreAdminPanelLabel"           : "Decisions and Results",
+            "FinalScoreAdminPanelDecisionsButton" : "All Decisions",
+            "FinalScoreAdminPanelResultsButton"   : "All Results",
+            "FinalScoreAdminPanelReRunButton" : "Rerun Last Period Decisions",
+            "FinalScoreAdminPanelReRunSaveButton" : "Save",
+
+
             //Labels for Questionnaire Page
             "QuestionnairePageQuestionnaire"                             : "Questionnaire",
             "QuestionnairePageVeryPoor"                                  : "Very poor",
@@ -1729,8 +1736,8 @@
 
             "DecisionPageDecisionNewProductDevelopmentInvestmentName"                                                   : "名称",
             "DecisionPageDecisionNewProductDevelopmentInvestmentRequiredAmount"                                         : "所需投资金额 (RMB 百万)",
-            "DecisionPageDecisionNewProductDevelopmentInvestmentExtraBudgetRequiredToIncreaseEfficiencyBy25points"      : "提高2%/5%生产效率，预计所需的额外预算",
-            "DecisionPageDecisionNewProductDevelopmentInvestmentExtraBudgetRequiredToIncreaseFlexibilityBy25points"     : "提高2%/5%生产效率，预计所需的额外预算",
+            "DecisionPageDecisionNewProductDevelopmentInvestmentExtraBudgetRequiredToIncreaseEfficiencyBy25points"      : "提高 2% / 5%生产效率，预计所需的额外预算",
+            "DecisionPageDecisionNewProductDevelopmentInvestmentExtraBudgetRequiredToIncreaseFlexibilityBy25points"     : "提高 2% / 5%生产灵活性，预计所需的额外预算",
             "DecisionPageDecisionNewProductDevelopmentInvestmentExtraBudgetRequiredToIncreaseTechnologyLevelBy12points" : "每提高一个/两个级别的技术水平，预计所需的额外预算",
             "DecisionPageDecisionNewProductDevelopmentInvestmentNote"                                                   : "注意: 在提高生产效率中的预算投入将等量影响生产灵活性 ",
 
@@ -1847,6 +1854,11 @@
             "FinalScorePageThank"                          : "谢谢 !",
             "FinalScorePageThankInfo"                      : "您宝贵的意见会更好的改进我们的产品!",
 
+            "FinalScoreAdminPanelLabel"           : "公司决策和结果",
+            "FinalScoreAdminPanelDecisionsButton" : "显示所有阶段所有公司的决策",
+            "FinalScoreAdminPanelResultsButton"   : "显示结果",
+            "FinalScoreAdminPanelReRunButton"   : "重新运行上一轮决策",
+            "FinalScoreAdminPanelReRunSaveButton" : "保存",
 
             //Labels for Questionnaire Page
             "QuestionnairePageQuestionnaire"                             : "问卷调查",

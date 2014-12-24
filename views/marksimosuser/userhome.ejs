@@ -468,18 +468,18 @@
                                     <div class="table_report">
 
                                         <ul class="nav nav-pills">
-                                            <li ng-class="{'active': data.tableC3SegmentDistribution.currentTable==1}"><a href="" ng-click="switchTableReportC3(1, 'marketShareValue', '%')">{{'ReportSegmentDistributionsTableTitleMarketShareValue' | translate}}</a></li>
-                                            <li ng-class="{'active': data.tableC3SegmentDistribution.currentTable==2}"><a href="" ng-click="switchTableReportC3(2, 'marketShareVolume', '%')">{{'ReportSegmentDistributionsTableTitleMarketShareVolume' | translate}}</a></li>
-                                            <li ng-class="{'active': data.tableC3SegmentDistribution.currentTable==3}"><a href="" ng-click="switchTableReportC3(3, 'marketSaleValue', '')">{{'ReportSegmentDistributionsTableTitleMarketSalesValue' | translate}}</a></li>
-                                            <li ng-class="{'active': data.tableC3SegmentDistribution.currentTable==4}"><a href="" ng-click="switchTableReportC3(4, 'marketSaleVolume', '')">{{'ReportSegmentDistributionsTableTitleMarketSalesVolume' | translate}}</a></li>
-                                            <li ng-class="{'active': data.tableC3SegmentDistribution.currentTable==5}"><a href="" ng-click="switchTableReportC3(5, 'averageNetMarketPriceStdPack', '')">{{'ReportSegmentDistributionsTableTitleAverageNetMarketPrice' | translate}}</a></li>
-                                            <li ng-class="{'active': data.tableC3SegmentDistribution.currentTable==6}"><a href="" ng-click="switchTableReportC3(6, 'valuePerception', '')">{{'ReportSegmentDistributionsTableTitleValuePerception' | translate}}</a></li>
-                                            <li ng-class="{'active': data.tableC3SegmentDistribution.currentTable==7}"><a href="" ng-click="switchTableReportC3(7, 'imagePerception', '')">{{'ReportSegmentDistributionsTableTitleImagePerception' | translate}}</a></li>
+                                            <li ng-class="{'active': data.tableC3SegmentDistribution.currentTable==1}"><a href="" ng-click="switchTableReportC3(1, 'marketShareValue', '%', false)">{{'ReportSegmentDistributionsTableTitleMarketShareValue' | translate}}</a></li>
+                                            <li ng-class="{'active': data.tableC3SegmentDistribution.currentTable==2}"><a href="" ng-click="switchTableReportC3(2, 'marketShareVolume', '%', false)">{{'ReportSegmentDistributionsTableTitleMarketShareVolume' | translate}}</a></li>
+                                            <li ng-class="{'active': data.tableC3SegmentDistribution.currentTable==3}"><a href="" ng-click="switchTableReportC3(3, 'marketSaleValue', '', true)">{{'ReportSegmentDistributionsTableTitleMarketSalesValue' | translate}}</a></li>
+                                            <li ng-class="{'active': data.tableC3SegmentDistribution.currentTable==4}"><a href="" ng-click="switchTableReportC3(4, 'marketSaleVolume', '', true)">{{'ReportSegmentDistributionsTableTitleMarketSalesVolume' | translate}}</a></li>
+                                            <li ng-class="{'active': data.tableC3SegmentDistribution.currentTable==5}"><a href="" ng-click="switchTableReportC3(5, 'averageNetMarketPriceStdPack', '', true)">{{'ReportSegmentDistributionsTableTitleAverageNetMarketPrice' | translate}}</a></li>
+                                            <li ng-class="{'active': data.tableC3SegmentDistribution.currentTable==6}"><a href="" ng-click="switchTableReportC3(6, 'valuePerception', '', false)">{{'ReportSegmentDistributionsTableTitleValuePerception' | translate}}</a></li>
+                                            <li ng-class="{'active': data.tableC3SegmentDistribution.currentTable==7}"><a href="" ng-click="switchTableReportC3(7, 'imagePerception', '', false)">{{'ReportSegmentDistributionsTableTitleImagePerception' | translate}}</a></li>
                                         </ul>
 
                                         <div class="divider_horizontal"></div>
 
-                                        <div table-report-segment-distribution data="data.tableC3SegmentDistribution.currentTableData" unit="data.tableC3SegmentDistribution.currentTableUnit" chartdata="data.tableC3SegmentDistribution.chartData" chartconfig="data.tableC3SegmentDistribution.chartConfig"></div>
+                                        <div table-report-segment-distribution data="data.tableC3SegmentDistribution.currentTableData" unit="data.tableC3SegmentDistribution.currentTableUnit" allsegments="data.tableC3SegmentDistribution.currentTableShowAllSegments" chartdata="data.tableC3SegmentDistribution.chartData" chartconfig="data.tableC3SegmentDistribution.chartConfig"></div>
                                     </div>
 
                                 </div>
@@ -493,22 +493,22 @@
                                     <h5>{{'ReportMenuMarketTrends' | translate}}
                                         <div class="pull-right">
                                             <div class="btn-group btn-group-sm">
-                                                <button type="button" class="btn btn-default" ng-class="{'active': css.tableReportTab=='SKU'}" ng-click="switchTableCategoryC5('SKU', 'averageDisplayPriceStdPack', '')">{{'ReportTabLabelSKU' | translate}}</button>
-                                                <button type="button" class="btn btn-default" ng-class="{'active': css.tableReportTab=='Brand'}" ng-click="switchTableCategoryC5('Brand', 'averageDisplayPriceStdPack', '')">{{'ReportTabLabelBrand' | translate}}</button>
-                                                <button type="button" class="btn btn-default" ng-class="{'active': css.tableReportTab=='Global'}" ng-click="switchTableCategoryC5('Global', 'averageNetMarketPriceStdPack', '')">{{'ReportTabLabelGlobal' | translate}}</button>
+                                                <button type="button" class="btn btn-default" ng-class="{'active': data.tableC5MarketTrends.tableReportTab=='SKU'}" ng-click="switchTableCategoryC5('SKU', 'averageDisplayPriceStdPack', '')">{{'ReportTabLabelSKU' | translate}}</button>
+                                                <button type="button" class="btn btn-default" ng-class="{'active': data.tableC5MarketTrends.tableReportTab=='Brand'}" ng-click="switchTableCategoryC5('Brand', 'averageDisplayPriceStdPack', '')">{{'ReportTabLabelBrand' | translate}}</button>
+                                                <button type="button" class="btn btn-default" ng-class="{'active': data.tableC5MarketTrends.tableReportTab=='Global'}" ng-click="switchTableCategoryC5('Global', 'averageNetMarketPriceStdPack', '')">{{'ReportTabLabelGlobal' | translate}}</button>
                                             </div>
                                         </div>
                                     </h5>
 
                                     <ul class="nav nav-pills table_multimenu">
-                                        <li ng-class="{'active': css.tableReportMenu == 1}"><a href="" ng-click="switchTableMenuLevel1C5(1, css.tableReportTab, 'averageDisplayPriceStdPack', '')">{{'ReportMarketTrendsSKUTableTitleMarketFigures' | translate}}</a></li>
-                                        <li ng-class="{'active': css.tableReportMenu == 2}"><a href="" ng-click="switchTableMenuLevel1C5(2, css.tableReportTab, 'lostSalesVolumeDueToOOSStdPack', '')">{{'ReportMarketTrendsSKUTableTitleMiscellaneous' | translate}}</a></li>
-                                        <li ng-class="{'active': css.tableReportMenu == 3}"><a href="" ng-click="switchTableMenuLevel1C5(3, css.tableReportTab, 'valueShareInPriceSensitiveSegment', '%')">{{'ReportMarketTrendsSKUTableTitleSegmentWiseValueShare' | translate}}</a></li>
-                                        <li ng-class="{'active': css.tableReportMenu == 4}"><a href="" ng-click="switchTableMenuLevel1C5(4, css.tableReportTab, 'volumeShareInPriceSensitiveSegment', '%')">{{'ReportMarketTrendsSKUTableTitleSegmentWiseVolumeShare' | translate}}</a></li>
+                                        <li ng-class="{'active': css.tableReportMenu == 1}"><a href="" ng-click="switchTableMenuLevel1C5(1, data.tableC5MarketTrends.tableReportTab, 'averageDisplayPriceStdPack', '')">{{'ReportMarketTrendsSKUTableTitleMarketFigures' | translate}}</a></li>
+                                        <li ng-class="{'active': css.tableReportMenu == 2}"><a href="" ng-click="switchTableMenuLevel1C5(2, data.tableC5MarketTrends.tableReportTab, 'lostSalesVolumeDueToOOSStdPack', '')">{{'ReportMarketTrendsSKUTableTitleMiscellaneous' | translate}}</a></li>
+                                        <li ng-class="{'active': css.tableReportMenu == 3}"><a href="" ng-click="switchTableMenuLevel1C5(3, data.tableC5MarketTrends.tableReportTab, 'valueShareInPriceSensitiveSegment', '%')">{{'ReportMarketTrendsSKUTableTitleSegmentWiseValueShare' | translate}}</a></li>
+                                        <li ng-class="{'active': css.tableReportMenu == 4}"><a href="" ng-click="switchTableMenuLevel1C5(4, data.tableC5MarketTrends.tableReportTab, 'volumeShareInPriceSensitiveSegment', '%')">{{'ReportMarketTrendsSKUTableTitleSegmentWiseVolumeShare' | translate}}</a></li>
                                     </ul>
 
                                     <!--  SKU  -->
-                                    <div class="table_report" ng-if="css.tableReportTab=='SKU'">
+                                    <div class="table_report" ng-if="data.tableC5MarketTrends.tableReportTab=='SKU'">
 
                                         <ul class="nav nav-pills" ng-if="css.tableReportMenu == 1">
                                             <li ng-class="{'active': data.tableC5MarketTrends.currentTable==1}"><a href="" ng-click="switchTableReportC5(1, 'SKU', 'averageDisplayPriceStdPack', '')">{{'ReportMarketTrendsSKUMarketFiguresAverageDisplayPrice' | translate}}</a></li>
@@ -556,7 +556,7 @@
 
 
                                     <!--  Brand  -->
-                                    <div class="table_report" ng-if="css.tableReportTab=='Brand'">
+                                    <div class="table_report" ng-if="data.tableC5MarketTrends.tableReportTab=='Brand'">
 
                                         <ul class="nav nav-pills" ng-if="css.tableReportMenu == 1">
                                             <li ng-class="{'active': data.tableC5MarketTrends.currentTable==1}"><a href="" ng-click="switchTableReportC5(1, 'brand', 'averageDisplayPriceStdPack', '')">{{'ReportMarketTrendsBrandMarketFiguresAverageDisplayPrice' | translate}}</a></li>
@@ -604,7 +604,7 @@
 
 
                                     <!--  Global  -->
-                                    <div class="table_report" ng-if="css.tableReportTab=='Global'">
+                                    <div class="table_report" ng-if="data.tableC5MarketTrends.tableReportTab=='Global'">
 
                                         <ul class="nav nav-pills" ng-if="css.tableReportMenu == 1">
                                             <li ng-class="{'active': data.tableC5MarketTrends.currentTable==1}"><a href="" ng-click="switchTableReportC5(1, 'global', 'averageNetMarketPriceStdPack', '')">{{'ReportMarketTrendsGlobalMarketFiguresAverageNetMarketPrice' | translate}}</a></li>
@@ -874,18 +874,18 @@
                                     <div class="table_report">
 
                                         <ul class="nav nav-pills">
-                                            <li ng-class="{'active': data.tableC3SegmentDistribution.currentTable==1}"><a href="" ng-click="switchTableReportC3(1, 'marketShareValue', '%')">{{'ReportSegmentDistributionsTableTitleMarketShareValue' | translate}}</a></li>
-                                            <li ng-class="{'active': data.tableC3SegmentDistribution.currentTable==2}"><a href="" ng-click="switchTableReportC3(2, 'marketShareVolume', '%')">{{'ReportSegmentDistributionsTableTitleMarketShareVolume' | translate}}</a></li>
-                                            <li ng-class="{'active': data.tableC3SegmentDistribution.currentTable==3}"><a href="" ng-click="switchTableReportC3(3, 'marketSaleValue', '')">{{'ReportSegmentDistributionsTableTitleMarketSalesValue' | translate}}</a></li>
-                                            <li ng-class="{'active': data.tableC3SegmentDistribution.currentTable==4}"><a href="" ng-click="switchTableReportC3(4, 'marketSaleVolume', '')">{{'ReportSegmentDistributionsTableTitleMarketSalesVolume' | translate}}</a></li>
-                                            <li ng-class="{'active': data.tableC3SegmentDistribution.currentTable==5}"><a href="" ng-click="switchTableReportC3(5, 'averageNetMarketPriceStdPack', '')">{{'ReportSegmentDistributionsTableTitleAverageNetMarketPrice' | translate}}</a></li>
-                                            <li ng-class="{'active': data.tableC3SegmentDistribution.currentTable==6}"><a href="" ng-click="switchTableReportC3(6, 'valuePerception', '')">{{'ReportSegmentDistributionsTableTitleValuePerception' | translate}}</a></li>
-                                            <li ng-class="{'active': data.tableC3SegmentDistribution.currentTable==7}"><a href="" ng-click="switchTableReportC3(7, 'imagePerception', '')">{{'ReportSegmentDistributionsTableTitleImagePerception' | translate}}</a></li>
+                                            <li ng-class="{'active': data.tableC3SegmentDistribution.currentTable==1}"><a href="" ng-click="switchTableReportC3(1, 'marketShareValue', '%', false)">{{'ReportSegmentDistributionsTableTitleMarketShareValue' | translate}}</a></li>
+                                            <li ng-class="{'active': data.tableC3SegmentDistribution.currentTable==2}"><a href="" ng-click="switchTableReportC3(2, 'marketShareVolume', '%', false)">{{'ReportSegmentDistributionsTableTitleMarketShareVolume' | translate}}</a></li>
+                                            <li ng-class="{'active': data.tableC3SegmentDistribution.currentTable==3}"><a href="" ng-click="switchTableReportC3(3, 'marketSaleValue', '', true)">{{'ReportSegmentDistributionsTableTitleMarketSalesValue' | translate}}</a></li>
+                                            <li ng-class="{'active': data.tableC3SegmentDistribution.currentTable==4}"><a href="" ng-click="switchTableReportC3(4, 'marketSaleVolume', '', true)">{{'ReportSegmentDistributionsTableTitleMarketSalesVolume' | translate}}</a></li>
+                                            <li ng-class="{'active': data.tableC3SegmentDistribution.currentTable==5}"><a href="" ng-click="switchTableReportC3(5, 'averageNetMarketPriceStdPack', '', true)">{{'ReportSegmentDistributionsTableTitleAverageNetMarketPrice' | translate}}</a></li>
+                                            <li ng-class="{'active': data.tableC3SegmentDistribution.currentTable==6}"><a href="" ng-click="switchTableReportC3(6, 'valuePerception', '', false)">{{'ReportSegmentDistributionsTableTitleValuePerception' | translate}}</a></li>
+                                            <li ng-class="{'active': data.tableC3SegmentDistribution.currentTable==7}"><a href="" ng-click="switchTableReportC3(7, 'imagePerception', '', false)">{{'ReportSegmentDistributionsTableTitleImagePerception' | translate}}</a></li>
                                         </ul>
 
                                         <div class="divider_horizontal"></div>
 
-                                        <div table-report-segment-distribution data="data.tableC3SegmentDistribution.currentTableData" unit="data.tableC3SegmentDistribution.currentTableUnit" chartdata="data.tableC3SegmentDistribution.chartData" chartconfig="data.tableC3SegmentDistribution.chartConfig"></div>
+                                        <div table-report-segment-distribution data="data.tableC3SegmentDistribution.currentTableData" unit="data.tableC3SegmentDistribution.currentTableUnit" allsegments="data.tableC3SegmentDistribution.currentTableShowAllSegments" chartdata="data.tableC3SegmentDistribution.chartData" chartconfig="data.tableC3SegmentDistribution.chartConfig"></div>
                                     </div>
 
                                 </div>
@@ -899,22 +899,22 @@
                                     <h5>{{'ReportMenuMarketTrends' | translate}}
                                         <div class="pull-right">
                                             <div class="btn-group btn-group-sm">
-                                                <button type="button" class="btn btn-default" ng-class="{'active': css.tableReportTab=='SKU'}" ng-click="switchTableCategoryC5('SKU', 'averageDisplayPriceStdPack', '')">{{'ReportTabLabelSKU' | translate}}</button>
-                                                <button type="button" class="btn btn-default" ng-class="{'active': css.tableReportTab=='Brand'}" ng-click="switchTableCategoryC5('Brand', 'averageDisplayPriceStdPack', '')">{{'ReportTabLabelBrand' | translate}}</button>
-                                                <button type="button" class="btn btn-default" ng-class="{'active': css.tableReportTab=='Global'}" ng-click="switchTableCategoryC5('Global', 'averageNetMarketPriceStdPack', '')">{{'ReportTabLabelGlobal' | translate}}</button>
+                                                <button type="button" class="btn btn-default" ng-class="{'active': data.tableC5MarketTrends.tableReportTab=='SKU'}" ng-click="switchTableCategoryC5('SKU', 'averageDisplayPriceStdPack', '')">{{'ReportTabLabelSKU' | translate}}</button>
+                                                <button type="button" class="btn btn-default" ng-class="{'active': data.tableC5MarketTrends.tableReportTab=='Brand'}" ng-click="switchTableCategoryC5('Brand', 'averageDisplayPriceStdPack', '')">{{'ReportTabLabelBrand' | translate}}</button>
+                                                <button type="button" class="btn btn-default" ng-class="{'active': data.tableC5MarketTrends.tableReportTab=='Global'}" ng-click="switchTableCategoryC5('Global', 'averageNetMarketPriceStdPack', '')">{{'ReportTabLabelGlobal' | translate}}</button>
                                             </div>
                                         </div>
                                     </h5>
 
                                     <ul class="nav nav-pills table_multimenu">
-                                        <li ng-class="{'active': css.tableReportMenu == 1}"><a href="" ng-click="switchTableMenuLevel1C5(1, css.tableReportTab, 'averageDisplayPriceStdPack', '')">{{'ReportMarketTrendsSKUTableTitleMarketFigures' | translate}}</a></li>
-                                        <li ng-class="{'active': css.tableReportMenu == 2}"><a href="" ng-click="switchTableMenuLevel1C5(2, css.tableReportTab, 'lostSalesVolumeDueToOOSStdPack', '')">{{'ReportMarketTrendsSKUTableTitleMiscellaneous' | translate}}</a></li>
-                                        <li ng-class="{'active': css.tableReportMenu == 3}"><a href="" ng-click="switchTableMenuLevel1C5(3, css.tableReportTab, 'valueShareInPriceSensitiveSegment', '%')">{{'ReportMarketTrendsSKUTableTitleSegmentWiseValueShare' | translate}}</a></li>
-                                        <li ng-class="{'active': css.tableReportMenu == 4}"><a href="" ng-click="switchTableMenuLevel1C5(4, css.tableReportTab, 'volumeShareInPriceSensitiveSegment', '%')">{{'ReportMarketTrendsSKUTableTitleSegmentWiseVolumeShare' | translate}}</a></li>
+                                        <li ng-class="{'active': css.tableReportMenu == 1}"><a href="" ng-click="switchTableMenuLevel1C5(1, data.tableC5MarketTrends.tableReportTab, 'averageDisplayPriceStdPack', '')">{{'ReportMarketTrendsSKUTableTitleMarketFigures' | translate}}</a></li>
+                                        <li ng-class="{'active': css.tableReportMenu == 2}"><a href="" ng-click="switchTableMenuLevel1C5(2, data.tableC5MarketTrends.tableReportTab, 'lostSalesVolumeDueToOOSStdPack', '')">{{'ReportMarketTrendsSKUTableTitleMiscellaneous' | translate}}</a></li>
+                                        <li ng-class="{'active': css.tableReportMenu == 3}"><a href="" ng-click="switchTableMenuLevel1C5(3, data.tableC5MarketTrends.tableReportTab, 'valueShareInPriceSensitiveSegment', '%')">{{'ReportMarketTrendsSKUTableTitleSegmentWiseValueShare' | translate}}</a></li>
+                                        <li ng-class="{'active': css.tableReportMenu == 4}"><a href="" ng-click="switchTableMenuLevel1C5(4, data.tableC5MarketTrends.tableReportTab, 'volumeShareInPriceSensitiveSegment', '%')">{{'ReportMarketTrendsSKUTableTitleSegmentWiseVolumeShare' | translate}}</a></li>
                                     </ul>
 
                                     <!--  SKU  -->
-                                    <div class="table_report" ng-if="css.tableReportTab=='SKU'">
+                                    <div class="table_report" ng-if="data.tableC5MarketTrends.tableReportTab=='SKU'">
 
                                         <ul class="nav nav-pills" ng-if="css.tableReportMenu == 1">
                                             <li ng-class="{'active': data.tableC5MarketTrends.currentTable==1}"><a href="" ng-click="switchTableReportC5(1, 'SKU', 'averageDisplayPriceStdPack', '')">{{'ReportMarketTrendsSKUMarketFiguresAverageDisplayPrice' | translate}}</a></li>
@@ -962,7 +962,7 @@
 
 
                                     <!--  Brand  -->
-                                    <div class="table_report" ng-if="css.tableReportTab=='Brand'">
+                                    <div class="table_report" ng-if="data.tableC5MarketTrends.tableReportTab=='Brand'">
 
                                         <ul class="nav nav-pills" ng-if="css.tableReportMenu == 1">
                                             <li ng-class="{'active': data.tableC5MarketTrends.currentTable==1}"><a href="" ng-click="switchTableReportC5(1, 'brand', 'averageDisplayPriceStdPack', '')">{{'ReportMarketTrendsBrandMarketFiguresAverageDisplayPrice' | translate}}</a></li>
@@ -1010,7 +1010,7 @@
 
 
                                     <!--  Global  -->
-                                    <div class="table_report" ng-if="css.tableReportTab=='Global'">
+                                    <div class="table_report" ng-if="data.tableC5MarketTrends.tableReportTab=='Global'">
 
                                         <ul class="nav nav-pills" ng-if="css.tableReportMenu == 1">
                                             <li ng-class="{'active': data.tableC5MarketTrends.currentTable==1}"><a href="" ng-click="switchTableReportC5(1, 'global', 'averageNetMarketPriceStdPack', '')">{{'ReportMarketTrendsGlobalMarketFiguresAverageNetMarketPrice' | translate}}</a></li>
@@ -1549,8 +1549,8 @@
                         <!--<span class="glyphicon glyphicon-resize-full chart_icon"></span>-->
                         <!--<span class="glyphicon glyphicon-save chart_icon"></span>-->
                         <div class="btn-group btn-group-sm perception_map_group">
-                            <button type="button" class="btn btn-default perception_map_button" ng-click="switchPerceptionMapsData('sku')">{{'ReportTabLabelSKU' | translate}}</button>
-                            <button type="button" class="btn btn-default perception_map_button" ng-click="switchPerceptionMapsData('brand')">{{'ReportTabLabelBrand' | translate}}</button>
+                            <button type="button" class="btn btn-default perception_map_button" ng-class="{'active':css.tableReportTabC2=='SKU'}" ng-click="switchPerceptionMapsData('SKU')">{{'ReportTabLabelSKU' | translate}}</button>
+                            <button type="button" class="btn btn-default perception_map_button" ng-class="{'active':css.tableReportTabC2=='Brand'}" ng-click="switchPerceptionMapsData('Brand')">{{'ReportTabLabelBrand' | translate}}</button>
                         </div>
 
                         <div class="btn-group perception_map_dropdown">
@@ -1564,11 +1564,11 @@
 
 
                     </h5>
-                    <nvd3-scatter-chart data="data.chartC21PerceptionMap.dataChart"
+                    <nvd3-scatter-chart-marksimos data="data.chartC21PerceptionMap.dataChart"
                         xaxislabel="{{'ReportPerceptionMapAxisTitleValuePerception' | translate}}" yaxislabel="{{'ReportPerceptionMapAxisTitleImagePerception' | translate}}" color="C2ColorFunction()" legendcolor="C2ColorFunction()" shape="C2shapeFunction()" tooltipContent="C2TooltipContent()"
-                        height="600" margin="{left:100}" legendWidth="400" showXAxis="true" showYAxis="true"  showLegend="true"  tooltips="true" interactive="true" fisheye="1000" transitionDuration="500">
-                        <svg class="IE11_chart_A3"></svg>
-                    </nvd3-scatter-chart>
+                        height="800" margin="{left:100}" legendWidth="400" showXAxis="true" showYAxis="true"  showLegend="true"  tooltips="true" interactive="true" fisheye="1000" transitionDuration="500">
+                        <svg class="IE11_chart_C2"></svg>
+                    </nvd3-scatter-chart-marksimos>
                 </div>
             </div>
         </div>
@@ -1582,18 +1582,18 @@
                     <div class="table_report">
 
                         <ul class="nav nav-pills">
-                            <li ng-class="{'active': data.tableC3SegmentDistribution.currentTable==1}"><a href="" ng-click="switchTableReportC3(1, 'marketShareValue', '%')">{{'ReportSegmentDistributionsTableTitleMarketShareValue' | translate}}</a></li>
-                            <li ng-class="{'active': data.tableC3SegmentDistribution.currentTable==2}"><a href="" ng-click="switchTableReportC3(2, 'marketShareVolume', '%')">{{'ReportSegmentDistributionsTableTitleMarketShareVolume' | translate}}</a></li>
-                            <li ng-class="{'active': data.tableC3SegmentDistribution.currentTable==3}"><a href="" ng-click="switchTableReportC3(3, 'marketSaleValue', '')">{{'ReportSegmentDistributionsTableTitleMarketSalesValue' | translate}}</a></li>
-                            <li ng-class="{'active': data.tableC3SegmentDistribution.currentTable==4}"><a href="" ng-click="switchTableReportC3(4, 'marketSaleVolume', '')">{{'ReportSegmentDistributionsTableTitleMarketSalesVolume' | translate}}</a></li>
-                            <li ng-class="{'active': data.tableC3SegmentDistribution.currentTable==5}"><a href="" ng-click="switchTableReportC3(5, 'averageNetMarketPriceStdPack', '')">{{'ReportSegmentDistributionsTableTitleAverageNetMarketPrice' | translate}}</a></li>
-                            <li ng-class="{'active': data.tableC3SegmentDistribution.currentTable==6}"><a href="" ng-click="switchTableReportC3(6, 'valuePerception', '')">{{'ReportSegmentDistributionsTableTitleValuePerception' | translate}}</a></li>
-                            <li ng-class="{'active': data.tableC3SegmentDistribution.currentTable==7}"><a href="" ng-click="switchTableReportC3(7, 'imagePerception', '')">{{'ReportSegmentDistributionsTableTitleImagePerception' | translate}}</a></li>
+                            <li ng-class="{'active': data.tableC3SegmentDistribution.currentTable==1}"><a href="" ng-click="switchTableReportC3(1, 'marketShareValue', '%', false)">{{'ReportSegmentDistributionsTableTitleMarketShareValue' | translate}}</a></li>
+                            <li ng-class="{'active': data.tableC3SegmentDistribution.currentTable==2}"><a href="" ng-click="switchTableReportC3(2, 'marketShareVolume', '%', false)">{{'ReportSegmentDistributionsTableTitleMarketShareVolume' | translate}}</a></li>
+                            <li ng-class="{'active': data.tableC3SegmentDistribution.currentTable==3}"><a href="" ng-click="switchTableReportC3(3, 'marketSaleValue', '', true)">{{'ReportSegmentDistributionsTableTitleMarketSalesValue' | translate}}</a></li>
+                            <li ng-class="{'active': data.tableC3SegmentDistribution.currentTable==4}"><a href="" ng-click="switchTableReportC3(4, 'marketSaleVolume', '', true)">{{'ReportSegmentDistributionsTableTitleMarketSalesVolume' | translate}}</a></li>
+                            <li ng-class="{'active': data.tableC3SegmentDistribution.currentTable==5}"><a href="" ng-click="switchTableReportC3(5, 'averageNetMarketPriceStdPack', '', true)">{{'ReportSegmentDistributionsTableTitleAverageNetMarketPrice' | translate}}</a></li>
+                            <li ng-class="{'active': data.tableC3SegmentDistribution.currentTable==6}"><a href="" ng-click="switchTableReportC3(6, 'valuePerception', '', false)">{{'ReportSegmentDistributionsTableTitleValuePerception' | translate}}</a></li>
+                            <li ng-class="{'active': data.tableC3SegmentDistribution.currentTable==7}"><a href="" ng-click="switchTableReportC3(7, 'imagePerception', '', false)">{{'ReportSegmentDistributionsTableTitleImagePerception' | translate}}</a></li>
                         </ul>
 
                         <div class="divider_horizontal"></div>
 
-                        <div table-report-segment-distribution data="data.tableC3SegmentDistribution.currentTableData" unit="data.tableC3SegmentDistribution.currentTableUnit" chartdata="data.tableC3SegmentDistribution.chartData" chartconfig="data.tableC3SegmentDistribution.chartConfig"></div>
+                        <div table-report-segment-distribution data="data.tableC3SegmentDistribution.currentTableData" unit="data.tableC3SegmentDistribution.currentTableUnit" allsegments="data.tableC3SegmentDistribution.currentTableShowAllSegments" chartdata="data.tableC3SegmentDistribution.chartData" chartconfig="data.tableC3SegmentDistribution.chartConfig"></div>
                     </div>
 
                 </div>
@@ -1651,22 +1651,22 @@
                     <h5>{{'ReportMenuMarketTrends' | translate}}
                         <div class="pull-right">
                             <div class="btn-group btn-group-sm">
-                                <button type="button" class="btn btn-default" ng-class="{'active': css.tableReportTab=='SKU'}" ng-click="switchTableCategoryC5('SKU', 'averageDisplayPriceStdPack', '')">{{'ReportTabLabelSKU' | translate}}</button>
-                                <button type="button" class="btn btn-default" ng-class="{'active': css.tableReportTab=='Brand'}" ng-click="switchTableCategoryC5('Brand', 'averageDisplayPriceStdPack', '')">{{'ReportTabLabelBrand' | translate}}</button>
-                                <button type="button" class="btn btn-default" ng-class="{'active': css.tableReportTab=='Global'}" ng-click="switchTableCategoryC5('Global', 'averageNetMarketPriceStdPack', '')">{{'ReportTabLabelGlobal' | translate}}</button>
+                                <button type="button" class="btn btn-default" ng-class="{'active': data.tableC5MarketTrends.tableReportTab=='SKU'}" ng-click="switchTableCategoryC5('SKU', 'averageDisplayPriceStdPack', '')">{{'ReportTabLabelSKU' | translate}}</button>
+                                <button type="button" class="btn btn-default" ng-class="{'active': data.tableC5MarketTrends.tableReportTab=='Brand'}" ng-click="switchTableCategoryC5('Brand', 'averageDisplayPriceStdPack', '')">{{'ReportTabLabelBrand' | translate}}</button>
+                                <button type="button" class="btn btn-default" ng-class="{'active': data.tableC5MarketTrends.tableReportTab=='Global'}" ng-click="switchTableCategoryC5('Global', 'averageNetMarketPriceStdPack', '')">{{'ReportTabLabelGlobal' | translate}}</button>
                             </div>
                         </div>
                     </h5>
 
                     <ul class="nav nav-pills table_multimenu">
-                        <li ng-class="{'active': css.tableReportMenu == 1}"><a href="" ng-click="switchTableMenuLevel1C5(1, css.tableReportTab, 'averageDisplayPriceStdPack', '')">{{'ReportMarketTrendsSKUTableTitleMarketFigures' | translate}}</a></li>
-                        <li ng-class="{'active': css.tableReportMenu == 2}"><a href="" ng-click="switchTableMenuLevel1C5(2, css.tableReportTab, 'lostSalesVolumeDueToOOSStdPack', '')">{{'ReportMarketTrendsSKUTableTitleMiscellaneous' | translate}}</a></li>
-                        <li ng-class="{'active': css.tableReportMenu == 3}"><a href="" ng-click="switchTableMenuLevel1C5(3, css.tableReportTab, 'valueShareInPriceSensitiveSegment', '%')">{{'ReportMarketTrendsSKUTableTitleSegmentWiseValueShare' | translate}}</a></li>
-                        <li ng-class="{'active': css.tableReportMenu == 4}"><a href="" ng-click="switchTableMenuLevel1C5(4, css.tableReportTab, 'volumeShareInPriceSensitiveSegment', '%')">{{'ReportMarketTrendsSKUTableTitleSegmentWiseVolumeShare' | translate}}</a></li>
+                        <li ng-class="{'active': css.tableReportMenu == 1}"><a href="" ng-click="switchTableMenuLevel1C5(1, data.tableC5MarketTrends.tableReportTab, 'averageDisplayPriceStdPack', '')">{{'ReportMarketTrendsSKUTableTitleMarketFigures' | translate}}</a></li>
+                        <li ng-class="{'active': css.tableReportMenu == 2}"><a href="" ng-click="switchTableMenuLevel1C5(2, data.tableC5MarketTrends.tableReportTab, 'lostSalesVolumeDueToOOSStdPack', '')">{{'ReportMarketTrendsSKUTableTitleMiscellaneous' | translate}}</a></li>
+                        <li ng-class="{'active': css.tableReportMenu == 3}"><a href="" ng-click="switchTableMenuLevel1C5(3, data.tableC5MarketTrends.tableReportTab, 'valueShareInPriceSensitiveSegment', '%')">{{'ReportMarketTrendsSKUTableTitleSegmentWiseValueShare' | translate}}</a></li>
+                        <li ng-class="{'active': css.tableReportMenu == 4}"><a href="" ng-click="switchTableMenuLevel1C5(4, data.tableC5MarketTrends.tableReportTab, 'volumeShareInPriceSensitiveSegment', '%')">{{'ReportMarketTrendsSKUTableTitleSegmentWiseVolumeShare' | translate}}</a></li>
                     </ul>
 
                     <!--  SKU  -->
-                    <div class="table_report" ng-if="css.tableReportTab=='SKU'">
+                    <div class="table_report" ng-if="data.tableC5MarketTrends.tableReportTab=='SKU'">
 
                         <ul class="nav nav-pills" ng-if="css.tableReportMenu == 1">
                             <li ng-class="{'active': data.tableC5MarketTrends.currentTable==1}"><a href="" ng-click="switchTableReportC5(1, 'SKU', 'averageDisplayPriceStdPack', '')">{{'ReportMarketTrendsSKUMarketFiguresAverageDisplayPrice' | translate}}</a></li>
@@ -1714,7 +1714,7 @@
 
 
                     <!--  Brand  -->
-                    <div class="table_report" ng-if="css.tableReportTab=='Brand'">
+                    <div class="table_report" ng-if="data.tableC5MarketTrends.tableReportTab=='Brand'">
 
                         <ul class="nav nav-pills" ng-if="css.tableReportMenu == 1">
                             <li ng-class="{'active': data.tableC5MarketTrends.currentTable==1}"><a href="" ng-click="switchTableReportC5(1, 'brand', 'averageDisplayPriceStdPack', '')">{{'ReportMarketTrendsBrandMarketFiguresAverageDisplayPrice' | translate}}</a></li>
@@ -1762,7 +1762,7 @@
 
 
                     <!--  Global  -->
-                    <div class="table_report" ng-if="css.tableReportTab=='Global'">
+                    <div class="table_report" ng-if="data.tableC5MarketTrends.tableReportTab=='Global'">
 
                         <ul class="nav nav-pills" ng-if="css.tableReportMenu == 1">
                             <li ng-class="{'active': data.tableC5MarketTrends.currentTable==1}"><a href="" ng-click="switchTableReportC5(1, 'global', 'averageNetMarketPriceStdPack', '')">{{'ReportMarketTrendsGlobalMarketFiguresAverageNetMarketPrice' | translate}}</a></li>
@@ -2492,7 +2492,7 @@
                                         </tr>
                                         <tr>
                                             <td></td>
-                                            <td> </td>
+                                            <td></td>
                                         </tr>
                                         <tr>
                                             <td>{{'DecisionPageSpendingDetailsTable2NormalCapacity' | translate}}</td>
@@ -2589,39 +2589,21 @@
 
 
     <div class="row mainbody" ng-cloak ng-if="css.menu=='Score'">
-
-        <div class="col-md-9 score_box" ng-if='!css.showFeedback'>
+        <div class="col-md-9 score_box" >
 
             <div class="row">
                 <div class="col-md-12 score_info">
-
-                    <span class="score_info_title col-md-9">{{'FinalScorePageScore' | translate}}</span>
-
+                    <span class="score_info_title col-md-9 ">{{'FinalScorePageScore' | translate}}</span>
                     <div class="pull-right">
                         <div class="btn-group btn-group-sm">
-                            <button type="button" class="btn btn-default" ng-class="{'active':css.selectScore=='Original'}" ng-click="css.selectScore='Original' ">{{'FinalScorePageButtonOriginal' | translate}}</button>
-                            <button type="button" class="btn btn-default" ng-class="{'active':css.selectScore=='Rescaled'}" ng-click="css.selectScore='Rescaled' ">{{'FinalScorePageButtonRescaled' | translate}}</button>
+                            <button type="button" class="btn btn-default" ng-class="{'active':data.tableFinalScore.showScaled==false}" ng-click="data.tableFinalScore.showScaled=false">{{'FinalScorePageButtonOriginal' | translate}}</button>
+                            <button type="button" class="btn btn-default" ng-class="{'active':data.tableFinalScore.showScaled==true}" ng-click="data.tableFinalScore.showScaled=true">{{'FinalScorePageButtonRescaled' | translate}}</button>
                         </div>
                     </div>
                 </div>
             </div>
 
-            <div class="row">
-                <div class="col-md-12 score_data">
-                    
-                    <div class="table_report">
-                        <ul class="nav nav-pills">
-                            <li ng-class="{'active': n==css.selectFinalScorePeriod}" ng-repeat="n in css.finalReportPeriods">
-                                <a href="" ng-click="switchTableReportFinalScore(n)">{{'FinalScorePagePeriod' | translate}} {{n}}</a>
-                            </li>
-                        </ul>
-
-                        <div class="divider_horizontal"></div>
-                        <div table-report-final-score data="data.tableFinalScore.selectPeriodData" select-score="css.selectScore"></div>
-                    </div>
-
-                </div>
-            </div>
+            <table-report-final-score data="data.tableFinalScore.data" show-scaled="data.tableFinalScore.showScaled"></table-report-final-score>
         </div>
 
 
@@ -2629,35 +2611,29 @@
 
             <div class="row">
                 <div class="col-md-12 feedback_info" ng-show='!isFeedbackSumbit'>
-                    <h4 class="text-center">
-                    {{'FinalScorePageCongratulations' | translate}} !</h4>
+                    <h4 class="text-center">{{'FinalScorePageCongratulations' | translate}} !</h4>
                     <h4 class="text-center">{{'FinalScorePageCongratulationsInfo' | translate}} .</h4>
                     <p class="text-center provide_feedback">
-                        <button class="btn btn-warning" ng-click='showQuestionnaire()' ng-disabled='isFeedbackSumbit'>{{'FinalScorePageProvideFeedback' | translate}}</button>
+                        <button class="btn btn-warning" ng-click="css.showFeedback = true">{{'FinalScorePageProvideFeedback' | translate}}</button>
                     </p>
                 </div>
                 <div class="col-md-12 feedback_info" ng-show='isFeedbackSumbit'>
-                    <h4 class="text-center">
-                    {{'FinalScorePageThank' | translate}} !</h4>
+                    <h4 class="text-center">{{'FinalScorePageThank' | translate}} !</h4>
                     <h4 class="text-center">{{'FinalScorePageThankInfo' | translate}} </h4>
+                    <p class="text-center provide_feedback">
+                        <button class="btn btn-warning" ng-click="css.showFeedback = true">{{'FinalScorePageProvideFeedback' | translate}}</button>
+                    </p>
                 </div>
             </div>
         </div>
 
 
         <div class="col-md-9 score_box fade in" ng-if="css.showFeedback">
-
             <div class="row">
                 <form role="form" name='questionnaireForm'>
                     <div class="col-md-12 feedback_data">
-                        <h3 class="text-center">
-                            {{'QuestionnairePageQuestionnaire' | translate}}
-                        </h3>
-
-                        <h4>
-                            A {{'QuestionnairePageOverallSatisfactionWiththeProgram' | translate}}
-                        </h4>
-
+                        <h3 class="text-center">{{'QuestionnairePageQuestionnaire' | translate}}</h3>
+                        <h4> 1. {{'QuestionnairePageOverallSatisfactionWiththeProgram' | translate}}</h4>
                         <div class="table_feedback">
                             <table class="table table-hover">
                                 <thead>
@@ -2689,7 +2665,7 @@
                                         </td>
                                         <td ng-repeat='n in [1,2,3,4,5]'>
                                             <p class="text-center">
-                                            <input value={{n}} type="radio" ng-model="questionnaire.q_OverallSatisfactionWithTheProgram[index]" name="{{radio}}" id="{{radio+($index+1)}}">
+                                                <input value={{n}} type="radio" ng-model="questionnaire.q_OverallSatisfactionWithTheProgram[index]" name="{{radio}}" id="{{radio+($index+1)}}">
                                                 <label>{{n}}</label>
                                             </p>
                                         </td>
@@ -2697,11 +2673,7 @@
                                 </tbody>
                             </table>
                         </div>
-
-                        <h4>
-                            B {{'QuestionnairePageTeachingTeam' | translate}}
-                        </h4>
-
+                        <h4> 2. {{'QuestionnairePageTeachingTeam' | translate}}</h4>
                         <div class="table_feedback">
                             <table class="table table-hover">
                                 <thead>
@@ -2733,7 +2705,7 @@
                                         </td>
                                         <td ng-repeat='n in [1,2,3,4,5]'>
                                             <p class="text-center">
-                                            <input value={{n}} type="radio" ng-model="questionnaire.q_TeachingTeam[index]" name="{{radio}}" id="{{radio+($index+1)}}">
+                                                <input value={{n}} type="radio" ng-model="questionnaire.q_TeachingTeam[index]" name="{{radio}}" id="{{radio+($index+1)}}">
                                                 <label>{{n}}</label>
                                             </p>
                                         </td>
@@ -2741,11 +2713,7 @@
                                 </tbody>
                             </table>
                         </div>
-
-                        <h4>
-                            C {{'QuestionnairePageProduct' | translate}}
-                        </h4>
-
+                        <h4> 3. {{'QuestionnairePageProduct' | translate}}</h4>
                         <div class="table_feedback">
                             <table class="table table-hover">
                                 <thead>
@@ -2777,7 +2745,7 @@
                                         </td>
                                         <td ng-repeat='n in [1,2,3,4,5]'>
                                             <p class="text-center">
-                                            <input value={{n}} type="radio" ng-model="questionnaire.q_Product[index]" name="{{radio}}" id="{{radio+($index+1)}}">
+                                                <input value={{n}} type="radio" ng-model="questionnaire.q_Product[index]" name="{{radio}}" id="{{radio+($index+1)}}">
                                                 <label>{{n}}</label>
                                             </p>
                                         </td>
@@ -2785,11 +2753,7 @@
                                 </tbody>
                             </table>
                         </div>
-
-                        <h4>
-                            D {{'QuestionnairePageInterpreter' | translate}}
-                        </h4>
-
+                        <h4> 4. {{'QuestionnairePageInterpreter' | translate}}</h4>
                         <div class="table_feedback">
                             <table class="table table-hover">
                                 <thead>
@@ -2821,7 +2785,7 @@
                                         </td>
                                         <td ng-repeat='n in [1,2,3,4,5]'>
                                             <p class="text-center">
-                                            <input value={{n}} type="radio" ng-model="questionnaire.q_Interpreter" name="AccuracyAndPresentation" id="{{'AccuracyAndPresentation'+$index}}">
+                                                <input value={{n}} type="radio" ng-model="questionnaire.q_Interpreter" name="AccuracyAndPresentation" id="{{'AccuracyAndPresentation'+$index}}">
                                                 <label>{{n}}</label>
                                             </p>
                                         </td>
@@ -2829,11 +2793,7 @@
                                 </tbody>
                             </table>
                         </div>
-
-                        <h4>
-                            E {{'QuestionnairePageTeachingSupport' | translate}}
-                        </h4>
-
+                        <h4> 5. {{'QuestionnairePageTeachingSupport' | translate}}</h4>
                         <div class="table_feedback">
                             <table class="table table-hover">
                                 <thead>
@@ -2865,7 +2825,7 @@
                                         </td>
                                         <td ng-repeat='n in [1,2,3,4,5]'>
                                             <p class="text-center">
-                                            <input value={{n}} type="radio" ng-model="questionnaire.q_TeachingSupport[index]" name="{{radio}}" id="{{radio+($index+1)}}">
+                                                <input value={{n}} type="radio" ng-model="questionnaire.q_TeachingSupport[index]" name="{{radio}}" id="{{radio+($index+1)}}">
                                                 <label>{{n}}</label>
                                             </p>
                                         </td>
@@ -2873,13 +2833,11 @@
                                 </tbody>
                             </table>
                         </div>
-
-                        <h4>{{'QuestionnairePageOthers' | translate}}</h4>
-
+                        <h4> 6. {{'QuestionnairePageOthers' | translate}}</h4>
                         <h5>1.{{'QuestionnairePageMostBenefit' | translate}} ?</h5>
                         <p class="feedback_others_p text-muted" ng-repeat="radio in questionnaire.radio_MostBenefits.info">
-                           <input type="radio" id="{{radio+($index+1)}}" name="mostBenefits" value="{{$index+1}}" ng-model='questionnaire.q_MostBenefit'>
-                           <label for="{{radio+($index+1)}}">{{$index+1}} . {{'QuestionnairePage'+radio | translate}}</label>
+                            <input type="radio" id="{{radio+($index+1)}}" name="mostBenefits" value="{{$index+1}}" ng-model='questionnaire.q_MostBenefit'>
+                            <label for="{{radio+($index+1)}}">{{$index+1}} . {{'QuestionnairePage'+radio | translate}}</label>
                         </p>
                         <h4 class="clear"></h4>
                         <h5>2.{{'QuestionnairePageRecommendMarkSimos' | translate}} ?</h5>
@@ -2899,16 +2857,12 @@
                         </p>
                         <h4 class="clear"></h4>
                         <p class="text-center provide_feedback">
-                            <button class="btn btn-warning" ng-click='submitQuestionnaire(questionnaire)' ng-disabled='isFeedbackSumbit'>{{'QuestionnaireSubmit' | translate}}</button>
+                            <button class="btn btn-warning" ng-click='submitQuestionnaire(questionnaire)'>{{'QuestionnaireSubmit' | translate}}</button>
                         </p>
-
                     </div>
-                    
 
                 </form>
-
             </div>
-
         </div>
 
     </div>

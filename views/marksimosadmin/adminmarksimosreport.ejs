@@ -1,44 +1,88 @@
 <% include ./include/headcssadmin.html %>
 
 
-<body class="skin-blue" ng-app="marksimosadmin" ng-controller="adminMarksimosReportController">
+<body class="skin-blue" ng-app="marksimosadmin" ng-controller="adminMarksimosReportController" ng-cloak>
     <header-admin class="header" currentuser="data.currentUser"></header-admin>
 
 
     <div class="wrapper row-offcanvas row-offcanvas-left">
 
-
         <section class="content">
-            <h2 class="page-header">MarkSimos Seminar <%= seminarId %> Report</h2>
-            {{'ReportYourCompany' | translate}} :
-            <div class="btn-group">
-                <button type="button" class="btn btn-default" ng-class="{'active': css.currentReportMenu=='A1'}" ng-click="clickChartMenu('A1')">{{'ReportMenuCompanyStatus' | translate}}</button>
-                <button type="button" class="btn btn-default" ng-class="{'active': css.currentReportMenu=='A2'}" ng-click="clickChartMenu('A2')">{{'ReportMenuFinancialReport' | translate}}</button>
-                <button type="button" class="btn btn-default" ng-class="{'active': css.currentReportMenu=='A3'}" ng-click="clickChartMenu('A3')">{{'ReportMenuInventoryReport' | translate}}</button>
-                <button type="button" class="btn btn-default" ng-class="{'active': css.currentReportMenu=='A4'}" ng-click="clickChartMenu('A4')">{{'ReportMenuProfitabilityEvolution' | translate}}</button>
-            </div>
-            <br />
 
-            {{'ReportYourCompetitors' | translate}} :
-            <div class="btn-group">
-                <button type="button" class="btn btn-default" ng-class="{'active': css.currentReportMenu=='B1'}" ng-click="clickChartMenu('B1')">{{'ReportMenuMarketShare' | translate}}</button>
-                <button type="button" class="btn btn-default" ng-class="{'active': css.currentReportMenu=='B2'}" ng-click="clickChartMenu('B2')">{{'ReportMenuCompetitorIntelligence' | translate}}</button>
-                <button type="button" class="btn btn-default" ng-class="{'active': css.currentReportMenu=='B3'}" ng-click="clickChartMenu('B3')">{{'ReportMenuInvestmentProfits' | translate}}</button>
-                <button type="button" class="btn btn-default" ng-class="{'active': css.currentReportMenu=='B4'}" ng-click="clickChartMenu('B4')">{{'ReportMenuMarketSalesInventory' | translate}}</button>
+            <div class="row">
+                <div class="col-md-12">
+                    <h2 class="page-header">MarkSimos Seminar <%= seminarId %> Report </h2>
+                </div>
             </div>
-            <br />
 
-            {{'ReportMarketLandscape' | translate}} :
-            <div class="btn-group">
-                <button type="button" class="btn btn-default" ng-class="{'active': css.currentReportMenu=='C1'}" ng-click="clickChartMenu('C1')">{{'ReportMenuSegmentLeaderTop5' | translate}}</button>
-                <button type="button" class="btn btn-default" ng-class="{'active': css.currentReportMenu=='C2'}" ng-click="clickChartMenu('C2')">{{'ReportMenuPerceptionMap' | translate}}</button>
-                <button type="button" class="btn btn-default" ng-class="{'active': css.currentReportMenu=='C3'}" ng-click="clickChartMenu('C3')">{{'ReportMenuSegmentDistributions' | translate}}</button>
-                <button type="button" class="btn btn-default" ng-class="{'active': css.currentReportMenu=='C4'}" ng-click="clickChartMenu('C4')">{{'ReportMenuMarketEvolution' | translate}}</button>
-                <button type="button" class="btn btn-default" ng-class="{'active': css.currentReportMenu=='C5'}" ng-click="clickChartMenu('C5')">{{'ReportMenuMarketTrends' | translate}}</button>
-                <button type="button" class="btn btn-default" ng-class="{'active': css.currentReportMenu=='C6'}" ng-click="clickChartMenu('C6')">{{'ReportMenuMarketIndicator' | translate}}</button>
+            <div class="row">
+                <div class="col-md-7">
+                    {{'ReportYourCompany' | translate}} :
+                    <div class="btn-group">
+                        <button type="button" class="btn btn-default" ng-class="{'active': css.currentReportMenu=='A1'}" ng-click="clickChartMenu('A1')">{{'ReportMenuCompanyStatus' | translate}}</button>
+                        <button type="button" class="btn btn-default" ng-class="{'active': css.currentReportMenu=='A2'}" ng-click="clickChartMenu('A2')">{{'ReportMenuFinancialReport' | translate}}</button>
+                        <button type="button" class="btn btn-default" ng-class="{'active': css.currentReportMenu=='A3'}" ng-click="clickChartMenu('A3')">{{'ReportMenuInventoryReport' | translate}}</button>
+                        <button type="button" class="btn btn-default" ng-class="{'active': css.currentReportMenu=='A4'}" ng-click="clickChartMenu('A4')">{{'ReportMenuProfitabilityEvolution' | translate}}</button>
+                    </div>
+                    <br />
+
+                    {{'ReportYourCompetitors' | translate}} :
+                    <div class="btn-group">
+                        <button type="button" class="btn btn-default" ng-class="{'active': css.currentReportMenu=='B1'}" ng-click="clickChartMenu('B1')">{{'ReportMenuMarketShare' | translate}}</button>
+                        <button type="button" class="btn btn-default" ng-class="{'active': css.currentReportMenu=='B2'}" ng-click="clickChartMenu('B2')">{{'ReportMenuCompetitorIntelligence' | translate}}</button>
+                        <button type="button" class="btn btn-default" ng-class="{'active': css.currentReportMenu=='B3'}" ng-click="clickChartMenu('B3')">{{'ReportMenuInvestmentProfits' | translate}}</button>
+                        <button type="button" class="btn btn-default" ng-class="{'active': css.currentReportMenu=='B4'}" ng-click="clickChartMenu('B4')">{{'ReportMenuMarketSalesInventory' | translate}}</button>
+                    </div>
+                    <br />
+
+                    {{'ReportMarketLandscape' | translate}} :
+                    <div class="btn-group">
+                        <button type="button" class="btn btn-default" ng-class="{'active': css.currentReportMenu=='C1'}" ng-click="clickChartMenu('C1')">{{'ReportMenuSegmentLeaderTop5' | translate}}</button>
+                        <button type="button" class="btn btn-default" ng-class="{'active': css.currentReportMenu=='C2'}" ng-click="clickChartMenu('C2')">{{'ReportMenuPerceptionMap' | translate}}</button>
+                        <button type="button" class="btn btn-default" ng-class="{'active': css.currentReportMenu=='C3'}" ng-click="clickChartMenu('C3')">{{'ReportMenuSegmentDistributions' | translate}}</button>
+                        <button type="button" class="btn btn-default" ng-class="{'active': css.currentReportMenu=='C4'}" ng-click="clickChartMenu('C4')">{{'ReportMenuMarketEvolution' | translate}}</button>
+                        <button type="button" class="btn btn-default" ng-class="{'active': css.currentReportMenu=='C5'}" ng-click="clickChartMenu('C5')">{{'ReportMenuMarketTrends' | translate}}</button>
+                        <button type="button" class="btn btn-default" ng-class="{'active': css.currentReportMenu=='C6'}" ng-click="clickChartMenu('C6')">{{'ReportMenuMarketIndicator' | translate}}</button>
+                    </div>
+
+                    <br />
+                    {{'FinalScoreAdminPanelLabel' | translate}} :
+                    <button type="button" class="btn btn-default" ng-click="clickChartMenu('AllDecisions')"> {{'FinalScoreAdminPanelDecisionsButton' | translate}}</button>
+                    <button type="button" class="btn btn-default" ng-click="clickChartMenu('AllResults')"> {{'FinalScoreAdminPanelResultsButton' | translate}}</button>
+                    <button type="button" class="btn btn-default" ng-click="clickChartMenu('Questionnaire')"> {{'QuestionnairePageQuestionnaire' | translate}}</button>
+                </div>
+
+
+                <div class="col-md-5">
+                    <form class="form-inline" role="form" ng-if="css.currentReportMenu=='AllDecisions'">
+                        <div class="form-group">
+                            <button type="submit" class="btn btn-default" ng-click="reRunSeminar()">{{'FinalScoreAdminPanelReRunButton' | translate}}</button>
+
+                            <label class="checkbox-inline" ng-repeat="companyid in data.allDecisions.allCompanyId">
+                                <input type="checkbox" ng-model="data.reRunCompanies[$index]"> {{'HomePageSecondMenuBarLabelsCompany' | translate}} {{companyid | companyname}}
+                            </label>
+                        </div>
+                    </form>
+
+                    <br />
+
+                    <form class="form-inline" role="form" name="skuForm" ng-if="css.currentReportMenu=='AllDecisions'">
+                        <div class="form-group" ng-class="{'has-success':skuForm.$valid&&skuForm.SKUField.$dirty, 'has-error':skuForm.$invalid&&skuForm.SKUField.$dirty}">
+                            <label class="sr-only" for="SKUField">{{data.reRunDecision.sku_fieldname}}</label>
+                            <label class="control-label" for="SKUField" ng-show="skuForm.SKUField.$error.required&&skuForm.$dirty"><i class="fa fa-times-circle-o"></i> Required !</label>
+                            <input type="text" class="form-control" id="SKUField" name="SKUField" placeholder="{{data.reRunDecision.sku_fieldname}}" ng-model="data.reRunDecision.sku_fieldvalue" required>
+                        </div>
+
+                        <button type="submit" class="btn btn-default" ng-click="updateSkuDecision()" ng-disabled="skuForm.$invalid">
+                            {{'FinalScoreAdminPanelReRunSaveButton' | translate}}  {{'HomePageSecondMenuBarCurrentPeriod' | translate}}{{data.reRunDecision.periodId}} {{'HomePageSecondMenuBarLabelsCompany' | translate}}{{data.reRunDecision.companyId | companyname}} SKU {{data.reRunDecision.sku_fieldname}}
+                        </button>
+                    </form>
+                </div>
             </div>
+
 
         </section>
+
 
 
         <!--  Table A1  -->
@@ -49,7 +93,7 @@
                     <div class="pull-right box-tools">
                         <div class="btn-group">
                             <button type="button" class="btn btn-default btn-sm dropdown-toggle" data-toggle="dropdown">
-                                {{'HomePageSecondMenuBarLabelsCompany' | translate}} {{data.tableA1CompanyStatus.currentCompany.companyName}} <span class="caret"></span>
+                                {{'HomePageSecondMenuBarLabelsCompany' | translate}} {{data.tableA1CompanyStatus.currentCompany.companyname}} <span class="caret"></span>
                             </button>
                             <ul class="dropdown-menu" role="menu">
                                 <li ng-repeat="company in data.tableA1CompanyStatus.allCompanyData"><a href="" ng-click="switchTableReportA1Company(company)">{{'HomePageSecondMenuBarLabelsCompany' | translate}} {{company.companyName}}</a></li>
@@ -93,6 +137,7 @@
             </div>
             <!-- /.box -->
         </section>
+
 
 
         <!--  Table A2  -->
@@ -231,6 +276,7 @@
         </section>
 
 
+
         <!--  Table B1  -->
         <section class="content" ng-if="css.currentReportMenu=='B1'">
 
@@ -353,6 +399,7 @@
         </section>
 
 
+
         <!--  Table B3  -->
         <section class="content" ng-if="css.currentReportMenu=='B3'">
             <!--  row 1  -->
@@ -418,6 +465,7 @@
         </section>
 
 
+
         <!--  Table B4  -->
         <section class="content" ng-if="css.currentReportMenu=='B4'">
             <!--  row 1  -->
@@ -481,6 +529,8 @@
             </div>
             <!--  /row 2  -->
         </section>
+
+
 
         <!--  Table C1  -->
         <section class="content" ng-if="css.currentReportMenu=='C1'">
@@ -597,37 +647,52 @@
 
         </section>
 
+
+
         <!-- Chart C2  -->
         <section class="content" ng-if="css.currentReportMenu=='C2'">
             <div class="box box-primary">
                 <div class="box-header">
-                    <div class="btn-group btn-group-sm perception_map_group pull-right">
-                        <button type="button" class="btn btn-default perception_map_button" ng-click="switchPerceptionMapsData('sku')">{{'ReportTabLabelSKU' | translate}}</button>
-                        <button type="button" class="btn btn-default perception_map_button" ng-click="switchPerceptionMapsData('brand')">{{'ReportTabLabelBrand' | translate}}</button>
+
+                    <div class="pull-right box-tools">
+                        <div class="btn-group ">
+                            <button type="button" class="btn btn-default btn-sm dropdown-toggle perception_map_button" data-toggle="dropdown">
+                                {{'HomePageSecondMenuBarCurrentPeriod' | translate}} {{data.chartC21PerceptionMap.currentPeriod}} <span class="caret"></span>
+                            </button>
+                            <ul class="dropdown-menu" role="menu">
+                                <li ng-repeat="period in data.chartC21PerceptionMap.allData"><a href="" ng-click="switchTableReportC2Period(period)">{{'HomePageSecondMenuBarCurrentPeriod' | translate}} {{period.period}}</a></li>
+                            </ul>
+                        </div>
+
+                        <div class="btn-group btn-group-sm  ">
+                            <button type="button" class="btn btn-default" ng-class="{'active':css.tableReportTabC2=='SKU'}" ng-click="switchPerceptionMapsData('SKU')">{{'ReportTabLabelSKU' | translate}}</button>
+                            <button type="button" class="btn btn-default" ng-class="{'active':css.tableReportTabC2=='Brand'}" ng-click="switchPerceptionMapsData('Brand')">{{'ReportTabLabelBrand' | translate}}</button>
+                        </div>
+
+
                     </div>
-                    <div class="btn-group perception_map_dropdown pull-right">
-                        <button type="button" class="btn btn-default btn-sm dropdown-toggle perception_map_button" data-toggle="dropdown">
-                            {{'HomePageSecondMenuBarCurrentPeriod' | translate}} {{data.chartC21PerceptionMap.currentPeriod}} <span class="caret"></span>
-                        </button>
-                        <ul class="dropdown-menu" role="menu">
-                            <li ng-repeat="period in data.chartC21PerceptionMap.allData"><a href="" ng-click="switchTableReportC2Period(period)">{{'HomePageSecondMenuBarCurrentPeriod' | translate}} {{period.period}}</a></li>
-                        </ul>
-                    </div>
+
+
+
+
+
+
                     <i class="fa fa-dashboard"></i>
                     <h3 class="box-title">
                         {{'ReportMenuPerceptionMap' | translate}}
                     </h3>
                 </div>
                 <div class="box-body no-padding">
-                    <nvd3-scatter-chart data="data.chartC21PerceptionMap.dataChart"
+                    <nvd3-scatter-chart-marksimos data="data.chartC21PerceptionMap.dataChart"
                                         xaxislabel="{{'ReportPerceptionMapAxisTitleValuePerception' | translate}}" yaxislabel="{{'ReportPerceptionMapAxisTitleImagePerception' | translate}}" color="C2ColorFunction()" legendcolor="C2ColorFunction()" shape="C2shapeFunction()" tooltipcontent="C2TooltipContent()"
-                                        height="600" margin="{left:100}" legendwidth="400" showxaxis="true" showyaxis="true" showlegend="true" tooltips="true" interactive="true" fisheye="1000" transitionduration="500">
-                        <svg class="IE11_chart_A3"></svg>
-                    </nvd3-scatter-chart>
+                                        height="800" margin="{left:100}" legendwidth="400" showxaxis="true" showyaxis="true" showlegend="true" tooltips="true" interactive="true" fisheye="1000" transitionduration="500">
+                        <svg class="IE11_chart_C2"></svg>
+                    </nvd3-scatter-chart-marksimos>
                 </div>
             </div>
         </section>
-      
+
+
 
         <!--  Table C3  -->
         <section class="content" ng-if="css.currentReportMenu=='C3'">
@@ -642,23 +707,25 @@
                     <div class="table_report">
 
                         <ul class="nav nav-pills">
-                            <li ng-class="{'active': data.tableC3SegmentDistribution.currentTable==1}"><a href="" ng-click="switchTableReportC3(1, 'marketShareValue', '%')">{{'ReportSegmentDistributionsTableTitleMarketShareValue' | translate}}</a></li>
-                            <li ng-class="{'active': data.tableC3SegmentDistribution.currentTable==2}"><a href="" ng-click="switchTableReportC3(2, 'marketShareVolume', '%')">{{'ReportSegmentDistributionsTableTitleMarketShareVolume' | translate}}</a></li>
-                            <li ng-class="{'active': data.tableC3SegmentDistribution.currentTable==3}"><a href="" ng-click="switchTableReportC3(3, 'marketSaleValue', '')">{{'ReportSegmentDistributionsTableTitleMarketSalesValue' | translate}}</a></li>
-                            <li ng-class="{'active': data.tableC3SegmentDistribution.currentTable==4}"><a href="" ng-click="switchTableReportC3(4, 'marketSaleVolume', '')">{{'ReportSegmentDistributionsTableTitleMarketSalesVolume' | translate}}</a></li>
-                            <li ng-class="{'active': data.tableC3SegmentDistribution.currentTable==5}"><a href="" ng-click="switchTableReportC3(5, 'averageNetMarketPriceStdPack', '')">{{'ReportSegmentDistributionsTableTitleAverageNetMarketPrice' | translate}}</a></li>
-                            <li ng-class="{'active': data.tableC3SegmentDistribution.currentTable==6}"><a href="" ng-click="switchTableReportC3(6, 'valuePerception', '')">{{'ReportSegmentDistributionsTableTitleValuePerception' | translate}}</a></li>
-                            <li ng-class="{'active': data.tableC3SegmentDistribution.currentTable==7}"><a href="" ng-click="switchTableReportC3(7, 'imagePerception', '')">{{'ReportSegmentDistributionsTableTitleImagePerception' | translate}}</a></li>
+                            <li ng-class="{'active': data.tableC3SegmentDistribution.currentTable==1}"><a href="" ng-click="switchTableReportC3(1, 'marketShareValue', '%', false)">{{'ReportSegmentDistributionsTableTitleMarketShareValue' | translate}}</a></li>
+                            <li ng-class="{'active': data.tableC3SegmentDistribution.currentTable==2}"><a href="" ng-click="switchTableReportC3(2, 'marketShareVolume', '%', false)">{{'ReportSegmentDistributionsTableTitleMarketShareVolume' | translate}}</a></li>
+                            <li ng-class="{'active': data.tableC3SegmentDistribution.currentTable==3}"><a href="" ng-click="switchTableReportC3(3, 'marketSaleValue', '', true)">{{'ReportSegmentDistributionsTableTitleMarketSalesValue' | translate}}</a></li>
+                            <li ng-class="{'active': data.tableC3SegmentDistribution.currentTable==4}"><a href="" ng-click="switchTableReportC3(4, 'marketSaleVolume', '', true)">{{'ReportSegmentDistributionsTableTitleMarketSalesVolume' | translate}}</a></li>
+                            <li ng-class="{'active': data.tableC3SegmentDistribution.currentTable==5}"><a href="" ng-click="switchTableReportC3(5, 'averageNetMarketPriceStdPack', '', true)">{{'ReportSegmentDistributionsTableTitleAverageNetMarketPrice' | translate}}</a></li>
+                            <li ng-class="{'active': data.tableC3SegmentDistribution.currentTable==6}"><a href="" ng-click="switchTableReportC3(6, 'valuePerception', '', false)">{{'ReportSegmentDistributionsTableTitleValuePerception' | translate}}</a></li>
+                            <li ng-class="{'active': data.tableC3SegmentDistribution.currentTable==7}"><a href="" ng-click="switchTableReportC3(7, 'imagePerception', '', false)">{{'ReportSegmentDistributionsTableTitleImagePerception' | translate}}</a></li>
                         </ul>
 
                         <div class="divider_horizontal"></div>
 
-                        <div table-report-segment-distribution data="data.tableC3SegmentDistribution.currentTableData" unit="data.tableC3SegmentDistribution.currentTableUnit" chartdata="data.tableC3SegmentDistribution.chartData" chartconfig="data.tableC3SegmentDistribution.chartConfig"></div>
+                        <div table-report-segment-distribution data="data.tableC3SegmentDistribution.currentTableData" unit="data.tableC3SegmentDistribution.currentTableUnit" allsegments="data.tableC3SegmentDistribution.currentTableShowAllSegments" chartdata="data.tableC3SegmentDistribution.chartData" chartconfig="data.tableC3SegmentDistribution.chartConfig"></div>
                     </div>
 
                 </div>
             </div>
         </section>
+
+
 
         <!--  Table C4  -->
         <section class="content" ng-if="css.currentReportMenu=='C4'">
@@ -722,6 +789,7 @@
             </div>
             <!--  \row 2  -->
         </section>
+
 
 
         <!--  Table C5  -->
@@ -893,6 +961,7 @@
         </section>
 
 
+
         <!--  Table C6  -->
         <section class="content" ng-if="css.currentReportMenu=='C6'">
             <div class="box box-primary">
@@ -905,10 +974,328 @@
                 </div>
             </div>
         </section>
-    </div>
 
 
 
+
+
+
+
+        <!--  All Decisions   -->
+        <section class="content" ng-if="css.currentReportMenu=='AllDecisions'">
+            <!-- Report box -->
+            <div class="box box-primary">
+                <div class="box-header">
+                    <div class="pull-right">
+                        <div class="btn-group ">
+                            <button type="button" class="btn btn-default btn-sm dropdown-toggle" data-toggle="dropdown">
+                                {{'HomePageSecondMenuBarCurrentPeriod' | translate}} {{data.allDecisions.currentPeriod}} <span class="caret"></span>
+                            </button>
+                            <ul class="dropdown-menu" role="menu">
+                                <li ><a href="" ng-click="data.allDecisions.currentPeriod='!!'">All {{'HomePageSecondMenuBarCurrentPeriod' | translate}} </a></li>
+                                <li ng-repeat="period in data.allDecisions.allPeriod"><a href="" ng-click="data.allDecisions.currentPeriod=period">{{'HomePageSecondMenuBarCurrentPeriod' | translate}}  {{period}}</a></li>
+                            </ul>
+                        </div>
+
+                        <div class="btn-group ">
+                            <button type="button" class="btn btn-default btn-sm dropdown-toggle" data-toggle="dropdown">
+                                {{'HomePageSecondMenuBarLabelsCompany' | translate}} {{data.allDecisions.currentCompanyId | companyname}} <span class="caret"></span>
+                            </button>
+                            <ul class="dropdown-menu" role="menu">
+                                <li ><a href="" ng-click="data.allDecisions.currentCompanyId='!!'">All {{'HomePageSecondMenuBarLabelsCompany' | translate}} </a></li>
+                                <li ng-repeat="companyid in data.allDecisions.allCompanyId"><a href="" ng-click="data.allDecisions.currentCompanyId=companyid">{{'HomePageSecondMenuBarLabelsCompany' | translate}} {{companyid | companyname}}</a></li>
+                            </ul>
+                        </div>
+
+                    </div>
+
+                    <i class="fa fa-table"></i>
+                    <h3 class="box-title">
+                        {{'DecisionPageDecisionTabMAKEDECISIONS' | translate}}
+                    </h3>
+                </div>
+
+
+               <div class="box-body no-padding" ng-repeat="company in data.allDecisions.data | filter:{period: data.allDecisions.currentPeriod, d_CID:data.allDecisions.currentCompanyId}">
+
+                   <div class="row">
+                       <div class="col-md-12">
+                           <div class="box box-info">
+                               <div class="box-header">
+                                   <i class="fa fa-bars"></i>
+                                   <h3 class="box-title">
+                                       {{'HomePageSecondMenuBarCurrentPeriod' | translate}} {{company.period}} - {{'HomePageSecondMenuBarLabelsCompany' | translate}} {{company.d_CID | companyname}}
+                                   </h3>
+                                   <h3 class="box-title pull-right company_title">
+                                       {{'DecisionPageSecondMenuBarLabelsAdditionalBudget' | translate}} {{company.d_RequestedAdditionalBudget}}
+                                   </h3>
+                                   <h3 class="box-title pull-right company_title">
+                                       {{'DecisionPageDecisionNewProductDevelopmentInvestmentInvestmentInProcessingTechnology' | translate}} {{company.d_InvestmentInTechnology}}
+                                   </h3>
+                                   <h3 class="box-title pull-right company_title">
+                                       {{'DecisionPageDecisionNewProductDevelopmentInvestmentInvestmentInProductionEfficiency' | translate}} {{company.d_InvestmentInEfficiency}}
+                                   </h3>
+                               </div>
+
+                               <div class="box-body" >
+                                   <div ng-repeat="brand in company.brandDecisions">
+                                       <p class="bg-info brand_title" >
+                                           <strong>{{'DecisionPageSpendingDetailsTable1BrandName' | translate}} {{brand.d_BrandName}}</strong>
+                                           <strong>{{'DecisionPageDecisionTabSalesForce' | translate}} {{brand.d_SalesForce}}</strong>
+                                       </p>
+                                           <table class="table table-hover table-condensed" >
+                                               <tbody >
+                                                   <tr class="active">
+                                                       <th>{{'DecisionPageDecisionTabName' | translate}}/ {{'DecisionPageDecisionTabDiscontinue' | translate}}</th>
+                                                       <th>{{'DecisionPageDecisionTabProcessingTechnology' | translate}}</th>
+                                                       <th>{{'DecisionPageDecisionTabIngredientsQuality' | translate}}</th>
+                                                       <th>{{'DecisionPageDecisionTabPackagingSize' | translate}}</th>
+                                                       <th>{{'DecisionPageDecisionTabProductionVolume' | translate}}</th>
+                                                       <th>{{'DecisionPageDecisionTabManufacturerPrice' | translate}}</th>
+                                                       <th>{{'DecisionPageDecisionTabRepriceFactoryStock' | translate}}</th>
+                                                       <th>{{'DecisionPageDecisionTabConsumerCommunication' | translate}}</th>
+
+                                                       <th>{{'DecisionPageDecisionTabTargetConsumerSegment' | translate}}</th>
+                                                       <th>{{'DecisionPageDecisionTabConsumerPromotions' | translate}}</th>
+                                                       <th>{{'DecisionPageDecisionTabConsumerPromotionsSchedule' | translate}}</th>
+                                                       <th>{{'DecisionPageDecisionTabTradeExpenses' | translate}}</th>
+                                                       <th>{{'DecisionPageDecisionTabAdditionalTradeMargin' | translate}}</th>
+                                                       <th>{{'DecisionPageDecisionTabWholesaleMinimumVolume' | translate}}</th>
+                                                       <th>{{'DecisionPageDecisionTabWholesaleBonusRate' | translate}}</th>
+                                                   </tr>
+
+                                                   <tr ng-repeat="sku in brand.SKUDecisions ">
+                                                       <td >{{brand.d_BrandName}}{{sku.d_SKUName}}/ {{sku.d_ToDrop}}</td>
+                                                       <td ng-click="clickSkuField(company.period, company.d_CID, brand.d_BrandID, sku, sku.d_SKUID, 'd_Technology', sku.d_Technology)">{{sku.d_Technology}}</td>
+                                                       <td ng-click="clickSkuField(company.period, company.d_CID, brand.d_BrandID, sku, sku.d_SKUID, 'd_IngredientsQuality', sku.d_IngredientsQuality)">{{sku.d_IngredientsQuality}}</td>
+                                                       <td>{{sku.d_PackSize | skupacksize | translate}}</td>
+                                                       <td ng-click="clickSkuField(company.period, company.d_CID, brand.d_BrandID, sku, sku.d_SKUID, 'd_ProductionVolume', sku.d_ProductionVolume)">{{sku.d_ProductionVolume}}</td>
+                                                       <td ng-click="clickSkuField(company.period, company.d_CID, brand.d_BrandID, sku, sku.d_SKUID, 'd_FactoryPrice', sku.d_FactoryPrice[0])">{{sku.d_FactoryPrice[0] | number:2 }}</td>
+                                                       <td>{{sku.d_RepriceFactoryStocks}}</td>
+                                                       <td ng-click="clickSkuField(company.period, company.d_CID, brand.d_BrandID, sku, sku.d_SKUID, 'd_Advertising', sku.d_Advertising)">{{sku.d_Advertising}}</td>
+
+                                                       <td ng-click="clickSkuField(company.period, company.d_CID, brand.d_BrandID, sku, sku.d_SKUID, 'd_TargetConsumerSegment', sku.d_TargetConsumerSegment)">{{sku.d_TargetConsumerSegment }}</td>
+                                                       <td ng-click="clickSkuField(company.period, company.d_CID, brand.d_BrandID, sku, sku.d_SKUID, 'd_PromotionalBudget', sku.d_PromotionalBudget)">{{sku.d_PromotionalBudget}}</td>
+                                                       <td>
+                                                           <span ng-repeat="week in sku.d_PromotionalEpisodes track by $index">
+                                                               <input type="checkbox" ng-model="week" >
+                                                           </span>
+                                                       </td>
+                                                       <td ng-click="clickSkuField(company.period, company.d_CID, brand.d_BrandID, sku, sku.d_SKUID, 'd_TradeExpenses', sku.d_TradeExpenses)">{{sku.d_TradeExpenses}}</td>
+                                                       <td ng-click="clickSkuField(company.period, company.d_CID, brand.d_BrandID, sku, sku.d_SKUID, 'd_AdditionalTradeMargin', sku.d_AdditionalTradeMargin)">{{sku.d_AdditionalTradeMargin}}</td>
+                                                       <td ng-click="clickSkuField(company.period, company.d_CID, brand.d_BrandID, sku, sku.d_SKUID, 'd_WholesalesBonusMinVolume', sku.d_WholesalesBonusMinVolume)">{{sku.d_WholesalesBonusMinVolume}}</td>
+                                                       <td ng-click="clickSkuField(company.period, company.d_CID, brand.d_BrandID, sku, sku.d_SKUID, 'd_WholesalesBonusRate', sku.d_WholesalesBonusRate)">{{sku.d_WholesalesBonusRate}}</td>
+                                                   </tr>
+
+                                               </tbody>
+                                           </table>
+
+
+                                   </div>
+                               </div>
+                           </div>
+                       </div>
+                   </div>
+
+
+
+                </div>
+
+            </div>
+            <!-- /.box -->
+        </section>
+
+
+
+        <!-- Final Score  -->
+        <section class="content" ng-if="css.currentReportMenu=='AllResults'">
+            <div class="box box-primary">
+                <div class="box-header">
+                    <div class="pull-right">
+                        <div class="btn-group btn-group-sm">
+                          <button type="button" class="btn btn-default" ng-class="{false:'active'}[data.tableFinalScore.showScaled]" ng-click="data.tableFinalScore.showScaled=false">{{'FinalScorePageButtonOriginal' | translate}}</button>
+                          <button type="button" class="btn btn-default" ng-class="{true:'active'}[data.tableFinalScore.showScaled]" ng-click="data.tableFinalScore.showScaled=true">{{'FinalScorePageButtonRescaled' | translate}}</button>
+                        </div>
+                    </div>
+
+                    <i class="fa fa-table"></i>
+                    <h3 class="box-title">{{'FinalScorePageScore' | translate}}</h3>
+                </div>
+
+                <div class="box-body no-padding">
+                    <table-report-final-score data="data.tableFinalScore.data" show-scaled="data.tableFinalScore.showScaled"></table-report-final-score>
+                </div>
+                
+            </div>
+        </section>
+
+
+
+        <!--  Questionnaire--> 
+        <section class="content" ng-if="css.currentReportMenu=='Questionnaire'">
+            <div class="box box-primary">
+                <div class="box-header">
+                    <i class="fa fa-pencil-square-o"></i>
+                    <h3 class="box-title">{{'QuestionnairePageQuestionnaire' | translate}}</h3>
+                </div>
+                <div class="box-body no-padding">
+                    <div class="row">
+                        <div class="col-md-3">
+                            <div class="panel panel-default" ng-repeat="company in data.questionnaire.data">
+                                <div class="panel panel-heading">{{'HomePageSecondMenuBarLabelsCompany' | translate}}{{company.companyName}}</div>
+                                <div class="list-group panel-body no-padding">
+                                    <a href="javascript:void(0);"
+                                       class="list-group-item"
+                                       ng-click="data.questionnaire.currentQuestionnaire=student.questionnaire"
+                                       ng-class="{'active':data.questionnaire.currentQuestionnaire.email===student.email}"
+                                       ng-repeat="student in company.studentList"><span>{{student.email}}</span><i class="fa pull-right" ng-class="{true:'fa-check text-success',false:'fa-ban text-danger'}[!!student.questionnaire]"></i></a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-8">
+                            <div class="row">
+                                <table class="table table-bordered table-striped">
+                                    <thead>
+                                        <tr class="bg-success">
+                                            <th colspan="2"><h4> 1. {{'QuestionnairePageOverallSatisfactionWiththeProgram' | translate}}</h4></th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr ng-repeat="radio in data.questionnaire.radio_OverallSatisfactionWithThePrograms.info">
+                                            <td class="col-md-6">{{'QuestionnairePage'+radio | translate}}</td>
+                                            <td>{{data.questionnaire.currentQuestionnaire.q_OverallSatisfactionWithTheProgram[$index]}}</td>
+                                        </tr>
+                                    </tbody>
+                                    <tfoot>
+                                        <tr>
+                                            <td colspan="2">&nbsp;</td>
+                                        </tr>
+                                    </tfoot>
+                                </table>
+                            </div>
+                            <div class="row">
+                                <table class="table table-bordered table-striped">
+                                    <thead>
+                                        <tr class="bg-success">
+                                            <th colspan="2"><h4> 2. {{'QuestionnairePageTeachingTeam' | translate}}</h4></th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr ng-repeat="radio in data.questionnaire.radio_TeachingTeams.info">
+                                            <td class="col-md-6">{{'QuestionnairePage'+radio | translate}}</td>
+                                            <td>{{data.questionnaire.currentQuestionnaire.q_TeachingTeam[$index]}}</td>
+                                        </tr>
+                                    </tbody>
+                                    <tfoot>
+                                        <tr>
+                                            <td colspan="2">&nbsp;</td>
+                                        </tr>
+                                    </tfoot>
+                                </table>
+                            </div>
+                            <div class="row">
+                                <table class="table table-bordered table-striped">
+                                    <thead>
+                                        <tr class="bg-success">
+                                            <th colspan="2"><h4> 3. {{'QuestionnairePageProduct' | translate}}</h4></th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr ng-repeat="radio in data.questionnaire.radio_Products.info">
+                                            <td class="col-md-6">{{'QuestionnairePage'+radio | translate}}</td>
+                                            <td>{{data.questionnaire.currentQuestionnaire.q_Product[$index]}}</td>
+                                        </tr>
+                                    </tbody>
+                                    <tfoot>
+                                        <tr>
+                                            <td colspan="2">&nbsp;</td>
+                                        </tr>
+                                    </tfoot>
+                                </table>
+                            </div>
+                            <div class="row">
+                                <table class="table table-bordered table-striped">
+                                    <thead>
+                                        <tr class="bg-success">
+                                            <th colspan="2"><h4> 4. {{'QuestionnairePageInterpreter' | translate}}</h4></th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td class="col-md-6">{{'QuestionnairePageAccuracyAndPresentation' | translate}}</td>
+                                            <td>{{data.questionnaire.currentQuestionnaire.q_Interpreter}}</td>
+                                        </tr>
+                                    </tbody>
+                                    <tfoot>
+                                        <tr>
+                                            <td colspan="2">&nbsp;</td>
+                                        </tr>
+                                    </tfoot>
+                                </table>
+                            </div>
+                            <div class="row">
+                                <table class="table table-bordered table-striped">
+                                    <thead>
+                                        <tr class="bg-success">
+                                            <th colspan="2"><h4>  5. {{'QuestionnairePageTeachingSupport' | translate}}</h4></th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr ng-repeat="radio in data.questionnaire.radio_TeachingSupports.info">
+                                            <td class="col-md-6">{{'QuestionnairePage'+radio | translate}}</td>
+                                            <td>{{data.questionnaire.currentQuestionnaire.q_TeachingSupport[$index]}}</td>
+                                        </tr>
+                                    </tbody>
+                                    <tfoot>
+                                        <tr>
+                                            <td colspan="2">&nbsp;</td>
+                                        </tr>
+                                    </tfoot>
+                                </table>
+                            </div>
+                            <div class="row">
+                                <table class="table table-bordered table-striped">
+                                    <thead>
+                                        <tr class="bg-success">
+                                            <th colspan="2"><h4>  6. {{'QuestionnairePageOthers' | translate}}</h4></th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td class="col-md-9">1.{{'QuestionnairePageMostBenefit' | translate}} ?</td>
+                                            <td>{{data.questionnaire.currentQuestionnaire.q_MostBenefit}}</td>
+                                        </tr>
+                                        <tr>
+                                            <td class="col-md-9">2.{{'QuestionnairePageRecommendMarkSimos' | translate}} ?</td>
+                                            <td>
+                                                <span ng-if="data.questionnaire.currentQuestionnaire">{{data.questionnaire.currentQuestionnaire.q_WillRecommend?"yes.":"no."}}</span>
+                                                {{data.questionnaire.currentQuestionnaire.q_ReasonForRecommendOrNot}}
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td class="col-md-9">3.{{'QuestionnairePageBringYou' | translate}} ?</td>
+                                            <td>{{data.questionnaire.currentQuestionnaire.q_FeelAboutMarkSimos}}</td>
+                                        </tr>
+                                    </tbody>
+                                    <tfoot>
+                                        <tr>
+                                            <td colspan="2">&nbsp;</td>
+                                        </tr>
+                                    </tfoot>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>   
+    
+     </div>
+
+
+
+
+    <div notifications="bottom right"></div>
 
 
 

@@ -581,8 +581,7 @@
                                         <th style="width:100px">Action</th>
                                         <th>ID</th>
                                         <th>Description</th>
-                                        <th>Initialized Status</th>
-                                        <th>Finished Status</th>
+                                        <th>Initialized Status / Finished Status</th>
                                         <th>Country / Province / City</th>
                                         <th>Venue</th>
                                         <th>CurrentPeriod / Rounds</th>
@@ -594,16 +593,12 @@
                                         <td style="width:100px">
                                             <button type="button" class="btn btn-danger" ng-hide="seminar.isInitialized" ng-click="initSeminar(seminar.seminarId)" ng-disabled="css.runButtonDisabled">Init</button>
 
-
-                                            <button type="button" class="btn btn-danger" ng-show="seminar.isInitialized" ng-click="runSeminar(seminar.seminarId, seminar.currentPeriod)" ng-disabled="css.runButtonDisabled">Run</button>
-
-                                            <input type="number" class="form-control" ng-show="seminar.isInitialized" placeholder="current round" ng-model="seminar.currentPeriod" disabled>
+                                            <button type="button" class="btn btn-danger" ng-show="seminar.isInitialized" ng-click="runSeminar(seminar.seminarId, seminar.companyMember)" ng-disabled="css.runButtonDisabled">Run Period{{seminar.currentPeriod}}</button>
 
                                         </td>
                                         <td><a href="adminhomereport/{{seminar.seminarId}}" target="_blank">{{seminar.seminarId}} Report</a></td>
                                         <td>{{seminar.description}}</td>
-                                        <td>{{seminar.isInitialized}} </td>
-                                        <td>{{seminar.isSimulationFinised}} </td>
+                                        <td>{{seminar.isInitialized}} / {{seminar.isSimulationFinished}}</td>
                                         <td>{{seminar.country}} / {{seminar.state}} / {{seminar.city}} </td>
                                         <td>{{seminar.venue}}</td>
                                         <td>{{seminar.currentPeriod}} / {{seminar.simulationSpan}} </td>

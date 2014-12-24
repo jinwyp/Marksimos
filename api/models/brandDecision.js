@@ -21,6 +21,8 @@ var tOneBrandDecisionSchema = new Schema({
 
 var BrandDecision = mongoose.model('BrandDecision', tOneBrandDecisionSchema);
 
+exports.query = BrandDecision;
+
 tOneBrandDecisionSchema.pre('save', true, function(next, done){
     var self = this;
     var validateAction = {
@@ -195,6 +197,7 @@ exports.initCreate = function(decision){
 
 //Run simulation process, create brand decision document based on last period decision, skip all the validations
 //copy bs_PeriodOfBirth from last period input
+//before creating : delete old one if it is existed
 exports.createBrandDecisionBasedOnLastPeriodDecision = function(decision){
     if(!mongoose.connection.readyState){
         throw new Error("mongoose is not connected.");
@@ -204,13 +207,22 @@ exports.createBrandDecisionBasedOnLastPeriodDecision = function(decision){
     var decision = new BrandDecision(decision);
     decision.modifiedField = 'skip';
 
-    decision.save(function(err, saveDecision, numAffected){
-        if(err){
-            deferred.reject(err);
-        }else{
-            deferred.resolve(saveDecision);
-        }
-    });
+    BrandDecision.remove({
+        seminarId   : decision.seminarId,
+        period      : decision.period,
+        d_CID       : decision.companyId,
+        d_BrandID   : decision.brandId,
+    }, function(err){
+        if(err){ return deferred.reject(err); }
+
+        decision.save(function(err, saveDecision, numAffected){
+            if(err){
+                deferred.reject(err);
+            }else{
+                deferred.resolve(saveDecision);
+            }
+        });
+    })
     return deferred.promise;
 }
 

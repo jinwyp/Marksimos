@@ -36,6 +36,7 @@
             menu                     : 'Home',
             chartMenu                : 'A1',
             tableReportTab           : 'SKU',
+            tableReportTabC2           : 'SKU',
             tableReportMenu          : 1,
             additionalBudget         : true,
             currentDecisionBrandId   : 0,
@@ -64,13 +65,8 @@
             dragSourceReportId : '',
             dragHaveLeftReport : false,
             dragHaveRightReport : false,
-            //score
-            selectFinalScorePeriod : 0,
-            selectScore : 'Original',
-            currentPeriod : 0,
             seminarFinished : false,
-            showFeedback : false,
-            finalReportPeriods: []
+            showFeedback : false
 
         };
 
@@ -135,7 +131,10 @@
                 brand_id : "",
                 othererrorinfo : ""
             },
-
+            tableFinalScore: {
+                data : [],
+                showScaled : true
+            },
             tableA1CompanyStatus : {
                 allCompanyData : [],
                 currentCompany : {
@@ -172,6 +171,7 @@
                 currentTable : 1,
                 currentTableData : {},
                 currentTableUnit : "%",
+                currentTableShowAllSegments : false,
                 chartConfig : chartReport.getChartConfig1(),
                 chartData : $scope.dataChartSimple
     //            marketShareVolume : [],
@@ -183,20 +183,17 @@
     //            imagePerception : []
             },
             tableC5MarketTrends : {
-                allData : [],
-                currentTable : 1,
+                allData          : [],
+                currentTable     : 1,
                 currentTableData : {},
                 currentTableUnit : "",
-                chartConfig : chartReport.getChartConfig1(),
-                chartData : $scope.dataChartSimple
+                chartConfig      : chartReport.getChartConfig1(),
+                chartData        : $scope.dataChartSimple,
+                tableReportTab   : 'Global'
             },
             tableC6MarketIndicators : {
                 allData : {}
             },
-            tableFinalScore:{
-                selectPeriodData : {}
-            },
-
 
 
             chartA3InventoryReport : {
@@ -506,7 +503,6 @@
         var app = {
 
             initOnce : function(){
-                this.loadingChartData();
                 this.loadingStudentData();
 
             },
@@ -515,133 +511,269 @@
                 this.loadingCompanyDecisionData();
                 this.loadingCompanyOtherData();
             },
+            loadingTableData : function(){
+                /********************  Table Report A1  ********************/
+                tableReport.companyStatus($scope.data.currentStudent.companyId).then(function(data, status, headers, config){
+                    //        console.log(data);
+                    $scope.data.tableA1CompanyStatus.allCompanyData = data;
+                    $scope.data.tableA1CompanyStatus.currentCompany = data[$scope.data.currentStudent.companyId-1];
+                    $scope.data.tableA1CompanyStatus.currentSKU = $scope.data.tableA1CompanyStatus.currentCompany.SKU[0];
+                    $scope.data.tableA1CompanyStatus.currentBrand = $scope.data.tableA1CompanyStatus.currentCompany.brand[0];
+                    $scope.data.tableA1CompanyStatus.currentGlobal = $scope.data.tableA1CompanyStatus.currentCompany.global;
+                });
 
+                $scope.switchTableReportA1Company = function(company){
+                    $scope.data.tableA1CompanyStatus.currentCompany = company;
+                    $scope.data.tableA1CompanyStatus.currentSKU = $scope.data.tableA1CompanyStatus.currentCompany.SKU[0];
+                    $scope.data.tableA1CompanyStatus.currentBrand = $scope.data.tableA1CompanyStatus.currentCompany.brand[0];
+                    $scope.data.tableA1CompanyStatus.currentGlobal = $scope.data.tableA1CompanyStatus.currentCompany.global;
+                };
+                $scope.switchTableReportA1SKU = function(SKU){
+                    $scope.data.tableA1CompanyStatus.currentSKU = SKU;
+                };
+                $scope.switchTableReportA1Brand = function(brand){
+                    $scope.data.tableA1CompanyStatus.currentBrand = brand;
+                };
+
+
+                /********************  Table Report A2  ********************/
+                tableReport.financialReport($scope.data.currentStudent.companyId).then(function(data, status, headers, config){
+                    //        console.log(data);
+                    $scope.data.tableA2FinancialData.allData = data;
+                    $scope.data.tableA2FinancialData.currentCompany = data[0];
+                    $scope.data.tableA2FinancialData.currentPeriod = $scope.data.tableA2FinancialData.currentCompany.periods[$scope.data.tableA2FinancialData.currentCompany.periods.length -1];
+                    $scope.data.tableA2FinancialData.currentBrand = $scope.data.tableA2FinancialData.currentPeriod.brands[0];
+                });
+                $scope.switchTableReportPeriod = function(period){
+                    $scope.data.tableA2FinancialData.currentPeriod = period;
+                    $scope.data.tableA2FinancialData.currentBrand = $scope.data.tableA2FinancialData.currentPeriod.brands[0];
+                };
+                $scope.switchTableReportA2Brand = function(brand){
+                    $scope.data.tableA2FinancialData.currentBrand = brand;
+                };
+
+
+                /********************  Table Report A4  ********************/
+                tableReport.profitabilityEvolution($scope.data.currentStudent.companyId).then(function(data, status, headers, config){
+                    //        console.log(data);
+                    $scope.data.tableA4ProfitabilityEvolution.allData = data[0];
+                    $scope.data.tableA4ProfitabilityEvolution.currentSKU = $scope.data.tableA4ProfitabilityEvolution.allData.SKU[0];
+                    $scope.data.tableA4ProfitabilityEvolution.currentBrand = $scope.data.tableA4ProfitabilityEvolution.allData.brand[0];
+                    $scope.data.tableA4ProfitabilityEvolution.currentGlobal = $scope.data.tableA4ProfitabilityEvolution.allData.global;
+                });
+                $scope.switchTableReportA4SKU = function(SKU){
+                    $scope.data.tableA4ProfitabilityEvolution.currentSKU = SKU;
+                };
+                $scope.switchTableReportA4Brand = function(brand){
+                    $scope.data.tableA4ProfitabilityEvolution.currentBrand = brand;
+                };
+
+                /********************  Table Report B2  ********************/
+                tableReport.competitorIntelligence($scope.data.currentStudent.companyId).then(function(data, status, headers, config){
+                    //        console.log(data);
+                    $scope.data.tableB2CompetitorIntelligence.allData = data;
+                    $scope.data.tableB2CompetitorIntelligence.currentTableData = $scope.data.tableB2CompetitorIntelligence.allData.acquiredProductionAndLogisticsEfficiency;
+                    $scope.data.tableB2CompetitorIntelligence.chartData = chartReport.formatChartData($scope.data.tableB2CompetitorIntelligence.allData.acquiredProductionAndLogisticsEfficiency);
+                });
+                $scope.switchTableMenuLevel1B2 = function(menu, field, unit){
+                    $scope.css.tableReportMenu = menu;
+                    $scope.switchTableReportB2(1, field, unit);
+                };
+                $scope.switchTableReportB2 = function(order, field, unit){
+                    $scope.data.tableB2CompetitorIntelligence.currentTable = order;
+                    $scope.data.tableB2CompetitorIntelligence.currentTableData = $scope.data.tableB2CompetitorIntelligence.allData[field];
+                    $scope.data.tableB2CompetitorIntelligence.chartData = chartReport.formatChartData($scope.data.tableB2CompetitorIntelligence.currentTableData);
+                    $scope.data.tableB2CompetitorIntelligence.currentTableUnit = unit;
+                };
+
+
+
+                /********************  Table Report C3  ********************/
+                tableReport.segmentDistribution($scope.data.currentStudent.companyId).then(function(data, status, headers, config){
+                    //        console.log(data);
+                    $scope.data.tableC3SegmentDistribution.allData = data;
+                    $scope.data.tableC3SegmentDistribution.currentTableData = $scope.data.tableC3SegmentDistribution.allData.marketShareVolume;
+                    $scope.data.tableC3SegmentDistribution.chartData = chartReport.formatChartData($scope.data.tableC3SegmentDistribution.currentTableData);
+                });
+                $scope.switchTableReportC3 = function(order, field, unit, showAllSegments){
+                    $scope.data.tableC3SegmentDistribution.currentTable = order;
+                    $scope.data.tableC3SegmentDistribution.currentTableShowAllSegments = showAllSegments;
+                    $scope.data.tableC3SegmentDistribution.currentTableData = $scope.data.tableC3SegmentDistribution.allData[field];
+                    $scope.data.tableC3SegmentDistribution.chartData = chartReport.formatChartData($scope.data.tableC3SegmentDistribution.currentTableData);
+                    $scope.data.tableC3SegmentDistribution.currentTableUnit = unit;
+                };
+
+                /********************  Table Report C5  ********************/
+                tableReport.marketTrends($scope.data.currentStudent.companyId).then(function(data, status, headers, config){
+                    $scope.data.tableC5MarketTrends.allData = data;
+                    $scope.data.tableC5MarketTrends.currentTableData = $scope.data.tableC5MarketTrends.allData.global.averageNetMarketPriceStdPack;
+                    $scope.data.tableC5MarketTrends.chartData = chartReport.formatChartData($scope.data.tableC5MarketTrends.currentTableData);
+                });
+                $scope.switchTableCategoryC5 = function(category, field, unit){
+                    $scope.data.tableC5MarketTrends.tableReportTab = category;
+                    if(category === 'SKU'){
+                        $scope.switchTableMenuLevel1C5(1, 'SKU', field, unit);
+                    }else if(category === 'Brand'){
+                        $scope.switchTableMenuLevel1C5(1, 'Brand', field, unit);
+                    }else{
+                        $scope.switchTableMenuLevel1C5(1, 'Global', field, unit);
+                    }
+                };
+                $scope.switchTableMenuLevel1C5 = function(menu, category, field, unit){
+                    $scope.data.tableC5MarketTrends.tableReportMenu = menu;
+                    if(category === 'SKU'){
+                        $scope.switchTableReportC5(1, 'SKU', field, unit);
+                    }else if(category === 'Brand'){
+                        $scope.switchTableReportC5(1, 'brand', field, unit);
+                    }else{
+                        $scope.switchTableReportC5(1, 'global', 'averageNetMarketPriceStdPack', unit);
+                    }
+                };
+                $scope.switchTableReportC5 = function(order, category, field, unit){
+                    $scope.data.tableC5MarketTrends.currentTable = order;
+                    $scope.data.tableC5MarketTrends.currentTableData = $scope.data.tableC5MarketTrends.allData[category][field];
+                    $scope.data.tableC5MarketTrends.currentTableUnit = unit;
+                    $scope.data.tableC5MarketTrends.chartData = chartReport.formatChartData($scope.data.tableC5MarketTrends.currentTableData);
+                };
+
+                /********************  Table Report C6  ********************/
+                tableReport.marketIndicators($scope.data.currentStudent.companyId).then(function(data, status, headers, config){
+                    $scope.data.tableC6MarketIndicators.allData = data;
+
+                });
+
+            },
             loadingChartData : function(){
-                /********************  Chart A3  ********************/
-                chartReport.inventoryReport().then(function(data, status, headers, config){
-                    $scope.data.chartA3InventoryReport.data = data[0].data;
-                });
+
+                chartReport.initTranslate().then(function() {
+                    /********************  Chart A3  ********************/
+                    chartReport.inventoryReport($scope.data.currentStudent.companyId).then(function(data, status, headers, config){
+                        $scope.data.chartA3InventoryReport.data = data[0].data;
+                    });
 
 
-                /********************  Chart B1  ********************/
-                chartReport.marketShareInValue().then(function(data, status, headers, config){
-    //        console.log(data);
-                    $scope.data.chartB11MarketShareInValue.data = data;
-                });
-                chartReport.marketShareInVolume().then(function(data, status, headers, config){
-    //        console.log(data);
-                    $scope.data.chartB12MarketShareInVolume.data = data;
-                });
-                chartReport.mindSpaceShare().then(function(data, status, headers, config){
-    //        console.log(data);
-                    $scope.data.chartB13MindSpaceShare.data = data;
-                });
-                chartReport.shelfSpaceShare().then(function(data, status, headers, config){
-    //        console.log(data);
-                    $scope.data.chartB14ShelfSpaceShare.data = data;
-                });
+                    /********************  Chart B1  ********************/
+                    chartReport.marketShareInValue($scope.data.currentStudent.companyId).then(function(data, status, headers, config){
+                        //        console.log(data);
+                        $scope.data.chartB11MarketShareInValue.data = data;
+                    });
+                    chartReport.marketShareInVolume($scope.data.currentStudent.companyId).then(function(data, status, headers, config){
+                        //        console.log(data);
+                        $scope.data.chartB12MarketShareInVolume.data = data;
+                    });
+                    chartReport.mindSpaceShare($scope.data.currentStudent.companyId).then(function(data, status, headers, config){
+                        //        console.log(data);
+                        $scope.data.chartB13MindSpaceShare.data = data;
+                    });
+                    chartReport.shelfSpaceShare($scope.data.currentStudent.companyId).then(function(data, status, headers, config){
+                        //        console.log(data);
+                        $scope.data.chartB14ShelfSpaceShare.data = data;
+                    });
 
 
-                /********************  Chart B3  ********************/
-                chartReport.totalInvestment().then(function(data, status, headers, config){
-    //        console.log(data);
-                    $scope.data.chartB31TotalInvestment.data = data;
-                });
-                chartReport.netProfitByCompanies().then(function(data, status, headers, config){
-    //        console.log(data);
-                    $scope.data.chartB32NetProfitByCompanies.data = data;
-                });
-                chartReport.returnOnInvestment().then(function(data, status, headers, config){
-    //        console.log(data);
-                    $scope.data.chartB33ReturnOnInvestment.data = data;
-                });
-                chartReport.investmentsVersusBudget().then(function(data, status, headers, config){
-                    $scope.data.chartB34InvestmentsVersusBudget.data = data;
-                });
+                    /********************  Chart B3  ********************/
+                    chartReport.totalInvestment($scope.data.currentStudent.companyId).then(function(data, status, headers, config){
+                        //        console.log(data);
+                        $scope.data.chartB31TotalInvestment.data = data;
+                    });
+                    chartReport.netProfitByCompanies($scope.data.currentStudent.companyId).then(function(data, status, headers, config){
+                        //        console.log(data);
+                        $scope.data.chartB32NetProfitByCompanies.data = data;
+                    });
+                    chartReport.returnOnInvestment($scope.data.currentStudent.companyId).then(function(data, status, headers, config){
+                        //        console.log(data);
+                        $scope.data.chartB33ReturnOnInvestment.data = data;
+                    });
+                    chartReport.investmentsVersusBudget($scope.data.currentStudent.companyId).then(function(data, status, headers, config){
+                        $scope.data.chartB34InvestmentsVersusBudget.data = data;
+                    });
 
 
-                /********************  Chart B4  ********************/
-                chartReport.marketSalesValue().then(function(data, status, headers, config){
-    //        console.log(data);
-                    $scope.data.chartB41MarketSalesValue.data = data;
-                });
-                chartReport.marketSalesVolume().then(function(data, status, headers, config){
-    //        console.log(data);
-                    $scope.data.chartB42MarketSalesVolume.data = data;
-                });
-                chartReport.totalInventoryAtFactory().then(function(data, status, headers, config){
-    //        console.log(data);
-                    $scope.data.chartB43TotalInventoryAtFactory.data = data;
-                });
-                chartReport.totalInventoryAtTrade().then(function(data, status, headers, config){
-                    $scope.data.chartB44TotalInventoryAtTrade.data = data;
-                });
+                    /********************  Chart B4  ********************/
+                    chartReport.marketSalesValue($scope.data.currentStudent.companyId).then(function(data, status, headers, config){
+                        //        console.log(data);
+                        $scope.data.chartB41MarketSalesValue.data = data;
+                    });
+                    chartReport.marketSalesVolume($scope.data.currentStudent.companyId).then(function(data, status, headers, config){
+                        //        console.log(data);
+                        $scope.data.chartB42MarketSalesVolume.data = data;
+                    });
+                    chartReport.totalInventoryAtFactory($scope.data.currentStudent.companyId).then(function(data, status, headers, config){
+                        //        console.log(data);
+                        $scope.data.chartB43TotalInventoryAtFactory.data = data;
+                    });
+                    chartReport.totalInventoryAtTrade($scope.data.currentStudent.companyId).then(function(data, status, headers, config){
+                        $scope.data.chartB44TotalInventoryAtTrade.data = data;
+                    });
 
 
-                /********************  Chart C1  ********************/
-                chartReport.segmentsLeadersByValuePriceSensitive().then(function(data, status, headers, config){
-                    $scope.data.chartC11SegmentsLeadersByValuePriceSensitive.allData = data.data;
-                    $scope.data.chartC11SegmentsLeadersByValuePriceSensitive.currentPeriod = $scope.data.chartC11SegmentsLeadersByValuePriceSensitive.allData.length - 4 ;
-                    $scope.data.chartC11SegmentsLeadersByValuePriceSensitive.data = $scope.data.chartC11SegmentsLeadersByValuePriceSensitive.allData[$scope.data.chartC11SegmentsLeadersByValuePriceSensitive.currentPeriod + 3];
-                });
-                chartReport.segmentsLeadersByValuePretenders().then(function(data, status, headers, config){
-                    $scope.data.chartC12SegmentsLeadersByValuePretenders.allData = data.data;
-                    $scope.data.chartC12SegmentsLeadersByValuePretenders.data = $scope.data.chartC12SegmentsLeadersByValuePretenders.allData[$scope.data.chartC11SegmentsLeadersByValuePriceSensitive.currentPeriod + 3];
-                });
-                chartReport.segmentsLeadersByValueModerate().then(function(data, status, headers, config){
-                    $scope.data.chartC13SegmentsLeadersByValueModerate.allData = data.data;
-                    $scope.data.chartC13SegmentsLeadersByValueModerate.data = $scope.data.chartC13SegmentsLeadersByValueModerate.allData[$scope.data.chartC11SegmentsLeadersByValuePriceSensitive.currentPeriod + 3];
-                });
-                chartReport.segmentsLeadersByValueGoodLife().then(function(data, status, headers, config){
-                    $scope.data.chartC14SegmentsLeadersByValueGoodLife.allData = data.data;
-                    $scope.data.chartC14SegmentsLeadersByValueGoodLife.data = $scope.data.chartC14SegmentsLeadersByValueGoodLife.allData[$scope.data.chartC11SegmentsLeadersByValuePriceSensitive.currentPeriod + 3];
-                });
-                chartReport.segmentsLeadersByValueUltimate().then(function(data, status, headers, config){
-                    $scope.data.chartC15SegmentsLeadersByValueUltimate.allData = data.data;
-                    $scope.data.chartC15SegmentsLeadersByValueUltimate.data = $scope.data.chartC15SegmentsLeadersByValueUltimate.allData[$scope.data.chartC11SegmentsLeadersByValuePriceSensitive.currentPeriod + 3];
-                });
-                chartReport.segmentsLeadersByValuePragmatic().then(function(data, status, headers, config){
-                    $scope.data.chartC16SegmentsLeadersByValuePragmatic.allData = data.data;
-                    $scope.data.chartC16SegmentsLeadersByValuePragmatic.data = $scope.data.chartC16SegmentsLeadersByValuePragmatic.allData[$scope.data.chartC11SegmentsLeadersByValuePriceSensitive.currentPeriod + 3];
-                });
+                    /********************  Chart C1  ********************/
+                    chartReport.segmentsLeadersByValuePriceSensitive($scope.data.currentStudent.companyId).then(function(data, status, headers, config){
+                        $scope.data.chartC11SegmentsLeadersByValuePriceSensitive.allData = data.data;
+                        $scope.data.chartC11SegmentsLeadersByValuePriceSensitive.currentPeriod = $scope.data.chartC11SegmentsLeadersByValuePriceSensitive.allData.length - 4 ;
+                        $scope.data.chartC11SegmentsLeadersByValuePriceSensitive.data = $scope.data.chartC11SegmentsLeadersByValuePriceSensitive.allData[$scope.data.chartC11SegmentsLeadersByValuePriceSensitive.currentPeriod + 3];
+                    });
+                    chartReport.segmentsLeadersByValuePretenders($scope.data.currentStudent.companyId).then(function(data, status, headers, config){
+                        $scope.data.chartC12SegmentsLeadersByValuePretenders.allData = data.data;
+                        $scope.data.chartC12SegmentsLeadersByValuePretenders.data = $scope.data.chartC12SegmentsLeadersByValuePretenders.allData[$scope.data.chartC11SegmentsLeadersByValuePriceSensitive.currentPeriod + 3];
+                    });
+                    chartReport.segmentsLeadersByValueModerate($scope.data.currentStudent.companyId).then(function(data, status, headers, config){
+                        $scope.data.chartC13SegmentsLeadersByValueModerate.allData = data.data;
+                        $scope.data.chartC13SegmentsLeadersByValueModerate.data = $scope.data.chartC13SegmentsLeadersByValueModerate.allData[$scope.data.chartC11SegmentsLeadersByValuePriceSensitive.currentPeriod + 3];
+                    });
+                    chartReport.segmentsLeadersByValueGoodLife($scope.data.currentStudent.companyId).then(function(data, status, headers, config){
+                        $scope.data.chartC14SegmentsLeadersByValueGoodLife.allData = data.data;
+                        $scope.data.chartC14SegmentsLeadersByValueGoodLife.data = $scope.data.chartC14SegmentsLeadersByValueGoodLife.allData[$scope.data.chartC11SegmentsLeadersByValuePriceSensitive.currentPeriod + 3];
+                    });
+                    chartReport.segmentsLeadersByValueUltimate($scope.data.currentStudent.companyId).then(function(data, status, headers, config){
+                        $scope.data.chartC15SegmentsLeadersByValueUltimate.allData = data.data;
+                        $scope.data.chartC15SegmentsLeadersByValueUltimate.data = $scope.data.chartC15SegmentsLeadersByValueUltimate.allData[$scope.data.chartC11SegmentsLeadersByValuePriceSensitive.currentPeriod + 3];
+                    });
+                    chartReport.segmentsLeadersByValuePragmatic($scope.data.currentStudent.companyId).then(function(data, status, headers, config){
+                        $scope.data.chartC16SegmentsLeadersByValuePragmatic.allData = data.data;
+                        $scope.data.chartC16SegmentsLeadersByValuePragmatic.data = $scope.data.chartC16SegmentsLeadersByValuePragmatic.allData[$scope.data.chartC11SegmentsLeadersByValuePriceSensitive.currentPeriod + 3];
+                    });
 
 
-                /********************  Chart C2  ********************/
-                chartReport.perceptionMap().then(function(data, status, headers, config){
-                    $scope.data.chartC21PerceptionMap.allData = data.data;
-                    $scope.data.chartC21PerceptionMap.currentPeriod = $scope.data.chartC21PerceptionMap.allData.length - 4;
-                    $scope.data.chartC21PerceptionMap.data = $scope.data.chartC21PerceptionMap.allData[$scope.data.chartC21PerceptionMap.currentPeriod + 3];
-                    $scope.data.chartC21PerceptionMap.dataChart = $scope.data.chartC21PerceptionMap.data.dataSKU;                   
+                    /********************  Chart C2  ********************/
+                    chartReport.perceptionMap($scope.data.currentStudent.companyId).then(function(data, status, headers, config){
+                        $scope.data.chartC21PerceptionMap.allData = data.data;
+                        $scope.data.chartC21PerceptionMap.currentPeriod = $scope.data.chartC21PerceptionMap.allData.length - 4;
+                        $scope.data.chartC21PerceptionMap.data = $scope.data.chartC21PerceptionMap.allData[$scope.data.chartC21PerceptionMap.currentPeriod + 3];
+                        $scope.data.chartC21PerceptionMap.dataChart = $scope.data.chartC21PerceptionMap.data.dataSKU;
+                    });
+
+                    /********************  Chart C4  ********************/
+                    $scope.data.chartC41GrowthRateInVolume.config.title = 'Growth Rate In Volume (Period -3 = 100)';
+                    $scope.data.chartC42GrowthRateInValue.config.title = 'Growth Rate In Value (Period -3 = 100)';
+                    $scope.data.chartC43NetMarketPrice.config.title = 'Net Market Price (Period -3 = 100)';
+                    $scope.data.chartC44SegmentValueShareTotalMarket.config.title = 'Segment Value Share In Total Market (%)';
+
+                    chartReport.growthRateInVolume($scope.data.currentStudent.companyId).then(function(data, status, headers, config){
+                        //        console.log(data);
+                        $scope.data.chartC41GrowthRateInVolume.data = data;
+                    });
+                    chartReport.growthRateInValue($scope.data.currentStudent.companyId).then(function(data, status, headers, config){
+                        //        console.log(data);
+                        $scope.data.chartC42GrowthRateInValue.data = data;
+                    });
+                    chartReport.netMarketPrice($scope.data.currentStudent.companyId).then(function(data, status, headers, config){
+                        //        console.log(data);
+                        $scope.data.chartC43NetMarketPrice.data = data;
+                    });
+                    chartReport.segmentValueShareTotalMarket($scope.data.currentStudent.companyId).then(function(data, status, headers, config){
+                        //        console.log(data);
+                        $scope.data.chartC44SegmentValueShareTotalMarket.data = data;
+                    });
                 });
 
-                /********************  Chart C4  ********************/
-                $scope.data.chartC41GrowthRateInVolume.config.title = 'Growth Rate In Volume (Period -3 = 100)';
-                $scope.data.chartC42GrowthRateInValue.config.title = 'Growth Rate In Value (Period -3 = 100)';
-                $scope.data.chartC43NetMarketPrice.config.title = 'Net Market Price (Period -3 = 100)';
-                $scope.data.chartC44SegmentValueShareTotalMarket.config.title = 'Segment Value Share In Total Market (%)';
-
-                chartReport.growthRateInVolume().then(function(data, status, headers, config){
-    //        console.log(data);
-                    $scope.data.chartC41GrowthRateInVolume.data = data;
-                });
-                chartReport.growthRateInValue().then(function(data, status, headers, config){
-    //        console.log(data);
-                    $scope.data.chartC42GrowthRateInValue.data = data;
-                });
-                chartReport.netMarketPrice().then(function(data, status, headers, config){
-    //        console.log(data);
-                    $scope.data.chartC43NetMarketPrice.data = data;
-                });
-                chartReport.segmentValueShareTotalMarket().then(function(data, status, headers, config){
-    //        console.log(data);
-                    $scope.data.chartC44SegmentValueShareTotalMarket.data = data;
-                });
             },
 
             loadingStudentData : function(){
                 var that = this;
                 Company.getCurrentStudent().then(function(data, status, headers, config){
                     $scope.data.currentStudent = data;
+
                     var currentDate = new Date();
 
                     $scope.data.currentTime.hour = 1;
@@ -669,12 +801,9 @@
 
                     $scope.data.currentCompanyNameCharacter = showCompanyName($scope.data.currentStudent.companyId);
 
-                    $scope.css.currentPeriod = $scope.data.currentStudent.currentPeriod;
-
-                    $scope.css.seminarFinished = $scope.data.currentStudent.isSimulationFinised;
+                    $scope.css.seminarFinished = $scope.data.currentStudent.isSimulationFinished;
 
                     $scope.css.periods = [];
-                    $scope.css.finalReportPeriods = [];
 
                     // 处理显示当前第几回合进度条
                     if(angular.isNumber($scope.data.currentStudent.currentPeriod)){
@@ -701,31 +830,31 @@
                                 });
                             }
                         }
-                        //get periods of finalScore
-                        for (var j = 0; j < $scope.data.currentStudent.currentPeriod; j++) {
-                            $scope.css.finalReportPeriods.push(j);
-                        }
+
                     }
 
 
-                    //get Final Score Data  of current period
-                    $scope.css.selectFinalScorePeriod = $scope.data.currentStudent.currentPeriod - 1;
-
-                    Company.getFinalScore($scope.data.currentStudent.currentPeriod - 1).then(function(data, status, headers, config){
-                        $scope.data.tableFinalScore.selectPeriodData = data;
+                    /********************  Loading FinalScore  ********************/
+                    Company.getFinalScore().then(function(data, status, headers, config) {
+                        $scope.data.tableFinalScore.data = data.data;
                     });
 
+                    that.loadingChartData();
+                    that.loadingTableData();
+                    that.loadingCompanyDecisionData();
+
                     // 处理最后比赛结束后
-                    if($scope.data.currentStudent.isSimulationFinised === false){
-                        that.loadingCompanyDecisionData();
+                    if($scope.data.currentStudent.isSimulationFinished === false){
                         that.loadingCompanyOtherData();
+                    }else{
+                        that.loadingFeedBackData();
                     }
 
                 });
             },
 
             loadingCompanyDecisionData : function(){
-                Company.getCompany().then(function(data, status, headers, config){
+                Company.getCompany($scope.data.currentStudent.companyId).then(function(data, status, headers, config){
 
                     //记录上一次选中的Brand  并找到对应的Index 供本次查询使用
                     if($scope.data.currentBrand !== null ){
@@ -769,15 +898,20 @@
 
                     $scope.data.currentSku = $scope.data.currentCompany.d_BrandsDecisions[$scope.data.currentBrandIndex].d_SKUsDecisions[$scope.data.currentSkuIndex];
 
-                    Company.getCompanyFutureProjectionCalculator($scope.data.currentSku.d_SKUID).then(function(data, status, headers, config){
-                        $scope.data.currentCompanyFutureProjectionCalculator = data;
-                    });
+
+                    if($scope.data.currentStudent.isSimulationFinished === false){
+                        Company.getCompanyFutureProjectionCalculator($scope.data.currentSku.d_SKUID, $scope.data.currentStudent.companyId).then(function(data, status, headers, config){
+                            $scope.data.currentCompanyFutureProjectionCalculator = data;
+                        });
+                    }
+
+
 
                 });
             },
 
             loadingCompanyOtherData : function(){
-                Company.getCompanyOtherInfo().then(function(data, status, headers, config){
+                Company.getCompanyOtherInfo($scope.data.currentStudent.companyId).then(function(data, status, headers, config){
                     $scope.data.currentCompanyOtherInfo = {
                         totalAvailableBudget : parseInt(data.totalAvailableBudget * 10000) / 100,
                         totalAvailableBudgetCSS : data.totalAvailableBudget.toFixed(4)  * 100 + '%',
@@ -792,12 +926,33 @@
 
                 });
 
-                Company.getCompanyProductPortfolio().then(function(data, status, headers, config){
+                Company.getCompanyProductPortfolio($scope.data.currentStudent.companyId).then(function(data, status, headers, config){
                     $scope.data.currentCompanyProductPortfolio = data;
                 });
 
-                Company.getCompanySpendingDetails().then(function(data, status, headers, config){
+                Company.getCompanySpendingDetails($scope.data.currentStudent.companyId).then(function(data, status, headers, config){
                     $scope.data.currentCompanySpendingDetails = data;
+                });
+            },
+            loadingFeedBackData : function(){
+                /********************  获取 Questionnaire  ********************/
+                Company.getQuestionnaire().success(function(data, status, headers, config) {
+                    $scope.questionnaire = data;
+                    $scope.questionnaire.radio_OverallSatisfactionWithThePrograms = {
+                        info: ['ChallengeStrategicThinkingAbility', 'DevelopAnIntegratedPerspective', 'TestPersonalAbilityOfBalancingRisks', 'ChallengeLeadershipAndTeamworkAbility', 'ChallengeAnalysisAndDecisionMakingAbility', 'SimulationInteresting']
+                    };
+                    $scope.questionnaire.radio_TeachingTeams = {
+                        info: ['FeedbackOnSimulationDecisions', 'ExpandingViewAndInspireThinking', 'Lectures']
+                    };
+                    $scope.questionnaire.radio_Products = {
+                        info: ['OverallProductUsageExperience', 'UserInterfaceExperience', 'EaseOfNavigation', 'ClarityOfWordsUsed']
+                    };
+                    $scope.questionnaire.radio_TeachingSupports = {
+                        info: ['Helpfulness', 'QualityOfTechnicalSupport']
+                    };
+                    $scope.questionnaire.radio_MostBenefits = {
+                        info: ["JoinProgram", "CompanyInHouse", "OpenClass"]
+                    };
                 });
             }
 
@@ -818,7 +973,8 @@
 
         /********************  Chart C2  ********************/
         $scope.switchPerceptionMapsData = function(flag){
-            if(flag === 'sku'){
+            $scope.css.tableReportTabC2 = flag;
+            if(flag === 'SKU'){
                 $scope.data.chartC21PerceptionMap.dataChart = $scope.data.chartC21PerceptionMap.data.dataSKU;
             }else{
                 $scope.data.chartC21PerceptionMap.dataChart = $scope.data.chartC21PerceptionMap.data.dataBrand;
@@ -835,137 +991,6 @@
 
 
 
-        /********************  Table Report A1  ********************/
-        tableReport.companyStatus().then(function(data, status, headers, config){
-    //        console.log(data);
-            $scope.data.tableA1CompanyStatus.allCompanyData = data;
-            $scope.data.tableA1CompanyStatus.currentCompany = data[0];
-            $scope.data.tableA1CompanyStatus.currentSKU = $scope.data.tableA1CompanyStatus.currentCompany.SKU[0];
-            $scope.data.tableA1CompanyStatus.currentBrand = $scope.data.tableA1CompanyStatus.currentCompany.brand[0];
-            $scope.data.tableA1CompanyStatus.currentGlobal = $scope.data.tableA1CompanyStatus.currentCompany.global;
-        });
-
-        $scope.switchTableReportA1Company = function(company){
-            $scope.data.tableA1CompanyStatus.currentCompany = company;
-            $scope.data.tableA1CompanyStatus.currentSKU = $scope.data.tableA1CompanyStatus.currentCompany.SKU[0];
-            $scope.data.tableA1CompanyStatus.currentBrand = $scope.data.tableA1CompanyStatus.currentCompany.brand[0];
-            $scope.data.tableA1CompanyStatus.currentGlobal = $scope.data.tableA1CompanyStatus.currentCompany.global;
-        };
-        $scope.switchTableReportA1SKU = function(SKU){
-            $scope.data.tableA1CompanyStatus.currentSKU = SKU;
-        };
-        $scope.switchTableReportA1Brand = function(brand){
-            $scope.data.tableA1CompanyStatus.currentBrand = brand;
-        };
-
-
-        /********************  Table Report A2  ********************/
-        tableReport.financialReport().then(function(data, status, headers, config){
-    //        console.log(data);
-            $scope.data.tableA2FinancialData.allData = data;
-            $scope.data.tableA2FinancialData.currentCompany = data[0];
-            $scope.data.tableA2FinancialData.currentPeriod = $scope.data.tableA2FinancialData.currentCompany.periods[$scope.data.tableA2FinancialData.currentCompany.periods.length -1];
-            $scope.data.tableA2FinancialData.currentBrand = $scope.data.tableA2FinancialData.currentPeriod.brands[0];
-        });
-        $scope.switchTableReportPeriod = function(period){
-            $scope.data.tableA2FinancialData.currentPeriod = period;
-            $scope.data.tableA2FinancialData.currentBrand = $scope.data.tableA2FinancialData.currentPeriod.brands[0];
-        };
-        $scope.switchTableReportA2Brand = function(brand){
-            $scope.data.tableA2FinancialData.currentBrand = brand;
-        };
-
-
-        /********************  Table Report A4  ********************/
-        tableReport.profitabilityEvolution().then(function(data, status, headers, config){
-    //        console.log(data);
-            $scope.data.tableA4ProfitabilityEvolution.allData = data[0];
-            $scope.data.tableA4ProfitabilityEvolution.currentSKU = $scope.data.tableA4ProfitabilityEvolution.allData.SKU[0];
-            $scope.data.tableA4ProfitabilityEvolution.currentBrand = $scope.data.tableA4ProfitabilityEvolution.allData.brand[0];
-            $scope.data.tableA4ProfitabilityEvolution.currentGlobal = $scope.data.tableA4ProfitabilityEvolution.allData.global;
-        });
-        $scope.switchTableReportA4SKU = function(SKU){
-            $scope.data.tableA4ProfitabilityEvolution.currentSKU = SKU;
-        };
-        $scope.switchTableReportA4Brand = function(brand){
-            $scope.data.tableA4ProfitabilityEvolution.currentBrand = brand;
-        };
-
-        /********************  Table Report B2  ********************/
-        tableReport.competitorIntelligence().then(function(data, status, headers, config){
-    //        console.log(data);
-            $scope.data.tableB2CompetitorIntelligence.allData = data;
-            $scope.data.tableB2CompetitorIntelligence.currentTableData = $scope.data.tableB2CompetitorIntelligence.allData.acquiredProductionAndLogisticsEfficiency;
-            $scope.data.tableB2CompetitorIntelligence.chartData = chartReport.formatChartData($scope.data.tableB2CompetitorIntelligence.allData.acquiredProductionAndLogisticsEfficiency);
-        });
-        $scope.switchTableMenuLevel1B2 = function(menu, field, unit){
-            $scope.css.tableReportMenu = menu;
-            $scope.switchTableReportB2(1, field, unit);
-        };
-        $scope.switchTableReportB2 = function(order, field, unit){
-            $scope.data.tableB2CompetitorIntelligence.currentTable = order;
-            $scope.data.tableB2CompetitorIntelligence.currentTableData = $scope.data.tableB2CompetitorIntelligence.allData[field];
-            $scope.data.tableB2CompetitorIntelligence.chartData = chartReport.formatChartData($scope.data.tableB2CompetitorIntelligence.currentTableData);
-            $scope.data.tableB2CompetitorIntelligence.currentTableUnit = unit;
-        };
-
-
-
-        /********************  Table Report C3  ********************/
-        tableReport.segmentDistribution().then(function(data, status, headers, config){
-    //        console.log(data);
-            $scope.data.tableC3SegmentDistribution.allData = data;
-            $scope.data.tableC3SegmentDistribution.currentTableData = $scope.data.tableC3SegmentDistribution.allData.marketShareVolume;
-            $scope.data.tableC3SegmentDistribution.chartData = chartReport.formatChartData($scope.data.tableC3SegmentDistribution.currentTableData);
-        });
-        $scope.switchTableReportC3 = function(order, field, unit){
-            $scope.data.tableC3SegmentDistribution.currentTable = order;
-            $scope.data.tableC3SegmentDistribution.currentTableData = $scope.data.tableC3SegmentDistribution.allData[field];
-            $scope.data.tableC3SegmentDistribution.chartData = chartReport.formatChartData($scope.data.tableC3SegmentDistribution.currentTableData);
-            $scope.data.tableC3SegmentDistribution.currentTableUnit = unit;
-        };
-
-        /********************  Table Report C5  ********************/
-        tableReport.marketTrends().then(function(data, status, headers, config){
-    //        console.log(data);
-            $scope.data.tableC5MarketTrends.allData = data;
-            $scope.data.tableC5MarketTrends.currentTableData = $scope.data.tableC5MarketTrends.allData.SKU.averageDisplayPriceStdPack;
-            $scope.data.tableC5MarketTrends.chartData = chartReport.formatChartData($scope.data.tableC5MarketTrends.currentTableData);
-
-        });
-        $scope.switchTableCategoryC5 = function(category, field, unit){
-            $scope.css.tableReportTab = category;
-            if(category === 'SKU'){
-                $scope.switchTableMenuLevel1C5(1, 'SKU', field, unit);
-            }else if(category === 'Brand'){
-                $scope.switchTableMenuLevel1C5(1, 'Brand', field, unit);
-            }else{
-                $scope.switchTableMenuLevel1C5(1, 'Global', field, unit);
-            }
-        };
-        $scope.switchTableMenuLevel1C5 = function(menu, category, field, unit){
-            $scope.css.tableReportMenu = menu;
-            if(category === 'SKU'){
-                $scope.switchTableReportC5(1, 'SKU', field, unit);
-            }else if(category === 'Brand'){
-                $scope.switchTableReportC5(1, 'brand', field, unit);
-            }else{
-                $scope.switchTableReportC5(1, 'global', 'averageNetMarketPriceStdPack', unit);
-            }
-        };
-        $scope.switchTableReportC5 = function(order, category, field, unit){
-            $scope.data.tableC5MarketTrends.currentTable = order;
-            $scope.data.tableC5MarketTrends.currentTableData = $scope.data.tableC5MarketTrends.allData[category][field];
-            $scope.data.tableC5MarketTrends.currentTableUnit = unit;
-            $scope.data.tableC5MarketTrends.chartData = chartReport.formatChartData($scope.data.tableC5MarketTrends.currentTableData);
-        };
-
-        /********************  Table Report C6  ********************/
-        tableReport.marketIndicators().then(function(data, status, headers, config){
-            $scope.data.tableC6MarketIndicators.allData = data;
-
-
-        });
 
 
 
@@ -1006,12 +1031,17 @@
 
 
 
+
+
+
+
         /********************  点击添加一个新的Brand 显示添加Brand的表单  ********************/
         $scope.showAddNewBrandForm = function(){
             $scope.css.addNewBrand = true;
             $scope.data.newBrand.brand_name = "";
             $scope.data.newBrand.sku_name = "";
             $scope.data.newBrand.othererrorinfo = "";
+            $scope.data.newBrand.companyId = $scope.data.currentStudent.companyId;
         };
 
         $scope.addNewBrand = function(form){
@@ -1020,6 +1050,7 @@
 
                 // 自动给品牌名称增加公司前缀
                 $scope.data.newBrand.brand_name = $scope.data.currentCompanyNameCharacter + $scope.data.newBrand.brand_name;
+
 
                 Company.addBrand($scope.data.newBrand).then(function(data, status, headers, config){
 
@@ -1042,6 +1073,43 @@
             }
         };
 
+        /********************  更新 Brand  ********************/
+        $scope.updateBrand = function(form){
+            $scope.data.currentModifiedBrand = {
+                companyId : $scope.data.currentStudent.companyId,
+                brand_id : $scope.data.currentBrand.d_BrandID,
+                brand_data : {
+                    d_SalesForce : $scope.data.currentBrand.d_SalesForce
+                }
+            };
+
+            Company.updateBrand($scope.data.currentModifiedBrand).then(function(data, status, headers, config){
+                form.brandSalesForce.$valid = true;
+                form.brandSalesForce.$invalid = false;
+
+                app.reRun();
+
+                notify({
+                    message : 'Save Success !',
+                    template : notifytemplate.success,
+                    position : 'center'
+                });
+            }, function(data){
+                console.log(data);
+
+                form.brandSalesForce.$valid = false;
+                form.brandSalesForce.$invalid = true;
+
+                $scope.css.brandErrorInfo = data.data;
+
+                notify({
+                    message : data.data.message,
+                    template : notifytemplate.failure,
+                    position : 'center'
+                });
+            });
+        };
+
 
         /********************  点击添加一个新的SKU 显示添加SKU的表单  ********************/
         $scope.showAddNewSkuForm = function(){
@@ -1049,6 +1117,7 @@
             $scope.data.newSku.sku_name = "";
             $scope.data.newSku.brand_id = "";
             $scope.data.newSku.othererrorinfo = "";
+            $scope.data.newSku.companyId = $scope.data.currentStudent.companyId;
         };
 
         $scope.addNewSku = function(form){
@@ -1075,26 +1144,6 @@
             }
         };
 
-        /********************  删除一个SKU  注意该SKU必须是本回合添加的SKU才可以删除 ********************/
-        $scope.delSku = function(sku){
-            Company.delSku(sku.d_SKUID, sku.d_BrandID).then(function(data, status, headers, config){
-
-                app.reRun();
-
-                notify({
-                    message  : 'Delete Sku Success !',
-                    template : notifytemplate.success,
-                    position : 'center'
-                });
-            }, function(data){
-                notify({
-                    message  : data.data.message,
-                    template : notifytemplate.failure,
-                    position : 'center'
-                });
-            });
-        };
-
 
         /********************  点击选中Brand 或 SKU  ********************/
         $scope.clickBrand = function(brand){
@@ -1108,9 +1157,8 @@
             $scope.css.skuErrorField = '';
             $scope.css.skuErrorFieldFrontEnd = '';
             $scope.data.currentSku = angular.copy(sku);
-            Company.getCompanyFutureProjectionCalculator($scope.data.currentSku.d_SKUID).then(function(data, status, headers, config){
+            Company.getCompanyFutureProjectionCalculator($scope.data.currentSku.d_SKUID, $scope.data.currentStudent.companyId).then(function(data, status, headers, config){
                 $scope.data.currentCompanyFutureProjectionCalculator = data;
-
             });
         };
 
@@ -1118,6 +1166,8 @@
         /********************  更新 SKU  ********************/
         $scope.leaveSkuInput = function(sku, fieldname, fielddata, segmentOrWeek, weekindex){
             $scope.data.currentModifiedSku = {
+                seminarId : $scope.data.currentStudent.seminarId,
+                companyId : $scope.data.currentStudent.companyId,
                 brand_id : sku.d_BrandID,
                 sku_id : sku.d_SKUID,
                 sku_data : {}
@@ -1182,10 +1232,10 @@
                     $scope.data.currentModifiedSku.sku_data[fieldname][0] = Number(fielddata);
                 }else if(fieldname === 'd_AdditionalTradeMargin'){
                     // 针对 d_AdditionalTradeMargin 字段需要特殊处理
-                    $scope.data.currentModifiedSku.sku_data[fieldname][0] = Number(fielddata) / 100;
+                    //$scope.data.currentModifiedSku.sku_data[fieldname] = Number(fielddata) / 100;
                 }else if(fieldname === 'd_WholesalesBonusRate'){
                     // 针对 d_WholesalesBonusRate 字段需要特殊处理
-                    $scope.data.currentModifiedSku.sku_data[fieldname][0] = Number(fielddata) / 100;
+                    //$scope.data.currentModifiedSku.sku_data[fieldname] = Number(fielddata) / 100;
                 }
 
 
@@ -1256,40 +1306,23 @@
                 });
             }
 
-
-
         };
 
-        /********************  更新 Brand  ********************/
-        $scope.updateBrand = function(form){
-            $scope.data.currentModifiedBrand = {
-                brand_id : $scope.data.currentBrand.d_BrandID,
-                brand_data : {
-                    d_SalesForce : $scope.data.currentBrand.d_SalesForce
-                }
-            };
 
-            Company.updateBrand($scope.data.currentModifiedBrand).then(function(data, status, headers, config){
-                form.brandSalesForce.$valid = true;
-                form.brandSalesForce.$invalid = false;
+        /********************  删除一个SKU  注意该SKU必须是本回合添加的SKU才可以删除 ********************/
+        $scope.delSku = function(sku){
+            Company.delSku($scope.data.currentStudent.companyId, sku.d_BrandID, sku.d_SKUID).then(function(data, status, headers, config){
 
                 app.reRun();
 
                 notify({
-                    message : 'Save Success !',
+                    message  : 'Delete Sku Success !',
                     template : notifytemplate.success,
                     position : 'center'
                 });
             }, function(data){
-                console.log(data);
-
-                form.brandSalesForce.$valid = false;
-                form.brandSalesForce.$invalid = true;
-
-                $scope.css.brandErrorInfo = data.data;
-
                 notify({
-                    message : data.data.message,
+                    message  : data.data.message,
                     template : notifytemplate.failure,
                     position : 'center'
                 });
@@ -1300,7 +1333,11 @@
         /********************  更新 Company  ********************/
         $scope.updateCompany = function(fieldname, form, formfieldname){
 
-            $scope.data.currentModifiedCompany.company_data = {};
+            $scope.data.currentModifiedCompany = {
+                companyId : $scope.data.currentStudent.companyId,
+                company_data : {}
+            };
+
             $scope.data.currentModifiedCompany.company_data[fieldname] = $scope.data.currentCompany[fieldname];
 
             Company.updateCompany($scope.data.currentModifiedCompany).success(function(data, status, headers, config){
@@ -1335,75 +1372,15 @@
 
 
 
-        /********************  get FinalScore  ********************/
-
-        $scope.changeToReportPage = function(){
-            $scope.css.menu = 'Report';
-
-            $timeout(function() {
-                angular.element('#reportinput').focus();
-            });
-        };
-
-        $scope.switchTableReportFinalScore = function(period){
-            $scope.css.selectFinalScorePeriod = period ;
-            Company.getFinalScore(period)
-            .then(function(data, status, headers, config){
-                $scope.data.tableFinalScore.selectPeriodData = data;
-            });
-        };
 
 
-        /********************  获取 Questionnaire  ********************/
-        Company.getQuestionnaire().success(function(data, status, headers, config) {
-            $scope.questionnaire = data;
-            $scope.questionnaire.radio_OverallSatisfactionWithThePrograms = {
-                info: ['ChallengeStrategicThinkingAbility', 'DevelopAnIntegratedPerspective', 'TestPersonalAbilityOfBalancingRisks', 'ChallengeLeadershipAndTeamworkAbility', 'ChallengeAnalysisAndDecisionMakingAbility', 'SimulationInteresting']
-            };
-            $scope.questionnaire.radio_TeachingTeams = {
-                info: ['FeedbackOnSimulationDecisions', 'ExpandingViewAndInspireThinking', 'Lectures']
-            };
-            $scope.questionnaire.radio_Products = {
-                info: ['OverallProductUsageExperience', 'UserInterfaceExperience', 'EaseOfNavigation', 'ClarityOfWordsUsed']
-            };
-            $scope.questionnaire.radio_TeachingSupports = {
-                info: ['Helpfulness', 'QualityOfTechnicalSupport']
-            };
-            $scope.questionnaire.radio_MostBenefits = {
-                info: ["JoinProgram", "CompanyInHouse", "OpenClass"]
-            };
-        });
 
-        $scope.showQuestionnaire = function() {
-            $scope.css.showFeedback = true;
-        };
 
-        /********************  更新 Questionnaire  ********************/
-        $scope.updateQuestionnaire = function(fieldname, index, form, formfieldname) {
 
-            var currentData = {
-                'location': fieldname,
-                'data': $scope.questionnaire[fieldname]
-            };
 
-            Company.updateQuestionnaire(currentData).success(function(data, status, headers, config) {
-                notify({
-                    message: 'Save Success !',
-                    template: notifytemplate.success,
-                    position: 'center'
-                });
-            }, function(data, status, headers, config) {
-                notify({
-                    message: data.message,
-                    template: notifytemplate.failure,
-                    position: 'center'
-                });
-            });
-        };
+
         /********************  提交 Questionnaire  ********************/
         $scope.submitQuestionnaire = function(questionnaire) {
-
-            $scope.isFeedbackSumbit = true;
 
             var currentData = {
                 'questionnaire': questionnaire
@@ -1416,6 +1393,7 @@
                     position: 'center'
                 });
                 $scope.css.showFeedback = false;
+                $scope.isFeedbackSumbit = true;
 
             }, function(data, status, headers, config) {
                 notify({

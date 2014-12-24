@@ -1,6 +1,6 @@
     <!-- header logo: style can be found in header.less -->
 
-    <a href="index.html" class="logo">
+    <a href="/marksimos/adminhome" class="logo">
         <!-- Add the class icon to your logo image or logo icon to add the margining -->
         MarkSimos Admin
     </a>
@@ -19,7 +19,18 @@
         <div class="navbar-right">
 
             <ul class="nav navbar-nav">
-            <!-- Messages: style can be found in dropdown.less-->
+
+                <li class="dropdown">
+                    <a href="" class="dropdown-toggle" data-toggle="dropdown">{{'HomePageMenuBarLabelsLanguage' | translate}} <b class="caret"></b></a>
+                    <ul class="dropdown-menu mk_dropdownlist">
+                        <li><a href="" ng-click="changeLanguage('en_US')">English</a></li>
+                        <li class="divider mk_dropdowndivider"></li>
+                        <li><a href="" ng-click="changeLanguage('zh_CN')">中文</a></li>
+                    </ul>
+                </li>
+
+
+                <!-- Messages: style can be found in dropdown.less-->
                 <li class="dropdown messages-menu">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown">
                         <i class="fa fa-envelope"></i>
