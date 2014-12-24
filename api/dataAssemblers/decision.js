@@ -22,7 +22,6 @@ exports.getDecision = function(seminarId, period, companyId){
         }
 
         //combine decisions
-            console.log(brandDecisionList);
         brandDecisionList.forEach(function(brandDecision){
 
             var tempSKUDecisionList = [];
