@@ -282,7 +282,7 @@ exports.removeStudentFromSeminar = function(req, res, next){
             return res.send(500, {message: "remove student from seminar failed."})
         })
         .done();
-}
+};
 
 
 

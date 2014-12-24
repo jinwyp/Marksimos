@@ -217,26 +217,26 @@ exports.getDecisionForFacilitator = function(req, res, next){
 
 
 exports.updateSKUDecision = function(req, res, next){
+
+    var companyId = +req.body.companyId;
     var brandId = req.body.brand_id;
     var SKUID = req.body.sku_id;
     var SKU = req.body.sku_data;
 
-    var seminarId = req.body.seminarId;
+    var period = req.session.currentPeriod;
+    var seminarId = req.session.seminarId;
+
+    var userRole = req.session.userRole;
+
+    if(userRole !== config.role.student){
+        period = req.body.periodId;
+        seminarId = req.body.seminarId;
+    }
 
     if(!seminarId){
         return res.send(403, {message: "You don't choose a seminar."});
     }
 
-    var companyId = +req.body.companyId;
-
-    var period = req.session.currentPeriod;
-
-
-    var userRole = req.session.userRole;
-
-    if(userRole !== config.role.student){
-        period = req.body.periodId
-    }
 
     if(!brandId){
         return res.send(403, {message: "Invalid parameter brand_id."});
@@ -250,12 +250,8 @@ exports.updateSKUDecision = function(req, res, next){
         return res.send(403, {message: "Invalid parameter skudata"});
     }
 
-    if(!seminarId){
-        return res.send(403, {message: "Invalid seminarId in session."});
-    }
-
     if(!companyId){
-        return res.send(403, {message: "Invalid companyId in session."});
+        return res.send(403, {message: "Invalid companyId."});
     }
 
     if(period === undefined){
@@ -290,11 +286,6 @@ exports.updateSKUDecision = function(req, res, next){
             if(postedSKU[field] !== undefined){
                 result[field] = postedSKU[field];
 
-                // //update consumer price automatically if user try to update factory price
-                // if(field === 'd_FactoryPrice'){
-                //     result.d_ConsumerPrice = result.d_FactoryPrice[0] * (gameParameters.pgen.wholesale_Markup + 1)
-                //         * (gameParameters.pgen.retail_Markup + 1);
-                // }
             }
         });
 
@@ -315,15 +306,17 @@ exports.updateBrandDecision = function(req, res, next){
     var brandId = req.body.brand_id;
     var brand_data = req.body.brand_data;
 
-    var seminarId = req.session.seminarId;
-
-    if(!seminarId){
-        return res.send(403, {message: "You don't choose a seminar."});
-    }
-
     var companyId = +req.body.companyId;
+
+    var seminarId = req.session.seminarId;
     var period = req.session.currentPeriod;
 
+    var userRole = req.session.userRole;
+
+    if(userRole !== config.role.student){
+        period = req.body.periodId;
+        seminarId = req.body.seminarId;
+    }
 
     if(!brandId){
         return res.send(403, {message: "Invalid parameter brand_id."});
@@ -338,7 +331,7 @@ exports.updateBrandDecision = function(req, res, next){
     }
 
     if(!companyId){
-        return res.send(403, {message: "Invalid companyId in session."});
+        return res.send(403, {message: "Invalid companyId."});
     }
 
     if(period === undefined){
@@ -374,16 +367,17 @@ exports.updateBrandDecision = function(req, res, next){
 exports.updateCompanyDecision = function(req, res, next){
 
     var company_data = req.body.company_data;
+    var companyId = +req.body.companyId;
 
+    var period = req.session.currentPeriod;
     var seminarId = req.session.seminarId;
 
-    if(!seminarId){
-        return res.send(403, {message: "You don't choose a seminar."});
+    var userRole = req.session.userRole;
+
+    if(userRole !== config.role.student){
+        period = req.body.periodId;
+        seminarId = req.body.seminarId;
     }
-
-    var companyId = +req.body.companyId;
-    var period = req.session.currentPeriod;
-
 
     if(!company_data){
         return res.send(403, {message: "Invalid parameter company_data"});
@@ -394,14 +388,14 @@ exports.updateCompanyDecision = function(req, res, next){
     }
 
     if(!companyId){
-        return res.send(403, {message: "Invalid companyId in session."});
+        return res.send(403, {message: "Invalid companyId ."});
     }
 
     if(period === undefined){
         return res.send(403, {message: "Invalid period in session."});
     }
 
-    var tempCompanyDecision = createCompanyDecision(company_data);
+    var tempCompanyDecision = filterCompanyDecision(company_data);
 
     //logger.log('tempCompanyDecision:' + util.inspect(tempCompanyDecision));
     companyDecisionModel.updateCompanyDecision(seminarId, period, companyId, tempCompanyDecision)
@@ -415,7 +409,7 @@ exports.updateCompanyDecision = function(req, res, next){
     .done();
 
 
-    function createCompanyDecision(postedCompanyDecision){
+    function filterCompanyDecision(postedCompanyDecision){
         var result = {};
 
         var fields = ['d_CompanyName','d_IsAdditionalBudgetAccepted','d_RequestedAdditionalBudget','d_InvestmentInEfficiency','d_InvestmentInTechnology','d_InvestmentInServicing'];
