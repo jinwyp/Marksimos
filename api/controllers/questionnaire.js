@@ -4,6 +4,8 @@ var logger = require('../../common/logger.js');
 var config = require('../../common/config.js');
 var Q = require('q');
 util = require('util');
+
+
 exports.getQuestionnaire = function(req, res, next) {
     var seminarId = req.session.seminarId;
     var email = req.session.email;
@@ -30,9 +32,8 @@ exports.getQuestionnaire = function(req, res, next) {
             if (result) {
                 return res.send(result);
             } else {
-                return {                  
+                return res.send({
                     "seminarId": seminarId.toString(),
-                    "email": "guest1@hcdlearning.com",
                     "q_FeelAboutMarkSimos": "",
                     "q_ReasonForRecommendOrNot": "",
                     "q_WillRecommend": true,
@@ -42,8 +43,7 @@ exports.getQuestionnaire = function(req, res, next) {
                     "q_Product": [5, 5, 5, 5],
                     "q_TeachingTeam": [5, 5, 5],
                     "q_OverallSatisfactionWithTheProgram": [5, 5, 5, 5, 5, 5]
-                }
-
+                })
             }
         })
         .fail(function(err) {
@@ -58,55 +58,6 @@ exports.getQuestionnaire = function(req, res, next) {
         })
         .done();
 };
-
-exports.updateQuestionnaire = function(req, res, next) {
-    var seminarId = req.session.seminarId;
-    var email = req.session.email;
-    var location = req.body.location;
-    var data = req.body.data;
-
-    if (!seminarId) {
-        return res.send(400, {
-            message: "You don't choose a seminar."
-        });
-    }
-
-    if (!email) {
-        return res.send(400, {
-            message: "Invalid email."
-        });
-    }
-
-    if (!location) {
-        return res.send(400, {
-            message: 'Invalid Locatin.'
-        });
-    }
-
-    if (!data) {
-        return res.send(400, {
-            message: 'Invalid data'
-        });
-    }
-
-    var temQuestionnaire = {};
-    temQuestionnaire[location] = data;
-    // if(location=="q_WillRecommend"){
-    //     temQuestionnaire.q_ReasonForRecommendOrNot="";
-    // }
-    questionnaireModel.update(seminarId, email, temQuestionnaire)
-        .then(function(result) {
-            res.send({
-                message: 'update success.'
-            });
-        })
-        .fail(function(err) {
-            var message = JSON.stringify(err, ['message', 'lower', 'upper', 'modifiedField'], 2);
-            res.send(403, message);
-        })
-        .done();
-
-}
 
 exports.submitQuestionnaire = function(req, res, next) {
 
