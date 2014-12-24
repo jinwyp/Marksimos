@@ -35,8 +35,8 @@ var paths = {
 
     cssSourcePath: ['./public/app/css/stylesheets/screen.css', './public/libs/bootstrap/dist/css/bootstrap.min.css', './public/app/css/stylesheets/main.css', './public/app/css/stylesheets/print.css', './public/app/css/stylesheets/ie.css', './public/libs/nvd3/nv.d3.css', './public/libs/angular-notify/dist/angular-notify.css'],
     unit_test: './api/test/marksimos/*',
-    scenario_test: './api/test/marksimos/**/*.js',
-    scenario_test2: './api/test/marksimos/student/*.js',
+    scenario_testAdmin: './api/test/marksimos/admin/*.js',
+    scenario_testStudent: './api/test/marksimos/student/*.js'
 
 };
 
@@ -219,13 +219,13 @@ gulp.task('browser-sync', function() {
 
 
 
-gulp.task('test', function() {
-    return gulp.src(paths.scenario_test)
+gulp.task('teststudent', function() {
+    return gulp.src(paths.scenario_testStudent)
         .pipe(jasmine());
 });
 
-gulp.task('test2', function() {
-    return gulp.src(paths.scenario_test2)
+gulp.task('testadmin', function() {
+    return gulp.src(paths.scenario_testAdmin)
         .pipe(jasmine());
 });
 
