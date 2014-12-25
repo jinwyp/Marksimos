@@ -282,6 +282,44 @@ exports.getSeminarOfFacilitator = function(req, res, next){
     }   
     seminarModel.find(query, {seminarId:-1})
     .then(function(allSeminars){
+
+            // 处理兼容老版本
+            if(allSeminars.length > 0 ){
+                allSeminars.forEach(function(seminarOld){
+
+                    if(seminarOld.companyAssignment.length > 0){
+                        if(typeof seminarOld.companyAssignment[0].companyId == 'undefined'){
+
+                            var companyList = [];
+
+                            for(var j=0; j<seminarOld.companyAssignment.length; j++){
+
+                                if( typeof seminarOld.companyAssignment[j] !== 'undefined'){
+
+                                    var companyNew = {
+                                        companyId : j + 1,
+                                        companyName : String.fromCharCode('A'.charCodeAt(0) + j ),
+                                        studentList : []
+                                    };
+
+                                    for(var k=0; k<seminarOld.companyAssignment[j].length; k++) {
+                                        companyNew.studentList.push(seminarOld.companyAssignment[j][k]);
+                                    }
+
+                                    companyList.push(companyNew);
+                                }
+
+
+                            }
+
+                            seminarModel.update({seminarId: seminarOld.seminarId}, { $set: { companyAssignment: companyList }}).then(function(result){
+                            })
+
+                        }
+                    }
+                })
+            }
+
         res.send(allSeminars);
     })
     .fail(function(err){
