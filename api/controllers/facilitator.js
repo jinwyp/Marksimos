@@ -242,7 +242,7 @@ exports.searchFacilitator = function(req, res, next){
 exports.getSeminarOfFacilitator = function(req, res, next){
     var facilitatorId = sessionOperation.getUserId(req);
 
-    seminarModel.find({facilitatorId: facilitatorId}, {})
+    seminarModel.find({facilitatorId: facilitatorId}, {seminarId:-1})
     .then(function(allSeminars){
         res.send(allSeminars);
     })
