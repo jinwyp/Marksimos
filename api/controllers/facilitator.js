@@ -240,9 +240,47 @@ exports.searchFacilitator = function(req, res, next){
 };
 
 exports.getSeminarOfFacilitator = function(req, res, next){
-    var facilitatorId = sessionOperation.getUserId(req);
-
-    seminarModel.find({facilitatorId: facilitatorId}, {seminarId:-1})
+    var facilitatorId = sessionOperation.getUserId(req);      
+    var filterKey = req.query.filterKey;
+    var status = req.query.status;
+    if (status == undefined) {
+        status = 'all';
+    }
+    switch (status.toString()) {
+        case 'true':
+            status = true;
+            break;
+        case 'false':
+            status = false;
+            break;
+    }  
+    var query = {};
+    if (filterKey) {
+        var strRegex = ".*" + filterKey + ".*";
+        if (status !== 'all') {
+            query.$or = [
+                { 'description': { $regex: strRegex }, facilitatorId: facilitatorId, 'isInitialized': status },
+                { 'seminarId': { $regex: strRegex }, facilitatorId: facilitatorId, 'isInitialized': status },
+                { 'venue': { $regex: strRegex }, facilitatorId: facilitatorId, 'isInitialized': status },
+            ];
+        }
+        else {
+            query.$or = [
+                { 'description': { $regex: strRegex }, facilitatorId: facilitatorId },
+                { 'seminarId': { $regex: strRegex }, facilitatorId: facilitatorId },
+                { 'venue': { $regex: strRegex }, facilitatorId: facilitatorId },
+            ];
+        }
+    }
+    else {
+        if (status !== 'all') {
+            query = { facilitatorId: facilitatorId, 'isInitialized': status };
+        }
+        else {
+            query = { facilitatorId: facilitatorId };
+        }
+    }   
+    seminarModel.find(query, {seminarId:-1})
     .then(function(allSeminars){
         res.send(allSeminars);
     })
