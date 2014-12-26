@@ -1193,6 +1193,7 @@
             }else if(fieldname === 'd_FactoryPrice' && !regexFloat.test(fielddata) ){
                 $scope.css.skuErrorFieldFrontEnd = fieldname;
 
+
             }else if(fieldname === 'd_Advertising' && !regexInteger.test(fielddata) ){
                 $scope.css.skuErrorFieldFrontEnd = fieldname;
 

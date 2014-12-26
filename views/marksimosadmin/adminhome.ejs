@@ -542,8 +542,8 @@
                         <div class="box box-primary">
                             <form class="form-horizontal" role="form" name="searchSeminarForm">
                                 <div class="box-body">  
-                                    <div class="form-group" ng-class="searchSeminarForm.filterKey.$dirty ? (searchSeminarForm.filterKey.$valid ? (data.searchSeminar.filterKey.length ? 'has-success' : '') : 'has-error') : ''">
-                                        <label class="col-sm-2 control-label">Keywords :</label>
+                                    <div class="form-group" ng-class="{'has-success':searchSeminarForm.filterKey.$dirty&&searchSeminarForm.filterKey.$valid, 'has-error':searchSeminarForm.filterKey.$dirty&&searchSeminarForm.filterKey.$invalid}">
+                                        <label class="col-sm-2 control-label" for="filterKey">Keywords :</label>
                                         <div class="col-sm-4">
                                             <input type="text" class="form-control" name="filterKey" ng-model="data.searchSeminar.filterKey" placeholder="ID or Description or Venue" ng-required="false" ng-minlength="2" ng-maxlength="20" ng-model-options="{ debounce: 500 }" />
                                         </div>
@@ -597,7 +597,10 @@
                                         <td style="width:100px">
                                             <button type="button" class="btn btn-danger" ng-hide="seminar.isInitialized" ng-click="initSeminar(seminar.seminarId)" ng-disabled="css.runButtonDisabled">Init</button>
 
-                                            <button type="button" class="btn btn-danger" ng-show="seminar.isInitialized" ng-click="runSeminar(seminar.seminarId, seminar.companyMember)" ng-disabled="css.runButtonDisabled">Run Period{{seminar.currentPeriod}}</button>
+                                            <button type="button" class="btn btn-danger" ng-show="seminar.isInitialized&&!seminar.isSimulationFinished&&!css.showConfirm" ng-click="showRunSeminarConfirm(seminar.seminarId)" >Run Period{{seminar.currentPeriod}}</button>
+
+                                            <button type="button" class="btn btn-info btn-sm" ng-show="seminar.seminarId==css.currentRunSeminarId" ng-click="runSeminar(seminar.seminarId, seminar.companyMember)" ng-disabled="css.runButtonDisabled">Confirm Yes</button>
+                                            <button type="button" class="btn btn-primary btn-sm" ng-show="seminar.seminarId==css.currentRunSeminarId" ng-click="showRunSeminarConfirmNo()" >No</button>
 
                                         </td>
                                         <td><a href="adminhomereport/{{seminar.seminarId}}" target="_blank">{{seminar.seminarId}} Report</a></td>

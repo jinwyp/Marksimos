@@ -54,7 +54,9 @@
             leftmenu: 11,
             menuTabShow: [false, false, false, false, false, false], //从第二个false 开始第1个菜单
             seminarId: 0,
-            runButtonDisabled: false
+            runButtonDisabled: false,
+            showConfirm : false,
+            currentRunSeminarId : 0
         };
 
         $scope.data = {
@@ -594,18 +596,31 @@
         $scope.runSeminar = function(seminarId) {
             $scope.css.runButtonDisabled = true;
 
+
             Admin.runSeminar(seminarId, true, []).success(function(data, status, headers, config) {
                 app.getSeminarInit();
                 $notification.success('Save success', 'Run Seminar success');
                 $scope.css.runButtonDisabled = false;
+                $scope.css.showConfirm = false;
+                $scope.css.currentRunSeminarId = 0;
 
             }).error(function(data, status, headers, config) {
                 console.log(data);
                 $notification.error('Failed', data.message);
                 $scope.css.runButtonDisabled = false;
+                $scope.css.showConfirm = false;
+                $scope.css.currentRunSeminarId = 0;
+
             });
         };
-
+        $scope.showRunSeminarConfirm = function(seminarId){
+            $scope.css.currentRunSeminarId = seminarId;
+            $scope.css.showConfirm = true;
+        }
+        $scope.showRunSeminarConfirmNo = function(seminarId){
+            $scope.css.currentRunSeminarId = 0;
+            $scope.css.showConfirm = false;
+        }
 
 
     }]);
