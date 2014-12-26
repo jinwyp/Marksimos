@@ -448,7 +448,27 @@
         }
     ]);
 
-
+    angular.module('marksimos.websitecomponent').directive('heighlightKey', function () {        
+        return {
+            scope: {
+                key:'=heighlightKey'
+            }, 
+            restrict: 'AE',
+            compile: function (tElement, tAttrs) {
+                return function (scope, tElement, tAttrs) {                  
+                    scope.$watch(tAttrs, function () {
+                        if (scope.key) {
+                            var html = tElement.html();
+                            html = html.replace(new RegExp("[" + scope.key.split('').join('][') + "]", "ig"), function (match) {
+                                return "<span class='text-danger'>" + match + "</span>";
+                            });
+                            tElement.html(html);
+                        }
+                    });
+                };
+            }
+        };
+    });
 
 })();
 
