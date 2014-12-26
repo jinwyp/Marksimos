@@ -240,10 +240,13 @@ exports.searchFacilitator = function(req, res, next){
 };
 
 exports.getSeminarOfFacilitator = function(req, res, next){
-    var facilitatorId = sessionOperation.getUserId(req);      
+    var facilitatorId = sessionOperation.getUserId(req);
+       
     var filterKey = req.query.filterKey;
     var status = req.query.status;
-    if (status == undefined) {
+
+    //确保status.toString()一定成功
+    if (status === undefined) {
         status = 'all';
     }
     switch (status.toString()) {
@@ -253,33 +256,26 @@ exports.getSeminarOfFacilitator = function(req, res, next){
         case 'false':
             status = false;
             break;
-    }  
-    var query = {};
-    if (filterKey) {
-        var strRegex = ".*" + filterKey + ".*";
-        if (status !== 'all') {
-            query.$or = [
-                { 'description': { $regex: strRegex }, facilitatorId: facilitatorId, 'isInitialized': status },
-                { 'seminarId': { $regex: strRegex }, facilitatorId: facilitatorId, 'isInitialized': status },
-                { 'venue': { $regex: strRegex }, facilitatorId: facilitatorId, 'isInitialized': status },
-            ];
-        }
-        else {
-            query.$or = [
-                { 'description': { $regex: strRegex }, facilitatorId: facilitatorId },
-                { 'seminarId': { $regex: strRegex }, facilitatorId: facilitatorId },
-                { 'venue': { $regex: strRegex }, facilitatorId: facilitatorId },
-            ];
-        }
     }
-    else {
-        if (status !== 'all') {
-            query = { facilitatorId: facilitatorId, 'isInitialized': status };
-        }
-        else {
-            query = { facilitatorId: facilitatorId };
-        }
-    }   
+    //组织query
+    var query = {};
+    query.$and = [{ facilitatorId: facilitatorId }];
+        
+    if (status !== 'all') {
+        query.$and.push({ 'isInitialized': status });
+    }
+  
+    if (filterKey) {
+        var strRegex = ".*[" + filterKey.split('').join('][') + "].*";
+        //不区分大小写
+        var regex = { $regex: strRegex , $options: 'i' };
+        query.$or = [
+            { 'description': regex },
+            { 'seminarId': regex },
+            { 'venue': regex },
+        ];
+    }
+  
     seminarModel.find(query, {seminarId:-1})
     .then(function(allSeminars){
 
