@@ -113,7 +113,7 @@ module.exports = (function(){
             break;
         case 'production':
             config.logDirectory = '/home/hcd/Marksimos/log/';
-            config.mongo_conn = 'mongodb://localhost/Marksimos';
+            config.mongo_conn = 'mongodb://marksimosdbadmin:marksimossunhao@127.0.0.1:27017/Marksimos';
             config.host = 'http://121.40.121.187:3000/';
             config.cgiService = 'http://10.171.251.169/cgi-bin/';
             break;
