@@ -545,7 +545,7 @@
                                     <div class="form-group" ng-class="searchSeminarForm.filterKey.$dirty ? (searchSeminarForm.filterKey.$valid ? (data.searchSeminar.filterKey.length ? 'has-success' : '') : 'has-error') : ''">
                                         <label class="col-sm-2 control-label">Keywords :</label>
                                         <div class="col-sm-4">
-                                            <input type="text" class="form-control" name="filterKey" ng-model="data.searchSeminar.filterKey" placeholder="keyword" ng-required="false" ng-minlength="2" ng-maxlength="20" ng-model-options="{ debounce: 500 }" />
+                                            <input type="text" class="form-control" name="filterKey" ng-model="data.searchSeminar.filterKey" placeholder="ID or Description or Venue" ng-required="false" ng-minlength="2" ng-maxlength="20" ng-model-options="{ debounce: 500 }" />
                                         </div>
                                         <label class="control-label" ng-show="!searchSeminarForm.filterKey.$valid"><i class="fa fa-times-circle-o"></i>Search keyword length should be between 2 and 20</label>
                                     </div>

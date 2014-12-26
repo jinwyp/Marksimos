@@ -256,6 +256,9 @@ exports.getSeminarOfFacilitator = function(req, res, next){
         case 'false':
             status = false;
             break;
+        default:
+            status = 'all';
+            break;
     }
     //组织query
     var query = {};
