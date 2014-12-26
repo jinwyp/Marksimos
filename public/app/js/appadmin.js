@@ -134,7 +134,7 @@
                 company_num: 3
             },
             searchSeminar: {
-                id: '',
+                filterKey: '',
                 status: 'all'
             },
             seminars: [],
@@ -501,12 +501,16 @@
                 Admin.getSeminars($scope.data.searchSeminar).success(function(data, status, headers, config) {
                     $scope.data.seminars = data;
 
-                }).error(function(data, status, headers, config) {
-                    console.log(data);
+                }).error(function(data, status, headers, config) {                   
                     $notification.error('Failed', data.message);
                 });
             }
         };
+            $scope.resetSeminar = function (form) {
+                $scope.data.searchSeminar.filterKey = "";
+                $scope.data.searchSeminar.status = "all";
+                $scope.searchSeminar(form);
+            }
         /********************  创建新的 Seminar  ********************/
         $scope.createNewSeminar = function(form) {
             if (form.$valid) {
