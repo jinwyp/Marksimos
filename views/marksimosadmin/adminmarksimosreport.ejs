@@ -2,12 +2,12 @@
 
 
 <body class="skin-blue" ng-app="marksimosadmin" ng-controller="adminMarksimosReportController" ng-cloak>
-    <header-admin class="header" currentuser="data.currentUser"></header-admin>
+    <header-admin class="header fixedtop" currentuser="data.currentUser"></header-admin>
 
 
-    <div class="wrapper row-offcanvas row-offcanvas-left">
+    <div class="wrapper row-offcanvas row-offcanvas-left ">
 
-        <section class="content">
+        <section class="content fixedtop">
 
             <div class="row">
                 <div class="col-md-12">
@@ -86,7 +86,7 @@
 
 
         <!--  Table A1  -->
-        <section class="content" ng-if="css.currentReportMenu=='A1'">
+        <section class="content sectionbox" ng-if="css.currentReportMenu=='A1'">
             <!-- Report box -->
             <div class="box box-primary">
                 <div class="box-header">
@@ -141,7 +141,7 @@
 
 
         <!--  Table A2  -->
-        <section class="content" ng-if="css.currentReportMenu=='A2'">
+        <section class="content sectionbox" ng-if="css.currentReportMenu=='A2'">
             <div class="box box-primary">
                 <div class="box-header">
                     <div class="pull-right box-tools">
@@ -187,7 +187,7 @@
 
 
         <!--  Chart A3  -->
-        <section class="content" ng-if="css.currentReportMenu=='A3'">
+        <section class="content sectionbox" ng-if="css.currentReportMenu=='A3'">
             <div class="box box-primary ">
                 <div class="box-header">
                     <div class="pull-right box-tools">
@@ -219,7 +219,7 @@
 
 
         <!--  Table A4  -->
-        <section class="content" ng-if="css.currentReportMenu=='A4'">
+        <section class="content sectionbox" ng-if="css.currentReportMenu=='A4'">
             <div class="box box-primary">
                 <div class="box-header">
                     <div class="pull-right box-tools">
@@ -278,7 +278,7 @@
 
 
         <!--  Table B1  -->
-        <section class="content" ng-if="css.currentReportMenu=='B1'">
+        <section class="content sectionbox" ng-if="css.currentReportMenu=='B1'">
 
             <!--  row 1  -->
             <div class="col-md-6">
@@ -345,7 +345,7 @@
 
 
         <!--  Table B2  -->
-        <section class="content" ng-if="css.currentReportMenu=='B2'">
+        <section class="content sectionbox" ng-if="css.currentReportMenu=='B2'">
             <div class="box box-primary">
                 <div class="box-header">
                     <i class="fa fa-table"></i>
@@ -401,7 +401,7 @@
 
 
         <!--  Table B3  -->
-        <section class="content" ng-if="css.currentReportMenu=='B3'">
+        <section class="content sectionbox" ng-if="css.currentReportMenu=='B3'">
             <!--  row 1  -->
             <div class="col-md-6">
                 <div class="box box-primary">
@@ -467,7 +467,7 @@
 
 
         <!--  Table B4  -->
-        <section class="content" ng-if="css.currentReportMenu=='B4'">
+        <section class="content sectionbox" ng-if="css.currentReportMenu=='B4'">
             <!--  row 1  -->
             <div class="col-md-6">
                 <div class="box box-primary">
@@ -533,7 +533,7 @@
 
 
         <!--  Table C1  -->
-        <section class="content" ng-if="css.currentReportMenu=='C1'">
+        <section class="content sectionbox" ng-if="css.currentReportMenu=='C1'">
                        
                 <div class="col-md-12">
                     <div class="box box-primary">
@@ -650,7 +650,7 @@
 
 
         <!-- Chart C2  -->
-        <section class="content" ng-if="css.currentReportMenu=='C2'">
+        <section class="content sectionbox" ng-if="css.currentReportMenu=='C2'">
             <div class="box box-primary">
                 <div class="box-header">
 
@@ -695,7 +695,7 @@
 
 
         <!--  Table C3  -->
-        <section class="content" ng-if="css.currentReportMenu=='C3'">
+        <section class="content sectionbox" ng-if="css.currentReportMenu=='C3'">
             <div class="box box-primary">
                 <div class="box-header">
                     <i class="fa fa-table"></i>
@@ -728,7 +728,7 @@
 
 
         <!--  Table C4  -->
-        <section class="content" ng-if="css.currentReportMenu=='C4'">
+        <section class="content sectionbox" ng-if="css.currentReportMenu=='C4'">
             <!--  row 1  -->
             <div class="col-md-6">
                 <div class="box box-primary">
@@ -793,7 +793,7 @@
 
 
         <!--  Table C5  -->
-        <section class="content" ng-if="css.currentReportMenu=='C5'">
+        <section class="content sectionbox" ng-if="css.currentReportMenu=='C5'">
             <div class="box box-primary">
                 <div class="box-header">
                     <div class="pull-right box-tools">
@@ -963,7 +963,7 @@
 
 
         <!--  Table C6  -->
-        <section class="content" ng-if="css.currentReportMenu=='C6'">
+        <section class="content sectionbox" ng-if="css.currentReportMenu=='C6'">
             <div class="box box-primary">
                 <div class="box-header">
                     <i class="fa fa-table"></i>
@@ -982,7 +982,7 @@
 
 
         <!--  All Decisions   -->
-        <section class="content" ng-if="css.currentReportMenu=='AllDecisions'">
+        <section class="content sectionbox" ng-if="css.currentReportMenu=='AllDecisions'">
             <!-- Report box -->
             <div class="box box-primary">
                 <div class="box-header">
@@ -1108,7 +1108,7 @@
 
 
         <!-- Final Score  -->
-        <section class="content" ng-if="css.currentReportMenu=='AllResults'">
+        <section class="content sectionbox" ng-if="css.currentReportMenu=='AllResults'">
             <div class="box box-primary">
                 <div class="box-header">
                     <div class="pull-right">
@@ -1132,7 +1132,7 @@
 
 
         <!--  Questionnaire--> 
-        <section class="content" ng-if="css.currentReportMenu=='Questionnaire'">
+        <section class="content sectionbox" ng-if="css.currentReportMenu=='Questionnaire'">
             <div class="box box-primary">
                 <div class="box-header">
                     <i class="fa fa-pencil-square-o"></i>
