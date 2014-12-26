@@ -135,7 +135,7 @@
             },
             searchSeminar: {
                 id: '',
-                status: 'false'
+                status: 'all'
             },
             seminars: [],
 

@@ -541,14 +541,20 @@
 
                         <div class="box box-primary">
                             <form class="form-horizontal" role="form" name="searchSeminarForm">
-                                <div class="box-body">
-
-                                    <username-input labeltext="Seminar Name :" placeholdertext="Seminar Name" formname="searchSeminarForm" data="data.searchSeminar.username" required="false" requirederrorinfo="Username is required" minlength="6" minlengtherrorinfo="Username must be at least 6 characters" maxlength="20" maxlengtherrorinfo="Username is a maximum of 20 characters"></username-input>
-
-
+                                <div class="box-body">  
+                                    <div class="form-group" ng-class="searchSeminarForm.filterKey.$dirty ? (searchSeminarForm.filterKey.$valid ? (data.searchSeminar.filterKey.length ? 'has-success' : '') : 'has-error') : ''">
+                                        <label class="col-sm-2 control-label">Keywords :</label>
+                                        <div class="col-sm-4">
+                                            <input type="text" class="form-control" name="filterKey" ng-model="data.searchSeminar.filterKey" placeholder="keyword" ng-required="false" ng-minlength="2" ng-maxlength="20" ng-model-options="{ debounce: 500 }" />
+                                        </div>
+                                        <label class="control-label" ng-show="!searchSeminarForm.filterKey.$valid"><i class="fa fa-times-circle-o"></i>Search keyword length should be between 2 and 20</label>
+                                    </div>
                                     <div class="form-group">
                                         <label for="inputSeminarUserStatus" class="col-sm-2 control-label">Initialized Status</label>
                                         <div class="col-sm-4">
+                                            <label class="radio-inline">
+                                                <input type="radio" name="inputSeminarUserStatus" ng-model="data.searchSeminar.status" value="all">All
+                                            </label>
                                             <label class="radio-inline">
                                                 <input type="radio" name="inputSeminarUserStatus" ng-model="data.searchSeminar.status" value="true">Active
                                             </label>
@@ -558,7 +564,6 @@
                                         </div>
                                     </div>
                                 </div>
-
                                 <div class="box-footer">
                                     <div class="form-group">
                                         <div class="col-sm-offset-2 col-sm-10">
@@ -566,7 +571,6 @@
                                         </div>
                                     </div>
                                 </div>
-
                             </form>
                         </div>
 
