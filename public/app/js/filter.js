@@ -165,7 +165,7 @@
 
                 function showFormatText(number) {
                     if(angular.isNumber(number)){
-                        return parseInt( number * 100) / 100 ;
+                        return Math.round( number * 100) / 100 ;
                     }
                     return number;
                 }

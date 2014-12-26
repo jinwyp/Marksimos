@@ -540,12 +540,13 @@
                     <div class="col-md-12">
 
                         <div class="box box-primary">
+
                             <form class="form-horizontal" role="form" name="searchSeminarForm">
                                 <div class="box-body">  
-                                    <div class="form-group" ng-class="searchSeminarForm.filterKey.$dirty ? (searchSeminarForm.filterKey.$valid ? (data.searchSeminar.filterKey.length ? 'has-success' : '') : 'has-error') : ''">
-                                        <label class="col-sm-2 control-label">Keywords :</label>
+                                    <div class="form-group" ng-class="{'has-success':searchSeminarForm.filterKey.$dirty&&searchSeminarForm.filterKey.$valid, 'has-error':searchSeminarForm.filterKey.$dirty&&searchSeminarForm.filterKey.$invalid}">
+                                        <label class="col-sm-2 control-label" for="filterKey">Keywords :</label>
                                         <div class="col-sm-4">
-                                            <input type="text" class="form-control" name="filterKey" ng-model="data.searchSeminar.filterKey" placeholder="ID or Description or Venue" ng-required="false" ng-minlength="2" ng-maxlength="20" ng-model-options="{ debounce: 500 }" />
+                                            <input type="text" ng-change="searchSeminar(searchSeminarForm)" class="form-control" id="filterKey" name="filterKey" ng-model="data.searchSeminar.filterKey" placeholder="ID or Description or Venue" ng-required="false" ng-minlength="2" ng-maxlength="20" ng-model-options="{ debounce: 500 }" />
                                         </div>
                                         <label class="control-label" ng-show="!searchSeminarForm.filterKey.$valid"><i class="fa fa-times-circle-o"></i>Search keyword length should be between 2 and 20</label>
                                     </div>
@@ -553,13 +554,13 @@
                                         <label for="inputSeminarUserStatus" class="col-sm-2 control-label">Initialized Status</label>
                                         <div class="col-sm-4">
                                             <label class="radio-inline">
-                                                <input type="radio" name="inputSeminarUserStatus" ng-model="data.searchSeminar.status" value="all">All
+                                                <input ng-change="searchSeminar(searchSeminarForm)" type="radio" name="inputSeminarUserStatus" ng-model="data.searchSeminar.status" value="all">All
                                             </label>
                                             <label class="radio-inline">
-                                                <input type="radio" name="inputSeminarUserStatus" ng-model="data.searchSeminar.status" value="true">Active
+                                                <input ng-change="searchSeminar(searchSeminarForm)" type="radio" name="inputSeminarUserStatus" ng-model="data.searchSeminar.status" value="true">Active
                                             </label>
                                             <label class="radio-inline">
-                                                <input type="radio" name="inputSeminarUserStatus" ng-model="data.searchSeminar.status" value="false">Inactive
+                                                <input ng-change="searchSeminar(searchSeminarForm)" type="radio" name="inputSeminarUserStatus" ng-model="data.searchSeminar.status" value="false">Inactive
                                             </label>
                                         </div>
                                     </div>
@@ -567,7 +568,7 @@
                                 <div class="box-footer">
                                     <div class="form-group">
                                         <div class="col-sm-offset-2 col-sm-10">
-                                            <button type="submit" class="btn btn-primary" ng-click="searchSeminar(searchSeminarForm)">Search</button>
+                                            <button type="submit" class="btn btn-primary" ng-click="resetSeminar(searchSeminarForm)">Reset</button>
                                         </div>
                                     </div>
                                 </div>
@@ -597,14 +598,17 @@
                                         <td style="width:100px">
                                             <button type="button" class="btn btn-danger" ng-hide="seminar.isInitialized" ng-click="initSeminar(seminar.seminarId)" ng-disabled="css.runButtonDisabled">Init</button>
 
-                                            <button type="button" class="btn btn-danger" ng-show="seminar.isInitialized" ng-click="runSeminar(seminar.seminarId, seminar.companyMember)" ng-disabled="css.runButtonDisabled">Run Period{{seminar.currentPeriod}}</button>
+                                            <button type="button" class="btn btn-danger" ng-show="seminar.isInitialized&&!seminar.isSimulationFinished&&!css.showConfirm" ng-click="showRunSeminarConfirm(seminar.seminarId)" >Run Period{{seminar.currentPeriod}}</button>
+
+                                            <button type="button" class="btn btn-info btn-sm" ng-show="seminar.seminarId==css.currentRunSeminarId" ng-click="runSeminar(seminar.seminarId, seminar.companyMember)" ng-disabled="css.runButtonDisabled">Confirm Yes</button>
+                                            <button type="button" class="btn btn-primary btn-sm" ng-show="seminar.seminarId==css.currentRunSeminarId" ng-click="showRunSeminarConfirmNo()" >No</button>
 
                                         </td>
-                                        <td><a href="adminhomereport/{{seminar.seminarId}}" target="_blank">{{seminar.seminarId}} Report</a></td>
-                                        <td>{{seminar.description}}</td>
+                                        <td><a href="adminhomereport/{{seminar.seminarId}}" target="_blank" data-hightlight-key="data.searchSeminar.filterKey">{{seminar.seminarId}} Report</a></td>
+                                        <td data-heighlight-key="data.searchSeminar.filterKey">{{seminar.description}}</td>
                                         <td>{{seminar.isInitialized}} / {{seminar.isSimulationFinished}}</td>
                                         <td>{{seminar.country}} / {{seminar.state}} / {{seminar.city}} </td>
-                                        <td>{{seminar.venue}}</td>
+                                        <td data-heighlight-key="data.searchSeminar.filterKey">{{seminar.venue}}</td>
                                         <td>{{seminar.currentPeriod}} / {{seminar.simulationSpan}} </td>
                                         <td>{{seminar.companyNum}} </td>
                                         <td>
