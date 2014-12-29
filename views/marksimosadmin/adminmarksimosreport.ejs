@@ -11,14 +11,17 @@
 
             <div class="row">
                 <div class="col-md-12">
-                    <h2 class="page-header">MarkSimos Seminar <%= seminarId %> Report </h2>
+                    <h2 class="page-header">MarkSimos Seminar <%= seminarId %> Report
+                        <a class="btn btn-app iconbtn" ng-click="css.showReportMenu=!css.showReportMenu"> <i class="fa fa-sort-asc"></i> </a>
+                    </h2>
+
                 </div>
             </div>
 
-            <div class="row">
+            <div class="row" ng-if="css.showReportMenu">
                 <div class="col-md-7">
                     {{'ReportYourCompany' | translate}} :
-                    <div class="btn-group">
+                    <div class="btn-group btn-group-xs">
                         <button type="button" class="btn btn-default" ng-class="{'active': css.currentReportMenu=='A1'}" ng-click="clickChartMenu('A1')">{{'ReportMenuCompanyStatus' | translate}}</button>
                         <button type="button" class="btn btn-default" ng-class="{'active': css.currentReportMenu=='A2'}" ng-click="clickChartMenu('A2')">{{'ReportMenuFinancialReport' | translate}}</button>
                         <button type="button" class="btn btn-default" ng-class="{'active': css.currentReportMenu=='A3'}" ng-click="clickChartMenu('A3')">{{'ReportMenuInventoryReport' | translate}}</button>
@@ -27,7 +30,7 @@
                     <br />
 
                     {{'ReportYourCompetitors' | translate}} :
-                    <div class="btn-group">
+                    <div class="btn-group btn-group-xs">
                         <button type="button" class="btn btn-default" ng-class="{'active': css.currentReportMenu=='B1'}" ng-click="clickChartMenu('B1')">{{'ReportMenuMarketShare' | translate}}</button>
                         <button type="button" class="btn btn-default" ng-class="{'active': css.currentReportMenu=='B2'}" ng-click="clickChartMenu('B2')">{{'ReportMenuCompetitorIntelligence' | translate}}</button>
                         <button type="button" class="btn btn-default" ng-class="{'active': css.currentReportMenu=='B3'}" ng-click="clickChartMenu('B3')">{{'ReportMenuInvestmentProfits' | translate}}</button>
@@ -36,7 +39,7 @@
                     <br />
 
                     {{'ReportMarketLandscape' | translate}} :
-                    <div class="btn-group">
+                    <div class="btn-group btn-group-xs">
                         <button type="button" class="btn btn-default" ng-class="{'active': css.currentReportMenu=='C1'}" ng-click="clickChartMenu('C1')">{{'ReportMenuSegmentLeaderTop5' | translate}}</button>
                         <button type="button" class="btn btn-default" ng-class="{'active': css.currentReportMenu=='C2'}" ng-click="clickChartMenu('C2')">{{'ReportMenuPerceptionMap' | translate}}</button>
                         <button type="button" class="btn btn-default" ng-class="{'active': css.currentReportMenu=='C3'}" ng-click="clickChartMenu('C3')">{{'ReportMenuSegmentDistributions' | translate}}</button>
@@ -47,16 +50,16 @@
 
                     <br />
                     {{'FinalScoreAdminPanelLabel' | translate}} :
-                    <button type="button" class="btn btn-default" ng-click="clickChartMenu('AllDecisions')"> {{'FinalScoreAdminPanelDecisionsButton' | translate}}</button>
-                    <button type="button" class="btn btn-default" ng-click="clickChartMenu('AllResults')"> {{'FinalScoreAdminPanelResultsButton' | translate}}</button>
-                    <button type="button" class="btn btn-default" ng-click="clickChartMenu('Questionnaire')"> {{'QuestionnairePageQuestionnaire' | translate}}</button>
+                    <button type="button" class="btn btn-default btn-sm" ng-click="clickChartMenu('AllDecisions')"> {{'FinalScoreAdminPanelDecisionsButton' | translate}}</button>
+                    <button type="button" class="btn btn-default btn-sm" ng-click="clickChartMenu('AllResults')"> {{'FinalScoreAdminPanelResultsButton' | translate}}</button>
+                    <button type="button" class="btn btn-default btn-sm" ng-click="clickChartMenu('Questionnaire')"> {{'QuestionnairePageQuestionnaire' | translate}}</button>
                 </div>
 
 
-                <div class="col-md-5">
-                    <form class="form-inline" role="form" ng-if="css.currentReportMenu=='AllDecisions'">
-                        <div class="form-group">
-                            <button type="submit" class="btn btn-default" ng-click="reRunSeminar()">{{'FinalScoreAdminPanelReRunButton' | translate}}</button>
+                <div class="col-md-5" ng-if="css.currentReportMenu=='AllDecisions'">
+                    <form class="form-inline" role="form" >
+                        <div class="form-group ">
+                            <button type="submit" class="btn btn-default btn-sm" ng-click="reRunSeminar()">{{'FinalScoreAdminPanelReRunButton' | translate}}</button>
 
                             <label class="checkbox-inline" ng-repeat="companyid in data.allDecisions.allCompanyId">
                                 <input type="checkbox" ng-model="data.reRunCompanies[$index]"> {{'HomePageSecondMenuBarLabelsCompany' | translate}} {{companyid | companyname}}
@@ -66,14 +69,14 @@
 
                     <br />
 
-                    <form class="form-inline" role="form" name="skuForm" ng-if="css.currentReportMenu=='AllDecisions'">
+                    <form class="form-inline" role="form" name="skuForm" >
                         <div class="form-group" ng-class="{'has-success':skuForm.$valid&&skuForm.SKUField.$dirty, 'has-error':skuForm.$invalid&&skuForm.SKUField.$dirty}">
                             <label class="sr-only" for="SKUField">{{data.reRunDecision.sku_fieldname}}</label>
                             <label class="control-label" for="SKUField" ng-show="skuForm.SKUField.$error.required&&skuForm.$dirty"><i class="fa fa-times-circle-o"></i> Required !</label>
-                            <input type="text" class="form-control" id="SKUField" name="SKUField" placeholder="{{data.reRunDecision.sku_fieldname}}" ng-model="data.reRunDecision.sku_fieldvalue" required>
+                            <input type="text" class="form-control input-sm" id="SKUField" name="SKUField" placeholder="{{data.reRunDecision.sku_fieldname}}" ng-model="data.reRunDecision.sku_fieldvalue" required>
                         </div>
 
-                        <button type="submit" class="btn btn-default" ng-click="updateSkuDecision()" ng-disabled="skuForm.$invalid">
+                        <button type="submit" class="btn btn-default btn-sm" ng-click="updateSkuDecision()" ng-disabled="skuForm.$invalid">
                             {{'FinalScoreAdminPanelReRunSaveButton' | translate}}  {{'HomePageSecondMenuBarCurrentPeriod' | translate}}{{data.reRunDecision.periodId}} {{'HomePageSecondMenuBarLabelsCompany' | translate}}{{data.reRunDecision.companyId | companyname}} SKU {{data.reRunDecision.sku_fieldname}}
                         </button>
                     </form>

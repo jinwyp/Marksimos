@@ -3,7 +3,7 @@ var app = express();
 
 var path = require('path');
 
-var favicon = require('static-favicon');
+var favicon = require('serve-favicon');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 var mongoose = require('mongoose');
@@ -33,8 +33,7 @@ app.engine('md', function(path, options, fn){
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
 
-
-app.use(favicon());
+app.use(favicon(path.join(__dirname, '/public/cn/assets/img/hcd-icon.ico')));
 
 var morganFileStream = fs.createWriteStream(config.logDirectory + 'access.log');
 app.use(morgan('dev', {stream: morganFileStream}));

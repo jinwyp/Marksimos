@@ -448,10 +448,10 @@
         }
     ]);
 
-    angular.module('marksimos.websitecomponent').directive('heighlightKey', function () {        
+    angular.module('marksimos.websitecomponent').directive('highlightKey', function () {        
         return {
             scope: {
-                key:'=heighlightKey'
+                key:'=highlightKey'
             }, 
             restrict: 'AE',
             compile: function (tElement, tAttrs) {

@@ -508,11 +508,11 @@
                 });
             }
         };
-            $scope.resetSeminar = function (form) {
-                $scope.data.searchSeminar.filterKey = "";
-                $scope.data.searchSeminar.status = "all";
-                $scope.searchSeminar(form);
-            }
+        $scope.resetSeminar = function (form) {
+            $scope.data.searchSeminar.filterKey = "";
+            $scope.data.searchSeminar.status = "all";
+            $scope.searchSeminar(form);
+        };
         /********************  创建新的 Seminar  ********************/
         $scope.createNewSeminar = function(form) {
             if (form.$valid) {
@@ -620,11 +620,11 @@
         $scope.showRunSeminarConfirm = function(seminarId){
             $scope.css.currentRunSeminarId = seminarId;
             $scope.css.showConfirm = true;
-        }
+        };
         $scope.showRunSeminarConfirmNo = function(seminarId){
             $scope.css.currentRunSeminarId = 0;
             $scope.css.showConfirm = false;
-        }
+        };
 
 
     }]);
@@ -635,10 +635,12 @@
 
     angular.module('marksimosadmin').controller('adminMarksimosReportController', ['$scope', '$http', '$notification', '$translate', 'Admin', 'AdminTable', 'chartReport', 'AdminChart', function($scope, $http, $notification,$translate, Admin,  AdminTable, chartReport, AdminChart) {
         $scope.css = {
+            showReportMenu: true,
             currentReportMenu: 'AllDecisions',
             tableReportTab: 'Global',
             tableReportTabC2 : 'SKU',
-            currentSeminarId : 0
+            currentSeminarId : 0,
+
         };
 
         $scope.data = {
