@@ -606,7 +606,6 @@
 
                                             <button type="button" class="btn btn-info btn-sm" ng-show="seminar.seminarId==css.currentRunSeminarId" ng-click="runSeminar(seminar.seminarId, seminar.companyMember)" ng-disabled="css.runButtonDisabled">Confirm Yes</button>
                                             <button type="button" class="btn btn-primary btn-sm" ng-show="seminar.seminarId==css.currentRunSeminarId" ng-click="showRunSeminarConfirmNo()" >No</button>
-
                                         </td>
                                         <td>{{seminar.seminarId}}
                                             <a href="adminhomereport/{{seminar.seminarId}}" target="_blank" data-hightlight-key="data.searchSeminar.filterKey" ng-show="seminar.isInitialized"> Report</a>
