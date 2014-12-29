@@ -608,7 +608,9 @@
                                             <button type="button" class="btn btn-primary btn-sm" ng-show="seminar.seminarId==css.currentRunSeminarId" ng-click="showRunSeminarConfirmNo()" >No</button>
 
                                         </td>
-                                        <td><a href="adminhomereport/{{seminar.seminarId}}" target="_blank" data-hightlight-key="data.searchSeminar.filterKey">{{seminar.seminarId}} Report</a></td>
+                                        <td>{{seminar.seminarId}}
+                                            <a href="adminhomereport/{{seminar.seminarId}}" target="_blank" data-hightlight-key="data.searchSeminar.filterKey" ng-show="seminar.isInitialized"> Report</a>
+                                        </td>
                                         <td data-heighlight-key="data.searchSeminar.filterKey">{{seminar.description}}</td>
                                         <td>{{seminar.isInitialized}} / {{seminar.isSimulationFinished}}</td>
                                         <td>{{seminar.country}} / {{seminar.state}} / {{seminar.city}} </td>

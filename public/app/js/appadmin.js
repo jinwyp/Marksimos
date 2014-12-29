@@ -635,10 +635,12 @@
 
     angular.module('marksimosadmin').controller('adminMarksimosReportController', ['$scope', '$http', '$notification', '$translate', 'Admin', 'AdminTable', 'chartReport', 'AdminChart', function($scope, $http, $notification,$translate, Admin,  AdminTable, chartReport, AdminChart) {
         $scope.css = {
+            showReportMenu: true,
             currentReportMenu: 'AllDecisions',
             tableReportTab: 'Global',
             tableReportTabC2 : 'SKU',
-            currentSeminarId : 0
+            currentSeminarId : 0,
+
         };
 
         $scope.data = {
