@@ -367,15 +367,7 @@
 
             getSeminarInit: function() {
                 Admin.getSeminars().success(function(data, status, headers, config) {
-                    angular.forEach(data, function(seminar) {
-                        seminar.companyMember = [];
-                        angular.forEach(seminar.companyAssignment, function(company, key) {
-                            seminar.companyMember.push({
-                                name: showCompanyName(key),
-                                students: company.studentList
-                            });
-                        });
-                    });
+
                     $scope.data.seminars = data;
                 }).error(function(data, status, headers, config) {
                     console.log(data);
