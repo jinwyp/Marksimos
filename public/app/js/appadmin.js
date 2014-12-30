@@ -367,15 +367,7 @@
 
             getSeminarInit: function() {
                 Admin.getSeminars().success(function(data, status, headers, config) {
-                    angular.forEach(data, function(seminar) {
-                        seminar.companyMember = [];
-                        angular.forEach(seminar.companyAssignment, function(company, key) {
-                            seminar.companyMember.push({
-                                name: showCompanyName(key),
-                                students: company.studentList
-                            });
-                        });
-                    });
+
                     $scope.data.seminars = data;
                 }).error(function(data, status, headers, config) {
                     console.log(data);
@@ -635,12 +627,11 @@
 
     angular.module('marksimosadmin').controller('adminMarksimosReportController', ['$scope', '$http', '$notification', '$translate', 'Admin', 'AdminTable', 'chartReport', 'AdminChart', function($scope, $http, $notification,$translate, Admin,  AdminTable, chartReport, AdminChart) {
         $scope.css = {
-            showReportMenu: true,
-            currentReportMenu: 'AllDecisions',
-            tableReportTab: 'Global',
+            showReportMenu : true,
+            currentReportMenu : 'AllDecisions',
+            tableReportTab : 'Global',
             tableReportTabC2 : 'SKU',
-            currentSeminarId : 0,
-
+            currentSeminarId : 0
         };
 
         $scope.data = {
@@ -655,6 +646,7 @@
 
             reRunCompanies : [false, false, false, false, false, false, false, false, false],
             reRunDecision : {
+                type : '',
                 seminarId : '',
                 periodId : 1,
                 companyId : 1,
@@ -663,7 +655,9 @@
                 sku_id : '',
                 sku_fieldname : '',
                 sku_fieldvalue : '',
-                sku_data : {}
+                sku_data : {},
+                brand_data : {},
+                company_data : {}
             },
 
             tableFinalScore: {
@@ -1216,47 +1210,94 @@
                     });
                 };
 
-                $scope.clickSkuField = function(period, company_id, brand_id, sku, sku_id, skuFieldName, skuValue) {
+                $scope.clickSkuField = function(type, period, company_id, brand_id, sku, sku_id, skuFieldName, skuValue) {
+                    $scope.data.reRunDecision.type = type;
                     $scope.data.reRunDecision.seminarId = $scope.css.currentSeminarId;
                     $scope.data.reRunDecision.periodId = period;
                     $scope.data.reRunDecision.companyId = company_id;
 
-                    $scope.data.reRunDecision.brand_id = brand_id;
-                    $scope.data.reRunDecision.sku = sku;
-                    $scope.data.reRunDecision.sku_id = sku_id;
+                    if(type === 'SKU'){
+                        $scope.data.reRunDecision.brand_id = brand_id;
+                        $scope.data.reRunDecision.sku = sku;
+                        $scope.data.reRunDecision.sku_id = sku_id;
+                    }else if(type === 'Company'){
+                        $scope.data.reRunDecision.brand_id = '';
+                        $scope.data.reRunDecision.sku = '';
+                        $scope.data.reRunDecision.sku_id = '';
+                    }else{
+                        $scope.data.reRunDecision.brand_id = brand_id;
+                        $scope.data.reRunDecision.sku = '';
+                        $scope.data.reRunDecision.sku_id = '';
+                    }
 
-                    $scope.data.reRunDecision.sku_fieldname= skuFieldName;
-                    $scope.data.reRunDecision.sku_fieldvalue= skuValue;
-
-
+                    $scope.data.reRunDecision.sku_fieldname = skuFieldName;
+                    $scope.data.reRunDecision.sku_fieldvalue = skuValue;
 
                 };
 
                 $scope.updateSkuDecision = function() {
+                    $scope.data.reRunDecision.sku_data = {};
+                    $scope.data.reRunDecision.brand_data = {};
+                    $scope.data.reRunDecision.company_data = {};
 
-                    $scope.data.reRunDecision.sku_data[$scope.data.reRunDecision.sku_fieldname] = $scope.data.reRunDecision.sku_fieldvalue;
+
+                    if( $scope.data.reRunDecision.type === 'SKU'){
+                        $scope.data.reRunDecision.sku_data[$scope.data.reRunDecision.sku_fieldname] = $scope.data.reRunDecision.sku_fieldvalue;
+
+                        if($scope.data.reRunDecision.sku_fieldname === 'd_PromotionalEpisodes'){
+                            //if(!angular.isUndefined(weekindex)){
+                            //    // 针对d_PromotionalEpisodes 字段需要特殊处理
+                            //    $scope.data.currentModifiedSku.sku_data[$scope.data.reRunDecision.sku_fieldname][weekindex] = segmentOrWeek;
+                            //}
+
+                        }else if($scope.data.reRunDecision.sku_fieldname === 'd_FactoryPrice'){
+                            // 针对 d_FactoryPrice 字段需要特殊处理
+                            $scope.data.reRunDecision.sku_data[$scope.data.reRunDecision.sku_fieldname] = $scope.data.reRunDecision.sku[$scope.data.reRunDecision.sku_fieldname];
+                            $scope.data.reRunDecision.sku_data[$scope.data.reRunDecision.sku_fieldname][0] = Number($scope.data.reRunDecision.sku_fieldvalue);
+
+                        }
+
+                        Admin.updateSkuDecision($scope.data.reRunDecision).success(function(data, status, headers, config) {
+                            $notification.success('Save success', 'Update SKU Decision Success');
+                            app.loadingAllDecisions();
+
+                        }).error(function(data, status, headers, config) {
+                            console.log(data);
+                            $notification.error('Failed', data.message);
+                        });
 
 
-                    if($scope.data.reRunDecision.sku_fieldname === 'd_PromotionalEpisodes'){
-                        //if(!angular.isUndefined(weekindex)){
-                        //    // 针对d_PromotionalEpisodes 字段需要特殊处理
-                        //    $scope.data.currentModifiedSku.sku_data[$scope.data.reRunDecision.sku_fieldname][weekindex] = segmentOrWeek;
-                        //}
+                    }else if( $scope.data.reRunDecision.type === 'Company'){
+                        $scope.data.reRunDecision.company_data[$scope.data.reRunDecision.sku_fieldname] = $scope.data.reRunDecision.sku_fieldvalue;
 
-                    }else if($scope.data.reRunDecision.sku_fieldname === 'd_FactoryPrice'){
-                        // 针对 d_FactoryPrice 字段需要特殊处理
-                        $scope.data.reRunDecision.sku_data[$scope.data.reRunDecision.sku_fieldname] = $scope.data.reRunDecision.sku[$scope.data.reRunDecision.sku_fieldname];
-                        $scope.data.reRunDecision.sku_data[$scope.data.reRunDecision.sku_fieldname][0] = Number($scope.data.reRunDecision.sku_fieldvalue);
+                        Admin.updateCompanyDecision($scope.data.reRunDecision).success(function(data, status, headers, config) {
+                            $notification.success('Save success', 'Update SKU Decision Success');
+                            app.loadingAllDecisions();
 
+                        }).error(function(data, status, headers, config) {
+                            console.log(data);
+                            $notification.error('Failed', data.message);
+                        });
+
+                    }else{
+                        $scope.data.reRunDecision.brand_data[$scope.data.reRunDecision.sku_fieldname] = $scope.data.reRunDecision.sku_fieldvalue;
+
+                        Admin.updateBrandDecision($scope.data.reRunDecision).success(function(data, status, headers, config) {
+                            $notification.success('Save success', 'Update SKU Decision Success');
+                            app.loadingAllDecisions();
+
+                        }).error(function(data, status, headers, config) {
+                            console.log(data);
+                            $notification.error('Failed', data.message);
+                        });
                     }
 
-                    Admin.updateSkuDecision($scope.data.reRunDecision).success(function(data, status, headers, config) {
-                        $notification.success('Save success', 'Update SKU Decision Success');
 
-                    }).error(function(data, status, headers, config) {
-                        console.log(data);
-                        $notification.error('Failed', data.message);
-                    });
+
+
+
+
+
 
                 };
 
