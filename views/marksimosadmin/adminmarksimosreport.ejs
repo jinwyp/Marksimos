@@ -11,7 +11,7 @@
 
             <div class="row">
                 <div class="col-md-12">
-                    <h2 class="page-header">MarkSimos Seminar <%= seminarId %> Report
+                    <h2 class="page-header" ng-class="{'menutitle':!css.showReportMenu}">MarkSimos Seminar <%= seminarId %> Report
                         <a class="btn btn-app iconbtn" ng-click="css.showReportMenu=!css.showReportMenu"> <i class="fa fa-sort-asc"></i> </a>
                     </h2>
 
@@ -77,12 +77,11 @@
                         </div>
 
                         <button type="submit" class="btn btn-default btn-sm" ng-click="updateSkuDecision()" ng-disabled="skuForm.$invalid">
-                            {{'FinalScoreAdminPanelReRunSaveButton' | translate}}  {{'HomePageSecondMenuBarCurrentPeriod' | translate}}{{data.reRunDecision.periodId}} {{'HomePageSecondMenuBarLabelsCompany' | translate}}{{data.reRunDecision.companyId | companyname}} SKU {{data.reRunDecision.sku_fieldname}}
+                            {{'FinalScoreAdminPanelReRunSaveButton' | translate}}  {{'HomePageSecondMenuBarCurrentPeriod' | translate}}{{data.reRunDecision.periodId}} {{'HomePageSecondMenuBarLabelsCompany' | translate}}{{data.reRunDecision.companyId | companyname}} {{data.reRunDecision.type}} {{data.reRunDecision.sku_fieldname}}
                         </button>
                     </form>
                 </div>
             </div>
-
 
         </section>
 
@@ -1029,13 +1028,13 @@
                                    <h3 class="box-title">
                                        {{'HomePageSecondMenuBarCurrentPeriod' | translate}} {{company.period}} - {{'HomePageSecondMenuBarLabelsCompany' | translate}} {{company.d_CID | companyname}}
                                    </h3>
-                                   <h3 class="box-title pull-right company_title">
+                                   <h3 class="box-title pull-right company_title" ng-click="clickSkuField('Company', company.period, company.d_CID, '', company, '', 'd_RequestedAdditionalBudget', company.d_RequestedAdditionalBudget)">
                                        {{'DecisionPageSecondMenuBarLabelsAdditionalBudget' | translate}} {{company.d_RequestedAdditionalBudget}}
                                    </h3>
-                                   <h3 class="box-title pull-right company_title">
+                                   <h3 class="box-title pull-right company_title" ng-click="clickSkuField('Company', company.period, company.d_CID, '', company, '', 'd_InvestmentInTechnology', company.d_InvestmentInTechnology)">
                                        {{'DecisionPageDecisionNewProductDevelopmentInvestmentInvestmentInProcessingTechnology' | translate}} {{company.d_InvestmentInTechnology}}
                                    </h3>
-                                   <h3 class="box-title pull-right company_title">
+                                   <h3 class="box-title pull-right company_title" ng-click="clickSkuField('Company', company.period, company.d_CID, '', company, '', 'd_InvestmentInEfficiency', company.d_InvestmentInEfficiency)">
                                        {{'DecisionPageDecisionNewProductDevelopmentInvestmentInvestmentInProductionEfficiency' | translate}} {{company.d_InvestmentInEfficiency}}
                                    </h3>
                                </div>
@@ -1044,7 +1043,7 @@
                                    <div ng-repeat="brand in company.brandDecisions">
                                        <p class="bg-info brand_title" >
                                            <strong>{{'DecisionPageSpendingDetailsTable1BrandName' | translate}} {{brand.d_BrandName}}</strong>
-                                           <strong>{{'DecisionPageDecisionTabSalesForce' | translate}} {{brand.d_SalesForce}}</strong>
+                                           <strong ng-click="clickSkuField('Brand', brand.period, brand.d_CID, brand.d_BrandID, brand, '', 'd_SalesForce', brand.d_SalesForce)">{{'DecisionPageDecisionTabSalesForce' | translate}} {{brand.d_SalesForce}}</strong>
                                        </p>
                                            <table class="table table-hover table-condensed" >
                                                <tbody >
@@ -1069,25 +1068,25 @@
 
                                                    <tr ng-repeat="sku in brand.SKUDecisions ">
                                                        <td >{{brand.d_BrandName}}{{sku.d_SKUName}}/ {{sku.d_ToDrop}}</td>
-                                                       <td ng-click="clickSkuField(company.period, company.d_CID, brand.d_BrandID, sku, sku.d_SKUID, 'd_Technology', sku.d_Technology)">{{sku.d_Technology}}</td>
-                                                       <td ng-click="clickSkuField(company.period, company.d_CID, brand.d_BrandID, sku, sku.d_SKUID, 'd_IngredientsQuality', sku.d_IngredientsQuality)">{{sku.d_IngredientsQuality}}</td>
+                                                       <td ng-click="clickSkuField('SKU', company.period, company.d_CID, brand.d_BrandID, sku, sku.d_SKUID, 'd_Technology', sku.d_Technology)">{{sku.d_Technology}}</td>
+                                                       <td ng-click="clickSkuField('SKU', company.period, company.d_CID, brand.d_BrandID, sku, sku.d_SKUID, 'd_IngredientsQuality', sku.d_IngredientsQuality)">{{sku.d_IngredientsQuality}}</td>
                                                        <td>{{sku.d_PackSize | skupacksize | translate}}</td>
-                                                       <td ng-click="clickSkuField(company.period, company.d_CID, brand.d_BrandID, sku, sku.d_SKUID, 'd_ProductionVolume', sku.d_ProductionVolume)">{{sku.d_ProductionVolume}}</td>
-                                                       <td ng-click="clickSkuField(company.period, company.d_CID, brand.d_BrandID, sku, sku.d_SKUID, 'd_FactoryPrice', sku.d_FactoryPrice[0])">{{sku.d_FactoryPrice[0] | number:2 }}</td>
+                                                       <td ng-click="clickSkuField('SKU', company.period, company.d_CID, brand.d_BrandID, sku, sku.d_SKUID, 'd_ProductionVolume', sku.d_ProductionVolume)">{{sku.d_ProductionVolume}}</td>
+                                                       <td ng-click="clickSkuField('SKU', company.period, company.d_CID, brand.d_BrandID, sku, sku.d_SKUID, 'd_FactoryPrice', sku.d_FactoryPrice[0])">{{sku.d_FactoryPrice[0] | number:2 }}</td>
                                                        <td>{{sku.d_RepriceFactoryStocks}}</td>
-                                                       <td ng-click="clickSkuField(company.period, company.d_CID, brand.d_BrandID, sku, sku.d_SKUID, 'd_Advertising', sku.d_Advertising)">{{sku.d_Advertising}}</td>
+                                                       <td ng-click="clickSkuField('SKU', company.period, company.d_CID, brand.d_BrandID, sku, sku.d_SKUID, 'd_Advertising', sku.d_Advertising)">{{sku.d_Advertising}}</td>
 
-                                                       <td ng-click="clickSkuField(company.period, company.d_CID, brand.d_BrandID, sku, sku.d_SKUID, 'd_TargetConsumerSegment', sku.d_TargetConsumerSegment)">{{sku.d_TargetConsumerSegment }}</td>
-                                                       <td ng-click="clickSkuField(company.period, company.d_CID, brand.d_BrandID, sku, sku.d_SKUID, 'd_PromotionalBudget', sku.d_PromotionalBudget)">{{sku.d_PromotionalBudget}}</td>
+                                                       <td ng-click="clickSkuField('SKU', company.period, company.d_CID, brand.d_BrandID, sku, sku.d_SKUID, 'd_TargetConsumerSegment', sku.d_TargetConsumerSegment)">{{sku.d_TargetConsumerSegment }}</td>
+                                                       <td ng-click="clickSkuField('SKU', company.period, company.d_CID, brand.d_BrandID, sku, sku.d_SKUID, 'd_PromotionalBudget', sku.d_PromotionalBudget)">{{sku.d_PromotionalBudget}}</td>
                                                        <td>
                                                            <span ng-repeat="week in sku.d_PromotionalEpisodes track by $index">
                                                                <input type="checkbox" ng-model="week" >
                                                            </span>
                                                        </td>
-                                                       <td ng-click="clickSkuField(company.period, company.d_CID, brand.d_BrandID, sku, sku.d_SKUID, 'd_TradeExpenses', sku.d_TradeExpenses)">{{sku.d_TradeExpenses}}</td>
-                                                       <td ng-click="clickSkuField(company.period, company.d_CID, brand.d_BrandID, sku, sku.d_SKUID, 'd_AdditionalTradeMargin', sku.d_AdditionalTradeMargin)">{{sku.d_AdditionalTradeMargin}}</td>
-                                                       <td ng-click="clickSkuField(company.period, company.d_CID, brand.d_BrandID, sku, sku.d_SKUID, 'd_WholesalesBonusMinVolume', sku.d_WholesalesBonusMinVolume)">{{sku.d_WholesalesBonusMinVolume}}</td>
-                                                       <td ng-click="clickSkuField(company.period, company.d_CID, brand.d_BrandID, sku, sku.d_SKUID, 'd_WholesalesBonusRate', sku.d_WholesalesBonusRate)">{{sku.d_WholesalesBonusRate}}</td>
+                                                       <td ng-click="clickSkuField('SKU', company.period, company.d_CID, brand.d_BrandID, sku, sku.d_SKUID, 'd_TradeExpenses', sku.d_TradeExpenses)">{{sku.d_TradeExpenses}}</td>
+                                                       <td ng-click="clickSkuField('SKU', company.period, company.d_CID, brand.d_BrandID, sku, sku.d_SKUID, 'd_AdditionalTradeMargin', sku.d_AdditionalTradeMargin)">{{sku.d_AdditionalTradeMargin}}</td>
+                                                       <td ng-click="clickSkuField('SKU', company.period, company.d_CID, brand.d_BrandID, sku, sku.d_SKUID, 'd_WholesalesBonusMinVolume', sku.d_WholesalesBonusMinVolume)">{{sku.d_WholesalesBonusMinVolume}}</td>
+                                                       <td ng-click="clickSkuField('SKU', company.period, company.d_CID, brand.d_BrandID, sku, sku.d_SKUID, 'd_WholesalesBonusRate', sku.d_WholesalesBonusRate)">{{sku.d_WholesalesBonusRate}}</td>
                                                    </tr>
 
                                                </tbody>

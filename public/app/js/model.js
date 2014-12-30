@@ -1178,6 +1178,12 @@
             runSeminar: function(seminarId, runNextPeriod, companyOverwrite) {
                 return $http.post(apiAdminPath + 'seminar/' + seminarId + '/runsimulation', {goingToNewPeriod : runNextPeriod, decisionsOverwriteSwitchers:companyOverwrite});
             },
+            updateCompanyDecision: function(postdata) {
+                return $http.put(apiAdminPath + 'company/decision', postdata);
+            },
+            updateBrandDecision: function(postdata) {
+                return $http.put(apiAdminPath + 'brand/decision', postdata);
+            },
             updateSkuDecision: function(postdata) {
                 return $http.put(apiAdminPath + 'sku/decision', postdata);
             }

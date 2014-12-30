@@ -448,9 +448,9 @@ apiRouter.get('/marksimos/api/admin/report/:report_name', requireAdminLogin({isR
 apiRouter.get('/marksimos/api/admin/chart/:chart_name', requireAdminLogin({isRedirect : false}), chartController.getChart);
 apiRouter.get('/marksimos/api/admin/finalscore/:seminarId', requireAdminLogin({ isRedirect: false }), reportController.getAdminFinalScore);
 
-apiRouter.put('/marksimos/api/admin/sku/decision', requireAdminLogin({isRedirect : false}), decisionController.updateSKUDecision);
-apiRouter.put('/marksimos/api/admin/brand/decision', requireAdminLogin({isRedirect : false}), decisionController.updateBrandDecision);
-apiRouter.put('/marksimos/api/admin/company/decision', requireAdminLogin({isRedirect : false}), decisionController.updateCompanyDecision);
+apiRouter.put('/marksimos/api/admin/sku/decision', requireAdminLogin({isRedirect : false}), authorize('modifyDecisions'), decisionController.updateSKUDecision);
+apiRouter.put('/marksimos/api/admin/brand/decision', requireAdminLogin({isRedirect : false}), authorize('modifyDecisions'), decisionController.updateBrandDecision);
+apiRouter.put('/marksimos/api/admin/company/decision', requireAdminLogin({isRedirect : false}), authorize('modifyDecisions'), decisionController.updateCompanyDecision);
 
 
 //feedback
@@ -531,7 +531,9 @@ function authorize(resource){
 
         'getSeminarOfFacilitator',
 
-        'runSimulation'
+        'runSimulation',
+        'modifyDecisions'
+
     ];
     authDefinition[config.role.student] = [
         'getStudent',
