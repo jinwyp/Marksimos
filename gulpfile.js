@@ -28,12 +28,12 @@ var paths = {
 
     compass_config : './public/app/css/config.rb',
     sassSourceFiles: './public/app/css/sass/*.scss',
-    cssSourceFiles: './public/app/css/stylesheets/main.css',
+    cssSourceFiles: './public/app/css/stylesheets/marksimosmain.css',
     cssOutputPath: './public/app/css/stylesheets',
     sasspath: 'public/app/css/sass',  // removed the dot-slash from here  './public/app/css/sass' wrong format
     imagespath : './public/app/css/images',
 
-    cssSourcePath: ['./public/app/css/stylesheets/screen.css', './public/libs/bootstrap/dist/css/bootstrap.min.css', './public/app/css/stylesheets/main.css', './public/app/css/stylesheets/print.css', './public/app/css/stylesheets/ie.css', './public/libs/nvd3/nv.d3.css', './public/libs/angular-notify/dist/angular-notify.css'],
+    cssSourcePath: ['./public/app/css/stylesheets/screen.css', './public/libs/bootstrap/dist/css/bootstrap.min.css', './public/app/css/stylesheets/marksimosmain.css', './public/app/css/stylesheets/print.css', './public/app/css/stylesheets/ie.css', './public/libs/nvd3/nv.d3.css', './public/libs/angular-notify/dist/angular-notify.css'],
     unit_test: './api/test/marksimos/*',
     scenario_testAdmin: './api/test/marksimos/admin/*.js',
     scenario_testStudent: './api/test/marksimos/student/*.js'

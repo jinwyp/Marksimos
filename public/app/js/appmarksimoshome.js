@@ -1520,7 +1520,9 @@
             }
         };
 
-
+        $scope.changeToReportPage = function(){
+            $scope.css.menu = 'Report';
+        };
 
 
 
