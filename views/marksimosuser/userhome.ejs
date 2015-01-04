@@ -111,7 +111,7 @@
                         <span class="input-group-btn">
                             <button class="btn btn-default" type="button"><span class="glyphicon glyphicon-search"></span></button>
                         </span>
-                        <input type="text" class="form-control" placeholder="find report or chart" ng-model="data.reportName" ng-change="searchReport()">
+                        <input type="text" class="form-control" placeholder="report or chart name" ng-model="data.reportName" ng-change="searchReport()">
 
 
                     </div><!-- /input-group -->
@@ -197,7 +197,7 @@
                         <span class="input-group-btn">
                             <button class="btn btn-default" type="button"><span class="glyphicon glyphicon-search"></span></button>
                         </span>
-                        <input type="text" class="form-control" id="reportinput" placeholder="find report or chart" ng-model="data.reportName" ng-change="searchReport()">
+                        <input type="text" class="form-control" id="reportinput" placeholder="report or chart name" ng-model="data.reportName" ng-change="searchReport()">
                     </div><!-- /input-group -->
                 </div>
 
@@ -207,8 +207,8 @@
         <div class="col-md-1 user_home_divider user_chart_box">
             <div class="row">
                 <div class="col-md-12 " ng-click="showComparisonPage()">
-                    <span class="user_chart_vs" ng-show="css.comparisonPage"> {{'HomePageSecondMenuBarCompareData' | translate}}</span>
-                    <span class="user_chart_vs" ng-hide="css.comparisonPage"> {{'HomePageSecondMenuBarCompareDataBack' | translate}}</span>
+                    <span class="user_chart_vs" ng-hide="css.comparisonPage"> {{'HomePageSecondMenuBarCompareData' | translate}}</span>
+                    <span class="user_chart_vs" ng-show="css.comparisonPage"> {{'HomePageSecondMenuBarCompareDataBack' | translate}}</span>
                 </div>
             </div>
         </div>
@@ -2553,7 +2553,7 @@
                         <span class="input-group-btn">
                             <button class="btn btn-default" type="button"><span class="glyphicon glyphicon-search"></span></button>
                         </span>
-                        <input type="text" class="form-control" placeholder="find report or chart" ng-model="data.reportName" ng-change="changeToReportPage()">
+                        <input type="text" class="form-control" placeholder="report or chart name" ng-model="data.reportName" ng-change="changeToReportPage()">
                     </div><!-- /input-group -->
                 </div>
 
