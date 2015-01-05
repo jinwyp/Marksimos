@@ -1,4 +1,4 @@
-var reportModel      = require('../models/report.js');
+var reportModel      = require('../models/marksimos/report.js');
 var logger           = require('../../common/logger.js');
 var config           = require('../../common/config.js');
 var simulationResult = require('../models/marksimos/simulationResult.js');
