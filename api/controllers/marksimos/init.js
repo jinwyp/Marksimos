@@ -1,42 +1,42 @@
-var request = require('../promises/request.js');
+var request = require('../../promises/request.js');
 var util = require('util');
 var url = require('url');
-var config = require('../../common/config.js');
-var utility = require('../../common/utility.js');
+var config = require('../../../common/config.js');
+var utility = require('../../../common/utility.js');
 var Q = require('q');
 
-var decisionCleaner = require('../convertors/decisionCleaner.js');
-var allResultsCleaner = require('../convertors/allResultsCleaner.js');
+var decisionCleaner = require('../../convertors/decisionCleaner.js');
+var allResultsCleaner = require('../../convertors/allResultsCleaner.js');
 
-var companyDecisionModel = require('../models/marksimos/companyDecision.js');
-var brandDecisionModel = require('../models/marksimos/brandDecision.js');
-var SKUDecisionModel = require('../models/marksimos/SKUDecision.js');
-var seminarModel = require('../models/marksimos/seminar.js');
-var reportModel = require('../models/marksimos/report.js');
-var simulationResultModel = require('../models/marksimos/simulationResult.js');
-var chartModel = require('../models/marksimos/chart.js');
-var dbutility = require('../models/dbutility.js');
+var companyDecisionModel = require('../../models/marksimos/companyDecision.js');
+var brandDecisionModel = require('../../models/marksimos/brandDecision.js');
+var SKUDecisionModel = require('../../models/marksimos/SKUDecision.js');
+var seminarModel = require('../../models/marksimos/seminar.js');
+var reportModel = require('../../models/marksimos/report.js');
+var simulationResultModel = require('../../models/marksimos/simulationResult.js');
+var chartModel = require('../../models/marksimos/chart.js');
+var dbutility = require('../../models/dbutility.js');
 
-var cgiapi = require('../cgiapi.js');
+var cgiapi = require('../../cgiapi.js');
 
-var decisionAssembler = require('../dataAssemblers/decision.js');
-var companyStatusReportAssembler = require('../dataAssemblers/companyStatusReport.js');
-var financialReportAssembler = require('../dataAssemblers/financialReport.js');
-var profitabilityEvolutionReportAssembler = require('../dataAssemblers/profitabilityEvolutionReport.js');
-var segmentDistributionReportAssembler = require('../dataAssemblers/segmentDistributionReport.js');
-var competitorIntelligenceReportAssembler = require('../dataAssemblers/competitorIntelligence.js');
-var marketTrendsReportAssembler = require('../dataAssemblers/marketTrendsReport.js');
-var marketIndicatorsReportAssembler = require('../dataAssemblers/marketIndicatorsReport.js');
-var chartAssembler = require('../dataAssemblers/chart.js');
+var decisionAssembler = require('../../dataAssemblers/decision.js');
+var companyStatusReportAssembler = require('../../dataAssemblers/companyStatusReport.js');
+var financialReportAssembler = require('../../dataAssemblers/financialReport.js');
+var profitabilityEvolutionReportAssembler = require('../../dataAssemblers/profitabilityEvolutionReport.js');
+var segmentDistributionReportAssembler = require('../../dataAssemblers/segmentDistributionReport.js');
+var competitorIntelligenceReportAssembler = require('../../dataAssemblers/competitorIntelligence.js');
+var marketTrendsReportAssembler = require('../../dataAssemblers/marketTrendsReport.js');
+var marketIndicatorsReportAssembler = require('../../dataAssemblers/marketIndicatorsReport.js');
+var chartAssembler = require('../../dataAssemblers/chart.js');
 
-var decisionConvertor = require('../convertors/decision.js');
+var decisionConvertor = require('../../convertors/decision.js');
 
-var logger = require('../../common/logger.js');
+var logger = require('../../../common/logger.js');
 
 
-var consts = require('../consts.js');
+var consts = require('../../consts.js');
 
-var sessionOperation = require('../../common/sessionOperation.js');
+var sessionOperation = require('../../../common/sessionOperation.js');
 var _ = require('underscore');
 
 
