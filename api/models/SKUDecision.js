@@ -10,7 +10,7 @@ var gameParameters           = require('../gameParameters.js').parameters;
 var utility                  = require('../../common/utility.js');
 var simulationResultModel    = require('./simulationResult.js');
 var _                        = require('underscore');
-var brandDecisionModel       = require('./brandDecision.js');
+var brandDecisionModel       = require('./marksimos/brandDecision.js');
 var companyDecisionModel      = require('./companyDecision.js');
 
 var tOneSKUDecisionSchema = new Schema({

@@ -1,11 +1,11 @@
 var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
-var consts = require('../consts.js');
+var consts = require('../../consts.js');
 var Q = require('q');
-var logger = require('../../common/logger.js');
-var spendingDetailsAssembler = require('../dataAssemblers/spendingDetails.js');
+var logger = require('../../../common/logger.js');
+var spendingDetailsAssembler = require('../../dataAssemblers/spendingDetails.js');
 var util = require('util');
-var companyDecisionModel      = require('./companyDecision.js');
+var companyDecisionModel      = require('./../companyDecision.js');
 var _                        = require('underscore');
 
 var tOneBrandDecisionSchema = new Schema({
