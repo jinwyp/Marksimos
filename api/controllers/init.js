@@ -14,7 +14,7 @@ var SKUDecisionModel = require('../models/marksimos/SKUDecision.js');
 var seminarModel = require('../models/marksimos/seminar.js');
 var reportModel = require('../models/marksimos/report.js');
 var simulationResultModel = require('../models/marksimos/simulationResult.js');
-var chartModel = require('../models/chart.js');
+var chartModel = require('../models/marksimos/chart.js');
 var dbutility = require('../models/dbutility.js');
 
 var cgiapi = require('../cgiapi.js');
