@@ -1,8 +1,8 @@
 var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
-var consts = require('../consts.js');
+var consts = require('../../consts.js');
 var Q = require('q');
-var spendingDetailsAssembler = require('../dataAssemblers/spendingDetails.js');
+var spendingDetailsAssembler = require('../../dataAssemblers/spendingDetails.js');
 var util = require('util');
 
 var tDecisionSchema = new Schema({

@@ -8,7 +8,7 @@ var Q = require('q');
 var decisionCleaner = require('../convertors/decisionCleaner.js');
 var allResultsCleaner = require('../convertors/allResultsCleaner.js');
 
-var companyDecisionModel = require('../models/companyDecision.js');
+var companyDecisionModel = require('../models/marksimos/companyDecision.js');
 var brandDecisionModel = require('../models/marksimos/brandDecision.js');
 var SKUDecisionModel = require('../models/SKUDecision.js');
 var seminarModel = require('../models/marksimos/seminar.js');
