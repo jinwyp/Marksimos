@@ -1,5 +1,5 @@
 var seminarModel = require('../models/seminar.js');
-var userModel = require('../models/user.js');
+var userModel = require('../models/user/user.js');
 
 var sessionOperation = require('../../common/sessionOperation.js');
 var logger = require('../../common/logger.js');

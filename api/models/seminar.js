@@ -11,7 +11,6 @@ var seminarSchema = new Schema({
     city: String,
     venue: String,
 
-
     simulationSpan: Number,  //seminar有多少个round
     companyNum: Number,  //team name list
 
@@ -19,13 +18,10 @@ var seminarSchema = new Schema({
 
     createDate: Date,
 
-    isFinished: {type: Boolean, default: false}, //if this seminar is finished
-
     companyAssignment: [],
     currentPeriod: {type: Number, default: consts.Period_0 + 1},
 
     companies: [],
-
 
 
     isInitialized: {type: Boolean, default: false}, //if seminar is initialized

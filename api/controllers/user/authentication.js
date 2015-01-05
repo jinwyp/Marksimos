@@ -1,15 +1,122 @@
-var express = require('express');
-var userModel = require('../models/user.js');
-var utility = require('../../common/utility.js');
-var logger = require('../../common/logger.js');
+var config = require('../../../common/config.js');
+var sessionOperation = require('../../../common/sessionOperation.js');
+var userModel = require('../../models/user/user.js');
+var seminarModel = require('../../models/seminar.js');
+
+
+var utility = require('../../../common/utility.js');
+var logger = require('../../../common/logger.js');
 var util = require('util');
-var sessionOperation = require('../../common/sessionOperation.js');
-var companyDecisionModel = require('../models/companyDecision.js');
-var seminarModel = require('../models/seminar.js');
-var config = require('../../common/config.js');
 
 
-exports.getUser = function(req, res, next){
+exports.studentLogin = function(req, res, next){
+    req.checkBody('email', 'Invalid email.').notEmpty().isEmail();
+    req.assert('password', '6 to 20 characters required').len(6, 20);
+
+    var errors = req.validationErrors();
+    if(errors){
+        return res.send(400, {message: util.inspect(errors)});
+    }
+
+    var email = req.body.email;
+    var password = req.body.password;
+
+    //console.log(email, password);
+
+    userModel.findByEmail(email)
+        .then(function(user){
+            if(!user){
+                return res.send(400, {message: 'User does not exist.'});
+            }
+
+            // if(!user.emailActivated){
+            //     return res.send(400, {message: 'User is not activated.'})
+            // }
+
+            if(!utility.comparePassword(password, user.password)){
+                return res.send(400, {message: 'Email or password is wrong.'})
+            }
+
+            sessionOperation.setStudentLoginStatus(req, true);
+            sessionOperation.setUserRole(req, user.role);
+            sessionOperation.setUserId(req, user._id);
+            sessionOperation.setEmail(req, email);
+
+            return res.send({
+                userId: user._id
+            });
+        })
+        .fail(function(err){
+            logger.error(err);
+            return res.send(500, {message: 'Login failed.'});
+        })
+        .done();
+};
+
+exports.adminLogin = function(req, res, next){
+    req.checkBody('email', 'Invalid email.').notEmpty().isEmail();
+    req.assert('password', '6 to 20 characters required').len(6, 20);
+
+    var errors = req.validationErrors();
+    if(errors){
+        return res.send(400, {message: util.inspect(errors)});
+    }
+
+    var email = req.body.email;
+    var password = req.body.password;
+
+    userModel.findByEmail(email)
+        .then(function(user){
+            if(!user){
+                return res.send(400, {message: 'User does not exist.'});
+            }
+
+            // if(!user.emailActivated){
+            //     return res.send(400, {message: 'User is not activated.'})
+            // }
+
+            if(!utility.comparePassword(password, user.password)){
+                return res.send(400, {message: 'Email or password is wrong.'})
+            }
+
+            sessionOperation.setAdminLoginStatus(req, true);
+            sessionOperation.setUserRole(req, user.role);
+            sessionOperation.setUserId(req, user._id);
+            sessionOperation.setEmail(req, email);
+
+            return res.send({
+                userId: user._id
+            });
+        })
+        .fail(function(err){
+            logger.error(err);
+            return res.send(500, {message: 'Login failed.'});
+        })
+        .done();
+};
+
+
+
+
+
+exports.logout = function(req, res, next){
+    sessionOperation.setStudentLoginStatus(req, false);
+    sessionOperation.setAdminLoginStatus(req, false);
+
+    sessionOperation.setUserRole(req, "");
+    sessionOperation.setUserId(req, "");
+    sessionOperation.setEmail(req, "");
+    sessionOperation.setSeminarId(req, "");
+    sessionOperation.setCurrentPeriod(req, "");
+    res.send({message: 'Logout success'});
+};
+
+
+
+
+
+
+exports.getUserInfo = function(req, res, next){
     var userId = sessionOperation.getUserId(req);
     userModel.findOne({_id: userId})
     .then(function(user){
@@ -28,70 +135,9 @@ exports.getUser = function(req, res, next){
 
 
 
-exports.getCurrnetStudentSeminar = function(req, res, next){
-    var userId = sessionOperation.getUserId(req);
-
-    userModel.findOne({_id: userId}).then(function(user){
-        if(!user){
-            return res.send(500, {message: "user doesn't exist."});
-        }
-
-        var seminarId = sessionOperation.getSeminarId(req);
-
-        var tempUser = JSON.parse(JSON.stringify(user));
-
-        return seminarModel.findOne({seminarId: seminarId}).then(function(dbSeminar){
-            if(!dbSeminar){
-                throw {message: "seminar " + seminarId +" doesn't exist."}
-            }
-
-            if(dbSeminar.currentPeriod > dbSeminar.simulationSpan){
-                sessionOperation.setCurrentPeriod(req, dbSeminar.simulationSpan); // very important
-            }else{
-                sessionOperation.setCurrentPeriod(req, dbSeminar.currentPeriod); // very important
-            }
 
 
-            tempUser.seminarId = dbSeminar.seminarId;
-
-            tempUser.numOfCompany = dbSeminar.companyNum;
-            tempUser.currentPeriod = dbSeminar.currentPeriod;
-            tempUser.maxPeriodRound = dbSeminar.simulationSpan;
-            tempUser.isSimulationFinished = dbSeminar.isSimulationFinished;
-
-            for(var i=0; i<dbSeminar.companyAssignment.length; i++){
-                //if this student is in this company
-                if(dbSeminar.companyAssignment[i].studentList.indexOf(user.email) > -1){
-
-                    tempUser.companyId = dbSeminar.companyAssignment[i].companyId;
-                    tempUser.companyName = dbSeminar.companyAssignment[i].companyName;
-                    tempUser.numOfTeamMember = dbSeminar.companyAssignment[i].studentList.length;
-                }
-            }
-
-            res.send(tempUser);
-        });
-    })
-    .fail(function(err){
-        logger.error(err);
-        next(err);
-    })
-    .done();
-}
-
-exports.logout = function(req, res, next){
-    sessionOperation.setStudentLoginStatus(req, false);
-    sessionOperation.setAdminLoginStatus(req, false);
-
-    sessionOperation.setUserRole(req, "");
-    sessionOperation.setUserId(req, "");
-    sessionOperation.setEmail(req, "");
-    sessionOperation.setSeminarId(req, "");
-    sessionOperation.setCurrentPeriod(req, "");
-    res.send({message: 'Logout success'});
-}
-
-exports.register = function(req, res, next){
+exports.registerStudentB2B = function(req, res, next){
     req.checkBody('email', 'Invalid email').notEmpty().isEmail();
     req.assert('password', '6 to 20 characters required').len(6, 20);
 
@@ -280,9 +326,10 @@ exports.registerE4Ecompany = function(req, res, next){
         res.send(500, {message: 'register failed.'});
     })
     .done();
-}
+};
 
-exports.activate = function(req, res, next){
+
+exports.activateEmail = function(req, res, next){
     var email = req.query.email;
     var token = req.query.token;
 
@@ -316,92 +363,6 @@ exports.activate = function(req, res, next){
     })
     .done();
 }
-
-exports.studentLogin = function(req, res, next){
-    req.checkBody('email', 'Invalid email.').notEmpty().isEmail();
-    req.assert('password', '6 to 20 characters required').len(6, 20);
-
-    var errors = req.validationErrors();
-    if(errors){
-        return res.send(400, {message: util.inspect(errors)});
-    }
-
-    var email = req.body.email;
-    var password = req.body.password;
-
-    //console.log(email, password);
-
-    userModel.findByEmail(email)
-    .then(function(user){
-        if(!user){
-            return res.send(400, {message: 'User does not exist.'});
-        }
-
-        // if(!user.emailActivated){
-        //     return res.send(400, {message: 'User is not activated.'})
-        // }
-
-        if(!utility.comparePassword(password, user.password)){
-            return res.send(400, {message: 'Email or password is wrong.'})
-        }
-
-        sessionOperation.setStudentLoginStatus(req, true);
-        sessionOperation.setUserRole(req, user.role);
-        sessionOperation.setUserId(req, user._id);
-        sessionOperation.setEmail(req, email);
-
-        return res.send({
-            userId: user._id
-        });
-    })
-    .fail(function(err){
-        logger.error(err);
-        return res.send(500, {message: 'Login failed.'});
-    })
-    .done();
-};
-
-exports.adminLogin = function(req, res, next){
-    req.checkBody('email', 'Invalid email.').notEmpty().isEmail();
-    req.assert('password', '6 to 20 characters required').len(6, 20);
-
-    var errors = req.validationErrors();
-    if(errors){
-        return res.send(400, {message: util.inspect(errors)});
-    }
-
-    var email = req.body.email;
-    var password = req.body.password;
-
-    userModel.findByEmail(email)
-    .then(function(user){
-        if(!user){
-            return res.send(400, {message: 'User does not exist.'});
-        }
-
-        // if(!user.emailActivated){
-        //     return res.send(400, {message: 'User is not activated.'})
-        // }
-
-        if(!utility.comparePassword(password, user.password)){
-            return res.send(400, {message: 'Email or password is wrong.'})
-        }
-
-        sessionOperation.setAdminLoginStatus(req, true);
-        sessionOperation.setUserRole(req, user.role);
-        sessionOperation.setUserId(req, user._id);
-        sessionOperation.setEmail(req, email);
-
-        return res.send({
-            userId: user._id
-        });
-    })
-    .fail(function(err){
-        logger.error(err);
-        return res.send(500, {message: 'Login failed.'});
-    })
-    .done();
-};
 
 
 
