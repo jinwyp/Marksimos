@@ -1,5 +1,5 @@
 var Q = require('q');
-var seminarModel = require('../models/seminar.js');
+var seminarModel = require('../models/marksimos/seminar.js');
 var SKUDecisionModel = require('../models/SKUDecision.js');
 var brandDecisionModel = require('../models/brandDecision.js');
 var utility = require('../../common/utility.js');

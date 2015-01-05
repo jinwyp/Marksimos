@@ -2,7 +2,7 @@ var reportModel      = require('../models/report.js');
 var logger           = require('../../common/logger.js');
 var config           = require('../../common/config.js');
 var simulationResult = require('../models/simulationResult.js');
-var seminarModel     = require('../models/seminar.js');
+var seminarModel     = require('../models/marksimos/seminar.js');
 var Q                = require('q');
 var _                = require('underscore');
 

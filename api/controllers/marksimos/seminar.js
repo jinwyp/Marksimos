@@ -1,11 +1,11 @@
-var seminarModel = require('../models/seminar.js');
-var userModel = require('../models/user/user.js');
+var seminarModel = require('../../models/marksimos/seminar.js');
+var userModel = require('../../models/user/user.js');
 
-var sessionOperation = require('../../common/sessionOperation.js');
-var logger = require('../../common/logger.js');
-var consts = require('../consts.js');
-var config = require('../../common/config.js');
-var utility = require('../../common/utility.js');
+var sessionOperation = require('../../../common/sessionOperation.js');
+var logger = require('../../../common/logger.js');
+var consts = require('../../consts.js');
+var config = require('../../../common/config.js');
+var utility = require('../../../common/utility.js');
 
 
 exports.addSeminar = function(req, res, next){

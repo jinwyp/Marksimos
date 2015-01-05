@@ -1,7 +1,7 @@
 var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
 var Q = require('q');
-var consts = require('../consts.js');
+var consts = require('../../consts.js');
 
 var seminarSchema = new Schema({
     seminarId: String,
