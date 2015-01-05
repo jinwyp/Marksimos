@@ -13,7 +13,7 @@ var brandDecisionModel = require('../models/marksimos/brandDecision.js');
 var SKUDecisionModel = require('../models/marksimos/SKUDecision.js');
 var seminarModel = require('../models/marksimos/seminar.js');
 var reportModel = require('../models/report.js');
-var simulationResultModel = require('../models/simulationResult.js');
+var simulationResultModel = require('../models/marksimos/simulationResult.js');
 var chartModel = require('../models/chart.js');
 var dbutility = require('../models/dbutility.js');
 

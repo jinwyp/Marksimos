@@ -4,7 +4,7 @@ var Q = require('q');
 var utility = require('../../common/utility.js');
 var consts = require('../consts.js');
 var gameParameters = require('../gameParameters.js').parameters;
-var simulationResultModel = require('../models/simulationResult.js');
+var simulationResultModel = require('../models/marksimos/simulationResult.js');
 
 /**
 * @param {Number} currentPeriod 

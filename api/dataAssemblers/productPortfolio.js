@@ -4,7 +4,7 @@ var consts = require('../consts.js');
 var seminarModel = require('../models/marksimos/seminar.js');
 var decisionAssembler = require('./decision.js');
 var Q = require('q');
-var simulationResultModel = require('../models/simulationResult.js');
+var simulationResultModel = require('../models/marksimos/simulationResult.js');
 
 /**
  * Assemble product portfolio data

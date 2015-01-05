@@ -5,7 +5,7 @@ var brandDecisionModel = require('../models/marksimos/brandDecision.js');
 var utility = require('../../common/utility.js');
 var consts = require('../consts.js');
 var gameParameters = require('../gameParameters.js').parameters;
-var simulationResultModel = require('../models/simulationResult.js');
+var simulationResultModel = require('../models/marksimos/simulationResult.js');
 
 exports.getSKUInfo = function(seminarId, currentPeriod, companyId, SKUID){
     if(typeof SKUID == 'number'){
