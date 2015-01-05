@@ -10,7 +10,7 @@ var allResultsCleaner = require('../convertors/allResultsCleaner.js');
 
 var companyDecisionModel = require('../models/marksimos/companyDecision.js');
 var brandDecisionModel = require('../models/marksimos/brandDecision.js');
-var SKUDecisionModel = require('../models/SKUDecision.js');
+var SKUDecisionModel = require('../models/marksimos/SKUDecision.js');
 var seminarModel = require('../models/marksimos/seminar.js');
 var reportModel = require('../models/report.js');
 var simulationResultModel = require('../models/simulationResult.js');
