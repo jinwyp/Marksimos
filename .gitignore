@@ -83,3 +83,4 @@ marksimos.njsproj
 obj/Debug/marksimos.njsproj.FileListAbsolute.txt
 obj/Debug/marksimos.njsprojResolveAssemblyReference.cache
 bin/Microsoft.NodejsTools.WebRole.dll
+app-debug.js

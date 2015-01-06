@@ -1,7 +1,7 @@
-var chartModel = require('../models/chart.js');
+var chartModel = require('../../models/marksimos/chart.js');
 var util = require('util');
-var logger = require('../../common/logger.js');
-var config           = require('../../common/config.js');
+var logger = require('../../../common/logger.js');
+var config           = require('../../../common/config.js');
 
 
 exports.getChart = function(req, res, next){

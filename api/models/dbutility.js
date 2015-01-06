@@ -1,6 +1,6 @@
-var companyDecisionModel = require('./companyDecision.js');
-var brandDecisionModel = require('./brandDecision.js');
-var SKUDecisionModel = require('./SKUDecision.js');
+var companyDecisionModel = require('./marksimos/companyDecision.js');
+var brandDecisionModel = require('./marksimos/brandDecision.js');
+var SKUDecisionModel = require('./marksimos/SKUDecision.js');
 var decisionAssembler = require('../dataAssemblers/decision.js');
 var Q = require('q');
 
