@@ -22,7 +22,7 @@ exports.getStudentFinalScore = function(req, res, next) {
             //成功操作
             if (result.showLastPeriodScore) {
                 //如果显示最后一阶段的分数，则正常输出
-                res.send(200, result.scoreData);
+                res.status(200).send(result.scoreData);
             } else {
                 //如果不显示最后一阶段的分数，则数据length-1,原数据为排过序的数据
                 if (result.scoreData && result.scoreData.length > 1) {
