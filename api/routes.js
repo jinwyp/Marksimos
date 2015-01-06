@@ -412,7 +412,9 @@ apiRouter.get('/marksimos/api/company/otherinfo', requireStudentLogin({isRedirec
 
 
 /**********  API For Administrator  **********/
-apiRouter.post('/marksimos/api/admin/login', authController.adminLogin);
+apiRouter.post('/marksimos/api/admin/login', passport.authenticate('local'), function (req, res) {
+    res.status(200).send({ message: 'login success.' });
+});
 
 apiRouter.get('/marksimos/api/admin/distributors', requireAdminLogin({isRedirect : false}), authorize('searchDistributor'), distributorController.searchDistributor);
 apiRouter.post('/marksimos/api/admin/distributors', requireAdminLogin({isRedirect : false}), authorize('addDistributor'), distributorController.addDistributor);

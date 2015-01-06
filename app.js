@@ -21,7 +21,7 @@ var customValidator = require('./common/express-custom-validator.js');
 var router = require('./api/routes.js');				// get an instance of the express Router
 
 var fs = require('fs');
-
+var passport = require('passport');
 
 
 
