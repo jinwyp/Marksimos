@@ -36,37 +36,36 @@
             menu                     : 'Home',
             chartMenu                : 'A1',
             tableReportTab           : 'SKU',
-            tableReportTabC2           : 'SKU',
-            tableReportMenu          : 1,
+            tableReportTabC2         : 'SKU',
             additionalBudget         : true,
             currentDecisionBrandId   : 0,
             currentDecisionRightMenu : 1,
             currentSearchReportName  : [],
             addNewSku                : false,
             addNewBrand              : false,
-            skuErrorField : '',
-            skuErrorFieldFrontEnd : '',
-            skuErrorInfo  : '',
-            brandErrorInfo  : '',
-            companyErrorInfo  : '',
-            periods : [],
-            comparisonPage : false,
-            dragEvent : {
+            skuErrorField            : '',
+            skuErrorFieldFrontEnd    : '',
+            skuErrorInfo             : '',
+            brandErrorInfo           : '',
+            companyErrorInfo         : '',
+            periods                  : [],
+            comparisonPage           : false,
+            dragEvent                : {
                 pressEvents   : 'touchstart mousedown',
                 moveEvents    : 'touchmove mousemove',
                 releaseEvents : 'touchend mouseup'
             },
-            dragReportFlag : false,
-            dragReportPosition : {
-                'top' : 2000,
+            dragReportFlag           : false,
+            dragReportPosition       : {
+                'top'  : 2000,
                 'left' : 2000
             },
-            dragTargetBoxId : '',
-            dragSourceReportId : '',
-            dragHaveLeftReport : false,
-            dragHaveRightReport : false,
-            seminarFinished : false,
-            showFeedback : false
+            dragTargetBoxId          : '',
+            dragSourceReportId       : '',
+            dragHaveLeftReport       : false,
+            dragHaveRightReport      : false,
+            seminarFinished          : false,
+            showFeedback             : false
 
         };
 
@@ -164,7 +163,8 @@
                 currentTableData : {},
                 currentTableUnit : "%",
                 chartConfig : chartReport.getChartConfig1(),
-                chartData : $scope.dataChartSimple
+                chartData : $scope.dataChartSimple,
+                tableReportMenu : 1
             },
             tableC3SegmentDistribution : {
                 allData : [],
@@ -189,7 +189,8 @@
                 currentTableUnit : "",
                 chartConfig      : chartReport.getChartConfig1(),
                 chartData        : $scope.dataChartSimple,
-                tableReportTab   : 'Global'
+                tableReportTab   : 'Global',
+                tableReportMenu : 1
             },
             tableC6MarketIndicators : {
                 allData : {}
@@ -576,7 +577,7 @@
                     $scope.data.tableB2CompetitorIntelligence.chartData = chartReport.formatChartData($scope.data.tableB2CompetitorIntelligence.allData.acquiredProductionAndLogisticsEfficiency);
                 });
                 $scope.switchTableMenuLevel1B2 = function(menu, field, unit){
-                    $scope.css.tableReportMenu = menu;
+                    $scope.data.tableB2CompetitorIntelligence.tableReportMenu = menu;
                     $scope.switchTableReportB2(1, field, unit);
                 };
                 $scope.switchTableReportB2 = function(order, field, unit){
@@ -626,7 +627,11 @@
                     }else if(category === 'Brand'){
                         $scope.switchTableReportC5(1, 'brand', field, unit);
                     }else{
-                        $scope.switchTableReportC5(1, 'global', 'averageNetMarketPriceStdPack', unit);
+                        if(menu === 1){
+                            $scope.switchTableReportC5(1, 'global', 'averageNetMarketPriceStdPack', unit);
+                        }else{
+                            $scope.switchTableReportC5(1, 'global', field, unit);
+                        }
                     }
                 };
                 $scope.switchTableReportC5 = function(order, category, field, unit){

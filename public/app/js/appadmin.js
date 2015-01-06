@@ -629,7 +629,7 @@
         $scope.css = {
             showReportMenu : true,
             currentReportMenu : 'AllDecisions',
-            tableReportTab : 'Global',
+            tableReportTab : 'SKU',
             tableReportTabC2 : 'SKU',
             currentSeminarId : 0
         };
@@ -702,7 +702,8 @@
                 currentTableData: {},
                 currentTableUnit: "%",
                 chartConfig: chartReport.getChartConfig1(),
-                chartData: $scope.dataChartSimple
+                chartData: $scope.dataChartSimple,
+                tableReportMenu : 1
             },
             //C3 Segment Distribution
             tableC3SegmentDistribution: {
@@ -720,7 +721,9 @@
                 currentTableData: {},
                 currentTableUnit: "",
                 chartConfig: chartReport.getChartConfig1(),
-                chartData: $scope.dataChartSimple
+                chartData: $scope.dataChartSimple,
+                tableReportTab   : 'Global',
+                tableReportMenu : 1
             },
             //C6 Market Indicators
             tableC6MarketIndicators: {
@@ -966,7 +969,7 @@
 
                 /********************  Table B2 Competitor Intelligence  *******************/
                 $scope.switchTableMenuLevel1B2 = function(menu, field, unit) {
-                    $scope.css.tableReportMenu = menu;
+                    $scope.data.tableB2CompetitorIntelligence.tableReportMenu = menu;
                     $scope.switchTableReportB2(1, field, unit);
                 };
                 $scope.switchTableReportB2 = function(order, field, unit) {
@@ -989,7 +992,7 @@
 
                 /********************  Table C5 Market Trends  *******************/
                 $scope.switchTableCategoryC5 = function(category, field, unit) {
-                    $scope.css.tableReportTab = category;
+                    $scope.data.tableC5MarketTrends.tableReportTab = category;
                     if (category === 'SKU') {
                         $scope.switchTableMenuLevel1C5(1, 'SKU', field, unit);
                     } else if (category === 'Brand') {
@@ -999,13 +1002,17 @@
                     }
                 };
                 $scope.switchTableMenuLevel1C5 = function(menu, category, field, unit) {
-                    $scope.css.tableReportMenu = menu;
+                    $scope.data.tableC5MarketTrends.tableReportMenu = menu;
                     if (category === 'SKU') {
                         $scope.switchTableReportC5(1, 'SKU', field, unit);
-                    } else if (category === 'Brand') {
+                    }else if (category === 'Brand') {
                         $scope.switchTableReportC5(1, 'brand', field, unit);
-                    } else {
-                        $scope.switchTableReportC5(1, 'global', 'averageNetMarketPriceStdPack', unit);
+                    }else {
+                        if(menu === 1){
+                            $scope.switchTableReportC5(1, 'global', 'averageNetMarketPriceStdPack', unit);
+                        }else{
+                            $scope.switchTableReportC5(1, 'global', field, unit);
+                        }
                     }
                 };
                 $scope.switchTableReportC5 = function(order, category, field, unit) {
