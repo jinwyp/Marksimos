@@ -1,11 +1,11 @@
 var Q = require('q');
-var seminarModel = require('../models/seminar.js');
-var SKUDecisionModel = require('../models/SKUDecision.js');
-var brandDecisionModel = require('../models/brandDecision.js');
+var seminarModel = require('../models/marksimos/seminar.js');
+var SKUDecisionModel = require('../models/marksimos/SKUDecision.js');
+var brandDecisionModel = require('../models/marksimos/brandDecision.js');
 var utility = require('../../common/utility.js');
 var consts = require('../consts.js');
 var gameParameters = require('../gameParameters.js').parameters;
-var simulationResultModel = require('../models/simulationResult.js');
+var simulationResultModel = require('../models/marksimos/simulationResult.js');
 
 exports.getSKUInfo = function(seminarId, currentPeriod, companyId, SKUID){
     if(typeof SKUID == 'number'){

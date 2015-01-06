@@ -35,7 +35,7 @@ app.set('view engine', 'ejs');
 
 app.use(favicon(path.join(__dirname, '/public/cn/assets/img/hcd-icon.ico')));
 
-var morganFileStream = fs.createWriteStream(config.logDirectory + 'access.log');
+var morganFileStream = fs.createWriteStream(config.logDirectory + 'accessmorgan.log');
 app.use(morgan('dev', {stream: morganFileStream}));
 
 app.use(cookieParser());

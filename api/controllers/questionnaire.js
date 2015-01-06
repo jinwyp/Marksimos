@@ -1,5 +1,5 @@
 ﻿var questionnaireModel = require('../models/questionnaire.js');
-var seminarModel = require('../models/seminar.js');
+var seminarModel = require('../models/marksimos/seminar.js');
 var logger = require('../../common/logger.js');
 var config = require('../../common/config.js');
 var Q = require('q');
