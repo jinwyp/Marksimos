@@ -17,8 +17,8 @@ exports.setAdminLoginStatus = function(req, loginStatus){
     req.session.studentLoginStatus = false;
 }
 
-exports.getAdminLoginStatus = function(req){
-    return req.session.adminLoginStatus;
+exports.getAdminLoginStatus = function (req){
+    return req.isAuthenticated() && (req.user.role === 1|| req.user.role === 2|| req.user.role === 3); 
 }
 
 

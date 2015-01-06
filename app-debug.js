@@ -25,7 +25,7 @@ var router = require('./api/routes.js');				// get an instance of the express Ro
 
 var fs = require('fs');
 
-
+var passport = require('passport');
 
 
 app.engine('md', function (path, options, fn) {
@@ -67,6 +67,8 @@ app.use(session({
 }));
 app.use(express.static(path.join(__dirname, 'public')));
 
+app.use(passport.initialize());
+app.use(passport.session());
 
 
 
