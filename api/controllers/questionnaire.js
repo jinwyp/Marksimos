@@ -137,7 +137,7 @@ exports.getQuestionnaireList = function(req, res, next) {
                 result[index].studentList = studentList;
             });
             //返回成功的数据
-            res.send(200, result);
+            res.status(200).send(result);
         }else {
             //未得到seminar，则很有可能是输入的seminarId无效
             res.send(400, { message: "Invalid seminarId." });
