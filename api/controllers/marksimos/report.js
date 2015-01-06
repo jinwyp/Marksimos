@@ -52,7 +52,7 @@ exports.getAdminFinalScore = function(req, res, next) {
         //获取并处理分数
         getFinalScore(seminarId).then(function(result) {
             //成功操作
-            res.send(200, result.scoreData);
+            res.status(200).send(result.scoreData);
         }).fail(function(err){
             logger.error(err);
             next(err);
