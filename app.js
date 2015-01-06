@@ -10,7 +10,6 @@ var mongoose = require('mongoose');
 
 var morgan = require('morgan');
 
-//var session = require('cookie-session');
 
 var session = require('express-session');
 var MongoStore = require('connect-mongo')(session);
@@ -65,6 +64,8 @@ app.use(session({
 }));
 app.use(express.static(path.join(__dirname, 'public')));
 
+app.use(passport.initialize());
+app.use(passport.session());
 
 
 

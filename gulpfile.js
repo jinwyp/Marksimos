@@ -173,7 +173,7 @@ gulp.task('nodemonjin', function () {
 });
 gulp.task('nodemonsunyun', function () {
     nodemon({
-        script: 'app.js',
+        script: 'app-debug.js',
         env: { 'NODE_ENV': 'sunyun' }
     });
 //        .on('restart', 'default')

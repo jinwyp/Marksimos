@@ -20,7 +20,8 @@ var config = require('../common/config.js');
 
 var apiRouter = express.Router();
 
-
+var passport = require('passport');
+authController.initAuth();
 
 /**********    For Testing    **********/
 
@@ -204,8 +205,10 @@ apiRouter.get('/marksimos/adminhomereport/:seminar_id', requireAdminLogin({isRed
 
 
 /**********    API For MarkSimos Student    **********/
-
-apiRouter.post('/marksimos/api/login', authController.studentLogin);
+apiRouter.post('/marksimos/api/login', passport.authenticate('local'), function (req, res) { 
+    res.status(200).send({ message: 'login success.' });
+});
+//apiRouter.post('/marksimos/api/login', authController.studentLogin);
 apiRouter.get('/marksimos/api/logout', authController.logout);
 
 apiRouter.get('/marksimos/api/create_admin', function (req,res,next) {
@@ -371,7 +374,7 @@ apiRouter.put('/marksimos/api/questionnaire',requireStudentLogin({isRedirect : f
 
 
 // get seminar
-apiRouter.get('/marksimos/api/user', requireStudentLogin({isRedirect : false}), authController.getUserInfo);
+apiRouter.get('/marksimos/api/user', requireStudentLogin({ isRedirect : false }), authController.getUserInfo);
 apiRouter.get('/marksimos/api/student/seminar', requireStudentLogin({isRedirect : false}), authorize('getSeminarOfStudent'), studentController.getSeminarList);
 apiRouter.get('/marksimos/api/studentinfo', requireStudentLogin({isRedirect : false}), authorize('getStudent'),studentController.getSeminarInfo);
 

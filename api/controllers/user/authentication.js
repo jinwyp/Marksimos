@@ -7,50 +7,40 @@ var seminarModel = require('../../models/marksimos/seminar.js');
 var utility = require('../../../common/utility.js');
 var logger = require('../../../common/logger.js');
 var util = require('util');
-
-
-exports.studentLogin = function(req, res, next){
-    req.checkBody('email', 'Invalid email.').notEmpty().isEmail();
-    req.assert('password', '6 to 20 characters required').len(6, 20);
-
-    var errors = req.validationErrors();
-    if(errors){
-        return res.send(400, {message: util.inspect(errors)});
-    }
-
-    var email = req.body.email;
-    var password = req.body.password;
-
-    //console.log(email, password);
-
-    userModel.findByEmail(email)
-        .then(function(user){
-            if(!user){
-                return res.send(400, {message: 'User does not exist.'});
+//Passport
+var passport = require('passport')
+  , LocalStrategy = require('passport-local').Strategy;
+exports.initAuth = function () {
+    passport.use(new LocalStrategy({ usernameField: 'email' }, function (email, password, done) { 
+        var User = userModel.query;
+        User.findOne({ email: email }, function (err, user) {
+            if (err) { return done(err); }
+            if (!user) {
+                return done(null, false, { message: 'User does not exist.' });
             }
+            if (!utility.comparePassword(password, user.password)) {
+                return done(null, false, { message: 'Email or password is wrong.' });
+            }         
+            return done(null, user);
+        });
+    
+    }));
 
-            // if(!user.emailActivated){
-            //     return res.send(400, {message: 'User is not activated.'})
-            // }
+    passport.serializeUser(function (user, done) {
+        done(null, user._id);
+    });     
+    passport.deserializeUser(function (id, done) {
+        userModel.query.findOne({ _id: id }, function (err, user) { 
+            done(err, user);
+        });
+    });
 
-            if(!utility.comparePassword(password, user.password)){
-                return res.send(400, {message: 'Email or password is wrong.'})
-            }
+};
 
-            sessionOperation.setStudentLoginStatus(req, true);
-            sessionOperation.setUserRole(req, user.role);
-            sessionOperation.setUserId(req, user._id);
-            sessionOperation.setEmail(req, email);
 
-            return res.send({
-                userId: user._id
-            });
-        })
-        .fail(function(err){
-            logger.error(err);
-            return res.send(500, {message: 'Login failed.'});
-        })
-        .done();
+exports.ensureStudentAuthenticated = function (req, res, next) { 
+    if (req.isAuthenticated()) { return next(); }
+    res.status(401).send({message:'Not authorized.'});
 };
 
 exports.adminLogin = function(req, res, next){
@@ -116,21 +106,8 @@ exports.logout = function(req, res, next){
 
 
 
-exports.getUserInfo = function(req, res, next){
-    var userId = sessionOperation.getUserId(req);
-    userModel.findOne({_id: userId})
-    .then(function(user){
-        if(!user){
-            return res.send(500, {message: "user doesn't exist."});
-        }
-
-        res.send(user);
-    })
-    .fail(function(err){
-        logger.error(err);
-        res.send(500, {message: "get user failed."})
-    })
-    .done();
+exports.getUserInfo = function (req, res, next){
+    res.send(req.user);
 };
 
 
