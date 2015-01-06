@@ -239,6 +239,6 @@ gulp.task('default', ['nodemonludwik', 'watchdev']);
 gulp.task('jin', [ 'compass', 'templates', 'nodemonjin', 'watchdev']);
 gulp.task('jingo', ['compass', 'templates', 'nodemonjin', 'watch']);
 
-gulp.task('sunyun', ['nodemonsunyun', 'watchdev']);
+gulp.task('sunyun', ['nodemonsunyun','compass', 'watchdev']);
 
 

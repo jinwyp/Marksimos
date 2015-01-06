@@ -10,7 +10,11 @@ var mongoose = require('mongoose');
 
 var morgan = require('morgan');
 
-var session = require('cookie-session');
+//var session = require('cookie-session');
+
+var session = require('express-session');
+var MongoStore = require('connect-mongo')(session);
+
 var expressValidator = require('express-validator');
 var sessionOperation = require('./common/sessionOperation.js');
 var config = require('./common/config.js');
@@ -47,9 +51,17 @@ app.use(expressValidator({
 }));
 
 
+//app.use(session({
+//    secret: 'marksimos',
+//    maxage: 24 * 60 * 60000
+//}));
+mongoose.connect(config.mongo_conn);
+
 app.use(session({
     secret: 'marksimos',
-    maxage: 24 * 60 * 60000
+    store: new MongoStore({ mongooseConnection: mongoose.connection }),
+    resave: true,
+    saveUninitialized: true
 }));
 app.use(express.static(path.join(__dirname, 'public')));
 
@@ -155,7 +167,6 @@ app.use(function(err, req, res, next){
 app.set('port', process.env.PORT || 3000);
 
 
-mongoose.connect(config.mongo_conn);
 var db = mongoose.connection;
 db.on('error', console.error.bind(console, 'connection error:'));
 db.once('open', function(response,request) {
