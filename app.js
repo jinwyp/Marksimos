@@ -22,7 +22,7 @@ var router = require('./api/routes.js');				// get an instance of the express Ro
 
 var fs = require('fs');
 var passport = require('passport');
-
+var flash = require('connect-flash');
 
 
 app.engine('md', function(path, options, fn){
@@ -49,11 +49,6 @@ app.use(expressValidator({
     customValidators: customValidator
 }));
 
-
-//app.use(session({
-//    secret: 'marksimos',
-//    maxage: 24 * 60 * 60000
-//}));
 mongoose.connect(config.mongo_conn);
 
 app.use(session({
@@ -63,11 +58,11 @@ app.use(session({
     saveUninitialized: true
 }));
 app.use(express.static(path.join(__dirname, 'public')));
-
+//---for passport
 app.use(passport.initialize());
 app.use(passport.session());
-
-
+app.use(flash());
+//---for passport
 
 
 // Router for all URL

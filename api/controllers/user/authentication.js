@@ -10,16 +10,17 @@ var util = require('util');
 //Passport
 var passport = require('passport')
   , LocalStrategy = require('passport-local').Strategy;
+
 exports.initAuth = function () {
     passport.use(new LocalStrategy({
         usernameField: 'email',
-        passReqToCallback:true
-    }, function (req,email, password, done) {
+        passReqToCallback: true
+    }, function (req, email, password, done) {
         req.checkBody('email', 'Invalid email').notEmpty().isEmail();
-        req.assert('password', '6 to 20 characters required').len(6, 20);        
+        req.assert('password', '6 to 20 characters required').len(6, 20);
         var errors = req.validationErrors();
-        if (errors) {          
-            return done(null, false, { message: util.inspect(errors)  });
+        if (errors) {
+            return done(null, false, { message: util.inspect(errors) });
         }
         var User = userModel.query;
         User.findOne({ email: email }, function (err, user) {
@@ -29,71 +30,37 @@ exports.initAuth = function () {
             }
             if (!utility.comparePassword(password, user.password)) {
                 return done(null, false, { message: 'Email or password is wrong.' });
-            }         
+            }
             return done(null, user);
         });
     
     }));
-
     passport.serializeUser(function (user, done) {
         done(null, user._id);
-    });     
+    });
     passport.deserializeUser(function (id, done) {
-        userModel.query.findOne({ _id: id }, function (err, user) { 
+        userModel.query.findOne({ _id: id }, function (err, user) {
             done(err, user);
         });
     });
-
 };
-
-
-exports.ensureStudentAuthenticated = function (req, res, next) { 
-    if (req.isAuthenticated()) { return next(); }
-    res.status(401).send({message:'Not authorized.'});
-};
-
-exports.adminLogin = function(req, res, next){
-    req.checkBody('email', 'Invalid email.').notEmpty().isEmail();
-    req.assert('password', '6 to 20 characters required').len(6, 20);
-
-    var errors = req.validationErrors();
-    if(errors){
-        return res.send(400, {message: util.inspect(errors)});
+exports.studentLogin = function (req, res, next) {
+    if (req.user.role !== 4) {
+        res.status(200).send({ message: 'Login success.' });
     }
-
-    var email = req.body.email;
-    var password = req.body.password;
-
-    userModel.findByEmail(email)
-        .then(function(user){
-            if(!user){
-                return res.send(400, {message: 'User does not exist.'});
-            }
-
-            // if(!user.emailActivated){
-            //     return res.send(400, {message: 'User is not activated.'})
-            // }
-
-            if(!utility.comparePassword(password, user.password)){
-                return res.send(400, {message: 'Email or password is wrong.'})
-            }
-
-            sessionOperation.setAdminLoginStatus(req, true);
-            sessionOperation.setUserRole(req, user.role);
-            sessionOperation.setUserId(req, user._id);
-            sessionOperation.setEmail(req, email);
-
-            return res.send({
-                userId: user._id
-            });
-        })
-        .fail(function(err){
-            logger.error(err);
-            return res.send(500, {message: 'Login failed.'});
-        })
-        .done();
-};
-
+    else {
+        res.status(403).send({ message: 'Your account is a ' + req.user.roleName + ' account, you need a student account login' });
+    }
+}
+exports.adminLogin = function (req, res, next) {
+    var user = req.user;
+    if (user.role === 1 || user.role === 2 || user.role === 3) {
+        res.status(200).send({ message: 'Login success.' });
+    }
+    else {
+        res.status(403).send({ message: 'Your account is a ' + req.user.roleName + ' account, you need an administrator account login' });
+    }
+}
 
 
 

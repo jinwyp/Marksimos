@@ -205,9 +205,7 @@ apiRouter.get('/marksimos/adminhomereport/:seminar_id', requireAdminLogin({isRed
 
 
 /**********    API For MarkSimos Student    **********/
-apiRouter.post('/marksimos/api/login', passport.authenticate('local'), function (req, res) { 
-    res.status(200).send({ message: 'login success.' });
-});
+apiRouter.post('/marksimos/api/login', passport.authenticate('local', { failureFlash: true }),authController.studentLogin);
 //apiRouter.post('/marksimos/api/login', authController.studentLogin);
 apiRouter.get('/marksimos/api/logout', authController.logout);
 
@@ -412,9 +410,7 @@ apiRouter.get('/marksimos/api/company/otherinfo', requireStudentLogin({isRedirec
 
 
 /**********  API For Administrator  **********/
-apiRouter.post('/marksimos/api/admin/login', passport.authenticate('local'), function (req, res) {
-    res.status(200).send({ message: 'login success.' });
-});
+apiRouter.post('/marksimos/api/admin/login', passport.authenticate('local', { failureFlash: true}),authController.adminLogin);
 
 apiRouter.get('/marksimos/api/admin/distributors', requireAdminLogin({isRedirect : false}), authorize('searchDistributor'), distributorController.searchDistributor);
 apiRouter.post('/marksimos/api/admin/distributors', requireAdminLogin({isRedirect : false}), authorize('addDistributor'), distributorController.addDistributor);

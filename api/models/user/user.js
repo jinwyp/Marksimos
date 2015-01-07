@@ -72,7 +72,11 @@ var userSchema = new Schema({
     websiteLanguage:{type: String, default: 'zh_CN'} // 'zh_CN'  'en_US'
 
 });
-
+userSchema.virtual('roleName').get(function () {
+    return { 1: 'admin', 2: 'distributor', 3: 'facilitator', 4: 'students', 9: 'B2C Enterprise' }[this.role] || 'unknown';
+}).set(function (roleName) {
+    this.role = { 'admin': 1, 'distributor': 2, 'facilitator': 3, 'students': 4, 'B2C Enterprise': 9 }[roleName] || 0;
+});
 var User = mongoose.model("User", userSchema);
 
 

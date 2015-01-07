@@ -26,7 +26,7 @@ var router = require('./api/routes.js');				// get an instance of the express Ro
 var fs = require('fs');
 
 var passport = require('passport');
-
+var flash = require('connect-flash');
 
 app.engine('md', function (path, options, fn) {
     fs.readFile(path, 'utf8', function (err, str) {
@@ -67,8 +67,11 @@ app.use(session({
 }));
 app.use(express.static(path.join(__dirname, 'public')));
 
+//---for passport
 app.use(passport.initialize());
 app.use(passport.session());
+app.use(flash());
+//---for passport
 
 
 
