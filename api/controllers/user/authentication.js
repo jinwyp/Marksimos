@@ -45,7 +45,7 @@ exports.initAuth = function () {
     });
 };
 exports.studentLogin = function (req, res, next) {
-    if (req.user.role !== 4) {
+    if (req.user.role === 4) {
         res.status(200).send({ message: 'Login success.' });
     }
     else {
