@@ -66,12 +66,7 @@ exports.adminLogin = function (req, res, next) {
 
 
 exports.logout = function(req, res, next){
-    sessionOperation.setStudentLoginStatus(req, false);
-    sessionOperation.setAdminLoginStatus(req, false);
-
-    sessionOperation.setUserRole(req, "");
-    sessionOperation.setUserId(req, "");
-    sessionOperation.setEmail(req, "");
+    req.logout();
     sessionOperation.setSeminarId(req, "");
     sessionOperation.setCurrentPeriod(req, "");
     res.send({message: 'Logout success'});
