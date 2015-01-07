@@ -11,7 +11,16 @@ var util = require('util');
 var passport = require('passport')
   , LocalStrategy = require('passport-local').Strategy;
 exports.initAuth = function () {
-    passport.use(new LocalStrategy({ usernameField: 'email' }, function (email, password, done) { 
+    passport.use(new LocalStrategy({
+        usernameField: 'email',
+        passReqToCallback:true
+    }, function (req,email, password, done) {
+        req.checkBody('email', 'Invalid email').notEmpty().isEmail();
+        req.assert('password', '6 to 20 characters required').len(6, 20);        
+        var errors = req.validationErrors();
+        if (errors) {          
+            return done(null, false, { message: util.inspect(errors)  });
+        }
         var User = userModel.query;
         User.findOne({ email: email }, function (err, user) {
             if (err) { return done(err); }
