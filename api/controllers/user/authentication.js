@@ -45,8 +45,7 @@ exports.initAuth = function () {
                 done({ message: util.inspect(err) }, false);
             }).done();
         });
-        
-    
+
     }));
     passport.serializeUser(function (user, done) {
         done(null, user._id);
@@ -64,7 +63,9 @@ exports.studentLogin = function (req, res, next) {
     else {
         res.status(403).send({ message: 'Your account is a ' + req.user.roleName + ' account, you need a student account login' });
     }
-}
+};
+
+
 
 function getUser(req, done) {
     if (req.user) {
