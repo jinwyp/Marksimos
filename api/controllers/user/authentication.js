@@ -108,7 +108,9 @@ function getUser(req, done) {
             done({ message: util.inspect(err) }, false);
         }).done();
     }
-
+    else {
+        done(null,false)
+    }  
 }
 //确保登录用户是学生
 exports.ensureStudentLogin = function (redirect) {
@@ -118,6 +120,9 @@ exports.ensureStudentLogin = function (redirect) {
                 return res.status(500).send(err);
             }
             if (!user) {
+                if (redirect) {
+                    return res.redirect('/marksimos/login');
+                }
                 return res.status(403).send({ message: 'Login failed.' });
             }
             if (req.user.role === 4) {
@@ -125,11 +130,10 @@ exports.ensureStudentLogin = function (redirect) {
             }
             else {
                 if (redirect) {
-                    res.redirect('/marksimos/login');
-                }
-                else {
-                    res.status(403).send({ message: 'Your account is a ' + req.user.roleName + ' account, you need a student account login' });
-                }           
+                    return res.redirect('/marksimos/login');
+                }                
+                res.status(403).send({ message: 'Your account is a ' + req.user.roleName + ' account, you need a student account login' });
+                         
             }
         });
     }
@@ -154,6 +158,9 @@ exports.ensureAdminLogin = function (redirect) {
                 return res.status(500).send(err);
             }
             if (!user) {
+                if (redirect) {
+                  return  res.redirect('/marksimos/admin');
+                }
                 return res.status(403).send({ message: 'Login failed.' });
             }
             if (user.role === 1 || user.role === 2 || user.role === 3) {
@@ -161,11 +168,10 @@ exports.ensureAdminLogin = function (redirect) {
             }
             else {
                 if (redirect) {
-                    res.redirect('/marksimos/admin');
+                   return res.redirect('/marksimos/admin');
                 }
-                else {
-                    res.status(403).send({ message: 'Your account is a ' + req.user.roleName + ' account, you need an administrator account login' });
-                }
+              res.status(403).send({ message: 'Your account is a ' + req.user.roleName + ' account, you need an administrator account login' });
+                
             }
         });
     }
