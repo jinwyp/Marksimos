@@ -1,11 +1,11 @@
 /**
  * Created by jinwyp on 1/5/15.
  */
-var mongoose = require('mongoose')
-   , Schema = mongoose.Schema;
+
+var mongoose = require('mongoose-q')(require('mongoose'))
+, Schema = mongoose.Schema;
 var uuid = require('node-uuid');
 var Q = require('q');
-
 var tokenSchema = new Schema({
     //令牌
     token: { type: String, required: true },
@@ -47,7 +47,5 @@ exports.saveToken = function (userInfo) {
 exports.findToken = function (token) {
     return Q.nbind(Token.findOne, Token)({ token: token });
 };
-
-
 
 

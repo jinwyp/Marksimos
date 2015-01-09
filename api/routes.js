@@ -108,7 +108,7 @@ apiRouter.get('/marksimos/intro',  authController.ensureStudentLogin(true), func
     res.render('marksimosuser/userintroduction.ejs', { title : 'MarkSimos - Introduction Videos'});
 });
 
-apiRouter.get('/marksimos/home', passport.authenticate('mixed', { failureFlash: true, failureRedirect: '/marksimos/login' }), authController.ensureStudentLogin(), function(req, res, next){
+apiRouter.get('/marksimos/home', passport.authenticate('local', { failureFlash: true, failureRedirect: '/marksimos/login' }), authController.ensureStudentLogin(), function(req, res, next){
     res.render('marksimosuser/userhome.ejs', { title : 'MarkSimos - User Home'});
 });
 
@@ -186,7 +186,7 @@ apiRouter.get('/marksimos/admin', function(req, res, next){
 apiRouter.get('/marksimos/adminhome',  authController.ensureAdminLogin(), function(req, res, next){
     res.render('marksimosadmin/adminhome.ejs', {title : 'Admin | Dashboard'});
 });
-apiRouter.get('/marksimos/adminhomereport/:seminar_id', passport.authenticate('mixed', { failureFlash: true, failureRedirect: '/marksimos/admin' }), authController.ensureAdminLogin(), authorize('runSimulation'), seminarController.chooseSeminarForFacilitator);
+apiRouter.get('/marksimos/adminhomereport/:seminar_id', passport.authenticate('local', { failureFlash: true, failureRedirect: '/marksimos/admin' }), authController.ensureAdminLogin(), authorize('runSimulation'), seminarController.chooseSeminarForFacilitator);
 
 
 
@@ -409,7 +409,7 @@ apiRouter.get('/marksimos/api/company/otherinfo',   authController.ensureStudent
 
 
 /**********  API For Administrator  **********/
-apiRouter.post('/marksimos/api/admin/login', passport.authenticate('mixed', { failureFlash: true}),authController.adminLogin);
+apiRouter.post('/marksimos/api/admin/login', passport.authenticate('local', { failureFlash: true}),authController.adminLogin);
 
 apiRouter.get('/marksimos/api/admin/distributors',  authController.ensureAdminLogin(), authorize('searchDistributor'), distributorController.searchDistributor);
 apiRouter.post('/marksimos/api/admin/distributors',  authController.ensureAdminLogin(), authorize('addDistributor'), distributorController.addDistributor);
