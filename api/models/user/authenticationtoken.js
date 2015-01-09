@@ -7,16 +7,16 @@ var uuid = require('node-uuid');
 var Q = require('q');
 
 var tokenSchema = new Schema({
-    //ÁîÅÆ
+    //ä»¤ç‰Œ
     token: { type: String, required: true },
-    //ÓÃ»§±àºÅ
+    //ç”¨æˆ·ç¼–å·
     userId: { type: String, required: true },
-    //ÆäËûĞÅÏ¢
+    //å…¶ä»–ä¿¡æ¯
     request: {
         ip: { type: String, required: false },
         userAgent: { type: String, required: false }
     },
-    //¹ıÆÚÊ±¼ä
+    //è¿‡æœŸæ—¶é—´
     expires: { type: Date, required: true }
 });
 
@@ -24,26 +24,26 @@ var tokenSchema = new Schema({
 var Token = mongoose.model("authenticationtoken", tokenSchema);
 exports = module.exports = Token;
 
-//Ä¬ÈÏ¹ıÆÚÊ±¼äÎª40·ÖÖÓ
+//é»˜è®¤è¿‡æœŸæ—¶é—´ä¸º40åˆ†é’Ÿ
 exports.defaultExpires = function () {
     return new Date(new Date().getTime() + 1000 * 60 * 40);
 };
 
 
-//±£´ætoken
+//ä¿å­˜token
 exports.saveToken = function (userInfo) {
     var expires = userInfo.expires || Token.defaultExpires();  
     var tokenInsert = new Token({
         token: uuid.v4(),
         userId: userInfo.userId,
-        request: userInfo.request,//ÆäËûĞÅÏ¢£¬Èçip,user agent
+        request: userInfo.request,//å…¶ä»–ä¿¡æ¯ï¼Œå¦‚ip,user agent
         expires: expires
     });
     return Q.nbind(Token.create, Token)(tokenInsert);
 };
 
 
-//¸ù¾İÓÃÁîÅÆÕÒµ½ÏàÓ¦µÄ¼ÇÂ¼
+//æ ¹æ®ç”¨ä»¤ç‰Œæ‰¾åˆ°ç›¸åº”çš„è®°å½•
 exports.findToken = function (token) {
     return Q.nbind(Token.findOne, Token)({ token: token });
 };
