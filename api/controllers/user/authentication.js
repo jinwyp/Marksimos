@@ -9,30 +9,44 @@ var logger = require('../../../common/logger.js');
 var util = require('util');
 //Passport
 var passport = require('passport')
-  , LocalStrategy = require('passport-local').Strategy;
+  , LocalStrategy = require('passport-local').Strategy
+  , Token = require('../../models/user/authenticationtoken.js');
+
 
 exports.initAuth = function () {
     passport.use(new LocalStrategy({
         usernameField: 'email',
         passReqToCallback: true
-    }, function (req, email, password, done) {
+    }, function (req,  email, password, done) {        
+        var User = userModel.query;        
+        //登录参数验证
         req.checkBody('email', 'Invalid email').notEmpty().isEmail();
         req.assert('password', '6 to 20 characters required').len(6, 20);
         var errors = req.validationErrors();
         if (errors) {
             return done(null, false, { message: util.inspect(errors) });
         }
-        var User = userModel.query;
+        
+        //查找用户 
         User.findOne({ email: email }, function (err, user) {
             if (err) { return done(err); }
+            
             if (!user) {
                 return done(null, false, { message: 'User does not exist.' });
             }
+            
             if (!utility.comparePassword(password, user.password)) {
                 return done(null, false, { message: 'Email or password is wrong.' });
             }
-            return done(null, user);
+            //为用户分配token
+            Token.saveToken({ userId: user._id }).then(function (tokenInfo) {
+                user.token = tokenInfo.token;
+                done(null, user);
+            }).fail(function (err) {
+                done({ message: util.inspect(err) }, false);
+            }).done();
         });
+        
     
     }));
     passport.serializeUser(function (user, done) {
@@ -46,22 +60,116 @@ exports.initAuth = function () {
 };
 exports.studentLogin = function (req, res, next) {
     if (req.user.role === 4) {
-        res.status(200).send({ message: 'Login success.' });
+        res.status(200).send({ message: 'Login success.' , token: req.user.token });
     }
     else {
         res.status(403).send({ message: 'Your account is a ' + req.user.roleName + ' account, you need a student account login' });
     }
 }
+
+function getUser(req, done) {
+    if (req.user) {
+        return done(null, req.user);
+    }
+
+    function lookup(obj, field) {
+        if (!obj) { return null; }
+        var chain = field.split(']').join('').split('[');
+        for (var i = 0, len = chain.length; i < len; i++) {
+            var prop = obj[chain[i]];
+            if (typeof (prop) === 'undefined') { return null; }
+            if (typeof (prop) !== 'object') { return prop; }
+            obj = prop;
+        }
+        return null;
+    }
+    this._tokenName = 'x-auth-token';
+    var token = req.headers[this._tokenName] || lookup(req.body, this._tokenName) || lookup(req.query, this._tokenName);
+    if (token) {
+        //查找token记录
+        Token.findToken(token).then(function (tokenInfo) {
+            //记录存在且未过期
+            if (tokenInfo && tokenInfo.expires > new Date()) {
+                User.findOne({ _id: tokenInfo.userId }, function (err, user) {
+                    if (err) { return done(err); }
+                    if (!user) {
+                        //token存在，用户不存在，则可能用户已被删除
+                        return done(null, false, { message: 'Login error.' });
+                    }
+                    done(null, user);
+                });
+            }
+            else {
+                //token过期或不存在
+                done(null, false, { message: 'Login timeout.' });
+            }
+               
+        }).fail(function (err) {
+            done({ message: util.inspect(err) }, false);
+        }).done();
+    }
+
+}
+//确保登录用户是学生
+exports.ensureStudentLogin = function (redirect) {
+    return function (req, res, next) {
+        getUser(req, function (err, user, message) {
+            if (err) {
+                return res.status(500).send(err);
+            }
+            if (!user) {
+                return res.status(403).send({ message: 'Login failed.' });
+            }
+            if (req.user.role === 4) {
+                next();
+            }
+            else {
+                if (redirect) {
+                    res.redirect('/marksimos/login');
+                }
+                else {
+                    res.status(403).send({ message: 'Your account is a ' + req.user.roleName + ' account, you need a student account login' });
+                }           
+            }
+        });
+    }
+};
 exports.adminLogin = function (req, res, next) {
     var user = req.user;
+    if (!user) {
+       return res.status(403).send({ message: 'Login failed.' });
+    }
     if (user.role === 1 || user.role === 2 || user.role === 3) {
-        res.status(200).send({ message: 'Login success.' });
+        res.status(200).send({ message: 'Login success.', token: req.user.token });
     }
     else {
         res.status(403).send({ message: 'Your account is a ' + req.user.roleName + ' account, you need an administrator account login' });
     }
 }
-
+//确保登录用户是管理员
+exports.ensureAdminLogin = function (redirect) {
+    return function (req, res, next) {
+        getUser(req, function (err, user, message) {
+            if (err) {
+                return res.status(500).send(err);
+            }
+            if (!user) {
+                return res.status(403).send({ message: 'Login failed.' });
+            }
+            if (user.role === 1 || user.role === 2 || user.role === 3) {
+                next();
+            }
+            else {
+                if (redirect) {
+                    res.redirect('/marksimos/admin');
+                }
+                else {
+                    res.status(403).send({ message: 'Your account is a ' + req.user.roleName + ' account, you need an administrator account login' });
+                }
+            }
+        });
+    }
+};
 
 
 
