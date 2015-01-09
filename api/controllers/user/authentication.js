@@ -2,15 +2,15 @@ var config = require('../../../common/config.js');
 var sessionOperation = require('../../../common/sessionOperation.js');
 var userModel = require('../../models/user/user.js');
 var seminarModel = require('../../models/marksimos/seminar.js');
-
+var Token = require('../../models/user/authenticationtoken.js');
 
 var utility = require('../../../common/utility.js');
 var logger = require('../../../common/logger.js');
 var util = require('util');
+
 //Passport
 var passport = require('passport')
-  , LocalStrategy = require('passport-local').Strategy
-  , Token = require('../../models/user/authenticationtoken.js');
+  , LocalStrategy = require('passport-local').Strategy;
 
 
 exports.initAuth = function () {
@@ -18,7 +18,6 @@ exports.initAuth = function () {
         usernameField: 'email',
         passReqToCallback: true
     }, function (req,  email, password, done) {        
-        var User = userModel.query;        
         //登录参数验证
         req.checkBody('email', 'Invalid email').notEmpty().isEmail();
         req.assert('password', '6 to 20 characters required').len(6, 20);
@@ -28,7 +27,7 @@ exports.initAuth = function () {
         }
         
         //查找用户 
-        User.findOne({ email: email }, function (err, user) {
+        userModel.query.findOne({ email: email }, function (err, user) {
             if (err) { return done(err); }
             
             if (!user) {
@@ -39,7 +38,7 @@ exports.initAuth = function () {
                 return done(null, false, { message: 'Email or password is wrong.' });
             }
             //为用户分配token
-            Token.saveToken({ userId: user._id }).then(function (tokenInfo) {
+            Token.createToken({ userId: user._id }).then(function (tokenInfo) {
                 user.token = tokenInfo.token;
                 done(null, user);
             }).fail(function (err) {

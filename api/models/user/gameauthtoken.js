@@ -16,6 +16,12 @@ var gameAuthTokenSchema = new Schema({
     gameId: { type: Number, required: true },
     seminarId: { type: String, required: true, select: true}
 
-
-
 });
+
+var gameAuthToken = mongoose.model("gameauthtoken", gameAuthTokenSchema);
+
+
+
+
+
+module.exports = gameAuthToken;

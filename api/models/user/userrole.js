@@ -1,8 +1,17 @@
 /**
  * Created by jinwyp on 1/5/15.
  */
+var mongoose = require('mongoose-q')(require('mongoose'));
+var Schema = mongoose.Schema;
+var Q = require('q');
+var mongooseTimestamps = require('mongoose-timestamp');
 
 
+/**
+ * User Role Model module.
+ * @module Model User Role
+ * @see module: api/model/user/userrole.js
+ */
 
 
 /**
@@ -23,11 +32,15 @@ var appResource = {
 
 
 
+/**
+ * UserRoles  (Will Store in Schema)
+ */
+
 var roles = [
     {
         id : 1,
         name : 'admin',
-        permissions :[ marksimos.studentInfoSingleGet ]
+        permissions :[ appResource.marksimos.studentInfoSingleGet ]
     },
     {
         id : 2,
@@ -50,6 +63,6 @@ var roles = [
         permissions :[]
     }
 
-]
+];
 
 
