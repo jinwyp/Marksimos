@@ -91,7 +91,7 @@ function getUser(req, done) {
     var token = req.headers[this._tokenName] || lookup(req.body, this._tokenName) || lookup(req.query, this._tokenName);
     if (token) {
         //查找token记录
-        Token.findToken(token).then(function (tokenInfo) {
+        Token.findOneQ({ token: token }).then(function (tokenInfo) {
             //记录存在且未过期
             if (tokenInfo && tokenInfo.expires > new Date()) {
                 User.findOne({ _id: tokenInfo.userId }, function (err, user) {

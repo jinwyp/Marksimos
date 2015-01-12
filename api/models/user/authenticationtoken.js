@@ -31,36 +31,32 @@ var tokenSchema = new Schema({
 });
 
 
-var Token = mongoose.model("authenticationtoken", tokenSchema);
-exports = module.exports = Token;
 
 
 
-exports.defaultExpires = function () {
+tokenSchema.statics.defaultExpires = function () {
     return new Date(new Date().getTime() + expiresTime);
 };
 
 
-
-
 //保存token
-exports.saveToken = function (userInfo) {
-    var expires = userInfo.expires || Token.defaultExpires();
-    var tokenInsert = new Token({
+tokenSchema.statics.createToken = function (userInfo) {
+    var expires = userInfo.expires || this.defaultExpires();
+    var tokenInsert = {
         token: uuid.v4(),
         userId: userInfo.userId,
         request: userInfo.request,//其他信息，如ip,user agent
         expires: expires
-    });
-    return Q.nbind(tokenInsert.save, tokenInsert)();
+    };
+    return this.createQ(tokenInsert) ;
 };
 
 
-//根据用令牌找到相应的记录
-exports.findToken = function (token) {
-    return Q.nbind(Token.findOne, Token)({ token: token });
-};
 
+
+
+var Token = mongoose.model("authenticationtoken", tokenSchema);
+module.exports = Token;
 
 
 
