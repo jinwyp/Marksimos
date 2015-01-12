@@ -1,6 +1,6 @@
-var config = require('../../../common/config.js');
 var sessionOperation = require('../../../common/sessionOperation.js');
 var userModel = require('../../models/user/user.js');
+var userRoleModel = require('../../models/user/userrole.js');
 var seminarModel = require('../../models/marksimos/seminar.js');
 var Token = require('../../models/user/authenticationtoken.js');
 
@@ -299,7 +299,7 @@ exports.registerE4Estudent = function(req, res, next){
     user.dateOfGraduation = req.body.dateOfGraduation;
     user.qq = req.body.qq;
 
-    user.role = config.role.student;
+    user.role = userRoleModel.role.student.id;
     user.studentType = 20;
 
     userModel.findByEmail(email)
@@ -359,7 +359,7 @@ exports.registerE4Ecompany = function(req, res, next){
     user.division = req.body.division;
     user.mobilePhone = req.body.mobileNumber;
 
-    user.role = config.role.enterpriseb2c;
+    user.role = userRoleModel.role.enterprise.id;
 
     userModel.findByEmail(email)
     .then(function(findResult){

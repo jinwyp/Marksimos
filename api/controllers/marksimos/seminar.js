@@ -1,10 +1,10 @@
 var seminarModel = require('../../models/marksimos/seminar.js');
 var userModel = require('../../models/user/user.js');
+var userRoleModel = require('../../models/user/userrole.js');
 
 var sessionOperation = require('../../../common/sessionOperation.js');
 var logger = require('../../../common/logger.js');
 var consts = require('../../consts.js');
-var config = require('../../../common/config.js');
 var utility = require('../../../common/utility.js');
 
 
@@ -344,7 +344,7 @@ exports.chooseSeminarForStudent = function(req, res, next){
             }
 
 
-            if(sessionOperation.getUserRole(req) === config.role.student){
+            if(sessionOperation.getUserRole(req) === userRoleModel.role.student.id){
 
             }
 

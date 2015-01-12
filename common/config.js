@@ -2,14 +2,6 @@ module.exports = (function(){
     var config = {
         passwordSalt: 'hcd',
 
-        role: {
-            admin: 1,
-            distributor: 2,
-            facilitator: 3,
-            student : 4,
-            enterpriseb2c: 9
-        },
-
         studentType: {
             B2Bstudents: 10,
             B2Cstudents: 20,

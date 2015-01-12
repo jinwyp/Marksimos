@@ -8,6 +8,8 @@ var brandDecisionModel        = require('../../models/marksimos/brandDecision.js
 var SKUDecisionModel          = require('../../models/marksimos/SKUDecision.js');
 var simulationResultModel     = require('../../models/marksimos/simulationResult.js');
 var seminarModel              = require('../../models/marksimos/seminar.js');
+var userRoleModel = require('../../models/user/userrole.js');
+
 var decisionCleaner           = require('../../convertors/decisionCleaner.js');
 var decisionConvertor         = require('../../convertors/decision.js');
 var logger                    = require('../../../common/logger.js');
@@ -228,7 +230,7 @@ exports.updateSKUDecision = function(req, res, next){
 
     var userRole = req.session.userRole;
 
-    if(userRole !== config.role.student){
+    if(userRole !== userRoleModel.role.student.id){
         period = req.body.periodId;
         seminarId = req.body.seminarId;
     }
@@ -313,7 +315,7 @@ exports.updateBrandDecision = function(req, res, next){
 
     var userRole = req.session.userRole;
 
-    if(userRole !== config.role.student){
+    if(userRole !== userRoleModel.role.student.id){
         period = req.body.periodId;
         seminarId = req.body.seminarId;
     }
@@ -374,7 +376,7 @@ exports.updateCompanyDecision = function(req, res, next){
 
     var userRole = req.session.userRole;
 
-    if(userRole !== config.role.student){
+    if(userRole !== userRoleModel.role.student.id){
         period = req.body.periodId;
         seminarId = req.body.seminarId;
     }

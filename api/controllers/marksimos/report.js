@@ -1,8 +1,8 @@
 var reportModel      = require('../../models/marksimos/report.js');
 var logger           = require('../../../common/logger.js');
-var config           = require('../../../common/config.js');
 var simulationResult = require('../../models/marksimos/simulationResult.js');
 var seminarModel     = require('../../models/marksimos/seminar.js');
+var userRoleModel = require('../../models/user/userrole.js');
 var Q                = require('q');
 var _                = require('underscore');
 
@@ -84,7 +84,7 @@ exports.getReport = function(req, res, next){
             return res.send(400, {message: "Report doesn't exist."})
         }
 
-        if(userRole === config.role.student && isReportNeedFilter(reportName)){
+        if(userRole === userRoleModel.role.student.id && isReportNeedFilter(reportName)){
             return res.send(extractReportOfOneCompany(report, companyId));
         }
 

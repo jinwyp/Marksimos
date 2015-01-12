@@ -4,6 +4,10 @@ var bcrypt   = require('bcrypt-nodejs');
 var Q = require('q');
 var uuid = require('node-uuid');
 
+
+var userRoleModel = require('./userrole.js');
+
+
 var userSchema = new Schema({
 
     // system field
@@ -17,7 +21,7 @@ var userSchema = new Schema({
     activated: {type: Boolean, default: false},
 
 
-    role: {type: Number, default: 4},  //1 admin, 2 distributor, 3 facilitator, 4  students,   9 B2C Enterprise
+    role: {type: Number, default: 4},  //1 admin, 2 distributor, 3 facilitator, 4  students,   5 B2C Enterprise
     studentType : {type: Number, default: 10}, //10 B2B students,  20 B2C students, 30 Both B2C and B2B students
 
 
@@ -71,11 +75,11 @@ var userSchema = new Schema({
     websiteLanguage:{type: String, default: 'zh_CN'} // 'zh_CN'  'en_US'
 
 });
+
 userSchema.virtual('roleName').get(function () {
-    return { 1: 'admin', 2: 'distributor', 3: 'facilitator', 4: 'students', 9: 'B2C Enterprise' }[this.role] || 'unknown';
-}).set(function (roleName) {
-    this.role = { 'admin': 1, 'distributor': 2, 'facilitator': 3, 'students': 4, 'B2C Enterprise': 9 }[roleName] || 0;
+    return userRoleModel.role[this.role].name ;
 });
+
 var User = mongoose.model("User", userSchema);
 
 

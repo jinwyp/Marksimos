@@ -1,17 +1,18 @@
 /**
  * Created by jinwyp on 1/5/15.
  */
-var mongoose = require('mongoose-q')(require('mongoose'));
-var Schema = mongoose.Schema;
-var Q = require('q');
-var mongooseTimestamps = require('mongoose-timestamp');
-
 
 /**
  * User Role Model module.
  * @module Model User Role
  * @see module: api/model/user/userrole.js
  */
+
+var mongoose = require('mongoose-q')(require('mongoose'));
+var Schema = mongoose.Schema;
+var Q = require('q');
+var mongooseTimestamps = require('mongoose-timestamp');
+
 
 
 /**
@@ -58,11 +59,45 @@ var roles = [
         permissions :[]
     },
     {
-        id : 5,
-        name : 'enterpriseb2c',
+        id : 9,
+        name : 'enterprise',
         permissions :[]
     }
 
 ];
 
+var roleResult = {};
+var getRole = function (){
+    roles.forEach(function(role){
+        roleResult[role.name] = role ;
+        roleResult[role.id] = role ;
+    });
+    console.log(roleResult);
+    return roleResult
+};
 
+
+
+
+
+var apps = {
+
+    marksimos : {
+        id : 10,
+        name : 'marksimos'
+    },
+    etales: {
+        id : 20,
+        name : 'etales'
+    }
+
+};
+
+
+module.exports = {
+    apps : apps,
+    appResource : appResource,
+    roles : roles,
+    role : getRole()
+
+};

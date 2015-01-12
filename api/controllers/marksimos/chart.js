@@ -1,8 +1,7 @@
 var chartModel = require('../../models/marksimos/chart.js');
 var util = require('util');
 var logger = require('../../../common/logger.js');
-var config           = require('../../../common/config.js');
-
+var userRoleModel = require('../../models/user/userrole.js');
 
 exports.getChart = function(req, res, next){
     var seminarId = req.session.seminarId;
@@ -42,7 +41,7 @@ exports.getChart = function(req, res, next){
             return res.send(500, {message: util.format("chart %s does not exist.", chartName)});
         }
 
-        if(userRole === config.role.student && chartName==='inventory_report'){
+        if(userRole === userRoleModel.role.student.id && chartName==='inventory_report'){
             //this function changes data in chart object
             var chartData = filterChart(chart, companyId);
             return res.send(chartData);

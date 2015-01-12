@@ -1,6 +1,6 @@
-var config = require('../../../common/config.js');
 var sessionOperation = require('../../../common/sessionOperation.js');
 var userModel = require('../../models/user/user.js');
+var userRoleModel = require('../../models/user/userrole.js');
 var seminarModel = require('../../models/marksimos/seminar.js');
 
 var logger = require('../../../common/logger.js');
@@ -35,7 +35,7 @@ exports.addDistributor = function(req, res, next){
         district: req.body.district || '',
         street: req.body.street || '',
 
-        role: config.role.distributor,
+        role: userRoleModel.role.distributor.id,
         emailActivated: true,
         activated: true,
         numOfLicense: req.body.num_of_license_granted
@@ -78,7 +78,7 @@ exports.updateDistributor = function(req, res, next){
         state: req.body.state,
         city: req.body.city,
         password: utility.hashPassword(req.body.password),
-        role: config.role.distributor,
+        role: userRoleModel.role.distributor.id,
         numOfLicense: req.body.num_of_license_granted,
         emailActivated: true,
         district: req.body.district || '',
@@ -109,7 +109,7 @@ exports.searchDistributor = function(req, res, next){
     var activated = req.query.user_status;
 
     var query = {
-        role: config.role.distributor
+        role: userRoleModel.role.distributor.id
     };
     if(name) query.username = name;
     if(email) query.email = email;
@@ -170,7 +170,7 @@ exports.addFacilitator = function(req, res, next){
         district: req.body.district || '',
         street: req.body.street || '',
 
-        role: config.role.facilitator,
+        role: userRoleModel.role.facilitator.id,
         activated: true,
         emailActivated: true,
 
@@ -238,7 +238,7 @@ exports.updateFacilitator = function(req, res, next){
     if(req.body.password) facilitator.password = utility.hashPassword(req.body.password);
 
     var userRole = sessionOperation.getUserRole(req);
-    if(req.body.num_of_license_granted && (userRole === config.role.admin || userRole === config.role.distributor)){
+    if(req.body.num_of_license_granted && (userRole === userRoleModel.role.admin.id || userRole === userRoleModel.role.distributor.id)){
         facilitator.numOfLicense = req.body.num_of_license_granted;
     }
     if(req.body.district) facilitator.district = req.body.district;
@@ -323,12 +323,12 @@ exports.searchFacilitator = function(req, res, next){
     var activated = req.query.user_status;
 
     var query = {
-        role: config.role.facilitator
+        role: userRoleModel.role.facilitator.id
     };
 
     //only distributor and admin can search facilitators
     //distributor can only view its own facilitators
-    if(sessionOperation.getUserRole(req) !== config.role.admin){
+    if(sessionOperation.getUserRole(req) !== userRoleModel.role.admin.id){
         query.distributorId = sessionOperation.getUserId(req);
     }
 
@@ -347,7 +347,7 @@ exports.searchFacilitator = function(req, res, next){
 
             allFacilitator = JSON.parse(JSON.stringify(allFacilitator));
 
-            return userModel.find({role: config.role.distributor})
+            return userModel.find({role: userRoleModel.role.distributor.id})
                 .then(function(allDistributor){
                     for(var i=0; i< allFacilitator.length; i++){
                         var facilitator = allFacilitator[i];
@@ -499,7 +499,7 @@ exports.addStudent = function(req, res, next){
         city          : req.body.city,
 
 
-        role           : config.role.student,
+        role           : userRoleModel.role.student.id,
         emailActivated : true,
         activated      : true,
         studentType    : req.body.student_type,
@@ -662,7 +662,7 @@ exports.searchStudent = function(req, res, next){
     //add for e4e
 
     var query = {
-        role : config.role.student
+        role : userRoleModel.role.student.id
     };
 
     if(req.query.student_type){
@@ -672,7 +672,7 @@ exports.searchStudent = function(req, res, next){
 
     //only facilitator and admin can search students
     //facilitator can only view its own students
-    if(sessionOperation.getUserRole(req) !== config.role.admin){
+    if(sessionOperation.getUserRole(req) !== userRoleModel.role.admin.id){
         query.facilitatorId = sessionOperation.getUserId(req);
     }
 

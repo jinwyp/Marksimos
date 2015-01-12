@@ -10,6 +10,7 @@ var questionnaireController = require('./controllers/questionnaire.js');
 var faqController  =  require('./controllers/faq.js');
 var utility = require('../common/utility.js')
 var userModel = require('./models/user/user.js');
+var userRoleModel = require('./models/user/userrole.js');
 var logger = require('../common/logger.js');
 var mongoose = require('mongoose');
 var util = require('util');
@@ -219,7 +220,7 @@ apiRouter.get('/marksimos/api/create_admin', function (req,res,next) {
             "country": "China",
             "state": "shanghai",
             "city": "shanghai",
-            "role": config.role.admin,
+            "role": userRoleModel.role.admin.id,
             "activated": true,
             "emailActivated": true,
             "emailActivateToken": "efe5ceba-fd21-445e-86b6-c5fa64f3c694"
@@ -238,7 +239,7 @@ apiRouter.get('/marksimos/api/create_admin', function (req,res,next) {
             "idcardNumber": "",
             "numOfUsedLicense": 0,
             "numOfLicense": 10000,
-            "role": config.role.distributor,
+            "role": userRoleModel.role.distributor.id,
             "activated": true,
             "emailActivated": true,
             "emailActivateToken": "efe5ceba-fd21-445e-86b6-c5fa64f3c694"
@@ -255,7 +256,7 @@ apiRouter.get('/marksimos/api/create_admin', function (req,res,next) {
             "distributorId": "54609f0c700a570813b1353f",
             "numOfUsedLicense": 0,
             "numOfLicense": 100,
-            "role": config.role.facilitator,
+            "role": userRoleModel.role.facilitator.id,
             "activated": true,
             "emailActivated": true,
             "emailActivateToken": "efe5ceba-fd21-445e-86b6-c5fa64f3c694"
@@ -276,7 +277,7 @@ apiRouter.get('/marksimos/api/create_admin', function (req,res,next) {
             "organizationOrUniversity": "",
             "majorsDegree": "",
             "studentType": 10,
-            "role": config.role.student,
+            "role": userRoleModel.role.student.id,
             "activated": true,
             "emailActivated": false
         },
@@ -296,7 +297,7 @@ apiRouter.get('/marksimos/api/create_admin', function (req,res,next) {
             "organizationOrUniversity": "",
             "majorsDegree": "",
             "studentType": 10,
-            "role": config.role.student,
+            "role": userRoleModel.role.student.id,
             "activated": true,
             "emailActivated": false
         },
@@ -316,7 +317,7 @@ apiRouter.get('/marksimos/api/create_admin', function (req,res,next) {
             "organizationOrUniversity": "",
             "majorsDegree": "",
             "studentType": 10,
-            "role": config.role.student,
+            "role": userRoleModel.role.student.id,
             "activated": true,
             "emailActivated": false
         },
@@ -336,17 +337,16 @@ apiRouter.get('/marksimos/api/create_admin', function (req,res,next) {
             "organizationOrUniversity": "",
             "majorsDegree": "",
             "studentType": 10,
-            "role": config.role.student,
+            "role": userRoleModel.role.student.id,
             "activated": true,
             "emailActivated": false
         }
     ];
-    userModel.query.find({role: config.role.admin}).exec().then(function (userResult) {
+    userModel.query.find({role: userRoleModel.role.admin.id}).exec().then(function (userResult) {
         if (userResult.length) {
             //已经存在管理员了，不进行初始化，只列出这些用户
             return res.send(400, {message: "already added."});
-        }
-        else {
+        }else {
             //不存在管理员，需要初始化
             userModel.query.create(userList, function (err, user) {
                 if (err) {
@@ -470,7 +470,7 @@ apiRouter.get('/marksimos/api/admin/user',  authController.ensureAdminLogin(), a
  */
 function authorize(resource){
     var authDefinition = {};
-    authDefinition[config.role.admin] = [
+    authDefinition[userRoleModel.role.admin.id] = [
         'addDistributor',
         'updateDistributor',
         'searchDistributor',
@@ -479,14 +479,14 @@ function authorize(resource){
 
         'searchStudent'
     ];
-    authDefinition[config.role.distributor] = [
+    authDefinition[userRoleModel.role.distributor.id] = [
         'updateDistributor',
 
         'addFacilitator',
         'updateFacilitator',
         'searchFacilitator'
     ];
-    authDefinition[config.role.facilitator] = [
+    authDefinition[userRoleModel.role.facilitator.id] = [
         'updateFacilitator',
 
         'addStudent',
@@ -504,7 +504,7 @@ function authorize(resource){
         'modifyDecisions'
 
     ];
-    authDefinition[config.role.student] = [
+    authDefinition[userRoleModel.role.student.id] = [
         'getStudent',
         'updateStudent',
         'getSeminarOfStudent'
@@ -513,7 +513,7 @@ function authorize(resource){
     return function authorize(req, res, next){
         var role = sessionOperation.getUserRole(req);
         //admin can do anything
-        // if(role === config.role.admin){
+        // if(role === userRoleModel.role.admin.id){
         //     return next();
         // }
 
