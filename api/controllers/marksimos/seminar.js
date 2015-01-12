@@ -1,4 +1,5 @@
 var seminarModel = require('../../models/marksimos/seminar.js');
+var gameTokenModel = require('../../models/user/gameauthtoken.js');
 var userModel = require('../../models/user/user.js');
 var userRoleModel = require('../../models/user/userrole.js');
 
@@ -344,9 +345,6 @@ exports.chooseSeminarForStudent = function(req, res, next){
             }
 
 
-            if(sessionOperation.getUserRole(req) === userRoleModel.role.student.id){
-
-            }
 
             return res.send({message: "choose seminar success."});
         })

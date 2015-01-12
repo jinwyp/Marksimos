@@ -6,10 +6,14 @@ var mongoose = require('mongoose-q')(require('mongoose'));
 var Schema = mongoose.Schema;
 var uuid = require('node-uuid');
 var Q = require('q');
+
+var logger = require('../../../common/logger.js');
+
+
 var lastClearTime = null;
 var oneDay = 1000 * 60 * 60 * 24;
 var oneMinute = 1000 * 60;
-var expiresTime = 1000 * 60 * 2; // 12 hours 1000 * 60 * 60 * 12
+var expiresTime = 1000 * 60 * 60 * 12; // 12 hours 1000 * 60 * 60 * 12
 
 
 
@@ -69,7 +73,7 @@ var clearToken = function () {
     var aMinuteAgo = now - oneMinute;
     //删除已过期1分钟的数据,防止边界问题
     Token.remove({ expires: { $lt: aMinuteAgo } }, function (err, rowNum) {
-        console.log("clear " + rowNum + " expired token.");
+        logger.log("clear " + rowNum + " expired token.");
     });
 
     setTimeout(clearToken, oneDay);
