@@ -4,7 +4,6 @@ var bcrypt   = require('bcrypt-nodejs');
 var Q = require('q');
 var uuid = require('node-uuid');
 
-
 var userSchema = new Schema({
 
     // system field
