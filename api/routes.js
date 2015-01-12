@@ -108,7 +108,7 @@ apiRouter.get('/marksimos/intro',  authController.ensureStudentLogin(true), func
     res.render('marksimosuser/userintroduction.ejs', { title : 'MarkSimos - Introduction Videos'});
 });
 
-apiRouter.get('/marksimos/home', passport.authenticate('local', { failureFlash: true, failureRedirect: '/marksimos/login' }), authController.ensureStudentLogin(), function(req, res, next){
+apiRouter.get('/marksimos/home', authController.ensureStudentLogin(), function(req, res, next){
     res.render('marksimosuser/userhome.ejs', { title : 'MarkSimos - User Home'});
 });
 
