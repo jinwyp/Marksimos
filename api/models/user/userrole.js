@@ -72,7 +72,6 @@ var getRole = function (){
         roleResult[role.name] = role ;
         roleResult[role.id] = role ;
     });
-    console.log(roleResult);
     return roleResult
 };
 
