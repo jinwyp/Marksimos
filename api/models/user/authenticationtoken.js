@@ -7,9 +7,10 @@ var Schema = mongoose.Schema;
 var uuid = require('node-uuid');
 var Q = require('q');
 var lastClearTime = null;
-var aDay = 1000 * 60 * 60 * 24;
-var min40 = 1000 * 60 * 40;
-var aMinute = 1000 * 60;
+var oneDay = 1000 * 60 * 60 * 24;
+var oneMinute = 1000 * 60;
+var expiresTime = 1000 * 60 * 2; // 12 hours 1000 * 60 * 60 * 12
+
 
 
 var tokenSchema = new Schema({
@@ -33,26 +34,14 @@ var tokenSchema = new Schema({
 var Token = mongoose.model("authenticationtoken", tokenSchema);
 exports = module.exports = Token;
 
-//默认过期时间为40分钟
+
+
 exports.defaultExpires = function () {
-    return new Date(new Date().getTime() + min40);
+    return new Date(new Date().getTime() + expiresTime);
 };
 
-//清除所有过期的token,一天清理一次
-clearToken = function () {
-    var now = new Date();
-    console.log('check');
-    lastClearTime = now;
-    //一分钟前
-    var aMinuteAgo = now - aMinute;
-    //删除已过期1分钟的数据,防止边界问题
-    Token.remove({ expires: { $lt: aMinuteAgo } }, function (err, rowNum) {
-        console.log("clear " + rowNum + " expired token.");
-    });
-    
-    setTimeout(clearToken, aDay);
-};
-clearToken();
+
+
 
 //保存token
 exports.saveToken = function (userInfo) {
@@ -73,3 +62,21 @@ exports.findToken = function (token) {
 };
 
 
+
+
+//清除所有过期的token,一天清理一次
+var clearToken = function () {
+    var now = new Date();
+    lastClearTime = now;
+
+    //一分钟前
+    var aMinuteAgo = now - oneMinute;
+    //删除已过期1分钟的数据,防止边界问题
+    Token.remove({ expires: { $lt: aMinuteAgo } }, function (err, rowNum) {
+        console.log("clear " + rowNum + " expired token.");
+    });
+
+    setTimeout(clearToken, oneDay);
+};
+
+clearToken();
