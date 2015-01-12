@@ -56,6 +56,9 @@ exports.initAuth = function () {
         });
     });
 };
+
+
+
 exports.studentLogin = function (req, res, next) {
     if (req.user.role === 4) {
         res.status(200).send({ message: 'Login success.' , token: req.user.token });
@@ -113,6 +116,8 @@ function getUser(req, done) {
         done(null,false)
     }  
 }
+
+
 //确保登录用户是学生
 exports.ensureStudentLogin = function (redirect) {
     return function (req, res, next) {
@@ -139,6 +144,8 @@ exports.ensureStudentLogin = function (redirect) {
         });
     }
 };
+
+
 exports.adminLogin = function (req, res, next) {
     var user = req.user;
     if (!user) {
@@ -150,9 +157,10 @@ exports.adminLogin = function (req, res, next) {
     else {
         res.status(403).send({ message: 'Your account is a ' + req.user.roleName + ' account, you need an administrator account login' });
     }
-}
-//确保登录用户是管理员
+};
 
+
+//确保登录用户是管理员
 exports.ensureAdminLogin = function (redirect) {
     return function (req, res, next) {
         getUser(req, function (err, user, message) {
