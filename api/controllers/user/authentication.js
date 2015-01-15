@@ -92,7 +92,7 @@ function getUser(req, done) {
 
         return null;
     }
-    this._tokenName = 'x-auth-token';
+    this._tokenName = 'x-access-token';
     var token = req.headers[this._tokenName] || lookup(req.body, this._tokenName) || lookup(req.query, this._tokenName);
     if (token) {
         //查找token记录

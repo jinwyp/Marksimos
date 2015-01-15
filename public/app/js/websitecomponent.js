@@ -60,9 +60,6 @@
                     Student.logOut().then(function(data){
 
                         $window.location.href = "/marksimos/login" ;
-
-                    }, function(err){
-                        console.log(err);
                     });
                 };
 
@@ -88,8 +85,6 @@
 
                         $window.location.href = "/marksimos/admin/" ;
 
-                    }, function(err){
-                        console.log(err);
                     });
                 };
 

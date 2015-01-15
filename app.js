@@ -11,8 +11,8 @@ var mongoose = require('mongoose');
 var morgan = require('morgan');
 
 
-var session = require('express-session');
-var MongoStore = require('connect-mongo')(session);
+//var session = require('express-session');
+//var MongoStore = require('connect-mongo')(session);
 
 var expressValidator = require('express-validator');
 var config = require('./common/config.js');
@@ -50,12 +50,12 @@ app.use(expressValidator({
 
 mongoose.connect(config.mongo_conn);
 
-app.use(session({
-    secret: 'marksimos',
-    store: new MongoStore({ mongooseConnection: mongoose.connection }),
-    resave: true,
-    saveUninitialized: true
-}));
+//app.use(session({
+//    secret: 'marksimos',
+//    store: new MongoStore({ mongooseConnection: mongoose.connection }),
+//    resave: true,
+//    saveUninitialized: true
+//}));
 app.use(express.static(path.join(__dirname, 'public')));
 //---for passport
 app.use(flash());

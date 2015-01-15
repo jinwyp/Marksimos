@@ -45,10 +45,6 @@
     var apiPath = '/marksimos/api/';
     var apiAdminPath = '/marksimos/api/admin/';
 
-    var errorHandler = function(err){
-        console.log("Error 404 , Type : API ", err );
-    };
-
 
     function authenticationModel($http, localStorageService){
 
@@ -78,8 +74,6 @@
                 return $http.get(apiPath + 'user').then(function(result){
 
                     return result.data;
-                })["catch"](function(err){
-                    console.log(err);
                 });
             },
 
@@ -87,8 +81,6 @@
                 return $http.get(apiPath + 'student/seminar').then(function(result){
 
                     return result.data;
-                })["catch"](function(err){
-                    console.log(err);
                 });
             }
         };
@@ -106,7 +98,7 @@
 //                console.log(result.data);
 
                     return result.data;
-                })["catch"](errorHandler);
+                });
             },
 
             getCompany : function(companyId){
@@ -114,35 +106,35 @@
 //                console.log(result.data);
 
                     return result.data;
-                })["catch"](errorHandler);
+                });
             },
             getCompanyOtherInfo : function(companyId){
                 return $http.get(apiPath + 'company/otherinfo', {params : {companyId : companyId }}).then(function(result){
 //                console.log(result.data);
 
                     return result.data;
-                })["catch"](errorHandler);
+                });
             },
             getCompanyFutureProjectionCalculator : function(skuId, companyId){
                 return $http.get(apiPath + 'future_projection_calculator/' + skuId, {params : {companyId : companyId }}).then(function(result){
 //                console.log(result.data);
 
                     return result.data;
-                })["catch"](errorHandler);
+                });
             },
             getCompanyProductPortfolio : function(companyId){
                 return $http.get(apiPath + 'product_portfolio', {params : {companyId : companyId }}).then(function(result){
 //                console.log(result.data);
 
                     return result.data;
-                })["catch"](errorHandler);
+                });
             },
             getCompanySpendingDetails : function(companyId){
                 return $http.get(apiPath + 'spending_details', {params : {companyId : companyId }}).then(function(result){
 //                console.log(result.data);
 
                     return result.data;
-                })["catch"](errorHandler);
+                });
             },
 
 
@@ -867,7 +859,7 @@
                 return  $http.get(apiPath + 'chart/inventory_report', {params : {companyId : companyId }}).then(function(result){
 //                console.log(result.data);
                     return chartFormatToolnvd3StackedMultiBarChart(result.data);
-                })["catch"](errorHandler);
+                });
             },
 
             // Chart B1
@@ -875,28 +867,28 @@
                 return $http.get(apiPath + 'chart/market_share_in_value', {params : {companyId : companyId }}).then(function(result){
 //                console.log(result.data);
                     return chartFormatToolLineChart(result.data, 2);
-                })["catch"](errorHandler);
+                });
             },
 
             marketShareInVolume : function(companyId){
                 return $http.get(apiPath + 'chart/market_share_in_volume', {params : {companyId : companyId }}).then(function(result){
 //                console.log(result.data);
                     return chartFormatToolLineChart(result.data, 2);
-                })["catch"](errorHandler);
+                });
             },
 
             mindSpaceShare : function(companyId){
                 return $http.get(apiPath + 'chart/mind_space_share', {params : {companyId : companyId }}).then(function(result){
 //                console.log(result.data);
                     return chartFormatToolLineChart(result.data, 2);
-                })["catch"](errorHandler);
+                });
             },
 
             shelfSpaceShare : function(companyId){
                 return $http.get(apiPath + 'chart/shelf_space_share', {params : {companyId : companyId }}).then(function(result){
 //                console.log(result.data);
                     return chartFormatToolLineChart(result.data, 2);
-                })["catch"](errorHandler);
+                });
             },
 
 
@@ -905,28 +897,28 @@
                 return $http.get(apiPath + 'chart/total_investment', {params : {companyId : companyId }}).then(function(result){
 //                console.log(result.data);
                     return chartFormatToolLineChart(result.data, 0);
-                })["catch"](errorHandler);
+                });
             },
 
             netProfitByCompanies : function(companyId){
                 return $http.get(apiPath + 'chart/net_profit_by_companies', {params : {companyId : companyId }}).then(function(result){
 //                console.log(result.data);
                     return chartFormatToolLineChart(result.data, 0);
-                })["catch"](errorHandler);
+                });
             },
 
             returnOnInvestment : function(companyId){
                 return $http.get(apiPath + 'chart/return_on_investment', {params : {companyId : companyId }}).then(function(result){
 //                console.log(result.data);
                     return chartFormatToolLineChart(result.data, 0);
-                })["catch"](errorHandler);
+                });
             },
 
             investmentsVersusBudget : function(companyId){
                 return $http.get(apiPath + 'chart/investments_versus_budget', {params : {companyId : companyId }}).then(function(result){
 //                console.log(result.data);
                     return chartFormatToolLineChart(result.data, 0);
-                })["catch"](errorHandler);
+                });
             },
 
 
@@ -935,28 +927,28 @@
                 return $http.get(apiPath + 'chart/market_sales_value', {params : {companyId : companyId }}).then(function(result){
 //                console.log(result.data);
                     return chartFormatToolLineChart(result.data, 0);
-                })["catch"](errorHandler);
+                });
             },
 
             marketSalesVolume : function(companyId){
                 return $http.get(apiPath + 'chart/market_sales_volume', {params : {companyId : companyId }}).then(function(result){
 //                console.log(result.data);
                     return chartFormatToolLineChart(result.data, 0);
-                })["catch"](errorHandler);
+                });
             },
 
             totalInventoryAtFactory : function(companyId){
                 return $http.get(apiPath + 'chart/total_inventory_at_factory', {params : {companyId : companyId }}).then(function(result){
 //                console.log(result.data);
                     return chartFormatToolLineChart(result.data, 0);
-                })["catch"](errorHandler);
+                });
             },
 
             totalInventoryAtTrade : function(companyId){
                 return $http.get(apiPath + 'chart/total_inventory_at_trade', {params : {companyId : companyId }}).then(function(result){
 //                console.log(result.data);
                     return chartFormatToolLineChart(result.data, 0);
-                })["catch"](errorHandler);
+                });
             },
 
 
@@ -965,42 +957,42 @@
                 return $http.get(apiPath + 'chart/segments_leaders_by_value_price_sensitive', {params : {companyId : companyId }}).then(function(result){
                 //console.log(result.data);
                     return chartFormatToolC1BarChart(result.data, 2);
-                })["catch"](errorHandler);
+                });
             },
 
             segmentsLeadersByValuePretenders : function(companyId){
                 return $http.get(apiPath + 'chart/segments_leaders_by_value_pretenders', {params : {companyId : companyId }}).then(function(result){
 //                console.log(result.data);
                     return chartFormatToolC1BarChart(result.data, 2);
-                })["catch"](errorHandler);
+                });
             },
 
             segmentsLeadersByValueModerate : function(companyId){
                 return $http.get(apiPath + 'chart/segments_leaders_by_value_moderate', {params : {companyId : companyId }}).then(function(result){
 //                console.log(result.data);
                     return chartFormatToolC1BarChart(result.data, 2);
-                })["catch"](errorHandler);
+                });
             },
 
             segmentsLeadersByValueGoodLife : function(companyId){
                 return $http.get(apiPath + 'chart/segments_leaders_by_value_good_life', {params : {companyId : companyId }}).then(function(result){
 //                console.log(result.data);
                     return chartFormatToolC1BarChart(result.data, 2);
-                })["catch"](errorHandler);
+                });
             },
 
             segmentsLeadersByValueUltimate : function(companyId){
                 return $http.get(apiPath + 'chart/segments_leaders_by_value_ultimate', {params : {companyId : companyId }}).then(function(result){
 //                console.log(result.data);
                     return chartFormatToolC1BarChart(result.data, 2);
-                })["catch"](errorHandler);
+                });
             },
 
             segmentsLeadersByValuePragmatic : function(companyId){
                 return $http.get(apiPath + 'chart/segments_leaders_by_value_pragmatic', {params : {companyId : companyId }}).then(function(result){
 //                console.log(result.data);
                     return chartFormatToolC1BarChart(result.data, 2);
-                })["catch"](errorHandler);
+                });
             },
 
 
@@ -1008,7 +1000,7 @@
             perceptionMap : function(companyId){
                 return $http.get(apiPath + 'chart/perception_map', {params : {companyId : companyId }}).then(function(result){
                     return chartFormatToolnvd3ScatterChart(result.data);
-                })["catch"](errorHandler);
+                });
             },
 
 
@@ -1017,28 +1009,28 @@
                 return $http.get(apiPath + 'chart/growth_rate_in_volume', {params : {companyId : companyId }}).then(function(result){
 //                console.log(result.data);
                     return chartFormatToolLineChart(result.data, 0);
-                })["catch"](errorHandler);
+                });
             },
 
             growthRateInValue : function(companyId){
                 return $http.get(apiPath + 'chart/growth_rate_in_value', {params : {companyId : companyId }}).then(function(result){
 //                console.log(result.data);
                     return chartFormatToolLineChart(result.data, 0);
-                })["catch"](errorHandler);
+                });
             },
 
             netMarketPrice : function(companyId){
                 return $http.get(apiPath + 'chart/net_market_price', {params : {companyId : companyId }}).then(function(result){
 //                console.log(result.data);
                     return chartFormatToolLineChart(result.data, 0);
-                })["catch"](errorHandler);
+                });
             },
 
             segmentValueShareTotalMarket : function(companyId){
                 return $http.get(apiPath + 'chart/segment_value_share_total_market', {params : {companyId : companyId }}).then(function(result){
 //                console.log(result.data);
                     return chartFormatToolLineChart(result.data, 2);
-                })["catch"](errorHandler);
+                });
             }
         };
 
@@ -1062,7 +1054,7 @@
 //                console.log(result.data);
 
                     return result.data;
-                })["catch"](errorHandler);
+                });
             },
 
             // Table Report A2
@@ -1071,7 +1063,7 @@
 //                console.log(result.data);
 
                     return result.data;
-                })["catch"](errorHandler);
+                });
             },
 
             // Table Report B2
@@ -1080,7 +1072,7 @@
 //                console.log(result.data);
 
                     return result.data;
-                })["catch"](errorHandler);
+                });
             },
 
             // Table Report B2
@@ -1089,7 +1081,7 @@
 //                console.log(result.data);
 
                     return result.data;
-                })["catch"](errorHandler);
+                });
             },
 
             // Table Report C3
@@ -1098,7 +1090,7 @@
 //                console.log(result.data);
 
                     return result.data;
-                })["catch"](errorHandler);
+                });
             },
 
             // Table Report C5
@@ -1107,7 +1099,7 @@
 //                console.log(result.data);
 
                     return result.data;
-                })["catch"](errorHandler);
+                });
             },
 
             // Table Report C6
@@ -1116,7 +1108,7 @@
 //                console.log(result.data);
 
                     return result.data;
-                })["catch"](errorHandler);
+                });
             }
         };
 
@@ -1132,17 +1124,17 @@
             getFAQ : function(){
                 return $http.get(apiPath + 'faq').then(function(result){
                     return result.data;
-                })["catch"](errorHandler);
+                });
             },
             getManualChinese : function(){
                 return $http.get('/marksimos/manual/zh_CN').then(function(result){
                     return result.data;
-                })["catch"](errorHandler);
+                });
             },
             getManualEnglish : function(){
                 return $http.get('/marksimos/manual/en_US').then(function(result){
                     return result.data;
-                })["catch"](errorHandler);
+                });
             }
 
         };
@@ -1218,7 +1210,7 @@
         function getAdminRequest(url) {
             return $http.get(apiAdminPath + url).then(function (result) {
                 return result.data;    
-            })["catch"](errorHandler);
+            });
         }       
         return {
             //Table A1 Company Status
@@ -1261,7 +1253,7 @@
             getInventoryReport : function(){
                 return $http.get(apiAdminPath + 'chart/inventory_report').then(function(result){
                     return chartFormatToolnvd3StackedMultiBarChart(result.data);
-                })["catch"](errorHandler);
+                });
             },
 
             //Table B1 Market Share In Value
@@ -1346,37 +1338,37 @@
             getSegmentsLeadersByValuePriceSensitive: function () {
                 return $http.get(apiAdminPath + 'chart/segments_leaders_by_value_price_sensitive').then(function (result) {                    
                     return chartFormatToolC1BarChart(result.data, 2);
-                })["catch"](errorHandler);
+                });
             },
             //Table C1-2 Segments Leaders By Value Pretenders
             getSegmentsLeadersByValuePretenders: function () {
                 return $http.get(apiAdminPath + 'chart/segments_leaders_by_value_pretenders').then(function (result) {
                     return chartFormatToolC1BarChart(result.data, 2);
-                })["catch"](errorHandler);
+                });
             },
             //Table C1-3 Segments Leaders By Value Moderate
             getSegmentsLeadersByValueModerate: function () {
                 return $http.get(apiAdminPath + 'chart/segments_leaders_by_value_moderate').then(function (result) {
                     return chartFormatToolC1BarChart(result.data, 2);
-                })["catch"](errorHandler);
+                });
             },
             //Table C1-4 Segments Leaders By Value Good Life
             getSegmentsLeadersByValueGoodLife: function () {
                 return $http.get(apiAdminPath + 'chart/segments_leaders_by_value_good_life').then(function (result) {
                     return chartFormatToolC1BarChart(result.data, 2);
-                })["catch"](errorHandler);
+                });
             },
             //Table C1-5 Segments Leaders By Value Ultimate
             getSegmentsLeadersByValueUltimate: function () {
                 return $http.get(apiAdminPath + 'chart/segments_leaders_by_value_ultimate').then(function (result) {
                     return chartFormatToolC1BarChart(result.data, 2);
-                })["catch"](errorHandler);
+                });
             },
             //Table C1-6 Segments Leaders By Value Pragmatic
             getSegmentsLeadersByValuePragmatic: function () {
                 return $http.get(apiAdminPath + 'chart/segments_leaders_by_value_pragmatic').then(function (result) {
                     return chartFormatToolC1BarChart(result.data, 2);
-                })["catch"](errorHandler);
+                });
             },
 
 
@@ -1384,31 +1376,31 @@
             getPerceptionMap: function() {
                 return $http.get(apiAdminPath + 'chart/perception_map').then(function(result) {
                     return chartFormatToolnvd3ScatterChart(result.data);
-                })["catch"](errorHandler);
+                });
             },
             //Table C4-1 Growth Rate In Volume
             getGrowthRateInVolume: function () {
                 return $http.get(apiAdminPath + 'chart/growth_rate_in_volume').then(function (result) {
                     return chartFormatToolLineChart(result.data, 0);
-                })["catch"](errorHandler);
+                });
             },
             //Table C4-2 Growth rate In Value
             getGrowthRateInValue: function () {
                 return $http.get(apiAdminPath + 'chart/growth_rate_in_value').then(function (result) {
                     return chartFormatToolLineChart(result.data, 0);
-                })["catch"](errorHandler);
+                });
             },
             //Table C4-3 Net market Price
             getNetMarketPrice: function () {
                 return $http.get(apiAdminPath + 'chart/net_market_price').then(function (result) {
                     return chartFormatToolLineChart(result.data, 0);
-                })["catch"](errorHandler);
+                });
             },
             //Table C4-4 Segment Value Share Total Market
             getSegmentValueShareTotalMarket: function () {
                 return $http.get(apiAdminPath + 'chart/segment_value_share_total_market').then(function (result) {
                     return chartFormatToolLineChart(result.data, 2);
-                })["catch"](errorHandler);
+                });
             }
 
         };
