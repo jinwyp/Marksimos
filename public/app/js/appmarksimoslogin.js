@@ -37,15 +37,15 @@
 
         $scope.login = function(form){
             if(form.$valid){
-                Student.login($scope.data.newUser).success(function(data, status, headers, config){
+                Student.login($scope.data.newUser).then(function(){
 
                     //$window.location.href = "/marksimos/intro" ;
 
-                }).error(function(data, status, headers, config){
+                }, function(err){
                     form.password.$valid = false;
                     form.password.$invalid = true;
                     $scope.css.newUser.passwordPrompt = true;
-                    console.log(data);
+                    console.log(err);
                 });
             }
         };

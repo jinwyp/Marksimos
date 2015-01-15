@@ -14,10 +14,13 @@
 
     /********************  Create New Module For Model ********************/
 
-    angular.module('marksimos.model', ['pascalprecht.translate', 'marksimos.translation']);
+    angular.module('marksimos.model', ['pascalprecht.translate', 'marksimos.translation',  'ngStorage']);
 
 
     /********************  Use This Module To Set New Factory  ********************/
+
+    angular.module('marksimos.model').factory('Authentication', ['$http', '$localStorage', authenticationModel]);
+
 
 
     angular.module('marksimos.model').factory('Student', ['$http', studentModel]);
@@ -46,11 +49,24 @@
         console.log("Error 404 , Type : API ", err );
     };
 
-    function studentModel ($http){
+
+    function authenticationModel($http, $localStorage){
+
+
+    }
+
+
+
+
+    function studentModel ($http, $localStorage){
 
         var factory = {
             login : function(user){
-                return $http.post(apiPath + 'login', user);
+                return $http.post(apiPath + 'login', user).then(function(result){
+                    console.log(result);
+                    $localStorage.hcdtoken = result.data.token;
+                    return result.data;
+                });
             },
             logOut : function(){
                 return $http.get(apiPath + 'logout');

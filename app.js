@@ -15,7 +15,6 @@ var session = require('express-session');
 var MongoStore = require('connect-mongo')(session);
 
 var expressValidator = require('express-validator');
-var sessionOperation = require('./common/sessionOperation.js');
 var config = require('./common/config.js');
 var customValidator = require('./common/express-custom-validator.js');
 var router = require('./api/routes.js');				// get an instance of the express Router
@@ -59,9 +58,10 @@ app.use(session({
 }));
 app.use(express.static(path.join(__dirname, 'public')));
 //---for passport
+app.use(flash());
 app.use(passport.initialize());
 app.use(passport.session());
-app.use(flash());
+
 //---for passport
 
 

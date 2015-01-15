@@ -60,12 +60,17 @@ exports.initAuth = function () {
 
 
 exports.studentLogin = function (req, res, next) {
-    if (req.user.role === 4) {
-        res.status(200).send({ message: 'Login success.' , token: req.user.token });
-    }
-    else {
-        res.status(403).send({ message: 'Your account is a ' + req.user.roleName + ' account, you need a student account login' });
-    }
+    passport.authenticate('local', function (err, user, info) {
+        if (err) { return next(err) }
+        if (!user) {
+            return res.status(401).send( { message: info.message })
+        }
+        if (user.role === 4) {
+            return res.status(200).send({ message: 'Login success.' , token: user.token });
+        }else {
+            return res.status(403).send({ message: 'Your account is a ' + user.roleName + ' account, you need a student account login' });
+        }
+    })(req, res, next);
 };
 
 

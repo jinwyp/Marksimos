@@ -205,7 +205,7 @@ apiRouter.get('/marksimos/adminhomereport/:seminar_id', passport.authenticate('l
 
 
 /**********    API For MarkSimos Student    **********/
-apiRouter.post('/marksimos/api/login', passport.authenticate('local', { session: true, failureFlash: true }), authController.studentLogin);
+apiRouter.post('/marksimos/api/login', authController.studentLogin);
 //apiRouter.post('/marksimos/api/login', authController.studentLogin);
 apiRouter.get('/marksimos/api/logout', authController.logout);
 
