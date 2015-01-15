@@ -12,7 +12,7 @@
 (function () {
     'use strict';
 
-    angular.module('marksimos.config', []);
+    angular.module('marksimos.config', ['LocalStorageModule']);
 
 
 
@@ -20,14 +20,20 @@
     /********************  http://stackoverflow.com/questions/21630534/node-js-angular-js-caution-provisional-headers-are-shown ********************/
 
 
-    angular.module('marksimos.config').config(['$httpProvider', function ($httpProvider) {
-        //Reset headers to avoid OPTIONS request (aka preflight)
-        $httpProvider.defaults.headers.common = {};
-        $httpProvider.defaults.headers.post = {};
-        $httpProvider.defaults.headers.put = {};
-        $httpProvider.defaults.headers.patch = {};
-    }]);
+    //angular.module('marksimos.config').config(['$httpProvider', function ($httpProvider) {
+    //    //Reset headers to avoid OPTIONS request (aka preflight)
+    //    $httpProvider.defaults.headers.common = {};
+    //    $httpProvider.defaults.headers.post = {};
+    //    $httpProvider.defaults.headers.put = {};
+    //    $httpProvider.defaults.headers.patch = {};
+    //}]);
 
+
+    angular.module('marksimos.config').config(['localStorageServiceProvider', function (localStorageServiceProvider) {
+        localStorageServiceProvider.setPrefix('hcdlearning');
+        localStorageServiceProvider.setStorageType('localStorage');  // Or sessionStorage
+        localStorageServiceProvider.setNotify(true, true);
+    }]);
 
 
 }());

@@ -14,16 +14,16 @@
 
     /********************  Create New Module For Model ********************/
 
-    angular.module('marksimos.model', ['pascalprecht.translate', 'marksimos.translation',  'ngStorage']);
+    angular.module('marksimos.model', ['LocalStorageModule', 'pascalprecht.translate', 'marksimos.translation']);
 
 
     /********************  Use This Module To Set New Factory  ********************/
 
-    angular.module('marksimos.model').factory('Authentication', ['$http', '$localStorage', authenticationModel]);
+    angular.module('marksimos.model').factory('Authentication', ['$http', 'localStorageService', authenticationModel]);
 
 
 
-    angular.module('marksimos.model').factory('Student', ['$http', studentModel]);
+    angular.module('marksimos.model').factory('Student', ['$http', 'localStorageService', studentModel]);
     angular.module('marksimos.model').factory('Company', ['$http', companyModel]);
 
 
@@ -50,7 +50,7 @@
     };
 
 
-    function authenticationModel($http, $localStorage){
+    function authenticationModel($http, localStorageService){
 
 
     }
@@ -58,18 +58,20 @@
 
 
 
-    function studentModel ($http, $localStorage){
+    function studentModel ($http, localStorageService){
 
         var factory = {
             login : function(user){
                 return $http.post(apiPath + 'login', user).then(function(result){
-                    console.log(result);
-                    $localStorage.hcdtoken = result.data.token;
+                    localStorageService.set('logintoken', result.data.token);
                     return result.data;
                 });
             },
             logOut : function(){
-                return $http.get(apiPath + 'logout');
+                return $http.get(apiPath + 'logout').then(function(result){
+                    localStorageService.clearAll();
+                    return result.data;
+                });
             },
 
             getStudent : function(){

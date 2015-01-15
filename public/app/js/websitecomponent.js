@@ -57,12 +57,12 @@
                 };
 
                 scope.clickLogout = function () {
-                    Student.logOut().success(function(data, status, headers, config){
+                    Student.logOut().then(function(data){
 
                         $window.location.href = "/marksimos/login" ;
 
-                    }).error(function(data, status, headers, config){
-                        console.log(data);
+                    }, function(err){
+                        console.log(err);
                     });
                 };
 
@@ -84,12 +84,12 @@
                 };
 
                 scope.clickLogout = function () {
-                    Student.logOut().success(function(data, status, headers, config){
+                    Student.logOut().then(function(data){
 
                         $window.location.href = "/marksimos/admin/" ;
 
-                    }).error(function(data, status, headers, config){
-                        console.log(data);
+                    }, function(err){
+                        console.log(err);
                     });
                 };
 
