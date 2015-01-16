@@ -40,6 +40,7 @@ exports.initAuth = function () {
             //为用户分配token
             Token.createToken({ userId: user._id }).then(function (tokenInfo) {
                 user.token = tokenInfo.token;
+
                 done(null, user);
             }).fail(function (err) {
                 done({ message: util.inspect(err) }, false);
@@ -66,6 +67,7 @@ exports.studentLogin = function (req, res, next) {
             return res.status(401).send( { message: info.message })
         }
         if (user.role === 4) {
+            //res.cookie('x-access-token', user.token, { maxAge: 12 * 60 * 60 * 1000, httpOnly: true });
             return res.status(200).send({ message: 'Login success.' , token: user.token });
         }else {
             return res.status(403).send({ message: 'Your account is a ' + user.roleName + ' account, you need a student account login' });
@@ -79,7 +81,6 @@ function getUser(req, done) {
     if (req.user) {
         return done(null, req.user);
     }
-
     function lookup(obj, field) {
         if (!obj) { return null; }
         var chain = field.split(']').join('').split('[');
@@ -92,8 +93,9 @@ function getUser(req, done) {
 
         return null;
     }
-    this._tokenName = 'x-access-token';
-    var token = req.headers[this._tokenName] || lookup(req.body, this._tokenName) || lookup(req.query, this._tokenName);
+    var tokenName = 'x-access-token';
+    var token = req.headers[tokenName] || lookup(req.body, tokenName) || lookup(req.query, tokenName) || req.cookies[tokenName];
+
     if (token) {
         //查找token记录
         Token.findOneQ({ token: token }).then(function (tokenInfo) {
@@ -196,6 +198,7 @@ exports.ensureAdminLogin = function (redirect) {
 
 exports.logout = function(req, res, next){
     req.logout();
+    res.clearCookie('x-access-token');
     sessionOperation.setSeminarId(req, "");
     sessionOperation.setCurrentPeriod(req, "");
     res.send({message: 'Logout success'});
