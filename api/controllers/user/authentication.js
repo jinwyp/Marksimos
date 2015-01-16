@@ -48,14 +48,7 @@ exports.initAuth = function () {
         });
 
     }));
-    passport.serializeUser(function (user, done) {
-        done(null, user._id);
-    });
-    passport.deserializeUser(function (id, done) {
-        userModel.query.findOne({ _id: id }, function (err, user) {
-            done(err, user);
-        });
-    });
+
 };
 
 
@@ -78,9 +71,7 @@ exports.studentLogin = function (req, res, next) {
 
 
 function getUser(req, done) {
-    if (req.user) {
-        return done(null, req.user);
-    }
+
     function lookup(obj, field) {
         if (!obj) { return null; }
         var chain = field.split(']').join('').split('[');
@@ -97,20 +88,19 @@ function getUser(req, done) {
     var token = req.headers[tokenName] || lookup(req.body, tokenName) || lookup(req.query, tokenName) || req.cookies[tokenName];
     if (token) {
         //查找token记录
-        console.log("1111", token);
         Token.findOne({ token: token }, function (errToken, tokenInfo) {
             if (errToken) { return done(errToken); }
-            console.log("2222", tokenInfo);
             //记录存在且未过期
             if (tokenInfo && tokenInfo.expires > new Date()) {
 
                 userModel.query.findOne({ _id: tokenInfo.userId }, function (err, user) {
                     if (err) { return done(err); }
-                    console.log(user);
                     if (!user) {
                         //token存在，用户不存在，则可能用户已被删除
                         return done(null, false, { message: 'Login error.' });
                     }
+
+                    req.user = user;
                     done(null, user);
                 });
             }else {

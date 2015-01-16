@@ -29,7 +29,7 @@ exports.setUserRole = function(req, userRole){
 
 exports.getUserRole = function (req){
     return req.user.role;    
-}
+};
 
 exports.setUserId = function(req, userId){
     req.session.userId = userId;
