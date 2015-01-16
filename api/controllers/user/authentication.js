@@ -67,7 +67,7 @@ exports.studentLogin = function (req, res, next) {
             return res.status(401).send( { message: info.message })
         }
         if (user.role === 4) {
-            //res.cookie('x-access-token', user.token, { maxAge: 12 * 60 * 60 * 1000, httpOnly: true });
+            res.cookie('x-access-token', user.token, { maxAge: 12 * 60 * 60 * 1000, httpOnly: true });
             return res.status(200).send({ message: 'Login success.' , token: user.token });
         }else {
             return res.status(403).send({ message: 'Your account is a ' + user.roleName + ' account, you need a student account login' });
@@ -95,34 +95,32 @@ function getUser(req, done) {
     }
     var tokenName = 'x-access-token';
     var token = req.headers[tokenName] || lookup(req.body, tokenName) || lookup(req.query, tokenName) || req.cookies[tokenName];
-
     if (token) {
-
         //查找token记录
-        Token.findOneQ({ token: token }).then(function (tokenInfo) {
+        console.log("1111", token);
+        Token.findOne({ token: token }, function (errToken, tokenInfo) {
+            if (errToken) { return done(errToken); }
+            console.log("2222", tokenInfo);
             //记录存在且未过期
             if (tokenInfo && tokenInfo.expires > new Date()) {
-                User.findOne({ _id: tokenInfo.userId }, function (err, user) {
+
+                userModel.query.findOne({ _id: tokenInfo.userId }, function (err, user) {
                     if (err) { return done(err); }
+                    console.log(user);
                     if (!user) {
                         //token存在，用户不存在，则可能用户已被删除
                         return done(null, false, { message: 'Login error.' });
                     }
                     done(null, user);
                 });
-            }
-            else {
+            }else {
                 //token过期或不存在
                 done(null, false, { message: 'Login timeout.' });
             }
                
-        }).fail(function (err) {
-            console.log(err);
-            done({ message: util.inspect(err) }, false);
-        }).done();
-    }
-    else {
-        done(null,false)
+        });
+    }else {
+        done(null, false)
     }  
 }
 
@@ -140,10 +138,9 @@ exports.ensureStudentLogin = function (redirect) {
                 }
                 return res.status(403).send({ message: 'Login failed.' });
             }
-            if (req.user.role === 4) {
+            if (user.role === 4) {
                 next();
-            }
-            else {
+            }else {
                 if (redirect) {
                     return res.redirect('/marksimos/login');
                 }                
@@ -151,6 +148,7 @@ exports.ensureStudentLogin = function (redirect) {
                          
             }
         });
+
     }
 };
 
