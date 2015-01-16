@@ -42,7 +42,6 @@
             templateUrl: 'userheader.html',
             link: function (scope, element, attrs) {
 
-
                 scope.clickMenu = function(currentmenu){
                     scope.currentMenu = currentmenu;
                 };
@@ -58,7 +57,6 @@
 
                 scope.clickLogout = function () {
                     Student.logOut().then(function(data){
-
                         $window.location.href = "/marksimos/login" ;
                     });
                 };

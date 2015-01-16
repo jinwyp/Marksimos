@@ -122,20 +122,21 @@ exports.ensureStudentLogin = function (redirect) {
             if (err) {
                 return res.status(500).send(err);
             }
-            if (!user) {
-                if (redirect) {
+
+            if (redirect) {
+
+                if (!user || user.role !== 4) {
                     return res.redirect('/marksimos/login');
                 }
-                return res.status(403).send({ message: 'Login failed.' });
-            }
-            if (user.role === 4) {
                 next();
-            }else {
-                if (redirect) {
-                    return res.redirect('/marksimos/login');
-                }                
-                res.status(403).send({ message: 'Your account is a ' + req.user.roleName + ' account, you need a student account login' });
-                         
+            }else{
+                if (!user) {
+                    return res.status(403).send({ message: 'Login failed.' });
+                }
+                if (user.role !== 4) {
+                    res.status(403).send({ message: 'Your account is a ' + req.user.roleName + ' account, you need a student account login' });
+                }
+                next();
             }
         });
 
@@ -189,8 +190,8 @@ exports.ensureAdminLogin = function (redirect) {
 exports.logout = function(req, res, next){
     req.logout();
     res.clearCookie('x-access-token');
-    sessionOperation.setSeminarId(req, "");
-    sessionOperation.setCurrentPeriod(req, "");
+    //sessionOperation.setSeminarId(req, "");
+    //sessionOperation.setCurrentPeriod(req, "");
     res.send({message: 'Logout success'});
 };
 

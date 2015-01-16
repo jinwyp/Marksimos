@@ -25,7 +25,6 @@
         return {
             'request': function (config) {
                 config.headers = config.headers || {};
-                console.log(localStorageService.get('logintoken'));
                 if (localStorageService.get('logintoken')) {
                     config.headers['x-access-token'] = localStorageService.get('logintoken');
                 }

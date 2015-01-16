@@ -19,13 +19,13 @@ exports.setAdminLoginStatus = function(req, loginStatus){
 
 exports.getAdminLoginStatus = function (req){
     return req.isAuthenticated() && (req.user.role === 1|| req.user.role === 2|| req.user.role === 3); 
-}
+};
 
 
 
 exports.setUserRole = function(req, userRole){
     req.session.userRole = userRole;
-}
+};
 
 exports.getUserRole = function (req){
     return req.user.role;    
@@ -33,15 +33,15 @@ exports.getUserRole = function (req){
 
 exports.setUserId = function(req, userId){
     req.session.userId = userId;
-}
+};
 
 exports.getUserId = function (req){
     return req.user.id;   
-}
+};
 
 exports.setSeminarId = function(req, seminarId){
     req.session.seminarId = seminarId;
-}
+};
 
 exports.getSeminarId = function(req){
     return req.session.seminarId;
