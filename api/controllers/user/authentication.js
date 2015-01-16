@@ -97,6 +97,7 @@ function getUser(req, done) {
     var token = req.headers[tokenName] || lookup(req.body, tokenName) || lookup(req.query, tokenName) || req.cookies[tokenName];
 
     if (token) {
+
         //查找token记录
         Token.findOneQ({ token: token }).then(function (tokenInfo) {
             //记录存在且未过期
@@ -116,6 +117,7 @@ function getUser(req, done) {
             }
                
         }).fail(function (err) {
+            console.log(err);
             done({ message: util.inspect(err) }, false);
         }).done();
     }
