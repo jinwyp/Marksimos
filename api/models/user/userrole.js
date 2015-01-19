@@ -22,14 +22,42 @@ var mongooseTimestamps = require('mongoose-timestamp');
 var appResource = {
 
     marksimos : {
-        studentInfoSingleGet : 'studentInfoSingleGet',
-        studentInfoSingleCUD : 'studentInfoSingleCUD',
-        studentSeminarListGet : 'studentSeminarListGet',
-        studentSeminarListCUD : 'studentSeminarListCUD'
+        studentLogin : 'studentLogin',
+        adminLogin : 'adminLogin',
+
+
+        studentInfoSingleGet : 'studentInfoSingleGet',  // For student
+        studentInfoSingleCUD : 'studentInfoSingleCUD',  // For student
+        studentInfoListGet   : 'studentInfoListGet',    // For admin facilitator
+
+        distributorInfoSingleGet : 'distributorInfoSingleGet',
+        distributorInfoSingleCUD : 'distributorInfoSingleCUD',
+        distributorInfoListGet   : 'distributorInfoListGet',
+
+        facilitatorInfoSingleGet : 'facilitatorInfoSingleGet',
+        facilitatorInfoSingleCUD : 'facilitatorInfoSingleCUD',
+        facilitatorInfoListGet   : 'facilitatorInfoListGet',
+
+
+        seminarSingleGet         : 'seminarSingleGet',        // For  facilitator
+        seminarSingleCUD         : 'seminarSingleCUD',        // For  facilitator
+        seminarSingleDecisionGet : 'seminarSingleDecisionGet',  // For student
+        seminarSingleDecisionCUD : 'seminarSingleDecisionCUD',  // For student
+
+        seminarAssignStudentCUD : 'seminarAssignStudentCUD',
+        seminarInit             : 'seminarInit',
+        seminarRunRound         : 'seminarRunRound',
+
+        seminarListOfStudentGet          : 'seminarListOfStudentGet',      // For student
+        seminarListOfFacilitatorGet      : 'seminarListOfFacilitatorGet',  // For  facilitator
+        seminarDecisionsOfFacilitatorCUD : 'seminarDecisionsOfFacilitatorCUD'  // For  facilitator
+
     },
     etales: {}
 
 };
+
+
 
 
 
@@ -41,22 +69,67 @@ var roles = [
     {
         id : 1,
         name : 'admin',
-        permissions :[ appResource.marksimos.studentInfoSingleGet ]
+        permissions :[
+            appResource.marksimos.distributorInfoSingleGet,
+            appResource.marksimos.distributorInfoSingleCUD,
+            appResource.marksimos.distributorInfoListGet,
+
+            appResource.marksimos.facilitatorInfoSingleGet,
+            appResource.marksimos.facilitatorInfoListGet,
+
+            appResource.marksimos.studentInfoSingleGet,
+            appResource.marksimos.studentInfoListGet
+
+        ]
     },
     {
         id : 2,
         name : 'distributor',
-        permissions :[]
+        permissions :[
+            appResource.marksimos.distributorInfoSingleGet,
+            appResource.marksimos.distributorInfoSingleCUD,
+
+            appResource.marksimos.facilitatorInfoSingleGet,
+            appResource.marksimos.facilitatorInfoSingleCUD,
+            appResource.marksimos.facilitatorInfoListGet
+
+        ]
     },
     {
         id : 3,
         name : 'facilitator',
-        permissions :[]
+        permissions :[
+            appResource.marksimos.facilitatorInfoSingleGet,
+            appResource.marksimos.facilitatorInfoSingleCUD,
+
+            appResource.marksimos.studentInfoSingleGet,
+            appResource.marksimos.studentInfoSingleCUD,
+            appResource.marksimos.studentInfoListGet,
+
+
+            appResource.marksimos.seminarSingleGet,
+            appResource.marksimos.seminarSingleCUD,
+
+            appResource.marksimos.seminarAssignStudentCUD,
+            appResource.marksimos.seminarInit,
+            appResource.marksimos.seminarRunRound,
+
+            appResource.marksimos.seminarListOfFacilitatorGet,
+            appResource.marksimos.seminarDecisionsOfFacilitatorCUD
+
+        ]
     },
     {
         id : 4,
         name : 'student',
-        permissions :[]
+        permissions :[
+            appResource.marksimos.studentInfoSingleGet,
+            appResource.marksimos.studentInfoSingleCUD,
+            appResource.marksimos.seminarListOfStudentGet,
+            appResource.marksimos.seminarSingleDecisionGet,
+            appResource.marksimos.seminarSingleDecisionCUD
+
+        ]
     },
     {
         id : 9,
@@ -66,18 +139,34 @@ var roles = [
 
 ];
 
-var roleResult = {};
+var roleListResult = {};
 var getRoleList = function (){
     roles.forEach(function(role){
-        roleResult[role.name] = role ;
-        roleResult[role.id] = role ;
+        roleListResult[role.name] = role ;
+        roleListResult[role.id] = role ;
     });
-    return roleResult
+    return roleListResult
 };
 
 
+/**
+ * Authorize Resource Permission of specified Role.
+ * @constructor
+ * @param {string} resource - The resource  of the Resource Permission.
+ * @param {string} userroleid - The userroleid of the user.
+ */
 
+var authorizeRolePermission = function(resource, userroleid){
+    if (userroleid > 0){
 
+        var role = roleListResult[userroleid];
+
+        if(role.permissions.indexOf(resource) > -1){
+            return true
+        }
+    }
+    return false
+};
 
 var apps = {
 
@@ -95,8 +184,8 @@ var apps = {
 
 module.exports = {
     apps : apps,
-    appResource : appResource,
+    right : appResource,
     roles : roles,
-    roleList : getRoleList()
-
+    roleList : getRoleList(),
+    authRolePermission : authorizeRolePermission
 };

@@ -13,6 +13,10 @@ var passport = require('passport')
   , LocalStrategy = require('passport-local').Strategy;
 
 
+/**
+ * Passport LocalStrategy For Login and Generate Token.
+ */
+
 exports.initAuth = function () {
     passport.use(new LocalStrategy({
         usernameField: 'email',
@@ -51,15 +55,13 @@ exports.initAuth = function () {
 
 };
 
-
-
 exports.studentLogin = function (req, res, next) {
     passport.authenticate('local', function (err, user, info) {
         if (err) { return next(err) }
         if (!user) {
             return res.status(401).send( { message: info.message })
         }
-        if (user.role === 4) {
+        if (user.role === userRoleModel.roleList.student.id) {
             res.cookie('x-access-token', user.token, { maxAge: 12 * 60 * 60 * 1000, httpOnly: true });
             return res.status(200).send({ message: 'Login success.' , token: user.token });
         }else {
@@ -68,7 +70,35 @@ exports.studentLogin = function (req, res, next) {
     })(req, res, next);
 };
 
+exports.adminLogin = function (req, res, next) {
+    passport.authenticate('local', function (err, user, info) {
+        if (err) { return next(err) }
+        if (!user) {
+            return res.status(401).send( { message: info.message })
+        }
+        if (user.role === userRoleModel.roleList.admin.id || user.role === userRoleModel.roleList.distributor.id || user.role === userRoleModel.roleList.facilitator.id) {
+            res.cookie('x-access-token', user.token, { maxAge: 12 * 60 * 60 * 1000, httpOnly: true });
+            return res.status(200).send({ message: 'Login success.' , token: user.token });
+        }else {
+            return res.status(403).send({ message: 'Your account is a ' + user.roleName + ' account, you need a admin account login' });
+        }
+    })(req, res, next);
+};
 
+exports.logout = function(req, res, next){
+    req.logout();
+    res.clearCookie('x-access-token');
+    //sessionOperation.setSeminarId(req, "");
+    //sessionOperation.setCurrentPeriod(req, "");
+    res.status(200).send({message: 'Logout success'});
+};
+
+
+
+
+/**
+ * Authenticate Token  For LocalStrategy.
+ */
 
 function getUser(req, done) {
 
@@ -81,7 +111,6 @@ function getUser(req, done) {
             if (typeof (prop) !== 'object') { return prop; }
             obj = prop;
         }
-
         return null;
     }
     var tokenName = 'x-access-token';
@@ -116,85 +145,95 @@ function getUser(req, done) {
 }
 
 
-//确保登录用户是学生
-exports.ensureStudentLogin = function (redirect) {
+
+exports.authLoginToken = function (options) {
     return function (req, res, next) {
-        getUser(req, function (err, user, message) {
-            if (err) {
-                return res.status(500).send(err);
+        options = options || {};
+        if(typeof options.failureRedirect === 'undefined'){
+            options.failureRedirect = false;
+        }
+
+        function lookup(obj, field) {
+            if (!obj) { return null; }
+            var chain = field.split(']').join('').split('[');
+            for (var i = 0, len = chain.length; i < len; i++) {
+                var prop = obj[chain[i]];
+                if (typeof (prop) === 'undefined') { return null; }
+                if (typeof (prop) !== 'object') { return prop; }
+                obj = prop;
             }
+            return null;
+        }
 
-            if (redirect) {
+        var tokenName = 'x-access-token';
+        var token = req.headers[tokenName] || lookup(req.body, tokenName) || lookup(req.query, tokenName) || req.cookies[tokenName];
 
-                if (!user || user.role !== 4) {
-                    return res.redirect('/marksimos/login');
+        if (token) {
+            //查找token记录
+            Token.findOne({ token: token }, function (errToken, tokenInfo) {
+                if (errToken) { return res.status(500).send(errToken); }
+
+                //token存在且未过期
+                if (tokenInfo && tokenInfo.expires > new Date()) {
+
+                    userModel.query.findOne({ _id: tokenInfo.userId }, function (err, user) {
+                        if (err) { return res.status(500).send(err);}
+
+                        if (!user) {
+                            //token存在，用户不存在，则可能用户已被删除
+                            options.message = 'Token existed, but user not found.';
+                        }else{
+                            req.user = user;
+                            next();
+                        }
+                    });
+                }else {
+                    //token过期
+                    options.message = 'Token have expired.';
                 }
-                next();
+            });
+        }
+
+        if (options.failureRedirect) {
+            return res.redirect(options.failureRedirect);
+        }else{
+            res.status(401).send( {message: options.message });
+        }
+    }
+};
+
+
+
+
+/**
+ * Middleware that will authorize a third-party account  with optional `options`.
+ *
+ * Examples:
+ *
+ *    passport.authorize('twitter-authz', { successRedirect: '/',  failureRedirect: '/login',  failureFlash: true });
+ *
+ * @param {Object} options
+ */
+
+
+exports.authRole = function (permission, options) {
+    return function (req, res, next) {
+        permission = permission || "";
+        options = options || {};
+
+        if (userRoleModel.authRolePermission(permission, req.user.roleId) ){
+            next();
+        }else{
+            if (options.failureRedirect) {
+                return res.redirect(options.failureRedirect);
             }else{
-                if (!user) {
-                    return res.status(403).send({ message: 'Login failed.' });
-                }
-                if (user.role !== 4) {
-                    res.status(403).send({ message: 'Your account is a ' + req.user.roleName + ' account, you need a student account login' });
-                }
-                next();
+                res.status(403).send( {message: 'You are not authorized. Need ' + permission + ' permission !'});
             }
-        });
+        }
 
     }
 };
 
-
-exports.adminLogin = function (req, res, next) {
-    var user = req.user;
-    if (!user) {
-       return res.status(403).send({ message: 'Login failed.' });
-    }
-    if (user.role === 1 || user.role === 2 || user.role === 3) {
-        res.status(200).send({ message: 'Login success.', token: req.user.token });
-    }
-    else {
-        res.status(403).send({ message: 'Your account is a ' + req.user.roleName + ' account, you need an administrator account login' });
-    }
-};
-
-
-//确保登录用户是管理员
-exports.ensureAdminLogin = function (redirect) {
-    return function (req, res, next) {
-        getUser(req, function (err, user, message) {
-            if (err) {
-                return res.status(500).send(err);
-            }
-            if (!user) {
-                if (redirect) {
-                  return  res.redirect('/marksimos/admin');
-                }
-                return res.status(403).send({ message: 'Login failed.' });
-            }
-            if (user.role === 1 || user.role === 2 || user.role === 3) {
-                next();
-            }
-            else {
-                if (redirect) {
-                   return res.redirect('/marksimos/admin');
-                }
-              res.status(403).send({ message: 'Your account is a ' + req.user.roleName + ' account, you need an administrator account login' });
-                
-            }
-        });
-    }
-};
-
-
-
-exports.logout = function(req, res, next){
-    req.logout();
-    res.clearCookie('x-access-token');
-    //sessionOperation.setSeminarId(req, "");
-    //sessionOperation.setCurrentPeriod(req, "");
-    res.send({message: 'Logout success'});
-};
 
 
 
