@@ -675,6 +675,7 @@ body a, body button {
 .header .navbar-inverse .navbar-brand img {
   max-width: 100%;
   max-height: 100%;
+  display: inline-block;
 }
 .header .navbar-inverse .navbar-nav li a {
   color: #d5def5;
