@@ -35,7 +35,7 @@ exports.addDistributor = function(req, res, next){
         district: req.body.district || '',
         street: req.body.street || '',
 
-        role: userRoleModel.role.distributor.id,
+        role: userRoleModel.roleList.distributor.id,
         emailActivated: true,
         activated: true,
         numOfLicense: req.body.num_of_license_granted
@@ -78,7 +78,7 @@ exports.updateDistributor = function(req, res, next){
         state: req.body.state,
         city: req.body.city,
         password: utility.hashPassword(req.body.password),
-        role: userRoleModel.role.distributor.id,
+        role: userRoleModel.roleListdistributor.id,
         numOfLicense: req.body.num_of_license_granted,
         emailActivated: true,
         district: req.body.district || '',
@@ -109,7 +109,7 @@ exports.searchDistributor = function(req, res, next){
     var activated = req.query.user_status;
 
     var query = {
-        role: userRoleModel.role.distributor.id
+        role: userRoleModel.roleListdistributor.id
     };
     if(name) query.username = name;
     if(email) query.email = email;
@@ -157,7 +157,7 @@ exports.addFacilitator = function(req, res, next){
         return res.send(400, {message: checkRequiredFieldResult});
     }
 
-    var distributorId = sessionOperation.getUserId(req);
+    var distributorId = req.user.id;
 
     var facilitator = {
         username: req.body.username,
@@ -170,7 +170,7 @@ exports.addFacilitator = function(req, res, next){
         district: req.body.district || '',
         street: req.body.street || '',
 
-        role: userRoleModel.role.facilitator.id,
+        role: userRoleModel.roleListfacilitator.id,
         activated: true,
         emailActivated: true,
 
@@ -237,8 +237,8 @@ exports.updateFacilitator = function(req, res, next){
     if(req.body.city) facilitator.city = req.body.city;
     if(req.body.password) facilitator.password = utility.hashPassword(req.body.password);
 
-    var userRole = sessionOperation.getUserRole(req);
-    if(req.body.num_of_license_granted && (userRole === userRoleModel.role.admin.id || userRole === userRoleModel.role.distributor.id)){
+    var userRole = req.user.roleId;
+    if(req.body.num_of_license_granted && (userRole === userRoleModel.roleListadmin.id || userRole === userRoleModel.roleListdistributor.id)){
         facilitator.numOfLicense = req.body.num_of_license_granted;
     }
     if(req.body.district) facilitator.district = req.body.district;
@@ -249,7 +249,7 @@ exports.updateFacilitator = function(req, res, next){
         return res.send(400, {message: "you have to provide at least one field to update."});
     }
 
-    var distributorId = sessionOperation.getUserId(req);
+    var distributorId = req.user.id;
 
     var p;
 
@@ -323,13 +323,13 @@ exports.searchFacilitator = function(req, res, next){
     var activated = req.query.user_status;
 
     var query = {
-        role: userRoleModel.role.facilitator.id
+        role: userRoleModel.roleListfacilitator.id
     };
 
     //only distributor and admin can search facilitators
     //distributor can only view its own facilitators
-    if(sessionOperation.getUserRole(req) !== userRoleModel.role.admin.id){
-        query.distributorId = sessionOperation.getUserId(req);
+    if(req.user.roleId !== userRoleModel.roleListadmin.id){
+        query.distributorId = req.user.id;
     }
 
     if(name) query.username = name;
@@ -347,7 +347,7 @@ exports.searchFacilitator = function(req, res, next){
 
             allFacilitator = JSON.parse(JSON.stringify(allFacilitator));
 
-            return userModel.find({role: userRoleModel.role.distributor.id})
+            return userModel.find({role: userRoleModel.roleListdistributor.id})
                 .then(function(allDistributor){
                     for(var i=0; i< allFacilitator.length; i++){
                         var facilitator = allFacilitator[i];
@@ -377,7 +377,7 @@ exports.searchFacilitator = function(req, res, next){
 };
 
 exports.getSeminarOfFacilitator = function(req, res, next){
-    var facilitatorId = sessionOperation.getUserId(req);
+    var facilitatorId = req.user.id;
 
     var filterKey = req.query.filterKey;
     var status = req.query.status;
@@ -486,7 +486,7 @@ exports.addStudent = function(req, res, next){
         return res.send(400, {message: checkRequiredFieldResult});
     }
 
-    var facilitatorId = sessionOperation.getUserId(req);
+    var facilitatorId = req.user.id;
 
     var student = {
         username      : req.body.username,
@@ -499,7 +499,7 @@ exports.addStudent = function(req, res, next){
         city          : req.body.city,
 
 
-        role           : userRoleModel.role.student.id,
+        role           : userRoleModel.roleListstudent.id,
         emailActivated : true,
         activated      : true,
         studentType    : req.body.student_type,
@@ -581,7 +581,7 @@ exports.updateStudent = function(req, res, next){
                 throw {httpStatus: 400, message: "student doesn't exist."}
             }
 
-            if(dbStudent.facilitatorId !== sessionOperation.getUserId(req)){
+            if(dbStudent.facilitatorId !== req.user.id){
                 throw {httpStatus: 400, message: "You are not authorized to update this student."}
             }
 
@@ -662,7 +662,7 @@ exports.searchStudent = function(req, res, next){
     //add for e4e
 
     var query = {
-        role : userRoleModel.role.student.id
+        role : userRoleModel.roleListstudent.id
     };
 
     if(req.query.student_type){
@@ -672,8 +672,8 @@ exports.searchStudent = function(req, res, next){
 
     //only facilitator and admin can search students
     //facilitator can only view its own students
-    if(sessionOperation.getUserRole(req) !== userRoleModel.role.admin.id){
-        query.facilitatorId = sessionOperation.getUserId(req);
+    if(req.user.roleId !== userRoleModel.roleListadmin.id){
+        query.facilitatorId = req.user.id;
     }
 
     if(username) query.username = username;

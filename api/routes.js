@@ -220,7 +220,7 @@ apiRouter.get('/marksimos/api/create_admin', function (req,res,next) {
             "country": "China",
             "state": "shanghai",
             "city": "shanghai",
-            "role": userRoleModel.role.admin.id,
+            "role": userRoleModel.roleList.admin.id,
             "activated": true,
             "emailActivated": true,
             "emailActivateToken": "efe5ceba-fd21-445e-86b6-c5fa64f3c694"
@@ -239,7 +239,7 @@ apiRouter.get('/marksimos/api/create_admin', function (req,res,next) {
             "idcardNumber": "",
             "numOfUsedLicense": 0,
             "numOfLicense": 10000,
-            "role": userRoleModel.role.distributor.id,
+            "role": userRoleModel.roleList.distributor.id,
             "activated": true,
             "emailActivated": true,
             "emailActivateToken": "efe5ceba-fd21-445e-86b6-c5fa64f3c694"
@@ -256,7 +256,7 @@ apiRouter.get('/marksimos/api/create_admin', function (req,res,next) {
             "distributorId": "54609f0c700a570813b1353f",
             "numOfUsedLicense": 0,
             "numOfLicense": 100,
-            "role": userRoleModel.role.facilitator.id,
+            "role": userRoleModel.roleList.facilitator.id,
             "activated": true,
             "emailActivated": true,
             "emailActivateToken": "efe5ceba-fd21-445e-86b6-c5fa64f3c694"
@@ -277,7 +277,7 @@ apiRouter.get('/marksimos/api/create_admin', function (req,res,next) {
             "organizationOrUniversity": "",
             "majorsDegree": "",
             "studentType": 10,
-            "role": userRoleModel.role.student.id,
+            "role": userRoleModel.roleList.student.id,
             "activated": true,
             "emailActivated": false
         },
@@ -297,7 +297,7 @@ apiRouter.get('/marksimos/api/create_admin', function (req,res,next) {
             "organizationOrUniversity": "",
             "majorsDegree": "",
             "studentType": 10,
-            "role": userRoleModel.role.student.id,
+            "role": userRoleModel.roleList.student.id,
             "activated": true,
             "emailActivated": false
         },
@@ -317,7 +317,7 @@ apiRouter.get('/marksimos/api/create_admin', function (req,res,next) {
             "organizationOrUniversity": "",
             "majorsDegree": "",
             "studentType": 10,
-            "role": userRoleModel.role.student.id,
+            "role": userRoleModel.roleList.student.id,
             "activated": true,
             "emailActivated": false
         },
@@ -337,12 +337,12 @@ apiRouter.get('/marksimos/api/create_admin', function (req,res,next) {
             "organizationOrUniversity": "",
             "majorsDegree": "",
             "studentType": 10,
-            "role": userRoleModel.role.student.id,
+            "role": userRoleModel.roleList.student.id,
             "activated": true,
             "emailActivated": false
         }
     ];
-    userModel.query.find({role: userRoleModel.role.admin.id}).exec().then(function (userResult) {
+    userModel.query.find({role: userRoleModel.roleList.admin.id}).exec().then(function (userResult) {
         if (userResult.length) {
             //已经存在管理员了，不进行初始化，只列出这些用户
             return res.send(400, {message: "already added."});
@@ -470,7 +470,7 @@ apiRouter.get('/marksimos/api/admin/user',  authController.ensureAdminLogin(), a
  */
 function authorize(resource){
     var authDefinition = {};
-    authDefinition[userRoleModel.role.admin.id] = [
+    authDefinition[userRoleModel.roleList.admin.id] = [
         'addDistributor',
         'updateDistributor',
         'searchDistributor',
@@ -479,14 +479,14 @@ function authorize(resource){
 
         'searchStudent'
     ];
-    authDefinition[userRoleModel.role.distributor.id] = [
+    authDefinition[userRoleModel.roleList.distributor.id] = [
         'updateDistributor',
 
         'addFacilitator',
         'updateFacilitator',
         'searchFacilitator'
     ];
-    authDefinition[userRoleModel.role.facilitator.id] = [
+    authDefinition[userRoleModel.roleList.facilitator.id] = [
         'updateFacilitator',
 
         'addStudent',
@@ -504,16 +504,16 @@ function authorize(resource){
         'modifyDecisions'
 
     ];
-    authDefinition[userRoleModel.role.student.id] = [
+    authDefinition[userRoleModel.roleList.student.id] = [
         'getStudent',
         'updateStudent',
         'getSeminarOfStudent'
     ];
 
     return function authorize(req, res, next){
-        var role = sessionOperation.getUserRole(req);
+        var role = req.user.roleId;
         //admin can do anything
-        // if(role === userRoleModel.role.admin.id){
+        // if(role === userRoleModel.roleList.admin.id){
         //     return next();
         // }
 

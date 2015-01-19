@@ -101,6 +101,7 @@ function getUser(req, done) {
                     }
 
                     req.user = user;
+                    console.log("user", req.user, req.user.roleId);
                     done(null, user);
                 });
             }else {
@@ -306,7 +307,7 @@ exports.registerE4Estudent = function(req, res, next){
     user.dateOfGraduation = req.body.dateOfGraduation;
     user.qq = req.body.qq;
 
-    user.role = userRoleModel.role.student.id;
+    user.role = userRoleModel.roleList.student.id;
     user.studentType = 20;
 
     userModel.findByEmail(email)
@@ -366,7 +367,7 @@ exports.registerE4Ecompany = function(req, res, next){
     user.division = req.body.division;
     user.mobilePhone = req.body.mobileNumber;
 
-    user.role = userRoleModel.role.enterprise.id;
+    user.role = userRoleModel.roleList.enterprise.id;
 
     userModel.findByEmail(email)
     .then(function(findResult){

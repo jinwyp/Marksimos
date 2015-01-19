@@ -3,41 +3,11 @@
 *
 * @param {Boolean} loginStatus
 */
-exports.setStudentLoginStatus = function(req, loginStatus){
-    req.session.studentLoginStatus = loginStatus;
-    req.session.adminLoginStatus = false;    
-}
-
-exports.getStudentLoginStatus = function (req){      
-    return req.isAuthenticated() && req.user.role === 4;    
-}
-
-exports.setAdminLoginStatus = function(req, loginStatus){
-    req.session.adminLoginStatus = loginStatus;
-    req.session.studentLoginStatus = false;
-}
-
-exports.getAdminLoginStatus = function (req){
-    return req.isAuthenticated() && (req.user.role === 1|| req.user.role === 2|| req.user.role === 3); 
-};
 
 
 
-exports.setUserRole = function(req, userRole){
-    req.session.userRole = userRole;
-};
 
-exports.getUserRole = function (req){
-    return req.user.role;    
-};
 
-exports.setUserId = function(req, userId){
-    req.session.userId = userId;
-};
-
-exports.getUserId = function (req){
-    return req.user.id;   
-};
 
 exports.setSeminarId = function(req, seminarId){
     req.session.seminarId = seminarId;
@@ -63,10 +33,3 @@ exports.getCurrentPeriod = function (req){
     return req.session.currentPeriod;
 }
 
-exports.setEmail = function (req, email){
-    req.session.email = email;
-}
-
-exports.getEmail = function(req){
-    return req.user.email;   
-}

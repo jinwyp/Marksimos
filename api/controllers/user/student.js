@@ -11,7 +11,7 @@ var utility = require('../../../common/utility.js');
 
 
 exports.getSeminarList = function(req, res, next){
-    var email = sessionOperation.getEmail(req);
+    var email = req.user.email;
 
     seminarModel.find({},{})
     .then(function(allSeminars){
@@ -44,7 +44,7 @@ exports.getSeminarList = function(req, res, next){
 
 
 exports.getSeminarInfo = function(req, res, next){
-    var userId = sessionOperation.getUserId(req);
+    var userId = req.user.id;
 
     userModel.findOne({_id: userId}).then(function(user){
         if(!user){

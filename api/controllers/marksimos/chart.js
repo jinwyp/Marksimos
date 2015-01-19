@@ -41,7 +41,7 @@ exports.getChart = function(req, res, next){
             return res.send(500, {message: util.format("chart %s does not exist.", chartName)});
         }
 
-        if(userRole === userRoleModel.role.student.id && chartName==='inventory_report'){
+        if(userRole === userRoleModel.roleList.student.id && chartName==='inventory_report'){
             //this function changes data in chart object
             var chartData = filterChart(chart, companyId);
             return res.send(chartData);

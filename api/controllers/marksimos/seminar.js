@@ -24,7 +24,7 @@ exports.addSeminar = function(req, res, next){
 
     var seminar = {};
 
-    var facilitatorId = sessionOperation.getUserId(req);
+    var facilitatorId = req.user.id;
 
     seminar.description = req.body.description;
     seminar.country = req.body.country;
@@ -131,7 +131,7 @@ exports.updateSeminar = function(req, res, next){
         return res.send(400, {message: "You should at leaset provide one field to update."})
     }
 
-    var facilitatorId = sessionOperation.getUserId(req);
+    var facilitatorId = req.user.id;
     var seminarId = sessionOperation.getSeminarId(req);
 
     if(!seminarId){

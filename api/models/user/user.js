@@ -77,7 +77,11 @@ var userSchema = new Schema({
 });
 
 userSchema.virtual('roleName').get(function () {
-    return userRoleModel.role[this.role].name ;
+    return userRoleModel.roleList[this.role].name ;
+});
+
+userSchema.virtual('roleId').get(function () {
+    return this.role ;
 });
 
 var User = mongoose.model("User", userSchema);

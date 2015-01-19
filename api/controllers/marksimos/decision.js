@@ -230,7 +230,7 @@ exports.updateSKUDecision = function(req, res, next){
 
     var userRole = req.session.userRole;
 
-    if(userRole !== userRoleModel.role.student.id){
+    if(userRole !== userRoleModel.roleList.student.id){
         period = req.body.periodId;
         seminarId = req.body.seminarId;
     }
@@ -315,7 +315,7 @@ exports.updateBrandDecision = function(req, res, next){
 
     var userRole = req.session.userRole;
 
-    if(userRole !== userRoleModel.role.student.id){
+    if(userRole !== userRoleModel.roleList.student.id){
         period = req.body.periodId;
         seminarId = req.body.seminarId;
     }
@@ -376,7 +376,7 @@ exports.updateCompanyDecision = function(req, res, next){
 
     var userRole = req.session.userRole;
 
-    if(userRole !== userRoleModel.role.student.id){
+    if(userRole !== userRoleModel.roleList.student.id){
         period = req.body.periodId;
         seminarId = req.body.seminarId;
     }

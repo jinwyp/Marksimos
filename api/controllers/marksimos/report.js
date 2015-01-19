@@ -84,7 +84,7 @@ exports.getReport = function(req, res, next){
             return res.send(400, {message: "Report doesn't exist."})
         }
 
-        if(userRole === userRoleModel.role.student.id && isReportNeedFilter(reportName)){
+        if(userRole === userRoleModel.roleList.student.id && isReportNeedFilter(reportName)){
             return res.send(extractReportOfOneCompany(report, companyId));
         }
 

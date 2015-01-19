@@ -67,7 +67,7 @@ var roles = [
 ];
 
 var roleResult = {};
-var getRole = function (){
+var getRoleList = function (){
     roles.forEach(function(role){
         roleResult[role.name] = role ;
         roleResult[role.id] = role ;
@@ -97,6 +97,6 @@ module.exports = {
     apps : apps,
     appResource : appResource,
     roles : roles,
-    role : getRole()
+    roleList : getRoleList()
 
 };
