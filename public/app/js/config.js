@@ -20,7 +20,7 @@
     /********************  http://stackoverflow.com/questions/21630534/node-js-angular-js-caution-provisional-headers-are-shown ********************/
 
     angular.module('marksimos.config').factory('marksimosInterceptor', ['$log', '$q', '$location', 'localStorageService', function($log, $q, $location, localStorageService) {
-        $log.debug('$log is here to show you that this is a regular factory with injection');
+        //$log.debug('$log is here to show you that this is a regular factory with injection');
 
         return {
             'request': function (config) {

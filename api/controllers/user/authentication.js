@@ -100,52 +100,6 @@ exports.logout = function(req, res, next){
  * Authenticate Token  For LocalStrategy.
  */
 
-function getUser(req, done) {
-
-    function lookup(obj, field) {
-        if (!obj) { return null; }
-        var chain = field.split(']').join('').split('[');
-        for (var i = 0, len = chain.length; i < len; i++) {
-            var prop = obj[chain[i]];
-            if (typeof (prop) === 'undefined') { return null; }
-            if (typeof (prop) !== 'object') { return prop; }
-            obj = prop;
-        }
-        return null;
-    }
-    var tokenName = 'x-access-token';
-    var token = req.headers[tokenName] || lookup(req.body, tokenName) || lookup(req.query, tokenName) || req.cookies[tokenName];
-    if (token) {
-        //查找token记录
-        Token.findOne({ token: token }, function (errToken, tokenInfo) {
-            if (errToken) { return done(errToken); }
-            //记录存在且未过期
-            if (tokenInfo && tokenInfo.expires > new Date()) {
-
-                userModel.query.findOne({ _id: tokenInfo.userId }, function (err, user) {
-                    if (err) { return done(err); }
-                    if (!user) {
-                        //token存在，用户不存在，则可能用户已被删除
-                        return done(null, false, { message: 'Login error.' });
-                    }
-
-                    req.user = user;
-                    console.log("user", req.user, req.user.roleId);
-                    done(null, user);
-                });
-            }else {
-                //token过期或不存在
-                done(null, false, { message: 'Login timeout.' });
-            }
-               
-        });
-    }else {
-        done(null, false)
-    }  
-}
-
-
-
 exports.authLoginToken = function (options) {
     return function (req, res, next) {
         options = options || {};
@@ -165,40 +119,49 @@ exports.authLoginToken = function (options) {
             return null;
         }
 
+        function sendResult(options){
+            if (options.failureRedirect) {
+                return res.redirect(options.failureRedirect);
+            }else{
+                return res.status(401).send( {message: options.message });
+            }
+        }
+
         var tokenName = 'x-access-token';
         var token = req.headers[tokenName] || lookup(req.body, tokenName) || lookup(req.query, tokenName) || req.cookies[tokenName];
 
         if (token) {
             //查找token记录
             Token.findOne({ token: token }, function (errToken, tokenInfo) {
-                if (errToken) { return res.status(500).send(errToken); }
+                if (errToken) { return next(errToken); }
 
                 //token存在且未过期
                 if (tokenInfo && tokenInfo.expires > new Date()) {
 
                     userModel.query.findOne({ _id: tokenInfo.userId }, function (err, user) {
-                        if (err) { return res.status(500).send(err);}
+                        if (err) { return next(err);}
 
                         if (!user) {
                             //token存在，用户不存在，则可能用户已被删除
                             options.message = 'Token existed, but user not found.';
+                            sendResult(options);
                         }else{
                             req.user = user;
-                            next();
+                            return next();
                         }
                     });
                 }else {
                     //token过期
                     options.message = 'Token have expired.';
+                    sendResult(options);
                 }
             });
+        }else {
+            options.message = 'Token not found, pls login .';
+            sendResult(options);
         }
 
-        if (options.failureRedirect) {
-            return res.redirect(options.failureRedirect);
-        }else{
-            res.status(401).send( {message: options.message });
-        }
+
     }
 };
 
@@ -222,12 +185,12 @@ exports.authRole = function (permission, options) {
         options = options || {};
 
         if (userRoleModel.authRolePermission(permission, req.user.roleId) ){
-            next();
+            return next();
         }else{
             if (options.failureRedirect) {
                 return res.redirect(options.failureRedirect);
             }else{
-                res.status(403).send( {message: 'You are not authorized. Need ' + permission + ' permission !'});
+                return res.status(403).send( {message: 'You are not authorized. Need ' + permission + ' permission !'});
             }
         }
 
