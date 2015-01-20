@@ -39,7 +39,9 @@ apiRouter.get('/', function(req, res, next){
 
 
 
-
+apiRouter.get('/b2c', function (req, res, next) {
+    res.render('b2c/index.ejs');
+});
 
 /**********    set Content-Type for all API JSON resppnse    **********/
 

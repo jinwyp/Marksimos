@@ -1,0 +1,431 @@
+.icon_b2c-sprite, .b2c-header .button, .b2c-header .button:hover, .down .pic-1 .front, .down .pic-1 .back, .down .pic-2 .front, .down .pic-2 .back, .down .pic-3 .front, .down .pic-3 .back, .down .pic-4 .front, .down .pic-4 .back, .down .pic-5 .front, .down .pic-5 .back, .down .pic-6 .front, .down .pic-6 .back, .man1, .man1:hover, .man2, .man2:hover, .man3, .man3:hover, .man4, .man4:hover {
+  background-image: url('../images/icon_b2c-sba594319fa.png');
+  background-repeat: no-repeat;
+}
+
+body {
+  min-width: 1280px;
+  font-family: "Microsoft YaHei" !important;
+  font-size: 16px;
+}
+
+.b2c-container {
+  width: 1280px;
+  margin: 0 auto;
+  padding: 0 0;
+  height: 82px;
+}
+
+.b2c-header {
+  height: 82px;
+  background-color: #bd2a0b;
+  background-image: url(../images/b2c_nav_1x82.png);
+}
+.b2c-header .button {
+  margin-top: 30px;
+  width: 49px;
+  height: 23px;
+  font-size: 12px;
+  display: inline-block;
+  background-position: 0 0;
+}
+.b2c-header .button:hover, .b2c-header .button.b2c_login_49x23-hover {
+  background-position: 0 -23px;
+}
+.b2c-header .button:hover {
+  background-position: 0 -23px;
+}
+
+.b2c-trans {
+  padding-top: 20px;
+}
+.b2c-trans .selected {
+  background-color: #7f1a03;
+}
+.b2c-trans span {
+  cursor: pointer;
+  display: block;
+  float: right;
+  margin-right: 10px;
+  width: 20px;
+  height: 20px;
+  font-weight: bold;
+  text-align: center;
+  color: #eda494;
+  background-color: #b92909;
+  border: 1px solid #eda494;
+}
+.b2c-trans span:hover {
+  background-color: #7f1a03;
+}
+
+.b2c-logo {
+  margin-left: 157px;
+  margin-top: 12px;
+  float: left;
+}
+
+.b2c-login {
+  float: right;
+  width: 600px;
+  height: 82px;
+  overflow: hidden;
+}
+
+.b2c-login-field {
+  float: left;
+  width: 165px;
+  color: #fff;
+  font-size: 12px;
+  margin-top: 10px;
+}
+.b2c-login-field div {
+  line-height: 20px;
+  height: 20px;
+}
+
+.b2c-login-input {
+  width: 150px;
+  padding: 0;
+  font-size: 12px;
+  height: 20px;
+  line-height: 20px;
+  border: solid #932F18 1px;
+  color: #333;
+}
+
+.b2c-login-field label, .b2c-login-field a {
+  color: #EDA694 !important;
+  padding-left: 2px;
+  vertical-align: top;
+}
+
+.b2c-footer {
+  background-color: #121318;
+  height: 126px;
+}
+
+.b2c-footer-content {
+  width: 900px;
+  margin: 0 auto;
+  height: 126px;
+  font-size: 12px;
+  padding-top: 37px;
+}
+.b2c-footer-content a {
+  margin-right: 65px;
+  margin-top: 37px;
+  color: #fff;
+}
+.b2c-footer-content img {
+  margin-left: 100px;
+}
+
+.middle {
+  height: 570px;
+}
+
+.left {
+  width: 760px;
+  float: left;
+  padding-left: 132px;
+  padding-top: 60px;
+}
+
+.right {
+  width: 520px;
+  float: left;
+}
+
+.pic-area {
+  height: 295px;
+  padding-left: 157px;
+  overflow: hidden;
+}
+
+.down {
+  height: 550px;
+  background-color: #c42e0d;
+  padding: 105px 0px 0px 0px;
+}
+.down .pic {
+  width: 255px;
+  height: 295px;
+  margin-right: 100px;
+  float: left;
+}
+.down .pic-1 {
+  margin-top: 20px;
+}
+.down .pic-1 .front {
+  background-position: 0 -3200px;
+}
+.down .pic-1 .back {
+  background-position: 0 -2945px;
+}
+.down .pic-2 {
+  margin-top: 20px;
+}
+.down .pic-2 .front {
+  background-position: 0 -3710px;
+}
+.down .pic-2 .back {
+  background-position: 0 -3455px;
+}
+.down .pic-3 {
+  margin-top: 20px;
+}
+.down .pic-3 .front {
+  background-position: 0 -4220px;
+}
+.down .pic-3 .back {
+  background-position: 0 -3965px;
+}
+.down .pic-4 .front {
+  background-position: 0 -4730px;
+}
+.down .pic-4 .back {
+  background-position: 0 -4475px;
+}
+.down .pic-5 .front {
+  background-position: 0 -5240px;
+}
+.down .pic-5 .back {
+  background-position: 0 -4985px;
+}
+.down .pic-6 .front {
+  background-position: 0 -5750px;
+}
+.down .pic-6 .back {
+  background-position: 0 -5495px;
+}
+.down .flip-container {
+  position: relative;
+  -moz-perspective: 1000;
+  -webkit-perspective: 1000;
+  perspective: 1000;
+  width: 255px;
+  height: 255px;
+}
+.down .flip-container .front, .down .flip-container .back {
+  background-color: #c42e0d;
+  -moz-transition: all 0.6s ease-in-out;
+  -o-transition: all 0.6s ease-in-out;
+  -webkit-transition: all 0.6s ease-in-out;
+  transition: all 0.6s ease-in-out;
+  -moz-backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+  backface-visibility: hidden;
+  -moz-transform-style: preserve-3d;
+  -webkit-transform-style: preserve-3d;
+  transform-style: preserve-3d;
+  height: 100%;
+  width: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+.no-csstransforms3d .down .flip-container .front {
+  opacity: 1;
+}
+.down .flip-container .back {
+  -moz-transform: rotateY(180deg);
+  -webkit-transform: rotateY(180deg);
+  transform: rotateY(180deg);
+}
+.no-csstransforms3d .down .flip-container .back {
+  visibility: hidden;
+  opacity: 0;
+}
+.down .flip-container:hover .front {
+  -moz-transform: rotateY(180deg);
+  -webkit-transform: rotateY(180deg);
+  transform: rotateY(180deg);
+}
+.no-csstransforms3d .down .flip-container:hover .front {
+  visibility: hidden;
+}
+.down .flip-container:hover .back {
+  -moz-transform: rotateY(360deg);
+  -webkit-transform: rotateY(360deg);
+  transform: rotateY(360deg);
+}
+.no-csstransforms3d .down .flip-container:hover .back {
+  visibility: visible;
+  opacity: 1;
+}
+.down .back {
+  font-size: 12px;
+  color: #fff;
+  padding-top: 35px;
+}
+.down .back .title {
+  text-indent: 0;
+  text-align: center;
+}
+.down .back p {
+  text-align: justify;
+  text-indent: 2em;
+  line-height: 25px;
+  padding: 0 25px;
+}
+.down .switch-button {
+  text-align: center;
+  margin-top: 60px;
+  margin-left: 2px;
+}
+.down .switch-button a {
+  margin-right: 75px;
+  color: #fff;
+  font-weight: 700;
+  text-decoration: none;
+  padding: 10px 20px;
+}
+.down .switch-button a:hover {
+  text-decoration: none;
+}
+.down .switch-button .selected {
+  padding: 8px 18px;
+  border: 2px solid #fff;
+  -moz-border-radius: 5px / 5px;
+  -webkit-border-radius: 5px 5px;
+  border-radius: 5px / 5px;
+}
+
+.b2c-man {
+  display: inline-block;
+  height: 357px;
+}
+
+.man1 {
+  width: 133px;
+  background-position: 0 -46px;
+}
+.man1:hover, .man1.b2c_man_1-hover {
+  background-position: 0 -403px;
+}
+.man1:hover {
+  background-position: 0 -403px;
+}
+
+.man2 {
+  width: 117px;
+  background-position: 0 -760px;
+}
+.man2:hover, .man2.b2c_man_2-hover {
+  background-position: 0 -1117px;
+}
+.man2:hover {
+  background-position: 0 -1117px;
+}
+
+.man3 {
+  width: 127px;
+  background-position: 0 -1474px;
+}
+.man3:hover, .man3.b2c_man_3-hover {
+  background-position: 0 -1831px;
+}
+.man3:hover {
+  background-position: 0 -1831px;
+}
+
+.man4 {
+  width: 114px;
+  background-position: 0 -2188px;
+}
+.man4:hover, .man4.b2c_man_4-hover {
+  background-position: 0 -2545px;
+}
+.man4:hover {
+  background-position: 0 -2545px;
+}
+
+.b2c-man-title {
+  margin-top: 40px;
+  margin-left: 75px;
+  font-size: 20px;
+  color: #999;
+  bottom: 100px;
+}
+
+.reg-form .form-group {
+  position: relative;
+}
+.reg-form .title {
+  font-weight: 900;
+  font-size: 25px;
+  margin-top: 100px;
+  margin-bottom: 20px;
+}
+.reg-form input[type=text], .reg-form input[type=password], .reg-form input[type=email] {
+  width: 395px;
+  height: 38px;
+}
+.reg-form input[type=text]:focus, .reg-form input[type=password]:focus, .reg-form input[type=email]:focus {
+  outline: none !important;
+  border: 1px solid #68a057;
+  box-shadow: 0 0 10px #68a057;
+  background-color: #FFFFEE;
+}
+.reg-form input[type=text]:focus:-moz-placeholder, .reg-form input[type=password]:focus:-moz-placeholder, .reg-form input[type=email]:focus:-moz-placeholder {
+  font-weight: 700;
+}
+.reg-form input[type=text]:focus::-moz-placeholder, .reg-form input[type=password]:focus::-moz-placeholder, .reg-form input[type=email]:focus::-moz-placeholder {
+  font-weight: 700;
+}
+.reg-form input[type=text]:focus:-ms-input-placeholder, .reg-form input[type=password]:focus:-ms-input-placeholder, .reg-form input[type=email]:focus:-ms-input-placeholder {
+  font-weight: 700;
+}
+.reg-form input[type=text]:focus::-webkit-input-placeholder, .reg-form input[type=password]:focus::-webkit-input-placeholder, .reg-form input[type=email]:focus::-webkit-input-placeholder {
+  font-weight: 700;
+}
+.reg-form .female {
+  margin-left: 15px;
+}
+.reg-form button {
+  border-style: none;
+  width: 194px;
+  height: 41px;
+  color: #fff;
+  font-size: 20px;
+  font-weight: 900;
+  background-color: #c42e0d;
+  border-bottom: 2px solid #7e200b;
+}
+.reg-form button:hover {
+  background-color: #7e200b;
+  border-bottom: 2px solid #ca3413;
+}
+.reg-form .radio {
+  padding: 10px 0px;
+}
+.reg-form .radio .err-msg {
+  margin-top: -7px;
+}
+.reg-form .err-msg {
+  right: 100%;
+  margin-top: -37px;
+  margin-right: 10px;
+  z-index: 999;
+  position: absolute;
+  width: 240px;
+  color: #FFFFFF;
+  background: #da8449;
+  height: 40px;
+  line-height: 40px;
+  text-align: center;
+  border-radius: 6px;
+}
+.reg-form .err-msg:after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 100%;
+  margin-top: -8px;
+  width: 0;
+  height: 0;
+  border-left: 8px solid #da8449;
+  border-top: 8px solid transparent;
+  border-bottom: 8px solid transparent;
+}
