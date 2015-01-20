@@ -10,37 +10,6 @@ var utility = require('../../../common/utility.js');
 
 
 
-exports.getSeminarList = function(req, res, next){
-    var email = req.user.email;
-
-    seminarModel.find({},{})
-    .then(function(allSeminars){
-        var assignedSeminars = [];
-
-        for(var i=0; i<allSeminars.length; i++){
-            var seminar = allSeminars[i];
-            for(var j=0; j<seminar.companyAssignment.length; j++){
-
-                if( typeof seminar.companyAssignment[j].studentList  !== 'undefined'){
-                    if(seminar.companyAssignment[j].studentList.indexOf(email) > -1){
-                        if(seminar.isInitialized ){
-                            assignedSeminars.push(seminar);
-                            break;
-                        }
-                    }
-                }
-            }
-        }
-
-        res.send(assignedSeminars);
-    })
-    .fail(function(err){
-        logger.error(err);
-        err.message = "get seminar list failed.";
-        next(err);
-    })
-    .done();
-};
 
 
 exports.getSeminarInfo = function(req, res, next){

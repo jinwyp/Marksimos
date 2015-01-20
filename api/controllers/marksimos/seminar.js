@@ -300,10 +300,6 @@ exports.chooseSeminarForFacilitator = function(req, res, next){
                 return res.send(400, {message: "seminar " + seminarId + " doesn't exist."});
             }
 
-            sessionOperation.setSeminarId(req, dbSeminar.seminarId);
-            sessionOperation.setCurrentPeriod(req, dbSeminar.currentPeriod);
-
-
             return res.render('marksimosadmin/adminmarksimosreport.ejs',{
                 title : 'Admin | Report',
                 seminarId: seminarId
@@ -319,46 +315,90 @@ exports.chooseSeminarForFacilitator = function(req, res, next){
 
 
 
-/**
- * Populate seminar information to session
- * facilitator and student can call this API
- */
+
 exports.chooseSeminarForStudent = function(req, res, next){
     var seminarId = req.query.seminar_id;
 
-    if(!seminarId){
-        return res.send(400, {message: "Invalid seminar_id"});
+    req.checkQuery('seminar_id', 'Invalid seminar_id').isInt();
+
+    var errors = req.validationErrors();
+    if (errors) {
+        return res.status(400).send('There have been validation errors: ' + util.inspect(errors), 400);
     }
 
-    seminarModel.findOne({seminarId: seminarId})
-        .then(function(dbSeminar){
-            if(!dbSeminar){
-                return res.send(400, {message: "seminar " + seminarId + " doesn't exist."});
-            }
+    seminarModel.query.findOneQ({seminarId: seminarId}).then(function(dbSeminar){
+        if(!dbSeminar){
+            return res.status(400).send( {message: "seminar " + seminarId + " doesn't exist."});
+        }else{
 
-            sessionOperation.setSeminarId(req, dbSeminar.seminarId);
+            var newGameToken = {
+                userId: req.user.id,
+                gameId: userRoleModel.gameList.marksimos.id,
+                seminarId: dbSeminar.seminarId
+            };
 
-            if(dbSeminar.currentPeriod > dbSeminar.simulationSpan){
-                sessionOperation.setCurrentPeriod(req, dbSeminar.simulationSpan); // very important
-            }else{
-                sessionOperation.setCurrentPeriod(req, dbSeminar.currentPeriod); // very important
-            }
+            gameTokenModel.findOneAndUpdateQ({ userId: req.user.id }, newGameToken, { upsert : true } ).then(function(gameToken){
 
+                //if(dbSeminar.currentPeriod > dbSeminar.simulationSpan){
+                //    sessionOperation.setCurrentPeriod(req, dbSeminar.simulationSpan); // very important
+                //}else{
+                //    sessionOperation.setCurrentPeriod(req, dbSeminar.currentPeriod); // very important
+                //}
 
+                return res.status(200).send({message: "choose seminar success."});
 
-            return res.send({message: "choose seminar success."});
-        })
-        .fail(function(err){
-            logger.error(err);
-            return res.send(500, {message: "choose seminar faile."})
-        })
-        .done();
+            }).fail(function(err){
+                err.message = "save game token failed!";
+                next(err);
+            }).done();
+        }
+
+    }).fail(function(err){
+        err.message = "choose seminar failed !";
+        next(err);
+    }).done();
 };
 
 
 
 
 
+/**
+ * Seminar List For student
+ */
+
+exports.getSeminarList = function(req, res, next){
+    var email = req.user.email;
+    var assignedSeminars = [];
+
+    seminarModel.query.find({
+        companyAssignment : {$elemMatch : {studentList: { $in: [email] }} },
+        isInitialized :true
+    }).sort('seminarId').execQ().then(function(allSeminars){
+
+        for(var i=0; i<allSeminars.length; i++){
+
+            var seminar = allSeminars[i];
+
+            for(var j=0; j<seminar.companyAssignment.length; j++){
+
+                if( typeof seminar.companyAssignment[j].studentList  !== 'undefined'){
+                    if(seminar.companyAssignment[j].studentList.indexOf(email) > -1){
+                        if(seminar.isInitialized ){
+                            assignedSeminars.push(seminar);
+                            break;
+                        }
+                    }
+                }
+            }
+        }
+
+        return res.status(200).send(assignedSeminars);
+    }).fail(function(err){
+        err.message = "get seminar list failed.";
+        next(err);
+    }).done();
+};
 
 
 

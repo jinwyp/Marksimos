@@ -147,7 +147,18 @@ exports.authLoginToken = function (options) {
                             sendResult(options);
                         }else{
                             req.user = user;
-                            return next();
+
+                            // 同时查询改用户当前所玩的Seminar
+                            seminarModel.query.findSeminarByUserId(user.id).then(function(seminarResult){
+
+                                req.gameMarksimos = {currentSeminar : seminarResult};
+
+                                return next();
+
+                            }).fail(function(err){
+                                next(err);
+                            }).done();
+
                         }
                     });
                 }else {
@@ -437,20 +448,6 @@ exports.activateEmail = function(req, res, next){
     })
     .done();
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 

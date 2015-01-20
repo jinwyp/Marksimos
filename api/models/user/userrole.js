@@ -177,22 +177,36 @@ var authorizeRolePermission = function(resource, userroleid){
     return false
 };
 
-var apps = {
 
-    marksimos : {
+
+
+/**
+ * GameList  (Will Store in Schema)
+ */
+
+var games = [
+    {
         id : 10,
         name : 'marksimos'
     },
-    etales: {
-        id : 20,
+    {
+        id : 30,
         name : 'etales'
     }
+];
 
+var gameListResult = {};
+var getGameList = function (){
+    games.forEach(function(game){
+        gameListResult[game.name] = game ;
+        gameListResult[game.id] = game ;
+    });
+    return gameListResult
 };
 
-
 module.exports = {
-    apps : apps,
+    games : games,
+    gameList : getGameList(),
     right : appResource,
     roles : roles,
     roleList : getRoleList(),
