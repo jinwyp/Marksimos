@@ -15,7 +15,7 @@
 
 
     /********************  Create New Module For Controllers ********************/
-    angular.module('marksimoslogin', [ 'pascalprecht.translate', 'marksimos.config', 'marksimos.model', 'marksimos.websitecomponent',  'marksimos.filter', 'marksimos.translation']);
+    angular.module('marksimoslogin', [ 'pascalprecht.translate', 'marksimos.config', 'marksimos.websitecomponent', 'marksimos.model', 'marksimos.filter',  'marksimos.translation']);
 
 
 
@@ -39,7 +39,7 @@
             if(form.$valid){
                 Student.login($scope.data.newUser).then(function(){
 
-                    //$window.location.href = "/marksimos/intro" ;
+                    $window.location.href = "/marksimos/intro" ;
 
                 }, function(err){
                     form.password.$valid = false;

@@ -168,9 +168,6 @@ apiRouter.post('/marksimos/api/login', auth.studentLogin);
 apiRouter.get('/marksimos/api/logout', auth.logout);
 
 
-
-
-
 // get seminar
 apiRouter.get('/marksimos/api/user', auth.authLoginToken(), auth.authRole(userRoleModel.right.marksimos.studentInfoSingleGet), auth.getUserInfo);
 apiRouter.get('/marksimos/api/student/seminar', auth.authLoginToken(), auth.authRole(userRoleModel.right.marksimos.seminarListOfStudentGet), studentController.getSeminarList);
@@ -209,7 +206,8 @@ apiRouter.put('/marksimos/api/company/decision', auth.authLoginToken(), auth.aut
 apiRouter.get('/marksimos/api/questionnaire', auth.authLoginToken(), auth.authRole(userRoleModel.right.marksimos.seminarSingleDecisionGet), questionnaireController.getQuestionnaire);
 apiRouter.put('/marksimos/api/questionnaire', auth.authLoginToken(), auth.authRole(userRoleModel.right.marksimos.seminarSingleDecisionCUD), questionnaireController.submitQuestionnaire);
 
-
+//getFaq
+apiRouter.get('/marksimos/api/faq', faqController.getFAQ);
 
 
 
@@ -419,7 +417,7 @@ apiRouter.get('/marksimos/api/create_admin', function (req,res,next) {
     });
 });
 apiRouter.get('/marksimos/api/initfaq', faqController.initFAQ);
-apiRouter.get('/marksimos/api/faq', faqController.getFAQ);
+
 
 
 

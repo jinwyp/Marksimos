@@ -15,7 +15,8 @@
 
 
     /********************  Create New Module For Controllers ********************/
-    angular.module('marksimoshelp', ['pascalprecht.translate', 'marksimos.model', 'marksimos.websitecomponent',  'marksimos.filter', 'marksimos.translation']);
+    angular.module('marksimoshelp', ['pascalprecht.translate', 'marksimos.config', 'marksimos.websitecomponent', 'marksimos.model', 'marksimos.filter', 'marksimos.translation']);
+
 
 
     /********************  Use This Module To Set New Controllers  ********************/
