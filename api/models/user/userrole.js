@@ -22,9 +22,8 @@ var mongooseTimestamps = require('mongoose-timestamp');
 var appResource = {
 
     marksimos : {
-        studentLogin : 'studentLogin',
-        adminLogin : 'adminLogin',
-
+        studentLogin : 'studentLogin',  // For Render ejs views of student
+        adminLogin : 'adminLogin',      // For Render ejs views of admin
 
         studentInfoSingleGet : 'studentInfoSingleGet',  // For student
         studentInfoSingleCUD : 'studentInfoSingleCUD',  // For student
@@ -41,12 +40,13 @@ var appResource = {
 
         seminarSingleGet         : 'seminarSingleGet',        // For  facilitator
         seminarSingleCUD         : 'seminarSingleCUD',        // For  facilitator
+
         seminarSingleDecisionGet : 'seminarSingleDecisionGet',  // For student
         seminarSingleDecisionCUD : 'seminarSingleDecisionCUD',  // For student
 
-        seminarAssignStudentCUD : 'seminarAssignStudentCUD',
-        seminarInit             : 'seminarInit',
-        seminarRunRound         : 'seminarRunRound',
+        seminarAssignStudentCUD : 'seminarAssignStudentCUD',  // For  facilitator
+        seminarInit             : 'seminarInit',              // For  facilitator
+        seminarRunRound         : 'seminarRunRound',          // For  facilitator
 
         seminarListOfStudentGet          : 'seminarListOfStudentGet',      // For student
         seminarListOfFacilitatorGet      : 'seminarListOfFacilitatorGet',  // For  facilitator
@@ -70,6 +70,8 @@ var roles = [
         id : 1,
         name : 'admin',
         permissions :[
+            appResource.marksimos.adminLogin,
+
             appResource.marksimos.distributorInfoSingleGet,
             appResource.marksimos.distributorInfoSingleCUD,
             appResource.marksimos.distributorInfoListGet,
@@ -86,6 +88,8 @@ var roles = [
         id : 2,
         name : 'distributor',
         permissions :[
+            appResource.marksimos.adminLogin,
+
             appResource.marksimos.distributorInfoSingleGet,
             appResource.marksimos.distributorInfoSingleCUD,
 
@@ -99,6 +103,8 @@ var roles = [
         id : 3,
         name : 'facilitator',
         permissions :[
+            appResource.marksimos.adminLogin,
+
             appResource.marksimos.facilitatorInfoSingleGet,
             appResource.marksimos.facilitatorInfoSingleCUD,
 
@@ -123,8 +129,11 @@ var roles = [
         id : 4,
         name : 'student',
         permissions :[
+            appResource.marksimos.studentLogin,
+
             appResource.marksimos.studentInfoSingleGet,
             appResource.marksimos.studentInfoSingleCUD,
+
             appResource.marksimos.seminarListOfStudentGet,
             appResource.marksimos.seminarSingleDecisionGet,
             appResource.marksimos.seminarSingleDecisionCUD
