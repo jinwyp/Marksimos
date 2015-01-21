@@ -61,7 +61,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 //---for passport
 app.use(flash());
 app.use(passport.initialize());
-app.use(passport.session());
+//app.use(passport.session());
 
 //---for passport
 

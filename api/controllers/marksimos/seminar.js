@@ -3,7 +3,6 @@ var gameTokenModel = require('../../models/user/gameauthtoken.js');
 var userModel = require('../../models/user/user.js');
 var userRoleModel = require('../../models/user/userrole.js');
 
-var sessionOperation = require('../../../common/sessionOperation.js');
 var logger = require('../../../common/logger.js');
 var consts = require('../../consts.js');
 var utility = require('../../../common/utility.js');
@@ -109,51 +108,6 @@ exports.addSeminar = function(req, res, next){
 
 
 
-
-
-
-exports.updateSeminar = function(req, res, next){
-    var validateResult = validateSeminar(req);
-
-    if(validateResult){
-        return res.send(400, {message: validateResult});
-    }
-
-    var seminar = {};
-
-    if(req.body.description) seminar.description = req.body.description;
-    if(req.body.country) seminar.country = req.body.country;
-    if(req.body.state) seminar.state = req.body.state;
-    if(req.body.city) seminar.city = req.body.city;
-    if(req.body.venue) seminar.venue = req.body.venue;
-
-    if(Object.keys(seminar).length === 0){
-        return res.send(400, {message: "You should at leaset provide one field to update."})
-    }
-
-    var facilitatorId = req.user.id;
-    var seminarId = sessionOperation.getSeminarId(req);
-
-    if(!seminarId){
-        return res.send(400, {message: "You have not choose a seminar."});
-    }
-
-    seminarModel.update({
-        facilitatorId: facilitatorId,
-        seminarId: seminarId
-    }, seminar)
-    .then(function(numAffected){
-        if(numAffected!==1){
-            return res.send(400, {message: "there's error during update seminar."})
-        }
-        return res.send({message: "update seminar success."})
-    })
-    .fail(function(err){
-        logger.error(err);
-        return res.send(500, {message: ""})
-    })
-    .done();
-};
 
 
 
@@ -338,12 +292,6 @@ exports.chooseSeminarForStudent = function(req, res, next){
             };
 
             gameTokenModel.findOneAndUpdateQ({ userId: req.user.id }, newGameToken, { upsert : true } ).then(function(gameToken){
-
-                //if(dbSeminar.currentPeriod > dbSeminar.simulationSpan){
-                //    sessionOperation.setCurrentPeriod(req, dbSeminar.simulationSpan); // very important
-                //}else{
-                //    sessionOperation.setCurrentPeriod(req, dbSeminar.currentPeriod); // very important
-                //}
 
                 return res.status(200).send({message: "choose seminar success."});
 

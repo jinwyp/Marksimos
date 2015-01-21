@@ -11,8 +11,7 @@ var _                = require('underscore');
 
 exports.getStudentFinalScore = function(req, res, next) {
 
-    //得到seminarId,学生从session中获取
-    var seminarId = +req.session.seminarId;
+    var seminarId = req.gameMarksimos.currentStudentSeminar.seminarId;
 
     if (!seminarId) {
         return res.send(400, { message: "You don't choose a seminar." });
@@ -63,7 +62,7 @@ exports.getAdminFinalScore = function(req, res, next) {
 
 
 exports.getReport = function(req, res, next){
-    var seminarId = req.session.seminarId;
+    var seminarId = req.gameMarksimos.currentStudentSeminar.seminarId;
 
     if(!seminarId){
         return res.send(400, {message: "You don't choose a seminar."});

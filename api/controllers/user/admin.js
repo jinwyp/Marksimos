@@ -1,4 +1,3 @@
-var sessionOperation = require('../../../common/sessionOperation.js');
 var userModel = require('../../models/user/user.js');
 var userRoleModel = require('../../models/user/userrole.js');
 var seminarModel = require('../../models/marksimos/seminar.js');

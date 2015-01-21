@@ -4,7 +4,7 @@ var logger = require('../../../common/logger.js');
 var userRoleModel = require('../../models/user/userrole.js');
 
 exports.getChart = function(req, res, next){
-    var seminarId = req.session.seminarId;
+    var seminarId = req.gameMarksimos.currentStudentSeminar.seminarId;
 
     if(!seminarId){
         return res.send(400, {message: "You don't choose a seminar."});

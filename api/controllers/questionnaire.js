@@ -7,8 +7,8 @@ util = require('util');
 
 
 exports.getQuestionnaire = function(req, res, next) {
-    var seminarId = req.session.seminarId;
-    var email = req.session.email;
+    var seminarId = req.gameMarksimos.currentStudentSeminar.seminarId;
+    var email = req.gameMarksimos.currentStudent.email;
 
     if (!seminarId) {
         return res.send(400, {
@@ -61,15 +61,11 @@ exports.getQuestionnaire = function(req, res, next) {
 
 exports.submitQuestionnaire = function(req, res, next) {
 
-   
-    var seminarId = req.session.seminarId;
-    var email = req.session.email;
+    var seminarId = req.gameMarksimos.currentStudentSeminar.seminarId;
+    var email = req.gameMarksimos.currentStudent.email;
+
     var questionnaire = req.body.questionnaire;
     var errorMsg = "";
-    //服务器端变量不存在则要重新登录
-    if (!seminarId || !email) {
-        errorMsg = "Please re login.";
-    }
 
     //客户端提交的变量验证 
     //q_OverallSatisfactionWithTheProgram   

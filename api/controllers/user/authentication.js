@@ -1,4 +1,3 @@
-var sessionOperation = require('../../../common/sessionOperation.js');
 var userModel = require('../../models/user/user.js');
 var userRoleModel = require('../../models/user/userrole.js');
 var seminarModel = require('../../models/marksimos/seminar.js');
@@ -88,8 +87,7 @@ exports.adminLogin = function (req, res, next) {
 exports.logout = function(req, res, next){
     req.logout();
     res.clearCookie('x-access-token');
-    //sessionOperation.setSeminarId(req, "");
-    //sessionOperation.setCurrentPeriod(req, "");
+
     res.status(200).send({message: 'Logout success'});
 };
 
@@ -230,7 +228,6 @@ exports.authRole = function (permission, options) {
 
 
 exports.getUserInfo = function (req, res, next){
-
     var userResult;
     var currentPeriod;
 
@@ -238,7 +235,6 @@ exports.getUserInfo = function (req, res, next){
         userResult = req.gameMarksimos.currentStudent.toObject();
 
         userResult.currentMarksimosSeminar = req.gameMarksimos.currentStudentSeminar.toObject();
-
 
         // very important, after seminar finished currentPeriod is last round
         if(userResult.currentMarksimosSeminar.currentPeriod > userResult.currentMarksimosSeminar.simulationSpan){
