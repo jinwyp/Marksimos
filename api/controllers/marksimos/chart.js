@@ -23,10 +23,8 @@ exports.getChart = function(req, res, next){
 
     //chart name saved in db doesn't contain _
     var chartNameTemp = chartName.replace(/_/g,'');
-    var userRole = req.session.userRole;
 
-    chartModel.findOne(seminarId)
-    .then(function(result){
+    chartModel.findOne(seminarId).then(function(result){
         var allCharts = result.charts;
         var chart = null;
         for(var i=0; i<allCharts.length; i++){
@@ -41,7 +39,7 @@ exports.getChart = function(req, res, next){
             return res.send(500, {message: util.format("chart %s does not exist.", chartName)});
         }
 
-        if(userRole === userRoleModel.roleList.student.id && chartName==='inventory_report'){
+        if(req.user.role === userRoleModel.roleList.student.id && chartName==='inventory_report'){
             //this function changes data in chart object
             var chartData = filterChart(chart, companyId);
             return res.send(chartData);

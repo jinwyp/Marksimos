@@ -75,7 +75,6 @@ exports.getReport = function(req, res, next){
         return res.send(400, {message: "Invalid parameter reportName."});
     }
 
-    var userRole = req.session.userRole;
 
     reportModel.findOne(seminarId, reportName)
     .then(function(report){
@@ -83,7 +82,7 @@ exports.getReport = function(req, res, next){
             return res.send(400, {message: "Report doesn't exist."})
         }
 
-        if(userRole === userRoleModel.roleList.student.id && isReportNeedFilter(reportName)){
+        if(req.user.role === userRoleModel.roleList.student.id && isReportNeedFilter(reportName)){
             return res.send(extractReportOfOneCompany(report, companyId));
         }
 
