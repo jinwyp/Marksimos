@@ -16,13 +16,13 @@
 
         $rootScope.$on('$translateChangeSuccess', function () {
             app.loadingChartData();
-
         });
 
 
         notify.config({
             duration : 10000
-        }) ;
+        });
+
         var notifytemplate = {
             success : '/app/js/websitecomponent/notifysavesuccess.html',
             failure : '/app/js/websitecomponent/notifysavefailure.html'
@@ -1065,7 +1065,7 @@
 
                     notify({
                         message  : 'Save Success !',
-                        template : notifytemplate.success,
+                        templateUrl : notifytemplate.success,
                         position : 'center'
                     });
 
@@ -1098,7 +1098,7 @@
 
                 notify({
                     message : 'Save Success !',
-                    template : notifytemplate.success,
+                    templateUrl : notifytemplate.success,
                     position : 'center'
                 });
             }, function(data){
@@ -1111,7 +1111,7 @@
 
                 notify({
                     message : data.data.message,
-                    template : notifytemplate.failure,
+                    templateUrl : notifytemplate.failure,
                     position : 'center'
                 });
             });
@@ -1137,7 +1137,7 @@
 
                     notify({
                         message  : 'Save Success !',
-                        template : notifytemplate.success,
+                        templateUrl : notifytemplate.success,
                         position : 'center'
                     });
 
@@ -1254,7 +1254,7 @@
 
                     notify({
                         message : 'Save Success !',
-                        template : notifytemplate.success,
+                        templateUrl : notifytemplate.success,
                         position : 'center'
                     });
                 }, function(data){
@@ -1307,7 +1307,7 @@
 
                     notify({
                         message : data.data.message,
-                        template : notifytemplate.failure,
+                        templateUrl : notifytemplate.failure,
                         position : 'center'
                     });
                     app.reRun();
@@ -1325,13 +1325,13 @@
 
                 notify({
                     message  : 'Delete Sku Success !',
-                    template : notifytemplate.success,
+                    templateUrl : notifytemplate.success,
                     position : 'center'
                 });
             }, function(data){
                 notify({
                     message  : data.data.message,
-                    template : notifytemplate.failure,
+                    templateUrl : notifytemplate.failure,
                     position : 'center'
                 });
             });
@@ -1359,7 +1359,7 @@
 
                 notify({
                     message : 'Save Success !',
-                    template : notifytemplate.success,
+                    templateUrl : notifytemplate.success,
                     position : 'center'
                 });
             }).error(function(data, status, headers, config){
@@ -1371,7 +1371,7 @@
 
                 notify({
                     message : data.message,
-                    template : notifytemplate.failure,
+                    templateUrl : notifytemplate.failure,
                     position : 'center'
                 });
             });
@@ -1397,7 +1397,7 @@
             Company.submitQuestionnaire(currentData).success(function(data, status, headers, config) {
                 notify({
                     message: 'Save Success !',
-                    template: notifytemplate.success,
+                    templateUrl: notifytemplate.success,
                     position: 'center'
                 });
                 $scope.css.showFeedback = false;
@@ -1406,7 +1406,7 @@
             }, function(data, status, headers, config) {
                 notify({
                     message: data.message,
-                    template: notifytemplate.failure,
+                    templateUrl: notifytemplate.failure,
                     position: 'center'
                 });
                 $scope.isFeedbackSumbit = false;
