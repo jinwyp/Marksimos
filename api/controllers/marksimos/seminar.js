@@ -287,7 +287,7 @@ exports.removeStudentFromSeminar = function(req, res, next){
 
 
 
-exports.chooseSeminarForFacilitator = function(req, res, next){
+exports.seminarInfoForFacilitator = function(req, res, next){
     var seminarId = req.params.seminar_id;
 
     if(!seminarId){
