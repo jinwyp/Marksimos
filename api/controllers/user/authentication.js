@@ -142,6 +142,7 @@ exports.authLoginToken = function (options) {
                 if (tokenInfo && tokenInfo.expires > new Date()) {
 
                     userModel.query.findOne({ _id: tokenInfo.userId }, function (err, user) {
+
                         if (err) { return next(err);}
 
                         if (!user) {
@@ -169,6 +170,7 @@ exports.authLoginToken = function (options) {
                                 return next();
 
                             }).fail(function(err){
+                                console.log(err);
                                 next(err);
                             }).done();
 

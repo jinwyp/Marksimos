@@ -34,7 +34,9 @@ var seminarSchema = new Schema({
 seminarSchema.statics.findSeminarByUserId = function (userid) {
     var that = this;
     return gameTokenModel.findOneQ({userId : userid }).then(function(gameToken){
-        return that.findOneQ({ seminarId : gameToken.seminarId})
+        if(gameToken){
+            return that.findOneQ({ seminarId : gameToken.seminarId})
+        }
     });
 };
 
