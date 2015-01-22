@@ -27,6 +27,10 @@ body {
   height: 23px;
   font-size: 12px;
   display: inline-block;
+  vertical-align: middle;
+  *vertical-align: auto;
+  *zoom: 1;
+  *display: inline;
   background-position: 0 0;
 }
 .b2c-header .button:hover, .b2c-header .button.b2c_login_49x23-hover {
@@ -118,7 +122,7 @@ body {
   color: #fff;
 }
 .b2c-footer-content img {
-  margin-left: 100px;
+  margin-left: 80px;
 }
 
 .middle {
@@ -126,15 +130,15 @@ body {
 }
 
 .left {
-  width: 760px;
-  float: left;
   padding-left: 132px;
   padding-top: 60px;
+  float: right;
 }
 
 .right {
-  width: 520px;
-  float: left;
+  float: right;
+  margin-left: 100px;
+  margin-right: 50px;
 }
 
 .pic-area {
@@ -200,12 +204,13 @@ body {
   background-position: 0 -5495px;
 }
 .down .flip-container {
+  width: 255px;
+  height: 255px;
+  position: relative;
   position: relative;
   -moz-perspective: 1000;
   -webkit-perspective: 1000;
   perspective: 1000;
-  width: 255px;
-  height: 255px;
 }
 .down .flip-container .front, .down .flip-container .back {
   background-color: #c42e0d;
@@ -226,6 +231,7 @@ body {
   left: 0;
 }
 .no-csstransforms3d .down .flip-container .front {
+  filter: progid:DXImageTransform.Microsoft.Alpha(enabled=false);
   opacity: 1;
 }
 .down .flip-container .back {
@@ -235,6 +241,8 @@ body {
 }
 .no-csstransforms3d .down .flip-container .back {
   visibility: hidden;
+  display: none;
+  filter: progid:DXImageTransform.Microsoft.Alpha(Opacity=0);
   opacity: 0;
 }
 .down .flip-container:hover .front {
@@ -252,6 +260,7 @@ body {
 }
 .no-csstransforms3d .down .flip-container:hover .back {
   visibility: visible;
+  filter: progid:DXImageTransform.Microsoft.Alpha(enabled=false);
   opacity: 1;
 }
 .down .back {
@@ -294,6 +303,10 @@ body {
 
 .b2c-man {
   display: inline-block;
+  vertical-align: middle;
+  *vertical-align: auto;
+  *zoom: 1;
+  *display: inline;
   height: 357px;
 }
 
@@ -350,7 +363,7 @@ body {
 }
 
 .reg-form .form-group {
-  position: relative;
+  padding-top: 3px;
 }
 .reg-form .title {
   font-weight: 900;
@@ -360,25 +373,22 @@ body {
 }
 .reg-form input[type=text], .reg-form input[type=password], .reg-form input[type=email] {
   width: 395px;
-  height: 38px;
 }
 .reg-form input[type=text]:focus, .reg-form input[type=password]:focus, .reg-form input[type=email]:focus {
   outline: none !important;
-  border: 1px solid #68a057;
-  box-shadow: 0 0 10px #68a057;
   background-color: #FFFFEE;
 }
 .reg-form input[type=text]:focus:-moz-placeholder, .reg-form input[type=password]:focus:-moz-placeholder, .reg-form input[type=email]:focus:-moz-placeholder {
-  font-weight: 700;
+  color: #333;
 }
 .reg-form input[type=text]:focus::-moz-placeholder, .reg-form input[type=password]:focus::-moz-placeholder, .reg-form input[type=email]:focus::-moz-placeholder {
-  font-weight: 700;
+  color: #333;
 }
 .reg-form input[type=text]:focus:-ms-input-placeholder, .reg-form input[type=password]:focus:-ms-input-placeholder, .reg-form input[type=email]:focus:-ms-input-placeholder {
-  font-weight: 700;
+  color: #333;
 }
 .reg-form input[type=text]:focus::-webkit-input-placeholder, .reg-form input[type=password]:focus::-webkit-input-placeholder, .reg-form input[type=email]:focus::-webkit-input-placeholder {
-  font-weight: 700;
+  color: #333;
 }
 .reg-form .female {
   margin-left: 15px;

@@ -11,4 +11,17 @@
             }
         });
     });
+    if ($.browser && $.browser.msie && $.browser.version < 10) {
+        $(".pic").on("mouseenter mouseleave", function (e) {
+            if (e.type === 'mouseenter') {
+                $(this).find('.back').stop().fadeIn(100, function () { 
+                    $(this).parent().find('.front').hide();
+                });
+            }
+            else { 
+                $(this).find('.front').show();
+                $(this).find('.back').stop().fadeOut(100);
+            }
+        }).trigger("mouseleave");
+    }
 });

@@ -6,8 +6,8 @@
     <title></title>   
     <link rel="stylesheet" href="/libs/bootstrap/dist/css/bootstrap.min.css">
     <link rel="stylesheet" href="/app/css/stylesheets/b2cmain.css">
-    <script src="/libs/jquery/jquery.js"></script>  
-    <script src="/libs/angular/angular.js"></script>   
+    <script src="/libs/jquery/jquery.js"></script>    
+    <script src="/libs/jquery-migrate/jquery-migrate.js"></script>  
     <script src="/app/js/appb2cmain.js"></script>
 </head>
 <body>
@@ -39,44 +39,46 @@
         </div>
     </header>
     <main>
-        <div class="middle b2c-container">          
-            <div class="middle left">
-                <div class="b2c-man man1"></div>
-                <div class="b2c-man man2"></div>
-                <div class="b2c-man man3"></div>
-                <div class="b2c-man man4"></div>
-                <div class="b2c-man-title">E4E helps you find their own stage.</div>
-            </div>
-            <div class="middle right clear">
-                <form class="reg-form">
-                    <div class="title">注册</div>
-                    <div class="form-group">
-                        <input class="input-lg form-control" type="text" placeholder="用户名" />
-                        <span class="err-msg">请输入正确的用户名!</span>
-                    </div>
-                    <div class="form-group">
-                        <input class="input-lg form-control" type="email" placeholder="邮箱" />
-                        <span class="err-msg">请输入正确的邮箱!</span>
-                    </div>
-                    <div class="form-group">
-                        <input class="input-lg form-control" type="password" placeholder="密码" />
-                        <span class="err-msg">请输入正确的密码!</span>
-                    </div>
-                    <div class="form-group">
-                        <input class="input-lg form-control" type="password" placeholder="再次输入密码" />
-                        <span class="err-msg">请输入正确的再次输入密码!</span>
-                    </div>
-                    <div class="form-group radio">
-                        <label class="radio-inline"><input type="radio" name="gender" />男</label>
-                        <label class="radio-inline female"><input type="radio" name="gender" />女</label>
-                        <span class="err-msg">请输入正确的再次输入密码!</span>
-                    </div>
-                    <div class="form-group"><button type="submit">确&nbsp;&nbsp;定</button></div>
-                </form>
-            </div>
+        <div class="middle b2c-container">                       
+                <div class="middle right">
+                    <form class="reg-form">
+                        <div class="title">注册</div>
+                        <div class="form-group has-feedback has-success">
+                            <input class="input-lg form-control" type="text" placeholder="用户名" />
+                            <span class="glyphicon glyphicon-ok form-control-feedback" aria-hidden="true"></span>
+                            <span class="err-msg hide">请输入正确的用户名!</span>
+                        </div>
+                        <div class="form-group has-feedback has-error">
+                            <input class="input-lg form-control" type="email" placeholder="邮箱" />
+                            <span class="glyphicon glyphicon-remove form-control-feedback" aria-hidden="true"></span>
+                            <span class="err-msg hide">请输入正确的邮箱!</span>
+                        </div>
+                        <div class="form-group has-feedback">
+                            <input class="input-lg form-control" type="password" placeholder="密码" />
+                            <span class="err-msg hide">请输入正确的密码!</span>
+                        </div>
+                        <div class="form-group has-feedback">
+                            <input class="input-lg form-control" type="password" placeholder="再次输入密码" />
+                            <span class="err-msg hide">请输入正确的再次输入密码!</span>
+                        </div>
+                        <div class="form-group radio has-error">
+                            <label class="radio-inline"><input type="radio" name="gender" />男</label>
+                            <label class="radio-inline female"><input type="radio" name="gender" />女</label>
+                            <span class="err-msg hide">请输入正确的再次输入密码!</span>
+                        </div>
+                        <div class="form-group"><button type="submit">确&nbsp;&nbsp;定</button></div>
+                    </form>
+                </div>
+                <div class="middle left">
+                    <div class="b2c-man man1"></div>
+                    <div class="b2c-man man2"></div>
+                    <div class="b2c-man man3"></div>
+                    <div class="b2c-man man4"></div>
+                    <div class="b2c-man-title">E4E helps you find their own stage.</div>
+                </div>             
         </div>    
         <div class="down">   
-            <div class="b2c-container pic-area clear">
+            <div class="b2c-container pic-area">
                 <div class="pic pic-1">
                     <div class="flip-container">
                         <div class="flipper">
