@@ -661,7 +661,7 @@ exports.searchStudent = function(req, res, next){
     //add for e4e
 
     var query = {
-        role : userRoleModel.roleListstudent.id
+        role : userRoleModel.roleList.student.id
     };
 
     if(req.query.student_type){
@@ -671,7 +671,7 @@ exports.searchStudent = function(req, res, next){
 
     //only facilitator and admin can search students
     //facilitator can only view its own students
-    if(req.user.roleId !== userRoleModel.roleListadmin.id){
+    if(req.user.roleId !== userRoleModel.roleList.admin.id){
         query.facilitatorId = req.user.id;
     }
 
