@@ -2,7 +2,7 @@ var reportModel      = require('../../models/marksimos/report.js');
 var logger           = require('../../../common/logger.js');
 var simulationResult = require('../../models/marksimos/simulationResult.js');
 var seminarModel     = require('../../models/marksimos/seminar.js');
-var userRoleModel = require('../../models/user/userrole.js');
+var userRoleModel    = require('../../models/user/userrole.js');
 var Q                = require('q');
 var _                = require('underscore');
 
@@ -64,22 +64,26 @@ exports.getAdminFinalScore = function(req, res, next) {
 exports.getReport = function(req, res, next){
     var seminarId = req.gameMarksimos.currentStudentSeminar.seminarId;
 
+    if(req.user.role !== userRoleModel.roleList.student.id){
+        seminarId = +req.query.seminarId;
+    }
+
     if(!seminarId){
-        return res.send(400, {message: "You don't choose a seminar."});
+        return res.status(400).send( {message: "You don't choose a seminar."});
     }
 
     var companyId = +req.query.companyId;
     var reportName = req.params.report_name;
 
     if(!reportName){
-        return res.send(400, {message: "Invalid parameter reportName."});
+        return res.status(400).send( {message: "Invalid parameter reportName."});
     }
 
 
     reportModel.findOne(seminarId, reportName)
     .then(function(report){
         if(report===null || report===undefined){
-            return res.send(400, {message: "Report doesn't exist."})
+            return res.status(400).send( {message: "Report doesn't exist."})
         }
 
         if(req.user.role === userRoleModel.roleList.student.id && isReportNeedFilter(reportName)){
@@ -90,7 +94,7 @@ exports.getReport = function(req, res, next){
     })
     .fail(function(err){
         logger.error(err);
-        res.send(500, {message: "fail to get report."});
+            res.status(500).send( {message: "fail to get report."});
     })
     .done();
 

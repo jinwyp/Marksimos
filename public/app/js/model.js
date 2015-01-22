@@ -1200,39 +1200,39 @@
     /********************  管理员报表-表格  ********************/
     function adminTableModel($http) {
 
-        function getAdminRequest(url) {
-            return $http.get(apiAdminPath + url).then(function (result) {
+        function getAdminRequest(url, seminarId) {
+            return $http.get(apiAdminPath + url, {params : {seminarId : seminarId}}).then(function (result) {
                 return result.data;    
             });
         }       
         return {
             //Table A1 Company Status
-            getCompany: function () {
-                return getAdminRequest("report/company_status");
+            getCompany: function (seminarId) {
+                return getAdminRequest("report/company_status", seminarId);
             },
             //Table A2 Financial Data
-            getFinancial: function () {
-                return getAdminRequest("report/financial_report");                
+            getFinancial: function (seminarId) {
+                return getAdminRequest("report/financial_report", seminarId);
             },
             //Table A4 Profitability Evolution
-            getProfitability: function () {
-                return getAdminRequest("report/profitability_evolution");              
+            getProfitability: function (seminarId) {
+                return getAdminRequest("report/profitability_evolution", seminarId);
             },
             //Table B2 Competitor Intelligence
-            getCompetitorIntelligence: function () {
-                return getAdminRequest("report/competitor_intelligence");               
+            getCompetitorIntelligence: function (seminarId) {
+                return getAdminRequest("report/competitor_intelligence", seminarId);
             },
             //Table C3 Segment Distribution
-            getSegmentDistribution: function () {
-                return getAdminRequest("report/segment_distribution");               
+            getSegmentDistribution: function (seminarId) {
+                return getAdminRequest("report/segment_distribution", seminarId);
             },
             //Table C5 Market Trends
-            getMarketTrends: function () {
-                return getAdminRequest("report/market_trends");
+            getMarketTrends: function (seminarId) {
+                return getAdminRequest("report/market_trends", seminarId);
             },
             //Table C6 Market Indicators
-            getMarketIndicators: function () {
-                return getAdminRequest("report/market_indicators");
+            getMarketIndicators: function (seminarId) {
+                return getAdminRequest("report/market_indicators", seminarId);
             }
         };
     }
@@ -1243,155 +1243,155 @@
     
         return {
             // Chart A3 Inventory Report
-            getInventoryReport : function(){
-                return $http.get(apiAdminPath + 'chart/inventory_report').then(function(result){
+            getInventoryReport : function(seminarId){
+                return $http.get(apiAdminPath + 'chart/inventory_report', {params : {seminarId : seminarId}}).then(function(result){
                     return chartFormatToolnvd3StackedMultiBarChart(result.data);
                 });
             },
 
             //Table B1 Market Share In Value
-            getMarketShareInValue: function () {
-                return $http.get(apiAdminPath + "chart/market_share_in_value").then(function (result) {
+            getMarketShareInValue: function (seminarId) {
+                return $http.get(apiAdminPath + "chart/market_share_in_value", {params : {seminarId : seminarId}}).then(function (result) {
                     return chartFormatToolLineChart(result.data, 2);
                 });                
             },
             //Table B1 Market Share In Volume
-            getMarketShareInVolume: function () {
-                return $http.get(apiAdminPath + "chart/market_share_in_volume").then(function (result) {
+            getMarketShareInVolume: function (seminarId) {
+                return $http.get(apiAdminPath + "chart/market_share_in_volume", {params : {seminarId : seminarId}}).then(function (result) {
                     return chartFormatToolLineChart(result.data, 2);
                 });               
             },
             //Table B1 Mind SpaceShare
-            getMindSpaceShare: function () {
-                return $http.get(apiAdminPath + "chart/mind_space_share").then(function (result) {
+            getMindSpaceShare: function (seminarId) {
+                return $http.get(apiAdminPath + "chart/mind_space_share", {params : {seminarId : seminarId}}).then(function (result) {
                     return chartFormatToolLineChart(result.data, 2);
                 });               
             },
             //Table B1 Shelf SpaceShare
-            getShelfSpaceShare: function () {
-                return $http.get(apiAdminPath + "chart/shelf_space_share").then(function (result) {
+            getShelfSpaceShare: function (seminarId) {
+                return $http.get(apiAdminPath + "chart/shelf_space_share", {params : {seminarId : seminarId}}).then(function (result) {
                     return chartFormatToolLineChart(result.data, 2);
                 });                
             },
 
 
             //Table B3-1 Total Investment
-            getTotalInvestment: function () {
-                return $http.get(apiAdminPath + "chart/total_investment").then(function (result) {
+            getTotalInvestment: function (seminarId) {
+                return $http.get(apiAdminPath + "chart/total_investment", {params : {seminarId : seminarId}}).then(function (result) {
                     return chartFormatToolLineChart(result.data, 0);
                 });               
             },
             //Table B3-2 Net Profit By Companies
-            getNetProfitByCompanies: function () {
-                return $http.get(apiAdminPath + "chart/net_profit_by_companies").then(function (result) {
+            getNetProfitByCompanies: function (seminarId) {
+                return $http.get(apiAdminPath + "chart/net_profit_by_companies", {params : {seminarId : seminarId}}).then(function (result) {
                     return chartFormatToolLineChart(result.data, 0);
                 });                
             },
             //Table B3-3 Return On Investment
-            getReturnOnInvestment: function () {
-                return $http.get(apiAdminPath + "chart/return_on_investment").then(function (result) {
+            getReturnOnInvestment: function (seminarId) {
+                return $http.get(apiAdminPath + "chart/return_on_investment", {params : {seminarId : seminarId}}).then(function (result) {
                     return chartFormatToolLineChart(result.data, 0);
                 });              
             },
             //Table B3-4 Investments Versus Budget
-            getInvestmentsVersusBudget: function () {
-                return $http.get(apiAdminPath + "chart/investments_versus_budget").then(function (result) {
+            getInvestmentsVersusBudget: function (seminarId) {
+                return $http.get(apiAdminPath + "chart/investments_versus_budget", {params : {seminarId : seminarId}}).then(function (result) {
                     return chartFormatToolLineChart(result.data, 0);
                 });               
             },
 
 
             //Table B4-1 Market Salues Value
-            getMarketSalesValue: function () {
-                return $http.get(apiAdminPath + "chart/market_sales_value").then(function(result) {
+            getMarketSalesValue: function (seminarId) {
+                return $http.get(apiAdminPath + "chart/market_sales_value", {params : {seminarId : seminarId}}).then(function(result) {
                     return chartFormatToolLineChart(result.data, 0);
                 });
             },
             //Table B4-2 Market Salues Volume
-            getMarketSalesVolume: function () {
-                return $http.get(apiAdminPath + "chart/market_sales_volume").then(function(result) {
+            getMarketSalesVolume: function (seminarId) {
+                return $http.get(apiAdminPath + "chart/market_sales_volume", {params : {seminarId : seminarId}}).then(function(result) {
                     return chartFormatToolLineChart(result.data, 0);
                 });
             },
             //Table B4-3 Total Inventory At Facotry
-            getTotalInventoryAtFactory: function () {
-                return $http.get(apiAdminPath + "chart/total_inventory_at_factory").then(function(result) {
+            getTotalInventoryAtFactory: function (seminarId) {
+                return $http.get(apiAdminPath + "chart/total_inventory_at_factory", {params : {seminarId : seminarId}}).then(function(result) {
                     return chartFormatToolLineChart(result.data, 0);
                 });
             },
             //Table B4-4 Total Inventory At Trade
-            getTotalInventoryAtTrade: function () {
-                return $http.get(apiAdminPath + "chart/total_inventory_at_trade").then(function(result) {
+            getTotalInventoryAtTrade: function (seminarId) {
+                return $http.get(apiAdminPath + "chart/total_inventory_at_trade", {params : {seminarId : seminarId}}).then(function(result) {
                     return chartFormatToolLineChart(result.data, 0);
                 });
             },
 
 
             //Table C1-1 Segments Leader By Value Price Sensitive
-            getSegmentsLeadersByValuePriceSensitive: function () {
-                return $http.get(apiAdminPath + 'chart/segments_leaders_by_value_price_sensitive').then(function (result) {                    
+            getSegmentsLeadersByValuePriceSensitive: function (seminarId) {
+                return $http.get(apiAdminPath + 'chart/segments_leaders_by_value_price_sensitive', {params : {seminarId : seminarId}}).then(function (result) {
                     return chartFormatToolC1BarChart(result.data, 2);
                 });
             },
             //Table C1-2 Segments Leaders By Value Pretenders
-            getSegmentsLeadersByValuePretenders: function () {
-                return $http.get(apiAdminPath + 'chart/segments_leaders_by_value_pretenders').then(function (result) {
+            getSegmentsLeadersByValuePretenders: function (seminarId) {
+                return $http.get(apiAdminPath + 'chart/segments_leaders_by_value_pretenders', {params : {seminarId : seminarId}}).then(function (result) {
                     return chartFormatToolC1BarChart(result.data, 2);
                 });
             },
             //Table C1-3 Segments Leaders By Value Moderate
-            getSegmentsLeadersByValueModerate: function () {
-                return $http.get(apiAdminPath + 'chart/segments_leaders_by_value_moderate').then(function (result) {
+            getSegmentsLeadersByValueModerate: function (seminarId) {
+                return $http.get(apiAdminPath + 'chart/segments_leaders_by_value_moderate', {params : {seminarId : seminarId}}).then(function (result) {
                     return chartFormatToolC1BarChart(result.data, 2);
                 });
             },
             //Table C1-4 Segments Leaders By Value Good Life
-            getSegmentsLeadersByValueGoodLife: function () {
-                return $http.get(apiAdminPath + 'chart/segments_leaders_by_value_good_life').then(function (result) {
+            getSegmentsLeadersByValueGoodLife: function (seminarId) {
+                return $http.get(apiAdminPath + 'chart/segments_leaders_by_value_good_life', {params : {seminarId : seminarId}}).then(function (result) {
                     return chartFormatToolC1BarChart(result.data, 2);
                 });
             },
             //Table C1-5 Segments Leaders By Value Ultimate
-            getSegmentsLeadersByValueUltimate: function () {
-                return $http.get(apiAdminPath + 'chart/segments_leaders_by_value_ultimate').then(function (result) {
+            getSegmentsLeadersByValueUltimate: function (seminarId) {
+                return $http.get(apiAdminPath + 'chart/segments_leaders_by_value_ultimate', {params : {seminarId : seminarId}}).then(function (result) {
                     return chartFormatToolC1BarChart(result.data, 2);
                 });
             },
             //Table C1-6 Segments Leaders By Value Pragmatic
-            getSegmentsLeadersByValuePragmatic: function () {
-                return $http.get(apiAdminPath + 'chart/segments_leaders_by_value_pragmatic').then(function (result) {
+            getSegmentsLeadersByValuePragmatic: function (seminarId) {
+                return $http.get(apiAdminPath + 'chart/segments_leaders_by_value_pragmatic', {params : {seminarId : seminarId}}).then(function (result) {
                     return chartFormatToolC1BarChart(result.data, 2);
                 });
             },
 
 
             //Table C2 Preception Map
-            getPerceptionMap: function() {
-                return $http.get(apiAdminPath + 'chart/perception_map').then(function(result) {
+            getPerceptionMap: function(seminarId) {
+                return $http.get(apiAdminPath + 'chart/perception_map', {params : {seminarId : seminarId}}).then(function(result) {
                     return chartFormatToolnvd3ScatterChart(result.data);
                 });
             },
             //Table C4-1 Growth Rate In Volume
-            getGrowthRateInVolume: function () {
-                return $http.get(apiAdminPath + 'chart/growth_rate_in_volume').then(function (result) {
+            getGrowthRateInVolume: function (seminarId) {
+                return $http.get(apiAdminPath + 'chart/growth_rate_in_volume', {params : {seminarId : seminarId}}).then(function (result) {
                     return chartFormatToolLineChart(result.data, 0);
                 });
             },
             //Table C4-2 Growth rate In Value
-            getGrowthRateInValue: function () {
-                return $http.get(apiAdminPath + 'chart/growth_rate_in_value').then(function (result) {
+            getGrowthRateInValue: function (seminarId) {
+                return $http.get(apiAdminPath + 'chart/growth_rate_in_value', {params : {seminarId : seminarId}}).then(function (result) {
                     return chartFormatToolLineChart(result.data, 0);
                 });
             },
             //Table C4-3 Net market Price
-            getNetMarketPrice: function () {
-                return $http.get(apiAdminPath + 'chart/net_market_price').then(function (result) {
+            getNetMarketPrice: function (seminarId) {
+                return $http.get(apiAdminPath + 'chart/net_market_price', {params : {seminarId : seminarId}}).then(function (result) {
                     return chartFormatToolLineChart(result.data, 0);
                 });
             },
             //Table C4-4 Segment Value Share Total Market
-            getSegmentValueShareTotalMarket: function () {
-                return $http.get(apiAdminPath + 'chart/segment_value_share_total_market').then(function (result) {
+            getSegmentValueShareTotalMarket: function (seminarId) {
+                return $http.get(apiAdminPath + 'chart/segment_value_share_total_market', {params : {seminarId : seminarId}}).then(function (result) {
                     return chartFormatToolLineChart(result.data, 2);
                 });
             }

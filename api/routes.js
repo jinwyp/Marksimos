@@ -254,7 +254,7 @@ apiRouter.get('/marksimos/api/admin/report/:report_name', auth.authLoginToken(),
 apiRouter.get('/marksimos/api/admin/chart/:chart_name', auth.authLoginToken(), auth.authRole(userRoleModel.right.marksimos.seminarListOfFacilitatorGet), chartController.getChart);
 apiRouter.get('/marksimos/api/admin/finalscore/:seminarId', auth.authLoginToken(), auth.authRole(userRoleModel.right.marksimos.seminarListOfFacilitatorGet), reportController.getAdminFinalScore);
 
-apiRouter.get('/marksimos/api/admin/questionnaire/:seminarId', auth.authLoginToken(), auth.authRole(userRoleModel.right.marksimos.seminarListOfFacilitatorGet), questionnaireController.getQuestionnaireList);
+apiRouter.get('/marksimos/api/admin/questionnaire/:seminarId', auth.authLoginToken(), auth.authRole(userRoleModel.right.marksimos.seminarListOfFacilitatorGet), questionnaireController.getQuestionnaireListForAdmin);
 
 apiRouter.put('/marksimos/api/admin/sku/decision', auth.authLoginToken(), auth.authRole(userRoleModel.right.marksimos.seminarDecisionsOfFacilitatorCUD), decisionController.updateSKUDecision);
 apiRouter.put('/marksimos/api/admin/brand/decision', auth.authLoginToken(), auth.authRole(userRoleModel.right.marksimos.seminarDecisionsOfFacilitatorCUD), decisionController.updateBrandDecision);

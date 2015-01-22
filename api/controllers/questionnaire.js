@@ -108,7 +108,7 @@ exports.submitQuestionnaire = function(req, res, next) {
         });
 }
 
-exports.getQuestionnaireList = function(req, res, next) {
+exports.getQuestionnaireListForAdmin = function(req, res, next) {
     //去除非法的seminarId
     var seminarId = +req.params.seminarId || 0;
 

@@ -6,19 +6,19 @@ var userRoleModel = require('../../models/user/userrole.js');
 exports.getChart = function(req, res, next){
     var seminarId = req.gameMarksimos.currentStudentSeminar.seminarId;
 
+    if(req.user.role !== userRoleModel.roleList.student.id){
+        seminarId = +req.query.seminarId;
+    }
+
     if(!seminarId){
-        return res.send(400, {message: "You don't choose a seminar."});
+        return res.status(400).send( {message: "You don't choose a seminar."});
     }
 
     var chartName = req.params.chart_name;
     var companyId = +req.query.companyId;
 
-    if(!seminarId ){
-        return res.send(500, {message: 'seminarId cannot be empty.'});
-    }
-
     if(!chartName){
-        return res.send(500, {message: 'chartName cannot be empty.'});
+        return res.status(400).send( {message: 'chartName cannot be empty.'});
     }
 
     //chart name saved in db doesn't contain _
@@ -36,7 +36,7 @@ exports.getChart = function(req, res, next){
         }
 
         if(!chart){
-            return res.send(500, {message: util.format("chart %s does not exist.", chartName)});
+            return res.status(400).send({message: util.format("chart %s does not exist.", chartName)});
         }
 
         if(req.user.role === userRoleModel.roleList.student.id && chartName==='inventory_report'){
@@ -49,7 +49,7 @@ exports.getChart = function(req, res, next){
     })
     .fail(function(err){
         logger.error(err);
-        res.send(500, {message: "get chart failed."})
+        res.status(500).send( {message: "get chart failed."})
     })
     .done();
 

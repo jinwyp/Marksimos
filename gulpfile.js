@@ -35,8 +35,9 @@ var paths = {
 
     cssSourcePath: ['./public/app/css/stylesheets/screen.css', './public/libs/bootstrap/dist/css/bootstrap.min.css', './public/app/css/stylesheets/marksimosmain.css', './public/app/css/stylesheets/print.css', './public/app/css/stylesheets/ie.css', './public/libs/nvd3/nv.d3.css', './public/libs/angular-notify/dist/angular-notify.css'],
     unit_test: './api/test/marksimos/*',
-    scenario_testAdmin: './api/test/marksimos/admin/*.js',
-    scenario_testStudent: './api/test/marksimos/student/*.js'
+    scenario_testAdminCreateSeminar: './api/test/marksimos/scenario/admincreateseminar.js',
+    scenario_testAdminReRunSeminar: './api/test/marksimos/scenario/adminrerundecision.js',
+    scenario_testStudentUpdateDecisions: './api/test/marksimos/scenario/studentupdatedecision.js'
 
 };
 
@@ -219,16 +220,19 @@ gulp.task('browser-sync', function() {
 
 
 
-gulp.task('teststudent', function() {
-    return gulp.src(paths.scenario_testStudent)
+gulp.task('teststudentusd', function() {
+    return gulp.src(paths.scenario_testStudentUpdateDecisions)
         .pipe(jasmine());
 });
 
-gulp.task('testadmin', function() {
-    return gulp.src(paths.scenario_testAdmin)
+gulp.task('testadmincs', function() {
+    return gulp.src(paths.scenario_testAdminCreateSeminar)
         .pipe(jasmine());
 });
-
+gulp.task('testadminrr', function() {
+    return gulp.src(paths.scenario_testAdminReRunSeminar)
+        .pipe(jasmine());
+});
 
 
 /********************  默认任务 he default task (called when you run `gulp` from cli)  ********************/
@@ -239,6 +243,6 @@ gulp.task('default', ['nodemonludwik', 'watchdev']);
 gulp.task('jin', [ 'compass', 'templates', 'nodemonjin', 'watchdev']);
 gulp.task('jingo', ['compass', 'templates', 'minifycss', 'jscompress', 'nodemonjin', 'watch']);
 
-gulp.task('sunyun', ['nodemonsunyun','compass', 'watchdev']);
+gulp.task('sunyun', ['compass', 'nodemonsunyun', 'watchdev']);
 
 
