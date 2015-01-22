@@ -12,32 +12,7 @@
 </head>
 <body>
     
-    <header>
-        <div class="b2c-header">
-            <div class="b2c-container">
-                <a href="/b2c">
-                    <img src="/app/css/images/b2c_logo.png" class="b2c-logo" />
-                </a>
-                <div class="b2c-login">
-                    <div class="b2c-login-field b2c-trans">
-                        <span>EN</span>
-                        <span class="selected">中</span>                                              
-                    </div>
-                    <div class="b2c-login-field">
-                        <div>登录名</div>
-                        <div><input type="text" class="b2c-login-input" /></div>
-                        <div><label><input type="checkbox">下次自动登录</label> </div>
-                    </div>
-                    <div class="b2c-login-field">
-                        <div>密码</div>
-                        <div><input type="text" class="b2c-login-input" /></div>
-                        <div><a href="#">忘记密码</a></div>
-                    </div>
-                    <a href="#" class="button"></a>
-                </div>
-            </div>
-        </div>
-    </header>
+    <% include ./include/header.ejs %>
     <main>
         <div class="middle b2c-container">                       
                 <div class="middle right">
@@ -179,20 +154,6 @@
             </div>        
         </div>   
     </main>
-    <footer>
-        <div class="b2c-footer">
-            <div class="b2c-container">
-                <div class="b2c-footer-content">
-                    <a href="#">企业</a>
-                    <a href="#">合得教育</a>
-                    <a href="#">加入我们</a>
-                    <a href="maillto:info@hcdlearning.com">联系我们:info@hcdlearning.com</a>
-                    <a href="#">沪ICP 13045400号</a>
-                    <img src="/app/css/images/hcd_logo.png" alt="合得教育logo" />
-                </div>
-            </div>
-        </div>
-    </footer>
-    
+    <% include ./include/footer.ejs %>
 </body>
 </html>
