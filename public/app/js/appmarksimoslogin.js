@@ -79,7 +79,7 @@
                 $scope.data.currentStudent = data;
             });
 
-            Student.getSeminar().then(function(data, status, headers, config){
+            Student.getSeminarList().then(function(data, status, headers, config){
                 $scope.data.seminars = data;
             });
         };
@@ -92,16 +92,17 @@
             $scope.data.selectSeminar.seminar_id = seminarid;
 
             if($scope.data.selectSeminar.seminar_id !== 0 ){
-                $http.get('/marksimos/api/choose_seminar', {params : $scope.data.selectSeminar}).success(function(data, status, headers, config){
 
-                    Company.getCurrentStudent().then(function(data, status, headers, config){
-                        $scope.data.currentStudentSeminar = data;
+                Student.chooseSeminar($scope.data.selectSeminar).success(function(data, status, headers, config){
 
-                        // 处理最后比赛结束后
+                    Student.getStudent().success(function(data, status, headers, config){
+                        $scope.data.currentStudentSeminar = data.currentMarksimosSeminar;
+
+                        // 处理最后比赛是否结束 跳过Who am I 页面
                         if($scope.data.currentStudentSeminar.isSimulationFinished === false){
                             $scope.css.showBox = 'whoami';
 
-                            Company.getCompany($scope.data.currentStudentSeminar.companyId).then(function(data, status, headers, config){
+                            Company.getCompany($scope.data.currentStudentSeminar.currentCompany.companyId).then(function(data, status, headers, config){
                                 angular.forEach(data.d_BrandsDecisions, function(brand){
                                     $scope.data.brandNumber++;
 

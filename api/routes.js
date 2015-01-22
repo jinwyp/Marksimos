@@ -148,7 +148,7 @@ apiRouter.get('/marksimos/adminhome', auth.authLoginToken({failureRedirect: '/ma
     res.render('marksimosadmin/adminhome.ejs', {title : 'Admin | Dashboard'});
 });
 
-apiRouter.get('/marksimos/adminhomereport/:seminar_id', auth.authLoginToken({failureRedirect: '/marksimos/admin'}), auth.authRole(userRoleModel.right.marksimos.adminLogin, {failureRedirect: '/marksimos/admin'}), seminarController.chooseSeminarForFacilitator);
+apiRouter.get('/marksimos/adminhomereport/:seminar_id', auth.authLoginToken({failureRedirect: '/marksimos/admin'}), auth.authRole(userRoleModel.right.marksimos.adminLogin, {failureRedirect: '/marksimos/admin'}), seminarController.seminarInfoForFacilitator);
 
 
 
@@ -172,13 +172,11 @@ apiRouter.get('/marksimos/api/logout', auth.logout);
 
 // get seminar
 apiRouter.get('/marksimos/api/user', auth.authLoginToken(), auth.authRole(userRoleModel.right.marksimos.studentInfoSingleGet), auth.getUserInfo);
-apiRouter.get('/marksimos/api/student/seminar', auth.authLoginToken(), auth.authRole(userRoleModel.right.marksimos.seminarListOfStudentGet), studentController.getSeminarList);
-apiRouter.get('/marksimos/api/studentinfo', auth.authLoginToken(), auth.authRole(userRoleModel.right.marksimos.studentInfoSingleGet), studentController.getSeminarInfo);
+apiRouter.get('/marksimos/api/student/seminar', auth.authLoginToken(), auth.authRole(userRoleModel.right.marksimos.seminarListOfStudentGet), seminarController.getSeminarList);
+apiRouter.get('/marksimos/api/choose_seminar', auth.authLoginToken(), auth.authRole(userRoleModel.right.marksimos.seminarListOfStudentGet), seminarController.chooseSeminarForStudent);
 
 //report
 apiRouter.get('/marksimos/api/report/:report_name', auth.authLoginToken(), auth.authRole(userRoleModel.right.marksimos.seminarSingleDecisionGet), reportController.getReport);
-apiRouter.get('/marksimos/api/choose_seminar', auth.authLoginToken(), auth.authRole(userRoleModel.right.marksimos.seminarSingleDecisionGet), seminarController.chooseSeminarForStudent);
-
 
 //chart
 apiRouter.get('/marksimos/api/chart/:chart_name', auth.authLoginToken(), auth.authRole(userRoleModel.right.marksimos.seminarSingleDecisionGet), chartController.getChart);

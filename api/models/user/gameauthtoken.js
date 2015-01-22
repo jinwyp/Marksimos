@@ -13,7 +13,7 @@ var Schema = mongoose.Schema;
 var Q = require('q');
 var mongooseTimestamps = require('mongoose-timestamp');
 
-
+var userRoleModel = require('./userrole.js');
 
 
 var gameAuthTokenSchema = new Schema({
@@ -26,8 +26,12 @@ var gameAuthTokenSchema = new Schema({
 });
 gameAuthTokenSchema.plugin(mongooseTimestamps);
 
-var gameAuthToken = mongoose.model("gameauthtoken", gameAuthTokenSchema);
 
+gameAuthTokenSchema.virtual('gameName').get(function () {
+    return userRoleModel.gameList[this.gameId].name ;
+});
+
+var gameAuthToken = mongoose.model("gameauthtoken", gameAuthTokenSchema);
 
 
 

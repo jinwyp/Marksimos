@@ -36,7 +36,6 @@ var logger = require('../../../common/logger.js');
 
 var consts = require('../../consts.js');
 
-var sessionOperation = require('../../../common/sessionOperation.js');
 var _ = require('underscore');
 
 
@@ -82,7 +81,6 @@ exports.init = function(req, res, next) {
                 //before init, a new seminar should be created,
                 //and it's currentPeriod should be set correctly = 1
                 currentPeriod = dbSeminar.currentPeriod;
-                sessionOperation.setCurrentPeriod(req, dbSeminar.currentPeriod);
 
                 //create periods array
                 periods.push(-3);
@@ -325,7 +323,6 @@ exports.runSimulation = function(){
                             if(dbSeminar.currentPeriod < dbSeminar.simulationSpan){
                                 //after simulation success, set currentPeriod to next period, only when goingToNewPeriod = true
                                 if(goingToNewPeriod){
-                                    sessionOperation.setCurrentPeriod(req, sessionOperation.getCurrentPeriod(req)+1);
                                     return seminarModel.update({seminarId: seminarId}, {
                                         currentPeriod: dbSeminar.currentPeriod + 1
                                     })
@@ -342,7 +339,6 @@ exports.runSimulation = function(){
 
                             }else if(dbSeminar.currentPeriod = dbSeminar.simulationSpan){
                                 if(goingToNewPeriod){
-                                    sessionOperation.setCurrentPeriod(req, sessionOperation.getCurrentPeriod(req)+1);
                                     return seminarModel.update({seminarId: seminarId}, {
                                         isSimulationFinished : true,
                                         currentPeriod       : dbSeminar.currentPeriod + 1

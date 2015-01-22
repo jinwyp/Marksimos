@@ -1,7 +1,9 @@
-var mongoose = require('mongoose');
+var mongoose = require('mongoose-q')(require('mongoose'));
 var Schema = mongoose.Schema;
 var Q = require('q');
 var consts = require('../../consts.js');
+
+var gameTokenModel = require('../../models/user/gameauthtoken.js');
 
 var seminarSchema = new Schema({
     seminarId: String,
@@ -29,13 +31,19 @@ var seminarSchema = new Schema({
     showLastPeriodScore: {type: Boolean, default: true}
 });
 
-var teamSchema = new Schema({
-    teamName: String,
-    userIds: [String]
-});
+seminarSchema.statics.findSeminarByUserId = function (userid) {
+    var that = this;
+    return gameTokenModel.findOneQ({userId : userid }).then(function(gameToken){
+        if(gameToken){
+            return that.findOneQ({ seminarId : gameToken.seminarId})
+        }
+    });
+};
+
 
 var Seminar = mongoose.model("Seminar", seminarSchema);
 exports.query = Seminar;
+
 
 exports.update = function(query, seminar){
     if(!mongoose.connection.readyState){

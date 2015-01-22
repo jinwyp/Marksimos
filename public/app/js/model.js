@@ -71,17 +71,17 @@
             },
 
             getStudent : function(){
-                return $http.get(apiPath + 'user').then(function(result){
+                return $http.get(apiPath + 'user');
+            },
 
+            getSeminarList : function(){
+                return $http.get(apiPath + 'student/seminar').then(function(result){
                     return result.data;
                 });
             },
 
-            getSeminar : function(){
-                return $http.get(apiPath + 'student/seminar').then(function(result){
-
-                    return result.data;
-                });
+            chooseSeminar : function(queryParams){
+                return $http.get(apiPath + 'choose_seminar', {params : queryParams});
             }
         };
 
@@ -93,13 +93,6 @@
     function companyModel ($http){
 
         var factory = {
-            getCurrentStudent : function(){
-                return $http.get(apiPath + 'studentinfo').then(function(result){
-//                console.log(result.data);
-
-                    return result.data;
-                });
-            },
 
             getCompany : function(companyId){
                 return $http.get(apiPath + 'company', {params : {companyId : companyId }}).then(function(result){

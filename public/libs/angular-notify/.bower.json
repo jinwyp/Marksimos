@@ -4,12 +4,12 @@
     "dist/angular-notify.js",
     "dist/angular-notify.css"
   ],
-  "version": "1.1.0",
+  "version": "2.0.2",
   "homepage": "https://github.com/cgross/angular-notify",
   "authors": [
     "Chris Gross <schtoo@schtoo.com>"
   ],
-  "description": "A minimalistic notification service for Angular apps.",
+  "description": "A minimalistic notification service for Angular.",
   "keywords": [
     "angular",
     "notify",
@@ -31,16 +31,16 @@
     "demo"
   ],
   "dependencies": {
-    "angular": "~1.2.16"
+    "angular": "~1.2"
   },
-  "_release": "1.1.0",
+  "_release": "2.0.2",
   "_resolution": {
     "type": "version",
-    "tag": "v1.1.0",
-    "commit": "4832a350841dd3b3a6600fc1f0335450e901efe7"
+    "tag": "v2.0.2",
+    "commit": "2f89d4517f90dc3d0bbb562dc5e8d735890e66d0"
   },
   "_source": "git://github.com/cgross/angular-notify.git",
-  "_target": "~1.1.0",
+  "_target": "~2.0.2",
   "_originalSource": "angular-notify",
   "_direct": true
 }

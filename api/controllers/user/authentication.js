@@ -1,4 +1,3 @@
-var sessionOperation = require('../../../common/sessionOperation.js');
 var userModel = require('../../models/user/user.js');
 var userRoleModel = require('../../models/user/userrole.js');
 var seminarModel = require('../../models/marksimos/seminar.js');
@@ -88,8 +87,7 @@ exports.adminLogin = function (req, res, next) {
 exports.logout = function(req, res, next){
     req.logout();
     res.clearCookie('x-access-token');
-    //sessionOperation.setSeminarId(req, "");
-    //sessionOperation.setCurrentPeriod(req, "");
+
     res.status(200).send({message: 'Logout success'});
 };
 
@@ -98,6 +96,11 @@ exports.logout = function(req, res, next){
 
 /**
  * Authenticate Token  For LocalStrategy.
+ *
+ *  * Examples:
+ *
+ *    authLoginToken( { successRedirect: '/',  failureRedirect: '/login',  failureFlash: true });
+ *
  */
 
 exports.authLoginToken = function (options) {
@@ -139,6 +142,7 @@ exports.authLoginToken = function (options) {
                 if (tokenInfo && tokenInfo.expires > new Date()) {
 
                     userModel.query.findOne({ _id: tokenInfo.userId }, function (err, user) {
+
                         if (err) { return next(err);}
 
                         if (!user) {
@@ -147,7 +151,29 @@ exports.authLoginToken = function (options) {
                             sendResult(options);
                         }else{
                             req.user = user;
-                            return next();
+
+                            // 同时查询改用户当前所玩的Seminar
+                            seminarModel.query.findSeminarByUserId(user.id).then(function(seminarResult){
+                                if(seminarResult){
+
+                                    req.gameMarksimos = {
+                                        currentStudent : user,
+                                        currentStudentSeminar : seminarResult
+                                    };
+                                }else{
+                                    req.gameMarksimos = {
+                                        currentStudent : false,
+                                        currentStudentSeminar : false
+                                    };
+                                }
+
+                                return next();
+
+                            }).fail(function(err){
+                                console.log(err);
+                                next(err);
+                            }).done();
+
                         }
                     });
                 }else {
@@ -169,11 +195,11 @@ exports.authLoginToken = function (options) {
 
 
 /**
- * Middleware that will authorize a third-party account  with optional `options`.
+ * Middleware that will authorize a UserRole  with optional `options`.
  *
  * Examples:
  *
- *    passport.authorize('twitter-authz', { successRedirect: '/',  failureRedirect: '/login',  failureFlash: true });
+ *    authRole('twitter-authz', { successRedirect: '/',  failureRedirect: '/login',  failureFlash: true });
  *
  * @param {Object} options
  */
@@ -204,7 +230,44 @@ exports.authRole = function (permission, options) {
 
 
 exports.getUserInfo = function (req, res, next){
-    res.send(req.user);
+    var userResult;
+    var currentPeriod;
+
+    if(req.gameMarksimos.currentStudent){
+        userResult = req.gameMarksimos.currentStudent.toObject();
+
+        userResult.currentMarksimosSeminar = req.gameMarksimos.currentStudentSeminar.toObject();
+
+        // very important, after seminar finished currentPeriod is last round
+        if(userResult.currentMarksimosSeminar.currentPeriod > userResult.currentMarksimosSeminar.simulationSpan){
+            currentPeriod =  userResult.currentMarksimosSeminar.simulationSpan;
+        }else{
+            currentPeriod = userResult.currentMarksimosSeminar.currentPeriod;
+        }
+
+        userResult.currentMarksimosSeminar.currentPeriod = currentPeriod;
+        userResult.currentMarksimosSeminar.numOfCompany = userResult.currentMarksimosSeminar.companyNum;
+        userResult.currentMarksimosSeminar.maxPeriodRound = userResult.currentMarksimosSeminar.simulationSpan;
+
+
+        for(var i=0; i<userResult.currentMarksimosSeminar.companyAssignment.length; i++){
+            //if this student is in this company
+            if(userResult.currentMarksimosSeminar.companyAssignment[i].studentList.indexOf(userResult.email) > -1){
+
+                userResult.currentMarksimosSeminar.currentCompany = {
+                    companyId : userResult.currentMarksimosSeminar.companyAssignment[i].companyId,
+                    companyName : userResult.currentMarksimosSeminar.companyAssignment[i].companyName,
+                    numOfTeamMember : userResult.currentMarksimosSeminar.companyAssignment[i].studentList.length
+                };
+            }
+        }
+    }else{
+        userResult = req.user.toObject();
+    }
+
+
+
+    res.status(200).send(userResult);
 };
 
 
@@ -437,20 +500,6 @@ exports.activateEmail = function(req, res, next){
     })
     .done();
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
