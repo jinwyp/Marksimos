@@ -1,0 +1,411 @@
+﻿@import "icon_b2c/*.png";
+@import "compass/css3";
+@import "compass/utilities/general/float";
+@mixin rotate( $degrees ) {
+  -webkit-transform: rotate(#{$degrees}deg);
+  -moz-transform: rotate(#{$degrees}deg);
+  -ms-transform: rotate(#{$degrees}deg);
+  -o-transform: rotate(#{$degrees}deg);
+  transform: rotate(#{$degrees}deg);
+
+  filter:  progid:DXImageTransform.Microsoft.Matrix(sizingMethod='auto expand', M11=#{cos($degrees)}, M12=-#{sin($degrees)}, M21=#{sin($degrees)}, M22=#{cos($degrees)});
+  -ms-filter: "progid:DXImageTransform.Microsoft.Matrix(sizingMethod='auto expand', M11=#{cos($degrees)}, M12=-#{sin($degrees)}, M21=#{sin($degrees)}, M22=#{cos($degrees)})";
+  zoom: 1;
+ }
+
+@mixin flippy($speed: 0.5s, $perspective: 500, $bgcolor: white) {
+  position: relative;
+  @include perspective($perspective);
+  .front, .back {
+    background-color: $bgcolor;
+    @include transition(all $speed ease-in-out);
+    @include backface-visibility(hidden);
+    @include transform-style(preserve-3d);
+    height: 100%;
+    width: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+  }
+  .front {   
+    .no-csstransforms3d & {
+      @include opacity(1);
+    }
+  }
+  .back {	
+    @include rotateY(180deg);	
+    .no-csstransforms3d & {
+      visibility: hidden;
+	  display:none;
+       @include opacity(0);
+    }
+  }
+  &:hover {
+    .front {
+      @include rotateY(180deg);
+      .no-csstransforms3d & {
+        visibility: hidden;
+      }
+    }
+    .back {
+      @include rotateY(360deg);
+      .no-csstransforms3d & {
+        visibility: visible;
+         @include opacity(1);
+      }
+    }
+  }
+}
+
+body{
+	min-width:1280px;
+	font-family: "Microsoft YaHei" ! important;
+	font-size:16px;
+}
+.b2c-container {
+    width: 1280px;
+    margin: 0 auto;
+    padding: 0 0;
+    height: 82px;	
+}
+.b2c-header {
+    height: 82px;
+	background-color:#bd2a0b;
+	$icon-repeat: repeat-x;
+	background-image:url(../images/b2c_nav_1x82.png);
+	.button{
+		margin-top:30px;
+		width:49px;
+		height:23px;
+		font-size:12px;
+		@include inline-block;	
+		@include icon_b2c-sprite(b2c_login_49x23);		
+		&:hover{
+			@include icon_b2c-sprite(b2c_login_49x23_hover);						
+		}
+	}
+}
+
+.b2c-trans{
+	padding-top:20px;
+	.selected{
+		background-color:#7f1a03;
+	}
+	span{
+		cursor:pointer;
+		display:block;
+		float:right;
+		margin-right:10px;
+		width:20px;
+		height:20px;
+		font-weight:bold;
+		text-align:center;
+		color:#eda494;
+		background-color:#b92909;
+		border:1px solid #eda494;
+		
+		&:hover{
+			background-color:#7f1a03;
+		}
+	}
+}
+.b2c-logo {
+    margin-left: 157px;
+    margin-top: 12px;
+	float:left;
+}
+
+.b2c-login {
+    float: right;
+    width: 600px;
+    height: 82px;
+	overflow: hidden;	
+}
+
+.b2c-login-field {
+	float: left;
+	width: 165px;    
+	color: #fff;	
+	font-size: 12px;
+	margin-top:10px;	
+    div{
+        line-height: 20px;
+        height: 20px;
+       }
+}
+
+.b2c-login-input {
+    width: 150px;
+    padding: 0;    
+    font-size: 12px;
+    height: 20px;
+    line-height: 20px;       
+    border: solid #932F18 1px;
+	color:#333;       
+}
+.b2c-login-field {
+	label,a{
+	 color:#EDA694 !important;
+	 padding-left:2px;	
+	 vertical-align:top;
+	}
+}
+
+.b2c-footer{
+	background-color:#121318;
+	height:126px;
+}
+.b2c-footer-content{
+	width:900px;
+	margin:0 auto;	
+	height:126px;	
+	font-size:12px;
+	padding-top:37px;	
+	a{
+		margin-right:65px;
+		margin-top:37px;
+		color:#fff;
+	}
+	img{
+		margin-left:80px;
+	}
+	
+}
+
+.middle{
+	height:570px;
+}
+.left{	
+	padding-left:132px;
+	padding-top:60px;
+	@include float-right;
+}
+.right{			
+	@include float-right;
+	margin-left:100px;
+	margin-right:50px;	
+}
+.pic-area{
+	height:295px;
+	padding-left:157px;	
+	overflow:hidden;
+}
+
+
+
+.down{
+	height:550px;
+	background-color:#c42e0d;
+	padding:105px 0px 0px 0px;
+	.pic{
+		width:255px;
+		height:295px;
+		margin-right:100px;	
+		float:left;
+	}
+	.pic-1{
+		margin-top:20px;
+		.front{
+			@include icon_b2c-sprite(whats-hcd-1);
+		}
+		.back{
+			@include icon_b2c-sprite(whats-hcd-1-back);
+		}
+	}
+	.pic-2{
+		margin-top:20px;
+		.front{
+			@include icon_b2c-sprite(whats-hcd-2);
+		}
+		.back{
+			@include icon_b2c-sprite(whats-hcd-2-back);
+		}
+	}
+	.pic-3{
+		margin-top:20px;
+		.front{
+			@include icon_b2c-sprite(whats-hcd-3);
+		}
+		.back{
+			@include icon_b2c-sprite(whats-hcd-3-back);
+		}
+	}
+	.pic-4{	
+		.front{
+			@include icon_b2c-sprite(whats-hcd-4);
+		}
+		.back{
+			@include icon_b2c-sprite(whats-hcd-4-back);
+		}
+	}
+	.pic-5{
+		.front{
+			@include icon_b2c-sprite(whats-hcd-5);
+		}
+		.back{
+			@include icon_b2c-sprite(whats-hcd-5-back);
+		}
+	}
+	.pic-6{
+		.front{
+			@include icon_b2c-sprite(whats-hcd-6);
+		}
+		.back{
+			@include icon_b2c-sprite(whats-hcd-6-back);
+		}
+	}
+
+	.flip-container{
+		width:255px;
+		height:255px;
+		position: relative;	
+		@include flippy(0.6s,1000,#c42e0d);		
+	}
+	.back {		
+		font-size:12px;
+		color:#fff;
+		padding-top:35px;	
+		.title{
+			text-indent:0;
+			text-align:center;
+		}
+		p{
+			text-align:justify;;
+			text-indent:2em;
+			line-height:25px;
+			padding:0 25px;
+		}
+	}
+	.switch-button{
+		text-align:center;
+		margin-top:60px;
+		margin-left:2px;
+		a{
+			margin-right:75px;
+			color:#fff;
+			font-weight:700;		
+			text-decoration:none;
+			padding:10px 20px;
+			&:hover{
+				text-decoration:none;
+			}			
+		}
+		.selected{	
+			padding:8px 18px;
+			border:2px solid #fff;		
+			@include border-radius(5px, 5px);
+		}		
+	}
+}
+
+.b2c-man{	
+	@include inline-block;
+	height:357px;
+}
+.man1{
+	width:133px;	
+	@include icon_b2c-sprite(b2c_man_1);	
+	&:hover{		
+		@include icon_b2c-sprite(b2c_man_1_hover);						
+	}
+}
+.man2{
+	width:117px;	
+	@include icon_b2c-sprite(b2c_man_2);	
+	&:hover{		
+		@include icon_b2c-sprite(b2c_man_2_hover);						
+	}
+}
+.man3{
+	width:127px;
+	@include icon_b2c-sprite(b2c_man_3);	
+	&:hover{		
+		@include icon_b2c-sprite(b2c_man_3_hover);						
+	}
+}
+.man4{
+	width:114px;	
+	@include icon_b2c-sprite(b2c_man_4);	
+	&:hover{		
+		@include icon_b2c-sprite(b2c_man_4_hover);						
+	}
+}
+.b2c-man-title{	
+	margin-top:40px;
+	margin-left:75px;
+	font-size:20px;
+	color:#999;
+	bottom:100px;	
+}
+
+.reg-form{
+	.form-group{		
+		padding-top:3px;	
+	}
+	.title{
+		font-weight:900;
+		font-size:25px;
+		margin-top:100px;
+		margin-bottom: 20px;
+	}
+	input[type=text],input[type=password],input[type=email]{
+		width:395px;		
+		&:focus{
+			outline: none !important;	
+			background-color:#FFFFEE;	
+			@include input-placeholder {
+				color:#333;			
+			}
+		}
+	}
+	.female{
+		margin-left:15px;
+	}	
+	button{
+		border-style:none;
+		width:194px;
+		height:41px;
+		color:#fff;
+		font-size:20px;
+		font-weight:900;
+		background-color:#c42e0d;
+		border-bottom:2px solid #7e200b;	
+		&:hover{
+			background-color:#7e200b;
+			border-bottom:2px solid #ca3413;			
+		}
+	}
+	.radio{		
+		padding:10px 0px;			
+		.err-msg{
+			margin-top: -7px;
+		}
+	}
+	.err-msg{
+		right:100%;
+		margin-top: -37px;
+		margin-right: 10px;
+		z-index:999;
+		position: absolute;
+		width:240px;
+		color: #FFFFFF;
+		background: #da8449;
+		height: 40px;
+		line-height: 40px;
+		text-align: center;		
+		border-radius: 6px;
+		&:after{
+			content: '';
+			position: absolute;
+			top: 50%;
+			left: 100%;
+			margin-top: -8px;
+			width: 0; height: 0;
+			border-left: 8px solid #da8449;
+			border-top: 8px solid transparent;
+			border-bottom: 8px solid transparent;
+		}
+	}
+}
+
+
