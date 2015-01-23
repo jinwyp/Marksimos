@@ -22,13 +22,13 @@ describe("Admin API ReRun Decisions : ", function() {
         originalTimeout = jasmine.DEFAULT_TIMEOUT_INTERVAL;
         jasmine.DEFAULT_TIMEOUT_INTERVAL = newTimeout;
 
-        request.post(adminApiPath + "login", { json: admin }, function(err, response, body) {
-
+        request.post(adminApiPath + "login", { form: admin }, function(err, res, body) {
             if (/^[A-Za-z0-9]+$/.test(body.userId) || response.statusCode === 200) {
                 done();
             }
         });
     });
+
 
 
 
@@ -39,7 +39,7 @@ describe("Admin API ReRun Decisions : ", function() {
         var resultPromise = [];
 
         function runSeminarAsync(runseminarId) {
-            request.post(adminApiPath + "seminar/" + runseminarId + "/runsimulation", {form:{goingToNewPeriod : false, decisionsOverwriteSwitchers:[true, true, true, true ]}}  , function(err, response, body) {
+            request.post(adminApiPath + "seminar/" + runseminarId + "/runsimulation", {json: {goingToNewPeriod : false, decisionsOverwriteSwitchers:[true, true, true, true ]}}  , function(err, response, body) {
                 if (!err && response.statusCode == 200) {
                     deferred.resolve(response);
                 }else{

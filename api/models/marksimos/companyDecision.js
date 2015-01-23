@@ -275,10 +275,16 @@ exports.updateCompanyDecision = function(seminarId, period, companyId, companyDe
             d_CID: companyId
         },function(err, doc){
             if(err){return deferred.reject(err);}
+
+            if(!doc){
+                var validateErr = new Error('Cannot find company Decision not found.');
+                return deferred.reject(validateErr);
+            }
+
             var fields = ['d_RequestedAdditionalBudget',
-                          'd_InvestmentInEfficiency',
-                          'd_InvestmentInTechnology',
-                          'd_InvestmentInServicing'];
+                'd_InvestmentInEfficiency',
+                'd_InvestmentInTechnology',
+                'd_InvestmentInServicing'];
 
             fields.forEach(function(field){
                 if(companyDecision[field] !== undefined){
@@ -291,6 +297,9 @@ exports.updateCompanyDecision = function(seminarId, period, companyId, companyDe
                 if(err){ deferred.reject(err);}
                 else{ return deferred.resolve(doc);}
             });
+
+
+
         });
     }
     return deferred.promise;

@@ -2,7 +2,7 @@
  * Created by jinwyp on 1/22/15.
  */
 
-var seminarId = '10078';
+var seminarId = '10076';
 
 var studentList =[
     {
