@@ -1,15 +1,12 @@
 ﻿/// <reference path="../../../node_modules/jasmine/lib/jasmine.js" />
 var request = require('request').defaults({ jar: true });
-var studentApiPath = "http://localhost:3000/marksimos/api/";
 var adminApiPath = "http://localhost:3000/marksimos/api/admin/";
 var utility = require('../../testUtility.js');
 var Q = require('q');
 
 var data = require('../fakedata.js');
-
-
-var semanerId = '10069';
-
+var admin = data.adminList[0];
+var seminarId = data.seminarId;
 
 
 var originalTimeout;
@@ -20,29 +17,39 @@ var newTimeout = 10000;
 
 describe("Admin API ReRun Decisions : ", function() {
 
-
     beforeEach(function(done) {
 
         originalTimeout = jasmine.DEFAULT_TIMEOUT_INTERVAL;
         jasmine.DEFAULT_TIMEOUT_INTERVAL = newTimeout;
 
-        var admin = adminList[0];
         request.post(adminApiPath + "login", { json: admin }, function(err, response, body) {
 
             if (/^[A-Za-z0-9]+$/.test(body.userId) || response.statusCode === 200) {
                 done();
-
             }
         });
     });
 
 
 
-    it("Submit One Periods For Company, Brand and SKU Decisions", function(done) {
+    it("ReRun All Company, Brand and SKU Decisions of one Peroid", function(done) {
 
         var deferred = Q.defer();
 
         var resultPromise = [];
+
+        function runSeminarAsync(runseminarId) {
+            request.post(adminApiPath + "seminar/" + runseminarId + "/runsimulation", {form:{goingToNewPeriod : false, decisionsOverwriteSwitchers:[true, true, true, true ]}}  , function(err, response, body) {
+                if (!err && response.statusCode == 200) {
+                    deferred.resolve(response);
+                }else{
+                    console.log(body);
+                    deferred.reject(new Error(err));
+                }
+            });
+
+            return deferred.promise;
+        }
 
         function companyAsync(company) {
             request.put(adminApiPath + "company/decision", { json: company }, function(err, response, body) {
@@ -84,11 +91,10 @@ describe("Admin API ReRun Decisions : ", function() {
         }
 
 
-
-        period2.forEach(function(company){
+        function runOneRound(company){
 
             var companyModify = {
-                seminarId : semanerId,
+                seminarId : seminarId,
                 periodId : company.period,
                 companyId : company.d_CID,
                 company_data : {
@@ -105,7 +111,7 @@ describe("Admin API ReRun Decisions : ", function() {
             company.brandDecisions.forEach(function(brand){
 
                 var brandModify = {
-                    seminarId : semanerId,
+                    seminarId : seminarId,
                     periodId : brand.period,
                     companyId : brand.d_CID,
                     brand_id : brand.d_BrandID,
@@ -119,7 +125,7 @@ describe("Admin API ReRun Decisions : ", function() {
                 brand.SKUDecisions.forEach(function(sku){
 
                     var skuModify = {
-                        seminarId : semanerId,
+                        seminarId : seminarId,
                         periodId : sku.period,
                         companyId : sku.d_CID,
                         brand_id : sku.d_BrandID,
@@ -145,41 +151,43 @@ describe("Admin API ReRun Decisions : ", function() {
                         sku_data : {}
 
                     };
-                    //for (var property in skuModify.sku_post) {
-                    //    if ( typeof (skuModify.sku_post[property]) == "function") {
-                    //        //obj[p]();
-                    //    } else {
-                    //
-                    //        var temp ;
-                    //        //temp[property]= skuModify.sku_post[property]
-                    //        // property 为属性名称，obj[p]为对应属性的值
-                    //        skuModify.sku_data = temp;
-                    //    }
-                    //
-                    //    resultPromise.push(skuAsync(skuModify));
-                    //}
 
                     //console.log("--------:::", skuModify);
                     resultPromise.push(skuAsync(skuModify));
                 })
 
-
             });
 
+        }
 
 
 
+        if(gulpArguments.p === 1 || gulpArguments.p === true){
+            data.period1.forEach(runOneRound);
+        }
+        if(gulpArguments.p === 2){
+            data.period2.forEach(runOneRound);
+        }
+        if(gulpArguments.p === 3){
+            data.period3.forEach(runOneRound);
+        }
+        if(gulpArguments.p === 4){
+            data.period4.forEach(runOneRound);
+        }
 
-        });
+        if(resultPromise.length > 0){
+            Q.all(resultPromise).spread(function(){
+                for (var i=0; i<arguments.length; i++){
+                    expect(arguments[i].statusCode).toBe(200);
+                }
+                return runSeminarAsync(seminarId)
+            }).then(function(response){
+                expect(response.statusCode).toBe(200);
 
-
-
-        Q.all(resultPromise).spread(function(){
-            for (var i=0; i<arguments.length; i++){
-                expect(arguments[i].statusCode).toBe(200);
-            }
-
-        }).done(done);
+            }).fail(function (err) {
+                console.log(err);
+            }).done(done);
+        }
 
 
     });

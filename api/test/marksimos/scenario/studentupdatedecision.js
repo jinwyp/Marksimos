@@ -1,14 +1,19 @@
 ﻿/// <reference path="../../../node_modules/jasmine/lib/jasmine.js" />
+
+
+
+var Q = require('q');
 var request = require('request').defaults({ jar: true });
+
 var studentApiPath = "http://localhost:3000/marksimos/api/";
 var adminApiPath = "http://localhost:3000/marksimos/api/admin/";
 var utility = require('../../testUtility.js');
-var Q = require('q');
+
 
 var data = require('../fakedata.js');
 
-
-var semanerId = '10069';
+var student = data.studentList[0];
+var seminarId = data.seminarId;
 
 
 
@@ -25,12 +30,12 @@ describe("Student API Submit Decisions : ", function() {
         originalTimeout = jasmine.DEFAULT_TIMEOUT_INTERVAL;
         jasmine.DEFAULT_TIMEOUT_INTERVAL = newTimeout;
 
-        var student = studentList[0];
+
         request.post(studentApiPath + "login", { json: student }, function(err, response, body) {
 
             if (/^[A-Za-z0-9]+$/.test(body.userId) || response.statusCode === 200) {
 
-                request.get(studentApiPath + "choose_seminar?seminar_id=10051", { qs: {seminar_id:semanerId} }, function(err, response, body) {
+                request.get(studentApiPath + "choose_seminar?seminar_id=10051", { qs: {seminar_id:seminarId} }, function(err, response, body) {
                     if (!err && response.statusCode == 200) {
                         done();
                     }
@@ -48,22 +53,6 @@ describe("Student API Submit Decisions : ", function() {
         var deferred = Q.defer();
 
         var resultPromiseP1 = [];
-        var resultPromiseP2 = [];
-        var resultPromiseP3 = [];
-        var resultPromiseP4 = [];
-
-        function runSeminarAsync(runseminarId) {
-            request.post(adminApiPath + "seminar/" + runseminarId + "/runsimulation", {}, function(err, response, body) {
-                if (!err && response.statusCode == 200) {
-                    deferred.resolve(response);
-                }else{
-                    console.log(body);
-                    deferred.reject(new Error(err));
-                }
-            });
-
-            return deferred.promise;
-        }
 
 
         function companyAsync(company) {
@@ -169,19 +158,29 @@ describe("Student API Submit Decisions : ", function() {
 
         }
 
-        period1.forEach(runOneRound);
+        if(gulpArguments.p === 1 || gulpArguments.p === true){
+            data.period1.forEach(runOneRound);
+        }
+        if(gulpArguments.p === 2){
+            data.period2.forEach(runOneRound);
+        }
+        if(gulpArguments.p === 3){
+            data.period3.forEach(runOneRound);
+        }
+        if(gulpArguments.p === 4){
+            data.period4.forEach(runOneRound);
+        }
 
+        if(resultPromiseP1.length > 0){
+            Q.all(resultPromiseP1).spread(function(){
+                for (var i=0; i<arguments.length; i++){
+                    expect(arguments[i].statusCode).toBe(200);
+                }
 
-        Q.all(resultPromiseP1).spread(function(){
-            for (var i=0; i<arguments.length; i++){
-                expect(arguments[i].statusCode).toBe(200);
-            }
-
-            return runSeminarAsync(runseminarId)
-
-        }).then(function(value){
-            expect(value[0].statusCode).toBe(200);
-        }).done(done);
+            }).fail(function (err) {
+                console.log(err);
+            }).done(done);
+        }
 
 
     });
@@ -194,12 +193,6 @@ describe("Student API Submit Decisions : ", function() {
 
 
 });
-
-
-
-
-
-
 
 
 

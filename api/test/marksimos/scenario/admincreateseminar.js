@@ -4,6 +4,9 @@ var adminApiPath = "http://localhost:3000/marksimos/api/admin/";
 var utility = require('../../testUtility.js');
 var Q = require('q');
 
+var data = require('../fakedata.js');
+var admin = data.adminList[0];
+
 
 var originalTimeout;
 
@@ -14,11 +17,7 @@ describe("Admin API Create Seminar", function() {
         originalTimeout = jasmine.DEFAULT_TIMEOUT_INTERVAL;
         jasmine.DEFAULT_TIMEOUT_INTERVAL = 10000;
 
-        var account = {
-            email: "hcd_facilitator@hcdlearning.com",
-            password: "hcdfacilitator@9876"
-        };
-        request.post(adminApiPath + "login", { form: account }, function(err, res, body) {
+        request.post(adminApiPath + "login", { form: admin }, function(err, res, body) {
             if (/^[A-Za-z0-9]+$/.test(body.userId)) {
                 done();
             }
@@ -106,10 +105,9 @@ describe("Admin API Create Seminar", function() {
             expect(res4[1].message).toMatch(/^.+success.+$/);
             expect(res5[1].message).toMatch(/^.+success.+$/);
 
-
             expect(res6[0].statusCode).toBe(200);
         }).fail(function(err) {
-            expect(err).toBe(null);
+            console.log(err);
         }).done(done);
     });
 });

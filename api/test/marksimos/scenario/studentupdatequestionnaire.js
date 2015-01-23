@@ -2,26 +2,17 @@
 var studentApiPath = "http://localhost:3000/marksimos/api/";
 var utility = require('../../testUtility.js');
 var Q = require('q');
+
+
+
+var data = require('../fakedata.js');
+
+var student = data.studentList[0];
+var seminarId = data.seminarId;
+
+
 describe("Student API  Questionnaire", function () {
-    var studentList = [
-        {
-            email : 'anilraparla@hcdlearning.com',
-            password : '123456'
-        },
-        {
-            email : 'haosun@hcdlearning.com',
-            password : '123456'
-        }, {
-            email : 'jinwang@hcdlearning.com',
-            password : '123456'
-        }, 
-        {
-            email : 'yunsun@hcdlearning.com',
-            password : '123456'
-        }
-    ];
-    var semanerId = '10051';
-    
+
     var questionnaireList = [
         //有效的
         {                
@@ -50,9 +41,11 @@ describe("Student API  Questionnaire", function () {
     ];
 
     beforeEach(function (done) {
-        request.post(studentApiPath + "login", { json: studentList[2] }, function (err, response, body) {            
+        jasmine.DEFAULT_TIMEOUT_INTERVAL = 10000;
+
+        request.post(studentApiPath + "login", { json: student }, function (err, response, body) {
             if (/^[A-Za-z0-9]+$/.test(body.userId) || response.statusCode === 200) {                
-                request.get(studentApiPath + "choose_seminar?seminar_id="+ semanerId, { qs: { seminar_id: semanerId } }, function (err, response, body) {
+                request.get(studentApiPath + "choose_seminar?seminar_id="+ seminarId, { qs: { seminar_id: seminarId } }, function (err, response, body) {
                     if (!err && response.statusCode == 200) {
                         done();
                     }
@@ -61,16 +54,6 @@ describe("Student API  Questionnaire", function () {
         });
 
     });
-    
-
-    it("Submit Questionnaire", function (done) {
-        Q.nfcall(request.put, studentApiPath + "questionnaire", { json: { questionnaire: questionnaireList[0] } }).then(function (value) {
-            expect(value[1].message).toBe("Update success.");
-        }).fail(function (err) {
-            expect(err).toBe(undefined);
-        }).done(done);
-    });
-    
 
     it("Submit Questionnaire-Invalid Email", function (done) {
         Q.nfcall(request.put, studentApiPath + "questionnaire", { json: { questionnaire: questionnaireList[1] } }).then(function (value) {
@@ -80,6 +63,17 @@ describe("Student API  Questionnaire", function () {
             expect(err).toBe(undefined);
         }).done(done);
     });
+
+    it("Submit Questionnaire Success", function (done) {
+        Q.nfcall(request.put, studentApiPath + "questionnaire", { json: { questionnaire: questionnaireList[0] } }).then(function (value) {
+            expect(value[1].message).toBe("Update success.");
+        }).fail(function (err) {
+            expect(err).toBe(undefined);
+        }).done(done);
+    });
+    
+
+
 
    
 

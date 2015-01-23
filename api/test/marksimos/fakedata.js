@@ -2,6 +2,7 @@
  * Created by jinwyp on 1/22/15.
  */
 
+var seminarId = '10078';
 
 var studentList =[
     {
@@ -5879,14 +5880,13 @@ var seminarFinalResult = [
 ];
 
 
-module.exports = (function() {
-    return {
-        studentList : studentList,
-        adminList : adminList,
-        period1 : period1,
-        period2 : period2,
-        period3 : period3,
-        period4 : period4,
-        finalResult : seminarFinalResult
-    }
-}())
+module.exports = {
+    studentList : studentList,
+    adminList : adminList,
+    seminarId : seminarId,
+    period1 : period1,
+    period2 : period2,
+    period3 : period3,
+    period4 : period4,
+    finalResult : seminarFinalResult
+};
