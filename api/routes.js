@@ -20,7 +20,8 @@ var config = require('../common/config.js');
 
 var apiRouter = express.Router();
 
-
+var fs = require('fs');
+var path = require('path');
 
 /**********    Init Passport Auth    **********/
 auth.initAuth();
