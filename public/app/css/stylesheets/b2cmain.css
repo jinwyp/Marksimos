@@ -1,12 +1,17 @@
-.icon_b2c-sprite, .b2c-header .button, .b2c-header .button:hover, .down .pic-1 .front, .down .pic-1 .back, .down .pic-2 .front, .down .pic-2 .back, .down .pic-3 .front, .down .pic-3 .back, .down .pic-4 .front, .down .pic-4 .back, .down .pic-5 .front, .down .pic-5 .back, .down .pic-6 .front, .down .pic-6 .back, .man1, .man1:hover, .man2, .man2:hover, .man3, .man3:hover, .man4, .man4:hover {
-  background-image: url('../images/icon_b2c-sba594319fa.png');
+.icon_b2c-sprite, .b2c-header .button, .b2c-header .button:hover, .down .pic-1 .front, .down .pic-1 .back, .down .pic-2 .front, .down .pic-2 .back, .down .pic-3 .front, .down .pic-3 .back, .down .pic-4 .front, .down .pic-4 .back, .down .pic-5 .front, .down .pic-5 .back, .down .pic-6 .front, .down .pic-6 .back, .man1, .man1:hover, .man2, .man2:hover, .man3, .man3:hover, .man4, .man4:hover, .b2c-login-main .b2c-icon {
+  background-image: url('../images/icon_b2c-sb6d54d31df.png');
   background-repeat: no-repeat;
+}
+
+html {
+  height: 100%;
 }
 
 body {
   min-width: 1280px;
   font-family: "Microsoft YaHei" !important;
   font-size: 16px;
+  min-height: 100%;
 }
 
 .b2c-container {
@@ -104,6 +109,12 @@ body {
   vertical-align: top;
 }
 
+.b2c-footer-fix {
+  position: fixed;
+  width: 100%;
+  bottom: 0;
+}
+
 .b2c-footer {
   background-color: #121318;
   height: 126px;
@@ -162,46 +173,46 @@ body {
   margin-top: 20px;
 }
 .down .pic-1 .front {
-  background-position: 0 -3200px;
+  background-position: 0 -3380px;
 }
 .down .pic-1 .back {
-  background-position: 0 -2945px;
+  background-position: 0 -3125px;
 }
 .down .pic-2 {
   margin-top: 20px;
 }
 .down .pic-2 .front {
-  background-position: 0 -3710px;
+  background-position: 0 -3890px;
 }
 .down .pic-2 .back {
-  background-position: 0 -3455px;
+  background-position: 0 -3635px;
 }
 .down .pic-3 {
   margin-top: 20px;
 }
 .down .pic-3 .front {
-  background-position: 0 -4220px;
+  background-position: 0 -4400px;
 }
 .down .pic-3 .back {
-  background-position: 0 -3965px;
+  background-position: 0 -4145px;
 }
 .down .pic-4 .front {
-  background-position: 0 -4730px;
+  background-position: 0 -4910px;
 }
 .down .pic-4 .back {
-  background-position: 0 -4475px;
+  background-position: 0 -4655px;
 }
 .down .pic-5 .front {
-  background-position: 0 -5240px;
+  background-position: 0 -5420px;
 }
 .down .pic-5 .back {
-  background-position: 0 -4985px;
+  background-position: 0 -5165px;
 }
 .down .pic-6 .front {
-  background-position: 0 -5750px;
+  background-position: 0 -5930px;
 }
 .down .pic-6 .back {
-  background-position: 0 -5495px;
+  background-position: 0 -5675px;
 }
 .down .flip-container {
   width: 255px;
@@ -438,4 +449,83 @@ body {
   border-left: 8px solid #da8449;
   border-top: 8px solid transparent;
   border-bottom: 8px solid transparent;
+}
+
+/**********login**********/
+.b2c-login-main {
+  padding-top: 100px;
+  padding-left: 250px;
+  vertical-align: top;
+}
+.b2c-login-main .form-group {
+  width: 290px;
+}
+.b2c-login-main .checkbox-inline {
+  font-size: 10px;
+}
+.b2c-login-main .b2c-icon {
+  margin-top: 23px;
+  width: 180px;
+  height: 180px;
+  display: inline-block;
+  vertical-align: middle;
+  *vertical-align: auto;
+  *zoom: 1;
+  *display: inline;
+  background-position: 0 -2945px;
+}
+.b2c-login-main .b2c-login-area {
+  width: 360px;
+  height: 365px;
+  background-color: #dedede;
+  display: inline-block;
+  vertical-align: middle;
+  *vertical-align: auto;
+  *zoom: 1;
+  *display: inline;
+}
+.b2c-login-main .b2c-login-errmsg {
+  background-color: #ffe6e1;
+  padding: 5px 10px;
+  font-size: 12px;
+}
+.b2c-login-main button {
+  width: 160px;
+  height: 39px;
+  color: #fff;
+  font-size: 20px;
+  font-weight: 900;
+  border-top: none;
+  border-left: none;
+  border-right: none;
+  border-bottom: 2px solid #7e200b;
+  background-color: #c42e0d;
+}
+.b2c-login-main button:hover {
+  border-bottom: 2px solid #c42e0d;
+  background-color: #7e200b;
+}
+.b2c-login-main .forgot-password {
+  font-size: 12px;
+  margin-top: 5px;
+}
+
+/**********verify-account**********/
+.b2c-verify-account {
+  padding-top: 100px;
+  padding-left: 170px;
+  font-weight: 700;
+  text-indent: 2em;
+  letter-spacing: 5px;
+  color: #999;
+}
+.b2c-verify-account .tip-header {
+  text-indent: 0;
+}
+.b2c-verify-account a {
+  letter-spacing: 0;
+}
+.b2c-verify-account p {
+  font-size: 18px;
+  margin-top: 20px;
 }
