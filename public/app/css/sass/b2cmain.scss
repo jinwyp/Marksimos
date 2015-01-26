@@ -1,17 +1,6 @@
 ﻿@import "icon_b2c/*.png";
 @import "compass/css3";
 @import "compass/utilities/general/float";
-@mixin rotate( $degrees ) {
-  -webkit-transform: rotate(#{$degrees}deg);
-  -moz-transform: rotate(#{$degrees}deg);
-  -ms-transform: rotate(#{$degrees}deg);
-  -o-transform: rotate(#{$degrees}deg);
-  transform: rotate(#{$degrees}deg);
-
-  filter:  progid:DXImageTransform.Microsoft.Matrix(sizingMethod='auto expand', M11=#{cos($degrees)}, M12=-#{sin($degrees)}, M21=#{sin($degrees)}, M22=#{cos($degrees)});
-  -ms-filter: "progid:DXImageTransform.Microsoft.Matrix(sizingMethod='auto expand', M11=#{cos($degrees)}, M12=-#{sin($degrees)}, M21=#{sin($degrees)}, M22=#{cos($degrees)})";
-  zoom: 1;
- }
 
 @mixin flippy($speed: 0.5s, $perspective: 500, $bgcolor: white) {
   position: relative;
@@ -57,10 +46,15 @@
   }
 }
 
+
+html{
+  height: 100%;
+}
 body{
 	min-width:1280px;
 	font-family: "Microsoft YaHei" ! important;
 	font-size:16px;
+	min-height: 100%;
 }
 .b2c-container {
     width: 1280px;
@@ -150,7 +144,11 @@ body{
 	 vertical-align:top;
 	}
 }
-
+.b2c-footer-fix{
+	position:fixed;
+	width:100%;
+	bottom:0;
+}
 .b2c-footer{
 	background-color:#121318;
 	height:126px;
@@ -408,4 +406,72 @@ body{
 	}
 }
 
-
+/**********login**********/
+.b2c-login-main{
+	padding-top:100px;
+	padding-left:250px;
+	vertical-align:top;
+	.form-group{
+		width:290px;	
+	}
+	.checkbox-inline{
+		font-size:10px;		
+	}
+	.b2c-icon{
+		margin-top:23px;
+		width:180px;
+		height:180px;	
+		@include inline-block;
+		@include icon_b2c-sprite(login-icon);	
+	}
+	.b2c-login-area{
+		width:360px;
+		height:365px;
+		background-color:#dedede;
+		@include inline-block;		
+	}
+	.b2c-login-errmsg{
+		background-color:rgb(255,230,225);
+		padding:5px 10px;
+		font-size:12px;
+	}
+	button{
+		&:hover{
+			border-bottom:2px solid #c42e0d;
+			background-color:#7e200b;
+		}
+		width:160px;
+		height:39px;
+		color: #fff;
+		font-size: 20px;
+		font-weight: 900;
+		border-top:none;
+		border-left:none;
+		border-right:none;
+		border-bottom:2px solid #7e200b;
+		background-color:#c42e0d;
+	}
+	.forgot-password{
+		font-size:12px;
+		margin-top:5px;
+	}
+}
+/**********verify-account**********/
+.b2c-verify-account{
+	padding-top:100px;
+	padding-left:170px;
+	font-weight:700;
+	text-indent:2em;
+	letter-spacing:5px;
+	color:#999;
+	.tip-header{
+		text-indent:0;
+	}
+	a{
+		letter-spacing:0;
+	}
+	p{
+		font-size:18px;
+		margin-top:20px;	
+	}
+}

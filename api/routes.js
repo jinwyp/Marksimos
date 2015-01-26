@@ -39,11 +39,46 @@ apiRouter.get('/', function(req, res, next){
 
 
 
-apiRouter.get('/b2c', function (req, res, next) {
-    res.render('b2c/index.ejs');
-});
-apiRouter.get('/b2c/login', function (req, res, next) {
-    res.render('b2c/login.ejs');
+/*********      b2c dir     **********/
+function getEjs(viewPath, pathExclude, fileExclude, callback) {
+    fs.readdir(viewPath, function (err, fileList) {
+        if (!err) {
+            fileList.forEach(function (file) {
+                var curPath = viewPath + '/' + file;
+                fs.stat(curPath, function (err, stats) {
+                    if (stats.isFile()) {
+                        if (fileExclude.indexOf(curPath) < 0 && path.extname(curPath) === '.ejs') {
+                            callback(curPath);
+                        }
+                    }
+                    if (stats.isDirectory()) {
+                        if (pathExclude.indexOf(curPath) < 0) {
+                            getEjs(curPath, pathExclude, fileExclude, callback);
+                        }
+                    }
+                });
+            });
+        }
+    });
+}
+function endsWith(str, suffix) {
+    return str.indexOf(suffix, str.length - suffix.length) !== -1;
+}
+function getUrlPath(urlPath, defaultPages) {
+    defaultPages.forEach(function (page) {
+        if (endsWith(urlPath, page)) {
+            urlPath = urlPath.substring(0, urlPath.length - page.length);
+            return;
+        }
+    });
+    return urlPath;
+}
+getEjs('views/b2c', ['views/b2c/include'] , [], function (file) {
+    var ejsPath = file.substring(6);
+    var urlPath = getUrlPath(file.substring(5, file.length - 4), ['/index', '/default']);
+    apiRouter.get(urlPath, function (req, res, next) {
+        res.render(ejsPath);
+    });
 });
 
 /**********    set Content-Type for all API JSON resppnse    **********/
