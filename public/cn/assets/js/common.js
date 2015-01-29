@@ -87,6 +87,21 @@ function navigation() {
 	})
 }
 
+// 加入我们右侧选中
+function jionus() {
+	var elem = $('.joinUs  .aside li');
+	if(!elem.length) return;
+
+	elem.click(function(event) {
+		elem.each(function(){
+			$(this).removeClass('active');
+		});
+
+		$(this).addClass("active");
+	});
+
+}
+
 
 
 $(function(){
@@ -95,4 +110,5 @@ $(function(){
 	elemHover();
 	placeHolder();
 	navigation();
+	jionus();
 })
