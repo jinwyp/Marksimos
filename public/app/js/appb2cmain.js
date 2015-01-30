@@ -24,6 +24,7 @@
             }
         }).trigger("mouseleave");
     }
+
     $(window).on('resize', function () {
         if ($('header').height() + $('footer').height() + $('main').height() < $(window).height()) {
             $('footer').addClass('b2c-footer-fix');
