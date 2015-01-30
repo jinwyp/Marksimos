@@ -40,7 +40,8 @@
     "jsonkit": "~0.3.2",
     "marked": "~0.3.2",
     "jquery": "1.9.1",
-    "aight": "~1.2.5",
-    "jquery-migrate": "~1.2.1"
+    "jquery-migrate": "~1.2.1",
+    "aight": "~1.2.5"
+
   }
 }

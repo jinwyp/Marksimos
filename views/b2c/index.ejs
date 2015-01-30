@@ -1,19 +1,12 @@
-﻿<!DOCTYPE html>
+﻿<% include include/headcss.ejs %>
 
-<html xmlns="http://www.w3.org/1999/xhtml">
-<head>
-    <meta charset="utf-8" />
-    <title></title>   
-    <link rel="stylesheet" href="/libs/bootstrap/dist/css/bootstrap.min.css">
-    <link rel="stylesheet" href="/app/css/stylesheets/b2cmain.css">
-    <script src="/libs/jquery/jquery.js"></script>    
-    <script src="/libs/jquery-migrate/jquery-migrate.js"></script>  
-    <script src="/app/js/appb2cmain.js"></script>
-</head>
-<body>
-    
-    <% include ./include/header.ejs %>
-    <main>
+
+<body ng-app="b2clogin">
+    <b2c-header showmenu="false" showlogout="false"></b2c-header>
+
+
+
+    <main ng-controller="userLoginController">
         <div class="middle b2c-container">                       
                 <div class="middle right">
                     <form class="reg-form">

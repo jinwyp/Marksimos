@@ -17,12 +17,44 @@
     angular.module('marksimos.websitecomponent', ['marksimos.templates', 'marksimos.model', 'pascalprecht.translate', 'marksimos.translation' ]);
 
 
+    angular.module('marksimos.websitecomponent').directive('b2cHeader', ['$window', '$translate',  b2cHeaderComponent ]);
     angular.module('marksimos.websitecomponent').directive('userHeader', ['$window', '$translate', 'Student', userHeaderComponent ]);
     angular.module('marksimos.websitecomponent').directive('headerAdmin', ['$window', '$translate', 'Student', adminHeaderComponent]);
     angular.module('marksimos.websitecomponent').directive('menuAdmin', [adminMenuComponent]);
 
 
+    function b2cHeaderComponent($window, $translate){
+        return {
+            scope: {
+                showmenu     : '=',
+                showlogout   : '='
+            },
+            restrict: 'AE',
+            templateUrl: 'app/js/websitecomponent/b2cheader.html',
+            link: function (scope, element, attrs) {
 
+                //scope.clickMenu = function(currentmenu){
+                //    scope.currentMenu = currentmenu;
+                //};
+                //
+                //scope.clickHelpMenu = function(){
+                //    if($window.location.href.indexOf('/marksimos/help')==-1)
+                //        $window.location.href='/marksimos/help';
+                //};
+                //
+                //scope.changeLanguage = function (langKey) {
+                //    $translate.use(langKey);
+                //};
+                //
+                //scope.clickLogout = function () {
+                //    Student.logOut().then(function(data){
+                //        $window.location.href = "/marksimos/login" ;
+                //    });
+                //};
+
+            }
+        };
+    }
 
 
     function userHeaderComponent($window, $translate, Student){

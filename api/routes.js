@@ -101,23 +101,18 @@ apiRouter.all("/marksimos/api/*", function(req, res, next){
 /**********    Routes for rendering templates E4E Website    **********/
 
 apiRouter.get('/e4e', function(req, res, next){
-    res.render('e4e/index.ejs',{title:'HCD E4E'});
+    res.render('b2c/index.ejs', {title : 'Welcome to HCD E4E | HCD Learning'});
 });
 
-apiRouter.get('/e4e/register/company', function(req, res, next){
-    res.render('e4e/company-register.ejs',{title:'HCD E4E'});
+apiRouter.get('/e4e/signin', function(req, res, next){
+    res.render('b2c/login.ejs', {title:'HCD E4E Sign in to Your Account| HCD Learning'});
 });
 
-apiRouter.get('/e4e/register/student', function(req, res, next){
-    res.render('e4e/student-register.ejs',{title:'HCD E4E'});
+apiRouter.get('/e4e/forgorpassword', function(req, res, next){
+    res.render('b2c/forgetpassword.ejs', {title:'Forgotten Your Password? | HCD Learning'});
 });
 
-apiRouter.get('/e4e/company-success', function(req, res, next){
-    res.render('e4e/company-success.ejs',{title:'HCD E4E'});
-});
-apiRouter.get('/e4e/student-success', function(req, res, next){
-    res.render('e4e/student-success.ejs',{title:'HCD E4E'});
-});
+
 
 
 

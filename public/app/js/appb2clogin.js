@@ -1,4 +1,88 @@
-﻿$(function () {
+﻿
+/**
+ * Created by jinwyp on 1/30/15.
+ */
+
+/**
+ * recommended
+ *
+ * no globals are left behind
+ */
+
+
+
+
+
+(function () {
+    'use strict';
+
+
+
+    /********************  Create New Module For Controllers ********************/
+    angular.module('b2clogin', [ 'marksimos.websitecomponent', 'marksimos.model']);
+
+
+
+    /********************  Use This Module To Set New Controllers  ********************/
+    angular.module('b2clogin').controller('userLoginController', ['$scope', '$http', '$window', function  ($scope, $http, $window) {
+        $scope.css = {
+            newUser : {
+                passwordPrompt : false
+            }
+        };
+
+        $scope.data = {
+            newUser : {
+                email : '',
+                password : ''
+            }
+        };
+
+
+        $scope.login = function(form){
+            if(form.$valid){
+                Student.login($scope.data.newUser).then(function(){
+
+                    $window.location.href = "/marksimos/intro" ;
+
+                }, function(err){
+                    form.password.$valid = false;
+                    form.password.$invalid = true;
+                    $scope.css.newUser.passwordPrompt = true;
+                });
+            }
+        };
+
+    }]);
+
+
+
+
+
+
+
+
+}());
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+$(function () {
+
     $('.switch-button a').each(function (idx) {
         $(this).on('mouseenter', function (e) {           
             $('.switch-button .selected').removeClass("selected");
