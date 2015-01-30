@@ -514,7 +514,7 @@ body{
 	}
 	button{
 		margin-top:11px;
-		@include b2cButton();
+		@include b2cButton;
 	}
 	hr{
 		width:90%;
@@ -531,6 +531,46 @@ body{
 				font-weight:700;
 			}
 		}
+	}
+}
+.b2c-enter-code{
+	.b2c-code{
+		margin-top:44px;
+		margin-left:260px;
+		height:180px;
+		width:180px;
+		@include icon_b2c-sprite(b2c_prints);			
+	}
+	h4{
+			margin-top:67px;
+			margin-bottom:20px;
+			margin-left:150px;
+		}
+		input[type=password]{
+			width:302px;
+			height:48px;
+			font-size:20px;
+			letter-spacing:10px;
+		}
+		.tip{
+			font-size:12px;
+			margin-bottom:10px;
+		}
+		.help{
+			text-decoration: underline;
+			margin-top:-9px;
+		}		
+		button{
+			@include b2cButton(150px);
+			margin-right:10px;			
+		}
+		p{
+			margin-top:50px;
+		}
+		
+	hr{
+		width:90%;
+		margin-top:56px;	
 	}
 }
 .b2c-verify-account{
