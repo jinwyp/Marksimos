@@ -1,5 +1,5 @@
-.icon_b2c-sprite, .b2c-header .button, .b2c-header .button:hover, .down .pic-1 .front, .down .pic-1 .back, .down .pic-2 .front, .down .pic-2 .back, .down .pic-3 .front, .down .pic-3 .back, .down .pic-4 .front, .down .pic-4 .back, .down .pic-5 .front, .down .pic-5 .back, .down .pic-6 .front, .down .pic-6 .back, .man1, .man1:hover, .man2, .man2:hover, .man3, .man3:hover, .man4, .man4:hover, .b2c-login-main .b2c-icon {
-  background-image: url('../images/icon_b2c-sb6d54d31df.png');
+.icon_b2c-sprite, .b2c-header .button, .b2c-header .button:hover, .down .pic-1 .front, .down .pic-1 .back, .down .pic-2 .front, .down .pic-2 .back, .down .pic-3 .front, .down .pic-3 .back, .down .pic-4 .front, .down .pic-4 .back, .down .pic-5 .front, .down .pic-5 .back, .down .pic-6 .front, .down .pic-6 .back, .man1, .man1:hover, .man2, .man2:hover, .man3, .man3:hover, .man4, .man4:hover, .b2c-login-main .b2c-icon, .b2c-enter-email .b2c-prints {
+  background-image: url('../images/icon_b2c-s98e4cc4685.png');
   background-repeat: no-repeat;
 }
 
@@ -173,46 +173,46 @@ body {
   margin-top: 20px;
 }
 .down .pic-1 .front {
-  background-position: 0 -3380px;
+  background-position: 0 -3560px;
 }
 .down .pic-1 .back {
-  background-position: 0 -3125px;
+  background-position: 0 -3305px;
 }
 .down .pic-2 {
   margin-top: 20px;
 }
 .down .pic-2 .front {
-  background-position: 0 -3890px;
+  background-position: 0 -4070px;
 }
 .down .pic-2 .back {
-  background-position: 0 -3635px;
+  background-position: 0 -3815px;
 }
 .down .pic-3 {
   margin-top: 20px;
 }
 .down .pic-3 .front {
-  background-position: 0 -4400px;
+  background-position: 0 -4580px;
 }
 .down .pic-3 .back {
-  background-position: 0 -4145px;
+  background-position: 0 -4325px;
 }
 .down .pic-4 .front {
-  background-position: 0 -4910px;
+  background-position: 0 -5090px;
 }
 .down .pic-4 .back {
-  background-position: 0 -4655px;
+  background-position: 0 -4835px;
 }
 .down .pic-5 .front {
-  background-position: 0 -5420px;
+  background-position: 0 -5600px;
 }
 .down .pic-5 .back {
-  background-position: 0 -5165px;
+  background-position: 0 -5345px;
 }
 .down .pic-6 .front {
-  background-position: 0 -5930px;
+  background-position: 0 -6110px;
 }
 .down .pic-6 .back {
-  background-position: 0 -5675px;
+  background-position: 0 -5855px;
 }
 .down .flip-container {
   width: 255px;
@@ -472,7 +472,7 @@ body {
   *vertical-align: auto;
   *zoom: 1;
   *display: inline;
-  background-position: 0 -2945px;
+  background-position: 0 -3125px;
 }
 .b2c-login-main .b2c-login-area {
   width: 360px;
@@ -511,6 +511,81 @@ body {
 }
 
 /**********verify-account**********/
+.b2c-top-line {
+  background-color: #4f5565;
+  color: #7f89a2;
+  height: 60px;
+  line-height: 60px;
+  vertical-align: middle;
+}
+.b2c-top-line i {
+  margin-right: 10px;
+}
+.b2c-top-line label {
+  margin-left: 170px;
+  font-size: 20px;
+}
+.b2c-top-line span {
+  margin-left: 200px;
+  margin-right: 30px;
+  font-size: 16px;
+}
+.b2c-top-line a {
+  color: #7f89a2;
+}
+.b2c-top-line .active {
+  color: #b6bdd7;
+}
+
+.b2c-enter-email .b2c-prints {
+  margin-top: 44px;
+  margin-left: 260px;
+  height: 180px;
+  width: 180px;
+  background-position: 0 -2902px;
+}
+.b2c-enter-email h3 {
+  margin-top: 67px;
+  margin-bottom: 20px;
+}
+.b2c-enter-email input[type=text] {
+  width: 400px;
+  height: 40px;
+}
+.b2c-enter-email button {
+  margin-top: 11px;
+  border-style: none;
+  width: 194px;
+  height: 41px;
+  color: #fff;
+  font-size: 20px;
+  font-weight: 900;
+  background-color: #c42e0d;
+  border-bottom: 2px solid #7e200b;
+}
+.b2c-enter-email button:hover {
+  background-color: #7e200b;
+  border-bottom: 2px solid #ca3413;
+}
+.b2c-enter-email hr {
+  width: 90%;
+  margin-top: 56px;
+}
+.b2c-enter-email .tip div {
+  display: inline-block;
+  vertical-align: middle;
+  *vertical-align: auto;
+  *zoom: 1;
+  *display: inline;
+  width: 220px;
+  margin-left: 52px;
+}
+.b2c-enter-email .tip div a, .b2c-enter-email .tip div span {
+  font-size: 15px;
+  margin-left: 10px;
+  font-weight: 700;
+}
+
 .b2c-verify-account {
   padding-top: 100px;
   padding-left: 170px;

@@ -46,7 +46,20 @@
     }
   }
 }
-
+@mixin b2cButton($width:194px,$height:41px){
+		border-style:none;
+		width:$width;
+		height:$height;
+		color:#fff;
+		font-size:20px;
+		font-weight:900;
+		background-color:#c42e0d;
+		border-bottom:2px solid #7e200b;	
+		&:hover{
+			background-color:#7e200b;
+			border-bottom:2px solid #ca3413;			
+		}
+}
 
 html{
   height: 100%;
@@ -458,6 +471,68 @@ body{
 	}
 }
 /**********verify-account**********/
+.b2c-top-line{
+	background-color:rgb(79,85,101);
+	color:rgb(127,137,162);
+	height:60px;
+	line-height:60px;
+	vertical-align:middle;
+	i{
+		margin-right:10px;
+	}
+	label{
+		margin-left:170px;
+		font-size:20px;
+	}
+	span{
+		margin-left:200px;
+		margin-right:30px;
+		font-size:16px;
+	}
+	a{
+		color:rgb(127,137,162);
+	}
+	.active{
+		color:rgb(182,189,215);
+	}
+}
+.b2c-enter-email{
+	.b2c-prints{		
+		margin-top:44px;
+		margin-left:260px;
+		height:180px;
+		width:180px;
+		@include icon_b2c-sprite(b2c_prints);	
+	}
+	h3{
+		margin-top:67px;
+		margin-bottom:20px;
+	}
+	input[type=text]{
+		width:400px;
+		height:40px;
+	}
+	button{
+		margin-top:11px;
+		@include b2cButton();
+	}
+	hr{
+		width:90%;
+		margin-top:56px;	
+	}
+	.tip{
+		div{
+			@include inline-block;
+			width:220px;
+			margin-left:52px;
+			a,span{				
+				font-size:15px;
+				margin-left:10px;
+				font-weight:700;
+			}
+		}
+	}
+}
 .b2c-verify-account{
 	padding-top:100px;
 	padding-left:170px;
@@ -467,7 +542,7 @@ body{
 	color:#999;
 	.tip-header{
 		text-indent:0;
-	}
+	}	
 	a{
 		letter-spacing:0;
 	}
