@@ -433,7 +433,7 @@
             restrict : 'A',
             link  : function (element, attrs) {
 
-                $(document).unbind('keydown').bind('keydown', function (event) {
+                element(document).unbind('keydown').bind('keydown', function (event) {
 
                     var doPrevent = true;
                     if (event.keyCode === 8) {
@@ -468,6 +468,29 @@
 
         };
     }]
+    );
+
+
+    // Prevent the backspace key from navigating back.
+    angular.module('marksimos.commoncomponent').directive('stickFooter', ['$window', function($window) {
+            return {
+                restrict : 'AE',
+                link  : function (element, attrs) {
+
+                    $window.on('resize', function () {
+                        if (element('header').height() + element('footer').height() + element('main').height() < $window.height()) {
+                            //$('footer').addClass('b2c-footer-fix');
+
+                            scope.css = true;
+                        }else {
+                            //$('footer').removeClass('b2c-footer-fix');
+                            scope.css = true;
+                        }
+                    }).trigger('resize');
+                }
+
+            };
+        }]
     );
 
 
