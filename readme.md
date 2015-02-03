@@ -130,6 +130,9 @@ Error:     error public/app/css/sass/main.scss (Line 136: Invalid GBK character"
  *  手动把bin文件夹所有东西拷贝到d:\mongo,然后选中刚才打开的bat文件，按任意键安装完成
  *  可以用命令行或在服务管理里关闭或启动服务
 
+
+### Windows 下Mongo意外退出 需要删除mongo的lock文件, 在重启 mongo服务即可
+
 ### 关闭Mongo
 * 使用mongo shell 关闭 命令如下
 use admin

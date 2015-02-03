@@ -95,19 +95,28 @@ $(function () {
             }
         });
     });
-    if ($.browser && $.browser.msie && $.browser.version < 10) {
+
+
+    // Detecting IE
+    var oldIE;
+    if ($('html').is('.ie6, .ie7, .ie8')) {
+        oldIE = true;
+    }
+
+    if (oldIE) {
         $(".pic").on("mouseenter mouseleave", function (e) {
             if (e.type === 'mouseenter') {
-                $(this).find('.back').stop().fadeIn(100, function () { 
+                $(this).find('.back').stop().fadeIn(100, function () {
                     $(this).parent().find('.front').hide();
                 });
             }
-            else { 
+            else {
                 $(this).find('.front').show();
                 $(this).find('.back').stop().fadeOut(100);
             }
         }).trigger("mouseleave");
     }
+
 
     $(window).on('resize', function () {
         if ($('header').height() + $('footer').height() + $('main').height() < $(window).height()) {

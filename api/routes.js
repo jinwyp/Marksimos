@@ -104,14 +104,17 @@ apiRouter.get('/e4e', function(req, res, next){
     res.render('b2c/index.ejs', {title : 'Welcome to HCD E4E | HCD Learning'});
 });
 
-apiRouter.get('/e4e/signin', function(req, res, next){
+apiRouter.get('/e4e/login', function(req, res, next){
     res.render('b2c/login.ejs', {title:'HCD E4E Sign in to Your Account| HCD Learning'});
 });
 
-apiRouter.get('/e4e/forgorpassword', function(req, res, next){
-    res.render('b2c/forgetpassword.ejs', {title:'Forgotten Your Password? | HCD Learning'});
+apiRouter.get('/e4e/forgotpassword', function(req, res, next){
+    res.render('b2c/forgotpassword.ejs', {title:'Forgotten Your Password? | HCD Learning'});
 });
 
+apiRouter.get('/e4e/email', function(req, res, next){
+    res.render('b2c/emailverify.ejs', {title:'Forgotten Your Password? | HCD Learning'});
+});
 
 
 

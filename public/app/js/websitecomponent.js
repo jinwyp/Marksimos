@@ -30,7 +30,7 @@
                 showlogout   : '='
             },
             restrict: 'AE',
-            templateUrl: 'app/js/websitecomponent/b2cheader.html',
+            templateUrl: 'b2cheader.html',
             link: function (scope, element, attrs) {
 
                 //scope.clickMenu = function(currentmenu){
