@@ -33,13 +33,30 @@
 
         $scope.data = {
             newUser : {
+                username : '',
                 email : '',
-                password : ''
+                password : '',
+                passwordReInput : '',
+                gender : ""
             }
         };
 
 
         $scope.login = function(form){
+            if(form.$valid){
+                Student.login($scope.data.newUser).then(function(){
+
+                    $window.location.href = "/marksimos/intro" ;
+
+                }, function(err){
+                    form.password.$valid = false;
+                    form.password.$invalid = true;
+                    $scope.css.newUser.passwordPrompt = true;
+                });
+            }
+        };
+
+        $scope.register = function(form){
             if(form.$valid){
                 Student.login($scope.data.newUser).then(function(){
 

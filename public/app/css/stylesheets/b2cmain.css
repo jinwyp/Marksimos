@@ -426,7 +426,7 @@ body {
 }
 .reg-form .err-msg {
   right: 100%;
-  margin-top: -37px;
+  margin-top: -44px;
   margin-right: 10px;
   z-index: 999;
   position: absolute;

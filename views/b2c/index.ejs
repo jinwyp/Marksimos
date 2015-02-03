@@ -3,39 +3,54 @@
 
 <body ng-app="b2clogin">
 
-    <b2c-header ></b2c-header>
+    <b2c-header></b2c-header>
 
     <main ng-controller="userLoginController">
         <div class="middle b2c-container">                       
             <div class="middle right">
-                <form class="reg-form">
+
+                <form class="reg-form" name="regForm">
                     <div class="title">注册</div>
-                    <div class="form-group has-feedback has-success">
-                        <input class="input-lg form-control" type="text" placeholder="用户名" />
-                        <span class="glyphicon glyphicon-ok form-control-feedback" aria-hidden="true"></span>
-                        <span class="err-msg hide">请输入正确的用户名!</span>
+
+                    <div class="form-group has-feedback" ng-class="{'has-success':regForm.username.$dirty&&regForm.username.$valid, 'has-error':regForm.username.$dirty&&regForm.username.$invalid}">
+                        <input class="input-lg form-control" type="text" name="username" placeholder="用户名" ng-model="data.newUser.username" required/>
+                        <span class="glyphicon glyphicon-ok form-control-feedback" aria-hidden="true" ng-if="regForm.username.$dirty&&regForm.username.$valid"></span>
+                        <span class="glyphicon glyphicon-remove form-control-feedback" aria-hidden="true" ng-if="regForm.username.$dirty&&regForm.username.$invalid"></span>
+                        <span class="err-msg" ng-if="regForm.username.$dirty&&regForm.username.$invalid">请输入正确的用户名!</span>
                     </div>
-                    <div class="form-group has-feedback has-error">
-                        <input class="input-lg form-control" type="email" placeholder="邮箱" />
-                        <span class="glyphicon glyphicon-remove form-control-feedback" aria-hidden="true"></span>
-                        <span class="err-msg hide">请输入正确的邮箱!</span>
+
+                    <div class="form-group has-feedback" ng-class="{'has-success':regForm.email.$dirty&&regForm.email.$valid, 'has-error':regForm.email.$dirty&&regForm.email.$invalid}">
+                        <input class="input-lg form-control" type="email" name="email" placeholder="邮箱"  ng-model="data.newUser.email" required/>
+                        <span class="glyphicon glyphicon-ok form-control-feedback" aria-hidden="true" ng-if="regForm.email.$dirty&&regForm.email.$valid"></span>
+                        <span class="glyphicon glyphicon-remove form-control-feedback" aria-hidden="true" ng-if="regForm.email.$dirty&&regForm.email.$invalid"></span>
+                        <span class="err-msg" ng-if="regForm.email.$dirty&&regForm.email.$invalid">请输入正确的邮箱!</span>
                     </div>
-                    <div class="form-group has-feedback">
-                        <input class="input-lg form-control" type="password" placeholder="密码" />
-                        <span class="err-msg hide">请输入正确的密码!</span>
+
+                    <div class="form-group has-feedback" ng-class="{'has-success':regForm.password.$dirty&&regForm.password.$valid, 'has-error':regForm.password.$dirty&&regForm.password.$invalid}">
+                        <input class="input-lg form-control" type="password" name="password" placeholder="密码" ng-model="data.newUser.password" required/>
+                        <span class="glyphicon glyphicon-ok form-control-feedback" aria-hidden="true" ng-if="regForm.password.$dirty&&regForm.password.$valid"></span>
+                        <span class="glyphicon glyphicon-remove form-control-feedback" aria-hidden="true" ng-if="regForm.password.$dirty&&regForm.password.$invalid"></span>
+                        <span class="err-msg" ng-if="regForm.password.$dirty&&regForm.password.$invalid">请输入正确的密码!</span>
                     </div>
-                    <div class="form-group has-feedback">
-                        <input class="input-lg form-control" type="password" placeholder="再次输入密码" />
-                        <span class="err-msg hide">请输入正确的再次输入密码!</span>
+
+                    <div class="form-group has-feedback" ng-class="{'has-success':regForm.passwordreinput.$dirty&&regForm.passwordreinput.$valid, 'has-error':regForm.passwordreinput.$dirty&&regForm.passwordreinput.$invalid}">
+                        <input class="input-lg form-control" type="password" name="passwordreinput" placeholder="再次输入密码" ng-model="data.newUser.passwordreinput" required/>
+                        <span class="glyphicon glyphicon-ok form-control-feedback" aria-hidden="true" ng-if="regForm.passwordreinput.$dirty&&regForm.passwordreinput.$valid"></span>
+                        <span class="glyphicon glyphicon-remove form-control-feedback" aria-hidden="true" ng-if="regForm.passwordreinput.$dirty&&regForm.passwordreinput.$invalid"></span>
+                        <span class="err-msg" ng-if="regForm.passwordreinput.$dirty&&regForm.passwordreinput.$invalid">请输入正确的再次输入密码!</span>
                     </div>
-                    <div class="form-group radio has-error">
-                        <label class="radio-inline"><input type="radio" name="gender" />男</label>
-                        <label class="radio-inline female"><input type="radio" name="gender" />女</label>
-                        <span class="err-msg hide">请输入正确的再次输入密码!</span>
+
+                    <div class="form-group radio" ng-class="{'has-success':regForm.gender.$dirty&&regForm.gender.$valid, 'has-error':regForm.gender.$dirty&&regForm.gender.$invalid}">
+                        <label class="radio-inline"><input type="radio" name="gender" value="1" ng-model="data.newUser.gender" />男</label>
+                        <label class="radio-inline female"><input type="radio" name="gender" value="2" ng-model="data.newUser.gender" />女</label>
+                        <span class="err-msg" ng-if="regForm.gender.$dirty&&regForm.gender.$invalid">请选择性别!</span>
                     </div>
+
                     <div class="form-group"><button type="submit">确&nbsp;&nbsp;定</button></div>
                 </form>
+
             </div>
+
             <div class="middle left">
                 <div class="b2c-man man1"></div>
                 <div class="b2c-man man2"></div>
