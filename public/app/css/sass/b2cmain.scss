@@ -2,6 +2,12 @@
 @import "compass/css3";
 @import "compass/utilities/general/float";
 
+$color_white: #ffffff;
+$color_register_button: #c42e0d;
+$color_register_button_border: #7e200b;
+$color_register_button_hover: #7e200b;
+$color_register_button_hover_border: #ca3413;
+
 
 @mixin flippy($speed: 0.5s, $perspective: 500, $bgcolor: white) {
   position: relative;
@@ -48,6 +54,26 @@
 }
 
 
+@mixin registerButton{
+	border-style:none;
+	padding: 6px 60px;
+	color:$color_white;
+	font-size:20px;
+	font-weight:900;
+	background-color:$color_register_button;
+//	border-bottom:2px solid $color_register_button_border;
+	@include box-shadow($color_register_button_border 0px 2px 4px);
+	@include border-radius(0px);
+
+	&:hover,
+	&:focus{
+		color:$color_white;
+		background-color:$color_register_button_hover;
+//		border-bottom:2px solid #ca3413;
+	}
+}
+
+
 @mixin b2cButton($width:194px,$height:41px){
 		border-style:none;
 		width:$width;
@@ -85,11 +111,15 @@ body{
     padding: 0 0;
     height: 82px;	
 }
+
+
+
 .b2c-header {
     height: 82px;
 	background-color:#bd2a0b;
 	$icon-repeat: repeat-x;
 	background-image:url(../images/b2c_nav_1x82.png);
+
 	.button{
 		margin-top:30px;
 		width:49px;
@@ -101,72 +131,76 @@ body{
 			@include icon_b2c-sprite(b2c_login_49x23_hover);						
 		}
 	}
-}
 
-.b2c-trans{
-	padding-top:20px;
-	.selected{
-		background-color:#7f1a03;
-	}
-	span{
-		cursor:pointer;
-		display:block;
-		float:right;
-		margin-right:10px;
-		width:20px;
-		height:20px;
-		font-weight:bold;
-		text-align:center;
-		color:#eda494;
-		background-color:#b92909;
-		border:1px solid #eda494;
-		
-		&:hover{
+
+	.b2c-trans{
+		padding-top:20px;
+		.selected{
 			background-color:#7f1a03;
 		}
+		span{
+			cursor:pointer;
+			display:block;
+			float:right;
+			margin-right:10px;
+			width:20px;
+			height:20px;
+			font-weight:bold;
+			text-align:center;
+			color:#eda494;
+			background-color:#b92909;
+			border:1px solid #eda494;
+
+			&:hover{
+				background-color:#7f1a03;
+			}
+		}
 	}
-}
-.b2c-logo {
-    margin-left: 157px;
-    margin-top: 12px;
-	float:left;
-}
-
-.b2c-login {
-    float: right;
-    width: 600px;
-    height: 82px;
-	overflow: hidden;	
-}
-
-.b2c-login-field {
-	float: left;
-	width: 165px;    
-	color: #fff;	
-	font-size: 12px;
-	margin-top:10px;	
-    div{
-        line-height: 20px;
-        height: 20px;
-       }
-}
-
-.b2c-login-input {
-    width: 150px;
-    padding: 0;    
-    font-size: 12px;
-    height: 20px;
-    line-height: 20px;       
-    border: solid #932F18 1px;
-	color:#333;       
-}
-.b2c-login-field {
-	label,a{
-	 color:#EDA694 !important;
-	 padding-left:2px;	
-	 vertical-align:top;
+	.b2c-logo {
+		margin-left: 157px;
+		margin-top: 12px;
+		float:left;
 	}
+
+	.b2c-login {
+		float: right;
+		width: 600px;
+		height: 82px;
+		overflow: hidden;
+	}
+
+	.b2c-login-field {
+		float: left;
+		width: 165px;
+		color: #fff;
+		font-size: 12px;
+		margin-top:10px;
+		div {
+			line-height: 20px;
+			height: 20px;
+		}
+
+		label, a{
+			color:#EDA694 !important;
+			padding-left:2px;
+			vertical-align:top;
+		}
+	}
+
+	.b2c-login-input {
+		width: 150px;
+		padding: 0;
+		font-size: 12px;
+		height: 20px;
+		line-height: 20px;
+		border: solid #932F18 1px;
+		color:#333;
+	}
+
 }
+
+
+
 .b2c-footer-fix{
 	position:fixed;
 	width:100%;
@@ -206,118 +240,11 @@ body{
 	margin-left:100px;
 	margin-right:50px;	
 }
-.pic-area{
-	height:295px;
-	padding-left:157px;	
-	overflow:hidden;
-}
 
 
 
-.down{
-	height:550px;
-	background-color:#c42e0d;
-	padding:105px 0px 0px 0px;
-	.pic{
-		width:255px;
-		height:295px;
-		margin-right:100px;	
-		float:left;
-	}
-	.pic-1{
-		margin-top:20px;
-		.front{
-			@include icon_b2c-sprite(whats-hcd-1);
-		}
-		.back{
-			@include icon_b2c-sprite(whats-hcd-1-back);
-		}
-	}
-	.pic-2{
-		margin-top:20px;
-		.front{
-			@include icon_b2c-sprite(whats-hcd-2);
-		}
-		.back{
-			@include icon_b2c-sprite(whats-hcd-2-back);
-		}
-	}
-	.pic-3{
-		margin-top:20px;
-		.front{
-			@include icon_b2c-sprite(whats-hcd-3);
-		}
-		.back{
-			@include icon_b2c-sprite(whats-hcd-3-back);
-		}
-	}
-	.pic-4{	
-		.front{
-			@include icon_b2c-sprite(whats-hcd-4);
-		}
-		.back{
-			@include icon_b2c-sprite(whats-hcd-4-back);
-		}
-	}
-	.pic-5{
-		.front{
-			@include icon_b2c-sprite(whats-hcd-5);
-		}
-		.back{
-			@include icon_b2c-sprite(whats-hcd-5-back);
-		}
-	}
-	.pic-6{
-		.front{
-			@include icon_b2c-sprite(whats-hcd-6);
-		}
-		.back{
-			@include icon_b2c-sprite(whats-hcd-6-back);
-		}
-	}
 
-	.flip-container{
-		width:255px;
-		height:255px;
-		position: relative;	
-		@include flippy(0.6s,1000,#c42e0d);		
-	}
-	.back {		
-		font-size:12px;
-		color:#fff;
-		padding-top:35px;	
-		.title{
-			text-indent:0;
-			text-align:center;
-		}
-		p{
-			text-align:justify;;
-			text-indent:2em;
-			line-height:25px;
-			padding:0 25px;
-		}
-	}
-	.switch-button{
-		text-align:center;
-		margin-top:60px;
-		margin-left:2px;
-		a{
-			margin-right:75px;
-			color:#fff;
-			font-weight:700;		
-			text-decoration:none;
-			padding:10px 20px;
-			&:hover{
-				text-decoration:none;
-			}			
-		}
-		.selected{	
-			padding:8px 18px;
-			border:2px solid #fff;		
-			@include border-radius(5px, 5px);
-		}		
-	}
-}
+/********************  Register Form Left Part  ********************/
 
 .b2c-man{	
 	@include inline-block;
@@ -359,13 +286,15 @@ body{
 	bottom:100px;	
 }
 
+
+
+/********************  Register Form Right Part ********************/
+
 .reg-form{
-	.form-group{		
-		padding-top:3px;	
-	}
+
 	.title{
 		font-weight:900;
-		font-size:25px;
+		font-size:24px;
 		margin-top:100px;
 		margin-bottom: 20px;
 	}
@@ -383,18 +312,7 @@ body{
 		margin-left:15px;
 	}	
 	button{
-		border-style:none;
-		width:194px;
-		height:41px;
-		color:#fff;
-		font-size:20px;
-		font-weight:900;
-		background-color:#c42e0d;
-		border-bottom:2px solid #7e200b;	
-		&:hover{
-			background-color:#7e200b;
-			border-bottom:2px solid #ca3413;			
-		}
+		@include registerButton
 	}
 	.radio{		
 		padding:10px 0px;			
@@ -429,17 +347,144 @@ body{
 	}
 }
 
-/**********login**********/
+
+/********************  Index Page Below Pics ********************/
+
+.down-box{
+	height:550px;
+	background-color:#c42e0d;
+	padding:105px 0px 0px 0px;
+
+	.pic-area{
+		height:295px;
+		padding-left:157px;
+		overflow:hidden;
+	}
+
+
+	.pic{
+		width:255px;
+		height:295px;
+		margin-right:100px;
+		float:left;
+	}
+	.pic-1{
+		margin-top:20px;
+		.front{
+			@include icon_b2c-sprite(whats-hcd-1);
+		}
+		.back{
+			@include icon_b2c-sprite(whats-hcd-1-back);
+		}
+	}
+	.pic-2{
+		margin-top:20px;
+		.front{
+			@include icon_b2c-sprite(whats-hcd-2);
+		}
+		.back{
+			@include icon_b2c-sprite(whats-hcd-2-back);
+		}
+	}
+	.pic-3{
+		margin-top:20px;
+		.front{
+			@include icon_b2c-sprite(whats-hcd-3);
+		}
+		.back{
+			@include icon_b2c-sprite(whats-hcd-3-back);
+		}
+	}
+	.pic-4{
+		.front{
+			@include icon_b2c-sprite(whats-hcd-4);
+		}
+		.back{
+			@include icon_b2c-sprite(whats-hcd-4-back);
+		}
+	}
+	.pic-5{
+		.front{
+			@include icon_b2c-sprite(whats-hcd-5);
+		}
+		.back{
+			@include icon_b2c-sprite(whats-hcd-5-back);
+		}
+	}
+	.pic-6{
+		.front{
+			@include icon_b2c-sprite(whats-hcd-6);
+		}
+		.back{
+			@include icon_b2c-sprite(whats-hcd-6-back);
+		}
+	}
+
+	.flip-container{
+		width:255px;
+		height:255px;
+		position: relative;
+		@include flippy(0.6s,1000,#c42e0d);
+	}
+	.back {
+		font-size:12px;
+		color:#fff;
+		padding-top:35px;
+		.title{
+			text-indent:0;
+			text-align:center;
+		}
+		p{
+			text-align:justify;;
+			text-indent:2em;
+			line-height:25px;
+			padding:0 25px;
+		}
+	}
+	.switch-button{
+		text-align:center;
+		margin-top:60px;
+		margin-left:2px;
+		a{
+			margin-right:75px;
+			color:#fff;
+			font-weight:700;
+			text-decoration:none;
+			padding:10px 20px;
+			&:hover{
+				text-decoration:none;
+			}
+		}
+		.selected{
+			padding:8px 18px;
+			border:2px solid #fff;
+			@include border-radius(5px, 5px);
+		}
+	}
+}
+
+
+
+
+/********************  Login Form  ********************/
 .b2c-login-main{
 	padding-top:100px;
 	padding-left:250px;
 	vertical-align:top;
+
+	.title{
+		font-weight:900;
+		font-size:24px;
+	}
+
 	.form-group{
 		width:290px;	
 	}
 	.checkbox-inline{
-		font-size:10px;		
+		font-size:12px;
+		display: inline;
 	}
+
 	.b2c-icon{
 		margin-top:23px;
 		width:180px;
@@ -458,28 +503,20 @@ body{
 		padding:5px 10px;
 		font-size:12px;
 	}
-	button{
-		&:hover{
-			border-bottom:2px solid #c42e0d;
-			background-color:#7e200b;
-		}
-		width:160px;
-		height:39px;
-		color: #fff;
-		font-size: 20px;
-		font-weight: 900;
-		border-top:none;
-		border-left:none;
-		border-right:none;
-		border-bottom:2px solid #7e200b;
-		background-color:#c42e0d;
+	.btn{
+		@include registerButton
+	}
+	.register{
+		margin-left: 10px;
 	}
 	.forgot-password{
 		font-size:12px;
-		margin-top:5px;
+		margin-top:15px;
 	}
 }
-/**********verify-account**********/
+
+
+/********************  Verify Email  ********************/
 .b2c-top-line{
 	background-color:rgb(79,85,101);
 	color:rgb(127,137,162);

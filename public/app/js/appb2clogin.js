@@ -38,14 +38,16 @@
             password : '',
             passwordReInput : '',
             gender : "",
-            clickSubmit : false
+            clickSubmit : false,
+            rememberMe : false,
+            loginFailedInfo : false
         };
-
 
 
         app = {
             init : function(){
                 vm.clickregister = app.register;
+                vm.clicklogin = app.login;
             },
             reRun : function(){
 
@@ -54,17 +56,18 @@
 
             login : function(form){
                 if(form.$valid){
-                    Student.login($scope.data.newUser).then(function(){
-
-                        $window.location.href = "/marksimos/intro" ;
-
-                    }, function(err){
-                        form.password.$valid = false;
-                        form.password.$invalid = true;
-                        $scope.css.newUser.passwordPrompt = true;
-                    });
+                    //Student.login($scope.data.newUser).then(function(){
+                    //
+                    //    $window.location.href = "/marksimos/intro" ;
+                    //
+                    //}, function(err){
+                    //    form.password.$valid = false;
+                    //    form.password.$invalid = true;
+                    //    $scope.css.newUser.passwordPrompt = true;
+                    //});
                 }
             },
+
             register : function(form){
                 vm.newUser.clickSubmit = true;
                 if(form.$valid){
