@@ -426,6 +426,32 @@
     });
 
 
+    angular.module('marksimos.commoncomponent').directive('ngMatch', ['$parse', function($parse) {
+        return {
+
+            restrict: 'A',
+            require: 'ngModel',
+            scope: {
+                ngMatch: "="
+            },
+            link: function (scope, element, attrs, ctrl) {
+
+                // if ngModel is not defined, we don't need to do anything
+                if (ctrl) {
+                    ctrl.$validators.match = function(modelValue, viewValue) {
+                        return scope.ngMatch === viewValue;
+                    };
+
+                    scope.$watch('ngMatch', function () {
+                        ctrl.$validate();
+                    });
+                }else{
+                    return
+                };
+            }
+        };
+    }]);
+
 
     // Prevent the backspace key from navigating back.
     angular.module('marksimos.commoncomponent').directive('preventBackspaceNavigateBack', ['$document', function($document) {
@@ -471,7 +497,6 @@
     );
 
 
-    // Prevent the backspace key from navigating back.
     angular.module('marksimos.commoncomponent').directive('stickFooter', ['$window', function($window) {
             return {
                 restrict : 'AE',

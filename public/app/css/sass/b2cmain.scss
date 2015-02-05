@@ -46,6 +46,8 @@
     }
   }
 }
+
+
 @mixin b2cButton($width:194px,$height:41px){
 		border-style:none;
 		width:$width;
@@ -60,6 +62,13 @@
 			border-bottom:2px solid #ca3413;			
 		}
 }
+
+/********************  Angular JS 首次载入页面默认隐藏模板显示  ********************/
+
+[ng\:cloak], [ng-cloak], [data-ng-cloak], [x-ng-cloak], .ng-cloak, .x-ng-cloak {
+	display: none !important;
+}
+
 
 html{
   height: 100%;

@@ -1,6 +1,12 @@
+@charset "UTF-8";
 .icon_b2c-sprite, .b2c-header .button, .b2c-header .button:hover, .down .pic-1 .front, .down .pic-1 .back, .down .pic-2 .front, .down .pic-2 .back, .down .pic-3 .front, .down .pic-3 .back, .down .pic-4 .front, .down .pic-4 .back, .down .pic-5 .front, .down .pic-5 .back, .down .pic-6 .front, .down .pic-6 .back, .man1, .man1:hover, .man2, .man2:hover, .man3, .man3:hover, .man4, .man4:hover, .b2c-login-main .b2c-icon, .b2c-enter-email .b2c-prints {
   background-image: url('../images/icon_b2c-s98e4cc4685.png');
   background-repeat: no-repeat;
+}
+
+/********************  Angular JS 首次载入页面默认隐藏模板显示  ********************/
+[ng\:cloak], [ng-cloak], [data-ng-cloak], [x-ng-cloak], .ng-cloak, .x-ng-cloak {
+  display: none !important;
 }
 
 html {

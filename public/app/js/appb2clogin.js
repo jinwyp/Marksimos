@@ -19,56 +19,71 @@
 
 
     /********************  Create New Module For Controllers ********************/
-    angular.module('b2clogin', [ 'marksimos.websitecomponent', 'marksimos.model']);
+    angular.module('b2clogin', ['marksimos.commoncomponent', 'marksimos.websitecomponent', 'marksimos.model']);
 
 
 
     /********************  Use This Module To Set New Controllers  ********************/
-    angular.module('b2clogin').controller('userLoginController', ['$scope', '$http', '$window', function  ($scope, $http, $window) {
-        $scope.css = {
-            newUser : {
-                passwordPrompt : false
-            }
+    angular.module('b2clogin').controller('userLoginController', [ '$http', '$window', function  ($http, $window) {
+        var vm = this;
+        var app = {};
+
+        vm.css = {
+            showRegForm : true
         };
 
-        $scope.data = {
-            newUser : {
-                username : '',
-                email : '',
-                password : '',
-                passwordReInput : '',
-                gender : ""
-            }
+        vm.newUser =  {
+            username : '',
+            email : '',
+            password : '',
+            passwordReInput : '',
+            gender : "",
+            clickSubmit : false
         };
 
 
-        $scope.login = function(form){
-            if(form.$valid){
-                Student.login($scope.data.newUser).then(function(){
 
-                    $window.location.href = "/marksimos/intro" ;
+        app = {
+            init : function(){
+                vm.clickregister = app.register;
+            },
+            reRun : function(){
 
-                }, function(err){
-                    form.password.$valid = false;
-                    form.password.$invalid = true;
-                    $scope.css.newUser.passwordPrompt = true;
-                });
+            },
+
+
+            login : function(form){
+                if(form.$valid){
+                    Student.login($scope.data.newUser).then(function(){
+
+                        $window.location.href = "/marksimos/intro" ;
+
+                    }, function(err){
+                        form.password.$valid = false;
+                        form.password.$invalid = true;
+                        $scope.css.newUser.passwordPrompt = true;
+                    });
+                }
+            },
+            register : function(form){
+                vm.newUser.clickSubmit = true;
+                if(form.$valid){
+                    vm.css.showRegForm = false;
+                    //Student.login($scope.data.newUser).then(function(){
+                    //
+                    //    $window.location.href = "/marksimos/intro" ;
+                    //
+                    //}, function(err){
+                    //    form.password.$valid = false;
+                    //    form.password.$invalid = true;
+                    //    $scope.css.newUser.passwordPrompt = true;
+                    //});
+                }
             }
+
         };
 
-        $scope.register = function(form){
-            if(form.$valid){
-                Student.login($scope.data.newUser).then(function(){
-
-                    $window.location.href = "/marksimos/intro" ;
-
-                }, function(err){
-                    form.password.$valid = false;
-                    form.password.$invalid = true;
-                    $scope.css.newUser.passwordPrompt = true;
-                });
-            }
-        };
+        app.init();
 
     }]);
 
