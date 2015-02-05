@@ -74,20 +74,7 @@ $color_register_button_hover_border: #ca3413;
 }
 
 
-@mixin b2cButton($width:194px,$height:41px){
-		border-style:none;
-		width:$width;
-		height:$height;
-		color:#fff;
-		font-size:20px;
-		font-weight:900;
-		background-color:#c42e0d;
-		border-bottom:2px solid #7e200b;	
-		&:hover{
-			background-color:#7e200b;
-			border-bottom:2px solid #ca3413;			
-		}
-}
+
 
 /********************  Angular JS 首次载入页面默认隐藏模板显示  ********************/
 
@@ -560,7 +547,7 @@ body{
 	}
 	button{
 		margin-top:11px;
-		@include b2cButton();
+		@include registerButton
 	}
 	hr{
 		width:90%;

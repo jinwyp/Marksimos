@@ -568,17 +568,21 @@ body {
 .b2c-enter-email button {
   margin-top: 11px;
   border-style: none;
-  width: 194px;
-  height: 41px;
-  color: #fff;
+  padding: 6px 60px;
+  color: #ffffff;
   font-size: 20px;
   font-weight: 900;
   background-color: #c42e0d;
-  border-bottom: 2px solid #7e200b;
+  -moz-box-shadow: #7e200b 0px 2px 4px;
+  -webkit-box-shadow: #7e200b 0px 2px 4px;
+  box-shadow: #7e200b 0px 2px 4px;
+  -moz-border-radius: 0px;
+  -webkit-border-radius: 0px;
+  border-radius: 0px;
 }
-.b2c-enter-email button:hover {
+.b2c-enter-email button:hover, .b2c-enter-email button:focus {
+  color: #ffffff;
   background-color: #7e200b;
-  border-bottom: 2px solid #ca3413;
 }
 .b2c-enter-email hr {
   width: 90%;
