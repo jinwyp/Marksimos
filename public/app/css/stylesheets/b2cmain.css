@@ -50,28 +50,6 @@ body {
 .b2c-header .button:hover {
   background-position: 0 -23px;
 }
-.b2c-header .b2c-trans {
-  padding-top: 20px;
-}
-.b2c-header .b2c-trans .selected {
-  background-color: #7f1a03;
-}
-.b2c-header .b2c-trans span {
-  cursor: pointer;
-  display: block;
-  float: right;
-  margin-right: 10px;
-  width: 20px;
-  height: 20px;
-  font-weight: bold;
-  text-align: center;
-  color: #eda494;
-  background-color: #b92909;
-  border: 1px solid #eda494;
-}
-.b2c-header .b2c-trans span:hover {
-  background-color: #7f1a03;
-}
 .b2c-header .b2c-logo {
   margin-left: 157px;
   margin-top: 12px;
@@ -82,6 +60,36 @@ body {
   width: 600px;
   height: 82px;
   overflow: hidden;
+}
+.b2c-header .b2c-trans {
+  margin-right: 5px;
+  margin-top: 10px;
+  padding-top: 20px;
+  color: #fff;
+  font-size: 12px;
+}
+.b2c-header .b2c-trans .selected {
+  background-color: #7f1a03;
+}
+.b2c-header .b2c-trans span {
+  cursor: pointer;
+  display: block;
+  float: right;
+  margin-right: 7px;
+  width: 20px;
+  height: 20px;
+  line-height: 20px;
+  font-weight: bold;
+  text-align: center;
+  color: #eda494;
+  background-color: #b92909;
+  border: 1px solid #eda494;
+}
+.b2c-header .b2c-trans span:hover {
+  background-color: #7f1a03;
+}
+.b2c-header .b2c-login-box {
+  margin-right: 50px;
 }
 .b2c-header .b2c-login-field {
   float: left;
