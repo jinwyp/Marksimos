@@ -51,34 +51,28 @@ exports.addSeminar = function(req, res, next){
 
     }
 
-    userModel.findOne({_id: facilitatorId})
+    userModel.findOneQ({_id: facilitatorId})
     .then(function(dbFacilitator){
         if(!dbFacilitator){
-            throw {message: "Can't find facilitator."};
+            throw new Error("Cancel promise chains. Can't find facilitator.");
         }
 
         if(dbFacilitator.numOfLicense <= 0){
-            throw {httpStatus:400, message: "You don't have enough licenses."}
-        } 
+            throw new Error("Cancel promise chains. You don't have enough licenses.");
+        }
 
-        return userModel.update({_id: facilitatorId}, {
+        return userModel.updateQ({_id: facilitatorId}, {
             numOfLicense: dbFacilitator.numOfLicense - 1,
             numOfUsedLicense: dbFacilitator.numOfUsedLicense + 1
         })
-    })
-    .then(function(numAffected){
-        if(numAffected === 0){
-            throw {message: "update facilitator failed."}
-        }
-
-        if(numAffected > 1){
-            throw {message: "more than one row was updated."}
+    }).then(function(numAffected){
+        if(numAffected === 0 || numAffected > 1){
+            throw new Error( "Cancel promise chains. update facilitator failed, or update more than one facilitator.");
         }
 
         //get all seminar, create the next seminar id
         return seminarModel.find({}, {seminarId: "desc"})
-    })
-    .then(function(allSeminars){
+    }).then(function(allSeminars){
         if(!allSeminars || allSeminars.length === 0){
             seminar.seminarId = "10000";
         }else{
@@ -86,22 +80,15 @@ exports.addSeminar = function(req, res, next){
         }
 
         return seminarModel.insert(seminar);
-    })
-    .then(function(result){
+    }).then(function(result){
         if(!result){
-            return res.send(500, {message: "save seminar to db failed."});
+            throw new Error( "Cancel promise chains. save seminar to db failed.");
         }
 
-        return res.send(result);
-    })
-    .fail(function(err){
-        logger.error(err);
-        if(err.httpStatus){
-            return res.send(err.httpStatus, {message: err.message});
-        }
-        return res.send(500, {message: "add seminar failed."})
-    })
-    .done();
+        return res.status(200).send(result);
+    }).fail(function(err){
+        next(err);
+    }).done();
 };
 
 

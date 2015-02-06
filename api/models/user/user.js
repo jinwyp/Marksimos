@@ -1,4 +1,4 @@
-var mongoose = require('mongoose');
+var mongoose = require('mongoose-q')(require('mongoose'));
 var Schema = mongoose.Schema;
 var bcrypt   = require('bcrypt-nodejs');
 var Q = require('q');
@@ -84,13 +84,9 @@ userSchema.virtual('roleId').get(function () {
     return this.role ;
 });
 
-var User = mongoose.model("User", userSchema);
 
-
-exports.query = User;
-
-
-exports.register = function(user){
+//保存token
+userSchema.statics.register = function (user) {
     if(!mongoose.connection.readyState){
         throw new Error("mongoose is not connected.");
     }
@@ -105,6 +101,11 @@ exports.register = function(user){
     });
     return deferred.promise;
 };
+
+
+var User = mongoose.model("User", userSchema);
+module.exports = User;
+
 
 
 exports.updateByEmail = function(email, user){
@@ -129,124 +130,9 @@ exports.updateByEmail = function(email, user){
     return deferred.promise; 
 };
 
-exports.update = function(query, user){
-    if(!mongoose.connection.readyState){
-        throw new Error("mongoose is not connected.");
-    }
 
-    var deferred = Q.defer();
 
-    User.update(query
-    , user
-    , function(err, numAffected){
-        if(err){
-            deferred.reject(err);
-        }else{
-            deferred.resolve(numAffected);
-        }
-    });
 
-    return deferred.promise; 
-};
-
-exports.findByEmail = function(email){
-    if(!mongoose.connection.readyState){
-        throw new Error("mongoose is not connected.");
-    }
-
-    var deferred = Q.defer();
-
-    User.findOne({
-        email: email
-    }, 
-    function(err, result){
-        if(err){
-            deferred.reject(err);
-        }else{
-            deferred.resolve(result);
-        }
-    });
-
-    return deferred.promise;
-};
-
-exports.findByEmailAndToken = function(email, token){
-    if(!mongoose.connection.readyState){
-        throw new Error("mongoose is not connected.");
-    }
-
-    var deferred = Q.defer();
-
-    User.findOne({
-        email: email,
-        activateToken: token
-    }, 
-    function(err, result){
-        if(err){
-            deferred.reject(err);
-        }else{
-            deferred.resolve(result);
-        }
-    })
-
-    return deferred.promise;
-}
-
-exports.find = function(query){
-    if(!mongoose.connection.readyState){
-        throw new Error("mongoose is not connected.");
-    }
-
-    var deferred = Q.defer();
-
-    User.find(query, 
-    function(err, result){
-        if(err){
-            deferred.reject(err);
-        }else{
-            deferred.resolve(result);
-        }
-    })
-
-    return deferred.promise;
-}
-
-exports.findOne = function(query){
-    if(!mongoose.connection.readyState){
-        throw new Error("mongoose is not connected.");
-    }
-
-    var deferred = Q.defer();
-
-    User.findOne(query,
-    function(err, result){
-        if(err){
-            deferred.reject(err);
-        }else{
-            deferred.resolve(result);
-        }
-    })
-
-    return deferred.promise;
-}
-
-exports.remove = function(query){
-    if(!mongoose.connection.readyState){
-        throw new Error("mongoose is not connected.");
-    }
-    
-    var deferred = Q.defer();
-
-    User.remove(query, function(err){
-        if(err){
-            deferred.reject(err);
-        }else{
-            deferred.resolve(undefined);
-        }
-    })
-
-    return deferred.promise;
-}
 
 
 

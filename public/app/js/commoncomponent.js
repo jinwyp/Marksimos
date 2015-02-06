@@ -437,17 +437,15 @@
             link: function (scope, element, attrs, ctrl) {
 
                 // if ngModel is not defined, we don't need to do anything
-                if (ctrl) {
-                    ctrl.$validators.match = function(modelValue, viewValue) {
-                        return scope.ngMatch === viewValue;
-                    };
+                if (!ctrl) return;
 
-                    scope.$watch('ngMatch', function () {
-                        ctrl.$validate();
-                    });
-                }else{
-                    return
+                ctrl.$validators.match = function(modelValue, viewValue) {
+                    return scope.ngMatch === viewValue;
                 };
+
+                scope.$watch('ngMatch', function () {
+                    ctrl.$validate();
+                });
             }
         };
     }]);

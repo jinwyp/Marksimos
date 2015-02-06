@@ -118,8 +118,8 @@ apiRouter.get('/e4e/forgotpassword', function(req, res, next){
 
 
 /**********   API For E4E   **********/
-apiRouter.post('/e4e/api/registercompany',auth.registerE4Ecompany);
-apiRouter.post('/e4e/api/registerstudent',auth.registerE4Estudent);
+apiRouter.post('/e4e/api/registercompany', auth.registerE4Ecompany);
+apiRouter.post('/e4e/api/registerstudent', auth.registerE4Estudent);
 
 
 
@@ -435,21 +435,29 @@ apiRouter.get('/marksimos/api/create_admin', function (req,res,next) {
             "emailActivated": false
         }
     ];
-    userModel.query.find({role: userRoleModel.roleList.admin.id}).exec().then(function (userResult) {
+    userModel.find({role: userRoleModel.roleList.admin.id}).execQ().then(function (userResult) {
         if (userResult.length) {
             //已经存在管理员了，不进行初始化，只列出这些用户
-            return res.send(400, {message: "already added."});
+            return res.status(400).send ({message: "already added."});
         }else {
             //不存在管理员，需要初始化
-            userModel.query.create(userList, function (err, user) {
+            userModel.create(userList, function (err) {
                 if (err) {
-                    return res.send(400, {message: "add users failed."});
+                    return res.status(400).send( {message: "add default admin and users failed."});
                 } else {
-                    return res.send(userList);
+                    //for (var i=1; i<arguments.length; ++i) {
+                    //    var user = arguments[i];
+                    //    // do some stuff with candy
+                    //}
+
+                    var userResults = Array.prototype.slice.call(arguments, 1);
+                    return res.status(200).send(userResults);
                 }
             });
         }
-    });
+    }).fail(function(err){
+        next (err);
+    }).done();
 });
 apiRouter.get('/marksimos/api/initfaq', faqController.initFAQ);
 

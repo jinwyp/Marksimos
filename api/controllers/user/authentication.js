@@ -30,7 +30,7 @@ exports.initAuth = function () {
         }
         
         //查找用户 
-        userModel.query.findOne({ email: email }, function (err, user) {
+        userModel.findOne({ email: email }, function (err, user) {
             if (err) { return done(err); }
             
             if (!user) {
@@ -141,7 +141,7 @@ exports.authLoginToken = function (options) {
                 //token存在且未过期
                 if (tokenInfo && tokenInfo.expires > new Date()) {
 
-                    userModel.query.findOne({ _id: tokenInfo.userId }, function (err, user) {
+                    userModel.findOne({ _id: tokenInfo.userId }, function (err, user) {
 
                         if (err) { return next(err);}
 
@@ -303,33 +303,29 @@ exports.registerStudentB2B = function(req, res, next){
     if(city) user.city = city;
 
 
-    userModel.findByEmail(email)
-    .then(function(findResult){
+    userModel.findOneQ({email: email}).then(function(findResult){
         if(findResult){
-            return res.send({status:2, message: 'User is existed.'});
+            throw new Error( "Cancel promise chains. User is existed.");
         }
-        return userModel.register(user)
-        .then(function(result){
-            if(result){
-                return utility.sendActivateEmail(email, user.emailActivateToken)
-                .then(function(sendEmailResult){
-                    if(sendEmailResult){
-                        return res.send({message: 'Register success'});
-                    }else{
-                        throw new Error('Send activate email failed.');
-                    }
-                })
-            }else{
-                throw new Error('Save user to db failed.');
+        return userModel.register(user).then(function(result){
+            if(!result){
+                throw new Error('Cancel promise chains. Save new user to db failed.');
             }
+
+            return utility.sendActivateEmail(email, user.emailActivateToken).then(function(sendEmailResult){
+                if(!sendEmailResult){
+                    throw new Error('Cancel promise chains. Send activate email failed.');
+                }else{
+                    return res.status(200).send({message: 'Register success'});
+                }
+            })
         })
-    })
-    .fail(function(err){
-        logger.error(err);
-        res.send(500, {message: 'register failed.'});
-    })
-    .done();
+    }).fail(function(err){
+        next(err);
+    }).done();
 };
+
+
 
 
 function randomString(len) {
@@ -375,13 +371,11 @@ exports.registerE4Estudent = function(req, res, next){
     user.role = userRoleModel.roleList.student.id;
     user.studentType = 20;
 
-    userModel.findByEmail(email)
-    .then(function(findResult){
+    userModel.findOneQ({email: email}).then(function(findResult){
         if(findResult){
-            return res.send({status:2, message: 'User is existed.'});
+            throw new Error( "Cancel promise chains. User is existed.");
         }
-        return userModel.register(user)
-        .then(function(result){
+        return userModel.register(user).then(function(result){
             if(result){
                 return res.send({message: 'Register success',password:oldPassword});
 
@@ -397,13 +391,10 @@ exports.registerE4Estudent = function(req, res, next){
                 throw new Error('Save user to db failed.');
             }
         })
-    })
-    .fail(function(err){
-        logger.error(err);
-        res.send(500, {message: 'register failed.'});
-    })
-    .done();
-}
+    }).fail(function(err){
+        next(err);
+    }).done();
+};
 
 
 //registerE4Ecompany
@@ -423,7 +414,7 @@ exports.registerE4Ecompany = function(req, res, next){
     var user = {
         email: email,
         password: password
-    }
+    };
 
     user.username = req.body.nameOfContactPerson;
     user.designation = req.body.designation;
@@ -434,13 +425,11 @@ exports.registerE4Ecompany = function(req, res, next){
 
     user.role = userRoleModel.roleList.enterprise.id;
 
-    userModel.findByEmail(email)
-    .then(function(findResult){
+    userModel.findOneQ({email: email}).then(function(findResult){
         if(findResult){
-            return res.send({status:2, message: 'User is existed.'});
+            throw new Error( "Cancel promise chains. User is existed.");
         }
-        return userModel.register(user)
-        .then(function(result){
+        return userModel.register(user).then(function(result){
             if(result){
                 return res.send({message: 'Register success',password:oldPassword});
 
@@ -457,12 +446,9 @@ exports.registerE4Ecompany = function(req, res, next){
                 throw new Error('Save user to db failed.');
             }
         })
-    })
-    .fail(function(err){
-        logger.error(err);
-        res.send(500, {message: 'register failed.'});
-    })
-    .done();
+    }).fail(function(err){
+        next(err);
+    }).done();
 };
 
 
@@ -478,8 +464,10 @@ exports.activateEmail = function(req, res, next){
         return res.send(400, {message: 'token is required.'})
     }
 
-    userModel.findByEmailAndToken(email, token)
-    .then(function(result){
+    userModel.findOneQ({
+        email: email,
+        activateToken: token
+    }).then(function(result){
         if(result){
             return userModel.updateByEmail(email, {
                 emailActivated: true
