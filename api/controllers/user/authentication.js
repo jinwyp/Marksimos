@@ -24,6 +24,7 @@ exports.initAuth = function () {
         //登录参数验证
         req.checkBody('email', 'Invalid email').notEmpty().isEmail();
         req.assert('password', '6 to 20 characters required').len(6, 20);
+
         var errors = req.validationErrors();
         if (errors) {
             return done(null, false, { message: util.inspect(errors) });

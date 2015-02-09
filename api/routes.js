@@ -20,10 +20,10 @@ var config = require('../common/config.js');
 
 var apiRouter = express.Router();
 
-var fs = require('fs');
-var path = require('path');
 
-/**********    Init Passport Auth    **********/
+
+
+/**********     Init Passport Auth     **********/
 auth.initAuth();
 
 
@@ -32,7 +32,9 @@ auth.initAuth();
 
 
 
-/**********    Routes for rendering templates HCD Learning Website    **********/
+
+
+/**********     Routes for rendering templates HCD Learning Website     **********/
 
 apiRouter.get('/', function(req, res, next){
     res.redirect('/cn');
@@ -40,65 +42,14 @@ apiRouter.get('/', function(req, res, next){
 
 
 
-/*********      b2c dir     **********/
-function getEjs(viewPath, pathExclude, fileExclude, callback) {
-    fs.readdir(viewPath, function (err, fileList) {
-        if (!err) {
-            fileList.forEach(function (file) {
-                var curPath = viewPath + '/' + file;
-                fs.stat(curPath, function (err, stats) {
-                    if (stats.isFile()) {
-                        if (fileExclude.indexOf(curPath) < 0 && path.extname(curPath) === '.ejs') {
-                            callback(curPath);
-                        }
-                    }
-                    if (stats.isDirectory()) {
-                        if (pathExclude.indexOf(curPath) < 0) {
-                            getEjs(curPath, pathExclude, fileExclude, callback);
-                        }
-                    }
-                });
-            });
-        }
-    });
-}
-function endsWith(str, suffix) {
-    return str.indexOf(suffix, str.length - suffix.length) !== -1;
-}
-function getUrlPath(urlPath, defaultPages) {
-    defaultPages.forEach(function (page) {
-        if (endsWith(urlPath, page)) {
-            urlPath = urlPath.substring(0, urlPath.length - page.length);
-            return;
-        }
-    });
-    return urlPath;
-}
-getEjs('views/b2c', ['views/b2c/include'] , [], function (file) {
-    var ejsPath = file.substring(6);
-    var urlPath = getUrlPath(file.substring(5, file.length - 4), ['/index', '/default']);
-    apiRouter.get(urlPath, function (req, res, next) {
-        res.render(ejsPath);
-    });
-});
-
-/**********    set Content-Type for all API JSON resppnse    **********/
-
-apiRouter.all("/e4e/api/*", function(req, res, next){
-    res.set('Content-Type', 'application/json; charset=utf-8');
-    next();
-});
-
-apiRouter.all("/marksimos/api/*", function(req, res, next){
-    res.set('Content-Type', 'application/json; charset=utf-8');
-    next();
-});
 
 
 
 
 
-/**********    Routes for rendering templates E4E Website    **********/
+
+
+/**********     Routes for rendering templates E4E Website     **********/
 
 apiRouter.get('/e4e', function(req, res, next){
     res.render('b2c/index.ejs', {title : 'Welcome to HCD E4E | HCD Learning'});
@@ -117,18 +68,11 @@ apiRouter.get('/e4e/forgotpassword', function(req, res, next){
 
 
 
-/**********   API For E4E   **********/
-apiRouter.post('/e4e/api/registercompany', auth.registerE4Ecompany);
-apiRouter.post('/e4e/api/registerstudent', auth.registerE4Estudent);
 
 
 
 
-
-
-
-
-/**********    Routes for rendering templates MarkSimos User/Student    **********/
+/**********     Routes for rendering templates MarkSimos User/Student     **********/
 
 apiRouter.get('/marksimos', auth.authLoginToken({failureRedirect: '/marksimos/login'}), auth.authRole(userRoleModel.right.marksimos.studentLogin, {failureRedirect: '/marksimos/login'}), function(req, res, next){
     res.redirect('/marksimos/intro');
@@ -173,7 +117,12 @@ apiRouter.get('/marksimos/manual/en_US',function(req,res,next){
 
 
 
-/**********    Routes for rendering templates Administrator    **********/
+
+
+
+
+
+/**********     Routes for rendering templates Administrator     **********/
 
 apiRouter.get('/marksimos/admin', function(req, res, next){
     res.render('marksimosadmin/adminlogin.ejs', {title : 'Admin | Log in'});
@@ -194,13 +143,41 @@ apiRouter.get('/marksimos/adminhomereport/:seminar_id', auth.authLoginToken({fai
 
 
 
+/**********     Set Content-Type for all API JSON response     **********/
+
+apiRouter.all("/e4e/api/*", function(req, res, next){
+    res.set('Content-Type', 'application/json; charset=utf-8');
+    next();
+});
+
+apiRouter.all("/marksimos/api/*", function(req, res, next){
+    res.set('Content-Type', 'application/json; charset=utf-8');
+    next();
+});
 
 
 
 
 
 
-/**********    API For MarkSimos Student    **********/
+
+
+
+
+/**********     API For E4E Student     **********/
+apiRouter.post('/e4e/api/registercompany', auth.registerE4Ecompany);
+apiRouter.post('/e4e/api/registerstudent', auth.registerE4Estudent);
+
+
+
+
+
+
+
+
+
+
+/**********     API For MarkSimos Student     **********/
 apiRouter.post('/marksimos/api/login', auth.studentLogin);
 apiRouter.get('/marksimos/api/logout', auth.logout);
 
@@ -246,8 +223,18 @@ apiRouter.get('/marksimos/api/faq', faqController.getFAQ);
 
 
 
-/**********  API For Administrator  **********/
+
+
+
+
+
+
+
+/**********     API For Administrator     **********/
 apiRouter.post('/marksimos/api/admin/login', auth.adminLogin);
+
+// get current admin role
+apiRouter.get('/marksimos/api/admin/user', auth.authLoginToken(), auth.authRole(userRoleModel.right.marksimos.adminLogin), auth.getUserInfo);
 
 apiRouter.get('/marksimos/api/admin/distributors', auth.authLoginToken(), auth.authRole(userRoleModel.right.marksimos.distributorInfoListGet), distributorController.searchDistributor);
 apiRouter.post('/marksimos/api/admin/distributors', auth.authLoginToken(), auth.authRole(userRoleModel.right.marksimos.distributorInfoSingleCUD), distributorController.addDistributor);
@@ -294,13 +281,16 @@ apiRouter.put('/marksimos/api/admin/company/decision', auth.authLoginToken(), au
 
 
 
-// get current admin role
-apiRouter.get('/marksimos/api/admin/user', auth.authLoginToken(), auth.authRole(userRoleModel.right.marksimos.adminLogin), auth.getUserInfo);
 
 
 
 
-/**********  Database Init  **********/
+
+
+
+
+/**********     Database Init     **********/
+apiRouter.get('/marksimos/api/initfaq', faqController.initFAQ);
 
 apiRouter.get('/marksimos/api/create_admin', function (req,res,next) {
 
@@ -459,7 +449,7 @@ apiRouter.get('/marksimos/api/create_admin', function (req,res,next) {
         next (err);
     }).done();
 });
-apiRouter.get('/marksimos/api/initfaq', faqController.initFAQ);
+
 
 
 
