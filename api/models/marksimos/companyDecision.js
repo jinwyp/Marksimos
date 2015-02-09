@@ -190,7 +190,7 @@ exports.removeAll =  function(seminarId){
     }
 
     return deferred.promise;
-}
+};
 
 exports.save = function(decision){
     if(!mongoose.connection.readyState){
@@ -210,6 +210,11 @@ exports.save = function(decision){
             d_CID       : decisionResult.d_CID
         }, function(err, numberRemoved){
             if(err){ return deferred.reject(err); }
+
+            if(numberRemoved === 0 && decision.reRunLastRound){
+                return deferred.reject(new Error('There are no Company decisions deleted when create Company Decisions'));
+            }
+
 
             decisionResult.save(function(err, saveDecision, numAffected){
                 if(err){

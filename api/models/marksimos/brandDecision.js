@@ -213,7 +213,11 @@ exports.createBrandDecisionBasedOnLastPeriodDecision = function(decision){
         d_CID       : decisionResult.d_CID,
         d_BrandID   : decisionResult.d_BrandID
     }, function(err, numberRemoved){
-        if(err || numberRemoved === 0){ return deferred.reject(err); }
+        if(err ){ return deferred.reject(err); }
+
+        if(numberRemoved === 0 && decision.reRunLastRound){
+            return deferred.reject(new Error('There are no Brand decisions deleted when create Brand Decisions'));
+        }
 
         decisionResult.save(function(err, saveDecision, numAffected){
             if(err){

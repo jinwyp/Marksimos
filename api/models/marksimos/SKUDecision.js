@@ -547,7 +547,12 @@ exports.createSKUDecisionBasedOnLastPeriodDecision = function(decision){
         d_BrandID   : decisionResult.d_BrandID,
         d_SKUID     : decisionResult.d_SKUID
     }, function(err, numberRemoved){
-        if(err || numberRemoved === 0){ return deferred.reject(err); }
+        if(err ){ return deferred.reject(err); }
+
+        if(numberRemoved === 0 && decision.reRunLastRound){
+            return deferred.reject(new Error('There are no SKU decisions deleted when create SKU Decisions'));
+        }
+
 
         decisionResult.save(function(err, saveDecision, numAffected){
             if(err){

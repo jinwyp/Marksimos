@@ -827,6 +827,7 @@ function createNewDecisionBasedOnLastPeriodDecision(seminarId, lastPeriod, decis
                             if(!result){
                                 throw {message: "Cancel promise chains. Because save SKUDecision failed during create copy of last period decision."};
                             }
+                            tempSKUDecision.reRunLastRound = true;
                             return SKUDecisionModel.createSKUDecisionBasedOnLastPeriodDecision(tempSKUDecision);
                         })
                     }
@@ -858,6 +859,7 @@ function createNewDecisionBasedOnLastPeriodDecision(seminarId, lastPeriod, decis
                             if(!result){
                                 throw {message: "Cancel promise chains. Because save brandDecision failed during create copy of last period decision."};
                             }
+                            tempBrandDecision.reRunLastRound = true;
                             return brandDecisionModel.createBrandDecisionBasedOnLastPeriodDecision(tempBrandDecision);
                         })
                     }
@@ -896,6 +898,7 @@ function createNewDecisionBasedOnLastPeriodDecision(seminarId, lastPeriod, decis
                         if(!result){
                             throw {message: "Cancel promise chains. Because save comanyDecision failed during create copy of last period decision."};
                         }
+                        tempCompanyDecision.reRunLastRound = true;
                         return companyDecisionModel.save(tempCompanyDecision);
                     })
                 }
