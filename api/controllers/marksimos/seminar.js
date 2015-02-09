@@ -12,7 +12,7 @@ exports.addSeminar = function(req, res, next){
     var checkRequiredFieldResult = checkRequiredField(req);
 
     if(checkRequiredFieldResult){
-        return res.send(400, {message: checkRequiredFieldResult});
+        return res.status(400).send( {message: checkRequiredFieldResult});
     }
 
     var validateResult = validateSeminar(req);
@@ -116,7 +116,7 @@ exports.assignStudentToSeminar = function(req, res, next){
 
  
     var email = req.body.email;
-    var seminarId = req.body.seminar_id.toString();
+    var seminarId = req.body.seminar_id;
     var companyId = +req.body.company_id;
 
 
@@ -125,8 +125,7 @@ exports.assignStudentToSeminar = function(req, res, next){
         return;
     }
 
-    userModel.findOne({email: email})
-    .then(function(student){
+    userModel.findOneQ({email: email}).then(function(student){
         if(!student){
             throw {message: "Email not exist, assign student to seminar failed."};
         }
@@ -162,12 +161,9 @@ exports.assignStudentToSeminar = function(req, res, next){
             return res.send({message: "there's error during update seminar."});
         }
         return res.send({message: "assign student to seminar success."})
-    })
-    .fail(function(err){
-        logger.error(err);
+    }).fail(function(err){
         next (err);
-    })
-    .done();
+    }).done();
 };
 
 

@@ -1,6 +1,6 @@
 
 var gulp = require('gulp'),
-    argv = require('yargs').usage('Usage: $0 -p [num]').argv;
+    argv = require('yargs').usage('Usage: $0 -p [num] -sid [num]').example('$0 -p 1 -sid 10001', 'count the lines in the given file').argv;
     livereload = require('gulp-livereload'),
     nodemon = require('gulp-nodemon'),
     jshint = require('gulp-jshint'),
@@ -224,7 +224,8 @@ gulp.task('browser-sync', function() {
 /********************  场景测试任务 API Testing Task (called when you run `gulp` from cli)  ********************/
 gulpArguments = argv;
 gulp.task('teststudentud', function() {
-    console.log("pls use 'gulp teststudentud -p' with '-p' peroid number argument, example: 'gulp teststudentud -p1' ");
+    console.log("Pls use 'gulp teststudentud -p -sid'. Argument '-p' peroid number, Argument '-sid' seminarId argument. ");
+    console.log("Example: 'gulp teststudentud -p1 -sid10001' ");
     return gulp.src(paths.scenario_testStudentUpdateDecisions)
         .pipe(jasmine());
 });

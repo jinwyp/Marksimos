@@ -25,12 +25,44 @@ var studentList =[
 ];
 
 
+
 var adminList =[
     {
         email : 'hcd_facilitator@hcdlearning.com',
         password : 'hcdfacilitator@9876'
     }
 ];
+
+
+
+var createSeminarStudentList = [
+    {
+        company_id: 1,
+        email: "anilraparla@hcdlearning.com",
+        seminar_id: 1000
+    },
+    {
+        company_id: 2,
+        email: "haosun@hcdlearning.com",
+        seminar_id: 1000
+    },
+    {
+        company_id: 3,
+        email: "jinwang@hcdlearning.com",
+        seminar_id: 1000
+    },
+    {
+        company_id: 4,
+        email: "yunsun@hcdlearning.com",
+        seminar_id: 1000
+    },
+    {
+        company_id: 1,
+        email: "anilraparla@hcdlearning.com",
+        seminar_id: 1000
+    }
+];
+
 
 
 var period1 = [
@@ -5882,6 +5914,7 @@ var seminarFinalResult = [
 
 module.exports = {
     studentList : studentList,
+    createSeminarStudentList : createSeminarStudentList,
     adminList : adminList,
     seminarId : seminarId,
     period1 : period1,

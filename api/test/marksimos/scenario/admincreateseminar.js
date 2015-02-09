@@ -6,7 +6,7 @@ var Q = require('q');
 
 var data = require('../fakedata.js');
 var admin = data.adminList[0];
-
+var studentInfoList = data.createSeminarStudentList;
 
 var originalTimeout;
 
@@ -58,34 +58,11 @@ describe("Admin API Create Seminar", function() {
 
             newSeminar = value[1];
             expect(newSeminar.seminarId).toMatch(/^\d+$/);
-            var studentInfoList = [
-                {
-                    company_id: 1,
-                    email: "anilraparla@hcdlearning.com",
-                    seminar_id: newSeminar.seminarId.toString()
-                },
-                {
-                    company_id: 2,
-                    email: "haosun@hcdlearning.com",
-                    seminar_id: newSeminar.seminarId
-                },
-                {
-                    company_id: 3,
-                    email: "jinwang@hcdlearning.com",
-                    seminar_id: newSeminar.seminarId
-                },
-                {
-                    company_id: 4,
-                    email: "yunsun@hcdlearning.com",
-                    seminar_id: newSeminar.seminarId
-                },
-                 {
-                     company_id: 1,
-                     email: "anilraparla@hcdlearning.com",
-                     seminar_id: newSeminar.seminarId.toString()
-                 }
 
-            ];
+            studentInfoList.forEach(function(studentInfo){
+                studentInfo.seminar_id = newSeminar.seminarId;
+            });
+
             return studentInfoList;
         }).then(function(studentInfoList) {
             return Q.all([
