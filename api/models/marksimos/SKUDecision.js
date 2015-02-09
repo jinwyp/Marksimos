@@ -553,7 +553,6 @@ exports.createSKUDecisionBasedOnLastPeriodDecision = function(decision){
             return deferred.reject(new Error('There are no SKU decisions deleted when create SKU Decisions'));
         }
 
-
         decisionResult.save(function(err, saveDecision, numAffected){
             if(err){
                 deferred.reject(err);
@@ -561,10 +560,10 @@ exports.createSKUDecisionBasedOnLastPeriodDecision = function(decision){
                 deferred.resolve(saveDecision);
             }
         });
-    })
+    });
 
     return deferred.promise;
-}
+};
 
 //User choose to launch new product, need name validations(also set up SKUID)
 exports.create = function(decision){

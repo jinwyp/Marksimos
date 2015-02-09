@@ -215,7 +215,6 @@ exports.save = function(decision){
                 return deferred.reject(new Error('There are no Company decisions deleted when create Company Decisions'));
             }
 
-
             decisionResult.save(function(err, saveDecision, numAffected){
                 if(err){
                     deferred.reject(err);
