@@ -30,16 +30,12 @@
 
                     $window.location.href = "/marksimos/adminhome";
 
-                    }).error(function (data, status, headers, config) {
-                        console.log(data, status);
-                        if (status == 400) {
-                            form.password.$valid = false;
-                            form.password.$invalid = true;
-                        }
-                        else if (status == 403) {
-                            form.email.$valid = false;
-                            form.email.$invalid = true;
-                        }
+                }).error(function (data, status, headers, config) {
+                    console.log(data, status);
+                    if (status === 401 || status === 403) {
+                        form.password.$valid = false;
+                        form.password.$invalid = true;
+                    }
                 });
             }
         };
