@@ -165,8 +165,8 @@ apiRouter.all("/marksimos/api/*", function(req, res, next){
 
 
 /**********     API For E4E Student     **********/
-apiRouter.post('/e4e/api/registercompany', auth.registerE4Ecompany);
-apiRouter.post('/e4e/api/registerstudent', auth.registerE4Estudent);
+apiRouter.post('/e4e/api/registercompany', auth.registerB2CEnterprise);
+apiRouter.post('/e4e/api/registerstudent', auth.registerB2CStudent);
 
 
 

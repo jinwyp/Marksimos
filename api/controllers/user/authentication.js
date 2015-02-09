@@ -275,7 +275,7 @@ exports.getUserInfo = function (req, res, next){
 
 
 
-exports.registerStudentB2B = function(req, res, next){
+exports.registerB2BStudent = function(req, res, next){
     req.checkBody('email', 'Invalid email').notEmpty().isEmail();
     req.assert('password', '6 to 20 characters required').len(6, 20);
 
@@ -341,8 +341,10 @@ function randomString(len) {
 }
 
 
-//registerE4Estudent
-exports.registerE4Estudent = function(req, res, next){
+
+
+
+exports.registerB2CStudent = function(req, res, next){
     req.checkBody('email', 'Invalid email').notEmpty().isEmail();
 
     var errors = req.validationErrors();
@@ -399,7 +401,7 @@ exports.registerE4Estudent = function(req, res, next){
 
 
 //registerE4Ecompany
-exports.registerE4Ecompany = function(req, res, next){
+exports.registerB2CEnterprise = function(req, res, next){
     req.checkBody('email', 'Invalid email').notEmpty().isEmail();
 
     var errors = req.validationErrors();
