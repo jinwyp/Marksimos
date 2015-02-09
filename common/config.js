@@ -66,15 +66,15 @@ module.exports = (function(){
     };
 
     switch(process.env.NODE_ENV){
-        case 'sunyun':
-            config.logDirectory = 'D:/node_log/';
-            config.mongo_conn = 'mongodb://marksimosdbadmin:marksimossunhao@192.168.2.50:27017/Marksimos';
-            config.host = 'http://localhost:3000/';
-            config.cgiService = 'http://192.168.2.50/cgi-bin/';
-            break;
         case 'suyuan':
             config.logDirectory = '/Users/ludwik/code/Marksimos/log/';
             config.mongo_conn = 'mongodb://localhost/Marksimos';
+            config.host = 'http://localhost:3000/';
+            config.cgiService = 'http://192.168.2.50/cgi-bin/';
+            break;
+        case 'jinlocal':
+            config.logDirectory = '/Users/jinwyp/Documents/github/Marksimos/log/';
+            config.mongo_conn = 'mongodb://marksimosdbadmin:marksimossunhao@127.0.0.1:27017/Marksimos';
             config.host = 'http://localhost:3000/';
             config.cgiService = 'http://192.168.2.50/cgi-bin/';
             break;

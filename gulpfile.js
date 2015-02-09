@@ -175,10 +175,10 @@ gulp.task('nodemonjin', function () {
     });
 //        .on('restart', 'default')
 });
-gulp.task('nodemonsunyun', function () {
+gulp.task('nodemonjinlocal', function () {
     nodemon({
-        script: 'app-debug.js',
-        env: { 'NODE_ENV': 'sunyun' }
+        script: 'app.js',
+        env: { 'NODE_ENV': 'jinlocal' }
     });
 //        .on('restart', 'default')
 });
@@ -256,8 +256,9 @@ gulp.task('default', ['nodemonludwik', 'watchdev']);
 
 //gulp.task('jin', ['mongo', 'browser-sync', 'nodemonjin', 'watch']);
 gulp.task('jin', [ 'compass', 'templates', 'nodemonjin', 'watchdev']);
+gulp.task('jinco', ['compass', 'templates', 'nodemonjinlocal', 'watchdev']);
 gulp.task('jingo', ['compass', 'templates', 'minifycss', 'jscompress', 'nodemonjin', 'watch']);
 
-gulp.task('sunyun', ['compass', 'nodemonsunyun', 'watchdev']);
+
 
 
