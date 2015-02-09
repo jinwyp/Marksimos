@@ -204,25 +204,25 @@ exports.createBrandDecisionBasedOnLastPeriodDecision = function(decision){
     }
 
     var deferred = Q.defer();
-    var decision = new BrandDecision(decision);
-    decision.modifiedField = 'skip';
+    var decisionResult = new BrandDecision(decision);
+    decisionResult.modifiedField = 'skip';
 
     BrandDecision.remove({
-        seminarId   : decision.seminarId,
-        period      : decision.period,
-        d_CID       : decision.companyId,
-        d_BrandID   : decision.brandId,
-    }, function(err){
-        if(err){ return deferred.reject(err); }
+        seminarId   : decisionResult.seminarId,
+        period      : decisionResult.period,
+        d_CID       : decisionResult.d_CID,
+        d_BrandID   : decisionResult.d_BrandID
+    }, function(err, numberRemoved){
+        if(err || numberRemoved === 0){ return deferred.reject(err); }
 
-        decision.save(function(err, saveDecision, numAffected){
+        decisionResult.save(function(err, saveDecision, numAffected){
             if(err){
                 deferred.reject(err);
             }else{
                 deferred.resolve(saveDecision);
             }
         });
-    })
+    });
     return deferred.promise;
 }
 

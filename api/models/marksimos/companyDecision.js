@@ -202,16 +202,16 @@ exports.save = function(decision){
     if(!decision){
         deferred.reject(new Error("Invalid argument decision."));
     }else{
-        var d = new CompanyDecision(decision);
+        var decisionResult = new CompanyDecision(decision);
 
         CompanyDecision.remove({
-            seminarId   : d.seminarId,
-            period      : d.period,
-            d_CID       : d.companyId,
-        }, function(err){
+            seminarId   : decisionResult.seminarId,
+            period      : decisionResult.period,
+            d_CID       : decisionResult.d_CID
+        }, function(err, numberRemoved){
             if(err){ return deferred.reject(err); }
 
-            d.save(function(err, saveDecision, numAffected){
+            decisionResult.save(function(err, saveDecision, numAffected){
                 if(err){
                     deferred.reject(err);
                 }else{

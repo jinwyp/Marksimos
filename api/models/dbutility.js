@@ -40,7 +40,7 @@ exports.saveDecision = function(seminarId, allDecisions){
                 exports.saveSKUDecision(decision, seminarId, decision.period)
             ]);
         })
-    })
+    });
     return p;
 };
 
