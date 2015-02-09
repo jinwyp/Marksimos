@@ -18,9 +18,9 @@ var seminarId;
 var originalTimeout;
 var newTimeout = 10000;
 
+if(gulpArguments.s > 10000 && gulpArguments.p > 0){
 
-if(gulpArguments.sid > 10000){
-    seminarId = gulpArguments.sid;
+    seminarId = gulpArguments.s;
 
     describe("Student API Submit Decisions : ", function() {
 
@@ -34,7 +34,7 @@ if(gulpArguments.sid > 10000){
 
                 if (/^[A-Za-z0-9]+$/.test(body.userId) || response.statusCode === 200) {
 
-                    request.get(studentApiPath + "choose_seminar?seminar_id=10051", { qs: {seminar_id:seminarId} }, function(err, response, body) {
+                    request.get(studentApiPath + "choose_seminar", { qs: {seminar_id:seminarId} }, function(err, response, body) {
                         if (!err && response.statusCode == 200) {
                             done();
                         }

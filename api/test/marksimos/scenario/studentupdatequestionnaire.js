@@ -12,8 +12,8 @@ var seminarId ;
 
 
 
-if(gulpArguments.sid > 10000) {
-    seminarId = gulpArguments.sid;
+if(gulpArguments.s > 10000){
+    seminarId = gulpArguments.s;
 
     describe("Student API  Questionnaire", function () {
 

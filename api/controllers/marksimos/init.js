@@ -149,7 +149,7 @@ exports.init = function(req, res, next) {
                     if(numAffected!==1){
                         throw {message: "Cancel promise chains. Because there's error during set isInitialized to true."};
                     }
-                    res.send(200, {message: 'initialize success'});
+                    res.status(200).send( {message: 'initialize success'});
                 }).done();
             })
             .fail(function(err){

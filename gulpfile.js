@@ -224,8 +224,8 @@ gulp.task('browser-sync', function() {
 /********************  场景测试任务 API Testing Task (called when you run `gulp` from cli)  ********************/
 gulpArguments = argv;
 gulp.task('teststudentud', function() {
-    console.log("Pls use 'gulp teststudentud -p -sid'. Argument '-p' peroid number, Argument '-sid' seminarId argument. ");
-    console.log("Example: 'gulp teststudentud -p1 -sid10001' ");
+    console.log("Pls use 'gulp teststudentud -p -s'. Argument '-p' peroid number, Argument '-s' seminarId argument. ");
+    console.log("Example: 'gulp teststudentud -p1 -s10001' ");
     return gulp.src(paths.scenario_testStudentUpdateDecisions)
         .pipe(jasmine());
 });
@@ -239,11 +239,14 @@ gulp.task('testadmincs', function() {
         .pipe(jasmine());
 });
 gulp.task('testadminrn', function() {
+    console.log("Pls use 'gulp testadminrn -p -s'. Argument '-p' peroid number, Argument '-s' seminarId argument. ");
+    console.log("Example: 'gulp testadminrn -p1 -s10001' ");
     return gulp.src(paths.scenario_testAdminRunSeminarNextRound)
         .pipe(jasmine());
 });
 gulp.task('testadminrr', function() {
-    console.log("pls use 'gulp testadminrr -p' with '-p' peroid number argument, example: 'gulp testadminrr -p1' ");
+    console.log("Pls use 'gulp testadminrr -p -s'. Argument '-p' peroid number, Argument '-s' seminarId argument. ");
+    console.log("Example: 'gulp testadminrr -p1 -s10001' ");
     return gulp.src(paths.scenario_testAdminReRunSeminar)
         .pipe(jasmine());
 });

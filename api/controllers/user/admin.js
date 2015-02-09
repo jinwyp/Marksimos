@@ -169,43 +169,40 @@ exports.addFacilitator = function(req, res, next){
         distributorId: distributorId
     };
 
-    userModel.findOne({
+    userModel.findOneQ({
         email: req.body.email
     }).then(function(result){
-            if(result){
-                return res.send(400, {message: 'Email has been used, please choose another email.'});
-            }else{
-                return userModel.findOneQ({_id: distributorId})
-            }
-        })
-        .then(function(distributor){
-            if(!distributor){
-                throw {message: "Can't find distributor in database: distributorId: " + distributorId};
-            }
+        if(result){
+            return res.send(400, {message: 'Email has been used, please choose another email.'});
+        }else{
+            return userModel.findOneQ({_id: distributorId})
+        }
+    }).then(function(distributor){
+        if(!distributor){
+            throw {message: "Can't find distributor in database: distributorId: " + distributorId};
+        }
 
-            if(distributor.numOfLicense - parseInt(req.body.num_of_license) <= 0){
-                throw {httpStatus: 400, message: "You don't have enought license."};
-            }
+        if(distributor.numOfLicense - parseInt(req.body.num_of_license) <= 0){
+            throw {httpStatus: 400, message: "You don't have enought license."};
+        }
 
-            return userModel.updateQ({_id: distributorId}, {
-                numOfLicense: distributor.numOfLicense - parseInt(req.body.num_of_license_granted),
-                numOfUsedLicense: distributor.numOfUsedLicense + parseInt(req.body.num_of_license_granted)
-            });
-        })
-        .then(function(numAffected){
-            if(numAffected!==1){
-                throw {message: 'update distributor failed during add facilitator.'}
-            }
-            return userModel.register(facilitator);
-        })
-        .then(function(result){
-            if(!result){
-                throw {message: 'add facilitator failed.'}
-            }
-            res.send(result);
-        }).fail(function(err){
-            next(err);
-        }).done();
+        return userModel.updateQ({_id: distributorId}, {
+            numOfLicense: distributor.numOfLicense - parseInt(req.body.num_of_license_granted),
+            numOfUsedLicense: distributor.numOfUsedLicense + parseInt(req.body.num_of_license_granted)
+        });
+    }).then(function(numAffected){
+        if(numAffected!==1){
+            throw {message: 'update distributor failed during add facilitator.'}
+        }
+        return userModel.register(facilitator);
+    }).then(function(result){
+        if(!result){
+            throw {message: 'add facilitator failed.'}
+        }
+        res.send(result);
+    }).fail(function(err){
+        next(err);
+    }).done();
 };
 
 exports.updateFacilitator = function(req, res, next){
