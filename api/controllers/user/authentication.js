@@ -318,7 +318,7 @@ exports.registerB2CStudent = function(req, res, next){
         organizationOrUniversity : req.body.university,
         dateOfGraduation : req.body.dateOfGraduation,
 
-
+        facilitatorId: "54d834bdeaf05dbd048120f8", // fixed for b2c_facilitator
 
         role : userRoleModel.roleList.student.id,
         studentType : userModel.getStudentType().B2C
@@ -380,6 +380,7 @@ exports.registerB2CEnterprise = function(req, res, next){
         companyContactMobileNumber: req.body.companyContactMobileNumber,
         companyOfficeTelephone: req.body.companyOfficeTelephone,
 
+        facilitatorId: "54d834bdeaf05dbd048120f8", // fixed for b2c_facilitator
 
         role : userRoleModel.roleList.enterprise.id,
         studentType : userModel.getStudentType().B2C
