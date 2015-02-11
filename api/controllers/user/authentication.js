@@ -275,58 +275,6 @@ exports.getUserInfo = function (req, res, next){
 
 
 
-exports.registerB2BStudent = function(req, res, next){
-    req.checkBody('email', 'Invalid email').notEmpty().isEmail();
-    req.assert('password', '6 to 20 characters required').len(6, 20);
-
-    var errors = req.validationErrors();
-    if(errors){
-        return res.send(400, {message: util.inspect(errors)});
-    }
-
-    var email = req.body.email;
-    var password = req.body.password;
-    password = utility.hashPassword(password);
-
-    var phoneNum = req.body.mobilePhone || '';
-    var country = req.body.country || '';
-    var state = req.body.state || '';
-    var city = req.body.city || '';
-
-    var user = {
-        email: email,
-        password: password
-    };
-
-    if(phoneNum) user.mobilePhone = phoneNum;
-    if(country) user.country = country;
-    if(state) user.state = state;
-    if(city) user.city = city;
-
-
-    userModel.findOneQ({email: email}).then(function(findResult){
-        if(findResult){
-            throw new Error( "Cancel promise chains. User is existed.");
-        }
-        return userModel.register(user).then(function(result){
-            if(!result){
-                throw new Error('Cancel promise chains. Save new user to db failed.');
-            }
-
-            return utility.sendActivateEmail(email, user.emailActivateToken).then(function(sendEmailResult){
-                if(!sendEmailResult){
-                    throw new Error('Cancel promise chains. Send activate email failed.');
-                }else{
-                    return res.status(200).send({message: 'Register success'});
-                }
-            })
-        })
-    }).fail(function(err){
-        next(err);
-    }).done();
-};
-
-
 
 
 function randomString(len) {
@@ -390,6 +338,16 @@ exports.registerB2CStudent = function(req, res, next){
             //     }
             // })
 
+
+            //return utility.sendActivateEmail(email, user.emailActivateToken).then(function(sendEmailResult){
+            //    if(!sendEmailResult){
+            //        throw new Error('Cancel promise chains. Send activate email failed.');
+            //    }else{
+            //        return res.status(200).send({message: 'Register success'});
+            //    }
+            //})
+
+
         }else{
             throw new Error('Save new user to database error.');
         }
@@ -403,56 +361,44 @@ exports.registerB2CStudent = function(req, res, next){
 
 
 exports.registerB2CEnterprise = function(req, res, next){
-    req.checkBody('email', 'Invalid email').notEmpty().isEmail();
 
-    var errors = req.validationErrors();
-    if(errors){
-        return res.send(400, {message: util.inspect(errors)});
+    var validationErrors = userModel.registerValidations(req, userRoleModel.roleList.enterprise.id);
+
+    if(validationErrors){
+        return res.status(400).send( {message: validationErrors} );
     }
 
-    var email = req.body.email;
-    var password = randomString(6);
-    var oldPassword = password;
-    password = utility.hashPassword(password);
+    var newUser = {
+        username : req.body.username,
+        email: req.body.email,
+        password: req.body.password,
 
-    var user = {
-        email: email,
-        password: password
+
+        companyName : req.body.companyName,
+        companyAddress : req.body.companyAddress,
+        companyContactPerson : req.body.companyContactPerson,
+        companyContactMobileNumber: req.body.companyContactMobileNumber,
+        companyOfficeTelephone: req.body.companyOfficeTelephone,
+
+
+        role : userRoleModel.roleList.enterprise.id,
+        studentType : userModel.getStudentType().B2C
     };
 
-    user.username = req.body.nameOfContactPerson;
-    user.designation = req.body.designation;
-    user.officalContactNumber = req.body.officalContactNumber;
-    user.holdingCompany = req.body.holdingCompany;
-    user.division = req.body.division;
-    user.mobilePhone = req.body.mobileNumber;
 
-    user.role = userRoleModel.roleList.enterprise.id;
+    userModel.register(newUser).then(function(result){
+        if(result){
+            return res.status(200).send({message: 'Register new company success'});
 
-    userModel.findOneQ({email: email}).then(function(findResult){
-        if(findResult){
-            throw new Error( "Cancel promise chains. User is existed.");
+        }else{
+            throw new Error('Save new company to database error.');
         }
-        return userModel.register(user).then(function(result){
-            if(result){
-                return res.send({message: 'Register success',password:oldPassword});
 
-
-                // return utility.sendActivateEmail(email, user.emailActivateToken)
-                // .then(function(sendEmailResult){
-                //     if(sendEmailResult){
-                //         return res.send({message: 'Register success'});
-                //     }else{
-                //         throw new Error('Send activate email failed.');
-                //     }
-                // })
-            }else{
-                throw new Error('Save user to db failed.');
-            }
-        })
     }).fail(function(err){
         next(err);
     }).done();
+
+
 };
 
 

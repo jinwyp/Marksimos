@@ -63,7 +63,9 @@ apiRouter.get('/e4e/forgotpassword', function(req, res, next){
     res.render('b2c/forgotpassword.ejs', {title:'Forgotten Your Password? | HCD Learning'});
 });
 
-
+apiRouter.get('/e4e/aa', function(req, res, next){
+    res.render('e4e/index.ejs', {title:'Forgotten Your Password? | HCD Learning'});
+});
 
 
 
@@ -167,7 +169,6 @@ apiRouter.all("/marksimos/api/*", function(req, res, next){
 /**********     API For E4E Student     **********/
 apiRouter.post('/e4e/api/registercompany', auth.registerB2CEnterprise);
 apiRouter.post('/e4e/api/registerstudent', auth.registerB2CStudent);
-
 
 
 

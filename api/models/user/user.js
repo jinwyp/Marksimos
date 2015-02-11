@@ -51,7 +51,7 @@ var userSchema = new Schema({
     occupation: String,
 
 
-    //address
+    //user address
     country: String,
     state: String,
     city: String,
@@ -59,11 +59,13 @@ var userSchema = new Schema({
     street: String,
 
 
-    //add for e4e company
-    designation: String,
-    officialContactNumber: String,
-    holdingCompany: String,
-    division: String,
+    //For B2C E4E Enterprise
+    companyName : String,
+    companyAddress : String,
+    companyContactPerson : String,
+    companyContactMobileNumber: String,
+    companyOfficeTelephone: String,
+
 
 
     //distributor and facilitator info
@@ -165,7 +167,9 @@ userSchema.statics.registerValidations = function(req, userRoleId){
         req.checkBody('gender', 'Gender is required').notEmpty().isInt();
     }
 
-
+    if(userRoleId === userRoleModel.roleList.enterprise.id){
+        req.checkBody('enterprise', 'Company Name is required').notEmpty().len(4, 100);
+    }
 
 
     return req.validationErrors();

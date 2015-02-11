@@ -442,6 +442,57 @@ exports.getSeminarOfFacilitator = function(req, res, next){
 
 
 
+exports.registerB2BStudent = function(req, res, next){
+    req.checkBody('email', 'Invalid email').notEmpty().isEmail();
+    req.assert('password', '6 to 20 characters required').len(6, 20);
+
+    var errors = req.validationErrors();
+    if(errors){
+        return res.send(400, {message: util.inspect(errors)});
+    }
+
+    var email = req.body.email;
+    var password = req.body.password;
+
+    var phoneNum = req.body.mobilePhone || '';
+    var country = req.body.country || '';
+    var state = req.body.state || '';
+    var city = req.body.city || '';
+
+    var user = {
+        email: email,
+        password: password
+    };
+
+    if(phoneNum) user.mobilePhone = phoneNum;
+    if(country) user.country = country;
+    if(state) user.state = state;
+    if(city) user.city = city;
+
+
+    userModel.findOneQ({email: email}).then(function(findResult){
+        if(findResult){
+            throw new Error( "Cancel promise chains. User is existed.");
+        }
+        return userModel.register(user).then(function(result){
+            if(!result){
+                throw new Error('Cancel promise chains. Save new user to db failed.');
+            }
+
+            return utility.sendActivateEmail(email, user.emailActivateToken).then(function(sendEmailResult){
+                if(!sendEmailResult){
+                    throw new Error('Cancel promise chains. Send activate email failed.');
+                }else{
+                    return res.status(200).send({message: 'Register success'});
+                }
+            })
+        })
+    }).fail(function(err){
+        next(err);
+    }).done();
+};
+
+
 
 exports.addStudent = function(req, res, next){
     var validateResult = utility.validateUser(req);
