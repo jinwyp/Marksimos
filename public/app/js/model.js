@@ -43,6 +43,7 @@
 
 
     var apiPath = '/marksimos/api/';
+    var apiPathB2C = '/e4e/api/';
     var apiAdminPath = '/marksimos/api/admin/';
 
 
@@ -57,6 +58,10 @@
     function studentModel ($http, localStorageService){
 
         var factory = {
+            registerB2C : function(user){
+                return $http.post(apiPathB2C + 'registerstudent', user);
+            },
+
             login : function(user){
                 return $http.post(apiPath + 'login', user).then(function(result){
                     localStorageService.set('logintoken', result.data.token);

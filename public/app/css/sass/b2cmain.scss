@@ -581,17 +581,17 @@ body{
 	padding-top:100px;
 	padding-left:170px;
 	font-weight:700;
-	text-indent:2em;
 	letter-spacing:5px;
 	color:#999;
 	.tip-header{
-		text-indent:0;
-	}	
+		margin-left:0px;
+	}
 	a{
 		letter-spacing:0;
 	}
 	p{
 		font-size:18px;
-		margin-top:20px;	
+		margin-top:20px;
+		margin-left:40px;
 	}
 }

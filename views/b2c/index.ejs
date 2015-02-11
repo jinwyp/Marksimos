@@ -13,24 +13,26 @@
                     <div class="title">注册</div>
 
                     <div class="form-group has-feedback" ng-class="{'has-success':regForm.username.$dirty&&regForm.username.$valid, 'has-error':regForm.username.$dirty&&regForm.username.$invalid}">
-                        <input class="input-lg form-control" type="text" name="username" placeholder="用户名" ng-model="register.newUser.username" required/>
+                        <input class="input-lg form-control" type="text" name="username" placeholder="用户名" ng-model="register.newUser.username" required ng-minlength="6" ng-maxlength="20"/>
                         <span class="glyphicon glyphicon-ok form-control-feedback" aria-hidden="true" ng-if="regForm.username.$dirty&&regForm.username.$valid"></span>
                         <span class="glyphicon glyphicon-remove form-control-feedback" aria-hidden="true" ng-if="regForm.username.$dirty&&regForm.username.$invalid"></span>
-                        <span class="err-msg" ng-if="regForm.username.$dirty&&regForm.username.$invalid">请输入正确的用户名!</span>
+                        <span class="err-msg" ng-if="regForm.username.$dirty&&regForm.username.$error.required">请输入正确的用户名!</span>
+                        <span class="err-msg" ng-if="regForm.username.$dirty&&regForm.username.$error.minlength || regForm.username.$dirty&&regForm.username.$error.maxlength">用户名长度为6-20个字符!</span>
+                        <span class="err-msg" ng-if="regForm.username.$dirty&&register.css.usernameExistedInfo">用户名或邮箱已经存在!</span>
                     </div>
 
                     <div class="form-group has-feedback" ng-class="{'has-success':regForm.email.$dirty&&regForm.email.$valid, 'has-error':regForm.email.$dirty&&regForm.email.$invalid}">
                         <input class="input-lg form-control" type="email" name="email" placeholder="邮箱"  ng-model="register.newUser.email" required/>
                         <span class="glyphicon glyphicon-ok form-control-feedback" aria-hidden="true" ng-if="regForm.email.$dirty&&regForm.email.$valid"></span>
                         <span class="glyphicon glyphicon-remove form-control-feedback" aria-hidden="true" ng-if="regForm.email.$dirty&&regForm.email.$invalid"></span>
-                        <span class="err-msg" ng-if="regForm.email.$dirty&&regForm.email.$invalid">请输入正确的邮箱!</span>
+                        <span class="err-msg" ng-if="regForm.email.$dirty&&regForm.email.$error.required || regForm.email.$dirty&&regForm.email.$error.email">请输入正确的邮箱!</span>
                     </div>
 
                     <div class="form-group has-feedback" ng-class="{'has-success':regForm.password.$dirty&&regForm.password.$valid, 'has-error':regForm.password.$dirty&&regForm.password.$invalid}">
-                        <input class="input-lg form-control" type="password" name="password" placeholder="密码" ng-model="register.newUser.password" required/>
+                        <input class="input-lg form-control" type="password" name="password" placeholder="密码" ng-model="register.newUser.password" required ng-minlength="6" ng-maxlength="20"/>
                         <span class="glyphicon glyphicon-ok form-control-feedback" aria-hidden="true" ng-if="regForm.password.$dirty&&regForm.password.$valid"></span>
                         <span class="glyphicon glyphicon-remove form-control-feedback" aria-hidden="true" ng-if="regForm.password.$dirty&&regForm.password.$invalid"></span>
-                        <span class="err-msg" ng-if="regForm.password.$dirty&&regForm.password.$invalid">请输入正确的密码!</span>
+                        <span class="err-msg" ng-if="regForm.password.$dirty&&regForm.password.$invalid">请输入正确的密码 6-20个字符!</span>
                     </div>
 
                     <div class="form-group has-feedback" ng-class="{'has-success':regForm.passwordreinput.$dirty&&regForm.passwordreinput.$valid, 'has-error':regForm.passwordreinput.$dirty&&regForm.passwordreinput.$invalid}">
@@ -62,11 +64,11 @@
 
         <div class="middle b2c-container" ng-if="!register.css.showRegForm" ng-cloak>
             <div class="b2c-verify-account text-justify">
-                <p class="tip-header">User Name 您好:</p>
-                <p>感谢您注册E4E,打开您的邮箱可完成注册，</p>
-                <p>我们发送了邮件到您的邮箱:<a href="#">ryanluan@hcdlearning.com</a></p>
-                <p>E4E</p>
-                <p>2014年12月31日</p>
+                <p class="tip-header">{{register.newUser.username}} 您好:</p>
+                <p>感谢您注册E4E !</p>
+                <p>我们发送了一封邮件到您的邮箱:<a href="{{register.newUser.email | emailaddress}}" target="_blank">{{register.newUser.email}}</a></p>
+                <p>请打开您的邮箱,点击邮件中链接即可完成注册. <a class="btn btn-info" href="{{register.newUser.email | emailaddress}}">立即查看</a></p>
+
             </div>
         </div>
 

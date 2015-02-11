@@ -19,17 +19,19 @@
 
 
     /********************  Create New Module For Controllers ********************/
-    angular.module('b2clogin', ['marksimos.commoncomponent', 'marksimos.websitecomponent', 'marksimos.model']);
+    angular.module('b2clogin', ['marksimos.commoncomponent', 'marksimos.websitecomponent', 'marksimos.model', 'marksimos.filter']);
 
 
 
     /********************  Use This Module To Set New Controllers  ********************/
-    angular.module('b2clogin').controller('userLoginController', [ '$http', '$window', function  ($http, $window) {
+    angular.module('b2clogin').controller('userLoginController', [ '$http', '$window', 'Student', function  ($http, $window, Student) {
         var vm = this;
         var app = {};
 
         vm.css = {
-            showRegForm : true
+            showRegForm : true,
+            loginFailedInfo : false,
+            usernameExistedInfo : false
         };
 
         vm.newUser =  {
@@ -39,8 +41,7 @@
             passwordReInput : '',
             gender : "",
             clickSubmit : false,
-            rememberMe : false,
-            loginFailedInfo : false
+            rememberMe : false
         };
 
 
@@ -70,17 +71,23 @@
 
             register : function(form){
                 vm.newUser.clickSubmit = true;
+                vm.css.usernameExistedInfo = false;
+
                 if(form.$valid){
-                    vm.css.showRegForm = false;
-                    //Student.login($scope.data.newUser).then(function(){
-                    //
-                    //    $window.location.href = "/marksimos/intro" ;
-                    //
-                    //}, function(err){
-                    //    form.password.$valid = false;
-                    //    form.password.$invalid = true;
-                    //    $scope.css.newUser.passwordPrompt = true;
-                    //});
+
+                    Student.registerB2C(vm.newUser).then(function(){
+
+                        vm.css.showRegForm = false;
+
+                    }).catch(function(err){
+                        form.username.$valid = false;
+                        form.username.$invalid = true;
+                        form.email.$valid = false;
+                        form.email.$invalid = true;
+
+                        vm.css.usernameExistedInfo = true;
+                        console.log(err.data);
+                    });
                 }
             }
 

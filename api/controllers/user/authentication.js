@@ -345,62 +345,63 @@ function randomString(len) {
 
 
 exports.registerB2CStudent = function(req, res, next){
-    req.checkBody('email', 'Invalid email').notEmpty().isEmail();
 
-    var errors = req.validationErrors();
-    if(errors){
-        return res.send(400, {message: util.inspect(errors)});
+    var validationErrors = userModel.registerValidations(req, userRoleModel.roleList.student.id);
+
+    if(validationErrors){
+        return res.status(400).send( {message: validationErrors} );
     }
 
-    var email = req.body.email;
-    var password = randomString(6);
-    var oldPassword = password;
-    password = utility.hashPassword(password);
+    var newUser = {
+        username : req.body.username,
+        email: req.body.email,
+        password: req.body.password,
 
-    var user = {
-        email: email,
-        password: password
+        gender : req.body.gender,
+        firstName : req.body.firstName,
+        lastName : req.body.lastName,
+        birthday : req.body.birthday,
+        idcardNumber : req.body.idcardNumber,
+        mobilePhone : req.body.mobilePhone,
+        qq : req.body.qq,
+
+
+        majorsDegree : req.body.majorsDegree,
+        organizationOrUniversity : req.body.university,
+        dateOfGraduation : req.body.dateOfGraduation,
+
+
+
+        role : userRoleModel.roleList.student.id,
+        studentType : userModel.getStudentType().B2C
     };
 
-    user.username = req.body.userName;
-    user.firstName = req.body.firstName;
-    user.lastName = req.body.lastName;
-    user.birthday = req.body.yearOfBirth;
-    user.majorsDegree = req.body.majors;
-    user.organizationOrUniversity = req.body.university;
-    user.dateOfGraduation = req.body.dateOfGraduation;
-    user.qq = req.body.qq;
 
-    user.role = userRoleModel.roleList.student.id;
-    user.studentType = 20;
+    userModel.register(newUser).then(function(result){
+        if(result){
+            return res.status(200).send({message: 'Register new user success'});
 
-    userModel.findOneQ({email: email}).then(function(findResult){
-        if(findResult){
-            throw new Error( "Cancel promise chains. User is existed.");
+            // return utility.sendActivateEmail(email, user.emailActivateToken)
+            // .then(function(sendEmailResult){
+            //     if(sendEmailResult){
+            //         return res.send({message: 'Register success'});
+            //     }else{
+            //         throw new Error('Send activate email failed.');
+            //     }
+            // })
+
+        }else{
+            throw new Error('Save new user to database error.');
         }
-        return userModel.register(user).then(function(result){
-            if(result){
-                return res.send({message: 'Register success',password:oldPassword});
 
-                // return utility.sendActivateEmail(email, user.emailActivateToken)
-                // .then(function(sendEmailResult){
-                //     if(sendEmailResult){
-                //         return res.send({message: 'Register success'});
-                //     }else{
-                //         throw new Error('Send activate email failed.');
-                //     }
-                // })
-            }else{
-                throw new Error('Save user to db failed.');
-            }
-        })
     }).fail(function(err){
         next(err);
     }).done();
+
+
 };
 
 
-//registerE4Ecompany
 exports.registerB2CEnterprise = function(req, res, next){
     req.checkBody('email', 'Invalid email').notEmpty().isEmail();
 

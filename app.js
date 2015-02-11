@@ -13,15 +13,16 @@ var morgan = require('morgan');
 
 //var session = require('express-session');
 //var MongoStore = require('connect-mongo')(session);
+var config = require('./common/config.js');
+var router = require('./api/routes.js');				// get an instance of the express Router
+
 
 var expressValidator = require('express-validator');
-var config = require('./common/config.js');
 var customValidator = require('./common/express-custom-validator.js');
-var router = require('./api/routes.js');				// get an instance of the express Router
+
 
 var fs = require('fs');
 var passport = require('passport');
-var flash = require('connect-flash');
 
 
 app.engine('md', function(path, options, fn){
@@ -44,6 +45,7 @@ app.use(cookieParser());
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
+
 app.use(expressValidator({
     customValidators: customValidator
 }));
@@ -58,12 +60,12 @@ mongoose.connect(config.mongo_conn);
 //}));
 
 app.use(express.static(path.join(__dirname, 'public')));
-//---for passport
-app.use(flash());
+
+
+
 app.use(passport.initialize());
 //app.use(passport.session());
 
-//---for passport
 
 
 // Router for all URL
