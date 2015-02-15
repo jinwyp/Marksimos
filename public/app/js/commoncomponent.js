@@ -319,6 +319,7 @@
                 data             : '=',
 
                 radiooptions : '=',
+                checkboxoptions : '=',
 
                 required          : '=',
                 requirederrorinfo : '@',
@@ -370,7 +371,7 @@
                                         '<label class="' + labelclass + ' control-label" for="ID' + tAttrs.name + '" >' + tAttrs.label + '</label>' +
 
                                         '<div class="' + inputclass + '">' +
-                                            '<label class="checkbox-inline" ng-repeat="option in radiooptions">' +
+                                            '<label class="checkbox-inline" ng-repeat="option in checkboxoptions">' +
                                                 '<input type="' + type + '" id="ID' + tAttrs.name +'" name="' + tAttrs.name + '"value="{{option.value}}" ng-model="$parent.data" ' + required + '>' + '{{option.text}}' +
                                             '</label>' +
                                         '</div>' +

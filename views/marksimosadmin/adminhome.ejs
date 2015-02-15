@@ -478,7 +478,6 @@
                                     <text-form-input type="text" name="newStudentOccupation" label="Current Occupation :" labelclass="col-sm-2" inputclass="col-sm-4" data="data.newStudent.occupation" minlength="2" minlengtherrorinfo="Current occupation must be at least 2 characters" maxlength="100" maxlengtherrorinfo="Current occupation is a maximum of 100 characters" ></text-form-input>
                                     <text-form-input type="text" name="newStudentUniversity" label="University / Organization :" labelclass="col-sm-2" inputclass="col-sm-4" data="data.newStudent.organizationOrUniversity" minlength="2" minlengtherrorinfo="University must be at least 2 characters" maxlength="100" maxlengtherrorinfo="University is a maximum of 100 characters" ></text-form-input>
 
-
                                     <text-form-input type="radio" name="newStudentStudentType" label="Student For :" labelclass="col-sm-2" inputclass="col-sm-4" data="data.newStudent.studentType" radiooptions="data.newStudent.studentTypeRadioOptions" required="true"></text-form-input>
 
                                 </div>
@@ -622,9 +621,11 @@
                             <form class="form-horizontal" role="form" name="newSeminarForm">
                                 <div class="box-body">
 
-                                    <username-input labeltext="Description :" placeholdertext="Seminar Description" formname="newSeminarForm" data="data.newSeminar.description" required="true" requirederrorinfo="description is required" minlength="2" minlengtherrorinfo="description must be at least 2 characters" maxlength="20" maxlengtherrorinfo="description is a maximum of 20 characters"></username-input>
-                                    <round-input labeltext="No. of Rounds :" placeholdertext="No. of Rounds" formname="newSeminarForm" data="data.newSeminar.simulation_span" required="true" requirederrorinfo="Round is required" numbererrorinfo="Round is numeric" min="1" minerrorinfo="Must be greater than 1" max="9" maxerrorinfo="Must be less than 9"></round-input>
-                                    <licence-input labeltext="No. of Teams :" placeholdertext="No. of Teams" formname="newSeminarForm" data="data.newSeminar.company_num" required="true" requirederrorinfo="Team is required" numbererrorinfo="Team is numeric" min="1" minerrorinfo="Must be greater than 1" max="6" maxerrorinfo="Must be less than 6"></licence-input>
+                                    <text-form-input type="text" name="newSeminarDescription" label="Description :" placeholder="Seminar Description" labelclass="col-sm-2" inputclass="col-sm-4" data="data.newSeminar.description" required="true" requirederrorinfo="Description is required" minlength="2" minlengtherrorinfo="Description must be at least 6 characters" maxlength="20" maxlengtherrorinfo="Description is a maximum of 20 characters"></text-form-input>
+
+                                    <text-form-input type="number" name="newSeminarRounds" label="No. of Rounds :" placeholder="No. of Rounds" labelclass="col-sm-2" inputclass="col-sm-4" data="data.newSeminar.simulation_span" min="2" minerrorinfo="Must be greater than 2" max="8" maxerrorinfo="Must be less than 8"></text-form-input>
+                                    <text-form-input type="number" name="newSeminarTeams" label="No. of Teams :" placeholder="No. of Seminar Teams" labelclass="col-sm-2" inputclass="col-sm-4" data="data.newSeminar.company_num"  min="2" minerrorinfo="Must be greater than 2" max="6" maxerrorinfo="Must be less than 6" ></text-form-input>
+
 
                                     <div class="form-group">
                                         <label for="inputSeminarCountry" class="col-sm-2 control-label">Country/State/City : </label>
@@ -647,12 +648,8 @@
                                         </div>
                                     </div>
 
-                                    <div class="form-group" ng-class="{'has-success':newSeminarForm.venue.$dirty && newSeminarForm.venue.$valid, 'has-error': newSeminarForm.venue.$dirty && newSeminarForm.venue.$invalid}">
-                                        <label for="inputVenue" class="col-sm-2 control-label">Venue : </label>
-                                        <div class="col-sm-4">
-                                            <input type="text" class="form-control" id="inputVenue" name="venue"  ng-model="data.newSeminar.venue" required>
-                                        </div>
-                                    </div>
+                                    <text-form-input type="text" name="newSeminarVenue" label="Venue :" placeholder="Seminar Description" labelclass="col-sm-2" inputclass="col-sm-4" data="data.newSeminar.venue" required="true" ></text-form-input>
+
                                 </div>
 
                                 <div class="box-footer">
