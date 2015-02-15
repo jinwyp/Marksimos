@@ -106,14 +106,24 @@
                 email: "",
                 password: "",
                 mobilePhone: "",
-                country: null,
+                qq: "",
+
+                country: 'China',
                 state: "shanghai",
                 city: "shanghai",
+
+                firstName: "",
+                lastName: "",
+
                 occupation: "",
-                university: "",
-                firstname: "",
-                lastname: "",
-                student_type: 10 //10 B2B students,  20 B2C students, 30 Both B2C and B2B students
+                organizationOrUniversity: "",
+                studentType: "", //10 B2B students,  20 B2C students, 30 Both B2C and B2B students
+
+                studentTypeRadioOptions : [
+                    {value : 10, text : 'B2B Student'},
+                    {value : 20, text : 'B2C(E4E) Student'}
+                ]
+
             },
             searchStudent: {
                 username: '',
@@ -458,6 +468,7 @@
         };
         /********************  创建新的 Student  ********************/
         $scope.createNewStudent = function(form) {
+
             if (form.$valid) {
                 $http.post('/marksimos/api/admin/students', $scope.data.newStudent).success(function(data, status, headers, config) {
 
@@ -468,7 +479,7 @@
 
                 }).error(function(data, status, headers, config) {
                     console.log(data);
-                    $notification.error('Failed', data.message);
+                    $notification.error('Failed', data.message[0].msg);
                 });
             }
         };

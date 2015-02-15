@@ -310,16 +310,7 @@ exports.checkRequiredFieldForAllUsers = function(req){
     if(!req.body.city) return "city can't be empty.";
 };
 
-/**
-* Check all fileds which are needed when adding a new student
-*/
-exports.checkRequiredFieldForStudent = function(req){
-    var checkUserResult = exports.checkRequiredFieldForAllUsers(req);
-    if(checkUserResult) return checkUserResult;
 
-    if(!req.body.firstname) return "first_name can't be empty.";
-    if(!req.body.lastname) return "last_name can't be empty.";
-};
 
 /**
 * Check all fileds which are needed when adding a new facilitator

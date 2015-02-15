@@ -294,7 +294,7 @@ function randomString(len) {
 
 exports.registerB2CStudent = function(req, res, next){
 
-    var validationErrors = userModel.registerValidations(req, userRoleModel.roleList.student.id);
+    var validationErrors = userModel.registerValidations(req, userRoleModel.roleList.student.id, userModel.getStudentType().B2C);
 
     if(validationErrors){
         return res.status(400).send( {message: validationErrors} );
@@ -306,17 +306,17 @@ exports.registerB2CStudent = function(req, res, next){
         password: req.body.password,
 
         gender : req.body.gender,
-        firstName : req.body.firstName,
-        lastName : req.body.lastName,
-        birthday : req.body.birthday,
-        idcardNumber : req.body.idcardNumber,
-        mobilePhone : req.body.mobilePhone,
-        qq : req.body.qq,
+        //firstName : req.body.firstName,
+        //lastName : req.body.lastName,
+        //birthday : req.body.birthday,
+        //idcardNumber : req.body.idcardNumber,
+        //mobilePhone : req.body.mobilePhone,
+        //qq : req.body.qq,
 
 
-        majorsDegree : req.body.majorsDegree,
-        organizationOrUniversity : req.body.university,
-        dateOfGraduation : req.body.dateOfGraduation,
+        //majorsDegree : req.body.majorsDegree,
+        //organizationOrUniversity : req.body.university,
+        //dateOfGraduation : req.body.dateOfGraduation,
 
         facilitatorId: "54d834bdeaf05dbd048120f8", // fixed for b2c_facilitator
 

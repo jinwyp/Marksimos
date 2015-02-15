@@ -75,7 +75,7 @@ exports.updateDistributor = function(req, res, next){
         state: req.body.state,
         city: req.body.city,
         password: utility.hashPassword(req.body.password),
-        role: userRoleModel.roleListdistributor.id,
+        role: userRoleModel.roleList.distributor.id,
         numOfLicense: req.body.num_of_license_granted,
         emailActivated: true,
         district: req.body.district || '',
@@ -103,7 +103,7 @@ exports.searchDistributor = function(req, res, next){
     var activated = req.query.user_status;
 
     var query = {
-        role: userRoleModel.roleListdistributor.id
+        role: userRoleModel.roleList.distributor.id
     };
     if(name) query.username = name;
     if(email) query.email = email;
@@ -161,7 +161,7 @@ exports.addFacilitator = function(req, res, next){
         district: req.body.district || '',
         street: req.body.street || '',
 
-        role: userRoleModel.roleListfacilitator.id,
+        role: userRoleModel.roleList.facilitator.id,
         activated: true,
         emailActivated: true,
 
@@ -221,7 +221,7 @@ exports.updateFacilitator = function(req, res, next){
     if(req.body.password) facilitator.password = utility.hashPassword(req.body.password);
 
     var userRole = req.user.roleId;
-    if(req.body.num_of_license_granted && (userRole === userRoleModel.roleListadmin.id || userRole === userRoleModel.roleListdistributor.id)){
+    if(req.body.num_of_license_granted && (userRole === userRoleModel.roleList.admin.id || userRole === userRoleModel.roleList.distributor.id)){
         facilitator.numOfLicense = req.body.num_of_license_granted;
     }
     if(req.body.district) facilitator.district = req.body.district;
@@ -301,12 +301,12 @@ exports.searchFacilitator = function(req, res, next){
     var activated = req.query.user_status;
 
     var query = {
-        role: userRoleModel.roleListfacilitator.id
+        role: userRoleModel.roleList.facilitator.id
     };
 
     //only distributor and admin can search facilitators
     //distributor can only view its own facilitators
-    if(req.user.roleId !== userRoleModel.roleListadmin.id){
+    if(req.user.roleId !== userRoleModel.roleList.admin.id){
         query.distributorId = req.user.id;
     }
 
@@ -324,7 +324,7 @@ exports.searchFacilitator = function(req, res, next){
 
         allFacilitator = JSON.parse(JSON.stringify(allFacilitator));
 
-        return userModel.findQ({role: userRoleModel.roleListdistributor.id}).then(function(allDistributor){
+        return userModel.findQ({role: userRoleModel.roleList.distributor.id}).then(function(allDistributor){
             for(var i=0; i< allFacilitator.length; i++){
                 var facilitator = allFacilitator[i];
                 var distributor = findDistributor(facilitator.distributorId, allDistributor);
@@ -442,116 +442,74 @@ exports.getSeminarOfFacilitator = function(req, res, next){
 
 
 
-exports.registerB2BStudent = function(req, res, next){
-    req.checkBody('email', 'Invalid email').notEmpty().isEmail();
-    req.assert('password', '6 to 20 characters required').len(6, 20);
-
-    var errors = req.validationErrors();
-    if(errors){
-        return res.send(400, {message: util.inspect(errors)});
-    }
-
-    var email = req.body.email;
-    var password = req.body.password;
-
-    var phoneNum = req.body.mobilePhone || '';
-    var country = req.body.country || '';
-    var state = req.body.state || '';
-    var city = req.body.city || '';
-
-    var user = {
-        email: email,
-        password: password
-    };
-
-    if(phoneNum) user.mobilePhone = phoneNum;
-    if(country) user.country = country;
-    if(state) user.state = state;
-    if(city) user.city = city;
 
 
-    userModel.findOneQ({email: email}).then(function(findResult){
-        if(findResult){
-            throw new Error( "Cancel promise chains. User is existed.");
-        }
-        return userModel.register(user).then(function(result){
-            if(!result){
-                throw new Error('Cancel promise chains. Save new user to db failed.');
-            }
 
-            return utility.sendActivateEmail(email, user.emailActivateToken).then(function(sendEmailResult){
-                if(!sendEmailResult){
-                    throw new Error('Cancel promise chains. Send activate email failed.');
-                }else{
-                    return res.status(200).send({message: 'Register success'});
-                }
-            })
-        })
-    }).fail(function(err){
-        next(err);
-    }).done();
-};
+
+
+
+
 
 
 
 exports.addStudent = function(req, res, next){
-    var validateResult = utility.validateUser(req);
+    req.body.organizationOrUniversity = req.body.university;
 
-    if(validateResult){
-        return res.send(400, {message: validateResult});
-    }
+    var validationErrors = userModel.registerValidations(req, userRoleModel.roleList.student.id, userModel.getStudentType().B2B);
 
-    var checkRequiredFieldResult = utility.checkRequiredFieldForStudent(req);
-    if(checkRequiredFieldResult){
-        return res.send(400, {message: checkRequiredFieldResult});
+    if(validationErrors){
+        return res.status(400).send( {message: validationErrors} );
     }
 
     var facilitatorId = req.user.id;
 
-    var student = {
-        username      : req.body.username,
-        email         : req.body.email,
-        password      : utility.hashPassword(req.body.password),
-        mobilePhone   : req.body.mobilePhone,
+    var newStudent = {
+        username : req.body.username,
+        email: req.body.email,
+        password: req.body.password,
+
+        gender : req.body.gender,
+        firstName : req.body.firstName,
+        lastName : req.body.lastName,
+        //birthday : req.body.birthday,
+        //idcardNumber : req.body.idcardNumber,
+        mobilePhone : req.body.mobilePhone,
+        qq : req.body.qq,
+
 
         country       : req.body.country,
         state         : req.body.state,
         city          : req.body.city,
 
+        majorsDegree : req.body.majorsDegree,
+        //dateOfGraduation : req.body.dateOfGraduation,
+        organizationOrUniversity : req.body.university,
+        occupation               : req.body.occupation,
 
-        role           : userRoleModel.roleListstudent.id,
-        emailActivated : true,
-        activated      : true,
-        studentType    : req.body.student_type,
         facilitatorId  : facilitatorId,
 
-        idcardNumber             : req.body.idcardNumber || '',
-        gender                   : req.body.gender || '',
-        occupation               : req.body.occupation || '',
-        firstName                : req.body.firstname,
-        lastName                 : req.body.lastname,
-        organizationOrUniversity : req.body.university || '',
-        majorsDegree             : req.body.majorsDegree || ''
+        role : userRoleModel.roleList.student.id,
+        studentType : req.body.studentType,
 
+        activated      : true
     };
 
-    userModel.findOneQ({
-        email: req.body.email
-    }).then(function(result){
+    userModel.register(newStudent).then(function(result){
         if(result){
-            return res.send(400, {message: 'Email has been used, please choose another email.'});
+            return res.status(200).send({message: 'Register new company success'});
+
         }else{
-            return userModel.register(student);
+            throw new Error('Save new company to database error.');
         }
-    }).then(function(result){
-        if(!result){
-            throw {message: "failed to save student to db."}
-        }
-        res.send(result);
+
     }).fail(function(err){
         next(err);
     }).done();
+
 };
+
+
+
 
 exports.updateStudent = function(req, res, next){
     var validateResult = utility.validateUser(req);

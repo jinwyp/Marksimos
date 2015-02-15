@@ -157,22 +157,61 @@ userSchema.statics.updateByEmail = function(email, user){
 
 
 
-userSchema.statics.registerValidations = function(req, userRoleId){
+userSchema.statics.registerValidations = function(req, userRoleId, studentType){
+
+    studentType = studentType || 20
+
     req.checkBody('username', 'Username should be 6-20 characters').notEmpty().len(6, 20);
     req.checkBody('email', 'Email wrong format').notEmpty().isEmail();
     req.checkBody('password', 'Password should be 6-20 characters').notEmpty().len(6, 20);
 
 
-    if(userRoleId === userRoleModel.roleList.student.id){
+    if(userRoleId === userRoleModel.roleList.student.id && studentType === 20){
         req.checkBody('gender', 'Gender is required').notEmpty().isInt();
     }
 
+    if(userRoleId === userRoleModel.roleList.student.id && studentType === 10){
+        req.checkBody('gender', 'Gender is required').optional().isInt();
+        req.checkBody('mobilePhone', 'mobilePhone wrong format').notEmpty().isMobilePhone('zh-CN');
+
+
+        req.checkBody('country', 'country is required').notEmpty();
+        req.checkBody('state', 'state is required').notEmpty();
+        req.checkBody('city', 'city is required').notEmpty();
+
+        req.checkBody('qq', 'qq number format wrong' ).optional().isInt();
+        req.checkBody('firstname', '2 to 50 characters required.').optional().len(2, 50);
+        req.checkBody('lastname', '2 to 50 characters required.').optional().len(2, 50);
+        req.checkBody('idcardNumber', '2 to 100 characters required.').optional().matches( /^\d{17}([0-9]|X)$/ );
+
+
+        //req.checkBody('occupation', '2 to 100 characters required.').optional().len(2, 100);
+        req.checkBody('organizationOrUniversity', '2 to 100 characters required.').optional().len(2, 100);
+
+        req.checkBody('studentType', 'Student B2B or B2C Type is required.').notEmpty().isInt();
+
+    }
+
+
     if(userRoleId === userRoleModel.roleList.enterprise.id){
-        req.checkBody('enterprise', 'Company Name is required').notEmpty().len(4, 100);
+        req.checkBody('companyName', 'Company Name is required').notEmpty().len(4, 100);
+    }
+
+
+    if(userRoleId === userRoleModel.roleList.distributor.id){
+        req.checkBody('idcardNumber', '2 to 100 characters required.').matches( /^\d{17}([0-9]|X)$/ );
+    }
+
+
+    if(userRoleId === userRoleModel.roleList.facilitator.id){
+        req.checkBody('idcardNumber', '2 to 100 characters required.').matches( /^\d{17}([0-9]|X)$/ );
     }
 
 
     return req.validationErrors();
+
+
+
 };
 
 

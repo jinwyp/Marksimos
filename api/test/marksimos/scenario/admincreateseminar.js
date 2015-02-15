@@ -5,13 +5,14 @@ var utility = require('../../testUtility.js');
 var Q = require('q');
 
 var data = require('../fakedata.js');
-var admin = data.adminList[0];
+var admin = data.facilitator[0];
+
 var studentInfoList = data.createSeminarStudentList;
 
 var originalTimeout;
 
 
-describe("Admin API Create Seminar", function() {
+describe("Admin API Create Distributor and Facilitator and Student", function() {
 
     beforeEach(function(done) {
         originalTimeout = jasmine.DEFAULT_TIMEOUT_INTERVAL;

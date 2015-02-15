@@ -312,12 +312,12 @@ apiRouter.get('/marksimos/api/create_admin', function (req,res,next) {
         {
             "_id": mongoose.Types.ObjectId("54609f0c700a570813b1353f"),
             "username": "hcd_distributor",
+            "password": utility.hashPassword("distributor@hcd5678"),
             "email": "hcd_distributor@hcdlearning.com",
             "mobilePhone": "13916502743",
             "country": "China",
             "state": "shanghai",
             "city": "shanghai",
-            "password": utility.hashPassword("distributor@hcd5678"),
             "district": "Ren Min Lu",
             "street": "",
             "idcardNumber": "",
@@ -331,12 +331,12 @@ apiRouter.get('/marksimos/api/create_admin', function (req,res,next) {
         {
             "_id": mongoose.Types.ObjectId("54609fb2700a570813b13540"),
             "username": "hcd_facilitator",
+            "password": utility.hashPassword("hcdfacilitator@9876"),
             "email": "hcd_facilitator@hcdlearning.com",
             "mobilePhone": "13916502743",
             "country": "China",
             "state": "shanghai",
             "city": "shanghai",
-            "password": utility.hashPassword("hcdfacilitator@9876"),
             "distributorId": "54609f0c700a570813b1353f",
             "numOfUsedLicense": 0,
             "numOfLicense": 100000,
@@ -348,12 +348,12 @@ apiRouter.get('/marksimos/api/create_admin', function (req,res,next) {
         {
             "_id": mongoose.Types.ObjectId("54d834bdeaf05dbd048120f8"),
             "username": "b2c_facilitator",
+            "password": utility.hashPassword("hcdfacilitator@9876"),
             "email": "jinwang@hcdlearning.com",
             "mobilePhone": "13564568304",
             "country": "China",
             "state": "shanghai",
             "city": "shanghai",
-            "password": utility.hashPassword("hcdfacilitator@9876"),
             "distributorId": "54609f0c700a570813b1353f",
             "numOfUsedLicense": 0,
             "numOfLicense": 1000000000,
@@ -446,7 +446,31 @@ apiRouter.get('/marksimos/api/create_admin', function (req,res,next) {
     userModel.find({role: userRoleModel.roleList.admin.id}).execQ().then(function (userResult) {
         if (userResult.length) {
             //已经存在管理员了，不进行初始化，只列出这些用户
-            return res.status(400).send ({message: "already added."});
+
+            // 补充增加 b2c_facilitator 账号
+            userModel.find({"username": "b2c_facilitator"}).execQ().then(function (userB2CResult) {
+
+                if(userB2CResult.length){
+                    return res.status(400).send ({message: "already added."});
+                }else{
+                    userModel.create(userList[3], function (err, b2cFacilitatorResults) {
+                        if (err) {
+                            return res.status(400).send( {message: "add default admin and users failed."});
+                        } else {
+                            //for (var i=1; i<arguments.length; ++i) {
+                            //    var user = arguments[i];
+                            //    // do some stuff with candy
+                            //}
+
+                            return res.status(200).send(b2cFacilitatorResults);
+                        }
+                    });
+                }
+            }).fail(function(err){
+                next (err);
+            }).done();
+
+
         }else {
             //不存在管理员，需要初始化
             userModel.create(userList, function (err) {
@@ -458,8 +482,8 @@ apiRouter.get('/marksimos/api/create_admin', function (req,res,next) {
                     //    // do some stuff with candy
                     //}
 
-                    var userResults = Array.prototype.slice.call(arguments, 1);
-                    return res.status(200).send(userResults);
+                    var userListResults = Array.prototype.slice.call(arguments, 1);
+                    return res.status(200).send(userListResults);
                 }
             });
         }

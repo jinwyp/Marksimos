@@ -443,11 +443,13 @@
 
                             <form class="form-horizontal" role="form" name="newStudentForm">
                                 <div class="box-body">
+                                    <text-form-input type="text" name="newStudentUsername" label="Student UserName :" placeholder="Student UserName" labelclass="col-sm-2" inputclass="col-sm-4" data="data.newStudent.username" required="true" minlength="6" minlengtherrorinfo="Username must be at least 6 characters" maxlength="20" maxlengtherrorinfo="Username is a maximum of 20 characters"></text-form-input>
+                                    <text-form-input type="email" name="newStudentEmail" label="Student Email :" placeholder="Email" labelclass="col-sm-2" inputclass="col-sm-4" data="data.newStudent.email" required="true" requirederrorinfo="Email is required!" emailerrorinfo="Doesn't look like a valid email !" ></text-form-input>
+                                    <text-form-input type="text" name="newStudentPassword" label="Password :" placeholder="Password" labelclass="col-sm-2" inputclass="col-sm-4" data="data.newStudent.password" required="true" requirederrorinfo="Password is required!" minlength="6" minlengtherrorinfo="Password must be at least 6 characters" maxlength="20" maxlengtherrorinfo="Password is a maximum of 20 characters" ></text-form-input>
 
-                                    <username-input labeltext="Student UserName :" placeholdertext="Student UserName" formname="newStudentForm" data="data.newStudent.username" required="true" requirederrorinfo="Username is required" minlength="6" minlengtherrorinfo="Username must be at least 6 characters" maxlength="20" maxlengtherrorinfo="Username is a maximum of 20 characters"></username-input>
-                                    <email-input labeltext="Student Email :" placeholdertext="Email" formname="newStudentForm" data="data.newStudent.email" required="true" requirederrorinfo="Email is required" emailerrorinfo="Doesn't look like a valid email !"></email-input>
-                                    <password-input labeltext="Password :" placeholdertext="Password" formname="newStudentForm" data="data.newStudent.password" required="true" requirederrorinfo="Password is required" minlength="6" minlengtherrorinfo="Password must be at least 6 characters" maxlength="20" maxlengtherrorinfo="Password is a maximum of 20 characters"></password-input>
-                                    <phone-input labeltext="Phone :" placeholdertext="Cell Phone" formname="newStudentForm" data="data.newStudent.mobilePhone" required="true" requirederrorinfo="Phone is required" minlength="11" minlengtherrorinfo="Phone must be at least 11 characters" maxlength="15" maxlengtherrorinfo="Phone is a maximum of 15 characters"></phone-input>
+                                    <text-form-input type="text" name="newStudentMobilePhone" label="Mobile Phone :" placeholder="Cell Phone Number" labelclass="col-sm-2" inputclass="col-sm-4" data="data.newStudent.mobilePhone" required="true" requirederrorinfo="Mobile Phone is required!" minlength="11" minlengtherrorinfo="Phone must be at least 11 characters" maxlength="15" maxlengtherrorinfo="Phone is a maximum of 15 characters" ></text-form-input>
+                                    <text-form-input type="text" name="newStudentQQ" label="QQ :" placeholder="QQ Number" labelclass="col-sm-2" inputclass="col-sm-4" data="data.newStudent.qq" minlength="4" minlengtherrorinfo="QQ must be at least 4 characters" maxlength="20" maxlengtherrorinfo="QQ is a maximum of 20 characters" ></text-form-input>
+
 
                                     <div class="form-group">
                                         <label for="inputStudentCountry" class="col-sm-2 control-label">Country/State/City : </label>
@@ -470,55 +472,15 @@
                                         </div>
                                     </div>
 
-                                    <div class="form-group" ng-class="{'has-success':newStudentForm.firstname.$dirty && newStudentForm.firstname.$valid, 'has-error': newStudentForm.firstname.$dirty && newStudentForm.firstname.$invalid}">
-                                        <label for="inputFirstName" class="col-sm-2 control-label">First Name : </label>
-                                        <div class="col-sm-4">
-                                            <input type="text" class="form-control" id="inputFirstName" name="firstname"  ng-model="data.newStudent.firstname" required>
-                                        </div>
-                                    </div>
-                                    <div class="form-group" ng-class="{'has-success':newStudentForm.lastname.$dirty && newStudentForm.lastname.$valid, 'has-error': newStudentForm.lastname.$dirty && newStudentForm.lastname.$invalid}">
-                                        <label for="inputLastName" class="col-sm-2 control-label">Last Name : </label>
-                                        <div class="col-sm-4">
-                                            <input type="text" class="form-control" id="inputLastName" name="lastname"  ng-model="data.newStudent.lastname" required>
-                                        </div>
-                                    </div>
+                                    <text-form-input type="text" name="newStudentFirstName" label="First Name :" labelclass="col-sm-2" inputclass="col-sm-4" data="data.newStudent.firstName" minlength="2" minlengtherrorinfo="First name must be at least 2 characters" maxlength="50" maxlengtherrorinfo="First name is a maximum of 50 characters" ></text-form-input>
+                                    <text-form-input type="text" name="newStudentLastName" label="Last Name :" labelclass="col-sm-2" inputclass="col-sm-4" data="data.newStudent.lastName" minlength="2" minlengtherrorinfo="Last name must be at least 2 characters" maxlength="50" maxlengtherrorinfo="Last name is a maximum of 50 characters" ></text-form-input>
 
-                                    <div class="form-group" ng-class="{'has-success':newStudentForm.occupation.$dirty && newStudentForm.occupation.$valid, 'has-error': newStudentForm.occupation.$dirty && newStudentForm.occupation.$invalid}">
-                                        <label for="inputOccupation" class="col-sm-2 control-label">Current Occupation : </label>
-                                        <div class="col-sm-4">
-                                            <input type="text" class="form-control" id="inputOccupation" name="occupation"  ng-model="data.newStudent.occupation">
-                                        </div>
-                                    </div>
+                                    <text-form-input type="text" name="newStudentOccupation" label="Current Occupation :" labelclass="col-sm-2" inputclass="col-sm-4" data="data.newStudent.occupation" minlength="2" minlengtherrorinfo="Current occupation must be at least 2 characters" maxlength="100" maxlengtherrorinfo="Current occupation is a maximum of 100 characters" ></text-form-input>
+                                    <text-form-input type="text" name="newStudentUniversity" label="University / Organization :" labelclass="col-sm-2" inputclass="col-sm-4" data="data.newStudent.organizationOrUniversity" minlength="2" minlengtherrorinfo="University must be at least 2 characters" maxlength="100" maxlengtherrorinfo="University is a maximum of 100 characters" ></text-form-input>
 
-                                    <div class="form-group" ng-class="{'has-success':newStudentForm.university.$dirty && newStudentForm.university.$valid, 'has-error': newStudentForm.university.$dirty && newStudentForm.university.$invalid}">
-                                        <label for="inputUniversity" class="col-sm-2 control-label">University / Organization: </label>
-                                        <div class="col-sm-4">
-                                            <input type="text" class="form-control" id="inputUniversity" name="university"  ng-model="data.newStudent.university">
-                                        </div>
-                                    </div>
 
-                                    <div class="form-group" ng-class="{'has-success':newStudentForm.student_type.$dirty && newStudentForm.student_type.$valid, 'has-error': newStudentForm.student_type.$dirty && newStudentForm.student_type.$invalid}">
-                                        <label for="inputStudentUserFrom" class="col-sm-2 control-label">Student For</label>
-                                        <div class="col-sm-4">
-                                            <label class="radio-inline">
-                                                <input type="radio" name="inputStudentUserFrom" ng-model="data.newStudent.student_type" value="10">B2B Student
-                                            </label>
-                                            <label class="radio-inline">
-                                                <input type="radio" name="inputStudentUserFrom" ng-model="data.newStudent.student_type" value="20">B2C(E4E) Student
-                                            </label>
-                                        </div>
-                                    </div>
+                                    <text-form-input type="radio" name="newStudentStudentType" label="Student For :" labelclass="col-sm-2" inputclass="col-sm-4" data="data.newStudent.studentType" radiooptions="data.newStudent.studentTypeRadioOptions" required="true"></text-form-input>
 
-                                    <!--<div class="form-group">-->
-                                    <!--<label for="inputStudentLicenceGranted" class="col-sm-2 control-label">Game Type :</label>-->
-                                    <!--<div class="col-sm-4">-->
-                                    <!--<select class="form-control input-sm">-->
-                                    <!--<option>MARKSIMOS B2B</option>-->
-                                    <!--<option>MARKSIMOS B2C</option>-->
-                                    <!--<option>CASASIMOS</option>-->
-                                    <!--</select>-->
-                                    <!--</div>-->
-                                    <!--</div>-->
                                 </div>
 
                                 <div class="box-footer">

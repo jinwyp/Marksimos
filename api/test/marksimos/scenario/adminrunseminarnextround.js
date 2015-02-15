@@ -5,7 +5,7 @@ var utility = require('../../testUtility.js');
 var Q = require('q');
 
 var data = require('../fakedata.js');
-var admin = data.adminList[0];
+var admin = data.facilitator[0];
 var seminarId ;
 
 var originalTimeout;

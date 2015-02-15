@@ -26,13 +26,28 @@ var studentList =[
 
 
 
-var adminList =[
+
+var admin =[
+    {
+        email : 'hcd_administrator@hcdlearning.com',
+        password : 'admin1234@hcd'
+    }
+];
+
+var distributor =[
+    {
+        email : 'hcd_distributor@hcdlearning.com',
+        password : 'distributor@hcd5678'
+    }
+];
+
+
+var facilitator =[
     {
         email : 'hcd_facilitator@hcdlearning.com',
         password : 'hcdfacilitator@9876'
     }
 ];
-
 
 
 var createSeminarStudentList = [
@@ -5915,7 +5930,9 @@ var seminarFinalResult = [
 module.exports = {
     studentList : studentList,
     createSeminarStudentList : createSeminarStudentList,
-    adminList : adminList,
+    admin : admin,
+    distributor : distributor,
+    facilitator : facilitator,
     seminarId : seminarId,
     period1 : period1,
     period2 : period2,
