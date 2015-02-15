@@ -258,54 +258,6 @@
     });
 
 
-    angular.module('marksimos.commoncomponent').directive('roundInput', function() {
-        return {
-            scope: {
-                labeltext : '@',
-                data : '=',
-                placeholdertext : '@',
-                formname : '=',
-                required : '=',
-                requirederrorinfo : '@',
-                numbererrorinfo : '@',
-                min : '=',
-                minerrorinfo : '@',
-                max : '=',
-                maxerrorinfo : '@',
-                maxlength : '=',
-                maxlengtherrorinfo : '@'
-
-            },
-            restrict: 'AE',
-            templateUrl: 'formroundinput.html',
-            link: function (scope, element, attrs) {
-
-                if(angular.isUndefined(scope.required)  ){
-                    scope.required = true;
-                    scope.requirederrorinfo = 'Number is required';
-                    scope.numbererrorinfo = 'Must be numeric character';
-                }
-
-                if(angular.isUndefined(scope.min)  ){
-                    scope.min = 1;
-                    scope.minerrorinfo = 'Number must be greater than 0';
-                }
-
-                if(angular.isUndefined(scope.max)  ){
-                    scope.max = 9;
-                    scope.maxerrorinfo = 'Number must be less than 9';
-                }
-
-                if(angular.isUndefined(scope.required)  ){
-                    scope.maxlength = 100;
-                    scope.maxlengtherrorinfo = 'Number is a maximum of 100 characters';
-                }
-
-            }
-        };
-    });
-
-
     angular.module('marksimos.commoncomponent').directive('textFormInput', function($compile, $timeout) {
         return {
             scope : {
@@ -405,6 +357,11 @@
                     maxlength = "";
                     maxlengtherrorinfo = "";
 
+                    //numbererrorinfo = 'Number is required';
+                    //numbererrorinfo = 'Must be numeric character';
+                    //numbererrorinfo = 'Number must be greater than 0';
+                    //numbererrorinfo = 'Number must be less than 9';
+
                 }else{
                     min = "";
                     max = "";
@@ -430,12 +387,12 @@
                                 '</div>' +
                                 '<label class="control-label" ng-if="form.$dirty && form.$error.required && !form.$error.number"><i class="fa fa-times-circle-o"></i> ' + requirederrorinfo + ' </label>' +
                                 '<label class="control-label" ng-if="form.$dirty && form.$error.email"><i class="fa fa-times-circle-o"></i> ' + emailerrorinfo + ' </label>' +
-                                '<label class="control-label" ng-if="form.$dirty && form.$error.minlength" ><i class="fa fa-times-circle-o"></i>' + minlengtherrorinfo + '</label>' +
-                                '<label class="control-label" ng-if="form.$dirty && form.$error.maxlength" ><i class="fa fa-times-circle-o"></i>' + maxlengtherrorinfo + '</label>' +
-                                '<label class="control-label" ng-if="form.$dirty && form.$error.number" ><i class="fa fa-times-circle-o"></i>must be a number</label>' +
-                                '<label class="control-label" ng-if="form.$dirty && form.$error.min || form.$dirty && form.$error.max " ><i class="fa fa-times-circle-o"></i>' + numbererrorinfo + '</label>' +
-                                '<label class="control-label" ng-if="form.$dirty && form.$error.pattern" ><i class="fa fa-times-circle-o"></i>' + patternerrorinfo + '</label>' +
-                                '<label class="control-label" ng-if="form.$invalid && othererrorinfo" ><i class="fa fa-times-circle-o"></i>{{othererrorinfo}}</label>' +
+                                '<label class="control-label" ng-if="form.$dirty && form.$error.minlength" ><i class="fa fa-times-circle-o"></i> ' + minlengtherrorinfo + '</label>' +
+                                '<label class="control-label" ng-if="form.$dirty && form.$error.maxlength" ><i class="fa fa-times-circle-o"></i> ' + maxlengtherrorinfo + '</label>' +
+                                '<label class="control-label" ng-if="form.$dirty && form.$error.number" ><i class="fa fa-times-circle-o"></i> must be a number</label>' +
+                                '<label class="control-label" ng-if="form.$dirty && form.$error.min || form.$dirty && form.$error.max " ><i class="fa fa-times-circle-o"></i> ' + numbererrorinfo + '</label>' +
+                                '<label class="control-label" ng-if="form.$dirty && form.$error.pattern" ><i class="fa fa-times-circle-o"></i> ' + patternerrorinfo + '</label>' +
+                                '<label class="control-label" ng-if="form.$invalid && othererrorinfo" ><i class="fa fa-times-circle-o"></i> {{othererrorinfo}}</label>' +
 
                                 '</div>';
 

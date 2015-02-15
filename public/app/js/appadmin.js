@@ -60,6 +60,7 @@
 
         $scope.data = {
             currentUser: null,
+
             newDistributor: {
                 username: "",
                 email: "",
@@ -71,7 +72,7 @@
                 city: "shanghai",
                 district: "",
                 street: "",
-                num_of_license_granted: 0,
+                numOfLicense: 0,
                 gameType: ""
             },
             searchDistributor: {
@@ -92,7 +93,7 @@
                 city: "shanghai",
                 district: "",
                 street: "",
-                num_of_license_granted: 0
+                numOfLicense: 0
             },
             searchFacilitator: {
                 username: '',
@@ -479,7 +480,7 @@
 
                 }).error(function(data, status, headers, config) {
                     console.log(data);
-                    $notification.error('Failed', data.message[0].msg);
+                    $notification.error('Failed', data.message);
                 });
             }
         };

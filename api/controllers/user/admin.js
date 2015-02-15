@@ -10,51 +10,44 @@ var validator = require('validator');
 
 
 exports.addDistributor = function(req, res, next){
-    var validateResult = utility.validateUser(req);
+    var validationErrors = userModel.registerValidations(req, userRoleModel.roleList.distributor.id);
 
-    if(validateResult){
-        return res.send(400, {message: validateResult});
+    if(validationErrors){
+        return res.status(400).send( {message: validationErrors} );
     }
 
-    var checkRequiredFieldResult = utility.checkRequiredFieldForDistributor(req);
-    if(checkRequiredFieldResult){
-        return res.send(400, {message: checkRequiredFieldResult});
-    }
+    var newDistributor = {
+        username     : req.body.username,
+        email        : req.body.email,
+        password     : req.body.password,
 
-    var distributor = {
-        username: req.body.username,
-        email: req.body.email,
-        password: utility.hashPassword(req.body.password),
-        mobilePhone: req.body.mobilePhone,
-        idcardNumber: req.body.idcardNumber || '',
+        mobilePhone  : req.body.mobilePhone,
+        idcardNumber : req.body.idcardNumber,
 
-        country: req.body.country,
-        state: req.body.state,
-        city: req.body.city,
-        district: req.body.district || '',
-        street: req.body.street || '',
+        country  : req.body.country,
+        state    : req.body.state,
+        city     : req.body.city,
+        district : req.body.district || '',
+        street   : req.body.street || '',
 
-        role: userRoleModel.roleList.distributor.id,
-        emailActivated: true,
-        activated: true,
-        numOfLicense: req.body.num_of_license_granted
-
+        role           : userRoleModel.roleList.distributor.id,
+        activated      : true,
+        numOfLicense   : req.body.numOfLicense
 
     };
 
-    userModel.findOneQ({
-        email: req.body.email
-    }).then(function(result){
+    userModel.register(newDistributor).then(function(result){
         if(result){
-            return res.send(400, {message: 'Email has been used, please choose another email.'});
+            return res.status(200).send({message: 'Register new distributor success'});
+
         }else{
-            return userModel.register(distributor).then(function(result){
-                res.send(result);
-            })
+            throw new Error('Save new company to database error.');
         }
+
     }).fail(function(err){
         next(err);
     }).done();
+
 };
 
 
@@ -63,10 +56,12 @@ exports.updateDistributor = function(req, res, next){
         return res.send(400, {message: "distributor_id can't be empty."})
     }
 
-    var validateResult = utility.validateUser(req);
-    if(validateResult){
-        return res.send(400, {message: validateResult});
+    var validationErrors = userModel.registerValidations(req, userRoleModel.roleList.distributor.id);
+
+    if(validationErrors){
+        return res.status(400).send( {message: validationErrors} );
     }
+
 
     var distributor = {
         username: req.body.name,
@@ -74,10 +69,8 @@ exports.updateDistributor = function(req, res, next){
         country: req.body.country,
         state: req.body.state,
         city: req.body.city,
-        password: utility.hashPassword(req.body.password),
         role: userRoleModel.roleList.distributor.id,
         numOfLicense: req.body.num_of_license_granted,
-        emailActivated: true,
         district: req.body.district || '',
         street: req.body.street || '',
         idcardNumber: req.body.idcardNumber || ''
@@ -93,6 +86,8 @@ exports.updateDistributor = function(req, res, next){
         next(err);
     }).done();
 };
+
+
 
 exports.searchDistributor = function(req, res, next){
     var name = req.query.username;

@@ -182,7 +182,7 @@ userSchema.statics.registerValidations = function(req, userRoleId, studentType){
         req.checkBody('qq', 'qq number format wrong' ).optional().isInt();
         req.checkBody('firstname', '2 to 50 characters required.').optional().len(2, 50);
         req.checkBody('lastname', '2 to 50 characters required.').optional().len(2, 50);
-        req.checkBody('idcardNumber', '2 to 100 characters required.').optional().matches( /^\d{17}([0-9]|X)$/ );
+        req.checkBody('idcardNumber', '18 to 19 characters required.').optional().matches( /^\d{17}([0-9]|X)$/ );
 
 
         //req.checkBody('occupation', '2 to 100 characters required.').optional().len(2, 100);
@@ -199,12 +199,27 @@ userSchema.statics.registerValidations = function(req, userRoleId, studentType){
 
 
     if(userRoleId === userRoleModel.roleList.distributor.id){
-        req.checkBody('idcardNumber', '2 to 100 characters required.').matches( /^\d{17}([0-9]|X)$/ );
+        req.checkBody('mobilePhone', 'mobilePhone wrong format').notEmpty().isMobilePhone('zh-CN');
+        req.checkBody('idcardNumber', '18 to 19 characters required.').matches( /^\d{17}([0-9]|X)$/ );
+
+        req.checkBody('country', 'country is required').notEmpty();
+        req.checkBody('state', 'state is required').notEmpty();
+        req.checkBody('city', 'city is required').notEmpty();
+
+        req.checkBody('numOfLicense', 'License number must be between 1 to 99999 integer number.').notEmpty().isInt();
+
     }
 
 
     if(userRoleId === userRoleModel.roleList.facilitator.id){
-        req.checkBody('idcardNumber', '2 to 100 characters required.').matches( /^\d{17}([0-9]|X)$/ );
+        req.checkBody('mobilePhone', 'mobilePhone wrong format').notEmpty().isMobilePhone('zh-CN');
+        req.checkBody('idcardNumber', '18 to 19 characters required.').matches( /^\d{17}([0-9]|X)$/ );
+
+        req.checkBody('country', 'country is required').notEmpty();
+        req.checkBody('state', 'state is required').notEmpty();
+        req.checkBody('city', 'city is required').notEmpty();
+
+        req.checkBody('numOfLicense', 'License number must be between 1 to 99999 integer number.').notEmpty().isInt();
     }
 
 
