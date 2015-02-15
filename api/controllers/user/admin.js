@@ -37,11 +37,11 @@ exports.addDistributor = function(req, res, next){
     };
 
     userModel.register(newDistributor).then(function(result){
-        if(result){
-            return res.status(200).send({message: 'Register new distributor success'});
-        }else{
+        if(!result){
             throw new Error('Save new distributor to database error.');
         }
+
+        return res.status(200).send({message: 'Register new distributor success'});
 
     }).fail(function(err){
         next(err);
@@ -75,8 +75,8 @@ exports.updateDistributor = function(req, res, next){
         idcardNumber: req.body.idcardNumber || ''
     };
 
-    userModel.updateQ({_id: req.params.distributor_id}, distributor).then(function(numAffected){
-        if(numAffected===1){
+    userModel.updateQ({_id: req.params.distributor_id}, distributor).then(function(numberAffected){
+        if(numberAffected === 1){
             return res.send({message: 'update success.'});
         }else{
             return res.send(400, {message: 'user does not exist.'});
@@ -177,7 +177,6 @@ exports.addFacilitator = function(req, res, next){
 
 
             resultDistributor.saveQ().then(function(resultUpdatedDistributor){
-                console.log("11", resultUpdatedDistributor);
                 return userModel.register(newFacilitator);
 
             }).then(function(resultFacilitator){
@@ -343,10 +342,12 @@ exports.searchFacilitator = function(req, res, next){
     }
 };
 
+
+
 exports.getSeminarOfFacilitator = function(req, res, next){
     var facilitatorId = req.user.id;
 
-    var filterKey = req.query.filterKey;
+    var keywordFilter = req.query.filterKey;
     var status = req.query.status;
 
     //确保status.toString()一定成功
@@ -364,6 +365,7 @@ exports.getSeminarOfFacilitator = function(req, res, next){
             status = 'all';
             break;
     }
+
     //组织query
     var query = {};
     query.$and = [{ facilitatorId: facilitatorId }];
@@ -372,14 +374,15 @@ exports.getSeminarOfFacilitator = function(req, res, next){
         query.$and.push({ 'isInitialized': status });
     }
 
-    if (filterKey) {
-        var strRegex = ".*[" + filterKey.split('').join('][') + "].*";
+    if (keywordFilter) {
+        var strRegex = ".*[" + keywordFilter.split('').join('][') + "].*";
+
         //不区分大小写
         var regex = { $regex: strRegex , $options: 'i' };
         query.$or = [
             { 'description': regex },
             { 'seminarId': regex },
-            { 'venue': regex },
+            { 'venue': regex }
         ];
     }
 
@@ -415,7 +418,7 @@ exports.getSeminarOfFacilitator = function(req, res, next){
                         }
 
                         seminarModel.update({seminarId: seminarOld.seminarId}, { $set: { companyAssignment: companyList }}).then(function(result){
-                        })
+                        }).done();
 
                     }
                 }
@@ -489,12 +492,11 @@ exports.addStudent = function(req, res, next){
     };
 
     userModel.register(newStudent).then(function(result){
-        if(result){
-            return res.status(200).send({message: 'Register new company success'});
-
-        }else{
+        if(result) {
             throw new Error('Save new company to database error.');
         }
+
+        return res.status(200).send({message: 'Register new company success'});
 
     }).fail(function(err){
         next(err);
