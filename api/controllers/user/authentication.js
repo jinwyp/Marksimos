@@ -29,7 +29,7 @@ exports.initAuth = function () {
             req.body.email = req.body.username;
             req.checkBody('email', 'Invalid email').notEmpty().isEmail();
         }else{
-            req.checkBody('username', 'Username should be 6-20 characters').notEmpty().len(6, 20);
+            req.checkBody('username', 'Username should be 6-20 characters').notEmpty().len(4, 20);
         }
 
         var errors = req.validationErrors();

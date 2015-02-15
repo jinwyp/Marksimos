@@ -1,9 +1,0 @@
-    <div class="form-group" ng-class="{'has-success':formname.phone.$dirty && formname.phone.$valid, 'has-error': formname.phone.$dirty && formname.phone.$invalid}">
-        <label for="inputPhone" class="col-sm-2 control-label">{{labeltext}}</label>
-        <div class="col-sm-4">
-            <input type="text" class="form-control" id="inputPhone" name="phone" placeholder="{{placeholdertext}}" ng-model="data" ng-required="{{required}}" ng-minlength="{{minlength}}" ng-maxlength="{{maxlength}}">
-        </div>
-        <label class="control-label" ng-show="formname.phone.$dirty && formname.phone.$error.required" ><i class="fa fa-times-circle-o"></i> {{requirederrorinfo}}</label>
-        <label class="control-label" ng-show="formname.phone.$dirty && formname.phone.$error.minlength" ><i class="fa fa-times-circle-o"></i> {{minlengtherrorinfo}}</label>
-        <label class="control-label" ng-show="formname.phone.$dirty && formname.phone.$error.maxlength" ><i class="fa fa-times-circle-o"></i> {{maxlengtherrorinfo}}</label>
-    </div>
