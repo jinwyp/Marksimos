@@ -322,7 +322,7 @@ apiRouter.get('/marksimos/api/create_admin', function (req,res,next) {
             "street": "",
             "idcardNumber": "",
             "numOfUsedLicense": 0,
-            "numOfLicense": 10000,
+            "numOfLicense": 500000,
             "role": userRoleModel.roleList.distributor.id,
             "activated": true,
             "emailActivated": true,

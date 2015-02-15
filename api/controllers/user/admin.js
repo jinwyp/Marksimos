@@ -39,9 +39,8 @@ exports.addDistributor = function(req, res, next){
     userModel.register(newDistributor).then(function(result){
         if(result){
             return res.status(200).send({message: 'Register new distributor success'});
-
         }else{
-            throw new Error('Save new company to database error.');
+            throw new Error('Save new distributor to database error.');
         }
 
     }).fail(function(err){
@@ -132,72 +131,72 @@ exports.searchDistributor = function(req, res, next){
 
 
 exports.addFacilitator = function(req, res, next){
-    var validateResult = utility.validateUser(req);
+    var validationErrors = userModel.registerValidations(req, userRoleModel.roleList.facilitator.id);
 
-    if(validateResult){
-        return res.send(400, {message: validateResult});
-    }
-
-    var checkRequiredFieldResult = utility.checkRequiredFieldForFacilitator(req);
-    if(checkRequiredFieldResult){
-        return res.send(400, {message: checkRequiredFieldResult});
+    if(validationErrors){
+        return res.status(400).send( {message: validationErrors} );
     }
 
     var distributorId = req.user.id;
 
-    var facilitator = {
-        username: req.body.username,
-        email: req.body.email,
-        password: utility.hashPassword(req.body.password),
-        mobilePhone: req.body.mobilePhone,
-        country: req.body.country,
-        state: req.body.state,
-        city: req.body.city,
-        district: req.body.district || '',
-        street: req.body.street || '',
 
-        role: userRoleModel.roleList.facilitator.id,
-        activated: true,
-        emailActivated: true,
+    var newFacilitator = {
+        username     : req.body.username,
+        email        : req.body.email,
+        password     : req.body.password,
 
-        numOfLicense: req.body.num_of_license_granted, //update distributor license when you update this field.
+        mobilePhone  : req.body.mobilePhone,
+        idcardNumber : req.body.idcardNumber,
+
+        country  : req.body.country,
+        state    : req.body.state,
+        city     : req.body.city,
+        district : req.body.district || '',
+        street   : req.body.street || '',
+
+        role           : userRoleModel.roleList.facilitator.id,
+        activated      : true,
+        numOfLicense   : req.body.numOfLicense, //update distributor license when you update this field.
+
         distributorId: distributorId
+
     };
 
-    userModel.findOneQ({
-        email: req.body.email
-    }).then(function(result){
-        if(result){
-            return res.send(400, {message: 'Email has been used, please choose another email.'});
-        }else{
-            return userModel.findOneQ({_id: distributorId})
-        }
-    }).then(function(distributor){
-        if(!distributor){
-            throw {message: "Can't find distributor in database: distributorId: " + distributorId};
+    userModel.findOneQ({ _id: newFacilitator.distributorId}).then(function(resultDistributor){
+
+        if(!resultDistributor){
+            throw new Error("Cancel promise, Can't find this distributor: " + newFacilitator.distributorId);
+        }else {
+
+            if(resultDistributor.numOfLicense - parseInt(newFacilitator.numOfLicense) <= 0){
+                throw new Error("Cancel promise, You don't have enough license to create a new facilitator.");
+            }
+
+            resultDistributor.numOfLicense = resultDistributor.numOfLicense - parseInt(newFacilitator.numOfLicense);
+            resultDistributor.numOfUsedLicense = resultDistributor.numOfUsedLicense + parseInt(newFacilitator.numOfLicense);
+
+
+            resultDistributor.saveQ().then(function(resultUpdatedDistributor){
+                console.log("11", resultUpdatedDistributor);
+                return userModel.register(newFacilitator);
+
+            }).then(function(resultFacilitator){
+                if(!resultFacilitator) {
+                    throw new Error('Save new facilitator to database error.');
+                }
+
+                return res.status(200).send({message: 'Register new facilitator success'});
+
+            }).fail(function(err){
+                next(err);
+            }).done();
         }
 
-        if(distributor.numOfLicense - parseInt(req.body.num_of_license) <= 0){
-            throw {httpStatus: 400, message: "You don't have enought license."};
-        }
-
-        return userModel.updateQ({_id: distributorId}, {
-            numOfLicense: distributor.numOfLicense - parseInt(req.body.num_of_license_granted),
-            numOfUsedLicense: distributor.numOfUsedLicense + parseInt(req.body.num_of_license_granted)
-        });
-    }).then(function(numAffected){
-        if(numAffected!==1){
-            throw {message: 'update distributor failed during add facilitator.'}
-        }
-        return userModel.register(facilitator);
-    }).then(function(result){
-        if(!result){
-            throw {message: 'add facilitator failed.'}
-        }
-        res.send(result);
     }).fail(function(err){
         next(err);
     }).done();
+
+
 };
 
 exports.updateFacilitator = function(req, res, next){

@@ -16,7 +16,7 @@ var userSchema = new Schema({
     password: { type: String, required: true, select: true},
 
 
-    emailActivateToken: { type: String, default: uuid.v4() , select: true},
+    emailActivateToken: { type: String, default: uuid.v4(), default: false},
     emailActivated: {type: Boolean, default: false},
     activated: {type: Boolean, default: false},
 
