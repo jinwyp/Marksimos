@@ -25,7 +25,7 @@
             //Labels for Login
             "LoginPageLabelWelcome"           : "Welcome !",
             "LoginPageLabelSignIn"            : "Sign In",
-            "LoginPageLabelEmail"             : "Email :",
+            "LoginPageLabelEmail"             : "Username / Email :",
             "LoginPageLabelPassword"          : "Password :",
             "LoginPageLabelPasswordErrorInfo" : "Password Incorrect !",
             "LoginPageButtonSignIn"           : "Sign In",
@@ -984,7 +984,7 @@
             //Labels for Login
             "LoginPageLabelWelcome" : "欢迎使用MarkSimos !",
             "LoginPageLabelSignIn" : "登录",
-            "LoginPageLabelEmail" : "邮箱 :",
+            "LoginPageLabelEmail" : "用户名 / 邮箱 :",
             "LoginPageLabelPassword" : "密码 :",
             "LoginPageLabelPasswordErrorInfo" : "邮箱或密码错误 !",
             "LoginPageButtonSignIn" : "点击登录",

@@ -349,7 +349,7 @@ apiRouter.get('/marksimos/api/create_admin', function (req,res,next) {
             "_id": mongoose.Types.ObjectId("54d834bdeaf05dbd048120f8"),
             "username": "b2c_facilitator",
             "password": utility.hashPassword("hcdfacilitator@9876"),
-            "email": "jinwang@hcdlearning.com",
+            "email": "b2c_facilitator@hcdlearning.com",
             "mobilePhone": "13564568304",
             "country": "China",
             "state": "shanghai",

@@ -18,6 +18,7 @@
 
         $scope.data = {
             admin: {
+                username : '',
                 email: '',
                 password: ''
             }

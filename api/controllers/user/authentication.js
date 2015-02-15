@@ -18,29 +18,41 @@ var passport = require('passport')
 
 exports.initAuth = function () {
     passport.use(new LocalStrategy({
-        usernameField: 'email',
+        usernameField: 'username',
         passReqToCallback: true
-    }, function (req,  email, password, done) {        
-        //登录参数验证
-        req.checkBody('email', 'Invalid email').notEmpty().isEmail();
+    }, function (req, username, password, done) {
+        //登录参数验证 (用户名和邮箱都可以验证)
+
         req.assert('password', '6 to 20 characters required').len(6, 20);
+
+        if(req.body.username.indexOf('@') > -1 ){
+            req.body.email = req.body.username;
+            req.checkBody('email', 'Invalid email').notEmpty().isEmail();
+        }else{
+            req.checkBody('username', 'Username should be 6-20 characters').notEmpty().len(6, 20);
+        }
 
         var errors = req.validationErrors();
         if (errors) {
             return done(null, false, { message: util.inspect(errors) });
         }
-        
-        //查找用户 
-        userModel.findOne({ email: email }, function (err, user) {
+
+        //查找用户
+        userModel.findOne( {$or : [
+            { username: req.body.username},
+            { email: req.body.email}
+
+        ]}, function (err, user) {
             if (err) { return done(err); }
             
             if (!user) {
                 return done(null, false, { message: 'User does not exist.' });
             }
             
-            if (!utility.comparePassword(password, user.password)) {
-                return done(null, false, { message: 'Email or password is wrong.' });
+            if (!userModel.verifyPassword(password, user.password)) {
+                return done(null, false, { message: 'Username or password wrong.' });
             }
+
             //为用户分配token
             Token.createToken({ userId: user._id }).then(function (tokenInfo) {
                 user.token = tokenInfo.token;
@@ -54,6 +66,9 @@ exports.initAuth = function () {
     }));
 
 };
+
+
+
 
 exports.studentLogin = function (req, res, next) {
     passport.authenticate('local', function (err, user, info) {
