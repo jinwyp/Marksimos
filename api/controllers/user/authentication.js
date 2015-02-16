@@ -348,28 +348,32 @@ exports.registerB2CStudent = function(req, res, next){
     };
 
 
-    userModel.register(newUser).then(function(result){
-        if(result){
-            return res.status(200).send({message: 'Register new user success'});
+    userModel.register(newUser).then(function(resultUser){
+        if(resultUser){
 
-            // return utility.sendActivateEmail(email, user.emailActivateToken)
-            // .then(function(sendEmailResult){
-            //     if(sendEmailResult){
-            //         return res.send({message: 'Register success'});
-            //     }else{
-            //         throw new Error('Send activate email failed.');
-            //     }
-            // })
+            var emailSubject = 'Your HCD account: Email address verification';
+
+            var emailBody =  'Dear ' + resultUser.username + ' : <br/><br/>' +
+                'In order to help maintain the security of your account, please verify your email address by clicking the following link:' +
+                '<a href="http://www.hcdlearning.com/useractivate?email=' + resultUser.email + '&emailtoken=' +  resultUser.emailActivateToken + '/">' +
+                'http://www.hcdlearning.com/useractivate?email=' + resultUser.email + '&emailtoken=' +  resultUser.emailActivateToken   + '></a>' +
+                'Your email address will be used to assist you in changing your account credentials, should you ever need help with those things.' + '<br/><br/>' +
+                'Thanks for helping us maintain the security of your account.' + '<br/><br/>' +
+                'HCD learning Support Team' + '<br/>' +
+                '<a href="http://www.hcdlearning.com/"> http://www.hcdlearning.com/ </a>'
+            ;
 
 
-            //return utility.sendActivateEmail(email, user.emailActivateToken).then(function(sendEmailResult){
+
+            //userModel.sendEmail(resultUser.email, emailSubject, emailBody).then(function(sendEmailResult){
             //    if(!sendEmailResult){
             //        throw new Error('Cancel promise chains. Send activate email failed.');
             //    }else{
-            //        return res.status(200).send({message: 'Register success'});
+            //        return res.status(200).send({message: 'Register new user success'});
             //    }
-            //})
+            //}).done();
 
+            return res.status(200).send({message: 'Register new user success'});
 
         }else{
             throw new Error('Save new user to database error.');

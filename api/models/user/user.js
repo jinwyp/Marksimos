@@ -4,8 +4,10 @@ var Q = require('q');
 var mongooseTimestamps = require('mongoose-timestamp');
 var uuid = require('node-uuid');
 var bcrypt = require('bcrypt-nodejs');
+var nodemailer = require('nodemailer');
 
 var userRoleModel = require('./userrole.js');
+var config = require('../../../common/config.js');
 
 
 var userSchema = new Schema({
@@ -16,7 +18,7 @@ var userSchema = new Schema({
     password: { type: String, required: true, select: true},
 
 
-    emailActivateToken: { type: String, default: uuid.v4(), default: false},
+    emailActivateToken: { type: String, default: uuid.v4()},
     emailActivated: {type: Boolean, default: false},
     activated: {type: Boolean, default: false},
 
@@ -122,6 +124,33 @@ userSchema.statics.register = function (newUser) {
                     deferred.resolve(result);
                 }
             });
+        }
+    });
+
+    return deferred.promise;
+};
+
+
+userSchema.statics.sendEmail = function(targetEmail, subject, html) {
+    var deferred = Q.defer();
+
+    var smtpTransport = config.mailTransporter;
+
+
+    var mailOptions = {
+        from: config.mailContent.from,
+        to: targetEmail,
+        subject: subject,
+        text: html
+    };
+
+    smtpTransport.sendMail(mailOptions, function(error, response){
+        if (error) {
+            console.log('Email send error : ' + error);
+            deferred.reject(error);
+        } else {
+            console.log('Email already send : ' + response);
+            deferred.resolve({message: 'Email already send : ' + response.message});
         }
     });
 

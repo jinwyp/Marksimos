@@ -4,6 +4,7 @@ var consts = require('../api/consts.js');
 var config = require('./config.js');
 var nodemailer = require('nodemailer');
 
+
 var Q = require('q');
 var util = require('util');
 var logger  = require('./logger.js');
@@ -225,6 +226,8 @@ exports.sendActivateEmail = function(toEmail, activateToken){
 
     return sendMail(toEmail,'HCD activate email', body);
 }
+
+
 
 /**
  * @param {String} subject：发送的主题
