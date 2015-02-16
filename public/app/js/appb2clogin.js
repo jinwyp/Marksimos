@@ -19,7 +19,7 @@
 
 
     /********************  Create New Module For Controllers ********************/
-    angular.module('b2clogin', ['marksimos.commoncomponent', 'marksimos.websitecomponent', 'marksimos.model', 'marksimos.filter']);
+    angular.module('b2clogin', ['marksimos.config', 'marksimos.commoncomponent', 'marksimos.websitecomponent', 'marksimos.model', 'marksimos.filter']);
 
 
 
@@ -45,6 +45,7 @@
         };
 
 
+
         app = {
             init : function(){
                 vm.clickregister = app.register;
@@ -57,15 +58,15 @@
 
             login : function(form){
                 if(form.$valid){
-                    //Student.login($scope.data.newUser).then(function(){
-                    //
-                    //    $window.location.href = "/marksimos/intro" ;
-                    //
-                    //}, function(err){
-                    //    form.password.$valid = false;
-                    //    form.password.$invalid = true;
-                    //    $scope.css.newUser.passwordPrompt = true;
-                    //});
+                    Student.login(vm.newUser).then(function(){
+
+                        $window.location.href = "/e4e/userhome" ;
+
+                    }, function(err){
+                        form.password.$valid = false;
+                        form.password.$invalid = true;
+                        $scope.css.newUser.passwordPrompt = true;
+                    });
                 }
             },
 

@@ -16,6 +16,8 @@ var passport = require('passport')
  * Passport LocalStrategy For Login and Generate Token.
  */
 
+Token.clearToken();
+
 exports.initAuth = function () {
     passport.use(new LocalStrategy({
         usernameField: 'username',
@@ -37,6 +39,12 @@ exports.initAuth = function () {
             return done(null, false, { message: util.inspect(errors) });
         }
 
+        var rememberMe = false;
+        if(req.body.rememberMe){
+            rememberMe = true;
+        };
+
+
         //查找用户
         userModel.findOne( {$or : [
             { username: req.body.username},
@@ -54,7 +62,7 @@ exports.initAuth = function () {
             }
 
             //为用户分配token
-            Token.createToken({ userId: user._id }).then(function (tokenInfo) {
+            Token.createToken({ userId: user._id, rememberMe : rememberMe }).then(function (tokenInfo) {
                 user.token = tokenInfo.token;
 
                 done(null, user);

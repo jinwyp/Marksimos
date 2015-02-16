@@ -26,7 +26,7 @@
     function b2cHeaderComponent($window, $translate){
         return {
             scope: {
-                showmenu     : '=',
+                showlogin   : '=',
                 showlogout   : '='
             },
             restrict: 'AE',
