@@ -211,7 +211,7 @@ exports.updateFacilitator = function(req, res, next){
     if(req.body.country) facilitator.country = req.body.country;
     if(req.body.state) facilitator.state = req.body.state;
     if(req.body.city) facilitator.city = req.body.city;
-    if(req.body.password) facilitator.password = utility.hashPassword(req.body.password);
+    if(req.body.password) facilitator.password = userModel.generateHashPassword(req.body.password);
 
     var userRole = req.user.roleId;
     if(req.body.num_of_license_granted && (userRole === userRoleModel.roleList.admin.id || userRole === userRoleModel.roleList.distributor.id)){
@@ -521,7 +521,7 @@ exports.updateStudent = function(req, res, next){
     if(req.body.country) student.country = req.body.country;
     if(req.body.state) student.state = req.body.state;
     if(req.body.city) student.city = req.body.city;
-    if(req.body.password) student.password = utility.hashPassword(req.body.password);
+    if(req.body.password) student.password = userModel.generateHashPassword(req.body.password);
     if(req.body.idcardNumber) student.idcardNumber = req.body.idcardNumber;
     if(req.body.gender) student.gender = req.body.gender;
     if(req.body.occupation) student.occupation = req.body.occupation;
@@ -576,7 +576,7 @@ exports.resetStudentPassword = function(req, res, next){
     var student = {};
     var password = 'hcd1234';
 
-    student.password = utility.hashPassword(password);
+    student.password = userModel.generateHashPassword(password);
 
     var student_id = req.body.student_id;
 

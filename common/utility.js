@@ -1,13 +1,10 @@
 var gameParameters = require('../api/gameParameters.js').parameters;
 var gameExogenous = require('../api/gameExsogenous.js');
-var cgiapi = require('../api/cgiapi.js');
 var consts = require('../api/consts.js');
 var config = require('./config.js');
 var nodemailer = require('nodemailer');
 
 var Q = require('q');
-var bcrypt = require('bcrypt-nodejs');
-var validator = require('validator');
 var util = require('util');
 var logger  = require('./logger.js');
 
@@ -257,14 +254,6 @@ function sendMail(toEmail, subject, html) {
     });
 
     return deferred.promise;
-};
-
-exports.hashPassword = function(password){
-    return bcrypt.hashSync(password);
-};
-
-exports.comparePassword = function(password, hashedPassword){
-    return bcrypt.compareSync(password, hashedPassword);
 };
 
 
