@@ -24,7 +24,7 @@
 
 
     /********************  Use This Module To Set New Controllers  ********************/
-    angular.module('b2clogin').controller('userLoginController', [ '$http', '$window', 'Student', function  ($http, $window, Student) {
+    angular.module('b2clogin').controller('userLoginController', [ '$http', '$window', '$location', 'Student', function  ($http, $window, $location, Student) {
         var vm = this;
         var app = {};
 
@@ -44,7 +44,9 @@
             rememberMe : false
         };
 
-
+        if(!angular.isUndefined($location.search().username)  ){
+            vm.newUser.username = $location.search().username;
+        }
 
         app = {
             init : function(){
@@ -62,10 +64,13 @@
 
                         $window.location.href = "/e4e/userhome" ;
 
-                    }, function(err){
+                    }).catch(function(err){
+                        form.username.$valid = false;
+                        form.username.$invalid = true;
                         form.password.$valid = false;
                         form.password.$invalid = true;
-                        $scope.css.newUser.passwordPrompt = true;
+
+                        vm.css.loginFailedInfo = true;
                     });
                 }
             },
@@ -87,7 +92,6 @@
                         form.email.$invalid = true;
 
                         vm.css.usernameExistedInfo = true;
-                        console.log(err.data);
                     });
                 }
             }

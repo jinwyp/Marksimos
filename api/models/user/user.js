@@ -1,9 +1,9 @@
 var mongoose = require('mongoose-q')(require('mongoose'));
 var Schema = mongoose.Schema;
-var bcrypt = require('bcrypt-nodejs');
 var Q = require('q');
+var mongooseTimestamps = require('mongoose-timestamp');
 var uuid = require('node-uuid');
-
+var bcrypt = require('bcrypt-nodejs');
 
 var userRoleModel = require('./userrole.js');
 
@@ -78,7 +78,7 @@ var userSchema = new Schema({
     websiteLanguage:{type: String, default: 'zh_CN'} // 'zh_CN'  'en_US'
 
 });
-
+userSchema.plugin(mongooseTimestamps);
 
 
 

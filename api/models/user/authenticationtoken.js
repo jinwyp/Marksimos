@@ -6,7 +6,7 @@ var mongoose = require('mongoose-q')(require('mongoose'));
 var Schema = mongoose.Schema;
 var uuid = require('node-uuid');
 var Q = require('q');
-
+var mongooseTimestamps = require('mongoose-timestamp');
 var logger = require('../../../common/logger.js');
 
 
@@ -36,7 +36,7 @@ var tokenSchema = new Schema({
     //过期时间
     expires: { type: Date, required: true }
 });
-
+tokenSchema.plugin(mongooseTimestamps);
 
 
 

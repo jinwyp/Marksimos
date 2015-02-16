@@ -9,16 +9,16 @@
 
                 <div class="b2c-login-box pull-right" ng-if="showlogin">
                     <div class="b2c-login-field">
-                        <div>登录名</div>
-                        <div><input type="text" class="b2c-login-input" /></div>
-                        <div><label><input type="checkbox">下次自动登录</label> </div>
+                        <div>用户名/邮箱</div>
+                        <div><input type="text" class="b2c-login-input" ng-model="newUser.username"/></div>
+                        <div><label><input type="checkbox" ng-model="newUser.rememberMe">下次自动登录</label> </div>
                     </div>
                     <div class="b2c-login-field">
                         <div>密码</div>
-                        <div><input type="text" class="b2c-login-input" /></div>
+                        <div><input type="text" class="b2c-login-input" ng-model="newUser.password"/></div>
                         <div><a href="/e4e/forgotpassword">忘记密码</a></div>
                     </div>
-                    <a href="" class="button"></a>
+                    <a href="" class="button" ng-click="clickLogin()"></a>
                 </div>
 
                 <div class="b2c-trans pull-right">
