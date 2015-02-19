@@ -386,7 +386,7 @@ apiRouter.get('/marksimos/api/create_admin', function (req,res,next) {
             "emailActivated": false
         },
         {
-            "username": "jin",
+            "username": "jinwang",
             "email": "jinwang@hcdlearning.com",
             "mobilePhone": "13564568304",
             "country": "China",
