@@ -63,7 +63,7 @@
                                 $window.location.href = "/e4e/userhome" ;
 
                             }, function(err){
-                                $window.location.href = "/e4e/login?username=" + scope.newUser.username ;
+                                $window.location.href = "/e4e/login#!/?username=" + scope.newUser.username ;
                             });
                         }
                     }

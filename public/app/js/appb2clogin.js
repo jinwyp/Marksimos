@@ -25,6 +25,8 @@
 
     /********************  Use This Module To Set New Controllers  ********************/
     angular.module('b2clogin').controller('userLoginController', [ '$http', '$window', '$location', 'Student', function  ($http, $window, $location, Student) {
+
+        /* jshint validthis: true */
         var vm = this;
         var app = {};
 

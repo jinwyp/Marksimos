@@ -465,7 +465,37 @@ exports.activateEmail = function(req, res, next){
         res.send(500, {message: 'activate failed.'})
     })
     .done();
-}
+};
+
+
+
+exports.forgetPassword = function(req, res, next){
+
+    req.checkBody('email', 'Email wrong format').notEmpty().isEmail();
+
+    var validationErrors =  req.validationErrors();
+
+    if(validationErrors){
+        return res.status(400).send( {message: validationErrors} );
+    }
+
+    userModel.findOneQ({
+        email: req.body.email
+    }).then(function(resultUser){
+
+        if(!resultUser){
+            throw new Error('User does not exist.');
+        }
+
+        res.status(200).send( resultUser );
+
+    }).fail(function(err){
+        next(err);
+    }).done();
+};
+
+
+
 
 
 
