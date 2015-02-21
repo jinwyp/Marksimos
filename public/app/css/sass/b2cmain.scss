@@ -540,43 +540,50 @@ body{
 		color:rgb(182,189,215);
 	}
 }
+
 .b2c-enter-email{
-	.b2c-prints{		
-		margin-top:44px;
-		margin-left:260px;
-		height:180px;
-		width:180px;
-		@include icon_b2c-sprite(b2c_prints);	
-	}
-	h3{
-		margin-top:67px;
-		margin-bottom:20px;
-	}
-	input[type=text]{
-		width:400px;
-		height:40px;
-	}
-	button{
-		margin-top:11px;
-		@include registerButton
-	}
-	hr{
-		width:90%;
-		margin-top:56px;	
-	}
-	.tip{
-		div{
-			@include inline-block;
-			width:220px;
-			margin-left:52px;
-			a,span{				
-				font-size:15px;
-				margin-left:10px;
-				font-weight:700;
-			}
-		}
-	}
+    .b2c-prints{
+        margin-top:44px;
+        margin-left:260px;
+        height:180px;
+        width:180px;
+        @include icon_b2c-sprite(b2c_prints);
+    }
+    h3{
+        margin-top:67px;
+        margin-bottom:20px;
+    }
+
+    button{
+        margin-top:11px;
+        @include registerButton
+    }
+
+    .err-msg{
+        background-color:rgb(255,230,225);
+        padding:5px 10px;
+        font-size:12px;
+    }
+
+    hr{
+        width:90%;
+        margin-top:56px;
+    }
+    .tip{
+        div{
+            @include inline-block;
+            width:220px;
+            margin-left:52px;
+            a,span{
+                font-size:15px;
+                margin-left:10px;
+                font-weight:700;
+            }
+        }
+    }
 }
+
+
 .b2c-verify-account{
 	padding-top:100px;
 	padding-left:170px;

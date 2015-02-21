@@ -28,12 +28,13 @@
 
         /* jshint validthis: true */
         var vm = this;
-        var app = {};
+
 
         vm.css = {
             showRegForm : true,
             loginFailedInfo : false,
-            usernameExistedInfo : false
+            usernameExistedInfo : false,
+            emailNotExistedInfo : false
         };
 
         vm.newUser =  {
@@ -50,54 +51,81 @@
             vm.newUser.username = $location.search().username;
         }
 
-        app = {
-            init : function(){
-                vm.clickregister = app.register;
-                vm.clicklogin = app.login;
-            },
-            reRun : function(){
-
-            },
+        /**********  Event Center  **********/
+        vm.clickregister = userRegister;
+        vm.clicklogin = userLogin;
+        vm.clickForgetPassword = forgetPasswordStep1;
 
 
-            login : function(form){
-                if(form.$valid){
-                    Student.login(vm.newUser).then(function(){
 
-                        $window.location.href = "/e4e/userhome" ;
+        /**********  Function Declarations  **********/
 
-                    }).catch(function(err){
+        function userLogin(form){
+            if(form.$valid){
+                Student.login(vm.newUser).then(function(){
+
+                    $window.location.href = "/e4e/userhome" ;
+
+                }).catch(function(err){
                         form.username.$valid = false;
                         form.username.$invalid = true;
                         form.password.$valid = false;
                         form.password.$invalid = true;
 
                         vm.css.loginFailedInfo = true;
-                    });
-                }
-            },
-
-            register : function(form){
-                vm.newUser.clickSubmit = true;
-                vm.css.usernameExistedInfo = false;
-
-                if(form.$valid){
-
-                    Student.registerB2C(vm.newUser).then(function(){
-
-                        vm.css.showRegForm = false;
-
-                    }).catch(function(err){
-                        form.username.$valid = false;
-                        form.username.$invalid = true;
-                        form.email.$valid = false;
-                        form.email.$invalid = true;
-
-                        vm.css.usernameExistedInfo = true;
-                    });
-                }
+                });
             }
+        }
 
+
+        function userRegister(form){
+            vm.newUser.clickSubmit = true;
+            vm.css.usernameExistedInfo = false;
+
+            if(form.$valid){
+
+                Student.registerB2C(vm.newUser).then(function(){
+
+                    vm.css.showRegForm = false;
+
+                }).catch(function(err){
+                    form.username.$valid = false;
+                    form.username.$invalid = true;
+                    form.email.$valid = false;
+                    form.email.$invalid = true;
+
+                    vm.css.emailExistedInfo = true;
+                });
+            }
+        }
+
+
+        function forgetPasswordStep1(form){
+            vm.css.emailNotExistedInfo = false;
+
+            if(form.$valid){
+                Student.forgetPassword(vm.newUser).then(function(result){
+                    console.log(result.data);
+
+                }).catch(function(err){
+                    form.email.$valid = false;
+                    form.email.$invalid = true;
+
+                    vm.css.emailNotExistedInfo = true;
+
+                });
+            }
+        }
+
+
+        var app = {};
+        app = {
+            init : function(){
+
+            },
+            reRun : function(){
+
+            }
         };
 
         app.init();

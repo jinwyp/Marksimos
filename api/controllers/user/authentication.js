@@ -484,7 +484,7 @@ exports.forgetPassword = function(req, res, next){
     }).then(function(resultUser){
 
         if(!resultUser){
-            throw new Error('User does not exist.');
+            throw new Error('Cancel promise. User does not exist.');
         }
 
         res.status(200).send( resultUser );

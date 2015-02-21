@@ -569,10 +569,6 @@ body {
   margin-top: 67px;
   margin-bottom: 20px;
 }
-.b2c-enter-email input[type=text] {
-  width: 400px;
-  height: 40px;
-}
 .b2c-enter-email button {
   margin-top: 11px;
   border-style: none;
@@ -591,6 +587,11 @@ body {
 .b2c-enter-email button:hover, .b2c-enter-email button:focus {
   color: #ffffff;
   background-color: #7e200b;
+}
+.b2c-enter-email .err-msg {
+  background-color: #ffe6e1;
+  padding: 5px 10px;
+  font-size: 12px;
 }
 .b2c-enter-email hr {
   width: 90%;
