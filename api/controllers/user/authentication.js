@@ -4,6 +4,7 @@ var seminarModel = require('../../models/marksimos/seminar.js');
 var Token = require('../../models/user/authenticationtoken.js');
 
 var utility = require('../../../common/utility.js');
+var mail = require('../../../common/sendCloud.js');
 var logger = require('../../../common/logger.js');
 var util = require('util');
 
@@ -469,6 +470,11 @@ exports.activateEmail = function(req, res, next){
 
 
 
+
+
+
+
+
 exports.forgetPassword = function(req, res, next){
 
     req.checkBody('email', 'Email wrong format').notEmpty().isEmail();
@@ -479,20 +485,43 @@ exports.forgetPassword = function(req, res, next){
         return res.status(400).send( {message: validationErrors} );
     }
 
-    userModel.findOneQ({
-        email: req.body.email
-    }).then(function(resultUser){
+    var mailSender = mail.createEmailSender();
+
+
+    userModel.findOneQ({ email: req.body.email }).then(function(resultUser){
+
 
         if(!resultUser){
             throw new Error('Cancel promise. User does not exist.');
         }
 
-        res.status(200).send( resultUser );
+        // setup e-mail data with unicode symbols
+        var mailOptions = {
+            from: 'Jinwang <jinwyp@gmail.com>', // sender address
+            to: 'jinwyp@163.com', // list of receivers
+            subject: 'Hello', // Subject line
+            text: 'Hello world', // plaintext body
+            html: '<b>Hello world</b>' // html body
+        };
+
+        mailSender.sendMail(mailOptions, function(error, info){
+            if(error){
+                console.log(error);
+            }else{
+                console.log('Message sent: ' + info.message);
+                res.status(200).send( info );
+            }
+
+        });
+
+
+
 
     }).fail(function(err){
         next(err);
     }).done();
 };
+
 
 
 
