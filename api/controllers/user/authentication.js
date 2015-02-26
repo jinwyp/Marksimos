@@ -5,10 +5,14 @@ var Token = require('../../models/user/authenticationtoken.js');
 var EmailModel = require('../../models/user/emailContent.js');
 
 
-var utility = require('../../../common/utility.js');
+
 var mailProvider = require('../../../common/sendCloud.js');
+var mailSender = mailProvider.createEmailSender();
+
 var logger = require('../../../common/logger.js');
 var util = require('util');
+var utility = require('../../../common/utility.js');
+
 
 //Passport
 var passport = require('passport')
@@ -352,64 +356,26 @@ exports.registerB2CStudent = function(req, res, next){
 
 
     userModel.register(newUser).then(function(resultUser){
-        if(resultUser){
-
-            var emailSubject = 'Your HCD account: Email address verification';
-
-            var emailBody =  'Dear ' + resultUser.username + ' : <br/><br/>' +
-                'In order to help maintain the security of your account, please verify your email address by clicking the following link:' +
-                '<a href="http://www.hcdlearning.com/useractivate?email=' + resultUser.email + '&emailtoken=' +  resultUser.emailActivateToken + '/">' +
-                'http://www.hcdlearning.com/useractivate?email=' + resultUser.email + '&emailtoken=' +  resultUser.emailActivateToken   + '></a>' +
-                'Your email address will be used to assist you in changing your account credentials, should you ever need help with those things.' + '<br/><br/>' +
-                'Thanks for helping us maintain the security of your account.' + '<br/><br/>' +
-                'HCD learning Support Team' + '<br/>' +
-                '<a href="http://www.hcdlearning.com/"> http://www.hcdlearning.com/ </a>'
-            ;
-
-
-
-            var mailSender = mailProvider.createEmailSender();
-
-
-            userModel.findOneQ({ email: req.body.email }).then(function(resultUser){
-
-
-                if(!resultUser){
-                    throw new Error('Cancel promise. User does not exist.');
-                }
-
-                // setup e-mail data with unicode symbols
-                var mailOptions = EmailModel.mailSample;
-
-                mailSender.sendMail(mailOptions, function(error, info){
-                    if(error){
-                        res.status(400).send( error );
-                    }else{
-                        res.status(200).send( info );
-                    }
-                });
-
-
-
-
-            }).fail(function(err){
-                next(err);
-            }).done();
-
-
-            //userModel.sendEmail(resultUser.email, emailSubject, emailBody).then(function(sendEmailResult){
-            //    if(!sendEmailResult){
-            //        throw new Error('Cancel promise chains. Send activate email failed.');
-            //    }else{
-            //        return res.status(200).send({message: 'Register new user success'});
-            //    }
-            //}).done();
-
-            return res.status(200).send({message: 'Register new user success'});
-
-        }else{
+        if(!resultUser) {
             throw new Error('Save new user to database error.');
         }
+
+
+        var mailContent = EmailModel.registration;
+
+        mailContent.html = mailContent.html1 + resultUser.username + mailContent.html2 + resultUser.email + mailContent.html3 + resultUser.resultUser.emailActivateToken +
+            mailContent.html4 + resultUser.email + mailContent.html5 + resultUser.resultUser.emailActivateToken + mailContent.htmlend ;
+
+        mailSender.sendMail(mailContent, function(error, info){
+            if(error){
+                logger.error(error);
+            }else{
+                logger.log(info);
+            }
+        });
+
+        return res.status(200).send({message: 'Register new user success'});
+
 
     }).fail(function(err){
         next(err);
@@ -516,29 +482,25 @@ exports.forgetPassword = function(req, res, next){
         return res.status(400).send( {message: validationErrors} );
     }
 
-    var mailSender = mailProvider.createEmailSender();
-
 
     userModel.findOneQ({ email: req.body.email }).then(function(resultUser){
-
 
         if(!resultUser){
             throw new Error('Cancel promise. User does not exist.');
         }
 
-        // setup e-mail data with unicode symbols
-        var mailOptions = EmailModel.mailSample;
+        var mailContent = EmailModel.resetPassword;
 
-        mailSender.sendMail(mailOptions, function(error, info){
+        mailContent.html = mailContent.html1 + resultUser.username + mailContent.html2 + resultUser.email + mailContent.html3 + resultUser.resultUser.emailActivateToken +
+        mailContent.html4 + resultUser.email + mailContent.html5 + resultUser.resultUser.emailActivateToken + mailContent.htmlend ;
+
+        mailSender.sendMail(mailContent, function(error, info){
             if(error){
-                res.status(400).send( error );
-            }else{
-                res.status(200).send( info );
+                logger.error(error);
             }
+
+            return res.status(200).send({message: 'Reset Password Email Send'});
         });
-
-
-
 
     }).fail(function(err){
         next(err);

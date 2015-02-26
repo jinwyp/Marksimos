@@ -115,7 +115,7 @@ userSchema.statics.register = function (newUser) {
         if (err) return deferred.reject(err);
         // already exists
         if (userexisted) {
-            return deferred.reject(new Error('cancel register new user, because user or email is existed.'));
+            return deferred.reject(new Error('cancel register new user, because username or email is existed.'));
         }else {
             User.create(newUser, function(err, result){
                 if(err){
