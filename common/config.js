@@ -1,18 +1,38 @@
+var nodemailer = require('nodemailer');
+
 module.exports = (function(){
     var config = {
-        passwordSalt: 'hcd',
 
-        studentType: {
-            B2Bstudents: 10,
-            B2Cstudents: 20,
-            B2CAndB2Bstudents: 30
-        },
+        mailTransporter : nodemailer.createTransport({
+            service: 'Gmail',
+            auth: {
+                user: 'jinwyp@gmail.com',
+                pass: 'jinwyp2011'
+            }
+        }),
+
+        //mailTransporter : nodemailer.createTransport( {
+        //    host: "smtp.163.com", // 主机
+        //    secure: true, // 使用 SSL
+        //    port: 465, // SMTP 端口
+        //    auth: {
+        //        user: "jinwyp", // 账号
+        //        pass: "jinwyp2011" // 密码
+        //    }
+        //}),
 
         mail: {
             host: 'mail.hcdglobal.com',
             user: 'test@hcdglobal.com',
             password: 'hcd1234##',
             name: 'HCD'
+        },
+        mailContent: {
+            from: 'HCD <jinwyp.163.com>',
+            to: 'jinwang.hcdlearning.com',
+            subject: 'Hello world',
+            text: 'Hello world, I am a test mail!',
+            html: '<b>Hello world, I am a test mail!</b>'
         },
 
         segmentNameAndIndex: {
@@ -66,15 +86,15 @@ module.exports = (function(){
     };
 
     switch(process.env.NODE_ENV){
-        case 'sunyun':
-            config.logDirectory = 'D:/node_log/';
-            config.mongo_conn = 'mongodb://marksimosdbadmin:marksimossunhao@192.168.2.50:27017/Marksimos';
+        case 'suyuan':
+            config.logDirectory = '/Users/jinwyp/Documents/github/Marksimos/log/';
+            config.mongo_conn = 'mongodb://localhost/Marksimos';
             config.host = 'http://localhost:3000/';
             config.cgiService = 'http://192.168.2.50/cgi-bin/';
             break;
-        case 'suyuan':
-            config.logDirectory = '/Users/ludwik/code/Marksimos/log/';
-            config.mongo_conn = 'mongodb://localhost/Marksimos';
+        case 'jinlocal':
+            config.logDirectory = '/Users/jinwyp/Documents/github/Marksimos/log/';
+            config.mongo_conn = 'mongodb://marksimosdbadmin:marksimossunhao@127.0.0.1:27017/Marksimos';
             config.host = 'http://localhost:3000/';
             config.cgiService = 'http://192.168.2.50/cgi-bin/';
             break;

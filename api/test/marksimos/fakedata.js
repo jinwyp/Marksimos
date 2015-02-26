@@ -6,18 +6,22 @@ var seminarId = '10076';
 
 var studentList =[
     {
+        username : 'anilraparla@hcdlearning.com',
         email : 'anilraparla@hcdlearning.com',
         password : '123456'
     },
     {
+        username : 'haosun@hcdlearning.com',
         email : 'haosun@hcdlearning.com',
         password : '123456'
     },
     {
+        username : 'jinwang@hcdlearning.com',
         email : 'jinwang@hcdlearning.com',
         password : '123456'
     },
     {
+        username : 'yunsun@hcdlearning.com',
         email : 'yunsun@hcdlearning.com',
         password : '123456'
     }
@@ -25,12 +29,62 @@ var studentList =[
 ];
 
 
-var adminList =[
+
+
+var admin =[
     {
+        username : 'hcd_administrator@hcdlearning.com',
+        email : 'hcd_administrator@hcdlearning.com',
+        password : 'admin1234@hcd'
+    }
+];
+
+var distributor =[
+    {
+        username : 'hcd_distributor@hcdlearning.com',
+        email : 'hcd_distributor@hcdlearning.com',
+        password : 'distributor@hcd5678'
+    }
+];
+
+
+var facilitator =[
+    {
+        username : 'hcd_facilitator@hcdlearning.com',
         email : 'hcd_facilitator@hcdlearning.com',
         password : 'hcdfacilitator@9876'
     }
 ];
+
+
+var createSeminarStudentList = [
+    {
+        company_id: 1,
+        email: "anilraparla@hcdlearning.com",
+        seminar_id: 1000
+    },
+    {
+        company_id: 2,
+        email: "haosun@hcdlearning.com",
+        seminar_id: 1000
+    },
+    {
+        company_id: 3,
+        email: "jinwang@hcdlearning.com",
+        seminar_id: 1000
+    },
+    {
+        company_id: 4,
+        email: "yunsun@hcdlearning.com",
+        seminar_id: 1000
+    },
+    {
+        company_id: 1,
+        email: "anilraparla@hcdlearning.com",
+        seminar_id: 1000
+    }
+];
+
 
 
 var period1 = [
@@ -5882,7 +5936,10 @@ var seminarFinalResult = [
 
 module.exports = {
     studentList : studentList,
-    adminList : adminList,
+    createSeminarStudentList : createSeminarStudentList,
+    admin : admin,
+    distributor : distributor,
+    facilitator : facilitator,
     seminarId : seminarId,
     period1 : period1,
     period2 : period2,

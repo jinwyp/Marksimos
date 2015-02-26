@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8" />
+    <meta http-equiv = "X-UA-Compatible" content="IE=edge"	/>
+    <meta name = "viewport" content = "width=device-width, height=device-height, initial-scale=1.0, minimum-scale = 1.0, maximum-scale=1.0, user-scalable = no" />
+    <title>2048</title>
+    <link rel="stylesheet" href = "2048.css" />
+    <script type="text/javascript" src="http://libs.baidu.com/jquery/1.9.0/jquery.min.js"></script>
+    <script type="text/javascript" src="main2048.js"></script>
+    <script type="text/javascript" src="support2048.js"></script>
+    <script type="text/javascript" src="move2048.js"></script>
+</head>
+
+<body>
+<header>
+    <h1>2048</h1>
+    <a href="javascript:newGame();" class="btm" id="newGameButtom">new game</a><br />
+    <p>score: <span id="score">0</span></p>
+</header>
+<div id="container">
+    <div class="cell" id="cell-00"></div>
+    <div class="cell" id="cell-01"></div>
+    <div class="cell" id="cell-02"></div>
+    <div class="cell" id="cell-03"></div>
+    <div class="cell" id="cell-10"></div>
+    <div class="cell" id="cell-11"></div>
+    <div class="cell" id="cell-12"></div>
+    <div class="cell" id="cell-13"></div>
+    <div class="cell" id="cell-20"></div>
+    <div class="cell" id="cell-21"></div>
+    <div class="cell" id="cell-22"></div>
+    <div class="cell" id="cell-23"></div>
+    <div class="cell" id="cell-30"></div>
+    <div class="cell" id="cell-31"></div>
+    <div class="cell" id="cell-32"></div>
+    <div class="cell" id="cell-33"></div>
+
+
+    <div  class="alert" id="gameOver">
+        <p>Game is Over</p>
+        <a href="javascript:newGame();" class="btm" id="tryAgain">try again</a><br />
+    </div>
+
+    <div class="alert" id="gameWin" >
+        <p>GOOD!NOW YOU HAVE GET 2048!</p>
+        <p><a href="javascript:newGame();" class="btm" id="restart">new game</a></p>
+        <p><a href="javascript:continuePlay();" class="btm" id="continue">GoGoGO</a></p>
+    </div>
+
+
+
+
+</body>
+</html>

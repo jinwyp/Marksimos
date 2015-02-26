@@ -5,14 +5,14 @@
 <div class="form-box" id="login-box" ng-controller="adminLoginController">
     <div class="header">Sign In</div>
 
-    <form name="loginForm">
+    <form name="loginForm" ng-cloak>
         <div class="body bg-gray">
 
-            <div class="form-group" ng-class="{'has-success':loginForm.email.$dirty && loginForm.email.$valid, 'has-error': loginForm.email.$dirty && loginForm.email.$invalid}">
+            <div class="form-group" ng-class="{'has-success':loginForm.username.$dirty && loginForm.username.$valid, 'has-error': loginForm.username.$dirty && loginForm.username.$invalid}">
 
-                <input type="email" name="email" class="form-control" placeholder="Admin User Email" ng-model="data.admin.email" required />
-                <label class="control-label" for="inputError" ng-show="loginForm.email.$dirty && loginForm.email.$invalid">
-                    <i class="fa fa-times-circle-o"></i> Please input your email
+                <input type="text" name="username" class="form-control" placeholder="Admin Username / Email" ng-model="data.admin.username" required />
+                <label class="control-label" for="inputError" ng-show="loginForm.username.$dirty && loginForm.username.$invalid">
+                    <i class="fa fa-times-circle-o"></i> Please input your username or email
                 </label>
             </div>
 

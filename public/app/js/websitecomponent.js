@@ -17,12 +17,69 @@
     angular.module('marksimos.websitecomponent', ['marksimos.templates', 'marksimos.model', 'pascalprecht.translate', 'marksimos.translation' ]);
 
 
+    angular.module('marksimos.websitecomponent').directive('b2cHeader', ['$window', '$translate', 'Student', b2cHeaderComponent ]);
     angular.module('marksimos.websitecomponent').directive('userHeader', ['$window', '$translate', 'Student', userHeaderComponent ]);
     angular.module('marksimos.websitecomponent').directive('headerAdmin', ['$window', '$translate', 'Student', adminHeaderComponent]);
     angular.module('marksimos.websitecomponent').directive('menuAdmin', [adminMenuComponent]);
 
 
+    function b2cHeaderComponent($window, $translate, Student){
+        return {
+            scope: {
+                showlogin  : '=',
+                showlogout : '=',
+                username   : '@',
+                password   : '@'
+            },
+            restrict: 'AE',
+            templateUrl: 'b2cheader.html',
+            link: function (scope, element, attrs) {
 
+                //scope.clickHelpMenu = function(){
+                //    if($window.location.href.indexOf('/marksimos/help')==-1)
+                //        $window.location.href='/marksimos/help';
+                //};
+                //
+                //scope.changeLanguage = function (langKey) {
+                //    $translate.use(langKey);
+                //};
+                //
+
+                scope.newUser = {
+                    username : scope.username,
+                    password : scope.password,
+                    rememberMe : false
+                };
+
+                scope.clickLogin = function () {
+
+                    if(typeof scope.newUser.username === 'undefined' || typeof scope.newUser.password === 'undefined' ){
+                        return false;
+                    }else {
+                        if(scope.newUser.username !== '' && scope.newUser.password !== ''){
+
+                            Student.login(scope.newUser).then(function(){
+
+                                $window.location.href = "/e4e/userhome" ;
+
+                            }, function(err){
+                                $window.location.href = "/e4e/login#!/?username=" + scope.newUser.username ;
+                            });
+                        }
+                    }
+
+
+                };
+
+                scope.clickLogout = function () {
+                    Student.logOut().then(function(data){
+                        $window.location.href = "/marksimos/login" ;
+                    });
+                };
+
+            }
+        };
+    }
 
 
     function userHeaderComponent($window, $translate, Student){

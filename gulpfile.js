@@ -1,6 +1,6 @@
 
 var gulp = require('gulp'),
-    argv = require('yargs').usage('Usage: $0 -p [num]').argv;
+    argv = require('yargs').usage('Usage: $0 -p [num] -sid [num]').example('$0 -p 1 -sid 10001', 'count the lines in the given file').argv;
     livereload = require('gulp-livereload'),
     nodemon = require('gulp-nodemon'),
     jshint = require('gulp-jshint'),
@@ -175,10 +175,17 @@ gulp.task('nodemonjin', function () {
     });
 //        .on('restart', 'default')
 });
-gulp.task('nodemonsunyun', function () {
+gulp.task('nodemonjinlocal', function () {
     nodemon({
-        script: 'app-debug.js',
-        env: { 'NODE_ENV': 'sunyun' }
+        script: 'app.js',
+        env: { 'NODE_ENV': 'jinlocal' }
+    });
+//        .on('restart', 'default')
+});
+gulp.task('nodemonjinlocal2', function () {
+    nodemon({
+        script: 'app.js',
+        env: { 'NODE_ENV': 'suyuan' }
     });
 //        .on('restart', 'default')
 });
@@ -224,7 +231,8 @@ gulp.task('browser-sync', function() {
 /********************  场景测试任务 API Testing Task (called when you run `gulp` from cli)  ********************/
 gulpArguments = argv;
 gulp.task('teststudentud', function() {
-    console.log("pls use 'gulp teststudentud -p' with '-p' peroid number argument, example: 'gulp teststudentud -p1' ");
+    console.log("Pls use 'gulp teststudentud -p -s'. Argument '-p' peroid number, Argument '-s' seminarId argument. ");
+    console.log("Example: 'gulp teststudentud -p1 -s10001' ");
     return gulp.src(paths.scenario_testStudentUpdateDecisions)
         .pipe(jasmine());
 });
@@ -238,11 +246,14 @@ gulp.task('testadmincs', function() {
         .pipe(jasmine());
 });
 gulp.task('testadminrn', function() {
+    console.log("Pls use 'gulp testadminrn -p -s'. Argument '-p' peroid number, Argument '-s' seminarId argument. ");
+    console.log("Example: 'gulp testadminrn -p1 -s10001' ");
     return gulp.src(paths.scenario_testAdminRunSeminarNextRound)
         .pipe(jasmine());
 });
 gulp.task('testadminrr', function() {
-    console.log("pls use 'gulp testadminrr -p' with '-p' peroid number argument, example: 'gulp testadminrr -p1' ");
+    console.log("Pls use 'gulp testadminrr -p -s'. Argument '-p' peroid number, Argument '-s' seminarId argument. ");
+    console.log("Example: 'gulp testadminrr -p1 -s10001' ");
     return gulp.src(paths.scenario_testAdminReRunSeminar)
         .pipe(jasmine());
 });
@@ -256,8 +267,10 @@ gulp.task('default', ['nodemonludwik', 'watchdev']);
 
 //gulp.task('jin', ['mongo', 'browser-sync', 'nodemonjin', 'watch']);
 gulp.task('jin', [ 'compass', 'templates', 'nodemonjin', 'watchdev']);
-gulp.task('jingo', ['compass', 'templates', 'minifycss', 'jscompress', 'nodemonjin', 'watch']);
+gulp.task('jinco', ['compass', 'templates', 'nodemonjinlocal', 'watchdev']);
+gulp.task('jinco2', ['compass', 'templates', 'nodemonjinlocal2', 'watchdev']);
+gulp.task('jinpro', ['compass', 'templates', 'minifycss', 'jscompress', 'nodemonjin', 'watch']);
 
-gulp.task('sunyun', ['compass', 'nodemonsunyun', 'watchdev']);
+
 
 

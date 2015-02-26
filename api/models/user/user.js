@@ -1,11 +1,13 @@
-var mongoose = require('mongoose');
+var mongoose = require('mongoose-q')(require('mongoose'));
 var Schema = mongoose.Schema;
-var bcrypt   = require('bcrypt-nodejs');
 var Q = require('q');
+var mongooseTimestamps = require('mongoose-timestamp');
 var uuid = require('node-uuid');
-
+var bcrypt = require('bcrypt-nodejs');
+var nodemailer = require('nodemailer');
 
 var userRoleModel = require('./userrole.js');
+var config = require('../../../common/config.js');
 
 
 var userSchema = new Schema({
@@ -16,13 +18,13 @@ var userSchema = new Schema({
     password: { type: String, required: true, select: true},
 
 
-    emailActivateToken: { type: String, default: uuid.v4() , select: true},
+    emailActivateToken: { type: String, default: uuid.v4()},
     emailActivated: {type: Boolean, default: false},
     activated: {type: Boolean, default: false},
 
 
-    role: {type: Number, default: 4},  //1 admin, 2 distributor, 3 facilitator, 4  students,   5 B2C Enterprise
-    studentType : {type: Number, default: 10}, //10 B2B students,  20 B2C students, 30 Both B2C and B2B students
+    role: {type: Number, default: 4, required: true},  //1 admin, 2 distributor, 3 facilitator, 4  students,   5 B2C Enterprise
+    studentType : {type: Number, default: 10, required: true}, //10 B2B students,  20 B2C students, 30 Both B2C and B2B students
 
 
     // 3rd facebook auth
@@ -33,8 +35,9 @@ var userSchema = new Schema({
         username : String
     },
 
+
     //user basic info
-    gender       : Number,
+    gender       : Number,  // 1 male 2 female
     birthday: Date,
     firstName    : String,
     lastName     : String,
@@ -50,7 +53,7 @@ var userSchema = new Schema({
     occupation: String,
 
 
-    //address
+    //user address
     country: String,
     state: String,
     city: String,
@@ -58,11 +61,13 @@ var userSchema = new Schema({
     street: String,
 
 
-    //add for e4e company
-    designation: String,
-    officalContactNumber: String,
-    holdingCompany: String,
-    division: String,
+    //For B2C E4E Enterprise
+    companyName : String,
+    companyAddress : String,
+    companyContactPerson : String,
+    companyContactMobileNumber: String,
+    companyOfficeTelephone: String,
+
 
 
     //distributor and facilitator info
@@ -75,6 +80,10 @@ var userSchema = new Schema({
     websiteLanguage:{type: String, default: 'zh_CN'} // 'zh_CN'  'en_US'
 
 });
+userSchema.plugin(mongooseTimestamps);
+
+
+
 
 userSchema.virtual('roleName').get(function () {
     return userRoleModel.roleList[this.role].name ;
@@ -84,30 +93,72 @@ userSchema.virtual('roleId').get(function () {
     return this.role ;
 });
 
-var User = mongoose.model("User", userSchema);
 
 
-exports.query = User;
 
 
-exports.register = function(user){
+
+userSchema.statics.register = function (newUser) {
     if(!mongoose.connection.readyState){
         throw new Error("mongoose is not connected.");
     }
 
     var deferred = Q.defer();
-    User.create(user, function(err, result){
-        if(err){
-            deferred.reject(err);
-        }else{
-            deferred.resolve(result);
+
+    newUser.password = User.generateHashPassword(newUser.password);
+
+    User.findOne( {$or : [
+        {username: newUser.username},
+        {'email': newUser.email}
+    ]}, function(err, userexisted) {
+        // In case of any error return
+        if (err) return deferred.reject(err);
+        // already exists
+        if (userexisted) {
+            return deferred.reject(new Error('cancel register new user, because user or email is existed.'));
+        }else {
+            User.create(newUser, function(err, result){
+                if(err){
+                    deferred.reject(err);
+                }else{
+                    deferred.resolve(result);
+                }
+            });
         }
     });
+
     return deferred.promise;
 };
 
 
-exports.updateByEmail = function(email, user){
+userSchema.statics.sendEmail = function(targetEmail, subject, html) {
+    var deferred = Q.defer();
+
+    var smtpTransport = config.mailTransporter;
+
+
+    var mailOptions = {
+        from: config.mailContent.from,
+        to: targetEmail,
+        subject: subject,
+        text: html
+    };
+
+    smtpTransport.sendMail(mailOptions, function(error, response){
+        if (error) {
+            console.log('Email send error : ' + error);
+            deferred.reject(error);
+        } else {
+            console.log('Email already send : ' + response);
+            deferred.resolve({message: 'Email already send : ' + response.message});
+        }
+    });
+
+    return deferred.promise;
+};
+
+
+userSchema.statics.updateByEmail = function(email, user){
     if(!mongoose.connection.readyState){
         throw new Error("mongoose is not connected.");
     }
@@ -115,138 +166,124 @@ exports.updateByEmail = function(email, user){
     var deferred = Q.defer();
 
     User.update({
-        email: email
-    }
-    ,user
-    , function(err, numAffected){
-        if(err){
-            deferred.reject(err);
-        }else{
-            deferred.resolve(numAffected);
+            email: email
         }
-    });
-
-    return deferred.promise; 
-};
-
-exports.update = function(query, user){
-    if(!mongoose.connection.readyState){
-        throw new Error("mongoose is not connected.");
-    }
-
-    var deferred = Q.defer();
-
-    User.update(query
-    , user
-    , function(err, numAffected){
-        if(err){
-            deferred.reject(err);
-        }else{
-            deferred.resolve(numAffected);
-        }
-    });
-
-    return deferred.promise; 
-};
-
-exports.findByEmail = function(email){
-    if(!mongoose.connection.readyState){
-        throw new Error("mongoose is not connected.");
-    }
-
-    var deferred = Q.defer();
-
-    User.findOne({
-        email: email
-    }, 
-    function(err, result){
-        if(err){
-            deferred.reject(err);
-        }else{
-            deferred.resolve(result);
-        }
-    });
+        ,user
+        , function(err, numAffected){
+            if(err){
+                deferred.reject(err);
+            }else{
+                deferred.resolve(numAffected);
+            }
+        });
 
     return deferred.promise;
 };
 
-exports.findByEmailAndToken = function(email, token){
-    if(!mongoose.connection.readyState){
-        throw new Error("mongoose is not connected.");
+
+
+
+
+
+
+userSchema.statics.registerValidations = function(req, userRoleId, studentType){
+
+    studentType = studentType || 20
+
+    req.checkBody('username', 'Username should be 6-20 characters').notEmpty().len(6, 20);
+    req.checkBody('email', 'Email wrong format').notEmpty().isEmail();
+    req.checkBody('password', 'Password should be 6-20 characters').notEmpty().len(6, 20);
+
+
+    if(userRoleId === userRoleModel.roleList.student.id && studentType === 20){
+        req.checkBody('gender', 'Gender is required').notEmpty().isInt();
     }
 
-    var deferred = Q.defer();
+    if(userRoleId === userRoleModel.roleList.student.id && studentType === 10){
+        req.checkBody('gender', 'Gender is required').optional().isInt();
+        req.checkBody('mobilePhone', 'mobilePhone wrong format').notEmpty().isMobilePhone('zh-CN');
 
-    User.findOne({
-        email: email,
-        activateToken: token
-    }, 
-    function(err, result){
-        if(err){
-            deferred.reject(err);
-        }else{
-            deferred.resolve(result);
-        }
-    })
 
-    return deferred.promise;
-}
+        req.checkBody('country', 'country is required').notEmpty();
+        req.checkBody('state', 'state is required').notEmpty();
+        req.checkBody('city', 'city is required').notEmpty();
 
-exports.find = function(query){
-    if(!mongoose.connection.readyState){
-        throw new Error("mongoose is not connected.");
+        req.checkBody('qq', 'qq number format wrong' ).optional().isInt();
+        req.checkBody('firstname', '2 to 50 characters required.').optional().len(2, 50);
+        req.checkBody('lastname', '2 to 50 characters required.').optional().len(2, 50);
+        req.checkBody('idcardNumber', '18 to 19 characters required.').optional().matches( /^\d{17}([0-9]|X)$/ );
+
+
+        //req.checkBody('occupation', '2 to 100 characters required.').optional().len(2, 100);
+        req.checkBody('organizationOrUniversity', '2 to 100 characters required.').optional().len(2, 100);
+
+        req.checkBody('studentType', 'Student B2B or B2C Type is required.').notEmpty().isInt();
+
     }
 
-    var deferred = Q.defer();
 
-    User.find(query, 
-    function(err, result){
-        if(err){
-            deferred.reject(err);
-        }else{
-            deferred.resolve(result);
-        }
-    })
-
-    return deferred.promise;
-}
-
-exports.findOne = function(query){
-    if(!mongoose.connection.readyState){
-        throw new Error("mongoose is not connected.");
+    if(userRoleId === userRoleModel.roleList.enterprise.id){
+        req.checkBody('companyName', 'Company Name is required').notEmpty().len(4, 100);
     }
 
-    var deferred = Q.defer();
 
-    User.findOne(query,
-    function(err, result){
-        if(err){
-            deferred.reject(err);
-        }else{
-            deferred.resolve(result);
-        }
-    })
+    if(userRoleId === userRoleModel.roleList.distributor.id){
+        req.checkBody('mobilePhone', 'mobilePhone wrong format').notEmpty().isMobilePhone('zh-CN');
+        req.checkBody('idcardNumber', '18 to 19 characters required.').matches( /^\d{17}([0-9]|X)$/ );
 
-    return deferred.promise;
-}
+        req.checkBody('country', 'country is required').notEmpty();
+        req.checkBody('state', 'state is required').notEmpty();
+        req.checkBody('city', 'city is required').notEmpty();
 
-exports.remove = function(query){
-    if(!mongoose.connection.readyState){
-        throw new Error("mongoose is not connected.");
+        req.checkBody('numOfLicense', 'License number must be between 1 to 99999 integer number.').notEmpty().isInt();
+
     }
-    
-    var deferred = Q.defer();
 
-    User.remove(query, function(err){
-        if(err){
-            deferred.reject(err);
-        }else{
-            deferred.resolve(undefined);
-        }
-    })
 
-    return deferred.promise;
-}
+    if(userRoleId === userRoleModel.roleList.facilitator.id){
+        req.checkBody('mobilePhone', 'mobilePhone wrong format').notEmpty().isMobilePhone('zh-CN');
+        req.checkBody('idcardNumber', '18 to 19 characters required.').matches( /^\d{17}([0-9]|X)$/ );
+
+        req.checkBody('country', 'country is required').notEmpty();
+        req.checkBody('state', 'state is required').notEmpty();
+        req.checkBody('city', 'city is required').notEmpty();
+
+        req.checkBody('numOfLicense', 'License number must be between 1 to 99999 integer number.').notEmpty().isInt();
+    }
+
+
+    return req.validationErrors();
+
+
+
+};
+
+
+userSchema.statics.getStudentType = function(){
+    return {
+        B2B : 10,
+        B2C : 20,
+        BothB2CAndB2B : 30
+    };
+};
+
+
+userSchema.statics.generateHashPassword = function(password){
+    return bcrypt.hashSync(password, bcrypt.genSaltSync(10));
+};
+
+userSchema.statics.verifyPassword = function(password, hashedPassword){
+    return bcrypt.compareSync(password, hashedPassword);
+};
+
+
+
+
+
+
+var User = mongoose.model("User", userSchema);
+module.exports = User;
+
 
 
 

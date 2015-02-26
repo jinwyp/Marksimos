@@ -264,7 +264,7 @@ exports.updateSKUDecision = function(req, res, next){
 
     SKUDecisionModel.updateSKU(seminarId, period, companyId, brandId, SKUID, tempSKU)
     .then(function(doc){
-        res.send(200, {status: 1, message: 'update success.'});
+        res.status(200).send( {status: 1, message: 'update success.'});
     })
     .fail(function(err){
 

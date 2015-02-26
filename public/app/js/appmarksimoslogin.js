@@ -29,6 +29,7 @@
 
         $scope.data = {
             newUser : {
+                username : '',
                 email : '',
                 password : ''
             }

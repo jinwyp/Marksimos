@@ -1,0 +1,118 @@
+/* CSS Document */
+
+header{
+    display:block;
+    margin:0 auto;
+    width:100%;
+    text-align:center;
+}
+
+header h1{
+    font-family:Verdana;
+    font-size:20pt;
+    color:orange;
+}
+
+.btm{
+    margin:20px auto;
+    width:5%;
+
+    padding:5px 5px;
+
+    text-decoration:none;
+    border-radius:10px;
+    font-family:Verdana;
+
+    background-color:orange;
+    color:#ffffff;
+}
+
+.btm:hover{
+    background-color:#FFCC99;
+}
+
+header p{
+    font-family:Verdana;
+    font-size:20px;
+    color:orange;
+    margin-top:20px;
+    margin-bottom:10px;
+}
+
+header p #score{
+
+    border-bottom:1px dashed orange;
+    width:60px;
+
+}
+
+#container{
+    width:500px;
+    height:500px;
+    padding:0px;
+    margin:20px auto;
+    border-radius:10px;
+    border:1px solid orange;
+    position:relative;
+}
+
+.cell{
+    /*
+    width:100px;
+    height:100px;
+    border-radius:6px;
+    */
+    background-color:#FFCC99;
+    border:0px solid #FFCC99;
+    position:absolute;
+}
+
+.cellNumber{
+    /*width:100px;
+    height:100px;
+    border-radius:6px;
+    */
+    position:absolute;
+    font-family:Verdana;
+    text-align:center;
+    font-size:20px;
+    line-height:100px;
+}
+
+#gameOver{
+    position:relative;
+    width:50%;
+    text-align:center;
+
+    margin:0 auto;
+    font-size:30px;
+    opacity:0.7;
+    font-family:Verdana;
+    color:orange;
+    background-color:#fff;
+    padding:20px;
+
+    border-radius:30%;
+    border:orange dashed 1px;
+
+    z-index:100;
+}
+
+#gameWin{
+    position:relative;
+    width:80%;
+    text-align:center;
+
+    margin:0 auto;
+    font-size:20px;
+    opacity:0.7;
+    font-family:Verdana;
+    color:orange;
+    background-color:#fff;
+    padding:20px;
+
+    border-radius:30%;
+    border:orange dashed 1px;
+
+    z-index:100;
+}

@@ -18,6 +18,7 @@
 
         $scope.data = {
             admin: {
+                username : '',
                 email: '',
                 password: ''
             }
@@ -30,16 +31,12 @@
 
                     $window.location.href = "/marksimos/adminhome";
 
-                    }).error(function (data, status, headers, config) {
-                        console.log(data, status);
-                        if (status == 400) {
-                            form.password.$valid = false;
-                            form.password.$invalid = true;
-                        }
-                        else if (status == 403) {
-                            form.email.$valid = false;
-                            form.email.$invalid = true;
-                        }
+                }).error(function (data, status, headers, config) {
+                    console.log(data, status);
+                    if (status === 401 || status === 403) {
+                        form.password.$valid = false;
+                        form.password.$invalid = true;
+                    }
                 });
             }
         };
@@ -64,6 +61,7 @@
 
         $scope.data = {
             currentUser: null,
+
             newDistributor: {
                 username: "",
                 email: "",
@@ -75,7 +73,7 @@
                 city: "shanghai",
                 district: "",
                 street: "",
-                num_of_license_granted: 0,
+                numOfLicense: 0,
                 gameType: ""
             },
             searchDistributor: {
@@ -96,7 +94,7 @@
                 city: "shanghai",
                 district: "",
                 street: "",
-                num_of_license_granted: 0
+                numOfLicense: 0
             },
             searchFacilitator: {
                 username: '',
@@ -110,14 +108,24 @@
                 email: "",
                 password: "",
                 mobilePhone: "",
-                country: null,
+                qq: "",
+
+                country: 'China',
                 state: "shanghai",
                 city: "shanghai",
+
+                firstName: "",
+                lastName: "",
+
                 occupation: "",
-                university: "",
-                firstname: "",
-                lastname: "",
-                student_type: 10 //10 B2B students,  20 B2C students, 30 Both B2C and B2B students
+                organizationOrUniversity: "",
+                studentType: "", //10 B2B students,  20 B2C students, 30 Both B2C and B2B students
+
+                studentTypeRadioOptions : [
+                    {value : 10, text : 'B2B Student'},
+                    {value : 20, text : 'B2C(E4E) Student'}
+                ]
+
             },
             searchStudent: {
                 username: '',
@@ -462,6 +470,7 @@
         };
         /********************  创建新的 Student  ********************/
         $scope.createNewStudent = function(form) {
+
             if (form.$valid) {
                 $http.post('/marksimos/api/admin/students', $scope.data.newStudent).success(function(data, status, headers, config) {
 

@@ -4,6 +4,7 @@ var seminarModel = require('../../models/marksimos/seminar.js');
 var Token = require('../../models/user/authenticationtoken.js');
 
 var utility = require('../../../common/utility.js');
+var mail = require('../../../common/sendCloud.js');
 var logger = require('../../../common/logger.js');
 var util = require('util');
 
@@ -16,32 +17,53 @@ var passport = require('passport')
  * Passport LocalStrategy For Login and Generate Token.
  */
 
+Token.clearToken();
+
 exports.initAuth = function () {
     passport.use(new LocalStrategy({
-        usernameField: 'email',
+        usernameField: 'username',
         passReqToCallback: true
-    }, function (req,  email, password, done) {        
-        //登录参数验证
-        req.checkBody('email', 'Invalid email').notEmpty().isEmail();
+    }, function (req, username, password, done) {
+        //登录参数验证 (用户名和邮箱都可以验证)
+
         req.assert('password', '6 to 20 characters required').len(6, 20);
+
+        if(req.body.username.indexOf('@') > -1 ){
+            req.body.email = req.body.username;
+            req.checkBody('email', 'Invalid email').notEmpty().isEmail();
+        }else{
+            req.checkBody('username', 'Username should be 6-20 characters').notEmpty().len(6, 20);
+        }
+
         var errors = req.validationErrors();
         if (errors) {
             return done(null, false, { message: util.inspect(errors) });
         }
-        
-        //查找用户 
-        userModel.query.findOne({ email: email }, function (err, user) {
+
+        var rememberMe = false;
+        if(req.body.rememberMe){
+            rememberMe = true;
+        };
+
+
+        //查找用户
+        userModel.findOne( {$or : [
+            { username: req.body.username},
+            { email: req.body.email}
+
+        ]}, function (err, user) {
             if (err) { return done(err); }
             
             if (!user) {
                 return done(null, false, { message: 'User does not exist.' });
             }
             
-            if (!utility.comparePassword(password, user.password)) {
-                return done(null, false, { message: 'Email or password is wrong.' });
+            if (!userModel.verifyPassword(password, user.password)) {
+                return done(null, false, { message: 'Username or password wrong.' });
             }
+
             //为用户分配token
-            Token.createToken({ userId: user._id }).then(function (tokenInfo) {
+            Token.createToken({ userId: user._id, rememberMe : rememberMe }).then(function (tokenInfo) {
                 user.token = tokenInfo.token;
 
                 done(null, user);
@@ -53,6 +75,9 @@ exports.initAuth = function () {
     }));
 
 };
+
+
+
 
 exports.studentLogin = function (req, res, next) {
     passport.authenticate('local', function (err, user, info) {
@@ -141,7 +166,7 @@ exports.authLoginToken = function (options) {
                 //token存在且未过期
                 if (tokenInfo && tokenInfo.expires > new Date()) {
 
-                    userModel.query.findOne({ _id: tokenInfo.userId }, function (err, user) {
+                    userModel.findOne({ _id: tokenInfo.userId }, function (err, user) {
 
                         if (err) { return next(err);}
 
@@ -274,62 +299,6 @@ exports.getUserInfo = function (req, res, next){
 
 
 
-exports.registerStudentB2B = function(req, res, next){
-    req.checkBody('email', 'Invalid email').notEmpty().isEmail();
-    req.assert('password', '6 to 20 characters required').len(6, 20);
-
-    var errors = req.validationErrors();
-    if(errors){
-        return res.send(400, {message: util.inspect(errors)});
-    }
-
-    var email = req.body.email;
-    var password = req.body.password;
-    password = utility.hashPassword(password);
-
-    var phoneNum = req.body.mobilePhone || '';
-    var country = req.body.country || '';
-    var state = req.body.state || '';
-    var city = req.body.city || '';
-
-    var user = {
-        email: email,
-        password: password
-    };
-
-    if(phoneNum) user.mobilePhone = phoneNum;
-    if(country) user.country = country;
-    if(state) user.state = state;
-    if(city) user.city = city;
-
-
-    userModel.findByEmail(email)
-    .then(function(findResult){
-        if(findResult){
-            return res.send({status:2, message: 'User is existed.'});
-        }
-        return userModel.register(user)
-        .then(function(result){
-            if(result){
-                return utility.sendActivateEmail(email, user.emailActivateToken)
-                .then(function(sendEmailResult){
-                    if(sendEmailResult){
-                        return res.send({message: 'Register success'});
-                    }else{
-                        throw new Error('Send activate email failed.');
-                    }
-                })
-            }else{
-                throw new Error('Save user to db failed.');
-            }
-        })
-    })
-    .fail(function(err){
-        logger.error(err);
-        res.send(500, {message: 'register failed.'});
-    })
-    .done();
-};
 
 
 function randomString(len) {
@@ -344,125 +313,121 @@ function randomString(len) {
 }
 
 
-//registerE4Estudent
-exports.registerE4Estudent = function(req, res, next){
-    req.checkBody('email', 'Invalid email').notEmpty().isEmail();
 
-    var errors = req.validationErrors();
-    if(errors){
-        return res.send(400, {message: util.inspect(errors)});
+
+
+exports.registerB2CStudent = function(req, res, next){
+
+    var validationErrors = userModel.registerValidations(req, userRoleModel.roleList.student.id, userModel.getStudentType().B2C);
+
+    if(validationErrors){
+        return res.status(400).send( {message: validationErrors} );
     }
 
-    var email = req.body.email;
-    var password = randomString(6);
-    var oldPassword = password;
-    password = utility.hashPassword(password);
+    var newUser = {
+        username : req.body.username,
+        email: req.body.email,
+        password: req.body.password,
 
-    var user = {
-        email: email,
-        password: password
+        gender : req.body.gender,
+        //firstName : req.body.firstName,
+        //lastName : req.body.lastName,
+        //birthday : req.body.birthday,
+        //idcardNumber : req.body.idcardNumber,
+        //mobilePhone : req.body.mobilePhone,
+        //qq : req.body.qq,
+
+
+        //majorsDegree : req.body.majorsDegree,
+        //organizationOrUniversity : req.body.university,
+        //dateOfGraduation : req.body.dateOfGraduation,
+
+        facilitatorId: "54d834bdeaf05dbd048120f8", // fixed for b2c_facilitator
+
+        role : userRoleModel.roleList.student.id,
+        studentType : userModel.getStudentType().B2C
     };
 
-    user.username = req.body.userName;
-    user.firstName = req.body.firstName;
-    user.lastName = req.body.lastName;
-    user.birthday = req.body.yearOfBirth;
-    user.majorsDegree = req.body.majors;
-    user.organizationOrUniversity = req.body.university;
-    user.dateOfGraduation = req.body.dateOfGraduation;
-    user.qq = req.body.qq;
 
-    user.role = userRoleModel.roleList.student.id;
-    user.studentType = 20;
+    userModel.register(newUser).then(function(resultUser){
+        if(resultUser){
 
-    userModel.findByEmail(email)
-    .then(function(findResult){
-        if(findResult){
-            return res.send({status:2, message: 'User is existed.'});
+            var emailSubject = 'Your HCD account: Email address verification';
+
+            var emailBody =  'Dear ' + resultUser.username + ' : <br/><br/>' +
+                'In order to help maintain the security of your account, please verify your email address by clicking the following link:' +
+                '<a href="http://www.hcdlearning.com/useractivate?email=' + resultUser.email + '&emailtoken=' +  resultUser.emailActivateToken + '/">' +
+                'http://www.hcdlearning.com/useractivate?email=' + resultUser.email + '&emailtoken=' +  resultUser.emailActivateToken   + '></a>' +
+                'Your email address will be used to assist you in changing your account credentials, should you ever need help with those things.' + '<br/><br/>' +
+                'Thanks for helping us maintain the security of your account.' + '<br/><br/>' +
+                'HCD learning Support Team' + '<br/>' +
+                '<a href="http://www.hcdlearning.com/"> http://www.hcdlearning.com/ </a>'
+            ;
+
+
+
+            //userModel.sendEmail(resultUser.email, emailSubject, emailBody).then(function(sendEmailResult){
+            //    if(!sendEmailResult){
+            //        throw new Error('Cancel promise chains. Send activate email failed.');
+            //    }else{
+            //        return res.status(200).send({message: 'Register new user success'});
+            //    }
+            //}).done();
+
+            return res.status(200).send({message: 'Register new user success'});
+
+        }else{
+            throw new Error('Save new user to database error.');
         }
-        return userModel.register(user)
-        .then(function(result){
-            if(result){
-                return res.send({message: 'Register success',password:oldPassword});
 
-                // return utility.sendActivateEmail(email, user.emailActivateToken)
-                // .then(function(sendEmailResult){
-                //     if(sendEmailResult){
-                //         return res.send({message: 'Register success'});
-                //     }else{
-                //         throw new Error('Send activate email failed.');
-                //     }
-                // })
-            }else{
-                throw new Error('Save user to db failed.');
-            }
-        })
-    })
-    .fail(function(err){
-        logger.error(err);
-        res.send(500, {message: 'register failed.'});
-    })
-    .done();
-}
+    }).fail(function(err){
+        next(err);
+    }).done();
 
 
-//registerE4Ecompany
-exports.registerE4Ecompany = function(req, res, next){
-    req.checkBody('email', 'Invalid email').notEmpty().isEmail();
+};
 
-    var errors = req.validationErrors();
-    if(errors){
-        return res.send(400, {message: util.inspect(errors)});
+
+exports.registerB2CEnterprise = function(req, res, next){
+
+    var validationErrors = userModel.registerValidations(req, userRoleModel.roleList.enterprise.id);
+
+    if(validationErrors){
+        return res.status(400).send( {message: validationErrors} );
     }
 
-    var email = req.body.email;
-    var password = randomString(6);
-    var oldPassword = password;
-    password = utility.hashPassword(password);
+    var newUser = {
+        username : req.body.username,
+        email: req.body.email,
+        password: req.body.password,
 
-    var user = {
-        email: email,
-        password: password
-    }
 
-    user.username = req.body.nameOfContactPerson;
-    user.designation = req.body.designation;
-    user.officalContactNumber = req.body.officalContactNumber;
-    user.holdingCompany = req.body.holdingCompany;
-    user.division = req.body.division;
-    user.mobilePhone = req.body.mobileNumber;
+        companyName : req.body.companyName,
+        companyAddress : req.body.companyAddress,
+        companyContactPerson : req.body.companyContactPerson,
+        companyContactMobileNumber: req.body.companyContactMobileNumber,
+        companyOfficeTelephone: req.body.companyOfficeTelephone,
 
-    user.role = userRoleModel.roleList.enterprise.id;
+        facilitatorId: "54d834bdeaf05dbd048120f8", // fixed for b2c_facilitator
 
-    userModel.findByEmail(email)
-    .then(function(findResult){
-        if(findResult){
-            return res.send({status:2, message: 'User is existed.'});
+        role : userRoleModel.roleList.enterprise.id,
+        studentType : userModel.getStudentType().B2C
+    };
+
+
+    userModel.register(newUser).then(function(result){
+        if(result){
+            return res.status(200).send({message: 'Register new company success'});
+
+        }else{
+            throw new Error('Save new company to database error.');
         }
-        return userModel.register(user)
-        .then(function(result){
-            if(result){
-                return res.send({message: 'Register success',password:oldPassword});
+
+    }).fail(function(err){
+        next(err);
+    }).done();
 
 
-                // return utility.sendActivateEmail(email, user.emailActivateToken)
-                // .then(function(sendEmailResult){
-                //     if(sendEmailResult){
-                //         return res.send({message: 'Register success'});
-                //     }else{
-                //         throw new Error('Send activate email failed.');
-                //     }
-                // })
-            }else{
-                throw new Error('Save user to db failed.');
-            }
-        })
-    })
-    .fail(function(err){
-        logger.error(err);
-        res.send(500, {message: 'register failed.'});
-    })
-    .done();
 };
 
 
@@ -478,8 +443,10 @@ exports.activateEmail = function(req, res, next){
         return res.send(400, {message: 'token is required.'})
     }
 
-    userModel.findByEmailAndToken(email, token)
-    .then(function(result){
+    userModel.findOneQ({
+        email: email,
+        activateToken: token
+    }).then(function(result){
         if(result){
             return userModel.updateByEmail(email, {
                 emailActivated: true
@@ -499,7 +466,65 @@ exports.activateEmail = function(req, res, next){
         res.send(500, {message: 'activate failed.'})
     })
     .done();
-}
+};
+
+
+
+
+
+
+
+
+exports.forgetPassword = function(req, res, next){
+
+    req.checkBody('email', 'Email wrong format').notEmpty().isEmail();
+
+    var validationErrors =  req.validationErrors();
+
+    if(validationErrors){
+        return res.status(400).send( {message: validationErrors} );
+    }
+
+    var mailSender = mail.createEmailSender();
+
+
+    userModel.findOneQ({ email: req.body.email }).then(function(resultUser){
+
+
+        if(!resultUser){
+            throw new Error('Cancel promise. User does not exist.');
+        }
+
+        // setup e-mail data with unicode symbols
+        var mailOptions = {
+            from: 'Jinwang <jinwyp@gmail.com>', // sender address
+            to: 'jinwyp@163.com', // list of receivers
+            subject: 'Hello', // Subject line
+            text: 'Hello world', // plaintext body
+            html: '<b>Hello world</b>' // html body
+        };
+
+        mailSender.sendMail(mailOptions, function(error, info){
+            if(error){
+                console.log(error);
+            }else{
+                console.log('Message sent: ' + info.message);
+                res.status(200).send( info );
+            }
+
+        });
+
+
+
+
+    }).fail(function(err){
+        next(err);
+    }).done();
+};
+
+
+
+
 
 
 

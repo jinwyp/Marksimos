@@ -5,13 +5,14 @@ var utility = require('../../testUtility.js');
 var Q = require('q');
 
 var data = require('../fakedata.js');
-var admin = data.adminList[0];
+var admin = data.facilitator[0];
 
+var studentInfoList = data.createSeminarStudentList;
 
 var originalTimeout;
 
 
-describe("Admin API Create Seminar", function() {
+describe("Admin API Create Distributor and Facilitator and Student", function() {
 
     beforeEach(function(done) {
         originalTimeout = jasmine.DEFAULT_TIMEOUT_INTERVAL;
@@ -58,34 +59,11 @@ describe("Admin API Create Seminar", function() {
 
             newSeminar = value[1];
             expect(newSeminar.seminarId).toMatch(/^\d+$/);
-            var studentInfoList = [
-                {
-                    company_id: 1,
-                    email: "anilraparla@hcdlearning.com",
-                    seminar_id: newSeminar.seminarId.toString()
-                },
-                {
-                    company_id: 2,
-                    email: "haosun@hcdlearning.com",
-                    seminar_id: newSeminar.seminarId
-                },
-                {
-                    company_id: 3,
-                    email: "jinwang@hcdlearning.com",
-                    seminar_id: newSeminar.seminarId
-                },
-                {
-                    company_id: 4,
-                    email: "yunsun@hcdlearning.com",
-                    seminar_id: newSeminar.seminarId
-                },
-                 {
-                     company_id: 1,
-                     email: "anilraparla@hcdlearning.com",
-                     seminar_id: newSeminar.seminarId.toString()
-                 }
 
-            ];
+            studentInfoList.forEach(function(studentInfo){
+                studentInfo.seminar_id = newSeminar.seminarId;
+            });
+
             return studentInfoList;
         }).then(function(studentInfoList) {
             return Q.all([
@@ -93,19 +71,17 @@ describe("Admin API Create Seminar", function() {
                 Q.nfcall(request.post, adminApiPath + "assign_student_to_seminar", { json: studentInfoList[1] }),
                 Q.nfcall(request.post, adminApiPath + "assign_student_to_seminar", { json: studentInfoList[2] }),
                 Q.nfcall(request.post, adminApiPath + "assign_student_to_seminar", { json: studentInfoList[3] }),
-                Q.nfcall(request.post, adminApiPath + "assign_student_to_seminar", { json: studentInfoList[4] }),
 
                 Q.nfcall(request.post, adminApiPath + "seminar/" + newSeminar.seminarId + "/init", {})
 
             ]);
-        }).spread(function(res1, res2, res3, res4, res5, res6) {
+        }).spread(function(res1, res2, res3, res4, res5) {
             expect(res1[1].message).toMatch(/^.+success.+$/);
             expect(res2[1].message).toMatch(/^.+success.+$/);
             expect(res3[1].message).toMatch(/^.+success.+$/);
             expect(res4[1].message).toMatch(/^.+success.+$/);
-            expect(res5[1].message).toMatch(/^.+success.+$/);
 
-            expect(res6[0].statusCode).toBe(200);
+            expect(res5[0].statusCode).toBe(200);
         }).fail(function(err) {
             console.log(err);
         }).done(done);

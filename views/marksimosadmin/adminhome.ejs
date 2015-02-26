@@ -28,9 +28,8 @@
                             <form class="form-horizontal" role="form" name="searchDistributorForm">
                                 <div class="box-body">
 
-                                    <username-input labeltext="Distributor UserName :" placeholdertext="Distributor UserName" formname="searchDistributorForm" data="data.searchDistributor.username" required="false" requirederrorinfo="Username is required" minlength="6" minlengtherrorinfo="Username must be at least 6 characters" maxlength="20" maxlengtherrorinfo="Username is a maximum of 20 characters"></username-input>
-                                    <email-input labeltext="Distributor Email :" placeholdertext="Email" formname="searchDistributorForm" data="data.searchDistributor.email" required="false" requirederrorinfo="Email is required" emailerrorinfo="Doesn't look like a valid email !"></email-input>
-
+                                    <text-form-input type="text" name="newDistributorUsername" label="Distributor UserName :" placeholder="Distributor UserName" labelclass="col-sm-2" inputclass="col-sm-4" data="data.searchDistributor.username" minlength="6" minlengtherrorinfo="Username must be at least 6 characters" maxlength="20" maxlengtherrorinfo="Username is a maximum of 20 characters"></text-form-input>
+                                    <text-form-input type="email" name="newDistributorEmail" label="Distributor Email :" placeholder="Email" labelclass="col-sm-2" inputclass="col-sm-4" data="data.searchDistributor.email" emailerrorinfo="Doesn't look like a valid email !" ></text-form-input>
 
                                     <div class="form-group">
                                         <label for="inputDistributorUserStatus" class="col-sm-2 control-label">User Status</label>
@@ -43,6 +42,7 @@
                                             </label>
                                         </div>
                                     </div>
+
                                 </div>
 
                                 <div class="box-footer">
@@ -105,11 +105,12 @@
                             <form class="form-horizontal" role="form" name="newDistributorForm">
                                 <div class="box-body">
 
-                                    <username-input labeltext="Distributor UserName :" placeholdertext="Distributor UserName" formname="newDistributorForm" data="data.newDistributor.username" required="true" requirederrorinfo="Username is required" minlength="6" minlengtherrorinfo="Username must be at least 6 characters" maxlength="20" maxlengtherrorinfo="Username is a maximum of 20 characters"></username-input>
-                                    <email-input labeltext="Distributor Email :" placeholdertext="Email" formname="newDistributorForm" data="data.newDistributor.email" required="true" requirederrorinfo="Email is required" emailerrorinfo="Doesn't look like a valid email !"></email-input>
-                                    <password-input labeltext="Password :" placeholdertext="Password" formname="newDistributorForm" data="data.newDistributor.password" required="true" requirederrorinfo="Password is required" minlength="6" minlengtherrorinfo="Password must be at least 6 characters" maxlength="20" maxlengtherrorinfo="Password is a maximum of 20 characters"></password-input>
-                                    <phone-input labeltext="Phone :" placeholdertext="Cell Phone" formname="newDistributorForm" data="data.newDistributor.mobilePhone" required="false" requirederrorinfo="Phone is required" minlength="11" minlengtherrorinfo="Phone must be at least 11 characters" maxlength="15" maxlengtherrorinfo="Phone is a maximum of 15 characters"></phone-input>
-                                    <idcard-input labeltext="ID Card :" placeholdertext="Pin Code" formname="newDistributorForm" data="data.newDistributor.idcardNumber" required="false" requirederrorinfo="ID Card is required" minlength="18" minlengtherrorinfo="ID Card must be at least 18 characters" maxlength="19" maxlengtherrorinfo="ID Card is a maximum of 19 characters"></idcard-input>
+                                    <text-form-input type="text" name="newDistributorUsername" label="Distributor UserName :" placeholder="Distributor UserName" labelclass="col-sm-2" inputclass="col-sm-4" data="data.newDistributor.username" required="true" minlength="6" minlengtherrorinfo="Username must be at least 6 characters" maxlength="20" maxlengtherrorinfo="Username is a maximum of 20 characters"></text-form-input>
+                                    <text-form-input type="email" name="newDistributorEmail" label="Distributor Email :" placeholder="Email" labelclass="col-sm-2" inputclass="col-sm-4" data="data.newDistributor.email" required="true" requirederrorinfo="Email is required!" emailerrorinfo="Doesn't look like a valid email !" ></text-form-input>
+                                    <text-form-input type="text" name="newDistributorPassword" label="Password :" placeholder="Password" labelclass="col-sm-2" inputclass="col-sm-4" data="data.newDistributor.password" required="true" requirederrorinfo="Password is required!" minlength="6" minlengtherrorinfo="Password must be at least 6 characters" maxlength="20" maxlengtherrorinfo="Password is a maximum of 20 characters" ></text-form-input>
+
+                                    <text-form-input type="text" name="newDistributorMobilePhone" label="Mobile Phone :" placeholder="Cell Phone Number" labelclass="col-sm-2" inputclass="col-sm-4" data="data.newDistributor.mobilePhone" required="true" requirederrorinfo="Mobile Phone is required!" minlength="11" minlengtherrorinfo="Phone must be at least 11 characters" maxlength="15" maxlengtherrorinfo="Phone is a maximum of 15 characters" ></text-form-input>
+                                    <text-form-input type="text" name="newDistributorIDCard" label="ID Card :" placeholder="Pin Code" labelclass="col-sm-2" inputclass="col-sm-4" data="data.newDistributor.idcardNumber" required="true" requirederrorinfo="ID Card is required!" minlength="18" minlengtherrorinfo="ID Card must be at least 18 characters" maxlength="18" maxlengtherrorinfo="ID Card is a maximum of 18 characters" ></text-form-input>
 
                                     <div class="form-group">
                                         <label for="inputDistributorCountry" class="col-sm-2 control-label">Country/State/City : </label>
@@ -142,19 +143,8 @@
                                         </div>
                                     </div>
 
-                                    <licence-input labeltext="No. of Licences Granted :" placeholdertext="No. of Licences Granted" formname="newDistributorForm" data="data.newDistributor.num_of_license_granted" required="true" requirederrorinfo="License is required" numbererrorinfo="License is numeric" min="1" minerrorinfo="Must be greater than 1" max="200" maxerrorinfo="Must be less than 200"></licence-input>
+                                    <text-form-input type="number" name="newDistributorLicences" label="No. of Licences Granted :" placeholder="No. of Default Licences" labelclass="col-sm-2" inputclass="col-sm-4" data="data.newDistributor.numOfLicense" required="true" requirederrorinfo="License No. is required!" min="1" minerrorinfo="Must be greater than 1" max="200" maxerrorinfo="Must be less than 200"></text-form-input>
 
-
-                                    <!--<div class="form-group">-->
-                                    <!--<label for="inputDistributorLicenceGranted" class="col-sm-2 control-label">Game Type :</label>-->
-                                    <!--<div class="col-sm-4">-->
-                                    <!--<select class="form-control input-sm">-->
-                                    <!--<option>MARKSIMOS B2B</option>-->
-                                    <!--<option>MARKSIMOS B2C</option>-->
-                                    <!--<option>CASASIMOS</option>-->
-                                    <!--</select>-->
-                                    <!--</div>-->
-                                    <!--</div>-->
                                 </div>
 
                                 <div class="box-footer">
@@ -184,9 +174,8 @@
                             <form class="form-horizontal" role="form" name="searchFacilitatorForm">
                                 <div class="box-body">
 
-                                    <username-input labeltext="Facilitator UserName :" placeholdertext="Facilitator UserName" formname="searchFacilitatorForm" data="data.searchFacilitator.username" required="false" requirederrorinfo="Username is required" minlength="6" minlengtherrorinfo="Username must be at least 6 characters" maxlength="20" maxlengtherrorinfo="Username is a maximum of 20 characters"></username-input>
-                                    <email-input labeltext="Facilitator Email :" placeholdertext="Email" formname="searchFacilitatorForm" data="data.searchFacilitator.email" required="false" requirederrorinfo="Email is required" emailerrorinfo="Doesn't look like a valid email !"></email-input>
-
+                                    <text-form-input type="text" name="newFacilitatorUsername" label="Facilitator UserName :" placeholder="Facilitator UserName" labelclass="col-sm-2" inputclass="col-sm-4" data="data.searchFacilitator.username" minlength="6" minlengtherrorinfo="Username must be at least 6 characters" maxlength="20" maxlengtherrorinfo="Username is a maximum of 20 characters"></text-form-input>
+                                    <text-form-input type="email" name="newFacilitatorEmail" label="Facilitator Email :" placeholder="Email" labelclass="col-sm-2" inputclass="col-sm-4" data="data.searchFacilitator.email" emailerrorinfo="Doesn't look like a valid email !" ></text-form-input>
 
                                     <div class="form-group">
                                         <label for="inputFacilitatorUserStatus" class="col-sm-2 control-label">User Status</label>
@@ -199,6 +188,7 @@
                                             </label>
                                         </div>
                                     </div>
+
                                 </div>
 
                                 <div class="box-footer">
@@ -262,12 +252,12 @@
                         <div class="box box-primary">
                             <form class="form-horizontal" role="form" name="newFacilitatorForm">
                                 <div class="box-body">
+                                    <text-form-input type="text" name="newDistributorUsername" label="Facilitator UserName :" placeholder="Facilitator UserName" labelclass="col-sm-2" inputclass="col-sm-4" data="data.newFacilitator.username" required="true" minlength="6" minlengtherrorinfo="Username must be at least 6 characters" maxlength="20" maxlengtherrorinfo="Username is a maximum of 20 characters"></text-form-input>
+                                    <text-form-input type="email" name="newFacilitatorEmail" label="Facilitator Email :" placeholder="Email" labelclass="col-sm-2" inputclass="col-sm-4" data="data.newFacilitator.email" required="true" requirederrorinfo="Email is required!" emailerrorinfo="Doesn't look like a valid email !" ></text-form-input>
+                                    <text-form-input type="text" name="newFacilitatorPassword" label="Password :" placeholder="Password" labelclass="col-sm-2" inputclass="col-sm-4" data="data.newFacilitator.password" required="true" requirederrorinfo="Password is required!" minlength="6" minlengtherrorinfo="Password must be at least 6 characters" maxlength="20" maxlengtherrorinfo="Password is a maximum of 20 characters" ></text-form-input>
 
-                                    <username-input labeltext="Facilitator UserName :" placeholdertext="Facilitator UserName" formname="newFacilitatorForm" data="data.newFacilitator.username" required="true" requirederrorinfo="Username is required" minlength="6" minlengtherrorinfo="Username must be at least 6 characters" maxlength="20" maxlengtherrorinfo="Username is a maximum of 20 characters"></username-input>
-                                    <email-input labeltext="Facilitator Email :" placeholdertext="Email" formname="newFacilitatorForm" data="data.newFacilitator.email" required="true" requirederrorinfo="Email is required" emailerrorinfo="Doesn't look like a valid email !"></email-input>
-                                    <password-input labeltext="Password :" placeholdertext="Password" formname="newFacilitatorForm" data="data.newFacilitator.password" required="true" requirederrorinfo="Password is required" minlength="6" minlengtherrorinfo="Password must be at least 6 characters" maxlength="20" maxlengtherrorinfo="Password is a maximum of 20 characters"></password-input>
-                                    <phone-input labeltext="Phone :" placeholdertext="Cell Phone" formname="newFacilitatorForm" data="data.newFacilitator.mobilePhone" required="false" requirederrorinfo="Phone is required" minlength="11" minlengtherrorinfo="Phone must be at least 11 characters" maxlength="15" maxlengtherrorinfo="Phone is a maximum of 15 characters"></phone-input>
-                                    <idcard-input labeltext="ID Card :" placeholdertext="Pin Code" formname="newFacilitatorForm" data="data.newFacilitator.idcardNumber" required="false" requirederrorinfo="ID Card is required" minlength="17" minlengtherrorinfo="ID Card must be at least 17 characters" maxlength="24" maxlengtherrorinfo="ID Card is a maximum of 24 characters"></idcard-input>
+                                    <text-form-input type="text" name="newFacilitatorMobilePhone" label="Mobile Phone :" placeholder="Cell Phone Number" labelclass="col-sm-2" inputclass="col-sm-4" data="data.newFacilitator.mobilePhone" required="true" requirederrorinfo="Mobile Phone is required!" minlength="11" minlengtherrorinfo="Phone must be at least 11 characters" maxlength="15" maxlengtherrorinfo="Phone is a maximum of 15 characters" ></text-form-input>
+                                    <text-form-input type="text" name="newFacilitatorIDCard" label="ID Card :" placeholder="Pin Code" labelclass="col-sm-2" inputclass="col-sm-4" data="data.newFacilitator.idcardNumber" required="true" requirederrorinfo="ID Card is required!" minlength="18" minlengtherrorinfo="ID Card must be at least 18 characters" maxlength="18" maxlengtherrorinfo="ID Card is a maximum of 18 characters" ></text-form-input>
 
                                     <div class="form-group">
                                         <label for="inputFacilitatorCountry" class="col-sm-2 control-label">Country/State/City : </label>
@@ -300,7 +290,7 @@
                                         </div>
                                     </div>
 
-                                    <licence-input labeltext="No. of Licences Granted :" placeholdertext="No. of Licences Granted" formname="newFacilitatorForm" data="data.newFacilitator.num_of_license_granted" required="true" requirederrorinfo="License is required" numbererrorinfo="License is numeric" min="1" minerrorinfo="Must be greater than 1" max="200" maxerrorinfo="Must be less than 200"></licence-input>
+                                    <text-form-input type="number" name="newFacilitatorLicences" label="No. of Licences Granted :" placeholder="No. of Default Licences" labelclass="col-sm-2" inputclass="col-sm-4" data="data.newFacilitator.numOfLicense" required="true" requirederrorinfo="License No. is required!" min="1" minerrorinfo="Must be greater than 1" max="200" maxerrorinfo="Must be less than 200"></text-form-input>
 
 
                                     <!--<div class="form-group">-->
@@ -341,9 +331,8 @@
                             <form class="form-horizontal" role="form" name="searchStudentForm">
                                 <div class="box-body">
 
-                                    <username-input labeltext="Student UserName :" placeholdertext="Student UserName" formname="searchStudentForm" data="data.searchStudent.username" required="false" requirederrorinfo="Username is required" minlength="6" minlengtherrorinfo="Username must be at least 6 characters" maxlength="20" maxlengtherrorinfo="Username is a maximum of 20 characters"></username-input>
-                                    <email-input labeltext="Student Email :" placeholdertext="Email" formname="searchStudentForm" data="data.searchStudent.email" required="false" requirederrorinfo="Email is required" emailerrorinfo="Doesn't look like a valid email !"></email-input>
-
+                                    <text-form-input type="text" name="newStudentUsername" label="Student UserName :" placeholder="Student UserName" labelclass="col-sm-2" inputclass="col-sm-4" data="data.searchStudent.username" minlength="6" minlengtherrorinfo="Username must be at least 6 characters" maxlength="20" maxlengtherrorinfo="Username is a maximum of 20 characters"></text-form-input>
+                                    <text-form-input type="email" name="newStudentEmail" label="Student Email :" placeholder="Email" labelclass="col-sm-2" inputclass="col-sm-4" data="data.searchStudent.email" emailerrorinfo="Doesn't look like a valid email !" ></text-form-input>
 
                                     <div class="form-group">
                                         <label for="inputStudentUserStatus" class="col-sm-2 control-label">User Status</label>
@@ -359,7 +348,7 @@
 
                                     <div class="form-group">
                                         <label for="inputStudentUserFrom" class="col-sm-2 control-label">User From</label>
-                                        <div class="col-sm-4">
+                                        <div class="col-sm-8">
                                             <label class="radio-inline">
                                                 <input type="radio" name="inputStudentUserFrom" ng-model="data.searchStudent.student_type" value="">All
                                             </label>
@@ -443,11 +432,13 @@
 
                             <form class="form-horizontal" role="form" name="newStudentForm">
                                 <div class="box-body">
+                                    <text-form-input type="text" name="newStudentUsername" label="Student UserName :" placeholder="Student UserName" labelclass="col-sm-2" inputclass="col-sm-4" data="data.newStudent.username" required="true" minlength="6" minlengtherrorinfo="Username must be at least 6 characters" maxlength="20" maxlengtherrorinfo="Username is a maximum of 20 characters"></text-form-input>
+                                    <text-form-input type="email" name="newStudentEmail" label="Student Email :" placeholder="Email" labelclass="col-sm-2" inputclass="col-sm-4" data="data.newStudent.email" required="true" requirederrorinfo="Email is required!" emailerrorinfo="Doesn't look like a valid email !" ></text-form-input>
+                                    <text-form-input type="text" name="newStudentPassword" label="Password :" placeholder="Password" labelclass="col-sm-2" inputclass="col-sm-4" data="data.newStudent.password" required="true" requirederrorinfo="Password is required!" minlength="6" minlengtherrorinfo="Password must be at least 6 characters" maxlength="20" maxlengtherrorinfo="Password is a maximum of 20 characters" ></text-form-input>
 
-                                    <username-input labeltext="Student UserName :" placeholdertext="Student UserName" formname="newStudentForm" data="data.newStudent.username" required="true" requirederrorinfo="Username is required" minlength="6" minlengtherrorinfo="Username must be at least 6 characters" maxlength="20" maxlengtherrorinfo="Username is a maximum of 20 characters"></username-input>
-                                    <email-input labeltext="Student Email :" placeholdertext="Email" formname="newStudentForm" data="data.newStudent.email" required="true" requirederrorinfo="Email is required" emailerrorinfo="Doesn't look like a valid email !"></email-input>
-                                    <password-input labeltext="Password :" placeholdertext="Password" formname="newStudentForm" data="data.newStudent.password" required="true" requirederrorinfo="Password is required" minlength="6" minlengtherrorinfo="Password must be at least 6 characters" maxlength="20" maxlengtherrorinfo="Password is a maximum of 20 characters"></password-input>
-                                    <phone-input labeltext="Phone :" placeholdertext="Cell Phone" formname="newStudentForm" data="data.newStudent.mobilePhone" required="true" requirederrorinfo="Phone is required" minlength="11" minlengtherrorinfo="Phone must be at least 11 characters" maxlength="15" maxlengtherrorinfo="Phone is a maximum of 15 characters"></phone-input>
+                                    <text-form-input type="text" name="newStudentMobilePhone" label="Mobile Phone :" placeholder="Cell Phone Number" labelclass="col-sm-2" inputclass="col-sm-4" data="data.newStudent.mobilePhone" required="true" requirederrorinfo="Mobile Phone is required!" minlength="11" minlengtherrorinfo="Phone must be at least 11 characters" maxlength="15" maxlengtherrorinfo="Phone is a maximum of 15 characters" ></text-form-input>
+                                    <text-form-input type="text" name="newStudentQQ" label="QQ :" placeholder="QQ Number" labelclass="col-sm-2" inputclass="col-sm-4" data="data.newStudent.qq" minlength="4" minlengtherrorinfo="QQ must be at least 4 characters" maxlength="20" maxlengtherrorinfo="QQ is a maximum of 20 characters" ></text-form-input>
+
 
                                     <div class="form-group">
                                         <label for="inputStudentCountry" class="col-sm-2 control-label">Country/State/City : </label>
@@ -470,55 +461,14 @@
                                         </div>
                                     </div>
 
-                                    <div class="form-group" ng-class="{'has-success':newStudentForm.firstname.$dirty && newStudentForm.firstname.$valid, 'has-error': newStudentForm.firstname.$dirty && newStudentForm.firstname.$invalid}">
-                                        <label for="inputFirstName" class="col-sm-2 control-label">First Name : </label>
-                                        <div class="col-sm-4">
-                                            <input type="text" class="form-control" id="inputFirstName" name="firstname"  ng-model="data.newStudent.firstname" required>
-                                        </div>
-                                    </div>
-                                    <div class="form-group" ng-class="{'has-success':newStudentForm.lastname.$dirty && newStudentForm.lastname.$valid, 'has-error': newStudentForm.lastname.$dirty && newStudentForm.lastname.$invalid}">
-                                        <label for="inputLastName" class="col-sm-2 control-label">Last Name : </label>
-                                        <div class="col-sm-4">
-                                            <input type="text" class="form-control" id="inputLastName" name="lastname"  ng-model="data.newStudent.lastname" required>
-                                        </div>
-                                    </div>
+                                    <text-form-input type="text" name="newStudentFirstName" label="First Name :" labelclass="col-sm-2" inputclass="col-sm-4" data="data.newStudent.firstName" minlength="2" minlengtherrorinfo="First name must be at least 2 characters" maxlength="50" maxlengtherrorinfo="First name is a maximum of 50 characters" ></text-form-input>
+                                    <text-form-input type="text" name="newStudentLastName" label="Last Name :" labelclass="col-sm-2" inputclass="col-sm-4" data="data.newStudent.lastName" minlength="2" minlengtherrorinfo="Last name must be at least 2 characters" maxlength="50" maxlengtherrorinfo="Last name is a maximum of 50 characters" ></text-form-input>
 
-                                    <div class="form-group" ng-class="{'has-success':newStudentForm.occupation.$dirty && newStudentForm.occupation.$valid, 'has-error': newStudentForm.occupation.$dirty && newStudentForm.occupation.$invalid}">
-                                        <label for="inputOccupation" class="col-sm-2 control-label">Current Occupation : </label>
-                                        <div class="col-sm-4">
-                                            <input type="text" class="form-control" id="inputOccupation" name="occupation"  ng-model="data.newStudent.occupation">
-                                        </div>
-                                    </div>
+                                    <text-form-input type="text" name="newStudentOccupation" label="Current Occupation :" labelclass="col-sm-2" inputclass="col-sm-4" data="data.newStudent.occupation" minlength="2" minlengtherrorinfo="Current occupation must be at least 2 characters" maxlength="100" maxlengtherrorinfo="Current occupation is a maximum of 100 characters" ></text-form-input>
+                                    <text-form-input type="text" name="newStudentUniversity" label="University / Organization :" labelclass="col-sm-2" inputclass="col-sm-4" data="data.newStudent.organizationOrUniversity" minlength="2" minlengtherrorinfo="University must be at least 2 characters" maxlength="100" maxlengtherrorinfo="University is a maximum of 100 characters" ></text-form-input>
 
-                                    <div class="form-group" ng-class="{'has-success':newStudentForm.university.$dirty && newStudentForm.university.$valid, 'has-error': newStudentForm.university.$dirty && newStudentForm.university.$invalid}">
-                                        <label for="inputUniversity" class="col-sm-2 control-label">University / Organization: </label>
-                                        <div class="col-sm-4">
-                                            <input type="text" class="form-control" id="inputUniversity" name="university"  ng-model="data.newStudent.university">
-                                        </div>
-                                    </div>
+                                    <text-form-input type="radio" name="newStudentStudentType" label="Student For :" labelclass="col-sm-2" inputclass="col-sm-4" data="data.newStudent.studentType" radiooptions="data.newStudent.studentTypeRadioOptions" required="true"></text-form-input>
 
-                                    <div class="form-group" ng-class="{'has-success':newStudentForm.student_type.$dirty && newStudentForm.student_type.$valid, 'has-error': newStudentForm.student_type.$dirty && newStudentForm.student_type.$invalid}">
-                                        <label for="inputStudentUserFrom" class="col-sm-2 control-label">Student For</label>
-                                        <div class="col-sm-4">
-                                            <label class="radio-inline">
-                                                <input type="radio" name="inputStudentUserFrom" ng-model="data.newStudent.student_type" value="10">B2B Student
-                                            </label>
-                                            <label class="radio-inline">
-                                                <input type="radio" name="inputStudentUserFrom" ng-model="data.newStudent.student_type" value="20">B2C(E4E) Student
-                                            </label>
-                                        </div>
-                                    </div>
-
-                                    <!--<div class="form-group">-->
-                                    <!--<label for="inputStudentLicenceGranted" class="col-sm-2 control-label">Game Type :</label>-->
-                                    <!--<div class="col-sm-4">-->
-                                    <!--<select class="form-control input-sm">-->
-                                    <!--<option>MARKSIMOS B2B</option>-->
-                                    <!--<option>MARKSIMOS B2C</option>-->
-                                    <!--<option>CASASIMOS</option>-->
-                                    <!--</select>-->
-                                    <!--</div>-->
-                                    <!--</div>-->
                                 </div>
 
                                 <div class="box-footer">
@@ -660,9 +610,11 @@
                             <form class="form-horizontal" role="form" name="newSeminarForm">
                                 <div class="box-body">
 
-                                    <username-input labeltext="Description :" placeholdertext="Seminar Description" formname="newSeminarForm" data="data.newSeminar.description" required="true" requirederrorinfo="description is required" minlength="2" minlengtherrorinfo="description must be at least 2 characters" maxlength="20" maxlengtherrorinfo="description is a maximum of 20 characters"></username-input>
-                                    <round-input labeltext="No. of Rounds :" placeholdertext="No. of Rounds" formname="newSeminarForm" data="data.newSeminar.simulation_span" required="true" requirederrorinfo="Round is required" numbererrorinfo="Round is numeric" min="1" minerrorinfo="Must be greater than 1" max="9" maxerrorinfo="Must be less than 9"></round-input>
-                                    <licence-input labeltext="No. of Teams :" placeholdertext="No. of Teams" formname="newSeminarForm" data="data.newSeminar.company_num" required="true" requirederrorinfo="Team is required" numbererrorinfo="Team is numeric" min="1" minerrorinfo="Must be greater than 1" max="6" maxerrorinfo="Must be less than 6"></licence-input>
+                                    <text-form-input type="text" name="newSeminarDescription" label="Description :" placeholder="Seminar Description" labelclass="col-sm-2" inputclass="col-sm-4" data="data.newSeminar.description" required="true" requirederrorinfo="Description is required" minlength="2" minlengtherrorinfo="Description must be at least 6 characters" maxlength="20" maxlengtherrorinfo="Description is a maximum of 20 characters"></text-form-input>
+
+                                    <text-form-input type="number" name="newSeminarRounds" label="No. of Rounds :" placeholder="No. of Rounds" labelclass="col-sm-2" inputclass="col-sm-4" data="data.newSeminar.simulation_span" min="2" minerrorinfo="Must be greater than 2" max="8" maxerrorinfo="Must be less than 8"></text-form-input>
+                                    <text-form-input type="number" name="newSeminarTeams" label="No. of Teams :" placeholder="No. of Seminar Teams" labelclass="col-sm-2" inputclass="col-sm-4" data="data.newSeminar.company_num"  min="2" minerrorinfo="Must be greater than 2" max="6" maxerrorinfo="Must be less than 6" ></text-form-input>
+
 
                                     <div class="form-group">
                                         <label for="inputSeminarCountry" class="col-sm-2 control-label">Country/State/City : </label>
@@ -685,12 +637,8 @@
                                         </div>
                                     </div>
 
-                                    <div class="form-group" ng-class="{'has-success':newSeminarForm.venue.$dirty && newSeminarForm.venue.$valid, 'has-error': newSeminarForm.venue.$dirty && newSeminarForm.venue.$invalid}">
-                                        <label for="inputVenue" class="col-sm-2 control-label">Venue : </label>
-                                        <div class="col-sm-4">
-                                            <input type="text" class="form-control" id="inputVenue" name="venue"  ng-model="data.newSeminar.venue" required>
-                                        </div>
-                                    </div>
+                                    <text-form-input type="text" name="newSeminarVenue" label="Venue :" placeholder="Seminar Description" labelclass="col-sm-2" inputclass="col-sm-4" data="data.newSeminar.venue" required="true" ></text-form-input>
+
                                 </div>
 
                                 <div class="box-footer">

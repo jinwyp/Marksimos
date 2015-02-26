@@ -1,13 +1,11 @@
 var gameParameters = require('../api/gameParameters.js').parameters;
 var gameExogenous = require('../api/gameExsogenous.js');
-var cgiapi = require('../api/cgiapi.js');
 var consts = require('../api/consts.js');
 var config = require('./config.js');
 var nodemailer = require('nodemailer');
 
+
 var Q = require('q');
-var bcrypt = require('bcrypt-nodejs');
-var validator = require('validator');
 var util = require('util');
 var logger  = require('./logger.js');
 
@@ -209,6 +207,18 @@ exports.calculateIngredientsQuality = function(SKUResult){
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
 exports.sendActivateEmail = function(toEmail, activateToken){
     var body = "Please click this link, blablabla"
     var linkText =  config.host + 'activate?email=' + toEmail + '&token=' + activateToken;
@@ -216,6 +226,8 @@ exports.sendActivateEmail = function(toEmail, activateToken){
 
     return sendMail(toEmail,'HCD activate email', body);
 }
+
+
 
 /**
  * @param {String} subject：发送的主题
@@ -247,101 +259,10 @@ function sendMail(toEmail, subject, html) {
     return deferred.promise;
 };
 
-exports.hashPassword = function(password){
-    return bcrypt.hashSync(password);
-};
 
-exports.comparePassword = function(password, hashedPassword){
-    return bcrypt.compareSync(password, hashedPassword);
-};
 
-exports.validateIdcardNumber = function(pincode){
-    return pincode && /^\d{17}([0-9]|X)$/.test(pincode);
-};
 
-exports.validateGender = function(gender){
-    return gender && [1, 2].indexOf(gender) > 0;
-};
 
-/**
-* @param {Object} req the same object a controller gets
-*/
-exports.validateUser = function(req){
-    if(req.body.email) req.checkBody('email', 'Invalid email').notEmpty().isEmail();
-    if(req.body.password) req.assert('password', '6 to 20 characters required').len(6, 20);
-    if(req.body.username) req.checkBody('username', '6 to 100 characters required.').notEmpty().len(6, 100);
-    if(req.body.mobilePhone) req.checkBody('mobilePhone', 'mobilePhone is empty.').notEmpty();
-    if(req.body.country) req.checkBody('country', 'country is empty').notEmpty();
-    if(req.body.state) req.checkBody('state', 'state is empty').notEmpty();
-    if(req.body.city) req.checkBody('city', 'city is empty').notEmpty();
-    if(req.body.num_of_license_granted) req.checkBody('num_of_license_granted', 'Invalid num of license').isInt();
-
-    if(req.body.firstname) req.checkBody('firstname', '2 to 20 characters required.').notEmpty().len(2, 20);
-    if(req.body.lastname) req.checkBody('lastname', '2 to 20 characters required.').notEmpty().len(2, 20);
-
-    var errors = req.validationErrors();
-    if(errors){
-        return util.inspect(errors);
-    }
-
-    //if phone contains characters other than number
-    if(req.body.mobilePhone && !validator.isNumeric(req.body.mobilePhone)){
-        return "Invalid mobilePhone.";
-    }
-
-    if(req.body.idcardNumber && !exports.validateIdcardNumber(req.body.idcardNumber)){
-        return 'Invalid idcardNumber';
-    }
-
-    if(req.body.gender && !exports.validateGender(req.body.gender)){
-        return 'Invalid gender';
-    }
-};
-
-/**
-* Check all fileds which are needed when adding a new user
-*/
-exports.checkRequiredFieldForAllUsers = function(req){
-    if(!req.body.email) return "email can't be empty.";
-    if(!req.body.password) return "password can't be empty.";
-    if(!req.body.mobilePhone) return "mobilePhone can't be empty.";
-    if(!req.body.country) return "country can't be empty.";
-    if(!req.body.state) return "state can't be empty.";
-    if(!req.body.city) return "city can't be empty.";
-};
-
-/**
-* Check all fileds which are needed when adding a new student
-*/
-exports.checkRequiredFieldForStudent = function(req){
-    var checkUserResult = exports.checkRequiredFieldForAllUsers(req);
-    if(checkUserResult) return checkUserResult;
-
-    if(!req.body.firstname) return "first_name can't be empty.";
-    if(!req.body.lastname) return "last_name can't be empty.";
-};
-
-/**
-* Check all fileds which are needed when adding a new facilitator
-*/
-exports.checkRequiredFieldForFacilitator = function(req){
-    var checkUserResult = exports.checkRequiredFieldForAllUsers(req);
-    if(checkUserResult) return checkUserResult;
-
-    if(!req.body.username) return "name can't be empty.";
-    if(!req.body.num_of_license_granted) return "num_of_license can't be empty.";
-};
-
-/**
-* Check all fileds which are needed when adding a new facilitator
-*/
-exports.checkRequiredFieldForDistributor = function(req){
-    var checkUserResult = exports.checkRequiredFieldForAllUsers(req);
-    if(checkUserResult) return checkUserResult;
-
-    if(!req.body.username) return "name can't be empty.";
-    if(!req.body.num_of_license_granted) return "num_of_license can't be empty.";
-};
 
 
 /**

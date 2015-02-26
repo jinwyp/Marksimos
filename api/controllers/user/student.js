@@ -1,4 +1,3 @@
-var userModel = require('../../models/user/user.js');
 
 
 var validator = require('validator');

@@ -20,10 +20,10 @@ var config = require('../common/config.js');
 
 var apiRouter = express.Router();
 
-var fs = require('fs');
-var path = require('path');
 
-/**********    Init Passport Auth    **********/
+
+
+/**********     Init Passport Auth     **********/
 auth.initAuth();
 
 
@@ -32,7 +32,9 @@ auth.initAuth();
 
 
 
-/**********    Routes for rendering templates HCD Learning Website    **********/
+
+
+/**********     Routes for rendering templates HCD Learning Website     **********/
 
 apiRouter.get('/', function(req, res, next){
     res.redirect('/cn');
@@ -40,90 +42,34 @@ apiRouter.get('/', function(req, res, next){
 
 
 
-/*********      b2c dir     **********/
-function getEjs(viewPath, pathExclude, fileExclude, callback) {
-    fs.readdir(viewPath, function (err, fileList) {
-        if (!err) {
-            fileList.forEach(function (file) {
-                var curPath = viewPath + '/' + file;
-                fs.stat(curPath, function (err, stats) {
-                    if (stats.isFile()) {
-                        if (fileExclude.indexOf(curPath) < 0 && path.extname(curPath) === '.ejs') {
-                            callback(curPath);
-                        }
-                    }
-                    if (stats.isDirectory()) {
-                        if (pathExclude.indexOf(curPath) < 0) {
-                            getEjs(curPath, pathExclude, fileExclude, callback);
-                        }
-                    }
-                });
-            });
-        }
-    });
-}
-function endsWith(str, suffix) {
-    return str.indexOf(suffix, str.length - suffix.length) !== -1;
-}
-function getUrlPath(urlPath, defaultPages) {
-    defaultPages.forEach(function (page) {
-        if (endsWith(urlPath, page)) {
-            urlPath = urlPath.substring(0, urlPath.length - page.length);
-            return;
-        }
-    });
-    return urlPath;
-}
-getEjs('views/b2c', ['views/b2c/include'] , [], function (file) {
-    var ejsPath = file.substring(6);
-    var urlPath = getUrlPath(file.substring(5, file.length - 4), ['/index', '/default']);
-    apiRouter.get(urlPath, function (req, res, next) {
-        res.render(ejsPath);
-    });
-});
-
-/**********    set Content-Type for all API JSON resppnse    **********/
-
-apiRouter.all("/e4e/api/*", function(req, res, next){
-    res.set('Content-Type', 'application/json; charset=utf-8');
-    next();
-});
-
-apiRouter.all("/marksimos/api/*", function(req, res, next){
-    res.set('Content-Type', 'application/json; charset=utf-8');
-    next();
-});
 
 
 
 
 
-/**********    Routes for rendering templates E4E Website    **********/
+
+
+/**********     Routes for rendering templates E4E Website     **********/
 
 apiRouter.get('/e4e', function(req, res, next){
-    res.render('e4e/index.ejs',{title:'HCD E4E'});
+    res.render('b2c/index.ejs', {title : 'Welcome to HCD E4E | HCD Learning'});
 });
 
-apiRouter.get('/e4e/register/company', function(req, res, next){
-    res.render('e4e/company-register.ejs',{title:'HCD E4E'});
+apiRouter.get('/e4e/login', function(req, res, next){
+    res.render('b2c/login.ejs', {title:'HCD E4E Sign in to Your Account| HCD Learning'});
 });
 
-apiRouter.get('/e4e/register/student', function(req, res, next){
-    res.render('e4e/student-register.ejs',{title:'HCD E4E'});
-});
-
-apiRouter.get('/e4e/company-success', function(req, res, next){
-    res.render('e4e/company-success.ejs',{title:'HCD E4E'});
-});
-apiRouter.get('/e4e/student-success', function(req, res, next){
-    res.render('e4e/student-success.ejs',{title:'HCD E4E'});
+apiRouter.get('/e4e/forgotpassword', function(req, res, next){
+    res.render('b2c/forgotpassword.ejs', {title:'Forgotten Your Password? | HCD Learning'});
 });
 
 
 
-/**********   API For E4E   **********/
-apiRouter.post('/e4e/api/registercompany',auth.registerE4Ecompany);
-apiRouter.post('/e4e/api/registerstudent',auth.registerE4Estudent);
+
+
+apiRouter.get('/e4e/userhome', auth.authLoginToken({failureRedirect: '/e4e/login'}), auth.authRole(userRoleModel.right.marksimos.studentLogin, {failureRedirect: '/e4e/login'}), function(req, res, next){
+    res.render('e4e/student-success.ejs', {title:'E4E User Home | HCD Learning'});
+});
 
 
 
@@ -132,7 +78,7 @@ apiRouter.post('/e4e/api/registerstudent',auth.registerE4Estudent);
 
 
 
-/**********    Routes for rendering templates MarkSimos User/Student    **********/
+/**********     Routes for rendering templates MarkSimos User/Student     **********/
 
 apiRouter.get('/marksimos', auth.authLoginToken({failureRedirect: '/marksimos/login'}), auth.authRole(userRoleModel.right.marksimos.studentLogin, {failureRedirect: '/marksimos/login'}), function(req, res, next){
     res.redirect('/marksimos/intro');
@@ -177,7 +123,12 @@ apiRouter.get('/marksimos/manual/en_US',function(req,res,next){
 
 
 
-/**********    Routes for rendering templates Administrator    **********/
+
+
+
+
+
+/**********     Routes for rendering templates Administrator     **********/
 
 apiRouter.get('/marksimos/admin', function(req, res, next){
     res.render('marksimosadmin/adminlogin.ejs', {title : 'Admin | Log in'});
@@ -198,13 +149,41 @@ apiRouter.get('/marksimos/adminhomereport/:seminar_id', auth.authLoginToken({fai
 
 
 
+/**********     Set Content-Type for all API JSON response     **********/
+
+apiRouter.all("/e4e/api/*", function(req, res, next){
+    res.set('Content-Type', 'application/json; charset=utf-8');
+    next();
+});
+
+apiRouter.all("/marksimos/api/*", function(req, res, next){
+    res.set('Content-Type', 'application/json; charset=utf-8');
+    next();
+});
 
 
 
 
 
 
-/**********    API For MarkSimos Student    **********/
+
+
+
+
+/**********     API For E4E Student     **********/
+apiRouter.post('/e4e/api/registercompany', auth.registerB2CEnterprise);
+apiRouter.post('/e4e/api/registerstudent', auth.registerB2CStudent);
+
+apiRouter.post('/e4e/api/forgotpassword', auth.forgetPassword);
+
+
+
+
+
+
+
+
+/**********     API For MarkSimos Student     **********/
 apiRouter.post('/marksimos/api/login', auth.studentLogin);
 apiRouter.get('/marksimos/api/logout', auth.logout);
 
@@ -250,8 +229,18 @@ apiRouter.get('/marksimos/api/faq', faqController.getFAQ);
 
 
 
-/**********  API For Administrator  **********/
+
+
+
+
+
+
+
+/**********     API For Administrator     **********/
 apiRouter.post('/marksimos/api/admin/login', auth.adminLogin);
+
+// get current admin role
+apiRouter.get('/marksimos/api/admin/user', auth.authLoginToken(), auth.authRole(userRoleModel.right.marksimos.adminLogin), auth.getUserInfo);
 
 apiRouter.get('/marksimos/api/admin/distributors', auth.authLoginToken(), auth.authRole(userRoleModel.right.marksimos.distributorInfoListGet), distributorController.searchDistributor);
 apiRouter.post('/marksimos/api/admin/distributors', auth.authLoginToken(), auth.authRole(userRoleModel.right.marksimos.distributorInfoSingleCUD), distributorController.addDistributor);
@@ -298,20 +287,23 @@ apiRouter.put('/marksimos/api/admin/company/decision', auth.authLoginToken(), au
 
 
 
-// get current admin role
-apiRouter.get('/marksimos/api/admin/user', auth.authLoginToken(), auth.authRole(userRoleModel.right.marksimos.adminLogin), auth.getUserInfo);
 
 
 
 
-/**********  Database Init  **********/
+
+
+
+
+/**********     Database Init     **********/
+apiRouter.get('/marksimos/api/initfaq', faqController.initFAQ);
 
 apiRouter.get('/marksimos/api/create_admin', function (req,res,next) {
 
     var userList = [
         {
             "username": "hcd_administrator",
-            "password": utility.hashPassword("admin1234@hcd"),
+            "password": userModel.generateHashPassword("admin1234@hcd"),
             "email": "hcd_administrator@hcdlearning.com",
             "mobilePhone": "13916502743",
             "country": "China",
@@ -325,17 +317,17 @@ apiRouter.get('/marksimos/api/create_admin', function (req,res,next) {
         {
             "_id": mongoose.Types.ObjectId("54609f0c700a570813b1353f"),
             "username": "hcd_distributor",
+            "password": userModel.generateHashPassword("distributor@hcd5678"),
             "email": "hcd_distributor@hcdlearning.com",
             "mobilePhone": "13916502743",
             "country": "China",
             "state": "shanghai",
             "city": "shanghai",
-            "password": utility.hashPassword("distributor@hcd5678"),
             "district": "Ren Min Lu",
             "street": "",
             "idcardNumber": "",
             "numOfUsedLicense": 0,
-            "numOfLicense": 10000,
+            "numOfLicense": 500000,
             "role": userRoleModel.roleList.distributor.id,
             "activated": true,
             "emailActivated": true,
@@ -344,15 +336,32 @@ apiRouter.get('/marksimos/api/create_admin', function (req,res,next) {
         {
             "_id": mongoose.Types.ObjectId("54609fb2700a570813b13540"),
             "username": "hcd_facilitator",
+            "password": userModel.generateHashPassword("hcdfacilitator@9876"),
             "email": "hcd_facilitator@hcdlearning.com",
             "mobilePhone": "13916502743",
             "country": "China",
             "state": "shanghai",
             "city": "shanghai",
-            "password": utility.hashPassword("hcdfacilitator@9876"),
             "distributorId": "54609f0c700a570813b1353f",
             "numOfUsedLicense": 0,
-            "numOfLicense": 100,
+            "numOfLicense": 100000,
+            "role": userRoleModel.roleList.facilitator.id,
+            "activated": true,
+            "emailActivated": true,
+            "emailActivateToken": "efe5ceba-fd21-445e-86b6-c5fa64f3c694"
+        },
+        {
+            "_id": mongoose.Types.ObjectId("54d834bdeaf05dbd048120f8"),
+            "username": "b2c_facilitator",
+            "password": userModel.generateHashPassword("hcdfacilitator@9876"),
+            "email": "b2c_facilitator@hcdlearning.com",
+            "mobilePhone": "13564568304",
+            "country": "China",
+            "state": "shanghai",
+            "city": "shanghai",
+            "distributorId": "54609f0c700a570813b1353f",
+            "numOfUsedLicense": 0,
+            "numOfLicense": 1000000000,
             "role": userRoleModel.roleList.facilitator.id,
             "activated": true,
             "emailActivated": true,
@@ -365,7 +374,7 @@ apiRouter.get('/marksimos/api/create_admin', function (req,res,next) {
             "country": "China",
             "state": "shanghai",
             "city": "shanghai",
-            "password": utility.hashPassword("123456"),
+            "password": userModel.generateHashPassword("123456"),
             "facilitatorId": "54609fb2700a570813b13540",
             "idcardNumber": "321181198502273515",
             "occupation": "Student",
@@ -379,13 +388,13 @@ apiRouter.get('/marksimos/api/create_admin', function (req,res,next) {
             "emailActivated": false
         },
         {
-            "username": "jin",
+            "username": "jinwang",
             "email": "jinwang@hcdlearning.com",
             "mobilePhone": "13564568304",
             "country": "China",
             "state": "shanghai",
             "city": "shanghai",
-            "password": utility.hashPassword("123456"),
+            "password": userModel.generateHashPassword("123456"),
             "facilitatorId": "54609fb2700a570813b13540",
             "idcardNumber": "321181198502273515",
             "occupation": "Student",
@@ -405,7 +414,7 @@ apiRouter.get('/marksimos/api/create_admin', function (req,res,next) {
             "country": "China",
             "state": "shanghai",
             "city": "shanghai",
-            "password": utility.hashPassword("123456"),
+            "password": userModel.generateHashPassword("123456"),
             "facilitatorId": "54609fb2700a570813b13540",
             "idcardNumber": "321181198502273515",
             "occupation": "Student",
@@ -425,7 +434,7 @@ apiRouter.get('/marksimos/api/create_admin', function (req,res,next) {
             "country": "China",
             "state": "shanghai",
             "city": "shanghai",
-            "password": utility.hashPassword("123456"),
+            "password": userModel.generateHashPassword("123456"),
             "facilitatorId": "54609fb2700a570813b13540",
             "idcardNumber": "321181198502273515",
             "occupation": "Student",
@@ -439,23 +448,55 @@ apiRouter.get('/marksimos/api/create_admin', function (req,res,next) {
             "emailActivated": false
         }
     ];
-    userModel.query.find({role: userRoleModel.roleList.admin.id}).exec().then(function (userResult) {
+    userModel.find({role: userRoleModel.roleList.admin.id}).execQ().then(function (userResult) {
         if (userResult.length) {
             //已经存在管理员了，不进行初始化，只列出这些用户
-            return res.send(400, {message: "already added."});
+
+            // 补充增加 b2c_facilitator 账号
+            userModel.find({"username": "b2c_facilitator"}).execQ().then(function (userB2CResult) {
+
+                if(userB2CResult.length){
+                    return res.status(400).send ({message: "already added."});
+                }else{
+                    userModel.create(userList[3], function (err, b2cFacilitatorResults) {
+                        if (err) {
+                            return res.status(400).send( {message: "add default admin and users failed."});
+                        } else {
+                            //for (var i=1; i<arguments.length; ++i) {
+                            //    var user = arguments[i];
+                            //    // do some stuff with candy
+                            //}
+
+                            return res.status(200).send(b2cFacilitatorResults);
+                        }
+                    });
+                }
+            }).fail(function(err){
+                next (err);
+            }).done();
+
+
         }else {
             //不存在管理员，需要初始化
-            userModel.query.create(userList, function (err, user) {
+            userModel.create(userList, function (err) {
                 if (err) {
-                    return res.send(400, {message: "add users failed."});
+                    return res.status(400).send( {message: "add default admin and users failed."});
                 } else {
-                    return res.send(userList);
+                    //for (var i=1; i<arguments.length; ++i) {
+                    //    var user = arguments[i];
+                    //    // do some stuff with candy
+                    //}
+
+                    var userListResults = Array.prototype.slice.call(arguments, 1);
+                    return res.status(200).send(userListResults);
                 }
             });
         }
-    });
+    }).fail(function(err){
+        next (err);
+    }).done();
 });
-apiRouter.get('/marksimos/api/initfaq', faqController.initFAQ);
+
 
 
 

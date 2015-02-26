@@ -50,13 +50,15 @@
     //}]);
 
 
-    angular.module('marksimos.config').config(['$httpProvider', 'localStorageServiceProvider', function ($httpProvider, localStorageServiceProvider ) {
+    angular.module('marksimos.config').config(['$httpProvider', 'localStorageServiceProvider', '$locationProvider', function ($httpProvider, localStorageServiceProvider, $locationProvider ) {
         localStorageServiceProvider.setPrefix('hcdlearning');
         localStorageServiceProvider.setStorageType('localStorage');  // Or sessionStorage
         localStorageServiceProvider.setNotify(true, true);
 
 
         $httpProvider.interceptors.push('marksimosInterceptor');
+
+        $locationProvider.html5Mode(false).hashPrefix('!');
 
     }]);
 
