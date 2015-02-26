@@ -3,38 +3,6 @@ var nodemailer = require('nodemailer');
 module.exports = (function(){
     var config = {
 
-        mailTransporter : nodemailer.createTransport({
-            service: 'Gmail',
-            auth: {
-                user: 'jinwyp@gmail.com',
-                pass: 'jinwyp2011'
-            }
-        }),
-
-        //mailTransporter : nodemailer.createTransport( {
-        //    host: "smtp.163.com", // 主机
-        //    secure: true, // 使用 SSL
-        //    port: 465, // SMTP 端口
-        //    auth: {
-        //        user: "jinwyp", // 账号
-        //        pass: "jinwyp2011" // 密码
-        //    }
-        //}),
-
-        mail: {
-            host: 'mail.hcdglobal.com',
-            user: 'test@hcdglobal.com',
-            password: 'hcd1234##',
-            name: 'HCD'
-        },
-        mailContent: {
-            from: 'HCD <jinwyp.163.com>',
-            to: 'jinwang.hcdlearning.com',
-            subject: 'Hello world',
-            text: 'Hello world, I am a test mail!',
-            html: '<b>Hello world, I am a test mail!</b>'
-        },
-
         segmentNameAndIndex: {
             'priceSensitive':0,
             'pretenders': 1,

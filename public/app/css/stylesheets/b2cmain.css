@@ -1,7 +1,6 @@
-
 @charset "UTF-8";
-.icon_b2c-sprite, .b2c-header .button, .b2c-header .button:hover, .man1, .man1:hover, .man2, .man2:hover, .man3, .man3:hover, .man4, .man4:hover, .down-box .pic-1 .front, .down-box .pic-1 .back, .down-box .pic-2 .front, .down-box .pic-2 .back, .down-box .pic-3 .front, .down-box .pic-3 .back, .down-box .pic-4 .front, .down-box .pic-4 .back, .down-box .pic-5 .front, .down-box .pic-5 .back, .down-box .pic-6 .front, .down-box .pic-6 .back, .b2c-login-main .b2c-icon, .b2c-enter-email .b2c-prints {
-  background-image: url('../images/icon_b2c-s98e4cc4685.png');
+.icon_b2c-sprite, .b2c-header .button, .b2c-header .button:hover, .man1, .man1:hover, .man2, .man2:hover, .man3, .man3:hover, .man4, .man4:hover, .down-box .pic-1 .front, .down-box .pic-1 .back, .down-box .pic-2 .front, .down-box .pic-2 .back, .down-box .pic-3 .front, .down-box .pic-3 .back, .down-box .pic-4 .front, .down-box .pic-4 .back, .down-box .pic-5 .front, .down-box .pic-5 .back, .down-box .pic-6 .front, .down-box .pic-6 .back, .b2c-login-main .b2c-icon, .b2c-enter-email .b2c-prints, .b2c-enter-code .b2c-code {
+  background-image: url('../images/icon_b2c-sd0f215c49d.png');
   background-repeat: no-repeat;
 }
 
@@ -43,13 +42,13 @@ body {
   *vertical-align: auto;
   *zoom: 1;
   *display: inline;
-  background-position: 0 0;
+  background-position: 0 -180px;
 }
 .b2c-header .button:hover, .b2c-header .button.b2c_login_49x23-hover {
-  background-position: 0 -23px;
+  background-position: 0 -203px;
 }
 .b2c-header .button:hover {
-  background-position: 0 -23px;
+  background-position: 0 -203px;
 }
 .b2c-header .b2c-logo {
   margin-left: 157px;
@@ -173,46 +172,46 @@ body {
 
 .man1 {
   width: 133px;
-  background-position: 0 -46px;
+  background-position: 0 -226px;
 }
 .man1:hover, .man1.b2c_man_1-hover {
-  background-position: 0 -403px;
+  background-position: 0 -583px;
 }
 .man1:hover {
-  background-position: 0 -403px;
+  background-position: 0 -583px;
 }
 
 .man2 {
   width: 117px;
-  background-position: 0 -760px;
+  background-position: 0 -940px;
 }
 .man2:hover, .man2.b2c_man_2-hover {
-  background-position: 0 -1117px;
+  background-position: 0 -1297px;
 }
 .man2:hover {
-  background-position: 0 -1117px;
+  background-position: 0 -1297px;
 }
 
 .man3 {
   width: 127px;
-  background-position: 0 -1474px;
+  background-position: 0 -1654px;
 }
 .man3:hover, .man3.b2c_man_3-hover {
-  background-position: 0 -1831px;
+  background-position: 0 -2011px;
 }
 .man3:hover {
-  background-position: 0 -1831px;
+  background-position: 0 -2011px;
 }
 
 .man4 {
   width: 114px;
-  background-position: 0 -2188px;
+  background-position: 0 -2368px;
 }
 .man4:hover, .man4.b2c_man_4-hover {
-  background-position: 0 -2545px;
+  background-position: 0 -2725px;
 }
 .man4:hover {
-  background-position: 0 -2545px;
+  background-position: 0 -2725px;
 }
 
 .b2c-man-title {
@@ -324,46 +323,46 @@ body {
   margin-top: 20px;
 }
 .down-box .pic-1 .front {
-  background-position: 0 -3560px;
+  background-position: 0 -3740px;
 }
 .down-box .pic-1 .back {
-  background-position: 0 -3305px;
+  background-position: 0 -3485px;
 }
 .down-box .pic-2 {
   margin-top: 20px;
 }
 .down-box .pic-2 .front {
-  background-position: 0 -4070px;
+  background-position: 0 -4250px;
 }
 .down-box .pic-2 .back {
-  background-position: 0 -3815px;
+  background-position: 0 -3995px;
 }
 .down-box .pic-3 {
   margin-top: 20px;
 }
 .down-box .pic-3 .front {
-  background-position: 0 -4580px;
+  background-position: 0 -4760px;
 }
 .down-box .pic-3 .back {
-  background-position: 0 -4325px;
+  background-position: 0 -4505px;
 }
 .down-box .pic-4 .front {
-  background-position: 0 -5090px;
+  background-position: 0 -5270px;
 }
 .down-box .pic-4 .back {
-  background-position: 0 -4835px;
+  background-position: 0 -5015px;
 }
 .down-box .pic-5 .front {
-  background-position: 0 -5600px;
+  background-position: 0 -5780px;
 }
 .down-box .pic-5 .back {
-  background-position: 0 -5345px;
+  background-position: 0 -5525px;
 }
 .down-box .pic-6 .front {
-  background-position: 0 -6110px;
+  background-position: 0 -6290px;
 }
 .down-box .pic-6 .back {
-  background-position: 0 -5855px;
+  background-position: 0 -6035px;
 }
 .down-box .flip-container {
   width: 255px;
@@ -489,7 +488,7 @@ body {
   *vertical-align: auto;
   *zoom: 1;
   *display: inline;
-  background-position: 0 -3125px;
+  background-position: 0 -3305px;
 }
 .b2c-login-main .b2c-login-area {
   width: 360px;
@@ -564,7 +563,7 @@ body {
   margin-left: 260px;
   height: 180px;
   width: 180px;
-  background-position: 0 -2902px;
+  background-position: 0 -3082px;
 }
 .b2c-enter-email h3 {
   margin-top: 67px;
@@ -632,3 +631,55 @@ body {
   margin-left: 40px;
 }
 
+.b2c-enter-code .b2c-code {
+  margin-top: 44px;
+  margin-left: 260px;
+  height: 180px;
+  width: 180px;
+  background-position: 0 -3082px;
+}
+.b2c-enter-code h4 {
+  margin-top: 67px;
+  margin-bottom: 20px;
+  margin-left: 150px;
+}
+.b2c-enter-code input[type=password] {
+  width: 302px;
+  height: 48px;
+  font-size: 20px;
+  letter-spacing: 10px;
+}
+.b2c-enter-code .tip {
+  font-size: 12px;
+  margin-bottom: 10px;
+}
+.b2c-enter-code .help {
+  text-decoration: underline;
+  margin-top: -9px;
+}
+.b2c-enter-code button {
+  border-style: none;
+  padding: 6px 60px;
+  color: #ffffff;
+  font-size: 20px;
+  font-weight: 900;
+  background-color: #c42e0d;
+  -moz-box-shadow: #7e200b 0px 2px 4px;
+  -webkit-box-shadow: #7e200b 0px 2px 4px;
+  box-shadow: #7e200b 0px 2px 4px;
+  -moz-border-radius: 0px;
+  -webkit-border-radius: 0px;
+  border-radius: 0px;
+  margin-right: 10px;
+}
+.b2c-enter-code button:hover, .b2c-enter-code button:focus {
+  color: #ffffff;
+  background-color: #7e200b;
+}
+.b2c-enter-code p {
+  margin-top: 50px;
+}
+.b2c-enter-code hr {
+  width: 90%;
+  margin-top: 56px;
+}

@@ -64,6 +64,10 @@ apiRouter.get('/e4e/forgotpassword', function(req, res, next){
 });
 
 
+apiRouter.get('/e4e/emailverify/registration', function(req, res, next){
+    res.render('b2c/forgotpassword.ejs', {title:'Forgotten Your Password? | HCD Learning'});
+});
+
 
 
 

@@ -6,8 +6,9 @@
 
 var util = require('util');
 var fs = require('fs');
-var hyperquest = require('hyperquest');
-
+//var hyperquest = require('hyperquest');
+var request = require('request');
+var _ = require('underscore'); // npm install underscore to install
 
 
 var sendCloud = {
@@ -27,20 +28,21 @@ var sendCloud = {
 };
 
 
-var serverSettings = {
-    url : 'https://sendcloud.sohu.com/',
+
+var serverSettingsDefault = {
+    url : 'http://sendcloud.sohu.com/',
     sendCloudModule : 'mail',
     action : 'send',
     format : 'json',
     api_user : 'jinwyp_test_0XlCSJ',
     api_key : 'XuuMlW73jTugTig4',
 
-    from : '',
-    fromname : '',
-    to : '',
+    from : 'service@sendcloud.im',
+    fromname : 'HCD Learning',
+    to : 'jinwyp@163.com',
     cc : '',
-    subject : '',
-    html : '',
+    subject : '欢迎使用HCD Learning！',
+    html : '欢迎使用HCD Learning！',
 
     template_invoke_name : '',
     substitution_vars : '',
@@ -54,18 +56,22 @@ var serverSettings = {
 module.exports.createEmailSender = function(sendmethod, serversettings) {
     sendmethod = sendmethod || 'webapi'; //  SMTP or WebAPI
 
-    serversettings = serversettings || serverSettings;
+    var serversettings = serversettings || serverSettingsDefault;
+    serversettings = _.extend(serverSettingsDefault, serversettings);
 
-    return new Nodemailer(sendmethod, serversettings);
+
+    return new NodemailerSendCloud(sendmethod, serversettings);
 };
 
+
+
 /**
- * Creates an object for exposing the Nodemailer API
+ * Creates an object for exposing the NodemailerSendCloud API
  *
  * @constructor
  * @param {Object} transporter Transport object instance to pass the mails to
  */
-function Nodemailer(sendmethod, serversettings) {
+function NodemailerSendCloud(sendmethod, serversettings) {
 
     this.sendMethod = sendmethod;
     this.module = sendCloud.module[serversettings.sendCloudModule];
@@ -78,30 +84,38 @@ function Nodemailer(sendmethod, serversettings) {
 
 
 
-Nodemailer.prototype.sendMail = function(mail, callback) {
+NodemailerSendCloud.prototype.sendMail = function(mail, callback) {
 
-    mail.from = mail.from || 'jinwyp@gmail.com'
-    mail.to = mail.to || 'jinwyp@163.com'
-    mail.subject = mail.subject || 'Hello'
-    mail.html = mail.html || '<b>Hello world</b>'
+    mail.from = mail.from || serverSettingsDefault.from;
+    mail.to = mail.to || serverSettingsDefault.to;
+    mail.subject = mail.subject || serverSettingsDefault.subject;
+    mail.html = mail.html || serverSettingsDefault.html;
+
 
     var queryUrl  = this.serverSettings.url + '/' + this.sendMethod + '/' + this.module + '.' + this.action + '.' + this.format;
 
-    queryUrl = queryUrl + '/?api_user=' + this.serverSettings.api_user + '&api_key=' + this.serverSettings.api_key +
+    queryUrl = queryUrl + '?api_user=' + this.serverSettings.api_user + '&api_key=' + this.serverSettings.api_key +
         '&from=' + mail.from + '&to=' + mail.to + '&subject=' + mail.subject + '&html=' + mail.html;
 
-    var req = hyperquest(queryUrl, { method: 'GET' }, function(err, res){
-        if (err) {
+    console.log("QURL:", queryUrl);
+
+    request(queryUrl, function(error, response, body){
+
+        if (error) {
             return callback(err);
         }
 
-        return callback(res);
+        if (response.statusCode == 200) {
+            console.log("SSS", body);
+            return callback(null, body);
+        }else{
+            console.log("FFF", response);
+            return callback(null, response);
+        }
+
+
     });
 
-    req.pipe(process.stdout, { end: false });
-    req.on('end', function () {
-        console.log('Email Send End !!');
-    });
 
 
 
