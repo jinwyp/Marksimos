@@ -302,6 +302,25 @@ body {
   border-bottom: 8px solid transparent;
 }
 
+.reg-verify-account {
+  padding-top: 100px;
+  padding-left: 170px;
+  font-weight: 700;
+  letter-spacing: 5px;
+  color: #999;
+}
+.reg-verify-account .tip-header {
+  margin-left: 0px;
+}
+.reg-verify-account a {
+  letter-spacing: 0;
+}
+.reg-verify-account p {
+  font-size: 18px;
+  margin-top: 20px;
+  margin-left: 40px;
+}
+
 /********************  Index Page Below Pics ********************/
 .down-box {
   height: 550px;
@@ -610,25 +629,6 @@ body {
   font-size: 15px;
   margin-left: 10px;
   font-weight: 700;
-}
-
-.b2c-verify-account {
-  padding-top: 100px;
-  padding-left: 170px;
-  font-weight: 700;
-  letter-spacing: 5px;
-  color: #999;
-}
-.b2c-verify-account .tip-header {
-  margin-left: 0px;
-}
-.b2c-verify-account a {
-  letter-spacing: 0;
-}
-.b2c-verify-account p {
-  font-size: 18px;
-  margin-top: 20px;
-  margin-left: 40px;
 }
 
 .b2c-enter-code .b2c-code {

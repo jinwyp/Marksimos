@@ -346,6 +346,27 @@ body{
 }
 
 
+.reg-verify-account{
+	padding-top:100px;
+	padding-left:170px;
+	font-weight:700;
+	letter-spacing:5px;
+	color:#999;
+
+	.tip-header{
+		margin-left:0px;
+	}
+	a{
+		letter-spacing:0;
+	}
+	p{
+		font-size:18px;
+		margin-top:20px;
+		margin-left:40px;
+	}
+}
+
+
 /********************  Index Page Below Pics ********************/
 
 .down-box{
@@ -588,26 +609,6 @@ body{
 
 
 
-
-
-.b2c-verify-account{
-	padding-top:100px;
-	padding-left:170px;
-	font-weight:700;
-	letter-spacing:5px;
-	color:#999;
-	.tip-header{
-		margin-left:0px;
-	}
-	a{
-		letter-spacing:0;
-	}
-	p{
-		font-size:18px;
-		margin-top:20px;
-		margin-left:40px;
-	}
-}
 
 
 

@@ -52,22 +52,29 @@ apiRouter.get('/', function(req, res, next){
 /**********     Routes for rendering templates E4E Website     **********/
 
 apiRouter.get('/e4e', function(req, res, next){
-    res.render('b2c/index.ejs', {title : 'Welcome to HCD E4E | HCD Learning'});
+    res.render('b2c/registration/indexreg.ejs', {title : 'Welcome to HCD E4E | HCD Learning'});
 });
+
+apiRouter.get('/e4e/emailverify/registration', auth.authLoginToken({failureRedirect: '/e4e/login'}), auth.activateRegistrationEmail);
+
 
 apiRouter.get('/e4e/login', function(req, res, next){
     res.render('b2c/login.ejs', {title:'HCD E4E Sign in to Your Account| HCD Learning'});
 });
+
+
+
 
 apiRouter.get('/e4e/forgotpassword', function(req, res, next){
     res.render('b2c/forgotpassword.ejs', {title:'Forgotten Your Password? | HCD Learning'});
 });
 
 
-apiRouter.get('/e4e/emailverify/registration', function(req, res, next){
-    res.render('b2c/forgotpassword.ejs', {title:'Forgotten Your Password? | HCD Learning'});
-});
 
+
+apiRouter.get('/e4e/emailverify/code', function(req, res, next){
+    res.render('b2c/emailverify/enter-code.ejs', {title:'Forgotten Your Password? | HCD Learning'});
+});
 
 
 

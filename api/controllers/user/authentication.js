@@ -353,7 +353,7 @@ exports.registerB2CStudent = function(req, res, next){
 
     userModel.register(newUser).then(function(resultUser) {
         if (!resultUser) {
-            throw new Error('Save new user to database error.');
+            throw new Error('Cancel promise chains. Because Save new user to database error.');
         }
 
         var mailContent = EmailModel.registration;
@@ -371,7 +371,7 @@ exports.registerB2CStudent = function(req, res, next){
 
         mailSender.sendMailQ(mailContent).then(function(resultSendEmail){
             if (!resultSendEmail) {
-                throw new Error('Send email of new user failed !');
+                throw new Error('Cancel promise chains. Because Send email of new user failed !');
             }else{
                 logger.log(resultSendEmail);
             }
@@ -416,12 +416,11 @@ exports.registerB2CEnterprise = function(req, res, next){
 
 
     userModel.register(newUser).then(function(result){
-        if(result){
-            return res.status(200).send({message: 'Register new company success'});
-
-        }else{
-            throw new Error('Save new company to database error.');
+        if(!result){
+            throw new Error('Cancel promise chains. Because Save new company to database error.');
         }
+
+        return res.status(200).send({message: 'Register new company success'});
 
     }).fail(function(err){
         next(err);
@@ -431,41 +430,53 @@ exports.registerB2CEnterprise = function(req, res, next){
 };
 
 
-exports.activateEmail = function(req, res, next){
-    var email = req.query.email;
-    var token = req.query.token;
+// http://www.hcdlearning.com/e4e/emailverify/registration?email=jinwyp@163.com&emailtoken=f70c16b5-2cf1-42d1-90ba-b2fa1bcd3db8
 
-    if(!email){
-        return res.send(400, {message: 'email is required.'})
-    }
+exports.activateRegistrationEmail = function(req, res, next){
+    var validationErrors = userModel.emailVerificationValidations(req, userRoleModel.roleList.student.id, userModel.getStudentType().B2C);
 
-    if(!token){
-        return res.send(400, {message: 'token is required.'})
+    if(validationErrors){
+        return res.status(400).send( {message: validationErrors} );
     }
 
     userModel.findOneQ({
-        email: email,
-        activateToken: token
-    }).then(function(result){
-        if(result){
-            return userModel.updateByEmail(email, {
-                emailActivated: true
-            })
-            .then(function(numAffected){
-                if(numAffected === 1){
-                    return res.send({message: 'activate success'});
-                }
-                return res.send(500, {message: 'more or less than 1 record is updated. it should be only one.'})
-            });
-        }else{
-            throw new Error('User does not exist.');
+        email: req.query.email,
+        emailActivateToken: req.query.emailtoken,
+        emailActivated: false
+    }).then(function(resultUser){
+
+        if(!resultUser) {
+            throw new Error('Cancel promise chains. Because User Email Activate Token not found!');
         }
-    })
-    .fail(function(err){
-        logger.error(err);
-        res.send(500, {message: 'activate failed.'})
-    })
-    .done();
+
+        resultUser.emailActivated = true;
+        resultUser.activated = true;
+
+        return resultUser.saveQ();
+
+    }).then(function(result){
+        var savedDoc = result[0];
+        var numberAffected = result[1];
+
+        console.log("emailActivateToken: ", result);
+
+        //if(numberAffected !== 1){
+        //    throw new Error('Cancel promise chains. Because Update user emailActivated status failed. more or less than 1 record is updated. it should be only one !');
+        //}
+
+        if(!result){
+            throw new Error('Cancel promise chains. Because Update user emailActivated status failed. more or less than 1 record is updated. it should be only one !');
+        }
+
+        return res.render('b2c/registration/indexregsuccess.ejs', {
+            title     : ' Email Activate Success ! | HCD Learning',
+            username  : result.username,
+            useremail : result.email
+        });
+
+    }).fail(function(err){
+        next(err);
+    }).done();
 };
 
 
@@ -489,7 +500,7 @@ exports.forgetPassword = function(req, res, next){
     userModel.findOneQ({ email: req.body.email }).then(function(resultUser){
 
         if(!resultUser){
-            throw new Error('Cancel promise. User does not exist.');
+            throw new Error('Cancel promise chains. Because User does not exist.');
         }
 
         var mailContent = EmailModel.resetPassword;
