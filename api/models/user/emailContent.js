@@ -32,7 +32,7 @@ module.exports = {
 
         html: '',
 
-        html1: '<div style=\'width: 430px; font-size: 12px; color: #333333; font-family: Trebuchet MS,Verdana,Arial,Helvetica,sans-serif;\'><br/><b>Dear ',
+        html1: '<html><body><div style=\'width: 500px; font-size: 12px; \'><br/><b>Dear ',
         html2: ' :</b><br/><br/>' +
         'In order to help maintain the security of your account, please verify your email address by clicking the following link: <br/>' +
         '<a href=\'http://www.hcdlearning.com/e4e/emailverify/registration?email=' ,
@@ -42,7 +42,7 @@ module.exports = {
         htmlend: '</a><br/><br/><br/>' +
         'Thanks for helping us maintain the security of your account. <br/><br/>' +
         'The HCD Learning Team<br/>' +
-        '<a href=\'http://www.hcdlearning.com\'>http://www.hcdlearning.com</a> </div>'
+        '<a href=\'http://www.hcdlearning.com\'>http://www.hcdlearning.com</a> </div></body></html>'
     },
 
 
@@ -65,7 +65,8 @@ module.exports = {
 
         html: '',
 
-        html1: '<html><head></head><body><div style=\'width: 430px; font-size: 12px; color: #333333; font-family: Trebuchet MS,Verdana,Arial,Helvetica,sans-serif; \'><br/><b>Dear ',
+        //html1: '<html><head></head><body><div style=\'width: 430px; font-size: 12px; color: #333333; font-family: Trebuchet MS,Verdana,Arial,Helvetica,sans-serif; \'><br/><b>Dear ',
+        html1: '<html><body><div style=\'width: 500px; font-size: 12px; color: #333333; \'><br/><b>Dear ',
         html2: ' :</b><br/><br/>' +
         'Changing your password is simple. Please use the link below within 24 hours. <br/>' +
         '<a href=\'http://www.hcdlearning.com/e4e/emailverify/changepassword?username=',

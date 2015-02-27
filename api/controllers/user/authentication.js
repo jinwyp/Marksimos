@@ -14,6 +14,9 @@ var util = require('util');
 var utility = require('../../../common/utility.js');
 
 
+var expiresTime = 1000 * 60 * 60 * 24 * 3; // 3 days
+
+
 //Passport
 var passport = require('passport')
   , LocalStrategy = require('passport-local').Strategy;
@@ -326,6 +329,7 @@ exports.registerB2CStudent = function(req, res, next){
         return res.status(400).send( {message: validationErrors} );
     }
 
+
     var newUser = {
         username : req.body.username,
         email: req.body.email,
@@ -347,7 +351,9 @@ exports.registerB2CStudent = function(req, res, next){
         facilitatorId: "54d834bdeaf05dbd048120f8", // fixed for b2c_facilitator
 
         role : userRoleModel.roleList.student.id,
-        studentType : userModel.getStudentType().B2C
+        studentType : userModel.getStudentType().B2C,
+
+        emailActivateTokenExpires : new Date(new Date().getTime() + expiresTime)
     };
 
 
@@ -411,7 +417,9 @@ exports.registerB2CEnterprise = function(req, res, next){
         facilitatorId: "54d834bdeaf05dbd048120f8", // fixed for b2c_facilitator
 
         role : userRoleModel.roleList.enterprise.id,
-        studentType : userModel.getStudentType().B2C
+        studentType : userModel.getStudentType().B2C,
+
+        emailActivateTokenExpires : new Date(new Date().getTime() + expiresTime)
     };
 
 
@@ -439,6 +447,8 @@ exports.activateRegistrationEmail = function(req, res, next){
         return res.status(400).send( {message: validationErrors} );
     }
 
+    var nowDate = new Date();
+
     userModel.findOneQ({
         email: req.query.email,
         emailActivateToken: req.query.emailtoken,
@@ -449,6 +459,10 @@ exports.activateRegistrationEmail = function(req, res, next){
             throw new Error('Cancel promise chains. Because User Email Activate Token not found!');
         }
 
+        if( resultUser.emailActivateTokenExpires < nowDate){
+            throw new Error('Cancel promise chains. Because Email Activate Token Expire !');
+        }
+
         resultUser.emailActivated = true;
         resultUser.activated = true;
 
@@ -457,8 +471,6 @@ exports.activateRegistrationEmail = function(req, res, next){
     }).then(function(result){
         var savedDoc = result[0];
         var numberAffected = result[1];
-
-        console.log("emailActivateToken: ", result);
 
         //if(numberAffected !== 1){
         //    throw new Error('Cancel promise chains. Because Update user emailActivated status failed. more or less than 1 record is updated. it should be only one !');
@@ -486,7 +498,7 @@ exports.activateRegistrationEmail = function(req, res, next){
 
 
 
-exports.forgetPassword = function(req, res, next){
+exports.forgotPasswordStep1 = function(req, res, next){
 
     req.checkBody('email', 'Email wrong format').notEmpty().isEmail();
 

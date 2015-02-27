@@ -16,7 +16,7 @@ var OneDay = 1000 * 60 * 60 * 24;
 var OneMinute = 1000 * 60;
 
 var expiresTime = 1000 * 60 * 60 * 48; // 48 hours 2 days 1000 * 60 * 60 * 12
-var expiresTimeRememberMe = 1000 * 60 * 60 * 24 * 30 * 6; // 6 month  1000 * 60 * 60 * 12
+var expiresTimeRememberMe = 1000 * 60 * 60 * 24 * 30 * 6; // 6 month  1000 * 60 * 60 * 24
 
 
 

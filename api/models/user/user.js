@@ -18,7 +18,11 @@ var userSchema = new Schema({
     password: { type: String, required: true, select: true},
 
 
+    resetPasswordToken: { type: String, default: uuid.v4()},
+    resetPasswordTokenExpires: { type: Date },
+
     emailActivateToken: { type: String, default: uuid.v4()},
+    emailActivateTokenExpires: { type: Date },
     emailActivated: {type: Boolean, default: false},
     activated: {type: Boolean, default: false},
 

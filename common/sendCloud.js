@@ -20,7 +20,7 @@ var sendCloud = {
     },
     action : {
         send : 'send',
-        sendTemplate : 'send_template'
+        send_template : 'send_template'
     },
     format : {
         json : 'json',
