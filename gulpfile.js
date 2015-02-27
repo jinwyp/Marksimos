@@ -189,7 +189,13 @@ gulp.task('nodemonjinlocal2', function () {
     });
 //        .on('restart', 'default')
 });
-
+gulp.task('nodemonyuekecheng', function () {
+    nodemon({
+        script: 'app.js',
+        env: { 'NODE_ENV': 'yuekecheng' }
+    });
+//        .on('restart', 'default')
+});
 
 
 /********************  Rerun the task when a file changes  ********************/
@@ -270,6 +276,10 @@ gulp.task('jin', [ 'compass', 'templates', 'nodemonjin', 'watchdev']);
 gulp.task('jinco', ['compass', 'templates', 'nodemonjinlocal', 'watchdev']);
 gulp.task('jinco2', ['compass', 'templates', 'nodemonjinlocal2', 'watchdev']);
 gulp.task('jinpro', ['compass', 'templates', 'minifycss', 'jscompress', 'nodemonjin', 'watch']);
+gulp.task('yuekecheng', [ 'compass', 'templates', 'nodemonyuekecheng', 'watchdev']);
+
+
+
 
 
 
