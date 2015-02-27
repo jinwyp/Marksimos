@@ -1,0 +1,60 @@
+<% include include/headcss.ejs %>
+
+
+<body ng-app="b2clogin">
+
+<b2c-header showlogin="true"></b2c-header>
+
+<main ng-controller="" class="container">
+    <div class="row">
+        <div class="col-md-8 col-md-offset-2">
+            <header class="row">
+
+
+            </header>
+            <div class="row">
+                <aside class="col-md-4">
+                    <div class="head"></div>
+                    <div class="upload-avatar">上传头像</div>
+                    <div>编辑我的资料</div>
+                    <nav class="profile-nav">
+                        <ul>
+                            <li class="selected">基本信息</li>
+                            <li>学校信息</li>
+                            <li>团队信息</li>
+                            <li>安全信息</li>
+                            <li>联系方式</li>
+                        </ul>
+                    </nav>
+                </aside>
+                <article class="col-md-8">
+                    <div class="profile-detail-tip row">请选择下方要修改的项目进行编辑<span class="done-button col-">完成修改</span></div>
+                    <div class="profile-detail">
+                        <div class="profile-detail-title">基本信息</div>
+                        <form>
+                            <div class="row"><label for="name" class="col-md-2">用户名：</label><input type="text" name="name" id="name" class="col-md-6"></div>
+                            <div class="row"><label for="email" class="col-md-2">邮箱：</label><input type="text" id="email" name="email" class="col-md-6"></div>
+                            <div class="row">
+                                <label class="col-md-2">性别</label>
+                                <label class="radio-inline"><input type="radio" name="gender" value="1"/>男</label>
+                                <label class="radio-inline female"><input type="radio" name="gender" value="2"/>女</label>
+                            </div>
+                            <div class="row">
+                                <lable class="col-md-2">生日</lable>
+
+                            </div>
+                            <div class="row">
+                                <button type="submit">保存修改</button>
+                                <button class="">取消</button>
+                            </div>
+
+                        </form>
+                    </div>
+                </article>
+            </div>
+        </div>
+    </div>
+</main>
+
+
+<% include ./include/footerscriptlogin.ejs %>

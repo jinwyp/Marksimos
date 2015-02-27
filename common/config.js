@@ -73,6 +73,12 @@ module.exports = (function(){
             config.host = 'http://localhost:3000/';
             config.cgiService = 'http://192.168.2.50/cgi-bin/';
             break;
+        case 'yuekecheng':
+            config.logDirectory = 'D:/github/marksimos/log';
+            config.mongo_conn = 'mongodb://marksimosdbadmin:marksimossunhao@192.168.2.50:27017/Marksimos';
+            config.host = 'http://localhost:3000/';
+            config.cgiService = 'http://192.168.2.50/cgi-bin/';
+            break;
         case 'ludwik':
             config.logDirectory = '/Users/ludwik/code/actived/Marksimos/log/';
             config.host = 'http://localhost:3000/';
