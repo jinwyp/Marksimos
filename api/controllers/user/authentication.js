@@ -115,6 +115,8 @@ exports.adminLogin = function (req, res, next) {
     })(req, res, next);
 };
 
+
+
 exports.logout = function(req, res, next){
     req.logout();
     res.clearCookie('x-access-token');
@@ -306,20 +308,14 @@ exports.getUserInfo = function (req, res, next){
 
 
 
-
-function randomString(len) {
-    len = len || 32;
-    var $chars = 'ABCDEFGHJKMNPQRSTWXYZabcdefhijkmnprstwxyz2345678';    /****默认去掉了容易混淆的字符oOLl,9gq,Vv,Uu,I1****/
-    var maxPos = $chars.length;
-    var pwd = '';
-    for (i = 0; i < len; i++) {
-        pwd += $chars.charAt(Math.floor(Math.random() * maxPos));
-    }
-    return pwd;
-}
-
-
-
+/**
+ * Registration .
+ *
+ *  * Examples:
+ *
+ *
+ *
+ */
 
 
 exports.registerB2CStudent = function(req, res, next){
@@ -355,32 +351,39 @@ exports.registerB2CStudent = function(req, res, next){
     };
 
 
-    userModel.register(newUser).then(function(resultUser){
-        if(!resultUser) {
+    userModel.register(newUser).then(function(resultUser) {
+        if (!resultUser) {
             throw new Error('Save new user to database error.');
         }
 
-
         var mailContent = EmailModel.registration;
 
-        mailContent.html = mailContent.html1 + resultUser.username + mailContent.html2 + resultUser.email + mailContent.html3 + resultUser.resultUser.emailActivateToken +
-            mailContent.html4 + resultUser.email + mailContent.html5 + resultUser.resultUser.emailActivateToken + mailContent.htmlend ;
+        mailContent.to = resultUser.email;
 
-        mailSender.sendMail(mailContent, function(error, info){
-            if(error){
-                logger.error(error);
+        //mailContent.substitution_vars.to.push(resultUser.email);
+        //mailContent.substitution_vars.sub['%username%'].push(resultUser.username);
+        //mailContent.substitution_vars.sub['%useremail%'].push(resultUser.email);
+        //mailContent.substitution_vars.sub['%token%'].push(resultUser.emailActivateToken);
+
+        mailContent.html = mailContent.html1 + resultUser.username + mailContent.html2 + resultUser.email + mailContent.html3 + resultUser.emailActivateToken + mailContent.html4 + resultUser.email + mailContent.html5 + resultUser.emailActivateToken + mailContent.htmlend;
+
+
+
+        mailSender.sendMailQ(mailContent).then(function(resultSendEmail){
+            if (!resultSendEmail) {
+                throw new Error('Send email of new user failed !');
             }else{
-                logger.log(info);
+                logger.log(resultSendEmail);
             }
-        });
+        }).fail(function(err){
+            next(err);
+        }).done();
 
         return res.status(200).send({message: 'Register new user success'});
-
 
     }).fail(function(err){
         next(err);
     }).done();
-
 
 };
 
@@ -491,8 +494,9 @@ exports.forgetPassword = function(req, res, next){
 
         var mailContent = EmailModel.resetPassword;
 
-        mailContent.html = mailContent.html1 + resultUser.username + mailContent.html2 + resultUser.email + mailContent.html3 + resultUser.resultUser.emailActivateToken +
-        mailContent.html4 + resultUser.email + mailContent.html5 + resultUser.resultUser.emailActivateToken + mailContent.htmlend ;
+        mailContent.to = resultUser.email;
+        mailContent.html = mailContent.html1 + resultUser.username + mailContent.html2 + resultUser.email + mailContent.html3 + resultUser.emailActivateToken +
+        mailContent.html4 + resultUser.email + mailContent.html5 + resultUser.emailActivateToken + mailContent.htmlend ;
 
         mailSender.sendMail(mailContent, function(error, info){
             if(error){

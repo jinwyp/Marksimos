@@ -6,7 +6,8 @@
 
 var util = require('util');
 var fs = require('fs');
-//var hyperquest = require('hyperquest');
+
+var Q = require('q');
 var request = require('request');
 var _ = require('underscore'); // npm install underscore to install
 
@@ -42,7 +43,7 @@ var serverSettingsDefault = {
     to : 'jinwyp@163.com',
     cc : '',
     subject : '欢迎使用HCD Learning！',
-    html : '欢迎使用HCD Learning！',
+    html : '',
 
     template_invoke_name : '',
     substitution_vars : '',
@@ -91,13 +92,22 @@ NodemailerSendCloud.prototype.sendMail = function(mail, callback) {
     mail.subject = mail.subject || serverSettingsDefault.subject;
     mail.html = mail.html || serverSettingsDefault.html;
 
+    mail.template_invoke_name = mail.template_invoke_name || serverSettingsDefault.template_invoke_name;
+    mail.substitution_vars = mail.substitution_vars || serverSettingsDefault.substitution_vars;
 
-    var queryUrl  = this.serverSettings.url + '/' + this.sendMethod + '/' + this.module + '.' + this.action + '.' + this.format;
+    mail.substitution_vars = JSON.stringify(mail.substitution_vars);
 
-    queryUrl = queryUrl + '?api_user=' + this.serverSettings.api_user + '&api_key=' + this.serverSettings.api_key +
-        '&from=' + mail.from + '&to=' + mail.to + '&subject=' + mail.subject + '&html=' + mail.html;
 
-    console.log("QURL:", queryUrl);
+    var queryUrl  = this.serverSettings.url + this.sendMethod + '/' + this.module + '.' + this.action + '.' + this.format;
+    queryUrl = queryUrl + '?api_user=' + this.serverSettings.api_user + '&api_key=' + this.serverSettings.api_key;
+
+    if(mail.html !== ''){
+        queryUrl = queryUrl + '&from=' + mail.from + '&to=' + mail.to + '&subject=' + mail.subject + '&html=' + mail.html;
+    }else{
+        queryUrl = queryUrl + '&from=' + mail.from + '&fromname=' + mail.fromname + '&template_invoke_name=' + mail.template_invoke_name + '&subject=' + mail.subject + '&substitution_vars=' + JSON.stringify(mail.substitution_vars);
+    }
+
+    console.log("EmailURL: ", queryUrl);
 
     request(queryUrl, function(error, response, body){
 
@@ -106,17 +116,60 @@ NodemailerSendCloud.prototype.sendMail = function(mail, callback) {
         }
 
         if (response.statusCode == 200) {
-            console.log("SSS", body);
             return callback(null, body);
         }else{
-            console.log("FFF", response);
             return callback(null, response);
         }
 
 
     });
 
+};
 
 
+
+NodemailerSendCloud.prototype.sendMailQ = function(mail) {
+
+    var deferred = Q.defer();
+
+    mail.from = mail.from || serverSettingsDefault.from;
+    mail.to = mail.to || serverSettingsDefault.to;
+    mail.subject = mail.subject || serverSettingsDefault.subject;
+    mail.html = mail.html || serverSettingsDefault.html;
+
+    mail.template_invoke_name = mail.template_invoke_name || serverSettingsDefault.template_invoke_name;
+    mail.substitution_vars = mail.substitution_vars || serverSettingsDefault.substitution_vars;
+
+    mail.substitution_vars = JSON.stringify(mail.substitution_vars);
+
+
+
+    var queryUrl  = this.serverSettings.url + '/' + this.sendMethod + '/' + this.module + '.' + this.action + '.' + this.format;
+    queryUrl = queryUrl + '?api_user=' + this.serverSettings.api_user + '&api_key=' + this.serverSettings.api_key;
+
+    if(mail.html !== ''){
+        queryUrl = queryUrl + '&from=' + mail.from + '&to=' + mail.to + '&subject=' + mail.subject + '&html=' + mail.html;
+    }else{
+        queryUrl = queryUrl + '&from=' + mail.from + '&fromname=' + mail.fromname + '&template_invoke_name=' + mail.template_invoke_name + '&subject=' + mail.subject + '&substitution_vars=' + mail.substitution_vars;
+    }
+
+
+    console.log("EmailURL: ", queryUrl);
+
+    request(queryUrl, function(error, response, body){
+
+        if (error) {
+            return deferred.reject(err);
+        }
+
+        if (response.statusCode == 200) {
+            return deferred.resolve(body);
+        }else{
+            return deferred.resolve(body);
+        }
+    });
+
+
+    return deferred.promise;
 
 };

@@ -94,7 +94,7 @@
                     form.email.$valid = false;
                     form.email.$invalid = true;
 
-                    vm.css.emailExistedInfo = true;
+                    vm.css.usernameExistedInfo = true;
                 });
             }
         }

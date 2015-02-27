@@ -6,7 +6,7 @@
     <b2c-header showlogin="true"></b2c-header>
 
     <main ng-controller="userLoginController as register">
-        <div class="middle b2c-container" ng-if="register.css.showRegForm" >
+        <div class="middle b2c-container"  >
             <div class="middle right">
 
                 <form class="reg-form" name="regForm" novalidate ng-cloak>
@@ -176,5 +176,13 @@
         </div>   
     </main>
 
+
+    <div style="width: 430px; font-size: 12px; color: #333333; font-family: Trebuchet MS,Verdana,Arial,Helvetica,sans-serif;">
+        <br/><b>Dear %username% :</b><br/><br/>
+        In order to help maintain the security of your account, please verify your email address by clicking the following link: <br/>
+        <a href="http://www.hcdlearning.com/e4e/emailverify/registration?email=%useremail%&emailtoken=%token%">http://www.hcdlearning.com/e4e/emailverify/registration?email=%useremail%&emailtoken=%token%</a><br/><br/><br/>
+        Thanks for helping us maintain the security of your account. <br/><br/>
+        The HCD Learning Team <br/><a href="http://www.hcdlearning.com">http://www.hcdlearning.com</a>
+    </div>
 
 <% include ./include/footerscriptlogin.ejs %>
