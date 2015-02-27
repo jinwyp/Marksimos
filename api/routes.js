@@ -69,11 +69,11 @@ apiRouter.get('/e4e/forgotpassword', function(req, res, next){
     res.render('b2c/forgotpassword/forgotpassword.ejs', {title:'Forgotten Your Password? | HCD Learning'});
 });
 
-apiRouter.get('/e4e/forgotpassword/emailverify', function(req, res, next){
+apiRouter.get('/e4e/forgotpassword/step2', function(req, res, next){
     res.render('b2c/forgotpassword/enter-code.ejs', {title:'Forgotten Your Password? | HCD Learning'});
 });
 
-apiRouter.get('/e4e/forgotpassword/email', function(req, res, next){
+apiRouter.get('/e4e/forgotpassword/step3', function(req, res, next){
     res.render('b2c/forgotpassword/enter-email.ejs', {title:'Forgotten Your Password? | HCD Learning'});
 });
 
