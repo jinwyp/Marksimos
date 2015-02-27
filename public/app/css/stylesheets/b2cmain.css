@@ -685,3 +685,123 @@ body {
 }
 
 /********************  User Profile  ********************/
+.profile-body {
+  background-color: #ECEDE8;
+}
+
+.profile-content {
+  padding-left: 30px;
+  padding-right: 30px;
+  background-color: #ffffff;
+  -moz-border-radius: 7px;
+  -webkit-border-radius: 7px;
+  border-radius: 7px;
+}
+.profile-content .profile-section {
+  margin: 1.5em 0;
+}
+
+.detail-nav {
+  line-height: 2;
+  text-align: center;
+}
+.detail-nav ul, .detail-nav li {
+  list-style: none;
+  padding-left: 0;
+}
+.detail-nav li {
+  border: 1px solid black;
+  border-bottom: none;
+}
+.detail-nav li:last-child {
+  border-bottom: solid;
+  border-width: 1px;
+}
+.detail-nav .avatar {
+  width: 100%;
+  height: 185px;
+  margin-bottom: 20px;
+  -moz-border-radius: 0.3em;
+  -webkit-border-radius: 0.3em;
+  border-radius: 0.3em;
+}
+.detail-nav .edit-title {
+  line-height: 2.5;
+  position: relative;
+}
+.detail-nav .upload-avatar-button {
+  background-color: #741F01;
+  color: #ffffff;
+  text-decoration: underline;
+}
+.detail-nav .up-triangle {
+  border: 5px solid;
+  border-left-color: transparent;
+  border-bottom-color: transparent;
+  position: absolute;
+  transform: rotate(-45deg);
+  left: 0;
+  right: 0;
+  margin: 0 auto;
+  width: 0;
+  bottom: -5px;
+}
+.detail-nav .selected {
+  background-color: #d98348;
+  color: #ffffff;
+}
+
+.profile-detail label {
+  font-weight: normal;
+}
+.profile-detail form {
+  border: 1px solid;
+  border-top: none;
+  padding: 1em;
+}
+.profile-detail form > div > div {
+  margin-bottom: 0.5em;
+}
+.profile-detail .profile-detail-title {
+  background-color: #d98348;
+  color: #ffffff;
+  padding-left: 0.8em;
+  line-height: 1.8;
+}
+.profile-detail .profile-detail-tip {
+  padding-left: 0.8em;
+  background-color: #d9d9d9;
+  margin-bottom: 0.8em;
+}
+.profile-detail .profile-detail-tip span {
+  line-height: 2;
+}
+.profile-detail .done-button {
+  margin: 0.2em 0.4em;
+  background-color: #444444;
+  color: #ffffff;
+  padding: 0.2em 0.4em;
+  float: right;
+  font-size: 0.9em;
+}
+.profile-detail .profile-button-container {
+  padding: 1.2em 0 0;
+}
+.profile-detail .profile-button-container button {
+  margin-right: 0.5em;
+  padding: 0.2em 0.5em;
+  border-style: none;
+  color: #ffffff;
+  -moz-box-shadow: #7e200b 0px 2px 4px;
+  -webkit-box-shadow: #7e200b 0px 2px 4px;
+  box-shadow: #7e200b 0px 2px 4px;
+  -moz-border-radius: 0px;
+  -webkit-border-radius: 0px;
+  border-radius: 0px;
+}
+.profile-detail .profile-button-container button[type=submit] {
+  background-color: #B82A0C;
+}
+.profile-detail .profile-button-container .cancel {
+  background-color: #797979;
+}
