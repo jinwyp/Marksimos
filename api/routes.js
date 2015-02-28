@@ -52,23 +52,30 @@ apiRouter.get('/', function(req, res, next){
 /**********     Routes for rendering templates E4E Website     **********/
 
 apiRouter.get('/e4e', function(req, res, next){
-    res.render('b2c/index.ejs', {title : 'Welcome to HCD E4E | HCD Learning'});
+    res.render('b2c/registration/indexreg.ejs', {title : 'Welcome to HCD E4E | HCD Learning'});
 });
+
+apiRouter.get('/e4e/emailverify/registration', auth.authLoginToken({failureRedirect: '/e4e/login'}), auth.activateRegistrationEmail);
+
 
 apiRouter.get('/e4e/login', function(req, res, next){
     res.render('b2c/login.ejs', {title:'HCD E4E Sign in to Your Account| HCD Learning'});
 });
 
+
+
+
 apiRouter.get('/e4e/forgotpassword', function(req, res, next){
-    res.render('b2c/forgotpassword.ejs', {title:'Forgotten Your Password? | HCD Learning'});
+    res.render('b2c/forgotpassword/forgotpassword.ejs', {title:'Forgotten Your Password? | HCD Learning'});
 });
 
-
-apiRouter.get('/e4e/emailverify/registration', function(req, res, next){
-    res.render('b2c/forgotpassword.ejs', {title:'Forgotten Your Password? | HCD Learning'});
+apiRouter.get('/e4e/forgotpassword/emailverify', function(req, res, next){
+    res.render('b2c/forgotpassword/enter-code.ejs', {title:'Forgotten Your Password? | HCD Learning'});
 });
 
-
+apiRouter.get('/e4e/forgotpassword/email', function(req, res, next){
+    res.render('b2c/forgotpassword/enter-email.ejs', {title:'Forgotten Your Password? | HCD Learning'});
+});
 
 
 apiRouter.get('/e4e/profile', /*auth.authLoginToken({failureRedirect: '/e4e/login'}), auth.authRole(userRoleModel.right.marksimos.studentLogin, {failureRedirect: '/e4e/login'}),*/ function(req, res, next){
@@ -132,6 +139,7 @@ apiRouter.get('/marksimos/manual/en_US',function(req,res,next){
 
 
 
+
 /**********     Routes for rendering templates Administrator     **********/
 
 apiRouter.get('/marksimos/admin', function(req, res, next){
@@ -178,7 +186,7 @@ apiRouter.all("/marksimos/api/*", function(req, res, next){
 apiRouter.post('/e4e/api/registercompany', auth.registerB2CEnterprise);
 apiRouter.post('/e4e/api/registerstudent', auth.registerB2CStudent);
 
-apiRouter.post('/e4e/api/forgotpassword', auth.forgetPassword);
+apiRouter.post('/e4e/api/forgotpasswordstep1', auth.forgotPasswordStep1);
 
 
 

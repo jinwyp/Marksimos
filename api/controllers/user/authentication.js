@@ -14,6 +14,9 @@ var util = require('util');
 var utility = require('../../../common/utility.js');
 
 
+var expiresTime = 1000 * 60 * 60 * 24 * 3; // 3 days
+
+
 //Passport
 var passport = require('passport')
   , LocalStrategy = require('passport-local').Strategy;
@@ -114,6 +117,8 @@ exports.adminLogin = function (req, res, next) {
         }
     })(req, res, next);
 };
+
+
 
 exports.logout = function(req, res, next){
     req.logout();
@@ -306,20 +311,14 @@ exports.getUserInfo = function (req, res, next){
 
 
 
-
-function randomString(len) {
-    len = len || 32;
-    var $chars = 'ABCDEFGHJKMNPQRSTWXYZabcdefhijkmnprstwxyz2345678';    /****默认去掉了容易混淆的字符oOLl,9gq,Vv,Uu,I1****/
-    var maxPos = $chars.length;
-    var pwd = '';
-    for (i = 0; i < len; i++) {
-        pwd += $chars.charAt(Math.floor(Math.random() * maxPos));
-    }
-    return pwd;
-}
-
-
-
+/**
+ * Registration .
+ *
+ *  * Examples:
+ *
+ *
+ *
+ */
 
 
 exports.registerB2CStudent = function(req, res, next){
@@ -329,6 +328,7 @@ exports.registerB2CStudent = function(req, res, next){
     if(validationErrors){
         return res.status(400).send( {message: validationErrors} );
     }
+
 
     var newUser = {
         username : req.body.username,
@@ -351,36 +351,45 @@ exports.registerB2CStudent = function(req, res, next){
         facilitatorId: "54d834bdeaf05dbd048120f8", // fixed for b2c_facilitator
 
         role : userRoleModel.roleList.student.id,
-        studentType : userModel.getStudentType().B2C
+        studentType : userModel.getStudentType().B2C,
+
+        emailActivateTokenExpires : new Date(new Date().getTime() + expiresTime)
     };
 
 
-    userModel.register(newUser).then(function(resultUser){
-        if(!resultUser) {
-            throw new Error('Save new user to database error.');
+    userModel.register(newUser).then(function(resultUser) {
+        if (!resultUser) {
+            throw new Error('Cancel promise chains. Because Save new user to database error.');
         }
-
 
         var mailContent = EmailModel.registration;
 
-        mailContent.html = mailContent.html1 + resultUser.username + mailContent.html2 + resultUser.email + mailContent.html3 + resultUser.resultUser.emailActivateToken +
-            mailContent.html4 + resultUser.email + mailContent.html5 + resultUser.resultUser.emailActivateToken + mailContent.htmlend ;
+        mailContent.to = resultUser.email;
 
-        mailSender.sendMail(mailContent, function(error, info){
-            if(error){
-                logger.error(error);
+        //mailContent.substitution_vars.to.push(resultUser.email);
+        //mailContent.substitution_vars.sub['%username%'].push(resultUser.username);
+        //mailContent.substitution_vars.sub['%useremail%'].push(resultUser.email);
+        //mailContent.substitution_vars.sub['%token%'].push(resultUser.emailActivateToken);
+
+        mailContent.html = mailContent.html1 + resultUser.username + mailContent.html2 + resultUser.email + mailContent.html3 + resultUser.emailActivateToken + mailContent.html4 + resultUser.email + mailContent.html5 + resultUser.emailActivateToken + mailContent.htmlend;
+
+
+
+        mailSender.sendMailQ(mailContent).then(function(resultSendEmail){
+            if (!resultSendEmail) {
+                throw new Error('Cancel promise chains. Because Send email of new user failed !');
             }else{
-                logger.log(info);
+                logger.log(resultSendEmail);
             }
-        });
+        }).fail(function(err){
+            next(err);
+        }).done();
 
         return res.status(200).send({message: 'Register new user success'});
-
 
     }).fail(function(err){
         next(err);
     }).done();
-
 
 };
 
@@ -408,17 +417,18 @@ exports.registerB2CEnterprise = function(req, res, next){
         facilitatorId: "54d834bdeaf05dbd048120f8", // fixed for b2c_facilitator
 
         role : userRoleModel.roleList.enterprise.id,
-        studentType : userModel.getStudentType().B2C
+        studentType : userModel.getStudentType().B2C,
+
+        emailActivateTokenExpires : new Date(new Date().getTime() + expiresTime)
     };
 
 
     userModel.register(newUser).then(function(result){
-        if(result){
-            return res.status(200).send({message: 'Register new company success'});
-
-        }else{
-            throw new Error('Save new company to database error.');
+        if(!result){
+            throw new Error('Cancel promise chains. Because Save new company to database error.');
         }
+
+        return res.status(200).send({message: 'Register new company success'});
 
     }).fail(function(err){
         next(err);
@@ -428,41 +438,57 @@ exports.registerB2CEnterprise = function(req, res, next){
 };
 
 
-exports.activateEmail = function(req, res, next){
-    var email = req.query.email;
-    var token = req.query.token;
+// http://www.hcdlearning.com/e4e/emailverify/registration?email=jinwyp@163.com&emailtoken=f70c16b5-2cf1-42d1-90ba-b2fa1bcd3db8
 
-    if(!email){
-        return res.send(400, {message: 'email is required.'})
+exports.activateRegistrationEmail = function(req, res, next){
+    var validationErrors = userModel.emailVerificationValidations(req, userRoleModel.roleList.student.id, userModel.getStudentType().B2C);
+
+    if(validationErrors){
+        return res.status(400).send( {message: validationErrors} );
     }
 
-    if(!token){
-        return res.send(400, {message: 'token is required.'})
-    }
+    var nowDate = new Date();
 
     userModel.findOneQ({
-        email: email,
-        activateToken: token
-    }).then(function(result){
-        if(result){
-            return userModel.updateByEmail(email, {
-                emailActivated: true
-            })
-            .then(function(numAffected){
-                if(numAffected === 1){
-                    return res.send({message: 'activate success'});
-                }
-                return res.send(500, {message: 'more or less than 1 record is updated. it should be only one.'})
-            });
-        }else{
-            throw new Error('User does not exist.');
+        email: req.query.email,
+        emailActivateToken: req.query.emailtoken,
+        emailActivated: false
+    }).then(function(resultUser){
+
+        if(!resultUser) {
+            throw new Error('Cancel promise chains. Because User Email Activate Token not found!');
         }
-    })
-    .fail(function(err){
-        logger.error(err);
-        res.send(500, {message: 'activate failed.'})
-    })
-    .done();
+
+        if( resultUser.emailActivateTokenExpires < nowDate){
+            throw new Error('Cancel promise chains. Because Email Activate Token Expire !');
+        }
+
+        resultUser.emailActivated = true;
+        resultUser.activated = true;
+
+        return resultUser.saveQ();
+
+    }).then(function(result){
+        var savedDoc = result[0];
+        var numberAffected = result[1];
+
+        //if(numberAffected !== 1){
+        //    throw new Error('Cancel promise chains. Because Update user emailActivated status failed. more or less than 1 record is updated. it should be only one !');
+        //}
+
+        if(!result){
+            throw new Error('Cancel promise chains. Because Update user emailActivated status failed. more or less than 1 record is updated. it should be only one !');
+        }
+
+        return res.render('b2c/registration/indexregsuccess.ejs', {
+            title     : ' Email Activate Success ! | HCD Learning',
+            username  : result.username,
+            useremail : result.email
+        });
+
+    }).fail(function(err){
+        next(err);
+    }).done();
 };
 
 
@@ -472,7 +498,7 @@ exports.activateEmail = function(req, res, next){
 
 
 
-exports.forgetPassword = function(req, res, next){
+exports.forgotPasswordStep1 = function(req, res, next){
 
     req.checkBody('email', 'Email wrong format').notEmpty().isEmail();
 
@@ -486,13 +512,14 @@ exports.forgetPassword = function(req, res, next){
     userModel.findOneQ({ email: req.body.email }).then(function(resultUser){
 
         if(!resultUser){
-            throw new Error('Cancel promise. User does not exist.');
+            throw new Error('Cancel promise chains. Because User does not exist.');
         }
 
         var mailContent = EmailModel.resetPassword;
 
-        mailContent.html = mailContent.html1 + resultUser.username + mailContent.html2 + resultUser.email + mailContent.html3 + resultUser.resultUser.emailActivateToken +
-        mailContent.html4 + resultUser.email + mailContent.html5 + resultUser.resultUser.emailActivateToken + mailContent.htmlend ;
+        mailContent.to = resultUser.email;
+        mailContent.html = mailContent.html1 + resultUser.username + mailContent.html2 + resultUser.email + mailContent.html3 + resultUser.emailActivateToken +
+        mailContent.html4 + resultUser.email + mailContent.html5 + resultUser.emailActivateToken + mailContent.htmlend ;
 
         mailSender.sendMail(mailContent, function(error, info){
             if(error){

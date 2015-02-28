@@ -14,52 +14,69 @@ module.exports = {
     },
 
     registration: {
-        from: 'HCDLearing <jinwang.hcdlearning.com>',
-        to: 'jinwang.163.com',
+        from: 'HCDLearing <jinwang@hcdlearning.com>',
+        fromname : 'HCDLearning webmaster',
+        to: 'jinwyp@163.com',
+
         subject: 'Your HCD Learning account: Email address verification',
-        data : {
-            userName : '',
-            token : ''
+
+        substitution_vars : {
+            to : [],
+            sub : {
+                '%username%' : [],
+                '%useremail%' : [],
+                '%token%' : []
+            }
         },
+        template_invoke_name : 'registration',
 
         html: '',
 
-        html1: '<b>Dear ',
-        html2: ' :</b> <br/> <br/>' +
+        html1: '<html><body><div style=\'width: 500px; font-size: 12px; \'><br/><b>Dear ',
+        html2: ' :</b><br/><br/>' +
         'In order to help maintain the security of your account, please verify your email address by clicking the following link: <br/>' +
-        '<a href="http://www.hcdlearning.com/e4e/emailverify/registration?email=' ,
+        '<a href=\'http://www.hcdlearning.com/e4e/emailverify/registration?email=' ,
         html3: '&emailtoken=',
-        html4: '">http://www.hcdlearning.com/e4e/emailverify/registration?email=' ,
+        html4: '\'>http://www.hcdlearning.com/e4e/emailverify/registration?email=' ,
         html5: '&emailtoken=' ,
-        htmlend: '</a> <br/> <br/> <br/>' +
-        'Thanks for helping us maintain the security of your account. <br/> <br/>' +
-        'The HCD Learning Team <br/>' +
-        '<a href="http://www.hcdlearning.com ">http://www.hcdlearning.com </a>'
+        htmlend: '</a><br/><br/><br/>' +
+        'Thanks for helping us maintain the security of your account. <br/><br/>' +
+        'The HCD Learning Team<br/>' +
+        '<a href=\'http://www.hcdlearning.com\'>http://www.hcdlearning.com</a> </div></body></html>'
     },
 
 
     resetPassword: {
-        from: 'HCDLearing <jinwang.hcdlearning.com>',
-        to: 'jinwang.163.com',
+        from: 'HCDLearing <jinwang@hcdlearning.com>',
+        fromname : 'HCDLearning webmaster',
+        to: 'jinwyp@163.com',
+
         subject: 'HCD Learning account password reset',
-        data : {
-            userName : '',
-            token : ''
+
+        substitution_vars : {
+            to : [],
+            sub : {
+                '%username%' : [],
+                '%useremail%' : [],
+                '%token%' : []
+            }
         },
+        template_invoke_name : 'resetpassword',
 
         html: '',
 
-        html1: '<b>Dear ',
-        html2: ' :</b> <br/> <br/>' +
+        //html1: '<html><head></head><body><div style=\'width: 430px; font-size: 12px; color: #333333; font-family: Trebuchet MS,Verdana,Arial,Helvetica,sans-serif; \'><br/><b>Dear ',
+        html1: '<html><body><div style=\'width: 500px; font-size: 12px; color: #333333; \'><br/><b>Dear ',
+        html2: ' :</b><br/><br/>' +
         'Changing your password is simple. Please use the link below within 24 hours. <br/>' +
-        '<a href="http://www.hcdlearning.com/e4e/emailverify/changepassword?username=',
+        '<a href=\'http://www.hcdlearning.com/e4e/emailverify/changepassword?username=',
         html3: '&passwordtoken=',
-        html4: '">http://www.hcdlearning.com/e4e/emailverify/changepassword?username=' ,
+        html4: '\'>http://www.hcdlearning.com/e4e/emailverify/changepassword?username=' ,
         html5: '&passwordtoken=' ,
         htmlend: '</a> <br/> <br/> <br/>' +
         'Thanks you. <br/> <br/>' +
-        'The HCD Learning Team <br/>' +
-        '<a href="http://www.hcdlearning.com ">http://www.hcdlearning.com </a>'
+        'The HCD Learning Team<br/>' +
+        '<a href=\'http://www.hcdlearning.com\'>http://www.hcdlearning.com</a></div></body></html>'
     }
 };
 

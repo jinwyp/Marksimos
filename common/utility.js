@@ -219,51 +219,6 @@ exports.calculateIngredientsQuality = function(SKUResult){
 
 
 
-exports.sendActivateEmail = function(toEmail, activateToken){
-    var body = "Please click this link, blablabla"
-    var linkText =  config.host + 'activate?email=' + toEmail + '&token=' + activateToken;
-    body += "<a href='" + linkText + "'>"+ linkText +"</a>";
-
-    return sendMail(toEmail,'HCD activate email', body);
-}
-
-
-
-/**
- * @param {String} subject：发送的主题
- * @param {String} html：发送的 html 内容
- */
-function sendMail(toEmail, subject, html) {
-     var deferred = Q.defer();
-    var smtpTransport = nodemailer.createTransport('SMTP', {
-        host: config.mail.host,
-        auth: {user: config.mail.user, pass: config.mail.password},
-    });
-   
-    var mailOptions = {
-        from: [config.mail.name, config.mail.user].join(' '),
-        to: toEmail,
-        subject: subject,
-        html: html
-    };
-
-    smtpTransport.sendMail(mailOptions, function(error, response){
-        if (error) {
-            deferred.reject(error);
-        } else {
-            deferred.resolve({message: 'Message sent: ' + response.message});
-        }
-        smtpTransport.close();
-    });
-
-    return deferred.promise;
-};
-
-
-
-
-
-
 
 /**
 * Create an array of all the company names
@@ -307,6 +262,19 @@ exports.getFactoryPriceByConsumberPrice = function(consumerPrice){
 
 
 
+
+
+
+function randomString(len) {
+    len = len || 32;
+    var $chars = 'ABCDEFGHJKMNPQRSTWXYZabcdefhijkmnprstwxyz2345678';    /****默认去掉了容易混淆的字符oOLl,9gq,Vv,Uu,I1****/
+    var maxPos = $chars.length;
+    var pwd = '';
+    for (i = 0; i < len; i++) {
+        pwd += $chars.charAt(Math.floor(Math.random() * maxPos));
+    }
+    return pwd;
+}
 
 
 

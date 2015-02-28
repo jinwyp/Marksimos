@@ -1,4 +1,4 @@
-var mongoose = require('mongoose-q')(require('mongoose'));
+var mongoose = require('mongoose-q')(require('mongoose'), {spread:true});
 var Schema = mongoose.Schema;
 var Q = require('q');
 var mongooseTimestamps = require('mongoose-timestamp');
@@ -18,7 +18,11 @@ var userSchema = new Schema({
     password: { type: String, required: true, select: true},
 
 
+    resetPasswordToken: { type: String, default: uuid.v4()},
+    resetPasswordTokenExpires: { type: Date },
+
     emailActivateToken: { type: String, default: uuid.v4()},
+    emailActivateTokenExpires: { type: Date },
     emailActivated: {type: Boolean, default: false},
     activated: {type: Boolean, default: false},
 
@@ -115,7 +119,7 @@ userSchema.statics.register = function (newUser) {
         if (err) return deferred.reject(err);
         // already exists
         if (userexisted) {
-            return deferred.reject(new Error('cancel register new user, because username or email is existed.'));
+            return deferred.reject(new Error('Cancel register new user, because username or email is existed.'));
         }else {
             User.create(newUser, function(err, result){
                 if(err){
@@ -188,7 +192,7 @@ userSchema.statics.updateByEmail = function(email, user){
 
 userSchema.statics.registerValidations = function(req, userRoleId, studentType){
 
-    studentType = studentType || 20
+    studentType = studentType || 20;
 
     req.checkBody('username', 'Username should be 6-20 characters').notEmpty().len(6, 20);
     req.checkBody('email', 'Email wrong format').notEmpty().isEmail();
@@ -255,6 +259,20 @@ userSchema.statics.registerValidations = function(req, userRoleId, studentType){
     return req.validationErrors();
 
 
+
+};
+
+
+
+
+userSchema.statics.emailVerificationValidations = function(req, userRoleId, studentType){
+
+    studentType = studentType || 20;
+
+    req.checkQuery('email', 'Email wrong format').notEmpty().isEmail();
+    req.checkQuery('emailtoken', 'Email ActivateToken wrong format').isUUID(4);
+
+    return req.validationErrors();
 
 };
 
