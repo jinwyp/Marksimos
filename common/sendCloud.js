@@ -33,7 +33,7 @@ var sendCloud = {
 var serverSettingsDefault = {
     url : 'http://sendcloud.sohu.com/',
     sendCloudModule : 'mail',
-    action : 'send',
+    action : 'send_template',
     format : 'json',
     api_user : 'jinwyp_test_0XlCSJ',
     api_key : 'XuuMlW73jTugTig4',
@@ -87,42 +87,64 @@ function NodemailerSendCloud(sendmethod, serversettings) {
 
 NodemailerSendCloud.prototype.sendMail = function(mail, callback) {
 
-    mail.from = mail.from || serverSettingsDefault.from;
-    mail.to = mail.to || serverSettingsDefault.to;
-    mail.subject = mail.subject || serverSettingsDefault.subject;
-    mail.html = mail.html || serverSettingsDefault.html;
+    mail.from = mail.from || this.serverSettings.from;
+    mail.to = mail.to || this.serverSettings.to;
+    mail.subject = mail.subject || this.serverSettings.subject;
+    mail.html = mail.html || this.serverSettings.html;
 
-    mail.template_invoke_name = mail.template_invoke_name || serverSettingsDefault.template_invoke_name;
-    mail.substitution_vars = mail.substitution_vars || serverSettingsDefault.substitution_vars;
+    mail.template_invoke_name = mail.template_invoke_name || this.serverSettings.template_invoke_name;
+    mail.substitution_vars = mail.substitution_vars || this.serverSettings.substitution_vars;
 
     mail.substitution_vars = JSON.stringify(mail.substitution_vars);
 
 
     var queryUrl  = this.serverSettings.url + this.sendMethod + '/' + this.module + '.' + this.action + '.' + this.format;
-    queryUrl = queryUrl + '?api_user=' + this.serverSettings.api_user + '&api_key=' + this.serverSettings.api_key;
+    var postUrl  = queryUrl;
 
-    if(mail.html !== ''){
+
+
+    if(this.serverSettings.action === sendCloud.action.send){
+        queryUrl = queryUrl + '?api_user=' + this.serverSettings.api_user + '&api_key=' + this.serverSettings.api_key;
         queryUrl = queryUrl + '&from=' + mail.from + '&to=' + mail.to + '&subject=' + mail.subject + '&html=' + mail.html;
+
+        request(queryUrl, function(error, response, body){
+
+            if (error) {
+                return callback(err);
+            }
+
+            if (response.statusCode == 200) {
+                return callback(null, body);
+            }else{
+                return callback(null, response);
+            }
+
+        });
+
     }else{
-        queryUrl = queryUrl + '&from=' + mail.from + '&fromname=' + mail.fromname + '&template_invoke_name=' + mail.template_invoke_name + '&subject=' + mail.subject + '&substitution_vars=' + JSON.stringify(mail.substitution_vars);
+        // use email template_invoke_name to send email
+
+        //queryUrl = queryUrl + '&from=' + mail.from + '&fromname=' + mail.fromname + '&template_invoke_name=' + mail.template_invoke_name + '&subject=' + mail.subject + '&substitution_vars=' + JSON.stringify(mail.substitution_vars);
+
+        mail.api_user = this.serverSettings.api_user;
+        mail.api_key = this.serverSettings.api_key;
+
+        request.post({url:postUrl, formData: mail}, function optionalCallback(error, httpResponse, body) {
+            if (error) {
+                return callback(err);
+            }
+
+            if (httpResponse.statusCode == 200) {
+                return callback(null, body);
+            }else{
+                return callback(null, body);
+            }
+        });
     }
 
-    console.log("EmailURL: ", queryUrl);
+    console.log("Email queryUrl: ", queryUrl);
+    console.log("Email postUrl: ", postUrl);
 
-    request(queryUrl, function(error, response, body){
-
-        if (error) {
-            return callback(err);
-        }
-
-        if (response.statusCode == 200) {
-            return callback(null, body);
-        }else{
-            return callback(null, response);
-        }
-
-
-    });
 
 };
 
@@ -132,42 +154,64 @@ NodemailerSendCloud.prototype.sendMailQ = function(mail) {
 
     var deferred = Q.defer();
 
-    mail.from = mail.from || serverSettingsDefault.from;
-    mail.to = mail.to || serverSettingsDefault.to;
-    mail.subject = mail.subject || serverSettingsDefault.subject;
-    mail.html = mail.html || serverSettingsDefault.html;
+    mail.from = mail.from || this.serverSettings.from;
+    mail.to = mail.to || this.serverSettings.to;
+    mail.subject = mail.subject || this.serverSettings.subject;
+    mail.html = mail.html || this.serverSettings.html;
 
-    mail.template_invoke_name = mail.template_invoke_name || serverSettingsDefault.template_invoke_name;
-    mail.substitution_vars = mail.substitution_vars || serverSettingsDefault.substitution_vars;
+    mail.template_invoke_name = mail.template_invoke_name || this.serverSettings.template_invoke_name;
+    mail.substitution_vars = mail.substitution_vars || this.serverSettings.substitution_vars;
 
     mail.substitution_vars = JSON.stringify(mail.substitution_vars);
 
 
 
     var queryUrl  = this.serverSettings.url + this.sendMethod + '/' + this.module + '.' + this.action + '.' + this.format;
-    queryUrl = queryUrl + '?api_user=' + this.serverSettings.api_user + '&api_key=' + this.serverSettings.api_key;
+    var postUrl  = queryUrl;
 
-    if(mail.html !== ''){
+
+    if(this.serverSettings.action === sendCloud.action.send){
+        queryUrl = queryUrl + '?api_user=' + this.serverSettings.api_user + '&api_key=' + this.serverSettings.api_key;
         queryUrl = queryUrl + '&from=' + mail.from + '&to=' + mail.to + '&subject=' + mail.subject + '&html=' + mail.html;
+
+        request(queryUrl, function(error, response, body){
+
+            if (error) {
+                return deferred.reject(err);
+            }
+
+            if (response.statusCode == 200) {
+                return deferred.resolve(body);
+            }else{
+                return deferred.resolve(body);
+            }
+        });
+
     }else{
-        queryUrl = queryUrl + '&from=' + mail.from + '&fromname=' + mail.fromname + '&template_invoke_name=' + mail.template_invoke_name + '&subject=' + mail.subject + '&substitution_vars=' + mail.substitution_vars;
+        // use email template_invoke_name to send email
+
+        //queryUrl = queryUrl + '&from=' + mail.from + '&fromname=' + mail.fromname + '&template_invoke_name=' + mail.template_invoke_name + '&subject=' + mail.subject + '&substitution_vars=' + mail.substitution_vars;
+
+        mail.api_user = this.serverSettings.api_user;
+        mail.api_key = this.serverSettings.api_key;
+
+        request.post({url:postUrl, formData: mail}, function optionalCallback(error, httpResponse, body) {
+            if (error) {
+                return deferred.reject(error);
+            }
+
+            if (httpResponse.statusCode == 200) {
+                return deferred.resolve(body);
+            }else{
+                return deferred.resolve(body);
+            }
+        });
     }
 
 
-    console.log("EmailURL: ", queryUrl);
+    console.log("Email queryUrl: ", queryUrl);
+    console.log("Email postUrl: ", postUrl);
 
-    request(queryUrl, function(error, response, body){
-
-        if (error) {
-            return deferred.reject(err);
-        }
-
-        if (response.statusCode == 200) {
-            return deferred.resolve(body);
-        }else{
-            return deferred.resolve(body);
-        }
-    });
 
 
     return deferred.promise;

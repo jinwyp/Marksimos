@@ -32,9 +32,12 @@
 
         vm.css = {
             showRegForm : true,
+            showForgotPasswordForm : true,
+            resetPasswordForm : 'tokenForm',
             loginFailedInfo : false,
             usernameExistedInfo : false,
-            emailNotExistedInfo : false
+            emailNotExistedInfo : false,
+            resetPasswordTokenNotExistedInfo : false
         };
 
         vm.newUser =  {
@@ -42,6 +45,7 @@
             email : '',
             password : '',
             passwordReInput : '',
+            passwordResetVerifyCode : '',
             gender : "",
             clickSubmit : false,
             rememberMe : false
@@ -54,7 +58,10 @@
         /**********  Event Center  **********/
         vm.clickregister = userRegister;
         vm.clicklogin = userLogin;
-        vm.clickForgetPassword = forgetPasswordStep1;
+        vm.clickForgetPasswordStep1 = forgetPasswordStep1;
+        vm.clickForgetPasswordStep2 = forgetPasswordStep2;
+
+
 
 
 
@@ -104,8 +111,9 @@
             vm.css.emailNotExistedInfo = false;
 
             if(form.$valid){
-                Student.forgetPassword(vm.newUser).then(function(result){
-                    console.log(result.data);
+                Student.forgetPasswordStep1(vm.newUser).then(function(result){
+
+                    vm.css.showForgotPasswordForm = false;
 
                 }).catch(function(err){
                     form.email.$valid = false;
@@ -116,6 +124,27 @@
                 });
             }
         }
+
+
+        function forgetPasswordStep2(form){
+            vm.css.resetPasswordTokenNotExistedInfo = false;
+
+            if(form.$valid){
+                Student.forgetPasswordStep2(vm.newUser).then(function(result){
+                    console.log(result.data);
+
+                    vm.css.resetPasswordForm = 'inputPasswordForm';
+
+                }).catch(function(err){
+                    form.password.$valid = false;
+                    form.password.$invalid = true;
+
+                    vm.css.resetPasswordTokenNotExistedInfo = true;
+
+                });
+            }
+        }
+
 
 
         var app = {};

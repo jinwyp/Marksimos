@@ -6,7 +6,7 @@
     <b2c-header showlogin="true"></b2c-header>
 
     <main ng-controller="userLoginController as register">
-        <div class="middle b2c-container" ng-if="register.css.showRegForm" >
+        <div class="middle b2c-container" ng-if="true" >
             <div class="middle right">
 
                 <form class="reg-form" name="regForm" novalidate ng-cloak>
@@ -66,8 +66,8 @@
             <div class="reg-verify-account text-justify">
                 <p class="tip-header">{{register.newUser.username}} 您好:</p>
                 <p>感谢您注册E4E !</p>
-                <p>我们发送了一封邮件到您的邮箱:<a href="{{register.newUser.email | emailaddress}}" target="_blank">{{register.newUser.email}}</a></p>
-                <p>请打开您的邮箱,点击邮件中链接即可完成注册. <a class="btn btn-info" href="{{register.newUser.email | emailaddress}}">立即查看</a></p>
+                <p>我们发送了一封邮件到您的邮箱: <a href="{{register.newUser.email | emailaddress}}" target="_blank">{{register.newUser.email}}</a></p>
+                <p>请打开您的邮箱, 点击邮件中链接即可完成注册. <a class="btn btn-info" href="{{register.newUser.email | emailaddress}}" target="_blank">立即查看</a></p>
 
             </div>
         </div>

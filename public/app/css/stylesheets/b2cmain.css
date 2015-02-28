@@ -613,22 +613,8 @@ body {
   font-size: 12px;
 }
 .b2c-enter-email hr {
-  width: 90%;
-  margin-top: 56px;
-}
-.b2c-enter-email .tip div {
-  display: inline-block;
-  vertical-align: middle;
-  *vertical-align: auto;
-  *zoom: 1;
-  *display: inline;
-  width: 220px;
-  margin-left: 52px;
-}
-.b2c-enter-email .tip div a, .b2c-enter-email .tip div span {
-  font-size: 15px;
-  margin-left: 10px;
-  font-weight: 700;
+  width: 100%;
+  margin-top: 30px;
 }
 
 .b2c-enter-code .b2c-code {
@@ -639,23 +625,11 @@ body {
   background-position: 0 -3082px;
 }
 .b2c-enter-code h4 {
-  margin-top: 67px;
+  margin-top: 60px;
   margin-bottom: 20px;
-  margin-left: 150px;
 }
-.b2c-enter-code input[type=password] {
-  width: 302px;
-  height: 48px;
-  font-size: 20px;
+.b2c-enter-code input[type=text] {
   letter-spacing: 10px;
-}
-.b2c-enter-code .tip {
-  font-size: 12px;
-  margin-bottom: 10px;
-}
-.b2c-enter-code .help {
-  text-decoration: underline;
-  margin-top: -9px;
 }
 .b2c-enter-code button {
   border-style: none;
@@ -676,12 +650,14 @@ body {
   color: #ffffff;
   background-color: #7e200b;
 }
-.b2c-enter-code p {
-  margin-top: 50px;
+.b2c-enter-code .err-msg {
+  background-color: #ffe6e1;
+  padding: 5px 10px;
+  font-size: 12px;
 }
 .b2c-enter-code hr {
-  width: 90%;
-  margin-top: 56px;
+  width: 100%;
+  margin-top: 30px;
 }
 
 /********************  User Profile  ********************/

@@ -18,6 +18,7 @@ var userSchema = new Schema({
     password: { type: String, required: true, select: true},
 
 
+    resetPasswordVerifyCode: { type: String},
     resetPasswordToken: { type: String, default: uuid.v4()},
     resetPasswordTokenExpires: { type: Date },
 
@@ -265,16 +266,29 @@ userSchema.statics.registerValidations = function(req, userRoleId, studentType){
 
 
 
-userSchema.statics.emailVerificationValidations = function(req, userRoleId, studentType){
+userSchema.statics.emailVerifyRegistrationValidations = function(req, userRoleId, studentType){
 
     studentType = studentType || 20;
 
     req.checkQuery('email', 'Email wrong format').notEmpty().isEmail();
-    req.checkQuery('emailtoken', 'Email ActivateToken wrong format').isUUID(4);
+    req.checkQuery('emailtoken', 'Email ActivateToken wrong format').notEmpty().isUUID(4);
 
     return req.validationErrors();
 
 };
+
+userSchema.statics.emailVerifyResetPasswordValidations = function(req, userRoleId, studentType){
+
+    studentType = studentType || 20;
+
+    req.checkQuery('username', 'Username should be 6-20 characters').notEmpty().len(6, 20);
+    req.checkQuery('passwordtoken', 'Reset Password Token wrong').notEmpty().isUUID(4);
+
+    return req.validationErrors();
+
+};
+
+
 
 
 userSchema.statics.getStudentType = function(){

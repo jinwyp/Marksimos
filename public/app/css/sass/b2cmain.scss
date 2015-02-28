@@ -591,29 +591,11 @@ body{
 	}
 
 	hr{
-		width:90%;
-		margin-top:56px;
+		width:100%;
+		margin-top:30px;
 	}
-	.tip{
-		div{
-			@include inline-block;
-			width:220px;
-			margin-left:52px;
-			a,span{
-				font-size:15px;
-				margin-left:10px;
-				font-weight:700;
-			}
-		}
-	}
+
 }
-
-
-
-
-
-
-
 
 
 
@@ -626,35 +608,27 @@ body{
 		@include icon_b2c-sprite(b2c_prints);
 	}
 	h4{
-		margin-top:67px;
+		margin-top:60px;
 		margin-bottom:20px;
-		margin-left:150px;
 	}
-	input[type=password]{
-		width:302px;
-		height:48px;
-		font-size:20px;
+	input[type=text]{
 		letter-spacing:10px;
 	}
-	.tip{
-		font-size:12px;
-		margin-bottom:10px;
-	}
-	.help{
-		text-decoration: underline;
-		margin-top:-9px;
-	}
+
 	button{
 		@include registerButton;
 		margin-right:10px;
 	}
-	p{
-		margin-top:50px;
+
+	.err-msg{
+		background-color:rgb(255,230,225);
+		padding:5px 10px;
+		font-size:12px;
 	}
 
 	hr{
-		width:90%;
-		margin-top:56px;
+		width:100%;
+		margin-top:30px;
 	}
 }
 
