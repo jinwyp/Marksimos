@@ -144,7 +144,7 @@ NodemailerSendCloud.prototype.sendMailQ = function(mail) {
 
 
 
-    var queryUrl  = this.serverSettings.url + '/' + this.sendMethod + '/' + this.module + '.' + this.action + '.' + this.format;
+    var queryUrl  = this.serverSettings.url + this.sendMethod + '/' + this.module + '.' + this.action + '.' + this.format;
     queryUrl = queryUrl + '?api_user=' + this.serverSettings.api_user + '&api_key=' + this.serverSettings.api_key;
 
     if(mail.html !== ''){
