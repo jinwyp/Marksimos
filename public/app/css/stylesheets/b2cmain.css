@@ -693,30 +693,35 @@ body {
   padding-left: 30px;
   padding-right: 30px;
 }
-.profile-content header {
+.profile-content > header {
   background-color: #ffffff;
   margin-bottom: 10px;
+  position: relative;
 }
-.profile-content header nav {
+.profile-content > header nav {
   margin-top: 19px;
   margin-left: 160px;
   margin-bottom: 14px;
   text-align: center;
+  width: 350px;
 }
-.profile-content header nav > div > div:not(:last-child) {
+.profile-content > header nav > div > div:not(:last-child) {
   border-right: 1px solid #d9d9d9;
 }
-.profile-content header nav .selected {
+.profile-content > header nav .selected {
   border-bottom: solid #C22D0F;
   padding: 12px;
   font-weight: bolder;
 }
-.profile-content header nav .small-down-triangle {
+.profile-content > header nav .small-down-triangle {
   border: 4px solid;
   border-left-color: transparent;
   border-bottom-color: transparent;
   transform: rotate(135deg);
   width: 0;
+  position: absolute;
+  bottom: 10px;
+  right: 25px;
 }
 .profile-content section {
   background-color: #ffffff;
@@ -728,7 +733,7 @@ body {
 .profile-content .user-info {
   position: absolute;
   top: 120px;
-  left: 45px;
+  left: 44px;
   width: 300px;
 }
 .profile-content .user-info .profile-head {
@@ -751,11 +756,14 @@ body {
   -moz-border-radius: 7px;
   -webkit-border-radius: 7px;
   border-radius: 7px;
+  margin-bottom: 20px;
 }
 
 .detail-nav {
   line-height: 2;
   text-align: center;
+  max-width: 300px;
+  padding-left: 44px;
 }
 .detail-nav ul, .detail-nav li {
   list-style: none;
@@ -803,6 +811,87 @@ body {
   color: #ffffff;
 }
 
+.upload-avatar-window {
+  padding: 1em;
+  text-align: left;
+  top: 350px;
+  z-index: 100;
+  position: fixed;
+  left: 50%;
+  margin-left: -250px;
+  width: 500px;
+}
+.upload-avatar-window header {
+  background-color: #bd2a0b;
+  color: #ffffff;
+  padding-left: 1em;
+}
+.upload-avatar-window main {
+  padding: 30px 30px 20px;
+  background-color: #ffffff;
+  font-weight: bolder;
+}
+.upload-avatar-window main .avatar-window-icon {
+  width: 100px;
+  height: 100px;
+  margin-right: 12px;
+}
+.upload-avatar-window main > div {
+  display: inline-block;
+  vertical-align: middle;
+  *vertical-align: auto;
+  *zoom: 1;
+  *display: inline;
+  font-size: 0.9em;
+}
+.upload-avatar-window main .select-file {
+  font-weight: normal;
+}
+.upload-avatar-window main .select-file button {
+  border-style: none;
+  -moz-border-radius: 2px;
+  -webkit-border-radius: 2px;
+  border-radius: 2px;
+  -moz-box-shadow: #E2E2E2 0px 2px 4px;
+  -webkit-box-shadow: #E2E2E2 0px 2px 4px;
+  box-shadow: #E2E2E2 0px 2px 4px;
+  background-color: #E2E2E2;
+  margin-right: 8px;
+  line-height: 1.8;
+}
+.upload-avatar-window footer {
+  background-color: #ddd;
+  overflow: hidden;
+}
+.upload-avatar-window footer button {
+  float: right;
+  border-style: none;
+  -moz-border-radius: 0px;
+  -webkit-border-radius: 0px;
+  border-radius: 0px;
+  -moz-box-shadow: #6C6C6C 0px 2px 4px;
+  -webkit-box-shadow: #6C6C6C 0px 2px 4px;
+  box-shadow: #6C6C6C 0px 2px 4px;
+  width: 80px;
+  background-color: #6C6C6C;
+  margin: 10px;
+  font-size: 0.8em;
+  line-height: 1.8;
+  color: #ffffff;
+}
+.upload-avatar-window .avatar-border {
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  z-index: -1;
+  border: 1em solid rgba(128, 128, 128, 0.55);
+  -moz-border-radius: 1em;
+  -webkit-border-radius: 1em;
+  border-radius: 1em;
+}
+
 .profile-detail {
   padding-right: 2em;
 }
@@ -845,18 +934,22 @@ body {
 .profile-detail .profile-button-container button {
   margin-right: 0.5em;
   padding: 0.2em 0.5em;
+  width: 44%;
   border-style: none;
   color: #ffffff;
-  -moz-box-shadow: #7e200b 0px 2px 4px;
-  -webkit-box-shadow: #7e200b 0px 2px 4px;
-  box-shadow: #7e200b 0px 2px 4px;
   -moz-border-radius: 0px;
   -webkit-border-radius: 0px;
   border-radius: 0px;
 }
 .profile-detail .profile-button-container button[type=submit] {
   background-color: #B82A0C;
+  -moz-box-shadow: #7e200b 0px 2px 4px;
+  -webkit-box-shadow: #7e200b 0px 2px 4px;
+  box-shadow: #7e200b 0px 2px 4px;
 }
 .profile-detail .profile-button-container .cancel {
   background-color: #797979;
+  -moz-box-shadow: #797979 0px 2px 4px;
+  -webkit-box-shadow: #797979 0px 2px 4px;
+  box-shadow: #797979 0px 2px 4px;
 }
