@@ -29,8 +29,8 @@
             <section class="row profile-section">
                 <aside class="col-md-4 detail-nav">
                     <img class="avatar"/>
-                    <div class="upload-avatar-button">上传头像</div>
-                    <div class="upload-avatar-window">
+                    <div class="upload-avatar-button profile-underline">上传头像</div>
+                    <div class="upload-avatar-window todo">
                         <div class="avatar-border">
                         </div>
                         <header>上传本人头像</header>
@@ -57,19 +57,20 @@
                 </aside>
                 <article class="col-md-8 profile-detail">
                     <div class="profile-detail-tip row"><span>请选择下方要修改的项目进行编辑</span><div class="done-button ">完成修改</div></div>
+
                     <div class="row">
                         <div class="profile-detail-title">基本信息</div>
                         <form>
-                            <div class="col-md-offset-2">
-                                <div class="row"><label for="name" class="col-md-3">用户名：</label><input type="text" name="name" id="name" class="col-md-6"></div>
-                                <div class="row"><label for="email" class="col-md-3">邮箱：</label><input type="text" id="email" name="email" class="col-md-6"></div>
+                            <div class="col-md-offset-1">
+                                <div class="row"><label for="name" class="col-md-3">用户名：</label><input type="text" name="name" id="name" class="col-md-7"></div>
+                                <div class="row"><label for="email" class="col-md-3">邮箱：</label><input type="text" id="email" name="email" class="col-md-7"></div>
                                 <div class="row">
-                                    <label class="col-md-3">性别</label>
+                                    <label class="col-md-3">性别：</label>
                                     <label class="radio-inline"><input type="radio" name="gender" value="1"/>男</label>
                                     <label class="radio-inline female"><input type="radio" name="gender" value="2"/>女</label>
                                 </div>
                                 <div class="row">
-                                    <lable class="col-md-3">生日</lable>
+                                    <lable class="col-md-3">生日：</lable>
                                     <select name="year" id="year">
                                         <option value="0">选择年</option>
                                         <option value="2013">2013</option>
@@ -98,6 +99,85 @@
                             </div>
                         </form>
                     </div>
+
+                    <div class="row">
+                        <div class="profile-detail-title">学校信息</div>
+                        <form>
+                            <div class="col-md-offset-1">
+                                <div class="row"><label for="name" class="col-md-3">大学：</label><input type="text" name="name" id="name" class="col-md-7"></div>
+                                <div class="row"><label for="email" class="col-md-3">院系：</label><input type="text" id="email" name="email" class="col-md-7"></div>
+                                <div class="row"><label for="email" class="col-md-3">入学时间：</label><input type="text" id="email" name="email" class="col-md-2"></div>
+                                <div class="row">
+                                    <lable class="col-md-3">学历：</lable><input type="text" id="email" name="email" class="col-md-2">
+                                    <lable class="col-md-3">学年：</lable><input type="text" id="email" name="email" class="col-md-2">
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-6 col-md-offset-3 profile-button-container">
+                                        <button type="submit">保存修改</button>
+                                        <button class="cancel">取消</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+
+                    <div class="row team-info">
+                        <div class="profile-detail-title">团队信息</div>
+                        <form>
+                            <div class="col-md-offset-1">
+                                <div class="row head"><span class="col-md-4">用户名：</span><span class="col-md-4">邮箱：</span></div>
+                                <div class="row"><label for="name" class="col-md-3 team-label">队员一：</label><input type="text" name="name" id="name" class="col-md-3"><input type="text" name="name" id="name" class="col-md-3"></div>
+                                <div class="row"><label for="name" class="col-md-3 team-label">队员二：</label><input type="text" name="name" id="name" class="col-md-3"><input type="text" name="name" id="name" class="col-md-3"></div>
+                                <div class="row"><label for="name" class="col-md-3 team-label">队员三：</label><input type="text" name="name" id="name" class="col-md-3"><input type="text" name="name" id="name" class="col-md-3"></div>
+                                <div class="row"><label for="name" class="col-md-3 team-label">队员四：</label><input type="text" name="name" id="name" class="col-md-3"><input type="text" name="name" id="name" class="col-md-3"></div>
+                                <div class="row"><label for="name" class="col-md-3 team-label">队员五：</label><input type="text" name="name" id="name" class="col-md-3"><input type="text" name="name" id="name" class="col-md-3"></div>
+                                <div class="row"><label for="name" class="col-md-3 team-label">队员六：</label><input type="text" name="name" id="name" class="col-md-3"><input type="text" name="name" id="name" class="col-md-3"></div>
+                                <div class="row team-name">
+                                    <lable class="col-md-3 team-label">战队名称：</lable><input type="text" id="email" name="email" class="col-md-6">
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-6 col-md-offset-3 profile-button-container">
+                                        <button type="submit">保存修改</button>
+                                        <button class="cancel">取消</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+
+                    <div class="row">
+                        <div class="profile-detail-title">安全信息</div>
+                        <form>
+                            <div class="col-md-offset-1">
+                                <div class="row"><label for="name" class="col-md-3 profile-underline">更改密码</label></div>
+                                <div class="row"><label for="email" class="col-md-3">原始密码：</label><input type="text" id="email" name="email" class="col-md-5"></div>
+                                <div class="row"><label for="email" class="col-md-3">新密码：</label><input type="text" id="email" name="email" class="col-md-5"></div>
+                                <div class="row"><label for="email" class="col-md-3">再输入密码：</label><input type="text" id="email" name="email" class="col-md-5"></div>
+                                <div class="row">
+                                    <div class="col-md-6 col-md-offset-3 profile-button-container">
+                                        <button type="submit">保存修改</button>
+                                        <button class="cancel">取消</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+
+                    <div class="row">
+                        <div class="profile-detail-title">联系方式</div>
+                        <form>
+                            <div class="col-md-offset-1">
+                                <div class="row"><label for="email" class="col-md-3 profile-underline">QQ ID:</label><input type="text" id="qqid" name="email" class="col-md-5"></div>
+                                <div class="row">
+                                    <div class="col-md-6 col-md-offset-3 profile-button-container">
+                                        <button type="submit">保存修改</button>
+                                        <button class="cancel">取消</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+
                 </article>
             </section>
         </div>

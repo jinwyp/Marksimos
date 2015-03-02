@@ -685,6 +685,10 @@ body {
 }
 
 /********************  User Profile  ********************/
+.profile-underline {
+  text-decoration: underline;
+}
+
 .profile-body {
   background-color: #ECEDE8;
 }
@@ -757,6 +761,7 @@ body {
   -webkit-border-radius: 7px;
   border-radius: 7px;
   margin-bottom: 20px;
+  padding-bottom: 20px;
 }
 
 .detail-nav {
@@ -792,7 +797,6 @@ body {
 .detail-nav .upload-avatar-button {
   background-color: #741F01;
   color: #ffffff;
-  text-decoration: underline;
 }
 .detail-nav .up-triangle {
   border: 5px solid;
@@ -857,6 +861,8 @@ body {
   box-shadow: #E2E2E2 0px 2px 4px;
   background-color: #E2E2E2;
   margin-right: 8px;
+  height: 25px;
+  width: 80px;
   line-height: 1.8;
 }
 .upload-avatar-window footer {
@@ -869,9 +875,9 @@ body {
   -moz-border-radius: 0px;
   -webkit-border-radius: 0px;
   border-radius: 0px;
-  -moz-box-shadow: #6C6C6C 0px 2px 4px;
-  -webkit-box-shadow: #6C6C6C 0px 2px 4px;
-  box-shadow: #6C6C6C 0px 2px 4px;
+  -moz-box-shadow: #AEAEAE 0px 2px 4px;
+  -webkit-box-shadow: #AEAEAE 0px 2px 4px;
+  box-shadow: #AEAEAE 0px 2px 4px;
   width: 80px;
   background-color: #6C6C6C;
   margin: 10px;
@@ -902,6 +908,7 @@ body {
   border: 1px solid;
   border-top: none;
   padding: 1em;
+  font-size: 0.9em;
 }
 .profile-detail form > div > div {
   margin-bottom: 0.5em;
@@ -934,7 +941,7 @@ body {
 .profile-detail .profile-button-container button {
   margin-right: 0.5em;
   padding: 0.2em 0.5em;
-  width: 44%;
+  width: 85px;
   border-style: none;
   color: #ffffff;
   -moz-border-radius: 0px;
@@ -952,4 +959,19 @@ body {
   -moz-box-shadow: #797979 0px 2px 4px;
   -webkit-box-shadow: #797979 0px 2px 4px;
   box-shadow: #797979 0px 2px 4px;
+}
+.profile-detail .team-info .team-label {
+  width: 90px;
+}
+.profile-detail .team-info .head {
+  margin-left: 80px;
+}
+.profile-detail .team-info .team-name {
+  margin-top: 2.5em;
+}
+.profile-detail .team-info .team-name .team-label {
+  padding-right: 0;
+}
+.profile-detail .team-info input:not(:last-child) {
+  margin-right: 5px;
 }

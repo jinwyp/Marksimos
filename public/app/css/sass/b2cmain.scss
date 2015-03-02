@@ -677,6 +677,10 @@ $lineHeight_button: 1.8;
 	width: 0;
 }
 
+.profile-underline {
+	text-decoration: underline;
+}
+
 .profile-body {
 	background-color: #ECEDE8;
 }
@@ -747,6 +751,7 @@ $lineHeight_button: 1.8;
 		padding-top: 2em;
 		@include border-radius(7px);
 		margin-bottom: 20px;
+		padding-bottom: 20px;
 	}
 }
 
@@ -780,7 +785,6 @@ $lineHeight_button: 1.8;
 	.upload-avatar-button {
 		background-color: #741F01;
 		color: $color_white;
-		text-decoration: underline;
 	}
 	.up-triangle {
 		@include triangle();
@@ -830,6 +834,8 @@ $lineHeight_button: 1.8;
 				@include box-shadow(#E2E2E2 0px 2px 4px);
 				background-color: #E2E2E2;
 				margin-right: 8px;
+				height: 25px;
+				width: 80px;
 				line-height: $lineHeight_button;
 			}
 		}
@@ -842,12 +848,12 @@ $lineHeight_button: 1.8;
 			float: right;
 			border-style: none;
 			@include border-radius(0px);
-			@include box-shadow(#6C6C6C 0px 2px 4px);
+			@include box-shadow(#AEAEAE 0px 2px 4px);
 			width: 80px;
 			background-color: #6C6C6C;
 			margin: 10px;
 			font-size: 0.8em;
-			line-height: 1.8;
+			line-height: $lineHeight_button;
 			color: $color_white;
 		}
 	}
@@ -871,6 +877,7 @@ $lineHeight_button: 1.8;
 		border: 1px solid;
 		border-top: none;
 		padding: 1em;
+		font-size:0.9em;
 	}
 	form > div > div {
 		margin-bottom: 0.5em;
@@ -904,7 +911,7 @@ $lineHeight_button: 1.8;
 		button {
 			margin-right: 0.5em;
 			padding: 0.2em 0.5em;
-			width: 44%;
+			width: 85px;
 
 			border-style:none;
 			color:$color_white;
@@ -919,6 +926,23 @@ $lineHeight_button: 1.8;
 		.cancel {
 			background-color: #797979;
 			@include box-shadow(#797979 0px 2px 4px);
+		}
+	}
+	.team-info {
+		.team-label {
+			width: 90px;
+		}
+		.head {
+			margin-left: 80px;
+		}
+		.team-name {
+			margin-top: 2.5em;
+			.team-label {
+				padding-right: 0;
+			}
+		}
+		input:not(:last-child) {
+			margin-right: 5px;
 		}
 	}
 }
