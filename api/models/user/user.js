@@ -126,8 +126,6 @@ userSchema.statics.register = function (newUser) {
 
     var deferred = Q.defer();
 
-    newUser.password = User.generateHashPassword(newUser.password);
-
     User.findOne( {$or : [
         {username: newUser.username},
         {'email': newUser.email}

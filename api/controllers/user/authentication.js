@@ -67,7 +67,7 @@ exports.initAuth = function () {
             if (!user) {
                 return done(null, false, { message: 'User does not exist.' });
             }
-            
+
             if (!userModel.verifyPassword(password, user.password)) {
                 return done(null, false, { message: 'Username or password wrong.' });
             }
@@ -75,6 +75,7 @@ exports.initAuth = function () {
             //为用户分配token
             Token.createToken({ userId: user._id, rememberMe : rememberMe }).then(function (tokenInfo) {
                 user.token = tokenInfo.token;
+                user.tokenExpires = tokenInfo.expires;
 
                 done(null, user);
             }).fail(function (err) {
@@ -96,8 +97,10 @@ exports.studentLogin = function (req, res, next) {
             return res.status(401).send( { message: info.message })
         }
         if (user.role === userRoleModel.roleList.student.id) {
-            res.cookie('x-access-token', user.token, { maxAge: 12 * 60 * 60 * 1000, httpOnly: true });
+            //res.cookie('x-access-token', user.token, { maxAge: 12 * 60 * 60 * 1000, httpOnly: true });
+            res.cookie('x-access-token', user.token, { maxAge: user.tokenExpires, httpOnly: true });
             return res.status(200).send({ message: 'Login success.' , token: user.token });
+
         }else {
             return res.status(403).send({ message: 'Your account is a ' + user.roleName + ' account, you need a student account login' });
         }
@@ -111,8 +114,10 @@ exports.adminLogin = function (req, res, next) {
             return res.status(401).send( { message: info.message })
         }
         if (user.role === userRoleModel.roleList.admin.id || user.role === userRoleModel.roleList.distributor.id || user.role === userRoleModel.roleList.facilitator.id) {
-            res.cookie('x-access-token', user.token, { maxAge: 12 * 60 * 60 * 1000, httpOnly: true });
+            //res.cookie('x-access-token', user.token, { maxAge: 12 * 60 * 60 * 1000, httpOnly: true });
+            res.cookie('x-access-token', user.token, { maxAge: user.tokenExpires, httpOnly: true });
             return res.status(200).send({ message: 'Login success.' , token: user.token });
+
         }else {
             return res.status(403).send({ message: 'Your account is a ' + user.roleName + ' account, you need a admin account login' });
         }

@@ -573,10 +573,9 @@ exports.resetStudentPassword = function(req, res, next){
         return res.send(400, {message: validateResult});
     }
 
-    var student = {};
-    var password = 'hcd1234';
-
-    student.password = userModel.generateHashPassword(password);
+    var student = {
+        password : userModel.generateHashPassword('hcd1234')
+    };
 
     var student_id = req.body.student_id;
 
