@@ -30,6 +30,20 @@
                 <aside class="col-md-4 detail-nav">
                     <img class="avatar"/>
                     <div class="upload-avatar-button">上传头像</div>
+                    <div class="upload-avatar-window">
+                        <div class="avatar-border">
+                        </div>
+                        <header>上传本人头像</header>
+                        <main>
+                            <img class="avatar-window-icon"/>
+                            <div>
+                                <div>选择电脑里的一张图片</div>
+                                <div class="select-file"><button>浏览...</button><span>未选择文件</span></div>
+                                <div>支持JPG、JPEG、GIF和PNG文件，最大4M</div>
+                            </div>
+                        </main>
+                        <footer><button>取消</button></footer>
+                    </div>
                     <div class="edit-title">编辑我的资料<span class="up-triangle"></span></div>
                     <nav class="profile-nav">
                         <ul>
@@ -56,10 +70,27 @@
                                 </div>
                                 <div class="row">
                                     <lable class="col-md-3">生日</lable>
-
+                                    <select name="year" id="year">
+                                        <option value="0">选择年</option>
+                                        <option value="2013">2013</option>
+                                        <option value="2014">2014</option>
+                                        <option value="2015">2015</option>
+                                    </select>
+                                    <select name="month" id="month">
+                                        <option value="0">选择月</option>
+                                        <option value="1">1月</option>
+                                        <option value="2">2月</option>
+                                        <option value="3">3月</option>
+                                    </select>
+                                    <select name="day" id="day">
+                                        <option value="0">选择日</option>
+                                        <option value="1">1日</option>
+                                        <option value="2">2日</option>
+                                        <option value="3">3日</option>
+                                    </select>
                                 </div>
                                 <div class="row">
-                                    <div class="col-md-5 col-md-offset-3 profile-button-container">
+                                    <div class="col-md-6 col-md-offset-3 profile-button-container">
                                         <button type="submit">保存修改</button>
                                         <button class="cancel">取消</button>
                                     </div>

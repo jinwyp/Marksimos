@@ -3,8 +3,8 @@
 @import "compass/utilities/general/float";
 
 $color_white: #ffffff;
-$color_orange: #d98348;
-$color_gray: #d9d9d9;
+$color_profile_detail_title: #d98348;
+$color_profile_tip: #d9d9d9;
 $color_register_button: #c42e0d;
 $color_register_button_border: #7e200b;
 $color_register_button_hover: #7e200b;
@@ -640,6 +640,9 @@ body{
 
 
 /********************  User Profile  ********************/
+$left_of_avatar: 44px;
+$lineHeight_button: 1.8;
+
 @mixin triangle ($borderWidth: 5px, $rotate: -45deg, $borderColor: #000) {
 	border: $borderWidth solid;
 	border-left-color: transparent;
@@ -656,17 +659,19 @@ body{
 	padding-left: 30px;
 	padding-right: 30px;
 
-	header {
+	& > header {
 		background-color: $color_white;
 		margin-bottom: 10px;
+		position: relative;
 		nav {
 			margin-top: 19px;
 			margin-left: 160px;
 			margin-bottom: 14px;
 			text-align: center;
+			width: 350px;
 
 			&>div>div:not(:last-child){
-				border-right: 1px solid $color_gray;
+				border-right: 1px solid $color_profile_tip;
 			}
 
 			.selected {
@@ -675,7 +680,10 @@ body{
 				font-weight: bolder;
 			}
 			.small-down-triangle {
-				@include triangle(4px, 135deg)
+				@include triangle(4px, 135deg);
+				position: absolute;
+				bottom: 10px;
+				right: 25px;
 			}
 		}
 	}
@@ -690,7 +698,7 @@ body{
 	.user-info {
 		position: absolute;
 		top: 120px;
-		left: 45px;
+		left: $left_of_avatar;
 		width: 300px;
 
 		.profile-head {
@@ -712,12 +720,15 @@ body{
 	.profile-section {
 		padding-top: 2em;
 		@include border-radius(7px);
+		margin-bottom: 20px;
 	}
 }
 
 .detail-nav {
   	line-height: 2;
   	text-align: center;
+	max-width: 300px;
+	padding-left: $left_of_avatar;
   	ul, li {
 		list-style: none;
 		padding-left: 0;
@@ -754,8 +765,75 @@ body{
 		bottom: -5px;
 	}
 	.selected {
-		background-color: $color_orange;
+		background-color: $color_profile_detail_title;
 		color: $color_white;
+	}
+}
+
+.upload-avatar-window {
+	padding:1em;
+	text-align: left;
+	top: 350px;
+	z-index:100;
+	position: fixed;
+	left: 50%;
+	margin-left: -250px;
+	width: 500px;
+	header {
+		background-color: #bd2a0b;
+		color: $color_white;
+		padding-left: 1em;
+	}
+	main {
+		padding:30px 30px 20px;
+		background-color: $color_white;
+		.avatar-window-icon {
+			width: 100px;
+			height: 100px;
+			margin-right: 12px;
+		}
+		& > div {
+			@include inline-block;
+			font-size: 0.9em;
+		}
+		.select-file {
+			font-weight: normal;
+			button {
+				border-style: none;
+				@include border-radius(2px);
+				@include box-shadow(#E2E2E2 0px 2px 4px);
+				background-color: #E2E2E2;
+				margin-right: 8px;
+				line-height: $lineHeight_button;
+			}
+		}
+		font-weight: bolder;
+	}
+	footer {
+		background-color: #ddd;
+		overflow: hidden;
+		button {
+			float: right;
+			border-style: none;
+			@include border-radius(0px);
+			@include box-shadow(#6C6C6C 0px 2px 4px);
+			width: 80px;
+			background-color: #6C6C6C;
+			margin: 10px;
+			font-size: 0.8em;
+			line-height: 1.8;
+			color: $color_white;
+		}
+	}
+	.avatar-border {
+		top: 0;
+		left: 0;
+		width: 100%;
+		height: 100%;
+		position:absolute;
+		z-index: -1;
+		border:1em solid rgba(128, 128, 128, 0.55);
+		@include border-radius(1em);
 	}
 }
 
@@ -774,14 +852,14 @@ body{
 	padding-right: 2em;
 
 	.profile-detail-title {
-		background-color: $color_orange;
+		background-color: $color_profile_detail_title;
 		color: $color_white;
 		padding-left:0.8em;
 		line-height: 1.8;
 	}
 	.profile-detail-tip {
 		padding-left:0.8em;
-		background-color: $color_gray;
+		background-color: $color_profile_tip;
 		margin-bottom: 0.8em;
 		span {
 			line-height: 2;
@@ -800,18 +878,21 @@ body{
 		button {
 			margin-right: 0.5em;
 			padding: 0.2em 0.5em;
+			width: 44%;
 
 			border-style:none;
 			color:$color_white;
 			//	border-bottom:2px solid $color_register_button_border;
-			@include box-shadow($color_register_button_border 0px 2px 4px);
+
 			@include border-radius(0px);
 		}
 		button[type=submit] {
 			background-color: #B82A0C;
+			@include box-shadow($color_register_button_border 0px 2px 4px);
 		}
 		.cancel {
 			background-color: #797979;
+			@include box-shadow(#797979 0px 2px 4px);
 		}
 	}
 }
