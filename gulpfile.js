@@ -1,5 +1,6 @@
 
 var gulp = require('gulp'),
+    argv = require('yargs').usage('Usage: $0 -p [num] -sid [num]').example('$0 -p 1 -sid 10001', 'count the lines in the given file').argv;
     livereload = require('gulp-livereload'),
     nodemon = require('gulp-nodemon'),
     jshint = require('gulp-jshint'),
@@ -35,8 +36,11 @@ var paths = {
 
     cssSourcePath: ['./public/app/css/stylesheets/screen.css', './public/libs/bootstrap/dist/css/bootstrap.min.css', './public/app/css/stylesheets/marksimosmain.css', './public/app/css/stylesheets/print.css', './public/app/css/stylesheets/ie.css', './public/libs/nvd3/nv.d3.css', './public/libs/angular-notify/dist/angular-notify.css'],
     unit_test: './api/test/marksimos/*',
-    scenario_testAdmin: './api/test/marksimos/admin/*.js',
-    scenario_testStudent: './api/test/marksimos/student/*.js'
+    scenario_testAdminCreateSeminar: './api/test/marksimos/scenario/admincreateseminar.js',
+    scenario_testAdminRunSeminarNextRound: './api/test/marksimos/scenario/adminrunseminarnextround.js',
+    scenario_testAdminReRunSeminar: './api/test/marksimos/scenario/adminrerundecision.js',
+    scenario_testStudentUpdateDecisions: './api/test/marksimos/scenario/studentupdatedecision.js',
+    scenario_testStudentUpdateQuestionnaire: './api/test/marksimos/scenario/studentupdatequestionnaire.js'
 
 };
 
@@ -171,14 +175,27 @@ gulp.task('nodemonjin', function () {
     });
 //        .on('restart', 'default')
 });
-gulp.task('nodemonsunyun', function () {
+gulp.task('nodemonjinlocal', function () {
     nodemon({
         script: 'app.js',
-        env: { 'NODE_ENV': 'sunyun' }
+        env: { 'NODE_ENV': 'jinlocal' }
     });
 //        .on('restart', 'default')
 });
-
+gulp.task('nodemonjinlocal2', function () {
+    nodemon({
+        script: 'app.js',
+        env: { 'NODE_ENV': 'suyuan' }
+    });
+//        .on('restart', 'default')
+});
+gulp.task('nodemonyuekecheng', function () {
+    nodemon({
+        script: 'app.js',
+        env: { 'NODE_ENV': 'yuekecheng' }
+    });
+//        .on('restart', 'default')
+});
 
 
 /********************  Rerun the task when a file changes  ********************/
@@ -204,7 +221,6 @@ gulp.task('watch', function() {
 gulp.task('watchdev', function() {
     gulp.watch(paths.angularTemplates, ['templates']);
     gulp.watch(paths.sassSourceFiles, ['compass']);
-    gulp.watch(paths.cssSourceFiles, ['minifycss']);
     gulp.watch(paths.javascript, ['jshint']);
 });
 
@@ -219,15 +235,48 @@ gulp.task('browser-sync', function() {
 
 
 
-gulp.task('teststudent', function() {
-    return gulp.src(paths.scenario_testStudent)
+
+
+
+
+
+
+
+
+
+
+
+
+/********************  场景测试任务 API Testing Task (called when you run `gulp` from cli)  ********************/
+gulpArguments = argv;
+gulp.task('teststudentud', function() {
+    console.log("Pls use 'gulp teststudentud -p -s'. Argument '-p' peroid number, Argument '-s' seminarId argument. ");
+    console.log("Example: 'gulp teststudentud -s10001 -p1' ");
+    return gulp.src(paths.scenario_testStudentUpdateDecisions)
+        .pipe(jasmine());
+});
+gulp.task('teststudentuq', function() {
+    return gulp.src(paths.scenario_testStudentUpdateQuestionnaire)
         .pipe(jasmine());
 });
 
-gulp.task('testadmin', function() {
-    return gulp.src(paths.scenario_testAdmin)
+gulp.task('testadmincs', function() {
+    return gulp.src(paths.scenario_testAdminCreateSeminar)
         .pipe(jasmine());
 });
+gulp.task('testadminrn', function() {
+    console.log("Pls use 'gulp testadminrn -p -s'. Argument '-p' peroid number, Argument '-s' seminarId argument. ");
+    console.log("Example: 'gulp testadminrn -s10001' ");
+    return gulp.src(paths.scenario_testAdminRunSeminarNextRound)
+        .pipe(jasmine());
+});
+gulp.task('testadminrr', function() {
+    console.log("Pls use 'gulp testadminrr -p -s'. Argument '-p' peroid number, Argument '-s' seminarId argument. ");
+    console.log("Example: 'gulp testadminrr -s10001 -p1' ");
+    return gulp.src(paths.scenario_testAdminReRunSeminar)
+        .pipe(jasmine());
+});
+
 
 
 
@@ -237,8 +286,14 @@ gulp.task('default', ['nodemonludwik', 'watchdev']);
 
 //gulp.task('jin', ['mongo', 'browser-sync', 'nodemonjin', 'watch']);
 gulp.task('jin', [ 'compass', 'templates', 'nodemonjin', 'watchdev']);
-gulp.task('jingo', ['compass', 'templates', 'minifycss', 'jscompress', 'nodemonjin', 'watch']);
+gulp.task('jinco', ['compass', 'templates', 'nodemonjinlocal', 'watchdev']);
+gulp.task('jinco2', ['compass', 'templates', 'nodemonjinlocal2', 'watchdev']);
+gulp.task('jinpro', ['compass', 'templates', 'minifycss', 'jscompress', 'nodemonjin', 'watch']);
+gulp.task('yuekecheng', [ 'compass', 'templates', 'nodemonyuekecheng', 'watchdev']);
 
-gulp.task('sunyun', ['nodemonsunyun', 'watchdev']);
+
+
+
+
 
 

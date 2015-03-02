@@ -21,16 +21,16 @@
 
                     <h4>{{'LoginPageLabelSignIn' | translate}}</h4>
                     <form role="form" name="loginForm">
-                        <div class="form-group has-feedback" ng-class="{'has-success':loginForm.email.$dirty && loginForm.email.$valid, 'has-error': loginForm.email.$dirty && loginForm.email.$invalid}">
+                        <div class="form-group has-feedback" ng-class="{'has-success':loginForm.username.$dirty && loginForm.username.$valid, 'has-error': loginForm.username.$dirty && loginForm.username.$invalid}">
                             <label class="control-label" for="loginInputEmail">{{'LoginPageLabelEmail' | translate}}</label>
-                            <input type="email" class="form-control" id="loginInputEmail" name="email" placeholder="" ng-model="data.newUser.email" required>
-                            <span class="glyphicon glyphicon-ok form-control-feedback" ng-show="loginForm.email.$dirty && loginForm.email.$valid"></span>
-                            <span class="glyphicon glyphicon-remove form-control-feedback" ng-show="loginForm.email.$dirty && loginForm.email.$invalid"></span>
+                            <input type="text" class="form-control" id="loginInputEmail" name="username" placeholder="" ng-model="data.newUser.username" required>
+                            <span class="glyphicon glyphicon-ok form-control-feedback" ng-show="loginForm.username.$dirty && loginForm.username.$valid"></span>
+                            <span class="glyphicon glyphicon-remove form-control-feedback" ng-show="loginForm.username.$dirty && loginForm.username.$invalid"></span>
                         </div>
 
-                        <div class="form-group has-feedback" ng-class="{'has-success':loginForm.password.$dirty && loginForm.password.$valid , 'has-error': loginForm.password.$dirty && loginForm.password.$invalid}">
+                        <div class="form-group has-feedback" ng-class="{'has-success':loginForm.password.$dirty && loginForm.password.$valid, 'has-error': loginForm.password.$dirty && loginForm.password.$invalid}">
                             <label class="control-label" for="loginInputpassword" ng-hide="css.newUser.passwordPrompt && loginForm.password.$invalid">{{'LoginPageLabelPassword' | translate}}</label>
-                            <label class="control-label" for="loginInputpassword" ng-cloak ng-show="css.newUser.passwordPrompt && loginForm.password.$invalid">{{'LoginPageLabelPasswordErrorInfo' | translate}} </label>
+                            <label class="control-label" for="loginInputpassword" ng-show="css.newUser.passwordPrompt && loginForm.password.$invalid">{{'LoginPageLabelPasswordErrorInfo' | translate}} </label>
                             <input type="password" class="form-control" id="loginInputpassword" name="password" placeholder="" ng-model="data.newUser.password" required ng-minlength="5" ng-maxlength="12">
                             <span class="glyphicon glyphicon-ok form-control-feedback" ng-show="loginForm.password.$dirty && loginForm.password.$valid"></span>
                             <span class="glyphicon glyphicon-remove form-control-feedback" ng-show="loginForm.password.$dirty && loginForm.password.$invalid"></span>

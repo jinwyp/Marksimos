@@ -5,6 +5,7 @@
 <script src="/libs/angular/angular.js"></script>
 <% } %>
 <script src="/libs/angular-cookies/angular-cookies.min.js"></script>
+<script src="/libs/angular-local-storage/dist/angular-local-storage.min.js"></script>
 <script src="/libs/angular-translate/angular-translate.min.js"></script>
 <script src="/libs/angular-translate-storage-cookie/angular-translate-storage-cookie.min.js"></script>
 
@@ -13,12 +14,11 @@
 
 
 
-
-
 <% if(settings.env == "production"){ %>
 <script src="/app/dist/app.min.js"></script>
 <% } else{ %>
 <script src="/app/js/directivetemplates.js"></script>
+<script src="/app/js/config.js"></script>
 <script src="/app/js/model.js"></script>
 <script src="/app/js/translation.js"></script>
 <script src="/app/js/websitecomponent.js"></script>

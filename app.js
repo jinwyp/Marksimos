@@ -10,16 +10,19 @@ var mongoose = require('mongoose');
 
 var morgan = require('morgan');
 
-var session = require('cookie-session');
-var expressValidator = require('express-validator');
-var sessionOperation = require('./common/sessionOperation.js');
+
+//var session = require('express-session');
+//var MongoStore = require('connect-mongo')(session);
 var config = require('./common/config.js');
-var customValidator = require('./common/express-custom-validator.js');
 var router = require('./api/routes.js');				// get an instance of the express Router
 
+
+var expressValidator = require('express-validator');
+var customValidator = require('./common/express-custom-validator.js');
+
+
 var fs = require('fs');
-
-
+var passport = require('passport');
 
 
 app.engine('md', function(path, options, fn){
@@ -36,24 +39,34 @@ app.set('view engine', 'ejs');
 app.use(favicon(path.join(__dirname, '/public/cn/assets/img/hcd-icon.ico')));
 
 var morganFileStream = fs.createWriteStream(config.logDirectory + 'accessmorgan.log');
-app.use(morgan('dev', {stream: morganFileStream}));
+app.use(morgan('dev', {
+    //stream: morganFileStream
+}));
 
 app.use(cookieParser());
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
+
 app.use(expressValidator({
     customValidators: customValidator
 }));
 
+mongoose.connect(config.mongo_conn);
 
-app.use(session({
-    secret: 'marksimos',
-    maxage: 24 * 60 * 60000
-}));
+//app.use(session({
+//    secret: 'marksimos',
+//    store: new MongoStore({ mongooseConnection: mongoose.connection }),
+//    resave: true,
+//    saveUninitialized: true
+//}));
+
 app.use(express.static(path.join(__dirname, 'public')));
 
 
+
+app.use(passport.initialize());
+//app.use(passport.session());
 
 
 
@@ -155,7 +168,6 @@ app.use(function(err, req, res, next){
 app.set('port', process.env.PORT || 3000);
 
 
-mongoose.connect(config.mongo_conn);
 var db = mongoose.connection;
 db.on('error', console.error.bind(console, 'connection error:'));
 db.once('open', function(response,request) {

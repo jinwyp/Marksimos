@@ -1,33 +1,30 @@
 var chartModel = require('../../models/marksimos/chart.js');
 var util = require('util');
 var logger = require('../../../common/logger.js');
-var config           = require('../../../common/config.js');
-
+var userRoleModel = require('../../models/user/userrole.js');
 
 exports.getChart = function(req, res, next){
-    var seminarId = req.session.seminarId;
+    var seminarId = req.gameMarksimos.currentStudentSeminar.seminarId;
+
+    if(req.user.role !== userRoleModel.roleList.student.id){
+        seminarId = +req.query.seminarId;
+    }
 
     if(!seminarId){
-        return res.send(400, {message: "You don't choose a seminar."});
+        return res.status(400).send( {message: "You don't choose a seminar."});
     }
 
     var chartName = req.params.chart_name;
     var companyId = +req.query.companyId;
 
-    if(!seminarId ){
-        return res.send(500, {message: 'seminarId cannot be empty.'});
-    }
-
     if(!chartName){
-        return res.send(500, {message: 'chartName cannot be empty.'});
+        return res.status(400).send( {message: 'chartName cannot be empty.'});
     }
 
     //chart name saved in db doesn't contain _
     var chartNameTemp = chartName.replace(/_/g,'');
-    var userRole = req.session.userRole;
 
-    chartModel.findOne(seminarId)
-    .then(function(result){
+    chartModel.findOne(seminarId).then(function(result){
         var allCharts = result.charts;
         var chart = null;
         for(var i=0; i<allCharts.length; i++){
@@ -39,10 +36,10 @@ exports.getChart = function(req, res, next){
         }
 
         if(!chart){
-            return res.send(500, {message: util.format("chart %s does not exist.", chartName)});
+            return res.status(400).send({message: util.format("chart %s does not exist.", chartName)});
         }
 
-        if(userRole === config.role.student && chartName==='inventory_report'){
+        if(req.user.role === userRoleModel.roleList.student.id && chartName==='inventory_report'){
             //this function changes data in chart object
             var chartData = filterChart(chart, companyId);
             return res.send(chartData);
@@ -52,7 +49,7 @@ exports.getChart = function(req, res, next){
     })
     .fail(function(err){
         logger.error(err);
-        res.send(500, {message: "get chart failed."})
+        res.status(500).send( {message: "get chart failed."})
     })
     .done();
 

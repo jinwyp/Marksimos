@@ -1,10 +1,10 @@
 var seminarModel = require('../../models/marksimos/seminar.js');
+var gameTokenModel = require('../../models/user/gameauthtoken.js');
 var userModel = require('../../models/user/user.js');
+var userRoleModel = require('../../models/user/userrole.js');
 
-var sessionOperation = require('../../../common/sessionOperation.js');
 var logger = require('../../../common/logger.js');
 var consts = require('../../consts.js');
-var config = require('../../../common/config.js');
 var utility = require('../../../common/utility.js');
 
 
@@ -12,7 +12,7 @@ exports.addSeminar = function(req, res, next){
     var checkRequiredFieldResult = checkRequiredField(req);
 
     if(checkRequiredFieldResult){
-        return res.send(400, {message: checkRequiredFieldResult});
+        return res.status(400).send( {message: checkRequiredFieldResult});
     }
 
     var validateResult = validateSeminar(req);
@@ -23,7 +23,7 @@ exports.addSeminar = function(req, res, next){
 
     var seminar = {};
 
-    var facilitatorId = sessionOperation.getUserId(req);
+    var facilitatorId = req.user.id;
 
     seminar.description = req.body.description;
     seminar.country = req.body.country;
@@ -51,34 +51,28 @@ exports.addSeminar = function(req, res, next){
 
     }
 
-    userModel.findOne({_id: facilitatorId})
+    userModel.findOneQ({_id: facilitatorId})
     .then(function(dbFacilitator){
         if(!dbFacilitator){
-            throw {message: "Can't find facilitator."};
+            throw new Error("Cancel promise chains. Can't find facilitator.");
         }
 
         if(dbFacilitator.numOfLicense <= 0){
-            throw {httpStatus:400, message: "You don't have enough licenses."}
-        } 
+            throw new Error("Cancel promise chains. You don't have enough licenses.");
+        }
 
-        return userModel.update({_id: facilitatorId}, {
+        return userModel.updateQ({_id: facilitatorId}, {
             numOfLicense: dbFacilitator.numOfLicense - 1,
             numOfUsedLicense: dbFacilitator.numOfUsedLicense + 1
         })
-    })
-    .then(function(numAffected){
-        if(numAffected === 0){
-            throw {message: "update facilitator failed."}
-        }
-
-        if(numAffected > 1){
-            throw {message: "more than one row was updated."}
+    }).then(function(numAffected){
+        if(numAffected === 0 || numAffected > 1){
+            throw new Error( "Cancel promise chains. update facilitator failed, or update more than one facilitator.");
         }
 
         //get all seminar, create the next seminar id
         return seminarModel.find({}, {seminarId: "desc"})
-    })
-    .then(function(allSeminars){
+    }).then(function(allSeminars){
         if(!allSeminars || allSeminars.length === 0){
             seminar.seminarId = "10000";
         }else{
@@ -86,73 +80,21 @@ exports.addSeminar = function(req, res, next){
         }
 
         return seminarModel.insert(seminar);
-    })
-    .then(function(result){
+    }).then(function(result){
         if(!result){
-            return res.send(500, {message: "save seminar to db failed."});
+            throw new Error( "Cancel promise chains. save seminar to db failed.");
         }
 
-        return res.send(result);
-    })
-    .fail(function(err){
-        logger.error(err);
-        if(err.httpStatus){
-            return res.send(err.httpStatus, {message: err.message});
-        }
-        return res.send(500, {message: "add seminar failed."})
-    })
-    .done();
+        return res.status(200).send(result);
+    }).fail(function(err){
+        next(err);
+    }).done();
 };
 
 
 
 
 
-
-
-
-exports.updateSeminar = function(req, res, next){
-    var validateResult = validateSeminar(req);
-
-    if(validateResult){
-        return res.send(400, {message: validateResult});
-    }
-
-    var seminar = {};
-
-    if(req.body.description) seminar.description = req.body.description;
-    if(req.body.country) seminar.country = req.body.country;
-    if(req.body.state) seminar.state = req.body.state;
-    if(req.body.city) seminar.city = req.body.city;
-    if(req.body.venue) seminar.venue = req.body.venue;
-
-    if(Object.keys(seminar).length === 0){
-        return res.send(400, {message: "You should at leaset provide one field to update."})
-    }
-
-    var facilitatorId = sessionOperation.getUserId(req);
-    var seminarId = sessionOperation.getSeminarId(req);
-
-    if(!seminarId){
-        return res.send(400, {message: "You have not choose a seminar."});
-    }
-
-    seminarModel.update({
-        facilitatorId: facilitatorId,
-        seminarId: seminarId
-    }, seminar)
-    .then(function(numAffected){
-        if(numAffected!==1){
-            return res.send(400, {message: "there's error during update seminar."})
-        }
-        return res.send({message: "update seminar success."})
-    })
-    .fail(function(err){
-        logger.error(err);
-        return res.send(500, {message: ""})
-    })
-    .done();
-};
 
 
 
@@ -174,7 +116,7 @@ exports.assignStudentToSeminar = function(req, res, next){
 
  
     var email = req.body.email;
-    var seminarId = req.body.seminar_id.toString();
+    var seminarId = req.body.seminar_id;
     var companyId = +req.body.company_id;
 
 
@@ -183,8 +125,7 @@ exports.assignStudentToSeminar = function(req, res, next){
         return;
     }
 
-    userModel.findOne({email: email})
-    .then(function(student){
+    userModel.findOneQ({email: email}).then(function(student){
         if(!student){
             throw {message: "Email not exist, assign student to seminar failed."};
         }
@@ -220,12 +161,9 @@ exports.assignStudentToSeminar = function(req, res, next){
             return res.send({message: "there's error during update seminar."});
         }
         return res.send({message: "assign student to seminar success."})
-    })
-    .fail(function(err){
-        logger.error(err);
+    }).fail(function(err){
         next (err);
-    })
-    .done();
+    }).done();
 };
 
 
@@ -286,7 +224,7 @@ exports.removeStudentFromSeminar = function(req, res, next){
 
 
 
-exports.chooseSeminarForFacilitator = function(req, res, next){
+exports.seminarInfoForFacilitator = function(req, res, next){
     var seminarId = req.params.seminar_id;
 
     if(!seminarId){
@@ -298,10 +236,6 @@ exports.chooseSeminarForFacilitator = function(req, res, next){
             if(!dbSeminar){
                 return res.send(400, {message: "seminar " + seminarId + " doesn't exist."});
             }
-
-            sessionOperation.setSeminarId(req, dbSeminar.seminarId);
-            sessionOperation.setCurrentPeriod(req, dbSeminar.currentPeriod);
-
 
             return res.render('marksimosadmin/adminmarksimosreport.ejs',{
                 title : 'Admin | Report',
@@ -318,49 +252,84 @@ exports.chooseSeminarForFacilitator = function(req, res, next){
 
 
 
-/**
- * Populate seminar information to session
- * facilitator and student can call this API
- */
+
 exports.chooseSeminarForStudent = function(req, res, next){
     var seminarId = req.query.seminar_id;
 
-    if(!seminarId){
-        return res.send(400, {message: "Invalid seminar_id"});
+    req.checkQuery('seminar_id', 'Invalid seminar_id').isInt();
+
+    var errors = req.validationErrors();
+    if (errors) {
+        return res.status(400).send('There have been validation errors: ' + util.inspect(errors), 400);
     }
 
-    seminarModel.findOne({seminarId: seminarId})
-        .then(function(dbSeminar){
-            if(!dbSeminar){
-                return res.send(400, {message: "seminar " + seminarId + " doesn't exist."});
-            }
+    seminarModel.query.findOneQ({seminarId: seminarId}).then(function(dbSeminar){
+        if(!dbSeminar){
+            return res.status(400).send( {message: "seminar " + seminarId + " doesn't exist."});
+        }else{
 
-            sessionOperation.setSeminarId(req, dbSeminar.seminarId);
+            var newGameToken = {
+                userId: req.user.id,
+                gameId: userRoleModel.gameList.marksimos.id,
+                seminarId: dbSeminar.seminarId
+            };
 
-            if(dbSeminar.currentPeriod > dbSeminar.simulationSpan){
-                sessionOperation.setCurrentPeriod(req, dbSeminar.simulationSpan); // very important
-            }else{
-                sessionOperation.setCurrentPeriod(req, dbSeminar.currentPeriod); // very important
-            }
+            gameTokenModel.findOneAndUpdateQ({ userId: req.user.id }, newGameToken, { upsert : true } ).then(function(gameToken){
 
+                return res.status(200).send({message: "choose seminar success."});
 
-            if(sessionOperation.getUserRole(req) === config.role.student){
+            }).fail(function(err){
+                err.message = "save game token failed!";
+                next(err);
+            }).done();
+        }
 
-            }
-
-            return res.send({message: "choose seminar success."});
-        })
-        .fail(function(err){
-            logger.error(err);
-            return res.send(500, {message: "choose seminar faile."})
-        })
-        .done();
+    }).fail(function(err){
+        err.message = "choose seminar failed !";
+        next(err);
+    }).done();
 };
 
 
 
 
 
+/**
+ * Seminar List For student
+ */
+
+exports.getSeminarList = function(req, res, next){
+    var email = req.user.email;
+    var assignedSeminars = [];
+
+    seminarModel.query.find({
+        companyAssignment : {$elemMatch : {studentList: { $in: [email] }} },
+        isInitialized :true
+    }).sort('seminarId').execQ().then(function(allSeminars){
+
+        for(var i=0; i<allSeminars.length; i++){
+
+            var seminar = allSeminars[i];
+
+            for(var j=0; j<seminar.companyAssignment.length; j++){
+
+                if( typeof seminar.companyAssignment[j].studentList  !== 'undefined'){
+                    if(seminar.companyAssignment[j].studentList.indexOf(email) > -1){
+                        if(seminar.isInitialized ){
+                            assignedSeminars.push(seminar);
+                            break;
+                        }
+                    }
+                }
+            }
+        }
+
+        return res.status(200).send(assignedSeminars);
+    }).fail(function(err){
+        err.message = "get seminar list failed.";
+        next(err);
+    }).done();
+};
 
 
 

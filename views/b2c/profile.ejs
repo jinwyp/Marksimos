@@ -1,0 +1,108 @@
+<% include include/headcss.ejs %>
+
+
+<body ng-app="b2clogin" class="profile-body">
+
+<b2c-header showlogin="true"></b2c-header>
+
+<main ng-controller="" class="container-fluid">
+    <div class="row">
+        <div class="col-md-7 col-md-offset-2 profile-content">
+            <header class="row">
+                <div class="banner"></div>
+                <div class="user-info">
+                    <img class="profile-head"/>
+                    <div class="text-info">
+                        <div class="profile-username">Iron Man</div>
+                        <div class="profile-school-name">Stark Industrial</div>
+                    </div>
+                </div>
+                <nav class="col-md-6 col-md-offset-2">
+                    <div class="row">
+                        <div class="col-md-4"><span>个人主页</span></div>
+                        <div class="col-md-4"><span class="selected">资料</span></div>
+                        <div class="col-md-4"><span>更多</span><span class="small-down-triangle"></span></div>
+                    </div>
+                </nav>
+
+            </header>
+            <section class="row profile-section">
+                <aside class="col-md-4 detail-nav">
+                    <img class="avatar"/>
+                    <div class="upload-avatar-button">上传头像</div>
+                    <div class="upload-avatar-window">
+                        <div class="avatar-border">
+                        </div>
+                        <header>上传本人头像</header>
+                        <main>
+                            <img class="avatar-window-icon"/>
+                            <div>
+                                <div>选择电脑里的一张图片</div>
+                                <div class="select-file"><button>浏览...</button><span>未选择文件</span></div>
+                                <div>支持JPG、JPEG、GIF和PNG文件，最大4M</div>
+                            </div>
+                        </main>
+                        <footer><button>取消</button></footer>
+                    </div>
+                    <div class="edit-title">编辑我的资料<span class="up-triangle"></span></div>
+                    <nav class="profile-nav">
+                        <ul>
+                            <li class="selected">基本信息</li>
+                            <li>学校信息</li>
+                            <li>团队信息</li>
+                            <li>安全信息</li>
+                            <li>联系方式</li>
+                        </ul>
+                    </nav>
+                </aside>
+                <article class="col-md-8 profile-detail">
+                    <div class="profile-detail-tip row"><span>请选择下方要修改的项目进行编辑</span><div class="done-button ">完成修改</div></div>
+                    <div class="row">
+                        <div class="profile-detail-title">基本信息</div>
+                        <form>
+                            <div class="col-md-offset-2">
+                                <div class="row"><label for="name" class="col-md-3">用户名：</label><input type="text" name="name" id="name" class="col-md-6"></div>
+                                <div class="row"><label for="email" class="col-md-3">邮箱：</label><input type="text" id="email" name="email" class="col-md-6"></div>
+                                <div class="row">
+                                    <label class="col-md-3">性别</label>
+                                    <label class="radio-inline"><input type="radio" name="gender" value="1"/>男</label>
+                                    <label class="radio-inline female"><input type="radio" name="gender" value="2"/>女</label>
+                                </div>
+                                <div class="row">
+                                    <lable class="col-md-3">生日</lable>
+                                    <select name="year" id="year">
+                                        <option value="0">选择年</option>
+                                        <option value="2013">2013</option>
+                                        <option value="2014">2014</option>
+                                        <option value="2015">2015</option>
+                                    </select>
+                                    <select name="month" id="month">
+                                        <option value="0">选择月</option>
+                                        <option value="1">1月</option>
+                                        <option value="2">2月</option>
+                                        <option value="3">3月</option>
+                                    </select>
+                                    <select name="day" id="day">
+                                        <option value="0">选择日</option>
+                                        <option value="1">1日</option>
+                                        <option value="2">2日</option>
+                                        <option value="3">3日</option>
+                                    </select>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-6 col-md-offset-3 profile-button-container">
+                                        <button type="submit">保存修改</button>
+                                        <button class="cancel">取消</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </article>
+            </section>
+        </div>
+    </div>
+</main>
+
+
+<% include ./include/footerscriptlogin.ejs %>

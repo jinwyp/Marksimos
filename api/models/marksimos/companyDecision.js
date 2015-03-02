@@ -190,7 +190,7 @@ exports.removeAll =  function(seminarId){
     }
 
     return deferred.promise;
-}
+};
 
 exports.save = function(decision){
     if(!mongoose.connection.readyState){
@@ -202,16 +202,20 @@ exports.save = function(decision){
     if(!decision){
         deferred.reject(new Error("Invalid argument decision."));
     }else{
-        var d = new CompanyDecision(decision);
+        var decisionResult = new CompanyDecision(decision);
 
         CompanyDecision.remove({
-            seminarId   : d.seminarId,
-            period      : d.period,
-            d_CID       : d.companyId,
-        }, function(err){
+            seminarId   : decisionResult.seminarId,
+            period      : decisionResult.period,
+            d_CID       : decisionResult.d_CID
+        }, function(err, numberRemoved){
             if(err){ return deferred.reject(err); }
 
-            d.save(function(err, saveDecision, numAffected){
+            if(numberRemoved === 0 && decision.reRunLastRound){
+                return deferred.reject(new Error('There are no Company decisions deleted when create Company Decisions'));
+            }
+
+            decisionResult.save(function(err, saveDecision, numAffected){
                 if(err){
                     deferred.reject(err);
                 }else{
@@ -275,10 +279,16 @@ exports.updateCompanyDecision = function(seminarId, period, companyId, companyDe
             d_CID: companyId
         },function(err, doc){
             if(err){return deferred.reject(err);}
+
+            if(!doc){
+                var validateErr = new Error('Cannot find company Decision not found.');
+                return deferred.reject(validateErr);
+            }
+
             var fields = ['d_RequestedAdditionalBudget',
-                          'd_InvestmentInEfficiency',
-                          'd_InvestmentInTechnology',
-                          'd_InvestmentInServicing'];
+                'd_InvestmentInEfficiency',
+                'd_InvestmentInTechnology',
+                'd_InvestmentInServicing'];
 
             fields.forEach(function(field){
                 if(companyDecision[field] !== undefined){
@@ -291,6 +301,9 @@ exports.updateCompanyDecision = function(seminarId, period, companyId, companyDe
                 if(err){ deferred.reject(err);}
                 else{ return deferred.resolve(doc);}
             });
+
+
+
         });
     }
     return deferred.promise;

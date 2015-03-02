@@ -20,293 +20,8 @@
     /********************  Use This Module To Set New Controllers  ********************/
 
     /********************  Form Input ********************/
-    angular.module('marksimos.commoncomponent').directive('usernameInput', function() {
-        return {
-            scope: {
-                labeltext : '@',
-                data : '=',
-                placeholdertext : '@',
-                formname : '=',
-                required : '=',
-                requirederrorinfo : '@',
-                minlength : '=',
-                minlengtherrorinfo : '@',
-                maxlength : '=',
-                maxlengtherrorinfo : '@'
 
-            },
-            restrict: 'AE',
-            templateUrl: 'formusernameinput.html',
-            link: function (scope, element, attrs) {
-
-                if(angular.isUndefined(scope.required)  ){
-                    scope.required = true;
-                    scope.requirederrorinfo = 'username is required';
-                }
-
-                if(angular.isUndefined(scope.minlength)  ){
-                    scope.minlength = 6;
-                    scope.minlengtherrorinfo = 'username must be at least 6 characters';
-                }
-
-                if(angular.isUndefined(scope.required)  ){
-                    scope.maxlength = 20;
-                    scope.maxlengtherrorinfo = 'username is a maximum of 20 characters';
-                }
-
-            }
-        };
-    });
-
-
-    angular.module('marksimos.commoncomponent').directive('emailInput', function() {
-        return {
-            scope: {
-                labeltext : '@',
-                data : '=',
-                placeholdertext : '@',
-                formname : '=',
-                required : '=',
-                requirederrorinfo : '@',
-                emailerrorinfo : '@',
-                maxlength : '=',
-                maxlengtherrorinfo : '@'
-
-            },
-            restrict: 'AE',
-            templateUrl: 'formemailinput.html',
-            link: function (scope, element, attrs) {
-
-                if(angular.isUndefined(scope.required)  ){
-                    scope.required = true;
-                    scope.requirederrorinfo = 'Email is required';
-                    scope.emailerrorinfo = "";
-                }
-
-
-                if(angular.isUndefined(scope.required)  ){
-                    scope.maxlength = 50;
-                    scope.maxlengtherrorinfo = 'Email is a maximum of 50 characters';
-                }
-
-            }
-        };
-    });
-
-
-    angular.module('marksimos.commoncomponent').directive('passwordInput', function() {
-        return {
-            scope: {
-                labeltext : '@',
-                data : '=',
-                placeholdertext : '@',
-                formname : '=',
-                required : '=',
-                requirederrorinfo : '@',
-                minlength : '=',
-                minlengtherrorinfo : '@',
-                maxlength : '=',
-                maxlengtherrorinfo : '@'
-
-            },
-            restrict: 'AE',
-            templateUrl: 'formpasswordinput.html',
-            link: function (scope, element, attrs) {
-
-                if(angular.isUndefined(scope.required)  ){
-                    scope.required = true;
-                    scope.requirederrorinfo = 'Password is required';
-                }
-
-                if(angular.isUndefined(scope.minlength)  ){
-                    scope.minlength = 6;
-                    scope.minlengtherrorinfo = 'Password must be at least 6 characters';
-                }
-
-                if(angular.isUndefined(scope.required)  ){
-                    scope.maxlength = 20;
-                    scope.maxlengtherrorinfo = 'Password is a maximum of 20 characters';
-                }
-
-            }
-        };
-    });
-
-
-    angular.module('marksimos.commoncomponent').directive('phoneInput', function() {
-        return {
-            scope: {
-                labeltext : '@',
-                data : '=',
-                placeholdertext : '@',
-                formname : '=',
-                required : '=',
-                requirederrorinfo : '@',
-                minlength : '=',
-                minlengtherrorinfo : '@',
-                maxlength : '=',
-                maxlengtherrorinfo : '@'
-            },
-            restrict: 'AE',
-            templateUrl: 'formphoneinput.html',
-            link: function (scope, element, attrs) {
-
-                if(angular.isUndefined(scope.required)  ){
-                    scope.required = true;
-                    scope.requirederrorinfo = 'Cell Phone Number is required';
-                }
-
-                if(angular.isUndefined(scope.minlength)  ){
-                    scope.minlength = 11;
-                    scope.minlengtherrorinfo = 'Cell Phone Number must be at least 11 characters';
-                }
-
-                if(angular.isUndefined(scope.required)  ){
-                    scope.maxlength = 13;
-                    scope.maxlengtherrorinfo = 'Cell Phone Number is a maximum of 13 characters';
-                }
-
-            }
-        };
-    });
-
-
-    angular.module('marksimos.commoncomponent').directive('idcardInput', function() {
-        return {
-            scope: {
-                labeltext : '@',
-                data : '=',
-                placeholdertext : '@',
-                formname : '=',
-                required : '=',
-                requirederrorinfo : '@',
-                minlength : '=',
-                minlengtherrorinfo : '@',
-                maxlength : '=',
-                maxlengtherrorinfo : '@'
-
-            },
-            restrict: 'AE',
-            templateUrl: 'formidcardinput.html',
-            link: function (scope, element, attrs) {
-
-                if(angular.isUndefined(scope.required)  ){
-                    scope.required = true;
-                    scope.requirederrorinfo = 'ID Card is required';
-                }
-
-                if(angular.isUndefined(scope.minlength)  ){
-                    scope.minlength = 17;
-                    scope.minlengtherrorinfo = 'ID Card must be at least 17 characters';
-                }
-
-                if(angular.isUndefined(scope.required)  ){
-                    scope.maxlength = 24;
-                    scope.maxlengtherrorinfo = 'ID Card is a maximum of 24 characters';
-                }
-
-            }
-        };
-    });
-
-
-    angular.module('marksimos.commoncomponent').directive('licenceInput', function() {
-        return {
-            scope: {
-                labeltext : '@',
-                data : '=',
-                placeholdertext : '@',
-                formname : '=',
-                required : '=',
-                requirederrorinfo : '@',
-                numbererrorinfo : '@',
-                min : '=',
-                minerrorinfo : '@',
-                max : '=',
-                maxerrorinfo : '@',
-                maxlength : '=',
-                maxlengtherrorinfo : '@'
-
-            },
-            restrict: 'AE',
-            templateUrl: 'formlicenceinput.html',
-            link: function (scope, element, attrs) {
-
-                if(angular.isUndefined(scope.required)  ){
-                    scope.required = true;
-                    scope.requirederrorinfo = 'Number is required';
-                    scope.numbererrorinfo = 'Must be numeric character';
-                }
-
-                if(angular.isUndefined(scope.min)  ){
-                    scope.min = 1;
-                    scope.minerrorinfo = 'Number must be greater than 0';
-                }
-
-                if(angular.isUndefined(scope.max)  ){
-                    scope.max = 1000;
-                    scope.maxerrorinfo = 'Number must be less than 1000';
-                }
-
-                if(angular.isUndefined(scope.required)  ){
-                    scope.maxlength = 100;
-                    scope.maxlengtherrorinfo = 'Number is a maximum of 100 characters';
-                }
-
-            }
-        };
-    });
-
-
-    angular.module('marksimos.commoncomponent').directive('roundInput', function() {
-        return {
-            scope: {
-                labeltext : '@',
-                data : '=',
-                placeholdertext : '@',
-                formname : '=',
-                required : '=',
-                requirederrorinfo : '@',
-                numbererrorinfo : '@',
-                min : '=',
-                minerrorinfo : '@',
-                max : '=',
-                maxerrorinfo : '@',
-                maxlength : '=',
-                maxlengtherrorinfo : '@'
-
-            },
-            restrict: 'AE',
-            templateUrl: 'formroundinput.html',
-            link: function (scope, element, attrs) {
-
-                if(angular.isUndefined(scope.required)  ){
-                    scope.required = true;
-                    scope.requirederrorinfo = 'Number is required';
-                    scope.numbererrorinfo = 'Must be numeric character';
-                }
-
-                if(angular.isUndefined(scope.min)  ){
-                    scope.min = 1;
-                    scope.minerrorinfo = 'Number must be greater than 0';
-                }
-
-                if(angular.isUndefined(scope.max)  ){
-                    scope.max = 9;
-                    scope.maxerrorinfo = 'Number must be less than 9';
-                }
-
-                if(angular.isUndefined(scope.required)  ){
-                    scope.maxlength = 100;
-                    scope.maxlengtherrorinfo = 'Number is a maximum of 100 characters';
-                }
-
-            }
-        };
-    });
-
-
-    angular.module('marksimos.commoncomponent').directive('textFormInput', function() {
+    angular.module('marksimos.commoncomponent').directive('textFormInput', function($compile, $timeout) {
         return {
             scope : {
                 type             : '@',
@@ -318,8 +33,12 @@
                 placeholder      : '@',
                 data             : '=',
 
+                radiooptions : '=',
+                checkboxoptions : '=',
+
                 required          : '=',
                 requirederrorinfo : '@',
+                emailerrorinfo    : '@',
 
                 minlength          : '@',
                 minlengtherrorinfo : '@',
@@ -341,31 +60,55 @@
             restrict: 'AE',
             require: '^form',
             template: function(tElement, tAttrs) {
+
                 var labelclass = tAttrs.labelclass || 'col-sm-4';
                 var inputclass = tAttrs.inputclass || 'col-sm-3';
+                var inputgroupprefix = tAttrs.inputgroupprefix || '';
 
                 var type = tAttrs.type || 'text';
 
-                var required, requirederrorinfo, minlength, minlengtherrorinfo, maxlength, maxlengtherrorinfo, min, max, numbererrorinfo, pattern, patternerrorinfo;
+
+
+                var required, requirederrorinfo, emailerrorinfo, minlength, minlengtherrorinfo, maxlength, maxlengtherrorinfo, min, max, numbererrorinfo, pattern, patternerrorinfo;
 
                 required = tAttrs.hasOwnProperty('required') ? 'ng-required="' + tAttrs.required + '"' : "";
                 requirederrorinfo = tAttrs.hasOwnProperty('requirederrorinfo') ? tAttrs.requirederrorinfo  : "field is required";
 
+                if(type === 'email'){
+                    emailerrorinfo = tAttrs.hasOwnProperty('emailerrorinfo') ? tAttrs.emailerrorinfo  : 'Email format wrong';
+                }
+
 
                 if (type === 'checkbox'){
+                    required = tAttrs.hasOwnProperty('required') ? 'ng-required=" !data "' : "";
 
-                    var tplcheckbox = '<div class="form-group" ng-class="{ \'has-success\':form.$dirty && form.$valid , \'has-error\': form.$dirty && form.$invalid}">' +
-                                        '<label class="' + labelclass + ' control-label" for="' + tAttrs.name + '" >' + tAttrs.label + '</label>' +
-                                            '<div class="' + inputclass + '">' +
-                                                '<div class="checkbox">' +
-                                                '<label>' +
-                                                    '<input type="' + type + '" id="ID' + tAttrs.name +'" name="' + tAttrs.name +'" ng-model="data" ' + required + '>' +
-                                                '</label>' +
-                                            '</div>' +
+                    var tplcheckbox = '<div class="form-group" ng-class="{ \'has-success\':form.$dirty && form.$valid , \'has-error\':form.$dirty && form.$invalid}">' +
+                                        '<label class="' + labelclass + ' control-label" for="ID' + tAttrs.name + '" >' + tAttrs.label + '</label>' +
+
+                                        '<div class="' + inputclass + '">' +
+                                            '<label class="checkbox-inline" ng-repeat="option in checkboxoptions">' +
+                                                '<input type="' + type + '" id="ID' + tAttrs.name +'" name="' + tAttrs.name + '"value="{{option.value}}" ng-model="$parent.data" ' + required + '>' + '{{option.text}}' +
+                                            '</label>' +
                                         '</div>' +
-                                        '</div>';
+                                    '</div>';
 
                     return tplcheckbox;
+
+                }if (type === 'radio'){
+                    required = tAttrs.hasOwnProperty('required') ? 'ng-required=" !data "' : "";
+
+
+                    var tplradio = '<div class="form-group" ng-class="{ \'has-success\':form.$dirty && form.$valid , \'has-error\': form.$dirty && form.$invalid}">' +
+                                        '<label class="' + labelclass + ' control-label" for="ID' + tAttrs.name + '" >' + tAttrs.label + '</label>' +
+
+                                        '<div class="' + inputclass + '">' +
+                                            '<label class="radio-inline" ng-repeat="option in radiooptions">' +
+                                                '<input type="' + type + '" id="ID' + tAttrs.name +'" name="' + tAttrs.name + '"value="{{option.value}}" ng-model="$parent.data" ' + required + '>' + '{{option.text}}' +
+                                            '</label>' +
+                                        '</div>' +
+                                    '</div>';
+
+                    return tplradio;
 
                 }else if(type === 'number'){
                     min = tAttrs.hasOwnProperty('min') ? 'min="' + tAttrs.min + '"' : "";
@@ -376,6 +119,11 @@
                     minlengtherrorinfo = "";
                     maxlength = "";
                     maxlengtherrorinfo = "";
+
+                    //numbererrorinfo = 'Number is required';
+                    //numbererrorinfo = 'Must be numeric character';
+                    //numbererrorinfo = 'Number must be greater than 0';
+                    //numbererrorinfo = 'Number must be less than 9';
 
                 }else{
                     min = "";
@@ -389,24 +137,25 @@
                     maxlengtherrorinfo = tAttrs.hasOwnProperty('maxlengtherrorinfo') ? tAttrs.maxlengtherrorinfo  : 'field is a maximum of ' + tAttrs.maxlength + ' characters';
 
                     pattern = tAttrs.hasOwnProperty('pattern') ? 'ng-pattern="' + tAttrs.pattern + '"' : "";
-                    patternerrorinfo = tAttrs.hasOwnProperty('patternerrorinfo') ? tAttrs.patternerrorinfo : 'wrong text format !';
+                    patternerrorinfo = tAttrs.hasOwnProperty('patternerrorinfo') ? tAttrs.patternerrorinfo : 'wrong text format';
                 }
 
                 var tpltext = '<div class="form-group has-feedback" ng-class="{ \'has-success\':form.$dirty && form.$valid , \'has-error\': form.$dirty && form.$invalid}">' +
-                                '<label class="' + labelclass + ' control-label" for="' + tAttrs.name + '" >' + tAttrs.label + '</label>' +
+                                '<label class="' + labelclass + ' control-label" for="ID' + tAttrs.name + '" >' + tAttrs.label + '</label>' +
                                 '<div class=" ' + inputclass + '">'  +
-                                    '<span class="form-input-prefix" ng-if="inputgroupprefix">{{inputgroupprefix}}</span>' +
+                                    '<span class="form-input-prefix" ng-if="inputgroupprefix">' + inputgroupprefix + '</span>' +
                                     '<input type="' + type + '" class="form-control" id="ID' + tAttrs.name +'" name="' + tAttrs.name +'" placeholder="{{placeholder}}" ng-model="data" ' + required + minlength + maxlength + min + max + pattern + '>' +
                                     '<span ng-if="form.$dirty && form.$valid" class="glyphicon glyphicon-ok form-control-feedback"></span>' +
                                     '<span ng-if="form.$dirty && form.$invalid" class="glyphicon glyphicon-remove form-control-feedback"></span>' +
                                 '</div>' +
                                 '<label class="control-label" ng-if="form.$dirty && form.$error.required && !form.$error.number"><i class="fa fa-times-circle-o"></i> ' + requirederrorinfo + ' </label>' +
-                                '<label class="control-label" ng-if="form.$dirty && form.$error.minlength" ><i class="fa fa-times-circle-o"></i>' + minlengtherrorinfo + '</label>' +
-                                '<label class="control-label" ng-if="form.$dirty && form.$error.maxlength" ><i class="fa fa-times-circle-o"></i>' + maxlengtherrorinfo + '</label>' +
-                                '<label class="control-label" ng-if="form.$dirty && form.$error.number" ><i class="fa fa-times-circle-o"></i>must be a number</label>' +
-                                '<label class="control-label" ng-if="form.$dirty && form.$error.min || form.$dirty && form.$error.max " ><i class="fa fa-times-circle-o"></i>' + numbererrorinfo + '</label>' +
-                                '<label class="control-label" ng-if="form.$dirty && form.$error.pattern" ><i class="fa fa-times-circle-o"></i>' + patternerrorinfo + '</label>' +
-                                '<label class="control-label" ng-if="form.$invalid" ><i class="fa fa-times-circle-o"></i>{{othererrorinfo}}</label>' +
+                                '<label class="control-label" ng-if="form.$dirty && form.$error.email"><i class="fa fa-times-circle-o"></i> ' + emailerrorinfo + ' </label>' +
+                                '<label class="control-label" ng-if="form.$dirty && form.$error.minlength" ><i class="fa fa-times-circle-o"></i> ' + minlengtherrorinfo + '</label>' +
+                                '<label class="control-label" ng-if="form.$dirty && form.$error.maxlength" ><i class="fa fa-times-circle-o"></i> ' + maxlengtherrorinfo + '</label>' +
+                                '<label class="control-label" ng-if="form.$dirty && form.$error.number" ><i class="fa fa-times-circle-o"></i> must be a number</label>' +
+                                '<label class="control-label" ng-if="form.$dirty && form.$error.min || form.$dirty && form.$error.max " ><i class="fa fa-times-circle-o"></i> ' + numbererrorinfo + '</label>' +
+                                '<label class="control-label" ng-if="form.$dirty && form.$error.pattern" ><i class="fa fa-times-circle-o"></i> ' + patternerrorinfo + '</label>' +
+                                '<label class="control-label" ng-if="form.$invalid && othererrorinfo" ><i class="fa fa-times-circle-o"></i> {{othererrorinfo}}</label>' +
 
                                 '</div>';
 
@@ -415,16 +164,48 @@
             },
 
             compile: function ( tElement, tAttrs) {
-
                 return function (scope, element, attributes, formController) {
+
+                    //var radioLabelsTPl = element.find('#radioTpl');
+                    //console.log(radioLabelsTPl.html());
+                    //$compile(radioLabelsTPl.html())(scope)
+                    //radioLabelsTPl.html( $compile(radioLabelsTPl.html())(scope) );
+
                     scope.form = formController[scope.name];
 
-                    scope.inputgroupprefix = angular.isUndefined(scope.inputgroupprefix) ? ""  : scope.inputgroupprefix;
+                    $timeout(function(){
+                        //fixed ng-repeat bug
+                        scope.form = formController[scope.name];
+                    }, 500);
                 };
             }
         };
     });
 
+
+    angular.module('marksimos.commoncomponent').directive('ngMatch', ['$parse', function($parse) {
+        return {
+
+            restrict: 'A',
+            require: 'ngModel',
+            scope: {
+                ngMatch: "="
+            },
+            link: function (scope, element, attrs, ctrl) {
+
+                // if ngModel is not defined, we don't need to do anything
+                if (!ctrl) return;
+
+                ctrl.$validators.match = function(modelValue, viewValue) {
+                    return scope.ngMatch === viewValue;
+                };
+
+                scope.$watch('ngMatch', function () {
+                    ctrl.$validate();
+                });
+            }
+        };
+    }]);
 
 
     // Prevent the backspace key from navigating back.
@@ -468,6 +249,28 @@
 
         };
     }]
+    );
+
+
+    angular.module('marksimos.commoncomponent').directive('stickFooter', ['$window', function($window) {
+            return {
+                restrict : 'AE',
+                link  : function (element, attrs) {
+
+                    $window.on('resize', function () {
+                        if (element('header').height() + element('footer').height() + element('main').height() < $window.height()) {
+                            //$('footer').addClass('b2c-footer-fix');
+
+                            scope.css = true;
+                        }else {
+                            //$('footer').removeClass('b2c-footer-fix');
+                            scope.css = true;
+                        }
+                    }).trigger('resize');
+                }
+
+            };
+        }]
     );
 
 

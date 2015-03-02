@@ -1,6 +1,5 @@
-var config = require('../../../common/config.js');
-var sessionOperation = require('../../../common/sessionOperation.js');
 var userModel = require('../../models/user/user.js');
+var userRoleModel = require('../../models/user/userrole.js');
 var seminarModel = require('../../models/marksimos/seminar.js');
 
 var logger = require('../../../common/logger.js');
@@ -11,65 +10,57 @@ var validator = require('validator');
 
 
 exports.addDistributor = function(req, res, next){
-    var validateResult = utility.validateUser(req);
+    var validationErrors = userModel.registerValidations(req, userRoleModel.roleList.distributor.id);
 
-    if(validateResult){
-        return res.send(400, {message: validateResult});
+    if(validationErrors){
+        return res.status(400).send( {message: validationErrors} );
     }
 
-    var checkRequiredFieldResult = utility.checkRequiredFieldForDistributor(req);
-    if(checkRequiredFieldResult){
-        return res.send(400, {message: checkRequiredFieldResult});
-    }
+    var newDistributor = {
+        username     : req.body.username,
+        email        : req.body.email,
+        password     : req.body.password,
 
-    var distributor = {
-        username: req.body.username,
-        email: req.body.email,
-        password: utility.hashPassword(req.body.password),
-        mobilePhone: req.body.mobilePhone,
-        idcardNumber: req.body.idcardNumber || '',
+        mobilePhone  : req.body.mobilePhone,
+        idcardNumber : req.body.idcardNumber,
 
-        country: req.body.country,
-        state: req.body.state,
-        city: req.body.city,
-        district: req.body.district || '',
-        street: req.body.street || '',
+        country  : req.body.country,
+        state    : req.body.state,
+        city     : req.body.city,
+        district : req.body.district || '',
+        street   : req.body.street || '',
 
-        role: config.role.distributor,
-        emailActivated: true,
-        activated: true,
-        numOfLicense: req.body.num_of_license_granted
-
+        role           : userRoleModel.roleList.distributor.id,
+        activated      : true,
+        numOfLicense   : req.body.numOfLicense
 
     };
 
-    userModel.findByEmail(req.body.email)
-    .then(function(result){
-        if(result){
-            return res.send(400, {message: 'Email has been used, please choose another email.'});
-        }else{
-            return userModel.register(distributor)
-                .then(function(result){
-                    res.send(result);
-                })
+    userModel.register(newDistributor).then(function(result){
+        if(!result){
+            throw new Error('Save new distributor to database error.');
         }
-    })
-    .fail(function(err){
-        logger.error(err);
-        res.send(400, {message: 'add distributor failed.'});
-    })
-    .done();
+
+        return res.status(200).send({message: 'Register new distributor success'});
+
+    }).fail(function(err){
+        next(err);
+    }).done();
+
 };
+
 
 exports.updateDistributor = function(req, res, next){
     if(!req.params.distributor_id){
         return res.send(400, {message: "distributor_id can't be empty."})
     }
 
-    var validateResult = utility.validateUser(req);
-    if(validateResult){
-        return res.send(400, {message: validateResult});
+    var validationErrors = userModel.registerValidations(req, userRoleModel.roleList.distributor.id);
+
+    if(validationErrors){
+        return res.status(400).send( {message: validationErrors} );
     }
+
 
     var distributor = {
         username: req.body.name,
@@ -77,28 +68,25 @@ exports.updateDistributor = function(req, res, next){
         country: req.body.country,
         state: req.body.state,
         city: req.body.city,
-        password: utility.hashPassword(req.body.password),
-        role: config.role.distributor,
+        role: userRoleModel.roleList.distributor.id,
         numOfLicense: req.body.num_of_license_granted,
-        emailActivated: true,
         district: req.body.district || '',
         street: req.body.street || '',
         idcardNumber: req.body.idcardNumber || ''
     };
 
-    userModel.update({_id: req.params.distributor_id}, distributor)
-    .then(function(numAffected){
-        if(numAffected===1){
+    userModel.updateQ({_id: req.params.distributor_id}, distributor).then(function(numberAffected){
+        if(numberAffected === 1){
             return res.send({message: 'update success.'});
         }else{
             return res.send(400, {message: 'user does not exist.'});
         }
-    })
-    .fail(function(err){
-        logger.error(err);
-        return res.send(500, {message: 'update distributor failed.'});
-    })
+    }).fail(function(err){
+        next(err);
+    }).done();
 };
+
+
 
 exports.searchDistributor = function(req, res, next){
     var name = req.query.username;
@@ -109,7 +97,7 @@ exports.searchDistributor = function(req, res, next){
     var activated = req.query.user_status;
 
     var query = {
-        role: config.role.distributor
+        role: userRoleModel.roleList.distributor.id
     };
     if(name) query.username = name;
     if(email) query.email = email;
@@ -118,14 +106,11 @@ exports.searchDistributor = function(req, res, next){
     if(city) query.city = city;
     if(activated) query.activated = activated;
 
-    userModel.find(query)
-    .then(function(result){
-        res.send(result);
-    })
-    .fail(function(err){
-        logger.error(err);
-        res.send(500, {message: 'search failed'})
-    })
+    userModel.findQ(query).then(function(result){
+        res.status(200).send(result);
+    }).fail(function(err){
+        next(err);
+    }).done();
 };
 
 
@@ -146,80 +131,71 @@ exports.searchDistributor = function(req, res, next){
 
 
 exports.addFacilitator = function(req, res, next){
-    var validateResult = utility.validateUser(req);
+    var validationErrors = userModel.registerValidations(req, userRoleModel.roleList.facilitator.id);
 
-    if(validateResult){
-        return res.send(400, {message: validateResult});
+    if(validationErrors){
+        return res.status(400).send( {message: validationErrors} );
     }
 
-    var checkRequiredFieldResult = utility.checkRequiredFieldForFacilitator(req);
-    if(checkRequiredFieldResult){
-        return res.send(400, {message: checkRequiredFieldResult});
-    }
+    var distributorId = req.user.id;
 
-    var distributorId = sessionOperation.getUserId(req);
 
-    var facilitator = {
-        username: req.body.username,
-        email: req.body.email,
-        password: utility.hashPassword(req.body.password),
-        mobilePhone: req.body.mobilePhone,
-        country: req.body.country,
-        state: req.body.state,
-        city: req.body.city,
-        district: req.body.district || '',
-        street: req.body.street || '',
+    var newFacilitator = {
+        username     : req.body.username,
+        email        : req.body.email,
+        password     : req.body.password,
 
-        role: config.role.facilitator,
-        activated: true,
-        emailActivated: true,
+        mobilePhone  : req.body.mobilePhone,
+        idcardNumber : req.body.idcardNumber,
 
-        numOfLicense: req.body.num_of_license_granted, //update distributor license when you update this field.
+        country  : req.body.country,
+        state    : req.body.state,
+        city     : req.body.city,
+        district : req.body.district || '',
+        street   : req.body.street || '',
+
+        role           : userRoleModel.roleList.facilitator.id,
+        activated      : true,
+        numOfLicense   : req.body.numOfLicense, //update distributor license when you update this field.
+
         distributorId: distributorId
+
     };
 
-    userModel.findByEmail(req.body.email)
-        .then(function(result){
-            if(result){
-                return res.send(400, {message: 'Email has been used, please choose another email.'});
-            }else{
-                return userModel.findOne({_id: distributorId})
-            }
-        })
-        .then(function(distributor){
-            if(!distributor){
-                throw {message: "Can't find distributor in database: distributorId: " + distributorId};
+    userModel.findOneQ({ _id: newFacilitator.distributorId}).then(function(resultDistributor){
+
+        if(!resultDistributor){
+            throw new Error("Cancel promise, Can't find this distributor: " + newFacilitator.distributorId);
+        }else {
+
+            if(resultDistributor.numOfLicense - parseInt(newFacilitator.numOfLicense) <= 0){
+                throw new Error("Cancel promise, You don't have enough license to create a new facilitator.");
             }
 
-            if(distributor.numOfLicense - parseInt(req.body.num_of_license) <= 0){
-                throw {httpStatus: 400, message: "You don't have enought license."};
-            }
+            resultDistributor.numOfLicense = resultDistributor.numOfLicense - parseInt(newFacilitator.numOfLicense);
+            resultDistributor.numOfUsedLicense = resultDistributor.numOfUsedLicense + parseInt(newFacilitator.numOfLicense);
 
-            return userModel.update({_id: distributorId}, {
-                numOfLicense: distributor.numOfLicense - parseInt(req.body.num_of_license_granted),
-                numOfUsedLicense: distributor.numOfUsedLicense + parseInt(req.body.num_of_license_granted)
-            });
-        })
-        .then(function(numAffected){
-            if(numAffected!==1){
-                throw {message: 'update distributor failed during add facilitator.'}
-            }
-            return userModel.register(facilitator);
-        })
-        .then(function(result){
-            if(!result){
-                throw {message: 'add facilitator failed.'}
-            }
-            res.send(result);
-        })
-        .fail(function(err){
-            logger.error(err);
-            if(err.httpStatus){
-                return res.send(err.httpStatus, {message: err.message});
-            }
-            res.send(500, {message: 'add facilitator failed.'});
-        })
-        .done();
+
+            resultDistributor.saveQ().then(function(resultUpdatedDistributor){
+                return userModel.register(newFacilitator);
+
+            }).then(function(resultFacilitator){
+                if(!resultFacilitator) {
+                    throw new Error('Save new facilitator to database error.');
+                }
+
+                return res.status(200).send({message: 'Register new facilitator success'});
+
+            }).fail(function(err){
+                next(err);
+            }).done();
+        }
+
+    }).fail(function(err){
+        next(err);
+    }).done();
+
+
 };
 
 exports.updateFacilitator = function(req, res, next){
@@ -235,10 +211,10 @@ exports.updateFacilitator = function(req, res, next){
     if(req.body.country) facilitator.country = req.body.country;
     if(req.body.state) facilitator.state = req.body.state;
     if(req.body.city) facilitator.city = req.body.city;
-    if(req.body.password) facilitator.password = utility.hashPassword(req.body.password);
+    if(req.body.password) facilitator.password = userModel.generateHashPassword(req.body.password);
 
-    var userRole = sessionOperation.getUserRole(req);
-    if(req.body.num_of_license_granted && (userRole === config.role.admin || userRole === config.role.distributor)){
+    var userRole = req.user.roleId;
+    if(req.body.num_of_license_granted && (userRole === userRoleModel.roleList.admin.id || userRole === userRoleModel.roleList.distributor.id)){
         facilitator.numOfLicense = req.body.num_of_license_granted;
     }
     if(req.body.district) facilitator.district = req.body.district;
@@ -249,7 +225,7 @@ exports.updateFacilitator = function(req, res, next){
         return res.send(400, {message: "you have to provide at least one field to update."});
     }
 
-    var distributorId = sessionOperation.getUserId(req);
+    var distributorId = req.user.id;
 
     var p;
 
@@ -257,44 +233,44 @@ exports.updateFacilitator = function(req, res, next){
     //from the distributor
     if(req.body.num_of_license_granted > 0){
         //find the facilitor to be updated.
-        p = userModel.findOne({
+        p = userModel.findOneQ({
             _id: req.params.facilitator_id
         })
-            .then(function(dbFacilitator){
-                //if this facilitator belongs to the current distributor
-                if(dbFacilitator.distributorId === distributorId){
-                    var addedLicense = parseInt(req.body.num_of_license_granted) - dbFacilitator.numOfLicense;
-                    return userModel.findOne({
-                        _id: distributorId
-                    })
-                        .then(function(dbDistributor){
-                            //if the distributor has enough license
-                            if(dbDistributor.numOfLicense > addedLicense){
-                                return userModel.update({
-                                    _id: distributorId
-                                }, {
-                                    numOfUsedLicense: dbDistributor.numOfUsedLicense + addedLicense,
-                                    numOfLicense: dbDistributor.numOfLicense - addedLicense
-                                })
-                                    .then(function(numAffected){
-                                        if(numAffected!==1){
-                                            throw {httpStatus: 400, message: 'failed to update distributor '
-                                            + distributorId + ' during updating facilitator ' + req.params.facilitator_id}
-                                        }else{
-                                            return userModel.update({_id: req.params.facilitator_id}, facilitator);
-                                        }
-                                    })
+        .then(function(dbFacilitator){
+            //if this facilitator belongs to the current distributor
+            if(dbFacilitator.distributorId === distributorId){
+                var addedLicense = parseInt(req.body.num_of_license_granted) - dbFacilitator.numOfLicense;
+                return userModel.findOneQ({
+                    _id: distributorId
+                })
+                .then(function(dbDistributor){
+                    //if the distributor has enough license
+                    if(dbDistributor.numOfLicense > addedLicense){
+                        return userModel.updateQ({
+                            _id: distributorId
+                        }, {
+                            numOfUsedLicense: dbDistributor.numOfUsedLicense + addedLicense,
+                            numOfLicense: dbDistributor.numOfLicense - addedLicense
+                        })
+                        .then(function(numAffected){
+                            if(numAffected!==1){
+                                throw {httpStatus: 400, message: 'failed to update distributor '
+                                + distributorId + ' during updating facilitator ' + req.params.facilitator_id}
                             }else{
-                                throw {httpStatus: 400, message: "you don't have enought license, you need " + addedLicense
-                                + " more licenses, but you only have " + dbDistributor.numOfUsedLicense}
+                                return userModel.updateQ({_id: req.params.facilitator_id}, facilitator);
                             }
                         })
-                }else{
-                    throw {httpStatus: 400, message: "You are not authorized to update this facilitator."}
-                }
-            })
+                    }else{
+                        throw {httpStatus: 400, message: "you don't have enought license, you need " + addedLicense
+                        + " more licenses, but you only have " + dbDistributor.numOfUsedLicense}
+                    }
+                })
+            }else{
+                throw {httpStatus: 400, message: "You are not authorized to update this facilitator."}
+            }
+        })
     }else{
-        p = userModel.update({_id: req.params.facilitator_id}, facilitator);
+        p = userModel.updateQ({_id: req.params.facilitator_id}, facilitator);
     }
 
     p.then(function(numAffected){
@@ -303,16 +279,11 @@ exports.updateFacilitator = function(req, res, next){
         }else{
             return res.send(400, {message: 'user does not exist.'});
         }
-    })
-        .fail(function(err){
-            logger.error(err);
-            if(err.httpStatus){
-                return res.send(err.httpStatus, {message: err.message});
-            }
-            return res.send(500, {message: 'update facilitator failed.'});
-        })
-        .done();
+    }).fail(function(err){
+        next(err);
+    }).done();
 };
+
 
 exports.searchFacilitator = function(req, res, next){
     var name = req.query.username;
@@ -323,13 +294,13 @@ exports.searchFacilitator = function(req, res, next){
     var activated = req.query.user_status;
 
     var query = {
-        role: config.role.facilitator
+        role: userRoleModel.roleList.facilitator.id
     };
 
     //only distributor and admin can search facilitators
     //distributor can only view its own facilitators
-    if(sessionOperation.getUserRole(req) !== config.role.admin){
-        query.distributorId = sessionOperation.getUserId(req);
+    if(req.user.roleId !== userRoleModel.roleList.admin.id){
+        query.distributorId = req.user.id;
     }
 
     if(name) query.username = name;
@@ -339,33 +310,28 @@ exports.searchFacilitator = function(req, res, next){
     if(city) query.city = city;
     if(activated) query.activated = activated;
 
-    userModel.find(query)
-        .then(function(allFacilitator){
-            if(allFacilitator.length === 0){
-                return res.send([]);
+    userModel.findQ(query).then(function(allFacilitator){
+        if(allFacilitator.length === 0){
+            return res.send([]);
+        }
+
+        allFacilitator = JSON.parse(JSON.stringify(allFacilitator));
+
+        return userModel.findQ({role: userRoleModel.roleList.distributor.id}).then(function(allDistributor){
+            for(var i=0; i< allFacilitator.length; i++){
+                var facilitator = allFacilitator[i];
+                var distributor = findDistributor(facilitator.distributorId, allDistributor);
+                if(!distributor){
+                    return res.send(500, {message: "distributor " + facilitator.distributorId + " doesn't exist."})
+                }
+                facilitator.distributorName = distributor.username;
             }
 
-            allFacilitator = JSON.parse(JSON.stringify(allFacilitator));
-
-            return userModel.find({role: config.role.distributor})
-                .then(function(allDistributor){
-                    for(var i=0; i< allFacilitator.length; i++){
-                        var facilitator = allFacilitator[i];
-                        var distributor = findDistributor(facilitator.distributorId, allDistributor);
-                        if(!distributor){
-                            return res.send(500, {message: "distributor " + facilitator.distributorId + " doesn't exist."})
-                        }
-                        facilitator.distributorName = distributor.username;
-                    }
-
-                    res.send(allFacilitator);
-                })
+            res.send(allFacilitator);
         })
-        .fail(function(err){
-            logger.error(err);
-            res.send(500, {message: 'search failed'})
-        })
-        .done();
+    }).fail(function(err){
+        next(err);
+    }).done();
 
     function findDistributor(distributorId, allDistributor){
         for(var i=0; i< allDistributor.length; i++){
@@ -376,10 +342,12 @@ exports.searchFacilitator = function(req, res, next){
     }
 };
 
-exports.getSeminarOfFacilitator = function(req, res, next){
-    var facilitatorId = sessionOperation.getUserId(req);
 
-    var filterKey = req.query.filterKey;
+
+exports.getSeminarOfFacilitator = function(req, res, next){
+    var facilitatorId = req.user.id;
+
+    var keywordFilter = req.query.filterKey;
     var status = req.query.status;
 
     //确保status.toString()一定成功
@@ -397,6 +365,7 @@ exports.getSeminarOfFacilitator = function(req, res, next){
             status = 'all';
             break;
     }
+
     //组织query
     var query = {};
     query.$and = [{ facilitatorId: facilitatorId }];
@@ -405,65 +374,71 @@ exports.getSeminarOfFacilitator = function(req, res, next){
         query.$and.push({ 'isInitialized': status });
     }
 
-    if (filterKey) {
-        var strRegex = ".*[" + filterKey.split('').join('][') + "].*";
+    if (keywordFilter) {
+        var strRegex = ".*[" + keywordFilter.split('').join('][') + "].*";
+
         //不区分大小写
         var regex = { $regex: strRegex , $options: 'i' };
         query.$or = [
             { 'description': regex },
             { 'seminarId': regex },
-            { 'venue': regex },
+            { 'venue': regex }
         ];
     }
 
-    seminarModel.find(query, {seminarId:-1})
-        .then(function(allSeminars){
+    seminarModel.find(query, {seminarId:-1}).then(function(allSeminars){
 
-            // 处理兼容老版本
-            if(allSeminars.length > 0 ){
-                allSeminars.forEach(function(seminarOld){
+        // 处理兼容老版本
+        if(allSeminars.length > 0 ){
+            allSeminars.forEach(function(seminarOld){
 
-                    if(seminarOld.companyAssignment.length > 0){
-                        if(typeof seminarOld.companyAssignment[0].companyId == 'undefined'){
+                if(seminarOld.companyAssignment.length > 0){
+                    if(typeof seminarOld.companyAssignment[0].companyId == 'undefined'){
 
-                            var companyList = [];
+                        var companyList = [];
 
-                            for(var j=0; j<seminarOld.companyAssignment.length; j++){
+                        for(var j=0; j<seminarOld.companyAssignment.length; j++){
 
-                                if( typeof seminarOld.companyAssignment[j] !== 'undefined'){
+                            if( typeof seminarOld.companyAssignment[j] !== 'undefined'){
 
-                                    var companyNew = {
-                                        companyId : j + 1,
-                                        companyName : String.fromCharCode('A'.charCodeAt(0) + j ),
-                                        studentList : []
-                                    };
+                                var companyNew = {
+                                    companyId : j + 1,
+                                    companyName : String.fromCharCode('A'.charCodeAt(0) + j ),
+                                    studentList : []
+                                };
 
-                                    for(var k=0; k<seminarOld.companyAssignment[j].length; k++) {
-                                        companyNew.studentList.push(seminarOld.companyAssignment[j][k]);
-                                    }
-
-                                    companyList.push(companyNew);
+                                for(var k=0; k<seminarOld.companyAssignment[j].length; k++) {
+                                    companyNew.studentList.push(seminarOld.companyAssignment[j][k]);
                                 }
 
-
+                                companyList.push(companyNew);
                             }
 
-                            seminarModel.update({seminarId: seminarOld.seminarId}, { $set: { companyAssignment: companyList }}).then(function(result){
-                            })
 
                         }
-                    }
-                })
-            }
 
-            res.send(allSeminars);
-        })
-        .fail(function(err){
-            logger.error(err);
-            res.send(500, {message: "get seminar list faile."})
-        })
-        .done();
+                        seminarModel.update({seminarId: seminarOld.seminarId}, { $set: { companyAssignment: companyList }}).then(function(result){
+                        }).done();
+
+                    }
+                }
+            })
+        }
+
+        res.send(allSeminars);
+    }).fail(function(err){
+        next(err);
+    }).done();
 };
+
+
+
+
+
+
+
+
+
 
 
 
@@ -475,71 +450,62 @@ exports.getSeminarOfFacilitator = function(req, res, next){
 
 
 exports.addStudent = function(req, res, next){
-    var validateResult = utility.validateUser(req);
+    req.body.organizationOrUniversity = req.body.university;
 
-    if(validateResult){
-        return res.send(400, {message: validateResult});
+    var validationErrors = userModel.registerValidations(req, userRoleModel.roleList.student.id, userModel.getStudentType().B2B);
+
+    if(validationErrors){
+        return res.status(400).send( {message: validationErrors} );
     }
 
-    var checkRequiredFieldResult = utility.checkRequiredFieldForStudent(req);
-    if(checkRequiredFieldResult){
-        return res.send(400, {message: checkRequiredFieldResult});
-    }
+    var facilitatorId = req.user.id;
 
-    var facilitatorId = sessionOperation.getUserId(req);
+    var newStudent = {
+        username : req.body.username,
+        email: req.body.email,
+        password: req.body.password,
 
-    var student = {
-        username      : req.body.username,
-        email         : req.body.email,
-        password      : utility.hashPassword(req.body.password),
-        mobilePhone   : req.body.mobilePhone,
+        gender : req.body.gender,
+        firstName : req.body.firstName,
+        lastName : req.body.lastName,
+        //birthday : req.body.birthday,
+        //idcardNumber : req.body.idcardNumber,
+        mobilePhone : req.body.mobilePhone,
+        qq : req.body.qq,
+
 
         country       : req.body.country,
         state         : req.body.state,
         city          : req.body.city,
 
+        majorsDegree : req.body.majorsDegree,
+        //dateOfGraduation : req.body.dateOfGraduation,
+        organizationOrUniversity : req.body.university,
+        occupation               : req.body.occupation,
 
-        role           : config.role.student,
-        emailActivated : true,
-        activated      : true,
-        studentType    : req.body.student_type,
         facilitatorId  : facilitatorId,
 
-        idcardNumber             : req.body.idcardNumber || '',
-        gender                   : req.body.gender || '',
-        occupation               : req.body.occupation || '',
-        firstName                : req.body.firstname,
-        lastName                 : req.body.lastname,
-        organizationOrUniversity : req.body.university || '',
-        majorsDegree             : req.body.majorsDegree || ''
+        role : userRoleModel.roleList.student.id,
+        studentType : req.body.studentType,
 
+        activated      : true
     };
 
-    userModel.findOne({
-        email: req.body.email
-    })
-        .then(function(result){
-            if(result){
-                return res.send(400, {message: 'Email has been used, please choose another email.'});
-            }else{
-                return userModel.register(student);
-            }
-        })
-        .then(function(result){
-            if(!result){
-                throw {message: "failed to save student to db."}
-            }
-            res.send(result);
-        })
-        .fail(function(err){
-            logger.error(err);
-            if(err.httpStatus){
-                return res.send(err.httpStatus, {message: err.message});
-            }
-            res.send(500, {message: "add student failed."})
-        })
-        .done();
+    userModel.register(newStudent).then(function(result){
+        if(result) {
+            throw new Error('Save new company to database error.');
+        }
+
+        return res.status(200).send({message: 'Register new company success'});
+
+    }).fail(function(err){
+        next(err);
+    }).done();
+
 };
+
+
+
 
 exports.updateStudent = function(req, res, next){
     var validateResult = utility.validateUser(req);
@@ -555,7 +521,7 @@ exports.updateStudent = function(req, res, next){
     if(req.body.country) student.country = req.body.country;
     if(req.body.state) student.state = req.body.state;
     if(req.body.city) student.city = req.body.city;
-    if(req.body.password) student.password = utility.hashPassword(req.body.password);
+    if(req.body.password) student.password = userModel.generateHashPassword(req.body.password);
     if(req.body.idcardNumber) student.idcardNumber = req.body.idcardNumber;
     if(req.body.gender) student.gender = req.body.gender;
     if(req.body.occupation) student.occupation = req.body.occupation;
@@ -573,39 +539,32 @@ exports.updateStudent = function(req, res, next){
         return res.send(400, {message: "student_id can't be empty."})
     }
 
-    userModel.findOne({
+    userModel.findOneQ({
         _id: student_id
-    })
-        .then(function(dbStudent){
-            if(!dbStudent){
-                throw {httpStatus: 400, message: "student doesn't exist."}
-            }
+    }).then(function(dbStudent){
+        if(!dbStudent){
+            throw {httpStatus: 400, message: "student doesn't exist."}
+        }
 
-            if(dbStudent.facilitatorId !== sessionOperation.getUserId(req)){
-                throw {httpStatus: 400, message: "You are not authorized to update this student."}
-            }
+        if(dbStudent.facilitatorId !== req.user.id){
+            throw {httpStatus: 400, message: "You are not authorized to update this student."}
+        }
 
-            return userModel.update({_id: student_id}, student);
-        })
-        .then(function(numAffected){
-            if(numAffected !== 1){
-                if(numAffected > 1){
-                    throw {httpStatus:400, message: "more than one row are updated."};
-                }else{
-                    throw {httpStatus:400, message: "no student is updated." + student_id};
-                }
+        return userModel.updateQ({_id: student_id}, student);
+    }).then(function(numAffected){
+        if(numAffected !== 1){
+            if(numAffected > 1){
+                throw {httpStatus:400, message: "more than one row are updated."};
+            }else{
+                throw {httpStatus:400, message: "no student is updated." + student_id};
             }
-            res.send({message: "update student success."});
-        })
-        .fail(function(err){
-            logger.error(err);
-            if(err.httpStatus){
-                return res.send(err.httpStatus, {message: err.message});
-            }
-            res.send(500, {message: "failed to update student."});
-        })
-        .done();
+        }
+        res.send({message: "update student success."});
+    }).fail(function(err){
+        next(err);
+    }).done();
 };
+
 
 exports.resetStudentPassword = function(req, res, next){
     var validateResult = utility.validateUser(req);
@@ -614,41 +573,32 @@ exports.resetStudentPassword = function(req, res, next){
         return res.send(400, {message: validateResult});
     }
 
-    var student = {};
-    var password = 'hcd1234';
-
-    student.password = utility.hashPassword(password);
+    var student = {
+        password : userModel.generateHashPassword('hcd1234')
+    };
 
     var student_id = req.body.student_id;
 
-    userModel.findOne({
+    userModel.findOneQ({
         _id: student_id
-    })
-        .then(function(dbStudent){
-            if(!dbStudent){
-                throw {httpStatus: 400, message: "student doesn't exist."}
-            }
+    }).then(function(dbStudent){
+        if(!dbStudent){
+            throw {httpStatus: 400, message: "student doesn't exist."}
+        }
 
-            return userModel.update({_id: student_id}, student);
-        })
-        .then(function(numAffected){
-            if(numAffected !== 1){
-                if(numAffected > 1){
-                    throw {httpStatus:400, message: "more than one row are updated."};
-                }else{
-                    throw {httpStatus:400, message: "no student is updated." + student_id};
-                }
+        return userModel.updateQ({_id: student_id}, student);
+    }).then(function(numAffected){
+        if(numAffected !== 1){
+            if(numAffected > 1){
+                throw {httpStatus:400, message: "more than one row are updated."};
+            }else{
+                throw {httpStatus:400, message: "no student is updated." + student_id};
             }
-            res.send({message: "update student success."});
-        })
-        .fail(function(err){
-            logger.error(err);
-            if(err.httpStatus){
-                return res.send(err.httpStatus, {message: err.message});
-            }
-            res.send(500, {message: "failed to update student."});
-        })
-        .done();
+        }
+        res.send({message: "update student success."});
+    }).fail(function(err){
+        next(err);
+    }).done();
 };
 
 
@@ -662,7 +612,7 @@ exports.searchStudent = function(req, res, next){
     //add for e4e
 
     var query = {
-        role : config.role.student
+        role : userRoleModel.roleList.student.id
     };
 
     if(req.query.student_type){
@@ -672,8 +622,8 @@ exports.searchStudent = function(req, res, next){
 
     //only facilitator and admin can search students
     //facilitator can only view its own students
-    if(sessionOperation.getUserRole(req) !== config.role.admin){
-        query.facilitatorId = sessionOperation.getUserId(req);
+    if(req.user.roleId !== userRoleModel.roleList.admin.id){
+        query.facilitatorId = req.user.id;
     }
 
     if(username) query.username = username;
@@ -683,15 +633,11 @@ exports.searchStudent = function(req, res, next){
     if(city) query.city = city;
     if(activated) query.activated = activated;
 
-    userModel.find(query)
-        .then(function(result){
-            res.send(result);
-        })
-        .fail(function(err){
-            logger.error(err);
-            res.send(500, {message: 'search failed'})
-        })
-        .done();
+    userModel.findQ(query).then(function(result){
+        res.send(result);
+    }).fail(function(err){
+        next(err);
+    }).done();
 }
 
 

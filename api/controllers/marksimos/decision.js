@@ -8,6 +8,8 @@ var brandDecisionModel        = require('../../models/marksimos/brandDecision.js
 var SKUDecisionModel          = require('../../models/marksimos/SKUDecision.js');
 var simulationResultModel     = require('../../models/marksimos/simulationResult.js');
 var seminarModel              = require('../../models/marksimos/seminar.js');
+var userRoleModel = require('../../models/user/userrole.js');
+
 var decisionCleaner           = require('../../convertors/decisionCleaner.js');
 var decisionConvertor         = require('../../convertors/decision.js');
 var logger                    = require('../../../common/logger.js');
@@ -24,12 +26,10 @@ var SKUInfoAssembler          = require('../../dataAssemblers/SKUInfo.js');
  */
 exports.submitDecision = function(req, res, next){
     var companyId = +req.query.companyId;
-    var period = req.session.currentPeriod;
-    var seminarId = req.session.seminarId;
 
-    if(!seminarId){
-        return res.send(403, {message: "You don't choose a seminar."});
-    }
+    var seminarId = req.gameMarksimos.currentStudentSeminar.seminarId;
+    var period = req.gameMarksimos.currentStudentSeminar.currentPeriod;
+
 
     if(!companyId){
         return res.json({message: "Invalid companyId"});
@@ -45,8 +45,7 @@ exports.submitDecision = function(req, res, next){
 
     var result = {};
 
-    companyDecisionModel.findOne(seminarId, period, companyId)
-    .then(function(decision){
+    companyDecisionModel.findOne(seminarId, period, companyId).then(function(decision){
         if(!decision){
             throw new Error("decision doesn't exist.");
         }
@@ -166,9 +165,9 @@ exports.submitDecision = function(req, res, next){
 
 
 exports.getDecision = function(req, res, next){
-    var seminarId = req.session.seminarId;
+    var seminarId = req.gameMarksimos.currentStudentSeminar.seminarId;
+    var period = req.gameMarksimos.currentStudentSeminar.currentPeriod;
 
-    var period = req.session.currentPeriod;
     var companyId = +req.query.companyId;
 
 
@@ -223,12 +222,11 @@ exports.updateSKUDecision = function(req, res, next){
     var SKUID = req.body.sku_id;
     var SKU = req.body.sku_data;
 
-    var period = req.session.currentPeriod;
-    var seminarId = req.session.seminarId;
+    var seminarId = req.gameMarksimos.currentStudentSeminar.seminarId;
+    var period = req.gameMarksimos.currentStudentSeminar.currentPeriod;
 
-    var userRole = req.session.userRole;
 
-    if(userRole !== config.role.student){
+    if(req.user.role !== userRoleModel.roleList.student.id){
         period = req.body.periodId;
         seminarId = req.body.seminarId;
     }
@@ -266,7 +264,7 @@ exports.updateSKUDecision = function(req, res, next){
 
     SKUDecisionModel.updateSKU(seminarId, period, companyId, brandId, SKUID, tempSKU)
     .then(function(doc){
-        res.send(200, {status: 1, message: 'update success.'});
+        res.status(200).send( {status: 1, message: 'update success.'});
     })
     .fail(function(err){
 
@@ -308,12 +306,11 @@ exports.updateBrandDecision = function(req, res, next){
 
     var companyId = +req.body.companyId;
 
-    var seminarId = req.session.seminarId;
-    var period = req.session.currentPeriod;
+    var seminarId = req.gameMarksimos.currentStudentSeminar.seminarId;
+    var period = req.gameMarksimos.currentStudentSeminar.currentPeriod;
 
-    var userRole = req.session.userRole;
 
-    if(userRole !== config.role.student){
+    if(req.user.role !== userRoleModel.roleList.student.id){
         period = req.body.periodId;
         seminarId = req.body.seminarId;
     }
@@ -369,12 +366,10 @@ exports.updateCompanyDecision = function(req, res, next){
     var company_data = req.body.company_data;
     var companyId = +req.body.companyId;
 
-    var period = req.session.currentPeriod;
-    var seminarId = req.session.seminarId;
+    var seminarId = req.gameMarksimos.currentStudentSeminar.seminarId;
+    var period = req.gameMarksimos.currentStudentSeminar.currentPeriod;
 
-    var userRole = req.session.userRole;
-
-    if(userRole !== config.role.student){
+    if(req.user.role !== userRoleModel.roleList.student.id){
         period = req.body.periodId;
         seminarId = req.body.seminarId;
     }
@@ -424,13 +419,13 @@ exports.updateCompanyDecision = function(req, res, next){
 };
 
 exports.addBrand = function(req, res, next){
-    var seminarId = req.session.seminarId;
+    var seminarId = req.gameMarksimos.currentStudentSeminar.seminarId;
+    var period = req.gameMarksimos.currentStudentSeminar.currentPeriod;
 
     if(!seminarId){
         return res.send(403, {message: "You don't choose a seminar."});
     }
 
-    var period = req.session.currentPeriod;
     var companyId = +req.body.companyId;
 
     var brand_name = req.body.brand_name;
@@ -518,13 +513,13 @@ exports.addBrand = function(req, res, next){
 };
 
 exports.addSKU = function(req, res, next){
-    var seminarId = req.session.seminarId;
+    var seminarId = req.gameMarksimos.currentStudentSeminar.seminarId;
+    var period = req.gameMarksimos.currentStudentSeminar.currentPeriod;
 
     if(!seminarId){
         return res.send(403, {message: "You don't choose a seminar."});
     }
 
-    var period = req.session.currentPeriod;
     var companyId = +req.body.companyId;
 
     var brand_id = req.body.brand_id;
@@ -552,13 +547,12 @@ exports.addSKU = function(req, res, next){
 };
 
 exports.deleteSKU = function(req, res, next){
-    var seminarId = req.session.seminarId;
+    var seminarId = req.gameMarksimos.currentStudentSeminar.seminarId;
+    var period = req.gameMarksimos.currentStudentSeminar.currentPeriod;
 
     if(!seminarId){
         return res.send(403, {message: "You don't choose a seminar."});
     }
-
-    var period = req.session.currentPeriod;
 
     var companyId = +req.params.company_id;
     var brand_id = req.params.brand_id;
@@ -584,13 +578,14 @@ exports.deleteSKU = function(req, res, next){
 
 
 exports.getProductPortfolio = function(req, res, next){
-    var seminarId = req.session.seminarId;
+    var seminarId = req.gameMarksimos.currentStudentSeminar.seminarId;
+    var period = req.gameMarksimos.currentStudentSeminar.currentPeriod;
+
 
     if(!seminarId){
         return res.send(403, {message: "You don't choose a seminar."});
     }
 
-    var period = req.session.currentPeriod;
     var companyId = +req.query.companyId;
 
     productPortfolioAssembler.getProductPortfolioForOneCompany(seminarId, period, companyId)
@@ -605,13 +600,13 @@ exports.getProductPortfolio = function(req, res, next){
 }
 
 exports.getSpendingDetails = function(req, res, next){
-    var seminarId = req.session.seminarId;
+    var seminarId = req.gameMarksimos.currentStudentSeminar.seminarId;
+    var period = req.gameMarksimos.currentStudentSeminar.currentPeriod;
 
     if(!seminarId){
         return res.send(403, {message: "You don't choose a seminar."});
     }
 
-    var period = req.session.currentPeriod;
     var companyId = +req.query.companyId;
 
     spendingDetailsAssembler.getSpendingDetails(seminarId, period, companyId)
@@ -627,13 +622,13 @@ exports.getSpendingDetails = function(req, res, next){
 
 
 exports.getSKUInfoFutureProjection = function(req, res, next){
-    var seminarId = req.session.seminarId;
+    var seminarId = req.gameMarksimos.currentStudentSeminar.seminarId;
+    var period = req.gameMarksimos.currentStudentSeminar.currentPeriod;
 
     if(!seminarId){
         return res.send(403, {message: "You don't choose a seminar."});
     }
 
-    var period = req.session.currentPeriod;
     var companyId = +req.query.companyId;
 
     var SKUID = req.params.sku_id;
@@ -655,18 +650,18 @@ exports.getSKUInfoFutureProjection = function(req, res, next){
 
 
 exports.getOtherinfo = function(req, res, next){
-    var seminarId = req.session.seminarId;
+    var seminarId = req.gameMarksimos.currentStudentSeminar.seminarId;
+    var period = req.gameMarksimos.currentStudentSeminar.currentPeriod;
 
     if(!seminarId){
         return res.send(403, {message: "You don't choose a seminar."});
     }
 
-    var currentPeriod = req.session.currentPeriod;
     var companyId = +req.query.companyId;
 
     Q.all([
-        spendingDetailsAssembler.getSpendingDetails(seminarId, currentPeriod, companyId),
-        simulationResultModel.findOne(seminarId, currentPeriod - 1)
+        spendingDetailsAssembler.getSpendingDetails(seminarId, period, companyId),
+        simulationResultModel.findOne(seminarId, period - 1)
     ])
     .spread(function(spendingDetails, lastPeriodResult){
         var totalInvestment = spendingDetails.companyData.totalInvestment;

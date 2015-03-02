@@ -7,17 +7,17 @@ util = require('util');
 
 
 exports.getQuestionnaire = function(req, res, next) {
-    var seminarId = req.session.seminarId;
-    var email = req.session.email;
+    var seminarId = req.gameMarksimos.currentStudentSeminar.seminarId;
+    var email = req.gameMarksimos.currentStudent.email;
 
     if (!seminarId) {
-        return res.send(400, {
+        return res.status(400).send( {
             message: "You don't choose a seminar."
         });
     }
 
     if (!email) {
-        return res.send(400, {
+        return res.status(400).send( {
             message: "Invalid email."
         });
     }
@@ -48,11 +48,11 @@ exports.getQuestionnaire = function(req, res, next) {
         })
         .fail(function(err) {
             if (err.httpStatus) {
-                return res.send(err.httpStatus, {
+                return res.status(400).send({
                     message: err.message
                 });
             }
-            res.send(500, {
+            res.status(500).send( {
                 message: "get questionnaire failed."
             })
         })
@@ -61,15 +61,11 @@ exports.getQuestionnaire = function(req, res, next) {
 
 exports.submitQuestionnaire = function(req, res, next) {
 
-   
-    var seminarId = req.session.seminarId;
-    var email = req.session.email;
+    var seminarId = req.gameMarksimos.currentStudentSeminar.seminarId;
+    var email = req.gameMarksimos.currentStudent.email;
+
     var questionnaire = req.body.questionnaire;
     var errorMsg = "";
-    //服务器端变量不存在则要重新登录
-    if (!seminarId || !email) {
-        errorMsg = "Please re login.";
-    }
 
     //客户端提交的变量验证 
     //q_OverallSatisfactionWithTheProgram   
@@ -95,24 +91,22 @@ exports.submitQuestionnaire = function(req, res, next) {
 
     var errors = req.validationErrors() || errorMsg;
     if (errors) {
-        res.send('There have been validation errors: ' + util.inspect(errors), 400);
-        return;
+        return res.status(400).send('There have been validation errors: ' + util.inspect(errors));
     }
  
     questionnaireModel.query.update({ seminarId: seminarId, email: email }, questionnaire, { upsert: true },
         function(err, numAffected) {
             if (err) {
                 var message = Array.isArray(err)
-                res.send(403, message);
+                res.status(400).send( message);
             } else {
-                res.send({
-                    message: 'Update success.'
-                });
+                res.status(200).send({ message: 'Update success.' });
             }
         });
-}
+};
 
-exports.getQuestionnaireList = function(req, res, next) {
+
+exports.getQuestionnaireListForAdmin = function(req, res, next) {
     //去除非法的seminarId
     var seminarId = +req.params.seminarId || 0;
 
@@ -140,7 +134,7 @@ exports.getQuestionnaireList = function(req, res, next) {
             res.status(200).send(result);
         }else {
             //未得到seminar，则很有可能是输入的seminarId无效
-            res.send(400, { message: "Invalid seminarId." });
+            res.status(400).send( { message: "Invalid seminarId." });
         }
     }, function(err) {
         //如果有异常，记录异常

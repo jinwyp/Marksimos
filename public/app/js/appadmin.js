@@ -18,6 +18,7 @@
 
         $scope.data = {
             admin: {
+                username : '',
                 email: '',
                 password: ''
             }
@@ -30,10 +31,9 @@
 
                     $window.location.href = "/marksimos/adminhome";
 
-                }).error(function(data, status, headers, config) {
-                    if (status == 400) {
-                        console.log(data, status);
-
+                }).error(function (data, status, headers, config) {
+                    console.log(data, status);
+                    if (status === 401 || status === 403) {
                         form.password.$valid = false;
                         form.password.$invalid = true;
                     }
@@ -61,6 +61,7 @@
 
         $scope.data = {
             currentUser: null,
+
             newDistributor: {
                 username: "",
                 email: "",
@@ -72,7 +73,7 @@
                 city: "shanghai",
                 district: "",
                 street: "",
-                num_of_license_granted: 0,
+                numOfLicense: 0,
                 gameType: ""
             },
             searchDistributor: {
@@ -93,7 +94,7 @@
                 city: "shanghai",
                 district: "",
                 street: "",
-                num_of_license_granted: 0
+                numOfLicense: 0
             },
             searchFacilitator: {
                 username: '',
@@ -107,14 +108,24 @@
                 email: "",
                 password: "",
                 mobilePhone: "",
-                country: null,
+                qq: "",
+
+                country: 'China',
                 state: "shanghai",
                 city: "shanghai",
+
+                firstName: "",
+                lastName: "",
+
                 occupation: "",
-                university: "",
-                firstname: "",
-                lastname: "",
-                student_type: 10 //10 B2B students,  20 B2C students, 30 Both B2C and B2B students
+                organizationOrUniversity: "",
+                studentType: "", //10 B2B students,  20 B2C students, 30 Both B2C and B2B students
+
+                studentTypeRadioOptions : [
+                    {value : 10, text : 'B2B Student'},
+                    {value : 20, text : 'B2C(E4E) Student'}
+                ]
+
             },
             searchStudent: {
                 username: '',
@@ -459,6 +470,7 @@
         };
         /********************  创建新的 Student  ********************/
         $scope.createNewStudent = function(form) {
+
             if (form.$valid) {
                 $http.post('/marksimos/api/admin/students', $scope.data.newStudent).success(function(data, status, headers, config) {
 
@@ -878,6 +890,8 @@
             init: function() {
 
                 var that = this;
+                $scope.css.currentSeminarId = /.+\/adminhomereport\/(\d+).*/.exec(window.location.href)[1] || 0;
+
                 //加载 All Comapany Decisions
                 that.loadingAllDecisions();
 
@@ -1313,7 +1327,6 @@
 
 
             loadingAllDecisions: function() {
-                $scope.css.currentSeminarId = /.+\/adminhomereport\/(\d+).*/.exec(window.location.href)[1] || 0;
 
                 if($scope.css.currentSeminarId){
                     Admin.getAllCompanyDecisionsOfAllPeriods($scope.css.currentSeminarId).success(function(data, status, headers, config) {
@@ -1330,14 +1343,12 @@
 
             },
             loadingFinalScoresData: function() {
-                var seminerID = /.+\/adminhomereport\/(\d+).*/.exec(window.location.href)[1] || 0;
-                Admin.getFinalScores(seminerID).success(function(data, status, headers, config) {
+                Admin.getFinalScores($scope.css.currentSeminarId).success(function(data, status, headers, config) {
                     $scope.data.tableFinalScore.data = data;                   
                 });
             },
             loadingQuestionnaireData: function() {
-                var seminerID = /.+\/adminhomereport\/(\d+).*/.exec(window.location.href)[1] || 0;
-                Admin.getQuestionnaire(seminerID).success(function(data, status, headers, config) {                  
+                Admin.getQuestionnaire($scope.css.currentSeminarId).success(function(data, status, headers, config) {
                     $scope.data.questionnaire.data = data;
                     if (data[0].studentList.length) {
                         $scope.data.questionnaire.currentQuestionnaire = data[0].studentList[0].questionnaire;
@@ -1362,7 +1373,7 @@
             loadingCompanyData: function() {
                 /********************  Table A1 Company Status  *******************/
                 //获取数据
-                AdminTable.getCompany().then(function(data, status, headers, config) {
+                AdminTable.getCompany($scope.css.currentSeminarId).then(function(data, status, headers, config) {
                     $scope.data.tableA1CompanyStatus.allCompanyData = data;
                     //设置默认公司
                     $scope.switchTableReportA1Company(data[0]);
@@ -1371,7 +1382,7 @@
             loadingFinancialData: function() {
                 /********************  Table A2 Financial Data  *******************/
                 //获取数据
-                AdminTable.getFinancial().then(function(data, status, headers, config) {
+                AdminTable.getFinancial($scope.css.currentSeminarId).then(function(data, status, headers, config) {
                     $scope.data.tableA2FinancialData.allData = data;
                     //设置默认的公司
                     $scope.switchTableReportA2Company(0);
@@ -1381,7 +1392,7 @@
             loadingProfitabilityData: function() {
                 /********************  Table A4 Profitability Evolution  *******************/
                 //获取数据
-                AdminTable.getProfitability().then(function(data, status, headers, config) {
+                AdminTable.getProfitability($scope.css.currentSeminarId).then(function(data, status, headers, config) {
                     $scope.data.tableA4ProfitabilityEvolution.allData = data;
                     //设置默认的公司
                     $scope.switchTableReportA4Company(0);
@@ -1390,7 +1401,7 @@
             loadingCompetitorIntelligenceData: function() {
                 /********************  Table B2 Competitor Intelligence  *******************/
                 //获取数据
-                AdminTable.getCompetitorIntelligence().then(function(data, status, headers, config) {
+                AdminTable.getCompetitorIntelligence($scope.css.currentSeminarId).then(function(data, status, headers, config) {
                     $scope.data.tableB2CompetitorIntelligence.allData = data;
                     $scope.data.tableB2CompetitorIntelligence.currentTableData = $scope.data.tableB2CompetitorIntelligence.allData.acquiredProductionAndLogisticsEfficiency;
                     $scope.data.tableB2CompetitorIntelligence.chartData = chartReport.formatChartData($scope.data.tableB2CompetitorIntelligence.allData.acquiredProductionAndLogisticsEfficiency);
@@ -1399,7 +1410,7 @@
             loadingSegmentDistributionData: function() {
                 /********************  Table C3 Segment Distribution  *******************/
                 //获取数据
-                AdminTable.getSegmentDistribution().then(function(data, status, headers, config) {
+                AdminTable.getSegmentDistribution($scope.css.currentSeminarId).then(function(data, status, headers, config) {
                     $scope.data.tableC3SegmentDistribution.allData = data;
                     $scope.data.tableC3SegmentDistribution.currentTableData = $scope.data.tableC3SegmentDistribution.allData.marketShareVolume;
                     $scope.data.tableC3SegmentDistribution.chartData = chartReport.formatChartData($scope.data.tableC3SegmentDistribution.currentTableData);
@@ -1408,7 +1419,7 @@
             loadingMarketTrendsData: function() {
                 /********************  Table C5 Market Trends  *******************/
                 //获取数据
-                AdminTable.getMarketTrends().then(function(data, status, headers, config) {
+                AdminTable.getMarketTrends($scope.css.currentSeminarId).then(function(data, status, headers, config) {
                     $scope.data.tableC5MarketTrends.allData = data;
                     $scope.switchTableMenuLevel1C5(1, $scope.css.tableReportTab, 'averageDisplayPriceStdPack', '');
                 });
@@ -1416,7 +1427,7 @@
             loadingMarketIndicatorsData: function() {
                 /********************  Table C6 Market Indicators  *******************/
                 //获取数据
-                AdminTable.getMarketIndicators().then(function(data, status, headers, config) {
+                AdminTable.getMarketIndicators($scope.css.currentSeminarId).then(function(data, status, headers, config) {
                     $scope.data.tableC6MarketIndicators.allData = data;
                 });
             },
@@ -1424,7 +1435,7 @@
 
             loadingChartA3InventoryReportData: function() {
                 /********************  Chart A3  ********************/
-                AdminChart.getInventoryReport().then(function(data, status, headers, config) {
+                AdminChart.getInventoryReport($scope.css.currentSeminarId).then(function(data, status, headers, config) {
                     $scope.data.chartA3InventoryReport.allData = data;
                     $scope.data.chartA3InventoryReport.currentCompany = $scope.data.chartA3InventoryReport.allData[0];
                     $scope.data.chartA3InventoryReport.data = $scope.data.chartA3InventoryReport.allData[0].data;
@@ -1435,38 +1446,38 @@
             loadingChartB1Data: function() {
                 /********************  Table B1  *******************/
                 //Chart B1 1 Market Share In Value
-                AdminChart.getMarketShareInValue().then(function(data, status, headers, config) {
+                AdminChart.getMarketShareInValue($scope.css.currentSeminarId).then(function(data, status, headers, config) {
                     $scope.data.chartB11MarketShareInValue.data = data;
                 });
                 //Chart B1 2 Market Share In Volume
-                AdminChart.getMarketShareInVolume().then(function(data, status, headers, config) {
+                AdminChart.getMarketShareInVolume($scope.css.currentSeminarId).then(function(data, status, headers, config) {
                     $scope.data.chartB12MarketShareInVolume.data = data;
                 });
                 //Chart B1 3 Mind Space Share
-                AdminChart.getMindSpaceShare().then(function(data, status, headers, config) {
+                AdminChart.getMindSpaceShare($scope.css.currentSeminarId).then(function(data, status, headers, config) {
                     $scope.data.chartB13MindSpaceShare.data = data;
                 });
                 //Chart B1 4 Shelf Space Share
-                AdminChart.getShelfSpaceShare().then(function(data, status, headers, config) {
+                AdminChart.getShelfSpaceShare($scope.css.currentSeminarId).then(function(data, status, headers, config) {
                     $scope.data.chartB14ShelfSpaceShare.data = data;
                 });
             },
             loadingChartB3Data: function() {
                 /********************  Table B3  *******************/
                 //Table B3-1 Total Investment
-                AdminChart.getTotalInvestment().then(function(data, status, headers, config) {
+                AdminChart.getTotalInvestment($scope.css.currentSeminarId).then(function(data, status, headers, config) {
                     $scope.data.chartB31TotalInvestment.data = data;
                 });
                 //Table B3-2 Net Profit By Companies
-                AdminChart.getNetProfitByCompanies().then(function(data, status, headers, config) {
+                AdminChart.getNetProfitByCompanies($scope.css.currentSeminarId).then(function(data, status, headers, config) {
                     $scope.data.chartB32NetProfitByCompanies.data = data;
                 });
                 //Table B3-3 Return On Investment
-                AdminChart.getReturnOnInvestment().then(function(data, status, headers, config) {
+                AdminChart.getReturnOnInvestment($scope.css.currentSeminarId).then(function(data, status, headers, config) {
                     $scope.data.chartB33ReturnOnInvestment.data = data;
                 });
                 //Table B3-4 Investments Versus Budget
-                AdminChart.getInvestmentsVersusBudget().then(function(data, status, headers, config) {
+                AdminChart.getInvestmentsVersusBudget($scope.css.currentSeminarId).then(function(data, status, headers, config) {
                     $scope.data.chartB34InvestmentsVersusBudget.data = data;
                 });
 
@@ -1474,58 +1485,58 @@
             loadingChartB4Data: function() {
 
                 //Table B4-1 Market Salues Value
-                AdminChart.getMarketSalesValue().then(function(data, status, headers, config) {
+                AdminChart.getMarketSalesValue($scope.css.currentSeminarId).then(function(data, status, headers, config) {
                     $scope.data.chartB41MarketSalesValue.data = data;
                 });
                 //Table B4-2 Market Salues Volume
-                AdminChart.getMarketSalesVolume().then(function(data, status, headers, config) {
+                AdminChart.getMarketSalesVolume($scope.css.currentSeminarId).then(function(data, status, headers, config) {
                     $scope.data.chartB42MarketSalesVolume.data = data;
                 });
                 //Table B4-3 Total Inventory At Facotry
-                AdminChart.getTotalInventoryAtFactory().then(function(data, status, headers, config) {
+                AdminChart.getTotalInventoryAtFactory($scope.css.currentSeminarId).then(function(data, status, headers, config) {
                     $scope.data.chartB43TotalInventoryAtFactory.data = data;
                 });
                 //Table B4-4 Total Inventory At Trade
-                AdminChart.getTotalInventoryAtTrade().then(function(data, status, headers, config) {
+                AdminChart.getTotalInventoryAtTrade($scope.css.currentSeminarId).then(function(data, status, headers, config) {
                     $scope.data.chartB44TotalInventoryAtTrade.data = data;
                 });
             },
             loadingChartC1Data: function() {
                 //Chart C1-1 Segments Leader By Value Price Sensitive
-                AdminChart.getSegmentsLeadersByValuePriceSensitive().then(function(data, status, headers, config) {
+                AdminChart.getSegmentsLeadersByValuePriceSensitive($scope.css.currentSeminarId).then(function(data, status, headers, config) {
                     $scope.data.chartC11SegmentsLeadersByValuePriceSensitive.allData = data.data;
                     $scope.data.chartC11SegmentsLeadersByValuePriceSensitive.currentPeriod = $scope.data.chartC11SegmentsLeadersByValuePriceSensitive.allData.length - 4;
                     $scope.data.chartC11SegmentsLeadersByValuePriceSensitive.data = $scope.data.chartC11SegmentsLeadersByValuePriceSensitive.allData[$scope.data.chartC11SegmentsLeadersByValuePriceSensitive.currentPeriod + 3];
                 });
                 //Chart C1-2 Segments Leaders By Value Pretenders
-                AdminChart.getSegmentsLeadersByValuePretenders().then(function(data, status, headers, config) {
+                AdminChart.getSegmentsLeadersByValuePretenders($scope.css.currentSeminarId).then(function(data, status, headers, config) {
                     $scope.data.chartC12SegmentsLeadersByValuePretenders.allData = data.data;
                     $scope.data.chartC12SegmentsLeadersByValuePretenders.data = $scope.data.chartC12SegmentsLeadersByValuePretenders.allData[$scope.data.chartC11SegmentsLeadersByValuePriceSensitive.currentPeriod + 3];
                 });
                 //Chart C1-3 Segments Leaders By Value Moderate
-                AdminChart.getSegmentsLeadersByValueModerate().then(function(data, status, headers, config) {
+                AdminChart.getSegmentsLeadersByValueModerate($scope.css.currentSeminarId).then(function(data, status, headers, config) {
                     $scope.data.chartC13SegmentsLeadersByValueModerate.allData = data.data;
                     $scope.data.chartC13SegmentsLeadersByValueModerate.data = $scope.data.chartC13SegmentsLeadersByValueModerate.allData[$scope.data.chartC11SegmentsLeadersByValuePriceSensitive.currentPeriod + 3];
                 });
                 //Chart C1-4 Segments Leaders By Value Good Life
-                AdminChart.getSegmentsLeadersByValueGoodLife().then(function(data, status, headers, config) {
+                AdminChart.getSegmentsLeadersByValueGoodLife($scope.css.currentSeminarId).then(function(data, status, headers, config) {
                     $scope.data.chartC14SegmentsLeadersByValueGoodLife.allData = data.data;
                     $scope.data.chartC14SegmentsLeadersByValueGoodLife.data = $scope.data.chartC14SegmentsLeadersByValueGoodLife.allData[$scope.data.chartC11SegmentsLeadersByValuePriceSensitive.currentPeriod + 3];
                 });
                 //Chart C1-5 Segments Leaders By Value Ultimate
-                AdminChart.getSegmentsLeadersByValueUltimate().then(function(data, status, headers, config) {
+                AdminChart.getSegmentsLeadersByValueUltimate($scope.css.currentSeminarId).then(function(data, status, headers, config) {
                     $scope.data.chartC15SegmentsLeadersByValueUltimate.allData = data.data;
                     $scope.data.chartC15SegmentsLeadersByValueUltimate.data = $scope.data.chartC15SegmentsLeadersByValueUltimate.allData[$scope.data.chartC11SegmentsLeadersByValuePriceSensitive.currentPeriod + 3];
                 });
                 //Chart C1-6 Segments Leaders By Value Pragmatic
-                AdminChart.getSegmentsLeadersByValuePragmatic().then(function(data, status, headers, config) {
+                AdminChart.getSegmentsLeadersByValuePragmatic($scope.css.currentSeminarId).then(function(data, status, headers, config) {
                     $scope.data.chartC16SegmentsLeadersByValuePragmatic.allData = data.data;
                     $scope.data.chartC16SegmentsLeadersByValuePragmatic.data = $scope.data.chartC16SegmentsLeadersByValuePragmatic.allData[$scope.data.chartC11SegmentsLeadersByValuePriceSensitive.currentPeriod + 3];
                 });
             },           
             loadingChartC2Data: function() {
                 //Chart C2 Perception Map
-                AdminChart.getPerceptionMap().then(function(data, status, headers, config) {                   
+                AdminChart.getPerceptionMap($scope.css.currentSeminarId).then(function(data, status, headers, config) {
                     $scope.data.chartC21PerceptionMap.allData = data.data;
                     $scope.data.chartC21PerceptionMap.currentPeriod = $scope.data.chartC21PerceptionMap.allData.length - 4;
                     $scope.data.chartC21PerceptionMap.data = $scope.data.chartC21PerceptionMap.allData[$scope.data.chartC21PerceptionMap.currentPeriod + 3];
@@ -1534,19 +1545,19 @@
             },
             loadingChartC4Data: function() {
                 //Table C4-1 Growth Rate In Volume
-                AdminChart.getGrowthRateInVolume().then(function(data, status, headers, config) {
+                AdminChart.getGrowthRateInVolume($scope.css.currentSeminarId).then(function(data, status, headers, config) {
                     $scope.data.chartC41GrowthRateInVolume.data = data;
                 });
                 //Table C4-2 Growth rate In Value
-                AdminChart.getGrowthRateInValue().then(function(data, status, headers, config) {
+                AdminChart.getGrowthRateInValue($scope.css.currentSeminarId).then(function(data, status, headers, config) {
                     $scope.data.chartC42GrowthRateInValue.data = data;
                 });
                 //Table C4-3 Net market Price
-                AdminChart.getNetMarketPrice().then(function(data, status, headers, config) {
+                AdminChart.getNetMarketPrice($scope.css.currentSeminarId).then(function(data, status, headers, config) {
                     $scope.data.chartC43NetMarketPrice.data = data;
                 });
                 //Table C4-4 Segment Value Share Total Market
-                AdminChart.getSegmentValueShareTotalMarket().then(function(data, status, headers, config) {
+                AdminChart.getSegmentValueShareTotalMarket($scope.css.currentSeminarId).then(function(data, status, headers, config) {
                     $scope.data.chartC44SegmentValueShareTotalMarket.data = data;
                 });
             }

@@ -80,3 +80,8 @@ marksimos.v12.suo
 Scripts/*
 marksimos.njsproj
 .ntvs_analysis.dat
+obj/Debug/marksimos.njsproj.FileListAbsolute.txt
+obj/Debug/marksimos.njsprojResolveAssemblyReference.cache
+bin/Microsoft.NodejsTools.WebRole.dll
+app-debug.js
+app-debug.js

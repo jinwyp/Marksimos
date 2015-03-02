@@ -1,0 +1,901 @@
+﻿@import "icon_b2c/*.png";
+@import "compass/css3";
+@import "compass/utilities/general/float";
+
+$color_white: #ffffff;
+$color_profile_detail_title: #d98348;
+$color_profile_tip: #d9d9d9;
+$color_register_button: #c42e0d;
+$color_register_button_border: #7e200b;
+$color_register_button_hover: #7e200b;
+$color_register_button_hover_border: #ca3413;
+
+
+@mixin flippy($speed: 0.5s, $perspective: 500, $bgcolor: white) {
+  position: relative;
+  @include perspective($perspective);
+  .front, .back {
+    background-color: $bgcolor;
+    @include transition(all $speed ease-in-out);
+    @include backface-visibility(hidden);
+    @include transform-style(preserve-3d);
+    height: 100%;
+    width: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+  }
+  .front {   
+    .no-csstransforms3d & {
+      @include opacity(1);
+    }
+  }
+  .back {	
+    @include rotateY(180deg);	
+    .no-csstransforms3d & {
+      visibility: hidden;
+	  display:none;
+       @include opacity(0);
+    }
+  }
+  &:hover {
+    .front {
+      @include rotateY(180deg);
+      .no-csstransforms3d & {
+        visibility: hidden;
+      }
+    }
+    .back {
+      @include rotateY(360deg);
+      .no-csstransforms3d & {
+        visibility: visible;
+         @include opacity(1);
+      }
+    }
+  }
+}
+
+
+@mixin registerButton{
+	border-style:none;
+	padding: 6px 60px;
+	color:$color_white;
+	font-size:20px;
+	font-weight:900;
+	background-color:$color_register_button;
+//	border-bottom:2px solid $color_register_button_border;
+	@include box-shadow($color_register_button_border 0px 2px 4px);
+	@include border-radius(0px);
+
+	&:hover,
+	&:focus{
+		color:$color_white;
+		background-color:$color_register_button_hover;
+//		border-bottom:2px solid #ca3413;
+	}
+}
+
+
+
+
+/********************  Angular JS 首次载入页面默认隐藏模板显示  ********************/
+
+[ng\:cloak], [ng-cloak], [data-ng-cloak], [x-ng-cloak], .ng-cloak, .x-ng-cloak {
+	display: none !important;
+}
+
+
+html{
+  height: 100%;
+}
+body{
+	min-width:1280px;
+	font-family: "Microsoft YaHei" ! important;
+	font-size:16px;
+	min-height: 100%;
+}
+.b2c-container {
+    width: 1280px;
+    margin: 0 auto;
+    padding: 0 0;
+    height: 82px;	
+}
+
+
+
+.b2c-header {
+    height: 82px;
+	background-color:#bd2a0b;
+	$icon-repeat: repeat-x;
+	background-image:url(../images/b2c_nav_1x82.png);
+
+	.button{
+		margin-top:30px;
+		width:49px;
+		height:23px;
+		font-size:12px;
+		@include inline-block;	
+		@include icon_b2c-sprite(b2c_login_49x23);		
+		&:hover{
+			@include icon_b2c-sprite(b2c_login_49x23_hover);						
+		}
+	}
+
+
+	.b2c-logo {
+		margin-left: 157px;
+		margin-top: 12px;
+		float:left;
+	}
+
+	.b2c-login {
+		float: right;
+		width: 600px;
+		height: 82px;
+		overflow: hidden;
+	}
+
+
+	.b2c-trans{
+		margin-right:5px;
+		margin-top:10px;
+		padding-top:20px;
+		color: #fff;
+		font-size: 12px;
+		.selected{
+			background-color:#7f1a03;
+		}
+		span{
+			cursor:pointer;
+			display:block;
+			float:right;
+			margin-right:7px;
+			width:20px;
+			height:20px;
+			line-height: 20px;
+			font-weight:bold;
+			text-align:center;
+			color:#eda494;
+			background-color:#b92909;
+			border:1px solid #eda494;
+
+			&:hover{
+				background-color:#7f1a03;
+			}
+		}
+	}
+
+	.b2c-login-box{
+		margin-right: 50px;
+	}
+
+	.b2c-login-field {
+		float: left;
+		width: 165px;
+		color: #fff;
+		font-size: 12px;
+		margin-top:10px;
+		div {
+			line-height: 20px;
+			height: 20px;
+		}
+
+		label, a{
+			color:#EDA694 !important;
+			padding-left:2px;
+			vertical-align:top;
+		}
+	}
+
+	.b2c-login-input {
+		width: 150px;
+		padding: 0;
+		font-size: 12px;
+		height: 20px;
+		line-height: 20px;
+		border: solid #932F18 1px;
+		color:#333;
+	}
+
+}
+
+
+
+.b2c-footer-fix{
+	position:fixed;
+	width:100%;
+	bottom:0;
+}
+.b2c-footer{
+	background-color:#121318;
+	height:126px;
+}
+.b2c-footer-content{
+	width:900px;
+	margin:0 auto;	
+	height:126px;	
+	font-size:12px;
+	padding-top:37px;	
+	a{
+		margin-right:65px;
+		margin-top:37px;
+		color:#fff;
+	}
+	img{
+		margin-left:80px;
+	}
+	
+}
+
+.middle{
+	height:570px;
+}
+.left{	
+	padding-left:132px;
+	padding-top:60px;
+	@include float-right;
+}
+.right{			
+	@include float-right;
+	margin-left:100px;
+	margin-right:50px;	
+}
+
+
+
+
+/********************  Register Form Left Part  ********************/
+
+.b2c-man{	
+	@include inline-block;
+	height:357px;
+}
+.man1{
+	width:133px;	
+	@include icon_b2c-sprite(b2c_man_1);	
+	&:hover{		
+		@include icon_b2c-sprite(b2c_man_1_hover);						
+	}
+}
+.man2{
+	width:117px;	
+	@include icon_b2c-sprite(b2c_man_2);	
+	&:hover{		
+		@include icon_b2c-sprite(b2c_man_2_hover);						
+	}
+}
+.man3{
+	width:127px;
+	@include icon_b2c-sprite(b2c_man_3);	
+	&:hover{		
+		@include icon_b2c-sprite(b2c_man_3_hover);						
+	}
+}
+.man4{
+	width:114px;	
+	@include icon_b2c-sprite(b2c_man_4);	
+	&:hover{		
+		@include icon_b2c-sprite(b2c_man_4_hover);						
+	}
+}
+.b2c-man-title{	
+	margin-top:40px;
+	margin-left:75px;
+	font-size:20px;
+	color:#999;
+	bottom:100px;	
+}
+
+
+
+/********************  Register Form Right Part ********************/
+
+.reg-form{
+
+	.title{
+		font-weight:900;
+		font-size:24px;
+		margin-top:100px;
+		margin-bottom: 20px;
+	}
+	input[type=text],input[type=password],input[type=email]{
+		width:395px;		
+		&:focus{
+			outline: none !important;	
+			background-color:#FFFFEE;	
+			@include input-placeholder {
+				color:#333;			
+			}
+		}
+	}
+	.female{
+		margin-left:15px;
+	}	
+	button{
+		@include registerButton
+	}
+	.radio{		
+		padding:10px 0px;			
+		.err-msg{
+			margin-top: -7px;
+		}
+	}
+	.err-msg{
+		right:100%;
+		margin-top: -44px;
+		margin-right: 10px;
+		z-index:999;
+		position: absolute;
+		width:240px;
+		color: #FFFFFF;
+		background: #da8449;
+		height: 40px;
+		line-height: 40px;
+		text-align: center;		
+		border-radius: 6px;
+		&:after{
+			content: '';
+			position: absolute;
+			top: 50%;
+			left: 100%;
+			margin-top: -8px;
+			width: 0; height: 0;
+			border-left: 8px solid #da8449;
+			border-top: 8px solid transparent;
+			border-bottom: 8px solid transparent;
+		}
+	}
+}
+
+
+.reg-verify-account{
+	padding-top:100px;
+	padding-left:170px;
+	font-weight:700;
+	letter-spacing:5px;
+	color:#999;
+
+	.tip-header{
+		margin-left:0px;
+	}
+	a{
+		letter-spacing:0;
+	}
+	p{
+		font-size:18px;
+		margin-top:20px;
+		margin-left:40px;
+	}
+}
+
+
+/********************  Index Page Below Pics ********************/
+
+.down-box{
+	height:550px;
+	background-color:#c42e0d;
+	padding:105px 0px 0px 0px;
+
+	.pic-area{
+		height:295px;
+		padding-left:157px;
+		overflow:hidden;
+	}
+
+
+	.pic{
+		width:255px;
+		height:295px;
+		margin-right:100px;
+		float:left;
+	}
+	.pic-1{
+		margin-top:20px;
+		.front{
+			@include icon_b2c-sprite(whats-hcd-1);
+		}
+		.back{
+			@include icon_b2c-sprite(whats-hcd-1-back);
+		}
+	}
+	.pic-2{
+		margin-top:20px;
+		.front{
+			@include icon_b2c-sprite(whats-hcd-2);
+		}
+		.back{
+			@include icon_b2c-sprite(whats-hcd-2-back);
+		}
+	}
+	.pic-3{
+		margin-top:20px;
+		.front{
+			@include icon_b2c-sprite(whats-hcd-3);
+		}
+		.back{
+			@include icon_b2c-sprite(whats-hcd-3-back);
+		}
+	}
+	.pic-4{
+		.front{
+			@include icon_b2c-sprite(whats-hcd-4);
+		}
+		.back{
+			@include icon_b2c-sprite(whats-hcd-4-back);
+		}
+	}
+	.pic-5{
+		.front{
+			@include icon_b2c-sprite(whats-hcd-5);
+		}
+		.back{
+			@include icon_b2c-sprite(whats-hcd-5-back);
+		}
+	}
+	.pic-6{
+		.front{
+			@include icon_b2c-sprite(whats-hcd-6);
+		}
+		.back{
+			@include icon_b2c-sprite(whats-hcd-6-back);
+		}
+	}
+
+	.flip-container{
+		width:255px;
+		height:255px;
+		position: relative;
+		@include flippy(0.6s,1000,#c42e0d);
+	}
+	.back {
+		font-size:12px;
+		color:#fff;
+		padding-top:35px;
+		.title{
+			text-indent:0;
+			text-align:center;
+		}
+		p{
+			text-align:justify;;
+			text-indent:2em;
+			line-height:25px;
+			padding:0 25px;
+		}
+	}
+	.switch-button{
+		text-align:center;
+		margin-top:60px;
+		margin-left:2px;
+		a{
+			margin-right:75px;
+			color:#fff;
+			font-weight:700;
+			text-decoration:none;
+			padding:10px 20px;
+			&:hover{
+				text-decoration:none;
+			}
+		}
+		.selected{
+			padding:8px 18px;
+			border:2px solid #fff;
+			@include border-radius(5px, 5px);
+		}
+	}
+}
+
+
+
+
+/********************  Login Form  ********************/
+.b2c-login-main{
+	padding-top:100px;
+	padding-left:250px;
+	vertical-align:top;
+
+	.title{
+		font-weight:900;
+		font-size:24px;
+	}
+
+	.form-group{
+		width:290px;	
+	}
+	.checkbox-inline{
+		font-size:12px;
+		display: inline;
+	}
+
+	.b2c-icon{
+		margin-top:23px;
+		width:180px;
+		height:180px;	
+		@include inline-block;
+		@include icon_b2c-sprite(login-icon);	
+	}
+	.b2c-login-area{
+		width:360px;
+		height:365px;
+		background-color:#dedede;
+		@include inline-block;		
+	}
+	.b2c-login-errmsg{
+		background-color:rgb(255,230,225);
+		padding:5px 10px;
+		font-size:12px;
+	}
+	.btn{
+		@include registerButton
+	}
+	.register{
+		margin-left: 10px;
+	}
+	.forgot-password{
+		font-size:12px;
+		margin-top:15px;
+	}
+}
+
+
+/********************  Verify Email  ********************/
+.b2c-top-line{
+	background-color:rgb(79,85,101);
+	color:rgb(127,137,162);
+	height:60px;
+	line-height:60px;
+	vertical-align:middle;
+	i{
+		margin-right:10px;
+	}
+
+	label{
+		margin-left:170px;
+		font-size:20px;
+	}
+	span{
+		margin-left:200px;
+		margin-right:30px;
+		font-size:16px;
+	}
+	a{
+		color:rgb(127,137,162);
+	}
+	.active{
+		color:rgb(182,189,215);
+	}
+}
+
+
+.b2c-enter-email{
+	.b2c-prints{
+		margin-top:44px;
+		margin-left:260px;
+		height:180px;
+		width:180px;
+		@include icon_b2c-sprite(b2c_prints);
+	}
+	h3{
+		margin-top:67px;
+		margin-bottom:20px;
+	}
+
+	button{
+		margin-top:11px;
+		@include registerButton
+	}
+
+	.err-msg{
+		background-color:rgb(255,230,225);
+		padding:5px 10px;
+		font-size:12px;
+	}
+
+	hr{
+		width:100%;
+		margin-top:30px;
+	}
+
+}
+
+
+
+.b2c-enter-code{
+	.b2c-code{
+		margin-top:44px;
+		margin-left:260px;
+		height:180px;
+		width:180px;
+		@include icon_b2c-sprite(b2c_prints);
+	}
+	h4{
+		margin-top:60px;
+		margin-bottom:20px;
+	}
+	input[type=text]{
+		letter-spacing:10px;
+	}
+
+	button{
+		@include registerButton;
+		margin-right:10px;
+	}
+
+	.err-msg{
+		background-color:rgb(255,230,225);
+		padding:5px 10px;
+		font-size:12px;
+	}
+
+	hr{
+		width:100%;
+		margin-top:30px;
+	}
+}
+
+
+
+
+
+
+
+
+/********************  User Profile  ********************/
+$left_of_avatar: 44px;
+$lineHeight_button: 1.8;
+
+
+@mixin triangle ($borderWidth: 5px, $rotate: -45deg, $borderColor: #000) {
+	border: $borderWidth solid;
+	border-left-color: transparent;
+	border-bottom-color: transparent;
+	transform: rotate($rotate);
+	width: 0;
+}
+
+.profile-body {
+	background-color: #ECEDE8;
+}
+
+.profile-content {
+	padding-left: 30px;
+	padding-right: 30px;
+
+	& > header {
+		background-color: $color_white;
+		margin-bottom: 10px;
+		position: relative;
+		nav {
+			margin-top: 19px;
+			margin-left: 160px;
+			margin-bottom: 14px;
+			text-align: center;
+			width: 350px;
+
+			&>div>div:not(:last-child){
+				border-right: 1px solid $color_profile_tip;
+			}
+
+			.selected {
+				border-bottom: solid #C22D0F;
+				padding: 12px;
+				font-weight: bolder;
+			}
+			.small-down-triangle {
+				@include triangle(4px, 135deg);
+				position: absolute;
+				bottom: 10px;
+				right: 25px;
+			}
+		}
+	}
+	section {
+		background-color: $color_white;
+	}
+
+	.banner {
+		height: 200px;
+		background-color: #550000;
+	}
+	.user-info {
+		position: absolute;
+		top: 120px;
+		left: $left_of_avatar;
+		width: 300px;
+
+		.profile-head {
+			float: left;
+			width: 120px;
+			height: 120px;
+		}
+		.text-info {
+			color: $color_white;
+			float: left;
+			margin-top: 1em;
+			margin-left: 1.5em;
+			.profile-username {
+				font-size: 1.5em;
+				font-weight: bold;
+			}
+		}
+	}
+	.profile-section {
+		padding-top: 2em;
+		@include border-radius(7px);
+		margin-bottom: 20px;
+	}
+}
+
+.detail-nav {
+  	line-height: 2;
+  	text-align: center;
+	max-width: 300px;
+	padding-left: $left_of_avatar;
+  	ul, li {
+		list-style: none;
+		padding-left: 0;
+	}
+	li {
+		border: 1px solid black;
+		border-bottom: none;
+	}
+	li:last-child {
+		border-bottom: solid;
+		border-width: 1px;
+	}
+	.avatar {
+		width: 100%;
+		height: 190px;
+		margin-bottom: 20px;
+		@include border-radius(0.3em);
+	}
+	.edit-title {
+		line-height: 2.5;
+		position: relative;
+	}
+	.upload-avatar-button {
+		background-color: #741F01;
+		color: $color_white;
+		text-decoration: underline;
+	}
+	.up-triangle {
+		@include triangle();
+		position: absolute;
+		left: 0;
+		right: 0;
+		margin: 0 auto;
+		bottom: -5px;
+	}
+	.selected {
+		background-color: $color_profile_detail_title;
+		color: $color_white;
+	}
+}
+
+.upload-avatar-window {
+	padding:1em;
+	text-align: left;
+	top: 350px;
+	z-index:100;
+	position: fixed;
+	left: 50%;
+	margin-left: -250px;
+	width: 500px;
+	header {
+		background-color: #bd2a0b;
+		color: $color_white;
+		padding-left: 1em;
+	}
+	main {
+		padding:30px 30px 20px;
+		background-color: $color_white;
+		.avatar-window-icon {
+			width: 100px;
+			height: 100px;
+			margin-right: 12px;
+		}
+		& > div {
+			@include inline-block;
+			font-size: 0.9em;
+		}
+		.select-file {
+			font-weight: normal;
+			button {
+				border-style: none;
+				@include border-radius(2px);
+				@include box-shadow(#E2E2E2 0px 2px 4px);
+				background-color: #E2E2E2;
+				margin-right: 8px;
+				line-height: $lineHeight_button;
+			}
+		}
+		font-weight: bolder;
+	}
+	footer {
+		background-color: #ddd;
+		overflow: hidden;
+		button {
+			float: right;
+			border-style: none;
+			@include border-radius(0px);
+			@include box-shadow(#6C6C6C 0px 2px 4px);
+			width: 80px;
+			background-color: #6C6C6C;
+			margin: 10px;
+			font-size: 0.8em;
+			line-height: 1.8;
+			color: $color_white;
+		}
+	}
+	.avatar-border {
+		top: 0;
+		left: 0;
+		width: 100%;
+		height: 100%;
+		position:absolute;
+		z-index: -1;
+		border:1em solid rgba(128, 128, 128, 0.55);
+		@include border-radius(1em);
+	}
+}
+
+.profile-detail {
+	label {
+		font-weight: normal;
+	}
+	form {
+		border: 1px solid;
+		border-top: none;
+		padding: 1em;
+	}
+	form > div > div {
+		margin-bottom: 0.5em;
+	}
+	padding-right: 2em;
+
+	.profile-detail-title {
+		background-color: $color_profile_detail_title;
+		color: $color_white;
+		padding-left:0.8em;
+		line-height: 1.8;
+	}
+	.profile-detail-tip {
+		padding-left:0.8em;
+		background-color: $color_profile_tip;
+		margin-bottom: 0.8em;
+		span {
+			line-height: 2;
+		}
+	}
+	.done-button {
+		margin: 0.2em 0.4em;
+		background-color: #444444;
+		color: $color_white;
+		padding: 0.2em 0.4em;
+		float: right;
+		font-size: 0.9em;
+	}
+	.profile-button-container {
+		padding: 1.2em 0 0;
+		button {
+			margin-right: 0.5em;
+			padding: 0.2em 0.5em;
+			width: 44%;
+
+			border-style:none;
+			color:$color_white;
+			//	border-bottom:2px solid $color_register_button_border;
+
+			@include border-radius(0px);
+		}
+		button[type=submit] {
+			background-color: #B82A0C;
+			@include box-shadow($color_register_button_border 0px 2px 4px);
+		}
+		.cancel {
+			background-color: #797979;
+			@include box-shadow(#797979 0px 2px 4px);
+		}
+	}
+}
+
+

@@ -37,8 +37,10 @@
 
     angular.module('marksimos.filter').directive('filterpercentage', percentageInputFilter);
     angular.module('marksimos.filter').directive('filternumber', numberInputFilter);
-   
- 
+
+
+    angular.module('marksimos.filter').filter('emailaddress', emailAddressFilter);
+
 
     function userSegmentFilter () {
         return function(input) {
@@ -124,7 +126,113 @@
 
         };
     }
-   
+
+
+
+    function emailAddressFilter(){
+        return function(input) {
+
+            var regEmail=/^[a-z0-9](\w|\.|-)*@([a-z0-9]+-?[a-z0-9]+\.){1,3}[a-z]{2,4}$/i;   // 验证email的格式是否正确
+
+
+            var emailWebSiteList = [
+                {
+                    suffix : '@163.com',
+                    website : 'mail.163.com',
+                    websiteFullUrl : 'http://mail.163.com/'
+                },
+                {
+                    suffix : '@126.com',
+                    website : 'mail.126.com',
+                    websiteFullUrl : 'http://mail.126.com/'
+                },
+                {
+                    suffix : '@yeah.net',
+                    website : 'mail.yeah.net',
+                    websiteFullUrl : 'http://mail.yeah.net/'
+                },
+                {
+                    suffix : '@sina.com',
+                    website : 'mail.sina.com.cn',
+                    websiteFullUrl : 'http://mail.sina.com.cn/'
+                },
+                {
+                    suffix : '@sina.cn',
+                    website : 'mail.sina.com.cn',
+                    websiteFullUrl : 'http://mail.sina.com.cn/'
+                },
+                {
+                    suffix : '@sohu.com',
+                    website : 'mail.sohu.com',
+                    websiteFullUrl : 'http://mail.sohu.com/'
+                },
+                {
+                    suffix : '@qq.com',
+                    website : 'mail.qq.com',
+                    websiteFullUrl : 'https://mail.qq.com/'
+                },
+                {
+                    suffix : '@21cn.com',
+                    website : 'mail.21cn.com',
+                    websiteFullUrl : 'http://mail.21cn.com/'
+                },
+                {
+                    suffix : '@gmail.com',
+                    website : 'mail.google.com',
+                    websiteFullUrl : 'https://mail.google.com/'
+                },
+                {
+                    suffix : '@hotmail.com',
+                    website : 'www.hotmail.com',
+                    websiteFullUrl : 'https://login.live.com/'
+                },
+                {
+                    suffix : '@hotmail.com',
+                    website : 'www.hotmail.com',
+                    websiteFullUrl : 'https://login.live.com/'
+                },
+                {
+                    suffix : '@outlook.com',
+                    website : 'login.live.com',
+                    websiteFullUrl : 'https://login.live.com/'
+                },
+                {
+                    suffix : '@yahoo.com',
+                    website : 'mail.yahoo.com',
+                    websiteFullUrl : 'https://login.yahoo.com/'
+                },
+                {
+                    suffix : '@tom.com',
+                    website : 'mail.tom.com',
+                    websiteFullUrl : 'http://web.mail.tom.com/'
+                }
+            ];
+
+
+
+
+            var emailFound = false;
+
+            if(angular.isString(input)){
+                emailWebSiteList.forEach(function(email){
+                    if(input.lastIndexOf(email.suffix) > -1){
+                        emailFound = email.websiteFullUrl;
+                        return;
+                    }
+                });
+
+                if(emailFound){
+                    return emailFound;
+                }else{
+                    return "#";
+                }
+
+            }
+
+            return input;
+
+        };
+    }
 
     /********************  NgModel Filters  ********************/
 

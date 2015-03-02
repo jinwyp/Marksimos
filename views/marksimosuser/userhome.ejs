@@ -11,7 +11,7 @@
 
 
 
-    <user-header showmenu="true" showlogout="true"  current-menu="css.menu" current-round="data.currentStudent.currentPeriod" seminar-finished="css.seminarFinished"></user-header>
+    <user-header showmenu="true" showlogout="true"  current-menu="css.menu" current-round="data.currentSeminar.currentPeriod" seminar-finished="css.seminarFinished"></user-header>
 
 
 
@@ -22,16 +22,16 @@
         <div class="col-md-2 user_home_divider user_brand_box">
 
             <div class="row ">
-                <h4 class="user_maincompany">{{'HomePageSecondMenuBarLabelsCompany' | translate}} <span class="company" ng-class="{'company_a':data.currentCompanyNameCharacter=='A', 'company_b':data.currentCompanyNameCharacter=='B', 'company_c':data.currentCompanyNameCharacter=='C', 'company_d':data.currentCompanyNameCharacter=='D', 'company_e':data.currentCompanyNameCharacter=='E', 'company_f':data.currentCompanyNameCharacter=='F'}">{{data.currentStudent.companyName | limitTo:-1}}</span> </h4>
+                <h4 class="user_maincompany">{{'HomePageSecondMenuBarLabelsCompany' | translate}} <span class="company" ng-class="{'company_a':data.currentCompanyNameCharacter=='A', 'company_b':data.currentCompanyNameCharacter=='B', 'company_c':data.currentCompanyNameCharacter=='C', 'company_d':data.currentCompanyNameCharacter=='D', 'company_e':data.currentCompanyNameCharacter=='E', 'company_f':data.currentCompanyNameCharacter=='F'}">{{data.currentSeminar.currentCompany.companyName | limitTo:-1}}</span> </h4>
             </div>
             <div class="row">
                 <div class="col-md-5">
                     <img src="/app/css/images/avator.png">
                 </div>
                 <div class="col-md-7">
-                    <h5>{{data.currentStudent.name}}</h5>
-                    <span class="user_title">{{data.currentStudent.companyRole}}</span>
-                    <span class="user_title">{{data.currentStudent.numOfTeamMember}} Team Member</span>
+                    <h5>{{data.currentStudent.username}}</h5>
+                    <span class="user_title">{{data.currentSeminar.currentCompany.companyRole}} </span>
+                    <span class="user_title">{{data.currentSeminar.currentCompany.numOfTeamMember}} Team Member</span>
                 </div>
             </div>
         </div>
@@ -65,7 +65,7 @@
         <div class="col-md-1 user_home_divider user_brand_box">
             <div class="row">
                 <div class="col-md-12">
-                    <span class="user_competitorsnum">{{data.currentStudent.numOfCompany}}</span>
+                    <span class="user_competitorsnum">{{data.currentSeminar.numOfCompany}}</span>
                     <span class="user_competitors">{{'HomePageSecondMenuBarLabelsCompanies' | translate}}</span>
                 </div>
             </div>
@@ -183,7 +183,7 @@
         <div class="col-md-2 user_home_divider user_chart_box">
 
             <div class="row ">
-                <h4 class="user_maincompany user_chart_company">{{'HomePageSecondMenuBarLabelsCompany' | translate}} <span class="company" ng-class="{'company_a':data.currentCompanyNameCharacter=='A', 'company_b':data.currentCompanyNameCharacter=='B', 'company_c':data.currentCompanyNameCharacter=='C', 'company_d':data.currentCompanyNameCharacter=='D', 'company_e':data.currentCompanyNameCharacter=='E', 'company_f':data.currentCompanyNameCharacter=='F'}">{{data.currentStudent.companyName | limitTo:-1}}</span> </h4>
+                <h4 class="user_maincompany user_chart_company">{{'HomePageSecondMenuBarLabelsCompany' | translate}} <span class="company" ng-class="{'company_a':data.currentCompanyNameCharacter=='A', 'company_b':data.currentCompanyNameCharacter=='B', 'company_c':data.currentCompanyNameCharacter=='C', 'company_d':data.currentCompanyNameCharacter=='D', 'company_e':data.currentCompanyNameCharacter=='E', 'company_f':data.currentCompanyNameCharacter=='F'}">{{data.currentSeminar.currentCompany.companyName | limitTo:-1}}</span> </h4>
 
             </div>
 
@@ -1834,7 +1834,7 @@
         <div class="col-md-2 user_home_divider user_chart_box">
 
             <div class="row ">
-                <h4 class="user_maincompany user_chart_company">{{'HomePageSecondMenuBarLabelsCompany' | translate}} <span class="company" ng-class="{'company_a':data.currentCompanyNameCharacter=='A', 'company_b':data.currentCompanyNameCharacter=='B', 'company_c':data.currentCompanyNameCharacter=='C', 'company_d':data.currentCompanyNameCharacter=='D', 'company_e':data.currentCompanyNameCharacter=='E', 'company_f':data.currentCompanyNameCharacter=='F'}">{{data.currentStudent.companyName | limitTo:-1}}</span> </h4>
+                <h4 class="user_maincompany user_chart_company">{{'HomePageSecondMenuBarLabelsCompany' | translate}} <span class="company" ng-class="{'company_a':data.currentCompanyNameCharacter=='A', 'company_b':data.currentCompanyNameCharacter=='B', 'company_c':data.currentCompanyNameCharacter=='C', 'company_d':data.currentCompanyNameCharacter=='D', 'company_e':data.currentCompanyNameCharacter=='E', 'company_f':data.currentCompanyNameCharacter=='F'}">{{data.currentSeminar.currentCompany.companyName | limitTo:-1}}</span> </h4>
             </div>
 
         </div>
@@ -1989,7 +1989,7 @@
                                                 <th class="sku_table">{{'DecisionPageDecisionTabName' | translate}} <button class="btn btn-default btn-xs" ng-click="showAddNewSkuForm()">+</button></th>
                                                 <th ng-repeat="sku in data.currentBrand.d_SKUsDecisions" >
                                                     <a href="" ng-click="clickCurrentSku(sku)">{{data.currentBrand.d_BrandName}}{{sku.d_SKUName}}</a>
-                                                    <button type="button" class="btn btn-default btn-xs" ng-show="sku.bs_PeriodOfBirth==data.currentStudent.currentPeriod" ng-click="delSku(sku)">x</button></th>
+                                                    <button type="button" class="btn btn-default btn-xs" ng-show="sku.bs_PeriodOfBirth==data.currentSeminar.currentPeriod" ng-click="delSku(sku)">x</button></th>
                                             </tr>
                                         </thead>
 
@@ -2018,10 +2018,10 @@
                                             </tr>
                                             <tr>
                                                 <td>{{'DecisionPageDecisionTabPackagingSize' | translate}}</td>
-                                                <td ng-repeat="sku in data.currentBrand.d_SKUsDecisions" ng-show="sku.bs_PeriodOfBirth!==data.currentStudent.currentPeriod" >
+                                                <td ng-repeat="sku in data.currentBrand.d_SKUsDecisions" ng-show="sku.bs_PeriodOfBirth!==data.currentSeminar.currentPeriod" >
                                                     <span>{{sku.d_PackSize | skupacksize | translate}}</span>
                                                  </td>
-                                                <td ng-repeat="sku in data.currentBrand.d_SKUsDecisions" ng-if="sku.bs_PeriodOfBirth==data.currentStudent.currentPeriod">
+                                                <td ng-repeat="sku in data.currentBrand.d_SKUsDecisions" ng-if="sku.bs_PeriodOfBirth==data.currentSeminar.currentPeriod">
                                                     <div class="btn-group">
                                                         <button type="button" class="btn btn-default btn-sm dropdown-toggle" data-toggle="dropdown"  ng-focus="clickCurrentSku(sku)">
                                                             <span>{{sku.d_PackSize | skupacksize | translate}}</span>
@@ -2540,7 +2540,7 @@
         <div class="col-md-2 user_home_divider user_chart_box">
 
             <div class="row ">
-                <h4 class="user_maincompany user_chart_company">{{'HomePageSecondMenuBarLabelsCompany' | translate}} <span class="company" ng-class="{'company_a':data.currentCompanyNameCharacter=='A', 'company_b':data.currentCompanyNameCharacter=='B', 'company_c':data.currentCompanyNameCharacter=='C', 'company_d':data.currentCompanyNameCharacter=='D', 'company_e':data.currentCompanyNameCharacter=='E', 'company_f':data.currentCompanyNameCharacter=='F'}">{{data.currentStudent.companyName | limitTo:-1}}</span> </h4>
+                <h4 class="user_maincompany user_chart_company">{{'HomePageSecondMenuBarLabelsCompany' | translate}} <span class="company" ng-class="{'company_a':data.currentCompanyNameCharacter=='A', 'company_b':data.currentCompanyNameCharacter=='B', 'company_c':data.currentCompanyNameCharacter=='C', 'company_d':data.currentCompanyNameCharacter=='D', 'company_e':data.currentCompanyNameCharacter=='E', 'company_f':data.currentCompanyNameCharacter=='F'}">{{data.currentSeminar.currentCompany.companyName | limitTo:-1}}</span> </h4>
             </div>
 
         </div>

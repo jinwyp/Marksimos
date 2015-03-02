@@ -1,8 +1,14 @@
-var mongoose = require('mongoose');
+var mongoose = require('mongoose-q')(require('mongoose'), {spread:true});
 var Schema = mongoose.Schema;
-var bcrypt   = require('bcrypt-nodejs');
 var Q = require('q');
+var mongooseTimestamps = require('mongoose-timestamp');
 var uuid = require('node-uuid');
+var bcrypt = require('bcrypt-nodejs');
+var SALT_WORK_FACTOR = 10;
+
+
+var userRoleModel = require('./userrole.js');
+var config = require('../../../common/config.js');
 
 
 var userSchema = new Schema({
@@ -13,13 +19,18 @@ var userSchema = new Schema({
     password: { type: String, required: true, select: true},
 
 
-    emailActivateToken: { type: String, default: uuid.v4() , select: true},
+    resetPasswordVerifyCode: { type: String},
+    resetPasswordToken: { type: String, default: uuid.v4()},
+    resetPasswordTokenExpires: { type: Date },
+
+    emailActivateToken: { type: String, default: uuid.v4()},
+    emailActivateTokenExpires: { type: Date },
     emailActivated: {type: Boolean, default: false},
     activated: {type: Boolean, default: false},
 
 
-    role: {type: Number, default: 4},  //1 admin, 2 distributor, 3 facilitator, 4  students,   9 B2C Enterprise
-    studentType : {type: Number, default: 10}, //10 B2B students,  20 B2C students, 30 Both B2C and B2B students
+    role: {type: Number, default: 4, required: true},  //1 admin, 2 distributor, 3 facilitator, 4  students,   5 B2C Enterprise
+    studentType : {type: Number, default: 10, required: true}, //10 B2B students,  20 B2C students, 30 Both B2C and B2B students
 
 
     // 3rd facebook auth
@@ -30,8 +41,9 @@ var userSchema = new Schema({
         username : String
     },
 
+
     //user basic info
-    gender       : Number,
+    gender       : Number,  // 1 male 2 female
     birthday: Date,
     firstName    : String,
     lastName     : String,
@@ -47,7 +59,7 @@ var userSchema = new Schema({
     occupation: String,
 
 
-    //address
+    //user address
     country: String,
     state: String,
     city: String,
@@ -55,11 +67,13 @@ var userSchema = new Schema({
     street: String,
 
 
-    //add for e4e company
-    designation: String,
-    officalContactNumber: String,
-    holdingCompany: String,
-    division: String,
+    //For B2C E4E Enterprise
+    companyName : String,
+    companyAddress : String,
+    companyContactPerson : String,
+    companyContactMobileNumber: String,
+    companyOfficeTelephone: String,
+
 
 
     //distributor and facilitator info
@@ -72,170 +86,229 @@ var userSchema = new Schema({
     websiteLanguage:{type: String, default: 'zh_CN'} // 'zh_CN'  'en_US'
 
 });
+userSchema.plugin(mongooseTimestamps);
+
+
+
+
+userSchema.virtual('roleName').get(function () {
+    return userRoleModel.roleList[this.role].name ;
+});
+
+userSchema.virtual('roleId').get(function () {
+    return this.role ;
+});
+
+
+userSchema.pre('save', function(next) {
+    var user = this;
+
+    // only hash the password if it has been modified (or is new)
+    if (!user.isModified('password')) return next();
+
+    bcrypt.genSalt(SALT_WORK_FACTOR, function(err, salt) {
+        if (err) return next(err);
+
+        bcrypt.hash(user.password, salt, null, function(err, hash) {
+            if (err) return next(err);
+            user.password = hash;
+            next();
+        });
+    });
+});
+
+
+
+userSchema.statics.register = function (newUser) {
+    if(!mongoose.connection.readyState){
+        throw new Error("mongoose is not connected.");
+    }
+
+    var deferred = Q.defer();
+
+    User.findOne( {$or : [
+        {username: newUser.username},
+        {'email': newUser.email}
+    ]}, function(err, userexisted) {
+        // In case of any error return
+        if (err) return deferred.reject(err);
+        // already exists
+        if (userexisted) {
+            return deferred.reject(new Error('Cancel register new user, because username or email is existed.'));
+        }else {
+            User.create(newUser, function(err, result){
+                if(err){
+                    deferred.reject(err);
+                }else{
+                    deferred.resolve(result);
+                }
+            });
+        }
+    });
+
+    return deferred.promise;
+};
+
+
+
+
+
+
+
+
+
+
+userSchema.statics.getStudentType = function(){
+    return {
+        B2B : 10,
+        B2C : 20,
+        BothB2CAndB2B : 30
+    };
+};
+
+
+userSchema.statics.generateHashPassword = function(password){
+    return bcrypt.hashSync(password, bcrypt.genSaltSync(SALT_WORK_FACTOR));
+};
+
+userSchema.statics.verifyPassword = function(password, hashedPassword){
+    return bcrypt.compareSync(password, hashedPassword);
+};
+
+
+
+
+
+
+
+
+
+
+
+
+userSchema.statics.registerValidations = function(req, userRoleId, studentType){
+
+    studentType = studentType || 20;
+
+    req.checkBody('username', 'Username should be 6-20 characters').notEmpty().len(6, 20);
+    req.checkBody('email', 'Email wrong format').notEmpty().isEmail();
+    req.checkBody('password', 'Password should be 6-20 characters').notEmpty().len(6, 20);
+
+
+    if(userRoleId === userRoleModel.roleList.student.id && studentType === 20){
+        req.checkBody('gender', 'Gender is required').notEmpty().isInt();
+    }
+
+    if(userRoleId === userRoleModel.roleList.student.id && studentType === 10){
+        req.checkBody('gender', 'Gender is required').optional().isInt();
+        req.checkBody('mobilePhone', 'mobilePhone wrong format').notEmpty().isMobilePhone('zh-CN');
+
+
+        req.checkBody('country', 'country is required').notEmpty();
+        req.checkBody('state', 'state is required').notEmpty();
+        req.checkBody('city', 'city is required').notEmpty();
+
+        req.checkBody('qq', 'qq number format wrong' ).optional().isInt();
+        req.checkBody('firstname', '2 to 50 characters required.').optional().len(2, 50);
+        req.checkBody('lastname', '2 to 50 characters required.').optional().len(2, 50);
+        req.checkBody('idcardNumber', '18 to 19 characters required.').optional().matches( /^\d{17}([0-9]|X)$/ );
+
+
+        //req.checkBody('occupation', '2 to 100 characters required.').optional().len(2, 100);
+        req.checkBody('organizationOrUniversity', '2 to 100 characters required.').optional().len(2, 100);
+
+        req.checkBody('studentType', 'Student B2B or B2C Type is required.').notEmpty().isInt();
+
+    }
+
+
+    if(userRoleId === userRoleModel.roleList.enterprise.id){
+        req.checkBody('companyName', 'Company Name is required').notEmpty().len(4, 100);
+    }
+
+
+    if(userRoleId === userRoleModel.roleList.distributor.id){
+        req.checkBody('mobilePhone', 'mobilePhone wrong format').notEmpty().isMobilePhone('zh-CN');
+        req.checkBody('idcardNumber', '18 to 19 characters required.').matches( /^\d{17}([0-9]|X)$/ );
+
+        req.checkBody('country', 'country is required').notEmpty();
+        req.checkBody('state', 'state is required').notEmpty();
+        req.checkBody('city', 'city is required').notEmpty();
+
+        req.checkBody('numOfLicense', 'License number must be between 1 to 99999 integer number.').notEmpty().isInt();
+
+    }
+
+
+    if(userRoleId === userRoleModel.roleList.facilitator.id){
+        req.checkBody('mobilePhone', 'mobilePhone wrong format').notEmpty().isMobilePhone('zh-CN');
+        req.checkBody('idcardNumber', '18 to 19 characters required.').matches( /^\d{17}([0-9]|X)$/ );
+
+        req.checkBody('country', 'country is required').notEmpty();
+        req.checkBody('state', 'state is required').notEmpty();
+        req.checkBody('city', 'city is required').notEmpty();
+
+        req.checkBody('numOfLicense', 'License number must be between 1 to 99999 integer number.').notEmpty().isInt();
+    }
+
+
+    return req.validationErrors();
+
+
+
+};
+
+
+
+
+userSchema.statics.emailVerifyRegistrationValidations = function(req, userRoleId, studentType){
+
+    studentType = studentType || 20;
+
+    req.checkQuery('email', 'Email wrong format').notEmpty().isEmail();
+    req.checkQuery('emailtoken', 'Email ActivateToken wrong format').notEmpty().isUUID(4);
+
+    return req.validationErrors();
+
+};
+
+
+
+userSchema.statics.emailVerifyResetPasswordValidations = function(req, userRoleId, studentType){
+
+    studentType = studentType || 20;
+
+    req.checkQuery('username', 'Username should be 6-20 characters').notEmpty().len(6, 20);
+    req.checkQuery('passwordtoken', 'Reset Password Token wrong').notEmpty().isUUID(4);
+
+    return req.validationErrors();
+
+};
+
+
+userSchema.statics.resetForgotPasswordValidations = function(req, userRoleId, studentType, step){
+
+    studentType = studentType || 20;
+    step = step || 1
+
+    if(step === 1){
+        req.checkBody('email', 'Email wrong format').notEmpty().isEmail();
+    }else if (step === 2){
+        req.checkBody('passwordResetVerifyCode', 'Reset Password Token wrong').notEmpty().len(6, 6);
+    }else if (step === 3){
+        req.checkBody('passwordResetVerifyCode', 'Reset Password Token wrong').notEmpty().len(6, 6);
+        req.checkBody('password', 'Password should be 6-20 characters').notEmpty().len(6, 20);
+    }
+
+    return req.validationErrors();
+
+};
+
+
 
 var User = mongoose.model("User", userSchema);
+module.exports = User;
 
-
-exports.query = User;
-
-
-exports.register = function(user){
-    if(!mongoose.connection.readyState){
-        throw new Error("mongoose is not connected.");
-    }
-
-    var deferred = Q.defer();
-    User.create(user, function(err, result){
-        if(err){
-            deferred.reject(err);
-        }else{
-            deferred.resolve(result);
-        }
-    });
-    return deferred.promise;
-};
-
-
-exports.updateByEmail = function(email, user){
-    if(!mongoose.connection.readyState){
-        throw new Error("mongoose is not connected.");
-    }
-
-    var deferred = Q.defer();
-
-    User.update({
-        email: email
-    }
-    ,user
-    , function(err, numAffected){
-        if(err){
-            deferred.reject(err);
-        }else{
-            deferred.resolve(numAffected);
-        }
-    });
-
-    return deferred.promise; 
-};
-
-exports.update = function(query, user){
-    if(!mongoose.connection.readyState){
-        throw new Error("mongoose is not connected.");
-    }
-
-    var deferred = Q.defer();
-
-    User.update(query
-    , user
-    , function(err, numAffected){
-        if(err){
-            deferred.reject(err);
-        }else{
-            deferred.resolve(numAffected);
-        }
-    });
-
-    return deferred.promise; 
-};
-
-exports.findByEmail = function(email){
-    if(!mongoose.connection.readyState){
-        throw new Error("mongoose is not connected.");
-    }
-
-    var deferred = Q.defer();
-
-    User.findOne({
-        email: email
-    }, 
-    function(err, result){
-        if(err){
-            deferred.reject(err);
-        }else{
-            deferred.resolve(result);
-        }
-    });
-
-    return deferred.promise;
-};
-
-exports.findByEmailAndToken = function(email, token){
-    if(!mongoose.connection.readyState){
-        throw new Error("mongoose is not connected.");
-    }
-
-    var deferred = Q.defer();
-
-    User.findOne({
-        email: email,
-        activateToken: token
-    }, 
-    function(err, result){
-        if(err){
-            deferred.reject(err);
-        }else{
-            deferred.resolve(result);
-        }
-    })
-
-    return deferred.promise;
-}
-
-exports.find = function(query){
-    if(!mongoose.connection.readyState){
-        throw new Error("mongoose is not connected.");
-    }
-
-    var deferred = Q.defer();
-
-    User.find(query, 
-    function(err, result){
-        if(err){
-            deferred.reject(err);
-        }else{
-            deferred.resolve(result);
-        }
-    })
-
-    return deferred.promise;
-}
-
-exports.findOne = function(query){
-    if(!mongoose.connection.readyState){
-        throw new Error("mongoose is not connected.");
-    }
-
-    var deferred = Q.defer();
-
-    User.findOne(query,
-    function(err, result){
-        if(err){
-            deferred.reject(err);
-        }else{
-            deferred.resolve(result);
-        }
-    })
-
-    return deferred.promise;
-}
-
-exports.remove = function(query){
-    if(!mongoose.connection.readyState){
-        throw new Error("mongoose is not connected.");
-    }
-    
-    var deferred = Q.defer();
-
-    User.remove(query, function(err){
-        if(err){
-            deferred.reject(err);
-        }else{
-            deferred.resolve(undefined);
-        }
-    })
-
-    return deferred.promise;
-}
 
 
 

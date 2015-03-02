@@ -36,7 +36,6 @@ var logger = require('../../../common/logger.js');
 
 var consts = require('../../consts.js');
 
-var sessionOperation = require('../../../common/sessionOperation.js');
 var _ = require('underscore');
 
 
@@ -82,7 +81,6 @@ exports.init = function(req, res, next) {
                 //before init, a new seminar should be created,
                 //and it's currentPeriod should be set correctly = 1
                 currentPeriod = dbSeminar.currentPeriod;
-                sessionOperation.setCurrentPeriod(req, dbSeminar.currentPeriod);
 
                 //create periods array
                 periods.push(-3);
@@ -151,7 +149,7 @@ exports.init = function(req, res, next) {
                     if(numAffected!==1){
                         throw {message: "Cancel promise chains. Because there's error during set isInitialized to true."};
                     }
-                    res.send(200, {message: 'initialize success'});
+                    res.status(200).send( {message: 'initialize success'});
                 }).done();
             })
             .fail(function(err){
@@ -315,7 +313,7 @@ exports.runSimulation = function(){
                             //DO NOT create the next period decision automatically
                             if(dbSeminar.currentPeriod < dbSeminar.simulationSpan){
                                 status = 'active';
-                                return createNewDecisionBasedOnLastPeriodDecision(seminarId, selectedPeriod, decisionsOverwriteSwitchers);
+                                return createNewDecisionBasedOnLastPeriodDecision(seminarId, selectedPeriod, decisionsOverwriteSwitchers, goingToNewPeriod);
                             }else{
                                 return undefined;
                             }
@@ -325,7 +323,6 @@ exports.runSimulation = function(){
                             if(dbSeminar.currentPeriod < dbSeminar.simulationSpan){
                                 //after simulation success, set currentPeriod to next period, only when goingToNewPeriod = true
                                 if(goingToNewPeriod){
-                                    sessionOperation.setCurrentPeriod(req, sessionOperation.getCurrentPeriod(req)+1);
                                     return seminarModel.update({seminarId: seminarId}, {
                                         currentPeriod: dbSeminar.currentPeriod + 1
                                     })
@@ -342,7 +339,6 @@ exports.runSimulation = function(){
 
                             }else if(dbSeminar.currentPeriod = dbSeminar.simulationSpan){
                                 if(goingToNewPeriod){
-                                    sessionOperation.setCurrentPeriod(req, sessionOperation.getCurrentPeriod(req)+1);
                                     return seminarModel.update({seminarId: seminarId}, {
                                         isSimulationFinished : true,
                                         currentPeriod       : dbSeminar.currentPeriod + 1
@@ -371,7 +367,7 @@ exports.runSimulation = function(){
                 if(err.httpStatus){
                     return res.send(err.httpStatus, {message: err.message});
                 }
-                res.send(500, {message: err.message})
+                res.status(500).send( {message: err.message})
             })
             .done();
         }
@@ -797,7 +793,7 @@ function duplicateLastPeriodDecision(seminarId, lastPeriod){
 //a) copy previous to current except dropped SKUs/Brands
 //b) clean array brandDecisions.d_SKUsDecisions
 //c) clean array companyDecisions.d_BrandsDecisions
-function createNewDecisionBasedOnLastPeriodDecision(seminarId, lastPeriod, decisionsOverwriteSwitchers){
+function createNewDecisionBasedOnLastPeriodDecision(seminarId, lastPeriod, decisionsOverwriteSwitchers, goingToNewPeriod){
     var discontinuedSKUId = [];
     var discontinuedBrandId = [];
 
@@ -831,6 +827,7 @@ function createNewDecisionBasedOnLastPeriodDecision(seminarId, lastPeriod, decis
                             if(!result){
                                 throw {message: "Cancel promise chains. Because save SKUDecision failed during create copy of last period decision."};
                             }
+                            tempSKUDecision.reRunLastRound = !goingToNewPeriod;
                             return SKUDecisionModel.createSKUDecisionBasedOnLastPeriodDecision(tempSKUDecision);
                         })
                     }
@@ -862,6 +859,7 @@ function createNewDecisionBasedOnLastPeriodDecision(seminarId, lastPeriod, decis
                             if(!result){
                                 throw {message: "Cancel promise chains. Because save brandDecision failed during create copy of last period decision."};
                             }
+                            tempBrandDecision.reRunLastRound = !goingToNewPeriod;
                             return brandDecisionModel.createBrandDecisionBasedOnLastPeriodDecision(tempBrandDecision);
                         })
                     }
@@ -900,6 +898,7 @@ function createNewDecisionBasedOnLastPeriodDecision(seminarId, lastPeriod, decis
                         if(!result){
                             throw {message: "Cancel promise chains. Because save comanyDecision failed during create copy of last period decision."};
                         }
+                        tempCompanyDecision.reRunLastRound = !goingToNewPeriod;
                         return companyDecisionModel.save(tempCompanyDecision);
                     })
                 }
