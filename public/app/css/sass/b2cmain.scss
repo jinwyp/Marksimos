@@ -643,6 +643,7 @@ body{
 $left_of_avatar: 44px;
 $lineHeight_button: 1.8;
 
+
 @mixin triangle ($borderWidth: 5px, $rotate: -45deg, $borderColor: #000) {
 	border: $borderWidth solid;
 	border-left-color: transparent;
