@@ -722,8 +722,8 @@ body {
   border-left-color: transparent;
   border-bottom-color: transparent;
   transform: rotate(135deg);
-  width: 0;
   position: absolute;
+  width: 0;
   bottom: 10px;
   right: 25px;
 }
@@ -736,7 +736,7 @@ body {
 }
 .profile-content .user-info {
   position: absolute;
-  top: 120px;
+  top: 109px;
   left: 44px;
   width: 300px;
 }
@@ -748,7 +748,7 @@ body {
 .profile-content .user-info .text-info {
   color: #ffffff;
   float: left;
-  margin-top: 1em;
+  margin-top: 1.5em;
   margin-left: 1.5em;
 }
 .profile-content .user-info .text-info .profile-username {
@@ -803,8 +803,8 @@ body {
   border-left-color: transparent;
   border-bottom-color: transparent;
   transform: rotate(-45deg);
-  width: 0;
   position: absolute;
+  width: 0;
   left: 0;
   right: 0;
   margin: 0 auto;
@@ -856,9 +856,9 @@ body {
   -moz-border-radius: 2px;
   -webkit-border-radius: 2px;
   border-radius: 2px;
-  -moz-box-shadow: #E2E2E2 0px 2px 4px;
-  -webkit-box-shadow: #E2E2E2 0px 2px 4px;
-  box-shadow: #E2E2E2 0px 2px 4px;
+  -moz-box-shadow: #938F8F 0px 2px 4px;
+  -webkit-box-shadow: #938F8F 0px 2px 4px;
+  box-shadow: #938F8F 0px 2px 4px;
   background-color: #E2E2E2;
   margin-right: 8px;
   height: 25px;
