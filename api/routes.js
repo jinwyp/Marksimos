@@ -436,7 +436,7 @@ apiRouter.get('/marksimos/api/create_admin', function (req,res,next) {
             "emailActivated": false
         },
         {
-            "username": "anil",
+            "username": "anilraparla",
             "email": "anilraparla@hcdlearning.com",
             "mobilePhone": "13916502743",
             "country": "China",
@@ -454,6 +454,26 @@ apiRouter.get('/marksimos/api/create_admin', function (req,res,next) {
             "role": userRoleModel.roleList.student.id,
             "activated": true,
             "emailActivated": false
+        },
+        {
+            "username": "yuekecheng",
+            "email": "clarkyue@hcdlearning.com",
+            "mobilePhone": "15900719671",
+            "country": "China",
+            "state": "shanghai",
+            "city": "shanghai",
+            "password": userModel.generateHashPassword("123456"),
+            "facilitatorId": "54609fb2700a570813b13540",
+            "idcardNumber": "321181198502273515",
+            "occupation": "Student",
+            "firstName": "clark",
+            "lastName": "yue",
+            "organizationOrUniversity": "",
+            "majorsDegree": "",
+            "studentType": 10,
+            "role": userRoleModel.roleList.student.id,
+            "activated": true,
+            "emailActivated": false
         }
     ];
     userModel.find({role: userRoleModel.roleList.admin.id}).execQ().then(function (userResult) {
@@ -463,7 +483,7 @@ apiRouter.get('/marksimos/api/create_admin', function (req,res,next) {
             // 补充增加 b2c_facilitator 账号
             userModel.find({"username": "b2c_facilitator"}).execQ().then(function (userB2CResult) {
 
-                if(userB2CResult.length){
+                if(userB2CResult){
                     return res.status(400).send ({message: "already added."});
                 }else{
                     userModel.create(userList[3], function (err, b2cFacilitatorResults) {
