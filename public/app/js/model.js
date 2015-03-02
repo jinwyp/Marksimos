@@ -67,6 +67,9 @@
             forgetPasswordStep2 : function(user){
                 return $http.post(apiPathB2C + 'forgotpasswordstep2', user);
             },
+            forgetPasswordStep3 : function(user){
+                return $http.post(apiPathB2C + 'forgotpasswordstep3', user);
+            },
 
             login : function(user){
                 return $http.post(apiPath + 'login', user).then(function(result){

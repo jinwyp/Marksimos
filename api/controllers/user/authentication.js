@@ -469,15 +469,13 @@ exports.activateRegistrationEmail = function(req, res, next){
 
         return resultUser.saveQ();
 
-    }).then(function(result){
-        var savedDoc = result[0];
-        var numberAffected = result[1];
+    }).then(function(savedDoc, numberAffectedRows){
 
-        //if(numberAffected !== 1){
+        //if(numberAffectedRows !== 1){
         //    throw new Error('Cancel promise chains. Because Update user emailActivated status failed. more or less than 1 record is updated. it should be only one !');
         //}
 
-        if(!result){
+        if(!savedDoc ){
             throw new Error('Cancel promise chains. Because Update user emailActivated status failed. more or less than 1 record is updated. it should be only one !');
         }
 
@@ -501,14 +499,11 @@ exports.activateRegistrationEmail = function(req, res, next){
 
 exports.sendResetPasswordEmail = function(req, res, next){
 
-    req.checkBody('email', 'Email wrong format').notEmpty().isEmail();
-
-    var validationErrors =  req.validationErrors();
+    var validationErrors = userModel.resetForgotPasswordValidations(req, userRoleModel.roleList.student.id, userModel.getStudentType().B2C, 1);
 
     if(validationErrors){
         return res.status(400).send( {message: validationErrors} );
     }
-
 
     userModel.findOneQ({ email: req.body.email }).then(function(resultUser) {
 
@@ -561,15 +556,11 @@ exports.sendResetPasswordEmail = function(req, res, next){
 
 exports.verifyResetPasswordCode = function(req, res, next){
 
-    req.checkBody('passwordResetVerifyCode', 'Reset Password Token wrong').notEmpty().len(6, 6);
-
-    var validationErrors =  req.validationErrors();
+    var validationErrors = userModel.resetForgotPasswordValidations(req, userRoleModel.roleList.student.id, userModel.getStudentType().B2C, 2);
 
     if(validationErrors){
         return res.status(400).send( {message: validationErrors} );
     }
-
-    var nowDate = new Date();
 
     userModel.findOneQ({
         resetPasswordVerifyCode: req.body.passwordResetVerifyCode
@@ -579,11 +570,7 @@ exports.verifyResetPasswordCode = function(req, res, next){
             throw new Error('Cancel promise chains. Because User Reset Password Verify Code wrong!');
         }
 
-        if( resultUser.resetPasswordTokenExpires < nowDate){
-            throw new Error('Cancel promise chains. Because Reset Password Token Expire !');
-        }
-
-        resultUser.resetPasswordVerifyCode = '';
+        //resultUser.resetPasswordVerifyCode = ''; // remove PasswordVerifyCode after reset
 
         return resultUser.saveQ();
 
@@ -591,7 +578,7 @@ exports.verifyResetPasswordCode = function(req, res, next){
     }).then(function(resultUser){
 
         if(!resultUser){
-            throw new Error('Cancel promise chains. Because Update user Verify Code failed. More or less than 1 record is updated. it should be only one !');
+            throw new Error('Cancel promise chains. Because Update reset Password Verify Code failed. More or less than 1 record is updated. it should be only one !');
         }
 
         return res.status(200).send({message: 'Reset Password Token valid'});
@@ -600,6 +587,44 @@ exports.verifyResetPasswordCode = function(req, res, next){
         next(err);
     }).done();
 };
+
+
+
+exports.resetNewPassword = function(req, res, next){
+
+    var validationErrors = userModel.resetForgotPasswordValidations(req, userRoleModel.roleList.student.id, userModel.getStudentType().B2C, 3);
+
+    if(validationErrors){
+        return res.status(400).send( {message: validationErrors} );
+    }
+
+    userModel.findOneQ({
+        resetPasswordVerifyCode: req.body.passwordResetVerifyCode
+    }).then(function(resultUser){
+
+        if(!resultUser) {
+            throw new Error('Cancel promise chains. Because User Reset Password Verify Code wrong!');
+        }
+
+        resultUser.resetPasswordVerifyCode = ''; // remove PasswordVerifyCode after reset
+        resultUser.password = req.body.password;
+
+        return resultUser.saveQ();
+
+    }).then(function(savedDoc, numberAffectedRows){
+        console.log('reset password : ', savedDoc, numberAffectedRows);
+
+        if(!savedDoc ){
+            throw new Error('Cancel promise chains. Because Update reset Password failed. More or less than 1 record is updated. it should be only one !');
+        }
+
+        return res.status(200).send({message: 'Reset New Password Success.'});
+
+    }).fail(function(err){
+        next(err);
+    }).done();
+};
+
 
 
 

@@ -73,11 +73,6 @@ apiRouter.get('/e4e/emailverify/changepassword', auth.forgotPasswordStep2);
 
 
 
-apiRouter.get('/e4e/forgotpassword/step3', function(req, res, next){
-    res.render('b2c/forgotpassword/enter-email.ejs', {title:'Forgotten Your Password? | HCD Learning'});
-});
-
-
 apiRouter.get('/e4e/profile', /*auth.authLoginToken({failureRedirect: '/e4e/login'}), auth.authRole(userRoleModel.right.marksimos.studentLogin, {failureRedirect: '/e4e/login'}),*/ function(req, res, next){
     res.render('b2c/profile.ejs', {title:'E4E User Home | HCD Learning'});
 });
@@ -188,6 +183,7 @@ apiRouter.post('/e4e/api/registerstudent', auth.registerB2CStudent);
 
 apiRouter.post('/e4e/api/forgotpasswordstep1', auth.sendResetPasswordEmail);
 apiRouter.post('/e4e/api/forgotpasswordstep2', auth.verifyResetPasswordCode);
+apiRouter.post('/e4e/api/forgotpasswordstep3', auth.resetNewPassword);
 
 
 

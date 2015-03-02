@@ -60,6 +60,7 @@
         vm.clicklogin = userLogin;
         vm.clickForgetPasswordStep1 = forgetPasswordStep1;
         vm.clickForgetPasswordStep2 = forgetPasswordStep2;
+        vm.clickResetPasswordStep3 = resetNewPassword;
 
 
 
@@ -131,14 +132,27 @@
 
             if(form.$valid){
                 Student.forgetPasswordStep2(vm.newUser).then(function(result){
-                    console.log(result.data);
-
                     vm.css.resetPasswordForm = 'inputPasswordForm';
 
                 }).catch(function(err){
-                    form.password.$valid = false;
-                    form.password.$invalid = true;
+                    form.passwordreset.$valid = false;
+                    form.passwordreset.$invalid = true;
 
+                    vm.css.resetPasswordTokenNotExistedInfo = true;
+
+                });
+            }
+        }
+
+
+        function resetNewPassword(form){
+            vm.css.resetPasswordTokenNotExistedInfo = false;
+
+            if(form.$valid){
+                Student.forgetPasswordStep3(vm.newUser).then(function(result){
+                    vm.css.resetPasswordForm = 'resetPasswordFinished';
+
+                }).catch(function(err){
                     vm.css.resetPasswordTokenNotExistedInfo = true;
 
                 });
