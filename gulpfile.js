@@ -182,13 +182,7 @@ gulp.task('nodemonjinlocal', function () {
     });
 //        .on('restart', 'default')
 });
-gulp.task('nodemonjinlocal2', function () {
-    nodemon({
-        script: 'app.js',
-        env: { 'NODE_ENV': 'suyuan' }
-    });
-//        .on('restart', 'default')
-});
+
 gulp.task('nodemonyuekecheng', function () {
     nodemon({
         script: 'app.js',
@@ -287,7 +281,6 @@ gulp.task('default', ['nodemonludwik', 'watchdev']);
 //gulp.task('jin', ['mongo', 'browser-sync', 'nodemonjin', 'watch']);
 gulp.task('jin', [ 'compass', 'templates', 'nodemonjin', 'watchdev']);
 gulp.task('jinco', ['compass', 'templates', 'nodemonjinlocal', 'watchdev']);
-gulp.task('jinco2', ['compass', 'templates', 'nodemonjinlocal2', 'watchdev']);
 gulp.task('jinpro', ['compass', 'templates', 'minifycss', 'jscompress', 'nodemonjin', 'watch']);
 gulp.task('yuekecheng', [ 'compass', 'templates', 'nodemonyuekecheng', 'watchdev']);
 

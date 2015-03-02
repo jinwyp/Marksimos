@@ -471,6 +471,14 @@
         /********************  创建新的 Student  ********************/
         $scope.createNewStudent = function(form) {
 
+            for(var p in $scope.data.newStudent) {
+                if ($scope.data.newStudent.hasOwnProperty(p)) {
+                    if ($scope.data.newStudent[p] === '') {
+                        delete $scope.data.newStudent[p]; // 为了解决提交的数据为可选项的问题
+                    }
+                }
+            }
+
             if (form.$valid) {
                 $http.post('/marksimos/api/admin/students', $scope.data.newStudent).success(function(data, status, headers, config) {
 

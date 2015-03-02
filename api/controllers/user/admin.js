@@ -491,12 +491,13 @@ exports.addStudent = function(req, res, next){
         activated      : true
     };
 
+
     userModel.register(newStudent).then(function(result){
-        if(result) {
-            throw new Error('Save new company to database error.');
+        if(!result) {
+            throw new Error('Create new B2B student to database error.');
         }
 
-        return res.status(200).send({message: 'Register new company success'});
+        return res.status(200).send({message: 'Create new B2B student success'});
 
     }).fail(function(err){
         next(err);
