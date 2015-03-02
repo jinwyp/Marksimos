@@ -54,7 +54,7 @@ module.exports = (function(){
     };
 
     switch(process.env.NODE_ENV){
-        case 'suyuan':
+        case 'jinlocal2':
             config.logDirectory = '/Users/jinwyp/Documents/github/Marksimos/log/';
             config.mongo_conn = 'mongodb://localhost/Marksimos';
             config.host = 'http://localhost:3000/';
@@ -85,17 +85,17 @@ module.exports = (function(){
             config.mongo_conn = 'mongodb://localhost/Marksimos';
             config.cgiService = 'http://localhost:8080/cgi-bin/marksimos/';
             break;
-        case 'development':
-            config.logDirectory = '/Users/ludwik/code/Marksimos/log/';
-            config.mongo_conn = 'mongodb://localhost/Marksimos';
-            config.host = 'http://localhost:3000/';
-            config.cgiService = 'http://192.168.2.50/cgi-bin/';
-            break;
         case 'raven':
             config.logDirectory = '/Users/raven/desktop/code/Marksimos/log/';
             config.mongo_conn = 'mongodb://localhost/Marksimos';
             config.host = 'http://localhost:3000/';
             config.cgiService = 'http://192.168.1.103:800/cgi-bin/';
+            break;
+        case 'development':
+            config.logDirectory = '/Users/ludwik/code/Marksimos/log/';
+            config.mongo_conn = 'mongodb://localhost/Marksimos';
+            config.host = 'http://localhost:3000/';
+            config.cgiService = 'http://192.168.2.50/cgi-bin/';
             break;
         case 'production':
             config.logDirectory = '/home/hcd/Marksimos/log/';

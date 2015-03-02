@@ -209,8 +209,8 @@ userSchema.statics.registerValidations = function(req, userRoleId, studentType){
         req.checkBody('city', 'city is required').notEmpty();
 
         req.checkBody('qq', 'qq number format wrong' ).optional().isInt();
-        req.checkBody('firstname', '2 to 50 characters required.').optional().len(2, 50);
-        req.checkBody('lastname', '2 to 50 characters required.').optional().len(2, 50);
+        req.checkBody('firstName', '2 to 50 characters required.').optional().len(2, 50);
+        req.checkBody('lastName', '2 to 50 characters required.').optional().len(2, 50);
         req.checkBody('idcardNumber', '18 to 19 characters required.').optional().matches( /^\d{17}([0-9]|X)$/ );
 
 
