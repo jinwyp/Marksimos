@@ -9,12 +9,13 @@ var EmailModel = require('../../models/user/emailContent.js');
 var mailProvider = require('../../../common/sendCloud.js');
 var mailSender = mailProvider.createEmailSender();
 
+var uuid = require('node-uuid');
 var logger = require('../../../common/logger.js');
 var util = require('util');
 var utility = require('../../../common/utility.js');
 
 
-var expiresTime = 1000 * 60 * 60 * 24 * 3; // 3 days
+var expiresTime = 1000 * 60 * 60 * 24; // 1 days
 
 
 //Passport
@@ -66,7 +67,7 @@ exports.initAuth = function () {
             if (!user) {
                 return done(null, false, { message: 'User does not exist.' });
             }
-            
+
             if (!userModel.verifyPassword(password, user.password)) {
                 return done(null, false, { message: 'Username or password wrong.' });
             }
@@ -74,6 +75,7 @@ exports.initAuth = function () {
             //为用户分配token
             Token.createToken({ userId: user._id, rememberMe : rememberMe }).then(function (tokenInfo) {
                 user.token = tokenInfo.token;
+                user.tokenExpires = tokenInfo.expires;
 
                 done(null, user);
             }).fail(function (err) {
@@ -95,8 +97,10 @@ exports.studentLogin = function (req, res, next) {
             return res.status(401).send( { message: info.message })
         }
         if (user.role === userRoleModel.roleList.student.id) {
-            res.cookie('x-access-token', user.token, { maxAge: 12 * 60 * 60 * 1000, httpOnly: true });
+            //res.cookie('x-access-token', user.token, { maxAge: 12 * 60 * 60 * 1000, httpOnly: true });
+            res.cookie('x-access-token', user.token, { maxAge: user.tokenExpires, httpOnly: true });
             return res.status(200).send({ message: 'Login success.' , token: user.token });
+
         }else {
             return res.status(403).send({ message: 'Your account is a ' + user.roleName + ' account, you need a student account login' });
         }
@@ -110,8 +114,10 @@ exports.adminLogin = function (req, res, next) {
             return res.status(401).send( { message: info.message })
         }
         if (user.role === userRoleModel.roleList.admin.id || user.role === userRoleModel.roleList.distributor.id || user.role === userRoleModel.roleList.facilitator.id) {
-            res.cookie('x-access-token', user.token, { maxAge: 12 * 60 * 60 * 1000, httpOnly: true });
+            //res.cookie('x-access-token', user.token, { maxAge: 12 * 60 * 60 * 1000, httpOnly: true });
+            res.cookie('x-access-token', user.token, { maxAge: user.tokenExpires, httpOnly: true });
             return res.status(200).send({ message: 'Login success.' , token: user.token });
+
         }else {
             return res.status(403).send({ message: 'Your account is a ' + user.roleName + ' account, you need a admin account login' });
         }
@@ -353,7 +359,7 @@ exports.registerB2CStudent = function(req, res, next){
         role : userRoleModel.roleList.student.id,
         studentType : userModel.getStudentType().B2C,
 
-        emailActivateTokenExpires : new Date(new Date().getTime() + expiresTime)
+        emailActivateTokenExpires : new Date(new Date().getTime() + expiresTime * 30)
     };
 
 
@@ -362,16 +368,16 @@ exports.registerB2CStudent = function(req, res, next){
             throw new Error('Cancel promise chains. Because Save new user to database error.');
         }
 
-        var mailContent = EmailModel.registration;
+        var mailContent = EmailModel.registration();
 
-        mailContent.to = resultUser.email;
+        //mailContent.to = resultUser.email;
 
-        //mailContent.substitution_vars.to.push(resultUser.email);
-        //mailContent.substitution_vars.sub['%username%'].push(resultUser.username);
-        //mailContent.substitution_vars.sub['%useremail%'].push(resultUser.email);
-        //mailContent.substitution_vars.sub['%token%'].push(resultUser.emailActivateToken);
+        mailContent.substitution_vars.to.push(resultUser.email);
+        mailContent.substitution_vars.sub['%username%'].push(resultUser.username);
+        mailContent.substitution_vars.sub['%useremail%'].push(resultUser.email);
+        mailContent.substitution_vars.sub['%token%'].push(resultUser.emailActivateToken);
 
-        mailContent.html = mailContent.html1 + resultUser.username + mailContent.html2 + resultUser.email + mailContent.html3 + resultUser.emailActivateToken + mailContent.html4 + resultUser.email + mailContent.html5 + resultUser.emailActivateToken + mailContent.htmlend;
+        //mailContent.html = mailContent.html1 + resultUser.username + mailContent.html2 + resultUser.email + mailContent.html3 + resultUser.emailActivateToken + mailContent.html4 + resultUser.email + mailContent.html5 + resultUser.emailActivateToken + mailContent.htmlend;
 
 
 
@@ -419,7 +425,7 @@ exports.registerB2CEnterprise = function(req, res, next){
         role : userRoleModel.roleList.enterprise.id,
         studentType : userModel.getStudentType().B2C,
 
-        emailActivateTokenExpires : new Date(new Date().getTime() + expiresTime)
+        emailActivateTokenExpires : new Date(new Date().getTime() + expiresTime * 30)
     };
 
 
@@ -441,10 +447,10 @@ exports.registerB2CEnterprise = function(req, res, next){
 // http://www.hcdlearning.com/e4e/emailverify/registration?email=jinwyp@163.com&emailtoken=f70c16b5-2cf1-42d1-90ba-b2fa1bcd3db8
 
 exports.activateRegistrationEmail = function(req, res, next){
-    var validationErrors = userModel.emailVerificationValidations(req, userRoleModel.roleList.student.id, userModel.getStudentType().B2C);
+    var validationErrors = userModel.emailVerifyRegistrationValidations(req, userRoleModel.roleList.student.id, userModel.getStudentType().B2C);
 
     if(validationErrors){
-        return res.status(400).send( {message: validationErrors} );
+        return next(new Error('Cancel Email Activate ! ' + validationErrors[0].msg) );
     }
 
     var nowDate = new Date();
@@ -468,15 +474,13 @@ exports.activateRegistrationEmail = function(req, res, next){
 
         return resultUser.saveQ();
 
-    }).then(function(result){
-        var savedDoc = result[0];
-        var numberAffected = result[1];
+    }).then(function(savedDoc, numberAffectedRows){
 
-        //if(numberAffected !== 1){
+        //if(numberAffectedRows !== 1){
         //    throw new Error('Cancel promise chains. Because Update user emailActivated status failed. more or less than 1 record is updated. it should be only one !');
         //}
 
-        if(!result){
+        if(!savedDoc ){
             throw new Error('Cancel promise chains. Because Update user emailActivated status failed. more or less than 1 record is updated. it should be only one !');
         }
 
@@ -498,36 +502,55 @@ exports.activateRegistrationEmail = function(req, res, next){
 
 
 
-exports.forgotPasswordStep1 = function(req, res, next){
+exports.sendResetPasswordEmail = function(req, res, next){
 
-    req.checkBody('email', 'Email wrong format').notEmpty().isEmail();
-
-    var validationErrors =  req.validationErrors();
+    var validationErrors = userModel.resetForgotPasswordValidations(req, userRoleModel.roleList.student.id, userModel.getStudentType().B2C, 1);
 
     if(validationErrors){
         return res.status(400).send( {message: validationErrors} );
     }
 
+    userModel.findOneQ({ email: req.body.email }).then(function(resultUser) {
 
-    userModel.findOneQ({ email: req.body.email }).then(function(resultUser){
-
-        if(!resultUser){
-            throw new Error('Cancel promise chains. Because User does not exist.');
+        if (!resultUser) {
+            throw new Error('Cancel promise chains. Because User Email does not exist.');
         }
 
-        var mailContent = EmailModel.resetPassword;
 
-        mailContent.to = resultUser.email;
-        mailContent.html = mailContent.html1 + resultUser.username + mailContent.html2 + resultUser.email + mailContent.html3 + resultUser.emailActivateToken +
-        mailContent.html4 + resultUser.email + mailContent.html5 + resultUser.emailActivateToken + mailContent.htmlend ;
+        resultUser.resetPasswordTokenExpires = new Date(new Date().getTime() + expiresTime * 2);
+        resultUser.resetPasswordToken = uuid.v4();
+        resultUser.resetPasswordVerifyCode = Math.floor(Math.random() * (999999 - 100000) + 100000 );
 
-        mailSender.sendMail(mailContent, function(error, info){
-            if(error){
-                logger.error(error);
+
+        return resultUser.saveQ();
+    }).then(function(resultUser){
+
+        if(!resultUser){
+            throw new Error('Cancel promise chains. Because Update user resetPasswordToken failed. More or less than 1 record is updated. it should be only one !');
+        }
+
+        var mailContent = EmailModel.resetPassword();
+
+        mailContent.substitution_vars.to.push(resultUser.email);
+        mailContent.substitution_vars.sub['%username%'].push(resultUser.username);
+        mailContent.substitution_vars.sub['%useremail%'].push(resultUser.email);
+        mailContent.substitution_vars.sub['%token%'].push(resultUser.resetPasswordToken);
+        mailContent.substitution_vars.sub['%verifycode%'].push(resultUser.resetPasswordVerifyCode);
+
+        //mailContent.to = resultUser.email;
+        //mailContent.html = mailContent.html1 + resultUser.username + mailContent.html2 + resultUser.email + mailContent.html3 + resultUser.emailActivateToken + mailContent.html4 + resultUser.email + mailContent.html5 + resultUser.emailActivateToken + mailContent.htmlend ;
+
+        mailSender.sendMailQ(mailContent).then(function(resultSendEmail){
+            if (!resultSendEmail) {
+                throw new Error('Cancel promise chains. Because Send resetPassword email failed !');
+            }else{
+                logger.log(resultSendEmail);
             }
+        }).fail(function(err){
+            next(err);
+        }).done();
 
-            return res.status(200).send({message: 'Reset Password Email Send'});
-        });
+        return res.status(200).send({message: 'Reset Password Email Send'});
 
     }).fail(function(err){
         next(err);
@@ -536,6 +559,116 @@ exports.forgotPasswordStep1 = function(req, res, next){
 
 
 
+exports.verifyResetPasswordCode = function(req, res, next){
+
+    var validationErrors = userModel.resetForgotPasswordValidations(req, userRoleModel.roleList.student.id, userModel.getStudentType().B2C, 2);
+
+    if(validationErrors){
+        return res.status(400).send( {message: validationErrors} );
+    }
+
+    userModel.findOneQ({
+        resetPasswordVerifyCode: req.body.passwordResetVerifyCode
+    }).then(function(resultUser){
+
+        if(!resultUser) {
+            throw new Error('Cancel promise chains. Because User Reset Password Verify Code wrong!');
+        }
+
+        //resultUser.resetPasswordVerifyCode = ''; // remove PasswordVerifyCode after reset
+
+        return resultUser.saveQ();
+
+
+    }).then(function(resultUser){
+
+        if(!resultUser){
+            throw new Error('Cancel promise chains. Because Update reset Password Verify Code failed. More or less than 1 record is updated. it should be only one !');
+        }
+
+        return res.status(200).send({message: 'Reset Password Token valid'});
+
+    }).fail(function(err){
+        next(err);
+    }).done();
+};
+
+
+
+exports.resetNewPassword = function(req, res, next){
+
+    var validationErrors = userModel.resetForgotPasswordValidations(req, userRoleModel.roleList.student.id, userModel.getStudentType().B2C, 3);
+
+    if(validationErrors){
+        return res.status(400).send( {message: validationErrors} );
+    }
+
+    userModel.findOneQ({
+        resetPasswordVerifyCode: req.body.passwordResetVerifyCode
+    }).then(function(resultUser){
+
+        if(!resultUser) {
+            throw new Error('Cancel promise chains. Because User Reset Password Verify Code wrong!');
+        }
+
+        resultUser.resetPasswordVerifyCode = ''; // remove PasswordVerifyCode after reset
+        resultUser.password = req.body.password;
+
+        return resultUser.saveQ();
+
+    }).then(function(savedDoc, numberAffectedRows){
+        console.log('reset password : ', savedDoc, numberAffectedRows);
+
+        if(!savedDoc ){
+            throw new Error('Cancel promise chains. Because Update reset Password failed. More or less than 1 record is updated. it should be only one !');
+        }
+
+        return res.status(200).send({message: 'Reset New Password Success.'});
+
+    }).fail(function(err){
+        next(err);
+    }).done();
+};
+
+
+
+
+
+
+// http://www.hcdlearning.com/e4e/e4e/emailverify/changepassword?username=jinwyp&passwordtoken=799731
+
+exports.forgotPasswordStep2 = function(req, res, next){
+    var validationErrors = userModel.emailVerifyResetPasswordValidations(req, userRoleModel.roleList.student.id, userModel.getStudentType().B2C);
+
+    if(validationErrors){
+        return next(new Error('Cancel Reset password! ' + validationErrors[0].msg) );
+    }
+
+    var nowDate = new Date();
+
+    userModel.findOneQ({
+        username: req.query.username,
+        resetPasswordToken: req.query.passwordtoken
+    }).then(function(resultUser){
+
+        if(!resultUser) {
+            throw new Error('Cancel promise chains. Because User Reset Password Token not found!');
+        }
+
+        if( resultUser.resetPasswordTokenExpires < nowDate){
+            throw new Error('Cancel promise chains. Because Reset Password Token Expire !');
+        }
+
+        return res.render('b2c/forgotpassword/step2enterpassword.ejs', {
+            title     : ' Reset your password ! | HCD Learning',
+            username  : resultUser.username,
+            useremail : resultUser.email
+        });
+
+    }).fail(function(err){
+        next(err);
+    }).done();
+};
 
 
 

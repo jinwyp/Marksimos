@@ -6,23 +6,28 @@ var seminarId = '10076';
 
 var studentList =[
     {
-        username : 'anilraparla@hcdlearning.com',
+        username : 'anilraparla',
         email : 'anilraparla@hcdlearning.com',
         password : '123456'
     },
     {
-        username : 'haosun@hcdlearning.com',
+        username : 'haosun',
         email : 'haosun@hcdlearning.com',
         password : '123456'
     },
     {
-        username : 'jinwang@hcdlearning.com',
+        username : 'jinwang',
         email : 'jinwang@hcdlearning.com',
         password : '123456'
     },
     {
-        username : 'yunsun@hcdlearning.com',
+        username : 'yunsun',
         email : 'yunsun@hcdlearning.com',
+        password : '123456'
+    },
+    {
+        username : 'yuekecheng',
+        email : 'clarkyue@hcdlearning.com',
         password : '123456'
     }
 
@@ -33,7 +38,7 @@ var studentList =[
 
 var admin =[
     {
-        username : 'hcd_administrator@hcdlearning.com',
+        username : 'hcd_administrator',
         email : 'hcd_administrator@hcdlearning.com',
         password : 'admin1234@hcd'
     }
@@ -41,7 +46,7 @@ var admin =[
 
 var distributor =[
     {
-        username : 'hcd_distributor@hcdlearning.com',
+        username : 'hcd_distributor',
         email : 'hcd_distributor@hcdlearning.com',
         password : 'distributor@hcd5678'
     }
@@ -50,8 +55,13 @@ var distributor =[
 
 var facilitator =[
     {
-        username : 'hcd_facilitator@hcdlearning.com',
+        username : 'hcd_facilitator',
         email : 'hcd_facilitator@hcdlearning.com',
+        password : 'hcdfacilitator@9876'
+    },
+    {
+        username : 'b2c_facilitator',
+        email : 'b2c_facilitator@hcdlearning.com',
         password : 'hcdfacilitator@9876'
     }
 ];

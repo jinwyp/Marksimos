@@ -53,7 +53,7 @@ describe("Admin API Create Distributor and Facilitator and Student", function() 
             venue: utility.dateFormat("yyyy-MM-dd")
         };
 
-        var newSeminar
+        var newSeminar;
 
         Q.nfcall(request.post, adminApiPath + "seminar", { json: seminarInfo }).then(function(value) {
 

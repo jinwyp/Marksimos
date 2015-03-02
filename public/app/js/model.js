@@ -61,8 +61,14 @@
             registerB2C : function(user){
                 return $http.post(apiPathB2C + 'registerstudent', user);
             },
-            forgetPassword : function(user){
-                return $http.post(apiPathB2C + 'forgotpassword', user);
+            forgetPasswordStep1 : function(user){
+                return $http.post(apiPathB2C + 'forgotpasswordstep1', user);
+            },
+            forgetPasswordStep2 : function(user){
+                return $http.post(apiPathB2C + 'forgotpasswordstep2', user);
+            },
+            forgetPasswordStep3 : function(user){
+                return $http.post(apiPathB2C + 'forgotpasswordstep3', user);
             },
 
             login : function(user){

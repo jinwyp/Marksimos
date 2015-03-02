@@ -4,7 +4,8 @@ var Q = require('q');
 var mongooseTimestamps = require('mongoose-timestamp');
 var uuid = require('node-uuid');
 var bcrypt = require('bcrypt-nodejs');
-var nodemailer = require('nodemailer');
+var SALT_WORK_FACTOR = 10;
+
 
 var userRoleModel = require('./userrole.js');
 var config = require('../../../common/config.js');
@@ -18,6 +19,7 @@ var userSchema = new Schema({
     password: { type: String, required: true, select: true},
 
 
+    resetPasswordVerifyCode: { type: String},
     resetPasswordToken: { type: String, default: uuid.v4()},
     resetPasswordTokenExpires: { type: Date },
 
@@ -98,7 +100,22 @@ userSchema.virtual('roleId').get(function () {
 });
 
 
+userSchema.pre('save', function(next) {
+    var user = this;
 
+    // only hash the password if it has been modified (or is new)
+    if (!user.isModified('password')) return next();
+
+    bcrypt.genSalt(SALT_WORK_FACTOR, function(err, salt) {
+        if (err) return next(err);
+
+        bcrypt.hash(user.password, salt, null, function(err, hash) {
+            if (err) return next(err);
+            user.password = hash;
+            next();
+        });
+    });
+});
 
 
 
@@ -108,8 +125,6 @@ userSchema.statics.register = function (newUser) {
     }
 
     var deferred = Q.defer();
-
-    newUser.password = User.generateHashPassword(newUser.password);
 
     User.findOne( {$or : [
         {username: newUser.username},
@@ -135,54 +150,35 @@ userSchema.statics.register = function (newUser) {
 };
 
 
-userSchema.statics.sendEmail = function(targetEmail, subject, html) {
-    var deferred = Q.defer();
-
-    var smtpTransport = config.mailTransporter;
 
 
-    var mailOptions = {
-        from: config.mailContent.from,
-        to: targetEmail,
-        subject: subject,
-        text: html
+
+
+
+
+
+
+userSchema.statics.getStudentType = function(){
+    return {
+        B2B : 10,
+        B2C : 20,
+        BothB2CAndB2B : 30
     };
-
-    smtpTransport.sendMail(mailOptions, function(error, response){
-        if (error) {
-            console.log('Email send error : ' + error);
-            deferred.reject(error);
-        } else {
-            console.log('Email already send : ' + response);
-            deferred.resolve({message: 'Email already send : ' + response.message});
-        }
-    });
-
-    return deferred.promise;
 };
 
 
-userSchema.statics.updateByEmail = function(email, user){
-    if(!mongoose.connection.readyState){
-        throw new Error("mongoose is not connected.");
-    }
-
-    var deferred = Q.defer();
-
-    User.update({
-            email: email
-        }
-        ,user
-        , function(err, numAffected){
-            if(err){
-                deferred.reject(err);
-            }else{
-                deferred.resolve(numAffected);
-            }
-        });
-
-    return deferred.promise;
+userSchema.statics.generateHashPassword = function(password){
+    return bcrypt.hashSync(password, bcrypt.genSaltSync(SALT_WORK_FACTOR));
 };
+
+userSchema.statics.verifyPassword = function(password, hashedPassword){
+    return bcrypt.compareSync(password, hashedPassword);
+};
+
+
+
+
+
 
 
 
@@ -213,8 +209,8 @@ userSchema.statics.registerValidations = function(req, userRoleId, studentType){
         req.checkBody('city', 'city is required').notEmpty();
 
         req.checkBody('qq', 'qq number format wrong' ).optional().isInt();
-        req.checkBody('firstname', '2 to 50 characters required.').optional().len(2, 50);
-        req.checkBody('lastname', '2 to 50 characters required.').optional().len(2, 50);
+        req.checkBody('firstName', '2 to 50 characters required.').optional().len(2, 50);
+        req.checkBody('lastName', '2 to 50 characters required.').optional().len(2, 50);
         req.checkBody('idcardNumber', '18 to 19 characters required.').optional().matches( /^\d{17}([0-9]|X)$/ );
 
 
@@ -265,37 +261,48 @@ userSchema.statics.registerValidations = function(req, userRoleId, studentType){
 
 
 
-userSchema.statics.emailVerificationValidations = function(req, userRoleId, studentType){
+userSchema.statics.emailVerifyRegistrationValidations = function(req, userRoleId, studentType){
 
     studentType = studentType || 20;
 
     req.checkQuery('email', 'Email wrong format').notEmpty().isEmail();
-    req.checkQuery('emailtoken', 'Email ActivateToken wrong format').isUUID(4);
+    req.checkQuery('emailtoken', 'Email ActivateToken wrong format').notEmpty().isUUID(4);
 
     return req.validationErrors();
 
 };
 
 
-userSchema.statics.getStudentType = function(){
-    return {
-        B2B : 10,
-        B2C : 20,
-        BothB2CAndB2B : 30
-    };
+
+userSchema.statics.emailVerifyResetPasswordValidations = function(req, userRoleId, studentType){
+
+    studentType = studentType || 20;
+
+    req.checkQuery('username', 'Username should be 6-20 characters').notEmpty().len(6, 20);
+    req.checkQuery('passwordtoken', 'Reset Password Token wrong').notEmpty().isUUID(4);
+
+    return req.validationErrors();
+
 };
 
 
-userSchema.statics.generateHashPassword = function(password){
-    return bcrypt.hashSync(password, bcrypt.genSaltSync(10));
+userSchema.statics.resetForgotPasswordValidations = function(req, userRoleId, studentType, step){
+
+    studentType = studentType || 20;
+    step = step || 1
+
+    if(step === 1){
+        req.checkBody('email', 'Email wrong format').notEmpty().isEmail();
+    }else if (step === 2){
+        req.checkBody('passwordResetVerifyCode', 'Reset Password Token wrong').notEmpty().len(6, 6);
+    }else if (step === 3){
+        req.checkBody('passwordResetVerifyCode', 'Reset Password Token wrong').notEmpty().len(6, 6);
+        req.checkBody('password', 'Password should be 6-20 characters').notEmpty().len(6, 20);
+    }
+
+    return req.validationErrors();
+
 };
-
-userSchema.statics.verifyPassword = function(password, hashedPassword){
-    return bcrypt.compareSync(password, hashedPassword);
-};
-
-
-
 
 
 

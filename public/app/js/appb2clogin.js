@@ -32,9 +32,12 @@
 
         vm.css = {
             showRegForm : true,
+            showForgotPasswordForm : true,
+            resetPasswordForm : 'tokenForm',
             loginFailedInfo : false,
             usernameExistedInfo : false,
-            emailNotExistedInfo : false
+            emailNotExistedInfo : false,
+            resetPasswordTokenNotExistedInfo : false
         };
 
         vm.newUser =  {
@@ -42,6 +45,7 @@
             email : '',
             password : '',
             passwordReInput : '',
+            passwordResetVerifyCode : '',
             gender : "",
             clickSubmit : false,
             rememberMe : false
@@ -54,7 +58,11 @@
         /**********  Event Center  **********/
         vm.clickregister = userRegister;
         vm.clicklogin = userLogin;
-        vm.clickForgetPassword = forgetPasswordStep1;
+        vm.clickForgetPasswordStep1 = forgetPasswordStep1;
+        vm.clickForgetPasswordStep2 = forgetPasswordStep2;
+        vm.clickResetPasswordStep3 = resetNewPassword;
+
+
 
 
 
@@ -64,7 +72,7 @@
             if(form.$valid){
                 Student.login(vm.newUser).then(function(){
 
-                    $window.location.href = "/e4e/userhome" ;
+                    $window.location.href = "/e4e/profile" ;
 
                 }).catch(function(err){
                         form.username.$valid = false;
@@ -104,8 +112,9 @@
             vm.css.emailNotExistedInfo = false;
 
             if(form.$valid){
-                Student.forgetPassword(vm.newUser).then(function(result){
-                    console.log(result.data);
+                Student.forgetPasswordStep1(vm.newUser).then(function(result){
+
+                    vm.css.showForgotPasswordForm = false;
 
                 }).catch(function(err){
                     form.email.$valid = false;
@@ -116,6 +125,40 @@
                 });
             }
         }
+
+
+        function forgetPasswordStep2(form){
+            vm.css.resetPasswordTokenNotExistedInfo = false;
+
+            if(form.$valid){
+                Student.forgetPasswordStep2(vm.newUser).then(function(result){
+                    vm.css.resetPasswordForm = 'inputPasswordForm';
+
+                }).catch(function(err){
+                    form.passwordreset.$valid = false;
+                    form.passwordreset.$invalid = true;
+
+                    vm.css.resetPasswordTokenNotExistedInfo = true;
+
+                });
+            }
+        }
+
+
+        function resetNewPassword(form){
+            vm.css.resetPasswordTokenNotExistedInfo = false;
+
+            if(form.$valid){
+                Student.forgetPasswordStep3(vm.newUser).then(function(result){
+                    vm.css.resetPasswordForm = 'resetPasswordFinished';
+
+                }).catch(function(err){
+                    vm.css.resetPasswordTokenNotExistedInfo = true;
+
+                });
+            }
+        }
+
 
 
         var app = {};

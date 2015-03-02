@@ -55,7 +55,7 @@ apiRouter.get('/e4e', function(req, res, next){
     res.render('b2c/registration/indexreg.ejs', {title : 'Welcome to HCD E4E | HCD Learning'});
 });
 
-apiRouter.get('/e4e/emailverify/registration', auth.authLoginToken({failureRedirect: '/e4e/login'}), auth.activateRegistrationEmail);
+apiRouter.get('/e4e/emailverify/registration', auth.activateRegistrationEmail);
 
 
 apiRouter.get('/e4e/login', function(req, res, next){
@@ -68,14 +68,8 @@ apiRouter.get('/e4e/login', function(req, res, next){
 apiRouter.get('/e4e/forgotpassword', function(req, res, next){
     res.render('b2c/forgotpassword/forgotpassword.ejs', {title:'Forgotten Your Password? | HCD Learning'});
 });
+apiRouter.get('/e4e/emailverify/changepassword', auth.forgotPasswordStep2);
 
-apiRouter.get('/e4e/forgotpassword/emailverify', function(req, res, next){
-    res.render('b2c/forgotpassword/enter-code.ejs', {title:'Forgotten Your Password? | HCD Learning'});
-});
-
-apiRouter.get('/e4e/forgotpassword/email', function(req, res, next){
-    res.render('b2c/forgotpassword/enter-email.ejs', {title:'Forgotten Your Password? | HCD Learning'});
-});
 
 
 apiRouter.get('/e4e/profile', /*auth.authLoginToken({failureRedirect: '/e4e/login'}), auth.authRole(userRoleModel.right.marksimos.studentLogin, {failureRedirect: '/e4e/login'}),*/ function(req, res, next){
@@ -186,7 +180,9 @@ apiRouter.all("/marksimos/api/*", function(req, res, next){
 apiRouter.post('/e4e/api/registercompany', auth.registerB2CEnterprise);
 apiRouter.post('/e4e/api/registerstudent', auth.registerB2CStudent);
 
-apiRouter.post('/e4e/api/forgotpasswordstep1', auth.forgotPasswordStep1);
+apiRouter.post('/e4e/api/forgotpasswordstep1', auth.sendResetPasswordEmail);
+apiRouter.post('/e4e/api/forgotpasswordstep2', auth.verifyResetPasswordCode);
+apiRouter.post('/e4e/api/forgotpasswordstep3', auth.resetNewPassword);
 
 
 
@@ -315,7 +311,7 @@ apiRouter.get('/marksimos/api/create_admin', function (req,res,next) {
     var userList = [
         {
             "username": "hcd_administrator",
-            "password": userModel.generateHashPassword("admin1234@hcd"),
+            "password": "admin1234@hcd",
             "email": "hcd_administrator@hcdlearning.com",
             "mobilePhone": "13916502743",
             "country": "China",
@@ -329,7 +325,7 @@ apiRouter.get('/marksimos/api/create_admin', function (req,res,next) {
         {
             "_id": mongoose.Types.ObjectId("54609f0c700a570813b1353f"),
             "username": "hcd_distributor",
-            "password": userModel.generateHashPassword("distributor@hcd5678"),
+            "password": "distributor@hcd5678",
             "email": "hcd_distributor@hcdlearning.com",
             "mobilePhone": "13916502743",
             "country": "China",
@@ -348,7 +344,7 @@ apiRouter.get('/marksimos/api/create_admin', function (req,res,next) {
         {
             "_id": mongoose.Types.ObjectId("54609fb2700a570813b13540"),
             "username": "hcd_facilitator",
-            "password": userModel.generateHashPassword("hcdfacilitator@9876"),
+            "password": "hcdfacilitator@9876",
             "email": "hcd_facilitator@hcdlearning.com",
             "mobilePhone": "13916502743",
             "country": "China",
@@ -365,7 +361,7 @@ apiRouter.get('/marksimos/api/create_admin', function (req,res,next) {
         {
             "_id": mongoose.Types.ObjectId("54d834bdeaf05dbd048120f8"),
             "username": "b2c_facilitator",
-            "password": userModel.generateHashPassword("hcdfacilitator@9876"),
+            "password": "hcdfacilitator@9876",
             "email": "b2c_facilitator@hcdlearning.com",
             "mobilePhone": "13564568304",
             "country": "China",
@@ -386,7 +382,7 @@ apiRouter.get('/marksimos/api/create_admin', function (req,res,next) {
             "country": "China",
             "state": "shanghai",
             "city": "shanghai",
-            "password": userModel.generateHashPassword("123456"),
+            "password": "123456",
             "facilitatorId": "54609fb2700a570813b13540",
             "idcardNumber": "321181198502273515",
             "occupation": "Student",
@@ -406,7 +402,7 @@ apiRouter.get('/marksimos/api/create_admin', function (req,res,next) {
             "country": "China",
             "state": "shanghai",
             "city": "shanghai",
-            "password": userModel.generateHashPassword("123456"),
+            "password": "123456",
             "facilitatorId": "54609fb2700a570813b13540",
             "idcardNumber": "321181198502273515",
             "occupation": "Student",
@@ -426,7 +422,7 @@ apiRouter.get('/marksimos/api/create_admin', function (req,res,next) {
             "country": "China",
             "state": "shanghai",
             "city": "shanghai",
-            "password": userModel.generateHashPassword("123456"),
+            "password": "123456",
             "facilitatorId": "54609fb2700a570813b13540",
             "idcardNumber": "321181198502273515",
             "occupation": "Student",
@@ -440,18 +436,38 @@ apiRouter.get('/marksimos/api/create_admin', function (req,res,next) {
             "emailActivated": false
         },
         {
-            "username": "anil",
+            "username": "anilraparla",
             "email": "anilraparla@hcdlearning.com",
             "mobilePhone": "13916502743",
             "country": "China",
             "state": "shanghai",
             "city": "shanghai",
-            "password": userModel.generateHashPassword("123456"),
+            "password": "123456",
             "facilitatorId": "54609fb2700a570813b13540",
             "idcardNumber": "321181198502273515",
             "occupation": "Student",
             "firstName": "anil",
             "lastName": "anil",
+            "organizationOrUniversity": "",
+            "majorsDegree": "",
+            "studentType": 10,
+            "role": userRoleModel.roleList.student.id,
+            "activated": true,
+            "emailActivated": false
+        },
+        {
+            "username": "yuekecheng",
+            "email": "clarkyue@hcdlearning.com",
+            "mobilePhone": "15900719671",
+            "country": "China",
+            "state": "shanghai",
+            "city": "shanghai",
+            "password": "123456",
+            "facilitatorId": "54609fb2700a570813b13540",
+            "idcardNumber": "321181198502273515",
+            "occupation": "Student",
+            "firstName": "clark",
+            "lastName": "yue",
             "organizationOrUniversity": "",
             "majorsDegree": "",
             "studentType": 10,
@@ -467,7 +483,7 @@ apiRouter.get('/marksimos/api/create_admin', function (req,res,next) {
             // 补充增加 b2c_facilitator 账号
             userModel.find({"username": "b2c_facilitator"}).execQ().then(function (userB2CResult) {
 
-                if(userB2CResult.length){
+                if(userB2CResult){
                     return res.status(400).send ({message: "already added."});
                 }else{
                     userModel.create(userList[3], function (err, b2cFacilitatorResults) {
