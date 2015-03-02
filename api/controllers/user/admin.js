@@ -195,7 +195,6 @@ exports.addFacilitator = function(req, res, next){
         next(err);
     }).done();
 
-
 };
 
 exports.updateFacilitator = function(req, res, next){
