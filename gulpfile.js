@@ -251,7 +251,7 @@ gulp.task('browser-sync', function() {
 gulpArguments = argv;
 gulp.task('teststudentud', function() {
     console.log("Pls use 'gulp teststudentud -p -s'. Argument '-p' peroid number, Argument '-s' seminarId argument. ");
-    console.log("Example: 'gulp teststudentud -p1 -s10001' ");
+    console.log("Example: 'gulp teststudentud -s10001 -p1' ");
     return gulp.src(paths.scenario_testStudentUpdateDecisions)
         .pipe(jasmine());
 });
@@ -266,13 +266,13 @@ gulp.task('testadmincs', function() {
 });
 gulp.task('testadminrn', function() {
     console.log("Pls use 'gulp testadminrn -p -s'. Argument '-p' peroid number, Argument '-s' seminarId argument. ");
-    console.log("Example: 'gulp testadminrn -p1 -s10001' ");
+    console.log("Example: 'gulp testadminrn -s10001' ");
     return gulp.src(paths.scenario_testAdminRunSeminarNextRound)
         .pipe(jasmine());
 });
 gulp.task('testadminrr', function() {
     console.log("Pls use 'gulp testadminrr -p -s'. Argument '-p' peroid number, Argument '-s' seminarId argument. ");
-    console.log("Example: 'gulp testadminrr -p1 -s10001' ");
+    console.log("Example: 'gulp testadminrr -s10001 -p1' ");
     return gulp.src(paths.scenario_testAdminReRunSeminar)
         .pipe(jasmine());
 });
