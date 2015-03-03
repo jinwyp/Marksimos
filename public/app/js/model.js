@@ -96,6 +96,10 @@
 
             chooseSeminar : function(queryParams){
                 return $http.get(apiPath + 'choose_seminar', {params : queryParams});
+            },
+
+            addStudentToTeam : function(user) {
+                return $http.post(apiPath + 'team/student', {params : user});
             }
         };
 
