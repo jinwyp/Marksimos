@@ -321,6 +321,14 @@ userSchema.statics.usernameValidations = function(req, userRoleId, studentType){
 };
 
 
+userSchema.statics.userIdValidations = function(req, userRoleId, studentType){
+
+    studentType = studentType || 20;
+
+    req.checkParams('student_id', 'User ID should be 24 characters').notEmpty().len(24, 24);
+
+    return req.validationErrors();
+};
 
 
 var User = mongoose.model("User", userSchema);
