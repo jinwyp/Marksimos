@@ -6,7 +6,7 @@
     <b2c-header showlogin="true"></b2c-header>
 
     <main ng-controller="userLoginController as register">
-        <div class="middle b2c-container" ng-if="true" >
+        <div class="middle b2c-container" ng-if="register.css.showRegForm" >
             <div class="middle right">
 
                 <form class="reg-form" name="regForm" novalidate ng-cloak>
@@ -50,7 +50,6 @@
 
                     <div class="form-group"><button class="btn btn-default" type="submit" ng-click="register.clickregister(regForm)" >注&nbsp;&nbsp;册</button></div>
                 </form>
-
             </div>
 
             <div class="middle left">

@@ -486,8 +486,8 @@ exports.activateRegistrationEmail = function(req, res, next){
 
         return res.render('b2c/registration/indexregsuccess.ejs', {
             title     : ' Email Activate Success ! | HCD Learning',
-            username  : result.username,
-            useremail : result.email
+            username  : savedDoc.username,
+            useremail : savedDoc.email
         });
 
     }).fail(function(err){
