@@ -1,5 +1,6 @@
 var userModel = require('../../models/user/user.js');
 var userRoleModel = require('../../models/user/userrole.js');
+var teamModel = require('../../models/user/team.js');
 var seminarModel = require('../../models/marksimos/seminar.js');
 var Token = require('../../models/user/authenticationtoken.js');
 var EmailModel = require('../../models/user/emailContent.js');
@@ -183,7 +184,7 @@ exports.authLoginToken = function (options) {
                 //token存在且未过期
                 if (tokenInfo && tokenInfo.expires > new Date()) {
 
-                    userModel.findOne({ _id: tokenInfo.userId }, function (err, user) {
+                    userModel.findOne({ _id: tokenInfo.userId }, '-password -resetPasswordToken -resetPasswordVerifyCode -emailActivateToken', function (err, user) {
 
                         if (err) { return next(err);}
 
@@ -308,8 +309,15 @@ exports.getUserInfo = function (req, res, next){
     }
 
 
+    teamModel.findOne({ creator: userResult.id }).populate('memberList', '-password -resetPasswordToken -resetPasswordVerifyCode -emailActivateToken').execQ().then(function(resultTeam){
+        userResult.team = resultTeam;
+        res.status(200).send(userResult);
 
-    res.status(200).send(userResult);
+    }).fail(function(err){
+        next(err);
+    }).done();
+
+
 };
 
 

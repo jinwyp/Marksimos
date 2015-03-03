@@ -2,7 +2,6 @@
  * Created by jinwyp on 3/3/15.
  */
 
-
 'use strict';
 
 /*!
