@@ -54,15 +54,12 @@ apiRouter.get('/', function(req, res, next){
 apiRouter.get('/e4e', function(req, res, next){
     res.render('b2c/registration/indexreg.ejs', {title : 'Welcome to HCD E4E | HCD Learning'});
 });
-
 apiRouter.get('/e4e/emailverify/registration', auth.activateRegistrationEmail);
 
 
 apiRouter.get('/e4e/login', function(req, res, next){
     res.render('b2c/login.ejs', {title:'HCD E4E Sign in to Your Account| HCD Learning'});
 });
-
-
 
 
 apiRouter.get('/e4e/forgotpassword', function(req, res, next){
@@ -183,6 +180,9 @@ apiRouter.post('/e4e/api/registerstudent', auth.registerB2CStudent);
 apiRouter.post('/e4e/api/forgotpasswordstep1', auth.sendResetPasswordEmail);
 apiRouter.post('/e4e/api/forgotpasswordstep2', auth.verifyResetPasswordCode);
 apiRouter.post('/e4e/api/forgotpasswordstep3', auth.resetNewPassword);
+
+
+apiRouter.post('/e4e/api/team/student',  auth.authLoginToken(), auth.authRole(userRoleModel.right.marksimos.teamInfoSingleGet), studentController.addStudentToTeam);
 
 
 
