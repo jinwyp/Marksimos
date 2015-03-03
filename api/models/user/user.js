@@ -305,6 +305,23 @@ userSchema.statics.resetForgotPasswordValidations = function(req, userRoleId, st
 };
 
 
+userSchema.statics.usernameValidations = function(req, userRoleId, studentType){
+
+    studentType = studentType || 20;
+
+    if(req.body.username.indexOf('@') > -1 ){
+        req.body.email = req.body.username;
+        req.checkBody('email', 'Invalid email').notEmpty().isEmail();
+    }else{
+        req.checkBody('username', 'Username should be 6-20 characters').notEmpty().len(6, 20);
+    }
+
+    return req.validationErrors();
+
+};
+
+
+
 
 var User = mongoose.model("User", userSchema);
 module.exports = User;

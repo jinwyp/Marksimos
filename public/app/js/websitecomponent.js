@@ -60,7 +60,7 @@
 
                             Student.login(scope.newUser).then(function(){
 
-                                $window.location.href = "/e4e/userhome" ;
+                                $window.location.href = "/e4e/profile" ;
 
                             }, function(err){
                                 $window.location.href = "/e4e/login#!/?username=" + scope.newUser.username ;
