@@ -116,22 +116,32 @@ exports.getQuestionnaireListForAdmin = function(req, res, next) {
         questionnaireModel.query.find({ seminarId: seminarId }).exec()
     ]).spread(function(seminarResult, questionnaireResult) {
         if (seminarResult) {
-            var result = seminarResult.companies, questionDic = {};
+            var result = [];
+            var questionDic = {};
+
             //生成字典
             questionnaireResult.forEach(function(question) {
                 questionDic[question.email] = question;
             });
+
             //拼接数据      
             seminarResult.companyAssignment.forEach(function(company, index) {
-                var studentList = [];               
-                (company.studentList||[]).forEach(function(email) {
-                    studentList.push({ email: email, questionnaire: questionDic[email] });
+                var studentList = [];
+
+                (company.studentList || []).forEach(function(email) {
+                    studentList.push({
+                        email: email,
+                        questionnaire: questionDic[email]
+                    });
                 });
 
-                result[index].studentList = studentList;
+                result[index].studentList = studentList ;
+                result[index].companyName = company.companyName ;
+                result[index].companyId = company.companyId ;
             });
             //返回成功的数据
             res.status(200).send(result);
+
         }else {
             //未得到seminar，则很有可能是输入的seminarId无效
             res.status(400).send( { message: "Invalid seminarId." });

@@ -1,35 +1,38 @@
 var mongoose = require('mongoose-q')(require('mongoose'));
 var Schema = mongoose.Schema;
+var schemaObjectId = Schema.Types.ObjectId;
 var Q = require('q');
+var mongooseTimestamps = require('mongoose-timestamp');
+
 var consts = require('../../consts.js');
 
 var gameTokenModel = require('../../models/user/gameauthtoken.js');
 
 var seminarSchema = new Schema({
     seminarId: String,
+
     description: String,
     country: String,
     state: String,
     city: String,
     venue: String,
 
+    currentPeriod: {type: Number, default: consts.Period_0 + 1},
     simulationSpan: Number,  //seminar有多少个round
     companyNum: Number,  //team name list
 
-    facilitatorId: String,
-
-    createDate: Date,
-
     companyAssignment: [],
-    currentPeriod: {type: Number, default: consts.Period_0 + 1},
-
-    companies: [],
-
 
     isInitialized: {type: Boolean, default: false}, //if seminar is initialized
     isSimulationFinished: {type: Boolean, default: false}, //if all simulation has been executed.
-    showLastPeriodScore: {type: Boolean, default: true}
+    showLastPeriodScore: {type: Boolean, default: true},
+
+    facilitatorId: String,
+
+    belongToCampaign : { type: schemaObjectId, ref: 'Campaign' }
 });
+
+seminarSchema.plugin(mongooseTimestamps);
 
 seminarSchema.statics.findSeminarByUserId = function (userid) {
     var that = this;

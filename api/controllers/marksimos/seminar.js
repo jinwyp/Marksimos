@@ -35,20 +35,15 @@ exports.addSeminar = function(req, res, next){
     seminar.companyNum = req.body.company_num;
     
     seminar.companyAssignment = [];
-    seminar.companies = [];
+
     var companyNameList = utility.createCompanyArray(seminar.companyNum);
-    for(i = 0; i<seminar.companyNum; i++){
-        seminar.companies.push({
-            companyId: i + 1,
-            companyName: companyNameList[i]
-        });
+    for(var i = 0; i<seminar.companyNum; i++){
 
         seminar.companyAssignment.push({
             companyId: i + 1,
             companyName: companyNameList[i],
             studentList : []
         });
-
     }
 
     userModel.findOneQ({_id: facilitatorId})
