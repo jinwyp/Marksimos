@@ -184,27 +184,58 @@
             addFailedInfo: false
         };
         vm.curType = '基本信息';
+        vm.currentUser = {
+            members: null,
+            teamName: ''
+        };
 
         /**********  Event Center  **********/
         vm.clickAddStudentToTeam = addStudentToTeam;
-        vm.members = []; //todo: should load from server.
+        vm.clickRemoveStudentToTeam = removeStudentToTeam;
+
 
         /**********  Function Declarations  **********/
         function addStudentToTeam(form) {
-            console.log('whatever');
             if (form.$valid) {
-                Student.addStudentToTeam({username:vm.newUser}).then(function(result) {
-                    vm.members.push(vm.newUser)
-                    console.log('success')
+                Student.addStudentToTeam({username: vm.newUser}).then(function(result) {
+                    getTeamInfo();
                 }).catch(function(err) {
                     form.$invalid = true;
                     form.$valid = false;
 
                     vm.css.addFailedInfo = true;
-                    console.log('failded')
                 })
             }
         }
+
+        function getTeamInfo() {
+            Student.getStudent().then(function(result) {
+                var user = vm.currentUser;
+                user.teamName = result.data.team.name;
+                user.members = result.data.team.memberList;
+            }).catch(function(err) {
+                console.log('load student info failed');
+            })
+        }
+
+        function removeStudentToTeam(id) {
+            Student.removeStudentToTeam(id).then(function(result) {
+                var members = vm.currentUser.members;
+                members.some(function(member, i) {
+                    if (member._id == id) {
+                        members.splice(i, 1);
+                        return true;
+                    }
+                })
+            })
+        }
+
+
+        function init() {
+            getTeamInfo()
+        }
+
+        init();
 
     }])
 

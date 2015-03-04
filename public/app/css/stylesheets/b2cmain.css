@@ -921,14 +921,22 @@ body {
   -webkit-box-shadow: #797979 0px 2px 4px;
   box-shadow: #797979 0px 2px 4px;
 }
+.profile-detail .add-button, .profile-detail .remove-button {
+  width: 65px;
+  border-style: none;
+  color: #ffffff;
+}
 .profile-detail .add-button {
   background-color: #B82A0C;
   -moz-box-shadow: #7e200b 0px 2px 4px;
   -webkit-box-shadow: #7e200b 0px 2px 4px;
   box-shadow: #7e200b 0px 2px 4px;
-  width: 65px;
-  border-style: none;
-  color: #ffffff;
+}
+.profile-detail .remove-button {
+  background-color: #797979;
+  -moz-box-shadow: #797979 0px 2px 4px;
+  -webkit-box-shadow: #797979 0px 2px 4px;
+  box-shadow: #797979 0px 2px 4px;
 }
 .profile-detail .profile-button-container {
   padding: 1.2em 0 0;
