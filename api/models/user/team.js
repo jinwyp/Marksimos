@@ -48,7 +48,14 @@ teamSchema.plugin(mongooseTimestamps);
  * Statics
  */
 
+teamSchema.statics.updateValidations = function(req){
 
+    req.checkBody('name', 'Username should be 6-20 characters').notEmpty().len(2, 50);
+    //req.checkBody('description', 'Invalid email').notEmpty().len(2, 50);
+
+    return req.validationErrors();
+
+};
 
 /**
  * Methods

@@ -308,8 +308,7 @@ exports.getUserInfo = function (req, res, next){
         userResult = req.user.toObject();
     }
 
-
-    teamModel.findOne({ creator: userResult.id }).populate('memberList', '-password -resetPasswordToken -resetPasswordVerifyCode -emailActivateToken').execQ().then(function(resultTeam){
+    teamModel.findOne({ creator: userResult._id }).populate('memberList', '-password -resetPasswordToken -resetPasswordVerifyCode -emailActivateToken').execQ().then(function(resultTeam){
         userResult.team = resultTeam;
         res.status(200).send(userResult);
 
