@@ -758,7 +758,7 @@ body {
   border-bottom: none;
 }
 .detail-nav li:last-child {
-  border-bottom: solid;
+  border-bottom: solid black;
   border-width: 1px;
 }
 .detail-nav .avatar {
@@ -812,17 +812,17 @@ body {
   color: #ffffff;
   padding-left: 1em;
 }
-.upload-avatar-window main {
+.upload-avatar-window .main {
   padding: 30px 30px 20px;
   background-color: #ffffff;
   font-weight: bolder;
 }
-.upload-avatar-window main .avatar-window-icon {
+.upload-avatar-window .main .avatar-window-icon {
   width: 100px;
   height: 100px;
   margin-right: 12px;
 }
-.upload-avatar-window main > div {
+.upload-avatar-window .main > div {
   display: inline-block;
   vertical-align: middle;
   *vertical-align: auto;
@@ -830,10 +830,10 @@ body {
   *display: inline;
   font-size: 0.9em;
 }
-.upload-avatar-window main .select-file {
+.upload-avatar-window .main .select-file {
   font-weight: normal;
 }
-.upload-avatar-window main .select-file button {
+.upload-avatar-window .main .select-file button {
   border-style: none;
   -moz-border-radius: 2px;
   -webkit-border-radius: 2px;
@@ -895,6 +895,10 @@ body {
 .profile-detail form > div > div {
   margin-bottom: 0.5em;
 }
+.profile-detail .none-bottom-border {
+  border-bottom: none;
+  padding-bottom: 0;
+}
 .profile-detail .profile-detail-title {
   background-color: #d98348;
   color: #ffffff;
@@ -917,23 +921,6 @@ body {
   float: right;
   font-size: 0.9em;
   border-style: none;
-  -moz-box-shadow: #797979 0px 2px 4px;
-  -webkit-box-shadow: #797979 0px 2px 4px;
-  box-shadow: #797979 0px 2px 4px;
-}
-.profile-detail .add-button, .profile-detail .remove-button {
-  width: 65px;
-  border-style: none;
-  color: #ffffff;
-}
-.profile-detail .add-button {
-  background-color: #B82A0C;
-  -moz-box-shadow: #7e200b 0px 2px 4px;
-  -webkit-box-shadow: #7e200b 0px 2px 4px;
-  box-shadow: #7e200b 0px 2px 4px;
-}
-.profile-detail .remove-button {
-  background-color: #797979;
   -moz-box-shadow: #797979 0px 2px 4px;
   -webkit-box-shadow: #797979 0px 2px 4px;
   box-shadow: #797979 0px 2px 4px;
@@ -969,9 +956,27 @@ body {
 .profile-detail .team-info .head {
   margin-left: 80px;
 }
+.profile-detail .team-info .team-name {
+  margin-bottom: 0;
+}
 .profile-detail .team-info .team-name .team-label {
   padding-right: 0;
 }
-.profile-detail .team-info input:not(:last-child) {
+.profile-detail .team-info button, .profile-detail .team-info .add-button, .profile-detail .team-info .remove-button {
+  width: 65px;
+  border-style: none;
+  color: #ffffff;
+  background-color: #797979;
+  -moz-box-shadow: #797979 0px 2px 4px;
+  -webkit-box-shadow: #797979 0px 2px 4px;
+  box-shadow: #797979 0px 2px 4px;
+}
+.profile-detail .team-info input, .profile-detail .team-info span {
   margin-right: 5px;
+}
+.profile-detail .team-info .add-button, .profile-detail .team-info .done {
+  background-color: #B82A0C;
+  -moz-box-shadow: #7e200b 0px 2px 4px;
+  -webkit-box-shadow: #7e200b 0px 2px 4px;
+  box-shadow: #7e200b 0px 2px 4px;
 }
