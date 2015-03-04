@@ -194,7 +194,7 @@
             console.log('whatever');
             if (form.$valid) {
                 Student.addStudentToTeam({username:vm.newUser}).then(function(result) {
-                    vm.members.push(vm.newUser)
+                    vm.members.push(vm.newUser);
                     console.log('success')
                 }).catch(function(err) {
                     form.$invalid = true;
@@ -269,10 +269,13 @@ $(function () {
 
     // Footer Fixed
     $(window).on('resize', function () {
-        if ($('header').height() + $('footer').height() + $('main').height() < $(window).height()) {
+
+        //console.log($('b2c-header').height() , $('footer').height() , $('.b2c-login-main').height() , $(window).height());
+
+        //if ( $('b2c-header').height() + $('footer').height() + $('.b2c-container').height() < $(window).height()) {
+        if(  $('.b2c-login-main').height() > 10 || $('.reg-verify-account').height() > 10 || $('.b2c-enter-email').height() > 10 || $('.b2c-enter-code').height() > 10 ){
             $('footer').addClass('b2c-footer-fix');
-        }
-        else { 
+        }else{
             $('footer').removeClass('b2c-footer-fix');
         }
     }).trigger('resize');

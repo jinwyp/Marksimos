@@ -9,6 +9,8 @@ var bodyParser = require('body-parser');
 var mongoose = require('mongoose');
 
 var morgan = require('morgan');
+var logger = require('./common/logger.js');
+
 
 
 //var session = require('express-session');
@@ -112,7 +114,8 @@ app.use(function(err, req, res, next){
     // here and next(err) appropriately, or if
     // we possibly recovered from the error, simply next().
 
-    console.log(typeof err.message,  err.message);
+    logger.log('400 or 500 Error.  Type:', typeof err.message, '   Message:',  err.message);
+
     if(typeof err.message !== 'undefined' && err.message.toLowerCase().substr(0, 6) == 'cancel' ){
         // respond promise stop chains info with no system error
         res.status(err.status || 400);
