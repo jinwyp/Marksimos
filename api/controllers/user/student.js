@@ -17,41 +17,53 @@ exports.updateStudentB2CInfo = function(req, res, next){
         return res.status(400).send( {message: validationErrors} );
     }
 
+    var saveUser = {
+        gender : req.body.gender || 1,
+        //birthday:req.body.birthday ,
+
+        firstName:req.body.firstName ||'',
+        lastName:req.body.lastName ||'',
+        idcardNumber:req.body.idcardNumber ||'',
+
+        mobilePhone:req.body.mobilePhone ||'',
+        qq:req.body.qq ||'',
+
+        majorsDegree:req.body.majorsDegree ||'',
+        //dateOfEnterCollege:req.body.dateOfGraduation ||'',
+        //dateOfGraduation:req.body.dateOfGraduation ||'',
+        organizationOrUniversity:req.body.organizationOrUniversity ||'',
+        occupation:req.body.occupation ||'',
+
+        country:req.body.country ||'',
+        state:req.body.state ||'',
+        city:req.body.city ||'',
+        district:req.body.district ||'',
+        street:req.body.street ||'',
+
+        websiteLanguage:req.body.description ||''
+    };
+
+
+    if(typeof req.body.birthday !== 'undefined'){
+        saveUser.birthday = req.body.birthday;
+    }
+    if(typeof req.body.dateOfEnterCollege !== 'undefined'){
+        saveUser.dateOfEnterCollege = req.body.birthday;
+    }
+    if(typeof req.body.dateOfGraduation !== 'undefined'){
+        saveUser.dateOfGraduation = req.body.birthday;
+    }
+
+
     userModel.findOneAndUpdateQ(
         { _id : req.user.id },
-        {
-            gender : req.body.gender,
-            birthday:req.body.birthday,
-
-            firstName:req.body.firstName ||'',
-            lastName:req.body.lastName ||'',
-            idcardNumber:req.body.idcardNumber ||'',
-
-            mobilePhone:req.body.mobilePhone ||'',
-            qq:req.body.qq ||'',
-
-            majorsDegree:req.body.majorsDegree ||'',
-            dateOfEnterCollege:req.body.dateOfGraduation ||'',
-            dateOfGraduation:req.body.dateOfGraduation ||'',
-            organizationOrUniversity:req.body.organizationOrUniversity ||'',
-            occupation:req.body.occupation ||'',
-
-            country:req.body.country ||'',
-            state:req.body.state ||'',
-            city:req.body.city ||'',
-            district:req.body.district ||'',
-            street:req.body.street ||'',
-
-            websiteLanguage:req.body.description ||''
-        },
-        { upsert : false}
+        saveUser
 
     ).then(function(resultUser){
 
         if(!resultUser){
             throw new Error('Cancel promise chains. Because Update Team failed. more or less than 1 record is updated. it should be only one !');
         }
-
         return res.status(200).send({message: 'Student update success'});
 
     }).fail(function(err){
