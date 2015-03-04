@@ -51,7 +51,7 @@ teamSchema.plugin(mongooseTimestamps);
 teamSchema.statics.updateValidations = function(req){
 
     req.checkBody('name', 'Team name should be 2-50 characters').notEmpty().len(2, 50);
-    //req.checkBody('description', 'Invalid email').notEmpty().len(2, 50);
+    //req.checkBody('description', 'Team description should be 2-50 characters').notEmpty().len(2, 50);
 
     return req.validationErrors();
 

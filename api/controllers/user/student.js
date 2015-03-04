@@ -7,9 +7,6 @@ var teamModel = require('../../models/user/team.js');
 
 //var ObjectId = require('mongoose').Types.ObjectId;
 
-var logger = require('../../../common/logger.js');
-
-
 
 exports.updateTeam = function(req, res, next){
 

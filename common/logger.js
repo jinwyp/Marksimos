@@ -16,6 +16,9 @@ exports.error = function(err){
     }
 };
 
-exports.log = function(message){
-    winston.info("Debug Info: ", message);
+exports.log = function(){
+    var args = Array.prototype.slice.call(arguments,0);
+    args.unshift("Debug Info: ");
+    winston.info.apply(this, args);
 };
+
