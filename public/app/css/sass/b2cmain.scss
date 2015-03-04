@@ -886,12 +886,18 @@ $lineHeight_button: 1.8;
 		border-style: none;
 		@include box-shadow(#797979 0px 2px 4px)
 	}
-	.add-button {
-		background-color: #B82A0C;
-		@include box-shadow($color_register_button_border 0px 2px 4px);
+	.add-button, .remove-button {
 		width: 65px;
 		border-style:none;
 		color:$color_white;
+	}
+	.add-button {
+		background-color: #B82A0C;
+		@include box-shadow($color_register_button_border 0px 2px 4px);
+	}
+	.remove-button {
+		background-color: #797979;
+		@include box-shadow(#797979 0px 2px 4px);
 	}
 	.profile-button-container {
 		padding: 1.2em 0 0;
