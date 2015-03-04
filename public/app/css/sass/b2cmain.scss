@@ -762,7 +762,9 @@ $lineHeight_button: 1.8;
 	.upload-avatar-button {
 		background-color: #741F01;
 		color: $color_white;
+		cursor: pointer;
 	}
+	.profile-nav {cursor: pointer;}
 	.up-triangle {
 		@include triangle();
 		left: 0;
@@ -884,6 +886,13 @@ $lineHeight_button: 1.8;
 		border-style: none;
 		@include box-shadow(#797979 0px 2px 4px)
 	}
+	.add-button {
+		background-color: #B82A0C;
+		@include box-shadow($color_register_button_border 0px 2px 4px);
+		width: 65px;
+		border-style:none;
+		color:$color_white;
+	}
 	.profile-button-container {
 		padding: 1.2em 0 0;
 		button {
@@ -915,7 +924,7 @@ $lineHeight_button: 1.8;
 			margin-left: 80px;
 		}
 		.team-name {
-			margin-top: 2.5em;
+			//margin-top: 2.5em;
 			.team-label {
 				padding-right: 0;
 			}

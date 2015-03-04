@@ -775,6 +775,10 @@ body {
 .detail-nav .upload-avatar-button {
   background-color: #741F01;
   color: #ffffff;
+  cursor: pointer;
+}
+.detail-nav .profile-nav {
+  cursor: pointer;
 }
 .detail-nav .up-triangle {
   border: 5px solid;
@@ -917,6 +921,15 @@ body {
   -webkit-box-shadow: #797979 0px 2px 4px;
   box-shadow: #797979 0px 2px 4px;
 }
+.profile-detail .add-button {
+  background-color: #B82A0C;
+  -moz-box-shadow: #7e200b 0px 2px 4px;
+  -webkit-box-shadow: #7e200b 0px 2px 4px;
+  box-shadow: #7e200b 0px 2px 4px;
+  width: 65px;
+  border-style: none;
+  color: #ffffff;
+}
 .profile-detail .profile-button-container {
   padding: 1.2em 0 0;
 }
@@ -947,9 +960,6 @@ body {
 }
 .profile-detail .team-info .head {
   margin-left: 80px;
-}
-.profile-detail .team-info .team-name {
-  margin-top: 2.5em;
 }
 .profile-detail .team-info .team-name .team-label {
   padding-right: 0;
