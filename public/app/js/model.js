@@ -100,7 +100,17 @@
 
             addStudentToTeam : function(user) {
                 return $http.post(apiPathB2C + 'team/student', user);
+            },
+
+            removeStudentToTeam : function(id) {
+                return $http.delete(apiPathB2C + 'team/student/' + id);
+            },
+
+            updateTeamName : function(name) {
+                return $http.post(apiPathB2C + 'team', {name: name});
             }
+
+
         };
 
         return factory;

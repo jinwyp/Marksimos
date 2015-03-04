@@ -747,7 +747,7 @@ $lineHeight_button: 1.8;
 		border-bottom: none;
 	}
 	li:last-child {
-		border-bottom: solid;
+		border-bottom: solid black;
 		border-width: 1px;
 	}
 	.avatar {
@@ -792,7 +792,7 @@ $lineHeight_button: 1.8;
 		color: $color_white;
 		padding-left: 1em;
 	}
-	main {
+	.main {
 		padding:30px 30px 20px;
 		background-color: $color_white;
 		.avatar-window-icon {
@@ -862,6 +862,10 @@ $lineHeight_button: 1.8;
 	}
 	padding-right: 2em;
 
+	.none-bottom-border {
+		border-bottom: none;
+		padding-bottom: 0;
+	}
 	.profile-detail-title {
 		background-color: $color_profile_detail_title;
 		color: $color_white;
@@ -886,24 +890,14 @@ $lineHeight_button: 1.8;
 		border-style: none;
 		@include box-shadow(#797979 0px 2px 4px)
 	}
-	.add-button {
-		background-color: #B82A0C;
-		@include box-shadow($color_register_button_border 0px 2px 4px);
-		width: 65px;
-		border-style:none;
-		color:$color_white;
-	}
 	.profile-button-container {
 		padding: 1.2em 0 0;
 		button {
 			margin-right: 0.5em;
 			padding: 0.2em 0.5em;
 			width: 85px;
-
 			border-style:none;
 			color:$color_white;
-			//	border-bottom:2px solid $color_register_button_border;
-
 
 			@include border-radius(0px);
 		}
@@ -928,9 +922,21 @@ $lineHeight_button: 1.8;
 			.team-label {
 				padding-right: 0;
 			}
+			margin-bottom: 0;
 		}
-		input:not(:last-child) {
+		button, .add-button, .remove-button{
+			width: 65px;
+			border-style:none;
+			color:$color_white;
+			background-color: #797979;
+			@include box-shadow(#797979 0px 2px 4px);
+		}
+		input, span {
 			margin-right: 5px;
+		}
+		.add-button, .done {
+			background-color: #B82A0C;
+			@include box-shadow($color_register_button_border 0px 2px 4px);
 		}
 	}
 }

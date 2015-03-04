@@ -5,7 +5,7 @@
 
 <b2c-header></b2c-header>
 
-<main ng-controller="profileController as profile" class="container-fluid">
+<div ng-controller="profileController as profile" class="container-fluid main">
     <div class="row">
         <div class="col-md-7 col-md-offset-2 profile-content">
             <header class="row">
@@ -119,24 +119,26 @@
 
                     <div class="row team-info" ng-if="profile.curType == '团队信息'">
                         <div class="profile-detail-title">团队信息</div>
-                        <form name="teamForm">
+                        <form name="teamNameForm" class="none-bottom-border">
                             <div class="col-md-offset-1">
                                 <div class="row team-name">
-                                    <label class="col-md-3 team-label" for="teamName">战队名称：</label><input type="text" id="teamName" name="teamName" class="col-md-6">
+                                    <label class="col-md-3 team-label" for="teamName">战队名称：</label>
+                                    <input ng-disabled="profile.updateTeamNameDisabled" ng-model="profile.currentUser.teamName" type="text" id="teamName" name="teamName" class="col-md-6">
+                                    <button ng-class="{done: profile.updateTeamNameDisabled}" ng-click="profile.clickUpdateTeamName(teamNameForm)">{{profile.updateTeamNameButtonText}}</button>
                                 </div>
-                                <br/>
-
-                                <div class="row head"><span class="col-md-5">用户名/邮箱：</span></div>
-                                <div class="row" ng-repeat="member in profile.members">
+                            </div>
+                        </form>
+                        <form name="teamForm">
+                            <div class="col-md-offset-1">
+                                <div class="row" ng-repeat="member in profile.currentUser.members">
                                     <label class="col-md-3 team-label">队员{{$index + 1}}：</label>
-                                    <span class="col-md-6">{{member}}</span>
+                                    <span class="col-md-6">{{member.username}}</span>
+                                    <input type="button" ng-click="profile.clickRemoveStudentToTeam(member._id)" class="remove-button col-md-3" value="删除">
                                 </div>
 
                                 <div class="row">
-                                    <label for="name" class="col-md-3 team-label">新队员：</label><input  ng-model="profile.newUser" required type="text" name="name" id="name" class="col-md-6">
-                                    <div class="col-md-3">
-                                        <button type="submit" ng-click="profile.clickAddStudentToTeam(teamForm)" class="add-button">增加</button>
-                                    </div>
+                                    <label for="name" class="col-md-3 team-label">新队员：</label><input placeholder="用户名/邮箱" ng-model="profile.newUser" required type="text" name="name" id="name" class="col-md-6">
+                                    <button type="submit" ng-click="profile.clickAddStudentToTeam(teamForm)" class="add-button col-md-3">增加</button>
                                 </div>
                                 <!--<div class="row"><label for="name" class="col-md-3 team-label">队员二：</label><input type="text" name="name" id="name" class="col-md-6"></div>-->
                             </div>
@@ -180,7 +182,7 @@
             </section>
         </div>
     </div>
-</main>
+</div>
 
 
 <% include ./include/footerscriptlogin.ejs %>
