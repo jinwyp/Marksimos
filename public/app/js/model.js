@@ -99,7 +99,7 @@
             },
 
             addStudentToTeam : function(user) {
-                return $http.post(apiPath + 'team/student', {params : user});
+                return $http.post(apiPathB2C + 'team/student', user);
             }
         };
 
