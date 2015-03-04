@@ -13,65 +13,25 @@ var logger = require('../../../common/logger.js');
 
 exports.updateTeam = function(req, res, next){
 
-    var validationErrors = userModel.usernameValidations(req, userRoleModel.roleList.student.id, userModel.getStudentType().B2C);
+    var validationErrors = teamModel.updateValidations(req);
 
     if(validationErrors){
         return res.status(400).send( {message: validationErrors} );
     }
 
-    var userData = {};
+    teamModel.findOneAndUpdateQ(
+        { creator : req.user.id },
+        { creator : req.user.id, name:req.body.name, description:req.body.description||''  },
+        { upsert : true}
 
-    userModel.findOneQ({$or : [
-        { 'username': req.body.username},
-        { 'email': req.body.email}
-    ]}).then(function(resultUser) {
+    ).then(function(resultTeam){
 
-        if (!resultUser) {
-            throw new Error('Cancel promise chains. Because User not found!');
+        if(!resultTeam){
+            throw new Error('Cancel promise chains. Because Update Team failed. more or less than 1 record is updated. it should be only one !');
         }
 
-        userData = resultUser;
+        return res.status(200).send({message: 'Team update success'});
 
-        return teamModel.findOneQ({ creator: req.user.id });
-
-    }).then(function(resultTeam){
-
-        if(resultTeam){
-
-            if(resultTeam.memberList.indexOf(userData.id) > -1){
-                throw new Error('Cancel promise chains. Because This user is already in the Team !');
-            }
-
-            resultTeam.memberList.push(userData.id);
-            resultTeam.saveQ().then(function(savedDoc){
-
-                if(!savedDoc ){
-                    throw new Error('Cancel promise chains. Because Update Team failed. more or less than 1 record is updated. it should be only one !');
-                }
-
-                return res.status(200).send({message: 'Add student to team success'});
-
-            }).fail(function(err){
-                next(err);
-            }).done();
-
-        }else{
-            teamModel.createQ({
-                name: req.user.username,
-                creator: req.user.id,
-                memberList : [userData.id]
-            }).then(function(resultNewTeam){
-
-                if(!resultNewTeam ){
-                    throw new Error('Cancel promise chains. Because Create New Team failed !');
-                }
-
-                return res.status(200).send({message: 'Create New Team success'});
-
-            }).fail(function(err){
-                next(err);
-            }).done();
-        }
     }).fail(function(err){
         next(err);
     }).done();
