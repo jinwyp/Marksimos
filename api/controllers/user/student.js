@@ -8,6 +8,59 @@ var teamModel = require('../../models/user/team.js');
 //var ObjectId = require('mongoose').Types.ObjectId;
 
 
+
+exports.updateStudentB2CInfo = function(req, res, next){
+
+    var validationErrors = userModel.userInfoValidations(req, userRoleModel.roleList.student.id, userModel.getStudentType().B2C);
+
+    if(validationErrors){
+        return res.status(400).send( {message: validationErrors} );
+    }
+
+    userModel.findOneAndUpdateQ(
+        { _id : req.user.id },
+        {
+            gender : req.body.gender,
+            birthday:req.body.birthday,
+
+            firstName:req.body.firstName ||'',
+            lastName:req.body.lastName ||'',
+            idcardNumber:req.body.idcardNumber ||'',
+
+            mobilePhone:req.body.mobilePhone ||'',
+            qq:req.body.qq ||'',
+
+            majorsDegree:req.body.majorsDegree ||'',
+            dateOfEnterCollege:req.body.dateOfGraduation ||'',
+            dateOfGraduation:req.body.dateOfGraduation ||'',
+            organizationOrUniversity:req.body.organizationOrUniversity ||'',
+            occupation:req.body.occupation ||'',
+
+            country:req.body.country ||'',
+            state:req.body.state ||'',
+            city:req.body.city ||'',
+            district:req.body.district ||'',
+            street:req.body.street ||'',
+
+            websiteLanguage:req.body.description ||''
+        },
+        { upsert : false}
+
+    ).then(function(resultUser){
+
+        if(!resultUser){
+            throw new Error('Cancel promise chains. Because Update Team failed. more or less than 1 record is updated. it should be only one !');
+        }
+
+        return res.status(200).send({message: 'Student update success'});
+
+    }).fail(function(err){
+        next(err);
+    }).done();
+};
+
+
+
 exports.updateTeam = function(req, res, next){
 
     var validationErrors = teamModel.updateValidations(req);
