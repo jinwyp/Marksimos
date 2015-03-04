@@ -47,18 +47,14 @@
                     <div class="edit-title">编辑我的资料<span class="up-triangle"></span></div>
                     <nav class="profile-nav">
                         <ul>
-                            <li class="selected">基本信息</li>
-                            <li>学校信息</li>
-                            <li>团队信息</li>
-                            <li>安全信息</li>
-                            <li>联系方式</li>
+                            <li ng-repeat="type in ['基本信息', '学校信息', '团队信息', '安全信息', '联系方式']" ng-class="{selected: profile.curType == type}" ng-click="profile.curType = type">{{type}}</li>
                         </ul>
                     </nav>
                 </aside>
                 <article class="col-md-8 profile-detail">
                     <div class="profile-detail-tip row"><span>请选择下方要修改的项目进行编辑</span><button class="done-button">完成修改</button></div>
 
-                    <div class="row">
+                    <div class="row" ng-if="profile.curType == '基本信息'">
                         <div class="profile-detail-title">基本信息</div>
                         <form>
                             <div class="col-md-offset-1">
@@ -100,7 +96,7 @@
                         </form>
                     </div>
 
-                    <div class="row">
+                    <div class="row" ng-if="profile.curType == '学校信息'">
                         <div class="profile-detail-title">学校信息</div>
                         <form>
                             <div class="col-md-offset-1">
@@ -121,7 +117,7 @@
                         </form>
                     </div>
 
-                    <div class="row team-info">
+                    <div class="row team-info" ng-if="profile.curType == '团队信息'">
                         <div class="profile-detail-title">团队信息</div>
                         <form name="teamForm">
                             <div class="col-md-offset-1">
@@ -131,9 +127,9 @@
                                 <br/>
 
                                 <div class="row head"><span class="col-md-5">用户名/邮箱：</span></div>
-                                <div class="row" ng-repeat="member in vm.members">
+                                <div class="row" ng-repeat="member in profile.members">
                                     <label class="col-md-3 team-label">队员{{$index + 1}}：</label>
-                                    <span class="col-md-6">{{member.name}}</span>
+                                    <span class="col-md-6">{{member}}</span>
                                 </div>
 
                                 <div class="row">
@@ -147,7 +143,7 @@
                         </form>
                     </div>
 
-                    <div class="row">
+                    <div class="row" ng-if="profile.curType == '安全信息'">
                         <div class="profile-detail-title">安全信息</div>
                         <form>
                             <div class="col-md-offset-1">
@@ -165,7 +161,7 @@
                         </form>
                     </div>
 
-                    <div class="row">
+                    <div class="row" ng-if="profile.curType == '联系方式'">
                         <div class="profile-detail-title">联系方式</div>
                         <form>
                             <div class="col-md-offset-1">

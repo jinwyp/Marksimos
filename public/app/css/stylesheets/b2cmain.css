@@ -775,6 +775,10 @@ body {
 .detail-nav .upload-avatar-button {
   background-color: #741F01;
   color: #ffffff;
+  cursor: pointer;
+}
+.detail-nav .profile-nav {
+  cursor: pointer;
 }
 .detail-nav .up-triangle {
   border: 5px solid;

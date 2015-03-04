@@ -762,7 +762,9 @@ $lineHeight_button: 1.8;
 	.upload-avatar-button {
 		background-color: #741F01;
 		color: $color_white;
+		cursor: pointer;
 	}
+	.profile-nav {cursor: pointer;}
 	.up-triangle {
 		@include triangle();
 		left: 0;

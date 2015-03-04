@@ -183,14 +183,18 @@
         vm.css = {
             addFailedInfo: false
         };
+        vm.curType = '基本信息';
+
+        /**********  Event Center  **********/
         vm.clickAddStudentToTeam = addStudentToTeam;
         vm.members = []; //todo: should load from server.
 
+        /**********  Function Declarations  **********/
         function addStudentToTeam(form) {
             console.log('whatever');
             if (form.$valid) {
                 Student.addStudentToTeam({username:vm.newUser}).then(function(result) {
-                    vm.members.push({name: vm.newUser})
+                    vm.members.push(vm.newUser)
                     console.log('success')
                 }).catch(function(err) {
                     form.$invalid = true;
