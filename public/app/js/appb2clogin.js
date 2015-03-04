@@ -230,6 +230,15 @@
             })
         }
 
+        function updateTeamName(form) {
+            if (form.teamName.disabled) {
+                form.teamName.disabled = false;
+                vm.updateTeamNameButtonText = '完成';
+            } else {
+
+            }
+        }
+
 
         function init() {
             getTeamInfo()

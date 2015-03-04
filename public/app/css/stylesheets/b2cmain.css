@@ -812,17 +812,17 @@ body {
   color: #ffffff;
   padding-left: 1em;
 }
-.upload-avatar-window main {
+.upload-avatar-window .main {
   padding: 30px 30px 20px;
   background-color: #ffffff;
   font-weight: bolder;
 }
-.upload-avatar-window main .avatar-window-icon {
+.upload-avatar-window .main .avatar-window-icon {
   width: 100px;
   height: 100px;
   margin-right: 12px;
 }
-.upload-avatar-window main > div {
+.upload-avatar-window .main > div {
   display: inline-block;
   vertical-align: middle;
   *vertical-align: auto;
@@ -830,10 +830,10 @@ body {
   *display: inline;
   font-size: 0.9em;
 }
-.upload-avatar-window main .select-file {
+.upload-avatar-window .main .select-file {
   font-weight: normal;
 }
-.upload-avatar-window main .select-file button {
+.upload-avatar-window .main .select-file button {
   border-style: none;
   -moz-border-radius: 2px;
   -webkit-border-radius: 2px;
@@ -894,6 +894,10 @@ body {
 }
 .profile-detail form > div > div {
   margin-bottom: 0.5em;
+}
+.profile-detail .none-bottom-border {
+  border-bottom: none;
+  padding-bottom: 0;
 }
 .profile-detail .profile-detail-title {
   background-color: #d98348;
@@ -969,9 +973,12 @@ body {
 .profile-detail .team-info .head {
   margin-left: 80px;
 }
+.profile-detail .team-info .team-name {
+  margin-bottom: 0;
+}
 .profile-detail .team-info .team-name .team-label {
   padding-right: 0;
 }
-.profile-detail .team-info input:not(:last-child) {
+.profile-detail .team-info input, .profile-detail .team-info span {
   margin-right: 5px;
 }

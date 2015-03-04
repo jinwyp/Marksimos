@@ -792,7 +792,7 @@ $lineHeight_button: 1.8;
 		color: $color_white;
 		padding-left: 1em;
 	}
-	main {
+	.main {
 		padding:30px 30px 20px;
 		background-color: $color_white;
 		.avatar-window-icon {
@@ -862,6 +862,10 @@ $lineHeight_button: 1.8;
 	}
 	padding-right: 2em;
 
+	.none-bottom-border {
+		border-bottom: none;
+		padding-bottom: 0;
+	}
 	.profile-detail-title {
 		background-color: $color_profile_detail_title;
 		color: $color_white;
@@ -934,8 +938,9 @@ $lineHeight_button: 1.8;
 			.team-label {
 				padding-right: 0;
 			}
+			margin-bottom: 0;
 		}
-		input:not(:last-child) {
+		input, span {
 			margin-right: 5px;
 		}
 	}
