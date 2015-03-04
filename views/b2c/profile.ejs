@@ -123,8 +123,8 @@
                             <div class="col-md-offset-1">
                                 <div class="row team-name">
                                     <label class="col-md-3 team-label" for="teamName">战队名称：</label>
-                                    <input disabled ng-model="profile.currentUser.teamName" type="text" id="teamName" name="teamName" class="col-md-6">
-                                    <button ng-click="profile.udpateTeamName(teamNameForm)">{{profile.updateTeamNameButtonText}}</button>
+                                    <input ng-disabled="profile.updateTeamNameDisabled" ng-model="profile.currentUser.teamName" type="text" id="teamName" name="teamName" class="col-md-6">
+                                    <button ng-class="{done: profile.updateTeamNameDisabled}" ng-click="profile.clickUpdateTeamName(teamNameForm)">{{profile.updateTeamNameButtonText}}</button>
                                 </div>
                             </div>
                         </form>

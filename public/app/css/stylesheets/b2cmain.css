@@ -758,7 +758,7 @@ body {
   border-bottom: none;
 }
 .detail-nav li:last-child {
-  border-bottom: solid;
+  border-bottom: solid black;
   border-width: 1px;
 }
 .detail-nav .avatar {
@@ -925,23 +925,6 @@ body {
   -webkit-box-shadow: #797979 0px 2px 4px;
   box-shadow: #797979 0px 2px 4px;
 }
-.profile-detail .add-button, .profile-detail .remove-button {
-  width: 65px;
-  border-style: none;
-  color: #ffffff;
-}
-.profile-detail .add-button {
-  background-color: #B82A0C;
-  -moz-box-shadow: #7e200b 0px 2px 4px;
-  -webkit-box-shadow: #7e200b 0px 2px 4px;
-  box-shadow: #7e200b 0px 2px 4px;
-}
-.profile-detail .remove-button {
-  background-color: #797979;
-  -moz-box-shadow: #797979 0px 2px 4px;
-  -webkit-box-shadow: #797979 0px 2px 4px;
-  box-shadow: #797979 0px 2px 4px;
-}
 .profile-detail .profile-button-container {
   padding: 1.2em 0 0;
 }
@@ -979,6 +962,21 @@ body {
 .profile-detail .team-info .team-name .team-label {
   padding-right: 0;
 }
+.profile-detail .team-info button, .profile-detail .team-info .add-button, .profile-detail .team-info .remove-button {
+  width: 65px;
+  border-style: none;
+  color: #ffffff;
+  background-color: #797979;
+  -moz-box-shadow: #797979 0px 2px 4px;
+  -webkit-box-shadow: #797979 0px 2px 4px;
+  box-shadow: #797979 0px 2px 4px;
+}
 .profile-detail .team-info input, .profile-detail .team-info span {
   margin-right: 5px;
+}
+.profile-detail .team-info .add-button, .profile-detail .team-info .done {
+  background-color: #B82A0C;
+  -moz-box-shadow: #7e200b 0px 2px 4px;
+  -webkit-box-shadow: #7e200b 0px 2px 4px;
+  box-shadow: #7e200b 0px 2px 4px;
 }

@@ -184,6 +184,8 @@
             addFailedInfo: false
         };
         vm.curType = '基本信息';
+        vm.updateTeamNameButtonText = '修改';
+        vm.updateTeamNameDisabled = true;
         vm.currentUser = {
             members: null,
             teamName: ''
@@ -192,6 +194,7 @@
         /**********  Event Center  **********/
         vm.clickAddStudentToTeam = addStudentToTeam;
         vm.clickRemoveStudentToTeam = removeStudentToTeam;
+        vm.clickUpdateTeamName = updateTeamName;
 
 
         /**********  Function Declarations  **********/
@@ -231,11 +234,16 @@
         }
 
         function updateTeamName(form) {
-            if (form.teamName.disabled) {
-                form.teamName.disabled = false;
+            if (vm.updateTeamNameDisabled) {
+                vm.updateTeamNameDisabled = false;
                 vm.updateTeamNameButtonText = '完成';
             } else {
-
+                Student.updateTeamName(vm.currentUser.teamName).then(function(result) {
+                    vm.updateTeamNameButtonText = '修改';
+                }).catch(function(err) {
+                    //todo;
+                });
+                vm.updateTeamNameDisabled = true;
             }
         }
 
