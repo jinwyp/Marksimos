@@ -176,7 +176,33 @@
     }]);
 
 
+    angular.module('b2clogin').controller('profileController', ['Student', function(Student) {
+        /* jshint validthis: true */
+        var vm = this;
 
+        vm.css = {
+            addFailedInfo: false
+        };
+        vm.clickAddStudentToTeam = addStudentToTeam;
+        vm.members = []; //todo: should load from server.
+
+        function addStudentToTeam(form) {
+            console.log('whatever');
+            if (form.$valid) {
+                Student.addStudentToTeam({username:vm.newUser}).then(function(result) {
+                    vm.members.push({name: vm.newUser})
+                    console.log('success')
+                }).catch(function(err) {
+                    form.$invalid = true;
+                    form.$valid = false;
+
+                    vm.css.addFailedInfo = true;
+                    console.log('failded')
+                })
+            }
+        }
+
+    }])
 
 
 
