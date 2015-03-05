@@ -114,11 +114,13 @@ app.use(function(err, req, res, next){
     // here and next(err) appropriately, or if
     // we possibly recovered from the error, simply next().
 
-    logger.log('400 or 500 Error.  Type:', typeof err.message, '   Message:',  err.message);
-    logger.log(err.toString());
+
 
     if(typeof err.message !== 'undefined' && err.message.toLowerCase().substr(0, 6) == 'cancel' ){
         // respond promise stop chains info with no system error
+
+        logger.log('400 Error.  Type:', typeof err.message, '   Message:',  err.message);
+
         res.status(err.status || 400);
 
         // respond with json
@@ -140,6 +142,8 @@ app.use(function(err, req, res, next){
 
     }else{
         // respond 500 system error
+        logger.error(err);
+
         res.status(err.status || 500);
 
         // respond with json

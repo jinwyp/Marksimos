@@ -8,7 +8,7 @@ exports.error = function(err){
     if(!err) return;
 
     if(err.message){
-        winston.info("Error: ",  err.message);
+        winston.info("System Error: ",  err.message);
     }
     
     if(err.stack){
