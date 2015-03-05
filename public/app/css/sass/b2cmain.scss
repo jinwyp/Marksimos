@@ -645,6 +645,17 @@ body{
 $left_of_avatar: 44px;
 $lineHeight_button: 1.8;
 
+@mixin normalInput() {
+	border-radius: 0;
+	height: 26px;
+	line-height: inherit !important;
+	&.col-md-6 {
+		width: (6/12*100%);
+	}
+	&.col-md-5 {
+		width: (5/12*100%);
+	}
+}
 
 @mixin triangle ($borderWidth: 5px, $rotate: -45deg, $borderColor: #000) {
 	border: $borderWidth solid;
@@ -664,6 +675,9 @@ $lineHeight_button: 1.8;
 }
 
 .profile-content {
+	input {
+		@include normalInput();
+	}
 	padding-left: 30px;
 	padding-right: 30px;
 
@@ -923,6 +937,10 @@ $lineHeight_button: 1.8;
 				padding-right: 0;
 			}
 			margin-bottom: 0;
+		}
+		.err-msg {
+			position: absolute;
+			left: -100px;
 		}
 		button, .add-button, .remove-button{
 			width: 65px;

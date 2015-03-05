@@ -108,6 +108,10 @@
 
             updateTeamName : function(name) {
                 return $http.post(apiPathB2C + 'team', {name: name});
+            },
+
+            updateStudentB2CInfo : function(data) {
+                return $http.put(apiPathB2C + 'student', data);
             }
 
 
