@@ -151,16 +151,28 @@
 
                     <div class="row" ng-if="profile.css.curTabIdx == 3">
                         <div class="profile-detail-title">安全信息</div>
-                        <form>
+                        <form name="securityInfoForm">
                             <div class="col-md-offset-1">
-                                <div class="row"><label for="name" class="col-md-3 profile-underline">更改密码</label></div>
-                                <div class="row"><label for="email" class="col-md-3">原始密码：</label><input type="text" id="email" name="email" class="col-md-5"></div>
-                                <div class="row"><label for="email" class="col-md-3">新密码：</label><input type="text" id="email" name="email" class="col-md-5"></div>
-                                <div class="row"><label for="email" class="col-md-3">再输入密码:</label><input type="text" id="email" name="email" class="col-md-5"></div>
+                                <div class="row"><label class="col-md-3 profile-underline">更改密码</label></div>
+                                <div class="row form-group" ng-class="{'has-success':securityInfoForm.oldPassword.$dirty&&securityInfoForm.oldPassword.$valid, 'has-error':securityInfoForm.oldPassword.$dirty&&securityInfoForm.oldPassword.$invalid}">
+                                    <label for="oldPassword" class="col-md-3">原始密码：</label>
+                                    <input type="text" ng-model="profile.current" id="oldPassword" name="oldPassword" class="col-md-5">
+                                    <span class="err-msg" ng-if="securityInfoForm.oldPassword.$dirty&&securityInfoForm.oldPassword.$error.required">请输入正确密码!</span>
+                                </div>
+                                <div class="row form-group" ng-class="{'has-success':securityInfoForm.newPassword.$dirty&&securityInfoForm.newPassword.$valid, 'has-error':securityInfoForm.newPassword.$dirty&&securityInfoForm.newPassword.$invalid}">
+                                    <label for="newPassword" class="col-md-3">新密码：</label>
+                                    <input type="text" id="newPassword" name="newPassword" class="col-md-5">
+                                    <span class="err-msg" ng-if="securityInfoForm.newPassword.$dirty&&securityInfoForm.newPassword.$error.required">请输入新密码!</span>
+                                </div>
+                                <div class="row form-group" ng-class="{'has-success':securityInfoForm.rePassword.$dirty&&securityInfoForm.rePassword.$valid, 'has-error':securityInfoForm.rePassword.$dirty&&securityInfoForm.rePassword.$invalid}">
+                                    <label for="rePassword" class="col-md-3">再输入密码:</label>
+                                    <input type="text" id="rePassword" name="rePassword" class="col-md-5">
+                                    <span class="err-msg" ng-if="securityInfoForm.rePassword.$dirty&&securityInfoForm.rePassword.$error.required">请再次输入新密码!</span>
+                                    <span class="err-msg" ng-if="securityInfoForm.rePassword.$dirty&&!securityInfoForm.rePassword.$error.required&&profile.currentUser.rePassword!=profile.current.newPassword">两次密码不一致!</span>
+                                </div>
                                 <div class="row">
                                     <div class="col-md-6 col-md-offset-3 profile-button-container">
                                         <button type="submit">保存修改</button>
-                                        <button class="cancel">取消</button>
                                     </div>
                                 </div>
                             </div>

@@ -185,7 +185,9 @@
             curTabIdx: 0,
             updateTeamNameDisabled: true,
             updateTeamNameFailedInfo: false,
-            updateSuccess: false
+            updateSuccess: false,
+            updatePasswordSuccessInfo: false,
+            updatePasswordFailedInfo: false
         };
 
         vm.currentUser = {
@@ -196,6 +198,7 @@
         vm.clickRemoveStudentToTeam = removeStudentToTeam;
         vm.clickUpdateTeamName = updateTeamName;
         vm.clickUpdateUserInfo = updateUserInfo;
+        vm.clickUpdatePassword = updatePassword;
 
 
         /**********  Function Declarations  **********/
@@ -256,6 +259,19 @@
                     }, 1500);
                 }).catch(function(err) {
                     //todo
+                })
+            }
+        }
+
+        function updatePassword(form) {
+            vm.css.updatePasswordSuccessInfo = false;
+            vm.css.updatePasswordFailedInfo = false;
+
+            if (form.$valid) {
+                Student.updatePassword(vm.currentUser.newPassword, vm.currentUser.oldPassword).then(function(result) {
+                    vm.css.updatePasswordSuccessInfo = true;
+                }).catch(function(err) {
+                    vm.css.updatePasswordFaildInfo = true;
                 })
             }
         }

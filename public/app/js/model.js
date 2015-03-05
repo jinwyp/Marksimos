@@ -112,6 +112,13 @@
 
             updateStudentB2CInfo : function(data) {
                 return $http.put(apiPathB2C + 'student', data);
+            },
+
+            updatePassword: function(passwordOld, passwordNew) {
+                return $http.put(apiPathB2c + 'student/password', {
+                    passwordOld: passwordOld,
+                    passwordNew: passwordNew
+                })
             }
 
 
