@@ -116,7 +116,7 @@
 
                 firstName: "",
                 lastName: "",
-                gender: 1,
+                gender: '',
                 studentGenderRadioOptions : [
                     {value : 1, text : 'Male'},
                     {value : 2, text : 'Female'}
@@ -174,10 +174,10 @@
                 description: '',
                 location: '',
                 matchDate: '',
-                activated : false,
+                activated : '',
                 campaignActivatedRadioOptions : [
-                    {value : 0, text : 'Active'},
-                    {value : 1, text : 'Disable'}
+                    {value : 1, text : 'Active'},
+                    {value : 0, text : 'Disable'}
                 ]
             },
 
@@ -526,6 +526,7 @@
         /********************  Create New Campaign  ********************/
         $scope.createNewCampaign = function(form) {
             if (form.$valid) {
+                console.log($scope.data.newCampaign);
                 Admin.addCampaign($scope.data.newCampaign).success(function(data, status, headers, config) {
 
                     //app.getCampaignInit();
