@@ -115,6 +115,7 @@ app.use(function(err, req, res, next){
     // we possibly recovered from the error, simply next().
 
     logger.log('400 or 500 Error.  Type:', typeof err.message, '   Message:',  err.message);
+    logger.log(err.toString());
 
     if(typeof err.message !== 'undefined' && err.message.toLowerCase().substr(0, 6) == 'cancel' ){
         // respond promise stop chains info with no system error

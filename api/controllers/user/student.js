@@ -56,7 +56,7 @@ exports.updateStudentB2CInfo = function(req, res, next){
 
 
     userModel.findOneAndUpdateQ(
-        { _id : req.user.id },
+        { _id : req.user._id },
         saveUser
 
     ).then(function(resultUser){
@@ -73,6 +73,46 @@ exports.updateStudentB2CInfo = function(req, res, next){
 
 
 
+exports.updateStudentB2CPassword = function(req, res, next){
+
+    var validationErrors = userModel.passwordValidations(req, userRoleModel.roleList.student.id, userModel.getStudentType().B2C);
+
+    if(validationErrors){
+        return res.status(400).send( {message: validationErrors} );
+    }
+
+    userModel.findByIdQ(req.user._id).then(function(resultUser){
+
+        if(!resultUser){
+            throw new Error('Cancel promise chains. Because user not found !');
+        }
+
+        if (!userModel.verifyPassword(req.body.passwordOld, resultUser.password)) {
+            throw new Error('Cancel promise chains. Because Old password wrong!');
+        }
+
+        resultUser.password = req.body.passwordNew;
+        return resultUser.saveQ();
+
+    }).then(function(savedDoc){
+
+        if(!savedDoc ){
+            throw new Error('Cancel promise chains. Because Update Password failed. More or less than 1 record is updated. it should be only one !');
+        }
+
+        return res.status(200).send({message: 'Student password update success'});
+
+    }).fail(function(err){
+        next(err);
+    }).done();
+};
+
+
+
+
+
+
+
 exports.updateTeam = function(req, res, next){
 
     var validationErrors = teamModel.updateValidations(req);
@@ -82,8 +122,8 @@ exports.updateTeam = function(req, res, next){
     }
 
     teamModel.findOneAndUpdateQ(
-        { creator : req.user.id },
-        { creator : req.user.id, name:req.body.name, description:req.body.description||''  },
+        { creator : req.user._id },
+        { creator : req.user._id, name:req.body.name, description:req.body.description||''  },
         { upsert : true}
 
     ).then(function(resultTeam){
@@ -98,7 +138,6 @@ exports.updateTeam = function(req, res, next){
         next(err);
     }).done();
 };
-
 
 
 exports.addStudentToTeam = function(req, res, next){
@@ -121,16 +160,16 @@ exports.addStudentToTeam = function(req, res, next){
         }
 
         userData = resultUser;
-        return teamModel.findOneQ({ creator: req.user.id });
+        return teamModel.findOneQ({ creator: req.user._id });
 
     }).then(function(resultTeam){
         if(resultTeam){
 
-            if(resultTeam.memberList.indexOf(userData.id) > -1){
+            if(resultTeam.memberList.indexOf(userData._id) > -1){
                 throw new Error('Cancel promise chains. Because This user is already in the Team !');
             }
 
-            resultTeam.memberList.push(userData.id);
+            resultTeam.memberList.push(userData._id);
             resultTeam.saveQ().then(function(savedDoc){
 
                 if(!savedDoc ){
@@ -146,8 +185,8 @@ exports.addStudentToTeam = function(req, res, next){
         }else{
             teamModel.createQ({
                 name: req.user.username,
-                creator: req.user.id,
-                memberList : [userData.id]
+                creator: req.user._id,
+                memberList : [userData._id]
             }).then(function(resultNewTeam){
 
                 if(!resultNewTeam ){
@@ -164,10 +203,6 @@ exports.addStudentToTeam = function(req, res, next){
         next(err);
     }).done();
 };
-
-
-
-
 
 
 exports.removeStudentToTeam = function(req, res, next){
@@ -187,7 +222,7 @@ exports.removeStudentToTeam = function(req, res, next){
         }
 
         userData = resultUser;
-        return teamModel.findOneQ({ creator: req.user.id });
+        return teamModel.findOneQ({ creator: req.user._id });
 
     }).then(function(resultTeam){
 
@@ -196,7 +231,7 @@ exports.removeStudentToTeam = function(req, res, next){
         }
 
         resultTeam.memberList.forEach(function(member, index){
-            if(member.toString() === userData.id){
+            if(member.toString() === userData._id){
                 resultTeam.memberList.splice(index, 1);
             }
         });

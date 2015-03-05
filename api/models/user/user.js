@@ -1,3 +1,10 @@
+
+'use strict';
+
+/*!
+ * Module dependencies
+ */
+
 var mongoose = require('mongoose-q')(require('mongoose'), {spread:true});
 var Schema = mongoose.Schema;
 var Q = require('q');
@@ -6,10 +13,15 @@ var uuid = require('node-uuid');
 var bcrypt = require('bcrypt-nodejs');
 var SALT_WORK_FACTOR = 10;
 
-
 var userRoleModel = require('./userrole.js');
 var config = require('../../../common/config.js');
 
+
+
+
+/**
+ * Mongoose schema
+ */
 
 var userSchema = new Schema({
 
@@ -87,10 +99,23 @@ var userSchema = new Schema({
     websiteLanguage:{type: String, default: 'zh_CN'} // 'zh_CN'  'en_US'
 
 });
+
+
+
+/**
+ * Mongoose plugin
+ */
 userSchema.plugin(mongooseTimestamps);
 
 
 
+
+/**
+ * Add your
+ * - pre-save hooks
+ * - validations
+ * - virtuals
+ */
 
 userSchema.virtual('roleName').get(function () {
     return userRoleModel.roleList[this.role].name ;
@@ -119,6 +144,11 @@ userSchema.pre('save', function(next) {
 });
 
 
+
+
+/**
+ * Statics
+ */
 
 userSchema.statics.register = function (newUser) {
     if(!mongoose.connection.readyState){
@@ -348,6 +378,18 @@ userSchema.statics.userIdValidations = function(req, userRoleId, studentType){
     return req.validationErrors();
 };
 
+
+
+
+/**
+ * Methods
+ */
+
+
+
+/**
+ * Register Model
+ */
 
 var User = mongoose.model("User", userSchema);
 module.exports = User;

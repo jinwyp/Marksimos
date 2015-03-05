@@ -624,7 +624,7 @@ exports.resetNewPassword = function(req, res, next){
         return resultUser.saveQ();
 
     }).then(function(savedDoc, numberAffectedRows){
-        console.log('reset password : ', savedDoc, numberAffectedRows);
+        //console.log('reset password : ', savedDoc, numberAffectedRows);
 
         if(!savedDoc ){
             throw new Error('Cancel promise chains. Because Update reset Password failed. More or less than 1 record is updated. it should be only one !');

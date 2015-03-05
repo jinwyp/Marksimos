@@ -181,6 +181,7 @@ apiRouter.post('/e4e/api/forgotpasswordstep1', auth.sendResetPasswordEmail);
 apiRouter.post('/e4e/api/forgotpasswordstep2', auth.verifyResetPasswordCode);
 apiRouter.post('/e4e/api/forgotpasswordstep3', auth.resetNewPassword);
 
+apiRouter.put('/e4e/api/student/password', auth.authLoginToken(), auth.authRole(userRoleModel.right.marksimos.studentInfoSingleCUD), studentController.updateStudentB2CPassword);
 apiRouter.put('/e4e/api/student', auth.authLoginToken(), auth.authRole(userRoleModel.right.marksimos.studentInfoSingleCUD), studentController.updateStudentB2CInfo);
 
 apiRouter.post('/e4e/api/team', auth.authLoginToken(), auth.authRole(userRoleModel.right.marksimos.teamInfoSingleCUD), studentController.updateTeam);
