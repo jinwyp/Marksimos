@@ -169,6 +169,18 @@
                 email: ""
             },
 
+            newCampaign: {
+                name: '',
+                description: '',
+                location: '',
+                matchDate: '',
+                activated : false,
+                campaignActivatedRadioOptions : [
+                    {value : 0, text : 'Active'},
+                    {value : 1, text : 'Disable'}
+                ]
+            },
+
             country: [
                 { id: "DZ2", name: "Algeria" },
                 { id: "AI2", name: "Anguilla" },
@@ -508,6 +520,24 @@
                 console.log(data);
                 $notification.error('Failed', data.message);
             });
+        };
+
+
+        /********************  Create New Campaign  ********************/
+        $scope.createNewCampaign = function(form) {
+            if (form.$valid) {
+                Admin.addCampaign($scope.data.newCampaign).success(function(data, status, headers, config) {
+
+                    //app.getCampaignInit();
+                    //$scope.css.leftmenu = 61;
+
+                    $notification.success('Save success', 'Create Campaign success');
+
+                }).error(function(data, status, headers, config) {
+                    console.log(data);
+                    $notification.error('Failed', data.message);
+                });
+            }
         };
 
 

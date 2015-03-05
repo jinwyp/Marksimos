@@ -1203,6 +1203,14 @@
                 return $http.post(apiAdminPath + 'students/reset_password', postdata);
             },
 
+            getCampaigns : function(urlparams){
+                urlparams = angular.isUndefined(urlparams) ? {}  : urlparams ;
+                return $http.get(apiAdminPath + 'campaigns', {params : urlparams});
+            },
+            addCampaign : function(postdata){
+                return $http.post(apiAdminPath + 'campaigns', postdata);
+            },
+
             getSeminars : function(urlparams){
                 urlparams = angular.isUndefined(urlparams) ? {}  : urlparams ;
                 return $http.get(apiAdminPath + 'facilitator/seminar', {params : urlparams});

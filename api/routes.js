@@ -5,7 +5,9 @@ var initController = require('./controllers/marksimos/init.js');
 var auth = require('./controllers/user/authentication.js');
 var distributorController = require('./controllers/user/admin.js');
 var studentController = require('./controllers/user/student.js');
+var campaignController = require('./controllers/b2c/campaign.js');
 var seminarController = require('./controllers/marksimos/seminar.js');
+
 var questionnaireController = require('./controllers/questionnaire.js');
 var faqController  =  require('./controllers/faq.js');
 var utility = require('../common/utility.js')
@@ -269,6 +271,11 @@ apiRouter.post('/marksimos/api/admin/students', auth.authLoginToken(), auth.auth
 apiRouter.put('/marksimos/api/admin/students/:student_id', auth.authLoginToken(), auth.authRole(userRoleModel.right.marksimos.studentInfoSingleCUD), distributorController.updateStudent);
 
 apiRouter.post('/marksimos/api/admin/students/reset_password',  auth.authLoginToken(), auth.authRole(userRoleModel.right.marksimos.studentInfoSingleCUD), distributorController.resetStudentPassword);
+
+
+//Facilitator manager Campaign
+apiRouter.get('/marksimos/api/admin/campaigns', auth.authLoginToken(), auth.authRole(userRoleModel.right.marksimos.campaignSingleCUD), campaignController.addCampaign);
+apiRouter.post('/marksimos/api/admin/campaigns', auth.authLoginToken(), auth.authRole(userRoleModel.right.marksimos.campaignSingleCUD), campaignController.addCampaign);
 
 
 //Facilitator manager seminars

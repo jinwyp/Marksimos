@@ -2,10 +2,7 @@ var userModel = require('../../models/user/user.js');
 var userRoleModel = require('../../models/user/userrole.js');
 var seminarModel = require('../../models/marksimos/seminar.js');
 
-var logger = require('../../../common/logger.js');
-var util = require('util');
 var utility = require('../../../common/utility.js');
-var validator = require('validator');
 
 
 
