@@ -268,7 +268,7 @@ apiRouter.get('/marksimos/api/admin/students', auth.authLoginToken(), auth.authR
 apiRouter.post('/marksimos/api/admin/students', auth.authLoginToken(), auth.authRole(userRoleModel.right.marksimos.studentInfoSingleCUD), distributorController.addStudent);
 apiRouter.put('/marksimos/api/admin/students/:student_id', auth.authLoginToken(), auth.authRole(userRoleModel.right.marksimos.studentInfoSingleCUD), distributorController.updateStudent);
 
-apiRouter.post('/marksimos/api/admin/resetPassword',  auth.authLoginToken(), auth.authRole(userRoleModel.right.marksimos.studentInfoSingleCUD), distributorController.resetStudentPassword);
+apiRouter.post('/marksimos/api/admin/students/reset_password',  auth.authLoginToken(), auth.authRole(userRoleModel.right.marksimos.studentInfoSingleCUD), distributorController.resetStudentPassword);
 
 
 //Facilitator manager seminars

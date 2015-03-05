@@ -17,8 +17,9 @@
         <!-- sidebar menu: : style can be found in sidebar.less -->
         <ul class="sidebar-menu">
             <li ng-class="{'active':css.menuexpand[1]}" ng-if="showtab[1]">
-                <a href="" ng-click="clickMenu(1)">
-                    <i class="fa fa-dashboard" ></i> <span>Dashboard</span>
+                <a href="" ng-click="clickMenu(11)">
+                    <i class="fa fa-dashboard" ></i>
+                    <span>Dashboard</span>
                 </a>
             </li>
 
@@ -29,8 +30,8 @@
                     <i class="fa pull-right" ng-class="{'fa-angle-left':!css.menuexpand[2], 'fa-angle-down':css.menuexpand[2]}"></i>
                 </a>
                 <ul class="treeview-menu" ng-show="css.menuexpand[2]">
-                    <li><a href="" ng-click="clickMenu(21)"><i class="fa fa-angle-double-right"></i> Distributor List</a></li>
-                    <li><a href="" ng-click="clickMenu(22)"><i class="fa fa-angle-double-right"></i> Create Distributor</a></li>
+                    <li ng-class="{'active' : currentMenu==21 }"><a href="" ng-click="clickMenu(21)"><i class="fa fa-angle-double-right"></i> Distributor List</a></li>
+                    <li ng-class="{'active' : currentMenu==22 }"><a href="" ng-click="clickMenu(22)"><i class="fa fa-angle-double-right"></i> Create Distributor</a></li>
                 </ul>
             </li>
 
@@ -41,8 +42,8 @@
                     <i class="fa pull-right" ng-class="{'fa-angle-left':!css.menuexpand[3], 'fa-angle-down':css.menuexpand[3]}"></i>
                 </a>
                 <ul class="treeview-menu" ng-show="css.menuexpand[3]">
-                    <li><a href="" ng-click="clickMenu(31)"><i class="fa fa-angle-double-right"></i> Facilitator List</a></li>
-                    <li><a href="" ng-click="clickMenu(32)"><i class="fa fa-angle-double-right"></i> Create Facilitator</a></li>
+                    <li ng-class="{'active' : currentMenu==31 }"><a href="" ng-click="clickMenu(31)"><i class="fa fa-angle-double-right"></i> Facilitator List</a></li>
+                    <li ng-class="{'active' : currentMenu==32 }"><a href="" ng-click="clickMenu(32)"><i class="fa fa-angle-double-right"></i> Create Facilitator</a></li>
                 </ul>
             </li>
 
@@ -53,8 +54,8 @@
                     <i class="fa pull-right" ng-class="{'fa-angle-left':!css.menuexpand[4], 'fa-angle-down':css.menuexpand[4]}"></i>
                 </a>
                 <ul class="treeview-menu" ng-show="css.menuexpand[4]">
-                    <li><a href="" ng-click="clickMenu(41)"><i class="fa fa-angle-double-right"></i> Student List</a></li>
-                    <li><a href="" ng-click="clickMenu(42)"><i class="fa fa-angle-double-right"></i> Create Student</a></li>
+                    <li ng-class="{'active' : currentMenu==41 }"><a href="" ng-click="clickMenu(41)"><i class="fa fa-angle-double-right"></i> Student List</a></li>
+                    <li ng-class="{'active' : currentMenu==42 }"><a href="" ng-click="clickMenu(42)"><i class="fa fa-angle-double-right"></i> Create Student</a></li>
                 </ul>
             </li>
 
@@ -65,22 +66,24 @@
                     <i class="fa pull-right"  ng-class="{'fa-angle-left':!css.menuexpand[5], 'fa-angle-down':css.menuexpand[5]}"></i>
                 </a>
                 <ul class="treeview-menu" ng-show="css.menuexpand[5]">
-                    <li><a href="" ng-click="clickMenu(51)"><i class="fa fa-angle-double-right"></i> Seminar List</a></li>
-                    <li><a href="" ng-click="clickMenu(52)"><i class="fa fa-angle-double-right"></i> Create Seminar</a></li>
+                    <li ng-class="{'active' : currentMenu==51 }"><a href="" ng-click="clickMenu(51)"><i class="fa fa-angle-double-right"></i> Seminar List</a></li>
+                    <li ng-class="{'active' : currentMenu==52 }"><a href="" ng-click="clickMenu(52)"><i class="fa fa-angle-double-right"></i> Create Seminar</a></li>
                 </ul>
             </li>
 
             <li class="treeview" ng-class="{'active':css.menuexpand[6]}" ng-if="showtab[6]">
                 <a href="" ng-click="clickTab(6)">
-                    <i class="fa fa-table"></i>
-                    <span>Licence Management</span>
+                    <i class="fa fa-bullhorn"></i>
+                    <span>Campaign Management</span>
                     <i class="fa pull-right"  ng-class="{'fa-angle-left':!css.menuexpand[6], 'fa-angle-down':css.menuexpand[6]}"></i>
                 </a>
                 <ul class="treeview-menu" ng-show="css.menuexpand[6]">
-                    <li><a href="" ng-click="clickMenu(61)"><i class="fa fa-angle-double-right"></i> Licence List</a></li>
-                    <li><a href="" ng-click="clickMenu(62)"><i class="fa fa-angle-double-right"></i> Create Licence</a></li>
+                    <li ng-class="{'active' : currentMenu==61 }"><a href="" ng-click="clickMenu(61)"><i class="fa fa-angle-double-right"></i> Campaign List</a></li>
+                    <li ng-class="{'active' : currentMenu==62 }"><a href="" ng-click="clickMenu(62)"><i class="fa fa-angle-double-right"></i> Create Campaign</a></li>
                 </ul>
             </li>
+
+
 
         </ul>
     </section>

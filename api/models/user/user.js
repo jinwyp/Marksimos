@@ -221,6 +221,8 @@ userSchema.statics.registerValidations = function(req, userRoleId, studentType){
 
     studentType = studentType || 20;
 
+    removeProperty(req.body);
+
     req.checkBody('username', 'Username should be 6-20 characters').notEmpty().len(6, 20);
     req.checkBody('email', 'Email wrong format').notEmpty().isEmail();
     req.checkBody('password', 'Password should be 6-20 characters').notEmpty().len(6, 20);
@@ -374,7 +376,8 @@ userSchema.statics.passwordValidations = function(req, userRoleId, studentType){
 
 userSchema.statics.userIdValidations = function(req, userRoleId, studentType){
     studentType = studentType || 20;
-    req.checkParams('student_id', 'User ID should be 24 characters').notEmpty().len(24, 24);
+    req.assert('student_id', 'User ID should be 24 characters').notEmpty().len(24, 24);
+    //req.checkParams('student_id', 'User ID should be 24 characters').notEmpty().len(24, 24);
     return req.validationErrors();
 };
 

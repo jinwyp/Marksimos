@@ -160,25 +160,17 @@
             link : function(scope, element){
 
                 scope.css = {
-                    currentTab : 2,
-//                currentMenu : 'DistributorList',
                     menuexpand : [false, false, true, true, true, true, true, true] // menus control expand
                 };
-
 
                 scope.clickTab = function(tab){
 
                     scope.css.menuexpand[tab] = !scope.css.menuexpand[tab];
-                    scope.css.currentTab = tab;
-
                 };
 
                 scope.clickMenu = function(currentmenu){
                     scope.currentMenu = currentmenu;
 
-                    if(currentmenu === 1){
-                        scope.clickTab(1);
-                    }
                 };
 
             }
