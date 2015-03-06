@@ -649,10 +649,16 @@ $lineHeight_button: 1.8;
 	border-radius: 0;
 	height: 26px;
 	line-height: inherit !important;
+	&.col-md-7 {
+		width: (7/12*100%);
+	}
 	&.col-md-6 {
 		width: (6/12*100%);
 	}
 	&.col-md-5 {
+		width: (5/12*100%);
+	}
+	&.col-md-2 {
 		width: (5/12*100%);
 	}
 }
@@ -720,7 +726,7 @@ $lineHeight_button: 1.8;
 		position: absolute;
 		top: 109px;
 		left: $left_of_avatar;
-		width: 300px;
+		//width: 300px;
 
 		.profile-head {
 			float: left;
