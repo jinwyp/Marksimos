@@ -115,7 +115,7 @@
             },
 
             updatePassword: function(passwordOld, passwordNew) {
-                return $http.put(apiPathB2c + 'student/password', {
+                return $http.put(apiPathB2C + 'student/password', {
                     passwordOld: passwordOld,
                     passwordNew: passwordNew
                 })
