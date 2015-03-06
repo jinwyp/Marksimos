@@ -94,7 +94,6 @@
                 </div>
             </section>
 
-
             <section class="content" ng-if="css.leftmenu==22">
                 <h2 class="page-header">Create New Distributor</h2>
 
@@ -242,7 +241,6 @@
                 </div>
             </section>
 
-
             <section class="content" ng-if="css.leftmenu==32">
                 <h2 class="page-header">Create New Facilitator</h2>
 
@@ -318,7 +316,6 @@
                     </div>
                 </div>
             </section>
-
 
 
             <section class="content" ng-if="css.leftmenu==41">
@@ -418,7 +415,6 @@
                 </div>
             </section>
 
-
             <section class="content" ng-if="css.leftmenu==42">
                 <h2 class="page-header">Create New Student</h2>
 
@@ -426,9 +422,6 @@
                     <div class="col-md-12">
 
                         <div class="box box-primary">
-
-
-
 
                             <form class="form-horizontal" role="form" name="newStudentForm">
                                 <div class="box-body">
@@ -463,11 +456,12 @@
 
                                     <text-form-input type="text" name="newStudentFirstName" label="First Name :" labelclass="col-sm-2" inputclass="col-sm-4" data="data.newStudent.firstName" minlength="2" minlengtherrorinfo="First name must be at least 2 characters" maxlength="50" maxlengtherrorinfo="First name is a maximum of 50 characters" ></text-form-input>
                                     <text-form-input type="text" name="newStudentLastName" label="Last Name :" labelclass="col-sm-2" inputclass="col-sm-4" data="data.newStudent.lastName" minlength="2" minlengtherrorinfo="Last name must be at least 2 characters" maxlength="50" maxlengtherrorinfo="Last name is a maximum of 50 characters" ></text-form-input>
+                                    <text-form-input type="radio" name="newStudentGender" label="Gender :" labelclass="col-sm-2" inputclass="col-sm-4" data="data.newStudent.gender" radiooptions="data.newStudent.studentGenderRadioOptions"></text-form-input>
 
                                     <text-form-input type="text" name="newStudentOccupation" label="Current Occupation :" labelclass="col-sm-2" inputclass="col-sm-4" data="data.newStudent.occupation" minlength="2" minlengtherrorinfo="Current occupation must be at least 2 characters" maxlength="100" maxlengtherrorinfo="Current occupation is a maximum of 100 characters" ></text-form-input>
                                     <text-form-input type="text" name="newStudentUniversity" label="University / Organization :" labelclass="col-sm-2" inputclass="col-sm-4" data="data.newStudent.organizationOrUniversity" minlength="2" minlengtherrorinfo="University must be at least 2 characters" maxlength="100" maxlengtherrorinfo="University is a maximum of 100 characters" ></text-form-input>
 
-                                    <text-form-input type="radio" name="newStudentStudentType" label="Student For :" labelclass="col-sm-2" inputclass="col-sm-4" data="data.newStudent.studentType" radiooptions="data.newStudent.studentTypeRadioOptions" required="true"></text-form-input>
+                                    <text-form-input type="radio" name="newStudentStudentType" label="Student For :" labelclass="col-sm-2" inputclass="col-sm-4" data="data.newStudent.studentType" radiooptions="data.newStudent.studentTypeRadioOptions" required></text-form-input>
 
                                 </div>
 
@@ -577,7 +571,7 @@
                                                 <div class="input-group-btn">
                                                     <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">{{seminar.currentCompanyName}} <span class="fa fa-caret-down"></span></button>
                                                     <ul class="dropdown-menu">
-                                                        <li ng-repeat="company in seminar.companies"><a href="" ng-click="chooseCompany(seminar, company)">Company {{company.companyName}}</a></li>
+                                                        <li ng-repeat="company in seminar.companyAssignment"><a href="" ng-click="chooseCompany(seminar, company)">Company {{company.companyName}}</a></li>
                                                     </ul>
                                                 </div><!-- /btn-group -->
                                                 <input type="email" class="form-control" placeholder="Student Email" ng-model="seminar.inputemail">
@@ -598,7 +592,6 @@
                     </div>
                 </div>
             </section>
-
 
             <section class="content" ng-if="css.leftmenu==52">
                 <h2 class="page-header">Create New Seminar</h2>
@@ -656,8 +649,38 @@
             </section>
 
 
+            <section class="content" ng-if="css.leftmenu==62">
+                <h2 class="page-header">Create New Campaign</h2>
 
+                <div class="row" >
+                    <div class="col-md-12">
 
+                        <div class="box box-primary">
+                            <form class="form-horizontal" role="form" name="newCampaignForm">
+                                <div class="box-body">
+                                    <text-form-input type="text" name="newCampaignName" label="Name :" placeholder="Campaign Name" labelclass="col-sm-2" inputclass="col-sm-4" data="data.newCampaign.name" required="true" requirederrorinfo="Name is required"></text-form-input>
+                                    <text-form-input type="text" name="newCampaignDescription" label="Description :" placeholder="Campaign Description" labelclass="col-sm-2" inputclass="col-sm-4" data="data.newCampaign.description" required="true" requirederrorinfo="Description is required" minlength="2" minlengtherrorinfo="Description must be at least 2 characters" maxlength="500" maxlengtherrorinfo="Description is a maximum of 500 characters"></text-form-input>
+
+                                    <text-form-input type="text" name="newCampaignLocation" label="Location :" placeholder="Country / State / City / Street" labelclass="col-sm-2" inputclass="col-sm-4" data="data.newCampaign.location" required="true" requirederrorinfo="Location is required"></text-form-input>
+                                    <text-form-input type="text" name="newCampaignMatchDate" label="Match Date :" placeholder="Match Start Date" labelclass="col-sm-2" inputclass="col-sm-4" data="data.newCampaign.matchDate" required="true" requirederrorinfo="Date is required"></text-form-input>
+
+                                    <text-form-input type="radio" name="newCampaignActivated" label="Activated :" labelclass="col-sm-2" inputclass="col-sm-4" data="data.newCampaign.activated" radiooptions="data.newCampaign.campaignActivatedRadioOptions" required="true"></text-form-input>
+
+                                </div>
+
+                                <div class="box-footer">
+                                    <div class="form-group">
+                                        <div class="col-sm-offset-2 col-sm-10">
+                                            <button type="submit" class="btn btn-primary" ng-click="createNewCampaign(newCampaignForm)"> Create </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+
+                    </div>
+                </div>
+            </section>
 
 
 

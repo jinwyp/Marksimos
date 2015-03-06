@@ -9,6 +9,8 @@ var bodyParser = require('body-parser');
 var mongoose = require('mongoose');
 
 var morgan = require('morgan');
+var logger = require('./common/logger.js');
+
 
 
 //var session = require('express-session');
@@ -112,9 +114,13 @@ app.use(function(err, req, res, next){
     // here and next(err) appropriately, or if
     // we possibly recovered from the error, simply next().
 
-    console.log(typeof err.message,  err.message);
+
+
     if(typeof err.message !== 'undefined' && err.message.toLowerCase().substr(0, 6) == 'cancel' ){
         // respond promise stop chains info with no system error
+
+        logger.log('400 Error.  Type:', typeof err.message, '   Message:',  err.message);
+
         res.status(err.status || 400);
 
         // respond with json
@@ -136,6 +142,8 @@ app.use(function(err, req, res, next){
 
     }else{
         // respond 500 system error
+        logger.error(err);
+
         res.status(err.status || 500);
 
         // respond with json

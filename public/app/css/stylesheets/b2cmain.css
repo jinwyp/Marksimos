@@ -673,6 +673,17 @@ body {
   padding-left: 30px;
   padding-right: 30px;
 }
+.profile-content input {
+  border-radius: 0;
+  height: 26px;
+  line-height: inherit !important;
+}
+.profile-content input.col-md-6 {
+  width: 50%;
+}
+.profile-content input.col-md-5 {
+  width: 41.66667%;
+}
 .profile-content > header {
   background-color: #ffffff;
   margin-bottom: 10px;
@@ -698,8 +709,8 @@ body {
   border-left-color: transparent;
   border-bottom-color: transparent;
   transform: rotate(135deg);
-  width: 0;
   position: absolute;
+  width: 0;
   bottom: 10px;
   right: 25px;
 }
@@ -712,19 +723,22 @@ body {
 }
 .profile-content .user-info {
   position: absolute;
-  top: 120px;
+  top: 109px;
   left: 44px;
   width: 300px;
 }
 .profile-content .user-info .profile-head {
   float: left;
-  width: 120px;
-  height: 120px;
+  width: 131px;
+  height: 131px;
+  -moz-border-radius: 2px;
+  -webkit-border-radius: 2px;
+  border-radius: 2px;
 }
 .profile-content .user-info .text-info {
   color: #ffffff;
   float: left;
-  margin-top: 1em;
+  margin-top: 1.5em;
   margin-left: 1.5em;
 }
 .profile-content .user-info .text-info .profile-username {
@@ -755,12 +769,11 @@ body {
   border-bottom: none;
 }
 .detail-nav li:last-child {
-  border-bottom: solid;
+  border-bottom: solid black;
   border-width: 1px;
 }
 .detail-nav .avatar {
   width: 100%;
-  height: 190px;
   margin-bottom: 20px;
   -moz-border-radius: 0.3em;
   -webkit-border-radius: 0.3em;
@@ -773,14 +786,18 @@ body {
 .detail-nav .upload-avatar-button {
   background-color: #741F01;
   color: #ffffff;
+  cursor: pointer;
+}
+.detail-nav .profile-nav {
+  cursor: pointer;
 }
 .detail-nav .up-triangle {
   border: 5px solid;
   border-left-color: transparent;
   border-bottom-color: transparent;
   transform: rotate(-45deg);
-  width: 0;
   position: absolute;
+  width: 0;
   left: 0;
   right: 0;
   margin: 0 auto;
@@ -806,17 +823,17 @@ body {
   color: #ffffff;
   padding-left: 1em;
 }
-.upload-avatar-window main {
+.upload-avatar-window .main {
   padding: 30px 30px 20px;
   background-color: #ffffff;
   font-weight: bolder;
 }
-.upload-avatar-window main .avatar-window-icon {
+.upload-avatar-window .main .avatar-window-icon {
   width: 100px;
   height: 100px;
   margin-right: 12px;
 }
-.upload-avatar-window main > div {
+.upload-avatar-window .main > div {
   display: inline-block;
   vertical-align: middle;
   *vertical-align: auto;
@@ -824,17 +841,17 @@ body {
   *display: inline;
   font-size: 0.9em;
 }
-.upload-avatar-window main .select-file {
+.upload-avatar-window .main .select-file {
   font-weight: normal;
 }
-.upload-avatar-window main .select-file button {
+.upload-avatar-window .main .select-file button {
   border-style: none;
   -moz-border-radius: 2px;
   -webkit-border-radius: 2px;
   border-radius: 2px;
-  -moz-box-shadow: #E2E2E2 0px 2px 4px;
-  -webkit-box-shadow: #E2E2E2 0px 2px 4px;
-  box-shadow: #E2E2E2 0px 2px 4px;
+  -moz-box-shadow: #938F8F 0px 2px 4px;
+  -webkit-box-shadow: #938F8F 0px 2px 4px;
+  box-shadow: #938F8F 0px 2px 4px;
   background-color: #E2E2E2;
   margin-right: 8px;
   height: 25px;
@@ -851,9 +868,9 @@ body {
   -moz-border-radius: 0px;
   -webkit-border-radius: 0px;
   border-radius: 0px;
-  -moz-box-shadow: #AEAEAE 0px 2px 4px;
-  -webkit-box-shadow: #AEAEAE 0px 2px 4px;
-  box-shadow: #AEAEAE 0px 2px 4px;
+  -moz-box-shadow: #797979 0px 2px 4px;
+  -webkit-box-shadow: #797979 0px 2px 4px;
+  box-shadow: #797979 0px 2px 4px;
   width: 80px;
   background-color: #6C6C6C;
   margin: 10px;
@@ -889,6 +906,10 @@ body {
 .profile-detail form > div > div {
   margin-bottom: 0.5em;
 }
+.profile-detail .none-bottom-border {
+  border-bottom: none;
+  padding-bottom: 0;
+}
 .profile-detail .profile-detail-title {
   background-color: #d98348;
   color: #ffffff;
@@ -910,6 +931,10 @@ body {
   padding: 0.2em 0.4em;
   float: right;
   font-size: 0.9em;
+  border-style: none;
+  -moz-box-shadow: #797979 0px 2px 4px;
+  -webkit-box-shadow: #797979 0px 2px 4px;
+  box-shadow: #797979 0px 2px 4px;
 }
 .profile-detail .profile-button-container {
   padding: 1.2em 0 0;
@@ -943,11 +968,30 @@ body {
   margin-left: 80px;
 }
 .profile-detail .team-info .team-name {
-  margin-top: 2.5em;
+  margin-bottom: 0;
 }
 .profile-detail .team-info .team-name .team-label {
   padding-right: 0;
 }
-.profile-detail .team-info input:not(:last-child) {
+.profile-detail .team-info .err-msg {
+  position: absolute;
+  left: -100px;
+}
+.profile-detail .team-info button, .profile-detail .team-info .add-button, .profile-detail .team-info .remove-button {
+  width: 65px;
+  border-style: none;
+  color: #ffffff;
+  background-color: #797979;
+  -moz-box-shadow: #797979 0px 2px 4px;
+  -webkit-box-shadow: #797979 0px 2px 4px;
+  box-shadow: #797979 0px 2px 4px;
+}
+.profile-detail .team-info input, .profile-detail .team-info span {
   margin-right: 5px;
+}
+.profile-detail .team-info .add-button, .profile-detail .team-info .done {
+  background-color: #B82A0C;
+  -moz-box-shadow: #7e200b 0px 2px 4px;
+  -webkit-box-shadow: #7e200b 0px 2px 4px;
+  box-shadow: #7e200b 0px 2px 4px;
 }

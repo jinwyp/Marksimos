@@ -96,7 +96,32 @@
 
             chooseSeminar : function(queryParams){
                 return $http.get(apiPath + 'choose_seminar', {params : queryParams});
+            },
+
+            addStudentToTeam : function(user) {
+                return $http.post(apiPathB2C + 'team/student', user);
+            },
+
+            removeStudentToTeam : function(id) {
+                return $http.delete(apiPathB2C + 'team/student/' + id);
+            },
+
+            updateTeamName : function(name) {
+                return $http.post(apiPathB2C + 'team', {name: name});
+            },
+
+            updateStudentB2CInfo : function(data) {
+                return $http.put(apiPathB2C + 'student', data);
+            },
+
+            updatePassword: function(passwordOld, passwordNew) {
+                return $http.put(apiPathB2C + 'student/password', {
+                    passwordOld: passwordOld,
+                    passwordNew: passwordNew
+                })
             }
+
+
         };
 
         return factory;
@@ -1166,18 +1191,59 @@
                 urlparams = angular.isUndefined(urlparams) ? {}  : urlparams ;
                 return $http.get(apiAdminPath + 'distributors', {params : urlparams});
             },
+            addDistributor : function(postdata){
+                return $http.post(apiAdminPath + 'distributors', postdata);
+            },
+
             getFacilitators : function(urlparams){
                 urlparams = angular.isUndefined(urlparams) ? {}  : urlparams ;
                 return $http.get(apiAdminPath + 'facilitators', {params : urlparams});
             },
+            addFacilitator : function(postdata){
+                return $http.post(apiAdminPath + 'facilitators', postdata);
+            },
+
             getStudents : function(urlparams){
                 urlparams = angular.isUndefined(urlparams) ? {}  : urlparams ;
                 return $http.get(apiAdminPath + 'students', {params : urlparams});
             },
+            addStudent : function(postdata){
+                return $http.post(apiAdminPath + 'students', postdata);
+            },
+            resetStudentPassword : function(postdata){
+                return $http.post(apiAdminPath + 'students/reset_password', postdata);
+            },
+
+            getCampaigns : function(urlparams){
+                urlparams = angular.isUndefined(urlparams) ? {}  : urlparams ;
+                return $http.get(apiAdminPath + 'campaigns', {params : urlparams});
+            },
+            addCampaign : function(postdata){
+                return $http.post(apiAdminPath + 'campaigns', postdata);
+            },
+
             getSeminars : function(urlparams){
                 urlparams = angular.isUndefined(urlparams) ? {}  : urlparams ;
                 return $http.get(apiAdminPath + 'facilitator/seminar', {params : urlparams});
             },
+            addSeminar : function(postdata){
+                return $http.post(apiAdminPath + 'seminar', postdata);
+            },
+            initSeminar: function(seminarId) {
+                return $http.post(apiAdminPath + 'seminar/' + seminarId + '/init' );
+            },
+            runSeminar: function(seminarId, runNextPeriod, companyOverwrite) {
+                return $http.post(apiAdminPath + 'seminar/' + seminarId + '/runsimulation', {goingToNewPeriod : runNextPeriod, decisionsOverwriteSwitchers:companyOverwrite});
+            },
+            addStudentToSeminar : function(postdata){
+                return $http.post(apiAdminPath + 'assign_student_to_seminar', postdata);
+            },
+            removeStudentToSeminar : function(postdata){
+                return $http.post(apiAdminPath + 'remove_student_from_seminar', postdata);
+            },
+
+
+
             getAllCompanyDecisionsOfAllPeriods : function(seminarId){
                 return $http.get(apiAdminPath + 'seminar/' + seminarId + '/decisions') ;
             },
@@ -1188,12 +1254,6 @@
             getQuestionnaire: function(seminarId) {
                 //获取反馈
                 return $http.get(apiAdminPath + 'questionnaire/' + seminarId);
-            },
-            initSeminar: function(seminarId) {
-                return $http.post(apiAdminPath + 'seminar/' + seminarId + '/init' );
-            },
-            runSeminar: function(seminarId, runNextPeriod, companyOverwrite) {
-                return $http.post(apiAdminPath + 'seminar/' + seminarId + '/runsimulation', {goingToNewPeriod : runNextPeriod, decisionsOverwriteSwitchers:companyOverwrite});
             },
             updateCompanyDecision: function(postdata) {
                 return $http.put(apiAdminPath + 'company/decision', postdata);

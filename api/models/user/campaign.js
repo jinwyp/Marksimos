@@ -26,7 +26,9 @@ var campaignSchema = new Schema({
 
     creator: { type: schemaObjectId, ref: 'User' },
 
-    seminarListMarksimos: [{ type: schemaObjectId, ref: 'Seminar' }]
+    seminarListMarksimos: [{ type: schemaObjectId, ref: 'Seminar' }],
+
+    activated: { type: Boolean, default: false }
 
 });
 
@@ -49,7 +51,18 @@ campaignSchema.plugin(mongooseTimestamps);
  * Statics
  */
 
+campaignSchema.statics.updateValidations = function(req){
 
+    req.sanitize('activated').toBoolean();
+
+    req.checkBody('name', 'Campaign name should be 2-50 characters').notEmpty().len(2, 50);
+    req.checkBody('description', 'Campaign description should be 2-10000 characters').notEmpty().len(2, 10000);
+
+    req.checkBody('activated', 'Campaign activated should Boolean true or false').notEmpty();
+
+    return req.validationErrors();
+
+};
 
 /**
  * Methods

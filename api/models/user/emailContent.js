@@ -97,4 +97,4 @@ function contentEmail() {
 
 
 
-module.exports = exports = new contentEmail;
+module.exports = exports = contentEmail;

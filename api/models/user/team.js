@@ -2,7 +2,6 @@
  * Created by jinwyp on 3/3/15.
  */
 
-
 'use strict';
 
 /*!
@@ -49,7 +48,14 @@ teamSchema.plugin(mongooseTimestamps);
  * Statics
  */
 
+teamSchema.statics.updateValidations = function(req){
 
+    req.checkBody('name', 'Team name should be 2-50 characters').notEmpty().len(2, 50);
+    //req.checkBody('description', 'Team description should be 2-50 characters').notEmpty().len(2, 50);
+
+    return req.validationErrors();
+
+};
 
 /**
  * Methods

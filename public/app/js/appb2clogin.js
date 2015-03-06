@@ -176,7 +176,127 @@
     }]);
 
 
+    angular.module('b2clogin').controller('profileController', ['Student', '$timeout', function(Student, $timeout) {
+        /* jshint validthis: true */
+        var vm = this;
 
+        vm.css = {
+            addStudentFailedInfo: false,
+            curTabIdx: 0,
+            updateTeamNameDisabled: true,
+            updateTeamNameFailedInfo: false,
+            updateSuccess: false,
+            updatePasswordSuccessInfo: false,
+            updatePasswordFailedInfo: false
+        };
+
+        vm.currentUser = {
+        };
+
+        /**********  Event Center  **********/
+        vm.clickAddStudentToTeam = addStudentToTeam;
+        vm.clickRemoveStudentToTeam = removeStudentToTeam;
+        vm.clickUpdateTeamName = updateTeamName;
+        vm.clickUpdateUserInfo = updateUserInfo;
+        vm.clickUpdatePassword = updatePassword;
+
+
+        /**********  Function Declarations  **********/
+        function addStudentToTeam(form) {
+            vm.css.addStudentFailedInfo = false;
+
+            if (form.$valid) {
+                Student.addStudentToTeam({username: vm.newUser}).then(function(result) {
+                    app.getUserInfo()
+                }).catch(function(err) {
+                    form.$invalid = true;
+                    form.$valid = false;
+
+                    vm.css.addFailedInfo = true;
+                })
+            }
+        }
+
+        function removeStudentToTeam(id) {
+            Student.removeStudentToTeam(id).then(function(result) {
+                var members = vm.currentUser.team.memberList;
+                members.some(function(member, i) {
+                    if (member._id == id) {
+                        members.splice(i, 1);
+                        return true;
+                    }
+                })
+            })
+        }
+
+        function updateTeamName(form) {
+            vm.css.updateTeamNameFailedInfo = false;
+
+            if (form.$valid) {
+                if (vm.css.updateTeamNameDisabled) {
+                    vm.css.updateTeamNameDisabled = false;
+                } else {
+                    Student.updateTeamName(vm.currentUser.team.name).then(function(result) {
+                        //todo;
+                    }).catch(function(err) {
+                        form.teamName.$valid = false;
+                        form.teamName.$invalid = true;
+
+                        vm.css.updateTeamNameFailedInfo = true;
+                    });
+                    vm.css.updateTeamNameDisabled = true;
+                }
+            }
+        }
+
+        function updateUserInfo(form) {
+            // todo, let what css info be false
+            if (form.$valid) {
+                Student.updateStudentB2CInfo(vm.currentUser).then(function(result) {
+                    vm.css.updateSuccess = true;
+                    $timeout(function() {
+                        vm.css.updateSuccess = false;
+                    }, 1500);
+                }).catch(function(err) {
+                    //todo
+                })
+            }
+        }
+
+        function updatePassword(form) {
+            vm.css.updatePasswordSuccessInfo = false;
+            vm.css.updatePasswordFailedInfo = false;
+
+            if (form.$valid) {
+                Student.updatePassword(vm.currentUser.newPassword, vm.currentUser.oldPassword).then(function(result) {
+                    vm.css.updatePasswordSuccessInfo = true;
+                }).catch(function(err) {
+                    vm.css.updatePasswordFaildInfo = true;
+                })
+            }
+        }
+
+
+        var app = {};
+        app = {
+            init : function(){
+                this.getUserInfo()
+            },
+            reRun : function(){
+
+            },
+            getUserInfo : function(){
+                Student.getStudent().then(function(result) {
+                    vm.currentUser = result.data;
+                }).catch(function(err) {
+                    console.log('load student info failed');
+                })
+            }
+        };
+
+        app.init();
+
+    }])
 
 
 
@@ -239,10 +359,13 @@ $(function () {
 
     // Footer Fixed
     $(window).on('resize', function () {
-        if ($('header').height() + $('footer').height() + $('main').height() < $(window).height()) {
+
+        //console.log($('b2c-header').height() , $('footer').height() , $('.b2c-login-main').height() , $(window).height());
+
+        //if ( $('b2c-header').height() + $('footer').height() + $('.b2c-container').height() < $(window).height()) {
+        if(  $('.b2c-login-main').height() > 10 || $('.reg-verify-account').height() > 10 || $('.b2c-enter-email').height() > 10 || $('.b2c-enter-code').height() > 10 ){
             $('footer').addClass('b2c-footer-fix');
-        }
-        else { 
+        }else{
             $('footer').removeClass('b2c-footer-fix');
         }
     }).trigger('resize');

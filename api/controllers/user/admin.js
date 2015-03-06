@@ -2,10 +2,7 @@ var userModel = require('../../models/user/user.js');
 var userRoleModel = require('../../models/user/userrole.js');
 var seminarModel = require('../../models/marksimos/seminar.js');
 
-var logger = require('../../../common/logger.js');
-var util = require('util');
 var utility = require('../../../common/utility.js');
-var validator = require('validator');
 
 
 
@@ -457,37 +454,37 @@ exports.addStudent = function(req, res, next){
         return res.status(400).send( {message: validationErrors} );
     }
 
-    var facilitatorId = req.user.id;
+    var facilitatorId = req.user._id;
 
     var newStudent = {
         username : req.body.username,
-        email: req.body.email,
-        password: req.body.password,
+        email    : req.body.email,
+        password : req.body.password,
 
-        gender : req.body.gender,
-        firstName : req.body.firstName,
-        lastName : req.body.lastName,
+        gender      : req.body.gender,
+        firstName   : req.body.firstName,
+        lastName    : req.body.lastName,
         //birthday : req.body.birthday,
         //idcardNumber : req.body.idcardNumber,
         mobilePhone : req.body.mobilePhone,
-        qq : req.body.qq,
+        qq          : req.body.qq,
 
 
-        country       : req.body.country,
-        state         : req.body.state,
-        city          : req.body.city,
+        country : req.body.country,
+        state   : req.body.state,
+        city    : req.body.city,
 
-        majorsDegree : req.body.majorsDegree,
+        majorsDegree             : req.body.majorsDegree,
         //dateOfGraduation : req.body.dateOfGraduation,
         organizationOrUniversity : req.body.university,
         occupation               : req.body.occupation,
 
-        facilitatorId  : facilitatorId,
+        facilitatorId : facilitatorId,
 
-        role : userRoleModel.roleList.student.id,
+        role        : userRoleModel.roleList.student.id,
         studentType : req.body.studentType,
 
-        activated      : true
+        activated : true
     };
 
 
@@ -567,39 +564,39 @@ exports.updateStudent = function(req, res, next){
 
 
 exports.resetStudentPassword = function(req, res, next){
-    var validateResult = utility.validateUser(req);
 
-    if(validateResult){
-        return res.send(400, {message: validateResult});
+    var validationErrors = userModel.userIdValidations(req, userRoleModel.roleList.student.id, userModel.getStudentType().B2B);
+
+    if(validationErrors){
+        return res.status(400).send( {message: validationErrors} );
     }
 
-    var student = {
-        password : userModel.generateHashPassword('hcd1234')
-    };
-
-    var student_id = req.body.student_id;
+    req.body.passwordNew = 'hcd1234';
 
     userModel.findOneQ({
-        _id: student_id
-    }).then(function(dbStudent){
-        if(!dbStudent){
-            throw {httpStatus: 400, message: "student doesn't exist."}
+        _id: req.body.student_id
+
+    }).then(function(resultStudent){
+        if(!resultStudent) {
+            throw new Error('Cancel promise chains. Because student does not exist.');
         }
 
-        return userModel.updateQ({_id: student_id}, student);
-    }).then(function(numAffected){
-        if(numAffected !== 1){
-            if(numAffected > 1){
-                throw {httpStatus:400, message: "more than one row are updated."};
-            }else{
-                throw {httpStatus:400, message: "no student is updated." + student_id};
-            }
+        resultStudent.password = req.body.passwordNew;
+
+        return resultStudent.saveQ();
+
+    }).then(function(savedDoc){
+        if(!savedDoc ){
+            throw new Error('Cancel promise chains. Because Update Password failed. More or less than 1 record is updated. it should be only one !');
         }
-        res.send({message: "update student success."});
+
+        return res.status(200).send({message: 'Student password reset success. Password is ' + req.body.passwordNew + '.'});
+
     }).fail(function(err){
         next(err);
     }).done();
 };
+
 
 
 exports.searchStudent = function(req, res, next){

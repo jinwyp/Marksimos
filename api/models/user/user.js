@@ -1,3 +1,10 @@
+
+'use strict';
+
+/*!
+ * Module dependencies
+ */
+
 var mongoose = require('mongoose-q')(require('mongoose'), {spread:true});
 var Schema = mongoose.Schema;
 var Q = require('q');
@@ -6,10 +13,15 @@ var uuid = require('node-uuid');
 var bcrypt = require('bcrypt-nodejs');
 var SALT_WORK_FACTOR = 10;
 
-
 var userRoleModel = require('./userrole.js');
 var config = require('../../../common/config.js');
 
+
+
+
+/**
+ * Mongoose schema
+ */
 
 var userSchema = new Schema({
 
@@ -54,6 +66,7 @@ var userSchema = new Schema({
 
     //user degree info
     majorsDegree: String,
+    dateOfEnterCollege: Date,
     dateOfGraduation: Date,
     organizationOrUniversity: String,
     occupation: String,
@@ -86,10 +99,23 @@ var userSchema = new Schema({
     websiteLanguage:{type: String, default: 'zh_CN'} // 'zh_CN'  'en_US'
 
 });
+
+
+
+/**
+ * Mongoose plugin
+ */
 userSchema.plugin(mongooseTimestamps);
 
 
 
+
+/**
+ * Add your
+ * - pre-save hooks
+ * - validations
+ * - virtuals
+ */
 
 userSchema.virtual('roleName').get(function () {
     return userRoleModel.roleList[this.role].name ;
@@ -118,6 +144,11 @@ userSchema.pre('save', function(next) {
 });
 
 
+
+
+/**
+ * Statics
+ */
 
 userSchema.statics.register = function (newUser) {
     if(!mongoose.connection.readyState){
@@ -190,10 +221,11 @@ userSchema.statics.registerValidations = function(req, userRoleId, studentType){
 
     studentType = studentType || 20;
 
+    removeProperty(req.body);
+
     req.checkBody('username', 'Username should be 6-20 characters').notEmpty().len(6, 20);
     req.checkBody('email', 'Email wrong format').notEmpty().isEmail();
     req.checkBody('password', 'Password should be 6-20 characters').notEmpty().len(6, 20);
-
 
     if(userRoleId === userRoleModel.roleList.student.id && studentType === 20){
         req.checkBody('gender', 'Gender is required').notEmpty().isInt();
@@ -202,17 +234,15 @@ userSchema.statics.registerValidations = function(req, userRoleId, studentType){
     if(userRoleId === userRoleModel.roleList.student.id && studentType === 10){
         req.checkBody('gender', 'Gender is required').optional().isInt();
         req.checkBody('mobilePhone', 'mobilePhone wrong format').notEmpty().isMobilePhone('zh-CN');
-
-
-        req.checkBody('country', 'country is required').notEmpty();
-        req.checkBody('state', 'state is required').notEmpty();
-        req.checkBody('city', 'city is required').notEmpty();
-
         req.checkBody('qq', 'qq number format wrong' ).optional().isInt();
+
         req.checkBody('firstName', '2 to 50 characters required.').optional().len(2, 50);
         req.checkBody('lastName', '2 to 50 characters required.').optional().len(2, 50);
         req.checkBody('idcardNumber', '18 to 19 characters required.').optional().matches( /^\d{17}([0-9]|X)$/ );
 
+        req.checkBody('country', 'country is required').notEmpty();
+        req.checkBody('state', 'state is required').notEmpty();
+        req.checkBody('city', 'city is required').notEmpty();
 
         //req.checkBody('occupation', '2 to 100 characters required.').optional().len(2, 100);
         req.checkBody('organizationOrUniversity', '2 to 100 characters required.').optional().len(2, 100);
@@ -221,11 +251,9 @@ userSchema.statics.registerValidations = function(req, userRoleId, studentType){
 
     }
 
-
     if(userRoleId === userRoleModel.roleList.enterprise.id){
         req.checkBody('companyName', 'Company Name is required').notEmpty().len(4, 100);
     }
-
 
     if(userRoleId === userRoleModel.roleList.distributor.id){
         req.checkBody('mobilePhone', 'mobilePhone wrong format').notEmpty().isMobilePhone('zh-CN');
@@ -239,7 +267,6 @@ userSchema.statics.registerValidations = function(req, userRoleId, studentType){
 
     }
 
-
     if(userRoleId === userRoleModel.roleList.facilitator.id){
         req.checkBody('mobilePhone', 'mobilePhone wrong format').notEmpty().isMobilePhone('zh-CN');
         req.checkBody('idcardNumber', '18 to 19 characters required.').matches( /^\d{17}([0-9]|X)$/ );
@@ -251,13 +278,34 @@ userSchema.statics.registerValidations = function(req, userRoleId, studentType){
         req.checkBody('numOfLicense', 'License number must be between 1 to 99999 integer number.').notEmpty().isInt();
     }
 
-
     return req.validationErrors();
-
-
-
 };
 
+
+userSchema.statics.userInfoValidations = function(req, userRoleId, studentType){
+    studentType = studentType || 20;
+
+    removeProperty(req.body);
+
+    if(userRoleId === userRoleModel.roleList.student.id && studentType === 10){
+        req.checkBody('gender', 'Gender is required').optional().isInt();
+        req.checkBody('birthday', 'Birthday is required').optional().isDate();
+
+        req.checkBody('mobilePhone', 'mobilePhone wrong format').optional().isMobilePhone('zh-CN');
+        req.checkBody('qq', 'qq number format wrong' ).optional().isInt();
+
+        req.checkBody('firstName', '2 to 50 characters required.').optional().len(2, 50);
+        req.checkBody('lastName', '2 to 50 characters required.').optional().len(2, 50);
+        req.checkBody('idcardNumber', '18 to 19 characters required.').optional().matches( /^\d{17}([0-9]|X)$/ );
+
+        req.checkBody('occupation', '2 to 100 characters required.').optional().len(2, 100);
+        req.checkBody('organizationOrUniversity', '2 to 100 characters required.').optional().len(2, 100);
+        req.checkBody('dateOfEnterCollege', 'Date Of Enter College is date format').optional().isDate();
+        req.checkBody('dateOfGraduation', 'Date Of Graduation is date format').optional().isDate();
+
+    }
+    return req.validationErrors();
+};
 
 
 
@@ -269,7 +317,6 @@ userSchema.statics.emailVerifyRegistrationValidations = function(req, userRoleId
     req.checkQuery('emailtoken', 'Email ActivateToken wrong format').notEmpty().isUUID(4);
 
     return req.validationErrors();
-
 };
 
 
@@ -282,7 +329,6 @@ userSchema.statics.emailVerifyResetPasswordValidations = function(req, userRoleI
     req.checkQuery('passwordtoken', 'Reset Password Token wrong').notEmpty().isUUID(4);
 
     return req.validationErrors();
-
 };
 
 
@@ -301,7 +347,6 @@ userSchema.statics.resetForgotPasswordValidations = function(req, userRoleId, st
     }
 
     return req.validationErrors();
-
 };
 
 
@@ -317,14 +362,53 @@ userSchema.statics.usernameValidations = function(req, userRoleId, studentType){
     }
 
     return req.validationErrors();
+};
 
+userSchema.statics.passwordValidations = function(req, userRoleId, studentType){
+
+    studentType = studentType || 20;
+
+    req.checkBody('passwordNew', 'Password should be 6-20 characters').notEmpty().len(6, 20);
+    req.checkBody('passwordOld', 'Password should be 6-20 characters').notEmpty().len(6, 20);
+
+    return req.validationErrors();
+};
+
+userSchema.statics.userIdValidations = function(req, userRoleId, studentType){
+    studentType = studentType || 20;
+    req.assert('student_id', 'User ID should be 24 characters').notEmpty().len(24, 24);
+    //req.checkParams('student_id', 'User ID should be 24 characters').notEmpty().len(24, 24);
+    return req.validationErrors();
 };
 
 
 
 
+/**
+ * Methods
+ */
+
+
+
+/**
+ * Register Model
+ */
+
 var User = mongoose.model("User", userSchema);
 module.exports = User;
+
+
+
+function removeProperty(obj){
+    for(var p in obj) {
+        if (obj.hasOwnProperty(p)) {
+            if (obj[p] === '' || obj[p] === null) {
+                delete obj[p]; // 为了解决提交的数据为可选项的问题
+            }
+        }
+    }
+    return obj;
+}
 
 
 
