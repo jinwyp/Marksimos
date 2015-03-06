@@ -673,6 +673,17 @@ body {
   padding-left: 30px;
   padding-right: 30px;
 }
+.profile-content input {
+  border-radius: 0;
+  height: 26px;
+  line-height: inherit !important;
+}
+.profile-content input.col-md-6 {
+  width: 50%;
+}
+.profile-content input.col-md-5 {
+  width: 41.66667%;
+}
 .profile-content > header {
   background-color: #ffffff;
   margin-bottom: 10px;
@@ -961,6 +972,10 @@ body {
 }
 .profile-detail .team-info .team-name .team-label {
   padding-right: 0;
+}
+.profile-detail .team-info .err-msg {
+  position: absolute;
+  left: -100px;
 }
 .profile-detail .team-info button, .profile-detail .team-info .add-button, .profile-detail .team-info .remove-button {
   width: 65px;
