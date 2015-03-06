@@ -74,6 +74,15 @@ campaignSchema.statics.searchQueryValidations = function(req){
 
 };
 
+campaignSchema.statics.addSeminarValidations = function(req){
+
+    req.assert('seminarId', 'Seminar ID should be 24 characters').notEmpty().len(24, 24);
+    req.assert('campaignId', 'Campaign ID should be 24 characters').notEmpty().len(24, 24);
+
+    return req.validationErrors();
+
+};
+
 /**
  * Methods
  */

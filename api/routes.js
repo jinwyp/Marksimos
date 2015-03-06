@@ -277,6 +277,9 @@ apiRouter.post('/marksimos/api/admin/students/reset_password',  auth.authLoginTo
 apiRouter.get('/marksimos/api/admin/campaigns', auth.authLoginToken(), auth.authRole(userRoleModel.right.marksimos.campaignInfoListGet), campaignController.searchCampaign);
 apiRouter.post('/marksimos/api/admin/campaigns', auth.authLoginToken(), auth.authRole(userRoleModel.right.marksimos.campaignSingleCUD), campaignController.addCampaign);
 
+apiRouter.post('/marksimos/api/admin/campaigns/seminar', auth.authLoginToken(), auth.authRole(userRoleModel.right.marksimos.campaignSingleCUD), campaignController.addMarkSimosSeminarToCampaign);
+apiRouter.delete('/marksimos/api/admin/campaigns', auth.authLoginToken(), auth.authRole(userRoleModel.right.marksimos.campaignSingleCUD), campaignController.removeMarkSimosSeminarFromCampaign);
+
 
 //Facilitator manager seminars
 apiRouter.get('/marksimos/api/admin/facilitator/seminar', auth.authLoginToken(), auth.authRole(userRoleModel.right.marksimos.seminarListOfFacilitatorGet), seminarController.getSeminarOfFacilitator);

@@ -185,6 +185,11 @@
                 activated: 'all'
             },
             campaigns: [],
+            addMarkSimosSeminarToCampaign: {
+                seminar_id: 0,
+                company_id: 0,
+                email: ""
+            },
 
             country: [
                 { id: "DZ2", name: "Algeria" },
@@ -566,7 +571,30 @@
                 });
             }
         };
+        /********************  add Marksimos Seminar Into Campaign  ********************/
+        $scope.addSeminarIntoCampaign = function(seminarid, studentemail) {
 
+            if ($scope.data.addStudentToSeminar.company_id === 0 || angular.isUndefined(studentemail) || studentemail === "") {
+                $scope.css.seminarId = seminarid;
+            }else{
+                $scope.css.seminarId = 0;
+                $scope.data.addStudentToSeminar.email = studentemail;
+
+                Admin.addSeminarToCampaign( $scope.data.addStudentToSeminar).success(function(data, status, headers, config) {
+
+                    app.getSeminarInit();
+                    $notification.success('Save success', 'Add Student to Seminar success');
+
+                    $scope.data.addStudentToSeminar.seminar_id = 0;
+                    $scope.data.addStudentToSeminar.company_id = 0;
+                    $scope.data.addStudentToSeminar.email = "";
+
+                }).error(function(data, status, headers, config) {
+                    console.log(data);
+                    $notification.error('Failed', data.message);
+                });
+            }
+        };
 
 
 

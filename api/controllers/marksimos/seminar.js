@@ -99,8 +99,8 @@ exports.addSeminar = function(req, res, next){
 exports.assignStudentToSeminar = function(req, res, next){
    
     req.checkBody('email', 'Invalid email.').notEmpty().isEmail();
-    req.checkBody('seminarId', 'Invalid seminar id.').notEmpty().isInt();
-    req.checkBody('companyId', 'Invalid company id.').notEmpty().isInt();
+    req.checkBody('seminar_id', 'Invalid seminar id.').notEmpty().isInt();
+    req.checkBody('company_id', 'Invalid company id.').notEmpty().isInt();
 
     var email = req.body.email;
     var seminarId = req.body.seminar_id;
