@@ -678,10 +678,16 @@ body {
   height: 26px;
   line-height: inherit !important;
 }
+.profile-content input.col-md-7 {
+  width: 58.33333%;
+}
 .profile-content input.col-md-6 {
   width: 50%;
 }
 .profile-content input.col-md-5 {
+  width: 41.66667%;
+}
+.profile-content input.col-md-2 {
   width: 41.66667%;
 }
 .profile-content > header {
@@ -725,7 +731,6 @@ body {
   position: absolute;
   top: 109px;
   left: 44px;
-  width: 300px;
 }
 .profile-content .user-info .profile-head {
   float: left;
