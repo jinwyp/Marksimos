@@ -8,6 +8,13 @@ var consts = require('../../consts.js');
 var utility = require('../../../common/utility.js');
 
 
+
+
+/**
+ * Seminar API for Facilitator
+ */
+
+
 exports.addSeminar = function(req, res, next){
     var checkRequiredFieldResult = checkRequiredField(req);
 
@@ -89,27 +96,12 @@ exports.addSeminar = function(req, res, next){
 
 
 
-
-
-
-
-
-
-
-/**
- * Facilitator can call this API
- */
 exports.assignStudentToSeminar = function(req, res, next){
    
-  
-
     req.checkBody('email', 'Invalid email.').notEmpty().isEmail();
-
     req.checkBody('seminarId', 'Invalid seminar id.').notEmpty().isInt();
+    req.checkBody('companyId', 'Invalid company id.').notEmpty().isInt();
 
-    req.checkBody('companyId', 'Invalid seminar id.').notEmpty().isInt();
-
- 
     var email = req.body.email;
     var seminarId = req.body.seminar_id;
     var companyId = +req.body.company_id;
@@ -219,6 +211,82 @@ exports.removeStudentFromSeminar = function(req, res, next){
 
 
 
+
+
+exports.getSeminarOfFacilitator = function(req, res, next){
+
+    var facilitatorId = req.user._id;
+
+    var keywordFilter = req.query.filterKey || '';
+    var status = req.query.status || 'all';
+
+    var query = {};
+    query.$and = [
+        { facilitatorId: facilitatorId }
+    ];
+
+    if (status !== 'all') {
+        query.$and.push({ 'isInitialized': status });
+    }
+
+    if (keywordFilter) {
+        var strRegex = ".*[" + keywordFilter.split('').join('][') + "].*";
+        var regex = { $regex: strRegex , $options: 'i' }; // $options : 'i' Means case insensitivity to match upper and lower cases. 不区分大小写
+
+        query.$or = [
+            { 'description': regex },
+            { 'seminarId': regex },
+            { 'venue': regex }
+        ];
+    }
+
+    seminarModel.find(query, {seminarId:-1}).then(function(allSeminars){
+
+        // 处理兼容老版本
+        if(allSeminars.length > 0 ){
+            allSeminars.forEach(function(seminarOld){
+
+                if(seminarOld.companyAssignment.length > 0){
+                    if(typeof seminarOld.companyAssignment[0].companyId == 'undefined'){
+
+                        var companyList = [];
+
+                        for(var j=0; j<seminarOld.companyAssignment.length; j++){
+
+                            if( typeof seminarOld.companyAssignment[j] !== 'undefined'){
+
+                                var companyNew = {
+                                    companyId : j + 1,
+                                    companyName : String.fromCharCode('A'.charCodeAt(0) + j ),
+                                    studentList : []
+                                };
+
+                                for(var k=0; k<seminarOld.companyAssignment[j].length; k++) {
+                                    companyNew.studentList.push(seminarOld.companyAssignment[j][k]);
+                                }
+
+                                companyList.push(companyNew);
+                            }
+
+
+                        }
+
+                        seminarModel.update({seminarId: seminarOld.seminarId}, { $set: { companyAssignment: companyList }}).then(function(result){
+                        }).done();
+
+                    }
+                }
+            })
+        }
+
+        res.send(allSeminars);
+    }).fail(function(err){
+        next(err);
+    }).done();
+};
+
+
+
 exports.seminarInfoForFacilitator = function(req, res, next){
     var seminarId = req.params.seminar_id;
 
@@ -243,6 +311,49 @@ exports.seminarInfoForFacilitator = function(req, res, next){
         })
         .done();
 
+};
+
+
+
+
+
+
+/**
+ * Seminar API for Student
+ */
+
+
+exports.getSeminarList = function(req, res, next){
+    var email = req.user.email;
+    var assignedSeminars = [];
+
+    seminarModel.query.find({
+        companyAssignment : {$elemMatch : {studentList: { $in: [email] }} },
+        isInitialized :true
+    }).sort('seminarId').execQ().then(function(allSeminars){
+
+        for(var i=0; i<allSeminars.length; i++){
+
+            var seminar = allSeminars[i];
+
+            for(var j=0; j<seminar.companyAssignment.length; j++){
+
+                if( typeof seminar.companyAssignment[j].studentList  !== 'undefined'){
+                    if(seminar.companyAssignment[j].studentList.indexOf(email) > -1){
+                        if(seminar.isInitialized ){
+                            assignedSeminars.push(seminar);
+                            break;
+                        }
+                    }
+                }
+            }
+        }
+
+        return res.status(200).send(assignedSeminars);
+    }).fail(function(err){
+        err.message = "get seminar list failed.";
+        next(err);
+    }).done();
 };
 
 
@@ -285,46 +396,6 @@ exports.chooseSeminarForStudent = function(req, res, next){
     }).done();
 };
 
-
-
-
-
-/**
- * Seminar List For student
- */
-
-exports.getSeminarList = function(req, res, next){
-    var email = req.user.email;
-    var assignedSeminars = [];
-
-    seminarModel.query.find({
-        companyAssignment : {$elemMatch : {studentList: { $in: [email] }} },
-        isInitialized :true
-    }).sort('seminarId').execQ().then(function(allSeminars){
-
-        for(var i=0; i<allSeminars.length; i++){
-
-            var seminar = allSeminars[i];
-
-            for(var j=0; j<seminar.companyAssignment.length; j++){
-
-                if( typeof seminar.companyAssignment[j].studentList  !== 'undefined'){
-                    if(seminar.companyAssignment[j].studentList.indexOf(email) > -1){
-                        if(seminar.isInitialized ){
-                            assignedSeminars.push(seminar);
-                            break;
-                        }
-                    }
-                }
-            }
-        }
-
-        return res.status(200).send(assignedSeminars);
-    }).fail(function(err){
-        err.message = "get seminar list failed.";
-        next(err);
-    }).done();
-};
 
 
 

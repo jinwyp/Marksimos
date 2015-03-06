@@ -180,6 +180,11 @@
                     {value : 0, text : 'Disable'}
                 ]
             },
+            searchCampaign: {
+                keyword: '',
+                activated: 'all'
+            },
+            campaigns: [],
 
             country: [
                 { id: "DZ2", name: "Algeria" },
@@ -366,6 +371,7 @@
                         // Role Facilitator
                         app.getStudentsInit();
                         app.getSeminarInit();
+                        app.getCampaignInit();
                         $scope.css.menuTabShow = [false, true, false, false, true, true, true];
                     }
 
@@ -403,6 +409,15 @@
                 Admin.getSeminars().success(function(data, status, headers, config) {
                     $scope.data.seminars = data;
                     
+                }).error(function(data, status, headers, config) {
+                    console.log(data);
+                });
+            },
+
+            getCampaignInit: function() {
+                Admin.getCampaigns().success(function(data, status, headers, config) {
+                    $scope.data.campaigns = data;
+
                 }).error(function(data, status, headers, config) {
                     console.log(data);
                 });
@@ -523,14 +538,25 @@
         };
 
 
+        /********************  Search Campaign  ********************/
+        $scope.searchCampaign = function(form) {
+            if (form.$valid) {
+                console.log($scope.data.searchCampaign);
+                Admin.getCampaigns($scope.data.searchCampaign).success(function(data, status, headers, config) {
+                    $scope.data.campaigns = data;
+
+                }).error(function(data, status, headers, config) {
+                    $notification.error('Failed', data.message);
+                });
+            }
+        };
         /********************  Create New Campaign  ********************/
         $scope.createNewCampaign = function(form) {
             if (form.$valid) {
-                console.log($scope.data.newCampaign);
                 Admin.addCampaign($scope.data.newCampaign).success(function(data, status, headers, config) {
 
-                    //app.getCampaignInit();
-                    //$scope.css.leftmenu = 61;
+                    app.getCampaignInit();
+                    $scope.css.leftmenu = 61;
 
                     $notification.success('Save success', 'Create Campaign success');
 
@@ -540,6 +566,8 @@
                 });
             }
         };
+
+
 
 
         /********************  搜索 Seminars  ********************/

@@ -410,10 +410,11 @@ exports.getSeminarOfFacilitator = function(req, res, next){
                                 companyList.push(companyNew);
                             }
 
-
                         }
 
                         seminarModel.update({seminarId: seminarOld.seminarId}, { $set: { companyAssignment: companyList }}).then(function(result){
+                        }).fail(function(err){
+                            next(err);
                         }).done();
 
                     }

@@ -7,7 +7,7 @@
 var userModel = require('../../models/user/user.js');
 var userRoleModel = require('../../models/user/userrole.js');
 var seminarModel = require('../../models/marksimos/seminar.js');
-var campaignModel = require('../../models/user/campaign.js');
+var campaignModel = require('../../models/b2c/campaign.js');
 
 
 
@@ -46,25 +46,39 @@ exports.addCampaign = function(req, res, next){
 
 
 exports.searchCampaign = function(req, res, next){
-    var name = req.query.username;
-    var email = req.query.email;
-    var country = req.query.country;
-    var state = req.query.state;
-    var city = req.query.city;
-    var activated = req.query.user_status;
+    var validationErrors = campaignModel.searchQueryValidations(req);
 
-    var query = {
-        role: userRoleModel.roleList.distributor.id
-    };
-    if(name) query.username = name;
-    if(email) query.email = email;
-    if(country) query.country = country;
-    if(state) query.state = state;
-    if(city) query.city = city;
-    if(activated) query.activated = activated;
+    if(validationErrors){
+        return res.status(400).send( {message: validationErrors} );
+    }
+    var searchKeyword = req.query.keyword || '';
+    var activated = req.query.activated || 'all';
 
-    userModel.findQ(query).then(function(result){
-        res.status(200).send(result);
+    var query = {};
+
+    if (activated !== 'all') {
+        query.$and = [
+            { activated: activated }
+        ];
+    }
+    if (searchKeyword) {
+        var strRegex = ".*[" + searchKeyword.split('').join('][') + "].*";
+        var regex = { $regex: strRegex , $options: 'i' }; // $options : 'i' Means case insensitivity to match upper and lower cases. 不区分大小写
+
+        query.$or = [
+            { 'name': regex },
+            { 'description': regex },
+            { 'location': regex },
+            { 'matchDate': regex }
+        ];
+    }
+
+    campaignModel.find(query).sort({createdAt: -1}).execQ().then(function(result){
+        if(!result){
+            throw new Error('Cancel promise chains. Because campaign not found !');
+        }
+        return res.status(200).send(result);
+
     }).fail(function(err){
         next(err);
     }).done();

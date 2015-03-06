@@ -308,8 +308,10 @@ exports.getUserInfo = function (req, res, next){
         userResult = req.user.toObject();
     }
 
+    userResult.roleName = req.user.roleName;
+
     teamModel.findOne({ creator: userResult._id }).populate('memberList', '-password -resetPasswordToken -resetPasswordVerifyCode -emailActivateToken').execQ().then(function(resultTeam){
-        userResult.team = resultTeam;
+        userResult.team = resultTeam || [];
         res.status(200).send(userResult);
 
     }).fail(function(err){

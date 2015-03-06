@@ -274,12 +274,12 @@ apiRouter.post('/marksimos/api/admin/students/reset_password',  auth.authLoginTo
 
 
 //Facilitator manager Campaign
-apiRouter.get('/marksimos/api/admin/campaigns', auth.authLoginToken(), auth.authRole(userRoleModel.right.marksimos.campaignSingleCUD), campaignController.addCampaign);
+apiRouter.get('/marksimos/api/admin/campaigns', auth.authLoginToken(), auth.authRole(userRoleModel.right.marksimos.campaignInfoListGet), campaignController.searchCampaign);
 apiRouter.post('/marksimos/api/admin/campaigns', auth.authLoginToken(), auth.authRole(userRoleModel.right.marksimos.campaignSingleCUD), campaignController.addCampaign);
 
 
 //Facilitator manager seminars
-apiRouter.get('/marksimos/api/admin/facilitator/seminar', auth.authLoginToken(), auth.authRole(userRoleModel.right.marksimos.seminarListOfFacilitatorGet), distributorController.getSeminarOfFacilitator);
+apiRouter.get('/marksimos/api/admin/facilitator/seminar', auth.authLoginToken(), auth.authRole(userRoleModel.right.marksimos.seminarListOfFacilitatorGet), seminarController.getSeminarOfFacilitator);
 apiRouter.post('/marksimos/api/admin/seminar', auth.authLoginToken(), auth.authRole(userRoleModel.right.marksimos.seminarSingleCUD), seminarController.addSeminar);
 
 apiRouter.post('/marksimos/api/admin/assign_student_to_seminar', auth.authLoginToken(), auth.authRole(userRoleModel.right.marksimos.seminarAssignStudentCUD), seminarController.assignStudentToSeminar);
