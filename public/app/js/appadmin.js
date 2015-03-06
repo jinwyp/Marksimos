@@ -54,6 +54,7 @@
             leftmenu: 11,
             menuTabShow: [false, false, false, false, false, false, false], //从第二个false 开始第1个菜单
             seminarId: 0,
+            campaignId: 0,
             runButtonDisabled: false,
             showConfirm : false,
             currentRunSeminarId : 0
@@ -185,10 +186,9 @@
                 activated: 'all'
             },
             campaigns: [],
-            addMarkSimosSeminarToCampaign: {
-                seminar_id: 0,
-                company_id: 0,
-                email: ""
+            addSeminarToCampaign: {
+                seminarId: 0,
+                campaigId: 0
             },
 
             country: [
@@ -572,22 +572,22 @@
             }
         };
         /********************  add Marksimos Seminar Into Campaign  ********************/
-        $scope.addSeminarIntoCampaign = function(seminarid, studentemail) {
+        $scope.addSeminarIntoCampaign = function(campaignid, seminarid) {
 
-            if ($scope.data.addStudentToSeminar.company_id === 0 || angular.isUndefined(studentemail) || studentemail === "") {
-                $scope.css.seminarId = seminarid;
+            if ( angular.isUndefined(seminarid) || seminarid === "") {
+                $scope.css.campaignId = campaignid;
             }else{
-                $scope.css.seminarId = 0;
-                $scope.data.addStudentToSeminar.email = studentemail;
+                $scope.css.campaignId = 0;
+                $scope.data.addSeminarToCampaign.campaignId = campaignid;
+                $scope.data.addSeminarToCampaign.seminarId = seminarid;
 
-                Admin.addSeminarToCampaign( $scope.data.addStudentToSeminar).success(function(data, status, headers, config) {
+                Admin.addSeminarToCampaign( $scope.data.addSeminarToCampaign).success(function(data, status, headers, config) {
 
-                    app.getSeminarInit();
-                    $notification.success('Save success', 'Add Student to Seminar success');
+                    app.getCampaignInit();
+                    $notification.success('Save success', 'Add Seminar to Campaign success');
 
-                    $scope.data.addStudentToSeminar.seminar_id = 0;
-                    $scope.data.addStudentToSeminar.company_id = 0;
-                    $scope.data.addStudentToSeminar.email = "";
+                    $scope.data.addSeminarToCampaign.campaignId = 0;
+                    $scope.data.addSeminarToCampaign.seminarId = 0;
 
                 }).error(function(data, status, headers, config) {
                     console.log(data);

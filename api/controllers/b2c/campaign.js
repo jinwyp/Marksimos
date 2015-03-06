@@ -73,7 +73,7 @@ exports.searchCampaign = function(req, res, next){
         ];
     }
 
-    campaignModel.find(query).sort({createdAt: -1}).execQ().then(function(result){
+    campaignModel.find(query).populate('seminarListMarksimos').sort({createdAt: -1}).execQ().then(function(result){
         if(!result){
             throw new Error('Cancel promise chains. Because campaign not found !');
         }
@@ -95,10 +95,9 @@ exports.addMarkSimosSeminarToCampaign = function(req, res, next){
         return res.status(400).send( {message: validationErrors} );
     }
 
-
     var dataSeminar ;
-    seminarModel.findByIdQ(req.body.seminarId).then(function(resultSeminar){
 
+    seminarModel.findOne({seminarId : req.body.seminarId}).then(function(resultSeminar){
 
         if(!resultSeminar){
             throw new Error('Cancel promise chains. Because Seminar not found !');
@@ -113,7 +112,7 @@ exports.addMarkSimosSeminarToCampaign = function(req, res, next){
 
         resultCampaign.seminarListMarksimos.forEach(function(seminar){
 
-            if(seminar._id.equals(dataSeminar._id)  ){
+            if(dataSeminar._id.equals(seminar)  ){
                 throw new Error('Cancel promise chains. Because this seminar already assigned to this campaign !');
             }
         });
