@@ -56,40 +56,25 @@
 
                     <div class="row" ng-if="profile.css.curTabIdx == 0">
                         <div class="profile-detail-title">基本信息</div>
-                        <form>
+                        <form name="basicInfoForm">
                             <div class="col-md-offset-1">
                                 <!--<div class="row"><label for="name" class="col-md-3 text-right">用户名：</label><input type="text" name="name" id="name" class="col-md-7"></div>
                                 <div class="row"><label for="email" class="col-md-3 text-right">邮箱：</label><input type="text" id="email" name="email" class="col-md-7"></div>-->
-                                <div class="row form-group radio">
+                                <div class="row form-group radio" ng-class="{'has-success':basicInfoForm.gender.$dirty&&basicInfoForm.gender.$valid, 'has-error':basicInfoForm.gender.$dirty&&basicInfoForm.gender.$invalid}">
                                     <label class="col-md-3 text-right">性别：</label>
-                                    <label class="radio-inline"><input type="radio" name="gender" value="1"/>男</label>
-                                    <label class="radio-inline female"><input type="radio" name="gender" value="2"/>女</label>
+                                    <label class="radio-inline"><input type="radio" required ng-model="profile.formDatas[0].gender" name="gender" value="1"/>男</label>
+                                    <label class="radio-inline female"><input type="radio" required ng-model="profile.formDatas[0].gender" name="gender" value="2"/>女</label>
+                                    <span class="err-msg" ng-if="!profile.formDatas[0].gender&&profile.formsDatas[0].clickSubmit">请选择性别!</span>
                                 </div>
-                                <div class="row">
-                                    <lable class="col-md-3 text-right">生日：</lable>
-                                    <select name="year" id="year">
-                                        <option value="0">选择年</option>
-                                        <option value="2013">2013</option>
-                                        <option value="2014">2014</option>
-                                        <option value="2015">2015</option>
-                                    </select>
-                                    <select name="month" id="month">
-                                        <option value="0">选择月</option>
-                                        <option value="1">1月</option>
-                                        <option value="2">2月</option>
-                                        <option value="3">3月</option>
-                                    </select>
-                                    <select name="day" id="day">
-                                        <option value="0">选择日</option>
-                                        <option value="1">1日</option>
-                                        <option value="2">2日</option>
-                                        <option value="3">3日</option>
-                                    </select>
+
+                                <div class="row form-group" ng-class="{'has-error': basicInfoForm.birthday.$invalid, 'has-success':basicInfoForm.birthday.$dirty&&basicInfoForm.birthday.$valid}">
+                                    <label class="control-label col-md-3 text-right">生日：</label>
+                                    <input type="text" data-date-format="yyyy-MM-dd" data-min-date="02/10/70" data-max-date="today" data-autoclose="1" class="form-control col-md-2" ng-model="profile.formDatas[0].birthday" name="birthday" bs-datepicker>
                                 </div>
                                 <div class="row">
                                     <div class="col-md-6 col-md-offset-3 profile-button-container">
-                                        <button type="submit">保存修改</button>
-                                        <button class="cancel">取消</button>
+                                        <button ng-click="profile.clickUpdateUserInfo(basicInfoForm)" type="submit">保存修改</button>
+                                        <!--<button class="cancel">取消</button>-->
                                     </div>
                                 </div>
                             </div>
@@ -105,9 +90,9 @@
                                     <input type="text" ng-model="profile.formDatas[1].organizationOrUniversity" name="school" id="school" class="col-md-7 form-control">
                                 </div>
                                 <!--<div class="row"><label for="email" class="col-md-3 text-right">院系：</label><input type="text" id="email" name="email" class="col-md-7"></div>-->
-                                <div class="row form-group">
+                                <div class="row form-group" ng-class="{'has-error': schoolForm.dateOfEnterCollege.$invalid, 'has-success':schoolForm.dateOfEnterCollege.$dirty&&schoolForm.dateOfEnterCollege.$valid}">
                                     <label for="enterDate" class="col-md-3 text-right">入学时间：</label>
-                                    <input type="text" ng-model="profile.formDatas[1].dateOfEnterCollege" id="enterDate" name="enterDate" class="col-md-2 form-control">
+                                    <input type="text" data-date-format="yyyy-MM-dd" data-min-date="02/10/70" data-max-date="today" data-autoclose="1" ng-model="profile.formDatas[1].dateOfEnterCollege" id="dateOfEnterCollege" name="dateOfEnterCollege" class="col-md-2 form-control" bs-datepicker>
                                 </div>
                                 <div class="row form-group">
                                     <label for="degree" class="col-md-3 text-right">学历：</label>
