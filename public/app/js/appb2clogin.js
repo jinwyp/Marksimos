@@ -19,7 +19,7 @@
 
 
     /********************  Create New Module For Controllers ********************/
-    angular.module('b2clogin', ['marksimos.config', 'marksimos.commoncomponent', 'marksimos.websitecomponent', 'marksimos.model', 'marksimos.filter']);
+    angular.module('b2clogin', ['marksimos.config', 'marksimos.commoncomponent', 'marksimos.websitecomponent', 'marksimos.model', 'marksimos.filter', 'mgcrea.ngStrap']);
 
 
 
@@ -252,11 +252,12 @@
 
         function updateUserInfo(form) {
             // todo, let what css info be false
-            if (form.$dirty) {
+            if (form.$valid) {
                 var data = vm.formDatas[vm.css.curTabIdx];
+                data.clickSumbit = true;
                 Student.updateStudentB2CInfo(data).then(function() {
                     Object.keys(data).forEach(function(key) {
-                        if (key.indexOf('$') == 0) return;
+                        if (key.indexOf('$') === 0) return;
                         vm.currentUser[key] = data[key];
                     });
                     vm.css.updateSuccessInfo = true;
@@ -292,7 +293,8 @@
                     // basic form
                     vm.formDatas[0] = {
                         gender: data.gender,
-                        birthday: data.birthday
+                        birthday: data.birthday,
+                        clickSumbit: false
                     };
                     // school form
                     vm.formDatas[1] = {
@@ -305,7 +307,7 @@
                     vm.formDatas[4] = {
                         qq: data.qq
                     };
-                })
+                });
             },
             reRun : function(){
 
