@@ -118,7 +118,7 @@
                 return $http.put(apiPathB2C + 'student/password', {
                     passwordOld: passwordOld,
                     passwordNew: passwordNew
-                })
+                });
             }
 
 

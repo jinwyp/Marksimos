@@ -330,7 +330,7 @@ exports.getSeminarList = function(req, res, next){
     seminarModel.query.find({
         companyAssignment : {$elemMatch : {studentList: { $in: [email] }} },
         isInitialized :true
-    }).sort('seminarId').execQ().then(function(allSeminars){
+    }).sort({isSimulationFinished : 1 , seminarId: -1}).execQ().then(function(allSeminars){
 
         for(var i=0; i<allSeminars.length; i++){
 
