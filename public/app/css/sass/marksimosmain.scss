@@ -1198,6 +1198,7 @@ body{
             border-style: solid;
             border-color: $color_main_body_user_period_bar_border;
             background-color:$color_main_body_user_period_bar_normal;
+            list-style-type: none;
         }
 
         .start{
@@ -1240,7 +1241,7 @@ body{
     .user_chart_list{
 
         border-color: $color_main_body_user_chart_list_border;
-        height: 389px;
+        height: 396px;
 //        background-color: $color_main_body_background;
 
         .panel-heading{

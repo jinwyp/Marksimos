@@ -279,10 +279,10 @@ gulp.task('testadminrr', function() {
 gulp.task('default', ['nodemonludwik', 'watchdev']);
 
 //gulp.task('jin', ['mongo', 'browser-sync', 'nodemonjin', 'watch']);
-gulp.task('jin', [ 'compass', 'templates', 'nodemonjin', 'watchdev']);
-gulp.task('jinco', ['compass', 'templates', 'nodemonjinlocal', 'watchdev']);
+gulp.task('jin', [ 'compass', 'templates', 'minifycss', 'nodemonjin', 'watchdev']);
+gulp.task('jinco', ['compass', 'templates', 'minifycss', 'nodemonjinlocal', 'watchdev']);
 gulp.task('jinpro', ['compass', 'templates', 'minifycss', 'jscompress', 'nodemonjin', 'watch']);
-gulp.task('yuekecheng', [ 'compass', 'templates', 'nodemonyuekecheng', 'watchdev']);
+gulp.task('yuekecheng', [ 'compass', 'templates', 'minifycss',  'nodemonyuekecheng', 'watchdev']);
 
 
 

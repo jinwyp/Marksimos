@@ -912,6 +912,7 @@ body a, body button {
   border-style: solid;
   border-color: #dfe0e5;
   background-color: #edeef1;
+  list-style-type: none;
 }
 .mainbody .user_period_bar .start {
   border-radius: 15px 0 0 15px;
@@ -947,7 +948,7 @@ body a, body button {
 }
 .mainbody .user_chart_list {
   border-color: #cfd3e0;
-  height: 389px;
+  height: 396px;
 }
 .mainbody .user_chart_list .panel-heading {
   background-color: #dbe3f6;
