@@ -112,8 +112,7 @@ exports.getQuestionnaireListForAdmin = function(req, res, next) {
                 questionDic[question.email] = question;
             });
 
-            console.log(questionDic);
-            //拼接数据      
+            //拼接数据
             seminarResult.companyAssignment.forEach(function(company, index) {
                 var resultCompany = {
                     companyId : company.companyId,

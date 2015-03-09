@@ -203,6 +203,12 @@ exports.authLoginToken = function (options) {
                                         currentStudent : user,
                                         currentStudentSeminar : seminarResult
                                     };
+
+                                    // very important, after seminar finished currentPeriod is last round
+                                    if(req.gameMarksimos.currentStudentSeminar.currentPeriod > req.gameMarksimos.currentStudentSeminar.simulationSpan){
+                                        req.gameMarksimos.currentStudentSeminar.currentPeriod =  req.gameMarksimos.currentStudentSeminar.simulationSpan;
+                                    }
+
                                 }else{
                                     req.gameMarksimos = {
                                         currentStudent : false,
@@ -213,7 +219,6 @@ exports.authLoginToken = function (options) {
                                 return next();
 
                             }).fail(function(err){
-                                console.log(err);
                                 next(err);
                             }).done();
 
@@ -274,7 +279,6 @@ exports.authRole = function (permission, options) {
 
 exports.getUserInfo = function (req, res, next){
     var userResult;
-    var currentPeriod;
 
     if(req.gameMarksimos.currentStudent){
         userResult = req.gameMarksimos.currentStudent.toObject();
@@ -283,12 +287,9 @@ exports.getUserInfo = function (req, res, next){
 
         // very important, after seminar finished currentPeriod is last round
         if(userResult.currentMarksimosSeminar.currentPeriod > userResult.currentMarksimosSeminar.simulationSpan){
-            currentPeriod =  userResult.currentMarksimosSeminar.simulationSpan;
-        }else{
-            currentPeriod = userResult.currentMarksimosSeminar.currentPeriod;
+            userResult.currentMarksimosSeminar.currentPeriod =  userResult.currentMarksimosSeminar.simulationSpan;
         }
 
-        userResult.currentMarksimosSeminar.currentPeriod = currentPeriod;
         userResult.currentMarksimosSeminar.numOfCompany = userResult.currentMarksimosSeminar.companyNum;
         userResult.currentMarksimosSeminar.maxPeriodRound = userResult.currentMarksimosSeminar.simulationSpan;
 

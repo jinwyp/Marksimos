@@ -170,21 +170,16 @@ exports.getDecision = function(req, res, next){
 
     var companyId = +req.query.companyId;
 
-
     if(!seminarId || !companyId || !period){
         return res.send(403, {message: "You don't choose a seminar."});
     }
 
 
-    decisionAssembler.getDecision(seminarId, period, companyId)
-    .then(function(result){
+    decisionAssembler.getDecision(seminarId, period, companyId).then(function(result){
         res.send(result)
-    })
-    .fail(function(err){
-        logger.error(err);
-        res.send(404, {message: "get company data failed."});
-    })
-    .done();
+    }).fail(function(err){
+        next(err);
+    }).done();
 };
 
 
