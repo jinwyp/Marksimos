@@ -1000,3 +1000,29 @@ body {
   -webkit-box-shadow: #7e200b 0px 2px 4px;
   box-shadow: #7e200b 0px 2px 4px;
 }
+
+.datepicker .text-muted {
+  color: #D1D1D1 !important;
+}
+
+/*
+ * Datepicker element
+ * https://github.com/mgcrea/bootstrap-additions/blob/master/src/datepicker/datepicker.less
+ */
+.datepicker.dropdown-menu {
+  width: 250px;
+  height: 270px;
+}
+.datepicker.dropdown-menu button {
+  outline: none;
+  border: 0px;
+}
+.datepicker.dropdown-menu tbody {
+  height: 180px;
+}
+.datepicker.dropdown-menu tbody button {
+  padding: 6px;
+}
+.datepicker.dropdown-menu.datepicker-mode-1 tbody button, .datepicker.dropdown-menu.datepicker-mode-2 tbody button {
+  height: 65px;
+}
