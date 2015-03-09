@@ -1,8 +1,7 @@
 ﻿var questionnaireModel = require('../models/questionnaire.js');
 var seminarModel = require('../models/marksimos/seminar.js');
-var logger = require('../../common/logger.js');
-var config = require('../../common/config.js');
 var Q = require('q');
+
 util = require('util');
 
 
@@ -18,17 +17,16 @@ exports.getQuestionnaire = function(req, res, next) {
         return res.status(400).send( { message: "Invalid email."});
     }
 
-    var questionnaire = {
+
+    questionnaireModel.findOneQ({
         seminarId: seminarId,
         email: email
-    };
-
-    questionnaireModel.findOne(seminarId, email).then(function(result) {
+    }).then(function(result) {
         if (result) {
             return res.send(result);
         }else {
             return res.send({
-                "seminarId": seminarId.toString(),
+                "seminarId": seminarId,
                 "q_FeelAboutMarkSimos": "",
                 "q_ReasonForRecommendOrNot": "",
                 "q_WillRecommend": true,
@@ -82,15 +80,14 @@ exports.submitQuestionnaire = function(req, res, next) {
         return res.status(400).send('There have been validation errors: ' + util.inspect(errors));
     }
  
-    questionnaireModel.query.update({ seminarId: seminarId, email: email }, questionnaire, { upsert: true },
-        function(err, numAffected) {
-            if (err) {
-                var message = Array.isArray(err)
-                res.status(400).send( message);
-            } else {
-                res.status(200).send({ message: 'Update success.' });
-            }
-        });
+    questionnaireModel.update({ seminarId: seminarId, email: email }, questionnaire, { upsert: true }, function(err, numAffected) {
+        if (err) {
+            var message = Array.isArray(err)
+            res.status(400).send( message);
+        } else {
+            res.status(200).send({ message: 'Update success.' });
+        }
+    });
 };
 
 
@@ -100,8 +97,8 @@ exports.getQuestionnaireListForAdmin = function(req, res, next) {
 
     //查询数据库
     Q.all([
-        seminarModel.query.findOne({ seminarId: seminarId }).select({ 'companyAssignment': true }).exec(),
-        questionnaireModel.query.find({ seminarId: seminarId }).exec()
+        seminarModel.findOne({ seminarId: seminarId }).select({ 'companyAssignment': true }).execQ(),
+        questionnaireModel.find({ seminarId: seminarId }).execQ()
     ]).spread(function(seminarResult, questionnaireResult) {
         if (seminarResult) {
             var result = [];
@@ -140,7 +137,7 @@ exports.getQuestionnaireListForAdmin = function(req, res, next) {
             //未得到seminar，则很有可能是输入的seminarId无效
             res.status(400).send( { message: "Invalid seminarId." });
         }
-    }, function(err) {
+    }).fail(function(err){
         next(err);
     }).done();
 };

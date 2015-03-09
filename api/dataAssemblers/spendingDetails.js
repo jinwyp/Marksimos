@@ -12,7 +12,7 @@ var simulationResultModel = require('../models/marksimos/simulationResult.js');
 exports.getSpendingDetails = function(seminarId, currentPeriod, companyId){
     return Q.all([
         decisionAssembler.getDecision(seminarId, currentPeriod, companyId),
-        seminarModel.findOne({seminarId: seminarId}),
+        seminarModel.findOneQ({seminarId: seminarId}),
         simulationResultModel.findOne(seminarId, currentPeriod - 1)
     ])
     .spread(function(decision, seminar, lastPeriodResult){

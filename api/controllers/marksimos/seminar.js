@@ -73,7 +73,7 @@ exports.addSeminar = function(req, res, next){
         }
 
         //get all seminar, create the next seminar id
-        return seminarModel.find({}, {seminarId: "desc"})
+        return seminarModel.find({}).sort({seminarId: "desc"}).execQ();
     }).then(function(allSeminars){
         if(!allSeminars || allSeminars.length === 0){
             seminar.seminarId = "10000";
@@ -81,7 +81,7 @@ exports.addSeminar = function(req, res, next){
             seminar.seminarId = parseInt(allSeminars[0].seminarId) + 1;
         }
 
-        return seminarModel.insert(seminar);
+        return seminarModel.createQ(seminar);
     }).then(function(result){
         if(!result){
             throw new Error( "Cancel promise chains. save seminar to db failed.");
@@ -117,7 +117,7 @@ exports.assignStudentToSeminar = function(req, res, next){
             throw {message: "Email not exist, assign student to seminar failed."};
         }
 
-        return seminarModel.findOne({seminarId: seminarId});
+        return seminarModel.findOneQ({seminarId: seminarId});
     })
     .then(function(dbSeminar){
         if(!dbSeminar){
@@ -167,46 +167,45 @@ exports.removeStudentFromSeminar = function(req, res, next){
     }
 
 
-    seminarModel.findOne({seminarId: seminarId})
-        .then(function(dbSeminar){
-            if(!dbSeminar){
-                throw {httpStatus: 400, message: "seminar "+ seminarId + " doesn't exist."}
-            }
+    seminarModel.findOneQ({seminarId: seminarId}).then(function(dbSeminar){
+        if(!dbSeminar){
+            throw {httpStatus: 400, message: "seminar "+ seminarId + " doesn't exist."}
+        }
 
-            var companyAssignment = dbSeminar.companyAssignment;
+        var companyAssignment = dbSeminar.companyAssignment;
 
 
-            for(var i=0; i<companyAssignment.length; i++){
-                //if this student is in this company
-                if(companyAssignment[i].studentList.indexOf(email) > -1){
+        for(var i=0; i<companyAssignment.length; i++){
+            //if this student is in this company
+            if(companyAssignment[i].studentList.indexOf(email) > -1){
 
-                    for(var j=0; j<companyAssignment[i].studentList.length; j++){
-                        if(companyAssignment[i].studentList[j] === email){
-                            companyAssignment[i].studentList.splice(j, 1);
-                        }
+                for(var j=0; j<companyAssignment[i].studentList.length; j++){
+                    if(companyAssignment[i].studentList[j] === email){
+                        companyAssignment[i].studentList.splice(j, 1);
                     }
                 }
             }
+        }
 
 
-            return seminarModel.update({seminarId: seminarId}, {
-                companyAssignment: companyAssignment
-            });
-        })
-        .then(function(numAffected){
-            if(numAffected!==1){
-                return res.send({message: "there's error during update seminar."});
-            }
-            return res.send({message: "remove student from seminar success."})
-        })
-        .fail(function(err){
-            logger.error(err);
-            if(err.httpStatus){
-                return res.send(err.httpStatus, {message: err.message});
-            }
-            return res.send(500, {message: "remove student from seminar failed."})
-        })
-        .done();
+        return seminarModel.update({seminarId: seminarId}, {
+            companyAssignment: companyAssignment
+        });
+    })
+    .then(function(numAffected){
+        if(numAffected!==1){
+            return res.send({message: "there's error during update seminar."});
+        }
+        return res.send({message: "remove student from seminar success."})
+    })
+    .fail(function(err){
+        logger.error(err);
+        if(err.httpStatus){
+            return res.send(err.httpStatus, {message: err.message});
+        }
+        return res.send(500, {message: "remove student from seminar failed."})
+    })
+    .done();
 };
 
 
@@ -240,7 +239,7 @@ exports.getSeminarOfFacilitator = function(req, res, next){
         ];
     }
 
-    seminarModel.find(query, {seminarId:-1}).then(function(allSeminars){
+    seminarModel.find(query).sort({seminarId:-1}).execQ().then(function(allSeminars){
 
         // 处理兼容老版本
         if(allSeminars.length > 0 ){
@@ -294,22 +293,19 @@ exports.seminarInfoForFacilitator = function(req, res, next){
         return res.send(400, {message: "Invalid seminar_id"});
     }
 
-    seminarModel.findOne({seminarId: seminarId})
-        .then(function(dbSeminar){
-            if(!dbSeminar){
-                return res.send(400, {message: "seminar " + seminarId + " doesn't exist."});
-            }
+    seminarModel.findOneQ({seminarId: seminarId}).then(function(dbSeminar){
+        if(!dbSeminar){
+            return res.send(400, {message: "seminar " + seminarId + " doesn't exist."});
+        }
 
-            return res.render('marksimosadmin/adminmarksimosreport.ejs',{
-                title : 'Admin | Report',
-                seminarId: seminarId
-            });
-        })
-        .fail(function(err){
-            logger.error(err);
-            return res.send(500, {message: "choose seminar fails."})
-        })
-        .done();
+        return res.render('marksimosadmin/adminmarksimosreport.ejs',{
+            title : 'Admin | Report',
+            seminarId: seminarId
+        });
+    }).fail(function(err){
+        logger.error(err);
+        return res.send(500, {message: "choose seminar fails."})
+    }).done();
 
 };
 
@@ -327,7 +323,7 @@ exports.getSeminarList = function(req, res, next){
     var email = req.user.email;
     var assignedSeminars = [];
 
-    seminarModel.query.find({
+    seminarModel.find({
         companyAssignment : {$elemMatch : {studentList: { $in: [email] }} },
         isInitialized :true
     }).sort({isSimulationFinished : 1 , seminarId: -1}).execQ().then(function(allSeminars){
@@ -369,7 +365,7 @@ exports.chooseSeminarForStudent = function(req, res, next){
         return res.status(400).send('There have been validation errors: ' + util.inspect(errors), 400);
     }
 
-    seminarModel.query.findOneQ({seminarId: seminarId}).then(function(dbSeminar){
+    seminarModel.findOneQ({seminarId: seminarId}).then(function(dbSeminar){
         if(!dbSeminar){
             return res.status(400).send( {message: "seminar " + seminarId + " doesn't exist."});
         }else{

@@ -66,8 +66,7 @@ exports.init = function(req, res, next) {
                 return res.send(400, {message: "seminarId cannot be empty."});
             }
 
-            seminarModel.findOne({seminarId: seminarId})
-            .then(function(dbSeminar){
+            seminarModel.findOneQ({seminarId: seminarId}).then(function(dbSeminar){
                 if(!dbSeminar){
                     status = 'active';
                     throw {message: "Cancel promise chains. Because seminar doesn't exist."}
@@ -217,7 +216,7 @@ exports.runSimulation = function(){
             }
 
             //check if this seminar exists
-            seminarModel.findOne({
+            seminarModel.findOneQ({
                 seminarId: seminarId
             })
             .then(function(dbSeminar){
@@ -580,7 +579,7 @@ function initChartData(seminarId, allResults){
     var period = allResults[allResults.length-1].period + 1;
 
     return Q.all([
-        seminarModel.findOne({seminarId: seminarId}),
+        seminarModel.findOneQ({seminarId: seminarId}),
         //get exogenous of period:0, FMCG and GENERIC market
         cgiapi.getExogenous(period)
     ])

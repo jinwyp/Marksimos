@@ -196,7 +196,7 @@ exports.authLoginToken = function (options) {
                             req.user = user;
 
                             // 同时查询改用户当前所玩的Seminar
-                            seminarModel.query.findSeminarByUserId(user.id).then(function(seminarResult){
+                            seminarModel.findSeminarByUserId(user.id).then(function(seminarResult){
                                 if(seminarResult){
 
                                     req.gameMarksimos = {

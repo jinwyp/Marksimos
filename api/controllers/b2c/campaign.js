@@ -97,7 +97,7 @@ exports.addMarkSimosSeminarToCampaign = function(req, res, next){
 
     var dataSeminar ;
 
-    seminarModel.findOne({seminarId : req.body.seminarId}).then(function(resultSeminar){
+    seminarModel.findOneQ({seminarId : req.body.seminarId}).then(function(resultSeminar){
 
         if(!resultSeminar){
             throw new Error('Cancel promise chains. Because Seminar not found !');
