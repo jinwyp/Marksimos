@@ -137,7 +137,7 @@ exports.assignStudentToSeminar = function(req, res, next){
 
         //if this student has not been added to this seminar, add it
         if(!isStudentAssignedToSeminar){
-            return seminarModel.update({ 'seminarId': seminarId, 'companyAssignment.companyId': companyId }, {
+            return seminarModel.updateQ({ 'seminarId': seminarId, 'companyAssignment.companyId': companyId }, {
                 '$addToSet': { 'companyAssignment.$.studentList': email }
             });
         }
@@ -150,6 +150,7 @@ exports.assignStudentToSeminar = function(req, res, next){
         return res.send({message: "assign student to seminar success."})
     }).fail(function(err){
         next (err);
+            console.log(err);
     }).done();
 };
 
@@ -188,7 +189,7 @@ exports.removeStudentFromSeminar = function(req, res, next){
         }
 
 
-        return seminarModel.update({seminarId: seminarId}, {
+        return seminarModel.updateQ({seminarId: seminarId}, {
             companyAssignment: companyAssignment
         });
     })
@@ -270,7 +271,7 @@ exports.getSeminarOfFacilitator = function(req, res, next){
 
                         }
 
-                        seminarModel.update({seminarId: seminarOld.seminarId}, { $set: { companyAssignment: companyList }}).then(function(result){
+                        seminarModel.updateQ({seminarId: seminarOld.seminarId}, { $set: { companyAssignment: companyList }}).then(function(result){
                         }).done();
 
                     }

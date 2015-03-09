@@ -71,22 +71,6 @@ seminarSchema.statics.findSeminarByUserId = function (userid) {
 };
 
 
-seminarSchema.statics.update = function(query, seminar){
-    if(!mongoose.connection.readyState){
-        throw new Error("mongoose is not connected.");
-    }
-
-    var deferred = Q.defer();
-    Seminar.update(query, seminar)
-        .exec(function(err, numAffected){
-            if(err){
-                deferred.reject(err);
-            }else{
-                deferred.resolve(numAffected);
-            }
-        });
-    return deferred.promise;
-};
 
 
 

@@ -139,7 +139,7 @@ exports.init = function(req, res, next) {
 
                 })
                 .then(function(){
-                    return seminarModel.update({seminarId: seminarId}, {
+                    return seminarModel.updateQ({seminarId: seminarId}, {
                         isInitialized: true
                     })
                 })
@@ -322,7 +322,7 @@ exports.runSimulation = function(){
                             if(dbSeminar.currentPeriod < dbSeminar.simulationSpan){
                                 //after simulation success, set currentPeriod to next period, only when goingToNewPeriod = true
                                 if(goingToNewPeriod){
-                                    return seminarModel.update({seminarId: seminarId}, {
+                                    return seminarModel.updateQ({seminarId: seminarId}, {
                                         currentPeriod: dbSeminar.currentPeriod + 1
                                     })
                                     .then(function(numAffected){
@@ -338,7 +338,7 @@ exports.runSimulation = function(){
 
                             }else if(dbSeminar.currentPeriod = dbSeminar.simulationSpan){
                                 if(goingToNewPeriod){
-                                    return seminarModel.update({seminarId: seminarId}, {
+                                    return seminarModel.updateQ({seminarId: seminarId}, {
                                         isSimulationFinished : true,
                                         currentPeriod       : dbSeminar.currentPeriod + 1
                                     }).then(function(numAffected){
