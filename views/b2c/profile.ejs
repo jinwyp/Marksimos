@@ -7,14 +7,14 @@
 
 <div ng-controller="profileController as profile" class="container-fluid main">
     <div class="row">
-        <div class="col-md-7 col-md-offset-2 profile-content">
+        <div class="col-md-7 col-md-offset-2 profile-content" ng-cloak>
             <header class="row">
                 <div class="banner"></div>
                 <div class="user-info">
                     <img src="/app/css/images/profile_avatar_1.png" class="profile-head"/>
                     <div class="text-info">
-                        <div class="profile-username">Iron Man</div>
-                        <div class="profile-school-name">Stark Industries</div>
+                        <div class="profile-username">{{profile.currentUser.username}}</div>
+                        <div class="profile-school-name">{{profile.currentUser.organizationOrUniversity}}</div>
                     </div>
                 </div>
                 <nav class="col-md-6 col-md-offset-2">
@@ -51,22 +51,22 @@
                         </ul>
                     </nav>
                 </aside>
-                <article class="col-md-8 profile-detail" ng-cloak>
+                <article class="col-md-8 profile-detail">
                     <div class="profile-detail-tip row"><span>请选择下方要修改的项目进行编辑</span><button class="done-button">完成修改</button></div>
 
                     <div class="row" ng-if="profile.css.curTabIdx == 0">
                         <div class="profile-detail-title">基本信息</div>
                         <form>
                             <div class="col-md-offset-1">
-                                <div class="row"><label for="name" class="col-md-3">用户名：</label><input type="text" name="name" id="name" class="col-md-7"></div>
-                                <div class="row"><label for="email" class="col-md-3">邮箱：</label><input type="text" id="email" name="email" class="col-md-7"></div>
-                                <div class="row">
-                                    <label class="col-md-3">性别：</label>
+                                <!--<div class="row"><label for="name" class="col-md-3 text-right">用户名：</label><input type="text" name="name" id="name" class="col-md-7"></div>
+                                <div class="row"><label for="email" class="col-md-3 text-right">邮箱：</label><input type="text" id="email" name="email" class="col-md-7"></div>-->
+                                <div class="row form-group radio">
+                                    <label class="col-md-3 text-right">性别：</label>
                                     <label class="radio-inline"><input type="radio" name="gender" value="1"/>男</label>
                                     <label class="radio-inline female"><input type="radio" name="gender" value="2"/>女</label>
                                 </div>
                                 <div class="row">
-                                    <lable class="col-md-3">生日：</lable>
+                                    <lable class="col-md-3 text-right">生日：</lable>
                                     <select name="year" id="year">
                                         <option value="0">选择年</option>
                                         <option value="2013">2013</option>
@@ -98,19 +98,28 @@
 
                     <div class="row" ng-if="profile.css.curTabIdx == 1">
                         <div class="profile-detail-title">学校信息</div>
-                        <form>
+                        <form name="schoolForm">
                             <div class="col-md-offset-1">
-                                <div class="row"><label for="name" class="col-md-3">大学：</label><input type="text" name="name" id="name" class="col-md-7"></div>
-                                <div class="row"><label for="email" class="col-md-3">院系：</label><input type="text" id="email" name="email" class="col-md-7"></div>
-                                <div class="row"><label for="email" class="col-md-3">入学时间：</label><input type="text" id="email" name="email" class="col-md-2"></div>
-                                <div class="row">
-                                    <lable class="col-md-3">学历：</lable><input type="text" id="email" name="email" class="col-md-2">
-                                    <lable class="col-md-3">学年：</lable><input type="text" id="email" name="email" class="col-md-2">
+                                <div class="row form-group">
+                                    <label for="school" class="col-md-3 text-right">大学：</label>
+                                    <input type="text" ng-model="profile.formDatas[1].organizationOrUniversity" name="school" id="school" class="col-md-7 form-control">
+                                </div>
+                                <!--<div class="row"><label for="email" class="col-md-3 text-right">院系：</label><input type="text" id="email" name="email" class="col-md-7"></div>-->
+                                <div class="row form-group">
+                                    <label for="enterDate" class="col-md-3 text-right">入学时间：</label>
+                                    <input type="text" ng-model="profile.formDatas[1].dateOfEnterCollege" id="enterDate" name="enterDate" class="col-md-2 form-control">
+                                </div>
+                                <div class="row form-group">
+                                    <label for="degree" class="col-md-3 text-right">学历：</label>
+                                    <input type="text" ng-model="profile.formDatas[1].majorsDegree" id="degree" name="degree" class="col-md-2 form-control">
+                                    <!--<lable class="col-md-3 text-right">学年：</lable><input type="text" id="email" name="email" class="col-md-2">-->
                                 </div>
                                 <div class="row">
                                     <div class="col-md-6 col-md-offset-3 profile-button-container">
-                                        <button type="submit">保存修改</button>
+                                        <button ng-click="profile.clickUpdateUserInfo(schoolForm)" type="submit">保存修改</button>
                                         <button class="cancel">取消</button>
+                                        <span ng-if="profile.css.updateSuccessInfo" class="success-msg">保存成功！</span>
+                                        <span ng-if="profile.css.updateFailedInfo" class="success-msg">保存失败！</span>
                                     </div>
                                 </div>
                             </div>
@@ -122,7 +131,7 @@
                         <form name="teamNameForm" class="none-bottom-border" ng-submit="profile.clickUpdateTeamName(teamNameForm)">
                             <div class="row col-md-offset-1">
                                 <div class="row form-group team-name" ng-class="{'has-success':teamNameForm.teamName.$dirty&&teamNameForm.teamName.$valid, 'has-error':teamNameForm.teamName.$dirty&&teamNameForm.teamName.$invalid}" >
-                                    <label class="col-md-3 team-label" for="teamName">战队名称：</label>
+                                    <label class="col-md-3 text-right team-label" for="teamName">战队名称：</label>
                                     <input class="form-control col-md-6" required ng-disabled="profile.css.updateTeamNameDisabled" ng-model="profile.currentUser.team.name" type="text" id="teamName" name="teamName">
                                     <span class="err-msg" ng-if="teamNameForm.teamName.$dirty&&teamNameForm.teamName.$error.required">请输入正确的战队名称!</span>
                                     <button ng-if="profile.css.updateTeamNameDisabled" class="done col-md-3">修改</button>
@@ -133,13 +142,13 @@
                         <form name="teamForm">
                             <div class="row col-md-offset-1">
                                 <div class="row" ng-repeat="member in profile.currentUser.team.memberList">
-                                    <label class="col-md-3 team-label">队员{{$index + 1}}：</label>
+                                    <label class="col-md-3 team-label text-right">队员{{$index + 1}}：</label>
                                     <span class="col-md-6">{{member.username}}</span>
                                     <input type="button" ng-click="profile.clickRemoveStudentToTeam(member._id)" class="remove-button col-md-3" value="删除">
                                 </div>
 
                                 <div class="row form-group" ng-class="{'has-success':teamForm.name.$dirty&&teamForm.name.$valid, 'has-error':teamForm.name.$dirty&&teamForm.name.$invalid}">
-                                    <label for="name" class="col-md-3 team-label">新队员：</label>
+                                    <label for="name" class="col-md-3 text-right team-label">新队员：</label>
                                     <input placeholder="用户名/邮箱" ng-model="profile.newUser" required type="text" name="name" id="name" class="form-control col-md-6">
                                     <span class="err-msg" ng-if="teamForm.name.$dirty&&teamForm.name.$error.required">请输入正确的用户名!</span>
                                     <button type="submit" ng-click="profile.clickAddStudentToTeam(teamForm)" class="add-button col-md-3">增加</button>
@@ -162,8 +171,8 @@
                                 <div class="row form-group" ng-class="{'has-success':securityInfoForm.newPassword.$dirty&&securityInfoForm.newPassword.$valid, 'has-error':securityInfoForm.newPassword.$dirty&&(securityInfoForm.newPassword.$invalid||profile.currentUser.oldPassword==profile.currentUser.newPassword)}">
                                     <label for="newPassword" class="col-md-3">新密码：</label>
                                     <input type="password" required ng-minlength="6" ng-maxlength="20" ng-model="profile.currentUser.newPassword" id="newPassword" name="newPassword" class="col-md-5 form-control">
-                                    <span class="err-msg" ng-if="securityInfoForm.newPassword.$dirty&&securityInfoForm.newPassword.$error.required">请输入新密码 6-20个字符!</span>
-                                    <span class="err-msg" ng-if="securityInfoForm.newPassword.$dirty&&!securityInfoForm.newPassword.$error.required&&(profile.currentUser.oldPassword==profile.currentUser.newPassword)">新密码不能与老密码相同!</span>
+                                    <span class="err-msg" ng-if="securityInfoForm.newPassword.$dirty&&securityInfoForm.newPassword.$invalid">请输入新密码 6-20个字符!</span>
+                                    <span class="err-msg" ng-if="securityInfoForm.newPassword.$dirty&&!securityInfoForm.newPassword.$error.required&&(profile.currentUser.oldPassword==profile.currentUser.newPassword&&profile.currentUser.newPassword)">新密码不能与老密码相同!</span>
                                 </div>
                                 <div class="row form-group" ng-class="{'has-success':securityInfoForm.rePassword.$dirty&&securityInfoForm.rePassword.$valid, 'has-error':securityInfoForm.rePassword.$dirty&&(securityInfoForm.rePassword.$invalid||profile.currentUser.rePassword!=profile.currentUser.newPassword)}">
                                     <label for="rePassword" class="col-md-3">再输入密码:</label>
@@ -174,6 +183,8 @@
                                 <div class="row">
                                     <div class="col-md-6 col-md-offset-3 profile-button-container">
                                         <button type="submit" ng-click="profile.clickUpdatePassword(securityInfoForm)">保存修改</button>
+                                        <span ng-if="profile.css.updatePasswordSuccessInfo" class="success-msg">保存成功！</span>
+                                        <span ng-if="profile.css.updatePasswordFailedInfo" class="success-msg">保存失败！</span>
                                     </div>
                                 </div>
                             </div>
@@ -186,7 +197,7 @@
                             <div class="col-md-offset-1">
                                 <div class="row form-group" ng-class="{'has-success':contactForm.qq.$dirty&&contactForm.qq.$valid, 'has-error':contactForm.qq.$dirty&&contactForm.qq.$invalid}" >
                                     <label for="qq" class="col-md-3 profile-underline">QQ ID:</label>
-                                    <input required ng-model="profile.currentUser.qq" type="text" id="qq" name="qq" class="form-control col-md-5">
+                                    <input required ng-model="profile.formDatas[4].qq" type="text" id="qq" name="qq" class="form-control col-md-5">
                                     <span class="err-msg" ng-if="contactForm.qq.$dirty&&contactForm.qq.$error.required">请输入正确的qq!</span>
                                     <span class="err-msg" ng-if="profile.css.updateSuccess">保存成功!</span>
                                 </div>

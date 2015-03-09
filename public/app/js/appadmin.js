@@ -54,6 +54,7 @@
             leftmenu: 11,
             menuTabShow: [false, false, false, false, false, false, false], //从第二个false 开始第1个菜单
             seminarId: 0,
+            campaignId: 0,
             runButtonDisabled: false,
             showConfirm : false,
             currentRunSeminarId : 0
@@ -179,6 +180,15 @@
                     {value : 1, text : 'Active'},
                     {value : 0, text : 'Disable'}
                 ]
+            },
+            searchCampaign: {
+                keyword: '',
+                activated: 'all'
+            },
+            campaigns: [],
+            addSeminarToCampaign: {
+                seminarId: 0,
+                campaigId: 0
             },
 
             country: [
@@ -366,6 +376,7 @@
                         // Role Facilitator
                         app.getStudentsInit();
                         app.getSeminarInit();
+                        app.getCampaignInit();
                         $scope.css.menuTabShow = [false, true, false, false, true, true, true];
                     }
 
@@ -403,6 +414,15 @@
                 Admin.getSeminars().success(function(data, status, headers, config) {
                     $scope.data.seminars = data;
                     
+                }).error(function(data, status, headers, config) {
+                    console.log(data);
+                });
+            },
+
+            getCampaignInit: function() {
+                Admin.getCampaigns().success(function(data, status, headers, config) {
+                    $scope.data.campaigns = data;
+
                 }).error(function(data, status, headers, config) {
                     console.log(data);
                 });
@@ -523,14 +543,25 @@
         };
 
 
+        /********************  Search Campaign  ********************/
+        $scope.searchCampaign = function(form) {
+            if (form.$valid) {
+                console.log($scope.data.searchCampaign);
+                Admin.getCampaigns($scope.data.searchCampaign).success(function(data, status, headers, config) {
+                    $scope.data.campaigns = data;
+
+                }).error(function(data, status, headers, config) {
+                    $notification.error('Failed', data.message);
+                });
+            }
+        };
         /********************  Create New Campaign  ********************/
         $scope.createNewCampaign = function(form) {
             if (form.$valid) {
-                console.log($scope.data.newCampaign);
                 Admin.addCampaign($scope.data.newCampaign).success(function(data, status, headers, config) {
 
-                    //app.getCampaignInit();
-                    //$scope.css.leftmenu = 61;
+                    app.getCampaignInit();
+                    $scope.css.leftmenu = 61;
 
                     $notification.success('Save success', 'Create Campaign success');
 
@@ -540,6 +571,31 @@
                 });
             }
         };
+        /********************  add Marksimos Seminar Into Campaign  ********************/
+        $scope.addSeminarIntoCampaign = function(campaignid, seminarid) {
+
+            if ( angular.isUndefined(seminarid) || seminarid === "") {
+                $scope.css.campaignId = campaignid;
+            }else{
+                $scope.css.campaignId = 0;
+                $scope.data.addSeminarToCampaign.campaignId = campaignid;
+                $scope.data.addSeminarToCampaign.seminarId = seminarid;
+
+                Admin.addSeminarToCampaign( $scope.data.addSeminarToCampaign).success(function(data, status, headers, config) {
+
+                    app.getCampaignInit();
+                    $notification.success('Save success', 'Add Seminar to Campaign success');
+
+                    $scope.data.addSeminarToCampaign.campaignId = 0;
+                    $scope.data.addSeminarToCampaign.seminarId = 0;
+
+                }).error(function(data, status, headers, config) {
+                    console.log(data);
+                    $notification.error('Failed', data.message);
+                });
+            }
+        };
+
 
 
         /********************  搜索 Seminars  ********************/
@@ -723,10 +779,9 @@
                 data: [],
                 showScaled: true
             },
-            questionnaire: {
-                data: [],
-                currentQuestionnaire:null
-            },
+            questionnaireQuestion: {},
+            questionnaireList: [],
+            currentQuestionnaire : null,
 
             //A1 Company Status
             tableA1CompanyStatus: {
@@ -1396,23 +1451,24 @@
             },
             loadingQuestionnaireData: function() {
                 Admin.getQuestionnaire($scope.css.currentSeminarId).success(function(data, status, headers, config) {
-                    $scope.data.questionnaire.data = data;
-                    if (data[0].studentList.length) {
-                        $scope.data.questionnaire.currentQuestionnaire = data[0].studentList[0].questionnaire;
-                    }                    
-                    $scope.data.questionnaire.radio_OverallSatisfactionWithThePrograms = {
+                    $scope.data.questionnaireList = data;
+                    if (data[0].studentList.length > 0) {
+                        $scope.data.currentQuestionnaire = data[0].studentList[0].questionnaire;
+                    }
+
+                    $scope.data.questionnaireQuestion.radio_OverallSatisfactionWithThePrograms = {
                         info: ['ChallengeStrategicThinkingAbility', 'DevelopAnIntegratedPerspective', 'TestPersonalAbilityOfBalancingRisks', 'ChallengeLeadershipAndTeamworkAbility', 'ChallengeAnalysisAndDecisionMakingAbility', 'SimulationInteresting']
                     };
-                    $scope.data.questionnaire.radio_TeachingTeams = {
+                    $scope.data.questionnaireQuestion.radio_TeachingTeams = {
                         info: ['FeedbackOnSimulationDecisions', 'ExpandingViewAndInspireThinking', 'Lectures']
                     };
-                    $scope.data.questionnaire.radio_Products = {
+                    $scope.data.questionnaireQuestion.radio_Products = {
                         info: ['OverallProductUsageExperience', 'UserInterfaceExperience', 'EaseOfNavigation', 'ClarityOfWordsUsed']
                     };
-                    $scope.data.questionnaire.radio_TeachingSupports = {
+                    $scope.data.questionnaireQuestion.radio_TeachingSupports = {
                         info: ['Helpfulness', 'QualityOfTechnicalSupport']
                     };
-                    $scope.data.questionnaire.radio_MostBenefits = {
+                    $scope.data.questionnaireQuestion.radio_MostBenefits = {
                         info: ["JoinProgram", "CompanyInHouse", "OpenClass"]
                     };
                 });

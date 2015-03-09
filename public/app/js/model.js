@@ -118,7 +118,7 @@
                 return $http.put(apiPathB2C + 'student/password', {
                     passwordOld: passwordOld,
                     passwordNew: passwordNew
-                })
+                });
             }
 
 
@@ -1220,6 +1220,9 @@
             },
             addCampaign : function(postdata){
                 return $http.post(apiAdminPath + 'campaigns', postdata);
+            },
+            addSeminarToCampaign : function(postdata){
+                return $http.post(apiAdminPath + 'campaigns/seminar', postdata);
             },
 
             getSeminars : function(urlparams){

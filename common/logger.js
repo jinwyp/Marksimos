@@ -10,7 +10,6 @@ exports.error = function(err){
     if(err.message){
         winston.info("System Error: ",  err.message);
     }
-    
     if(err.stack){
         winston.info(err.stack)
     }

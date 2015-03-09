@@ -105,7 +105,7 @@ function getFinalScore(seminarId) {
 
     return Q.all([
         simulationResult.findAll(seminarId),
-        seminarModel.findOne({ seminarId: seminarId })
+        seminarModel.findOneQ({ seminarId: seminarId })
     ]).spread(function(requestedPeriodResultArr, seminarInfo) {
         var resultArr = {
             scoreData: [],

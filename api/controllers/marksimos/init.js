@@ -66,8 +66,7 @@ exports.init = function(req, res, next) {
                 return res.send(400, {message: "seminarId cannot be empty."});
             }
 
-            seminarModel.findOne({seminarId: seminarId})
-            .then(function(dbSeminar){
+            seminarModel.findOneQ({seminarId: seminarId}).then(function(dbSeminar){
                 if(!dbSeminar){
                     status = 'active';
                     throw {message: "Cancel promise chains. Because seminar doesn't exist."}
@@ -140,7 +139,7 @@ exports.init = function(req, res, next) {
 
                 })
                 .then(function(){
-                    return seminarModel.update({seminarId: seminarId}, {
+                    return seminarModel.updateQ({seminarId: seminarId}, {
                         isInitialized: true
                     })
                 })
@@ -217,7 +216,7 @@ exports.runSimulation = function(){
             }
 
             //check if this seminar exists
-            seminarModel.findOne({
+            seminarModel.findOneQ({
                 seminarId: seminarId
             })
             .then(function(dbSeminar){
@@ -323,7 +322,7 @@ exports.runSimulation = function(){
                             if(dbSeminar.currentPeriod < dbSeminar.simulationSpan){
                                 //after simulation success, set currentPeriod to next period, only when goingToNewPeriod = true
                                 if(goingToNewPeriod){
-                                    return seminarModel.update({seminarId: seminarId}, {
+                                    return seminarModel.updateQ({seminarId: seminarId}, {
                                         currentPeriod: dbSeminar.currentPeriod + 1
                                     })
                                     .then(function(numAffected){
@@ -339,7 +338,7 @@ exports.runSimulation = function(){
 
                             }else if(dbSeminar.currentPeriod = dbSeminar.simulationSpan){
                                 if(goingToNewPeriod){
-                                    return seminarModel.update({seminarId: seminarId}, {
+                                    return seminarModel.updateQ({seminarId: seminarId}, {
                                         isSimulationFinished : true,
                                         currentPeriod       : dbSeminar.currentPeriod + 1
                                     }).then(function(numAffected){
@@ -580,7 +579,7 @@ function initChartData(seminarId, allResults){
     var period = allResults[allResults.length-1].period + 1;
 
     return Q.all([
-        seminarModel.findOne({seminarId: seminarId}),
+        seminarModel.findOneQ({seminarId: seminarId}),
         //get exogenous of period:0, FMCG and GENERIC market
         cgiapi.getExogenous(period)
     ])

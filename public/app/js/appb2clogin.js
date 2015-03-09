@@ -185,13 +185,14 @@
             curTabIdx: 0,
             updateTeamNameDisabled: true,
             updateTeamNameFailedInfo: false,
-            updateSuccess: false,
+            updateSuccessInfo: false,
+            updateFailedInfo: false,
             updatePasswordSuccessInfo: false,
             updatePasswordFailedInfo: false
         };
 
-        vm.currentUser = {
-        };
+        vm.currentUser = {};
+        vm.formDatas = [];
 
         /**********  Event Center  **********/
         vm.clickAddStudentToTeam = addStudentToTeam;
@@ -207,13 +208,13 @@
 
             if (form.$valid) {
                 Student.addStudentToTeam({username: vm.newUser}).then(function(result) {
-                    app.getUserInfo()
+                    return app.getUserInfo();
                 }).catch(function(err) {
                     form.$invalid = true;
                     form.$valid = false;
 
                     vm.css.addFailedInfo = true;
-                })
+                });
             }
         }
 
@@ -225,8 +226,8 @@
                         members.splice(i, 1);
                         return true;
                     }
-                })
-            })
+                });
+            });
         }
 
         function updateTeamName(form) {
@@ -251,15 +252,23 @@
 
         function updateUserInfo(form) {
             // todo, let what css info be false
-            if (form.$valid) {
-                Student.updateStudentB2CInfo(vm.currentUser).then(function(result) {
-                    vm.css.updateSuccess = true;
+            if (form.$dirty) {
+                var data = vm.formDatas[vm.css.curTabIdx];
+                Student.updateStudentB2CInfo(data).then(function() {
+                    Object.keys(data).forEach(function(key) {
+                        if (key.indexOf('$') == 0) return;
+                        vm.currentUser[key] = data[key];
+                    });
+                    vm.css.updateSuccessInfo = true;
                     $timeout(function() {
-                        vm.css.updateSuccess = false;
+                        vm.css.updateSuccessInfo = false;
                     }, 1500);
                 }).catch(function(err) {
-                    //todo
-                })
+                    vm.css.updateFailedInfo = true;
+                    $timeout(function() {
+                        vm.css.updateFailedInfo = false;
+                    }, 1500);
+                });
             }
         }
 
@@ -268,35 +277,51 @@
             vm.css.updatePasswordFailedInfo = false;
 
             if (form.$valid) {
-                Student.updatePassword(vm.currentUser.newPassword, vm.currentUser.oldPassword).then(function(result) {
+                Student.updatePassword(vm.currentUser.oldPassword, vm.currentUser.newPassword).then(function(result) {
                     vm.css.updatePasswordSuccessInfo = true;
                 }).catch(function(err) {
-                    vm.css.updatePasswordFaildInfo = true;
-                })
+                    vm.css.updatePasswordFailedInfo = true;
+                });
             }
         }
 
 
-        var app = {};
-        app = {
+        var app = {
             init : function(){
-                this.getUserInfo()
+                this.getUserInfo().then(function(data) {
+                    // basic form
+                    vm.formDatas[0] = {
+                        gender: data.gender,
+                        birthday: data.birthday
+                    };
+                    // school form
+                    vm.formDatas[1] = {
+                        organizationOrUniversity: data.organizationOrUniversity,
+                        dateOfEnterCollege: data.dateOfEnterCollege,
+                        majorsDegree: data.majorsDegree
+                    };
+                    vm.formDatas[2] = vm.formDatas[3] = null;
+                    // contact form
+                    vm.formDatas[4] = {
+                        qq: data.qq
+                    };
+                })
             },
             reRun : function(){
 
             },
             getUserInfo : function(){
-                Student.getStudent().then(function(result) {
-                    vm.currentUser = result.data;
+                return Student.getStudent().then(function(result) {
+                    return vm.currentUser = result.data;
                 }).catch(function(err) {
                     console.log('load student info failed');
-                })
+                });
             }
         };
 
         app.init();
 
-    }])
+    }]);
 
 
 

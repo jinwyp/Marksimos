@@ -64,6 +64,25 @@ campaignSchema.statics.updateValidations = function(req){
 
 };
 
+
+campaignSchema.statics.searchQueryValidations = function(req){
+
+    req.checkQuery('keyword', 'Campaign name should be 2-500 characters').optional().len(2, 500);
+    req.checkQuery('activated', 'Campaign activated should Boolean true or false').optional();
+
+    return req.validationErrors();
+
+};
+
+campaignSchema.statics.addSeminarValidations = function(req){
+
+    req.assert('seminarId', 'Seminar ID should be 5-9 characters').notEmpty().len(5, 9);
+    req.assert('campaignId', 'Campaign ID should be 24 characters').notEmpty().len(24, 24);
+
+    return req.validationErrors();
+
+};
+
 /**
  * Methods
  */

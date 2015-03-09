@@ -196,13 +196,19 @@ exports.authLoginToken = function (options) {
                             req.user = user;
 
                             // 同时查询改用户当前所玩的Seminar
-                            seminarModel.query.findSeminarByUserId(user.id).then(function(seminarResult){
+                            seminarModel.findSeminarByUserId(user.id).then(function(seminarResult){
                                 if(seminarResult){
 
                                     req.gameMarksimos = {
                                         currentStudent : user,
                                         currentStudentSeminar : seminarResult
                                     };
+
+                                    // very important, after seminar finished currentPeriod is last round
+                                    if(req.gameMarksimos.currentStudentSeminar.currentPeriod > req.gameMarksimos.currentStudentSeminar.simulationSpan){
+                                        req.gameMarksimos.currentStudentSeminar.currentPeriod =  req.gameMarksimos.currentStudentSeminar.simulationSpan;
+                                    }
+
                                 }else{
                                     req.gameMarksimos = {
                                         currentStudent : false,
@@ -213,7 +219,6 @@ exports.authLoginToken = function (options) {
                                 return next();
 
                             }).fail(function(err){
-                                console.log(err);
                                 next(err);
                             }).done();
 
@@ -274,7 +279,6 @@ exports.authRole = function (permission, options) {
 
 exports.getUserInfo = function (req, res, next){
     var userResult;
-    var currentPeriod;
 
     if(req.gameMarksimos.currentStudent){
         userResult = req.gameMarksimos.currentStudent.toObject();
@@ -283,12 +287,9 @@ exports.getUserInfo = function (req, res, next){
 
         // very important, after seminar finished currentPeriod is last round
         if(userResult.currentMarksimosSeminar.currentPeriod > userResult.currentMarksimosSeminar.simulationSpan){
-            currentPeriod =  userResult.currentMarksimosSeminar.simulationSpan;
-        }else{
-            currentPeriod = userResult.currentMarksimosSeminar.currentPeriod;
+            userResult.currentMarksimosSeminar.currentPeriod =  userResult.currentMarksimosSeminar.simulationSpan;
         }
 
-        userResult.currentMarksimosSeminar.currentPeriod = currentPeriod;
         userResult.currentMarksimosSeminar.numOfCompany = userResult.currentMarksimosSeminar.companyNum;
         userResult.currentMarksimosSeminar.maxPeriodRound = userResult.currentMarksimosSeminar.simulationSpan;
 
@@ -308,8 +309,10 @@ exports.getUserInfo = function (req, res, next){
         userResult = req.user.toObject();
     }
 
+    userResult.roleName = req.user.roleName;
+
     teamModel.findOne({ creator: userResult._id }).populate('memberList', '-password -resetPasswordToken -resetPasswordVerifyCode -emailActivateToken').execQ().then(function(resultTeam){
-        userResult.team = resultTeam;
+        userResult.team = resultTeam || [];
         res.status(200).send(userResult);
 
     }).fail(function(err){
