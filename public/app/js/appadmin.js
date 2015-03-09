@@ -779,10 +779,9 @@
                 data: [],
                 showScaled: true
             },
-            questionnaire: {
-                data: [],
-                currentQuestionnaire:null
-            },
+            questionnaireQuestion: {},
+            questionnaireList: [],
+            currentQuestionnaire : null,
 
             //A1 Company Status
             tableA1CompanyStatus: {
@@ -1452,23 +1451,24 @@
             },
             loadingQuestionnaireData: function() {
                 Admin.getQuestionnaire($scope.css.currentSeminarId).success(function(data, status, headers, config) {
-                    $scope.data.questionnaire.data = data;
-                    if (data[0].studentList.length) {
-                        $scope.data.questionnaire.currentQuestionnaire = data[0].studentList[0].questionnaire;
-                    }                    
-                    $scope.data.questionnaire.radio_OverallSatisfactionWithThePrograms = {
+                    $scope.data.questionnaireList = data;
+                    if (data[0].studentList.length > 0) {
+                        $scope.data.currentQuestionnaire = data[0].studentList[0].questionnaire;
+                    }
+
+                    $scope.data.questionnaireQuestion.radio_OverallSatisfactionWithThePrograms = {
                         info: ['ChallengeStrategicThinkingAbility', 'DevelopAnIntegratedPerspective', 'TestPersonalAbilityOfBalancingRisks', 'ChallengeLeadershipAndTeamworkAbility', 'ChallengeAnalysisAndDecisionMakingAbility', 'SimulationInteresting']
                     };
-                    $scope.data.questionnaire.radio_TeachingTeams = {
+                    $scope.data.questionnaireQuestion.radio_TeachingTeams = {
                         info: ['FeedbackOnSimulationDecisions', 'ExpandingViewAndInspireThinking', 'Lectures']
                     };
-                    $scope.data.questionnaire.radio_Products = {
+                    $scope.data.questionnaireQuestion.radio_Products = {
                         info: ['OverallProductUsageExperience', 'UserInterfaceExperience', 'EaseOfNavigation', 'ClarityOfWordsUsed']
                     };
-                    $scope.data.questionnaire.radio_TeachingSupports = {
+                    $scope.data.questionnaireQuestion.radio_TeachingSupports = {
                         info: ['Helpfulness', 'QualityOfTechnicalSupport']
                     };
-                    $scope.data.questionnaire.radio_MostBenefits = {
+                    $scope.data.questionnaireQuestion.radio_MostBenefits = {
                         info: ["JoinProgram", "CompanyInHouse", "OpenClass"]
                     };
                 });
