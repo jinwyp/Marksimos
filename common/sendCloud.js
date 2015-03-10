@@ -35,10 +35,10 @@ var serverSettingsDefault = {
     sendCloudModule : 'mail',
     action : 'send_template',
     format : 'json',
-    api_user : 'jinwyp_test_0XlCSJ',
+    api_user : 'jinwangmailsendkey',
     api_key : 'XuuMlW73jTugTig4',
 
-    from : 'service@sendcloud.im',
+    from : 'mailsub.hcdlearning.com',
     fromname : 'HCD Learning',
     to : 'jinwyp@163.com',
     cc : '',
