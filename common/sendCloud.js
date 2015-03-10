@@ -38,7 +38,7 @@ var serverSettingsDefault = {
     api_user : 'jinwangmailsendkey',
     api_key : 'XuuMlW73jTugTig4',
 
-    from : 'service@sendcloud.im',
+    from : 'mailsub.hcdlearning.com',
     fromname : 'HCD Learning',
     to : 'jinwyp@163.com',
     cc : '',
