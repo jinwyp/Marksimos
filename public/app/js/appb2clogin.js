@@ -204,16 +204,18 @@
 
         /**********  Function Declarations  **********/
         function addStudentToTeam(form) {
-            vm.css.addStudentFailedInfo = false;
+            vm.css.addTeamFailedInfo = false;
+            vm.css.addTeamSuccessInfo = false;
 
             if (form.$valid) {
                 Student.addStudentToTeam({username: vm.newUser}).then(function(result) {
+                    vm.css.addTeamSuccessInfo = true;
                     return app.getUserInfo();
                 }).catch(function(err) {
                     form.$invalid = true;
                     form.$valid = false;
 
-                    vm.css.addFailedInfo = true;
+                    vm.css.addTeamFailedInfo = true;
                 });
             }
         }
