@@ -3,7 +3,7 @@ var userRoleModel = require('../../models/user/userrole.js');
 var teamModel = require('../../models/user/team.js');
 var seminarModel = require('../../models/marksimos/seminar.js');
 var Token = require('../../models/user/authenticationtoken.js');
-var EmailModel = require('../../models/user/emailContent.js');
+var emailModel = require('../../models/user/emailContent.js');
 
 
 
@@ -378,8 +378,8 @@ exports.registerB2CStudent = function(req, res, next){
             throw new Error('Cancel promise chains. Because Save new user to database error.');
         }
 
-        var mailContent = EmailModel.registration();
-
+        var mailContent = emailModel.registration();
+        console.log("111---", mailContent);
         //mailContent.to = resultUser.email;
 
         mailContent.substitution_vars.to.push(resultUser.email);
@@ -388,7 +388,6 @@ exports.registerB2CStudent = function(req, res, next){
         mailContent.substitution_vars.sub['%token%'].push(resultUser.emailActivateToken);
 
         //mailContent.html = mailContent.html1 + resultUser.username + mailContent.html2 + resultUser.email + mailContent.html3 + resultUser.emailActivateToken + mailContent.html4 + resultUser.email + mailContent.html5 + resultUser.emailActivateToken + mailContent.htmlend;
-
 
 
         mailSender.sendMailQ(mailContent).then(function(resultSendEmail){
@@ -539,7 +538,7 @@ exports.sendResetPasswordEmail = function(req, res, next){
             throw new Error('Cancel promise chains. Because Update user resetPasswordToken failed. More or less than 1 record is updated. it should be only one !');
         }
 
-        var mailContent = EmailModel.resetPassword();
+        var mailContent = emailModel.resetPassword();
 
         mailContent.substitution_vars.to.push(resultUser.email);
         mailContent.substitution_vars.sub['%username%'].push(resultUser.username);
