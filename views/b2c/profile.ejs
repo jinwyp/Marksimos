@@ -68,13 +68,14 @@
                                 </div>
 
                                 <div class="row form-group" ng-class="{'has-error': basicInfoForm.birthday.$invalid, 'has-success':basicInfoForm.birthday.$dirty&&basicInfoForm.birthday.$valid}">
-                                    <label class="control-label col-md-3 text-right">生日：</label>
-                                    <input type="text" data-date-format="yyyy-MM-dd" data-min-date="02/10/70" data-max-date="today" data-autoclose="1" class="form-control col-md-2" ng-model="profile.formDatas[0].birthday" name="birthday" bs-datepicker>
+                                    <label for="birthday" class="control-label col-md-3 text-right">生日：</label>
+                                    <input type="text" data-date-format="yyyy-MM-dd" data-min-date="02/10/70" data-max-date="today" data-autoclose="1" class="form-control col-md-2" ng-model="profile.formDatas[0].birthday" name="birthday" id="birthday" bs-datepicker>
                                 </div>
                                 <div class="row">
                                     <div class="col-md-6 col-md-offset-3 profile-button-container">
                                         <button ng-click="profile.clickUpdateUserInfo(basicInfoForm)" type="submit">保存修改</button>
-                                        <!--<button class="cancel">取消</button>-->
+                                        <span ng-if="profile.css[profile.css.curTabIdx].updateSuccessInfo" class="success-msg">保存成功！</span>
+                                        <span ng-if="profile.css[profile.css.curTabIdx].updateFailedInfo" class="success-msg">保存失败！</span>
                                     </div>
                                 </div>
                             </div>
@@ -102,9 +103,9 @@
                                 <div class="row">
                                     <div class="col-md-6 col-md-offset-3 profile-button-container">
                                         <button ng-click="profile.clickUpdateUserInfo(schoolForm)" type="submit">保存修改</button>
-                                        <button class="cancel">取消</button>
-                                        <span ng-if="profile.css.updateSuccessInfo" class="success-msg">保存成功！</span>
-                                        <span ng-if="profile.css.updateFailedInfo" class="success-msg">保存失败！</span>
+                                        <!--<button class="cancel">取消</button>-->
+                                        <span ng-if="profile.css[profile.css.curTabIdx].updateSuccessInfo" class="success-msg">保存成功！</span>
+                                        <span ng-if="profile.css[profile.css.curTabIdx].updateFailedInfo" class="success-msg">保存失败！</span>
                                     </div>
                                 </div>
                             </div>
@@ -184,7 +185,8 @@
                                     <label for="qq" class="col-md-3 profile-underline">QQ ID:</label>
                                     <input required ng-model="profile.formDatas[4].qq" type="text" id="qq" name="qq" class="form-control col-md-5">
                                     <span class="err-msg" ng-if="contactForm.qq.$dirty&&contactForm.qq.$error.required">请输入正确的qq!</span>
-                                    <span class="err-msg" ng-if="profile.css.updateSuccess">保存成功!</span>
+                                    <span class="err-msg" ng-if="profile.css[profile.css.curTabIdx].updateSuccessInfo">保存成功!</span>
+                                    <span class="err-msg" ng-if="profile.css[profile.css.curTabIdx].updateFailedInfo">保存失败!</span>
                                 </div>
                                 <div class="row">
                                     <div class="col-md-6 col-md-offset-3 profile-button-container">

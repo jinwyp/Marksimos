@@ -5,8 +5,7 @@
 "use strict";
 
 
-function contentEmail() {
-    return {
+var contentEmail = {
         sample: function(){
 
             return {
@@ -90,9 +89,8 @@ function contentEmail() {
             }
 
         }
-    }
 
-}
+};
 
 
 

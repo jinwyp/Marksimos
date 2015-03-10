@@ -123,7 +123,7 @@ exports.updateTeam = function(req, res, next){
 
     teamModel.findOneAndUpdateQ(
         { creator : req.user._id },
-        { creator : req.user._id, name:req.body.name, description:req.body.description||''  },
+        { name:req.body.name, description:req.body.description||''  },
         { upsert : true}
 
     ).then(function(resultTeam){
@@ -157,6 +157,10 @@ exports.addStudentToTeam = function(req, res, next){
 
         if (!resultUser) {
             throw new Error('Cancel promise chains. Because User not found!');
+        }
+
+        if (resultUser._id.equals(req.user._id)) {
+            throw new Error('Cancel promise chains. Because User can not add himself in his own team !');
         }
 
         userData = resultUser;
@@ -231,7 +235,7 @@ exports.removeStudentToTeam = function(req, res, next){
         }
 
         resultTeam.memberList.forEach(function(member, index){
-            if(member.toString() === userData._id){
+            if(member.toString() === userData.id){
                 resultTeam.memberList.splice(index, 1);
             }
         });
