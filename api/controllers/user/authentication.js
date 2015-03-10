@@ -379,7 +379,6 @@ exports.registerB2CStudent = function(req, res, next){
         }
 
         var mailContent = emailModel.registration();
-        console.log("111---", mailContent);
         //mailContent.to = resultUser.email;
 
         mailContent.substitution_vars.to.push(resultUser.email);
