@@ -253,22 +253,17 @@
         function updateUserInfo(form) {
             // todo, let what css info be false
             if (form.$valid) {
-                var data = vm.formDatas[vm.css.curTabIdx];
+                var tabIdx = vm.css.curTabIdx;
+                var data = vm.formDatas[tabIdx];
                 data.clickSumbit = true;
                 Student.updateStudentB2CInfo(data).then(function() {
                     Object.keys(data).forEach(function(key) {
                         if (key.indexOf('$') === 0) return;
                         vm.currentUser[key] = data[key];
                     });
-                    vm.css.updateSuccessInfo = true;
-                    $timeout(function() {
-                        vm.css.updateSuccessInfo = false;
-                    }, 1500);
+                    vm.css[tabIdx].updateSuccessInfo = true;
                 }).catch(function(err) {
-                    vm.css.updateFailedInfo = true;
-                    $timeout(function() {
-                        vm.css.updateFailedInfo = false;
-                    }, 1500);
+                    vm.css[tabIdx].updateFailedInfo = true;
                 });
             }
         }
@@ -307,6 +302,13 @@
                     vm.formDatas[4] = {
                         qq: data.qq
                     };
+                    vm.formDatas.forEach(function(data, i) {
+                        if (!data) return;
+                        vm.css[i] = {
+                            updateSuccessInfo: false,
+                            updateFailedInfo: false
+                        };
+                    });
                 });
             },
             reRun : function(){
