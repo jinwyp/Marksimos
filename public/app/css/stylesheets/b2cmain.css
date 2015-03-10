@@ -1,5 +1,3 @@
-<<<<<<< HEAD
-=======
 @charset "UTF-8";
 .icon_b2c-sprite, .b2c-header .button, .b2c-header .button:hover, .man1, .man1:hover, .man2, .man2:hover, .man3, .man3:hover, .man4, .man4:hover, .down-box .pic-1 .front, .down-box .pic-1 .back, .down-box .pic-2 .front, .down-box .pic-2 .back, .down-box .pic-3 .front, .down-box .pic-3 .back, .down-box .pic-4 .front, .down-box .pic-4 .back, .down-box .pic-5 .front, .down-box .pic-5 .back, .down-box .pic-6 .front, .down-box .pic-6 .back, .b2c-login-main .b2c-icon, .b2c-enter-email .b2c-prints, .b2c-enter-code .b2c-code {
   background-image: url('../images/icon_b2c-sd0f215c49d.png');
@@ -1028,4 +1026,3 @@ body {
 .datepicker.dropdown-menu.datepicker-mode-1 tbody button, .datepicker.dropdown-menu.datepicker-mode-2 tbody button {
   height: 65px;
 }
->>>>>>> master
