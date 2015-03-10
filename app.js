@@ -43,9 +43,9 @@ app.use(favicon(path.join(__dirname, '/public/cn/assets/img/hcd-icon.ico')));
 var morganFileStream = fs.createWriteStream(config.logDirectory + 'accessmorgan.log', {'flags': 'a'});
 app.use(morgan('dev'));
 
-app.use(morgan('combined', {
-    stream: morganFileStream
-}));
+//app.use(morgan('combined', {
+//    stream: morganFileStream
+//}));
 
 app.use(cookieParser());
 app.use(bodyParser.json());
