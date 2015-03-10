@@ -105,7 +105,7 @@
                                         <button ng-click="profile.clickUpdateUserInfo(schoolForm)" type="submit">保存修改</button>
                                         <!--<button class="cancel">取消</button>-->
                                         <span ng-if="profile.css[profile.css.curTabIdx].updateSuccessInfo" class="success-msg">保存成功！</span>
-                                        <span ng-if="profile.css[profile.css.curTabIdx].updateFailedInfo" class="success-msg">保存失败！</span>
+                                        <span ng-if="profile.css[profile.css.curTabIdx].updateFailedInfo" class="failed-msg">保存失败！</span>
                                     </div>
                                 </div>
                             </div>
@@ -138,6 +138,8 @@
                                     <input placeholder="用户名/邮箱" ng-model="profile.newUser" required type="text" name="name" id="name" class="form-control col-md-6">
                                     <span class="err-msg" ng-if="teamForm.name.$dirty&&teamForm.name.$error.required">请输入正确的用户名!</span>
                                     <button type="submit" ng-click="profile.clickAddStudentToTeam(teamForm)" class="add-button col-md-3">增加</button>
+                                    <span ng-if="profile.css.addTeamSuccessInfo" class="success-msg">保存成功！</span>
+                                    <span ng-if="profile.css.addTeamFailedInfo" class="failed-msg">保存失败！</span>
                                 </div>
                                 <!--<div class="row"><label for="name" class="col-md-3 team-label">队员二：</label><input type="text" name="name" id="name" class="col-md-6"></div>-->
                             </div>
