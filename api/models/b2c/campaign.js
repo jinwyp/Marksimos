@@ -27,6 +27,7 @@ var campaignSchema = new Schema({
     creator: { type: schemaObjectId, ref: 'User' },
 
     seminarListMarksimos: [{ type: schemaObjectId, ref: 'Seminar' }],
+    teamList: [{ type: schemaObjectId, ref: 'Team' }],
 
     activated: { type: Boolean, default: false }
 
@@ -61,7 +62,6 @@ campaignSchema.statics.updateValidations = function(req){
     req.checkBody('activated', 'Campaign activated should Boolean true or false').notEmpty();
 
     return req.validationErrors();
-
 };
 
 
@@ -71,7 +71,6 @@ campaignSchema.statics.searchQueryValidations = function(req){
     req.checkQuery('activated', 'Campaign activated should Boolean true or false').optional();
 
     return req.validationErrors();
-
 };
 
 campaignSchema.statics.addSeminarValidations = function(req){
@@ -80,8 +79,9 @@ campaignSchema.statics.addSeminarValidations = function(req){
     req.assert('campaignId', 'Campaign ID should be 24 characters').notEmpty().len(24, 24);
 
     return req.validationErrors();
-
 };
+
+
 
 /**
  * Methods

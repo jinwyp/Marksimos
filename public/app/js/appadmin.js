@@ -595,6 +595,23 @@
                 });
             }
         };
+        /********************  Remove Marksimos Seminar From Campaign  ********************/
+        $scope.removeSeminarFromCampaign = function(campaignid, seminarid) {
+
+            if (campaignid === "" || seminarid === "") {
+
+            }else{
+                console.log(campaignid);
+                Admin.removeSeminarFromCampaign( campaignid, seminarid).success(function(data, status, headers, config) {
+                    app.getCampaignInit();
+                    $notification.success('Save success', 'Remove Seminar From Campaign success.');
+
+                }).error(function(data, status, headers, config) {
+                    console.log(data);
+                    $notification.error('Failed', data.message);
+                });
+            }
+        };
 
 
 
@@ -662,14 +679,14 @@
             }
         };
         /********************  Remove Student To Seminar  ********************/
-        $scope.removeStudentToSeminar = function(seminarid, studentemail) {
+        $scope.removeStudentFromSeminar = function(seminarid, studentemail) {
 
             if (seminarid === "" || angular.isUndefined(studentemail) || studentemail === "") {
             } else {
                 $scope.data.removedStudent.email = studentemail;
                 $scope.data.removedStudent.seminar_id = seminarid;
 
-                Admin.removeStudentToSeminar(  $scope.data.removedStudent).success(function(data, status, headers, config) {
+                Admin.removeStudentFromSeminar(  $scope.data.removedStudent).success(function(data, status, headers, config) {
                     app.getSeminarInit();
                     $notification.success('Save success', 'Remove Student to Seminar success');
 

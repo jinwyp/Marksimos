@@ -563,7 +563,7 @@
                                         <td>
                                             <p ng-repeat="company in seminar.companyAssignment">Company{{company.companyId | companyname }} :
                                                 <br>
-                                                <span ng-repeat="student in company.studentList">{{student}} <a href="" ng-click="removeStudentToSeminar(seminar.seminarId, student)">remove</a>, </span>
+                                                <span ng-repeat="student in company.studentList">{{student}} <a href="" ng-hide="seminar.isInitialized" ng-click="removeStudentFromSeminar(seminar.seminarId, student)">remove</a>, </span>
                                             </p>
                                         </td>
                                         <td style="width:460px">
@@ -712,7 +712,7 @@
                                         <th>Location</th>
                                         <th>Match Date</th>
                                         <th>Seminar List</th>
-                                        <th>Add Seminar</th>
+                                        <th>Team List</th>
                                     </tr>
                                     <tr ng-repeat="campaign in data.campaigns" >
                                         <td style="width:100px">
@@ -723,23 +723,26 @@
                                         <td data-highlight-key="data.searchCampaign.keyword">{{campaign.activated}}</td>
                                         <td data-highlight-key="data.searchCampaign.keyword">{{campaign.location}}</td>
                                         <td data-highlight-key="data.searchCampaign.keyword">{{campaign.matchDate}}</td>
-                                        <td>
-                                            <p ng-repeat="seminar in campaign.seminarListMarksimos">Seminar: {{seminar.seminarId }}
-                                                <!--<br>-->
-                                                <!--<span ng-repeat="student in company.studentList">{{student}} <a href="" ng-click="removeStudentToSeminar(campaign.campaignId, student)">remove</a>, </span>-->
-                                            </p>
-                                        </td>
-                                        <td style="width:460px">
-                                            <div class="input-group margin">
+                                        <td style="width:200px">
+                                            <div>
+                                                <p ng-repeat="seminar in campaign.seminarListMarksimos">
+                                                    <span>Seminar: {{seminar.seminarId }} <a href="" ng-click="removeSeminarFromCampaign(campaign._id, seminar.seminarId)">remove</a>, </span>
+                                                </p>
 
-                                                <input type="text" class="form-control" placeholder="Seminar ID" ng-model="campaign.inputSeminarId">
-                                                <span class="input-group-btn">
-                                                    <button class="btn btn-info" type="button" ng-click="addSeminarIntoCampaign(campaign._id, campaign.inputSeminarId)">Add</button>
-                                                </span>
-                                            </div><!-- /input-group -->
-                                            <div class="callout callout-danger" ng-show="campaign._id == css.campaignId">
-                                                <p>Please input seminar id !</p>
+                                                <div class="input-group ">
+                                                    <input type="text" class="form-control" placeholder="Seminar ID" ng-model="campaign.inputSeminarId">
+                                                    <span class="input-group-btn">
+                                                        <button class="btn btn-info" type="button" ng-click="addSeminarIntoCampaign(campaign._id, campaign.inputSeminarId)">Add</button>
+                                                    </span>
+                                                </div><!-- /input-group -->
+                                                <div class="callout callout-danger" ng-show="campaign._id == css.campaignId">
+                                                    <p>Please Input Seminar ID !</p>
+                                                </div>
                                             </div>
+
+                                        </td>
+                                        <td style="width:400px">
+
                                         </td>
                                     </tr>
                                     </tbody>

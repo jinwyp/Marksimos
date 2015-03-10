@@ -105,6 +105,7 @@ exports.addMarkSimosSeminarToCampaign = function(req, res, next){
         dataSeminar = resultSeminar;
 
         return campaignModel.findByIdQ(req.body.campaignId);
+
     }).then(function(resultCampaign){
         if(!resultCampaign){
             throw new Error('Cancel promise chains. Because Campaign not found !');
@@ -135,5 +136,44 @@ exports.addMarkSimosSeminarToCampaign = function(req, res, next){
 
 
 exports.removeMarkSimosSeminarFromCampaign = function(req, res, next){
+    var validationErrors = campaignModel.addSeminarValidations(req);
 
+    if(validationErrors){
+        return res.status(400).send( {message: validationErrors} );
+    }
+
+    var dataSeminar ;
+
+    seminarModel.findOneQ({seminarId : req.params.seminarId}).then(function(resultSeminar){
+
+        if(!resultSeminar){
+            throw new Error('Cancel promise chains. Because Seminar not found !');
+        }
+        dataSeminar = resultSeminar;
+
+        return campaignModel.findByIdQ(req.params.campaignId);
+
+    }).then(function(resultCampaign){
+        if(!resultCampaign){
+            throw new Error('Cancel promise chains. Because Campaign not found !');
+        }
+
+        resultCampaign.seminarListMarksimos.forEach(function(seminar, index){
+
+            if(dataSeminar._id.equals(seminar)){
+                resultCampaign.seminarListMarksimos.splice(index, 1);
+            }
+        });
+
+        return resultCampaign.saveQ();
+
+    }).then(function(saveDoc, numAffected){
+        if(!saveDoc){
+            throw new Error('Cancel promise chains. Because Update campaign failed. More or less than 1 record is updated. it should be only one !');
+        }
+        return res.status(200).send({message: "assign seminar to campaign success."})
+
+    }).fail(function(err){
+        next (err);
+    }).done();
 };

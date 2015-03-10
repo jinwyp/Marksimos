@@ -1222,7 +1222,10 @@
                 return $http.post(apiAdminPath + 'campaigns', postdata);
             },
             addSeminarToCampaign : function(postdata){
-                return $http.post(apiAdminPath + 'campaigns/seminar', postdata);
+                return $http.post(apiAdminPath + 'campaigns/seminars', postdata);
+            },
+            removeSeminarFromCampaign : function(campaignid, seminarid){
+                return $http.delete(apiAdminPath + 'campaigns/ ' +  campaignid + 'seminars/' +  seminarid);
             },
 
             getSeminars : function(urlparams){
@@ -1241,7 +1244,7 @@
             addStudentToSeminar : function(postdata){
                 return $http.post(apiAdminPath + 'assign_student_to_seminar', postdata);
             },
-            removeStudentToSeminar : function(postdata){
+            removeStudentFromSeminar : function(postdata){
                 return $http.post(apiAdminPath + 'remove_student_from_seminar', postdata);
             },
 
