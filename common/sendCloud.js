@@ -39,7 +39,7 @@ var serverSettingsDefault = {
     api_key : 'Az6VfYykm1NoO3XP',
 
     from : 'mailsub@hcdlearning.com',
-    fromname : 'HCD Learning web master',
+    fromname : 'HCD Learning webmaster',
     to : 'jinwyp@163.com',
     cc : '',
     subject : '欢迎使用HCD Learning！',
@@ -87,6 +87,9 @@ function NodemailerSendCloud(sendmethod, serversettings) {
 
 NodemailerSendCloud.prototype.sendMail = function(mail, callback) {
 
+    mail.api_user = this.serverSettings.api_user;
+    mail.api_key = this.serverSettings.api_key;
+
     mail.from = mail.from || this.serverSettings.from;
     mail.to = mail.to || this.serverSettings.to;
     mail.subject = mail.subject || this.serverSettings.subject;
@@ -127,8 +130,7 @@ NodemailerSendCloud.prototype.sendMail = function(mail, callback) {
 
         //queryUrl = queryUrl + '&from=' + mail.from + '&fromname=' + mail.fromname + '&template_invoke_name=' + mail.template_invoke_name + '&subject=' + mail.subject + '&substitution_vars=' + JSON.stringify(mail.substitution_vars);
 
-        mail.api_user = this.serverSettings.api_user;
-        mail.api_key = this.serverSettings.api_key;
+
 
         request.post({url:postUrl, form: mail}, function optionalCallback(error, httpResponse, body) {
             if (error) {
@@ -156,6 +158,9 @@ NodemailerSendCloud.prototype.sendMail = function(mail, callback) {
 NodemailerSendCloud.prototype.sendMailQ = function(mail) {
 
     var deferred = Q.defer();
+
+    mail.api_user = this.serverSettings.api_user;
+    mail.api_key = this.serverSettings.api_key;
 
     mail.from = mail.from || this.serverSettings.from;
     mail.to = mail.to || this.serverSettings.to;
@@ -189,16 +194,16 @@ NodemailerSendCloud.prototype.sendMailQ = function(mail) {
                 return deferred.resolve(body);
             }
         });
+        console.log("Email queryUrl: ", queryUrl);
 
     }else{
         // use email template_invoke_name to send email
 
         //queryUrl = queryUrl + '&from=' + mail.from + '&fromname=' + mail.fromname + '&template_invoke_name=' + mail.template_invoke_name + '&subject=' + mail.subject + '&substitution_vars=' + mail.substitution_vars;
 
-        mail.api_user = this.serverSettings.api_user;
-        mail.api_key = this.serverSettings.api_key;
 
-        request.post({url:postUrl, formData: mail}, function optionalCallback(error, httpResponse, body) {
+
+        request.post({url:postUrl, form: mail}, function optionalCallback(error, httpResponse, body) {
             if (error) {
                 return deferred.reject(error);
             }
@@ -209,11 +214,14 @@ NodemailerSendCloud.prototype.sendMailQ = function(mail) {
                 return deferred.resolve(body);
             }
         });
+
+        console.log("Email PostUrl: ", postUrl);
+        console.log("Email Content: ", mail);
     }
 
 
-    console.log("Email queryUrl: ", queryUrl);
-    console.log("Email postUrl: ", postUrl);
+
+
 
 
 

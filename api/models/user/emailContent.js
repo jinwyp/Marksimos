@@ -20,7 +20,7 @@ var contentEmail = {
         registration: function(){
 
             return {
-                from: 'HCDLearing <jinwang@hcdlearning.com>',
+                from: 'mailsub@hcdlearning.com',
                 fromname : 'HCDLearning webmaster',
                 to: '',
 
@@ -55,7 +55,7 @@ var contentEmail = {
 
         resetPassword: function(){
             return {
-                from: 'HCDLearing <jinwang@hcdlearning.com>',
+                from: 'mailsub@hcdlearning.com',
                 fromname : 'HCDLearning webmaster',
                 to: '',
 
