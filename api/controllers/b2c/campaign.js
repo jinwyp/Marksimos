@@ -217,7 +217,7 @@ exports.addTeamToCampaign = function(req, res, next){
     }
 
     if(req.user.role === userRoleModel.roleList.student.id && req.user.username !== req.body.username ){
-
+        // For student role
         return res.status(400).send( {message: 'User only can join campaign with own team'} );
     }
 
