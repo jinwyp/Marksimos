@@ -103,7 +103,7 @@ exports.searchDistributor = function(req, res, next){
     if(city) query.city = city;
     if(activated) query.activated = activated;
 
-    userModel.findQ(query).then(function(result){
+    userModel.findQ(query, userModel.selectFields()).then(function(result){
         res.status(200).send(result);
     }).fail(function(err){
         next(err);
@@ -306,7 +306,7 @@ exports.searchFacilitator = function(req, res, next){
     if(city) query.city = city;
     if(activated) query.activated = activated;
 
-    userModel.findQ(query).then(function(allFacilitator){
+    userModel.findQ(query, userModel.selectFields()).then(function(allFacilitator){
         if(allFacilitator.length === 0){
             return res.send([]);
         }
@@ -543,7 +543,7 @@ exports.searchStudent = function(req, res, next){
     if(city) query.city = city;
     if(activated) query.activated = activated;
 
-    userModel.findQ(query).then(function(result){
+    userModel.findQ(query, userModel.selectFields()).then(function(result){
         res.send(result);
     }).fail(function(err){
         next(err);

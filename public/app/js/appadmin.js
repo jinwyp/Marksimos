@@ -54,7 +54,8 @@
             leftmenu: 11,
             menuTabShow: [false, false, false, false, false, false, false], //从第二个false 开始第1个菜单
             seminarId: 0,
-            campaignId: 0,
+            campaignIdAddSeminar: 0,
+            campaignIdAddTeam: 0,
             runButtonDisabled: false,
             showConfirm : false,
             currentRunSeminarId : 0
@@ -188,7 +189,11 @@
             campaigns: [],
             addSeminarToCampaign: {
                 seminarId: 0,
-                campaigId: 0
+                campaignId: 0
+            },
+            addTeamToCampaign: {
+                username: 0,
+                campaignId: 0
             },
 
             country: [
@@ -575,9 +580,9 @@
         $scope.addSeminarIntoCampaign = function(campaignid, seminarid) {
 
             if ( angular.isUndefined(seminarid) || seminarid === "") {
-                $scope.css.campaignId = campaignid;
+                $scope.css.campaignIdAddSeminar = campaignid;
             }else{
-                $scope.css.campaignId = 0;
+                $scope.css.campaignIdAddSeminar = 0;
                 $scope.data.addSeminarToCampaign.campaignId = campaignid;
                 $scope.data.addSeminarToCampaign.seminarId = seminarid;
 
@@ -601,8 +606,7 @@
             if (campaignid === "" || seminarid === "") {
 
             }else{
-                console.log(campaignid);
-                Admin.removeSeminarFromCampaign( campaignid, seminarid).success(function(data, status, headers, config) {
+                Admin.removeSeminarFromCampaign({campaignId : campaignid, seminarId : seminarid } ).success(function(data, status, headers, config) {
                     app.getCampaignInit();
                     $notification.success('Save success', 'Remove Seminar From Campaign success.');
 
@@ -612,6 +616,49 @@
                 });
             }
         };
+
+        /********************  add Team Into Campaign  ********************/
+        $scope.addTeamIntoCampaign = function(campaignid, teamcreatorusername) {
+
+            if ( angular.isUndefined(teamcreatorusername) || teamcreatorusername === "") {
+                $scope.css.campaignIdAddTeam = campaignid;
+            }else{
+                $scope.css.campaignIdAddTeam = 0;
+                $scope.data.addTeamToCampaign.campaignId = campaignid;
+                $scope.data.addTeamToCampaign.username = teamcreatorusername;
+
+                Admin.addTeamToCampaign( $scope.data.addTeamToCampaign).success(function(data, status, headers, config) {
+
+                    app.getCampaignInit();
+                    $notification.success('Save success', 'Add Seminar to Campaign success');
+
+                    $scope.data.addTeamToCampaign.campaignId = 0;
+                    $scope.data.addTeamToCampaign.username = 0;
+
+                }).error(function(data, status, headers, config) {
+                    console.log(data);
+                    $notification.error('Failed', data.message);
+                });
+            }
+        };
+        /********************  Remove Team From Campaign  ********************/
+        $scope.removeTeamFromCampaign = function(campaignid, teamid) {
+
+            if (campaignid === "" || teamid === "") {
+
+            }else{
+                Admin.removeTeamFromCampaign({campaignId : campaignid, teamId : teamid } ).success(function(data, status, headers, config) {
+                    app.getCampaignInit();
+                    $notification.success('Save success', 'Remove Seminar From Campaign success.');
+
+                }).error(function(data, status, headers, config) {
+                    console.log(data);
+                    $notification.error('Failed', data.message);
+                });
+            }
+        };
+
+
 
 
 

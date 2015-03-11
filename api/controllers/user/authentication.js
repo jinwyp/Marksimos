@@ -184,7 +184,7 @@ exports.authLoginToken = function (options) {
                 //token存在且未过期
                 if (tokenInfo && tokenInfo.expires > new Date()) {
 
-                    userModel.findOne({ _id: tokenInfo.userId }, '-password -resetPasswordToken -resetPasswordVerifyCode -emailActivateToken', function (err, user) {
+                    userModel.findOne({ _id: tokenInfo.userId }, userModel.selectFields(), function (err, user) {
 
                         if (err) { return next(err);}
 
@@ -311,7 +311,7 @@ exports.getUserInfo = function (req, res, next){
 
     userResult.roleName = req.user.roleName;
 
-    teamModel.findOne({ creator: userResult._id }).populate('memberList', '-password -resetPasswordToken -resetPasswordVerifyCode -emailActivateToken').execQ().then(function(resultTeam){
+    teamModel.findOne({ creator: userResult._id }).populate('memberList', userModel.selectFields()).execQ().then(function(resultTeam){
         userResult.team = resultTeam || [];
         res.status(200).send(userResult);
 

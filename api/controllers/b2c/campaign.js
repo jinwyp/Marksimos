@@ -6,6 +6,7 @@
 
 var userModel = require('../../models/user/user.js');
 var userRoleModel = require('../../models/user/userrole.js');
+var teamModel = require('../../models/user/team.js');
 var seminarModel = require('../../models/marksimos/seminar.js');
 var campaignModel = require('../../models/b2c/campaign.js');
 
@@ -73,15 +74,40 @@ exports.searchCampaign = function(req, res, next){
         ];
     }
 
-    campaignModel.find(query).populate('seminarListMarksimos').sort({createdAt: -1}).execQ().then(function(result){
-        if(!result){
-            throw new Error('Cancel promise chains. Because campaign not found !');
-        }
-        return res.status(200).send(result);
+    campaignModel.find(query).populate('seminarListMarksimos').populate('teamList').sort({createdAt: -1}).exec(function(err, resultCampaign){
 
-    }).fail(function(err){
-        next(err);
-    }).done();
+        if(err){
+            next(err);
+        }
+
+        if(!resultCampaign){
+            next( new Error('Cancel promise chains. Because campaign not found !') );
+        }
+
+        // Deep population is here
+        var campaignOptions = [
+            { path: 'teamList.memberList', model : 'User', select : userModel.selectFields() },
+            { path: 'teamList.creator', model : 'User', select : userModel.selectFields()}
+        ];
+
+        teamModel.populate(resultCampaign, campaignOptions, function(err, resultTeam){
+            if(err){
+                next(err);
+            }
+
+            if(!resultTeam){
+                next( new Error('Cancel promise chains. Because team not found !') );
+            }
+
+            return res.status(200).send(resultCampaign);
+
+        });
+
+
+
+
+
+    })
 };
 
 
@@ -126,7 +152,7 @@ exports.addMarkSimosSeminarToCampaign = function(req, res, next){
         if(!saveDoc){
             throw new Error('Cancel promise chains. Because Update campaign failed. More or less than 1 record is updated. it should be only one !');
         }
-        return res.status(200).send({message: "assign seminar to campaign success."})
+        return res.status(200).send({message: "Assign seminar to campaign success."})
 
     }).fail(function(err){
         next (err);
@@ -143,15 +169,14 @@ exports.removeMarkSimosSeminarFromCampaign = function(req, res, next){
     }
 
     var dataSeminar ;
-
-    seminarModel.findOneQ({seminarId : req.params.seminarId}).then(function(resultSeminar){
+    seminarModel.findOneQ({seminarId : req.body.seminarId}).then(function(resultSeminar){
 
         if(!resultSeminar){
             throw new Error('Cancel promise chains. Because Seminar not found !');
         }
         dataSeminar = resultSeminar;
 
-        return campaignModel.findByIdQ(req.params.campaignId);
+        return campaignModel.findByIdQ(req.body.campaignId);
 
     }).then(function(resultCampaign){
         if(!resultCampaign){
@@ -171,9 +196,117 @@ exports.removeMarkSimosSeminarFromCampaign = function(req, res, next){
         if(!saveDoc){
             throw new Error('Cancel promise chains. Because Update campaign failed. More or less than 1 record is updated. it should be only one !');
         }
-        return res.status(200).send({message: "assign seminar to campaign success."})
+        return res.status(200).send({message: "Remove seminar from campaign success."})
 
     }).fail(function(err){
         next (err);
     }).done();
 };
+
+
+
+
+
+
+exports.addTeamToCampaign = function(req, res, next){
+
+    var validationErrors = campaignModel.addTeamValidations(req);
+
+    if(validationErrors){
+        return res.status(400).send( {message: validationErrors} );
+    }
+
+    var dataTeam ;
+
+    userModel.findOneQ({username : req.body.username}).then(function(resultUser){
+
+        if(!resultUser){
+            throw new Error('Cancel promise chains. Because User not found !');
+        }
+
+        return teamModel.findOneQ({creator : resultUser._id});
+
+    }).then(function(resultTeam) {
+        if (!resultTeam) {
+            throw new Error('Cancel promise chains. Because Team not found !');
+        }
+
+        dataTeam = resultTeam;
+        return campaignModel.findByIdQ(req.body.campaignId);
+
+    }).then(function(resultCampaign){
+        if(!resultCampaign){
+            throw new Error('Cancel promise chains. Because Campaign not found !');
+        }
+
+
+        resultCampaign.teamList.forEach(function(team){
+
+            if(dataTeam._id.equals(team)  ){
+                throw new Error('Cancel promise chains. Because this team already assigned to this campaign !');
+            }
+        });
+
+        resultCampaign.teamList.push(dataTeam._id);
+
+        return resultCampaign.saveQ();
+
+    }).then(function(saveDoc, numAffected){
+        if(!saveDoc){
+            throw new Error('Cancel promise chains. Because Update campaign failed. More or less than 1 record is updated. it should be only one !');
+        }
+        return res.status(200).send({message: "Assign team to campaign success."})
+
+    }).fail(function(err){
+        next (err);
+    }).done();
+};
+
+
+
+
+exports.removeTeamFromCampaign = function(req, res, next){
+    var validationErrors = campaignModel.removeTeamValidations(req);
+
+    if(validationErrors){
+        return res.status(400).send( {message: validationErrors} );
+    }
+
+    var dataTeam ;
+    teamModel.findByIdQ(req.body.teamId).then(function(resultTeam){
+
+        if(!resultTeam){
+            throw new Error('Cancel promise chains. Because Team not found !');
+        }
+        dataTeam = resultTeam;
+
+        return campaignModel.findByIdQ(req.body.campaignId);
+
+    }).then(function(resultCampaign){
+        if(!resultCampaign){
+            throw new Error('Cancel promise chains. Because Campaign not found !');
+        }
+
+        resultCampaign.teamList.forEach(function(team, index){
+
+            if(dataTeam._id.equals(team)){
+                resultCampaign.teamList.splice(index, 1);
+            }
+        });
+
+        return resultCampaign.saveQ();
+
+    }).then(function(saveDoc, numAffected){
+        if(!saveDoc){
+            throw new Error('Cancel promise chains. Because Update campaign failed. More or less than 1 record is updated. it should be only one !');
+        }
+        return res.status(200).send({message: "Remove team from campaign success."})
+
+    }).fail(function(err){
+        next (err);
+    }).done();
+};
+
+
+
+

@@ -42,7 +42,9 @@ apiRouter.get('/', function(req, res, next){
     res.redirect('/cn');
 });
 
-
+apiRouter.get('/admin', function(req, res, next){
+    res.redirect('/marksimos/admin');
+});
 
 
 
@@ -278,7 +280,10 @@ apiRouter.get('/marksimos/api/admin/campaigns', auth.authLoginToken(), auth.auth
 apiRouter.post('/marksimos/api/admin/campaigns', auth.authLoginToken(), auth.authRole(userRoleModel.right.marksimos.campaignSingleCUD), campaignController.addCampaign);
 
 apiRouter.post('/marksimos/api/admin/campaigns/seminars', auth.authLoginToken(), auth.authRole(userRoleModel.right.marksimos.campaignSingleCUD), campaignController.addMarkSimosSeminarToCampaign);
-apiRouter.delete('/marksimos/api/admin/campaigns/:campaignId/seminars/:seminarId', auth.authLoginToken(), auth.authRole(userRoleModel.right.marksimos.campaignSingleCUD), campaignController.removeMarkSimosSeminarFromCampaign);
+apiRouter.post('/marksimos/api/admin/campaigns/seminars/remove', auth.authLoginToken(), auth.authRole(userRoleModel.right.marksimos.campaignSingleCUD), campaignController.removeMarkSimosSeminarFromCampaign);
+
+apiRouter.post('/marksimos/api/admin/campaigns/teams', auth.authLoginToken(), auth.authRole(userRoleModel.right.marksimos.campaignSingleCUD), campaignController.addTeamToCampaign);
+apiRouter.post('/marksimos/api/admin/campaigns/teams/remove', auth.authLoginToken(), auth.authRole(userRoleModel.right.marksimos.campaignSingleCUD), campaignController.removeTeamFromCampaign);
 
 
 //Facilitator manager seminars

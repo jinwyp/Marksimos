@@ -1224,8 +1224,14 @@
             addSeminarToCampaign : function(postdata){
                 return $http.post(apiAdminPath + 'campaigns/seminars', postdata);
             },
-            removeSeminarFromCampaign : function(campaignid, seminarid){
-                return $http.delete(apiAdminPath + 'campaigns/ ' +  campaignid + 'seminars/' +  seminarid);
+            removeSeminarFromCampaign : function(postdata){
+                return $http.post(apiAdminPath + 'campaigns/seminars/remove', postdata);
+            },
+            addTeamToCampaign : function(postdata){
+                return $http.post(apiAdminPath + 'campaigns/teams', postdata);
+            },
+            removeTeamFromCampaign : function(postdata){
+                return $http.post(apiAdminPath + 'campaigns/teams/remove', postdata);
             },
 
             getSeminars : function(urlparams){
