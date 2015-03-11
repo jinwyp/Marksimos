@@ -36,10 +36,10 @@ var serverSettingsDefault = {
     action : 'send_template',
     format : 'json',
     api_user : 'jinwangmailsendkey',
-    api_key : 'XuuMlW73jTugTig4',
+    api_key : 'Az6VfYykm1NoO3XP',
 
-    from : 'mailsub.hcdlearning.com',
-    fromname : 'HCD Learning',
+    from : 'mailsub@hcdlearning.com',
+    fromname : 'HCD Learning web master',
     to : 'jinwyp@163.com',
     cc : '',
     subject : '欢迎使用HCD Learning！',
@@ -120,6 +120,7 @@ NodemailerSendCloud.prototype.sendMail = function(mail, callback) {
             }
 
         });
+        console.log("Email queryUrl: ", queryUrl);
 
     }else{
         // use email template_invoke_name to send email
@@ -129,7 +130,7 @@ NodemailerSendCloud.prototype.sendMail = function(mail, callback) {
         mail.api_user = this.serverSettings.api_user;
         mail.api_key = this.serverSettings.api_key;
 
-        request.post({url:postUrl, formData: mail}, function optionalCallback(error, httpResponse, body) {
+        request.post({url:postUrl, form: mail}, function optionalCallback(error, httpResponse, body) {
             if (error) {
                 return callback(err);
             }
@@ -140,10 +141,12 @@ NodemailerSendCloud.prototype.sendMail = function(mail, callback) {
                 return callback(null, body);
             }
         });
+
+        console.log("Email postUrl: ", postUrl);
     }
 
-    console.log("Email queryUrl: ", queryUrl);
-    console.log("Email postUrl: ", postUrl);
+
+
 
 
 };
