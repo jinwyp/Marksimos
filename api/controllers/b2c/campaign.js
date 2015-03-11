@@ -216,6 +216,11 @@ exports.addTeamToCampaign = function(req, res, next){
         return res.status(400).send( {message: validationErrors} );
     }
 
+    if(req.user.role === userRoleModel.roleList.student.id && req.user.username !== req.body.username ){
+
+        return res.status(400).send( {message: 'User only can join campaign with own team'} );
+    }
+
     var dataTeam ;
 
     userModel.findOneQ({username : req.body.username}).then(function(resultUser){
