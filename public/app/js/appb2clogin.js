@@ -182,7 +182,7 @@
 
         vm.css = {
             addStudentFailedInfo: false,
-            curTabIdx: 0,
+            curTabIdx: 1,
             updateTeamNameDisabled: true,
             updateTeamNameFailedInfo: false,
             updateSuccessInfo: false,
@@ -200,9 +200,15 @@
         vm.clickUpdateTeamName = updateTeamName;
         vm.clickUpdateUserInfo = updateUserInfo;
         vm.clickUpdatePassword = updatePassword;
+        vm.clickEdit = edit;
 
 
         /**********  Function Declarations  **********/
+
+        function edit(index) {
+            vm.css[index].disabled = false;
+        }
+
         function addStudentToTeam(form) {
             vm.css.addTeamFailedInfo = false;
             vm.css.addTeamSuccessInfo = false;
@@ -287,28 +293,30 @@
         var app = {
             init : function(){
                 this.getUserInfo().then(function(data) {
+                    // for the upload avatar form
+                    vm.formDatas[0] = null;
                     // basic form
-                    vm.formDatas[0] = {
+                    vm.formDatas[1] = {
                         gender: data.gender,
                         birthday: data.birthday,
                         clickSumbit: false
                     };
                     // school form
-                    vm.formDatas[1] = {
+                    vm.formDatas[2] = {
                         organizationOrUniversity: data.organizationOrUniversity,
                         dateOfEnterCollege: data.dateOfEnterCollege,
                         majorsDegree: data.majorsDegree
                     };
-                    vm.formDatas[2] = vm.formDatas[3] = null;
+                    vm.formDatas[3] = vm.formDatas[4] = null;
                     // contact form
-                    vm.formDatas[4] = {
+                    vm.formDatas[5] = {
                         qq: data.qq
                     };
                     vm.formDatas.forEach(function(data, i) {
-                        if (!data) return;
                         vm.css[i] = {
                             updateSuccessInfo: false,
-                            updateFailedInfo: false
+                            updateFailedInfo: false,
+                            disabled: true
                         };
                     });
                 });

@@ -768,14 +768,8 @@ body {
 .detail-nav ul, .detail-nav li {
   list-style: none;
   padding-left: 0;
-}
-.detail-nav li {
-  border: 1px solid black;
-  border-bottom: none;
-}
-.detail-nav li:last-child {
-  border-bottom: solid black;
-  border-width: 1px;
+  background-color: #B4B4B4;
+  color: #ffffff;
 }
 .detail-nav .avatar {
   width: 100%;
@@ -796,21 +790,8 @@ body {
 .detail-nav .profile-nav {
   cursor: pointer;
 }
-.detail-nav .up-triangle {
-  border: 5px solid;
-  border-left-color: transparent;
-  border-bottom-color: transparent;
-  transform: rotate(-45deg);
-  position: absolute;
-  width: 0;
-  left: 0;
-  right: 0;
-  margin: 0 auto;
-  bottom: -5px;
-}
 .detail-nav .selected {
-  background-color: #d98348;
-  color: #ffffff;
+  background-color: #959595;
 }
 
 .upload-avatar-window {
@@ -903,8 +884,6 @@ body {
   font-weight: normal;
 }
 .profile-detail form {
-  border: 1px solid;
-  border-top: none;
   padding: 1em;
   font-size: 0.9em;
 }
@@ -916,30 +895,14 @@ body {
   padding-bottom: 0;
 }
 .profile-detail .profile-detail-title {
-  background-color: #d98348;
-  color: #ffffff;
-  padding-left: 0.8em;
   line-height: 1.8;
+  border-bottom: #9F9F9F solid 2px;
 }
-.profile-detail .profile-detail-tip {
-  padding-left: 0.8em;
-  background-color: #d9d9d9;
-  margin-bottom: 0.8em;
-}
-.profile-detail .profile-detail-tip span {
-  line-height: 2;
-}
-.profile-detail .done-button {
-  margin: 0.2em 0.4em;
-  background-color: #444444;
-  color: #ffffff;
-  padding: 0.2em 0.4em;
+.profile-detail .profile-detail-title .profile-edit {
+  font-size: 0.8em;
   float: right;
-  font-size: 0.9em;
-  border-style: none;
-  -moz-box-shadow: #797979 0px 2px 4px;
-  -webkit-box-shadow: #797979 0px 2px 4px;
-  box-shadow: #797979 0px 2px 4px;
+  padding-top: 3px;
+  color: #0480CB;
 }
 .profile-detail .profile-button-container {
   padding: 1.2em 0 0;
@@ -1015,7 +978,7 @@ body {
 }
 .datepicker.dropdown-menu button {
   outline: none;
-  border: 0px;
+  border: 0;
 }
 .datepicker.dropdown-menu tbody {
   height: 180px;
