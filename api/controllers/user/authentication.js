@@ -388,13 +388,10 @@ exports.registerB2CStudent = function(req, res, next){
 
         //mailContent.html = mailContent.html1 + resultUser.username + mailContent.html2 + resultUser.email + mailContent.html3 + resultUser.emailActivateToken + mailContent.html4 + resultUser.email + mailContent.html5 + resultUser.emailActivateToken + mailContent.htmlend;
 
-
         mailSender.sendMailQ(mailContent).then(function(resultSendEmail){
             if (!resultSendEmail) {
                 throw new Error('Cancel promise chains. Because Send email of new user failed !');
             }else{
-
-                logger.log(mailContent);
                 logger.log(resultSendEmail);
             }
         }).fail(function(err){
