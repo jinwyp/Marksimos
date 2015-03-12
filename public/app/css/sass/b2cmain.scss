@@ -731,7 +731,7 @@ $lineHeight_button: 1.8;
 
 		.profile-head {
 			float: left;
-			width: image-width("profile_avatar_1.png");//todo: to delete?
+			width: image-width("profile_avatar_1.png");// todo: to delete?
 			height: image-height("profile_avatar_1.png");
 			@include border-radius(2px);
 		}
