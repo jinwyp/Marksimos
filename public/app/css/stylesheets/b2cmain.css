@@ -969,7 +969,7 @@ body {
   position: absolute;
   left: -100px;
 }
-.profile-detail .team-info button {
+.profile-detail .team-info button, .profile-detail .team-info .button {
   width: 65px;
   border-style: none;
   color: #ffffff;
