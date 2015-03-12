@@ -661,6 +661,19 @@ body {
 }
 
 /********************  User Profile  ********************/
+.alert-container {
+  position: relative;
+}
+.alert-container #profile-alert-container {
+  position: absolute;
+  top: -26px;
+  width: 100%;
+}
+.alert-container #profile-alert-container .alert {
+  padding: 2px;
+  margin-bottom: 0;
+}
+
 .profile-underline {
   text-decoration: underline;
 }
@@ -890,6 +903,17 @@ body {
 .profile-detail form > div > div {
   margin-bottom: 0.5em;
 }
+.profile-detail input.form-control[disabled] {
+  background-color: #ffffff;
+  border: none;
+  -moz-box-shadow: none;
+  -webkit-box-shadow: none;
+  box-shadow: none;
+  cursor: initial;
+}
+.profile-detail input[disabled][type=radio] {
+  display: none;
+}
 .profile-detail .none-bottom-border {
   border-bottom: none;
   padding-bottom: 0;
@@ -945,16 +969,19 @@ body {
   position: absolute;
   left: -100px;
 }
-.profile-detail .team-info button, .profile-detail .team-info .add-button, .profile-detail .team-info .remove-button {
-  width: auto;
+.profile-detail .team-info button {
+  width: 65px;
   border-style: none;
   color: #ffffff;
-  padding: 3px;
-  font-size: 10px;
   background-color: #797979;
   -moz-box-shadow: #797979 0px 2px 4px;
   -webkit-box-shadow: #797979 0px 2px 4px;
   box-shadow: #797979 0px 2px 4px;
+}
+.profile-detail .team-info .add-button, .profile-detail .team-info .remove-button {
+  width: auto;
+  padding: 3px;
+  font-size: 10px;
 }
 .profile-detail .team-info input, .profile-detail .team-info span {
   margin-right: 5px;

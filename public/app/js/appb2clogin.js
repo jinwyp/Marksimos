@@ -19,7 +19,7 @@
 
 
     /********************  Create New Module For Controllers ********************/
-    angular.module('b2clogin', ['marksimos.config', 'marksimos.commoncomponent', 'marksimos.websitecomponent', 'marksimos.model', 'marksimos.filter', 'mgcrea.ngStrap']);
+    angular.module('b2clogin', ['marksimos.config', 'marksimos.commoncomponent', 'marksimos.websitecomponent', 'marksimos.model', 'marksimos.filter', 'mgcrea.ngStrap', 'ngAnimate']);
 
 
 
@@ -176,7 +176,7 @@
     }]);
 
 
-    angular.module('b2clogin').controller('profileController', ['Student', '$timeout', function(Student, $timeout) {
+    angular.module('b2clogin').controller('profileController', ['Student', '$alert', function(Student, $alert) {
         /* jshint validthis: true */
         var vm = this;
 
@@ -188,7 +188,21 @@
             updateSuccessInfo: false,
             updateFailedInfo: false,
             updatePasswordSuccessInfo: false,
-            updatePasswordFailedInfo: false
+            updatePasswordFailedInfo: false,
+            alertSuccessInfo: {
+                content: '保存成功！',
+                duration: 3,
+                container: '#profile-alert-container',
+                type: 'success',
+                dismissable: false
+            },
+            alertFailedInfo: {
+                content: '保存失败！',
+                duration: 3,
+                container: '#profile-alert-container',
+                type: 'danger',
+                dismissable: false
+            }
         };
 
         vm.currentUser = {};
@@ -201,7 +215,7 @@
         vm.clickUpdateUserInfo = updateUserInfo;
         vm.clickUpdatePassword = updatePassword;
         vm.clickEdit = edit;
-        vm.clickCancel = cancel;
+        vm.clickCancel = disable;
 
 
         /**********  Function Declarations  **********/
@@ -210,7 +224,7 @@
             vm.css[index].disabled = false;
         }
 
-        function cancel(index) {
+        function disable(index) {
             vm.css[index].disabled = true;
         }
 
@@ -225,6 +239,7 @@
                 }).catch(function(err) {
                     form.$invalid = true;
                     form.$valid = false;
+                    $alert(vm.css.alertFailedInfo);
 
                     vm.css.addTeamFailedInfo = true;
                 });
@@ -251,10 +266,11 @@
                     vm.css.updateTeamNameDisabled = false;
                 } else {
                     Student.updateTeamName(vm.currentUser.team.name).then(function(result) {
-                        //todo;
+                        $alert(vm.css.alertSuccessInfo);
                     }).catch(function(err) {
                         form.teamName.$valid = false;
                         form.teamName.$invalid = true;
+                        $alert(vm.css.alertFailedInfo);
 
                         vm.css.updateTeamNameFailedInfo = true;
                     });
@@ -275,8 +291,11 @@
                         vm.currentUser[key] = data[key];
                     });
                     vm.css[tabIdx].updateSuccessInfo = true;
+                    disable(tabIdx);
+                    $alert(vm.css.alertSuccessInfo);
                 }).catch(function(err) {
                     vm.css[tabIdx].updateFailedInfo = true;
+                    $alert(vm.css.alertFailedInfo)
                 });
             }
         }
