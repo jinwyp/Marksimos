@@ -201,12 +201,17 @@
         vm.clickUpdateUserInfo = updateUserInfo;
         vm.clickUpdatePassword = updatePassword;
         vm.clickEdit = edit;
+        vm.clickCancel = cancel;
 
 
         /**********  Function Declarations  **********/
 
         function edit(index) {
             vm.css[index].disabled = false;
+        }
+
+        function cancel(index) {
+            vm.css[index].disabled = true;
         }
 
         function addStudentToTeam(form) {

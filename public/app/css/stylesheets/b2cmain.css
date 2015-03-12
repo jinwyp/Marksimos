@@ -946,9 +946,11 @@ body {
   left: -100px;
 }
 .profile-detail .team-info button, .profile-detail .team-info .add-button, .profile-detail .team-info .remove-button {
-  width: 65px;
+  width: auto;
   border-style: none;
   color: #ffffff;
+  padding: 3px;
+  font-size: 10px;
   background-color: #797979;
   -moz-box-shadow: #797979 0px 2px 4px;
   -webkit-box-shadow: #797979 0px 2px 4px;
