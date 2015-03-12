@@ -3,7 +3,7 @@
 @import "compass/utilities/general/float";
 
 $color_white: #ffffff;
-$color_profile_detail_title: #d98348;
+$color_profile_detail_title: #959595;
 $color_profile_tip: #d9d9d9;
 $color_register_button: #c42e0d;
 $color_register_button_border: #7e200b;
@@ -762,14 +762,8 @@ $lineHeight_button: 1.8;
   	ul, li {
 		list-style: none;
 		padding-left: 0;
-	}
-	li {
-		border: 1px solid black;
-		border-bottom: none;
-	}
-	li:last-child {
-		border-bottom: solid black;
-		border-width: 1px;
+		background-color: #B4B4B4;
+		color: $color_white;
 	}
 	.avatar {
 		width: 100%;
@@ -786,16 +780,8 @@ $lineHeight_button: 1.8;
 		cursor: pointer;
 	}
 	.profile-nav {cursor: pointer;}
-	.up-triangle {
-		@include triangle();
-		left: 0;
-		right: 0;
-		margin: 0 auto;
-		bottom: -5px;
-	}
 	.selected {
 		background-color: $color_profile_detail_title;
-		color: $color_white;
 	}
 }
 
@@ -873,8 +859,6 @@ $lineHeight_button: 1.8;
 		font-weight: normal;
 	}
 	form {
-		border: 1px solid;
-		border-top: none;
 		padding: 1em;
 		font-size:0.9em;
 	}
@@ -888,28 +872,14 @@ $lineHeight_button: 1.8;
 		padding-bottom: 0;
 	}
 	.profile-detail-title {
-		background-color: $color_profile_detail_title;
-		color: $color_white;
-		padding-left:0.8em;
 		line-height: 1.8;
-	}
-	.profile-detail-tip {
-		padding-left:0.8em;
-		background-color: $color_profile_tip;
-		margin-bottom: 0.8em;
-		span {
-			line-height: 2;
+		border-bottom: #9F9F9F solid 2px;
+		.profile-edit {
+			font-size: 0.8em;
+			float: right;
+			padding-top: 3px;
+			color: #0480CB;
 		}
-	}
-	.done-button {
-		margin: 0.2em 0.4em;
-		background-color: #444444;
-		color: $color_white;
-		padding: 0.2em 0.4em;
-		float: right;
-		font-size: 0.9em;
-		border-style: none;
-		@include box-shadow(#797979 0px 2px 4px)
 	}
 	.profile-button-container {
 		padding: 1.2em 0 0;
@@ -979,7 +949,7 @@ $lineHeight_button: 1.8;
 	height: 270px;
 	button {
 		outline: none;
-		border: 0px;
+		border: 0;
 	}
 	tbody {
 		height: 180px;
