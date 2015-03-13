@@ -90,6 +90,9 @@
             //Labels for Items on Home page - Second Menu Bar
             "HomePageSecondMenuBarLabelsCompany"           : "Company",
             "HomePageSecondMenuBarLabelsCompanies"         : "Companies",
+            "HomePageSecondMenuBarLabelsMemberTotal"         : "Now",
+            "HomePageSecondMenuBarLabelsMember"         : "members in the company to make decision",
+
             "HomePageSecondMenuBarLabelsTimeLeft"          : "left",
             "HomePageSecondMenuBarLabelsTimeLeftForSubmit" : "for submitting decision",
             "HomePageSecondMenuBarLabelsMission"           : "Mission: Market Share + Profit",
@@ -1047,9 +1050,11 @@
             //Labels for Items on Home page - Second Menu Bar
             "HomePageSecondMenuBarLabelsCompany"           : "公司",
             "HomePageSecondMenuBarLabelsCompanies"         : "个公司",
+            "HomePageSecondMenuBarLabelsMemberTotal"         : "现在共",
+            "HomePageSecondMenuBarLabelsMember"         : "个人员参与公司决策",
             "HomePageSecondMenuBarLabelsTimeLeft"          : "剩余",
             "HomePageSecondMenuBarLabelsTimeLeftForSubmit" : "时间做决策",
-            "HomePageSecondMenuBarLabelsMission"           : "目标：市场份额+利润",
+            "HomePageSecondMenuBarLabelsMission"           : "目标：市场份额+净利润",
             "HomePageSecondMenuBarLabelsMakeDecision"      : "做决策",
             "HomePageSecondMenuBarCurrentPeriod"           : "阶段",
 
@@ -1700,7 +1705,7 @@
 
             //Labels for Items on Decision Page - DecisionTab
             "DecisionPageDecisionTabMAKEDECISIONS" : "制定决策",
-            "DecisionPageDecisionTabMission"       : "目标: 市场份额+利润",
+            "DecisionPageDecisionTabMission"       : "目标: 市场份额+净利润",
             "DecisionPageDecisionTabAddNewBrand"   : "添加新品牌",
             "DecisionPageDecisionTabSalesForce"    : "销售团队 (RMB 百万)",
             "DecisionPageDecisionTabAddNewSKU"     : "添加新产品",
