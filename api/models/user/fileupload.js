@@ -18,11 +18,12 @@ var logger = require('../../../common/logger.js');
 
 var multer = require('multer');
 var mkdirp = require('mkdirp');
-
+var fs = require('fs');
 
 var baseUrl = config.fileUploadDirectory;
 var defaultPath = 'default_file_path';
 var tempPath = baseUrl + 'temp';
+var targetPath = baseUrl + defaultPath;
 
 mkdirp.sync(baseUrl + defaultPath);
 mkdirp.sync( tempPath);
@@ -127,10 +128,7 @@ uploadFeatureList.forEach(function(feature){
 
 
 
-FileStorage.multerUpload = function(targetpath){
-
-    targetpath = targetpath || defaultPath;
-    mkdirp.sync(baseUrl + targetpath);
+FileStorage.multerUpload = function(){
 
     return multer({
         dest : tempPath,
@@ -176,6 +174,19 @@ FileStorage.multerUpload = function(targetpath){
 
         },
         onFileUploadComplete: function (file, req, res) {
+
+
+            uploadFeatureList.forEach(function(feature){
+                feature.postBodyField.forEach(function(field){
+
+                    if(field.name ===  file.fieldname){
+                        targetPath =  baseUrl +  feature.filePath + '_' + field.filePath;
+                    }
+                });
+            });
+
+            //fs.renameSync(file.path, targetPath + file.name);
+
             logger.log('Upload Finished. File name ' + file.originalname + ' uploaded to  ' + file.path);
             console.log(req.files);
             //return res.send({message:"File uploaded."});
