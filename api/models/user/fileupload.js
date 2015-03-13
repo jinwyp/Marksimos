@@ -18,6 +18,15 @@ var multer = require('multer');
 var mkdirp = require('mkdirp');
 
 
+var baseUrl = '/public/app/uploadimage/';
+var defaultPath = 'defaultfilepath';
+var tempPath = baseUrl + 'temp';
+
+mkdirp.sync(defaultPath);
+mkdirp.sync(baseUrl + tempPath);
+
+
+
 /**
  * Mongoose schema
  */
@@ -77,14 +86,15 @@ module.exports = FileStorage;
 
 FileStorage.multerUpload = function(targetpath){
 
-    var baseUrl = './public/app/uploadimage/';
     var targetPath = targetpath || 'defaultfilepath';
-    var tempPath = baseUrl + 'temp';
-    console.log("a--------------", tempPath);
+
     return multer({
         dest : tempPath,
         limits: {
             fieldNameSize: 100,
+            fields : 30,
+            fieldSize : 1024,
+
             files: 2,
             fileSize: 1 * 1024 * 1024
         },

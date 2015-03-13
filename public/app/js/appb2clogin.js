@@ -208,7 +208,10 @@
 
         vm.currentUser = {};
         vm.formDatas = [];
-        vm.uploader = new FileUploader();
+        vm.uploader = new FileUploader({
+            url : '/e4e/api/student/avatar',
+            alias : 'studentavatar'
+        });
 
 
         /**********  Event Center  **********/
