@@ -673,6 +673,11 @@ $lineHeight_button: 1.8;
 	width: 0;
 }
 
+.profile-main {
+	width: 976px;
+	margin: 0 auto;
+}
+
 .alert-container {
 	position: relative;
 	#profile-alert-container {
@@ -698,8 +703,6 @@ $lineHeight_button: 1.8;
 	input {
 		@include normalInput();
 	}
-	padding-left: 30px;
-	padding-right: 30px;
 
 	& > header {
 		background-color: $color_white;
@@ -707,7 +710,7 @@ $lineHeight_button: 1.8;
 		position: relative;
 		nav {
 			margin-top: 19px;
-			margin-left: 160px;
+			margin-left: 180px;
 			margin-bottom: 14px;
 			text-align: center;
 			width: 350px;
@@ -734,7 +737,8 @@ $lineHeight_button: 1.8;
 
 	.banner {
 		height: 200px;
-		background-color: #550000;
+		background-color: #8E1C02;
+		margin: 0 -15px;
 	}
 	.user-info {
 		position: absolute;
@@ -761,7 +765,7 @@ $lineHeight_button: 1.8;
 	}
 	.profile-section {
 		padding-top: 2em;
-		@include border-radius(7px);
+		//@include border-radius(7px);
 		margin-bottom: 20px;
 		padding-bottom: 20px;
 	}
@@ -878,7 +882,8 @@ $lineHeight_button: 1.8;
 	form > div > div {
 		margin-bottom: 0.5em;
 	}
-	padding-right: 2em;
+	padding-right: 30px;
+	padding-left: 25px;
 
 	input.form-control[disabled] {
 		background-color: $color_white;

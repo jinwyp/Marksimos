@@ -661,6 +661,11 @@ body {
 }
 
 /********************  User Profile  ********************/
+.profile-main {
+  width: 976px;
+  margin: 0 auto;
+}
+
 .alert-container {
   position: relative;
 }
@@ -682,10 +687,6 @@ body {
   background-color: #ECEDE8;
 }
 
-.profile-content {
-  padding-left: 30px;
-  padding-right: 30px;
-}
 .profile-content input {
   border-radius: 0;
   height: 26px;
@@ -710,7 +711,7 @@ body {
 }
 .profile-content > header nav {
   margin-top: 19px;
-  margin-left: 160px;
+  margin-left: 180px;
   margin-bottom: 14px;
   text-align: center;
   width: 350px;
@@ -738,7 +739,8 @@ body {
 }
 .profile-content .banner {
   height: 200px;
-  background-color: #550000;
+  background-color: #8E1C02;
+  margin: 0 -15px;
 }
 .profile-content .user-info {
   position: absolute;
@@ -765,9 +767,6 @@ body {
 }
 .profile-content .profile-section {
   padding-top: 2em;
-  -moz-border-radius: 7px;
-  -webkit-border-radius: 7px;
-  border-radius: 7px;
   margin-bottom: 20px;
   padding-bottom: 20px;
 }
@@ -891,7 +890,8 @@ body {
 }
 
 .profile-detail {
-  padding-right: 2em;
+  padding-right: 30px;
+  padding-left: 25px;
 }
 .profile-detail label {
   font-weight: normal;
