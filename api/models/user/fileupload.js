@@ -13,17 +13,19 @@ var schemaObjectId = Schema.Types.ObjectId;
 
 var Q = require('q');
 var mongooseTimestamps = require('mongoose-timestamp');
+var config = require('../../../common/config.js');
+var logger = require('../../../common/logger.js');
 
 var multer = require('multer');
 var mkdirp = require('mkdirp');
 
 
-var baseUrl = '/public/app/uploadimage/';
-var defaultPath = 'defaultfilepath';
+var baseUrl = config.fileUploadDirectory;
+var defaultPath = 'default_file_path';
 var tempPath = baseUrl + 'temp';
 
-mkdirp.sync(defaultPath);
-mkdirp.sync(baseUrl + tempPath);
+mkdirp.sync(baseUrl + defaultPath);
+mkdirp.sync( tempPath);
 
 
 
@@ -84,9 +86,51 @@ var FileStorage = mongoose.model("FileStorage", fileStorageSchema);
 module.exports = FileStorage;
 
 
+var uploadFeatureList = [
+    {
+        name : 'studentProfile',
+        filePath : 'student_profile',
+        postBodyField : [
+            {
+                name : 'studentavatar',
+                filePath : 'avatar'
+            }
+        ]
+    },
+
+    {
+        name : 'adminCampaignInfo',
+        filePath : 'admin_campaign',
+        postBodyField : [
+            {
+                name : 'list',
+                filePath : 'list'
+            },
+            {
+                name : 'title',
+                filePath : 'title'
+            }
+        ]
+    }
+
+];
+
+var uploadFieldsLimit = [];
+
+uploadFeatureList.forEach(function(feature){
+    feature.postBodyField.forEach(function(field){
+        uploadFieldsLimit.push(field.name);
+        mkdirp.sync(baseUrl +  feature.filePath + '_' + field.filePath);
+    });
+});
+
+
+
+
 FileStorage.multerUpload = function(targetpath){
 
-    var targetPath = targetpath || 'defaultfilepath';
+    targetpath = targetpath || defaultPath;
+    mkdirp.sync(baseUrl + targetpath);
 
     return multer({
         dest : tempPath,
@@ -103,14 +147,36 @@ FileStorage.multerUpload = function(targetpath){
             var datenowString = datenow.getFullYear() + '_' + datenow.getMonth() + '_' + datenow.getDate() + '_' + datenow.getHours() + '_' + datenow.getMinutes() + '_' + datenow.getSeconds() + '_';
             return datenowString + filename.replace(/\W+/g, '_').toLowerCase() +  '_' + datenow.getTime();
         },
+        //changeDest: function(dest, req, res) {
+        //
+        //    for (var key in req.body) {
+        //        if(req.body.hasOwnProperty(key)  ){
+        //
+        //            uploadFeatureList.forEach(function(feature){
+        //                feature.postBodyField.forEach(function(field){
+        //
+        //                    if(field.name === req.body[field.name]){
+        //                        return baseUrl +  feature.filePath + '_' + field.filePath
+        //                    }
+        //                });
+        //            });
+        //        }
+        //    }
+        //
+        //    return dest;
+        //},
         onFileUploadStart: function (file, req, res) {
-            console.log('Upload field : ', file.fieldname + '. File name : ' + file.originalname + ' is starting ...')
 
-            targetPath = mkdirp.sync(baseUrl + targetPath);
+            if (uploadFieldsLimit.indexOf(file.fieldname) === -1)  {
+                logger.log('Upload file failed! Form fieldname: ' + file.fieldname + '. File name: ' + file.originalname);
+                return false;
+            }else{
+                logger.log('Starting upload ... Form fieldname: '+ file.fieldname + '. File name: ' + file.originalname);
+            }
 
         },
         onFileUploadComplete: function (file, req, res) {
-            console.log('Upload Finished. File name ' + file.originalname + ' uploaded to  ' + file.path);
+            logger.log('Upload Finished. File name ' + file.originalname + ' uploaded to  ' + file.path);
             console.log(req.files);
             //return res.send({message:"File uploaded."});
         }
