@@ -82,16 +82,6 @@
                     x : "Round 2",
                     y: [2, 2, 3, 3, 3, 3],
                     tooltip:"this is tooltip"
-                },
-                {
-                    x : "Round 3",
-                    y: [2, 2, 3, 3, 3, 3],
-                    tooltip:"this is tooltip"
-                },
-                {
-                    x : "Round 4",
-                    y: [0, 0, 0, 0, 0, 0],
-                    tooltip:"this is tooltip"
                 }
             ]
         };
@@ -691,7 +681,9 @@
                         $scope.data.chartB33ReturnOnInvestment.data = data;
                     });
                     chartReport.investmentsVersusBudget($scope.data.currentSeminar.currentCompany.companyId).then(function(data, status, headers, config){
+                        //console.log(data);
                         $scope.data.chartB34InvestmentsVersusBudget.data = data;
+
                     });
 
 

@@ -334,6 +334,18 @@
         return translateText.ReportPerceptionMapAxisLabelSegment ;
     }
 
+    var dataChartSimple = {
+        firstTime : true,
+        company : 0,
+        series: [],
+        data : [
+            {
+                x : "",
+                y: [],
+                tooltip:"tooltip"
+            }
+        ]
+    };
 
     var chartResult = {
         series: [],
@@ -341,11 +353,16 @@
     };
 
 
+
+
     var chartFormatToolLineChart = function(chartHttpData, decimalNumber){
         // 使用angular-chart 插件的数据格式
 
         chartResult.series = [];
         chartResult.data = [];
+
+
+
 
         if(angular.isUndefined(chartHttpData.periods)){
             // 如果periods 没有定义则是普通的图表,不带有系列的图表 目前仅仅有C44 和 B34
@@ -360,7 +377,9 @@
                     // C44 segment_value_share_total_market
                     chartResult.series.push(showTranslateTextConsumerSegmentName(value.segmentName));
                 }
+
             });
+
 
             angular.forEach(chartHttpData.chartData, function(value, key) {
                 var oneBarData = {
@@ -407,6 +426,11 @@
 
 
         }else if(angular.isArray(chartHttpData.periods) ){
+            //处理第一回合空数据
+            if(chartHttpData.chartData.length == 0){
+                return dataChartSimple;
+            }
+
             // 如果periods 有定义 则是带有系列的图表 包括图表 B1 B3 和 C4
             angular.forEach(chartHttpData.periods, function(value, key) {
 
@@ -436,7 +460,16 @@
             }else{
                 angular.forEach(chartHttpData.companyNames, function(value, key) {
                     chartResult.series.push(showTranslateTextCompanyName(value));
+
+                    //处理第一回合空数据
+                    if(dataChartSimple.firstTime === true){
+                        dataChartSimple.company = dataChartSimple.company + 1;
+                        dataChartSimple.series.push(showTranslateTextCompanyName(value));
+                        dataChartSimple.data[0].y.push(0);
+                    }
                 });
+                dataChartSimple.firstTime = false;
+
             }
 
             return angular.copy(chartResult);

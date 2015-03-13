@@ -191,7 +191,7 @@ apiRouter.post('/e4e/api/forgotpasswordstep3', auth.resetNewPassword);
 apiRouter.put('/e4e/api/student/password', auth.authLoginToken(), auth.authRole(userRoleModel.right.marksimos.studentInfoSingleCUD), studentController.updateStudentB2CPassword);
 apiRouter.put('/e4e/api/student', auth.authLoginToken(), auth.authRole(userRoleModel.right.marksimos.studentInfoSingleCUD), studentController.updateStudentB2CInfo);
 
-apiRouter.post('/e4e/api/student/avatar', auth.authLoginToken(), auth.authRole(userRoleModel.right.marksimos.studentInfoSingleCUD), fileUploadModel.multerUpload() );
+apiRouter.post('/e4e/api/student/avatar', auth.authLoginToken(), auth.authRole(userRoleModel.right.marksimos.studentInfoSingleCUD), fileUploadModel.multerUpload('studentavatar'), studentController.uploadStudentAvatar );
 
 apiRouter.post('/e4e/api/team', auth.authLoginToken(), auth.authRole(userRoleModel.right.marksimos.teamInfoSingleCUD), studentController.updateTeam);
 apiRouter.post('/e4e/api/team/student',  auth.authLoginToken(), auth.authRole(userRoleModel.right.marksimos.teamInfoSingleGet), studentController.addStudentToTeam);

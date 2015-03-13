@@ -44,7 +44,6 @@ exports.getChart = function(req, res, next){
             var chartData = filterChart(chart, companyId);
             return res.send(chartData);
         }
-
         res.send(chart.chartData);
     })
     .fail(function(err){
