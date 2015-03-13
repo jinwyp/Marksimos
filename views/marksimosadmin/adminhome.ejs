@@ -563,7 +563,7 @@
                                         <td>
                                             <p ng-repeat="company in seminar.companyAssignment">Company{{company.companyId | companyname }} :
                                                 <br>
-                                                <span ng-repeat="student in company.studentList">{{student}} <a href="" ng-hide="seminar.isInitialized" ng-click="removeStudentFromSeminar(seminar.seminarId, student)">remove</a>, </span>
+                                                <span ng-repeat="student in company.studentList">{{student}} <a href="" ng-click="removeStudentFromSeminar(seminar.seminarId, student)">remove</a>, </span>
                                             </p>
                                         </td>
                                         <td style="width:460px">
