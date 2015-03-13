@@ -183,7 +183,7 @@
 
         vm.css = {
             addStudentFailedInfo: false,
-            curTabIdx: 1,
+            currentTabIndex: 1,
             updateTeamNameDisabled: true,
             updateTeamNameFailedInfo: false,
             updateSuccessInfo: false,
@@ -208,7 +208,10 @@
 
         vm.currentUser = {};
         vm.formDatas = [];
-        vm.uploader = new FileUploader();
+        vm.uploader = new FileUploader({
+            alias: 'studentavatar',
+            url: '/e4e/api/student/avatar'
+        });
 
 
         /**********  Event Center  **********/
@@ -217,17 +220,17 @@
         vm.clickUpdateTeamName = updateTeamName;
         vm.clickUpdateUserInfo = updateUserInfo;
         vm.clickUpdatePassword = updatePassword;
-        vm.clickEdit = edit;
-        vm.clickCancel = disable;
+        vm.clickEditProfile = editProfile;
+        vm.clickCancelEditProfile = disableFormInput;
 
 
         /**********  Function Declarations  **********/
 
-        function edit(index) {
+        function editProfile(index) {
             vm.css[index].disabled = false;
         }
 
-        function disable(index) {
+        function disableFormInput(index) {
             vm.css[index].disabled = true;
         }
 
@@ -285,7 +288,7 @@
         function updateUserInfo(form) {
             // todo, let what css info be false
             if (form.$valid) {
-                var tabIdx = vm.css.curTabIdx;
+                var tabIdx = vm.css.currentTabIndex;
                 var data = vm.formDatas[tabIdx];
                 data.clickSumbit = true;
                 Student.updateStudentB2CInfo(data).then(function() {
@@ -298,7 +301,7 @@
                     $alert(vm.css.alertSuccessInfo);
                 }).catch(function(err) {
                     vm.css[tabIdx].updateFailedInfo = true;
-                    $alert(vm.css.alertFailedInfo)
+                    $alert(vm.css.alertFailedInfo);
                 });
             }
         }
@@ -314,10 +317,6 @@
                     vm.css.updatePasswordFailedInfo = true;
                 });
             }
-        }
-
-        function onAfterAddngFile(item) {
-
         }
 
 
@@ -366,49 +365,6 @@
 
         app.init();
 
-    }]).directive('ngThumb', ['$window', function($window) { // todo, place it to here for now
-        var helper = {
-            support: !!($window.FileReader && $window.CanvasRenderingContext2D),
-            isFile: function(item) {
-                return angular.isObject(item) && item instanceof $window.File;
-            },
-            isImage: function(file) {
-                var type =  '|' + file.type.slice(file.type.lastIndexOf('/') + 1) + '|';
-                return '|jpg|png|jpeg|bmp|gif|'.indexOf(type) !== -1;
-            }
-        };
-
-        return {
-            restrict: 'A',
-            template: '<canvas/>',
-            link: function(scope, element, attributes) {
-                if (!helper.support) return;
-
-                var params = scope.$eval(attributes.ngThumb);
-
-                if (!helper.isFile(params.file)) return;
-                if (!helper.isImage(params.file)) return;
-
-                var canvas = element.find('canvas');
-                var reader = new FileReader();
-
-                reader.onload = onLoadFile;
-                reader.readAsDataURL(params.file);
-
-                function onLoadFile(event) {
-                    var img = new Image();
-                    img.onload = onLoadImage;
-                    img.src = event.target.result;
-                }
-
-                function onLoadImage() {
-                    var width = params.width || this.width / this.height * params.height;
-                    var height = params.height || this.height / this.width * params.width;
-                    canvas.attr({ width: width, height: height });
-                    canvas[0].getContext('2d').drawImage(this, 0, 0, width, height);
-                }
-            }
-        };
     }]);
 
 
