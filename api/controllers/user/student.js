@@ -73,6 +73,8 @@ exports.updateStudentB2CInfo = function(req, res, next){
 
 
 
+
+
 exports.updateStudentB2CPassword = function(req, res, next){
 
     var validationErrors = userModel.passwordValidations(req, userRoleModel.roleList.student.id, userModel.getStudentType().B2C);
