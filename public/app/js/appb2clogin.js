@@ -410,6 +410,7 @@
                     canvas.attr({ width: width, height: height });
                     canvas[0].getContext('2d').drawImage(this, 0, 0, width, height);
                 }
+                
             }
         };
     }]);
