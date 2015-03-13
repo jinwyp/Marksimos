@@ -73,6 +73,12 @@ exports.updateStudentB2CInfo = function(req, res, next){
 
 
 
+exports.uploadStudentAvatar = function(req, res, next){
+
+    return res.status(200).send(req.files);
+
+
+};
 
 
 exports.updateStudentB2CPassword = function(req, res, next){
