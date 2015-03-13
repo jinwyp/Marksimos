@@ -218,7 +218,6 @@ exports.investmentsVersusBudget = function(allResults, simulationSpan){
             result.chartData[i-4].push(percentage);
         }
     }
-
     return result;
 };
 
