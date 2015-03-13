@@ -152,10 +152,10 @@ FileStorage.multerUpload = function(fieldname){
         onFileUploadStart: function (file, req, res) {
 
             if (uploadFieldsLimit.indexOf(file.fieldname) === -1 || fieldname !== file.fieldname ){
-                logger.log('Upload file failed! Form fieldname: ' + file.fieldname + '. File name: ' + file.originalname);
+                //logger.log('Upload file failed! Form fieldname: ' + file.fieldname + '. File name: ' + file.originalname);
                 return false;
             }else{
-                logger.log('Starting upload ... Form fieldname: '+ file.fieldname + '. File name: ' + file.originalname);
+                //logger.log('Starting upload ... Form fieldname: '+ file.fieldname + '. File name: ' + file.originalname);
             }
 
         },
@@ -176,7 +176,7 @@ FileStorage.multerUpload = function(fieldname){
             file.path = targetPath + file.name;
             file.pathAbsolute = basePath + targetPath + file.name;
 
-            logger.log('Upload Finished. File name ' + file.originalname + ' uploaded to  ' + file.path);
+            //logger.log('Upload Finished. File name ' + file.originalname + ' uploaded to  ' + file.path);
         }
     });
 };
