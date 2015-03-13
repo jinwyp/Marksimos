@@ -19,7 +19,8 @@
 
 
     /********************  Create New Module For Controllers ********************/
-    angular.module('b2clogin', ['marksimos.config', 'marksimos.commoncomponent', 'marksimos.websitecomponent', 'marksimos.model', 'marksimos.filter', 'mgcrea.ngStrap']);
+    angular.module('b2clogin', ['marksimos.config', 'marksimos.commoncomponent', 'marksimos.websitecomponent',
+        'marksimos.model', 'marksimos.filter', 'mgcrea.ngStrap', 'ngAnimate', 'angularFileUpload']);
 
 
 
@@ -176,23 +177,42 @@
     }]);
 
 
-    angular.module('b2clogin').controller('profileController', ['Student', '$timeout', function(Student, $timeout) {
+    angular.module('b2clogin').controller('profileController', ['Student', '$alert', 'FileUploader', function(Student, $alert, FileUploader) {
         /* jshint validthis: true */
         var vm = this;
 
         vm.css = {
             addStudentFailedInfo: false,
-            curTabIdx: 0,
+            curTabIdx: 1,
             updateTeamNameDisabled: true,
             updateTeamNameFailedInfo: false,
             updateSuccessInfo: false,
             updateFailedInfo: false,
             updatePasswordSuccessInfo: false,
-            updatePasswordFailedInfo: false
+            updatePasswordFailedInfo: false,
+            alertSuccessInfo: {
+                content: '保存成功！',
+                duration: 3,
+                container: '#profile-alert-container',
+                type: 'success',
+                dismissable: false
+            },
+            alertFailedInfo: {
+                content: '保存失败！',
+                duration: 3,
+                container: '#profile-alert-container',
+                type: 'danger',
+                dismissable: false
+            }
         };
 
         vm.currentUser = {};
         vm.formDatas = [];
+        vm.uploader = new FileUploader({
+            url : '/e4e/api/student/avatar',
+            alias : 'studentavatar'
+        });
+
 
         /**********  Event Center  **********/
         vm.clickAddStudentToTeam = addStudentToTeam;
@@ -200,9 +220,20 @@
         vm.clickUpdateTeamName = updateTeamName;
         vm.clickUpdateUserInfo = updateUserInfo;
         vm.clickUpdatePassword = updatePassword;
+        vm.clickEdit = edit;
+        vm.clickCancel = disable;
 
 
         /**********  Function Declarations  **********/
+
+        function edit(index) {
+            vm.css[index].disabled = false;
+        }
+
+        function disable(index) {
+            vm.css[index].disabled = true;
+        }
+
         function addStudentToTeam(form) {
             vm.css.addTeamFailedInfo = false;
             vm.css.addTeamSuccessInfo = false;
@@ -214,6 +245,7 @@
                 }).catch(function(err) {
                     form.$invalid = true;
                     form.$valid = false;
+                    $alert(vm.css.alertFailedInfo);
 
                     vm.css.addTeamFailedInfo = true;
                 });
@@ -240,10 +272,11 @@
                     vm.css.updateTeamNameDisabled = false;
                 } else {
                     Student.updateTeamName(vm.currentUser.team.name).then(function(result) {
-                        //todo;
+                        $alert(vm.css.alertSuccessInfo);
                     }).catch(function(err) {
                         form.teamName.$valid = false;
                         form.teamName.$invalid = true;
+                        $alert(vm.css.alertFailedInfo);
 
                         vm.css.updateTeamNameFailedInfo = true;
                     });
@@ -264,8 +297,11 @@
                         vm.currentUser[key] = data[key];
                     });
                     vm.css[tabIdx].updateSuccessInfo = true;
+                    disable(tabIdx);
+                    $alert(vm.css.alertSuccessInfo);
                 }).catch(function(err) {
                     vm.css[tabIdx].updateFailedInfo = true;
+                    $alert(vm.css.alertFailedInfo)
                 });
             }
         }
@@ -283,32 +319,38 @@
             }
         }
 
+        function onAfterAddngFile(item) {
+
+        }
+
 
         var app = {
             init : function(){
                 this.getUserInfo().then(function(data) {
+                    // for the upload avatar form
+                    vm.formDatas[0] = null;
                     // basic form
-                    vm.formDatas[0] = {
+                    vm.formDatas[1] = {
                         gender: data.gender,
                         birthday: data.birthday,
                         clickSumbit: false
                     };
                     // school form
-                    vm.formDatas[1] = {
+                    vm.formDatas[2] = {
                         organizationOrUniversity: data.organizationOrUniversity,
                         dateOfEnterCollege: data.dateOfEnterCollege,
                         majorsDegree: data.majorsDegree
                     };
-                    vm.formDatas[2] = vm.formDatas[3] = null;
+                    vm.formDatas[3] = vm.formDatas[4] = null;
                     // contact form
-                    vm.formDatas[4] = {
+                    vm.formDatas[5] = {
                         qq: data.qq
                     };
                     vm.formDatas.forEach(function(data, i) {
-                        if (!data) return;
                         vm.css[i] = {
                             updateSuccessInfo: false,
-                            updateFailedInfo: false
+                            updateFailedInfo: false,
+                            disabled: true
                         };
                     });
                 });
@@ -327,6 +369,49 @@
 
         app.init();
 
+    }]).directive('ngThumb', ['$window', function($window) { // todo, place it to here for now
+        var helper = {
+            support: !!($window.FileReader && $window.CanvasRenderingContext2D),
+            isFile: function(item) {
+                return angular.isObject(item) && item instanceof $window.File;
+            },
+            isImage: function(file) {
+                var type =  '|' + file.type.slice(file.type.lastIndexOf('/') + 1) + '|';
+                return '|jpg|png|jpeg|bmp|gif|'.indexOf(type) !== -1;
+            }
+        };
+
+        return {
+            restrict: 'A',
+            template: '<canvas/>',
+            link: function(scope, element, attributes) {
+                if (!helper.support) return;
+
+                var params = scope.$eval(attributes.ngThumb);
+
+                if (!helper.isFile(params.file)) return;
+                if (!helper.isImage(params.file)) return;
+
+                var canvas = element.find('canvas');
+                var reader = new FileReader();
+
+                reader.onload = onLoadFile;
+                reader.readAsDataURL(params.file);
+
+                function onLoadFile(event) {
+                    var img = new Image();
+                    img.onload = onLoadImage;
+                    img.src = event.target.result;
+                }
+
+                function onLoadImage() {
+                    var width = params.width || this.width / this.height * params.height;
+                    var height = params.height || this.height / this.width * params.width;
+                    canvas.attr({ width: width, height: height });
+                    canvas[0].getContext('2d').drawImage(this, 0, 0, width, height);
+                }
+            }
+        };
     }]);
 
 

@@ -245,7 +245,7 @@ function reportForBrand(onePeriodResult, companyId){
             brandName: brandResult.b_BrandName,
             salesValue: brandResult.b_FactorySalesValue,
             changeVersusPreviousPeriodSalesValue: brandResult.b_FactorySalesValueChange * 100,
-            shareInCompanyTotalSalesValue: brandResult.b_ShareInCompanySalesValue,
+            shareInCompanyTotalSalesValue: brandResult.b_ShareInCompanySalesValue * 100,
             costOfGoodsSold: -brandResult.b_CostOfGoodsSold,
             obsoleteGoodsCost: -brandResult.b_ObsoleteGoodsCost,
             discontinuedGoodsCost: -brandResult.b_DroppedGoodsCost,

@@ -151,6 +151,8 @@ var roles = [
             appResource.marksimos.teamInfoSingleCUD,
             appResource.marksimos.teamInfoListGet,
 
+            appResource.marksimos.campaignSingleGet,
+
             appResource.marksimos.seminarListOfStudentGet,
             appResource.marksimos.seminarSingleDecisionGet,
             appResource.marksimos.seminarSingleDecisionCUD

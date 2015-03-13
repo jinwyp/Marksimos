@@ -11,7 +11,7 @@
         <menu-admin current-menu="css.leftmenu" showtab="css.menuTabShow" currentuser="data.currentUser"></menu-admin>
 
 
-        <aside class="right-side">
+        <aside class="right-side" ng-cloak>
 
             <section class="content" ng-if="css.leftmenu==11">
                 <h2 class="page-header">Dashboard coming soon !!</h2>
@@ -726,7 +726,7 @@
                                         <td style="width:200px">
                                             <div>
                                                 <p ng-repeat="seminar in campaign.seminarListMarksimos">
-                                                    <span>Seminar: {{seminar.seminarId }} <a href="" ng-click="removeSeminarFromCampaign(campaign._id, seminar.seminarId)">remove</a>, </span>
+                                                    <span>Seminar : {{seminar.seminarId }} <a href="" ng-click="removeSeminarFromCampaign(campaign._id, seminar.seminarId)">remove</a>, </span>
                                                 </p>
 
                                                 <div class="input-group ">
@@ -735,14 +735,31 @@
                                                         <button class="btn btn-info" type="button" ng-click="addSeminarIntoCampaign(campaign._id, campaign.inputSeminarId)">Add</button>
                                                     </span>
                                                 </div><!-- /input-group -->
-                                                <div class="callout callout-danger" ng-show="campaign._id == css.campaignId">
+                                                <div class="callout callout-danger" ng-show="campaign._id == css.campaignIdAddSeminar">
                                                     <p>Please Input Seminar ID !</p>
                                                 </div>
                                             </div>
 
                                         </td>
                                         <td style="width:400px">
+                                            <div>
+                                                <div ng-repeat="team in campaign.teamList">
+                                                    <p>Team name : {{team.name }} / Creator : {{team.creator.username }} <a href="" ng-click="removeTeamFromCampaign(campaign._id, team._id)">remove</a>
+                                                        <br/>
+                                                        Team Members : <span ng-repeat="student in team.memberList">{{student.username }} , </span>
+                                                    </p>
+                                                </div>
 
+                                                <div class="input-group ">
+                                                    <input type="text" class="form-control" placeholder="Team Creator Username" ng-model="campaign.inputTeamCreatorUsername">
+                                                    <span class="input-group-btn">
+                                                        <button class="btn btn-info" type="button" ng-click="addTeamIntoCampaign(campaign._id, campaign.inputTeamCreatorUsername)">Add</button>
+                                                    </span>
+                                                </div><!-- /input-group -->
+                                                <div class="callout callout-danger" ng-show="campaign._id == css.campaignIdAddTeam">
+                                                    <p>Please Input Team Creator Username !</p>
+                                                </div>
+                                            </div>
                                         </td>
                                     </tr>
                                     </tbody>

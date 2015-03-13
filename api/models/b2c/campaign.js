@@ -82,6 +82,21 @@ campaignSchema.statics.addSeminarValidations = function(req){
 };
 
 
+campaignSchema.statics.addTeamValidations = function(req){
+    req.checkBody('username', 'Username should be 6-20 characters').notEmpty().len(6, 20);
+    //req.checkBody('teamId', 'Team ID should be 24 characters').notEmpty().len(24, 24);
+    req.checkBody('campaignId', 'Campaign ID should be 24 characters').notEmpty().len(24, 24);
+
+    return req.validationErrors();
+};
+
+campaignSchema.statics.removeTeamValidations = function(req){
+    req.checkBody('teamId', 'Team ID should be 24 characters').notEmpty().len(24, 24);
+    req.checkBody('campaignId', 'Campaign ID should be 24 characters').notEmpty().len(24, 24);
+
+    return req.validationErrors();
+};
+
 
 /**
  * Methods

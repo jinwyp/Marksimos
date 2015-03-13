@@ -1,3 +1,6 @@
+
+var fileUploadModel = require('./models/user/fileupload.js');
+
 var decisionController = require('./controllers/marksimos/decision.js');
 var chartController = require('./controllers/marksimos/chart.js');
 var reportController = require('./controllers/marksimos/report.js');
@@ -42,7 +45,9 @@ apiRouter.get('/', function(req, res, next){
     res.redirect('/cn');
 });
 
-
+apiRouter.get('/admin', function(req, res, next){
+    res.redirect('/marksimos/admin');
+});
 
 
 
@@ -186,11 +191,13 @@ apiRouter.post('/e4e/api/forgotpasswordstep3', auth.resetNewPassword);
 apiRouter.put('/e4e/api/student/password', auth.authLoginToken(), auth.authRole(userRoleModel.right.marksimos.studentInfoSingleCUD), studentController.updateStudentB2CPassword);
 apiRouter.put('/e4e/api/student', auth.authLoginToken(), auth.authRole(userRoleModel.right.marksimos.studentInfoSingleCUD), studentController.updateStudentB2CInfo);
 
+apiRouter.post('/e4e/api/student/avatar', auth.authLoginToken(), auth.authRole(userRoleModel.right.marksimos.studentInfoSingleCUD), fileUploadModel.multerUpload() );
+
 apiRouter.post('/e4e/api/team', auth.authLoginToken(), auth.authRole(userRoleModel.right.marksimos.teamInfoSingleCUD), studentController.updateTeam);
 apiRouter.post('/e4e/api/team/student',  auth.authLoginToken(), auth.authRole(userRoleModel.right.marksimos.teamInfoSingleGet), studentController.addStudentToTeam);
 apiRouter.delete('/e4e/api/team/student/:student_id',  auth.authLoginToken(), auth.authRole(userRoleModel.right.marksimos.teamInfoSingleCUD), studentController.removeStudentToTeam);
 
-
+apiRouter.post('/e4e/api/campaigns/teams', auth.authLoginToken(), auth.authRole(userRoleModel.right.marksimos.campaignSingleGet), campaignController.addTeamToCampaign);
 
 
 
@@ -278,7 +285,10 @@ apiRouter.get('/marksimos/api/admin/campaigns', auth.authLoginToken(), auth.auth
 apiRouter.post('/marksimos/api/admin/campaigns', auth.authLoginToken(), auth.authRole(userRoleModel.right.marksimos.campaignSingleCUD), campaignController.addCampaign);
 
 apiRouter.post('/marksimos/api/admin/campaigns/seminars', auth.authLoginToken(), auth.authRole(userRoleModel.right.marksimos.campaignSingleCUD), campaignController.addMarkSimosSeminarToCampaign);
-apiRouter.delete('/marksimos/api/admin/campaigns/:campaignId/seminars/:seminarId', auth.authLoginToken(), auth.authRole(userRoleModel.right.marksimos.campaignSingleCUD), campaignController.removeMarkSimosSeminarFromCampaign);
+apiRouter.post('/marksimos/api/admin/campaigns/seminars/remove', auth.authLoginToken(), auth.authRole(userRoleModel.right.marksimos.campaignSingleCUD), campaignController.removeMarkSimosSeminarFromCampaign);
+
+apiRouter.post('/marksimos/api/admin/campaigns/teams', auth.authLoginToken(), auth.authRole(userRoleModel.right.marksimos.campaignSingleCUD), campaignController.addTeamToCampaign);
+apiRouter.post('/marksimos/api/admin/campaigns/teams/remove', auth.authLoginToken(), auth.authRole(userRoleModel.right.marksimos.campaignSingleCUD), campaignController.removeTeamFromCampaign);
 
 
 //Facilitator manager seminars

@@ -206,7 +206,9 @@ userSchema.statics.verifyPassword = function(password, hashedPassword){
     return bcrypt.compareSync(password, hashedPassword);
 };
 
-
+userSchema.statics.selectFields = function(){
+    return '-password -resetPasswordVerifyCode -resetPasswordToken -resetPasswordTokenExpires -emailActivateToken -emailActivateTokenExpires';
+};
 
 
 
