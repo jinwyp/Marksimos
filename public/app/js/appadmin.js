@@ -163,7 +163,8 @@
             addStudentToSeminar: {
                 seminar_id: 0,
                 company_id: 0,
-                email: ""
+                studentemail : "",
+                teamcreatoremail : ""
             },
             removedStudent: {
                 seminar_id: 0,
@@ -708,7 +709,8 @@
                 $scope.css.seminarId = seminarid;
             }else{
                 $scope.css.seminarId = 0;
-                $scope.data.addStudentToSeminar.email = studentemail;
+                $scope.data.addStudentToSeminar.studentemail = studentemail;
+                $scope.data.addStudentToSeminar.teamcreatoremail = '';
 
                 Admin.addStudentToSeminar( $scope.data.addStudentToSeminar).success(function(data, status, headers, config) {
 
@@ -717,7 +719,8 @@
 
                     $scope.data.addStudentToSeminar.seminar_id = 0;
                     $scope.data.addStudentToSeminar.company_id = 0;
-                    $scope.data.addStudentToSeminar.email = "";
+                    $scope.data.addStudentToSeminar.studentemail = '';
+                    $scope.data.addStudentToSeminar.teamcreatoremail = '';
 
                 }).error(function(data, status, headers, config) {
                     console.log(data);
@@ -739,6 +742,33 @@
 
                     $scope.data.removedStudent.seminar_id = 0;
                     $scope.data.removedStudent.email = "";
+
+                }).error(function(data, status, headers, config) {
+                    console.log(data);
+                    $notification.error('Failed', data.message);
+                });
+            }
+        };
+
+        /********************  Add Team To Seminar  ********************/
+        $scope.addTeamToSeminar = function(seminarid, teamcreatorusername) {
+
+            if ($scope.data.addStudentToSeminar.company_id === 0 || angular.isUndefined(teamcreatorusername) || teamcreatorusername === "") {
+                $scope.css.seminarId = seminarid;
+            }else{
+                $scope.css.seminarId = 0;
+                $scope.data.addStudentToSeminar.studentemail = '';
+                $scope.data.addStudentToSeminar.teamcreatoremail = teamcreatorusername;
+
+                Admin.addStudentToSeminar( $scope.data.addStudentToSeminar).success(function(data, status, headers, config) {
+
+                    app.getSeminarInit();
+                    $notification.success('Save success', 'Add Team to Seminar success');
+
+                    $scope.data.addStudentToSeminar.seminar_id = 0;
+                    $scope.data.addStudentToSeminar.company_id = 0;
+                    $scope.data.addStudentToSeminar.studentemail = '';
+                    $scope.data.addStudentToSeminar.teamcreatoremail = '';
 
                 }).error(function(data, status, headers, config) {
                     console.log(data);

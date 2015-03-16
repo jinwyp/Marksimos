@@ -2,6 +2,7 @@ var seminarModel = require('../../models/marksimos/seminar.js');
 var gameTokenModel = require('../../models/user/gameauthtoken.js');
 var userModel = require('../../models/user/user.js');
 var userRoleModel = require('../../models/user/userrole.js');
+var teamModel = require('../../models/user/team.js');
 
 var logger = require('../../../common/logger.js');
 var consts = require('../../consts.js');
@@ -49,7 +50,8 @@ exports.addSeminar = function(req, res, next){
         seminar.companyAssignment.push({
             companyId: i + 1,
             companyName: companyNameList[i],
-            studentList : []
+            studentList : [],
+            teamList : []
         });
     }
 
@@ -97,62 +99,135 @@ exports.addSeminar = function(req, res, next){
 
 
 exports.assignStudentToSeminar = function(req, res, next){
-   
-    req.checkBody('email', 'Invalid email.').notEmpty().isEmail();
+
     req.checkBody('seminar_id', 'Invalid seminar id.').notEmpty().isInt();
     req.checkBody('company_id', 'Invalid company id.').notEmpty().isInt();
 
-    var email = req.body.email;
+    var email;
+
+    if(req.body.studentemail !== ''){
+        req.checkBody('studentemail', 'Invalid email.').notEmpty().isEmail();
+        email = req.body.studentemail;
+    }else{
+        req.checkBody('teamcreatoremail', 'Invalid email.').notEmpty().isEmail();
+        email = req.body.teamcreatoremail;
+    }
+
     var seminarId = req.body.seminar_id;
     var companyId = +req.body.company_id;
 
 
-    if (req.validationErr) {
-        res.send(400, { message: "Invalid company_id." });
-        return;
+    var validationErrors = req.validationErrors();
+
+    if(validationErrors){
+        return res.status(400).send( {message: validationErrors} );
     }
 
-    userModel.findOneQ({email: email}).then(function(student){
-        if(!student){
-            throw {message: "Email not exist, assign student to seminar failed."};
+
+    var userData;
+
+    userModel.findOneQ({email: email}).then(function(resultUser){
+
+        if(!resultUser){
+            throw new Error('Cancel promise chains. Because User not found !');
         }
+
+        userData = resultUser;
 
         return seminarModel.findOneQ({seminarId: seminarId});
-    })
-    .then(function(dbSeminar){
-        if(!dbSeminar){
-            throw {httpStatus: 400, message: "seminar "+ seminarId + " doesn't exist."}
+    }).then(function(resultSeminar){
+        if (!resultSeminar) {
+            throw new Error('Cancel promise chains. Because Seminar not found !');
         }
 
-        var companyAssignment = dbSeminar.companyAssignment;
+        var companyAssignment = resultSeminar.companyAssignment;
         var isStudentAssignedToSeminar = false;
+        var isTeamAssignedToSeminar = false;
 
+        if(req.body.studentemail !== ''){
 
-        for(var i=0; i < companyAssignment.length; i++){
-            if(companyAssignment[i].studentList.indexOf(email) > -1){
-                isStudentAssignedToSeminar = true;
-                throw {message: "Email have already assigned to this seminar."};
+            for(var i=0; i < companyAssignment.length; i++){
+                if(companyAssignment[i].studentList.indexOf(userData.email) > -1){
+                    isStudentAssignedToSeminar = true;
+                    throw new Error('Cancel promise chains. Because email have already assigned to this seminar!');
+                }
             }
+
+            //if this student has not been added to this seminar, add it
+            if(!isStudentAssignedToSeminar){
+                seminarModel.findOneAndUpdateQ({ 'seminarId': seminarId, 'companyAssignment.companyId': companyId }, {
+                    '$addToSet': { 'companyAssignment.$.studentList': userData.email }
+
+                }).then(function(saveDoc){
+                    if(!saveDoc){
+                        throw new Error('Cancel promise chains. Because Update seminar failed. More or less than 1 record is updated. it should be only one !');
+                    }
+                    return res.send({message: "assign student to seminar success."});
+                }).fail(function(err){
+                    next (err);
+                }).done();
+            }
+
+        }else{
+            teamModel.findOne({creator : userData._id}).populate('memberList').execQ().then(function(resultTeam) {
+
+                if (!resultTeam) {
+                    throw new Error('Cancel promise chains. Because Team not found !');
+                }
+
+                companyAssignment.forEach(function(company){
+
+                    if(typeof company.teamList !== 'undefined'){
+                        if(company.teamList.indexOf(resultTeam._id) > -1){
+                            isTeamAssignedToSeminar = true;
+                            throw new Error('Cancel promise chains. Because team have already assigned to this seminar!');
+                        }
+                    }
+
+                });
+
+                if(!isTeamAssignedToSeminar){
+
+                    companyAssignment.forEach(function(company){
+                        if(company.companyId == companyId) {
+
+                            resultTeam.memberList.forEach(function(student) {
+
+                                if(company.studentList.indexOf(student.email) === -1){
+                                    company.studentList.push(student.email);
+                                }
+
+                            });
+
+                            if(typeof company.teamList !== 'undefined'){
+                                company.teamList.push(resultTeam._id);
+                            }
+
+                        }
+
+                    });
+                    return seminarModel.findOneAndUpdateQ({ 'seminarId': seminarId }, {
+                        companyAssignment : companyAssignment
+                    });
+                }
+
+            }).then(function(saveDoc){
+                if(!saveDoc){
+                    throw new Error('Cancel promise chains. Because Update seminar failed. More or less than 1 record is updated. it should be only one !');
+                }
+                return res.send({message: "assign team to seminar success."})
+            }).fail(function(err){
+                next (err);
+            }).done();
+
         }
 
-        //if this student has not been added to this seminar, add it
-        if(!isStudentAssignedToSeminar){
-            return seminarModel.updateQ({ 'seminarId': seminarId, 'companyAssignment.companyId': companyId }, {
-                '$addToSet': { 'companyAssignment.$.studentList': email }
-            });
-        }
-        return 0;     
-    })
-    .then(function(numAffected){
-        if(numAffected!==1){
-            return res.send({message: "there's error during update seminar."});
-        }
-        return res.send({message: "assign student to seminar success."})
     }).fail(function(err){
         next (err);
-            console.log(err);
     }).done();
 };
+
+
 
 
 exports.removeStudentFromSeminar = function(req, res, next){
