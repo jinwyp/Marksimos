@@ -21,7 +21,7 @@ var mkdirp = require('mkdirp');
 var fs = require('fs');
 
 var basePath = config.fileUploadDirectory;
-var uploadPath = 'public/app/uploadimage/';
+var uploadPath = 'app/uploadimage/';
 
 var defaultPath = uploadPath + 'default_file_path';
 var tempPath = uploadPath + 'temp';
@@ -30,6 +30,7 @@ var targetPath = defaultPath;
 
 mkdirp.sync(basePath + defaultPath);
 mkdirp.sync(basePath + tempPath);
+
 
 
 
@@ -182,7 +183,6 @@ FileStorage.multerUpload = function(fieldname){
         },
 
         onFileUploadComplete: function (file, req, res) {
-
             uploadFeatureList.forEach(function(feature){
                 feature.postBodyField.forEach(function(field){
 
@@ -199,7 +199,6 @@ FileStorage.multerUpload = function(fieldname){
             file.pathAbsolute = basePath + targetPath + file.name;
 
             //logger.log('Upload Finished. File name ' + file.originalname + ' uploaded to  ' + file.path);
-            console.dir(file);
         }
     });
 };

@@ -55,7 +55,6 @@ exports.updateStudentB2CInfo = function(req, res, next){
         saveUser.dateOfGraduation = req.body.birthday;
     }
 
-
     userModel.findOneAndUpdateQ(
         { _id : req.user._id },
         saveUser
