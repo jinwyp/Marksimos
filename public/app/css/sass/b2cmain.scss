@@ -647,10 +647,10 @@ $left_of_avatar: 44px;
 $lineHeight_button: 1.8;
 
 @mixin normalInput() {
-	border-radius: 0;
-	height: 26px;
-	line-height: inherit !important;
-	&.col-md-7 {
+	border-radius: 0 !important;
+	// height: 26px;
+	// line-height: inherit !important;
+/*	&.col-md-7 {
 		width: (7/12*100%);
 	}
 	&.col-md-6 {
@@ -661,7 +661,7 @@ $lineHeight_button: 1.8;
 	}
 	&.col-md-2 {
 		width: (5/12*100%);
-	}
+	}*/
 }
 
 @mixin triangle ($borderWidth: 5px, $rotate: -45deg, $borderColor: #000) {
@@ -879,22 +879,16 @@ $lineHeight_button: 1.8;
 		padding: 1em;
 		font-size:0.9em;
 	}
-	form > div > div {
+	/*form > div > div {
 		margin-bottom: 0.5em;
-	}
+	}*/
 	padding-right: 30px;
 	padding-left: 25px;
 
-	input.form-control[disabled] {
-		background-color: $color_white;
-		border: none;
-		@include box-shadow(none);
-		cursor: initial;
-	}
-	input[disabled][type=radio] {
-		display: none;
-	}
 
+	.gender-radio {
+		padding-bottom: 7px;
+	}
 	.none-bottom-border {
 		border-bottom: none;
 		padding-bottom: 0;
@@ -930,18 +924,8 @@ $lineHeight_button: 1.8;
 		}
 	}
 	.team-info {
-		.team-label {
-			width: 90px;
-		}
 		.head {
 			margin-left: 80px;
-		}
-		.team-name {
-			//margin-top: 2.5em;
-			.team-label {
-				padding-right: 0;
-			}
-			margin-bottom: 0;
 		}
 		.err-msg {
 			position: absolute;
@@ -958,9 +942,6 @@ $lineHeight_button: 1.8;
 			width: auto;
 			padding: 3px;
 			font-size: 10px;
-		}
-		input, span {
-			margin-right: 5px;
 		}
 		.add-button, .done {
 			background-color: #B82A0C;
