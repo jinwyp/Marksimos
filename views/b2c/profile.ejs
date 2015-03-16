@@ -66,139 +66,168 @@
                 </div>
 
                 <div class="row" ng-if="profile.css.currentTabIndex == 1">
-                    <div class="profile-detail-title">基本信息<span class="profile-edit" ng-click="profile.clickEditProfile(1)">编辑</span></div>
-                    <form name="basicInfoForm">
-                        <div class="col-md-offset-1">
+                    <div class="profile-detail-title">基本信息<span class="profile-edit" ng-click="profile.clickEditProfile()">编辑</span></div>
+                    <form name="basicInfoForm" class="form-horizontal">
                             <!--<div class="row"><label for="name" class="col-md-3 text-right">用户名：</label><input type="text" name="name" id="name" class="col-md-7"></div>
                             <div class="row"><label for="email" class="col-md-3 text-right">邮箱：</label><input type="text" id="email" name="email" class="col-md-7"></div>-->
                             <div class="row form-group radio" ng-class="{'has-success':basicInfoForm.gender.$dirty&&basicInfoForm.gender.$valid, 'has-error':basicInfoForm.gender.$dirty&&basicInfoForm.gender.$invalid}">
-                                <label class="col-md-3 text-right">性别：</label>
-                                <label ng-if="!profile.css[1].disabled||profile.formDatas[1].gender==1" class="radio-inline"><input ng-disabled="profile.css[1].disabled" type="radio" ng-model="profile.formDatas[1].gender" name="gender" value="1"/>男</label>
-                                <label ng-if="!profile.css[1].disabled||profile.formDatas[1].gender==2" class="radio-inline female"><input ng-disabled="profile.css[1].disabled" type="radio" ng-model="profile.formDatas[1].gender" name="gender" value="2"/>女</label>
-                            </div>
-
-                            <div class="row form-group" ng-class="{'has-error': basicInfoForm.birthday.$invalid, 'has-success':basicInfoForm.birthday.$dirty&&basicInfoForm.birthday.$valid}">
-                                <label for="birthday" class="control-label col-md-3 text-right">生日：</label>
-                                <input ng-disabled="profile.css[1].disabled" type="text" data-date-format="yyyy-MM-dd" data-min-date="02/10/70" data-max-date="today" data-autoclose="1" class="form-control col-md-2" ng-model="profile.formDatas[1].birthday" name="birthday" id="birthday" bs-datepicker>
-                                <span class="err-msg" ng-if="basicInfoForm.birthday.$invalid">日期格式错误</span>
-                            </div>
-                            <div class="row" ng-if="!profile.css[1].disabled">
-                                <div class="col-md-6 col-md-offset-3 profile-button-container">
-                                    <button ng-click="profile.clickUpdateUserInfo(basicInfoForm)" type="submit">保存修改</button>
-                                    <button ng-click="profile.clickCancelEditProfile(1)" class="cancel">取消</button>
+                                <label class="col-md-3 control-label  text-right">性别：</label>
+                                <div class="col-xs-9" ng-if="!profile.css.formEditing">
+                                    <p class="form-control-static" ng-if="profile.currentUser.gender == 1">男</p>
+                                    <p class="form-control-static" ng-if="profile.currentUser.gender == 2">女</p>
+                                </div>
+                                <div class="col-xs-9 gender-radio" ng-if="profile.css.formEditing">
+                                    <label  class="control-label control-inline"><input type="radio" ng-model="profile.formData.gender" name="gender" value="1"/>男</label>
+                                    <label class="female control-label control-inline"><input type="radio" ng-model="profile.formData.gender" name="gender" value="2"/>女</label>
                                 </div>
                             </div>
-                        </div>
+
+                            <div class="row form-group form-group-sm" ng-class="{'has-error': basicInfoForm.birthday.$invalid, 'has-success':basicInfoForm.birthday.$dirty&&basicInfoForm.birthday.$valid}">
+                                <label for="birthday" class="control-label col-md-3 text-right">生日：</label>
+                                <div class="col-xs-9" ng-if="!profile.css.formEditing">
+                                    <p class="form-control-static">{{profile.currentUser.birthday|date:"yyyy-MM-dd"}}</p>
+                                </div>
+                                <div class="col-md-5" ng-if="profile.css.formEditing">
+                                    <input type="text" data-date-format="yyyy-MM-dd" data-min-date="02/10/70" data-max-date="today" data-autoclose="1" class="form-control" ng-model="profile.formData.birthday" name="birthday" id="birthday" bs-datepicker>
+                                </div>
+                                <span class="err-msg" ng-if="basicInfoForm.birthday.$invalid">日期格式错误</span>
+                            </div>
+                            <div class="row" ng-if="profile.css.formEditing">
+                                <div class="col-md-6 col-md-offset-3 profile-button-container">
+                                    <button ng-click="profile.clickUpdateUserInfo(basicInfoForm)" type="submit">保存修改</button>
+                                    <button ng-click="profile.clickCancelEditProfile()" class="cancel">取消</button>
+                                </div>
+                            </div>
                     </form>
                 </div>
 
                 <div class="row" ng-if="profile.css.currentTabIndex == 2">
-                    <div class="profile-detail-title">学校信息<span class="profile-edit" ng-click="profile.clickEditProfile(2)">编辑</span></div>
-                    <form name="schoolForm">
-                        <div class="col-md-offset-1">
-                            <div class="row form-group">
-                                <label for="school" class="col-md-3 text-right">大学：</label>
-                                <input ng-disabled="profile.css[2].disabled" type="text" ng-model="profile.formDatas[2].organizationOrUniversity" name="school" id="school" class="col-md-7 form-control">
+                    <div class="profile-detail-title">学校信息<span class="profile-edit" ng-click="profile.clickEditProfile()">编辑</span></div>
+                    <form name="schoolForm" class="form-horizontal">
+                            <div class="form-group">
+                                <label for="school" class="control-label col-md-3 text-right">大学：</label>
+                                <div class="col-xs-5" ng-if="!profile.css.formEditing">
+                                    <p class="form-control-static">{{profile.currentUser.organizationOrUniversity}}&nbsp</p>
+                                </div>
+                                <div class="col-xs-5" ng-if="profile.css.formEditing">
+                                    <input type="text" ng-model="profile.formData.organizationOrUniversity" name="school" id="school" class="form-control">
+                                </div>
                             </div>
                             <!--<div class="row"><label for="email" class="col-md-3 text-right">院系：</label><input type="text" id="email" name="email" class="col-md-7"></div>-->
                             <div class="row form-group" ng-class="{'has-error': schoolForm.dateOfEnterCollege.$invalid, 'has-success':schoolForm.dateOfEnterCollege.$dirty&&schoolForm.dateOfEnterCollege.$valid}">
-                                <label for="dateOfEnterCollege" class="col-md-3 text-right">入学时间：</label>
-                                <input ng-disabled="profile.css[2].disabled" type="text" data-date-format="yyyy-MM-dd" data-min-date="02/10/70" data-max-date="today" data-autoclose="1" ng-model="profile.formDatas[2].dateOfEnterCollege" id="dateOfEnterCollege" name="dateOfEnterCollege" class="col-md-2 form-control" bs-datepicker>
-                            </div>
-                            <div class="row form-group">
-                                <label for="degree" class="col-md-3 text-right">学历：</label>
-                                <input ng-disabled="profile.css[2].disabled" type="text" ng-model="profile.formDatas[2].majorsDegree" id="degree" name="degree" class="col-md-2 form-control">
-                                <!--<lable class="col-md-3 text-right">学年：</lable><input type="text" id="email" name="email" class="col-md-2">-->
-                            </div>
-                            <div class="row" ng-if="!profile.css[2].disabled">
-                                <div class="col-md-6 col-md-offset-3 profile-button-container">
-                                    <button ng-click="profile.clickUpdateUserInfo(schoolForm)" type="submit">保存修改</button>
-                                    <button class="cancel" ng-click="profile.clickCancelEditProfile(2)">取消</button>
+                                <label for="dateOfEnterCollege" class="control-label col-md-3 text-right">入学时间：</label>
+                                <div class="col-xs-3" ng-if="!profile.css.formEditing">
+                                    <p class="form-control-static">{{profile.currentUser.dateOfEnterCollege}}&nbsp</p>
+                                </div>
+                                <div class="col-xs-5" ng-if="profile.css.formEditing">
+                                    <input type="text" data-date-format="yyyy-MM-dd" data-min-date="02/10/70" data-max-date="today" data-autoclose="1" ng-model="profile.formData.dateOfEnterCollege" id="dateOfEnterCollege" name="dateOfEnterCollege" class="form-control" bs-datepicker>
                                 </div>
                             </div>
-                        </div>
+                            <div class="row form-group">
+                                <label for="degree" class="control-label col-md-3 text-right">学历：</label>
+                                <div class="col-xs-5" ng-if="!profile.css.formEditing">
+                                    <p class="form-control-static">{{profile.currentUser.majorsDegree}}&nbsp</p>
+                                </div>
+                                <div class="col-xs-5" ng-if="profile.css.formEditing">
+                                    <input type="text" ng-model="profile.formData.majorsDegree" id="degree" name="degree" class="col-md-2 form-control">
+                                </div>
+                                <!--<lable class="col-md-3 text-right">学年：</lable><input type="text" id="email" name="email" class="col-md-2">-->
+                            </div>
+                            <div class="row" ng-if="profile.css.formEditing">
+                                <div class="col-md-6 col-md-offset-3 profile-button-container">
+                                    <button ng-click="profile.clickUpdateUserInfo(schoolForm)" type="submit">保存修改</button>
+                                    <button class="cancel" ng-click="profile.clickCancelEditProfile()">取消</button>
+                                </div>
+                            </div>
                     </form>
                 </div>
 
                 <div class="row team-info" ng-if="profile.css.currentTabIndex == 3">
                     <div class="profile-detail-title">团队信息<!--<span class="profile-edit" ng-click="profile.clickEditProfile(3)">编辑</span>--></div>
-                    <form name="teamNameForm" class="none-bottom-border" ng-submit="profile.clickUpdateTeamName(teamNameForm)">
-                        <div class="row col-md-offset-1">
-                            <div class="row form-group team-name" ng-class="{'has-success':teamNameForm.teamName.$dirty&&teamNameForm.teamName.$valid, 'has-error':teamNameForm.teamName.$dirty&&teamNameForm.teamName.$invalid}" >
-                                <label class="col-md-3 text-right team-label" for="teamName">战队名称：</label>
-                                <input ng-disabled="profile.css.updateTeamNameDisabled" class="form-control col-md-6" required ng-model="profile.currentUser.team.name" type="text" id="teamName" name="teamName">
+                    <form name="teamNameForm" class="none-bottom-border form-horizontal" ng-submit="profile.clickUpdateTeamName(teamNameForm)">
+                            <div class="form-group team-name" ng-class="{'has-success':teamNameForm.teamName.$dirty&&teamNameForm.teamName.$valid, 'has-error':teamNameForm.teamName.$dirty&&teamNameForm.teamName.$invalid}" >
+                                <label class="col-md-3 control-label text-right team-label" for="teamName">战队名称：</label>
+                                <div class="col-xs-5">
+                                    <input ng-disabled="profile.css.updateTeamNameDisabled" class="form-control col-md-6" required ng-model="profile.currentUser.team.name" type="text" id="teamName" name="teamName">
+                                </div>
                                 <span class="err-msg" ng-if="teamNameForm.teamName.$dirty&&teamNameForm.teamName.$error.required">请输入正确的战队名称!</span>
                                 <button ng-if="profile.css.updateTeamNameDisabled" class="done col-md-3">修改</button>
                                 <button ng-if="!profile.css.updateTeamNameDisabled" class="col-md-3">保存</button>
                             </div>
-                        </div>
                     </form>
-                    <form name="teamForm">
-                        <div class="row col-md-offset-1">
-                            <div class="row" ng-repeat="member in profile.currentUser.team.memberList">
-                                <label class="col-md-3 team-label text-right">队员{{$index + 1}}：</label>
-                                <span class="col-md-6">{{member.username}}</span>
+                    <form name="teamForm" class="form-horizontal">
+                            <div class="form-group" ng-repeat="member in profile.currentUser.team.memberList">
+                                <label class="control-label col-md-3 team-label text-right">队员{{$index + 1}}：</label>
+                                <span class="col-xs-5">{{member.username}}</span>
                                 <span ng-click="profile.clickRemoveStudentToTeam(member._id)" class="remove-button glyphicon glyphicon-minus col-md-3 button"></span>
                             </div>
 
-                            <div class="row form-group" ng-class="{'has-success':teamForm.name.$dirty&&teamForm.name.$valid, 'has-error':teamForm.name.$dirty&&teamForm.name.$invalid}">
-                                <label for="name" class="col-md-3 text-right team-label">新队员：</label>
-                                <input placeholder="用户名/邮箱" ng-model="profile.newUser" required type="text" name="name" id="name" class="form-control col-md-6">
+                            <div class="form-group" ng-class="{'has-success':teamForm.name.$dirty&&teamForm.name.$valid, 'has-error':teamForm.name.$dirty&&teamForm.name.$invalid}">
+                                <label for="name" class="control-label col-md-3 text-right team-label">新队员：</label>
+                                <div class="col-xs-5">
+                                    <input placeholder="用户名/邮箱" ng-model="profile.newUser" required type="text" name="name" id="name" class="form-control">
+                                </div>
                                 <span class="err-msg" ng-if="teamForm.name.$dirty&&teamForm.name.$error.required">请输入正确的用户名!</span>
-                                <button type="submit" ng-click="profile.clickAddStudentToTeam(teamForm)" class="glyphicon glyphicon-plus add-button"></button>
+                                <button type="submit" ng-click="profile.clickAddStudentToTeam(teamForm)" class="glyphicon glyphicon-plus add-button col-md-3"></button>
                             </div>
                             <!--<div class="row"><label for="name" class="col-md-3 team-label">队员二：</label><input type="text" name="name" id="name" class="col-md-6"></div>-->
-                        </div>
                     </form>
                 </div>
 
                 <div class="row" ng-if="profile.css.currentTabIndex == 4">
                     <div class="profile-detail-title">安全信息<span class="profile-edit" ng-click="profile.clickEditProfile(4)">编辑</span></div>
-                    <form name="securityInfoForm" novalidate>
-                        <div class="col-md-offset-1">
-                            <div class="row form-group" ng-class="{'has-success':securityInfoForm.oldPassword.$dirty&&securityInfoForm.oldPassword.$valid, 'has-error':securityInfoForm.oldPassword.$dirty&&securityInfoForm.oldPassword.$invalid}">
-                                <label for="oldPassword" class="col-md-3 text-right">原始密码：</label>
-                                <input ng-disabled="profile.css[4].disabled" type="password" ng-minlength="6" ng-maxlength="20" required ng-model="profile.currentUser.oldPassword" id="oldPassword" name="oldPassword" class="col-md-5 form-control">
+                    <form name="securityInfoForm" class="form-horizontal" novalidate>
+                            <div class="form-group" ng-class="{'has-success':securityInfoForm.oldPassword.$dirty&&securityInfoForm.oldPassword.$valid, 'has-error':securityInfoForm.oldPassword.$dirty&&securityInfoForm.oldPassword.$invalid}">
+                                <label for="oldPassword" class="control-label col-md-3 text-right">原始密码：</label>
+                                <div class="col-xs-5">
+                                    <input type="password" ng-minlength="6" ng-maxlength="20" required ng-model="profile.currentUser.oldPassword" id="oldPassword" name="oldPassword" class="form-control">
+                                </div>
                                 <span class="err-msg" ng-if="securityInfoForm.oldPassword.$dirty&&(securityInfoForm.oldPassword.$error.required||securityInfoForm.oldPassword.$invalid)">请输入正确密码 6-20个字符!</span>
                             </div>
-                            <div class="row form-group" ng-class="{'has-success':securityInfoForm.newPassword.$dirty&&securityInfoForm.newPassword.$valid, 'has-error':securityInfoForm.newPassword.$dirty&&(securityInfoForm.newPassword.$invalid||profile.currentUser.oldPassword==profile.currentUser.newPassword)}">
-                                <label for="newPassword" class="col-md-3 text-right">新密码：</label>
-                                <input ng-disabled="profile.css[4].disabled" type="password" required ng-minlength="6" ng-maxlength="20" ng-model="profile.currentUser.newPassword" id="newPassword" name="newPassword" class="col-md-5 form-control">
+                            <div class="form-group" ng-class="{'has-success':securityInfoForm.newPassword.$dirty&&securityInfoForm.newPassword.$valid, 'has-error':securityInfoForm.newPassword.$dirty&&(securityInfoForm.newPassword.$invalid||profile.currentUser.oldPassword==profile.currentUser.newPassword)}">
+                                <label for="newPassword" class="control-label col-md-3 text-right">新密码：</label>
+                                <div class="col-xs-5">
+                                    <input type="password" required ng-minlength="6" ng-maxlength="20" ng-model="profile.currentUser.newPassword" id="newPassword" name="newPassword" class="form-control">
+                                </div>
                                 <span class="err-msg" ng-if="securityInfoForm.newPassword.$dirty&&securityInfoForm.newPassword.$invalid">请输入新密码 6-20个字符!</span>
                                 <span class="err-msg" ng-if="securityInfoForm.newPassword.$dirty&&!securityInfoForm.newPassword.$error.required&&(profile.currentUser.oldPassword==profile.currentUser.newPassword&&profile.currentUser.newPassword)">新密码不能与老密码相同!</span>
                             </div>
-                            <div class="row form-group" ng-class="{'has-success':securityInfoForm.rePassword.$dirty&&securityInfoForm.rePassword.$valid, 'has-error':securityInfoForm.rePassword.$dirty&&(securityInfoForm.rePassword.$invalid||profile.currentUser.rePassword!=profile.currentUser.newPassword)}">
-                                <label for="rePassword" class="col-md-3 text-right">再输入新密码:</label>
-                                <input ng-disabled="profile.css[4].disabled" type="password" required ng-model="profile.currentUser.rePassword" id="rePassword" name="rePassword" class="col-md-5 form-control">
+                            <div class="form-group" ng-class="{'has-success':securityInfoForm.rePassword.$dirty&&securityInfoForm.rePassword.$valid, 'has-error':securityInfoForm.rePassword.$dirty&&(securityInfoForm.rePassword.$invalid||profile.currentUser.rePassword!=profile.currentUser.newPassword)}">
+                                <label for="rePassword" class="control-label col-md-3 text-right">再输入新密码：</label>
+                                <div class="col-xs-5">
+                                    <input type="password" required ng-model="profile.currentUser.rePassword" id="rePassword" name="rePassword" class="form-control">
+                                </div>
                                 <span class="err-msg" ng-if="securityInfoForm.rePassword.$dirty&&securityInfoForm.rePassword.$error.required">请再次输入新密码!</span>
                                 <span class="err-msg" ng-if="securityInfoForm.rePassword.$dirty&&profile.currentUser.rePassword!=profile.currentUser.newPassword">两次密码不一致!</span>
                             </div>
-                            <div class="row" ng-if="!profile.css[4].disabled">
+                            <div class="row" ng-if="profile.css.formEditing">
                                 <div class="col-md-6 col-md-offset-3 profile-button-container">
                                     <button type="submit" ng-click="profile.clickUpdatePassword(securityInfoForm)">保存修改</button>
-                                    <button class="cancel" ng-click="profile.clickCancelEditProfile(4)">取消</button>
+                                    <button class="cancel" ng-click="profile.clickCancelEditProfile()">取消</button>
                                 </div>
                             </div>
-                        </div>
                     </form>
                 </div>
 
                 <div class="row" ng-if="profile.css.currentTabIndex == 5">
-                    <div class="profile-detail-title">联系方式<span class="profile-edit" ng-click="profile.clickEditProfile(5)">编辑</span></div>
-                    <form name="contactForm">
-                        <div class="col-md-offset-1">
-                            <div class="row form-group" ng-class="{'has-success':contactForm.qq.$dirty&&contactForm.qq.$valid, 'has-error':contactForm.qq.$dirty&&contactForm.qq.$invalid}" >
-                                <label for="qq" class="col-md-3 profile-underline text-right">QQ ID:</label>
-                                <input ng-disabled="profile.css[5].disabled" required ng-model="profile.formDatas[5].qq" type="text" id="qq" name="qq" class="form-control col-md-5">
+                    <div class="profile-detail-title">联系方式<span class="profile-edit" ng-click="profile.clickEditProfile()">编辑</span></div>
+                    <form name="contactForm" class="form-horizontal">
+                            <div class="form-group" ng-class="{'has-success':contactForm.qq.$dirty&&contactForm.qq.$valid, 'has-error':contactForm.qq.$dirty&&contactForm.qq.$invalid}" >
+                                <label for="qq" class="control-label col-md-3 profile-underline text-right">QQ ID:</label>
+                                <div class="col-xs-9" ng-if="!profile.css.formEditing">
+                                    <p class="form-control-static">{{profile.currentUser.qq}}</p>
+                                </div>
+                                <div ng-if="profile.css.formEditing" class="col-xs-5">
+                                    <input required ng-model="profile.formData.qq" type="text" id="qq" name="qq" class="form-control">
+                                </div>
                                 <span class="err-msg" ng-if="contactForm.qq.$dirty&&contactForm.qq.$error.required">请输入正确的qq!</span>
                             </div>
-                            <div class="row" ng-if="!profile.css[5].disabled">
+                            <div class="row" ng-if="profile.css.formEditing">
                                 <div class="col-md-6 col-md-offset-3 profile-button-container">
                                     <button ng-click="profile.clickUpdateUserInfo(contactForm)" type="submit">保存修改</button>
-                                    <button class="cancel" ng-click="profile.clickCancelEditProfile(5)">取消</button>
+                                    <button class="cancel" ng-click="profile.clickCancelEditProfile()">取消</button>
                                 </div>
                             </div>
-                        </div>
                     </form>
                 </div>
 
