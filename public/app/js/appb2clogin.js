@@ -177,6 +177,8 @@
     }]);
 
 
+
+
     angular.module('b2clogin').controller('profileController', ['Student', '$alert', 'FileUploader', function(Student, $alert, FileUploader) {
         /* jshint validthis: true */
         var vm = this;
@@ -185,21 +187,17 @@
             addStudentFailedInfo: false,
             currentTabIndex: 1,
             updateTeamNameDisabled: true,
-            updateTeamNameFailedInfo: false,
-            updateSuccessInfo: false,
-            updateFailedInfo: false,
-            updatePasswordSuccessInfo: false,
-            updatePasswordFailedInfo: false,
+            formEditing: false,
             alertSuccessInfo: {
                 content: '保存成功！',
-                duration: 3,
+                duration: 2,
                 container: '#profile-alert-container',
                 type: 'success',
                 dismissable: false
             },
             alertFailedInfo: {
                 content: '保存失败！',
-                duration: 3,
+                duration: 2,
                 container: '#profile-alert-container',
                 type: 'danger',
                 dismissable: false
@@ -207,7 +205,7 @@
         };
 
         vm.currentUser = {};
-        vm.formDatas = [];
+        vm.formData = {};
         vm.uploader = new FileUploader({
             url : '/e4e/api/student/avatar',
             alias : 'studentavatar'
@@ -221,17 +219,24 @@
         vm.clickUpdateUserInfo = updateUserInfo;
         vm.clickUpdatePassword = updatePassword;
         vm.clickEditProfile = editProfile;
-        vm.clickCancelEditProfile = disableFormInput;
+        vm.clickCancelEditProfile = cancelEditProfile;
 
 
         /**********  Function Declarations  **********/
 
-        function editProfile(index) {
-            vm.css[index].disabled = false;
+        function editProfile() {
+            vm.css.formEditing = true;
         }
 
-        function disableFormInput(index) {
-            vm.css[index].disabled = true;
+        function switchTab(index) {
+            if (vm.css.currentTabIndex == index) return;
+            vm.css.currentTabIndex = index;
+            vm.css.formEditing = false;
+        }
+
+        function cancelEditProfile() {
+            vm.css.formEditing = false;
+            app.resetForm();
         }
 
         function addStudentToTeam(form) {
@@ -240,14 +245,11 @@
 
             if (form.$valid) {
                 Student.addStudentToTeam({username: vm.newUser}).then(function(result) {
-                    vm.css.addTeamSuccessInfo = true;
                     return app.getUserInfo();
                 }).catch(function(err) {
                     form.$invalid = true;
                     form.$valid = false;
                     $alert(vm.css.alertFailedInfo);
-
-                    vm.css.addTeamFailedInfo = true;
                 });
             }
         }
@@ -273,12 +275,10 @@
                 } else {
                     Student.updateTeamName(vm.currentUser.team.name).then(function(result) {
                         $alert(vm.css.alertSuccessInfo);
-                    }).catch(function(err) {
+                    }).catch(function() {
                         form.teamName.$valid = false;
                         form.teamName.$invalid = true;
                         $alert(vm.css.alertFailedInfo);
-
-                        vm.css.updateTeamNameFailedInfo = true;
                     });
                     vm.css.updateTeamNameDisabled = true;
                 }
@@ -289,32 +289,24 @@
             // todo, let what css info be false
             if (form.$valid) {
                 var tabIdx = vm.css.currentTabIndex;
-                var data = vm.formDatas[tabIdx];
-                data.clickSumbit = true;
-                Student.updateStudentB2CInfo(data).then(function() {
-                    Object.keys(data).forEach(function(key) {
-                        if (key.indexOf('$') === 0) return;
-                        vm.currentUser[key] = data[key];
+                Student.updateStudentB2CInfo(vm.formData).then(function() {
+                    Object.keys(vm.formData).forEach(function(key) {
+                        vm.currentUser[key] = vm.formData[key];
                     });
-                    vm.css[tabIdx].updateSuccessInfo = true;
-                    disable(tabIdx);
                     $alert(vm.css.alertSuccessInfo);
-                }).catch(function(err) {
-                    vm.css[tabIdx].updateFailedInfo = true;
+                    cancelEditProfile();
+                }).catch(function() {
                     $alert(vm.css.alertFailedInfo);
                 });
             }
         }
 
         function updatePassword(form) {
-            vm.css.updatePasswordSuccessInfo = false;
-            vm.css.updatePasswordFailedInfo = false;
-
             if (form.$valid) {
                 Student.updatePassword(vm.currentUser.oldPassword, vm.currentUser.newPassword).then(function(result) {
-                    vm.css.updatePasswordSuccessInfo = true;
+                    $alert(vm.css.alertSuccessInfo);
                 }).catch(function(err) {
-                    vm.css.updatePasswordFailedInfo = true;
+                    $alert(vm.css.alertFailedInfo);
                 });
             }
         }
@@ -323,32 +315,7 @@
         var app = {
             init : function(){
                 this.getUserInfo().then(function(data) {
-                    // for the upload avatar form
-                    vm.formDatas[0] = null;
-                    // basic form
-                    vm.formDatas[1] = {
-                        gender: data.gender,
-                        birthday: data.birthday,
-                        clickSumbit: false
-                    };
-                    // school form
-                    vm.formDatas[2] = {
-                        organizationOrUniversity: data.organizationOrUniversity,
-                        dateOfEnterCollege: data.dateOfEnterCollege,
-                        majorsDegree: data.majorsDegree
-                    };
-                    vm.formDatas[3] = vm.formDatas[4] = null;
-                    // contact form
-                    vm.formDatas[5] = {
-                        qq: data.qq
-                    };
-                    vm.formDatas.forEach(function(data, i) {
-                        vm.css[i] = {
-                            updateSuccessInfo: false,
-                            updateFailedInfo: false,
-                            disabled: true
-                        };
-                    });
+                    app.resetForm();
                 });
             },
             reRun : function(){
@@ -360,14 +327,19 @@
                 }).catch(function(err) {
                     console.log('load student info failed');
                 });
+            },
+            resetForm: function() {
+                angular.forEach(vm.currentUser, function(data, key) {
+                    if (!angular.isObject(data)) {
+                        vm.formData[key] = data;
+                    }
+                });
             }
         };
 
         app.init();
 
     }]);
-
-
 
 
 
