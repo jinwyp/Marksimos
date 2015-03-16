@@ -427,7 +427,7 @@
 
         }else if(angular.isArray(chartHttpData.periods) ){
             //处理第一回合空数据
-            if(chartHttpData.chartData.length == 0){
+            if(chartHttpData.chartData.length === 0){
                 return dataChartSimple;
             }
 
