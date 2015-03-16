@@ -4,6 +4,7 @@
 var userModel = require('../../models/user/user.js');
 var userRoleModel = require('../../models/user/userrole.js');
 var teamModel = require('../../models/user/team.js');
+var fileUploadModel = require('../../models/user/fileupload.js');
 
 //var ObjectId = require('mongoose').Types.ObjectId;
 
@@ -75,10 +76,48 @@ exports.updateStudentB2CInfo = function(req, res, next){
 
 exports.uploadStudentAvatar = function(req, res, next){
 
-    return res.status(200).send(req.files);
+    if(req.files){
 
+        fileUploadModel.createQ({
+            name: req.files.studentavatar.name,
+            path: req.files.studentavatar.path,
+            physicalAbsolutePath: req.files.studentavatar.pathAbsolute,
+
+            uploadOriginalName: req.files.studentavatar.originalname,
+            uploadOriginalFileSize : req.files.studentavatar.size,
+            description : req.files.studentavatar.fieldname,
+
+            mimetype: req.files.studentavatar.mimetype,
+            encoding: req.files.studentavatar.encoding,
+            extension: req.files.studentavatar.extension,
+            truncated: req.files.studentavatar.truncated
+
+        }).then(function(result){
+
+            if(!result ){
+                throw new Error('Cancel promise chains. Because Create New File failed !');
+            }
+
+
+            return userModel.findOneAndUpdateQ({ _id : req.user._id} , {avatar : result._id});
+
+        }).then(function( savedDoc){
+
+            if(!savedDoc ){
+                throw new Error('Cancel promise chains. Because Update User failed. More or less than 1 record is updated. it should be only one !');
+            }
+            return res.status(200).send({message: 'Upload Avatar picture success'});
+
+
+        }).fail(function(err){
+            next(err);
+        }).done();
+    }
 
 };
+
+
+
 
 
 exports.updateStudentB2CPassword = function(req, res, next){

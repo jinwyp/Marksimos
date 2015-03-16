@@ -40,8 +40,14 @@ var fileStorageSchema = new Schema({
 
     name: { type: String },
     path:{ type: String },
+    physicalAbsolutePath:{ type: String },
     uploadOriginalName: { type: String },
-    uploadOriginalFileSize: { type: String },
+    uploadOriginalFileSize: { type: Number },
+
+    mimetype: { type: String },
+    encoding: { type: String },
+    extension: { type: String },
+    truncated: { type: Boolean , default: false},
 
     description: { type: String }
 
@@ -90,10 +96,20 @@ var FileStorage = mongoose.model("FileStorage", fileStorageSchema);
 module.exports = FileStorage;
 
 
+
+var mimeTypeLimit = [
+    'image/png',
+    'image/jpg',
+    'image/jpeg',
+    'image/bmp',
+    'image/gif',
+
+];
+
 var uploadFeatureList = [
     {
         name : 'studentProfile',
-        filePath : 'student_profile',
+        prefix : 'student_profile',
         postBodyField : [
             {
                 name : 'studentavatar',
@@ -104,7 +120,7 @@ var uploadFeatureList = [
 
     {
         name : 'adminCampaignInfo',
-        filePath : 'admin_campaign',
+        prefix : 'admin_campaign',
         postBodyField : [
             {
                 name : 'list',
@@ -119,12 +135,14 @@ var uploadFeatureList = [
 
 ];
 
+
+
 var uploadFieldsLimit = [];
 
 uploadFeatureList.forEach(function(feature){
     feature.postBodyField.forEach(function(field){
         uploadFieldsLimit.push(field.name);
-        mkdirp.sync(basePath + uploadPath +  feature.filePath + '_' + field.filePath);
+        mkdirp.sync(basePath + uploadPath +  feature.prefix + '_' + field.filePath);
     });
 });
 
@@ -151,21 +169,25 @@ FileStorage.multerUpload = function(fieldname){
 
         onFileUploadStart: function (file, req, res) {
 
+            if (mimeTypeLimit.indexOf(file.mimetype) === -1 ) {
+                return false;
+            }
+
             if (uploadFieldsLimit.indexOf(file.fieldname) === -1 || fieldname !== file.fieldname ){
                 //logger.log('Upload file failed! Form fieldname: ' + file.fieldname + '. File name: ' + file.originalname);
                 return false;
             }else{
                 //logger.log('Starting upload ... Form fieldname: '+ file.fieldname + '. File name: ' + file.originalname);
             }
-
         },
+
         onFileUploadComplete: function (file, req, res) {
 
             uploadFeatureList.forEach(function(feature){
                 feature.postBodyField.forEach(function(field){
 
                     if(field.name ===  file.fieldname){
-                        targetPath =  uploadPath +  feature.filePath + '_' + field.filePath + '/';
+                        targetPath =  uploadPath +  feature.prefix + '_' + field.filePath + '/';
                     }
                 });
             });
@@ -177,6 +199,7 @@ FileStorage.multerUpload = function(fieldname){
             file.pathAbsolute = basePath + targetPath + file.name;
 
             //logger.log('Upload Finished. File name ' + file.originalname + ' uploaded to  ' + file.path);
+            console.dir(file);
         }
     });
 };
