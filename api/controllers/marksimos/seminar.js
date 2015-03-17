@@ -178,7 +178,7 @@ exports.assignStudentToSeminar = function(req, res, next){
                 companyAssignment.forEach(function(company){
 
                     if(typeof company.teamList !== 'undefined'){
-                        if(company.teamList.indexOf(resultTeam._id) > -1){
+                        if(company.teamList.indexOf(resultTeam._id.toString()) > -1){
                             isTeamAssignedToSeminar = true;
                             throw new Error('Cancel promise chains. Because team have already assigned to this seminar!');
                         }
@@ -200,7 +200,7 @@ exports.assignStudentToSeminar = function(req, res, next){
                             });
 
                             if(typeof company.teamList !== 'undefined'){
-                                company.teamList.push(resultTeam._id);
+                                company.teamList.push(resultTeam._id.toString());
                             }
 
                         }
@@ -317,6 +317,50 @@ exports.getSeminarOfFacilitator = function(req, res, next){
 
     seminarModel.find(query).sort({seminarId:-1}).execQ().then(function(allSeminars){
 
+        // 处理Team 信息
+        var teamList = [];
+        var teamListHashTable = {};
+
+        allSeminars.forEach(function(seminar){
+            seminar.companyAssignment.forEach(function(company){
+
+                if(typeof company.teamList !== 'undefined'){
+                    company.teamList.forEach(function(teamid){
+                        teamList.push(teamid);
+                    });
+                }
+
+            });
+        });
+
+
+        teamModel.find({ '_id': { $in: teamList} }).populate('creator', userModel.selectFields() ).populate('memberList', userModel.selectFields() ).execQ().then(function(results){
+
+            results.forEach(function(team){
+                teamListHashTable[team._id] = team;
+            });
+
+
+            allSeminars.forEach(function(seminar){
+                seminar.companyAssignment.forEach(function(company){
+                    company.teamListData = [];
+
+                    if(typeof company.teamList !== 'undefined'){
+                        company.teamList.forEach(function(teamid){
+                            company.teamListData.push(teamListHashTable[teamid]);
+                        });
+                    }
+
+                });
+            });
+
+            res.status(200).send(allSeminars);
+
+        }).fail(function(err){
+            next(err);
+        }).done();
+
+
         // 处理兼容老版本
         if(allSeminars.length > 0 ){
             allSeminars.forEach(function(seminarOld){
@@ -354,7 +398,7 @@ exports.getSeminarOfFacilitator = function(req, res, next){
             })
         }
 
-        res.send(allSeminars);
+
     }).fail(function(err){
         next(err);
     }).done();

@@ -562,9 +562,9 @@
                                         <td>{{seminar.companyNum}} </td>
                                         <td>
                                             <p ng-repeat="company in seminar.companyAssignment">Company{{company.companyId | companyname }} :
-                                                <span ng-repeat="team in company.teamList">Team: {{team.name / team.creator}} <a href="" ng-click="removeStudentFromSeminar(seminar.seminarId, student)">remove</a>, </span>
+                                                <span ng-repeat="team in company.teamListData">Team: {{team.name}} / Creator: {{team.creator.username}} <a href="" ng-click="removeStudentFromSeminar(seminar.seminarId, student)">remove</a>, </span>
                                                 <br>
-                                                <span ng-repeat="student in company.studentList">{{student}} <a href="" ng-click="removeStudentFromSeminar(seminar.seminarId, student)">remove</a>, </span>
+                                                Members: <span ng-repeat="student in company.studentList">{{student}} <a href="" ng-click="removeStudentFromSeminar(seminar.seminarId, student)">remove</a>, </span>
                                             </p>
                                         </td>
                                         <td style="width:460px">
