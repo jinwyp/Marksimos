@@ -478,8 +478,7 @@ exports.seminarInfoForFacilitator = function(req, res, next){
             seminarId: seminarId
         });
     }).fail(function(err){
-        logger.error(err);
-        return res.send(500, {message: "choose seminar fails."})
+        next(err);
     }).done();
 
 };
@@ -566,6 +565,10 @@ exports.chooseSeminarForStudent = function(req, res, next){
         next(err);
     }).done();
 };
+
+
+
+
 
 
 

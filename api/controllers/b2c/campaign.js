@@ -13,6 +13,43 @@ var campaignModel = require('../../models/b2c/campaign.js');
 
 
 
+
+
+
+
+exports.campaignSingleInfoPage = function(req, res, next){
+
+    var validationErrors = campaignModel.campaignIdValidations(req);
+
+    if(validationErrors){
+        return res.status(400).send( {message: validationErrors} );
+    }
+
+
+    campaignModel.findOneQ({_id: req.params.campaignId}).then(function(resultCampaign){
+        if(!resultCampaign){
+            return res.status(400).send( {message: "campaign doesn't exist."});
+        }
+
+        return res.render('b2c/campaign.ejs',{
+            title : 'HCD E4E Campaign | HCD Learning',
+            campaign: resultCampaign
+        });
+
+    }).fail(function(err){
+        next(err);
+    }).done();
+
+};
+
+
+
+
+
+
+
+
+
 exports.addCampaign = function(req, res, next){
     var validationErrors = campaignModel.updateValidations(req);
 

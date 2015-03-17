@@ -83,6 +83,11 @@ apiRouter.get('/e4e/profile', auth.authLoginToken({failureRedirect: '/e4e/login'
 
 
 
+apiRouter.get('/e4e/campaign/:campaignId', auth.authLoginToken({failureRedirect: '/e4e/login'}), auth.authRole(userRoleModel.right.marksimos.studentLogin, {failureRedirect: '/e4e/login'}), campaignController.campaignSingleInfoPage);
+
+
+
+
 
 
 

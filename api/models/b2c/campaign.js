@@ -98,6 +98,13 @@ campaignSchema.statics.removeTeamValidations = function(req){
 };
 
 
+campaignSchema.statics.campaignIdValidations = function(req){
+    req.checkParams('campaignId', 'Campaign ID should be 24 characters').notEmpty().len(24, 24);
+
+    return req.validationErrors();
+};
+
+
 /**
  * Methods
  */
