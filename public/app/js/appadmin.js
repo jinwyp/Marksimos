@@ -168,8 +168,8 @@
             },
             removedStudent: {
                 seminar_id: 0,
-                student_id: "",
-                email: ""
+                studentemail : "",
+                teamid : ""
             },
 
             newCampaign: {
@@ -733,15 +733,18 @@
 
             if (seminarid === "" || angular.isUndefined(studentemail) || studentemail === "") {
             } else {
-                $scope.data.removedStudent.email = studentemail;
+
                 $scope.data.removedStudent.seminar_id = seminarid;
+                $scope.data.removedStudent.studentemail = studentemail;
+                $scope.data.removedStudent.teamid = '';
 
                 Admin.removeStudentFromSeminar(  $scope.data.removedStudent).success(function(data, status, headers, config) {
                     app.getSeminarInit();
                     $notification.success('Save success', 'Remove Student to Seminar success');
 
                     $scope.data.removedStudent.seminar_id = 0;
-                    $scope.data.removedStudent.email = "";
+                    $scope.data.removedStudent.studentemail = '';
+                    $scope.data.removedStudent.teamid = '';
 
                 }).error(function(data, status, headers, config) {
                     console.log(data);
@@ -769,6 +772,31 @@
                     $scope.data.addStudentToSeminar.company_id = 0;
                     $scope.data.addStudentToSeminar.studentemail = '';
                     $scope.data.addStudentToSeminar.teamcreatoremail = '';
+
+                }).error(function(data, status, headers, config) {
+                    console.log(data);
+                    $notification.error('Failed', data.message);
+                });
+            }
+        };
+
+        /********************  Remove Team To Seminar  ********************/
+        $scope.removeTeamFromSeminar = function(seminarid, teamid) {
+
+            if (seminarid === "" || angular.isUndefined(teamid) || teamid === "") {
+            } else {
+
+                $scope.data.removedStudent.seminar_id = seminarid;
+                $scope.data.removedStudent.studentemail = '';
+                $scope.data.removedStudent.teamid = teamid;
+
+                Admin.removeStudentFromSeminar(  $scope.data.removedStudent).success(function(data, status, headers, config) {
+                    app.getSeminarInit();
+                    $notification.success('Save success', 'Remove Team to Seminar success');
+
+                    $scope.data.removedStudent.seminar_id = 0;
+                    $scope.data.removedStudent.studentemail = '';
+                    $scope.data.removedStudent.teamid = '';
 
                 }).error(function(data, status, headers, config) {
                     console.log(data);

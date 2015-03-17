@@ -162,7 +162,7 @@ exports.assignStudentToSeminar = function(req, res, next){
                     if(!saveDoc){
                         throw new Error('Cancel promise chains. Because Update seminar failed. More or less than 1 record is updated. it should be only one !');
                     }
-                    return res.send({message: "assign student to seminar success."});
+                    return res.status(200).send({message: "assign student to seminar success."});
                 }).fail(function(err){
                     next (err);
                 }).done();
@@ -215,7 +215,7 @@ exports.assignStudentToSeminar = function(req, res, next){
                 if(!saveDoc){
                     throw new Error('Cancel promise chains. Because Update seminar failed. More or less than 1 record is updated. it should be only one !');
                 }
-                return res.send({message: "assign team to seminar success."})
+                return res.status(200).send({message: "assign team to seminar success."})
             }).fail(function(err){
                 next (err);
             }).done();
@@ -231,57 +231,106 @@ exports.assignStudentToSeminar = function(req, res, next){
 
 
 exports.removeStudentFromSeminar = function(req, res, next){
-    var email = req.body.email;
+
+    req.checkBody('seminar_id', 'Invalid seminar id.').notEmpty().isInt();
+
+    var email, teamid;
+
+    if(req.body.studentemail !== ''){
+        req.checkBody('studentemail', 'Invalid email.').notEmpty().isEmail();
+        email = req.body.studentemail;
+    }else{
+        req.checkBody('teamid', 'User ID should be 24 characters').notEmpty().len(24, 24);
+        teamid = req.body.teamid;
+    }
+
+    var validationErrors = req.validationErrors();
+
+    if(validationErrors){
+        return res.status(400).send( {message: validationErrors} );
+    }
+
     var seminarId = req.body.seminar_id;
 
-    if(!email){
-        return res.send(400, {message: "Invalid email."});
-    }
-
-    if(!seminarId){
-        return res.send(400, {message: "You don't choose a seminar."})
-    }
-
-
-    seminarModel.findOneQ({seminarId: seminarId}).then(function(dbSeminar){
-        if(!dbSeminar){
-            throw {httpStatus: 400, message: "seminar "+ seminarId + " doesn't exist."}
+    seminarModel.findOneQ({seminarId: seminarId}).then(function(resultSeminar){
+        if(!resultSeminar){
+            throw new Error( "seminar "+ seminarId + " doesn't exist.");
         }
 
-        var companyAssignment = dbSeminar.companyAssignment;
+        var companyAssignment = resultSeminar.companyAssignment;
 
+        if(req.body.studentemail !== ''){
 
-        for(var i=0; i<companyAssignment.length; i++){
-            //if this student is in this company
-            if(companyAssignment[i].studentList.indexOf(email) > -1){
+            for(var i=0; i<companyAssignment.length; i++){
+                //if this student is in this company
+                if(companyAssignment[i].studentList.indexOf(email) > -1){
 
-                for(var j=0; j<companyAssignment[i].studentList.length; j++){
-                    if(companyAssignment[i].studentList[j] === email){
-                        companyAssignment[i].studentList.splice(j, 1);
+                    for(var j=0; j<companyAssignment[i].studentList.length; j++){
+                        if(companyAssignment[i].studentList[j] === email){
+                            companyAssignment[i].studentList.splice(j, 1);
+                        }
                     }
                 }
             }
+
+            return seminarModel.updateQ({seminarId: seminarId}, {
+                companyAssignment: companyAssignment
+            });
+
+        }else{
+
+            return teamModel.findOne({_id : teamid}).populate('memberList').execQ().then(function(resultTeam) {
+                if (!resultTeam) {
+                    throw new Error('Cancel promise chains. Because Team not found !');
+                }
+
+
+                companyAssignment.forEach(function(company){
+
+                    if(typeof company.teamList !== 'undefined'){
+                        if(company.teamList.indexOf(resultTeam._id.toString()) > -1){
+
+                            company.teamList.forEach(function(teamid, index){
+
+
+                                if(teamid === resultTeam._id.toString()){
+                                    company.teamList.splice(index, 1);
+                                }
+
+                            });
+
+                            resultTeam.memberList.forEach(function(teamstudent){
+                                company.studentList.forEach(function(studentemail, studentindex){
+
+                                    if(teamstudent.email === studentemail){
+                                        company.studentList.splice(studentindex, 1);
+                                    }
+                                });
+                            });
+                        }
+                    }
+
+                });
+
+                return seminarModel.updateQ({seminarId: seminarId}, {
+                    companyAssignment: companyAssignment
+                });
+
+            });
+
         }
 
 
-        return seminarModel.updateQ({seminarId: seminarId}, {
-            companyAssignment: companyAssignment
-        });
-    })
-    .then(function(numAffected){
-        if(numAffected!==1){
-            return res.send({message: "there's error during update seminar."});
+
+    }).then(function(numberAffected){
+        if(numberAffected!==1){
+            throw new Error('Cancel promise chains. Because Because Update seminar failed. More or less than 1 record is updated. it should be only one !');
         }
-        return res.send({message: "remove student from seminar success."})
-    })
-    .fail(function(err){
-        logger.error(err);
-        if(err.httpStatus){
-            return res.send(err.httpStatus, {message: err.message});
-        }
-        return res.send(500, {message: "remove student from seminar failed."})
-    })
-    .done();
+        return res.status(200).send({message: "Remove team from seminar success."})
+
+    }).fail(function(err){
+        next(err);
+    }).done();
 };
 
 
@@ -403,6 +452,12 @@ exports.getSeminarOfFacilitator = function(req, res, next){
         next(err);
     }).done();
 };
+
+
+
+
+
+
 
 
 
