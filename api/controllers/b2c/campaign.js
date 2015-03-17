@@ -26,7 +26,7 @@ exports.campaignSingleInfoPage = function(req, res, next){
     }
 
 
-    campaignModel.findOneQ({_id: req.params.campaignId}).then(function(resultCampaign){
+    campaignModel.findOne({_id: req.params.campaignId}).populate('seminarListMarksimos').populate('teamList').execQ().then(function(resultCampaign){
         if(!resultCampaign){
             return res.status(400).send( {message: "campaign doesn't exist."});
         }
