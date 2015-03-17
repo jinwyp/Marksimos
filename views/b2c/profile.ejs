@@ -55,12 +55,16 @@
             <article class="col-md-8 profile-detail">
                 <div class="row alert-container"><div id="profile-alert-container"></div></div>
                 <div class="row" ng-if="profile.css.currentTabIndex == 0">
-                    <input type="file" nv-file-select uploader="profile.uploader" accept=".jpg,.png,.jpeg,.bmp,.gif"/><br/>
-                    <ul>
+                    <div class="file-input-wrapper glyphicon glyphicon-plus center-block">
+                        <span class="file-upload-text">上传图片</span>
+                        <div class="wrapper">
+                            <input class="file-input" type="file" nv-file-select uploader="profile.uploader" accept=".jpg,.png,.jpeg,.bmp,.gif"/>
+                        </div>
+                    </div>
+                    <ul class="center-block preview-avatar">
                         <li ng-repeat="item in profile.uploader.queue">
-                            Name: <span ng-bind="item.file.name"></span><br/>
+                            <div ng-thumb="{ file: item._file}"></div>
                             <button ng-click="item.upload()">upload</button>
-                            <div ng-thumb="{ file: item._file, height: 400 }"></div>
                         </li>
                     </ul>
                 </div>
@@ -70,7 +74,7 @@
                     <form name="basicInfoForm" class="form-horizontal">
                         <!--<div class="row"><label for="name" class="col-md-3 text-right">用户名：</label><input type="text" name="name" id="name" class="col-md-7"></div>
                         <div class="row"><label for="email" class="col-md-3 text-right">邮箱：</label><input type="text" id="email" name="email" class="col-md-7"></div>-->
-                        <div class="row form-group radio" ng-class="{'has-success':basicInfoForm.gender.$dirty&&basicInfoForm.gender.$valid, 'has-error':basicInfoForm.gender.$dirty&&basicInfoForm.gender.$invalid}">
+                        <div class="form-group radio" ng-class="{'has-success':basicInfoForm.gender.$dirty&&basicInfoForm.gender.$valid, 'has-error':basicInfoForm.gender.$dirty&&basicInfoForm.gender.$invalid}">
                             <label class="col-md-3 control-label  text-right">性别：</label>
                             <div class="col-xs-9" ng-if="!profile.css.formEditing">
                                 <p class="form-control-static" ng-if="profile.currentUser.gender == 1">男</p>
@@ -82,7 +86,7 @@
                             </div>
                         </div>
 
-                        <div class="row form-group" ng-class="{'has-error': basicInfoForm.birthday.$invalid, 'has-success':basicInfoForm.birthday.$dirty&&basicInfoForm.birthday.$valid}">
+                        <div class="form-group" ng-class="{'has-error': basicInfoForm.birthday.$invalid, 'has-success':basicInfoForm.birthday.$dirty&&basicInfoForm.birthday.$valid}">
                             <label for="birthday" class="control-label col-md-3 text-right">生日：</label>
                             <div class="col-xs-9" ng-if="!profile.css.formEditing">
                                 <p class="form-control-static">{{profile.currentUser.birthday|date:"yyyy-MM-dd"}}</p>
@@ -92,8 +96,8 @@
                             </div>
                             <span class="err-msg form-control-static col-xs-4" ng-if="basicInfoForm.birthday.$invalid">日期格式错误</span>
                         </div>
-                        <div class="row" ng-if="profile.css.formEditing">
-                            <div class="col-md-6 col-md-offset-3 profile-button-container">
+                        <div class="form-group" ng-if="profile.css.formEditing">
+                            <div class="col-md-6 col-md-offset-3">
                                 <button ng-click="profile.clickUpdateUserInfo(basicInfoForm)" type="submit">保存修改</button>
                                 <button ng-click="profile.clickCancelEditProfile()" class="cancel">取消</button>
                             </div>
@@ -135,7 +139,7 @@
                             <!--<lable class="col-md-3 text-right">学年：</lable><input type="text" id="email" name="email" class="col-md-2">-->
                         </div>
                         <div class="row" ng-if="profile.css.formEditing">
-                            <div class="col-md-6 col-md-offset-3 profile-button-container">
+                            <div class="col-md-6 col-md-offset-3 ">
                                 <button ng-click="profile.clickUpdateUserInfo(schoolForm)" type="submit">保存修改</button>
                                 <button class="cancel" ng-click="profile.clickCancelEditProfile()">取消</button>
                             </div>
@@ -171,7 +175,7 @@
                         <div class="form-group" ng-class="{'has-success':teamForm.name.$dirty&&teamForm.name.$valid, 'has-error':teamForm.name.$dirty&&teamForm.name.$invalid}">
                             <label for="name" class="control-label col-xs-3 text-right team-label">新队员：</label>
                             <div class="col-xs-5">
-                                <input placeholder="用户名/邮箱" ng-model="profile.newUser" required type="text" name="name" id="name" class="form-control">
+                                <input placeholder="用户名/邮箱" ng-model="profile.formData.newTeamMember" required type="text" name="name" id="name" class="form-control">
                             </div>
                             <button type="submit" ng-click="profile.clickAddStudentToTeam(teamForm)" class="glyphicon glyphicon-plus add-button col-xs-1"></button>
                             <span class="form-control-static err-msg col-xs-3" ng-if="teamForm.name.$dirty&&teamForm.name.$error.required">请输入正确的用户名!</span>
@@ -185,29 +189,29 @@
                     <form name="securityInfoForm" class="form-horizontal" novalidate>
                         <div class="form-group" ng-class="{'has-success':securityInfoForm.oldPassword.$dirty&&securityInfoForm.oldPassword.$valid, 'has-error':securityInfoForm.oldPassword.$dirty&&securityInfoForm.oldPassword.$invalid}">
                             <label for="oldPassword" class="control-label col-md-3 text-right">原始密码：</label>
-                            <div class="col-xs-5 input-container">
-                                <input ng-if="profile.css.formEditing" type="password" ng-minlength="6" ng-maxlength="20" required ng-model="profile.formData.oldPassword" id="oldPassword" name="oldPassword" class="form-control">
+                            <div ng-if="profile.css.formEditing"  class="col-xs-5">
+                                <input type="password" ng-minlength="6" ng-maxlength="20" required ng-model="profile.formData.oldPassword" id="oldPassword" name="oldPassword" class="form-control">
                             </div>
                             <span class="col-xs-4 form-control-static err-msg" ng-if="securityInfoForm.oldPassword.$dirty&&(securityInfoForm.oldPassword.$error.required||securityInfoForm.oldPassword.$invalid)">请输入密码 6-20个字符!</span>
                         </div>
                         <div class="form-group" ng-class="{'has-success':securityInfoForm.newPassword.$dirty&&securityInfoForm.newPassword.$valid, 'has-error':securityInfoForm.newPassword.$dirty&&(securityInfoForm.newPassword.$invalid||profile.formData.oldPassword==profile.formData.newPassword)}">
                             <label for="newPassword" class="control-label col-md-3 text-right">新密码：</label>
-                            <div class="col-xs-5 input-container">
-                                <input ng-if="profile.css.formEditing" type="password" required ng-minlength="6" ng-maxlength="20" ng-model="profile.formData.newPassword" id="newPassword" name="newPassword" class="form-control">
+                            <div ng-if="profile.css.formEditing" class="col-xs-5">
+                                <input type="password" required ng-minlength="6" ng-maxlength="20" ng-model="profile.formData.newPassword" id="newPassword" name="newPassword" class="form-control">
                             </div>
                             <span class="col-xs-4 form-control-static err-msg" ng-if="securityInfoForm.newPassword.$dirty&&securityInfoForm.newPassword.$invalid">请输入新密码 6-20个字符!</span>
                             <span class="col-xs-4 form-control-static err-msg" ng-if="securityInfoForm.newPassword.$dirty&&!securityInfoForm.newPassword.$error.required&&(profile.formData.oldPassword==profile.formData.newPassword&&profile.formData.newPassword)">新密码不能与老密码相同!</span>
                         </div>
                         <div class="form-group" ng-class="{'has-success':securityInfoForm.rePassword.$dirty&&securityInfoForm.rePassword.$valid, 'has-error':securityInfoForm.rePassword.$dirty&&(securityInfoForm.rePassword.$invalid||profile.formData.rePassword!=profile.formData.newPassword)}">
                             <label for="rePassword" class="control-label col-xs-3 text-right">再输入新密码：</label>
-                            <div class="col-xs-5 input-container">
-                                <input ng-if="profile.css.formEditing"  type="password" required ng-model="profile.formData.rePassword" id="rePassword" name="rePassword" class="form-control">
+                            <div ng-if="profile.css.formEditing" class="col-xs-5">
+                                <input  type="password" required ng-model="profile.formData.rePassword" id="rePassword" name="rePassword" class="form-control">
                             </div>
                             <span class="col-xs-4 form-control-static err-msg" ng-if="securityInfoForm.rePassword.$dirty&&securityInfoForm.rePassword.$error.required">请再次输入新密码!</span>
                             <span class="col-xs-4 form-control-static err-msg" ng-if="securityInfoForm.rePassword.$dirty&&profile.formData.rePassword!=profile.formData.newPassword">两次密码不一致!</span>
                         </div>
                         <div class="row" ng-if="profile.css.formEditing">
-                            <div class="col-md-6 col-md-offset-3 profile-button-container">
+                            <div class="col-md-6 col-md-offset-3 ">
                                 <button type="submit" ng-click="profile.clickUpdatePassword(securityInfoForm)">保存修改</button>
                                 <button class="cancel" ng-click="profile.clickCancelEditProfile()">取消</button>
                             </div>
@@ -229,7 +233,7 @@
                             <span class="err-msg" ng-if="contactForm.qq.$dirty&&contactForm.qq.$error.required">请输入正确的qq!</span>
                         </div>
                         <div class="row" ng-if="profile.css.formEditing">
-                            <div class="col-md-6 col-md-offset-3 profile-button-container">
+                            <div class="col-md-6 col-md-offset-3 ">
                                 <button ng-click="profile.clickUpdateUserInfo(contactForm)" type="submit">保存修改</button>
                                 <button class="cancel" ng-click="profile.clickCancelEditProfile()">取消</button>
                             </div>
