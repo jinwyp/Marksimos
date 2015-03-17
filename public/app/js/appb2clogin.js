@@ -246,7 +246,7 @@
 
             if (form.$valid) {
                 Student.addStudentToTeam({username: vm.newUser}).then(function(result) {
-                    return app.getUserInfo();
+                    app.getUserInfo();
                 }).catch(function(err) {
                     form.$invalid = true;
                     form.$valid = false;
@@ -325,7 +325,7 @@
             },
             getUserInfo : function(){
                 return Student.getStudent().then(function(result) {
-                    return vm.currentUser = result.data;
+                    vm.currentUser = result.data;
                 }).catch(function(err) {
                     console.log('load student info failed');
                 });

@@ -311,6 +311,7 @@
                 }
 
                 function onLoadImage() {
+                    // jshint validthis:true
                     var width = params.width || (this.width / this.height * params.height);
                     var height = params.height || (this.height / this.width * params.width);
                     canvas.attr({ width: width, height: height });
