@@ -219,6 +219,7 @@
         vm.clickUpdateUserInfo = updateUserInfo;
         vm.clickUpdatePassword = updatePassword;
         vm.clickEditProfile = editProfile;
+        vm.clickSwitchTab = switchTab;
         vm.clickCancelEditProfile = cancelEditProfile;
 
 
@@ -231,7 +232,7 @@
         function switchTab(index) {
             if (vm.css.currentTabIndex == index) return;
             vm.css.currentTabIndex = index;
-            vm.css.formEditing = false;
+            cancelEditProfile();
         }
 
         function cancelEditProfile() {
@@ -270,17 +271,19 @@
             vm.css.updateTeamNameFailedInfo = false;
 
             if (form.$valid) {
-                if (vm.css.updateTeamNameDisabled) {
-                    vm.css.updateTeamNameDisabled = false;
+                if (!vm.css.formEditing) {
+                    vm.css.formEditing = true;
                 } else {
-                    Student.updateTeamName(vm.currentUser.team.name).then(function(result) {
+                    var teamName = vm.formData.teamName;
+                    Student.updateTeamName(teamName).then(function(result) {
+                        vm.currentUser.team.name = teamName;
                         $alert(vm.css.alertSuccessInfo);
                     }).catch(function() {
                         form.teamName.$valid = false;
                         form.teamName.$invalid = true;
                         $alert(vm.css.alertFailedInfo);
                     });
-                    vm.css.updateTeamNameDisabled = true;
+                    vm.css.formEditing = false;
                 }
             }
         }
@@ -288,7 +291,6 @@
         function updateUserInfo(form) {
             // todo, let what css info be false
             if (form.$valid) {
-                var tabIdx = vm.css.currentTabIndex;
                 Student.updateStudentB2CInfo(vm.formData).then(function() {
                     Object.keys(vm.formData).forEach(function(key) {
                         vm.currentUser[key] = vm.formData[key];
@@ -303,7 +305,7 @@
 
         function updatePassword(form) {
             if (form.$valid) {
-                Student.updatePassword(vm.currentUser.oldPassword, vm.currentUser.newPassword).then(function(result) {
+                Student.updatePassword(vm.formData.oldPassword, vm.formData.newPassword).then(function(result) {
                     $alert(vm.css.alertSuccessInfo);
                 }).catch(function(err) {
                     $alert(vm.css.alertFailedInfo);
@@ -314,7 +316,7 @@
 
         var app = {
             init : function(){
-                this.getUserInfo().then(function(data) {
+                this.getUserInfo().then(function() {
                     app.resetForm();
                 });
             },
@@ -329,11 +331,19 @@
                 });
             },
             resetForm: function() {
+                var formData = vm.formData;
+
                 angular.forEach(vm.currentUser, function(data, key) {
                     if (!angular.isObject(data)) {
-                        vm.formData[key] = data;
+                        formData[key] = data;
                     }
                 });
+                formData.oldPassword = '';
+                formData.newPassword = '';
+                formData.rePassword = '';
+
+                formData.teamName = vm.currentUser.team && vm.currentUser.team.name;
+                vm.newUser = '';
             }
         };
 

@@ -901,12 +901,22 @@ body {
   padding: 1em;
   font-size: 0.9em;
 }
+.profile-detail .input-container {
+  min-height: 34px;
+}
+.profile-detail .err-msg {
+  width: auto;
+}
 .profile-detail .gender-radio {
   padding-bottom: 7px;
 }
-.profile-detail .none-bottom-border {
+.profile-detail .none-bottom {
   border-bottom: none;
   padding-bottom: 0;
+}
+.profile-detail .none-top {
+  border-top: none;
+  padding-top: 0;
 }
 .profile-detail .profile-detail-title {
   line-height: 1.8;
@@ -946,12 +956,10 @@ body {
 .profile-detail .team-info .head {
   margin-left: 80px;
 }
-.profile-detail .team-info .err-msg {
-  position: absolute;
-  left: -100px;
-}
 .profile-detail .team-info button, .profile-detail .team-info .button {
-  width: 65px;
+  width: 85px;
+  height: 32px;
+  font-size: 15px;
   border-style: none;
   color: #ffffff;
   background-color: #797979;
@@ -960,6 +968,8 @@ body {
   box-shadow: #797979 0px 2px 4px;
 }
 .profile-detail .team-info .add-button, .profile-detail .team-info .remove-button {
+  margin-top: 5px;
+  height: auto;
   width: auto;
   padding: 3px;
   font-size: 10px;
