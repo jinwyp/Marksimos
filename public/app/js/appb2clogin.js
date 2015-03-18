@@ -245,7 +245,7 @@
             vm.css.addTeamSuccessInfo = false;
 
             if (form.$valid) {
-                Student.addStudentToTeam({username: vm.newUser}).then(function(result) {
+                Student.addStudentToTeam({username: vm.formData.newTeamMember}).then(function(result) {
                     app.getUserInfo();
                 }).catch(function(err) {
                     form.$invalid = true;
@@ -343,7 +343,7 @@
                 formData.rePassword = '';
 
                 formData.teamName = vm.currentUser.team && vm.currentUser.team.name;
-                vm.newUser = '';
+                formData.newTeamMember = '';
             }
         };
 
