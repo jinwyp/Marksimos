@@ -20,9 +20,9 @@
                 <div class="row">
                     <nav class="col-md-6 col-md-offset-2">
                         <div class="row">
-                            <div class="col-md-4"><span>个人主页</span></div>
+                            <!--<div class="col-md-4"><span>个人主页</span></div>-->
                             <div class="col-md-4"><span class="selected">资料</span></div>
-                            <div class="col-md-4"><span>更多</span><span class="small-down-triangle"></span></div>
+                            <!--<div class="col-md-4"><span>更多</span><span class="small-down-triangle"></span></div>-->
                         </div>
                     </nav>
                 </div>
@@ -34,7 +34,7 @@
 
                 <nav class="profile-nav">
                     <ul>
-                        <li ng-repeat="type in ['上传头像', '基本信息', '学校信息', '团队信息', '安全信息', '联系方式']" ng-class="{selected: profile.css.currentTabIndex == $index}" ng-click="profile.clickSwitchTab($index)">{{type}}</li>
+                        <li ng-repeat="type in ['上传头像', '基本信息', '安全信息', '学校信息', '团队信息', '联系方式']" ng-class="{selected: profile.css.currentTabIndex == $index}" ng-click="profile.clickSwitchTab($index)">{{type}}</li>
                     </ul>
                 </nav>
             </aside>
@@ -92,41 +92,34 @@
                 </div>
 
                 <div class="row" ng-if="profile.css.currentTabIndex == 2">
-                    <div class="profile-detail-title">学校信息<span class="profile-edit" ng-click="profile.clickEditProfile()">编辑</span></div>
-                    <form name="schoolForm" class="form-horizontal">
-                        <div class="form-group">
-                            <label for="school" class="control-label col-md-3 text-right">大学：</label>
-                            <div class="col-xs-5" ng-if="!profile.css.formEditing">
-                                <p class="form-control-static">{{profile.currentUser.organizationOrUniversity}}&nbsp</p>
+                    <div class="profile-detail-title">安全信息<span class="profile-edit" ng-click="profile.clickEditProfile()">编辑</span></div>
+                    <form name="securityInfoForm" class="form-horizontal" novalidate>
+                        <div class="form-group" ng-class="{'has-success':securityInfoForm.oldPassword.$dirty&&securityInfoForm.oldPassword.$valid, 'has-error':securityInfoForm.oldPassword.$dirty&&securityInfoForm.oldPassword.$invalid}">
+                            <label for="oldPassword" class="control-label col-md-3 text-right">原始密码：</label>
+                            <div ng-if="profile.css.formEditing"  class="col-xs-5">
+                                <input type="password" ng-minlength="6" ng-maxlength="20" required ng-model="profile.formData.oldPassword" id="oldPassword" name="oldPassword" class="form-control">
                             </div>
-                            <div class="col-xs-5" ng-if="profile.css.formEditing">
-                                <input type="text" ng-model="profile.formData.organizationOrUniversity" name="school" id="school" class="form-control">
-                            </div>
+                            <span class="col-xs-4 form-control-static err-msg" ng-if="securityInfoForm.oldPassword.$dirty&&(securityInfoForm.oldPassword.$error.required||securityInfoForm.oldPassword.$invalid)">请输入密码 6-20个字符!</span>
                         </div>
-                        <!--<div class="row"><label for="email" class="col-md-3 text-right">院系：</label><input type="text" id="email" name="email" class="col-md-7"></div>-->
-                        <div class="row form-group" ng-class="{'has-error': schoolForm.dateOfEnterCollege.$invalid, 'has-success':schoolForm.dateOfEnterCollege.$dirty&&schoolForm.dateOfEnterCollege.$valid}">
-                            <label for="dateOfEnterCollege" class="control-label col-md-3 text-right">入学时间：</label>
-                            <div class="col-xs-3" ng-if="!profile.css.formEditing">
-                                <p class="form-control-static">{{profile.currentUser.dateOfEnterCollege|date:"yyyy-MM-dd"}}&nbsp</p>
+                        <div class="form-group" ng-class="{'has-success':securityInfoForm.newPassword.$dirty&&securityInfoForm.newPassword.$valid, 'has-error':securityInfoForm.newPassword.$dirty&&(securityInfoForm.newPassword.$invalid||profile.formData.oldPassword==profile.formData.newPassword)}">
+                            <label for="newPassword" class="control-label col-md-3 text-right">新密码：</label>
+                            <div ng-if="profile.css.formEditing" class="col-xs-5">
+                                <input type="password" required ng-minlength="6" ng-maxlength="20" ng-model="profile.formData.newPassword" id="newPassword" name="newPassword" class="form-control">
                             </div>
-                            <div class="col-xs-5" ng-if="profile.css.formEditing">
-                                <input type="text" data-date-format="yyyy-MM-dd" data-min-date="02/10/70" data-max-date="today" data-autoclose="1" ng-model="profile.formData.dateOfEnterCollege" id="dateOfEnterCollege" name="dateOfEnterCollege" class="form-control" bs-datepicker>
-                            </div>
-                            <span class="err-msg form-control-static col-xs-4" ng-if="schoolForm.dateOfEnterCollege.$invalid">日期格式错误</span>
+                            <span class="col-xs-4 form-control-static err-msg" ng-if="securityInfoForm.newPassword.$dirty&&securityInfoForm.newPassword.$invalid">请输入新密码 6-20个字符!</span>
+                            <span class="col-xs-4 form-control-static err-msg" ng-if="securityInfoForm.newPassword.$dirty&&!securityInfoForm.newPassword.$error.required&&(profile.formData.oldPassword==profile.formData.newPassword&&profile.formData.newPassword)">新密码不能与老密码相同!</span>
                         </div>
-                        <div class="row form-group">
-                            <label for="degree" class="control-label col-md-3 text-right">学历：</label>
-                            <div class="col-xs-5" ng-if="!profile.css.formEditing">
-                                <p class="form-control-static">{{profile.currentUser.majorsDegree}}&nbsp</p>
+                        <div class="form-group" ng-class="{'has-success':securityInfoForm.rePassword.$dirty&&securityInfoForm.rePassword.$valid, 'has-error':securityInfoForm.rePassword.$dirty&&(securityInfoForm.rePassword.$invalid||profile.formData.rePassword!=profile.formData.newPassword)}">
+                            <label for="rePassword" class="control-label col-xs-3 text-right">再输入新密码：</label>
+                            <div ng-if="profile.css.formEditing" class="col-xs-5">
+                                <input  type="password" required ng-model="profile.formData.rePassword" id="rePassword" name="rePassword" class="form-control">
                             </div>
-                            <div class="col-xs-5" ng-if="profile.css.formEditing">
-                                <input type="text" ng-model="profile.formData.majorsDegree" id="degree" name="degree" class="col-md-2 form-control">
-                            </div>
-                            <!--<lable class="col-md-3 text-right">学年：</lable><input type="text" id="email" name="email" class="col-md-2">-->
+                            <span class="col-xs-4 form-control-static err-msg" ng-if="securityInfoForm.rePassword.$dirty&&securityInfoForm.rePassword.$error.required">请再次输入新密码!</span>
+                            <span class="col-xs-4 form-control-static err-msg" ng-if="securityInfoForm.rePassword.$dirty&&(profile.formData.rePassword!==0&&profile.formData.rePassword)&&profile.formData.rePassword!=profile.formData.newPassword">两次密码不一致!</span>
                         </div>
                         <div class="row" ng-if="profile.css.formEditing">
                             <div class="col-md-6 col-md-offset-3 profile-button-container">
-                                <button ng-click="profile.clickUpdateUserInfo(schoolForm)" type="submit">保存修改</button>
+                                <button type="submit" ng-click="profile.clickUpdatePassword(securityInfoForm)">保存修改</button>
                                 <button class="cancel" ng-click="profile.clickCancelEditProfile()">取消</button>
                             </div>
                         </div>
@@ -171,34 +164,41 @@
                 </div>
 
                 <div class="row" ng-if="profile.css.currentTabIndex == 4">
-                    <div class="profile-detail-title">安全信息<span class="profile-edit" ng-click="profile.clickEditProfile(4)">编辑</span></div>
-                    <form name="securityInfoForm" class="form-horizontal" novalidate>
-                        <div class="form-group" ng-class="{'has-success':securityInfoForm.oldPassword.$dirty&&securityInfoForm.oldPassword.$valid, 'has-error':securityInfoForm.oldPassword.$dirty&&securityInfoForm.oldPassword.$invalid}">
-                            <label for="oldPassword" class="control-label col-md-3 text-right">原始密码：</label>
-                            <div ng-if="profile.css.formEditing"  class="col-xs-5">
-                                <input type="password" ng-minlength="6" ng-maxlength="20" required ng-model="profile.formData.oldPassword" id="oldPassword" name="oldPassword" class="form-control">
+                    <div class="profile-detail-title">学校信息<span class="profile-edit" ng-click="profile.clickEditProfile()">编辑</span></div>
+                    <form name="schoolForm" class="form-horizontal">
+                        <div class="form-group">
+                            <label for="school" class="control-label col-md-3 text-right">大学：</label>
+                            <div class="col-xs-5" ng-if="!profile.css.formEditing">
+                                <p class="form-control-static">{{profile.currentUser.organizationOrUniversity}}&nbsp</p>
                             </div>
-                            <span class="col-xs-4 form-control-static err-msg" ng-if="securityInfoForm.oldPassword.$dirty&&(securityInfoForm.oldPassword.$error.required||securityInfoForm.oldPassword.$invalid)">请输入密码 6-20个字符!</span>
+                            <div class="col-xs-5" ng-if="profile.css.formEditing">
+                                <input type="text" ng-model="profile.formData.organizationOrUniversity" name="school" id="school" class="form-control">
+                            </div>
                         </div>
-                        <div class="form-group" ng-class="{'has-success':securityInfoForm.newPassword.$dirty&&securityInfoForm.newPassword.$valid, 'has-error':securityInfoForm.newPassword.$dirty&&(securityInfoForm.newPassword.$invalid||profile.formData.oldPassword==profile.formData.newPassword)}">
-                            <label for="newPassword" class="control-label col-md-3 text-right">新密码：</label>
-                            <div ng-if="profile.css.formEditing" class="col-xs-5">
-                                <input type="password" required ng-minlength="6" ng-maxlength="20" ng-model="profile.formData.newPassword" id="newPassword" name="newPassword" class="form-control">
+                        <!--<div class="row"><label for="email" class="col-md-3 text-right">院系：</label><input type="text" id="email" name="email" class="col-md-7"></div>-->
+                        <div class="row form-group" ng-class="{'has-error': schoolForm.dateOfEnterCollege.$invalid, 'has-success':schoolForm.dateOfEnterCollege.$dirty&&schoolForm.dateOfEnterCollege.$valid}">
+                            <label for="dateOfEnterCollege" class="control-label col-md-3 text-right">入学时间：</label>
+                            <div class="col-xs-3" ng-if="!profile.css.formEditing">
+                                <p class="form-control-static">{{profile.currentUser.dateOfEnterCollege|date:"yyyy-MM-dd"}}&nbsp</p>
                             </div>
-                            <span class="col-xs-4 form-control-static err-msg" ng-if="securityInfoForm.newPassword.$dirty&&securityInfoForm.newPassword.$invalid">请输入新密码 6-20个字符!</span>
-                            <span class="col-xs-4 form-control-static err-msg" ng-if="securityInfoForm.newPassword.$dirty&&!securityInfoForm.newPassword.$error.required&&(profile.formData.oldPassword==profile.formData.newPassword&&profile.formData.newPassword)">新密码不能与老密码相同!</span>
+                            <div class="col-xs-5" ng-if="profile.css.formEditing">
+                                <input type="text" data-date-format="yyyy-MM-dd" data-min-date="02/10/70" data-max-date="today" data-autoclose="1" ng-model="profile.formData.dateOfEnterCollege" id="dateOfEnterCollege" name="dateOfEnterCollege" class="form-control" bs-datepicker>
+                            </div>
+                            <span class="err-msg form-control-static col-xs-4" ng-if="schoolForm.dateOfEnterCollege.$invalid">日期格式错误</span>
                         </div>
-                        <div class="form-group" ng-class="{'has-success':securityInfoForm.rePassword.$dirty&&securityInfoForm.rePassword.$valid, 'has-error':securityInfoForm.rePassword.$dirty&&(securityInfoForm.rePassword.$invalid||profile.formData.rePassword!=profile.formData.newPassword)}">
-                            <label for="rePassword" class="control-label col-xs-3 text-right">再输入新密码：</label>
-                            <div ng-if="profile.css.formEditing" class="col-xs-5">
-                                <input  type="password" required ng-model="profile.formData.rePassword" id="rePassword" name="rePassword" class="form-control">
+                        <div class="row form-group">
+                            <label for="degree" class="control-label col-md-3 text-right">学历：</label>
+                            <div class="col-xs-5" ng-if="!profile.css.formEditing">
+                                <p class="form-control-static">{{profile.currentUser.majorsDegree}}&nbsp</p>
                             </div>
-                            <span class="col-xs-4 form-control-static err-msg" ng-if="securityInfoForm.rePassword.$dirty&&securityInfoForm.rePassword.$error.required">请再次输入新密码!</span>
-                            <span class="col-xs-4 form-control-static err-msg" ng-if="securityInfoForm.rePassword.$dirty&&profile.formData.rePassword!=profile.formData.newPassword">两次密码不一致!</span>
+                            <div class="col-xs-5" ng-if="profile.css.formEditing">
+                                <input type="text" ng-model="profile.formData.majorsDegree" id="degree" name="degree" class="col-md-2 form-control">
+                            </div>
+                            <!--<lable class="col-md-3 text-right">学年：</lable><input type="text" id="email" name="email" class="col-md-2">-->
                         </div>
                         <div class="row" ng-if="profile.css.formEditing">
                             <div class="col-md-6 col-md-offset-3 profile-button-container">
-                                <button type="submit" ng-click="profile.clickUpdatePassword(securityInfoForm)">保存修改</button>
+                                <button ng-click="profile.clickUpdateUserInfo(schoolForm)" type="submit">保存修改</button>
                                 <button class="cancel" ng-click="profile.clickCancelEditProfile()">取消</button>
                             </div>
                         </div>
@@ -207,16 +207,16 @@
 
                 <div class="row" ng-if="profile.css.currentTabIndex == 5">
                     <div class="profile-detail-title">联系方式<span class="profile-edit" ng-click="profile.clickEditProfile()">编辑</span></div>
-                    <form name="contactForm" class="form-horizontal">
+                    <form name="contactForm" class="form-horizontal" novalidate>
                         <div class="form-group" ng-class="{'has-success':contactForm.qq.$dirty&&contactForm.qq.$valid, 'has-error':contactForm.qq.$dirty&&contactForm.qq.$invalid}" >
                             <label for="qq" class="control-label col-md-3 profile-underline text-right">QQ ID:</label>
                             <div class="col-xs-9" ng-if="!profile.css.formEditing">
                                 <p class="form-control-static">{{profile.currentUser.qq}}</p>
                             </div>
                             <div ng-if="profile.css.formEditing" class="col-xs-5">
-                                <input required ng-model="profile.formData.qq" type="text" id="qq" name="qq" class="form-control">
+                                <input ng-model="profile.formData.qq" type="text" id="qq" name="qq" class="form-control">
                             </div>
-                            <span class="err-msg" ng-if="contactForm.qq.$dirty&&contactForm.qq.$error.required">请输入正确的qq!</span>
+                            <!--<span class="err-msg" ng-if="contactForm.qq.$dirty&&contactForm.qq.$error.required">请输入正确的qq!</span>-->
                         </div>
                         <div class="row" ng-if="profile.css.formEditing">
                             <div class="col-md-6 col-md-offset-3 profile-button-container">
