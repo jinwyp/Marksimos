@@ -668,8 +668,9 @@ $lineHeight_button: 1.8;
 	position: relative;
 	#profile-alert-container {
 		position: absolute;
-		top: -26px;
+		top: 30px;
 		width: 100%;
+		z-index: 10;
 		.alert {
 			padding:2px;
 			margin-bottom: 0;
