@@ -201,14 +201,18 @@
                 container: '#profile-alert-container',
                 type: 'danger',
                 dismissable: false
-            }
+            },
+            defaultAvatar: '/app/css/images/profile_avatar_2.png'
         };
 
         vm.currentUser = {};
         vm.formData = {};
         vm.uploader = new FileUploader({
             url : '/e4e/api/student/avatar',
-            alias : 'studentavatar'
+            alias : 'studentavatar',
+            onAfterAddingFile : onAfterAddingFile,
+            onSuccessItem: onSuccessItem,
+            onErrorItem: onErrorItem
         });
 
 
@@ -311,6 +315,26 @@
                     $alert(vm.css.alertFailedInfo);
                 });
             }
+        }
+
+        // file upload
+        function onAfterAddingFile() {
+            // only holds the last uploaded file in the queue
+            if (vm.uploader.queue.length > 1) {
+                vm.uploader.removeFromQueue(0);
+            }
+        }
+
+        function onSuccessItem() {
+            app.getUserInfo().then(function() {
+                $alert(vm.css.alertSuccessInfo);
+            }).catch(function() {
+                $alert(vm.css.alertFailedInfo);
+            })
+        }
+
+        function onErrorItem() {
+            $alert(vm.css.alertFailedInfo);
         }
 
 
