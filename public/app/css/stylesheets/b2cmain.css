@@ -671,8 +671,9 @@ body {
 }
 .alert-container #profile-alert-container {
   position: absolute;
-  top: -26px;
+  top: 30px;
   width: 100%;
+  z-index: 10;
 }
 .alert-container #profile-alert-container .alert {
   padding: 2px;
