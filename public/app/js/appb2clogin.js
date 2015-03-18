@@ -177,40 +177,42 @@
     }]);
 
 
+
+
     angular.module('b2clogin').controller('profileController', ['Student', '$alert', 'FileUploader', function(Student, $alert, FileUploader) {
         /* jshint validthis: true */
         var vm = this;
 
         vm.css = {
             addStudentFailedInfo: false,
-            curTabIdx: 1,
+            currentTabIndex: 1,
             updateTeamNameDisabled: true,
-            updateTeamNameFailedInfo: false,
-            updateSuccessInfo: false,
-            updateFailedInfo: false,
-            updatePasswordSuccessInfo: false,
-            updatePasswordFailedInfo: false,
+            formEditing: false,
             alertSuccessInfo: {
                 content: '保存成功！',
-                duration: 3,
+                duration: 2,
                 container: '#profile-alert-container',
                 type: 'success',
                 dismissable: false
             },
             alertFailedInfo: {
                 content: '保存失败！',
-                duration: 3,
+                duration: 2,
                 container: '#profile-alert-container',
                 type: 'danger',
                 dismissable: false
-            }
+            },
+            defaultAvatar: '/app/css/images/profile_avatar_2.png'
         };
 
         vm.currentUser = {};
-        vm.formDatas = [];
+        vm.formData = {};
         vm.uploader = new FileUploader({
             url : '/e4e/api/student/avatar',
-            alias : 'studentavatar'
+            alias : 'studentavatar',
+            onAfterAddingFile : onAfterAddingFile,
+            onSuccessItem: onSuccessItem,
+            onErrorItem: onErrorItem
         });
 
 
@@ -220,18 +222,26 @@
         vm.clickUpdateTeamName = updateTeamName;
         vm.clickUpdateUserInfo = updateUserInfo;
         vm.clickUpdatePassword = updatePassword;
-        vm.clickEdit = edit;
-        vm.clickCancel = disable;
+        vm.clickEditProfile = editProfile;
+        vm.clickSwitchTab = switchTab;
+        vm.clickCancelEditProfile = cancelEditProfile;
 
 
         /**********  Function Declarations  **********/
 
-        function edit(index) {
-            vm.css[index].disabled = false;
+        function editProfile() {
+            vm.css.formEditing = true;
         }
 
-        function disable(index) {
-            vm.css[index].disabled = true;
+        function switchTab(index) {
+            if (vm.css.currentTabIndex == index) return;
+            vm.css.currentTabIndex = index;
+            cancelEditProfile();
+        }
+
+        function cancelEditProfile() {
+            vm.css.formEditing = false;
+            app.resetForm();
         }
 
         function addStudentToTeam(form) {
@@ -239,15 +249,12 @@
             vm.css.addTeamSuccessInfo = false;
 
             if (form.$valid) {
-                Student.addStudentToTeam({username: vm.newUser}).then(function(result) {
-                    vm.css.addTeamSuccessInfo = true;
-                    return app.getUserInfo();
+                Student.addStudentToTeam({username: vm.formData.newTeamMember}).then(function(result) {
+                    app.getUserInfo();
                 }).catch(function(err) {
                     form.$invalid = true;
                     form.$valid = false;
                     $alert(vm.css.alertFailedInfo);
-
-                    vm.css.addTeamFailedInfo = true;
                 });
             }
         }
@@ -268,19 +275,19 @@
             vm.css.updateTeamNameFailedInfo = false;
 
             if (form.$valid) {
-                if (vm.css.updateTeamNameDisabled) {
-                    vm.css.updateTeamNameDisabled = false;
+                if (!vm.css.formEditing) {
+                    vm.css.formEditing = true;
                 } else {
-                    Student.updateTeamName(vm.currentUser.team.name).then(function(result) {
+                    var teamName = vm.formData.teamName;
+                    Student.updateTeamName(teamName).then(function(result) {
+                        vm.currentUser.team.name = teamName;
                         $alert(vm.css.alertSuccessInfo);
-                    }).catch(function(err) {
+                    }).catch(function() {
                         form.teamName.$valid = false;
                         form.teamName.$invalid = true;
                         $alert(vm.css.alertFailedInfo);
-
-                        vm.css.updateTeamNameFailedInfo = true;
                     });
-                    vm.css.updateTeamNameDisabled = true;
+                    vm.css.formEditing = false;
                 }
             }
         }
@@ -288,71 +295,53 @@
         function updateUserInfo(form) {
             // todo, let what css info be false
             if (form.$valid) {
-                var tabIdx = vm.css.curTabIdx;
-                var data = vm.formDatas[tabIdx];
-                data.clickSumbit = true;
-                Student.updateStudentB2CInfo(data).then(function() {
-                    Object.keys(data).forEach(function(key) {
-                        if (key.indexOf('$') === 0) return;
-                        vm.currentUser[key] = data[key];
+                Student.updateStudentB2CInfo(vm.formData).then(function() {
+                    Object.keys(vm.formData).forEach(function(key) {
+                        vm.currentUser[key] = vm.formData[key];
                     });
-                    vm.css[tabIdx].updateSuccessInfo = true;
-                    disable(tabIdx);
                     $alert(vm.css.alertSuccessInfo);
-                }).catch(function(err) {
-                    vm.css[tabIdx].updateFailedInfo = true;
-                    $alert(vm.css.alertFailedInfo)
+                    cancelEditProfile();
+                }).catch(function() {
+                    $alert(vm.css.alertFailedInfo);
                 });
             }
         }
 
         function updatePassword(form) {
-            vm.css.updatePasswordSuccessInfo = false;
-            vm.css.updatePasswordFailedInfo = false;
-
             if (form.$valid) {
-                Student.updatePassword(vm.currentUser.oldPassword, vm.currentUser.newPassword).then(function(result) {
-                    vm.css.updatePasswordSuccessInfo = true;
+                Student.updatePassword(vm.formData.oldPassword, vm.formData.newPassword).then(function(result) {
+                    $alert(vm.css.alertSuccessInfo);
                 }).catch(function(err) {
-                    vm.css.updatePasswordFailedInfo = true;
+                    $alert(vm.css.alertFailedInfo);
                 });
             }
         }
 
-        function onAfterAddngFile(item) {
+        // file upload
+        function onAfterAddingFile() {
+            // only holds the last uploaded file in the queue
+            if (vm.uploader.queue.length > 1) {
+                vm.uploader.removeFromQueue(0);
+            }
+        }
 
+        function onSuccessItem() {
+            app.getUserInfo().then(function() {
+                $alert(vm.css.alertSuccessInfo);
+            }).catch(function() {
+                $alert(vm.css.alertFailedInfo);
+            })
+        }
+
+        function onErrorItem() {
+            $alert(vm.css.alertFailedInfo);
         }
 
 
         var app = {
             init : function(){
-                this.getUserInfo().then(function(data) {
-                    // for the upload avatar form
-                    vm.formDatas[0] = null;
-                    // basic form
-                    vm.formDatas[1] = {
-                        gender: data.gender,
-                        birthday: data.birthday,
-                        clickSumbit: false
-                    };
-                    // school form
-                    vm.formDatas[2] = {
-                        organizationOrUniversity: data.organizationOrUniversity,
-                        dateOfEnterCollege: data.dateOfEnterCollege,
-                        majorsDegree: data.majorsDegree
-                    };
-                    vm.formDatas[3] = vm.formDatas[4] = null;
-                    // contact form
-                    vm.formDatas[5] = {
-                        qq: data.qq
-                    };
-                    vm.formDatas.forEach(function(data, i) {
-                        vm.css[i] = {
-                            updateSuccessInfo: false,
-                            updateFailedInfo: false,
-                            disabled: true
-                        };
-                    });
+                this.getUserInfo().then(function() {
+                    app.resetForm();
                 });
             },
             reRun : function(){
@@ -360,61 +349,31 @@
             },
             getUserInfo : function(){
                 return Student.getStudent().then(function(result) {
-                    return vm.currentUser = result.data;
+                    vm.currentUser = result.data;
                 }).catch(function(err) {
                     console.log('load student info failed');
                 });
+            },
+            resetForm: function() {
+                var formData = vm.formData;
+
+                angular.forEach(vm.currentUser, function(data, key) {
+                    if (!angular.isObject(data)) {
+                        formData[key] = data;
+                    }
+                });
+                formData.oldPassword = '';
+                formData.newPassword = '';
+                formData.rePassword = '';
+
+                formData.teamName = vm.currentUser.team && vm.currentUser.team.name;
+                formData.newTeamMember = '';
             }
         };
 
         app.init();
 
-    }]).directive('ngThumb', ['$window', function($window) { // todo, place it to here for now
-        var helper = {
-            support: !!($window.FileReader && $window.CanvasRenderingContext2D),
-            isFile: function(item) {
-                return angular.isObject(item) && item instanceof $window.File;
-            },
-            isImage: function(file) {
-                var type =  '|' + file.type.slice(file.type.lastIndexOf('/') + 1) + '|';
-                return '|jpg|png|jpeg|bmp|gif|'.indexOf(type) !== -1;
-            }
-        };
-
-        return {
-            restrict: 'A',
-            template: '<canvas/>',
-            link: function(scope, element, attributes) {
-                if (!helper.support) return;
-
-                var params = scope.$eval(attributes.ngThumb);
-
-                if (!helper.isFile(params.file)) return;
-                if (!helper.isImage(params.file)) return;
-
-                var canvas = element.find('canvas');
-                var reader = new FileReader();
-
-                reader.onload = onLoadFile;
-                reader.readAsDataURL(params.file);
-
-                function onLoadFile(event) {
-                    var img = new Image();
-                    img.onload = onLoadImage;
-                    img.src = event.target.result;
-                }
-
-                function onLoadImage() {
-                    var width = params.width || this.width / this.height * params.height;
-                    var height = params.height || this.height / this.width * params.width;
-                    canvas.attr({ width: width, height: height });
-                    canvas[0].getContext('2d').drawImage(this, 0, 0, width, height);
-                }
-            }
-        };
     }]);
-
-
 
 
 

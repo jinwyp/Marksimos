@@ -184,7 +184,7 @@ exports.authLoginToken = function (options) {
                 //token存在且未过期
                 if (tokenInfo && tokenInfo.expires > new Date()) {
 
-                    userModel.findOne({ _id: tokenInfo.userId }, userModel.selectFields(), function (err, user) {
+                    userModel.findOne({ _id: tokenInfo.userId }).populate('avatar', '-physicalAbsolutePath').select( userModel.selectFields()).exec(function (err, user) {
 
                         if (err) { return next(err);}
 

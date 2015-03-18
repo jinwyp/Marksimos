@@ -20,13 +20,17 @@ var multer = require('multer');
 var mkdirp = require('mkdirp');
 var fs = require('fs');
 
-var baseUrl = config.fileUploadDirectory;
-var defaultPath = 'default_file_path';
-var tempPath = baseUrl + 'temp';
-var targetPath = baseUrl + defaultPath;
+var basePath = config.fileUploadDirectory;
+var uploadPath = 'app/uploadimage/';
 
-mkdirp.sync(baseUrl + defaultPath);
-mkdirp.sync( tempPath);
+var defaultPath = uploadPath + 'default_file_path';
+var tempPath = uploadPath + 'temp';
+
+var targetPath = defaultPath;
+
+mkdirp.sync(basePath + defaultPath);
+mkdirp.sync(basePath + tempPath);
+
 
 
 
@@ -37,8 +41,14 @@ var fileStorageSchema = new Schema({
 
     name: { type: String },
     path:{ type: String },
+    physicalAbsolutePath:{ type: String },
     uploadOriginalName: { type: String },
-    uploadOriginalFileSize: { type: String },
+    uploadOriginalFileSize: { type: Number },
+
+    mimetype: { type: String },
+    encoding: { type: String },
+    extension: { type: String },
+    truncated: { type: Boolean , default: false},
 
     description: { type: String }
 
@@ -87,10 +97,20 @@ var FileStorage = mongoose.model("FileStorage", fileStorageSchema);
 module.exports = FileStorage;
 
 
+
+var mimeTypeLimit = [
+    'image/png',
+    'image/jpg',
+    'image/jpeg',
+    'image/bmp',
+    'image/gif',
+
+];
+
 var uploadFeatureList = [
     {
         name : 'studentProfile',
-        filePath : 'student_profile',
+        prefix : 'student_profile',
         postBodyField : [
             {
                 name : 'studentavatar',
@@ -101,7 +121,7 @@ var uploadFeatureList = [
 
     {
         name : 'adminCampaignInfo',
-        filePath : 'admin_campaign',
+        prefix : 'admin_campaign',
         postBodyField : [
             {
                 name : 'list',
@@ -116,22 +136,24 @@ var uploadFeatureList = [
 
 ];
 
+
+
 var uploadFieldsLimit = [];
 
 uploadFeatureList.forEach(function(feature){
     feature.postBodyField.forEach(function(field){
         uploadFieldsLimit.push(field.name);
-        mkdirp.sync(baseUrl +  feature.filePath + '_' + field.filePath);
+        mkdirp.sync(basePath + uploadPath +  feature.prefix + '_' + field.filePath);
     });
 });
 
 
 
 
-FileStorage.multerUpload = function(){
+FileStorage.multerUpload = function(fieldname){
 
     return multer({
-        dest : tempPath,
+        dest : basePath + tempPath,
         limits: {
             fieldNameSize: 100,
             fields : 30,
@@ -145,51 +167,38 @@ FileStorage.multerUpload = function(){
             var datenowString = datenow.getFullYear() + '_' + datenow.getMonth() + '_' + datenow.getDate() + '_' + datenow.getHours() + '_' + datenow.getMinutes() + '_' + datenow.getSeconds() + '_';
             return datenowString + filename.replace(/\W+/g, '_').toLowerCase() +  '_' + datenow.getTime();
         },
-        //changeDest: function(dest, req, res) {
-        //
-        //    for (var key in req.body) {
-        //        if(req.body.hasOwnProperty(key)  ){
-        //
-        //            uploadFeatureList.forEach(function(feature){
-        //                feature.postBodyField.forEach(function(field){
-        //
-        //                    if(field.name === req.body[field.name]){
-        //                        return baseUrl +  feature.filePath + '_' + field.filePath
-        //                    }
-        //                });
-        //            });
-        //        }
-        //    }
-        //
-        //    return dest;
-        //},
+
         onFileUploadStart: function (file, req, res) {
 
-            if (uploadFieldsLimit.indexOf(file.fieldname) === -1)  {
-                logger.log('Upload file failed! Form fieldname: ' + file.fieldname + '. File name: ' + file.originalname);
+            if (mimeTypeLimit.indexOf(file.mimetype) === -1 ) {
                 return false;
-            }else{
-                logger.log('Starting upload ... Form fieldname: '+ file.fieldname + '. File name: ' + file.originalname);
             }
 
+            if (uploadFieldsLimit.indexOf(file.fieldname) === -1 || fieldname !== file.fieldname ){
+                //logger.log('Upload file failed! Form fieldname: ' + file.fieldname + '. File name: ' + file.originalname);
+                return false;
+            }else{
+                //logger.log('Starting upload ... Form fieldname: '+ file.fieldname + '. File name: ' + file.originalname);
+            }
         },
+
         onFileUploadComplete: function (file, req, res) {
-
-
             uploadFeatureList.forEach(function(feature){
                 feature.postBodyField.forEach(function(field){
 
                     if(field.name ===  file.fieldname){
-                        targetPath =  baseUrl +  feature.filePath + '_' + field.filePath;
+                        targetPath =  uploadPath +  feature.prefix + '_' + field.filePath + '/';
                     }
                 });
             });
 
-            //fs.renameSync(file.path, targetPath + file.name);
+            // move to new folder path
+            fs.renameSync(file.path, basePath + targetPath + file.name);
 
-            logger.log('Upload Finished. File name ' + file.originalname + ' uploaded to  ' + file.path);
-            console.log(req.files);
-            //return res.send({message:"File uploaded."});
+            file.path = targetPath + file.name;
+            file.pathAbsolute = basePath + targetPath + file.name;
+
+            //logger.log('Upload Finished. File name ' + file.originalname + ' uploaded to  ' + file.path);
         }
     });
 };

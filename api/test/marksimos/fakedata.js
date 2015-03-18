@@ -71,26 +71,31 @@ var createSeminarStudentList = [
     {
         company_id: 1,
         email: "anilraparla@hcdlearning.com",
+        studentemail: "anilraparla@hcdlearning.com",
         seminar_id: 1000
     },
     {
         company_id: 2,
         email: "haosun@hcdlearning.com",
+        studentemail: "haosun@hcdlearning.com",
         seminar_id: 1000
     },
     {
         company_id: 3,
         email: "jinwang@hcdlearning.com",
+        studentemail: "jinwang@hcdlearning.com",
         seminar_id: 1000
     },
     {
         company_id: 4,
         email: "yunsun@hcdlearning.com",
+        studentemail: "yunsun@hcdlearning.com",
         seminar_id: 1000
     },
     {
         company_id: 1,
         email: "anilraparla@hcdlearning.com",
+        studentemail: "anilraparla@hcdlearning.com",
         seminar_id: 1000
     }
 ];

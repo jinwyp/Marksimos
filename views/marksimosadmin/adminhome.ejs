@@ -562,8 +562,9 @@
                                         <td>{{seminar.companyNum}} </td>
                                         <td>
                                             <p ng-repeat="company in seminar.companyAssignment">Company{{company.companyId | companyname }} :
+                                                <span ng-repeat="team in company.teamListData">Team: {{team.name}} / Creator: {{team.creator.username}} <a href="" ng-click="removeTeamFromSeminar(seminar.seminarId, team._id)">remove</a>, </span>
                                                 <br>
-                                                <span ng-repeat="student in company.studentList">{{student}} <a href="" ng-click="removeStudentFromSeminar(seminar.seminarId, student)">remove</a>, </span>
+                                                Members: <span ng-repeat="student in company.studentList">{{student}} <a href="" ng-hide="seminar.isSimulationFinished" ng-click="removeStudentFromSeminar(seminar.seminarId, student)">remove</a>, </span>
                                             </p>
                                         </td>
                                         <td style="width:460px">
@@ -574,13 +575,14 @@
                                                         <li ng-repeat="company in seminar.companyAssignment"><a href="" ng-click="chooseCompany(seminar, company)">Company {{company.companyName}}</a></li>
                                                     </ul>
                                                 </div><!-- /btn-group -->
-                                                <input type="email" class="form-control" placeholder="Student Email" ng-model="seminar.inputemail">
+                                                <input type="email" class="form-control" placeholder="Student or Team creator Email" ng-model="seminar.inputemail">
                                                 <span class="input-group-btn">
-                                                    <button class="btn btn-info" type="button" ng-click="addStudentToSeminar(seminar.seminarId, seminar.inputemail)">Add</button>
+                                                    <button class="btn btn-info" type="button" ng-click="addStudentToSeminar(seminar.seminarId, seminar.inputemail)">Add Student</button>
+                                                    <button class="btn btn-primary" type="button" ng-click="addTeamToSeminar(seminar.seminarId, seminar.inputemail)">Add Team</button>
                                                 </span>
                                             </div><!-- /input-group -->
                                             <div class="callout callout-danger" ng-show="seminar.seminarId == css.seminarId">
-                                                <p>Please choose a company and input student email !</p>
+                                                <p>Please choose a company and input student email or team creator email !</p>
                                             </div>
                                         </td>
                                     </tr>

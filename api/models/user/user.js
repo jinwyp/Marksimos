@@ -53,6 +53,9 @@ var userSchema = new Schema({
         username : String
     },
 
+    //user avatar
+    avatar: { type: Schema.Types.ObjectId, ref: 'FileStorage', select: true },
+
 
     //user basic info
     gender       : Number,  // 1 male 2 female
