@@ -315,7 +315,7 @@
                     $alert(vm.css.alertFailedInfo);
                 });
             } else {
-                $alert(angular.extend({}, vm.css.alertFailedInfo, {content: '密码信息无效！'}))
+                $alert(angular.extend({}, vm.css.alertFailedInfo, {content: '密码信息无效！'}));
             }
         }
 
@@ -332,7 +332,7 @@
                 $alert(vm.css.alertSuccessInfo);
             }).catch(function() {
                 $alert(vm.css.alertFailedInfo);
-            })
+            });
         }
 
         function onErrorItem() {
