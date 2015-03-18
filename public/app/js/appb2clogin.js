@@ -19,7 +19,7 @@
 
 
     /********************  Create New Module For Controllers ********************/
-    angular.module('b2clogin', ['marksimos.config', 'marksimos.commoncomponent', 'marksimos.websitecomponent',
+    angular.module('b2clogin', ['pascalprecht.translate', 'marksimos.config', 'marksimos.commoncomponent', 'marksimos.websitecomponent',
         'marksimos.model', 'marksimos.filter', 'mgcrea.ngStrap', 'ngAnimate', 'angularFileUpload']);
 
 
@@ -179,7 +179,7 @@
 
 
 
-    angular.module('b2clogin').controller('profileController', ['Student', '$alert', 'FileUploader', function(Student, $alert, FileUploader) {
+    angular.module('b2clogin').controller('profileController', ['Student', '$alert', 'FileUploader', '$translate', function(Student, $alert, FileUploader, $translate) {
         /* jshint validthis: true */
         var vm = this;
 
