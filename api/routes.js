@@ -510,8 +510,8 @@ apiRouter.get('/marksimos/api/create_admin', function (req,res,next) {
             //已经存在管理员了，不进行初始化，只列出这些用户
 
             // 补充增加 b2c_facilitator 账号
-            userModel.find({"username": "b2c_facilitator"}).execQ().then(function (userB2CResult) {
-
+            userModel.findOne({"username": "b2c_facilitator"}).execQ().then(function (userB2CResult) {
+                console.log(userB2CResult);
                 if(userB2CResult){
                     return res.status(400).send ({message: "already added."});
                 }else{
