@@ -29,6 +29,15 @@ var campaignSchema = new Schema({
     seminarListMarksimos: [{ type: schemaObjectId, ref: 'Seminar' }],
     teamList: [{ type: schemaObjectId, ref: 'Team' }],
 
+    pictures : {
+        listCover : {type: schemaObjectId, ref: 'FileStorage'},
+        firstCover : {type: schemaObjectId, ref: 'FileStorage'},
+        benefit1 : {type: schemaObjectId, ref: 'FileStorage'},
+        benefit2 : {type: schemaObjectId, ref: 'FileStorage'},
+        benefit3 : {type: schemaObjectId, ref: 'FileStorage'},
+        qualification : {type: schemaObjectId, ref: 'FileStorage'}
+    },
+
     activated: { type: Boolean, default: false }
 
 });
