@@ -61,6 +61,7 @@ apiRouter.get('/admin', function(req, res, next){
 apiRouter.get('/e4e', function(req, res, next){
     res.render('b2c/registration/indexreg.ejs', {title : 'Welcome to HCD E4E | HCD Learning'});
 });
+
 apiRouter.get('/e4e/emailverify/registration', auth.activateRegistrationEmail);
 
 

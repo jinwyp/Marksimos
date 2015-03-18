@@ -165,12 +165,19 @@ exports.authLoginToken = function (options) {
             return null;
         }
 
-        function sendResult(options){
+        function sendFailureResponse(options){
             if (options.failureRedirect) {
                 return res.redirect(options.failureRedirect);
             }else{
                 return res.status(401).send( {message: options.message });
             }
+        }
+
+        function sendSuccessResponse(options, next){
+            if (options.successRedirect) {
+                return res.redirect(options.successRedirect);
+            }
+             return next();
         }
 
         var tokenName = 'x-access-token';
@@ -191,7 +198,7 @@ exports.authLoginToken = function (options) {
                         if (!user) {
                             //token存在，用户不存在，则可能用户已被删除
                             options.message = 'Token existed, but user not found.';
-                            sendResult(options);
+                            sendFailureResponse(options);
                         }else{
                             req.user = user;
 
@@ -227,12 +234,12 @@ exports.authLoginToken = function (options) {
                 }else {
                     //token过期
                     options.message = 'Token have expired.';
-                    sendResult(options);
+                    sendFailureResponse(options);
                 }
             });
         }else {
             options.message = 'Token not found, pls login .';
-            sendResult(options);
+            sendFailureResponse(options);
         }
 
 

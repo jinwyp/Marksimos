@@ -16,7 +16,7 @@ var campaignModel = require('../../models/b2c/campaign.js');
 
 exports.campaignListPage = function(req, res, next){
 
-    campaignModel.find({ activated: true}).populate('seminarListMarksimos').populate('teamList').execQ().then(function(resultCampaign){
+    campaignModel.find({ activated: false}).populate('seminarListMarksimos').populate('teamList').execQ().then(function(resultCampaign){
         if(resultCampaign.length == 0){
             return res.status(400).send( {message: "campaign doesn't exist."});
         }
