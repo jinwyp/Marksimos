@@ -1,11 +1,11 @@
 <% include include/headcss.ejs %>
 
 
-<body ng-app="b2clogin" class="profile-body">
+<body ng-app="b2clogin" ng-controller="profileController as profile">
 
 <b2c-header></b2c-header>
 
-<div ng-controller="profileController as profile" class="profile-main">
+<div class="profile-main">
     <div class="container-fluid profile-content" ng-cloak>
         <header class="row">
             <div class="col-xs-12">
