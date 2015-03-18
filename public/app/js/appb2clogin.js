@@ -202,7 +202,7 @@
                 type: 'danger',
                 dismissable: false
             },
-            defaultAvatar: '/app/css/images/profile_avatar_2.png'
+            defaultAvatar: 'app/css/images/profile_avatar_2.png'
         };
 
         vm.currentUser = {};
@@ -314,6 +314,8 @@
                 }).catch(function(err) {
                     $alert(vm.css.alertFailedInfo);
                 });
+            } else {
+                $alert(angular.extend({}, vm.css.alertFailedInfo, {content: '密码信息无效！'}))
             }
         }
 
