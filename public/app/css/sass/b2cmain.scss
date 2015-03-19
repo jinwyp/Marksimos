@@ -1,6 +1,7 @@
 ﻿@import "icon_b2c/*.png";
 @import "compass/css3";
 @import "compass/utilities/general/float";
+@import "compass/utilities/general/clearfix";
 
 $color_white: #ffffff;
 $color_profile_detail_title: #959595;
@@ -947,4 +948,143 @@ $lineHeight_button: 1.8;
 	}
 }
 
+/********************  campaign   ********************/
+.campaign-nav {
+	background-color: #454545;
+	height: 46px;
+	color: $color_white;
+	.nav-container {
+		width: 976px;
+		li::after {
+			content: ' ';
+			width: 1px;
+			font-size: 1px;
+			height: 27px;
+			border-right: 1px solid;
+			position: absolute;
+			top: 10px;
+			left: 100%;
+		}
+		li:hover::after, li:last-child::after {
+			border: none;
+		}
+		a {
+			font-size: 14px;
+			line-height: 16px;
+			width: 154px;
+			color: $color_white;
+			text-align: center;
+			&:link, &:visited{
+				background-color: transparent;
+			}
+			&:hover, &:active {
+				background-color: #848484;
+			};
+		}
+	}
+}
 
+.campaign-banner {
+	background-color: #4281EA;
+	height: 278px;
+}
+
+.campaign-main {
+	a {
+		color: black;
+	}
+	ul{
+		list-style: none;
+		padding: 0;
+	}
+	button {
+		color: $color_white;
+		border: none;
+		box-shadow: none;
+	}
+	div.center-block {
+		width: 890px;
+	}
+	h3 {
+		margin: 16px 0;
+		font-size: 16px;
+	}
+	.campaign-enter {
+		padding: 25px 0;
+		border-bottom: 1px solid #888;
+		button {
+			width: 144px;
+			height: 38px;
+			font-size: 18px;
+			margin-right: 27px;
+		}
+		.enter-button {
+			background-color: #B72909;
+			font-weight: bold;
+		}
+		.introduce {
+			color: black;
+			font-weight: normal;
+			border: 2px #888 solid;
+			background-color: $color_white;
+		}
+		.enter-count {
+			color: #888;
+			float: right;
+			padding: 10px 23px 0 0;
+			strong {
+				font-size: 18px;
+			}
+		}
+		@include clearfix()
+	}
+	.campaign-schedules {
+		border-bottom: 1px solid #888;
+		padding-bottom: 20px;
+		.schedule-list {
+			li {
+				font-size: 13px;
+				margin-bottom: 11px;
+			}
+			a {
+				position: relative;
+				span {
+					display: none;
+					position: absolute;
+					background-color: #B72909;
+					color: $color_white;
+					font-size: 12px;
+					padding: 1px 8px;
+					right: -50px;
+				}
+				&::before {
+					content: '';
+					padding-left: 50px;
+				}
+				&::after {
+					content: '';
+					padding-right: 50px;
+				}
+				&:hover span{
+					display: inline;
+				}
+			}
+		}
+	}
+	.gain-list {
+		.gain {
+			width: 170px;
+		}
+		img {
+			margin: 20px 0;
+			width: 170px;
+			height: 170px;
+			border: solid 3px #3E7DDF;
+			@include border-radius(50%);
+		}
+	}
+	.enter-condition {
+		background-color: #3E7DDF;
+		color: $color_white;
+	}
+}

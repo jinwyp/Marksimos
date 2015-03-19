@@ -952,3 +952,141 @@ body {
 .datepicker.dropdown-menu.datepicker-mode-1 tbody button, .datepicker.dropdown-menu.datepicker-mode-2 tbody button {
   height: 65px;
 }
+
+/********************  campaign   ********************/
+.campaign-nav {
+  background-color: #454545;
+  height: 46px;
+  color: #ffffff;
+}
+.campaign-nav .nav-container {
+  width: 976px;
+}
+.campaign-nav .nav-container li::after {
+  content: ' ';
+  width: 1px;
+  font-size: 1px;
+  height: 27px;
+  border-right: 1px solid;
+  position: absolute;
+  top: 10px;
+  left: 100%;
+}
+.campaign-nav .nav-container li:hover::after, .campaign-nav .nav-container li:last-child::after {
+  border: none;
+}
+.campaign-nav .nav-container a {
+  font-size: 14px;
+  line-height: 16px;
+  width: 154px;
+  color: #ffffff;
+  text-align: center;
+}
+.campaign-nav .nav-container a:link, .campaign-nav .nav-container a:visited {
+  background-color: transparent;
+}
+.campaign-nav .nav-container a:hover, .campaign-nav .nav-container a:active {
+  background-color: #848484;
+}
+
+.campaign-banner {
+  background-color: #4281EA;
+  height: 278px;
+}
+
+.campaign-main a {
+  color: black;
+}
+.campaign-main ul {
+  list-style: none;
+  padding: 0;
+}
+.campaign-main button {
+  color: #ffffff;
+  border: none;
+  box-shadow: none;
+}
+.campaign-main div.center-block {
+  width: 890px;
+}
+.campaign-main h3 {
+  margin: 16px 0;
+  font-size: 16px;
+}
+.campaign-main .campaign-enter {
+  padding: 25px 0;
+  border-bottom: 1px solid #888;
+  overflow: hidden;
+  *zoom: 1;
+}
+.campaign-main .campaign-enter button {
+  width: 144px;
+  height: 38px;
+  font-size: 18px;
+  margin-right: 27px;
+}
+.campaign-main .campaign-enter .enter-button {
+  background-color: #B72909;
+  font-weight: bold;
+}
+.campaign-main .campaign-enter .introduce {
+  color: black;
+  font-weight: normal;
+  border: 2px #888 solid;
+  background-color: #ffffff;
+}
+.campaign-main .campaign-enter .enter-count {
+  color: #888;
+  float: right;
+  padding: 10px 23px 0 0;
+}
+.campaign-main .campaign-enter .enter-count strong {
+  font-size: 18px;
+}
+.campaign-main .campaign-schedules {
+  border-bottom: 1px solid #888;
+  padding-bottom: 20px;
+}
+.campaign-main .campaign-schedules .schedule-list li {
+  font-size: 13px;
+  margin-bottom: 11px;
+}
+.campaign-main .campaign-schedules .schedule-list a {
+  position: relative;
+}
+.campaign-main .campaign-schedules .schedule-list a span {
+  display: none;
+  position: absolute;
+  background-color: #B72909;
+  color: #ffffff;
+  font-size: 12px;
+  padding: 1px 8px;
+  right: -50px;
+}
+.campaign-main .campaign-schedules .schedule-list a::before {
+  content: '';
+  padding-left: 50px;
+}
+.campaign-main .campaign-schedules .schedule-list a::after {
+  content: '';
+  padding-right: 50px;
+}
+.campaign-main .campaign-schedules .schedule-list a:hover span {
+  display: inline;
+}
+.campaign-main .gain-list .gain {
+  width: 170px;
+}
+.campaign-main .gain-list img {
+  margin: 20px 0;
+  width: 170px;
+  height: 170px;
+  border: solid 3px #3E7DDF;
+  -moz-border-radius: 50%;
+  -webkit-border-radius: 50%;
+  border-radius: 50%;
+}
+.campaign-main .enter-condition {
+  background-color: #3E7DDF;
+  color: #ffffff;
+}
