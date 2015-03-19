@@ -165,7 +165,12 @@ exports.authLoginToken = function (options) {
             return null;
         }
 
-        function sendFailureResponse(options){
+        function sendFailureResponse(options, next){
+
+            if(typeof options.successRedirect !== 'undefined'){
+                return next();
+            }
+
             if (options.failureRedirect) {
                 return res.redirect(options.failureRedirect);
             }else{
@@ -174,10 +179,10 @@ exports.authLoginToken = function (options) {
         }
 
         function sendSuccessResponse(options, next){
-            if (options.successRedirect) {
+            if (typeof options.successRedirect !== 'undefined') {
                 return res.redirect(options.successRedirect);
             }
-             return next();
+            return next();
         }
 
         var tokenName = 'x-access-token';
@@ -198,7 +203,7 @@ exports.authLoginToken = function (options) {
                         if (!user) {
                             //token存在，用户不存在，则可能用户已被删除
                             options.message = 'Token existed, but user not found.';
-                            sendFailureResponse(options);
+                            sendFailureResponse(options, next);
                         }else{
                             req.user = user;
 
@@ -223,7 +228,7 @@ exports.authLoginToken = function (options) {
                                     };
                                 }
 
-                                return next();
+                                return sendSuccessResponse(options, next);
 
                             }).fail(function(err){
                                 next(err);
@@ -234,12 +239,12 @@ exports.authLoginToken = function (options) {
                 }else {
                     //token过期
                     options.message = 'Token have expired.';
-                    sendFailureResponse(options);
+                    sendFailureResponse(options, next);
                 }
             });
         }else {
             options.message = 'Token not found, pls login .';
-            sendFailureResponse(options);
+            sendFailureResponse(options, next);
         }
 
 
