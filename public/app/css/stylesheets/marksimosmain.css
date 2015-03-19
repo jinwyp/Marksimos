@@ -579,6 +579,9 @@ body a, body button {
   padding: 15px 0px 1px 0px;
   font-size: 14px;
 }
+.login .panelbox ul {
+  padding: 0;
+}
 .login .panelbox .highlight1 {
   font-weight: bold;
   color: #5375e1;
@@ -605,10 +608,11 @@ body a, body button {
   color: #464646;
   -webkit-text-size-adjust: none;
   font-size: 11px;
+  padding-left: 20px;
+  list-style-type: none;
   background-image: url('../images/icon-sf042f4f04d.png');
   background-repeat: no-repeat;
   background-position: 1px -2044px;
-  padding-left: 20px;
   height: 24px;
 }
 .login .panelbox .brand_list .user_product span {
@@ -736,6 +740,9 @@ body a, body button {
 .mainbody .user_brand_box {
   height: 200px;
 }
+.mainbody .user_brand_box ul {
+  padding: 0;
+}
 .mainbody .user_brand_box .table > thead > tr > td,
 .mainbody .user_brand_box .table > tbody > tr > td,
 .mainbody .user_brand_box .table > tfoot > tr > td {
@@ -819,10 +826,11 @@ body a, body button {
   color: #464646;
   -webkit-text-size-adjust: none;
   font-size: 11px;
+  padding-left: 20px;
+  list-style-type: none;
   background-image: url('../images/icon-sf042f4f04d.png');
   background-repeat: no-repeat;
   background-position: 1px -2044px;
-  padding-left: 20px;
   height: 24px;
 }
 .mainbody .user_product span {
