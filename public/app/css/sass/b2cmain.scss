@@ -966,7 +966,7 @@ $lineHeight_button: 1.8;
 	}
 }
 
-/********************  campaign   ********************/
+/********************   campaign   ********************/
 .campaign-nav {
 	background-color: #454545;
 	height: 46px;
@@ -1039,6 +1039,7 @@ $lineHeight_button: 1.8;
 		.enter-button {
 			background-color: #B72909;
 			font-weight: bold;
+			@include box-shadow($color_register_button_border 0px 2px 4px);
 		}
 		.introduce {
 			color: black;
@@ -1074,6 +1075,8 @@ $lineHeight_button: 1.8;
 					font-size: 12px;
 					padding: 1px 8px;
 					right: -50px;
+					@include box-shadow($color_register_button_border 0px 2px 4px);
+					cursor: pointer;
 				}
 				&::before {
 					content: '';
@@ -1102,7 +1105,68 @@ $lineHeight_button: 1.8;
 		}
 	}
 	.enter-condition {
+		padding-bottom: 15px;
 		background-color: #3E7DDF;
 		color: $color_white;
+		img {
+			width: 325px;
+			height: 210px;
+			margin-right:10px;
+		}
+		h4 {
+			font-size: 16px;
+		}
+		p {
+			font-size: 14px;
+			padding-bottom: 15px;
+		}
+		.col-xs-offset-1 {
+			margin-left: 30px;
+		}
+	}
+	.campaign-process {
+		height: 300px; //todo remove this height
+		background-color: #C0C0C0; // todo remove
+	}
+	.campaign-winner {
+		color: $color_white;
+		background-color: #BC2A0B;
+		h3 {
+			margin-bottom: 30px;
+		}
+		span {
+			border: 2px $color_white solid;
+			@include border-radius(3px);
+			padding: 10px 15px;
+			font-size: 20px;
+			display: inline-block;
+			width: 200px;
+			cursor: pointer;
+		}
+		>div div:nth-child(2) span {
+			background-color: #9E240A;
+		}
+		>div div:last-child span{
+			background-color: #741906;
+		}
+		padding: 20px 0 60px;
+	}
+}
+
+/********************   campaign   ********************/
+.campaignlist-container {
+	div.center-block {
+		width: 890px;
+	}
+	.header {
+		h3 {
+			font-size: 16px;
+			margin: 0;
+		}
+		a {
+			font-size: 14px;
+		}
+		padding-bottom: 5px;
+		border-bottom: 1px solid #C7C7C7;
 	}
 }
