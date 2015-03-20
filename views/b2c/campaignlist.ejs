@@ -4,107 +4,124 @@
 <body ng-app="b2clogin" ng-controller="profileController as profile">
 
 <b2c-header></b2c-header>
+<div class="container-fluid campaignlist-container">
+    <!-- banner -->
+    <div class="campaignlist-banner row">
+        <img>
+    </div>
 
-<nav class="campaign-nav">
-    <div class="center-block nav-container">
-        <ul class="nav navbar-nav">
-            <li>
-                <a href="#enter">比赛报名</a>
-            </li>
-            <li>
-                <a href="#schedules">大赛赛程</a>
-            </li>
-            <li>
-                <a href="#gains">你能获得</a>
-            </li>
-            <li>
-                <a href="#conditions">加入条件</a>
-            </li>
-            <li>
-                <a href="#process">参赛流程</a>
-            </li>
-            <li>
-                <a href="#winner">获胜团队</a>
-            </li>
-        </ul>
-    </div>
-</nav>
-<div class="campaign-banner">
-    <img>
-</div>
-<div class="container-fluid campaign-main">
-    <div id="enter" class="center-block campaign-enter">
-        <button class="enter-button">马上报名</button>
-        <button class="introduce">游戏介绍</button>
-        <span class="enter-count">已有<strong>99999</strong>人参加</span>
-    </div>
-    <div id="schedules" class="center-block campaign-schedules">
-        <h3 class="text-center">大赛赛程</h3>
-        <ul class="schedule-list text-center">
-            <li><a>www.whateverwhoru.com<span>点击进入</span></a></li>
-            <li><a>www.whateverwhoru.com<span>点击进入</span></a></li>
-            <li><a>www.whateverwhoru.com<span>点击进入</span></a></li>
-            <li><a>www.whateverwhoru.com<span>点击进入</span></a></li>
-        </ul>
-    </div>
-    <div id="gains" class="row center-block campaign-gains">
-        <h3 class="col-xs-12 text-center">你能获得</h3>
+    <!-- campaign-list -->
+    <div class="row campaign-list">
         <div class="col-xs-12">
-            <ul class="gain-list row">
-                <li class="col-xs-4">
-                    <div class="gain center-block">
+            <div class="center-block list-container">
+                <div class="header row">
+                    <h3>赛事&活动</h3>
+                    <a>更多</a>
+                </div>
+                <div class="section row">
+                    <div class="figure col-xs-6">
                         <img>
-                        <h4 class="text-center">a title</h4>
-                        <p>bla bla bla bla bla bla bla bla bla bla bla bla</p>
+                        <div class="caption">
+                            <div>
+                                <p>E战成名 上海财经大学 商战模拟大赛</p>
+                                <span class="date">2015/09/02</span>
+                                <span class="count">1999人参加</span>
+                            </div>
+                            <button>参加</button>
+                        </div>
                     </div>
-                </li>
-                <li class="col-xs-4">
-                    <div class="gain center-block">
+                    <div class="figure col-xs-6">
                         <img>
-                        <h4 class="text-center">a title</h4>
-                        <p>bla bla bla bla bla bla bla bla bla bla bla bla</p>
+                        <div class="caption">
+                            <div>
+                                <p>E战成名 上海财经大学 商战模拟大赛</p>
+                                <span class="date">2015/09/02</span>
+                                <span class="count">1999人参加</span>
+                            </div>
+                            <button>参加</button>
+                        </div>
                     </div>
-                </li>
-                <li class="col-xs-4">
-                    <div class="gain center-block">
-                        <img>
-                        <h4 class="text-center">a title</h4>
-                        <p>bla bla bla bla bla bla bla bla bla bla bla bla</p>
-                    </div>
-                </li>
-            </ul>
-        </div>
-    </div>
-    <div id="conditions" class="enter-condition">
-        <div class="center-block">
-            <h3 class="text-center">加入条件</h3>
-            <div>
-                <img>
-                <div>
-                    <h4>乐于分享</h4>
-                    <p>具有分享精神，愿意分享自己的知识</p>
-                    <h4>敢于挑战</h4>
-                    <p>乐观向上，敢于向自己发起挑战</p>
-                    <h4>有专注力</h4>
-                    <p>目标明确，有足够的专注力</p>
                 </div>
             </div>
         </div>
     </div>
-    <div id="process" class="campaign-process">
-        <h3 class="text-center">参赛流程</h3>
-    </div>
-    <div id="winner" class="campaign-winner">
+
+    <div class="row game-list">
         <div class="center-block">
-            <h3>获胜队伍</h3>
-            <div>
-                <span>第一轮结果</span>
-                <span>第二轮结果</span>
-                <span>第三轮结果</span>
+            <div class="header">
+                <h3>热门游戏</h3>
+                <a>更多</a>
+            </div>
+            <div class="section">
+                <div class="figure">
+                    <img>
+                    <div class="caption">
+                        <p>MarkSimos 商战模拟大赛</p>
+                        <span class="date">2015/09/02</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row star-coach">
+        <div class="center-block">
+            <div class="header">
+                <h3>明星教练</h3>
+                <a>更多</a>
+            </div>
+            <div class="section">
+                <ul>
+                    <li>
+                        <div class="figure">
+                            <img>
+                            <div class="caption">
+                                <div class="name"></div>
+                                <div class="title"></div>
+                                <img>
+                                <button>关注</button>
+                            </div>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="figure">
+                            <img>
+                            <div class="caption">
+                                <div class="name"></div>
+                                <div class="title"></div>
+                                <img>
+                                <button>关注</button>
+                            </div>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="figure">
+                            <img>
+                            <div class="caption">
+                                <div class="name"></div>
+                                <div class="title"></div>
+                                <img>
+                                <button>关注</button>
+                            </div>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="figure">
+                            <img>
+                            <div class="caption">
+                                <div class="name"></div>
+                                <div class="title"></div>
+                                <img>
+                                <button>关注</button>
+                            </div>
+                        </div>
+                    </li>
+                </ul>
             </div>
         </div>
     </div>
 </div>
+
 <div class="footer">
 
 </div>
