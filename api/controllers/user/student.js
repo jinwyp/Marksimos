@@ -75,43 +75,25 @@ exports.updateStudentB2CInfo = function(req, res, next){
 
 exports.uploadStudentAvatar = function(req, res, next){
 
-    if(req.files){
+    fileUploadModel.creatFile(req.files, 'studentavatar').then(function(result){
 
-        fileUploadModel.createQ({
-            name: req.files.studentavatar.name,
-            path: req.files.studentavatar.path,
-            physicalAbsolutePath: req.files.studentavatar.pathAbsolute,
+        if(!result ){
+            throw new Error('Cancel promise chains. Because Create New File failed !');
+        }
 
-            uploadOriginalName: req.files.studentavatar.originalname,
-            uploadOriginalFileSize : req.files.studentavatar.size,
-            description : req.files.studentavatar.fieldname,
+        return userModel.findOneAndUpdateQ({ _id : req.user._id} , {avatar : result._id});
 
-            mimetype: req.files.studentavatar.mimetype,
-            encoding: req.files.studentavatar.encoding,
-            extension: req.files.studentavatar.extension,
-            truncated: req.files.studentavatar.truncated
+    }).then(function( savedDoc){
 
-        }).then(function(result){
-
-            if(!result ){
-                throw new Error('Cancel promise chains. Because Create New File failed !');
-            }
+        if(!savedDoc ){
+            throw new Error('Cancel promise chains. Because Update User failed. More or less than 1 record is updated. it should be only one !');
+        }
+        return res.status(200).send({message: 'Upload Avatar picture success'});
 
 
-            return userModel.findOneAndUpdateQ({ _id : req.user._id} , {avatar : result._id});
-
-        }).then(function( savedDoc){
-
-            if(!savedDoc ){
-                throw new Error('Cancel promise chains. Because Update User failed. More or less than 1 record is updated. it should be only one !');
-            }
-            return res.status(200).send({message: 'Upload Avatar picture success'});
-
-
-        }).fail(function(err){
-            next(err);
-        }).done();
-    }
+    }).fail(function(err){
+        next(err);
+    }).done();
 
 };
 

@@ -9,7 +9,7 @@ var userRoleModel = require('../../models/user/userrole.js');
 var teamModel = require('../../models/user/team.js');
 var seminarModel = require('../../models/marksimos/seminar.js');
 var campaignModel = require('../../models/b2c/campaign.js');
-
+var fileUploadModel = require('../../models/user/fileupload.js');
 
 
 
@@ -95,6 +95,62 @@ exports.addCampaign = function(req, res, next){
     }).done();
 
 };
+
+
+
+exports.uploadCampaignPics = function(req, res, next){
+    var validationErrors = campaignModel.campaignIdValidations(req);
+
+    if(validationErrors){
+        return res.status(400).send( {message: validationErrors} );
+    }
+
+
+    var uploadPicFields = [
+        'uploadListCover' ,
+        'uploadFirstCover' ,
+        'uploadBenefit1' ,
+        'uploadBenefit2' ,
+        'uploadBenefit3' ,
+        'uploadQualification'
+    ];
+
+    var currentFieldname;
+
+    for(var p in req.files) {
+        if (req.files.hasOwnProperty(p)) {
+            if (uploadPicFields.indexOf(p) > -1) {
+                currentFieldname = p;
+            }
+        }
+    }
+
+    fileUploadModel.creatFile(req.files, currentFieldname).then(function(result){
+
+        if(!result ){
+            throw new Error('Cancel promise chains. Because Upload campaign picture failed !');
+        }
+
+        var updateData = {};
+        updateData[currentFieldname] = result._id;
+
+        return campaignModel.findOneAndUpdateQ({ _id : req.body.id} , updateData);
+
+    }).then(function( savedDoc){
+
+        if(!savedDoc ){
+            throw new Error('Cancel promise chains. Because Update campaign failed. More or less than 1 record is updated. it should be only one !');
+        }
+        return res.status(200).send({message: 'Upload campaign picture success'});
+
+
+    }).fail(function(err){
+        next(err);
+    }).done();
+
+};
+
+
 
 
 

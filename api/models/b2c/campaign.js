@@ -32,6 +32,8 @@ var campaignSchema = new Schema({
     pictures : {
         listCover : {type: schemaObjectId, ref: 'FileStorage'},
         firstCover : {type: schemaObjectId, ref: 'FileStorage'},
+        firstCoverBackgroundColor : {type: String},
+
         benefit1 : {type: schemaObjectId, ref: 'FileStorage'},
         benefit2 : {type: schemaObjectId, ref: 'FileStorage'},
         benefit3 : {type: schemaObjectId, ref: 'FileStorage'},

@@ -163,7 +163,8 @@
             scope: {
                 currentMenu : '=',
                 showtab : '=',
-                currentuser : '='
+                currentuser : '=',
+                changemenu : '&'
             },
             restrict: 'AE',
             templateUrl: 'adminmenu.html',
@@ -180,7 +181,7 @@
 
                 scope.clickMenu = function(currentmenu){
                     scope.currentMenu = currentmenu;
-
+                    scope.changemenu();
                 };
 
             }

@@ -7,7 +7,7 @@
     'use strict';
 
     /********************  Create New Module For Controllers ********************/
-    angular.module('marksimosadmin', ['pascalprecht.translate', 'angularCharts', 'nvd3ChartDirectives', 'notifications', 'marksimos.websitecomponent', 'marksimos.commoncomponent', 'marksimos.filter']);
+    angular.module('marksimosadmin', ['pascalprecht.translate', 'angularCharts', 'nvd3ChartDirectives', 'notifications', 'angularFileUpload', 'marksimos.websitecomponent', 'marksimos.commoncomponent', 'marksimos.filter']);
 
 
 
@@ -48,11 +48,12 @@
 
 
 
-    angular.module('marksimosadmin').controller('adminHomeController', ['$scope', '$http', '$notification', 'Admin', function($scope, $http, $notification, Admin) {
+    angular.module('marksimosadmin').controller('adminHomeController', ['$scope', '$http', '$notification', 'FileUploader', 'Admin', function($scope, $http, $notification, FileUploader, Admin) {
 
         $scope.css = {
             leftmenu: 11,
             menuTabShow: [false, false, false, false, false, false, false], //从第二个false 开始第1个菜单
+            editMenuStatus : false,
             seminarId: 0,
             campaignIdAddSeminar: 0,
             campaignIdAddTeam: 0,
@@ -178,6 +179,13 @@
                 location: '',
                 matchDate: '',
                 activated : '',
+                firstCoverBackgroundColor : '',
+                uploadListCover : new FileUploader({url : '/marksimos/api/admin/campaigns', alias : 'uploadListCover', method:'PUT', formData:[{campaignId:''}]}),
+                uploadFirstCover : new FileUploader({url : '/marksimos/api/admin/campaigns', alias : 'uploadFirstCover', method:'PUT', formData:[{campaignId:''}]}),
+                uploadBenefit1 : new FileUploader({url : '/marksimos/api/admin/campaigns', alias : 'uploadBenefit1', method:'PUT', formData:[{campaignId:''}]}),
+                uploadBenefit2 : new FileUploader({url : '/marksimos/api/admin/campaigns', alias : 'uploadBenefit2', method:'PUT', formData:[{campaignId:''}]}),
+                uploadBenefit3 : new FileUploader({url : '/marksimos/api/admin/campaigns', alias : 'uploadBenefit3', method:'PUT', formData:[{campaignId:''}]}),
+                uploadQualification : new FileUploader({url : '/marksimos/api/admin/campaigns', alias : 'uploadQualification', method:'PUT', formData:[{campaignId:''}]}),
                 campaignActivatedRadioOptions : [
                     {value : 1, text : 'Active'},
                     {value : 0, text : 'Disable'}
@@ -439,7 +447,9 @@
 
         app.initOnce();
 
-
+        $scope.changeMenu = function() {
+            $scope.css.editMenuStatus = false;
+        };
 
 
 
@@ -659,7 +669,17 @@
             }
         };
 
+        $scope.showEditCampaignMenu = function(campaign) {
+            $scope.data.newCampaign.name = campaign.name;
+            $scope.data.newCampaign.description = campaign.description;
+            $scope.data.newCampaign.location = campaign.location;
+            $scope.data.newCampaign.matchDate = campaign.matchDate;
+            $scope.data.newCampaign.activated = campaign.activated;
 
+            $scope.css.editMenuStatus = true;
+            $scope.css.leftmenu = 62;
+
+        };
 
 
 
