@@ -210,7 +210,7 @@ userSchema.statics.verifyPassword = function(password, hashedPassword){
 };
 
 userSchema.statics.selectFields = function(){
-    return '-password -resetPasswordVerifyCode -resetPasswordToken -resetPasswordTokenExpires -emailActivateToken -emailActivateTokenExpires';
+    return '-password -facebook -resetPasswordVerifyCode -resetPasswordToken -resetPasswordTokenExpires -emailActivateToken -emailActivateTokenExpires';
 };
 
 
