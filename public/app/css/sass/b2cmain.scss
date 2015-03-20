@@ -1157,4 +1157,15 @@ $lineHeight_button: 1.8;
 	div.center-block {
 		width: 890px;
 	}
+	.header {
+		h3 {
+			font-size: 16px;
+			margin: 0;
+		}
+		a {
+			font-size: 14px;
+		}
+		padding-bottom: 5px;
+		border-bottom: 1px solid #C7C7C7;
+	}
 }

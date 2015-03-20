@@ -1161,3 +1161,14 @@ body {
 .campaignlist-container div.center-block {
   width: 890px;
 }
+.campaignlist-container .header {
+  padding-bottom: 5px;
+  border-bottom: 1px solid #C7C7C7;
+}
+.campaignlist-container .header h3 {
+  font-size: 16px;
+  margin: 0;
+}
+.campaignlist-container .header a {
+  font-size: 14px;
+}
