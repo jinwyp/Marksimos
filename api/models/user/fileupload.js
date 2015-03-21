@@ -194,6 +194,7 @@ uploadFeatureList.forEach(function(feature){
 
 
 FileStorage.multerUpload = function(fieldname){
+    fieldname = fieldname || '';
 
     return multer({
         dest : basePath + tempPath,
@@ -216,12 +217,19 @@ FileStorage.multerUpload = function(fieldname){
             if (mimeTypeLimit.indexOf(file.mimetype) === -1 ) {
                 return false;
             }
-            if (uploadFieldsLimit.indexOf(file.fieldname) === -1 || fieldname !== file.fieldname ){
+
+            if (uploadFieldsLimit.indexOf(file.fieldname) === -1 ) {
                 logger.log('Upload file failed! Form fieldname: ' + file.fieldname + '. File name: ' + file.originalname);
                 return false;
-            }else{
-                logger.log('Starting upload ... Form fieldname: '+ file.fieldname + '. File name: ' + file.originalname);
             }
+
+            if(fieldname !== '' && fieldname !== file.fieldname){
+                logger.log('Upload file failed! Form fieldname: ' + file.fieldname + '. File name: ' + file.originalname);
+                return false;
+            }
+
+            //logger.log('Starting upload ... Form fieldname: '+ file.fieldname + '. File name: ' + file.originalname);
+
         },
 
         onFileUploadComplete: function (file, req, res) {

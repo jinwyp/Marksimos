@@ -174,18 +174,20 @@
             },
 
             newCampaign: {
+                id : '',
                 name: '',
                 description: '',
                 location: '',
                 matchDate: '',
                 activated : '',
+                pictures : {},
                 firstCoverBackgroundColor : '',
-                uploadListCover : new FileUploader({url : '/marksimos/api/admin/campaigns', alias : 'uploadListCover', method:'PUT', formData:[{campaignId:''}]}),
-                uploadFirstCover : new FileUploader({url : '/marksimos/api/admin/campaigns', alias : 'uploadFirstCover', method:'PUT', formData:[{campaignId:''}]}),
-                uploadBenefit1 : new FileUploader({url : '/marksimos/api/admin/campaigns', alias : 'uploadBenefit1', method:'PUT', formData:[{campaignId:''}]}),
-                uploadBenefit2 : new FileUploader({url : '/marksimos/api/admin/campaigns', alias : 'uploadBenefit2', method:'PUT', formData:[{campaignId:''}]}),
-                uploadBenefit3 : new FileUploader({url : '/marksimos/api/admin/campaigns', alias : 'uploadBenefit3', method:'PUT', formData:[{campaignId:''}]}),
-                uploadQualification : new FileUploader({url : '/marksimos/api/admin/campaigns', alias : 'uploadQualification', method:'PUT', formData:[{campaignId:''}]}),
+                uploadListCover : new FileUploader({url : '/marksimos/api/admin/campaigns/upload', alias : 'uploadListCover', formData:[{campaignId:''}]}),
+                uploadFirstCover : new FileUploader({url : '/marksimos/api/admin/campaigns/upload', alias : 'uploadFirstCover', formData:[{campaignId:''}]}),
+                uploadBenefit1 : new FileUploader({url : '/marksimos/api/admin/campaigns/upload', alias : 'uploadBenefit1', formData:[{campaignId:''}]}),
+                uploadBenefit2 : new FileUploader({url : '/marksimos/api/admin/campaigns/upload', alias : 'uploadBenefit2', formData:[{campaignId:''}]}),
+                uploadBenefit3 : new FileUploader({url : '/marksimos/api/admin/campaigns/upload', alias : 'uploadBenefit3', formData:[{campaignId:''}]}),
+                uploadQualification : new FileUploader({url : '/marksimos/api/admin/campaigns/upload', alias : 'uploadQualification', formData:[{campaignId:''}]}),
                 campaignActivatedRadioOptions : [
                     {value : 1, text : 'Active'},
                     {value : 0, text : 'Disable'}
@@ -670,11 +672,24 @@
         };
 
         $scope.showEditCampaignMenu = function(campaign) {
+            console.log(campaign);
+
+            $scope.data.newCampaign.id = campaign._id;
             $scope.data.newCampaign.name = campaign.name;
             $scope.data.newCampaign.description = campaign.description;
             $scope.data.newCampaign.location = campaign.location;
             $scope.data.newCampaign.matchDate = campaign.matchDate;
             $scope.data.newCampaign.activated = campaign.activated;
+
+            $scope.data.newCampaign.firstCoverBackgroundColor = campaign.pictures.firstCoverBackgroundColor;
+            $scope.data.newCampaign.pictures = campaign.pictures;
+
+            $scope.data.newCampaign.uploadListCover.formData = [{campaignId:$scope.data.newCampaign.id}];
+            $scope.data.newCampaign.uploadFirstCover.formData = [{campaignId:$scope.data.newCampaign.id}];
+            $scope.data.newCampaign.uploadBenefit1.formData = [{campaignId:$scope.data.newCampaign.id}];
+            $scope.data.newCampaign.uploadBenefit2.formData = [{campaignId:$scope.data.newCampaign.id}];
+            $scope.data.newCampaign.uploadBenefit3.formData = [{campaignId:$scope.data.newCampaign.id}];
+            $scope.data.newCampaign.uploadQualification.formData = [{campaignId:$scope.data.newCampaign.id}];
 
             $scope.css.editMenuStatus = true;
             $scope.css.leftmenu = 62;

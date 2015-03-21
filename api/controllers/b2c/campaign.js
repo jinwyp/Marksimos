@@ -99,6 +99,9 @@ exports.addCampaign = function(req, res, next){
 
 
 exports.uploadCampaignPics = function(req, res, next){
+
+    console.log(req.body);
+
     var validationErrors = campaignModel.campaignIdValidations(req);
 
     if(validationErrors){
@@ -106,35 +109,47 @@ exports.uploadCampaignPics = function(req, res, next){
     }
 
 
-    var uploadPicFields = [
-        'uploadListCover' ,
-        'uploadFirstCover' ,
-        'uploadBenefit1' ,
-        'uploadBenefit2' ,
-        'uploadBenefit3' ,
-        'uploadQualification'
+    var uploadPicFields =[
+        {fieldname : 'uploadListCover', modelFieldName : 'listCover'},
+        {fieldname : 'uploadFirstCover', modelFieldName : 'firstCover'},
+        {fieldname : 'uploadBenefit1' , modelFieldName : 'benefit1'},
+        {fieldname : 'uploadBenefit2' , modelFieldName : 'benefit2'},
+        {fieldname : 'uploadBenefit3' , modelFieldName : 'benefit3'},
+        {fieldname : 'uploadQualification' , modelFieldName : 'qualification'}
+
     ];
 
-    var currentFieldname;
+    var currentFieldname, currentModelFieldname, fileid;
 
     for(var p in req.files) {
         if (req.files.hasOwnProperty(p)) {
-            if (uploadPicFields.indexOf(p) > -1) {
-                currentFieldname = p;
-            }
+            currentFieldname = p;
         }
     }
+
+    uploadPicFields.forEach(function(object){
+        if (object.fieldname === currentFieldname){
+            currentModelFieldname = object.modelFieldName;
+        }
+    });
+
 
     fileUploadModel.creatFile(req.files, currentFieldname).then(function(result){
 
         if(!result ){
             throw new Error('Cancel promise chains. Because Upload campaign picture failed !');
         }
+        fileid = result._id;
+        return campaignModel.findOneQ({ _id : req.body.campaignId});
 
-        var updateData = {};
-        updateData[currentFieldname] = result._id;
+    }).then(function( resultCampaign){
 
-        return campaignModel.findOneAndUpdateQ({ _id : req.body.id} , updateData);
+        if(!resultCampaign ){
+            throw new Error('Cancel promise chains. Because campaign not found!');
+        }
+
+        resultCampaign.pictures[currentModelFieldname] = fileid;
+        return resultCampaign.saveQ();
 
     }).then(function( savedDoc){
 
@@ -182,7 +197,7 @@ exports.searchCampaign = function(req, res, next){
         ];
     }
 
-    campaignModel.find(query).populate('seminarListMarksimos').populate('teamList').sort({createdAt: -1}).exec(function(err, resultCampaign){
+    campaignModel.find(query).populate('seminarListMarksimos').populate('pictures.listCover').populate('pictures.firstCover').populate('pictures.benefit1').populate('pictures.benefit2').populate('pictures.benefit3').populate('pictures.qualification').populate('teamList').sort({createdAt: -1}).exec(function(err, resultCampaign){
 
         if(err){
             next(err);
