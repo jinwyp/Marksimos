@@ -24,7 +24,9 @@
                     <% campaignList.forEach(function(campaign) { %>
 
                     <div class="figure col-xs-6">
-                        <img src="/<%= campaign.pictures.listCover ? campaign.pictures.listCover.path : ''  %> ">
+                        <a href="/e4e/campaign/<%=campaign._id%>">
+                            <img src="/<%= campaign.pictures.listCover ? campaign.pictures.listCover.path : ''  %> ">
+                        </a>
                         <div class="caption row">
                             <div class="col-xs-8 text-left">
                                 <p><%= campaign.name %></p>
