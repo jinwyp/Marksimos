@@ -56,10 +56,24 @@ body {
   float: left;
 }
 .b2c-header .b2c-login {
-  float: right;
-  width: 600px;
+  width: 700px;
   height: 82px;
   overflow: hidden;
+}
+.b2c-header .b2c-user {
+  width: 200px;
+  height: 82px;
+  overflow: hidden;
+}
+.b2c-header .b2c-user ul li {
+  float: left;
+  list-style-type: none;
+  padding: 18px 10px 0px 10px;
+  color: white;
+}
+.b2c-header .b2c-user img {
+  width: 50px;
+  height: 50px;
 }
 .b2c-header .b2c-trans {
   margin-right: 5px;
@@ -671,8 +685,9 @@ body {
 }
 .alert-container #profile-alert-container {
   position: absolute;
-  top: -26px;
+  top: 30px;
   width: 100%;
+  z-index: 10;
 }
 .alert-container #profile-alert-container .alert {
   padding: 2px;
@@ -856,9 +871,6 @@ body {
 .profile-detail .err-msg {
   width: auto;
 }
-.profile-detail .gender-radio {
-  padding-bottom: 7px;
-}
 .profile-detail .none-bottom {
   border-bottom: none;
   padding-bottom: 0;
@@ -953,4 +965,311 @@ body {
 }
 .datepicker.dropdown-menu.datepicker-mode-1 tbody button, .datepicker.dropdown-menu.datepicker-mode-2 tbody button {
   height: 65px;
+}
+
+/********************   campaign   ********************/
+.campaign-nav {
+  background-color: #454545;
+  height: 46px;
+  color: #ffffff;
+}
+.campaign-nav .nav-container {
+  width: 976px;
+}
+.campaign-nav .nav-container li::after {
+  content: ' ';
+  width: 1px;
+  font-size: 1px;
+  height: 27px;
+  border-right: 1px solid;
+  position: absolute;
+  top: 10px;
+  left: 100%;
+}
+.campaign-nav .nav-container li:hover::after, .campaign-nav .nav-container li:last-child::after {
+  border: none;
+}
+.campaign-nav .nav-container a {
+  font-size: 14px;
+  line-height: 16px;
+  width: 154px;
+  color: #ffffff;
+  text-align: center;
+}
+.campaign-nav .nav-container a:link, .campaign-nav .nav-container a:visited {
+  background-color: transparent;
+}
+.campaign-nav .nav-container a:hover, .campaign-nav .nav-container a:active {
+  background-color: #848484;
+}
+
+.campaign-banner {
+  background-color: #4281EA;
+  height: 278px;
+}
+
+.campaign-main a {
+  color: black;
+}
+.campaign-main ul {
+  list-style: none;
+  padding: 0;
+}
+.campaign-main button {
+  color: #ffffff;
+  border: none;
+  box-shadow: none;
+}
+.campaign-main div.center-block {
+  width: 890px;
+}
+.campaign-main h3 {
+  margin: 16px 0;
+  font-size: 16px;
+}
+.campaign-main .campaign-enter {
+  padding: 25px 0;
+  border-bottom: 1px solid #888;
+  overflow: hidden;
+  *zoom: 1;
+}
+.campaign-main .campaign-enter button {
+  width: 144px;
+  height: 38px;
+  font-size: 18px;
+  margin-right: 27px;
+}
+.campaign-main .campaign-enter .enter-button {
+  background-color: #B72909;
+  font-weight: bold;
+  -moz-box-shadow: #7e200b 0px 2px 4px;
+  -webkit-box-shadow: #7e200b 0px 2px 4px;
+  box-shadow: #7e200b 0px 2px 4px;
+}
+.campaign-main .campaign-enter .introduce {
+  color: black;
+  font-weight: normal;
+  border: 2px #888 solid;
+  background-color: #ffffff;
+}
+.campaign-main .campaign-enter .enter-count {
+  color: #888;
+  float: right;
+  padding: 10px 23px 0 0;
+}
+.campaign-main .campaign-enter .enter-count strong {
+  font-size: 18px;
+}
+.campaign-main .campaign-schedules {
+  border-bottom: 1px solid #888;
+  padding-bottom: 20px;
+}
+.campaign-main .campaign-schedules .schedule-list li {
+  font-size: 13px;
+  margin-bottom: 11px;
+}
+.campaign-main .campaign-schedules .schedule-list a {
+  position: relative;
+}
+.campaign-main .campaign-schedules .schedule-list a span {
+  display: none;
+  position: absolute;
+  background-color: #B72909;
+  color: #ffffff;
+  font-size: 12px;
+  padding: 1px 8px;
+  right: -50px;
+  -moz-box-shadow: #7e200b 0px 2px 4px;
+  -webkit-box-shadow: #7e200b 0px 2px 4px;
+  box-shadow: #7e200b 0px 2px 4px;
+  cursor: pointer;
+}
+.campaign-main .campaign-schedules .schedule-list a::before {
+  content: '';
+  padding-left: 50px;
+}
+.campaign-main .campaign-schedules .schedule-list a::after {
+  content: '';
+  padding-right: 50px;
+}
+.campaign-main .campaign-schedules .schedule-list a:hover span {
+  display: inline;
+}
+.campaign-main .gain-list .gain {
+  width: 170px;
+}
+.campaign-main .gain-list img {
+  margin: 20px 0;
+  width: 170px;
+  height: 170px;
+  border: solid 3px #3E7DDF;
+  -moz-border-radius: 50%;
+  -webkit-border-radius: 50%;
+  border-radius: 50%;
+}
+.campaign-main .enter-condition {
+  padding-bottom: 15px;
+  background-color: #3E7DDF;
+  color: #ffffff;
+}
+.campaign-main .enter-condition img {
+  width: 325px;
+  height: 210px;
+  margin-right: 10px;
+}
+.campaign-main .enter-condition h4 {
+  font-size: 16px;
+}
+.campaign-main .enter-condition p {
+  font-size: 14px;
+  padding-bottom: 15px;
+}
+.campaign-main .enter-condition .col-xs-offset-1 {
+  margin-left: 30px;
+}
+.campaign-main .campaign-process {
+  height: 300px;
+  background-color: #C0C0C0;
+}
+.campaign-main .campaign-winner {
+  color: #ffffff;
+  background-color: #BC2A0B;
+  padding: 20px 0 60px;
+}
+.campaign-main .campaign-winner h3 {
+  margin-bottom: 30px;
+}
+.campaign-main .campaign-winner span {
+  border: 2px #ffffff solid;
+  -moz-border-radius: 3px;
+  -webkit-border-radius: 3px;
+  border-radius: 3px;
+  padding: 10px 15px;
+  font-size: 20px;
+  display: inline-block;
+  width: 200px;
+  cursor: pointer;
+}
+.campaign-main .campaign-winner > div div:nth-child(2) span {
+  background-color: #9E240A;
+}
+.campaign-main .campaign-winner > div div:last-child span {
+  background-color: #741906;
+}
+
+/********************   campaign-list   ********************/
+.campaignlist-container > div {
+  padding-bottom: 20px;
+}
+.campaignlist-container button {
+  padding: 3px 14px;
+  color: #ffffff;
+  background-color: #7AC269;
+  border: none;
+  -moz-border-radius: 2px;
+  -webkit-border-radius: 2px;
+  border-radius: 2px;
+  -moz-box-shadow: #649F53 0px 2px 4px;
+  -webkit-box-shadow: #649F53 0px 2px 4px;
+  box-shadow: #649F53 0px 2px 4px;
+}
+.campaignlist-container div.center-block {
+  width: 890px;
+}
+.campaignlist-container .header {
+  margin-top: 30px;
+  padding-bottom: 5px;
+}
+.campaignlist-container .header h3 {
+  font-size: 16px;
+  margin: 0;
+  font-weight: bold;
+}
+.campaignlist-container .header a {
+  font-size: 14px;
+  color: black;
+}
+.campaignlist-container .header::after {
+  width: 890px;
+  margin: 0 auto;
+  border-bottom: 1px solid #C7C7C7;
+  padding-top: 7px;
+}
+.campaignlist-container .figure {
+  font-size: 13px;
+  padding-top: 14px;
+  padding-bottom: 16px;
+}
+.campaignlist-container .figure img {
+  width: 100%;
+}
+.campaignlist-container .figure .caption > div {
+  padding: 10px 15px;
+}
+.campaignlist-container .figure .caption p {
+  margin-bottom: 7px;
+}
+.campaignlist-container .figure .caption .count {
+  padding-left: 10px;
+  color: #7575EC;
+}
+.campaignlist-container .campaign-list img {
+  height: 120px;
+}
+.campaignlist-container .game-list {
+  color: #ffffff;
+  background-color: #A82411;
+}
+.campaignlist-container .game-list a {
+  color: #ffffff;
+}
+.campaignlist-container .game-list img {
+  height: 120px;
+}
+.campaignlist-container .coach-list {
+  padding-bottom: 40px;
+  background-color: #E7E7E7;
+}
+.campaignlist-container .coach-list .header::after {
+  width: 0;
+}
+.campaignlist-container .coach-list .figure {
+  font-size: 14px;
+  background-color: #ffffff;
+  -moz-border-radius: 3px;
+  -webkit-border-radius: 3px;
+  border-radius: 3px;
+}
+.campaignlist-container .coach-list .figure > img {
+  width: 150px;
+  height: 150px;
+  border: 7px solid #ADA9A6;
+  -moz-border-radius: 50%;
+  -webkit-border-radius: 50%;
+  border-radius: 50%;
+}
+.campaignlist-container .coach-list .figure .caption * {
+  padding: 0;
+}
+.campaignlist-container .coach-list .figure .caption .name {
+  margin-top: 10px;
+  font-weight: bold;
+}
+.campaignlist-container .coach-list .figure .caption .title {
+  font-size: 12px;
+  color: #7575EC;
+}
+.campaignlist-container .coach-list .figure .caption img {
+  width: 75%;
+  height: 14px;
+}
+.campaignlist-container .coach-list .figure .caption button {
+  margin-top: 5px;
+  padding: 5px 0;
+  width: 92%;
+}
+
+.campaignlist-footer {
+  height: 150px;
+  background-color: #7AC269;
 }

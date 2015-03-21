@@ -7,7 +7,7 @@
     'use strict';
 
     /********************  Create New Module For Controllers ********************/
-    angular.module('marksimosadmin', ['pascalprecht.translate', 'angularCharts', 'nvd3ChartDirectives', 'notifications', 'marksimos.websitecomponent', 'marksimos.commoncomponent', 'marksimos.filter']);
+    angular.module('marksimosadmin', ['pascalprecht.translate', 'angularCharts', 'nvd3ChartDirectives', 'notifications', 'angularFileUpload', 'marksimos.websitecomponent', 'marksimos.commoncomponent', 'marksimos.filter']);
 
 
 
@@ -48,11 +48,12 @@
 
 
 
-    angular.module('marksimosadmin').controller('adminHomeController', ['$scope', '$http', '$notification', 'Admin', function($scope, $http, $notification, Admin) {
+    angular.module('marksimosadmin').controller('adminHomeController', ['$scope', '$http', '$notification', 'FileUploader', 'Admin', function($scope, $http, $notification, FileUploader, Admin) {
 
         $scope.css = {
             leftmenu: 11,
             menuTabShow: [false, false, false, false, false, false, false], //从第二个false 开始第1个菜单
+            editMenuStatus : false,
             seminarId: 0,
             campaignIdAddSeminar: 0,
             campaignIdAddTeam: 0,
@@ -171,13 +172,22 @@
                 studentemail : "",
                 teamid : ""
             },
-
+            updateCampaign :{},
             newCampaign: {
+                id : '',
                 name: '',
                 description: '',
                 location: '',
                 matchDate: '',
                 activated : '',
+                pictures : {},
+                firstCoverBackgroundColor : '',
+                uploadListCover : new FileUploader({url : '/marksimos/api/admin/campaigns/upload', alias : 'uploadListCover', formData:[{campaignId:''}]}),
+                uploadFirstCover : new FileUploader({url : '/marksimos/api/admin/campaigns/upload', alias : 'uploadFirstCover', formData:[{campaignId:''}]}),
+                uploadBenefit1 : new FileUploader({url : '/marksimos/api/admin/campaigns/upload', alias : 'uploadBenefit1', formData:[{campaignId:''}]}),
+                uploadBenefit2 : new FileUploader({url : '/marksimos/api/admin/campaigns/upload', alias : 'uploadBenefit2', formData:[{campaignId:''}]}),
+                uploadBenefit3 : new FileUploader({url : '/marksimos/api/admin/campaigns/upload', alias : 'uploadBenefit3', formData:[{campaignId:''}]}),
+                uploadQualification : new FileUploader({url : '/marksimos/api/admin/campaigns/upload', alias : 'uploadQualification', formData:[{campaignId:''}]}),
                 campaignActivatedRadioOptions : [
                     {value : 1, text : 'Active'},
                     {value : 0, text : 'Disable'}
@@ -439,7 +449,9 @@
 
         app.initOnce();
 
-
+        $scope.changeMenu = function() {
+            $scope.css.editMenuStatus = false;
+        };
 
 
 
@@ -659,7 +671,58 @@
             }
         };
 
+        $scope.showEditCampaignMenu = function(campaign) {
+            console.log(campaign);
 
+            $scope.data.newCampaign.id = campaign._id;
+            $scope.data.newCampaign.name = campaign.name;
+            $scope.data.newCampaign.description = campaign.description;
+            $scope.data.newCampaign.location = campaign.location;
+            $scope.data.newCampaign.matchDate = campaign.matchDate;
+            $scope.data.newCampaign.activated = campaign.activated;
+
+            $scope.data.newCampaign.firstCoverBackgroundColor = campaign.pictures.firstCoverBackgroundColor || '';
+            $scope.data.newCampaign.pictures = campaign.pictures;
+
+            $scope.data.newCampaign.uploadListCover.formData = [{campaignId:$scope.data.newCampaign.id}];
+            $scope.data.newCampaign.uploadFirstCover.formData = [{campaignId:$scope.data.newCampaign.id}];
+            $scope.data.newCampaign.uploadBenefit1.formData = [{campaignId:$scope.data.newCampaign.id}];
+            $scope.data.newCampaign.uploadBenefit2.formData = [{campaignId:$scope.data.newCampaign.id}];
+            $scope.data.newCampaign.uploadBenefit3.formData = [{campaignId:$scope.data.newCampaign.id}];
+            $scope.data.newCampaign.uploadQualification.formData = [{campaignId:$scope.data.newCampaign.id}];
+
+            $scope.css.editMenuStatus = true;
+            $scope.css.leftmenu = 62;
+
+        };
+
+        /********************  Update Campaign  ********************/
+        $scope.updateCampaign = function(form) {
+            if (form.$valid) {
+
+                $scope.data.updateCampaign = {
+                    id : $scope.data.newCampaign.id,
+                    name : $scope.data.newCampaign.name,
+                    description: $scope.data.newCampaign.description,
+                    location: $scope.data.newCampaign.location,
+                    matchDate: $scope.data.newCampaign.matchDate,
+                    activated : $scope.data.newCampaign.activated,
+                    firstCoverBackgroundColor : $scope.data.newCampaign.firstCoverBackgroundColor
+                };
+
+                Admin.updateCampaign($scope.data.updateCampaign).success(function(data, status, headers, config) {
+
+                    app.getCampaignInit();
+                    $scope.css.leftmenu = 61;
+
+                    $notification.success('Save success', 'Update Campaign success');
+
+                }).error(function(data, status, headers, config) {
+                    console.log(data);
+                    $notification.error('Failed', data.message);
+                });
+            }
+        };
 
 
 
@@ -1536,10 +1599,6 @@
                             $notification.error('Failed', data.message);
                         });
                     }
-
-
-
-
 
 
 

@@ -58,9 +58,10 @@ apiRouter.get('/admin', function(req, res, next){
 
 /**********     Routes for rendering templates E4E Website     **********/
 
-apiRouter.get('/e4e', function(req, res, next){
+apiRouter.get('/e4e', auth.authLoginToken({successRedirect: '/e4e/campaigns'}), function(req, res, next){
     res.render('b2c/registration/indexreg.ejs', {title : 'Welcome to HCD E4E | HCD Learning'});
 });
+
 apiRouter.get('/e4e/emailverify/registration', auth.activateRegistrationEmail);
 
 
@@ -81,8 +82,7 @@ apiRouter.get('/e4e/profile', auth.authLoginToken({failureRedirect: '/e4e/login'
 });
 
 
-
-
+apiRouter.get('/e4e/campaigns/',  campaignController.campaignListPage);
 apiRouter.get('/e4e/campaign/:campaignId', auth.authLoginToken({failureRedirect: '/e4e/login'}), auth.authRole(userRoleModel.right.marksimos.studentLogin, {failureRedirect: '/e4e/login'}), campaignController.campaignSingleInfoPage);
 
 
@@ -288,6 +288,9 @@ apiRouter.post('/marksimos/api/admin/students/reset_password',  auth.authLoginTo
 //Facilitator manager Campaign
 apiRouter.get('/marksimos/api/admin/campaigns', auth.authLoginToken(), auth.authRole(userRoleModel.right.marksimos.campaignInfoListGet), campaignController.searchCampaign);
 apiRouter.post('/marksimos/api/admin/campaigns', auth.authLoginToken(), auth.authRole(userRoleModel.right.marksimos.campaignSingleCUD), campaignController.addCampaign);
+apiRouter.put('/marksimos/api/admin/campaigns', auth.authLoginToken(), auth.authRole(userRoleModel.right.marksimos.campaignSingleCUD), campaignController.updateCampaign);
+apiRouter.post('/marksimos/api/admin/campaigns/upload', auth.authLoginToken(), auth.authRole(userRoleModel.right.marksimos.campaignSingleCUD), fileUploadModel.multerUpload(), campaignController.uploadCampaignPics );
+
 
 apiRouter.post('/marksimos/api/admin/campaigns/seminars', auth.authLoginToken(), auth.authRole(userRoleModel.right.marksimos.campaignSingleCUD), campaignController.addMarkSimosSeminarToCampaign);
 apiRouter.post('/marksimos/api/admin/campaigns/seminars/remove', auth.authLoginToken(), auth.authRole(userRoleModel.right.marksimos.campaignSingleCUD), campaignController.removeMarkSimosSeminarFromCampaign);
@@ -510,8 +513,8 @@ apiRouter.get('/marksimos/api/create_admin', function (req,res,next) {
             //已经存在管理员了，不进行初始化，只列出这些用户
 
             // 补充增加 b2c_facilitator 账号
-            userModel.find({"username": "b2c_facilitator"}).execQ().then(function (userB2CResult) {
-
+            userModel.findOne({"username": "b2c_facilitator"}).execQ().then(function (userB2CResult) {
+                console.log(userB2CResult);
                 if(userB2CResult){
                     return res.status(400).send ({message: "already added."});
                 }else{
@@ -559,4 +562,4 @@ apiRouter.get('/marksimos/api/create_admin', function (req,res,next) {
 
 
 module.exports = apiRouter;
-   
+

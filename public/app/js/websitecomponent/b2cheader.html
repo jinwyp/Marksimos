@@ -5,7 +5,7 @@
                 <img src="/app/css/images/b2c_logo.png" class="b2c-logo" />
             </a>
 
-            <div class="b2c-login">
+            <div class="b2c-login pull-right">
 
                 <div class="b2c-login-box pull-right" ng-if="showlogin">
                     <div class="b2c-login-field">
@@ -20,6 +20,17 @@
                     </div>
                     <a href="" class="button" ng-click="clickLogin()"></a>
                 </div>
+
+
+
+                <div class="b2c-user pull-right" ng-if="!showlogin">
+                    <ul>
+                        <li><img ng-src="/{{currentuser.avatar.path}}" alt="avatar"/></li>
+                        <li><span ng-click="clickLogout()">退出</span></li>
+                    </ul>
+                </div>
+
+
 
                 <div class="b2c-trans pull-right">
                     <span>EN</span>

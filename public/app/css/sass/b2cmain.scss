@@ -1,6 +1,7 @@
 ﻿@import "icon_b2c/*.png";
 @import "compass/css3";
 @import "compass/utilities/general/float";
+@import "compass/utilities/general/clearfix";
 
 $color_white: #ffffff;
 $color_profile_detail_title: #959595;
@@ -9,6 +10,8 @@ $color_register_button: #c42e0d;
 $color_register_button_border: #7e200b;
 $color_register_button_hover: #7e200b;
 $color_register_button_hover_border: #ca3413;
+
+
 
 
 @mixin flippy($speed: 0.5s, $perspective: 500, $bgcolor: white) {
@@ -129,10 +132,27 @@ body{
 	}
 
 	.b2c-login {
-		float: right;
-		width: 600px;
+		width: 700px;
 		height: 82px;
 		overflow: hidden;
+	}
+
+	.b2c-user {
+		width: 200px;
+		height: 82px;
+		overflow: hidden;
+
+		ul li{
+			float: left;
+			list-style-type: none;
+			padding: 18px 10px 0px 10px;
+			color: white;
+		}
+
+		img {
+			width: 50px;
+			height: 50px;
+		}
 	}
 
 
@@ -668,8 +688,9 @@ $lineHeight_button: 1.8;
 	position: relative;
 	#profile-alert-container {
 		position: absolute;
-		top: -26px;
+		top: 30px;
 		width: 100%;
+		z-index: 10;
 		.alert {
 			padding:2px;
 			margin-bottom: 0;
@@ -852,9 +873,6 @@ $lineHeight_button: 1.8;
 	.err-msg {
 		width:auto;
 	}
-	.gender-radio {
-		padding-bottom: 7px;
-	}
 	.none-bottom {
 		border-bottom: none;
 		padding-bottom:0;
@@ -949,4 +967,308 @@ $lineHeight_button: 1.8;
 	}
 }
 
+/********************   campaign   ********************/
+.campaign-nav {
+	background-color: #454545;
+	height: 46px;
+	color: $color_white;
+	.nav-container {
+		width: 976px;
+		li::after {
+			content: ' ';
+			width: 1px;
+			font-size: 1px;
+			height: 27px;
+			border-right: 1px solid;
+			position: absolute;
+			top: 10px;
+			left: 100%;
+		}
+		li:hover::after, li:last-child::after {
+			border: none;
+		}
+		a {
+			font-size: 14px;
+			line-height: 16px;
+			width: 154px;
+			color: $color_white;
+			text-align: center;
+			&:link, &:visited{
+				background-color: transparent;
+			}
+			&:hover, &:active {
+				background-color: #848484;
+			};
+		}
+	}
+}
 
+.campaign-banner {
+	background-color: #4281EA;
+	height: 278px;
+}
+
+.campaign-main {
+	a {
+		color: black;
+	}
+	ul{
+		list-style: none;
+		padding: 0;
+	}
+	button {
+		color: $color_white;
+		border: none;
+		box-shadow: none;
+	}
+	div.center-block {
+		width: 890px;
+	}
+	h3 {
+		margin: 16px 0;
+		font-size: 16px;
+	}
+	.campaign-enter {
+		padding: 25px 0;
+		border-bottom: 1px solid #888;
+		button {
+			width: 144px;
+			height: 38px;
+			font-size: 18px;
+			margin-right: 27px;
+		}
+		.enter-button {
+			background-color: #B72909;
+			font-weight: bold;
+			@include box-shadow($color_register_button_border 0px 2px 4px);
+		}
+		.introduce {
+			color: black;
+			font-weight: normal;
+			border: 2px #888 solid;
+			background-color: $color_white;
+		}
+		.enter-count {
+			color: #888;
+			float: right;
+			padding: 10px 23px 0 0;
+			strong {
+				font-size: 18px;
+			}
+		}
+		@include clearfix()
+	}
+	.campaign-schedules {
+		border-bottom: 1px solid #888;
+		padding-bottom: 20px;
+		.schedule-list {
+			li {
+				font-size: 13px;
+				margin-bottom: 11px;
+			}
+			a {
+				position: relative;
+				span {
+					display: none;
+					position: absolute;
+					background-color: #B72909;
+					color: $color_white;
+					font-size: 12px;
+					padding: 1px 8px;
+					right: -50px;
+					@include box-shadow($color_register_button_border 0px 2px 4px);
+					cursor: pointer;
+				}
+				&::before {
+					content: '';
+					padding-left: 50px;
+				}
+				&::after {
+					content: '';
+					padding-right: 50px;
+				}
+				&:hover span{
+					display: inline;
+				}
+			}
+		}
+	}
+	.gain-list {
+		.gain {
+			width: 170px;
+		}
+		img {
+			margin: 20px 0;
+			width: 170px;
+			height: 170px;
+			border: solid 3px #3E7DDF;
+			@include border-radius(50%);
+		}
+	}
+	.enter-condition {
+		padding-bottom: 15px;
+		background-color: #3E7DDF;
+		color: $color_white;
+		img {
+			width: 325px;
+			height: 210px;
+			margin-right:10px;
+		}
+		h4 {
+			font-size: 16px;
+		}
+		p {
+			font-size: 14px;
+			padding-bottom: 15px;
+		}
+		.col-xs-offset-1 {
+			margin-left: 30px;
+		}
+	}
+	.campaign-process {
+		height: 300px; //todo remove this height
+		background-color: #C0C0C0; // todo remove
+	}
+	.campaign-winner {
+		color: $color_white;
+		background-color: #BC2A0B;
+		h3 {
+			margin-bottom: 30px;
+		}
+		span {
+			border: 2px $color_white solid;
+			@include border-radius(3px);
+			padding: 10px 15px;
+			font-size: 20px;
+			display: inline-block;
+			width: 200px;
+			cursor: pointer;
+		}
+		>div div:nth-child(2) span {
+			background-color: #9E240A;
+		}
+		>div div:last-child span{
+			background-color: #741906;
+		}
+		padding: 20px 0 60px;
+	}
+}
+
+/********************   campaign-list   ********************/
+.campaignlist-container {
+	&>div {
+		padding-bottom: 20px;
+	}
+	button {
+		padding:3px 14px;
+		color: $color_white;
+		background-color: #7AC269;
+		border: none;
+		@include border-radius(2px);
+		@include box-shadow(#649F53 0px 2px 4px);
+	}
+	div.center-block {
+		width: 890px;
+	}
+	.header {
+		margin-top: 30px;
+		h3 {
+			font-size: 16px;
+			margin: 0;
+			font-weight: bold;
+		}
+		a {
+			font-size: 14px;
+			color: black;
+		}
+		padding-bottom: 5px;
+		&::after {
+			width: 890px;
+			margin: 0 auto;
+			border-bottom: 1px solid #C7C7C7;
+			padding-top: 7px;
+		}
+	}
+
+	.figure {
+		font-size: 13px;
+		padding-top: 14px;
+		padding-bottom: 16px;
+		img {
+			width: 100%;
+		}
+		.caption {
+			>div {
+				padding: 10px 15px;
+			}
+			p {
+				margin-bottom: 7px;
+			}
+			.count {
+				padding-left: 10px;
+				color: #7575EC;
+			}
+		}
+
+	}
+
+	.campaign-list {
+		img {
+			height: 120px; // todo remove
+		}
+	}
+	.game-list {
+		color: $color_white;
+		background-color: #A82411;
+		a {
+			color: $color_white;
+		}
+		img {
+			height: 120px; // todo remove
+		}
+	}
+	.coach-list {
+		padding-bottom: 40px;
+		.header::after {
+			width: 0;
+		}
+		background-color: #E7E7E7;
+		.figure {
+			font-size: 14px;
+			background-color: $color_white;
+			@include border-radius(3px);
+			>img {
+				width: 150px;
+				height: 150px;
+				border: 7px solid #ADA9A6;
+				@include border-radius(50%);
+			}
+			.caption {
+				* {
+					padding: 0;
+				}
+				.name {
+					margin-top: 10px;
+					font-weight: bold;
+				}
+				.title {
+					font-size: 12px;
+					color: #7575EC;
+				}
+				img {
+					width:75%;
+					height: 14px;
+				}
+				button {
+					margin-top: 5px;
+					padding: 5px 0;
+					width: 92%;
+				}
+			}
+		}
+	}
+}
+.campaignlist-footer {
+	height: 150px;
+	background-color: #7AC269
+}

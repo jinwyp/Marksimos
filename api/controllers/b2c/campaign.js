@@ -9,12 +9,36 @@ var userRoleModel = require('../../models/user/userrole.js');
 var teamModel = require('../../models/user/team.js');
 var seminarModel = require('../../models/marksimos/seminar.js');
 var campaignModel = require('../../models/b2c/campaign.js');
+var fileUploadModel = require('../../models/user/fileupload.js');
 
 
 
 
+exports.campaignListPage = function(req, res, next){
 
+    campaignModel.find({ activated: true}).populate('seminarListMarksimos').populate('pictures.listCover').populate('pictures.firstCover').populate('pictures.benefit1').populate('pictures.benefit2').populate('pictures.benefit3').populate('pictures.qualification').populate('teamList').sort({createdAt: -1}).execQ().then(function(resultCampaign){
+        if(resultCampaign.length == 0){
+            return res.status(400).send( {message: "campaign doesn't exist."});
+        }
 
+        resultCampaign.forEach(function(campaign){
+            var totalMembers = 0;
+            campaign.teamList.forEach(function(team){
+                totalMembers = totalMembers + team.memberList.length + 1;
+            });
+            campaign.totalMembers = totalMembers;
+        });
+
+        return res.render('b2c/campaignlist.ejs',{
+            title : 'HCD E4E Campaign | HCD Learning',
+            campaignList: resultCampaign
+        });
+
+    }).fail(function(err){
+        next(err);
+    }).done();
+
+};
 
 
 exports.campaignSingleInfoPage = function(req, res, next){
@@ -25,8 +49,7 @@ exports.campaignSingleInfoPage = function(req, res, next){
         return res.status(400).send( {message: validationErrors} );
     }
 
-
-    campaignModel.findOne({_id: req.params.campaignId}).populate('seminarListMarksimos').populate('teamList').execQ().then(function(resultCampaign){
+    campaignModel.findOne({_id: req.params.campaignId, activated: true}).populate('seminarListMarksimos').populate('teamList').populate('pictures.listCover').populate('pictures.firstCover').populate('pictures.benefit1').populate('pictures.benefit2').populate('pictures.benefit3').populate('pictures.qualification').execQ().then(function(resultCampaign){
         if(!resultCampaign){
             return res.status(400).send( {message: "campaign doesn't exist."});
         }
@@ -83,6 +106,112 @@ exports.addCampaign = function(req, res, next){
 
 
 
+
+exports.updateCampaign = function(req, res, next){
+    var validationErrors = campaignModel.updateValidations(req);
+
+    if(validationErrors){
+        return res.status(400).send( {message: validationErrors} );
+    }
+
+    campaignModel.findOneAndUpdateQ({ _id : req.body.id} ,
+        { $set: {
+            name        : req.body.name,
+            description : req.body.description,
+            location    : req.body.location,
+            matchDate   : req.body.matchDate,
+            activated   : req.body.activated,
+            "pictures.firstCoverBackgroundColor": req.body.firstCoverBackgroundColor
+        }}
+    ).then(function(result){
+
+        if(!result){
+            throw new Error('Cancel promise chains. Because Create Campaign failed. more or less than 1 record is updated. it should be only one !');
+        }
+
+        return res.status(200).send({message: 'Campaign create success'});
+
+    }).fail(function(err){
+        next(err);
+    }).done();
+
+};
+
+
+
+
+
+exports.uploadCampaignPics = function(req, res, next){
+
+    console.log(req.body);
+
+    var validationErrors = campaignModel.campaignIdValidations(req);
+
+    if(validationErrors){
+        return res.status(400).send( {message: validationErrors} );
+    }
+
+
+    var uploadPicFields =[
+        {fieldname : 'uploadListCover', modelFieldName : 'listCover'},
+        {fieldname : 'uploadFirstCover', modelFieldName : 'firstCover'},
+        {fieldname : 'uploadBenefit1' , modelFieldName : 'benefit1'},
+        {fieldname : 'uploadBenefit2' , modelFieldName : 'benefit2'},
+        {fieldname : 'uploadBenefit3' , modelFieldName : 'benefit3'},
+        {fieldname : 'uploadQualification' , modelFieldName : 'qualification'}
+
+    ];
+
+    var currentFieldname, currentModelFieldname, fileid;
+
+    for(var p in req.files) {
+        if (req.files.hasOwnProperty(p)) {
+            currentFieldname = p;
+        }
+    }
+
+    uploadPicFields.forEach(function(object){
+        if (object.fieldname === currentFieldname){
+            currentModelFieldname = object.modelFieldName;
+        }
+    });
+
+
+    fileUploadModel.creatFile(req.files, currentFieldname).then(function(result){
+
+        if(!result ){
+            throw new Error('Cancel promise chains. Because Upload campaign picture failed !');
+        }
+        fileid = result._id;
+        return campaignModel.findOneQ({ _id : req.body.campaignId});
+
+    }).then(function( resultCampaign){
+
+        if(!resultCampaign ){
+            throw new Error('Cancel promise chains. Because campaign not found!');
+        }
+
+        resultCampaign.pictures[currentModelFieldname] = fileid;
+        return resultCampaign.saveQ();
+
+    }).then(function( savedDoc){
+
+        if(!savedDoc ){
+            throw new Error('Cancel promise chains. Because Update campaign failed. More or less than 1 record is updated. it should be only one !');
+        }
+        return res.status(200).send({message: 'Upload campaign picture success'});
+
+
+    }).fail(function(err){
+        next(err);
+    }).done();
+
+};
+
+
+
+
+
 exports.searchCampaign = function(req, res, next){
     var validationErrors = campaignModel.searchQueryValidations(req);
 
@@ -111,7 +240,7 @@ exports.searchCampaign = function(req, res, next){
         ];
     }
 
-    campaignModel.find(query).populate('seminarListMarksimos').populate('teamList').sort({createdAt: -1}).exec(function(err, resultCampaign){
+    campaignModel.find(query).populate('seminarListMarksimos').populate('pictures.listCover').populate('pictures.firstCover').populate('pictures.benefit1').populate('pictures.benefit2').populate('pictures.benefit3').populate('pictures.qualification').populate('teamList').sort({createdAt: -1}).exec(function(err, resultCampaign){
 
         if(err){
             next(err);

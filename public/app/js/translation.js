@@ -1010,7 +1010,7 @@
             "IntroPageSentence1" : "我的角色",
             "IntroPageSentence2" : "我正在接管公司",
             "IntroPageSentence3" : "运营管理",
-            "IntroPageSentence4" : "商品，",
+            "IntroPageSentence4" : "单品，",
             "IntroPageSentence5" : "共",
             "IntroPageSentence6" : "个品牌",
             "IntroPageSentence7" : "还要与另外",

@@ -8,7 +8,7 @@
 
     <div class="wrapper row-offcanvas row-offcanvas-left">
 
-        <menu-admin current-menu="css.leftmenu" showtab="css.menuTabShow" currentuser="data.currentUser"></menu-admin>
+        <menu-admin current-menu="css.leftmenu" showtab="css.menuTabShow" currentuser="data.currentUser" changemenu="changeMenu()"></menu-admin>
 
 
         <aside class="right-side" ng-cloak>
@@ -718,7 +718,7 @@
                                     </tr>
                                     <tr ng-repeat="campaign in data.campaigns" >
                                         <td style="width:100px">
-                                            <button type="button" class="btn btn-danger" ng-click="updateCampaign(campaign)" >Modify</button>
+                                            <button type="button" class="btn btn-danger" ng-click="showEditCampaignMenu(campaign)" >Modify</button>
                                         </td>
                                         <td data-highlight-key="data.searchCampaign.keyword">{{campaign.name}}</td>
                                         <td data-highlight-key="data.searchCampaign.keyword">{{campaign.description}}</td>
@@ -774,7 +774,8 @@
             </section>
 
             <section class="content" ng-if="css.leftmenu==62">
-                <h2 class="page-header">Create New Campaign</h2>
+                <h2 class="page-header" ng-if="!css.editMenuStatus">Create New Campaign</h2>
+                <h2 class="page-header" ng-if="css.editMenuStatus">Update Campaign</h2>
 
                 <div class="row" >
                     <div class="col-md-12">
@@ -790,12 +791,120 @@
 
                                     <text-form-input type="radio" name="newCampaignActivated" label="Status :" labelclass="col-sm-2" inputclass="col-sm-4" data="data.newCampaign.activated" radiooptions="data.newCampaign.campaignActivatedRadioOptions" required="true"></text-form-input>
 
+
+                                    <div class="form-group has-feedback" ng-if="css.editMenuStatus">
+                                        <label class="col-sm-2 control-label">List Cover :</label>
+                                        <div class=" col-sm-2">
+                                            <img ng-src="/{{data.newCampaign.pictures.listCover.path}}" />
+                                            <input type="file" nv-file-select uploader="data.newCampaign.uploadListCover"/><br/>
+                                        </div>
+                                        <div class=" col-sm-5">
+                                            <ul>
+                                                <li ng-repeat="picture in data.newCampaign.uploadListCover.queue">
+                                                    <span >Name: {{picture.file.name}} - Size: {{picture.file.size/1024/1024|number:2}}MB</span>
+                                                    <button class="btn btn-success btn-xs" ng-click="picture.upload()" ng-disabled="picture.isReady || picture.isUploading || picture.isSuccess"><span class="glyphicon glyphicon-upload"></span> Upload</button>
+                                                    <button class="btn btn-danger btn-xs" ng-click="picture.remove()"><span class="glyphicon glyphicon-trash"></span> Remove</button>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group has-feedback" ng-if="css.editMenuStatus">
+                                        <label class="col-sm-2 control-label">First Cover :</label>
+                                        <div class=" col-sm-2">
+                                            <img ng-src="/{{data.newCampaign.pictures.firstCover.path}}" />
+                                            <input type="file" nv-file-select uploader="data.newCampaign.uploadFirstCover"/><br/>
+                                        </div>
+                                        <div class=" col-sm-5">
+                                            <ul>
+                                                <li ng-repeat="picture in data.newCampaign.uploadFirstCover.queue">
+                                                    <span >Name: {{picture.file.name}} - Size: {{picture.file.size/1024/1024|number:2}}MB</span>
+                                                    <button class="btn btn-success btn-xs" ng-click="picture.upload()" ng-disabled="picture.isReady || picture.isUploading || picture.isSuccess"><span class="glyphicon glyphicon-upload"></span> Upload</button>
+                                                    <button class="btn btn-danger btn-xs" ng-click="picture.remove()"><span class="glyphicon glyphicon-trash"></span>  Remove</button>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                    </div>
+
+                                    <text-form-input ng-if="css.editMenuStatus" type="text" name="newCampaignFirstCoverBackgroundColor" label="First Cover Background Color :" placeholder="Color HEX" labelclass="col-sm-2" inputclass="col-sm-4" data="data.newCampaign.firstCoverBackgroundColor"></text-form-input>
+
+
+                                    <div class="form-group has-feedback" ng-if="css.editMenuStatus">
+                                        <label class="col-sm-2 control-label">Benefit Picture 1 :</label>
+                                        <div class=" col-sm-2">
+                                            <img ng-src="/{{data.newCampaign.pictures.benefit1.path}}" />
+                                            <input type="file" nv-file-select uploader="data.newCampaign.uploadBenefit1"/><br/>
+                                        </div>
+                                        <div class=" col-sm-5">
+                                            <ul>
+                                                <li ng-repeat="picture in data.newCampaign.uploadBenefit1.queue">
+                                                    <span >Name: {{picture.file.name}} - Size: {{picture.file.size/1024/1024|number:2}}MB</span>
+                                                    <button class="btn btn-success btn-xs" ng-click="picture.upload()" ng-disabled="picture.isReady || picture.isUploading || picture.isSuccess"><span class="glyphicon glyphicon-upload"></span> Upload</button>
+                                                    <button class="btn btn-danger btn-xs" ng-click="picture.remove()"><span class="glyphicon glyphicon-trash"></span>  Remove</button>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group has-feedback" ng-if="css.editMenuStatus">
+                                        <label class="col-sm-2 control-label">Benefit Picture 2 :</label>
+                                        <div class=" col-sm-2">
+                                            <img ng-src="/{{data.newCampaign.pictures.benefit2.path}}" />
+                                            <input type="file" nv-file-select uploader="data.newCampaign.uploadBenefit2"/><br/>
+                                        </div>
+                                        <div class=" col-sm-5">
+                                            <ul>
+                                                <li ng-repeat="picture in data.newCampaign.uploadBenefit2.queue">
+                                                    <span >Name: {{picture.file.name}} - Size: {{picture.file.size/1024/1024|number:2}}MB</span>
+                                                    <button class="btn btn-success btn-xs" ng-click="picture.upload()" ng-disabled="picture.isReady || picture.isUploading || picture.isSuccess"><span class="glyphicon glyphicon-upload"></span> Upload</button>
+                                                    <button class="btn btn-danger btn-xs" ng-click="picture.remove()"><span class="glyphicon glyphicon-trash"></span>  Remove</button>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group has-feedback" ng-if="css.editMenuStatus">
+                                        <label class="col-sm-2 control-label">Benefit Picture 3 :</label>
+                                        <div class=" col-sm-2">
+                                            <img ng-src="/{{data.newCampaign.pictures.benefit3.path}}" />
+                                            <input type="file" nv-file-select uploader="data.newCampaign.uploadBenefit3"/><br/>
+                                        </div>
+                                        <div class=" col-sm-5">
+                                            <ul>
+                                                <li ng-repeat="picture in data.newCampaign.uploadBenefit3.queue">
+                                                    <span >Name: {{picture.file.name}} - Size: {{picture.file.size/1024/1024|number:2}}MB</span>
+                                                    <button class="btn btn-success btn-xs" ng-click="picture.upload()" ng-disabled="picture.isReady || picture.isUploading || picture.isSuccess"><span class="glyphicon glyphicon-upload"></span> Upload</button>
+                                                    <button class="btn btn-danger btn-xs" ng-click="picture.remove()"><span class="glyphicon glyphicon-trash"></span>  Remove</button>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group has-feedback" ng-if="css.editMenuStatus">
+                                        <label class="col-sm-2 control-label">Qualification Picture :</label>
+                                        <div class=" col-sm-2">
+                                            <img ng-src="/{{data.newCampaign.pictures.qualification.path}}" />
+                                            <input type="file" nv-file-select uploader="data.newCampaign.uploadQualification"/><br/>
+                                        </div>
+                                        <div class=" col-sm-5">
+                                            <ul>
+                                                <li ng-repeat="picture in data.newCampaign.uploadQualification.queue">
+                                                    <span >Name: {{picture.file.name}} - Size: {{picture.file.size/1024/1024|number:2}}MB</span>
+                                                    <button class="btn btn-success btn-xs" ng-click="picture.upload()" ng-disabled="picture.isReady || picture.isUploading || picture.isSuccess"><span class="glyphicon glyphicon-upload"></span> Upload</button>
+                                                    <button class="btn btn-danger btn-xs" ng-click="picture.remove()"><span class="glyphicon glyphicon-trash"></span>  Remove</button>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                    </div>
+
+
                                 </div>
 
                                 <div class="box-footer">
                                     <div class="form-group">
                                         <div class="col-sm-offset-2 col-sm-10">
-                                            <button type="submit" class="btn btn-primary" ng-click="createNewCampaign(newCampaignForm)"> Create </button>
+                                            <button type="submit" class="btn btn-primary" ng-if="!css.editMenuStatus" ng-click="createNewCampaign(newCampaignForm)"> Create </button>
+                                            <button type="submit" class="btn btn-primary" ng-if="css.editMenuStatus" ng-click="updateCampaign(newCampaignForm)"> Update </button>
                                         </div>
                                     </div>
                                 </div>

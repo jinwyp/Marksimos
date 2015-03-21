@@ -73,6 +73,32 @@ fileStorageSchema.plugin(mongooseTimestamps);
  * Statics
  */
 
+
+fileStorageSchema.statics.creatFile = function (file, fieldname) {
+    if( typeof file[fieldname] !== 'undefined' ) {
+
+        return FileStorage.createQ({
+            name: file[fieldname].name,
+            path: file[fieldname].path,
+            physicalAbsolutePath: file[fieldname].pathAbsolute,
+
+            uploadOriginalName: file[fieldname].originalname,
+            uploadOriginalFileSize : file[fieldname].size,
+            description : file[fieldname].fieldname,
+
+            mimetype: file[fieldname].mimetype,
+            encoding: file[fieldname].encoding,
+            extension: file[fieldname].extension,
+            truncated: file[fieldname].truncated
+        });
+
+    }else{
+        throw new Error('Cancel. Because Upload File failed !');
+    }
+
+};
+
+
 fileStorageSchema.statics.updateValidations = function(req){
 
     req.checkBody('name', 'Team name should be 2-50 characters').notEmpty().len(2, 50);
@@ -124,17 +150,34 @@ var uploadFeatureList = [
         prefix : 'admin_campaign',
         postBodyField : [
             {
-                name : 'list',
-                filePath : 'list'
+                name : 'uploadListCover',
+                filePath : 'listcover'
             },
             {
-                name : 'title',
-                filePath : 'title'
+                name : 'uploadFirstCover',
+                filePath : 'firstcover'
+            },
+            {
+                name : 'uploadBenefit1',
+                filePath : 'benefit'
+            },
+            {
+                name : 'uploadBenefit2',
+                filePath : 'benefit'
+            },
+            {
+                name : 'uploadBenefit3',
+                filePath : 'benefit'
+            },
+            {
+                name : 'uploadQualification',
+                filePath : 'qualification'
             }
         ]
     }
 
 ];
+
 
 
 
@@ -151,6 +194,7 @@ uploadFeatureList.forEach(function(feature){
 
 
 FileStorage.multerUpload = function(fieldname){
+    fieldname = fieldname || '';
 
     return multer({
         dest : basePath + tempPath,
@@ -174,12 +218,18 @@ FileStorage.multerUpload = function(fieldname){
                 return false;
             }
 
-            if (uploadFieldsLimit.indexOf(file.fieldname) === -1 || fieldname !== file.fieldname ){
-                //logger.log('Upload file failed! Form fieldname: ' + file.fieldname + '. File name: ' + file.originalname);
+            if (uploadFieldsLimit.indexOf(file.fieldname) === -1 ) {
+                logger.log('Upload file failed! Form fieldname: ' + file.fieldname + '. File name: ' + file.originalname);
                 return false;
-            }else{
-                //logger.log('Starting upload ... Form fieldname: '+ file.fieldname + '. File name: ' + file.originalname);
             }
+
+            if(fieldname !== '' && fieldname !== file.fieldname){
+                logger.log('Upload file failed! Form fieldname: ' + file.fieldname + '. File name: ' + file.originalname);
+                return false;
+            }
+
+            //logger.log('Starting upload ... Form fieldname: '+ file.fieldname + '. File name: ' + file.originalname);
+
         },
 
         onFileUploadComplete: function (file, req, res) {

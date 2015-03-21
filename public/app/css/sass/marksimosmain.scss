@@ -224,8 +224,10 @@ $color_main_body_user_manual_table_2n:#f8f8f8;
     color: $color_main_body_product;
     -webkit-text-size-adjust:none;
     font-size: 11px;
-    @include my_icon-sprite(userproduct, no-repeat, 1px, 1px);
     padding-left: 20px;
+    list-style-type: none;
+    @include my_icon-sprite(userproduct, no-repeat, 1px, 1px);
+
 //    width: 150px;
     height: 24px;
 
@@ -917,6 +919,10 @@ body{
             font-size: 14px;
         }
 
+        ul {
+            padding: 0;
+        }
+
         .highlight1{
             font-weight: bold;
             color: $color_login_title;
@@ -1050,6 +1056,9 @@ body{
     .user_brand_box{
         height: 200px;
 
+        ul {
+            padding: 0;
+        }
         
         .table > thead > tr > td,
         .table > tbody > tr > td,

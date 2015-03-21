@@ -28,11 +28,11 @@
             scope: {
                 showlogin  : '=',
                 showlogout : '=',
-                username   : '@',
-                password   : '@'
+                currentuser   : '='
             },
             restrict: 'AE',
             templateUrl: 'b2cheader.html',
+
             link: function (scope, element, attrs) {
 
                 //scope.clickHelpMenu = function(){
@@ -46,10 +46,20 @@
                 //
 
                 scope.newUser = {
-                    username : scope.username,
-                    password : scope.password,
+                    username : '',
+                    password : '',
                     rememberMe : false
                 };
+
+                //scope.$watch('currentuser', function(newValue, oldValue) {
+                //    if ( newValue !== oldValue ) {
+                //        // Only increment the counter if the value changed
+                //        //scope.currentuser = newValue;
+                //        console.log(scope.currentuser);
+                //    }
+                //
+                //}, true);
+
 
                 scope.clickLogin = function () {
 
@@ -73,7 +83,7 @@
 
                 scope.clickLogout = function () {
                     Student.logOut().then(function(data){
-                        $window.location.href = "/marksimos/login" ;
+                        $window.location.href = "/e4e/login" ;
                     });
                 };
 
@@ -153,7 +163,8 @@
             scope: {
                 currentMenu : '=',
                 showtab : '=',
-                currentuser : '='
+                currentuser : '=',
+                changemenu : '&'
             },
             restrict: 'AE',
             templateUrl: 'adminmenu.html',
@@ -170,7 +181,7 @@
 
                 scope.clickMenu = function(currentmenu){
                     scope.currentMenu = currentmenu;
-
+                    scope.changemenu();
                 };
 
             }

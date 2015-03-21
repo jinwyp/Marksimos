@@ -549,9 +549,9 @@ exports.createSKUDecisionBasedOnLastPeriodDecision = function(decision){
     }, function(err, numberRemoved){
         if(err ){ return deferred.reject(err); }
 
-        if(numberRemoved === 0 && decision.reRunLastRound){
-            return deferred.reject(new Error('There are no SKU decisions deleted when create SKU Decisions'));
-        }
+        //if(numberRemoved === 0 && decision.reRunLastRound){
+        //    return deferred.reject(new Error('There are no SKU decisions deleted when create SKU Decisions'));
+        //}
 
         decisionResult.save(function(err, saveDecision, numAffected){
             if(err){

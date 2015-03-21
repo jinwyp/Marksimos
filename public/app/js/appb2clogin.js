@@ -19,7 +19,7 @@
 
 
     /********************  Create New Module For Controllers ********************/
-    angular.module('b2clogin', ['marksimos.config', 'marksimos.commoncomponent', 'marksimos.websitecomponent',
+    angular.module('b2clogin', ['pascalprecht.translate', 'marksimos.config', 'marksimos.commoncomponent', 'marksimos.websitecomponent',
         'marksimos.model', 'marksimos.filter', 'mgcrea.ngStrap', 'ngAnimate', 'angularFileUpload']);
 
 
@@ -73,7 +73,7 @@
             if(form.$valid){
                 Student.login(vm.newUser).then(function(){
 
-                    $window.location.href = "/e4e/profile" ;
+                    $window.location.href = "/e4e/campaigns" ;
 
                 }).catch(function(err){
                         form.username.$valid = false;
@@ -179,7 +179,7 @@
 
 
 
-    angular.module('b2clogin').controller('profileController', ['Student', '$alert', 'FileUploader', function(Student, $alert, FileUploader) {
+    angular.module('b2clogin').controller('profileController', ['Student', '$alert', 'FileUploader', '$translate', function(Student, $alert, FileUploader, $translate) {
         /* jshint validthis: true */
         var vm = this;
 
@@ -202,7 +202,7 @@
                 type: 'danger',
                 dismissable: false
             },
-            defaultAvatar: '/app/css/images/profile_avatar_2.png'
+            defaultAvatar: 'app/css/images/profile_avatar_2.png'
         };
 
         vm.currentUser = {};
@@ -314,6 +314,8 @@
                 }).catch(function(err) {
                     $alert(vm.css.alertFailedInfo);
                 });
+            } else {
+                $alert(angular.extend({}, vm.css.alertFailedInfo, {content: '密码信息无效！'}));
             }
         }
 
@@ -330,7 +332,7 @@
                 $alert(vm.css.alertSuccessInfo);
             }).catch(function() {
                 $alert(vm.css.alertFailedInfo);
-            })
+            });
         }
 
         function onErrorItem() {

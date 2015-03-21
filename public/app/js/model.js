@@ -1254,6 +1254,9 @@
             addCampaign : function(postdata){
                 return $http.post(apiAdminPath + 'campaigns', postdata);
             },
+            updateCampaign : function(postdata){
+                return $http.put(apiAdminPath + 'campaigns', postdata);
+            },
             addSeminarToCampaign : function(postdata){
                 return $http.post(apiAdminPath + 'campaigns/seminars', postdata);
             },

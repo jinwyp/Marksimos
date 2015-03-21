@@ -29,6 +29,17 @@ var campaignSchema = new Schema({
     seminarListMarksimos: [{ type: schemaObjectId, ref: 'Seminar' }],
     teamList: [{ type: schemaObjectId, ref: 'Team' }],
 
+    pictures : {
+        listCover : {type: schemaObjectId, ref: 'FileStorage'},
+        firstCover : {type: schemaObjectId, ref: 'FileStorage'},
+        firstCoverBackgroundColor : {type: String},
+
+        benefit1 : {type: schemaObjectId, ref: 'FileStorage'},
+        benefit2 : {type: schemaObjectId, ref: 'FileStorage'},
+        benefit3 : {type: schemaObjectId, ref: 'FileStorage'},
+        qualification : {type: schemaObjectId, ref: 'FileStorage'}
+    },
+
     activated: { type: Boolean, default: false }
 
 });
@@ -99,7 +110,7 @@ campaignSchema.statics.removeTeamValidations = function(req){
 
 
 campaignSchema.statics.campaignIdValidations = function(req){
-    req.checkParams('campaignId', 'Campaign ID should be 24 characters').notEmpty().len(24, 24);
+    req.assert('campaignId', 'Campaign ID should be 24 characters').notEmpty().len(24, 24);
 
     return req.validationErrors();
 };

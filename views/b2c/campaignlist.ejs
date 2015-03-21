@@ -1,0 +1,135 @@
+<% include include/headcss.ejs %>
+
+
+<body ng-app="b2clogin" ng-controller="profileController as profile">
+
+<b2c-header></b2c-header>
+
+<div class="container-fluid campaignlist-container">
+    <!-- banner -->
+    <div class="campaignlist-banner row">
+        <img>
+    </div>
+
+    <!-- campaign-list -->
+    <div class="row campaign-list">
+        <div class="col-xs-12">
+            <div class="center-block">
+                <div class="header row">
+                    <h3 class="col-xs-2 text-left">赛事&活动</h3>
+                    <a class="col-xs-2 col-xs-offset-8 text-right">更多</a>
+                </div>
+                <div class="section row">
+
+                    <% campaignList.forEach(function(campaign) { %>
+
+                    <div class="figure col-xs-6">
+                        <a href="/e4e/campaign/<%=campaign._id%>">
+                            <img src="/<%= campaign.pictures.listCover ? campaign.pictures.listCover.path : ''  %> ">
+                        </a>
+                        <div class="caption row">
+                            <div class="col-xs-8 text-left">
+                                <p><%= campaign.name %></p>
+                                <span class="date"><%= campaign.matchDate %></span>
+                                <span class="count"><%= campaign.totalMembers %> 人参加</span>
+                            </div>
+                            <div class="col-xs-4 text-right">
+                                <button>参加</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <% }); %>
+
+
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row game-list">
+        <div class="col-xs-12">
+            <div class="center-block">
+                <div class="header row">
+                    <h3 class="col-xs-2 text-left">热门游戏</h3>
+                    <a class="col-xs-2 col-xs-offset-8 text-right">更多</a>
+                </div>
+                <div class="section row">
+                    <div class="figure col-xs-3">
+                        <img>
+                        <div class="caption row">
+                            <div class="col-xs-12">
+                                <p>MarkSimos 商战模拟大赛</p>
+                                <span class="date">2015/09/02</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row coach-list">
+        <div class="col-xs-12">
+            <div class="center-block">
+                <div class="header row">
+                    <h3 class="col-xs-2 text-left">明星教练</h3>
+                    <a class="col-xs-2 col-xs-offset-8 text-right">更多</a>
+                </div>
+                <div class="section row">
+                    <div class="col-xs-3">
+                        <div class="figure text-center">
+                            <img>
+                            <div class="caption">
+                                <div class="name">Keith Goodail</div>
+                                <div class="title">情商教练</div>
+                                <img>
+                                <div><button>关注</button></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-xs-3">
+                        <div class="figure text-center">
+                            <img>
+                            <div class="caption">
+                                <div class="name">Keith Goodail</div>
+                                <div class="title">情商教练</div>
+                                <img>
+                                <div><button>关注</button></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-xs-3">
+                        <div class="figure text-center">
+                            <img>
+                            <div class="caption">
+                                <div class="name">Keith Goodail</div>
+                                <div class="title">情商教练</div>
+                                <img>
+                                <div><button>关注</button></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-xs-3">
+                        <div class="figure text-center">
+                            <img>
+                            <div class="caption">
+                                <div class="name">Keith Goodail</div>
+                                <div class="title">情商教练</div>
+                                <img>
+                                <div><button>关注</button></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="campaignlist-footer">
+
+</div>
+
+<% include ./include/footerscriptlogin.ejs %>
