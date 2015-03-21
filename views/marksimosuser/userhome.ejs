@@ -2002,7 +2002,7 @@
                                             </tr>
                                             <tr >
                                                 <td class="tdgroup">{{'DecisionPageDecisionTabProcessingTechnology' | translate}}</td>
-                                                <td ng-repeat="sku in data.currentBrand.d_SKUsDecisions" >
+                                                <td ng-repeat="sku in data.currentBrand.d_SKUsDecisions"  ng-class="{'bg-danger':sku.d_ToDrop}">
                                                     <div class="alert alert-danger alert-tooltip" role="alert" ng-show="css.skuErrorField=='d_Technology' && sku.d_SKUID==data.currentSku.d_SKUID">Must be in range {{css.skuErrorInfo.lower}} to {{css.skuErrorInfo.upper.toFixed(0)}} !</div>
                                                     <div class="alert alert-danger alert-tooltip" role="alert" ng-show="css.skuErrorFieldFrontEnd=='d_Technology' && sku.d_SKUID==data.currentSku.d_SKUID">{{'DecisionPageDecisionTabProcessingTechnologyFrontendValidation' | translate}}</div>
                                                     <input type="text" class="form-control input-sm " ng-class="{'form-control-error':css.skuErrorField=='d_Technology' && sku.d_SKUID==data.currentSku.d_SKUID}" ng-model="sku.d_Technology" ng-blur="leaveSkuInput(sku, 'd_Technology', sku.d_Technology)"  ng-focus="clickCurrentSku(sku)">
@@ -2010,7 +2010,7 @@
                                             </tr>
                                             <tr>
                                                 <td>{{'DecisionPageDecisionTabIngredientsQuality' | translate}}</td>
-                                                <td ng-repeat="sku in data.currentBrand.d_SKUsDecisions">
+                                                <td ng-repeat="sku in data.currentBrand.d_SKUsDecisions"  ng-class="{'bg-danger':sku.d_ToDrop}">
                                                     <div class="alert alert-danger alert-tooltip" role="alert" ng-show="css.skuErrorField=='d_IngredientsQuality' && sku.d_SKUID==data.currentSku.d_SKUID">Must be in range {{css.skuErrorInfo.lower}} to {{css.skuErrorInfo.upper.toFixed(0)}} !</div>
                                                     <div class="alert alert-danger alert-tooltip" role="alert" ng-show="css.skuErrorFieldFrontEnd=='d_IngredientsQuality' && sku.d_SKUID==data.currentSku.d_SKUID">{{'DecisionPageDecisionTabIngredientsQualityFrontendValidation' | translate}}</div>
                                                     <input type="text" class="form-control input-sm" ng-class="{'form-control-error':css.skuError=='d_IngredientsQuality' && sku.d_SKUID==data.currentSku.d_SKUID}" ng-model="sku.d_IngredientsQuality" ng-blur="leaveSkuInput(sku, 'd_IngredientsQuality', sku.d_IngredientsQuality)"  ng-focus="clickCurrentSku(sku)">
@@ -2018,7 +2018,7 @@
                                             </tr>
                                             <tr>
                                                 <td>{{'DecisionPageDecisionTabPackagingSize' | translate}}</td>
-                                                <td ng-repeat="sku in data.currentBrand.d_SKUsDecisions" ng-show="sku.bs_PeriodOfBirth!==data.currentSeminar.currentPeriod" >
+                                                <td ng-repeat="sku in data.currentBrand.d_SKUsDecisions" ng-show="sku.bs_PeriodOfBirth!==data.currentSeminar.currentPeriod"  ng-class="{'bg-danger':sku.d_ToDrop}">
                                                     <span>{{sku.d_PackSize | skupacksize | translate}}</span>
                                                  </td>
                                                 <td ng-repeat="sku in data.currentBrand.d_SKUsDecisions" ng-if="sku.bs_PeriodOfBirth==data.currentSeminar.currentPeriod">
@@ -2037,7 +2037,7 @@
                                             </tr>
                                             <tr>
                                                 <td class="tdgroup">{{'DecisionPageDecisionTabProductionVolume' | translate}}</td>
-                                                <td ng-repeat="sku in data.currentBrand.d_SKUsDecisions">
+                                                <td ng-repeat="sku in data.currentBrand.d_SKUsDecisions"  ng-class="{'bg-danger':sku.d_ToDrop}">
                                                     <div class="alert alert-danger alert-tooltip" role="alert" ng-show="css.skuErrorField=='d_ProductionVolume' && sku.d_SKUID==data.currentSku.d_SKUID">Must be in range {{css.skuErrorInfo.lower}} to {{css.skuErrorInfo.upper.toFixed(0)}} !</div>
                                                     <div class="alert alert-danger alert-tooltip" role="alert" ng-show="css.skuErrorFieldFrontEnd=='d_ProductionVolume' && sku.d_SKUID==data.currentSku.d_SKUID">{{'DecisionPageDecisionTabProductionVolumeFrontendValidation' | translate}}</div>
                                                     <input type="text" class="form-control input-sm" ng-class="{'form-control-error':css.skuError=='d_ProductionVolume' && sku.d_SKUID==data.currentSku.d_SKUID}" ng-model="sku.d_ProductionVolume" ng-blur="leaveSkuInput(sku, 'd_ProductionVolume', sku.d_ProductionVolume)"  ng-focus="clickCurrentSku(sku)">
@@ -2045,7 +2045,7 @@
                                             </tr>
                                             <tr>
                                                 <td>{{'DecisionPageDecisionTabManufacturerPrice' | translate}}</td>
-                                                <td ng-repeat="sku in data.currentBrand.d_SKUsDecisions">
+                                                <td ng-repeat="sku in data.currentBrand.d_SKUsDecisions"  ng-class="{'bg-danger':sku.d_ToDrop}">
                                                     <div class="alert alert-danger alert-tooltip" role="alert" ng-show="css.skuErrorField=='d_FactoryPrice' && sku.d_SKUID==data.currentSku.d_SKUID">Must be in range {{css.skuErrorInfo.lower}} to {{css.skuErrorInfo.upper.toFixed(0)}} !</div>
                                                     <div class="alert alert-danger alert-tooltip" role="alert" ng-show="css.skuErrorFieldFrontEnd=='d_FactoryPrice' && sku.d_SKUID==data.currentSku.d_SKUID">{{'DecisionPageDecisionTabManufacturerPriceFrontendValidation' | translate}}</div>
                                                     <input type="text" class="form-control input-sm" ng-class="{'form-control-error':css.skuError=='d_FactoryPrice' && sku.d_SKUID==data.currentSku.d_SKUID}" filternumber ng-model="sku.d_FactoryPrice[0]" ng-blur="leaveSkuInput(sku, 'd_FactoryPrice', sku.d_FactoryPrice[0] )"  ng-focus="clickCurrentSku(sku)">
@@ -2053,13 +2053,13 @@
                                             </tr>
                                             <tr>
                                                 <td>{{'DecisionPageDecisionTabRepriceFactoryStock' | translate}}</td>
-                                                <td ng-repeat="sku in data.currentBrand.d_SKUsDecisions">
+                                                <td ng-repeat="sku in data.currentBrand.d_SKUsDecisions"  ng-class="{'bg-danger':sku.d_ToDrop}">
                                                     <input type="checkbox" ng-model="sku.d_RepriceFactoryStocks" ng-change="leaveSkuInput(sku, 'd_RepriceFactoryStocks', sku.d_RepriceFactoryStocks)"  ng-focus="clickCurrentSku(sku)">
                                                 </td>
                                             </tr>
                                             <tr>
                                                 <td class="tdgroup">{{'DecisionPageDecisionTabConsumerCommunication' | translate}}</td>
-                                                <td ng-repeat="sku in data.currentBrand.d_SKUsDecisions">
+                                                <td ng-repeat="sku in data.currentBrand.d_SKUsDecisions"  ng-class="{'bg-danger':sku.d_ToDrop}">
                                                     <div class="alert alert-danger alert-tooltip" role="alert" ng-show="css.skuErrorField=='d_Advertising' && sku.d_SKUID==data.currentSku.d_SKUID">Must be in range {{css.skuErrorInfo.lower}} to {{css.skuErrorInfo.upper.toFixed(0)}} !</div>
                                                     <div class="alert alert-danger alert-tooltip" role="alert" ng-show="css.skuErrorFieldFrontEnd=='d_Advertising' && sku.d_SKUID==data.currentSku.d_SKUID">{{'DecisionPageDecisionTabConsumerCommunicationFrontendValidation' | translate}}</div>
                                                     <input type="text" class="form-control input-sm" ng-class="{'form-control-error':css.skuError=='d_Advertising' && sku.d_SKUID==data.currentSku.d_SKUID}" ng-model="sku.d_Advertising" ng-blur="leaveSkuInput(sku, 'd_Advertising', sku.d_Advertising)"  ng-focus="clickCurrentSku(sku)">
@@ -2067,7 +2067,7 @@
                                             </tr>
                                             <tr>
                                                 <td>{{'DecisionPageDecisionTabTargetConsumerSegment' | translate}}</td>
-                                                <td ng-repeat="sku in data.currentBrand.d_SKUsDecisions">
+                                                <td ng-repeat="sku in data.currentBrand.d_SKUsDecisions"  ng-class="{'bg-danger':sku.d_ToDrop}">
                                                     <div class="btn-group">
                                                         <button type="button" class="btn btn-default btn-sm dropdown-toggle" data-toggle="dropdown"  ng-focus="clickCurrentSku(sku)">
                                                             {{sku.d_TargetConsumerSegment }} <span class="caret"></span>
@@ -2087,7 +2087,7 @@
                                             </tr>
                                             <tr>
                                                 <td class="tdgroup">{{'DecisionPageDecisionTabConsumerPromotions' | translate}}</td>
-                                                <td ng-repeat="sku in data.currentBrand.d_SKUsDecisions">
+                                                <td ng-repeat="sku in data.currentBrand.d_SKUsDecisions"  ng-class="{'bg-danger':sku.d_ToDrop}">
                                                     <div class="alert alert-danger alert-tooltip" role="alert" ng-show="css.skuErrorField=='d_PromotionalBudget' && sku.d_SKUID==data.currentSku.d_SKUID">Must be in range {{css.skuErrorInfo.lower}} to {{css.skuErrorInfo.upper.toFixed(0)}} !</div>
                                                     <div class="alert alert-danger alert-tooltip" role="alert" ng-show="css.skuErrorFieldFrontEnd=='d_PromotionalBudget' && sku.d_SKUID==data.currentSku.d_SKUID">{{'DecisionPageDecisionTabConsumerPromotionsFrontendValidation' | translate}}</div>
                                                     <input type="text" class="form-control input-sm" ng-class="{'form-control-error':css.skuError=='d_PromotionalBudget' && sku.d_SKUID==data.currentSku.d_SKUID}" ng-model="sku.d_PromotionalBudget" ng-blur="leaveSkuInput(sku, 'd_PromotionalBudget', sku.d_PromotionalBudget)"  ng-focus="clickCurrentSku(sku)">
@@ -2095,7 +2095,7 @@
                                             </tr>
                                             <tr>
                                                 <td>{{'DecisionPageDecisionTabConsumerPromotionsSchedule' | translate}}</td>
-                                                <td ng-repeat="sku in data.currentBrand.d_SKUsDecisions">{{'DecisionPageDecisionTabConsumerPromotionsScheduleWeek' | translate}}
+                                                <td ng-repeat="sku in data.currentBrand.d_SKUsDecisions" ng-class="{'bg-danger':sku.d_ToDrop}">{{'DecisionPageDecisionTabConsumerPromotionsScheduleWeek' | translate}}
                                                     <span ng-repeat="week in sku.d_PromotionalEpisodes track by $index">
                                                         <input type="checkbox" ng-model="week" ng-change="leaveSkuInput(sku, 'd_PromotionalEpisodes', sku.d_PromotionalEpisodes, week, $index)"  ng-focus="clickCurrentSku(sku)">
                                                     </span>
@@ -2103,7 +2103,7 @@
                                             </tr>
                                             <tr>
                                                 <td class="tdgroup">{{'DecisionPageDecisionTabTradeExpenses' | translate}}</td>
-                                                <td ng-repeat="sku in data.currentBrand.d_SKUsDecisions">
+                                                <td ng-repeat="sku in data.currentBrand.d_SKUsDecisions" ng-class="{'bg-danger':sku.d_ToDrop}">
                                                     <div class="alert alert-danger alert-tooltip" role="alert" ng-show="css.skuErrorField=='d_TradeExpenses' && sku.d_SKUID==data.currentSku.d_SKUID">Must be in range {{css.skuErrorInfo.lower}} to {{css.skuErrorInfo.upper.toFixed(0)}} !</div>
                                                     <div class="alert alert-danger alert-tooltip" role="alert" ng-show="css.skuErrorFieldFrontEnd=='d_TradeExpenses' && sku.d_SKUID==data.currentSku.d_SKUID">{{'DecisionPageDecisionTabTradeExpensesFrontendValidation' | translate}}</div>
                                                     <input type="text" class="form-control input-sm" ng-class="{'form-control-error':css.skuError=='d_TradeExpenses' && sku.d_SKUID==data.currentSku.d_SKUID}" ng-model="sku.d_TradeExpenses" ng-blur="leaveSkuInput(sku, 'd_TradeExpenses', sku.d_TradeExpenses)"  ng-focus="clickCurrentSku(sku)">
@@ -2111,7 +2111,7 @@
                                             </tr>
                                             <tr>
                                                 <td>{{'DecisionPageDecisionTabAdditionalTradeMargin' | translate}}</td>
-                                                <td ng-repeat="sku in data.currentBrand.d_SKUsDecisions">
+                                                <td ng-repeat="sku in data.currentBrand.d_SKUsDecisions" ng-class="{'bg-danger':sku.d_ToDrop}">
                                                     <div class="alert alert-danger alert-tooltip" role="alert" ng-show="css.skuErrorField=='d_AdditionalTradeMargin' && sku.d_SKUID==data.currentSku.d_SKUID">Must be in range {{css.skuErrorInfo.lower}} to {{css.skuErrorInfo.upper.toFixed(0)}} !</div>
                                                     <div class="alert alert-danger alert-tooltip" role="alert" ng-show="css.skuErrorFieldFrontEnd=='d_AdditionalTradeMargin' && sku.d_SKUID==data.currentSku.d_SKUID">{{'DecisionPageDecisionTabAdditionalTradeMarginFrontendValidation' | translate}}</div>
                                                     <input type="text" class="form-control input-sm" ng-class="{'form-control-error':css.skuError=='d_AdditionalTradeMargin' && sku.d_SKUID==data.currentSku.d_SKUID}"  filterpercentage ng-model="sku.d_AdditionalTradeMargin"  ng-blur="leaveSkuInput(sku, 'd_AdditionalTradeMargin', sku.d_AdditionalTradeMargin)"  ng-focus="clickCurrentSku(sku)">
@@ -2119,7 +2119,7 @@
                                             </tr>
                                             <tr>
                                                 <td class="tdgroup">{{'DecisionPageDecisionTabWholesaleMinimumVolume' | translate}}</td>
-                                                <td ng-repeat="sku in data.currentBrand.d_SKUsDecisions">
+                                                <td ng-repeat="sku in data.currentBrand.d_SKUsDecisions" ng-class="{'bg-danger':sku.d_ToDrop}">
                                                     <div class="alert alert-danger alert-tooltip" role="alert" ng-show="css.skuErrorField=='d_WholesalesBonusMinVolume' && sku.d_SKUID==data.currentSku.d_SKUID">Must be in range {{css.skuErrorInfo.lower}} to {{css.skuErrorInfo.upper.toFixed(0)}} !</div>
                                                     <div class="alert alert-danger alert-tooltip" role="alert" ng-show="css.skuErrorFieldFrontEnd=='d_WholesalesBonusMinVolume' && sku.d_SKUID==data.currentSku.d_SKUID">{{'DecisionPageDecisionTabWholesaleMinimumVolumeFrontendValidation' | translate}}</div>
                                                     <input type="text" class="form-control input-sm" ng-class="{'form-control-error':css.skuError=='d_WholesalesBonusMinVolume' && sku.d_SKUID==data.currentSku.d_SKUID}"  ng-model="sku.d_WholesalesBonusMinVolume" ng-blur="leaveSkuInput(sku, 'd_WholesalesBonusMinVolume', sku.d_WholesalesBonusMinVolume)"  ng-focus="clickCurrentSku(sku)">
@@ -2127,7 +2127,7 @@
                                             </tr>
                                             <tr>
                                                 <td>{{'DecisionPageDecisionTabWholesaleBonusRate' | translate}}</td>
-                                                <td ng-repeat="sku in data.currentBrand.d_SKUsDecisions">
+                                                <td ng-repeat="sku in data.currentBrand.d_SKUsDecisions" ng-class="{'bg-danger':sku.d_ToDrop}">
                                                     <div class="alert alert-danger alert-tooltip" role="alert" ng-show="css.skuErrorField=='d_WholesalesBonusRate' && sku.d_SKUID==data.currentSku.d_SKUID">Must be in range {{css.skuErrorInfo.lower}} to {{css.skuErrorInfo.upper.toFixed(0)}} !</div>
                                                     <div class="alert alert-danger alert-tooltip" role="alert" ng-show="css.skuErrorFieldFrontEnd=='d_WholesalesBonusRate' && sku.d_SKUID==data.currentSku.d_SKUID">{{'DecisionPageDecisionTabWholesaleBonusRateFrontendValidation' | translate}}</div>
                                                     <input type="text" class="form-control input-sm" ng-class="{'form-control-error':css.skuError=='d_WholesalesBonusRate' && sku.d_SKUID==data.currentSku.d_SKUID}"  filterpercentage ng-model="sku.d_WholesalesBonusRate" ng-blur="leaveSkuInput(sku, 'd_WholesalesBonusRate', sku.d_WholesalesBonusRate)"  ng-focus="clickCurrentSku(sku)">
