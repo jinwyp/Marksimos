@@ -200,11 +200,8 @@ exports.calculateIngredientsQuality = function(SKUResult){
         return SKUResult.u_ps_WholesaleStocks[consts.StocksMaxTotal].s_IngredientsQuality;
     }else if(SKUResult.u_ps_FactoryStocks[consts.StocksMaxTotal].s_ps_Volume > 0){
         return SKUResult.u_ps_FactoryStocks[consts.StocksMaxTotal].s_IngredientsQuality;
-    }else if(SKUResult.u_ps_FactoryStocks[0] > 0){
+    }else{
         return SKUResult.u_ps_FactoryStocks[0].s_IngredientsQuality;
-    //there is not stock anywhere, try to find QL from last period decision
-    } else {
-        return '/';
     }
 }
 
