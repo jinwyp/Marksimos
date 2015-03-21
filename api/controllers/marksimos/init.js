@@ -487,6 +487,8 @@ function submitDecision(companyId, period, seminarId){
         //return result;
 
             var reqUrl = url.resolve(config.cgiService, 'decisions.exe');
+
+            logger.log(require('util').inspect(result.d_BrandsDecisions));
         return request.post(reqUrl, {
             decision: JSON.stringify(result),
             seminarId: seminarId,

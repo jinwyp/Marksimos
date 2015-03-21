@@ -46,9 +46,9 @@ exports.getDecision = function(seminarId, period, companyId){
  */
 exports.getAllCompanyDecisionsOfAllPeriod = function(seminarId){
     return Q.all([
-        companyDecisionModel.query.find({seminarId:seminarId}).where('period').gt(0).lean().exec(),
-        brandDecisionModel.query.find({seminarId:seminarId}).where('period').gt(0).lean().exec(),
-        SKUDecisionModel.query.find({seminarId:seminarId}).where('period').gt(0).lean().exec()
+        companyDecisionModel.query.find({seminarId:seminarId}).where('period').gt(0).sort('d_CID').lean().exec(),
+        brandDecisionModel.query.find({seminarId:seminarId}).where('period').gt(0).sort('d_BrandID').lean().exec(),
+        SKUDecisionModel.query.find({seminarId:seminarId}).where('period').gt(0).sort('d_SKUID').lean().exec()
     ])
         .spread(function(companyDecision, brandDecisionList, SKUDecisionList){
 
