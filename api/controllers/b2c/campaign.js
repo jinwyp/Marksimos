@@ -21,6 +21,13 @@ exports.campaignListPage = function(req, res, next){
             return res.status(400).send( {message: "campaign doesn't exist."});
         }
 
+        resultCampaign.forEach(function(campaign){
+
+            campaign.teamList.forEach(function(team){
+                console.log(team);
+            })
+        });
+
         return res.render('b2c/campaignlist.ejs',{
             title : 'HCD E4E Campaign | HCD Learning',
             campaignList: resultCampaign
