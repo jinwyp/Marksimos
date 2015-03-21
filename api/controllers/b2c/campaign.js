@@ -16,14 +16,14 @@ var fileUploadModel = require('../../models/user/fileupload.js');
 
 exports.campaignListPage = function(req, res, next){
 
-    campaignModel.find({ activated: true}).populate('seminarListMarksimos').populate('teamList').execQ().then(function(resultCampaign){
+    campaignModel.find({ activated: true}).populate('seminarListMarksimos').populate('pictures.listCover').populate('pictures.firstCover').populate('pictures.benefit1').populate('pictures.benefit2').populate('pictures.benefit3').populate('pictures.qualification').populate('teamList').sort({createdAt: -1}).execQ().then(function(resultCampaign){
         if(resultCampaign.length == 0){
             return res.status(400).send( {message: "campaign doesn't exist."});
         }
 
         return res.render('b2c/campaignlist.ejs',{
             title : 'HCD E4E Campaign | HCD Learning',
-            campaign: resultCampaign
+            campaignList: resultCampaign
         });
 
     }).fail(function(err){

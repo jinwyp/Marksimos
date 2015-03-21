@@ -73,7 +73,7 @@
             if(form.$valid){
                 Student.login(vm.newUser).then(function(){
 
-                    $window.location.href = "/e4e/profile" ;
+                    $window.location.href = "/e4e/campaigns" ;
 
                 }).catch(function(err){
                         form.username.$valid = false;

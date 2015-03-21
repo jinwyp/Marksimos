@@ -4,6 +4,7 @@
 <body ng-app="b2clogin" ng-controller="profileController as profile">
 
 <b2c-header></b2c-header>
+
 <div class="container-fluid campaignlist-container">
     <!-- banner -->
     <div class="campaignlist-banner row">
@@ -19,32 +20,27 @@
                     <a class="col-xs-2 col-xs-offset-8 text-right">更多</a>
                 </div>
                 <div class="section row">
+
+                    <% campaignList.forEach(function(campaign) { %>
+
                     <div class="figure col-xs-6">
-                        <img>
+                        <img src="/<%= campaign.pictures.listCover ? campaign.pictures.listCover.path : ''  %> ">
                         <div class="caption row">
                             <div class="col-xs-8 text-left">
-                                <p>E战成名 上海财经大学 商战模拟大赛</p>
-                                <span class="date">2015/09/02</span>
-                                <span class="count">1999人参加</span>
+                                <p><%= campaign.name %></p>
+                                <span class="date"><%= campaign.matchDate %></span>
+                                <span class="count"><%= campaign.name %></span>
                             </div>
                             <div class="col-xs-4 text-right">
                                 <button>参加</button>
                             </div>
                         </div>
                     </div>
-                    <div class="figure col-xs-6">
-                        <img>
-                        <div class="caption row">
-                            <div class="col-xs-8 text-left">
-                                <p>E战成名 上海财经大学 商战模拟大赛</p>
-                                <span class="date">2015/09/02</span>
-                                <span class="count">1999人参加</span>
-                            </div>
-                            <div class="col-xs-4 text-right">
-                                <button>参加</button>
-                            </div>
-                        </div>
-                    </div>
+
+                    <% }); %>
+
+
+
                 </div>
             </div>
         </div>
