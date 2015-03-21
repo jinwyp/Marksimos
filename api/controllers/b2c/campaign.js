@@ -22,10 +22,11 @@ exports.campaignListPage = function(req, res, next){
         }
 
         resultCampaign.forEach(function(campaign){
-
+            var totalMembers = 0;
             campaign.teamList.forEach(function(team){
-                console.log(team);
-            })
+                totalMembers = totalMembers + team.memberList.length + 1;
+            });
+            campaign.totalMembers = totalMembers;
         });
 
         return res.render('b2c/campaignlist.ejs',{
