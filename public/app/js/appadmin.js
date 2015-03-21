@@ -172,7 +172,7 @@
                 studentemail : "",
                 teamid : ""
             },
-
+            updateCampaign :{},
             newCampaign: {
                 id : '',
                 name: '',
@@ -681,7 +681,7 @@
             $scope.data.newCampaign.matchDate = campaign.matchDate;
             $scope.data.newCampaign.activated = campaign.activated;
 
-            $scope.data.newCampaign.firstCoverBackgroundColor = campaign.pictures.firstCoverBackgroundColor;
+            $scope.data.newCampaign.firstCoverBackgroundColor = campaign.pictures.firstCoverBackgroundColor || '';
             $scope.data.newCampaign.pictures = campaign.pictures;
 
             $scope.data.newCampaign.uploadListCover.formData = [{campaignId:$scope.data.newCampaign.id}];
@@ -694,6 +694,34 @@
             $scope.css.editMenuStatus = true;
             $scope.css.leftmenu = 62;
 
+        };
+
+        /********************  Update Campaign  ********************/
+        $scope.updateCampaign = function(form) {
+            if (form.$valid) {
+
+                $scope.data.updateCampaign = {
+                    id : $scope.data.newCampaign.id,
+                    name : $scope.data.newCampaign.name,
+                    description: $scope.data.newCampaign.description,
+                    location: $scope.data.newCampaign.location,
+                    matchDate: $scope.data.newCampaign.matchDate,
+                    activated : $scope.data.newCampaign.activated,
+                    firstCoverBackgroundColor : $scope.data.newCampaign.firstCoverBackgroundColor
+                };
+
+                Admin.updateCampaign($scope.data.updateCampaign).success(function(data, status, headers, config) {
+
+                    app.getCampaignInit();
+                    $scope.css.leftmenu = 61;
+
+                    $notification.success('Save success', 'Update Campaign success');
+
+                }).error(function(data, status, headers, config) {
+                    console.log(data);
+                    $notification.error('Failed', data.message);
+                });
+            }
         };
 
 

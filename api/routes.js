@@ -288,6 +288,7 @@ apiRouter.post('/marksimos/api/admin/students/reset_password',  auth.authLoginTo
 //Facilitator manager Campaign
 apiRouter.get('/marksimos/api/admin/campaigns', auth.authLoginToken(), auth.authRole(userRoleModel.right.marksimos.campaignInfoListGet), campaignController.searchCampaign);
 apiRouter.post('/marksimos/api/admin/campaigns', auth.authLoginToken(), auth.authRole(userRoleModel.right.marksimos.campaignSingleCUD), campaignController.addCampaign);
+apiRouter.put('/marksimos/api/admin/campaigns', auth.authLoginToken(), auth.authRole(userRoleModel.right.marksimos.campaignSingleCUD), campaignController.updateCampaign);
 apiRouter.post('/marksimos/api/admin/campaigns/upload', auth.authLoginToken(), auth.authRole(userRoleModel.right.marksimos.campaignSingleCUD), fileUploadModel.multerUpload(), campaignController.uploadCampaignPics );
 
 

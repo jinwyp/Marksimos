@@ -98,6 +98,41 @@ exports.addCampaign = function(req, res, next){
 
 
 
+
+exports.updateCampaign = function(req, res, next){
+    var validationErrors = campaignModel.updateValidations(req);
+
+    if(validationErrors){
+        return res.status(400).send( {message: validationErrors} );
+    }
+
+    campaignModel.findOneAndUpdateQ({ _id : req.body.id} ,
+        { $set: {
+            name        : req.body.name,
+            description : req.body.description,
+            location    : req.body.location,
+            matchDate   : req.body.matchDate,
+            activated   : req.body.activated,
+            "pictures.firstCoverBackgroundColor": req.body.firstCoverBackgroundColor
+        }}
+    ).then(function(result){
+
+        if(!result){
+            throw new Error('Cancel promise chains. Because Create Campaign failed. more or less than 1 record is updated. it should be only one !');
+        }
+
+        return res.status(200).send({message: 'Campaign create success'});
+
+    }).fail(function(err){
+        next(err);
+    }).done();
+
+};
+
+
+
+
+
 exports.uploadCampaignPics = function(req, res, next){
 
     console.log(req.body);
