@@ -1,4 +1,3 @@
-<<<<<<< Updated upstream
 // var _ = require('underscore')
 
 // setTimeout(function(){
@@ -34,8 +33,3 @@
 
 
 
-
-
-
-=======
->>>>>>> Stashed changes

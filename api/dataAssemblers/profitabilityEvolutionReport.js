@@ -79,7 +79,7 @@ function generateSKUReport(companyId, allResults, period){
                     onePeriodReport.taxes = -SKU.u_Taxes;
                     onePeriodReport.netProfit = SKU.u_NetProfit;
                     onePeriodReport.surchargeForSupplementaryInvestmentBudget = -SKU.u_CurrentSurcharge;
-                    onePeriodReport.netResult = -SKU.u_NetResult;
+                    onePeriodReport.netResult = SKU.u_NetResult;
                     onePeriodReport.shareInBrandTotalSalesValue = SKU.u_ShareInBrandSalesValue * 100;
                     onePeriodReport.shareInBrandGrossProfitLosses = SKU.u_ShareInBrandGrossProfit * 100;
                     onePeriodReport.shareOfTradeAndMarketingExpensesInBrandTotal = SKU.u_ShareInBrandTradeAndMrktng * 100;
@@ -168,7 +168,7 @@ function generateBrandReport(companyId, allResults, period){
                     onePeriodReport.taxes = -brandResult.b_Taxes;
                     onePeriodReport.netProfit = brandResult.b_NetProfit;
                     onePeriodReport.surchargeForSupplementaryInvestmentBudget = -brandResult.b_CurrentSurcharge;
-                    onePeriodReport.netResult = -brandResult.b_NetResult;
+                    onePeriodReport.netResult = brandResult.b_NetResult;
 
                     onePeriodReport.shareInCompanyTotalSalesValue = brandResult.b_ShareInCompanySalesValue * 100;
                     onePeriodReport.shareInCompanyGrossProfitLosses = brandResult.b_ShareInCompanyGrossProfit * 100;
@@ -258,7 +258,7 @@ function generateGlobalReport(companyId, allResults){
                 onePeriodReport.taxes = -companyResult.c_Taxes;
                 onePeriodReport.netProfit = companyResult.c_NetProfit;
                 onePeriodReport.surchargeForSupplementaryInvestmentBudget = -companyResult.c_CurrentSurcharge;
-                onePeriodReport.netResult = -companyResult.c_NetResult;
+                onePeriodReport.netResult = companyResult.c_NetResult;
 
                 onePeriodReport.grossProfitMargin = companyResult.c_GrossProfitMargin * 100;
                 onePeriodReport.tradeAndMarketingExpensesAsAPercentageOfSales = companyResult.c_TradeAndMrktngSalesRatio * 100;
