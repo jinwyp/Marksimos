@@ -1996,8 +1996,8 @@
                                         <tbody>
                                             <tr >
                                                 <td>{{'DecisionPageDecisionTabDiscontinue' | translate}}</td>
-                                                <td ng-repeat="sku in data.currentBrand.d_SKUsDecisions">
-                                                    <input type="checkbox" ng-model="sku.d_ToDrop" ng-change="leaveSkuInput(sku, 'd_ToDrop', sku.d_ToDrop)" ng-focus="clickCurrentSku(sku)">
+                                                <td ng-repeat="sku in data.currentBrand.d_SKUsDecisions" ng-class="{'bg-danger':sku.d_ToDrop}">
+                                                    <input type="checkbox" class="input-lg" ng-model="sku.d_ToDrop" ng-change="leaveSkuInput(sku, 'd_ToDrop', sku.d_ToDrop)" ng-focus="clickCurrentSku(sku)">
                                                 </td>
                                             </tr>
                                             <tr >
