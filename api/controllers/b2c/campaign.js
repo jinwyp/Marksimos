@@ -59,7 +59,7 @@ exports.campaignSingleInfoPage = function(req, res, next){
             totalMembers = totalMembers + team.memberList.length + 1;
         });
         campaign.totalMembers = totalMembers;
-        
+
         return res.render('b2c/campaign.ejs',{
             title : 'HCD E4E Campaign | HCD Learning',
             campaign: resultCampaign
@@ -119,7 +119,7 @@ exports.addCampaign = function(req, res, next){
         location    : req.body.location || '',
         matchDate   : req.body.matchDate || '',
         creator     : req.user._id,
-        pictures     : {firstCoverBackgroundColor:''},
+        pictures     : {firstCoverBackgroundColor:'#FFFFFF'},
         activated   : req.body.activated
 
     });
