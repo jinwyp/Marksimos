@@ -119,6 +119,10 @@
                     passwordOld: passwordOld,
                     passwordNew: passwordNew
                 });
+            },
+
+            addTeamToCampaign: function(data) {
+                return $http.post(apiPathB2c + 'campaigns/teams', data);
             }
 
 
