@@ -55,10 +55,10 @@ exports.campaignSingleInfoPage = function(req, res, next){
         }
 
         var totalMembers = 0;
-        campaign.teamList.forEach(function(team){
+        resultCampaign.teamList.forEach(function(team){
             totalMembers = totalMembers + team.memberList.length + 1;
         });
-        campaign.totalMembers = totalMembers;
+        resultCampaign.totalMembers = totalMembers;
 
         return res.render('b2c/campaign.ejs',{
             title : 'HCD E4E Campaign | HCD Learning',
@@ -86,10 +86,10 @@ exports.campaignSingleInfo = function(req, res, next){
         }
 
         var totalMembers = 0;
-        campaign.teamList.forEach(function(team){
+        resultCampaign.teamList.forEach(function(team){
             totalMembers = totalMembers + team.memberList.length + 1;
         });
-        campaign.totalMembers = totalMembers;
+        resultCampaign.totalMembers = totalMembers;
 
         return res.status(200).send(resultCampaign);
 
