@@ -259,7 +259,6 @@ exports.runSimulation = function(){
                 return submitDecisionForAllCompany(companies, selectedPeriod, seminarId)
                     .then(function(submitDecisionResult){
                         logger.log('write decision finished.');
-                        console.log(submitDecisionResult);
 
                         if(submitDecisionResult.message !== 'submit_decision_success'){
                              throw {message: 'Cancel promise chains. Because ' + submitDecisionResult.message};
@@ -488,7 +487,7 @@ function submitDecision(companyId, period, seminarId){
 
             var reqUrl = url.resolve(config.cgiService, 'decisions.exe');
 
-            logger.log(require('util').inspect(result.d_BrandsDecisions));
+            //logger.log(require('util').inspect(result.d_BrandsDecisions));
         return request.post(reqUrl, {
             decision: JSON.stringify(result),
             seminarId: seminarId,
