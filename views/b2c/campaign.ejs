@@ -38,6 +38,47 @@
         <button class="introduce">游戏介绍</button>
         <span class="enter-count">已有<strong>99999</strong>人参加</span>
     </div>
+    <!-- enter success template -->
+    <script type="text/ng-template" id="campaign-modal-enter-success.html">
+        <div class="modal enter-success campaign-modal">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        &nbsp;
+                        <button class="close" ng-click="$hide()"><span>×</span></button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="center-block">
+                            <h2>报名成功！</h2>
+                            <p>快来体验游戏吧</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </script>
+    <!-- enter failed template. to complete team info -->
+    <script type="text/ng-template" id="campaign-modal-enter-tip-complete-info.html">
+        <div class="modal enter-tip-complete-info campaign-modal">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <span>温馨提示</span>
+                        <button class="close" ng-click="$hide()"><span>×</span></button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="center-block">
+                            <h3>请先完成你的队伍信息</h3>
+                            <div>
+                                <button>完善信息</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </script>
+
     <div id="schedules" class="center-block campaign-schedules">
         <h3 class="text-center">大赛赛程</h3>
         <ul class="schedule-list text-center">
@@ -110,69 +151,60 @@
             </div>
         </div>
     </div>
+    <!-- winner template -->
+    <script type="text/ng-template" id="campaign-modal-winner.html">
+        <div class="modal winner-team campaign-modal">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <span>获胜团队</span>
+                        <button class="close" ng-click="$hide()"><span>×</span></button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="winner-icon center-block"></div>
+                        <div class="winner-text text-center center-block">第一轮优胜团队为</div>
+                        <table class="table table-bordered">
+                            <tbody>
+                            <tr>
+                                <td>战队名称</td>
+                                <td>战队名称</td>
+                                <td>战队名称</td>
+                            </tr>
+                            <tr>
+                                <td>成员</td>
+                                <td>成员</td>
+                                <td>成员</td>
+                            </tr>
+                            <tr>
+                                <td>成员</td>
+                                <td>成员</td>
+                                <td>成员</td>
+                            </tr>
+                            <tr>
+                                <td>成员</td>
+                                <td>成员</td>
+                                <td>成员</td>
+                            </tr>
+                            </tbody>
+                        </table>
+                        <div class="show-score text-center">查看我的得分</div>
+                        <div class="scores text-center">
+                            <div>第一轮得分：<i>100</i></div>
+                            <div>第二轮得分：<i>100</i></div>
+                            <div>第三轮得分：<i>100</i></div>
+                        </div>
+                        <div></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </script>
 </div>
 <div class="campaign-footer">
 
 </div>
 
-<!-- popup window template-->
-<script type="text/ng-template" id="campaign-modal-demo.html">
-    <div class="modal enter-success campaign-modal">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    &nbsp;
-                    <button class="close" ng-click="$hide()"><span>×</span></button>
-                </div>
-                <div class="modal-body">i am body</div>
-            </div>
-        </div>
-    </div>
-</script>
-
-<!-- 报名成功 -->
-<script type="text/ng-template" id="campaign-modal-enter-success.html">
-    <div class="modal enter-success campaign-modal">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    &nbsp;
-                    <button class="close" ng-click="$hide()"><span>×</span></button>
-                </div>
-                <div class="modal-body">
-                    <div class="center-block">
-                        <h2>报名成功！</h2>
-                        <p>快来体验游戏吧</p>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</script>
-
-<!-- 完善信息 -->
-<script type="text/ng-template" id="campaign-modal-enter-tip-complete-info.html">
-    <div class="modal enter-tip-complete-info campaign-modal">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <span>温馨提示</span>
-                    <button class="close" ng-click="$hide()"><span>×</span></button>
-                </div>
-                <div class="modal-body">
-                    <div class="center-block">
-                        <h3>请先完成你的队伍信息</h3>
-                        <div>
-                            <button>完善信息</button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</script>
-
-<!-- 配置提示 -->
+<!-- browsers compatibility tip template -->
 <script type="text/ng-template" id="campaign-modal-compatibility.html">
     <div class="modal enter-tip-compatibility campaign-modal">
         <div class="modal-dialog">
@@ -185,54 +217,6 @@
                     <div class="center-block">
                         <img alt="Browser Compatibility">
                     </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</script>
-
-<script type="text/ng-template" id="campaign-modal-winner.html">
-    <div class="modal winner-team campaign-modal">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <span>获胜团队</span>
-                    <button class="close" ng-click="$hide()"><span>×</span></button>
-                </div>
-                <div class="modal-body">
-                    <div class="winner-icon center-block"></div>
-                    <div class="winner-text text-center center-block">第一轮优胜团队为</div>
-                    <table class="table table-bordered">
-                        <tbody>
-                        <tr>
-                            <td>战队名称</td>
-                            <td>战队名称</td>
-                            <td>战队名称</td>
-                        </tr>
-                        <tr>
-                            <td>成员</td>
-                            <td>成员</td>
-                            <td>成员</td>
-                        </tr>
-                        <tr>
-                            <td>成员</td>
-                            <td>成员</td>
-                            <td>成员</td>
-                        </tr>
-                        <tr>
-                            <td>成员</td>
-                            <td>成员</td>
-                            <td>成员</td>
-                        </tr>
-                        </tbody>
-                    </table>
-                    <div class="show-score text-center">查看我的得分</div>
-                    <div class="scores text-center">
-                        <div>第一轮得分：<i>100</i></div>
-                        <div>第二轮得分：<i>100</i></div>
-                        <div>第三轮得分：<i>100</i></div>
-                    </div>
-                    <div></div>
                 </div>
             </div>
         </div>
