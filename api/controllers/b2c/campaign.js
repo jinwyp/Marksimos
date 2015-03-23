@@ -80,7 +80,7 @@ exports.campaignSingleInfo = function(req, res, next){
         return res.status(400).send( {message: validationErrors} );
     }
 
-    campaignModel.findOne({_id: req.params.campaignId, activated: true}).populate('seminarListMarksimos').populate('teamList').populate('pictures.listCover').populate('pictures.firstCover').populate('pictures.benefit1').populate('pictures.benefit2').populate('pictures.benefit3').populate('pictures.qualification').execQ().then(function(resultCampaign){
+    campaignModel.findOne({_id: req.params.campaignId, activated: true}).populate('seminarListMarksimos').populate('teamList').populate('pictures.listCover').populate('pictures.firstCover').populate('pictures.benefit1').populate('pictures.benefit2').populate('pictures.benefit3').populate('pictures.qualification').lean().execQ().then(function(resultCampaign){
         if(!resultCampaign){
             return res.status(400).send( {message: "campaign doesn't exist."});
         }
@@ -89,6 +89,7 @@ exports.campaignSingleInfo = function(req, res, next){
         resultCampaign.teamList.forEach(function(team){
             totalMembers = totalMembers + team.memberList.length + 1;
         });
+
         resultCampaign.totalMembers = totalMembers;
 
         return res.status(200).send(resultCampaign);
