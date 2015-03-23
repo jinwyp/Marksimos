@@ -681,7 +681,7 @@
             $scope.data.newCampaign.matchDate = campaign.matchDate;
             $scope.data.newCampaign.activated = campaign.activated;
 
-            
+
 
             $scope.data.newCampaign.firstCoverBackgroundColor = campaign.pictures.firstCoverBackgroundColor || '';
             $scope.data.newCampaign.pictures = campaign.pictures;

@@ -54,6 +54,12 @@ exports.campaignSingleInfoPage = function(req, res, next){
             return res.status(400).send( {message: "campaign doesn't exist."});
         }
 
+        var totalMembers = 0;
+        campaign.teamList.forEach(function(team){
+            totalMembers = totalMembers + team.memberList.length + 1;
+        });
+        campaign.totalMembers = totalMembers;
+        
         return res.render('b2c/campaign.ejs',{
             title : 'HCD E4E Campaign | HCD Learning',
             campaign: resultCampaign
@@ -78,6 +84,12 @@ exports.campaignSingleInfo = function(req, res, next){
         if(!resultCampaign){
             return res.status(400).send( {message: "campaign doesn't exist."});
         }
+
+        var totalMembers = 0;
+        campaign.teamList.forEach(function(team){
+            totalMembers = totalMembers + team.memberList.length + 1;
+        });
+        campaign.totalMembers = totalMembers;
 
         return res.status(200).send(resultCampaign);
 
