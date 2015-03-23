@@ -10,7 +10,7 @@ $color_register_button: #c42e0d;
 $color_register_button_border: #7e200b;
 $color_register_button_hover: #7e200b;
 $color_register_button_hover_border: #ca3413;
-
+$color_header_dropdown_button_hover: #7f1a03;
 
 
 
@@ -141,17 +141,41 @@ body{
 		width: 200px;
 		height: 82px;
 		overflow: hidden;
+		margin-right: 25px;
 
-		ul li{
-			float: left;
-			list-style-type: none;
-			padding: 18px 10px 0px 10px;
-			color: white;
+		.dropdown-menu {
+			width: 100px;
+			min-width: 100px;
+			padding: 0;
+			margin-top: 10px;
+			background-color: $color_register_button;
+			li {
+				padding: 5px 5px 5px 5px;
+
+				a {
+					text-align: center;
+					padding: 2px 10px;
+					color: white;
+					&:hover{
+						background-color:$color_header_dropdown_button_hover;
+					}
+				}
+			}
 		}
 
+
+
 		img {
-			width: 50px;
-			height: 50px;
+			width: 70px;
+			height: 70px;
+		}
+
+		.avatar {
+			border-radius: 40px ;
+			width: 70px;
+			height: 70px;
+			padding: 0;
+			margin-top: 7px;
 		}
 	}
 
