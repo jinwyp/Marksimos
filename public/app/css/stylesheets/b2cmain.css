@@ -64,7 +64,11 @@ body {
   width: 200px;
   height: 82px;
   overflow: hidden;
-  margin-right: 25px;
+  margin-right: 45px;
+}
+.b2c-header .b2c-user .glyphicon {
+  top: 8px;
+  color: white;
 }
 .b2c-header .b2c-user .dropdown-menu {
   width: 100px;

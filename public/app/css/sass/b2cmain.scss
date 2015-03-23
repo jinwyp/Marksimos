@@ -141,7 +141,12 @@ body{
 		width: 200px;
 		height: 82px;
 		overflow: hidden;
-		margin-right: 25px;
+		margin-right: 45px;
+
+		.glyphicon{
+			top:8px;
+			color: white;
+		}
 
 		.dropdown-menu {
 			width: 100px;
