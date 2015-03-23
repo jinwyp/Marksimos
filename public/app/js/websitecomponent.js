@@ -27,7 +27,6 @@
         return {
             scope: {
                 showlogin  : '=',
-                showlogout : '=',
                 currentuser   : '='
             },
             restrict: 'AE',
