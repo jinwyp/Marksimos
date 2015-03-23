@@ -107,6 +107,7 @@ exports.addCampaign = function(req, res, next){
         location    : req.body.location || '',
         matchDate   : req.body.matchDate || '',
         creator     : req.user._id,
+        pictures     : {firstCoverBackgroundColor:''},
         activated   : req.body.activated
 
     });
