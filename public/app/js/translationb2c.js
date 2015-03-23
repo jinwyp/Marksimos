@@ -8,10 +8,10 @@
     'use strict';
 
 
-    angular.module('marksimos.translationb2c', ['ngCookies']);
+    angular.module('b2c.translation', ['ngCookies']);
 
 
-    angular.module('marksimos.translationb2c').config(['$translateProvider',  function($translateProvider){
+    angular.module('b2c.translation').config(['$translateProvider',  function($translateProvider){
 
         // Adding a translation table for the English language
         $translateProvider.translations('en_US', {
