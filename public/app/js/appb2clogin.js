@@ -414,7 +414,7 @@
     }]);
 
 
-    angular.module('b2clogin').controller('campaignController', ['Student', '$modal', '$translate', function(Student, $modal, $translate) {
+    angular.module('b2clogin').controller('campaignController', ['Student', '$modal', '$translate', '$location', function(Student, $modal, $translate, $location) {
         /* jshint validthis: true */
         var vm = this;
 
@@ -422,19 +422,28 @@
 
         vm.currentUser = {};
 
-
+        vm.campaignId = $location.absUrl().split('/');
+        vm.campaignId = vm.campaignId[vm.campaignId.length - 1].substr(0, 24);
         /**********  Event Center  **********/
+
+        vm.clickStudentEnter = studentEnter;
 
 
 
         /**********  Function Declarations  **********/
-        function enter() {
+        function studentEnter() {
             var hasTeam = vm.currentUser && vm.currentUser.team;
-
-            var options = {container: 'body'};
 
             if (hasTeam) {
 
+                Student.addTeamToCampaign({
+                    username: vm.currentUser.username,
+                    campaignId: vm.campaignId
+                }).then(function() {
+                    $modal({container: 'body', template: 'campaign-modal-enter-success.html'})
+                })
+            } else {
+                $modal({container: 'body', template: 'campaign-modal-enter-tip-complete-info.html'})
             }
         }
 
@@ -448,7 +457,13 @@
 
             },
             getUserInfo : function(){
-                return Student.getStudent().then(function(result) {
+                Student.getCampaign(vm.campaignId).then(function(result) {
+                    vm.campaign = result.data;
+                }).catch(function(err) {
+                    console.log('load campaign failed')
+                });
+
+                Student.getStudent().then(function(result) {
                     vm.currentUser = result.data;
                 }).catch(function(err) {
                     console.log('load student info failed');

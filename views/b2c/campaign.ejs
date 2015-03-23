@@ -1,9 +1,9 @@
 <% include include/headcss.ejs %>
 
 
-<body ng-app="b2clogin" ng-controller="profileController as profile" class="campaign-body">
+<body ng-app="b2clogin" ng-controller="campaignController as campaign" class="campaign-body">
 
-<b2c-header currentuser="profile.currentUser"></b2c-header>
+<b2c-header currentuser="campaign.currentUser"></b2c-header>
 
 <nav class="campaign-nav">
     <div class="center-block nav-container">
@@ -29,12 +29,12 @@
         </ul>
     </div>
 </nav>
-<div class="campaign-banner">
-    <img>
+<div class="campaign-banner" style="background-color:<%= campaign.pictures.firstCoverBackgroundColor %> ">
+    <img ng-src="{{campaign.campaign.pictures.firstCover.path}}">
 </div>
 <div class="container-fluid campaign-main">
     <div id="enter" class="center-block campaign-enter">
-        <button class="enter-button">马上报名</button>
+        <button class="enter-button" ng-click="campaign.clickStudentEnter()">马上报名</button>
         <button class="introduce">游戏介绍</button>
         <span class="enter-count">已有<strong>99999</strong>人参加</span>
     </div>
@@ -82,10 +82,7 @@
     <div id="schedules" class="center-block campaign-schedules">
         <h3 class="text-center">大赛赛程</h3>
         <ul class="schedule-list text-center">
-            <li><a>www.whateverwhoru.com<span>点击进入</span></a></li>
-            <li><a>www.whateverwhoru.com<span>点击进入</span></a></li>
-            <li><a>www.whateverwhoru.com<span>点击进入</span></a></li>
-            <li><a>www.whateverwhoru.com<span>点击进入</span></a></li>
+            <li ng-repeat="seminar in campaign.campaign.seminarListMarksimos"><a href="/marksimos/intro">{{seminar.seminarId + seminar.description}}<span>点击进入</span></a></li>
         </ul>
     </div>
     <div id="gains" class="row center-block campaign-gains">
@@ -94,23 +91,23 @@
             <ul class="gain-list row">
                 <li class="col-xs-4">
                     <div class="gain center-block">
-                        <img>
-                        <h4 class="text-center">a title</h4>
-                        <p>bla bla bla bla bla bla bla bla bla bla bla bla</p>
+                        <img ng-src="{{campaign.campaign.pictures.benefit1.path}}">
+                        <!--<h4 class="text-center">a title</h4>
+                        <p>bla bla bla bla bla bla bla bla bla bla bla bla</p>-->
                     </div>
                 </li>
                 <li class="col-xs-4">
                     <div class="gain center-block">
-                        <img>
-                        <h4 class="text-center">a title</h4>
-                        <p>bla bla bla bla bla bla bla bla bla bla bla bla</p>
+                        <img ng-src="{{campaign.campaign.pictures.benefit2.path}}">
+                        <!--<h4 class="text-center">a title</h4>
+                        <p>bla bla bla bla bla bla bla bla bla bla bla bla</p>-->
                     </div>
                 </li>
                 <li class="col-xs-4">
                     <div class="gain center-block">
-                        <img>
-                        <h4 class="text-center">a title</h4>
-                        <p>bla bla bla bla bla bla bla bla bla bla bla bla</p>
+                        <img ng-src="{{campaign.campaign.pictures.benefit2.path}}">
+                        <!--<h4 class="text-center">a title</h4>
+                        <p>bla bla bla bla bla bla bla bla bla bla bla bla</p>-->
                     </div>
                 </li>
             </ul>
@@ -121,7 +118,7 @@
             <h3 class="text-center">加入条件</h3>
             <div class="row">
                 <div class="col-xs-6 text-right">
-                    <img>
+                    <img ng-src="{{campaign.campaign.pictures.qualification.path}}">
                 </div>
                 <div class="col-xs-5 col-xs-offset-1">
                     <h4>乐于分享</h4>

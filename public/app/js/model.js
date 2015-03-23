@@ -122,7 +122,11 @@
             },
 
             addTeamToCampaign: function(data) {
-                return $http.post(apiPathB2c + 'campaigns/teams', data);
+                return $http.post(apiPathB2C + 'campaigns/teams', data);
+            },
+
+            getCampaign: function(id) {
+                return $http.get(apiPathB2C + 'campaigns/' + id);
             }
 
 
