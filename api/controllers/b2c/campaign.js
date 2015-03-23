@@ -66,6 +66,27 @@ exports.campaignSingleInfoPage = function(req, res, next){
 };
 
 
+exports.campaignSingleInfo = function(req, res, next){
+
+    var validationErrors = campaignModel.campaignIdValidations(req);
+
+    if(validationErrors){
+        return res.status(400).send( {message: validationErrors} );
+    }
+
+    campaignModel.findOne({_id: req.params.campaignId, activated: true}).populate('seminarListMarksimos').populate('teamList').populate('pictures.listCover').populate('pictures.firstCover').populate('pictures.benefit1').populate('pictures.benefit2').populate('pictures.benefit3').populate('pictures.qualification').execQ().then(function(resultCampaign){
+        if(!resultCampaign){
+            return res.status(400).send( {message: "campaign doesn't exist."});
+        }
+
+        return res.status(200).send(resultCampaign);
+
+    }).fail(function(err){
+        next(err);
+    }).done();
+
+};
+
 
 
 
