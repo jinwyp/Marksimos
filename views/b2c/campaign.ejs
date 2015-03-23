@@ -1,7 +1,7 @@
 <% include include/headcss.ejs %>
 
 
-<body ng-app="b2clogin" ng-controller="campaignController as campaign" class="campaign-body">
+<body ng-app="b2clogin" ng-controller="campaignController as campaign" class="campaign-body" ng-cloak>
 
 <b2c-header currentuser="campaign.currentUser"></b2c-header>
 
@@ -36,7 +36,7 @@
     <div id="enter" class="center-block campaign-enter">
         <button class="enter-button" ng-click="campaign.clickStudentEnter()">马上报名</button>
         <button class="introduce">游戏介绍</button>
-        <span class="enter-count">已有<strong>99999</strong>人参加</span>
+        <span class="enter-count">已有<strong>{{campaign.campaign.totalMembers}}</strong>人参加</span>
     </div>
     <!-- enter success template -->
     <script type="text/ng-template" id="campaign-modal-enter-success.html">
