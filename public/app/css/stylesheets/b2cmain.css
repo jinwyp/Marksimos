@@ -1070,6 +1070,11 @@ body {
   -webkit-box-shadow: #7e200b 0px 2px 4px;
   box-shadow: #7e200b 0px 2px 4px;
 }
+.campaign-main .campaign-enter .already-entered-button {
+  -moz-box-shadow: #888 0px 2px 4px;
+  -webkit-box-shadow: #888 0px 2px 4px;
+  box-shadow: #888 0px 2px 4px;
+}
 .campaign-main .campaign-enter .introduce {
   color: black;
   font-weight: normal;
@@ -1323,6 +1328,9 @@ body {
 .campaignlist-container div.center-block {
   width: 890px;
 }
+.campaignlist-container .campaignlist-banner {
+  margin-top: 40px;
+}
 .campaignlist-container .header {
   margin-top: 30px;
   padding-bottom: 5px;
@@ -1417,6 +1425,15 @@ body {
 }
 
 .campaignlist-footer {
-  height: 150px;
+  height: 181px;
   background-color: #7AC269;
+}
+.campaignlist-footer > div {
+  width: 1600px;
+  position: relative;
+}
+.campaignlist-footer .join {
+  position: absolute;
+  left: 298px;
+  top: 59px;
 }
