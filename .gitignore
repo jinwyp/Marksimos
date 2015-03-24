@@ -88,3 +88,4 @@ bin/Microsoft.NodejsTools.WebRole.dll
 
 
 # CSS
+public/app/css/stylesheets/*.css
