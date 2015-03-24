@@ -167,7 +167,12 @@ gulp.task('nodemonraven', function () {
         env: { 'NODE_ENV': 'raven' }
     });
 });
-
+gulp.task('nodemonken', function () {
+  nodemon({
+    script: 'app.js',
+    env: { 'NODE_ENV': 'ken' }
+  });
+});
 gulp.task('nodemonjin', function () {
     nodemon({
         script: 'app.js',
@@ -279,6 +284,7 @@ gulp.task('testadminrr', function() {
 gulp.task('default', ['nodemonludwik', 'watchdev']);
 
 //gulp.task('jin', ['mongo', 'browser-sync', 'nodemonjin', 'watch']);
+gulp.task('ken', [ 'compass', 'templates', 'minifycss', 'nodemonken', 'watchdev']);
 gulp.task('jin', [ 'compass', 'templates', 'minifycss', 'nodemonjin', 'watchdev']);
 gulp.task('jinco', ['compass', 'templates', 'minifycss', 'nodemonjinlocal', 'watchdev']);
 gulp.task('jinpro', ['compass', 'templates', 'minifycss', 'jscompress', 'nodemonjin', 'watch']);
