@@ -1,4 +1,5 @@
 var request = require('../../promises/request.js');
+var originalRequest = require('request');
 var util = require('util');
 var url = require('url');
 var config = require('../../../common/config.js');
@@ -912,7 +913,16 @@ function createNewDecisionBasedOnLastPeriodDecision(seminarId, lastPeriod, decis
 }
 
 
-
+exports.getCgiStatus =  function(req, res, next) {
+    cgiServerUrl = url.resolve(config.cgiService, '/');
+    originalRequest({uri: cgiServerUrl, timeout: 5000}, function(err){
+        if (err){
+            return res.send({status: false});
+        } else {
+            return res.send({status: true});
+        }
+    })
+}
 
 
 
