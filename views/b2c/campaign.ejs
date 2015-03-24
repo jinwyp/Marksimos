@@ -29,12 +29,14 @@
         </ul>
     </div>
 </nav>
-<div class="campaign-banner" style="background-color:<%= campaign.pictures.firstCoverBackgroundColor %> ">
-    <img ng-src="{{campaign.campaign.pictures.firstCover.path}}">
+<div class="campaign-banner text-center" style="background-color:<%= campaign.pictures.firstCoverBackgroundColor %> ">
+    <img ng-src="/{{campaign.campaign.pictures.firstCover.path}}">
 </div>
 <div class="container-fluid campaign-main">
     <div id="enter" class="center-block campaign-enter">
-        <button class="enter-button" ng-click="campaign.clickStudentEnter()">马上报名</button>
+        <button ng-if="!campaign.css.hasEntered" class="enter-button" ng-click="campaign.clickStudentEnter()">马上报名</button>
+        <button ng-if="campaign.css.hasEntered" class="already-entered-button" ng-click="campaign.clickStudentEnter()">您已报名</button>
+
         <button class="introduce">游戏介绍</button>
         <span class="enter-count">已有<strong>{{campaign.campaign.totalMembers}}</strong>人参加</span>
     </div>
