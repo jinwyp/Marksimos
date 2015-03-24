@@ -97,6 +97,13 @@ module.exports = (function(){
             config.host = 'http://localhost:3000/';
             config.cgiService = 'http://192.168.1.103:800/cgi-bin/';
             break;
+        case 'ken':
+            config.fileUploadDirectory = '/Users/pengchengbi/work/Marksimos/public/';
+            config.logDirectory = '/Users/pengchengbi/work/Marksimos/log/';
+            config.mongo_conn = 'mongodb://localhost/Marksimos';
+            config.host = 'http://localhost:3000/';
+            config.cgiService = 'http://192.168.1.103:800/cgi-bin/';
+            break;
         case 'development':
             config.fileUploadDirectory = '/Users/ludwik/code/Marksimos/public/';
             config.logDirectory = '/Users/ludwik/code/Marksimos/log/';
