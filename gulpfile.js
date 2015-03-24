@@ -297,11 +297,11 @@ gulp.task('testadminrr', function() {
 gulp.task('default', ['nodemonludwik', 'watchdev']);
 
 //gulp.task('jin', ['mongo', 'browser-sync', 'nodemonjin', 'watch']);
-gulp.task('ken', [ 'compass', 'templates', 'minifycssMarksimos', 'minifycssB2C', 'nodemonken', 'watchdev']);
-gulp.task('jin', [ 'compass', 'templates', 'minifycssMarksimos', 'minifycssB2C', 'nodemonjin', 'watchdev']);
-gulp.task('jinco', ['compass', 'templates', 'minifycssMarksimos', 'minifycssB2C', 'nodemonjinlocal', 'watchdev']);
+gulp.task('ken', [ 'compass', 'templates', 'nodemonken', 'watchdev']);
+gulp.task('jin', [ 'compass', 'templates', 'nodemonjin', 'watchdev']);
+gulp.task('jinco', ['compass', 'templates', 'nodemonjinlocal', 'watchdev']);
 gulp.task('jinpro', ['compass', 'templates', 'minifycssMarksimos', 'minifycssB2C', 'jscompress', 'nodemonjin', 'watch']);
-gulp.task('yuekecheng', [ 'compass', 'templates', 'minifycssMarksimos', 'minifycssB2C', 'nodemonyuekecheng', 'watchdev']);
+gulp.task('yuekecheng', [ 'compass', 'templates', 'nodemonyuekecheng', 'watchdev']);
 
 
 
