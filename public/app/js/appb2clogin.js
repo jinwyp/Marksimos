@@ -414,7 +414,7 @@
     }]);
 
 
-    angular.module('b2clogin').controller('campaignController', ['Student', '$modal', '$translate', '$location', function(Student, $modal, $translate, $location) {
+    angular.module('b2clogin').controller('campaignController', ['Student', '$modal', '$translate', '$location', '$anchorScroll', '$q', function(Student, $modal, $translate, $location, $anchorScroll, $q) {
         /* jshint validthis: true */
         var vm = this;
 
@@ -432,6 +432,7 @@
 
         /**********  Function Declarations  **********/
         function studentEnter() {
+            if (vm.css.hasEntered) return;
             var hasTeam = vm.currentUser && vm.currentUser.team;
 
             if (hasTeam) {
@@ -452,21 +453,22 @@
         var app = {
             init : function(){
                 this.getUserInfo();
+                $anchorScroll();
             },
             reRun : function(){
 
             },
             getUserInfo : function(){
-                Student.getCampaign(vm.campaignId).then(function(result) {
-                    vm.campaign = result.data;
-                }).catch(function(err) {
-                    console.log('load campaign failed')
-                });
+                $q.all([Student.getCampaign(vm.campaignId), Student.getStudent()]).then(function(results) {
+                    vm.campaign = results[0].data;
+                    vm.currentUser = results[1].data;
 
-                Student.getStudent().then(function(result) {
-                    vm.currentUser = result.data;
+                    vm.css.hasEntered = vm.campaign.teamList && vm.campaign.teamList.some(function(team) {
+                        return team._id == vm.currentUser.team._id;
+                    })
                 }).catch(function(err) {
                     console.log('load student info failed');
+                    console.log(err);
                 });
             }
         };

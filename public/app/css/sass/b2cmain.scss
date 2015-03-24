@@ -1071,6 +1071,9 @@ $lineHeight_button: 1.8;
 			font-weight: bold;
 			@include box-shadow($color_register_button_border 0px 2px 4px);
 		}
+		.already-entered-button{
+			@include box-shadow(#888 0px 2px 4px)
+		}
 		.introduce {
 			color: black;
 			font-weight: normal;
@@ -1320,6 +1323,10 @@ $lineHeight_button: 1.8;
 	div.center-block {
 		width: 890px;
 	}
+
+	.campaignlist-banner {
+		margin-top: 40px;
+	}
 	.header {
 		margin-top: 30px;
 		h3 {
@@ -1377,7 +1384,7 @@ $lineHeight_button: 1.8;
 			height: 120px;  // todo remove
 		}
 	}
-	.coach-list {
+	.coach-list { //todo to delete
 		padding-bottom: 40px;
 		.header::after {
 			width: 0;
@@ -1419,6 +1426,15 @@ $lineHeight_button: 1.8;
 	}
 }
 .campaignlist-footer {
-	height: 150px;
-	background-color: #7AC269
+	height: 181px;
+	background-color: #7AC269;
+	> div {
+		width: 1600px;
+		position: relative;
+	}
+	.join {
+		position: absolute;
+		left: 298px;
+		top: 59px;
+	}
 }
