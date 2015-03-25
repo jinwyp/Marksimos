@@ -915,6 +915,9 @@ $lineHeight_button: 1.8;
 			cursor: pointer;
 		}
 	}
+	.firstName {
+		margin-bottom: -5px;
+	}
 	.profile-button-container {
 		button {
 			/*margin-right: 0.5em;
@@ -1156,10 +1159,6 @@ $lineHeight_button: 1.8;
 		.col-xs-offset-1 {
 			margin-left: 30px;
 		}
-	}
-	.campaign-process {
-		height: 300px;  //todo remove this height
-		background-color: #C0C0C0; // todo remove
 	}
 	.campaign-winner {
 		color: $color_white;

@@ -133,8 +133,8 @@
             </div>
         </div>
     </div>
-    <div id="process" class="row campaign-process">
-        <h3 class="text-center">参赛流程</h3>
+    <div id="process" class="row campaign-process text-center" style="background-color: <%= campaign.pictures.processBackgroundColor%>" >
+        <img ng-src="/{{campaign.campaign.pictures.process.path}}">
     </div>
     <div id="winner" class="campaign-winner row">
         <h3 class="text-center">获胜队伍</h3>
