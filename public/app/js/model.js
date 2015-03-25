@@ -1297,7 +1297,9 @@
             removeStudentFromSeminar : function(postdata){
                 return $http.post(apiAdminPath + 'remove_student_from_seminar', postdata);
             },
-
+            getCgiStatus: function(){
+                return $http.get(apiAdminPath + 'delphi_cgi');
+            },
 
 
             getAllCompanyDecisionsOfAllPeriods : function(seminarId){
