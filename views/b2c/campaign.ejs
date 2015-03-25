@@ -37,7 +37,7 @@
         <button ng-if="!campaign.css.hasEntered" class="enter-button" ng-click="campaign.clickStudentEnter()">马上报名</button>
         <button ng-if="campaign.css.hasEntered" class="already-entered-button" ng-click="campaign.clickStudentEnter()">您已报名</button>
 
-        <button class="introduce">游戏介绍</button>
+        <a href="/cn/marksimos.html" class="introduce">游戏介绍</a>
         <span class="enter-count">已有<strong>{{campaign.campaign.totalMembers}}</strong>人参加</span>
     </div>
     <!-- enter success template -->

@@ -442,7 +442,7 @@
                     campaignId: vm.campaignId
                 }).then(function() {
                     $modal({container: 'body', template: 'campaign-modal-enter-success.html'});
-                })
+                });
             } else {
                 $modal({container: 'body', template: 'campaign-modal-enter-tip-complete-info.html'});
             }
@@ -465,7 +465,7 @@
 
                     vm.css.hasEntered = vm.campaign.teamList && vm.campaign.teamList.some(function(team) {
                         return team._id == vm.currentUser.team._id;
-                    })
+                    });
                 }).catch(function(err) {
                     console.log('load student info failed');
                     console.log(err);
