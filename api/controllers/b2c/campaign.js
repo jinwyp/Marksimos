@@ -120,7 +120,7 @@ exports.addCampaign = function(req, res, next){
         location    : req.body.location || '',
         matchDate   : req.body.matchDate || '',
         creator     : req.user._id,
-        pictures     : {firstCoverBackgroundColor:'#FFFFFF'},
+        pictures     : {firstCoverBackgroundColor:'#FFFFFF', processBackgroundColor : '#FFFFFF'},
         activated   : req.body.activated
 
     });
@@ -156,7 +156,8 @@ exports.updateCampaign = function(req, res, next){
             location    : req.body.location,
             matchDate   : req.body.matchDate,
             activated   : req.body.activated,
-            "pictures.firstCoverBackgroundColor": req.body.firstCoverBackgroundColor
+            "pictures.firstCoverBackgroundColor": req.body.firstCoverBackgroundColor,
+            "pictures.processBackgroundColor": req.body.processBackgroundColor
         }}
     ).then(function(result){
 
@@ -193,7 +194,8 @@ exports.uploadCampaignPics = function(req, res, next){
         {fieldname : 'uploadBenefit1' , modelFieldName : 'benefit1'},
         {fieldname : 'uploadBenefit2' , modelFieldName : 'benefit2'},
         {fieldname : 'uploadBenefit3' , modelFieldName : 'benefit3'},
-        {fieldname : 'uploadQualification' , modelFieldName : 'qualification'}
+        {fieldname : 'uploadQualification' , modelFieldName : 'qualification'},
+        {fieldname : 'uploadProcess' , modelFieldName : 'process'}
 
     ];
 
