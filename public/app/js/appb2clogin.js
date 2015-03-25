@@ -376,6 +376,10 @@
 
     }]);
 
+
+
+
+
     angular.module('b2clogin').controller('campaignlistController', ['Student', '$alert', '$translate', function(Student, $alert, $translate) {
         /* jshint validthis: true */
         var vm = this;
@@ -412,6 +416,9 @@
 
         app.init();
     }]);
+
+
+
 
 
     angular.module('b2clogin').controller('campaignController', ['Student', '$modal', '$translate', '$location', '$anchorScroll', '$q', function(Student, $modal, $translate, $location, $anchorScroll, $q) {
