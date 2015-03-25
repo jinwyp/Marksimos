@@ -275,7 +275,7 @@ exports.searchCampaign = function(req, res, next){
         ];
     }
 
-    campaignModel.find(query).populate('seminarListMarksimos').populate('pictures.listCover').populate('pictures.firstCover').populate('pictures.benefit1').populate('pictures.benefit2').populate('pictures.benefit3').populate('pictures.qualification').populate('teamList').sort({createdAt: -1}).exec(function(err, resultCampaign){
+    campaignModel.find(query).populate('seminarListMarksimos').populate('pictures.listCover').populate('pictures.firstCover').populate('pictures.benefit1').populate('pictures.benefit2').populate('pictures.benefit3').populate('pictures.qualification').populate('pictures.process').populate('teamList').sort({createdAt: -1}).exec(function(err, resultCampaign){
 
         if(err){
             next(err);
