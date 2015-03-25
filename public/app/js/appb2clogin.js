@@ -449,7 +449,6 @@
         }
 
 
-
         var app = {
             init : function(){
                 this.getUserInfo();
@@ -468,7 +467,6 @@
                     });
                 }).catch(function(err) {
                     console.log('load student info failed');
-                    console.log(err);
                 });
             }
         };
