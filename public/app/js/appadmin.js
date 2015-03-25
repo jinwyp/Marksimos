@@ -49,6 +49,12 @@
 
 
     angular.module('marksimosadmin').controller('adminHomeController', ['$scope', '$http', '$notification', 'FileUploader', 'Admin', function($scope, $http, $notification, FileUploader, Admin) {
+        var fileUploaderOptions = {
+            url : '/marksimos/api/admin/campaigns/upload',
+            onSuccessItem : onSuccessItem,
+            onErrorItem : onErrorItem,
+            formData:[{campaignId:''}]
+        };
 
         $scope.css = {
             leftmenu: 11,
@@ -183,12 +189,14 @@
                 activated : '',
                 pictures : {},
                 firstCoverBackgroundColor : '',
-                uploadListCover : new FileUploader({url : '/marksimos/api/admin/campaigns/upload', alias : 'uploadListCover', formData:[{campaignId:''}]}),
-                uploadFirstCover : new FileUploader({url : '/marksimos/api/admin/campaigns/upload', alias : 'uploadFirstCover', formData:[{campaignId:''}]}),
-                uploadBenefit1 : new FileUploader({url : '/marksimos/api/admin/campaigns/upload', alias : 'uploadBenefit1', formData:[{campaignId:''}]}),
-                uploadBenefit2 : new FileUploader({url : '/marksimos/api/admin/campaigns/upload', alias : 'uploadBenefit2', formData:[{campaignId:''}]}),
-                uploadBenefit3 : new FileUploader({url : '/marksimos/api/admin/campaigns/upload', alias : 'uploadBenefit3', formData:[{campaignId:''}]}),
-                uploadQualification : new FileUploader({url : '/marksimos/api/admin/campaigns/upload', alias : 'uploadQualification', formData:[{campaignId:''}]}),
+                processBackgroundColor : '',
+                uploadListCover : new FileUploader(angular.extend(fileUploaderOptions, {alias: 'uploadListCover'})),
+                uploadFirstCover : new FileUploader(angular.extend(fileUploaderOptions, {alias: 'uploadFirstCover'})),
+                uploadBenefit1 : new FileUploader(angular.extend(fileUploaderOptions, {alias: 'uploadBenefit1'})),
+                uploadBenefit2 : new FileUploader(angular.extend(fileUploaderOptions, {alias: 'uploadBenefit2'})),
+                uploadBenefit3 : new FileUploader(angular.extend(fileUploaderOptions, {alias: 'uploadBenefit3'})),
+                uploadQualification : new FileUploader(angular.extend(fileUploaderOptions, {alias: 'uploadQualification'})),
+                uploadProcess : new FileUploader(angular.extend(fileUploaderOptions, {alias: 'uploadProcess'})),
                 campaignActivatedRadioOptions : [
                     {value : 1, text : 'Active'},
                     {value : 0, text : 'Disable'}
@@ -362,6 +370,13 @@
             return names[fieldname]();
         }
 
+        function onSuccessItem() {
+            $notification.success('Save success', 'Upload success');
+        }
+
+        function onErrorItem() {
+            $notification.error('Failed', 'Upload failed');
+        }
 
         var app = {
             initOnce: function() {
@@ -691,6 +706,7 @@
 
 
             $scope.data.newCampaign.firstCoverBackgroundColor = campaign.pictures.firstCoverBackgroundColor || '';
+            $scope.data.newCampaign.processBackgroundColor = campaign.pictures.processBackgroundColor || '';
             $scope.data.newCampaign.pictures = campaign.pictures;
 
             $scope.data.newCampaign.uploadListCover.formData = [{campaignId:$scope.data.newCampaign.id}];
@@ -699,6 +715,7 @@
             $scope.data.newCampaign.uploadBenefit2.formData = [{campaignId:$scope.data.newCampaign.id}];
             $scope.data.newCampaign.uploadBenefit3.formData = [{campaignId:$scope.data.newCampaign.id}];
             $scope.data.newCampaign.uploadQualification.formData = [{campaignId:$scope.data.newCampaign.id}];
+            $scope.data.newCampaign.uploadProcess.formData = [{campaignId:$scope.data.newCampaign.id}];
 
             $scope.css.editMenuStatus = true;
             $scope.css.leftmenu = 62;
@@ -716,7 +733,8 @@
                     location: $scope.data.newCampaign.location,
                     matchDate: $scope.data.newCampaign.matchDate,
                     activated : $scope.data.newCampaign.activated,
-                    firstCoverBackgroundColor : $scope.data.newCampaign.firstCoverBackgroundColor
+                    firstCoverBackgroundColor : $scope.data.newCampaign.firstCoverBackgroundColor,
+                    processBackgroundColor: $scope.data.newCampaign.processBackgroundColor
                 };
 
                 Admin.updateCampaign($scope.data.updateCampaign).success(function(data, status, headers, config) {

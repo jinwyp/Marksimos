@@ -32,12 +32,14 @@ var campaignSchema = new Schema({
     pictures : {
         listCover : {type: schemaObjectId, ref: 'FileStorage'},
         firstCover : {type: schemaObjectId, ref: 'FileStorage'},
-        firstCoverBackgroundColor : {type: String},
+        firstCoverBackgroundColor : {type: String, default: '#FFFFFF'},
 
         benefit1 : {type: schemaObjectId, ref: 'FileStorage'},
         benefit2 : {type: schemaObjectId, ref: 'FileStorage'},
         benefit3 : {type: schemaObjectId, ref: 'FileStorage'},
-        qualification : {type: schemaObjectId, ref: 'FileStorage'}
+        qualification : {type: schemaObjectId, ref: 'FileStorage'},
+        process : {type: schemaObjectId, ref: 'FileStorage'},
+        processBackgroundColor : {type: String, default: '#FFFFFF'}
     },
 
     activated: { type: Boolean, default: false }

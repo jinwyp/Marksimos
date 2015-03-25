@@ -16,7 +16,7 @@ var fileUploadModel = require('../../models/user/fileupload.js');
 
 exports.campaignListPage = function(req, res, next){
 
-    campaignModel.find({ activated: true}).populate('seminarListMarksimos').populate('teamList').populate('pictures.listCover').populate('pictures.firstCover').populate('pictures.benefit1').populate('pictures.benefit2').populate('pictures.benefit3').populate('pictures.qualification').sort({createdAt: -1}).execQ().then(function(resultCampaign){
+    campaignModel.find({ activated: true}).populate('seminarListMarksimos').populate('teamList').populate('pictures.listCover').populate('pictures.firstCover').populate('pictures.benefit1').populate('pictures.benefit2').populate('pictures.benefit3').populate('pictures.qualification').populate('pictures.process').sort({createdAt: -1}).execQ().then(function(resultCampaign){
         if(resultCampaign.length == 0){
             return res.status(400).send( {message: "campaign doesn't exist."});
         }
@@ -49,7 +49,7 @@ exports.campaignSingleInfoPage = function(req, res, next){
         return res.status(400).send( {message: validationErrors} );
     }
 
-    campaignModel.findOne({_id: req.params.campaignId, activated: true}).populate('seminarListMarksimos').populate('teamList').populate('pictures.listCover').populate('pictures.firstCover').populate('pictures.benefit1').populate('pictures.benefit2').populate('pictures.benefit3').populate('pictures.qualification').execQ().then(function(resultCampaign){
+    campaignModel.findOne({_id: req.params.campaignId, activated: true}).populate('seminarListMarksimos').populate('teamList').populate('pictures.listCover').populate('pictures.firstCover').populate('pictures.benefit1').populate('pictures.benefit2').populate('pictures.benefit3').populate('pictures.qualification').populate('pictures.process').execQ().then(function(resultCampaign){
         if(!resultCampaign){
             return res.status(400).send( {message: "campaign doesn't exist."});
         }
@@ -80,7 +80,7 @@ exports.campaignSingleInfo = function(req, res, next){
         return res.status(400).send( {message: validationErrors} );
     }
 
-    campaignModel.findOne({_id: req.params.campaignId, activated: true}).populate('seminarListMarksimos').populate('teamList').populate('pictures.listCover').populate('pictures.firstCover').populate('pictures.benefit1').populate('pictures.benefit2').populate('pictures.benefit3').populate('pictures.qualification').lean().execQ().then(function(resultCampaign){
+    campaignModel.findOne({_id: req.params.campaignId, activated: true}).populate('seminarListMarksimos').populate('teamList').populate('pictures.listCover').populate('pictures.firstCover').populate('pictures.benefit1').populate('pictures.benefit2').populate('pictures.benefit3').populate('pictures.qualification').populate('pictures.process').lean().execQ().then(function(resultCampaign){
         if(!resultCampaign){
             return res.status(400).send( {message: "campaign doesn't exist."});
         }
@@ -120,7 +120,7 @@ exports.addCampaign = function(req, res, next){
         location    : req.body.location || '',
         matchDate   : req.body.matchDate || '',
         creator     : req.user._id,
-        pictures     : {firstCoverBackgroundColor:'#FFFFFF'},
+        pictures     : {firstCoverBackgroundColor:'#FFFFFF', processBackgroundColor : '#FFFFFF'},
         activated   : req.body.activated
 
     });
@@ -156,7 +156,8 @@ exports.updateCampaign = function(req, res, next){
             location    : req.body.location,
             matchDate   : req.body.matchDate,
             activated   : req.body.activated,
-            "pictures.firstCoverBackgroundColor": req.body.firstCoverBackgroundColor
+            "pictures.firstCoverBackgroundColor": req.body.firstCoverBackgroundColor,
+            "pictures.processBackgroundColor": req.body.processBackgroundColor
         }}
     ).then(function(result){
 
@@ -178,8 +179,6 @@ exports.updateCampaign = function(req, res, next){
 
 exports.uploadCampaignPics = function(req, res, next){
 
-    console.log(req.body);
-
     var validationErrors = campaignModel.campaignIdValidations(req);
 
     if(validationErrors){
@@ -193,7 +192,8 @@ exports.uploadCampaignPics = function(req, res, next){
         {fieldname : 'uploadBenefit1' , modelFieldName : 'benefit1'},
         {fieldname : 'uploadBenefit2' , modelFieldName : 'benefit2'},
         {fieldname : 'uploadBenefit3' , modelFieldName : 'benefit3'},
-        {fieldname : 'uploadQualification' , modelFieldName : 'qualification'}
+        {fieldname : 'uploadQualification' , modelFieldName : 'qualification'},
+        {fieldname : 'uploadProcess' , modelFieldName : 'process'}
 
     ];
 
@@ -275,7 +275,7 @@ exports.searchCampaign = function(req, res, next){
         ];
     }
 
-    campaignModel.find(query).populate('seminarListMarksimos').populate('pictures.listCover').populate('pictures.firstCover').populate('pictures.benefit1').populate('pictures.benefit2').populate('pictures.benefit3').populate('pictures.qualification').populate('teamList').sort({createdAt: -1}).exec(function(err, resultCampaign){
+    campaignModel.find(query).populate('seminarListMarksimos').populate('pictures.listCover').populate('pictures.firstCover').populate('pictures.benefit1').populate('pictures.benefit2').populate('pictures.benefit3').populate('pictures.qualification').populate('pictures.process').populate('teamList').sort({createdAt: -1}).exec(function(err, resultCampaign){
 
         if(err){
             next(err);
@@ -303,7 +303,7 @@ exports.searchCampaign = function(req, res, next){
             return res.status(200).send(resultCampaign);
 
         });
-    })
+    });
 };
 
 
