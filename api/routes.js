@@ -58,7 +58,7 @@ apiRouter.get('/admin', function(req, res, next){
 
 /**********     Routes for rendering templates E4E Website     **********/
 
-apiRouter.get('/e4e', function(req, res, next){
+apiRouter.get('/e4e', auth.authLoginToken({successRedirect: '/e4e/campaigns'}), function(req, res, next){
     res.render('b2c/registration/indexreg.ejs', {title : 'Welcome to HCD E4E | HCD Learning'});
 });
 
@@ -79,7 +79,7 @@ apiRouter.get('/e4e/profile', auth.authLoginToken({failureRedirect: '/e4e/login'
     res.render('b2c/profile.ejs', {title:'E4E User Home | HCD Learning'});
 });
 
-apiRouter.get('/e4e/campaigns/',  campaignController.campaignListPage);
+apiRouter.get('/e4e/campaigns',  campaignController.campaignListPage);
 apiRouter.get('/e4e/campaign/:campaignId', auth.authLoginToken({failureRedirect: '/e4e/login'}), auth.authRole(userRoleModel.right.marksimos.studentLogin, {failureRedirect: '/e4e/login'}), campaignController.campaignSingleInfoPage);
 
 
