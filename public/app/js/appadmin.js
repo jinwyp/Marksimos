@@ -682,15 +682,12 @@
         };
 
         $scope.showEditCampaignMenu = function(campaign) {
-            console.log(campaign);
-
             $scope.data.newCampaign.id = campaign._id;
             $scope.data.newCampaign.name = campaign.name;
             $scope.data.newCampaign.description = campaign.description;
             $scope.data.newCampaign.location = campaign.location;
             $scope.data.newCampaign.matchDate = campaign.matchDate;
             $scope.data.newCampaign.activated = campaign.activated;
-
 
 
             $scope.data.newCampaign.firstCoverBackgroundColor = campaign.pictures.firstCoverBackgroundColor || '';
