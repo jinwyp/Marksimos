@@ -4,7 +4,7 @@
 @import "compass/utilities/general/clearfix";
 
 $color_white: #ffffff;
-$color_profile_detail_title: #959595;
+$color_profile_detail_title: #797978;
 $color_profile_tip: #d9d9d9;
 $color_register_button: #c42e0d;
 $color_register_button_border: #7e200b;
@@ -813,8 +813,8 @@ $lineHeight_button: 1.8;
   	ul, li {
 		list-style: none;
 		padding-left: 0;
-		background-color: #B4B4B4;
-		color: $color_white;
+		background-color: #e5e5e4;
+		color: $color_profile_detail_title;
 	}
 	.avatar {
 		width: 100%;
@@ -826,13 +826,9 @@ $lineHeight_button: 1.8;
 		line-height: 2.5;
 		position: relative;
 	}
-	.upload-avatar-button {
-		background-color: #741F01;
-		color: $color_white;
-		cursor: pointer;
-	}
 	.profile-nav {cursor: pointer;}
 	.selected {
+		color: $color_white;
 		background-color: $color_profile_detail_title;
 	}
 }
@@ -916,6 +912,7 @@ $lineHeight_button: 1.8;
 			float: right;
 			padding-top: 3px;
 			color: #0480CB;
+			cursor: pointer;
 		}
 	}
 	.profile-button-container {
