@@ -63,6 +63,7 @@
         };
 
         $scope.data = {
+            cgiStatus : {status:true},
             currentUser: null,
 
             newDistributor: {
@@ -428,8 +429,7 @@
             },
 
             getCgiStatus: function() {
-                Admin.getCgiStatus().success(function(data) {
-                    console.log(data);
+                Admin.getCgiStatus().success(function(data, status, headers, config) {
                     $scope.data.cgiStatus = data.status;
                 }).error(function(data, status, headers, config) {
                    console.log(data);
