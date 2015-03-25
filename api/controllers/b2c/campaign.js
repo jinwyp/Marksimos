@@ -16,7 +16,7 @@ var fileUploadModel = require('../../models/user/fileupload.js');
 
 exports.campaignListPage = function(req, res, next){
 
-    campaignModel.find({ activated: true}).populate('seminarListMarksimos').populate('teamList').populate('pictures.listCover').populate('pictures.firstCover').populate('pictures.benefit1').populate('pictures.benefit2').populate('pictures.benefit3').populate('pictures.qualification').sort({createdAt: -1}).execQ().then(function(resultCampaign){
+    campaignModel.find({ activated: true}).populate('seminarListMarksimos').populate('teamList').populate('pictures.listCover').populate('pictures.firstCover').populate('pictures.benefit1').populate('pictures.benefit2').populate('pictures.benefit3').populate('pictures.qualification').populate('pictures.process').sort({createdAt: -1}).execQ().then(function(resultCampaign){
         if(resultCampaign.length == 0){
             return res.status(400).send( {message: "campaign doesn't exist."});
         }
@@ -49,7 +49,7 @@ exports.campaignSingleInfoPage = function(req, res, next){
         return res.status(400).send( {message: validationErrors} );
     }
 
-    campaignModel.findOne({_id: req.params.campaignId, activated: true}).populate('seminarListMarksimos').populate('teamList').populate('pictures.listCover').populate('pictures.firstCover').populate('pictures.benefit1').populate('pictures.benefit2').populate('pictures.benefit3').populate('pictures.qualification').execQ().then(function(resultCampaign){
+    campaignModel.findOne({_id: req.params.campaignId, activated: true}).populate('seminarListMarksimos').populate('teamList').populate('pictures.listCover').populate('pictures.firstCover').populate('pictures.benefit1').populate('pictures.benefit2').populate('pictures.benefit3').populate('pictures.qualification').populate('pictures.process').execQ().then(function(resultCampaign){
         if(!resultCampaign){
             return res.status(400).send( {message: "campaign doesn't exist."});
         }
@@ -80,7 +80,7 @@ exports.campaignSingleInfo = function(req, res, next){
         return res.status(400).send( {message: validationErrors} );
     }
 
-    campaignModel.findOne({_id: req.params.campaignId, activated: true}).populate('seminarListMarksimos').populate('teamList').populate('pictures.listCover').populate('pictures.firstCover').populate('pictures.benefit1').populate('pictures.benefit2').populate('pictures.benefit3').populate('pictures.qualification').lean().execQ().then(function(resultCampaign){
+    campaignModel.findOne({_id: req.params.campaignId, activated: true}).populate('seminarListMarksimos').populate('teamList').populate('pictures.listCover').populate('pictures.firstCover').populate('pictures.benefit1').populate('pictures.benefit2').populate('pictures.benefit3').populate('pictures.qualification').populate('pictures.process').lean().execQ().then(function(resultCampaign){
         if(!resultCampaign){
             return res.status(400).send( {message: "campaign doesn't exist."});
         }
