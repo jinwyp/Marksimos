@@ -483,7 +483,8 @@
 
             <section class="content" ng-if="css.leftmenu==51">
                 <h2 class="page-header">Seminar Management
-                    <span>{{data.cgiStatus ? "(CGI connected)" : "(CGI disconnected)"}}</span>
+                    <span ng-show="data.cgiStatus" class="text-green">(CGI connected)</span>
+                    <span ng-hide="data.cgiStatus" class="text-red">(CGI disconnected)</span>
                 </h2>
 
                 <div class="row" >
