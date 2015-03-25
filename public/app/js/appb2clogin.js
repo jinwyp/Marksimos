@@ -19,8 +19,7 @@
 
 
     /********************  Create New Module For Controllers ********************/
-    angular.module('b2clogin', ['pascalprecht.translate', 'marksimos.config', 'marksimos.commoncomponent', 'marksimos.websitecomponent',
-        'marksimos.model', 'marksimos.filter', 'mgcrea.ngStrap', 'ngAnimate', 'angularFileUpload']);
+    angular.module('b2clogin', ['pascalprecht.translate', 'b2c.config', 'marksimos.commoncomponent', 'marksimos.websitecomponent', 'marksimos.model', 'marksimos.filter', 'mgcrea.ngStrap', 'ngAnimate', 'angularFileUpload']);
 
 
 
@@ -375,6 +374,106 @@
 
         app.init();
 
+    }]);
+
+    angular.module('b2clogin').controller('campaignlistController', ['Student', '$alert', '$translate', function(Student, $alert, $translate) {
+        /* jshint validthis: true */
+        var vm = this;
+
+        vm.css = {};
+
+        vm.currentUser = {};
+
+
+        /**********  Event Center  **********/
+
+
+
+        /**********  Function Declarations  **********/
+
+
+
+
+        var app = {
+            init : function(){
+                this.getUserInfo();
+            },
+            reRun : function(){
+
+            },
+            getUserInfo : function(){
+                return Student.getStudent().then(function(result) {
+                    vm.currentUser = result.data;
+                }).catch(function(err) {
+                    console.log('load student info failed');
+                });
+            }
+        };
+
+        app.init();
+    }]);
+
+
+    angular.module('b2clogin').controller('campaignController', ['Student', '$modal', '$translate', '$location', '$anchorScroll', '$q', function(Student, $modal, $translate, $location, $anchorScroll, $q) {
+        /* jshint validthis: true */
+        var vm = this;
+
+        vm.css = {};
+
+        vm.currentUser = {};
+
+        vm.campaignId = $location.absUrl().split('/');
+        vm.campaignId = vm.campaignId[vm.campaignId.length - 1].substr(0, 24);
+        /**********  Event Center  **********/
+
+        vm.clickStudentEnter = studentEnter;
+
+
+
+        /**********  Function Declarations  **********/
+        function studentEnter() {
+            if (vm.css.hasEntered) return;
+            var hasTeam = vm.currentUser && vm.currentUser.team;
+
+            if (hasTeam) {
+
+                Student.addTeamToCampaign({
+                    username: vm.currentUser.username,
+                    campaignId: vm.campaignId
+                }).then(function() {
+                    $modal({container: 'body', template: 'campaign-modal-enter-success.html'});
+                });
+            } else {
+                $modal({container: 'body', template: 'campaign-modal-enter-tip-complete-info.html'});
+            }
+        }
+
+
+
+        var app = {
+            init : function(){
+                this.getUserInfo();
+                $anchorScroll();
+            },
+            reRun : function(){
+
+            },
+            getUserInfo : function(){
+                $q.all([Student.getCampaign(vm.campaignId), Student.getStudent()]).then(function(results) {
+                    vm.campaign = results[0].data;
+                    vm.currentUser = results[1].data;
+
+                    vm.css.hasEntered = vm.campaign.teamList && vm.campaign.teamList.some(function(team) {
+                        return team._id == vm.currentUser.team._id;
+                    });
+                }).catch(function(err) {
+                    console.log('load student info failed');
+                    console.log(err);
+                });
+            }
+        };
+
+        app.init();
     }]);
 
 

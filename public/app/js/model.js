@@ -119,6 +119,14 @@
                     passwordOld: passwordOld,
                     passwordNew: passwordNew
                 });
+            },
+
+            addTeamToCampaign: function(data) {
+                return $http.post(apiPathB2C + 'campaigns/teams', data);
+            },
+
+            getCampaign: function(id) {
+                return $http.get(apiPathB2C + 'campaigns/' + id);
             }
 
 
@@ -1289,7 +1297,9 @@
             removeStudentFromSeminar : function(postdata){
                 return $http.post(apiAdminPath + 'remove_student_from_seminar', postdata);
             },
-
+            getCgiStatus: function(){
+                return $http.get(apiAdminPath + 'delphi_cgi');
+            },
 
 
             getAllCompanyDecisionsOfAllPeriods : function(seminarId){

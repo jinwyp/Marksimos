@@ -1,9 +1,9 @@
 <% include include/headcss.ejs %>
 
 
-<body ng-app="b2clogin" ng-controller="profileController as profile">
+<body ng-app="b2clogin" ng-controller="campaignController as campaign" class="campaign-body" ng-cloak>
 
-<b2c-header></b2c-header>
+<b2c-header currentuser="campaign.currentUser"></b2c-header>
 
 <nav class="campaign-nav">
     <div class="center-block nav-container">
@@ -29,22 +29,62 @@
         </ul>
     </div>
 </nav>
-<div class="campaign-banner">
-    <img>
+<div class="campaign-banner text-center" style="background-color:<%= campaign.pictures.firstCoverBackgroundColor %> ">
+    <img ng-src="/{{campaign.campaign.pictures.firstCover.path}}">
 </div>
 <div class="container-fluid campaign-main">
     <div id="enter" class="center-block campaign-enter">
-        <button class="enter-button">马上报名</button>
-        <button class="introduce">游戏介绍</button>
-        <span class="enter-count">已有<strong>99999</strong>人参加</span>
+        <button ng-if="!campaign.css.hasEntered" class="enter-button" ng-click="campaign.clickStudentEnter()">马上报名</button>
+        <button ng-if="campaign.css.hasEntered" class="already-entered-button" ng-click="campaign.clickStudentEnter()">您已报名</button>
+
+        <a href="/cn/marksimos.html" target="_blank" class="introduce">游戏介绍</a>
+        <span class="enter-count">已有<strong>{{campaign.campaign.totalMembers}}</strong>人参加</span>
     </div>
+    <!-- enter success template -->
+    <script type="text/ng-template" id="campaign-modal-enter-success.html">
+        <div class="modal enter-success campaign-modal">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        &nbsp;
+                        <button class="close" ng-click="$hide()"><span>×</span></button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="center-block">
+                            <h2>报名成功！</h2>
+                            <p>快来体验游戏吧</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </script>
+    <!-- enter failed template. to complete team info -->
+    <script type="text/ng-template" id="campaign-modal-enter-tip-complete-info.html">
+        <div class="modal enter-tip-complete-info campaign-modal">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <span>温馨提示</span>
+                        <button class="close" ng-click="$hide()"><span>×</span></button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="center-block">
+                            <h3>请先完成你的队伍信息</h3>
+                            <div>
+                                <button>完善信息</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </script>
+
     <div id="schedules" class="center-block campaign-schedules">
         <h3 class="text-center">大赛赛程</h3>
         <ul class="schedule-list text-center">
-            <li><a>www.whateverwhoru.com<span>点击进入</span></a></li>
-            <li><a>www.whateverwhoru.com<span>点击进入</span></a></li>
-            <li><a>www.whateverwhoru.com<span>点击进入</span></a></li>
-            <li><a>www.whateverwhoru.com<span>点击进入</span></a></li>
+            <li ng-repeat="seminar in campaign.campaign.seminarListMarksimos"><a href="/marksimos/intro">{{seminar.seminarId + seminar.description}}<span>点击进入</span></a></li>
         </ul>
     </div>
     <div id="gains" class="row center-block campaign-gains">
@@ -53,23 +93,23 @@
             <ul class="gain-list row">
                 <li class="col-xs-4">
                     <div class="gain center-block">
-                        <img>
-                        <h4 class="text-center">a title</h4>
-                        <p>bla bla bla bla bla bla bla bla bla bla bla bla</p>
+                        <img ng-src="/{{campaign.campaign.pictures.benefit1.path}}">
+                        <!--<h4 class="text-center">a title</h4>
+                        <p>bla bla bla bla bla bla bla bla bla bla bla bla</p>-->
                     </div>
                 </li>
                 <li class="col-xs-4">
                     <div class="gain center-block">
-                        <img>
-                        <h4 class="text-center">a title</h4>
-                        <p>bla bla bla bla bla bla bla bla bla bla bla bla</p>
+                        <img ng-src="/{{campaign.campaign.pictures.benefit2.path}}">
+                        <!--<h4 class="text-center">a title</h4>
+                        <p>bla bla bla bla bla bla bla bla bla bla bla bla</p>-->
                     </div>
                 </li>
                 <li class="col-xs-4">
                     <div class="gain center-block">
-                        <img>
-                        <h4 class="text-center">a title</h4>
-                        <p>bla bla bla bla bla bla bla bla bla bla bla bla</p>
+                        <img ng-src="/{{campaign.campaign.pictures.benefit2.path}}">
+                        <!--<h4 class="text-center">a title</h4>
+                        <p>bla bla bla bla bla bla bla bla bla bla bla bla</p>-->
                     </div>
                 </li>
             </ul>
@@ -80,7 +120,7 @@
             <h3 class="text-center">加入条件</h3>
             <div class="row">
                 <div class="col-xs-6 text-right">
-                    <img>
+                    <img ng-src="/{{campaign.campaign.pictures.qualification.path}}">
                 </div>
                 <div class="col-xs-5 col-xs-offset-1">
                     <h4>乐于分享</h4>
@@ -100,7 +140,7 @@
         <h3 class="text-center">获胜队伍</h3>
         <div class="center-block">
             <div class="col-xs-4 text-center">
-                <span>第一轮结果</span>
+                <span container="body" data-animation="am-fade-and-scale" data-placement="center" bs-modal="modal" data-template="campaign-modal-winner.html">第一轮结果</span>
             </div>
             <div class="col-xs-4 text-center">
                 <span>第二轮结果</span>
@@ -110,9 +150,77 @@
             </div>
         </div>
     </div>
+    <!-- winner template -->
+    <script type="text/ng-template" id="campaign-modal-winner.html">
+        <div class="modal winner-team campaign-modal">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <span>获胜团队</span>
+                        <button class="close" ng-click="$hide()"><span>×</span></button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="winner-icon center-block"></div>
+                        <div class="winner-text text-center center-block">第一轮优胜团队为</div>
+                        <table class="table table-bordered">
+                            <tbody>
+                            <tr>
+                                <td>战队名称</td>
+                                <td>战队名称</td>
+                                <td>战队名称</td>
+                            </tr>
+                            <tr>
+                                <td>成员</td>
+                                <td>成员</td>
+                                <td>成员</td>
+                            </tr>
+                            <tr>
+                                <td>成员</td>
+                                <td>成员</td>
+                                <td>成员</td>
+                            </tr>
+                            <tr>
+                                <td>成员</td>
+                                <td>成员</td>
+                                <td>成员</td>
+                            </tr>
+                            </tbody>
+                        </table>
+                        <div class="show-score text-center">查看我的得分</div>
+                        <div class="scores text-center">
+                            <div>第一轮得分：<i>100</i></div>
+                            <div>第二轮得分：<i>100</i></div>
+                            <div>第三轮得分：<i>100</i></div>
+                        </div>
+                        <div></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </script>
 </div>
 <div class="campaign-footer">
 
 </div>
+
+<!-- browsers compatibility tip template -->
+<script type="text/ng-template" id="campaign-modal-compatibility.html">
+    <div class="modal enter-tip-compatibility campaign-modal">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <span>配置提示</span>
+                    <button class="close" ng-click="$hide()"><span>×</span></button>
+                </div>
+                <div class="modal-body">
+                    <div class="center-block">
+                        <img alt="Browser Compatibility">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</script>
+
 
 <% include ./include/footerscriptlogin.ejs %>

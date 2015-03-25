@@ -23,11 +23,20 @@
 
 
 
-                <div class="b2c-user pull-right" ng-if="!showlogin">
-                    <ul>
-                        <li><img ng-src="/{{currentuser.avatar.path}}" alt="avatar"/></li>
-                        <li><span ng-click="clickLogout()">退出</span></li>
-                    </ul>
+                <div class="b2c-user pull-right" ng-if="!showlogin && currentuser">
+                    <button class="btn avatar" type="button" data-animation="am-flip-x" bs-dropdown="dropdown" data-template="dropdown-tpl.html" data-placement="bottom-left">
+                        <img ng-src="/{{currentuser.avatar.path}}" alt="avatar"/>
+                        <!--<span class="caret"></span>-->
+                    </button>
+                    <span class="glyphicon glyphicon-chevron-down" aria-hidden="true"></span>
+
+                    <script type="text/ng-template" id="dropdown-tpl.html">
+                        <ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu1">
+                            <li role="presentation"><a role="menuitem" tabindex="-1" href="/e4e/profile" >个人信息</a></li>
+                            <li role="presentation"><a role="menuitem" tabindex="-1" href="#" ng-click="clickLogout()">退出登录</a></li>
+                        </ul>
+                    </script>
+
                 </div>
 
 

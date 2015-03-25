@@ -31,10 +31,12 @@ var paths = {
     sassSourceFiles: './public/app/css/sass/*.scss',
     cssSourceFiles: './public/app/css/stylesheets/marksimosmain.css',
     cssOutputPath: './public/app/css/stylesheets',
+    cssDistPath: './public/app/dist',
     sasspath: 'public/app/css/sass',  // removed the dot-slash from here  './public/app/css/sass' wrong format
     imagespath : './public/app/css/images',
 
-    cssSourcePath: ['./public/app/css/stylesheets/screen.css', './public/libs/bootstrap/dist/css/bootstrap.min.css', './public/app/css/stylesheets/marksimosmain.css', './public/app/css/stylesheets/print.css', './public/app/css/stylesheets/ie.css', './public/libs/nvd3/nv.d3.css', './public/libs/angular-notify/dist/angular-notify.css'],
+    cssSourcePathMarksimos: ['./public/app/css/stylesheets/screen.css', './public/libs/bootstrap/dist/css/bootstrap.min.css', './public/app/css/stylesheets/marksimosmain.css', './public/app/css/stylesheets/print.css', './public/app/css/stylesheets/ie.css', './public/libs/nvd3/nv.d3.css', './public/libs/angular-notify/dist/angular-notify.css'],
+    cssSourcePathB2C: [ './public/libs/bootstrap/dist/css/bootstrap.min.css', './public/libs/angular-motion/dist/angular-motion.min.css', './public/app/css/stylesheets/b2cmain.css'],
     unit_test: './api/test/marksimos/*',
     scenario_testAdminCreateSeminar: './api/test/marksimos/scenario/admincreateseminar.js',
     scenario_testAdminRunSeminarNextRound: './api/test/marksimos/scenario/adminrunseminarnextround.js',
@@ -99,15 +101,25 @@ gulp.task('compass', function() {
 
 
 // 合并css 并压缩
-gulp.task('minifycss', function() {
-    gulp.src(paths.cssSourcePath)
-        .pipe(concat('app.min.css'))
+gulp.task('minifycssMarksimos', function() {
+    gulp.src(paths.cssSourcePathMarksimos)
+        .pipe(concat('appmarksimos.min.css'))
         .pipe(minifyCSS({
             keepBreaks:false,
             keepSpecialComments:0 //* for keeping all (default), 1 for keeping first one only, 0 for removing all
         }))
-        .pipe(gulp.dest(paths.cssOutputPath))
+        .pipe(gulp.dest(paths.cssDistPath))
 });
+gulp.task('minifycssB2C', function() {
+    gulp.src(paths.cssSourcePathB2C)
+        .pipe(concat('appb2c.min.css'))
+        .pipe(minifyCSS({
+            keepBreaks:false,
+            keepSpecialComments:0 //* for keeping all (default), 1 for keeping first one only, 0 for removing all
+        }))
+        .pipe(gulp.dest(paths.cssDistPath))
+});
+
 
 
 
@@ -167,7 +179,12 @@ gulp.task('nodemonraven', function () {
         env: { 'NODE_ENV': 'raven' }
     });
 });
-
+gulp.task('nodemonken', function () {
+  nodemon({
+    script: 'app.js',
+    env: { 'NODE_ENV': 'ken' }
+  });
+});
 gulp.task('nodemonjin', function () {
     nodemon({
         script: 'app.js',
@@ -197,7 +214,8 @@ gulp.task('nodemonyuekecheng', function () {
 gulp.task('watch', function() {
     gulp.watch(paths.angularTemplates, ['templates']);
     gulp.watch(paths.sassSourceFiles, ['compass']);
-    gulp.watch(paths.cssSourceFiles, ['minifycss']);
+    gulp.watch(paths.cssSourceFiles, ['minifycssMarksimos']);
+    gulp.watch(paths.cssSourceFiles, ['minifycssB2C']);
     gulp.watch(paths.javascript, ['jscompress']);
 
 //    var server = livereload();
@@ -279,10 +297,11 @@ gulp.task('testadminrr', function() {
 gulp.task('default', ['nodemonludwik', 'watchdev']);
 
 //gulp.task('jin', ['mongo', 'browser-sync', 'nodemonjin', 'watch']);
-gulp.task('jin', [ 'compass', 'templates', 'minifycss', 'nodemonjin', 'watchdev']);
-gulp.task('jinco', ['compass', 'templates', 'minifycss', 'nodemonjinlocal', 'watchdev']);
-gulp.task('jinpro', ['compass', 'templates', 'minifycss', 'jscompress', 'nodemonjin', 'watch']);
-gulp.task('yuekecheng', [ 'compass', 'templates', 'minifycss',  'nodemonyuekecheng', 'watchdev']);
+gulp.task('ken', [ 'compass', 'templates', 'nodemonken', 'watchdev']);
+gulp.task('jin', [ 'compass', 'templates', 'nodemonjin', 'watchdev']);
+gulp.task('jinco', ['compass', 'templates', 'nodemonjinlocal', 'watchdev']);
+gulp.task('jinpro', ['compass', 'templates', 'minifycssMarksimos', 'minifycssB2C', 'jscompress', 'nodemonjin', 'watch']);
+gulp.task('yuekecheng', [ 'compass', 'templates', 'nodemonyuekecheng', 'watchdev']);
 
 
 

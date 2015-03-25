@@ -16,7 +16,7 @@ var fileUploadModel = require('../../models/user/fileupload.js');
 
 exports.campaignListPage = function(req, res, next){
 
-    campaignModel.find({ activated: true}).populate('seminarListMarksimos').populate('pictures.listCover').populate('pictures.firstCover').populate('pictures.benefit1').populate('pictures.benefit2').populate('pictures.benefit3').populate('pictures.qualification').populate('teamList').sort({createdAt: -1}).execQ().then(function(resultCampaign){
+    campaignModel.find({ activated: true}).populate('seminarListMarksimos').populate('teamList').populate('pictures.listCover').populate('pictures.firstCover').populate('pictures.benefit1').populate('pictures.benefit2').populate('pictures.benefit3').populate('pictures.qualification').sort({createdAt: -1}).execQ().then(function(resultCampaign){
         if(resultCampaign.length == 0){
             return res.status(400).send( {message: "campaign doesn't exist."});
         }
@@ -54,6 +54,12 @@ exports.campaignSingleInfoPage = function(req, res, next){
             return res.status(400).send( {message: "campaign doesn't exist."});
         }
 
+        var totalMembers = 0;
+        resultCampaign.teamList.forEach(function(team){
+            totalMembers = totalMembers + team.memberList.length + 1;
+        });
+        resultCampaign.totalMembers = totalMembers;
+
         return res.render('b2c/campaign.ejs',{
             title : 'HCD E4E Campaign | HCD Learning',
             campaign: resultCampaign
@@ -65,6 +71,34 @@ exports.campaignSingleInfoPage = function(req, res, next){
 
 };
 
+
+exports.campaignSingleInfo = function(req, res, next){
+
+    var validationErrors = campaignModel.campaignIdValidations(req);
+
+    if(validationErrors){
+        return res.status(400).send( {message: validationErrors} );
+    }
+
+    campaignModel.findOne({_id: req.params.campaignId, activated: true}).populate('seminarListMarksimos').populate('teamList').populate('pictures.listCover').populate('pictures.firstCover').populate('pictures.benefit1').populate('pictures.benefit2').populate('pictures.benefit3').populate('pictures.qualification').lean().execQ().then(function(resultCampaign){
+        if(!resultCampaign){
+            return res.status(400).send( {message: "campaign doesn't exist."});
+        }
+
+        var totalMembers = 0;
+        resultCampaign.teamList.forEach(function(team){
+            totalMembers = totalMembers + team.memberList.length + 1;
+        });
+
+        resultCampaign.totalMembers = totalMembers;
+
+        return res.status(200).send(resultCampaign);
+
+    }).fail(function(err){
+        next(err);
+    }).done();
+
+};
 
 
 
@@ -86,6 +120,7 @@ exports.addCampaign = function(req, res, next){
         location    : req.body.location || '',
         matchDate   : req.body.matchDate || '',
         creator     : req.user._id,
+        pictures     : {firstCoverBackgroundColor:'#FFFFFF'},
         activated   : req.body.activated
 
     });
@@ -379,7 +414,7 @@ exports.addTeamToCampaign = function(req, res, next){
 
     if(req.user.role === userRoleModel.roleList.student.id && req.user.username !== req.body.username ){
         // For student role
-        return res.status(400).send( {message: 'User only can join campaign with own team'} );
+        return res.status(400).send( {message: 'Role student only can join campaign with own team'} );
     }
 
     var dataTeam ;

@@ -78,6 +78,7 @@ unit.xml
 # Visual Studio 2013
 marksimos.sln
 marksimos.v12.suo
+
 Scripts/*
 marksimos.njsproj
 .ntvs_analysis.dat
@@ -85,3 +86,6 @@ obj/Debug/marksimos.njsproj.FileListAbsolute.txt
 obj/Debug/marksimos.njsprojResolveAssemblyReference.cache
 bin/Microsoft.NodejsTools.WebRole.dll
 
+
+# CSS
+public/app/css/stylesheets/*.css

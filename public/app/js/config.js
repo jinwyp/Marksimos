@@ -13,7 +13,7 @@
     'use strict';
 
     angular.module('marksimos.config', ['LocalStorageModule']);
-
+    angular.module('b2c.config', ['LocalStorageModule']);
 
 
     /********************  解决提交请求$http 时出现 "Provisional headers are shown angular"(实际上并没有采用,而是后端出的问题导致了该问题) ********************/
@@ -41,6 +41,28 @@
     }]);
 
 
+
+    angular.module('b2c.config').factory('b2cInterceptor', ['$log', '$q', '$location', 'localStorageService', function($log, $q, $location, localStorageService) {
+        //$log.debug('$log is here to show you that this is a regular factory with injection');
+
+        return {
+            'request': function (config) {
+                config.headers = config.headers || {};
+                if (localStorageService.get('logintoken')) {
+                    config.headers['x-access-token'] = localStorageService.get('logintoken');
+                }
+                return config;
+            },
+            'responseError': function(response) {
+                //console.log(response);
+                if(response.status === 401 || response.status === 403) {
+                    $location.path('/e4e/login');
+                }
+                return $q.reject(response);
+            }
+        };
+    }]);
+
     //angular.module('marksimos.config').config(['$httpProvider', function ($httpProvider) {
     //    //Reset headers to avoid OPTIONS request (aka preflight)
     //    $httpProvider.defaults.headers.common = {};
@@ -55,7 +77,6 @@
         localStorageServiceProvider.setStorageType('localStorage');  // Or sessionStorage
         localStorageServiceProvider.setNotify(true, true);
 
-
         $httpProvider.interceptors.push('marksimosInterceptor');
 
         $locationProvider.html5Mode(false).hashPrefix('!');
@@ -63,5 +84,15 @@
     }]);
 
 
+    angular.module('b2c.config').config(['$httpProvider', 'localStorageServiceProvider', '$locationProvider', function ($httpProvider, localStorageServiceProvider, $locationProvider ) {
+        localStorageServiceProvider.setPrefix('hcdlearning');
+        localStorageServiceProvider.setStorageType('localStorage');  // Or sessionStorage
+        localStorageServiceProvider.setNotify(true, true);
+
+        $httpProvider.interceptors.push('b2cInterceptor');
+
+        $locationProvider.html5Mode(false).hashPrefix('!');
+
+    }]);
 
 }());

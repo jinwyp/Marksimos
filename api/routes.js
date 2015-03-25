@@ -202,6 +202,7 @@ apiRouter.post('/e4e/api/team', auth.authLoginToken(), auth.authRole(userRoleMod
 apiRouter.post('/e4e/api/team/student',  auth.authLoginToken(), auth.authRole(userRoleModel.right.marksimos.teamInfoSingleGet), studentController.addStudentToTeam);
 apiRouter.delete('/e4e/api/team/student/:student_id',  auth.authLoginToken(), auth.authRole(userRoleModel.right.marksimos.teamInfoSingleCUD), studentController.removeStudentToTeam);
 
+apiRouter.get('/e4e/api/campaigns/:campaignId', auth.authLoginToken(), auth.authRole(userRoleModel.right.marksimos.campaignSingleGet), campaignController.campaignSingleInfo);
 apiRouter.post('/e4e/api/campaigns/teams', auth.authLoginToken(), auth.authRole(userRoleModel.right.marksimos.campaignSingleGet), campaignController.addTeamToCampaign);
 
 
@@ -308,6 +309,8 @@ apiRouter.post('/marksimos/api/admin/remove_student_from_seminar', auth.authLogi
 
 apiRouter.post('/marksimos/api/admin/seminar/:seminar_id/init', auth.authLoginToken(), auth.authRole(userRoleModel.right.marksimos.seminarInit), initController.init());
 apiRouter.post('/marksimos/api/admin/seminar/:seminar_id/runsimulation', auth.authLoginToken(), auth.authRole(userRoleModel.right.marksimos.seminarRunRound), initController.runSimulation());
+
+apiRouter.get('/marksimos/api/admin/delphi_cgi', auth.authLoginToken(), auth.authRole(userRoleModel.right.marksimos.seminarInit), initController.getCgiStatus);
 
 
 

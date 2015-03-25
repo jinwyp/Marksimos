@@ -10,7 +10,7 @@ $color_register_button: #c42e0d;
 $color_register_button_border: #7e200b;
 $color_register_button_hover: #7e200b;
 $color_register_button_hover_border: #ca3413;
-
+$color_header_dropdown_button_hover: #7f1a03;
 
 
 
@@ -141,17 +141,44 @@ body{
 		width: 200px;
 		height: 82px;
 		overflow: hidden;
+		margin-right: 45px;
 
-		ul li{
-			float: left;
-			list-style-type: none;
-			padding: 18px 10px 0px 10px;
+		.glyphicon{
+			top:8px;
 			color: white;
 		}
 
+		.dropdown-menu {
+			width: 100px;
+			min-width: 100px;
+			padding: 0;
+			margin-top: 10px;
+			background-color: $color_register_button;
+			li {
+				padding: 5px 5px 5px 5px;
+
+				a {
+					text-align: center;
+					padding: 2px 10px;
+					color: white;
+					&:hover{
+						background-color:$color_header_dropdown_button_hover;
+					}
+				}
+			}
+		}
+
 		img {
-			width: 50px;
-			height: 50px;
+			width: 70px;
+			height: 70px;
+		}
+
+		.avatar {
+			border-radius: 40px ;
+			width: 70px;
+			height: 70px;
+			padding: 0;
+			margin-top: 7px;
 		}
 	}
 
@@ -1031,7 +1058,7 @@ $lineHeight_button: 1.8;
 	.campaign-enter {
 		padding: 25px 0;
 		border-bottom: 1px solid #888;
-		button {
+		button, .introduce {
 			width: 144px;
 			height: 38px;
 			font-size: 18px;
@@ -1042,11 +1069,20 @@ $lineHeight_button: 1.8;
 			font-weight: bold;
 			@include box-shadow($color_register_button_border 0px 2px 4px);
 		}
+		.already-entered-button{
+			@include box-shadow(#888 0px 2px 4px)
+		}
 		.introduce {
+			display: inline-block;
 			color: black;
 			font-weight: normal;
 			border: 2px #888 solid;
 			background-color: $color_white;
+			padding: 1px 6px;
+			vertical-align: middle;
+			text-align: center;
+			line-height: 30px;
+			text-decoration: none;
 		}
 		.enter-count {
 			color: #888;
@@ -1093,6 +1129,7 @@ $lineHeight_button: 1.8;
 			}
 		}
 	}
+
 	.gain-list {
 		.gain {
 			width: 170px;
@@ -1101,8 +1138,6 @@ $lineHeight_button: 1.8;
 			margin: 20px 0;
 			width: 170px;
 			height: 170px;
-			border: solid 3px #3E7DDF;
-			@include border-radius(50%);
 		}
 	}
 	.enter-condition {
@@ -1126,7 +1161,7 @@ $lineHeight_button: 1.8;
 		}
 	}
 	.campaign-process {
-		height: 300px; //todo remove this height
+		height: 300px;  //todo remove this height
 		background-color: #C0C0C0; // todo remove
 	}
 	.campaign-winner {
@@ -1154,6 +1189,127 @@ $lineHeight_button: 1.8;
 	}
 }
 
+// overwrite default bs style
+.campaign-body .modal-backdrop {
+	position: fixed;
+	bottom: 0;
+	z-index: 1040;
+}
+
+.campaign-modal .modal-dialog {
+	width:  549px;
+	.modal-content {
+		.modal-header {
+			color: $color_white;
+			background-color: #C42D0E;
+			>span {
+				font-size: 18px;
+				padding-left: 25px;
+			}
+			button {
+				@include border-radius(50%);
+				background-color: $color_white;
+				opacity: 1;
+				width: 28px;
+				height: 28px;
+				&:hover {
+					background-color: #EEE;
+				}
+				span {
+					position: relative;
+					top: -2px;
+					font-size: 25px;
+					color: #C42D0E;
+				}
+			}
+		}
+		@include border-radius(0);
+	}
+}
+
+.enter-success .modal-dialog {
+	.modal-body > div {
+		padding: 75px 0;
+		width: 400px;
+		* {padding-left: 215px;}
+	}
+}
+
+.enter-tip-complete-info .modal-body > div {
+	padding: 43px 0 75px;
+	width: 410px;
+	>* {
+		padding-left: 215px;
+	}
+	h3 {
+		font-size: 18px;
+	}
+	button {
+		color: $color_white;
+		font-size: 20px;
+		padding: 5px 54px;
+		border: none;
+		background-color: #B72909;
+		font-weight: bold;
+		@include box-shadow($color_register_button_border 0px 2px 4px);
+	}
+}
+
+.enter-tip-compatibility .modal-body > div{
+	width: 410px;
+	padding: 50px;
+	img {
+		width: 100%;
+		height: 100%;
+	}
+}
+
+.winner-team .modal-body {
+	font-weight: bold;
+	.winner-icon {
+		width: 180px;
+		height: 180px;
+
+		@include icon_b2c-sprite(b2c_winner);
+	}
+	.winner-text {
+		font-size: 17px;
+		background-color: #B92809;
+		color: $color_white;
+		font-weight: bold;
+		width: 220px;
+		line-height: 1.7;
+		padding-bottom: 2px;
+		margin-bottom: 33px;
+		margin-top: 20px;
+	}
+	table {
+		border-collapse: separate;
+		border-color: #555;
+		td {
+			padding-left: 25px;
+		}
+	}
+	.show-score {
+		color: #B92809;
+		font-size: 18px;
+	}
+	.scores {
+		margin: 10px 0;
+		padding: 14px;
+		background-color: #EFEFEF;
+		> div:not(:last-child) {
+			padding-bottom: 3px;
+		}
+		i {
+			font-style: normal;
+			text-decoration: underline;
+		}
+	}
+}
+
+
+
 /********************   campaign-list   ********************/
 .campaignlist-container {
 	&>div {
@@ -1169,6 +1325,10 @@ $lineHeight_button: 1.8;
 	}
 	div.center-block {
 		width: 890px;
+	}
+
+	.campaignlist-banner {
+		margin-top: 40px;
 	}
 	.header {
 		margin-top: 30px;
@@ -1224,10 +1384,10 @@ $lineHeight_button: 1.8;
 			color: $color_white;
 		}
 		img {
-			height: 120px; // todo remove
+			height: 120px;  // todo remove
 		}
 	}
-	.coach-list {
+	.coach-list { //todo to delete
 		padding-bottom: 40px;
 		.header::after {
 			width: 0;
@@ -1269,6 +1429,15 @@ $lineHeight_button: 1.8;
 	}
 }
 .campaignlist-footer {
-	height: 150px;
-	background-color: #7AC269
+	height: 181px;
+	background-color: #7AC269;
+	> div {
+		width: 1600px;
+		position: relative;
+	}
+	.join {
+		position: absolute;
+		left: 298px;
+		top: 59px;
+	}
 }

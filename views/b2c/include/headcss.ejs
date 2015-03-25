@@ -14,9 +14,14 @@
 
     <meta name="description" content="HCDlearning 合得国际 E4E 在线模拟商战">
 
+    <% if(settings.env == "production"){ %>
+    <link rel="stylesheet" href="/app/dist/appb2c.min.css">
+    <% } else{ %>
     <link rel="stylesheet" href="/libs/bootstrap/dist/css/bootstrap.min.css">
-    <link rel="stylesheet" href="/libs/angular-motion/dist/modules/fade.min.css">
+    <link rel="stylesheet" href="/libs/angular-motion/dist/angular-motion.min.css">
     <link rel="stylesheet" href="/app/css/stylesheets/b2cmain.css">
+    <% } %>
+
 
     <title> <%= title %> </title>
 

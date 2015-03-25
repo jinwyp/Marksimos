@@ -581,7 +581,7 @@ function prepareSKUTooltips(currentPeriodResult, perviousPeriodResult, SKUID){
     }
 
     function getTechnologyLevel(SKU){
-        if(!SKU.u_ps_RetailStocks){ return 1; }
+        if(!SKU.u_ps_RetailStocks){ return '/'; }
         if(SKU.u_ps_RetailStocks[consts.StocksMaxTotal].s_ps_Volume>0){
             return SKU.u_ps_RetailStocks[consts.StocksMaxTotal].s_Technology;
 
@@ -597,7 +597,7 @@ function prepareSKUTooltips(currentPeriodResult, perviousPeriodResult, SKUID){
     }
 
     function getIngredientsQuality(SKU){
-        if(!SKU.u_ps_RetailStocks){ return 1; }
+        if(!SKU.u_ps_RetailStocks){ return '/'; }
         if(SKU.u_ps_RetailStocks[consts.StocksMaxTotal].s_ps_Volume>0){
             return SKU.u_ps_RetailStocks[consts.StocksMaxTotal].s_IngredientsQuality;
 

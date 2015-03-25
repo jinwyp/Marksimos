@@ -63,6 +63,7 @@
         };
 
         $scope.data = {
+            cgiStatus : {status:true},
             currentUser: null,
 
             newDistributor: {
@@ -392,6 +393,7 @@
                         // Role Facilitator
                         app.getStudentsInit();
                         app.getSeminarInit();
+                        app.getCgiStatus();
                         app.getCampaignInit();
                         $scope.css.menuTabShow = [false, true, false, false, true, true, true];
                     }
@@ -423,6 +425,14 @@
                     $scope.data.students = data;
                 }).error(function(data, status, headers, config) {
                     console.log(data);
+                });
+            },
+
+            getCgiStatus: function() {
+                Admin.getCgiStatus().success(function(data, status, headers, config) {
+                    $scope.data.cgiStatus = data.status;
+                }).error(function(data, status, headers, config) {
+                   console.log(data);
                 });
             },
 
@@ -680,6 +690,8 @@
             $scope.data.newCampaign.location = campaign.location;
             $scope.data.newCampaign.matchDate = campaign.matchDate;
             $scope.data.newCampaign.activated = campaign.activated;
+
+
 
             $scope.data.newCampaign.firstCoverBackgroundColor = campaign.pictures.firstCoverBackgroundColor || '';
             $scope.data.newCampaign.pictures = campaign.pictures;
