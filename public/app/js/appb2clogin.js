@@ -441,10 +441,10 @@
                     username: vm.currentUser.username,
                     campaignId: vm.campaignId
                 }).then(function() {
-                    $modal({container: 'body', template: 'campaign-modal-enter-success.html'})
+                    $modal({container: 'body', template: 'campaign-modal-enter-success.html'});
                 })
             } else {
-                $modal({container: 'body', template: 'campaign-modal-enter-tip-complete-info.html'})
+                $modal({container: 'body', template: 'campaign-modal-enter-tip-complete-info.html'});
             }
         }
 
