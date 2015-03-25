@@ -179,8 +179,6 @@ exports.updateCampaign = function(req, res, next){
 
 exports.uploadCampaignPics = function(req, res, next){
 
-    console.log(req.body);
-
     var validationErrors = campaignModel.campaignIdValidations(req);
 
     if(validationErrors){
