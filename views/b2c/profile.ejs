@@ -74,8 +74,8 @@
                                     <input type="text" ng-model="profile.formData.firstName" name="firstName" id="firstName" class="form-control">
                                 </div>
                             </div>
-                            <!--<div class="row"><label for="firstName" class="col-md-3 text-right">用户名：</label><input type="text" name="name" id="name" class="col-md-7"></div>
-                            <div class="row"><label for="email" class="col-md-3 text-right">邮箱：</label><input type="text" id="email" name="email" class="col-md-7"></div>-->
+                            <!--<div class="row"><label for="firstName" class="col-md-3 text-right">用户名 :</label><input type="text" name="name" id="name" class="col-md-7"></div>
+                            <div class="row"><label for="email" class="col-md-3 text-right">邮箱 :</label><input type="text" id="email" name="email" class="col-md-7"></div>-->
                             <div class="form-group radio" ng-class="{'has-success':basicInfoForm.gender.$dirty&&basicInfoForm.gender.$valid, 'has-error':basicInfoForm.gender.$dirty&&basicInfoForm.gender.$invalid}">
                                 <label class="col-md-3 control-label  text-right">{{'ProfilePageBasicInfoGender' | translate}} :</label>
                                 <div class="col-xs-9" ng-if="!profile.css.formEditing">
@@ -111,14 +111,14 @@
                         <div class="profile-detail-title">安全信息<span class="profile-edit" ng-click="profile.clickEditProfile()">{{'ProfilePageEditButton' | translate}}</span></div>
                         <form name="securityInfoForm" class="form-horizontal" novalidate>
                             <div class="form-group" ng-class="{'has-success':securityInfoForm.oldPassword.$dirty&&securityInfoForm.oldPassword.$valid, 'has-error':securityInfoForm.oldPassword.$dirty&&securityInfoForm.oldPassword.$invalid}">
-                                <label for="oldPassword" class="control-label col-md-3 text-right">原始密码：</label>
+                                <label for="oldPassword" class="control-label col-md-3 text-right">原始密码 :</label>
                                 <div ng-if="profile.css.formEditing"  class="col-xs-5">
                                     <input type="password" ng-minlength="6" ng-maxlength="20" required ng-model="profile.formData.oldPassword" id="oldPassword" name="oldPassword" class="form-control">
                                 </div>
                                 <span class="col-xs-4 form-control-static err-msg" ng-if="securityInfoForm.oldPassword.$dirty&&(securityInfoForm.oldPassword.$error.required||securityInfoForm.oldPassword.$invalid)">请输入密码 6-20个字符!</span>
                             </div>
                             <div class="form-group" ng-class="{'has-success':securityInfoForm.newPassword.$dirty&&securityInfoForm.newPassword.$valid, 'has-error':securityInfoForm.newPassword.$dirty&&(securityInfoForm.newPassword.$invalid||profile.formData.oldPassword==profile.formData.newPassword)}">
-                                <label for="newPassword" class="control-label col-md-3 text-right">新密码：</label>
+                                <label for="newPassword" class="control-label col-md-3 text-right">新密码 :</label>
                                 <div ng-if="profile.css.formEditing" class="col-xs-5">
                                     <input type="password" required ng-minlength="6" ng-maxlength="20" ng-model="profile.formData.newPassword" id="newPassword" name="newPassword" class="form-control">
                                 </div>
@@ -126,7 +126,7 @@
                                 <span class="col-xs-4 form-control-static err-msg" ng-if="securityInfoForm.newPassword.$dirty&&!securityInfoForm.newPassword.$error.required&&(profile.formData.oldPassword==profile.formData.newPassword&&profile.formData.newPassword)">新密码不能与老密码相同!</span>
                             </div>
                             <div class="form-group" ng-class="{'has-success':securityInfoForm.rePassword.$dirty&&securityInfoForm.rePassword.$valid, 'has-error':securityInfoForm.rePassword.$dirty&&(securityInfoForm.rePassword.$invalid||profile.formData.rePassword!=profile.formData.newPassword)}">
-                                <label for="rePassword" class="control-label col-xs-3 text-right">再输入新密码：</label>
+                                <label for="rePassword" class="control-label col-xs-3 text-right">再输入新密码 :</label>
                                 <div ng-if="profile.css.formEditing" class="col-xs-5">
                                     <input  type="password" required ng-model="profile.formData.rePassword" id="rePassword" name="rePassword" class="form-control">
                                 </div>
@@ -147,7 +147,7 @@
                         <div class="profile-detail-title">学校信息<span class="profile-edit" ng-click="profile.clickEditProfile()">{{'ProfilePageEditButton' | translate}}</span></div>
                         <form name="schoolForm" class="form-horizontal">
                             <div class="form-group">
-                                <label for="school" class="control-label col-md-3 text-right">大学：</label>
+                                <label for="school" class="control-label col-md-3 text-right">大学 :</label>
                                 <div class="col-xs-5" ng-if="!profile.css.formEditing">
                                     <p class="form-control-static">{{profile.currentUser.organizationOrUniversity}}&nbsp</p>
                                 </div>
@@ -155,9 +155,9 @@
                                     <input type="text" ng-model="profile.formData.organizationOrUniversity" name="school" id="school" class="form-control">
                                 </div>
                             </div>
-                            <!--<div class="row"><label for="email" class="col-md-3 text-right">院系：</label><input type="text" id="email" name="email" class="col-md-7"></div>-->
+                            <!--<div class="row"><label for="email" class="col-md-3 text-right">院系 :</label><input type="text" id="email" name="email" class="col-md-7"></div>-->
                             <div class="row form-group" ng-class="{'has-error': schoolForm.dateOfEnterCollege.$invalid, 'has-success':schoolForm.dateOfEnterCollege.$dirty&&schoolForm.dateOfEnterCollege.$valid}">
-                                <label for="dateOfEnterCollege" class="control-label col-md-3 text-right">入学时间：</label>
+                                <label for="dateOfEnterCollege" class="control-label col-md-3 text-right">入学时间 :</label>
                                 <div class="col-xs-3" ng-if="!profile.css.formEditing">
                                     <p class="form-control-static">{{profile.currentUser.dateOfEnterCollege|date:"yyyy-MM-dd"}}&nbsp</p>
                                 </div>
@@ -167,14 +167,14 @@
                                 <span class="err-msg form-control-static col-xs-4" ng-if="schoolForm.dateOfEnterCollege.$invalid">日期格式错误</span>
                             </div>
                             <div class="row form-group">
-                                <label for="degree" class="control-label col-md-3 text-right">学历：</label>
+                                <label for="degree" class="control-label col-md-3 text-right">学历 :</label>
                                 <div class="col-xs-5" ng-if="!profile.css.formEditing">
                                     <p class="form-control-static">{{profile.currentUser.majorsDegree}}&nbsp</p>
                                 </div>
                                 <div class="col-xs-5" ng-if="profile.css.formEditing">
                                     <input type="text" ng-model="profile.formData.majorsDegree" id="degree" name="degree" class="col-md-2 form-control">
                                 </div>
-                                <!--<lable class="col-md-3 text-right">学年：</lable><input type="text" id="email" name="email" class="col-md-2">-->
+                                <!--<lable class="col-md-3 text-right">学年 :</lable><input type="text" id="email" name="email" class="col-md-2">-->
                             </div>
                             <div class="row" ng-if="profile.css.formEditing">
                                 <div class="col-md-6 col-md-offset-3 profile-button-container">
@@ -191,7 +191,7 @@
                         <div class="profile-detail-title">团队信息<!--<span class="profile-edit" ng-click="profile.clickEditProfile(3)">{{'ProfilePageEditButton' | translate}}</span>--></div>
                         <form novalidate name="teamNameForm" class="none-bottom form-horizontal" ng-submit="profile.clickUpdateTeamName(teamNameForm)">
                             <div class="form-group team-name" ng-class="{'has-success':teamNameForm.teamName.$dirty&&teamNameForm.teamName.$valid, 'has-error':teamNameForm.teamName.$dirty&&teamNameForm.teamName.$invalid}" >
-                                <label class="col-md-3 control-label text-right team-label" for="teamName">战队名称：</label>
+                                <label class="col-md-3 control-label text-right team-label" for="teamName">战队名称 :</label>
                                 <div class="col-xs-5" ng-if="!profile.css.formEditing">
                                     <p class="form-control-static">{{profile.currentUser.team.name}}&nbsp</p>
                                 </div>
@@ -205,7 +205,7 @@
                         </form>
                         <form novalidate name="teamForm" class="form-horizontal none-top">
                             <div class="form-group" ng-repeat="member in profile.currentUser.team.memberList">
-                                <label class="control-label col-md-3 team-label text-right">队员{{$index + 1}}：</label>
+                                <label class="control-label col-md-3 team-label text-right">队员{{$index + 1}} :</label>
                                 <div class="col-xs-5">
                                     <p class="form-control-static">{{member.username}}</p>
                                 </div>
@@ -213,14 +213,14 @@
                             </div>
 
                             <div class="form-group" ng-class="{'has-success':teamForm.name.$dirty&&teamForm.name.$valid, 'has-error':teamForm.name.$dirty&&teamForm.name.$invalid}">
-                                <label for="name" class="control-label col-xs-3 text-right team-label">新队员：</label>
+                                <label for="name" class="control-label col-xs-3 text-right team-label">新队员 :</label>
                                 <div class="col-xs-5">
                                     <input placeholder="用户名/邮箱" ng-model="profile.formData.newTeamMember" required type="text" name="name" id="name" class="form-control">
                                 </div>
                                 <button type="submit" ng-click="profile.clickAddStudentToTeam(teamForm)" class="glyphicon glyphicon-plus add-button col-xs-1"></button>
                                 <span class="form-control-static err-msg col-xs-3" ng-if="teamForm.name.$dirty&&teamForm.name.$error.required">请输入正确的用户名!</span>
                             </div>
-                            <!--<div class="row"><label for="name" class="col-md-3 team-label">队员二：</label><input type="text" name="name" id="name" class="col-md-6"></div>-->
+                            <!--<div class="row"><label for="name" class="col-md-3 team-label">队员二 :</label><input type="text" name="name" id="name" class="col-md-6"></div>-->
                         </form>
                     </div>
 
@@ -229,7 +229,7 @@
                         <div class="profile-detail-title">联系方式<span class="profile-edit" ng-click="profile.clickEditProfile()">{{'ProfilePageEditButton' | translate}}</span></div>
                         <form name="contactForm" class="form-horizontal" novalidate>
                             <div class="form-group" ng-class="{'has-success':contactForm.qq.$dirty&&contactForm.qq.$valid, 'has-error':contactForm.qq.$dirty&&contactForm.qq.$invalid}" >
-                                <label for="qq" class="control-label col-md-3 text-right">QQ：</label>
+                                <label for="qq" class="control-label col-md-3 text-right">QQ :</label>
                                 <div class="col-xs-5" ng-if="!profile.css.formEditing">
                                     <p class="form-control-static">{{profile.currentUser.qq}}</p>
                                 </div>
@@ -240,7 +240,7 @@
                                 <!--<span class="err-msg" ng-if="contactForm.qq.$dirty&&contactForm.qq.$error.required">请输入正确的qq!</span>-->
                             </div>
                             <div class="form-group" ng-class="{'has-success':contactForm.mobilePhone.$dirty&&contactForm.mobilePhone.$valid, 'has-error':contactForm.mobilePhone.$dirty&&contactForm.mobilePhone.$invalid}" >
-                                <label for="mobilePhone" class="control-label col-md-3 text-right">手机：</label>
+                                <label for="mobilePhone" class="control-label col-md-3 text-right">手机 :</label>
                                 <div class="col-xs-5" ng-if="!profile.css.formEditing">
                                     <p class="form-control-static">{{profile.currentUser.mobilePhone}}</p>
                                 </div>
