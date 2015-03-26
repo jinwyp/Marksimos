@@ -1911,7 +1911,7 @@
                             <a href="" >{{brand.d_BrandName}}</a>
                         </li>
 
-                        <li><a href="" ng-click="showAddNewBrandForm()">+</a></li>
+                        <li ng-class="{'active': css.currentDecisionBrandId==0}"><a href="" ng-click="showAddNewBrandForm()">+</a></li>
                     </ul>
 
                     <div class="row brand_box">
