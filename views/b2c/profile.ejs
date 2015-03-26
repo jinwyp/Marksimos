@@ -96,11 +96,11 @@
                                 <div class="col-md-5" ng-if="profile.css.formEditing">
                                     <input type="text" data-date-format="yyyy-MM-dd" data-min-date="02/10/70" data-max-date="today" data-autoclose="1" class="form-control" ng-model="profile.formData.birthday" name="birthday" id="birthday" bs-datepicker>
                                 </div>
-                                <span class="err-msg form-control-static col-xs-4" ng-if="basicInfoForm.birthday.$invalid">{{'日期格式错误' | translate}}</span>
+                                <span class="err-msg control-label form-control-static col-xs-4" ng-if="basicInfoForm.birthday.$invalid">{{'ProfilePageDateFormatError' | translate}}</span>
                             </div>
                             <div class="form-group" ng-if="profile.css.formEditing">
                                 <div class="col-md-6 col-md-offset-3 profile-button-container">
-                                    <button ng-click="profile.clickUpdateUserInfo(basicInfoForm)" type="submit">{{'ProfilePageSaveChangesButton' | translate}}</button>
+                                    <button ng-click="profile.clickUpdateUserInfo(basicInfoForm)" type="submit">{{'ProfilePageSaveButton' | translate}}</button>
                                     <button ng-click="profile.clickCancelEditProfile()" class="cancel">{{'ProfilePageCancelButton' | translate}}</button>
                                 </div>
                             </div>
@@ -115,27 +115,27 @@
                                 <div ng-if="profile.css.formEditing"  class="col-xs-5">
                                     <input type="password" ng-minlength="6" ng-maxlength="20" required ng-model="profile.formData.oldPassword" id="oldPassword" name="oldPassword" class="form-control">
                                 </div>
-                                <span class="col-xs-4 form-control-static err-msg" ng-if="securityInfoForm.oldPassword.$dirty&&(securityInfoForm.oldPassword.$error.required||securityInfoForm.oldPassword.$invalid)">{{'请输入密码 6-20个字符' | translate}}!</span>
+                                <span class="col-xs-4 form-control-static err-msg control-label" ng-if="securityInfoForm.oldPassword.$dirty&&(securityInfoForm.oldPassword.$error.required||securityInfoForm.oldPassword.$invalid)">{{'ProfilePagePasswordError' | translate}}!</span>
                             </div>
                             <div class="form-group" ng-class="{'has-success':securityInfoForm.newPassword.$dirty&&securityInfoForm.newPassword.$valid, 'has-error':securityInfoForm.newPassword.$dirty&&(securityInfoForm.newPassword.$invalid||profile.formData.oldPassword==profile.formData.newPassword)}">
                                 <label for="newPassword" class="control-label col-md-3 text-right">{{'ProfilePageSecurityInfoNewPassword' | translate}} :</label>
                                 <div ng-if="profile.css.formEditing" class="col-xs-5">
                                     <input type="password" required ng-minlength="6" ng-maxlength="20" ng-model="profile.formData.newPassword" id="newPassword" name="newPassword" class="form-control">
                                 </div>
-                                <span class="col-xs-4 form-control-static err-msg" ng-if="securityInfoForm.newPassword.$dirty&&securityInfoForm.newPassword.$invalid">{{'请输入新密码 6-20个字符' | translate}}!</span>
-                                <span class="col-xs-4 form-control-static err-msg" ng-if="securityInfoForm.newPassword.$dirty&&!securityInfoForm.newPassword.$error.required&&(profile.formData.oldPassword==profile.formData.newPassword&&profile.formData.newPassword)">{{'新密码不能与老密码相同' | translate}}!</span>
+                                <span class="col-xs-4 form-control-static err-msg control-label" ng-if="securityInfoForm.newPassword.$dirty&&securityInfoForm.newPassword.$invalid">{{'ProfilePageNewPasswordError' | translate}}!</span>
+                                <span class="col-xs-4 form-control-static err-msg control-label" ng-if="securityInfoForm.newPassword.$dirty&&!securityInfoForm.newPassword.$error.required&&(profile.formData.oldPassword==profile.formData.newPassword&&profile.formData.newPassword)">{{'ProfilePageTwoPasswordSameError' | translate}}!</span>
                             </div>
                             <div class="form-group" ng-class="{'has-success':securityInfoForm.rePassword.$dirty&&securityInfoForm.rePassword.$valid, 'has-error':securityInfoForm.rePassword.$dirty&&(securityInfoForm.rePassword.$invalid||profile.formData.rePassword!=profile.formData.newPassword)}">
                                 <label for="rePassword" class="control-label col-xs-3 text-right">{{'ProfilePageSecurityInfoReTypeNewPassword' | translate}} :</label>
                                 <div ng-if="profile.css.formEditing" class="col-xs-5">
                                     <input  type="password" required ng-model="profile.formData.rePassword" id="rePassword" name="rePassword" class="form-control">
                                 </div>
-                                <span class="col-xs-4 form-control-static err-msg" ng-if="securityInfoForm.rePassword.$dirty&&securityInfoForm.rePassword.$error.required">{{'请再次输入新密码' | translate}}!</span>
-                                <span class="col-xs-4 form-control-static err-msg" ng-if="securityInfoForm.rePassword.$dirty&&(profile.formData.rePassword!==0&&profile.formData.rePassword)&&profile.formData.rePassword!=profile.formData.newPassword">{{'两次密码不一致' | translate}}!</span>
+                                <span class="col-xs-4 form-control-static err-msg control-label" ng-if="securityInfoForm.rePassword.$dirty&&securityInfoForm.rePassword.$error.required">{{'ProfilePageConfirmPasswordError' | translate}}!</span>
+                                <span class="col-xs-4 form-control-static err-msg control-label" ng-if="securityInfoForm.rePassword.$dirty&&(profile.formData.rePassword!==0&&profile.formData.rePassword)&&profile.formData.rePassword!=profile.formData.newPassword">{{'ProfilePageTwoPasswordsNotConsistent' | translate}}!</span>
                             </div>
                             <div class="row" ng-if="profile.css.formEditing">
                                 <div class="col-md-6 col-md-offset-3 profile-button-container">
-                                    <button type="submit" ng-click="profile.clickUpdatePassword(securityInfoForm)">{{'ProfilePageSaveChangesButton' | translate}}</button>
+                                    <button type="submit" ng-click="profile.clickUpdatePassword(securityInfoForm)">{{'ProfilePageSaveButton' | translate}}</button>
                                     <button class="cancel" ng-click="profile.clickCancelEditProfile()">{{'ProfilePageCancelButton' | translate}}</button>
                                 </div>
                             </div>
@@ -164,7 +164,7 @@
                                 <div class="col-xs-5" ng-if="profile.css.formEditing">
                                     <input type="text" data-date-format="yyyy-MM-dd" data-min-date="02/10/70" data-max-date="today" data-autoclose="1" ng-model="profile.formData.dateOfEnterCollege" id="dateOfEnterCollege" name="dateOfEnterCollege" class="form-control" bs-datepicker>
                                 </div>
-                                <span class="err-msg form-control-static col-xs-4" ng-if="schoolForm.dateOfEnterCollege.$invalid">{{'日期格式错误' | translate}}</span>
+                                <span class="err-msg control-label form-control-static col-xs-4" ng-if="schoolForm.dateOfEnterCollege.$invalid">{{'ProfilePageDateFormatError' | translate}}</span>
                             </div>
                             <div class="row form-group">
                                 <label for="degree" class="control-label col-md-3 text-right">{{'ProfilePageSchoolInfoDegree' | translate}} :</label>
@@ -178,7 +178,7 @@
                             </div>
                             <div class="row" ng-if="profile.css.formEditing">
                                 <div class="col-md-6 col-md-offset-3 profile-button-container">
-                                    <button ng-click="profile.clickUpdateUserInfo(schoolForm)" type="submit">{{'ProfilePageSaveChangesButton' | translate}}</button>
+                                    <button ng-click="profile.clickUpdateUserInfo(schoolForm)" type="submit">{{'ProfilePageSaveButton' | translate}}</button>
                                     <button class="cancel" ng-click="profile.clickCancelEditProfile()">{{'ProfilePageCancelButton' | translate}}</button>
                                 </div>
                             </div>
@@ -198,7 +198,7 @@
                                 <div class="col-xs-5" ng-if="profile.css.formEditing">
                                     <input class="form-control col-md-6" required ng-model="profile.formData.teamName" type="text" id="teamName" name="teamName">
                                 </div>
-                                <span class="err-msg" ng-if="teamNameForm.teamName.$dirty&&teamNameForm.teamName.$error.required">{{'请输入正确的战队名称' | translate}}!</span>
+                                <span class="err-msg control-label" ng-if="teamNameForm.teamName.$dirty&&teamNameForm.teamName.$error.required">{{'ProfilePageTeamNameRequiredError' | translate}}!</span>
                                 <button ng-if="!profile.css.formEditing" class="done col-md-3">{{'ProfilePageChangeButton' | translate}}</button>
                                 <button ng-if="profile.css.formEditing" class="col-md-3">{{'ProfilePageSaveButton' | translate}}</button>
                             </div>
@@ -218,7 +218,7 @@
                                     <input placeholder="{{'用户名/邮箱' | translate}}" ng-model="profile.formData.newTeamMember" required type="text" name="name" id="name" class="form-control">
                                 </div>
                                 <button type="submit" ng-click="profile.clickAddStudentToTeam(teamForm)" class="glyphicon glyphicon-plus add-button col-xs-1"></button>
-                                <span class="form-control-static err-msg col-xs-3" ng-if="teamForm.name.$dirty&&teamForm.name.$error.required">{{'请输入正确的用户名' | translate}}!</span>
+                                <span class="form-control-static err-msg control-label col-xs-3" ng-if="teamForm.name.$dirty&&teamForm.name.$error.required">{{'ProfilePageNewMemberNameError' | translate}}!</span>
                             </div>
                             <!--<div class="row"><label for="name" class="col-md-3 team-label">{{'队员二' | translate}} :</label><input type="text" name="name" id="name" class="col-md-6"></div>-->
                         </form>
@@ -236,8 +236,8 @@
                                 <div ng-if="profile.css.formEditing" class="col-xs-5">
                                     <input ng-model="profile.formData.qq" type="text" id="qq" name="qq" class="form-control">
                                 </div>
-                                <span class="form-control-static err-msg col-xs-3" ng-if="!contactForm.qq.$dirty&&profile.css.errorFields.qq">{{'无效的qq号码' | translate}}</span>
-                                <!--<span class="err-msg" ng-if="contactForm.qq.$dirty&&contactForm.qq.$error.required">{{'请输入正确的' | translate}}qq!</span>-->
+                                <span class="form-control-static err-msg control-label col-xs-3" ng-if="!contactForm.qq.$dirty&&profile.css.errorFields.qq">{{'ProfilePageInvalidQQ' | translate}}</span>
+                                <!--<span class="err-msg control-label" ng-if="contactForm.qq.$dirty&&contactForm.qq.$error.required">{{'请输入正确的' | translate}}qq!</span>-->
                             </div>
                             <div class="form-group" ng-class="{'has-success':contactForm.mobilePhone.$dirty&&contactForm.mobilePhone.$valid, 'has-error':contactForm.mobilePhone.$dirty&&contactForm.mobilePhone.$invalid}" >
                                 <label for="mobilePhone" class="control-label col-md-3 text-right">{{'ProfileContactInfoMobilePhone' | translate}} :</label>
@@ -247,12 +247,12 @@
                                 <div ng-if="profile.css.formEditing" class="col-xs-5">
                                     <input ng-model="profile.formData.mobilePhone" type="text" id="mobilePhone" name="mobilePhone" class="form-control">
                                 </div>
-                                <span class="form-control-static err-msg col-xs-3" ng-if="!contactForm.mobilePhone.$dirty&&profile.css.errorFields.mobilePhone">{{'无效的手机号码' | translate}}</span>
-                                <!--<span class="err-msg" ng-if="contactForm.qq.$dirty&&contactForm.qq.$error.required">{{'请输入正确的' | translate}}qq!</span>-->
+                                <span class="form-control-static err-msg control-label col-xs-3" ng-if="!contactForm.mobilePhone.$dirty&&profile.css.errorFields.mobilePhone">{{'ProfilePageInvalidMobilePhoneNumber' | translate}}</span>
+                                <!--<span class="err-msg control-label" ng-if="contactForm.qq.$dirty&&contactForm.qq.$error.required">{{'请输入正确的' | translate}}qq!</span>-->
                             </div>
                             <div class="row" ng-if="profile.css.formEditing">
                                 <div class="col-md-6 col-md-offset-3 profile-button-container">
-                                    <button ng-click="profile.clickUpdateUserInfo(contactForm)" type="submit">{{'ProfilePageSaveChangesButton' | translate}}</button>
+                                    <button ng-click="profile.clickUpdateUserInfo(contactForm)" type="submit">{{'ProfilePageSaveButton' | translate}}</button>
                                     <button class="cancel" ng-click="profile.clickCancelEditProfile()">{{'ProfilePageCancelButton' | translate}}</button>
                                 </div>
                             </div>

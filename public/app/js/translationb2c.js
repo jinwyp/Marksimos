@@ -30,7 +30,6 @@
 
             //Labels for Info Details
             ProfilePageEditButton: 'Edit',
-            ProfilePageSaveChangesButton: 'Save Changes',
             ProfilePageCancelButton: 'Cancel',
             ProfilePageChangeButton: 'Change',
             ProfilePageSaveButton: 'Save',
@@ -42,7 +41,7 @@
             ProfilePageBasicInfoBirthday: 'Birthday',
             ProfilePageSecurityInfoCurrentPassword: 'Current Password',
             ProfilePageSecurityInfoNewPassword: 'New Password',
-            ProfilePageSecurityInfoReTypeNewPassword: 'Re-type New Password',
+            ProfilePageSecurityInfoReTypeNewPassword: 'Confirm Password',
             ProfilePageSchoolInfoCollege: 'College',
             ProfilePageSchoolInfoEnterDate: 'Enter Date',
             ProfilePageSchoolInfoDegree: 'Degree',
@@ -51,7 +50,20 @@
             ProfilePageTeamInfoNewMember: 'New Member',
             ProfileContactInfoMobilePhone: 'Mobile Phone',
 
+            //Error Tips for Validation
+            ProfilePagePasswordError: 'Please input password 6-20 characters',
+            ProfilePageNewPasswordError: 'Please input new password 6-20 characters',
+            ProfilePageTwoPasswordSameError: "New password can't be same as current password",
+            ProfilePageConfirmPasswordError: 'Please input new password again',
+            ProfilePageTwoPasswordsNotConsistent: 'Inconsistent passwords',
+            ProfilePageDateFormatError: 'Date format error',
+            ProfilePageTeamNameRequiredError: "Please input team's name",
+            ProfilePageNewMemberNameError: "Please input new member's name",
+            ProfilePageInvalidQQ: 'Invalid qq account',
+            ProfilePageInvalidMobilePhoneNumber: 'Invalid mobile phone number',
 
+            //Input Control Placeholder
+            ProfilePageNewMemberInputPlaceholder: 'Username/email',
 
 
 
@@ -70,51 +82,58 @@
 
 
 
-
-
-
-
-
-
         // Adding a translation table for the Chinese language
         $translateProvider.translations('zh_CN', {
 
 
             //profile page
             //Header Title
-            ProfilePageHeaderTitle: "个人信息",
+            ProfilePageHeaderTitle                   : "个人信息",
 
             //Labels for Navigator
-            ProfilePageTabUploadAvatar: '上传头像',
-            ProfilePageTabBasicInfo: '基本信息',
-            ProfilePageTabSecurityInfo: '安全信息',
-            ProfilePageTabSchoolInfo: '学校信息',
-            ProfilePageTabTeamInfo: '团队信息',
-            ProfilePageTabContactInfo: '联系方式',
+            ProfilePageTabUploadAvatar               : '上传头像',
+            ProfilePageTabBasicInfo                  : '基本信息',
+            ProfilePageTabSecurityInfo               : '安全信息',
+            ProfilePageTabSchoolInfo                 : '学校信息',
+            ProfilePageTabTeamInfo                   : '团队信息',
+            ProfilePageTabContactInfo                : '联系方式',
 
             //Labels for Info Details
-            ProfilePageEditButton: '编辑',
-            ProfilePageSaveChangesButton: '保存修改',
-            ProfilePageCancelButton: '取消',
-            ProfilePageChangeButton: '修改',
-            ProfilePageSaveButton: '保存',
-            ProfilePageUploadAvatarSelectionButton: '上传图片',
-            ProfilePageBasicInfoName: '姓名',
-            ProfilePageBasicInfoGender: '性别',
-            ProfilePageBasicInfoGenderMale: '男',
-            ProfilePageBasicInfoGenderFemale: '女',
-            ProfilePageBasicInfoBirthday: '生日',
-            ProfilePageSecurityInfoCurrentPassword: '原始密码',
-            ProfilePageSecurityInfoNewPassword: '新密码',
-            ProfilePageSecurityInfoReTypeNewPassword: '再输入新密码',
-            ProfilePageSchoolInfoCollege: '大学',
-            ProfilePageSchoolInfoEnterDate: '入学时间',
-            ProfilePageSchoolInfoDegree: '学历',
-            ProfilePageTeamInfoTeamName: '战队名称',
-            ProfilePageTeamInfoMember: '队员',
-            ProfilePageTeamInfoNewMember: '新队员',
-            ProfileContactInfoMobilePhone: '手机',
+            ProfilePageEditButton                    : '编辑',
+            ProfilePageCancelButton                  : '取消',
+            ProfilePageChangeButton                  : '修改',
+            ProfilePageSaveButton                    : '保存',
+            ProfilePageUploadAvatarSelectionButton   : '上传图片',
+            ProfilePageBasicInfoName                 : '姓名',
+            ProfilePageBasicInfoGender               : '性别',
+            ProfilePageBasicInfoGenderMale           : '男',
+            ProfilePageBasicInfoGenderFemale         : '女',
+            ProfilePageBasicInfoBirthday             : '生日',
+            ProfilePageSecurityInfoCurrentPassword   : '原始密码',
+            ProfilePageSecurityInfoNewPassword       : '新密码',
+            ProfilePageSecurityInfoReTypeNewPassword : '再输入新密码',
+            ProfilePageSchoolInfoCollege             : '大学',
+            ProfilePageSchoolInfoEnterDate           : '入学时间',
+            ProfilePageSchoolInfoDegree              : '学历',
+            ProfilePageTeamInfoTeamName              : '战队名称',
+            ProfilePageTeamInfoMember                : '队员',
+            ProfilePageTeamInfoNewMember             : '新队员',
+            ProfileContactInfoMobilePhone            : '手机',
 
+            //Error Tips for Validation
+            ProfilePagePasswordError: '请输入密码 6-20个字符',
+            ProfilePageNewPasswordError: '请输入新密码 6-20个字符',
+            ProfilePageTwoPasswordSameError: '新密码不能与老密码相同',
+            ProfilePageConfirmPasswordError: '请再次输入新密码',
+            ProfilePageTwoPasswordsNotConsistent: '两次密码不一致',
+            ProfilePageDateFormatError: '日期格式错误',
+            ProfilePageTeamNameRequiredError: '请输入正确的战队名称',
+            ProfilePageNewMemberNameError: '请输入正确的用户名',
+            ProfilePageInvalidQQ: '无效的QQ号码',
+            ProfilePageInvalidMobilePhoneNumber: '无效的手机号码',
+
+            //Input Control Placeholder
+            ProfilePageNewMemberInputPlaceholder: '用户名/邮箱',
 
             //Labels for Introduction
             "IntroPageSeminarListTitle"                   : "目前已有的游戏列表",
