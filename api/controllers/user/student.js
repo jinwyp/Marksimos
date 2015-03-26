@@ -25,7 +25,7 @@ exports.updateStudentB2CInfo = function(req, res, next){
     if(typeof req.body.idcardNumber !== 'undefined') updatedUser.idcardNumber = req.body.idcardNumber;
 
     if(typeof req.body.mobilePhone !== 'undefined') updatedUser.mobilePhone = req.body.mobilePhone;
-    if(typeof req.body.qq !== 'undefined') updatedUser.gender = req.body.qq;
+    if(typeof req.body.qq !== 'undefined') updatedUser.qq = req.body.qq;
 
     if(typeof req.body.majorsDegree !== 'undefined') updatedUser.majorsDegree = req.body.majorsDegree;
     if(typeof req.body.dateOfEnterCollege !== 'undefined') updatedUser.dateOfEnterCollege = req.body.dateOfEnterCollege;
