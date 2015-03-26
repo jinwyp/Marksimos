@@ -22,7 +22,7 @@
                         <nav class="col-md-6 col-md-offset-2">
                             <div class="row">
                                 <!--<div class="col-md-4"><span>个人主页</span></div>-->
-                                <div class="col-md-6"><span class="selected">个人信息</span></div>
+                                <div class="col-md-6"><span class="selected">{{'ProfilePageHeaderTitle' | translate}}</span></div>
                                 <!--<div class="col-md-4"><span>更多</span><span class="small-down-triangle"></span></div>-->
                             </div>
                         </nav>
@@ -35,8 +35,8 @@
                     <img class="avatar" ng-src="/{{profile.currentUser.avatar.path || profile.css.defaultAvatar}}" />
 
                     <nav class="profile-nav">
-                        <ul>
-                            <li ng-repeat="type in ['上传头像', '基本信息', '安全信息', '学校信息', '团队信息', '联系方式']" ng-class="{selected: profile.css.currentTabIndex == $index}" ng-click="profile.clickSwitchTab($index)">{{type}}</li>
+                        <ul><!--['上传头像', '基本信息', '安全信息', '学校信息', '团队信息', '联系方式']-->
+                            <li ng-repeat="type in profile.css.tabs" ng-class="{selected: profile.css.currentTabIndex == $index}" ng-click="profile.clickSwitchTab($index)">{{type}}</li>
                         </ul>
                     </nav>
                 </aside>

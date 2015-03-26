@@ -16,28 +16,55 @@
         // Adding a translation table for the English language
         $translateProvider.translations('en_US', {
 
+            //profile page
+            //Header Title
+            ProfilePageHeaderTitle: "Personal Info",
+
+            //Labels for Navigator
+            ProfilePageTabUploadAvatar: 'Upload Avatar',
+            ProfilePageTabBasicInfo: 'Basic Info',
+            ProfilePageTabSecurityInfo: 'Security Info',
+            ProfilePageTabSchoolInfo: 'School Info',
+            ProfilePageTabTeamInfo: 'Team Info',
+            ProfilePageTabContactInfo: 'Contact Info',
+            // the combination of the six above.
+            ProfilePageTabs: '{{avatar}},{{basic}},{{security}},{{school}},{{team}},{{contact}}',
+
+            //Labels for Info Details
+            ProfilePageEditButton: 'Edit',
+            ProfilePageSaveChangesButton: 'Save Changes',
+            ProfilePageCancelButton: 'Cancel',
+            ProfilePageChangeButton: 'Change',
+            ProfilePageSaveButton: 'Save',
+            ProfilePageUploadAvatarSelectionButton: 'Upload Picture',
+            ProfilePageBasicInfoName: 'Name',
+            ProfilePageBasicInfoGender: 'Gender',
+            ProfilePageBasicInfoGenderMale: 'Male',
+            ProfilePageBasicInfoGenderFemale: 'Female',
+            ProfilePageBasicInfoBirthday: 'Birthday',
+            ProfilePageSecurityInfoCurrentPassword: 'Current Password',
+            ProfilePageSecurityInfoNewPassword: 'New Password',
+            ProfilePageSecurityInfoReTypeNewPassword: 'Re-type New Password',
+            ProfilePageSchoolInfoCollege: 'College',
+            ProfilePageSchoolInfoEnterDate: 'Enter Date',
+            ProfilePageSchoolInfoDegree: 'Degree',
+            ProfilePageTeamInfoTeamName: 'Team Name',
+            ProfilePageTeamInfoMember: 'Member',
+            ProfilePageTeamInfoNewMember: 'New Member',
+            ProfileContactInfoMobilePhone: 'Mobile Phone',
+
+
+
+
+
+
             //Labels for Login
             "LoginPageLabelWelcome"           : "Welcome !",
             "LoginPageLabelSignIn"            : "Sign In",
             "LoginPageLabelEmail"             : "Username / Email :",
             "LoginPageLabelPassword"          : "Password :",
             "LoginPageLabelPasswordErrorInfo" : "Password Incorrect !",
-            "LoginPageButtonSignIn"           : "Sign In",
-
-
-            //Labels for Introduction
-            "IntroPageSeminarListTitle" : "List of the Game Enrolled :",
-            "IntroPageSeminarListLabelSeminarID" : "Seminar ID",
-            "IntroPageSeminarListLabelSeminarDescription" : "Seminar Description",
-            "IntroPageSeminarListLabelTotalRound" : "Total Round",
-            "IntroPageSeminarListLabelCompetitor" : "Competitor",
-            "IntroPageSeminarListLabelDateOfCommencement" : "Date of Commencement",
-            "IntroPageSeminarListLabelSeminarStatus" : "Seminar Status",
-            "IntroPageSeminarListLabelCountry" : "Country",
-            "IntroPageSeminarListLabelProvince" : "Province(State)",
-            "IntroPageSeminarListLabelCity" : "City",
-            "IntroPageSeminarListLabelVenue" : "Venue"
-
+            "LoginPageButtonSignIn"           : "Sign In"
 
 
         });
@@ -55,13 +82,41 @@
         $translateProvider.translations('zh_CN', {
 
 
-            //Labels for Login
-            "LoginPageLabelWelcome" : "欢迎使用MarkSimos !",
-            "LoginPageLabelSignIn" : "登录",
-            "LoginPageLabelEmail" : "用户名 / 邮箱 :",
-            "LoginPageLabelPassword" : "密码 :",
-            "LoginPageLabelPasswordErrorInfo" : "邮箱或密码错误 !",
-            "LoginPageButtonSignIn" : "点击登录",
+            //profile page
+            //Header Title
+            ProfilePageHeaderTitle: "个人信息",
+
+            //Labels for Navigator
+            ProfilePageTabUploadAvatar: '上传头像',
+            ProfilePageTabBasicInfo: '基本信息',
+            ProfilePageTabSecurityInfo: '安全信息',
+            ProfilePageTabSchoolInfo: '学校信息',
+            ProfilePageTabTeamInfo: '团队信息',
+            ProfilePageTabContactInfo: '联系方式',
+            ProfilePageTabs: '{{avatar}},{{basic}},{{security}},{{school}},{{team}},{{contact}}',
+
+            //Labels for Info Details
+            ProfilePageEditButton: '编辑',
+            ProfilePageSaveChangesButton: '保存修改',
+            ProfilePageCancelButton: '取消',
+            ProfilePageChangeButton: '修改',
+            ProfilePageSaveButton: '保存',
+            ProfilePageUploadAvatarSelectionButton: '上传图片',
+            ProfilePageBasicInfoName: '姓名',
+            ProfilePageBasicInfoGender: '性别',
+            ProfilePageBasicInfoGenderMale: '男',
+            ProfilePageBasicInfoGenderFemale: '女',
+            ProfilePageBasicInfoBirthday: '生日',
+            ProfilePageSecurityInfoCurrentPassword: '原始密码',
+            ProfilePageSecurityInfoNewPassword: '新密码',
+            ProfilePageSecurityInfoReTypeNewPassword: '再输入新密码',
+            ProfilePageSchoolInfoCollege: '大学',
+            ProfilePageSchoolInfoEnterDate: '入学时间',
+            ProfilePageSchoolInfoDegree: '学历',
+            ProfilePageTeamInfoTeamName: '战队名称',
+            ProfilePageTeamInfoMember: '队员',
+            ProfilePageTeamInfoNewMember: '新队员',
+            ProfileContactInfoMobilePhone: '手机',
 
 
             //Labels for Introduction

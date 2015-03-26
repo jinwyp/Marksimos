@@ -201,7 +201,13 @@
                 dismissable: false
             },
             defaultAvatar: 'app/css/images/profile_avatar_2.png',
-            errorFields: {}
+            errorFields: {},
+            tabs: $translate('ProfilePageTabs', {
+                avatar: $translate.instant('ProfilePageTabUploadAvatar')/*,
+                basic:,
+                security:,
+                school:,*/
+            })
         };
 
         vm.currentUser = {};
