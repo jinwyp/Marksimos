@@ -180,7 +180,6 @@
 
     angular.module('b2clogin').controller('profileController', ['Student', '$alert', 'FileUploader', '$translate', function(Student, $alert, FileUploader, $translate) {
         /* jshint validthis: true */
-        $translate.use('en_US');
         var vm = this;
         vm.css = {
             addStudentFailedInfo: false,
