@@ -181,7 +181,6 @@
     angular.module('b2clogin').controller('profileController', ['Student', '$alert', 'FileUploader', '$translate', function(Student, $alert, FileUploader, $translate) {
         /* jshint validthis: true */
         var vm = this;
-
         vm.css = {
             addStudentFailedInfo: false,
             currentTabIndex: 1,
@@ -201,7 +200,8 @@
                 type: 'danger',
                 dismissable: false
             },
-            defaultAvatar: 'app/css/images/profile_avatar_2.png'
+            defaultAvatar: 'app/css/images/profile_avatar_2.png',
+            errorFields: {}
         };
 
         vm.currentUser = {};
@@ -294,14 +294,22 @@
         function updateUserInfo(form) {
             // todo, let what css info be false
             if (form.$valid) {
+                vm.css.errorFields = {};
                 Student.updateStudentB2CInfo(vm.formData).then(function() {
                     Object.keys(vm.formData).forEach(function(key) {
                         vm.currentUser[key] = vm.formData[key];
                     });
                     $alert(vm.css.alertSuccessInfo);
                     cancelEditProfile();
-                }).catch(function() {
+                }).catch(function(err) {
                     $alert(vm.css.alertFailedInfo);
+                    if (err.data && err.data.message) {
+                        err.data.message.forEach(function(item) {
+                            vm.css.errorFields[item.param] = true;
+                            // so the backend error tip will disappear if users edit it
+                            form[item.param].$setPristine();
+                        });
+                    }
                 });
             }
         }
@@ -363,12 +371,15 @@
                         formData[key] = data;
                     }
                 });
+
                 formData.oldPassword = '';
                 formData.newPassword = '';
                 formData.rePassword = '';
 
                 formData.teamName = vm.currentUser.team && vm.currentUser.team.name;
                 formData.newTeamMember = '';
+
+                vm.css.errorFields = {};
             }
         };
 

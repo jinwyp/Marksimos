@@ -225,22 +225,24 @@
                         <form name="contactForm" class="form-horizontal" novalidate>
                             <div class="form-group" ng-class="{'has-success':contactForm.qq.$dirty&&contactForm.qq.$valid, 'has-error':contactForm.qq.$dirty&&contactForm.qq.$invalid}" >
                                 <label for="qq" class="control-label col-md-3 text-right">QQ：</label>
-                                <div class="col-xs-9" ng-if="!profile.css.formEditing">
+                                <div class="col-xs-5" ng-if="!profile.css.formEditing">
                                     <p class="form-control-static">{{profile.currentUser.qq}}</p>
                                 </div>
                                 <div ng-if="profile.css.formEditing" class="col-xs-5">
                                     <input ng-model="profile.formData.qq" type="text" id="qq" name="qq" class="form-control">
                                 </div>
+                                <span class="form-control-static err-msg col-xs-3" ng-if="!contactForm.qq.$dirty&&profile.css.errorFields.qq">无效的qq号码</span>
                                 <!--<span class="err-msg" ng-if="contactForm.qq.$dirty&&contactForm.qq.$error.required">请输入正确的qq!</span>-->
                             </div>
                             <div class="form-group" ng-class="{'has-success':contactForm.mobilePhone.$dirty&&contactForm.mobilePhone.$valid, 'has-error':contactForm.mobilePhone.$dirty&&contactForm.mobilePhone.$invalid}" >
                                 <label for="mobilePhone" class="control-label col-md-3 text-right">手机：</label>
-                                <div class="col-xs-9" ng-if="!profile.css.formEditing">
+                                <div class="col-xs-5" ng-if="!profile.css.formEditing">
                                     <p class="form-control-static">{{profile.currentUser.mobilePhone}}</p>
                                 </div>
                                 <div ng-if="profile.css.formEditing" class="col-xs-5">
                                     <input ng-model="profile.formData.mobilePhone" type="text" id="mobilePhone" name="mobilePhone" class="form-control">
                                 </div>
+                                <span class="form-control-static err-msg col-xs-3" ng-if="!contactForm.mobilePhone.$dirty&&profile.css.errorFields.mobilePhone">无效的手机号码</span>
                                 <!--<span class="err-msg" ng-if="contactForm.qq.$dirty&&contactForm.qq.$error.required">请输入正确的qq!</span>-->
                             </div>
                             <div class="row" ng-if="profile.css.formEditing">
