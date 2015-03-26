@@ -25,7 +25,7 @@
 
                 <div class="b2c-user pull-right" ng-if="!showlogin && currentuser.username">
                     <button class="btn avatar" type="button" data-animation="am-flip-x" bs-dropdown="dropdown" data-template="dropdown-tpl.html" data-placement="bottom-left">
-                        <img ng-src="/{{currentuser.avatar.path}}" alt="avatar"/>
+                        <img ng-src="/{{currentuser.avatar.path || 'app/css/images/profile_avatar_2.png'}}" alt="avatar"/>
                         <!--<span class="caret"></span>-->
                     </button>
                     <span class="glyphicon glyphicon-chevron-down" aria-hidden="true"></span>
@@ -42,8 +42,8 @@
 
 
                 <div class="b2c-trans pull-right">
-                    <span>EN</span>
-                    <span class="selected">中</span>
+                    <span ng-class="{'selected' : css.language == 'en_US'}" ng-click="changeLanguage('en_US')">EN</span>
+                    <span ng-class="{'selected' : css.language == 'zh_CN'}" ng-click="changeLanguage('zh_CN')">中</span>
                 </div>
 
             </div>

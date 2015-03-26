@@ -11,56 +11,38 @@ var fileUploadModel = require('../../models/user/fileupload.js');
 
 
 exports.updateStudentB2CInfo = function(req, res, next){
-
     var validationErrors = userModel.userInfoValidations(req, userRoleModel.roleList.student.id, userModel.getStudentType().B2C);
 
     if(validationErrors){
         return res.status(400).send( {message: validationErrors} );
     }
 
-    var saveUser = {
-        gender : req.body.gender || 1,
-        //birthday:req.body.birthday ,
+    var updatedUser = {};
+    if(typeof req.body.gender !== 'undefined') updatedUser.gender = req.body.gender;
+    if(typeof req.body.birthday !== 'undefined') updatedUser.birthday = req.body.birthday;
+    if(typeof req.body.firstName !== 'undefined') updatedUser.firstName = req.body.firstName;
+    if(typeof req.body.lastName !== 'undefined') updatedUser.lastName = req.body.lastName;
+    if(typeof req.body.idcardNumber !== 'undefined') updatedUser.idcardNumber = req.body.idcardNumber;
 
-        firstName:req.body.firstName ||'',
-        lastName:req.body.lastName ||'',
-        idcardNumber:req.body.idcardNumber ||'',
+    if(typeof req.body.mobilePhone !== 'undefined') updatedUser.mobilePhone = req.body.mobilePhone;
+    if(typeof req.body.qq !== 'undefined') updatedUser.qq = req.body.qq;
 
-        mobilePhone:req.body.mobilePhone ||'',
-        qq:req.body.qq ||'',
+    if(typeof req.body.majorsDegree !== 'undefined') updatedUser.majorsDegree = req.body.majorsDegree;
+    if(typeof req.body.dateOfEnterCollege !== 'undefined') updatedUser.dateOfEnterCollege = req.body.dateOfEnterCollege;
+    if(typeof req.body.dateOfGraduation !== 'undefined') updatedUser.dateOfGraduation = req.body.dateOfGraduation;
+    if(typeof req.body.organizationOrUniversity !== 'undefined') updatedUser.organizationOrUniversity = req.body.organizationOrUniversity;
+    if(typeof req.body.occupation !== 'undefined') updatedUser.occupation = req.body.occupation;
 
-        majorsDegree:req.body.majorsDegree ||'',
-        //dateOfEnterCollege:req.body.dateOfGraduation ||'',
-        //dateOfGraduation:req.body.dateOfGraduation ||'',
-        organizationOrUniversity:req.body.organizationOrUniversity ||'',
-        occupation:req.body.occupation ||'',
+    if(typeof req.body.country !== 'undefined') updatedUser.country = req.body.country;
+    if(typeof req.body.state !== 'undefined') updatedUser.state = req.body.state;
+    if(typeof req.body.city !== 'undefined') updatedUser.city = req.body.city;
+    if(typeof req.body.district !== 'undefined') updatedUser.district = req.body.district;
+    if(typeof req.body.street !== 'undefined') updatedUser.street = req.body.street;
 
-        country:req.body.country ||'',
-        state:req.body.state ||'',
-        city:req.body.city ||'',
-        district:req.body.district ||'',
-        street:req.body.street ||'',
-
-        websiteLanguage:req.body.description ||''
-    };
+    if(typeof req.body.websiteLanguage !== 'undefined') updatedUser.websiteLanguage = req.body.websiteLanguage;
 
 
-    if(typeof req.body.birthday !== 'undefined'){
-        saveUser.birthday = req.body.birthday;
-    }
-    if(typeof req.body.dateOfEnterCollege !== 'undefined'){
-        saveUser.dateOfEnterCollege = req.body.birthday;
-    }
-    if(typeof req.body.dateOfGraduation !== 'undefined'){
-        saveUser.dateOfGraduation = req.body.birthday;
-    }
-
-    userModel.findOneAndUpdateQ(
-        { _id : req.user._id },
-        saveUser
-
-    ).then(function(resultUser){
-
+    userModel.findOneAndUpdateQ( { _id : req.user._id }, {$set:updatedUser}  ).then(function(resultUser){
         if(!resultUser){
             throw new Error('Cancel promise chains. Because Update Team failed. more or less than 1 record is updated. it should be only one !');
         }

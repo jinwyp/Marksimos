@@ -1037,6 +1037,7 @@
         /********************  点击添加一个新的Brand 显示添加Brand的表单  ********************/
         $scope.showAddNewBrandForm = function(){
             $scope.css.addNewBrand = true;
+            $scope.css.currentDecisionBrandId = 0;
             $scope.data.newBrand.brand_name = "";
             $scope.data.newBrand.sku_name = "";
             $scope.data.newBrand.othererrorinfo = "";

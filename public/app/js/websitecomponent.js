@@ -38,12 +38,17 @@
                 //    if($window.location.href.indexOf('/marksimos/help')==-1)
                 //        $window.location.href='/marksimos/help';
                 //};
-                //
-                //scope.changeLanguage = function (langKey) {
-                //    $translate.use(langKey);
-                //};
-                //
-                console.log(scope.currentuser);
+
+                scope.css = {
+                    language : 'zh_CN'
+                };
+                scope.changeLanguage = function (langKey) {
+                    scope.css.language = langKey;
+                    $translate.use(langKey);
+
+                    Student.updateStudentB2CInfo({ 'websiteLanguage':langKey });
+                };
+
                 scope.newUser = {
                     username : '',
                     password : '',
@@ -119,6 +124,7 @@
 
                 scope.changeLanguage = function (langKey) {
                     $translate.use(langKey);
+                    Student.updateStudentB2CInfo({ 'websiteLanguage':langKey });
                 };
 
                 scope.clickLogout = function () {
