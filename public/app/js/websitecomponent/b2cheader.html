@@ -25,7 +25,7 @@
 
                 <div class="b2c-user pull-right" ng-if="!showlogin && currentuser.username">
                     <button class="btn avatar" type="button" data-animation="am-flip-x" bs-dropdown="dropdown" data-template="dropdown-tpl.html" data-placement="bottom-left">
-                        <img ng-src="/{{currentuser.avatar.path}}" alt="avatar"/>
+                        <img ng-src="/{{currentuser.avatar.path || 'app/css/images/profile_avatar_2.png'}}" alt="avatar"/>
                         <!--<span class="caret"></span>-->
                     </button>
                     <span class="glyphicon glyphicon-chevron-down" aria-hidden="true"></span>
