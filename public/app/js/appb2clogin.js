@@ -376,6 +376,10 @@
 
     }]);
 
+
+
+
+
     angular.module('b2clogin').controller('campaignlistController', ['Student', '$alert', '$translate', function(Student, $alert, $translate) {
         /* jshint validthis: true */
         var vm = this;
@@ -414,6 +418,9 @@
     }]);
 
 
+
+
+
     angular.module('b2clogin').controller('campaignController', ['Student', '$modal', '$translate', '$location', '$anchorScroll', '$q', function(Student, $modal, $translate, $location, $anchorScroll, $q) {
         /* jshint validthis: true */
         var vm = this;
@@ -441,13 +448,12 @@
                     username: vm.currentUser.username,
                     campaignId: vm.campaignId
                 }).then(function() {
-                    $modal({container: 'body', template: 'campaign-modal-enter-success.html'})
-                })
+                    $modal({container: 'body', template: 'campaign-modal-enter-success.html'});
+                });
             } else {
-                $modal({container: 'body', template: 'campaign-modal-enter-tip-complete-info.html'})
+                $modal({container: 'body', template: 'campaign-modal-enter-tip-complete-info.html'});
             }
         }
-
 
 
         var app = {
@@ -465,10 +471,9 @@
 
                     vm.css.hasEntered = vm.campaign.teamList && vm.campaign.teamList.some(function(team) {
                         return team._id == vm.currentUser.team._id;
-                    })
+                    });
                 }).catch(function(err) {
                     console.log('load student info failed');
-                    console.log(err);
                 });
             }
         };

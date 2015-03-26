@@ -172,6 +172,10 @@ var uploadFeatureList = [
             {
                 name : 'uploadQualification',
                 filePath : 'qualification'
+            },
+            {
+                name : 'uploadProcess',
+                filePath : 'process'
             }
         ]
     }

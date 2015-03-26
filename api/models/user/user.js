@@ -292,7 +292,7 @@ userSchema.statics.userInfoValidations = function(req, userRoleId, studentType){
 
     removeProperty(req.body);
 
-    if(userRoleId === userRoleModel.roleList.student.id && studentType === 10){
+    if(userRoleId === userRoleModel.roleList.student.id ){
         req.checkBody('gender', 'Gender is required').optional().isInt();
         req.checkBody('birthday', 'Birthday is required').optional().isDate();
 

@@ -19,7 +19,7 @@
     /********************  解决提交请求$http 时出现 "Provisional headers are shown angular"(实际上并没有采用,而是后端出的问题导致了该问题) ********************/
     /********************  http://stackoverflow.com/questions/21630534/node-js-angular-js-caution-provisional-headers-are-shown ********************/
 
-    angular.module('marksimos.config').factory('marksimosInterceptor', ['$log', '$q', '$location', 'localStorageService', function($log, $q, $location, localStorageService) {
+    angular.module('marksimos.config').factory('marksimosInterceptor', ['$log', '$q', '$window', 'localStorageService', function($log, $q, $window, localStorageService) {
         //$log.debug('$log is here to show you that this is a regular factory with injection');
 
         return {
@@ -33,7 +33,7 @@
             'responseError': function(response) {
                 //console.log(response);
                 if(response.status === 401 || response.status === 403) {
-                    $location.path('/marksimos');
+                    $window.location.href = '/marksimos';
                 }
                 return $q.reject(response);
             }
@@ -42,7 +42,7 @@
 
 
 
-    angular.module('b2c.config').factory('b2cInterceptor', ['$log', '$q', '$location', 'localStorageService', function($log, $q, $location, localStorageService) {
+    angular.module('b2c.config').factory('b2cInterceptor', ['$log', '$q', '$window', 'localStorageService', function($log, $q, $window, localStorageService) {
         //$log.debug('$log is here to show you that this is a regular factory with injection');
 
         return {
@@ -56,7 +56,7 @@
             'responseError': function(response) {
                 //console.log(response);
                 if(response.status === 401 || response.status === 403) {
-                    $location.path('/e4e/login');
+                    //$window.location.href = '/e4e/login';
                 }
                 return $q.reject(response);
             }

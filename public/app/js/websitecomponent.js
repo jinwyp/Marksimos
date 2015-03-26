@@ -43,7 +43,7 @@
                 //    $translate.use(langKey);
                 //};
                 //
-
+                console.log(scope.currentuser);
                 scope.newUser = {
                     username : '',
                     password : '',

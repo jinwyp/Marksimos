@@ -60,7 +60,16 @@
                     <div class="row" ng-if="profile.css.currentTabIndex == 1">
                         <div class="profile-detail-title">基本信息<span class="profile-edit" ng-click="profile.clickEditProfile()">编辑</span></div>
                         <form name="basicInfoForm" class="form-horizontal">
-                            <!--<div class="row"><label for="name" class="col-md-3 text-right">用户名：</label><input type="text" name="name" id="name" class="col-md-7"></div>
+                            <div class="form-group firstName">
+                                <label for="school" class="control-label col-md-3 text-right">姓名：</label>
+                                <div class="col-xs-5" ng-if="!profile.css.formEditing">
+                                    <p class="form-control-static">{{profile.currentUser.firstName}}&nbsp</p>
+                                </div>
+                                <div class="col-xs-5" ng-if="profile.css.formEditing">
+                                    <input type="text" ng-model="profile.formData.firstName" name="firstName" id="firstName" class="form-control">
+                                </div>
+                            </div>
+                            <!--<div class="row"><label for="firstName" class="col-md-3 text-right">用户名：</label><input type="text" name="name" id="name" class="col-md-7"></div>
                             <div class="row"><label for="email" class="col-md-3 text-right">邮箱：</label><input type="text" id="email" name="email" class="col-md-7"></div>-->
                             <div class="form-group radio" ng-class="{'has-success':basicInfoForm.gender.$dirty&&basicInfoForm.gender.$valid, 'has-error':basicInfoForm.gender.$dirty&&basicInfoForm.gender.$invalid}">
                                 <label class="col-md-3 control-label  text-right">性别：</label>
@@ -215,12 +224,22 @@
                         <div class="profile-detail-title">联系方式<span class="profile-edit" ng-click="profile.clickEditProfile()">编辑</span></div>
                         <form name="contactForm" class="form-horizontal" novalidate>
                             <div class="form-group" ng-class="{'has-success':contactForm.qq.$dirty&&contactForm.qq.$valid, 'has-error':contactForm.qq.$dirty&&contactForm.qq.$invalid}" >
-                                <label for="qq" class="control-label col-md-3 profile-underline text-right">QQ ID：</label>
+                                <label for="qq" class="control-label col-md-3 text-right">QQ：</label>
                                 <div class="col-xs-9" ng-if="!profile.css.formEditing">
                                     <p class="form-control-static">{{profile.currentUser.qq}}</p>
                                 </div>
                                 <div ng-if="profile.css.formEditing" class="col-xs-5">
                                     <input ng-model="profile.formData.qq" type="text" id="qq" name="qq" class="form-control">
+                                </div>
+                                <!--<span class="err-msg" ng-if="contactForm.qq.$dirty&&contactForm.qq.$error.required">请输入正确的qq!</span>-->
+                            </div>
+                            <div class="form-group" ng-class="{'has-success':contactForm.mobilePhone.$dirty&&contactForm.mobilePhone.$valid, 'has-error':contactForm.mobilePhone.$dirty&&contactForm.mobilePhone.$invalid}" >
+                                <label for="mobilePhone" class="control-label col-md-3 text-right">手机：</label>
+                                <div class="col-xs-9" ng-if="!profile.css.formEditing">
+                                    <p class="form-control-static">{{profile.currentUser.mobilePhone}}</p>
+                                </div>
+                                <div ng-if="profile.css.formEditing" class="col-xs-5">
+                                    <input ng-model="profile.formData.mobilePhone" type="text" id="mobilePhone" name="mobilePhone" class="form-control">
                                 </div>
                                 <!--<span class="err-msg" ng-if="contactForm.qq.$dirty&&contactForm.qq.$error.required">请输入正确的qq!</span>-->
                             </div>
