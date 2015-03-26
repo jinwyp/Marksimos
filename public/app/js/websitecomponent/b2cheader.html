@@ -42,8 +42,8 @@
 
 
                 <div class="b2c-trans pull-right">
-                    <span>EN</span>
-                    <span class="selected">中</span>
+                    <span ng-class="{'selected' : css.language == 'en_US'}" ng-click="changeLanguage('en_US')">EN</span>
+                    <span ng-class="{'selected' : css.language == 'zh_CN'}" ng-click="changeLanguage('zh_CN')">中</span>
                 </div>
 
             </div>
