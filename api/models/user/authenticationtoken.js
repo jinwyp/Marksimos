@@ -7,6 +7,7 @@ var Schema = mongoose.Schema;
 var uuid = require('node-uuid');
 var Q = require('q');
 var mongooseTimestamps = require('mongoose-timestamp');
+var userModel = require('./user.js');
 var logger = require('../../../common/logger.js');
 
 
@@ -75,6 +76,30 @@ tokenSchema.statics.clearToken = function (userInfo) {
     setTimeout(Token.clearToken, SevenDay);
 };
 
+
+tokenSchema.statics.verifyToken = function (token, callback) {
+    Token.findOne({ token: token }, function (errToken, tokenInfo) {
+        if (errToken) {
+            return callback(errToken);
+        }
+        //token存在且未过期
+        if (tokenInfo && tokenInfo.expires > new Date()) {
+            userModel.findOne({ _id: tokenInfo.userId }).populate('avatar', '-physicalAbsolutePath').select( userModel.selectFields()).exec(function (err, user) {
+                if (err) {
+                    return callback(err);
+                }
+                if (!user) {
+                    //token存在，用户不存在，则可能用户已被删除
+                    return callback('Token existed, but user not found.');
+                }
+                return callback(null, user);
+            });
+        }else {
+            //token过期
+            callback('Token have expired.');
+        }
+    });
+}
 
 
 var Token = mongoose.model("authenticationtoken", tokenSchema);

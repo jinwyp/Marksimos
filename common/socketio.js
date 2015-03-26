@@ -4,7 +4,9 @@
 
 'use strict';
 
-//var config = require('./environment');
+var seminarModel = require('../api/models/marksimos/seminar');
+var Token = require('../api/models/user/authenticationtoken');
+var _ = require('lodash');
 
 // When the user disconnects.. perform this
 function onDisconnect(socket) {
@@ -38,7 +40,20 @@ module.exports = function (socketio) {
     // }));
 
     socketio.on('connection', function (socket) {
-        console.log("connection!!");
+        var token = socket.handshake.query.token;
+        Token.verifyToken(token, function(err, user) {
+            seminarModel.findSeminarByUserId(user._id).then(function(seminarResult){
+                var company = _.find(seminarResult.companyAssignment, function(company) {
+                    return company.studentList.indexOf(user.email) > -1;
+                });
+
+                var socketRoomName = seminarResult.seminarId + company.companyId;
+                socket.join(socketRoomName);
+
+            }).fail(function(err){
+                console.log(err);
+            }).done();
+        });
 
         socket.address = socket.handshake.address.address + ':' +
             socket.handshake.address.port;

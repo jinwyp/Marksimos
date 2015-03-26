@@ -208,6 +208,8 @@ exports.getDecisionForFacilitator = function(req, res, next){
 
 exports.updateSKUDecision = function(req, res, next){
 
+    socketio.to(req.gameMarksimos.socketRoomName).emit('msg', 'test!!!');
+
     var companyId = +req.body.companyId;
     var brandId = req.body.brand_id;
     var SKUID = req.body.sku_id;

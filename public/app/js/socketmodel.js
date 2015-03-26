@@ -1,20 +1,21 @@
 (function () {
     'use strict';
 
-    angular.module('marksimos.socketmodel', ['btford.socket-io']);
+    angular.module('marksimos.socketmodel', ['btford.socket-io', 'LocalStorageModule']);
 
 
-    angular.module('marksimos.socketmodel').factory('socket', function (socketFactory) {
+    angular.module('marksimos.socketmodel').factory('socket', function (socketFactory, localStorageService) {
         var socket = null;
 
         return {
             setup: function() {
+                var token = localStorageService.get('logintoken');
                 var ioSocket = io.connect('', {
 //                    'force new connection': true,
 //                    'max reconnection attempts': Infinity,
 //                    'reconnection limit': 10 * 1000
                     // Send auth token on connection, you will need to DI the Auth service above
-                    // 'query': 'token=' + Auth.getToken()
+                    'query': 'token=' + token
                 });
 
                 socket = socketFactory({

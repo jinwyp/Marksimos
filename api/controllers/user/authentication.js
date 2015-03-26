@@ -4,7 +4,7 @@ var teamModel = require('../../models/user/team.js');
 var seminarModel = require('../../models/marksimos/seminar.js');
 var Token = require('../../models/user/authenticationtoken.js');
 var emailModel = require('../../models/user/emailContent.js');
-
+var _ = require('lodash');
 
 
 var mailProvider = require('../../../common/sendCloud.js');
@@ -146,31 +146,6 @@ exports.logout = function(req, res, next){
  *
  */
 
-var verifyToken = function (token, callback) {
-    Token.findOne({ token: token }, function (errToken, tokenInfo) {
-        if (errToken) {
-            return callback(errToken);
-        }
-        //token存在且未过期
-        if (tokenInfo && tokenInfo.expires > new Date()) {
-            userModel.findOne({ _id: tokenInfo.userId }).populate('avatar', '-physicalAbsolutePath').select( userModel.selectFields()).exec(function (err, user) {
-                if (err) {
-                    return callback(err);
-                }
-                if (!user) {
-                    //token存在，用户不存在，则可能用户已被删除
-                    return callback('Token existed, but user not found.');
-                }
-                return callback(null, user);
-            });
-        }else {
-            //token过期
-            callback('Token have expired.');
-        }
-    });
-}
-exports.verifyToken = verifyToken;
-
 
 exports.authLoginToken = function (options) {
     return function (req, res, next) {
@@ -215,7 +190,7 @@ exports.authLoginToken = function (options) {
         var token = req.headers[tokenName] || lookup(req.body, tokenName) || lookup(req.query, tokenName) || req.cookies[tokenName];
 
         if (token) {
-            verifyToken(token, function(err, user) {
+            Token.verifyToken(token, function(err, user) {
                 if (err) {
                     options.message = err;
                     return sendFailureResponse(options, next);
@@ -231,15 +206,25 @@ exports.authLoginToken = function (options) {
                             currentStudentSeminar : seminarResult
                         };
 
+                        var company = _.find(seminarResult.companyAssignment, function(company) {
+                            return company.studentList.indexOf(user.email) > -1;
+                        });
+                        if (company != undefined) {
+                            req.gameMarksimos.socketRoomName = seminarResult.seminarId + company.companyId;
+                        }
+                        else {
+                            req.gameMarksimos.socketRoomName = false;
+                        }
+
                         // very important, after seminar finished currentPeriod is last round
                         if(req.gameMarksimos.currentStudentSeminar.currentPeriod > req.gameMarksimos.currentStudentSeminar.simulationSpan){
                             req.gameMarksimos.currentStudentSeminar.currentPeriod =  req.gameMarksimos.currentStudentSeminar.simulationSpan;
                         }
-
                     }else{
                         req.gameMarksimos = {
                             currentStudent : false,
-                            currentStudentSeminar : false
+                            currentStudentSeminar : false,
+                            socketRoomName : false
                         };
                     }
 
