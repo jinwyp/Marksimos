@@ -36,7 +36,12 @@
 
                     <nav class="profile-nav">
                         <ul><!--['上传头像', '基本信息', '安全信息', '学校信息', '团队信息', '联系方式']-->
-                            <li ng-repeat="type in profile.css.tabs" ng-class="{selected: profile.css.currentTabIndex == $index}" ng-click="profile.clickSwitchTab($index)">{{type}}</li>
+                            <li ng-class="{selected: profile.css.currentTabIndex == 0}" ng-click="profile.clickSwitchTab(0)">{{'ProfilePageTabUploadAvatar' | translate}}</li>
+                            <li ng-class="{selected: profile.css.currentTabIndex == 1}" ng-click="profile.clickSwitchTab(1)">{{'ProfilePageTabBasicInfo' | translate}}</li>
+                            <li ng-class="{selected: profile.css.currentTabIndex == 2}" ng-click="profile.clickSwitchTab(2)">{{'ProfilePageTabSecurityInfo' | translate}}</li>
+                            <li ng-class="{selected: profile.css.currentTabIndex == 3}" ng-click="profile.clickSwitchTab(3)">{{'ProfilePageTabSchoolInfo' | translate}}</li>
+                            <li ng-class="{selected: profile.css.currentTabIndex == 4}" ng-click="profile.clickSwitchTab(4)">{{'ProfilePageTabTeamInfo' | translate}}</li>
+                            <li ng-class="{selected: profile.css.currentTabIndex == 5}" ng-click="profile.clickSwitchTab(5)">{{'ProfilePageTabContactInfo' | translate}}</li>
                         </ul>
                     </nav>
                 </aside>
@@ -44,7 +49,7 @@
                     <div class="row alert-container"><div id="profile-alert-container"></div></div>
                     <div class="row" ng-if="profile.css.currentTabIndex == 0">
                         <div class="file-input-wrapper glyphicon glyphicon-plus center-block">
-                            <span class="file-upload-text">上传图片</span>
+                            <span class="file-upload-text">{{'ProfilePageUploadAvatarSelectionButton' | translate}}</span>
                             <div class="wrapper">
                                 <input class="file-input" type="file" nv-file-select uploader="profile.uploader" accept=".jpg,.png,.jpeg,.bmp,.gif"/>
                             </div>
@@ -52,16 +57,16 @@
                         <ul class="center-block preview-avatar profile-button-container">
                             <li ng-repeat="item in profile.uploader.queue">
                                 <div ng-thumb="{ file: item._file}"></div>
-                                <button type="submit" class="center-block" ng-click="item.upload()">上传</button>
+                                <button type="submit" class="center-block" ng-click="item.upload()">{{'ProfilePageUploadAvatarUploadButton' | translate}}</button>
                             </li>
                         </ul>
                     </div>
 
                     <div class="row" ng-if="profile.css.currentTabIndex == 1">
-                        <div class="profile-detail-title">基本信息<span class="profile-edit" ng-click="profile.clickEditProfile()">编辑</span></div>
+                        <div class="profile-detail-title">{{'ProfilePageTabBasicInfo' | translate}}<span class="profile-edit" ng-click="profile.clickEditProfile()">{{'ProfilePageEditButton' | translate}}</span></div>
                         <form name="basicInfoForm" class="form-horizontal">
                             <div class="form-group firstName">
-                                <label for="school" class="control-label col-md-3 text-right">姓名：</label>
+                                <label for="school" class="control-label col-md-3 text-right">{{'ProfilePageTabBasicInfoName' | translate}} :</label>
                                 <div class="col-xs-5" ng-if="!profile.css.formEditing">
                                     <p class="form-control-static">{{profile.currentUser.firstName}}&nbsp</p>
                                 </div>
@@ -72,19 +77,19 @@
                             <!--<div class="row"><label for="firstName" class="col-md-3 text-right">用户名：</label><input type="text" name="name" id="name" class="col-md-7"></div>
                             <div class="row"><label for="email" class="col-md-3 text-right">邮箱：</label><input type="text" id="email" name="email" class="col-md-7"></div>-->
                             <div class="form-group radio" ng-class="{'has-success':basicInfoForm.gender.$dirty&&basicInfoForm.gender.$valid, 'has-error':basicInfoForm.gender.$dirty&&basicInfoForm.gender.$invalid}">
-                                <label class="col-md-3 control-label  text-right">性别：</label>
+                                <label class="col-md-3 control-label  text-right">{{'ProfilePageBasicInfoGender' | translate}} :</label>
                                 <div class="col-xs-9" ng-if="!profile.css.formEditing">
-                                    <p class="form-control-static" ng-if="profile.currentUser.gender == 1">男</p>
-                                    <p class="form-control-static" ng-if="profile.currentUser.gender == 2">女</p>
+                                    <p class="form-control-static" ng-if="profile.currentUser.gender == 1">{{'ProfilePageBasicInfoGenderFemale' | translate}}</p>
+                                    <p class="form-control-static" ng-if="profile.currentUser.gender == 2">{{'ProfilePageBasicInfoGenderMale' | translate}}</p>
                                 </div>
                                 <div class="col-xs-9 gender-radio" ng-if="profile.css.formEditing">
-                                    <label  class="control-label control-inline"><input type="radio" ng-model="profile.formData.gender" name="gender" value="1"/>男</label>
-                                    <label class="female control-label control-inline"><input type="radio" ng-model="profile.formData.gender" name="gender" value="2"/>女</label>
+                                    <label  class="control-label control-inline"><input type="radio" ng-model="profile.formData.gender" name="gender" value="1"/>{{'ProfilePageBasicInfoGenderFemale' | translate}}</label>
+                                    <label class="female control-label control-inline"><input type="radio" ng-model="profile.formData.gender" name="gender" value="2"/>{{'ProfilePageBasicInfoGenderMale' | translate}}</label>
                                 </div>
                             </div>
 
                             <div class="form-group" ng-class="{'has-error': basicInfoForm.birthday.$invalid, 'has-success':basicInfoForm.birthday.$dirty&&basicInfoForm.birthday.$valid}">
-                                <label for="birthday" class="control-label col-md-3 text-right">生日：</label>
+                                <label for="birthday" class="control-label col-md-3 text-right">{{'ProfilePageBasicInfoBirthday' | translate}} :</label>
                                 <div class="col-xs-9" ng-if="!profile.css.formEditing">
                                     <p class="form-control-static">{{profile.currentUser.birthday|date:"yyyy-MM-dd"}}</p>
                                 </div>
@@ -95,15 +100,15 @@
                             </div>
                             <div class="form-group" ng-if="profile.css.formEditing">
                                 <div class="col-md-6 col-md-offset-3 profile-button-container">
-                                    <button ng-click="profile.clickUpdateUserInfo(basicInfoForm)" type="submit">保存修改</button>
-                                    <button ng-click="profile.clickCancelEditProfile()" class="cancel">取消</button>
+                                    <button ng-click="profile.clickUpdateUserInfo(basicInfoForm)" type="submit">{{'ProfilePageSaveChangesButton' | translate}}</button>
+                                    <button ng-click="profile.clickCancelEditProfile()" class="cancel">{{'ProfilePageCancelButton' | translate}}</button>
                                 </div>
                             </div>
                         </form>
                     </div>
 
                     <div class="row" ng-if="profile.css.currentTabIndex == 2">
-                        <div class="profile-detail-title">安全信息<span class="profile-edit" ng-click="profile.clickEditProfile()">编辑</span></div>
+                        <div class="profile-detail-title">安全信息<span class="profile-edit" ng-click="profile.clickEditProfile()">{{'ProfilePageEditButton' | translate}}</span></div>
                         <form name="securityInfoForm" class="form-horizontal" novalidate>
                             <div class="form-group" ng-class="{'has-success':securityInfoForm.oldPassword.$dirty&&securityInfoForm.oldPassword.$valid, 'has-error':securityInfoForm.oldPassword.$dirty&&securityInfoForm.oldPassword.$invalid}">
                                 <label for="oldPassword" class="control-label col-md-3 text-right">原始密码：</label>
@@ -130,8 +135,8 @@
                             </div>
                             <div class="row" ng-if="profile.css.formEditing">
                                 <div class="col-md-6 col-md-offset-3 profile-button-container">
-                                    <button type="submit" ng-click="profile.clickUpdatePassword(securityInfoForm)">保存修改</button>
-                                    <button class="cancel" ng-click="profile.clickCancelEditProfile()">取消</button>
+                                    <button type="submit" ng-click="profile.clickUpdatePassword(securityInfoForm)">{{'ProfilePageSaveChangesButton' | translate}}</button>
+                                    <button class="cancel" ng-click="profile.clickCancelEditProfile()">{{'ProfilePageCancelButton' | translate}}</button>
                                 </div>
                             </div>
                         </form>
@@ -139,7 +144,7 @@
 
 
                     <div class="row" ng-if="profile.css.currentTabIndex == 3">
-                        <div class="profile-detail-title">学校信息<span class="profile-edit" ng-click="profile.clickEditProfile()">编辑</span></div>
+                        <div class="profile-detail-title">学校信息<span class="profile-edit" ng-click="profile.clickEditProfile()">{{'ProfilePageEditButton' | translate}}</span></div>
                         <form name="schoolForm" class="form-horizontal">
                             <div class="form-group">
                                 <label for="school" class="control-label col-md-3 text-right">大学：</label>
@@ -173,8 +178,8 @@
                             </div>
                             <div class="row" ng-if="profile.css.formEditing">
                                 <div class="col-md-6 col-md-offset-3 profile-button-container">
-                                    <button ng-click="profile.clickUpdateUserInfo(schoolForm)" type="submit">保存修改</button>
-                                    <button class="cancel" ng-click="profile.clickCancelEditProfile()">取消</button>
+                                    <button ng-click="profile.clickUpdateUserInfo(schoolForm)" type="submit">{{'ProfilePageSaveChangesButton' | translate}}</button>
+                                    <button class="cancel" ng-click="profile.clickCancelEditProfile()">{{'ProfilePageCancelButton' | translate}}</button>
                                 </div>
                             </div>
                         </form>
@@ -183,7 +188,7 @@
 
 
                     <div class="row team-info" ng-if="profile.css.currentTabIndex == 4">
-                        <div class="profile-detail-title">团队信息<!--<span class="profile-edit" ng-click="profile.clickEditProfile(3)">编辑</span>--></div>
+                        <div class="profile-detail-title">团队信息<!--<span class="profile-edit" ng-click="profile.clickEditProfile(3)">{{'ProfilePageEditButton' | translate}}</span>--></div>
                         <form novalidate name="teamNameForm" class="none-bottom form-horizontal" ng-submit="profile.clickUpdateTeamName(teamNameForm)">
                             <div class="form-group team-name" ng-class="{'has-success':teamNameForm.teamName.$dirty&&teamNameForm.teamName.$valid, 'has-error':teamNameForm.teamName.$dirty&&teamNameForm.teamName.$invalid}" >
                                 <label class="col-md-3 control-label text-right team-label" for="teamName">战队名称：</label>
@@ -194,8 +199,8 @@
                                     <input class="form-control col-md-6" required ng-model="profile.formData.teamName" type="text" id="teamName" name="teamName">
                                 </div>
                                 <span class="err-msg" ng-if="teamNameForm.teamName.$dirty&&teamNameForm.teamName.$error.required">请输入正确的战队名称!</span>
-                                <button ng-if="!profile.css.formEditing" class="done col-md-3">修改</button>
-                                <button ng-if="profile.css.formEditing" class="col-md-3">保存</button>
+                                <button ng-if="!profile.css.formEditing" class="done col-md-3">{{'ProfilePageChangeButton' | translate}}</button>
+                                <button ng-if="profile.css.formEditing" class="col-md-3">{{'ProfilePageSaveButton' | translate}}</button>
                             </div>
                         </form>
                         <form novalidate name="teamForm" class="form-horizontal none-top">
@@ -221,7 +226,7 @@
 
 
                     <div class="row" ng-if="profile.css.currentTabIndex == 5">
-                        <div class="profile-detail-title">联系方式<span class="profile-edit" ng-click="profile.clickEditProfile()">编辑</span></div>
+                        <div class="profile-detail-title">联系方式<span class="profile-edit" ng-click="profile.clickEditProfile()">{{'ProfilePageEditButton' | translate}}</span></div>
                         <form name="contactForm" class="form-horizontal" novalidate>
                             <div class="form-group" ng-class="{'has-success':contactForm.qq.$dirty&&contactForm.qq.$valid, 'has-error':contactForm.qq.$dirty&&contactForm.qq.$invalid}" >
                                 <label for="qq" class="control-label col-md-3 text-right">QQ：</label>
@@ -247,8 +252,8 @@
                             </div>
                             <div class="row" ng-if="profile.css.formEditing">
                                 <div class="col-md-6 col-md-offset-3 profile-button-container">
-                                    <button ng-click="profile.clickUpdateUserInfo(contactForm)" type="submit">保存修改</button>
-                                    <button class="cancel" ng-click="profile.clickCancelEditProfile()">取消</button>
+                                    <button ng-click="profile.clickUpdateUserInfo(contactForm)" type="submit">{{'ProfilePageSaveChangesButton' | translate}}</button>
+                                    <button class="cancel" ng-click="profile.clickCancelEditProfile()">{{'ProfilePageCancelButton' | translate}}</button>
                                 </div>
                             </div>
                         </form>

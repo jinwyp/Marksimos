@@ -27,8 +27,6 @@
             ProfilePageTabSchoolInfo: 'School Info',
             ProfilePageTabTeamInfo: 'Team Info',
             ProfilePageTabContactInfo: 'Contact Info',
-            // the combination of the six above.
-            ProfilePageTabs: '{{avatar}},{{basic}},{{security}},{{school}},{{team}},{{contact}}',
 
             //Labels for Info Details
             ProfilePageEditButton: 'Edit',
@@ -36,7 +34,7 @@
             ProfilePageCancelButton: 'Cancel',
             ProfilePageChangeButton: 'Change',
             ProfilePageSaveButton: 'Save',
-            ProfilePageUploadAvatarSelectionButton: 'Upload Picture',
+            ProfilePageUploadAvatarSelectionButton: 'Upload',
             ProfilePageBasicInfoName: 'Name',
             ProfilePageBasicInfoGender: 'Gender',
             ProfilePageBasicInfoGenderMale: 'Male',
@@ -93,7 +91,6 @@
             ProfilePageTabSchoolInfo: '学校信息',
             ProfilePageTabTeamInfo: '团队信息',
             ProfilePageTabContactInfo: '联系方式',
-            ProfilePageTabs: '{{avatar}},{{basic}},{{security}},{{school}},{{team}},{{contact}}',
 
             //Labels for Info Details
             ProfilePageEditButton: '编辑',
