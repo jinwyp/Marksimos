@@ -180,6 +180,7 @@
 
     angular.module('b2clogin').controller('profileController', ['Student', '$alert', 'FileUploader', '$translate', function(Student, $alert, FileUploader, $translate) {
         /* jshint validthis: true */
+        $translate.use('en_US');
         var vm = this;
         vm.css = {
             addStudentFailedInfo: false,
@@ -201,13 +202,7 @@
                 dismissable: false
             },
             defaultAvatar: 'app/css/images/profile_avatar_2.png',
-            errorFields: {},
-            tabs: $translate('ProfilePageTabs', {
-                avatar: $translate.instant('ProfilePageTabUploadAvatar')/*,
-                basic:,
-                security:,
-                school:,*/
-            })
+            errorFields: {}
         };
 
         vm.currentUser = {};
