@@ -31,7 +31,7 @@ var paths = {
     sassSourceFiles: './public/app/css/sass/*.scss',
     cssSourceFiles: './public/app/css/stylesheets/marksimosmain.css',
     cssOutputPath: './public/app/css/stylesheets',
-    cssDistPath: './public/app/dist',
+    cssDistPath: './public/app/css/distcss/',
     sasspath: 'public/app/css/sass',  // removed the dot-slash from here  './public/app/css/sass' wrong format
     imagespath : './public/app/css/images',
 
