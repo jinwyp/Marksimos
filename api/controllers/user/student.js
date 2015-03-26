@@ -11,7 +11,6 @@ var fileUploadModel = require('../../models/user/fileupload.js');
 
 
 exports.updateStudentB2CInfo = function(req, res, next){
-
     var validationErrors = userModel.userInfoValidations(req, userRoleModel.roleList.student.id, userModel.getStudentType().B2C);
 
     if(validationErrors){
@@ -19,17 +18,16 @@ exports.updateStudentB2CInfo = function(req, res, next){
     }
 
     var updatedUser = {};
-
     if(typeof req.body.gender !== 'undefined') updatedUser.gender = req.body.gender;
     if(typeof req.body.birthday !== 'undefined') updatedUser.birthday = req.body.birthday;
     if(typeof req.body.firstName !== 'undefined') updatedUser.firstName = req.body.firstName;
-    if(typeof req.body.lastName !== 'undefined') updatedUser.gender = req.body.lastName;
-    if(typeof req.body.idcardNumber !== 'undefined') updatedUser.gender = req.body.idcardNumber;
+    if(typeof req.body.lastName !== 'undefined') updatedUser.lastName = req.body.lastName;
+    if(typeof req.body.idcardNumber !== 'undefined') updatedUser.idcardNumber = req.body.idcardNumber;
 
     if(typeof req.body.mobilePhone !== 'undefined') updatedUser.mobilePhone = req.body.mobilePhone;
     if(typeof req.body.qq !== 'undefined') updatedUser.gender = req.body.qq;
 
-    if(typeof req.body.majorsDegree !== 'undefined') updatedUser.majorsDegree = req.body.qq;
+    if(typeof req.body.majorsDegree !== 'undefined') updatedUser.majorsDegree = req.body.majorsDegree;
     if(typeof req.body.dateOfEnterCollege !== 'undefined') updatedUser.dateOfEnterCollege = req.body.dateOfEnterCollege;
     if(typeof req.body.dateOfGraduation !== 'undefined') updatedUser.dateOfGraduation = req.body.dateOfGraduation;
     if(typeof req.body.organizationOrUniversity !== 'undefined') updatedUser.organizationOrUniversity = req.body.organizationOrUniversity;
@@ -44,9 +42,7 @@ exports.updateStudentB2CInfo = function(req, res, next){
     if(typeof req.body.websiteLanguage !== 'undefined') updatedUser.websiteLanguage = req.body.websiteLanguage;
 
 
-
-    userModel.findOneAndUpdateQ( { _id : req.user._id }, updatedUser ).then(function(resultUser){
-
+    userModel.findOneAndUpdateQ( { _id : req.user._id }, {$set:updatedUser}  ).then(function(resultUser){
         if(!resultUser){
             throw new Error('Cancel promise chains. Because Update Team failed. more or less than 1 record is updated. it should be only one !');
         }

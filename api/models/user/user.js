@@ -58,7 +58,7 @@ var userSchema = new Schema({
 
 
     //user basic info
-    gender       : Number,  // 1 male 2 female
+    gender       : {type: Number, default: 1 , min: 0, max: 10},  // 1 male 2 female
     birthday: Date,
     firstName    : String,
     lastName     : String,

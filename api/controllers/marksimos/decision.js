@@ -171,7 +171,7 @@ exports.getDecision = function(req, res, next){
     var companyId = +req.query.companyId;
 
     if(!seminarId || !companyId || !period){
-        return res.send(403, {message: "You don't choose a seminar."});
+        return res.send(400, {message: "You don't choose a seminar."});
     }
 
 
@@ -223,28 +223,28 @@ exports.updateSKUDecision = function(req, res, next){
     }
 
     if(!seminarId){
-        return res.send(403, {message: "You don't choose a seminar."});
+        return res.send(400, {message: "You don't choose a seminar."});
     }
 
 
     if(!brandId){
-        return res.send(403, {message: "Invalid parameter brand_id."});
+        return res.send(400, {message: "Invalid parameter brand_id."});
     }
 
     if(!SKUID){
-        return res.send(403, {message: "Invalid parameter sku_id."});
+        return res.send(400, {message: "Invalid parameter sku_id."});
     }
 
     if(!SKU){
-        return res.send(403, {message: "Invalid parameter skudata"});
+        return res.send(400, {message: "Invalid parameter skudata"});
     }
 
     if(!companyId){
-        return res.send(403, {message: "Invalid companyId."});
+        return res.send(400, {message: "Invalid companyId."});
     }
 
     if(period === undefined){
-        return res.send(403, {message: "Invalid period in session."});
+        return res.send(400, {message: "Invalid period in session."});
     }
 
     var jsonSKU = SKU;
@@ -262,7 +262,7 @@ exports.updateSKUDecision = function(req, res, next){
         var message = JSON.stringify(err, ['message', 'lower', 'upper', 'modifiedField'], 2);
 
         logger.log('!!!!: ' + message);
-        res.send(403, message);
+        res.send(400, message);
     })
     .done();
 
@@ -307,23 +307,23 @@ exports.updateBrandDecision = function(req, res, next){
     }
 
     if(!brandId){
-        return res.send(403, {message: "Invalid parameter brand_id."});
+        return res.send(400, {message: "Invalid parameter brand_id."});
     }
 
     if(!brand_data){
-        return res.send(403, {message: "Invalid parameter brand_data"});
+        return res.send(400, {message: "Invalid parameter brand_data"});
     }
 
     if(!seminarId){
-        return res.send(403, {message: "Invalid seminarId in session."});
+        return res.send(400, {message: "Invalid seminarId in session."});
     }
 
     if(!companyId){
-        return res.send(403, {message: "Invalid companyId."});
+        return res.send(400, {message: "Invalid companyId."});
     }
 
     if(period === undefined){
-        return res.send(403, {message: "Invalid period in session."});
+        return res.send(400, {message: "Invalid period in session."});
     }
 
     var tempBrand = filterBrandField(brand_data);
@@ -334,7 +334,7 @@ exports.updateBrandDecision = function(req, res, next){
     })
     .fail(function(err){
         var message = JSON.stringify(err, ['message', 'lower', 'upper', 'modifiedField'], 2);
-        res.send(403, message);
+        res.send(400, message);
     })
     .done();
 
@@ -366,19 +366,19 @@ exports.updateCompanyDecision = function(req, res, next){
     }
 
     if(!company_data){
-        return res.send(403, {message: "Invalid parameter company_data"});
+        return res.send(400, {message: "Invalid parameter company_data"});
     }
 
     if(!seminarId){
-        return res.send(403, {message: "Invalid seminarId in session."});
+        return res.send(400, {message: "Invalid seminarId in session."});
     }
 
     if(!companyId){
-        return res.send(403, {message: "Invalid companyId ."});
+        return res.send(400, {message: "Invalid companyId ."});
     }
 
     if(period === undefined){
-        return res.send(403, {message: "Invalid period in session."});
+        return res.send(400, {message: "Invalid period in session."});
     }
 
     var tempCompanyDecision = filterCompanyDecision(company_data);
@@ -390,7 +390,7 @@ exports.updateCompanyDecision = function(req, res, next){
     })
     .fail(function(err){
         var message = JSON.stringify(err, ['message', 'lower', 'upper', 'modifiedField'], 2);
-        res.send(403, message);
+        res.send(400, message);
     })
     .done();
 
@@ -414,7 +414,7 @@ exports.addBrand = function(req, res, next){
     var period = req.gameMarksimos.currentStudentSeminar.currentPeriod;
 
     if(!seminarId){
-        return res.send(403, {message: "You don't choose a seminar."});
+        return res.send(400, {message: "You don't choose a seminar."});
     }
 
     var companyId = +req.body.companyId;
@@ -423,11 +423,11 @@ exports.addBrand = function(req, res, next){
     var sku_name = req.body.sku_name;
 
     if(!brand_name){
-        return res.send(403, {message: "Invalid parameter brand_name."});
+        return res.send(400, {message: "Invalid parameter brand_name."});
     }
 
     if(!sku_name){
-        return res.send(403, {message: "Invalid parameter sku_name."})
+        return res.send(400, {message: "Invalid parameter sku_name."})
     }
 
     brandDecisionModel.create({
@@ -451,7 +451,7 @@ exports.addBrand = function(req, res, next){
     })
     .fail(function(err){
         var message = JSON.stringify(err, ['message'], 2);
-        res.send(403, message);
+        res.send(400, message);
     })
     .done();
 
@@ -466,7 +466,7 @@ exports.addBrand = function(req, res, next){
     //     })
 
     //     if(maxBrandId===0 || maxBrandId % 10 > 4){
-    //         return res.send(403, {message: "you alread have 5 brands."});
+    //         return res.send(400, {message: "you alread have 5 brands."});
     //     }
 
     //     var nextBrandId = maxBrandId +1;
@@ -508,7 +508,7 @@ exports.addSKU = function(req, res, next){
     var period = req.gameMarksimos.currentStudentSeminar.currentPeriod;
 
     if(!seminarId){
-        return res.send(403, {message: "You don't choose a seminar."});
+        return res.send(400, {message: "You don't choose a seminar."});
     }
 
     var companyId = +req.body.companyId;
@@ -517,7 +517,7 @@ exports.addSKU = function(req, res, next){
     var sku_name = req.body.sku_name;
 
     if(!sku_name){
-        return res.send(403, {message: "Invalid parameter sku_name."})
+        return res.send(400, {message: "Invalid parameter sku_name."})
     }
 
     SKUDecisionModel.create({
@@ -532,7 +532,7 @@ exports.addSKU = function(req, res, next){
     })
     .fail(function(err){
         var message = JSON.stringify(err, ['message'], 2);
-        res.send(403, message)
+        res.send(400, message)
     })
     .done();
 };
@@ -542,7 +542,7 @@ exports.deleteSKU = function(req, res, next){
     var period = req.gameMarksimos.currentStudentSeminar.currentPeriod;
 
     if(!seminarId){
-        return res.send(403, {message: "You don't choose a seminar."});
+        return res.send(400, {message: "You don't choose a seminar."});
     }
 
     var companyId = +req.params.company_id;
@@ -550,11 +550,11 @@ exports.deleteSKU = function(req, res, next){
     var sku_id = req.params.sku_id;
 
     if(!brand_id){
-        return res.send(403, {message: "Invalid parameter brand_id."});
+        return res.send(400, {message: "Invalid parameter brand_id."});
     }
 
     if(!sku_id){
-        return res.send(403, {message: "Invalid parameter sku_id."})
+        return res.send(400, {message: "Invalid parameter sku_id."})
     }
 
     SKUDecisionModel.remove(seminarId, period, companyId, brand_id, sku_id)
@@ -574,7 +574,7 @@ exports.getProductPortfolio = function(req, res, next){
 
 
     if(!seminarId){
-        return res.send(403, {message: "You don't choose a seminar."});
+        return res.send(400, {message: "You don't choose a seminar."});
     }
 
     var companyId = +req.query.companyId;
@@ -595,7 +595,7 @@ exports.getSpendingDetails = function(req, res, next){
     var period = req.gameMarksimos.currentStudentSeminar.currentPeriod;
 
     if(!seminarId){
-        return res.send(403, {message: "You don't choose a seminar."});
+        return res.send(400, {message: "You don't choose a seminar."});
     }
 
     var companyId = +req.query.companyId;
@@ -617,7 +617,7 @@ exports.getSKUInfoFutureProjection = function(req, res, next){
     var period = req.gameMarksimos.currentStudentSeminar.currentPeriod;
 
     if(!seminarId){
-        return res.send(403, {message: "You don't choose a seminar."});
+        return res.send(400, {message: "You don't choose a seminar."});
     }
 
     var companyId = +req.query.companyId;
@@ -625,7 +625,7 @@ exports.getSKUInfoFutureProjection = function(req, res, next){
     var SKUID = req.params.sku_id;
 
     if(!SKUID){
-        return res.send(403, {message: "Invalid parameter sku_id."});
+        return res.send(400, {message: "Invalid parameter sku_id."});
     }
 
     SKUInfoAssembler.getSKUInfo(seminarId, period, companyId, SKUID)
@@ -645,7 +645,7 @@ exports.getOtherinfo = function(req, res, next){
     var period = req.gameMarksimos.currentStudentSeminar.currentPeriod;
 
     if(!seminarId){
-        return res.send(403, {message: "You don't choose a seminar."});
+        return res.send(400, {message: "You don't choose a seminar."});
     }
 
     var companyId = +req.query.companyId;
