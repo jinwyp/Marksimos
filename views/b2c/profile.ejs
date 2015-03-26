@@ -79,12 +79,12 @@
                             <div class="form-group radio" ng-class="{'has-success':basicInfoForm.gender.$dirty&&basicInfoForm.gender.$valid, 'has-error':basicInfoForm.gender.$dirty&&basicInfoForm.gender.$invalid}">
                                 <label class="col-md-3 control-label  text-right">{{'ProfilePageBasicInfoGender' | translate}} :</label>
                                 <div class="col-xs-9" ng-if="!profile.css.formEditing">
-                                    <p class="form-control-static" ng-if="profile.currentUser.gender == 1">{{'ProfilePageBasicInfoGenderFemale' | translate}}</p>
-                                    <p class="form-control-static" ng-if="profile.currentUser.gender == 2">{{'ProfilePageBasicInfoGenderMale' | translate}}</p>
+                                    <p class="form-control-static" ng-if="profile.currentUser.gender == 1">{{'ProfilePageBasicInfoGenderMale' | translate}}&nbsp;&nbsp;</p>
+                                    <p class="form-control-static" ng-if="profile.currentUser.gender == 2">{{'ProfilePageBasicInfoGenderFemale' | translate}}</p>
                                 </div>
                                 <div class="col-xs-9 gender-radio" ng-if="profile.css.formEditing">
-                                    <label  class="control-label control-inline"><input type="radio" ng-model="profile.formData.gender" name="gender" value="1"/>{{'ProfilePageBasicInfoGenderFemale' | translate}}</label>
-                                    <label class="female control-label control-inline"><input type="radio" ng-model="profile.formData.gender" name="gender" value="2"/>{{'ProfilePageBasicInfoGenderMale' | translate}}</label>
+                                    <label  class="control-label control-inline"><input type="radio" ng-model="profile.formData.gender" name="gender" value="1"/>{{'ProfilePageBasicInfoGenderMale' | translate}}&nbsp;&nbsp;</label>
+                                    <label class="female control-label control-inline"><input type="radio" ng-model="profile.formData.gender" name="gender" value="2"/>{{'ProfilePageBasicInfoGenderFemale' | translate}}</label>
                                 </div>
                             </div>
 
