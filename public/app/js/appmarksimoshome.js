@@ -7,12 +7,12 @@
 
 
     /********************  Create New Module For Controllers ********************/
-    angular.module('marksimos', ['pascalprecht.translate', 'angularCharts', 'nvd3ChartDirectives', 'cgNotify', 'marksimos.config', 'marksimos.commoncomponent', 'marksimos.websitecomponent', 'marksimos.model', 'marksimos.filter', 'marksimos.translation' ]);
+    angular.module('marksimos', ['pascalprecht.translate', 'angularCharts', 'nvd3ChartDirectives', 'cgNotify', 'marksimos.config', 'marksimos.commoncomponent', 'marksimos.websitecomponent', 'marksimos.model', 'marksimos.socketmodel', 'marksimos.filter', 'marksimos.translation' ]);
 
 
 
     /********************  Use This Module To Set New Controllers  ********************/
-    angular.module('marksimos').controller('chartController', ['$translate', '$scope', '$rootScope', '$document', '$timeout', '$interval', '$http', 'notify', 'chartReport', 'tableReport', 'Student', 'Company',  function($translate, $scope, $rootScope, $document, $timeout, $interval, $http, notify, chartReport, tableReport, Student, Company ) {
+    angular.module('marksimos').controller('chartController', ['$translate', '$scope', '$rootScope', '$document', '$timeout', '$interval', '$http', 'notify', 'chartReport', 'tableReport', 'Student', 'Company', 'socket', function($translate, $scope, $rootScope, $document, $timeout, $interval, $http, notify, chartReport, tableReport, Student, Company, socket) {
 
         $rootScope.$on('$translateChangeSuccess', function () {
             app.loadingChartData();
@@ -1028,10 +1028,9 @@
 
         app.initOnce();
 
-
-
-
-
+        socket.socket.on('update', function(){
+            app.reRun();
+        });
 
 
         /********************  点击添加一个新的Brand 显示添加Brand的表单  ********************/
@@ -1054,7 +1053,7 @@
 
                 Company.addBrand($scope.data.newBrand).then(function(data, status, headers, config){
 
-                    app.reRun();
+//                    app.reRun();
 
                     notify({
                         message  : 'Save Success !',
@@ -1087,7 +1086,7 @@
                 form.brandSalesForce.$valid = true;
                 form.brandSalesForce.$invalid = false;
 
-                app.reRun();
+//                app.reRun();
 
                 notify({
                     message : 'Save Success !',
@@ -1126,7 +1125,7 @@
             if (form.$valid) {
                 Company.addSku($scope.data.newSku).then(function(data, status, headers, config){
 
-                    app.reRun();
+//                    app.reRun();
 
                     notify({
                         message  : 'Save Success !',
@@ -1243,7 +1242,7 @@
 
                 Company.updateSku($scope.data.currentModifiedSku).then(function(data, status, headers, config){
 
-                    app.reRun();
+//                    app.reRun();
 
                     notify({
                         message : 'Save Success !',
@@ -1303,7 +1302,7 @@
                         templateUrl : notifytemplate.failure,
                         position : 'center'
                     });
-                    app.reRun();
+//                    app.reRun();
                 });
             }
 
@@ -1314,7 +1313,7 @@
         $scope.delSku = function(sku){
             Company.delSku($scope.data.currentSeminar.currentCompany.companyId, sku.d_BrandID, sku.d_SKUID).then(function(data, status, headers, config){
 
-                app.reRun();
+//                app.reRun();
 
                 notify({
                     message  : 'Delete Sku Success !',
@@ -1348,7 +1347,7 @@
                 form[formfieldname].$valid = true;
                 form[formfieldname].$invalid = false;
 
-                app.reRun();
+//                app.reRun();
 
                 notify({
                     message : 'Save Success !',
@@ -1600,9 +1599,5 @@
         };
 
     }]);
-
-
-
-
 
 }());
