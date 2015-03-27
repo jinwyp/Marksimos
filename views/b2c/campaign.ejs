@@ -9,22 +9,22 @@
     <div class="center-block nav-container">
         <ul class="nav navbar-nav">
             <li>
-                <a href="#enter">比赛报名</a>
+                <a href="#enter">{{'CampaignPageNavEnterMatch' | translate}}</a>
             </li>
             <li>
-                <a href="#schedules">大赛赛程</a>
+                <a href="#schedules">{{'CampaignPageNavSchedules' | translate}}</a>
             </li>
             <li>
-                <a href="#gains">你能获得</a>
+                <a href="#gains">{{'CampaignPageNavGains' | translate}}</a>
             </li>
             <li>
-                <a href="#conditions">加入条件</a>
+                <a href="#conditions">{{'CampaignPageNavConditions' | translate}}</a>
             </li>
             <li>
-                <a href="#process">参赛流程</a>
+                <a href="#process">{{'CampaignPageNavProcess' | translate}}</a>
             </li>
             <li>
-                <a href="#winner">获胜团队</a>
+                <a href="#winner">{{'CampaignPageNavWinner' | translate}}</a>
             </li>
         </ul>
     </div>
@@ -34,11 +34,11 @@
 </div>
 <div class="container-fluid campaign-main">
     <div id="enter" class="center-block campaign-enter">
-        <button ng-if="!campaign.css.hasEntered" class="enter-button" ng-click="campaign.clickStudentEnter()">马上报名</button>
-        <button ng-if="campaign.css.hasEntered" class="already-entered-button" ng-click="campaign.clickStudentEnter()">您已报名</button>
+        <button ng-if="!campaign.css.hasEntered" class="enter-button" ng-click="campaign.clickStudentEnter()">{{'CampaignPageEnterCampaignEnterButton' | translate}}</button>
+        <button ng-if="campaign.css.hasEntered" class="already-entered-button" ng-click="campaign.clickStudentEnter()">{{'CampaignPageEnterCampaignHasEnteredButton' | translate}}</button>
 
-        <a href="/cn/marksimos.html" target="_blank" class="introduce">游戏介绍</a>
-        <span class="enter-count">已有<strong>{{campaign.campaign.totalMembers}}</strong>人参加</span>
+        <a href="/cn/marksimos.html" target="_blank" class="introduce">{{'CampaignPageEnterCampaignIntroduce' | translate}}</a>
+        <span class="enter-count">{{'CampaignPageEnterCampaignCountPrefix' | translate}}<strong>{{campaign.campaign.totalMembers}}</strong>{{'CampaignPageEnterCampaignCountSuffix' | translate}}{{campaign.campaign.totalMembers > 1 ? 'CampaignPageEnterCampaignCountPlural' : '' | translate}}</span>
     </div>
     <!-- enter success template -->
     <script type="text/ng-template" id="campaign-modal-enter-success.html">
@@ -51,8 +51,8 @@
                     </div>
                     <div class="modal-body">
                         <div class="center-block">
-                            <h2>报名成功！</h2>
-                            <p>快来体验游戏吧</p>
+                            <h2>{{'CampaignPageEnterSuccessTip1' | translate}}！</h2>
+                            <p>{{'CampaignPageEnterSuccessTip2' | translate}}</p>
                         </div>
                     </div>
                 </div>
@@ -65,14 +65,14 @@
             <div class="modal-dialog">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <span>温馨提示</span>
+                        <span>{{'CampaignPageEnterFailedTip1' | translate}}</span>
                         <button class="close" ng-click="$hide()"><span>×</span></button>
                     </div>
                     <div class="modal-body">
                         <div class="center-block">
-                            <h3>请先完成你的队伍信息</h3>
+                            <h3>{{'CampaignPageEnterFailedTip2' | translate}}</h3>
                             <div>
-                                <button>完善信息</button>
+                                <button>{{'CampaignPageEnterFailedCompleteInfoButton' | translate}}</button>
                             </div>
                         </div>
                     </div>
@@ -82,13 +82,13 @@
     </script>
 
     <div id="schedules" class="center-block campaign-schedules">
-        <h3 class="text-center">大赛赛程</h3>
+        <h3 class="text-center">{{'CampaignPageNavSchedules' | translate}}</h3>
         <ul class="schedule-list text-center">
-            <li ng-repeat="seminar in campaign.campaign.seminarListMarksimos"><a href="/marksimos/intro">{{seminar.seminarId + seminar.description}}<span>点击进入</span></a></li>
+            <li ng-repeat="seminar in campaign.campaign.seminarListMarksimos"><a href="/marksimos/intro">{{seminar.seminarId + seminar.description}}<span>{{'CampaignPageSchedulesEnter' | translate}}</span></a></li>
         </ul>
     </div>
     <div id="gains" class="row center-block campaign-gains">
-        <h3 class="col-xs-12 text-center">你能获得</h3>
+        <h3 class="col-xs-12 text-center">{{'CampaignPageNavGains' | translate}}</h3>
         <div class="col-xs-12">
             <ul class="gain-list row">
                 <li class="col-xs-4">
@@ -117,18 +117,18 @@
     </div>
     <div id="conditions" class="enter-condition row">
         <div class="col-xs-12">
-            <h3 class="text-center">加入条件</h3>
+            <h3 class="text-center">{{'CampaignPageNavConditions' | translate}}</h3>
             <div class="row">
                 <div class="col-xs-6 text-right">
                     <img ng-src="/{{campaign.campaign.pictures.qualification.path}}">
                 </div>
                 <div class="col-xs-5 col-xs-offset-1">
-                    <h4>乐于分享</h4>
-                    <p>具有分享精神，愿意分享自己的知识</p>
-                    <h4>敢于挑战</h4>
-                    <p>乐观向上，敢于向自己发起挑战</p>
-                    <h4>有专注力</h4>
-                    <p>目标明确，有足够的专注力</p>
+                    <h4>{{'CampaignPageCondition1' | translate}}</h4>
+                    <p>{{'CampaignPageCondition1Detail' | translate}}</p>
+                    <h4>{{'CampaignPageCondition2' | translate}}</h4>
+                    <p>{{'CampaignPageCondition2Detail' | translate}}</p>
+                    <h4>{{'CampaignPageCondition3' | translate}}</h4>
+                    <p>{{'CampaignPageCondition3Detail' | translate}}</p>
                 </div>
             </div>
         </div>
@@ -137,16 +137,16 @@
         <img ng-src="/{{campaign.campaign.pictures.process.path}}">
     </div>
     <div id="winner" class="campaign-winner row">
-        <h3 class="text-center">获胜队伍</h3>
+        <h3 class="text-center">{{'CampaignPageNavWinner' | translate}}</h3>
         <div class="center-block">
             <div class="col-xs-4 text-center">
-                <span container="body" data-animation="am-fade-and-scale" data-placement="center" bs-modal="modal" data-template="campaign-modal-winner.html">第一轮结果</span>
+                <span container="body" data-animation="am-fade-and-scale" data-placement="center" bs-modal="modal" data-template="campaign-modal-winner.html">{{'CampaignPageRound1' | translate}}</span>
             </div>
             <div class="col-xs-4 text-center">
-                <span>第二轮结果</span>
+                <span>{{'CampaignPageRound2' | translate}}</span>
             </div>
             <div class="col-xs-4 text-center">
-                <span>第三轮结果</span>
+                <span>{{'CampaignPageRound3' | translate}}</span>
             </div>
         </div>
     </div>
@@ -156,41 +156,41 @@
             <div class="modal-dialog">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <span>获胜团队</span>
+                        <span>{{'CampaignPageNavWinner' | translate}}</span>
                         <button class="close" ng-click="$hide()"><span>×</span></button>
                     </div>
                     <div class="modal-body">
                         <div class="winner-icon center-block"></div>
-                        <div class="winner-text text-center center-block">第一轮优胜团队为</div>
+                        <div class="winner-text text-center center-block">{{'CampaignPageRoundWinnerLabel' | translate}}</div>
                         <table class="table table-bordered">
                             <tbody>
                             <tr>
-                                <td>战队名称</td>
-                                <td>战队名称</td>
-                                <td>战队名称</td>
+                                <td>{{'CampaignPageTeamName' | translate}}</td>
+                                <td>{{'CampaignPageTeamName' | translate}}</td>
+                                <td>{{'CampaignPageTeamName' | translate}}</td>
                             </tr>
                             <tr>
-                                <td>成员</td>
-                                <td>成员</td>
-                                <td>成员</td>
+                                <td>{{'CampaignPageMember' | translate}}</td>
+                                <td>{{'CampaignPageMember' | translate}}</td>
+                                <td>{{'CampaignPageMember' | translate}}</td>
                             </tr>
                             <tr>
-                                <td>成员</td>
-                                <td>成员</td>
-                                <td>成员</td>
+                                <td>{{'CampaignPageMember' | translate}}</td>
+                                <td>{{'CampaignPageMember' | translate}}</td>
+                                <td>{{'CampaignPageMember' | translate}}</td>
                             </tr>
                             <tr>
-                                <td>成员</td>
-                                <td>成员</td>
-                                <td>成员</td>
+                                <td>{{'CampaignPageMember' | translate}}</td>
+                                <td>{{'CampaignPageMember' | translate}}</td>
+                                <td>{{'CampaignPageMember' | translate}}</td>
                             </tr>
                             </tbody>
                         </table>
-                        <div class="show-score text-center">查看我的得分</div>
+                        <div class="show-score text-center">{{'CampaignPageCheckScores' | translate}}</div>
                         <div class="scores text-center">
-                            <div>第一轮得分：<i>100</i></div>
-                            <div>第二轮得分：<i>100</i></div>
-                            <div>第三轮得分：<i>100</i></div>
+                            <div>{{'CampaignPageRound1Score' | translate}}：<i>100</i></div>
+                            <div>{{'CampaignPageRound2Score' | translate}}：<i>100</i></div>
+                            <div>{{'CampaignPageRound3Score' | translate}}：<i>100</i></div>
                         </div>
                         <div></div>
                     </div>
@@ -209,7 +209,7 @@
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
-                    <span>配置提示</span>
+                    <span>{{'配置提示' | translate}}</span>
                     <button class="close" ng-click="$hide()"><span>×</span></button>
                 </div>
                 <div class="modal-body">
