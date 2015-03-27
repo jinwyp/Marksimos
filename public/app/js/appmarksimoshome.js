@@ -1028,10 +1028,9 @@
 
         app.initOnce();
 
-        socket.setup();
-
-
-
+        socket.socket.on('update', function(){
+            app.reRun();
+        });
 
 
         /********************  点击添加一个新的Brand 显示添加Brand的表单  ********************/
@@ -1053,7 +1052,7 @@
 
                 Company.addBrand($scope.data.newBrand).then(function(data, status, headers, config){
 
-                    app.reRun();
+//                    app.reRun();
 
                     notify({
                         message  : 'Save Success !',
@@ -1086,7 +1085,7 @@
                 form.brandSalesForce.$valid = true;
                 form.brandSalesForce.$invalid = false;
 
-                app.reRun();
+//                app.reRun();
 
                 notify({
                     message : 'Save Success !',
@@ -1125,7 +1124,7 @@
             if (form.$valid) {
                 Company.addSku($scope.data.newSku).then(function(data, status, headers, config){
 
-                    app.reRun();
+//                    app.reRun();
 
                     notify({
                         message  : 'Save Success !',
@@ -1242,7 +1241,7 @@
 
                 Company.updateSku($scope.data.currentModifiedSku).then(function(data, status, headers, config){
 
-                    app.reRun();
+//                    app.reRun();
 
                     notify({
                         message : 'Save Success !',
@@ -1302,7 +1301,7 @@
                         templateUrl : notifytemplate.failure,
                         position : 'center'
                     });
-                    app.reRun();
+//                    app.reRun();
                 });
             }
 
@@ -1313,7 +1312,7 @@
         $scope.delSku = function(sku){
             Company.delSku($scope.data.currentSeminar.currentCompany.companyId, sku.d_BrandID, sku.d_SKUID).then(function(data, status, headers, config){
 
-                app.reRun();
+//                app.reRun();
 
                 notify({
                     message  : 'Delete Sku Success !',
@@ -1347,7 +1346,7 @@
                 form[formfieldname].$valid = true;
                 form[formfieldname].$invalid = false;
 
-                app.reRun();
+//                app.reRun();
 
                 notify({
                     message : 'Save Success !',
@@ -1599,9 +1598,5 @@
         };
 
     }]);
-
-
-
-
 
 }());
