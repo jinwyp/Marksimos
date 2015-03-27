@@ -186,6 +186,7 @@ db.once('open', function(response,request) {
       console.log('Express server listening on port ' + server.address().port);
     });
     var socketio = require('socket.io').listen(server);
+    global.socketio = socketio;
     require('./common/socketio')(socketio);
 });
 
