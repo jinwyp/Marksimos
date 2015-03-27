@@ -223,6 +223,11 @@
             CampaignPageRound1Score                   : '第一轮得分',
             CampaignPageRound2Score                   : '第二轮得分',
             CampaignPageRound3Score                   : '第三轮得分'
+
+
+
+            //Campaign List Page
+
         });
 
         // Tell the module what language to use by default

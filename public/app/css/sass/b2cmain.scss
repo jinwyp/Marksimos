@@ -1243,8 +1243,9 @@ $lineHeight_button: 1.8;
 	h3 {
 		font-size: 18px;
 	}
-	button {
+	a {
 		color: $color_white;
+		text-decoration: none;
 		font-size: 20px;
 		padding: 5px 54px;
 		border: none;
