@@ -287,7 +287,7 @@ exports.authRole = function (permission, options) {
             }
         }
 
-    }
+    };
 };
 
 
