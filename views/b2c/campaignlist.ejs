@@ -5,7 +5,7 @@
 
 <b2c-header currentuser="profile.currentUser"></b2c-header>
 
-<div class="container-fluid campaignlist-container">
+<div class="container-fluid campaignlist-container" ng-cloak>
     <!-- banner -->
     <div class="campaignlist-banner row text-center">
         <img src="/app/css/images/landing_page_banner.png">
@@ -16,7 +16,7 @@
         <div class="col-xs-12">
             <div class="center-block">
                 <div class="header row">
-                    <h3 class="col-xs-2 text-left">赛事&活动</h3>
+                    <h3 class="col-xs-3 text-left">{{'CampaignListPageMatches' | translate}}</h3>
                     <!--<a class="col-xs-2 col-xs-offset-8 text-right">更多</a>-->
                 </div>
                 <div class="section row">
@@ -31,10 +31,10 @@
                             <div class="col-xs-8 text-left">
                                 <p><%= campaign.name %></p>
                                 <span class="date"><%= campaign.matchDate %></span>
-                                <span class="count"><%= campaign.totalMembers %> 人参加</span>
+                                <span class="count"><%= campaign.totalMembers %> {{'CampaignListPageJoinedCountPrefix' | translate}}{{campaign.totalMembers > 1 ? 'CampaignListPageJoinedCountPlural' : '' | translate}} {{'CampaignListPageJoinedCountSuffix' | translate}}</span>
                             </div>
                             <div class="col-xs-4 text-right">
-                                <button>参加</button>
+                                <a class="button" href="/e4e/campaign/<%=campaign._id%>">{{'CampaignListPageJoin' | translate}}</a>
                             </div>
                         </div>
                     </div>
@@ -52,8 +52,8 @@
         <div class="col-xs-12">
             <div class="center-block">
                 <div class="header row">
-                    <h3 class="col-xs-2 text-left">热门游戏</h3>
-                    <a class="col-xs-2 col-xs-offset-8 text-right">更多</a>
+                    <h3 class="col-xs-2 text-left">{{'CampaignListPageHotGames' | translate}}</h3>
+                    <!--<a class="col-xs-2 col-xs-offset-8 text-right">更多</a>-->
                 </div>
                 <div class="section row">
                     <div class="figure col-xs-3">
@@ -61,7 +61,7 @@
 
                         <div class="caption row">
                             <div class="col-xs-12">
-                                <p>MarkSimos 商战模拟大赛</p>
+                                <p>MarkSimos {{'CampaignListPageBusinessSimulationMatch' | translate}}</p>
                                 <span class="date">2015/09/02</span>
                             </div>
                         </div>

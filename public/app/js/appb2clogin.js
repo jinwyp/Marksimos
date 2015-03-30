@@ -452,22 +452,6 @@
         /**********  Function Declarations  **********/
         function studentEnter() {
             if (vm.css.hasEntered) return;
-            /*var hasTeam = vm.currentUser && vm.currentUser.team;
-
-            if (hasTeam) {
-
-                Student.addTeamToCampaign({
-                    username: vm.currentUser.username,
-                    campaignId: vm.campaignId
-                }).then(function() {
-                    $modal({container: 'body', template: 'campaign-modal-enter-success.html'});
-                }).catch(function() {
-
-                })
-            } else {
-                $modal({container: 'body', template: 'campaign-modal-enter-tip-complete-info.html'});
-            }*/
-
 
             Student.addTeamToCampaign({
                 username: vm.currentUser.username,
