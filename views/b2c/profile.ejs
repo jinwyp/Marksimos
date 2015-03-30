@@ -66,7 +66,7 @@
                         <div class="profile-detail-title">{{'ProfilePageTabBasicInfo' | translate}}<span class="profile-edit" ng-click="profile.clickEditProfile()">{{'ProfilePageEditButton' | translate}}</span></div>
                         <form name="basicInfoForm" class="form-horizontal">
                             <div class="form-group firstName">
-                                <label for="school" class="control-label col-md-3 text-right">{{'ProfilePageBasicInfoName' | translate}} :</label>
+                                <label for="firstName" class="control-label col-md-3 text-right">{{'ProfilePageBasicInfoName' | translate}} :</label>
                                 <div class="col-xs-5" ng-if="!profile.css.formEditing">
                                     <p class="form-control-static">{{profile.currentUser.firstName}}&nbsp</p>
                                 </div>
@@ -215,7 +215,7 @@
                             <div class="form-group" ng-class="{'has-success':teamForm.name.$dirty&&teamForm.name.$valid, 'has-error':teamForm.name.$dirty&&teamForm.name.$invalid}">
                                 <label for="name" class="control-label col-xs-3 text-right team-label">{{'ProfilePageTeamInfoNewMember' | translate}} :</label>
                                 <div class="col-xs-5">
-                                    <input placeholder="{{'用户名/邮箱' | translate}}" ng-model="profile.formData.newTeamMember" required type="text" name="name" id="name" class="form-control">
+                                    <input placeholder="{{'ProfilePageNewMemberInputPlaceholder' | translate}}" ng-model="profile.formData.newTeamMember" required type="text" name="name" id="name" class="form-control">
                                 </div>
                                 <button type="submit" ng-click="profile.clickAddStudentToTeam(teamForm)" class="glyphicon glyphicon-plus add-button col-xs-1"></button>
                                 <span class="form-control-static err-msg control-label col-xs-3" ng-if="teamForm.name.$dirty&&teamForm.name.$error.required">{{'ProfilePageNewMemberNameError' | translate}}!</span>

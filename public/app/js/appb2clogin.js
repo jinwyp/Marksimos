@@ -178,7 +178,7 @@
 
 
 
-    angular.module('b2clogin').controller('profileController', ['Student', '$alert', 'FileUploader', '$translate', function(Student, $alert, FileUploader, $translate) {
+    angular.module('b2clogin').controller('profileController', ['Student', '$alert', 'FileUploader', '$translate', '$location', function(Student, $alert, FileUploader, $translate, $location) {
         /* jshint validthis: true */
         var vm = this;
         vm.css = {
@@ -187,14 +187,14 @@
             updateTeamNameDisabled: true,
             formEditing: false,
             alertSuccessInfo: {
-                content: '保存成功！',
+                content: $translate.instant('ProfilePageAlertSaveSuccessful'),
                 duration: 2,
                 container: '#profile-alert-container',
                 type: 'success',
                 dismissable: false
             },
             alertFailedInfo: {
-                content: '保存失败！',
+                content: $translate.instant('ProfilePageAlertSaveFailed'),
                 duration: 2,
                 container: '#profile-alert-container',
                 type: 'danger',
@@ -323,7 +323,7 @@
                     $alert(vm.css.alertFailedInfo);
                 });
             } else {
-                $alert(angular.extend({}, vm.css.alertFailedInfo, {content: '密码信息无效！'}));
+                $alert(angular.extend({}, vm.css.alertFailedInfo, {content: $translate.instant('ProfilePageAlertInvalidPassword')}));
             }
         }
 
@@ -350,6 +350,9 @@
 
         var app = {
             init : function(){
+                if (+$location.hash() >= 0) {
+                    switchTab(+$location.hash());
+                }
                 this.getUserInfo().then(function() {
                     app.resetForm();
                 });
@@ -452,19 +455,16 @@
         /**********  Function Declarations  **********/
         function studentEnter() {
             if (vm.css.hasEntered) return;
-            var hasTeam = vm.currentUser && vm.currentUser.team;
 
-            if (hasTeam) {
-
-                Student.addTeamToCampaign({
-                    username: vm.currentUser.username,
-                    campaignId: vm.campaignId
-                }).then(function() {
-                    $modal({container: 'body', template: 'campaign-modal-enter-success.html'});
-                });
-            } else {
+            Student.addTeamToCampaign({
+                username: vm.currentUser.username,
+                campaignId: vm.campaignId
+            }).then(function() {
+                $modal({container: 'body', template: 'campaign-modal-enter-success.html'});
+                vm.css.hasEntered = true;
+            }).catch(function() {
                 $modal({container: 'body', template: 'campaign-modal-enter-tip-complete-info.html'});
-            }
+            });
         }
 
 

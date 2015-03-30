@@ -17,6 +17,8 @@ $color_header_dropdown_button_hover: #7f1a03;
 
 
 
+
+
 @mixin flippy($speed: 0.5s, $perspective: 500, $bgcolor: white) {
   position: relative;
   @include perspective($perspective);
@@ -1227,30 +1229,53 @@ $lineHeight_button: 1.8;
 }
 
 .enter-success .modal-dialog {
-	.modal-body > div {
-		padding: 75px 0;
-		width: 400px;
-		* {padding-left: 215px;}
+	.modal-body {
+		.enter-success-icon {
+			position: absolute;
+			width: 180px;
+			height: 200px;
+			top: 31px;
+			left: 74px;
+			@include icon_b2c-sprite(b2c_enter_success);
+		}
+		position: relative;
+		> div {
+			padding: 75px 0;
+			width: 400px;
+			* {padding-left: 215px;}
+		}
 	}
 }
 
-.enter-tip-complete-info .modal-body > div {
-	padding: 43px 0 75px;
-	width: 410px;
-	>* {
-		padding-left: 215px;
+.enter-tip-complete-info .modal-body {
+	.enter-failed-icon {
+		position: absolute;
+		width: 156px;
+		height: 155px;
+		top: 31px;
+		left: 84px;
+		@include icon_b2c-sprite(b2c_enter_failed);
 	}
-	h3 {
-		font-size: 18px;
-	}
-	button {
-		color: $color_white;
-		font-size: 20px;
-		padding: 5px 54px;
-		border: none;
-		background-color: #B72909;
-		font-weight: bold;
-		@include box-shadow($color_register_button_border 0px 2px 4px);
+	position: relative;
+	> div {
+		padding: 43px 0 75px;
+		width: 410px;
+		>* {
+			padding-left: 215px;
+		}
+		h3 {
+			font-size: 18px;
+		}
+		a {
+			color: $color_white;
+			text-decoration:none;
+			font-size: 20px;
+			padding: 5px 54px;
+			border: none;
+			background-color: #B72909;
+			font-weight: bold;
+			@include box-shadow($color_register_button_border 0px 2px 4px);
+		}
 	}
 }
 
@@ -1314,11 +1339,12 @@ $lineHeight_button: 1.8;
 	&>div {
 		padding-bottom: 20px;
 	}
-	button {
+	button, a.button {
 		padding:3px 14px;
 		color: $color_white;
-		background-color: #7AC269;
+		background-color : #7AC269;
 		border: none;
+		text-decoration: none;
 		@include border-radius(2px);
 		@include box-shadow(#649F53 0px 2px 4px);
 	}
