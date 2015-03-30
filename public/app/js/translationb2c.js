@@ -80,8 +80,8 @@
             CampaignPageEnterCampaignEnterButton      : 'Enter',
             CampaignPageEnterCampaignHasEnteredButton : 'Already Entered',
             CampaignPageEnterCampaignIntroduce        : 'Introduce',
-            CampaignPageEnterCampaignCountPrefix      : 'Has Entered',
-            CampaignPageEnterCampaignCountSuffix      : 'People',
+            CampaignPageEnterCampaignCountPrefix      : 'Has Entered ',
+            CampaignPageEnterCampaignCountSuffix      : ' People',
             CampaignPageEnterCampaignCountPlural      : 's',
 
             //Labels for Enter Successful popup window
@@ -115,9 +115,18 @@
             CampaignPageCheckScores                   : 'Check Scores',
             CampaignPageRound1Score                   : 'The first round score',
             CampaignPageRound2Score                   : 'The second round score',
-            CampaignPageRound3Score                   : 'The third round score'
+            CampaignPageRound3Score                   : 'The third round score',
 
 
+
+            //Campaign List Page
+            CampaignListPageMatches: 'Matches & Campaigns',
+            CampaignListPageJoinedCountPrefix: 'people',
+            CampaignListPageJoinedCountSuffix: 'joined',
+            CampaignListPageJoinedCountPlural: 's',
+            CampaignListPageJoin: 'Join',
+            CampaignListPageHotGames: 'Hot Games',
+            CampaignListPageBusinessSimulationMatch: 'Business Simulation Match'
         });
 
 
@@ -222,7 +231,18 @@
             CampaignPageCheckScores                   : '查看我的得分',
             CampaignPageRound1Score                   : '第一轮得分',
             CampaignPageRound2Score                   : '第二轮得分',
-            CampaignPageRound3Score                   : '第三轮得分'
+            CampaignPageRound3Score                   : '第三轮得分',
+
+
+
+            //Campaign List Page
+            CampaignListPageMatches: '赛事&活动',
+            CampaignListPageJoinedCountPrefix: '人',
+            CampaignListPageJoinedCountSuffix: '参加',
+            CampaignListPageJoinedCountPlural: '',
+            CampaignListPageJoin: '参加',
+            CampaignListPageHotGames: '热门游戏',
+            CampaignListPageBusinessSimulationMatch: '商战模拟大赛'
         });
 
         // Tell the module what language to use by default

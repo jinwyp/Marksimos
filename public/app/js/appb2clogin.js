@@ -452,6 +452,7 @@
         /**********  Function Declarations  **********/
         function studentEnter() {
             if (vm.css.hasEntered) return;
+
             Student.addTeamToCampaign({
                 username: vm.currentUser.username,
                 campaignId: vm.campaignId

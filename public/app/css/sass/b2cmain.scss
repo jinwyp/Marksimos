@@ -1339,11 +1339,12 @@ $lineHeight_button: 1.8;
 	&>div {
 		padding-bottom: 20px;
 	}
-	button {
+	button, a.button {
 		padding:3px 14px;
 		color: $color_white;
-		background-color: #7AC269;
+		background-color : #7AC269;
 		border: none;
+		text-decoration: none;
 		@include border-radius(2px);
 		@include box-shadow(#649F53 0px 2px 4px);
 	}
