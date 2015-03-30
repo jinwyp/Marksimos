@@ -97,6 +97,7 @@
                     vm.css.showRegForm = false;
 
                 }).catch(function(err){
+                    console.log(err);
                     form.username.$valid = false;
                     form.username.$invalid = true;
                     form.email.$valid = false;

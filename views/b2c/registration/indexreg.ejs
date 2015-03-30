@@ -41,13 +41,13 @@
                     <span class="err-msg" ng-if="regForm.passwordreinput.$dirty&&regForm.passwordreinput.$invalid">请输入正确的再次输入密码!</span>
                 </div>
 
-                <!--<div class="form-group has-feedback" ng-class="{'has-success':regForm.verifyCode.$dirty&&regForm.verifyCode.$valid, 'has-error':regForm.verifyCode.$dirty&&regForm.verifyCode.$invalid}">-->
-                    <!--<input style="float: left; width: 180px;" class="input-lg form-control" type="text" name="verifyCode" placeholder="验证码" ng-model="register.newUser.verifyCode" required ng-match="register.newUser.verifyCode"/>-->
-                    <!--<span class="glyphicon glyphicon-ok form-control-feedback" aria-hidden="true" ng-if="regForm.verifyCode.$dirty&&regForm.verifyCode.$valid"></span>-->
-                    <!--<span class="glyphicon glyphicon-remove form-control-feedback" aria-hidden="true" ng-if="regForm.verifyCode.$dirty&&regForm.verifyCode.$invalid"></span>-->
-                    <!--<span class="err-msg" ng-if="regForm.verifyCode.$dirty&&regForm.verifyCode.$invalid">请输入正确的验证码!</span>-->
-                    <!--<span><img style="height: 46px" src="e4e/api/captcha"></span>-->
-                <!--</div>-->
+                <div class="form-group has-feedback" ng-class="{'has-success':regForm.captcha.$dirty&&regForm.captcha.$valid, 'has-error':regForm.captcha.$dirty&&regForm.captcha.$invalid}">
+                    <input style="float: left; width: 180px;" class="input-lg form-control" type="text" name="captcha" placeholder="验证码" ng-model="register.newUser.captcha" required/>
+                    <!--<span class="glyphicon glyphicon-ok form-control-feedback" aria-hidden="true" ng-if="regForm.captcha.$dirty&&regForm.captcha.$valid"></span>-->
+                    <span class="glyphicon glyphicon-remove form-control-feedbak" aria-hidden="true" ng-if="regForm.captcha.$dirty&&regForm.captcha.$invalid"></span>
+                    <span class="err-msg" ng-if="regForm.captcha.$dirty&&regForm.captcha.$invalid">请输入正确的验证码!</span>
+                    <span><img style="height: 46px" src="e4e/api/captcha"></span>
+                </div>
 
                 <div class="form-group radio" ng-class="{'has-success':regForm.gender.$dirty&&regForm.gender.$valid, 'has-error':regForm.gender.$dirty&&regForm.gender.$invalid}">
                     <label class="radio-inline"><input type="radio" name="gender" value="1" ng-model="register.newUser.gender" ng-required="true"/>男</label>

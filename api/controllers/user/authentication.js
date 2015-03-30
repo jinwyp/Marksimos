@@ -378,7 +378,14 @@ exports.registerB2CStudent = function(req, res, next){
     };
 
 
-    userModel.register(newUser).then(function(resultUser) {
+    Captcha.findOneQ({_id: req.cookies['captcha-id']})
+    .then(function(cpatcha){
+        if((cpatcha === undefined) || (cpatcha.txt != req.body.captcha.toUpperCase())) {
+            throw new Error("captcha error!");
+        }
+        return userModel.register(newUser);
+    })
+    .then(function(resultUser) {
         if (!resultUser) {
             throw new Error('Cancel promise chains. Because Save new user to database error.');
         }
@@ -686,10 +693,10 @@ exports.forgotPasswordStep2 = function(req, res, next){
 
 var ccap = require('ccap')();//Instantiated ccap class
 exports.generateCaptcha = function(req, res, next) {
-
     var ary = ccap.get();
     var txt = ary[0];
     var buf = ary[1];
+
     Captcha.createQ({txt: txt})
     .then(function(captcha) {
         res.cookie('captcha-id', captcha._id.toString());
