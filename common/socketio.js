@@ -8,22 +8,33 @@ var seminarModel = require('../api/models/marksimos/seminar');
 var Token = require('../api/models/user/authenticationtoken');
 var _ = require('lodash');
 
+var logger = require('./logger.js');
+
+
 // When the user disconnects.. perform this
-function onDisconnect(socket) {
+function onDisconnect() {
+    logger.log('User DISCONNECTED SocketIO');
 }
+
+
 
 // When the user connects.. perform this
 function onConnect(socket) {
-    // When the client emits 'info', this listens and executes
-    socket.on('info', function (data) {
-        console.info('[%s] %s', socket.address, JSON.stringify(data, null, 2));
+
+    // When the client emits 'debuginfo', this listens and executes
+    socket.on('debugInfo', function (data) {
+        console.info('[%s] %s', socket.handshake.address, JSON.stringify(data, null, 2));
     });
+
 
     // Insert sockets below
 //  require('../api/thing/thing.socket').register(socket);
 }
 
-module.exports = function (socketio) {
+
+
+
+exports.init = function (socketio) {
     // socket.io (v1.x.x) is powered by debug.
     // In order to see all the debug output, set DEBUG (in server/config/local.env.js) to including the desired scope.
     //
@@ -41,32 +52,48 @@ module.exports = function (socketio) {
 
     socketio.on('connection', function (socket) {
         var token = socket.handshake.query.token;
+        var roomMarksimosCompany;
+
         Token.verifyToken(token, function(err, user) {
-            seminarModel.findSeminarByUserId(user._id).then(function(seminarResult){
-                var company = _.find(seminarResult.companyAssignment, function(company) {
-                    return company.studentList.indexOf(user.email) > -1;
-                });
 
-                var socketRoomName = seminarResult.seminarId + company.companyId;
-                socket.join(socketRoomName);
+            if(err){
+                logger.error(err);
+            }else{
+                seminarModel.findSeminarByUserId(user._id).then(function(seminarResult){
+                    var company = _.find(seminarResult.companyAssignment, function(company) {
+                        return company.studentList.indexOf(user.email) > -1;
+                    });
 
-            }).fail(function(err){
-                console.log(err);
-            }).done();
+                    roomMarksimosCompany = seminarResult.seminarId.toString() + company.companyId.toString();
+                    socket.join(roomMarksimosCompany);
+
+                }).fail(function(err){
+                    logger.error(err);
+                }).done();
+            }
+
         });
 
-        socket.address = socket.handshake.address.address + ':' +
-            socket.handshake.address.port;
-        socket.connectedAt = new Date();
+        //socket.address = socket.handshake.address + ':' + socket.handshake.address.port;
+        //socket.connectedAt = new Date();
+
 
         // Call onDisconnect.
-        socket.on('disconnect', function () {
-            onDisconnect(socket);
-            console.info('[%s] DISCONNECTED', socket.address);
-        });
+        socket.on('disconnect', onDisconnect);
 
-        // Call onConnect.
+        logger.log('User CONNECTED SocketIO: ' + token + '. Address: ' + socket.handshake.address + '. Time: ' + socket.handshake.time);
+
+        // Call onConnect. API routes for Socket.IO
+
         onConnect(socket);
-        console.info('[%s] CONNECTED', socket.address);
+
     });
+
+
+};
+
+
+
+exports.emitMarksimosDecisionUpdate = function(roomName){
+    gsocketio.to(roomName).emit('marksimosDecisionUpdate');
 };

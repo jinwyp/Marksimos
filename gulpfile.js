@@ -35,7 +35,7 @@ var paths = {
     sasspath: 'public/app/css/sass',  // removed the dot-slash from here  './public/app/css/sass' wrong format
     imagespath : './public/app/css/images',
 
-    cssSourcePathMarksimos: ['./public/app/css/stylesheets/screen.css', './public/libs/bootstrap/dist/css/bootstrap.min.css', './public/app/css/stylesheets/marksimosmain.css', './public/app/css/stylesheets/print.css', './public/app/css/stylesheets/ie.css', './public/libs/nvd3/nv.d3.css', './public/libs/angular-notify/dist/angular-notify.css'],
+    cssSourcePathMarksimos: ['./public/app/css/stylesheets/screen.css', './public/libs/angular-notify/dist/angular-notify.css', './public/libs/bootstrap/dist/css/bootstrap.min.css', './public/app/css/stylesheets/marksimosmain.css', './public/app/css/stylesheets/print.css', './public/app/css/stylesheets/ie.css', './public/libs/nvd3/nv.d3.css'],
     cssSourcePathB2C: [ './public/libs/bootstrap/dist/css/bootstrap.min.css', './public/libs/angular-motion/dist/angular-motion.min.css', './public/app/css/stylesheets/b2cmain.css'],
     unit_test: './api/test/marksimos/*',
     scenario_testAdminCreateSeminar: './api/test/marksimos/scenario/admincreateseminar.js',

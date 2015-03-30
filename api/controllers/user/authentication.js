@@ -203,23 +203,23 @@ exports.authLoginToken = function (options) {
 
                         req.gameMarksimos = {
                             currentStudent : user,
-                            currentStudentSeminar : seminarResult
+                            currentStudentSeminar : seminarResult,
+                            socketRoomName : false
                         };
 
                         var company = _.find(seminarResult.companyAssignment, function(company) {
                             return company.studentList.indexOf(user.email) > -1;
                         });
-                        if (company != undefined) {
-                            req.gameMarksimos.socketRoomName = seminarResult.seminarId + company.companyId;
-                        }
-                        else {
-                            req.gameMarksimos.socketRoomName = false;
+
+                        if (typeof company !== 'undefined') {
+                            req.gameMarksimos.socketRoomName = seminarResult.seminarId.toString() + company.companyId.toString();
                         }
 
                         // very important, after seminar finished currentPeriod is last round
                         if(req.gameMarksimos.currentStudentSeminar.currentPeriod > req.gameMarksimos.currentStudentSeminar.simulationSpan){
                             req.gameMarksimos.currentStudentSeminar.currentPeriod =  req.gameMarksimos.currentStudentSeminar.simulationSpan;
                         }
+
                     }else{
                         req.gameMarksimos = {
                             currentStudent : false,

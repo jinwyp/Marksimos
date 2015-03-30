@@ -5,6 +5,7 @@
 
     angular.module('marksimos.socketmodel').factory('socket', function (socketFactory, localStorageService) {
         var socket = null;
+
         var setup = function() {
             var token = localStorageService.get('logintoken');
             var ioSocket = io.connect('', {
@@ -21,7 +22,7 @@
         };
 
         var close = function() {
-            if (socket != null){
+            if (socket !== null){
                 socket.removeAllListeners();
                 socket.disconnect();
                 socket = null;
@@ -29,6 +30,7 @@
         };
 
         setup();
+        //socket.emit('debugInfo', { my: 'data' });
 
         return {
             socket: socket
