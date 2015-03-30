@@ -178,7 +178,7 @@
 
 
 
-    angular.module('b2clogin').controller('profileController', ['Student', '$alert', 'FileUploader', '$translate', function(Student, $alert, FileUploader, $translate) {
+    angular.module('b2clogin').controller('profileController', ['Student', '$alert', 'FileUploader', '$translate', '$location', function(Student, $alert, FileUploader, $translate, $location) {
         /* jshint validthis: true */
         var vm = this;
         vm.css = {
@@ -350,6 +350,9 @@
 
         var app = {
             init : function(){
+                if (+$location.hash() >= 0) {
+                    switchTab(+$location.hash());
+                }
                 this.getUserInfo().then(function() {
                     app.resetForm();
                 });
