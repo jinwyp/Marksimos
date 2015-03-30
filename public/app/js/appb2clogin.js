@@ -187,14 +187,14 @@
             updateTeamNameDisabled: true,
             formEditing: false,
             alertSuccessInfo: {
-                content: '保存成功！',
+                content: $translate.instant('ProfilePageAlertSaveSuccessful'),
                 duration: 2,
                 container: '#profile-alert-container',
                 type: 'success',
                 dismissable: false
             },
             alertFailedInfo: {
-                content: '保存失败！',
+                content: $translate.instant('ProfilePageAlertSaveFailed'),
                 duration: 2,
                 container: '#profile-alert-container',
                 type: 'danger',
@@ -323,7 +323,7 @@
                     $alert(vm.css.alertFailedInfo);
                 });
             } else {
-                $alert(angular.extend({}, vm.css.alertFailedInfo, {content: '密码信息无效！'}));
+                $alert(angular.extend({}, vm.css.alertFailedInfo, {content: $translate.instant('ProfilePageAlertInvalidPassword')}));
             }
         }
 

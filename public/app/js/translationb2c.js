@@ -65,6 +65,11 @@
             //Input Control Placeholder
             ProfilePageNewMemberInputPlaceholder     : 'Username/email',
 
+            //Tips for alerts in javascript
+            ProfilePageAlertSaveSuccessful           : 'Save successful',
+            ProfilePageAlertSaveFailed               : 'Save failed',
+            ProfilePageAlertInvalidPassword          : 'Invalid password!',
+
 
 
             //Campaign Page
@@ -181,6 +186,11 @@
 
             //Placeholder for Input Control
             ProfilePageNewMemberInputPlaceholder     : '用户名/邮箱',
+
+            //Tips for alerts in javascript
+            ProfilePageAlertSaveSuccessful           : '保存成功',
+            ProfilePageAlertSaveFailed               : '保存失败',
+            ProfilePageAlertInvalidPassword          : '密码信息无效！',
 
 
 
