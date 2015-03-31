@@ -702,30 +702,30 @@ exports.forgotPasswordStep2 = function(req, res, next){
 
 
 
-var ccap = require('ccap')();//Instantiated ccap class
-exports.generateCaptcha = function(req, res, next) {
-    var ary = ccap.get();
-    var txt = ary[0];
-    var buf = ary[1];
-
-    Captcha.findOneAndRemoveQ({_id: req.cookies['x-captcha-token']})
-    .then(function(cpatcha) {})
-    .fail(next)
-    .done();
-
-    Captcha.createQ({txt: txt})
-    .then(function(captcha) {
-
-        if(captcha){
-            res.cookie('x-captcha-token', captcha._id.toString());
-            res.set('Content-Type', 'image/jpeg');
-            res.end(buf, 'binary');
-        }
-
-    })
-    .fail(next)
-    .done();
-};
+//var ccap = require('ccap')();//Instantiated ccap class
+//exports.generateCaptcha = function(req, res, next) {
+//    var ary = ccap.get();
+//    var txt = ary[0];
+//    var buf = ary[1];
+//
+//    Captcha.findOneAndRemoveQ({_id: req.cookies['x-captcha-token']})
+//    .then(function(cpatcha) {})
+//    .fail(next)
+//    .done();
+//
+//    Captcha.createQ({txt: txt})
+//    .then(function(captcha) {
+//
+//        if(captcha){
+//            res.cookie('x-captcha-token', captcha._id.toString());
+//            res.set('Content-Type', 'image/jpeg');
+//            res.end(buf, 'binary');
+//        }
+//
+//    })
+//    .fail(next)
+//    .done();
+//};
 
 
 
