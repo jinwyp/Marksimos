@@ -343,6 +343,18 @@ body{
 /********************  Register Form Right Part ********************/
 
 .reg-form{
+	.reg-captcha-input-container {
+		position: relative;
+		input {
+			width: 100% !important;
+		}
+		width:  196px;
+		display:  inline-block;
+	}
+	.reg-captcha {
+		vertical-align: bottom;
+		height: 46px;
+	}
 
 	.title{
 		font-weight:900;
