@@ -703,7 +703,6 @@ exports.generateCaptcha = function(req, res, next) {
     Captcha.findOneQ({_id: req.cookies['captcha-id']})
     .then(function(cpatcha) {
         if (cpatcha != undefined) {
-            console.log("wtf");
             Captcha.removeQ({_id: req.cookies['captcha-id']});
         }
     });
