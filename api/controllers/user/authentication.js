@@ -4,6 +4,7 @@ var teamModel = require('../../models/user/team.js');
 var seminarModel = require('../../models/marksimos/seminar.js');
 var Token = require('../../models/user/authenticationtoken.js');
 var emailModel = require('../../models/user/emailContent.js');
+var Captcha = require('../../models/user/Captcha.js');
 var _ = require('lodash');
 
 
@@ -377,7 +378,17 @@ exports.registerB2CStudent = function(req, res, next){
     };
 
 
-    userModel.register(newUser).then(function(resultUser) {
+    Captcha.findOneQ({_id: req.cookies['captcha-id']})
+    .then(function(cpatcha){
+        if(cpatcha != undefined) {
+            Captcha.removeQ({_id: req.cookies['captcha-id']});
+        }
+        if((cpatcha === undefined) || (cpatcha.txt != req.body.captcha.toUpperCase())) {
+            throw new Error("captcha error!");
+        }
+        return userModel.register(newUser);
+    })
+    .then(function(resultUser) {
         if (!resultUser) {
             throw new Error('Cancel promise chains. Because Save new user to database error.');
         }
@@ -683,6 +694,28 @@ exports.forgotPasswordStep2 = function(req, res, next){
 
 
 
+var ccap = require('ccap')();//Instantiated ccap class
+exports.generateCaptcha = function(req, res, next) {
+    var ary = ccap.get();
+    var txt = ary[0];
+    var buf = ary[1];
+
+    Captcha.findOneQ({_id: req.cookies['captcha-id']})
+    .then(function(cpatcha) {
+        if (cpatcha != undefined) {
+            Captcha.removeQ({_id: req.cookies['captcha-id']});
+        }
+    });
+
+    Captcha.createQ({txt: txt})
+    .then(function(captcha) {
+        res.cookie('captcha-id', captcha._id.toString());
+        res.removeHeader('content-type');
+        res.end(buf);
+    })
+    .fail(next)
+    .done();
+};
 
 
 
