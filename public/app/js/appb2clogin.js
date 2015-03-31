@@ -62,6 +62,7 @@
         vm.clickForgetPasswordStep2 = forgetPasswordStep2;
         vm.clickResetPasswordStep3 = resetNewPassword;
 
+        vm.captchaNum = 1;
 
 
 
@@ -97,7 +98,12 @@
                     vm.css.showRegForm = false;
 
                 }).catch(function(err){
-                    console.log(err);
+                    vm.captchaNum++;
+                    if(err.data.message == 'captcha error!') {
+                        form.captcha.$valid = false;
+                        form.captcha.$invalid = true;
+                        return;
+                    }
                     form.username.$valid = false;
                     form.username.$invalid = true;
                     form.email.$valid = false;

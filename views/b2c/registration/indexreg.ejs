@@ -42,11 +42,11 @@
                 </div>
 
                 <div class="form-group has-feedback" ng-class="{'has-success':regForm.captcha.$dirty&&regForm.captcha.$valid, 'has-error':regForm.captcha.$dirty&&regForm.captcha.$invalid}">
-                    <input style="float: left; width: 180px;" class="input-lg form-control" type="text" name="captcha" placeholder="验证码" ng-model="register.newUser.captcha" required/>
+                    <input style="float: left; width: 200px;" class="input-lg form-control" type="text" name="captcha" placeholder="验证码" ng-model="register.newUser.captcha" required/>
                     <!--<span class="glyphicon glyphicon-ok form-control-feedback" aria-hidden="true" ng-if="regForm.captcha.$dirty&&regForm.captcha.$valid"></span>-->
+                    <span><img style="padding-left: 5px;height: 44px" ng-click="register.captchaNum = register.captchaNum+1" ng-src="e4e/api/captcha?num={{register.captchaNum}}"></span>
                     <span class="glyphicon glyphicon-remove form-control-feedbak" aria-hidden="true" ng-if="regForm.captcha.$dirty&&regForm.captcha.$invalid"></span>
                     <span class="err-msg" ng-if="regForm.captcha.$dirty&&regForm.captcha.$invalid">请输入正确的验证码!</span>
-                    <span><img style="height: 46px" src="e4e/api/captcha"></span>
                 </div>
 
                 <div class="form-group radio" ng-class="{'has-success':regForm.gender.$dirty&&regForm.gender.$valid, 'has-error':regForm.gender.$dirty&&regForm.gender.$invalid}">
