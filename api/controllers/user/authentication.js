@@ -4,7 +4,7 @@ var teamModel = require('../../models/user/team.js');
 var seminarModel = require('../../models/marksimos/seminar.js');
 var Token = require('../../models/user/authenticationtoken.js');
 var emailModel = require('../../models/user/emailContent.js');
-var Captcha = require('../../models/user/Captcha.js');
+var Captcha = require('../../models/user/captcha.js');
 var _ = require('lodash');
 
 
@@ -378,14 +378,20 @@ exports.registerB2CStudent = function(req, res, next){
     };
 
 
-    Captcha.findOneQ({_id: req.cookies['captcha-id']})
+    Captcha.findOneQ({_id: req.cookies['x-captcha-token']})
     .then(function(cpatcha){
-        if(cpatcha != undefined) {
-            Captcha.removeQ({_id: req.cookies['captcha-id']});
+
+        if(cpatcha) {
+            cpatcha.removeQ();
+        }else{
+            throw new Error('Cancel captcha not found');
         }
-        if((cpatcha === undefined) || (cpatcha.txt != req.body.captcha.toUpperCase())) {
-            throw new Error("captcha error!");
+
+        if( cpatcha.txt !== req.body.captcha.toUpperCase() ) {
+            throw new Error('Cancel captcha error');
         }
+
+
         return userModel.register(newUser);
     })
     .then(function(resultUser) {
@@ -694,24 +700,28 @@ exports.forgotPasswordStep2 = function(req, res, next){
 
 
 
+
+
 var ccap = require('ccap')();//Instantiated ccap class
 exports.generateCaptcha = function(req, res, next) {
     var ary = ccap.get();
     var txt = ary[0];
     var buf = ary[1];
 
-    Captcha.findOneQ({_id: req.cookies['captcha-id']})
-    .then(function(cpatcha) {
-        if (cpatcha != undefined) {
-            Captcha.removeQ({_id: req.cookies['captcha-id']});
-        }
-    });
+    Captcha.findOneAndRemoveQ({_id: req.cookies['x-captcha-token']})
+    .then(function(cpatcha) {})
+    .fail(next)
+    .done();
 
     Captcha.createQ({txt: txt})
     .then(function(captcha) {
-        res.cookie('captcha-id', captcha._id.toString());
-        res.removeHeader('content-type');
-        res.end(buf);
+
+        if(captcha){
+            res.cookie('x-captcha-token', captcha._id.toString());
+            res.set('Content-Type', 'image/jpeg');
+            res.end(buf, 'binary');
+        }
+
     })
     .fail(next)
     .done();
