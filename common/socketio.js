@@ -94,6 +94,6 @@ exports.init = function (socketio) {
 
 
 
-exports.emitMarksimosDecisionUpdate = function(roomName){
-    gsocketio.to(roomName).emit('marksimosDecisionUpdate');
+exports.emitMarksimosDecisionUpdate = function(roomName, message){
+    gsocketio.to(roomName).emit('marksimosDecisionUpdate', message);
 };

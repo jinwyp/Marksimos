@@ -497,14 +497,17 @@
             initOnce : function(){
                 this.loadingStudentData();
 
-                socket.socket.on('marksimosDecisionUpdate', function(){
+                socket.socket.on('marksimosDecisionUpdate', function(message){
                     app.reRun();
 
-                    notify({
-                        message  : 'Decisions updated by Team Member !',
-                        templateUrl : notifytemplate.success,
-                        position : 'center'
-                    });
+                    if(message.username !== $scope.data.currentStudent.username){
+                        notify({
+                            message  : 'Decisions updated by Team Member !',
+                            templateUrl : notifytemplate.success,
+                            position : 'center'
+                        });
+                    }
+
                 });
 
             },
