@@ -166,8 +166,6 @@ app.use(function(err, req, res, next){
             return;
         }
 
-
-
     }
 
 
@@ -187,8 +185,8 @@ db.once('open', function(response,request) {
     });
 
     var socketio = require('socket.io').listen(server);
-    global.socketio = socketio;
-    require('./common/socketio')(socketio);
+    global.gsocketio = socketio;
+    require('./common/socketio').init(socketio);
 });
 
 

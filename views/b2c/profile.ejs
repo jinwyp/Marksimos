@@ -46,7 +46,24 @@
                     </nav>
                 </aside>
                 <article class="col-md-8 profile-detail">
-                    <div class="row alert-container"><div id="profile-alert-container"></div></div>
+                    <div class="row alert-container">
+                        <div id="profile-alert-container"></div>
+                        <script type="text/ng-template" id="profile-alert-success.html">
+                            <div class="alert alert-success">
+                                <span>{{'ProfilePageAlertSaveSuccessful' | translate}}</span>
+                            </div>
+                        </script>
+                        <script type="text/ng-template" id="profile-alert-failed.html">
+                            <div class="alert alert-danger">
+                                <span>{{'ProfilePageAlertSaveFailed' | translate}}</span>
+                            </div>
+                        </script>
+                        <script type="text/ng-template" id="profile-alert-invalid-password.html">
+                            <div class="alert alert-danger">
+                                <span>{{'ProfilePageAlertInvalidPassword' | translate}}</span>
+                            </div>
+                        </script>
+                    </div>
                     <div class="row" ng-if="profile.css.currentTabIndex == 0">
                         <div class="file-input-wrapper glyphicon glyphicon-plus center-block">
                             <span class="file-upload-text">{{'ProfilePageUploadAvatarSelectionButton' | translate}}</span>

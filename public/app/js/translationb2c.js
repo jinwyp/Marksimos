@@ -63,7 +63,7 @@
             ProfilePageInvalidMobilePhoneNumber      : 'Invalid mobile phone number',
 
             //Input Control Placeholder
-            ProfilePageNewMemberInputPlaceholder     : 'Username/email',
+            ProfilePageNewMemberInputPlaceholder     : 'Username/Email',
 
             //Tips for alerts in javascript
             ProfilePageAlertSaveSuccessful           : 'Save successful',
@@ -125,13 +125,13 @@
 
 
             //Campaign List Page
-            CampaignListPageMatches: 'Matches & Campaigns',
-            CampaignListPageJoinedCountPrefix: 'people',
-            CampaignListPageJoinedCountSuffix: 'joined',
-            CampaignListPageJoinedCountPlural: 's',
-            CampaignListPageJoin: 'Join',
-            CampaignListPageHotGames: 'Hot Games',
-            CampaignListPageBusinessSimulationMatch: 'Business Simulation Match'
+            CampaignListPageMatches                 : 'Matches & Campaigns',
+            CampaignListPageJoinedCountPrefix       : 'people',
+            CampaignListPageJoinedCountSuffix       : 'joined',
+            CampaignListPageJoinedCountPlural       : 's',
+            CampaignListPageJoin                    : 'Join',
+            CampaignListPageHotGames                : 'Hot Games',
+            CampaignListPageBusinessSimulationMatch : 'Business Simulation Match'
         });
 
 
@@ -246,13 +246,13 @@
 
 
             //Campaign List Page
-            CampaignListPageMatches: '赛事&活动',
-            CampaignListPageJoinedCountPrefix: '人',
-            CampaignListPageJoinedCountSuffix: '参加',
-            CampaignListPageJoinedCountPlural: '',
-            CampaignListPageJoin: '参加',
-            CampaignListPageHotGames: '热门游戏',
-            CampaignListPageBusinessSimulationMatch: '商战模拟大赛'
+            CampaignListPageMatches                 : '赛事&活动',
+            CampaignListPageJoinedCountPrefix       : '人',
+            CampaignListPageJoinedCountSuffix       : '参加',
+            CampaignListPageJoinedCountPlural       : '',
+            CampaignListPageJoin                    : '参加',
+            CampaignListPageHotGames                : '热门游戏',
+            CampaignListPageBusinessSimulationMatch : '商战模拟大赛'
         });
 
         // Tell the module what language to use by default

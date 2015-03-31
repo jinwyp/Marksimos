@@ -20,12 +20,12 @@
 
 
         notify.config({
-            duration : 10000
+            duration : 8000
         });
 
         var notifytemplate = {
-            success : '/app/js/websitecomponent/notifysavesuccess.html',
-            failure : '/app/js/websitecomponent/notifysavefailure.html'
+            success : 'notifysavesuccess.html',
+            failure : 'notifysavefailure.html'
         };
         $scope.closeAll = function(){
             notify.closeAll();
@@ -496,6 +496,16 @@
 
             initOnce : function(){
                 this.loadingStudentData();
+
+                socket.socket.on('marksimosDecisionUpdate', function(){
+                    app.reRun();
+
+                    notify({
+                        message  : 'Decisions updated by Team Member !',
+                        templateUrl : notifytemplate.success,
+                        position : 'center'
+                    });
+                });
 
             },
 
@@ -1028,9 +1038,7 @@
 
         app.initOnce();
 
-        socket.socket.on('update', function(){
-            app.reRun();
-        });
+
 
 
         /********************  点击添加一个新的Brand 显示添加Brand的表单  ********************/

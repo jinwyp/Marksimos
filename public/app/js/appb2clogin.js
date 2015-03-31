@@ -193,23 +193,17 @@
             currentTabIndex: 1,
             updateTeamNameDisabled: true,
             formEditing: false,
-            alertSuccessInfo: {
-                content: $translate.instant('ProfilePageAlertSaveSuccessful'),
+            alertInfo: {
                 duration: 2,
-                container: '#profile-alert-container',
-                type: 'success',
-                dismissable: false
-            },
-            alertFailedInfo: {
-                content: $translate.instant('ProfilePageAlertSaveFailed'),
-                duration: 2,
-                container: '#profile-alert-container',
-                type: 'danger',
-                dismissable: false
+                template: '',
+                container: '#profile-alert-container'
             },
             defaultAvatar: 'app/css/images/profile_avatar_2.png',
             errorFields: {}
         };
+        vm.css.alertSuccessInfo = angular.extend({}, vm.css.alertInfo, {template: 'profile-alert-success.html'});
+        vm.css.alertFailedInfo = angular.extend({}, vm.css.alertInfo, {template: 'profile-alert-failed.html'});
+        vm.css.alertInvalidPassword = angular.extend({}, vm.css.alertInfo, {template: 'profile-alert-invalid-password.html'});
 
         vm.currentUser = {};
         vm.formData = {};
@@ -330,7 +324,7 @@
                     $alert(vm.css.alertFailedInfo);
                 });
             } else {
-                $alert(angular.extend({}, vm.css.alertFailedInfo, {content: $translate.instant('ProfilePageAlertInvalidPassword')}));
+                $alert(vm.css.alertInvalidPassword);
             }
         }
 
