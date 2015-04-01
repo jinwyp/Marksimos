@@ -774,12 +774,10 @@ exports.forgotPasswordStep2 = function(req, res, next){
 
 
 exports.generatePhoneCode = function(req, res, next) {
-    console.log(req.user);
-
     var messageXSend = new MessageXSend();
 
     var verifyCode = String(Math.floor(Math.random() * (999999 - 100000) + 100000 ));
-    var verifyCodeExpires = new Date(new Date().getTime() + expiresTime * 30)
+    var verifyCodeExpires = new Date(new Date().getTime() + 1000 * 60 * 60); // one hour
 
     userModel.updateQ({_id: req.user._id}, {$set: {phoneVerifyCode: verifyCode, phoneVerifyCodeExpires:verifyCodeExpires}})
     .then(function(){
@@ -788,8 +786,37 @@ exports.generatePhoneCode = function(req, res, next) {
         messageXSend.set_project('pPlo2');
         messageXSend.xsend();
 
-        return res.status(200).send({message: 'Register new company success'});
+        return res.status(200).send({message: 'generatePhoneCode succeed'});
     })
     .fail(next)
     .done();
 };
+
+
+exports.verifyPhoneCode = function(req, res, next) {
+    var phoneVerifyCode = req.body.phoneVerifyCode;
+    if(typeof phoneVerifyCode === 'undefined') {
+        return res.status(400).send( {message: "No phoneVerifyCode found in body!"});
+    }
+
+    var user = req.user;
+    var nowDate = new Date();
+
+    if(user.phoneVerifyCodeExpires < nowDate) {
+        return res.status(400).send( {message: "PhoneVerifyCode Expired!"});
+    }
+
+    if(user.phoneVerifyCode !== phoneVerifyCode) {
+        return res.status(400).send( {message: "PhoneVerifyCode not match!"});
+    }
+
+    user.phoneVerified = true;
+    user.saveQ()
+    .then(function(){
+        return res.status(200).send({message: 'verifyPhoneCode succeed'});
+    })
+    .fail(next)
+    .done();
+
+};
+z
