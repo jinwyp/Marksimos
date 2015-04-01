@@ -33,7 +33,7 @@
             'responseError': function(response) {
                 //console.log(response);
                 if(response.status === 401) {
-                    $window.location.href = '/marksimos';
+                    //$window.location.href = '/marksimos';
                 }
                 return $q.reject(response);
             }
