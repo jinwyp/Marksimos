@@ -49,6 +49,9 @@
             ProfilePageTeamInfoMember                : 'Member',
             ProfilePageTeamInfoNewMember             : 'New Member',
             ProfileContactInfoMobilePhone            : 'Mobile Phone',
+            ProfileContactInfoMobilePhoneVerify      : 'Verify Mobile',
+            ProfileContactInfoMobilePhoneVerifySend  : 'Get verify code for free',
+            ProfileContactInfoMobilePhoneVerifyReSend : 'Resend verify code',
 
             //Error Tips for Validation
             ProfilePagePasswordError                 : 'Please input password 6-20 characters',
@@ -61,6 +64,7 @@
             ProfilePageNewMemberNameError            : "Please input new member's name",
             ProfilePageInvalidQQ                     : 'Invalid qq account',
             ProfilePageInvalidMobilePhoneNumber      : 'Invalid mobile phone number',
+            ProfilePageInvalidMobilePhoneNumberVerifyCode      : 'Mobile verify code wrong',
 
             //Input Control Placeholder
             ProfilePageNewMemberInputPlaceholder     : 'Username/Email',
@@ -171,18 +175,23 @@
             ProfilePageTeamInfoMember                : '队员',
             ProfilePageTeamInfoNewMember             : '新队员',
             ProfileContactInfoMobilePhone            : '手机',
+            ProfileContactInfoMobilePhoneVerify      : '验证手机',
+            ProfileContactInfoMobilePhoneVerifySend  : '免费获取验证码',
+            ProfileContactInfoMobilePhoneVerifyReSend  : '重新发送验证码',
 
             //Error Tips for Validation
-            ProfilePagePasswordError                 : '请输入密码 6-20个字符',
-            ProfilePageNewPasswordError              : '请输入新密码 6-20个字符',
-            ProfilePageTwoPasswordSameError          : '新密码不能与老密码相同',
-            ProfilePageConfirmPasswordError          : '请再次输入新密码',
-            ProfilePageTwoPasswordsNotConsistent     : '两次密码不一致',
-            ProfilePageDateFormatError               : '日期格式错误',
-            ProfilePageTeamNameRequiredError         : '请输入正确的战队名称',
-            ProfilePageNewMemberNameError            : '请输入正确的用户名',
-            ProfilePageInvalidQQ                     : '无效的QQ号码',
-            ProfilePageInvalidMobilePhoneNumber      : '无效的手机号码',
+            ProfilePagePasswordError                      : '请输入密码 6-20个字符',
+            ProfilePageNewPasswordError                   : '请输入新密码 6-20个字符',
+            ProfilePageTwoPasswordSameError               : '新密码不能与老密码相同',
+            ProfilePageConfirmPasswordError               : '请再次输入新密码',
+            ProfilePageTwoPasswordsNotConsistent          : '两次密码不一致',
+            ProfilePageDateFormatError                    : '日期格式错误',
+            ProfilePageTeamNameRequiredError              : '请输入正确的战队名称',
+            ProfilePageNewMemberNameError                 : '请输入正确的用户名',
+            ProfilePageInvalidQQ                          : '无效的QQ号码',
+            ProfilePageInvalidMobilePhoneNumber           : '无效的手机号码',
+            ProfilePageInvalidMobilePhoneNumberVerifyCode : '验证码错误',
+
 
             //Placeholder for Input Control
             ProfilePageNewMemberInputPlaceholder     : '用户名/邮箱',

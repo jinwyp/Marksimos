@@ -267,6 +267,20 @@
                                 <span class="form-control-static err-msg control-label col-xs-3" ng-if="!contactForm.mobilePhone.$dirty&&profile.css.errorFields.mobilePhone">{{'ProfilePageInvalidMobilePhoneNumber' | translate}}</span>
                                 <!--<span class="err-msg control-label" ng-if="contactForm.qq.$dirty&&contactForm.qq.$error.required">{{'请输入正确的' | translate}}qq!</span>-->
                             </div>
+                            <div class="form-group" ng-class="{'has-success':contactForm.mobilePhoneVerifyCode.$dirty&&contactForm.mobilePhoneVerifyCode.$valid, 'has-error':contactForm.mobilePhoneVerifyCode.$dirty&&contactForm.mobilePhoneVerifyCode.$invalid}" >
+                                <label for="mobilePhoneVerifyCode" class="control-label col-md-3 text-right">{{'ProfileContactInfoMobilePhoneVerify' | translate}} :</label>
+
+                                <div class="col-xs-2">
+                                    <input ng-model="profile.formData.mobilePhoneVerifyCode" type="text" id="mobilePhoneVerifyCode" name="mobilePhoneVerifyCode" class="form-control">
+                                </div>
+                                <div class="col-xs-2">
+                                    <button class="btn btn-default" ng-if="!profile.css.mobileVerifyCodeResend" ng-click="profile.clickSendMobileVerifyCode()">{{'ProfileContactInfoMobilePhoneVerifySend' | translate}}</button>
+                                    <button class="btn btn-default" ng-if="profile.css.mobileVerifyCodeResend" ng-click="profile.clickSendMobileVerifyCode()" ng-disabled="profile.css.mobileVerifyCodeTimeCounter>0">{{'ProfileContactInfoMobilePhoneVerifyReSend' | translate}} <span ng-hide="profile.css.mobileVerifyCodeTimeCounter==0">{{profile.css.mobileVerifyCodeTimeCounter}}</span></button>
+                                </div>
+                                <span class="form-control-static err-msg control-label col-xs-3" ng-if="!contactForm.mobilePhoneVerifyCode.$dirty&&profile.css.errorFields.mobilePhoneVerifyCode">{{'ProfilePageInvalidMobilePhoneNumberVerifyCode' | translate}}</span>
+                                <!--<span class="err-msg control-label" ng-if="contactForm.qq.$dirty&&contactForm.qq.$error.required">{{'请输入正确的' | translate}}qq!</span>-->
+                            </div>
+
                             <div class="row" ng-if="profile.css.formEditing">
                                 <div class="col-md-6 col-md-offset-3 profile-button-container">
                                     <button ng-click="profile.clickUpdateUserInfo(contactForm)" type="submit">{{'ProfilePageSaveButton' | translate}}</button>

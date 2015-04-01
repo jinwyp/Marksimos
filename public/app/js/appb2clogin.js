@@ -186,7 +186,7 @@
 
 
 
-    angular.module('b2clogin').controller('profileController', ['Student', '$alert', 'FileUploader', '$translate', '$location', function(Student, $alert, FileUploader, $translate, $location) {
+    angular.module('b2clogin').controller('profileController', ['Student', '$alert', 'FileUploader', '$translate', '$location', '$interval', function(Student, $alert, FileUploader, $translate, $location, $interval) {
         /* jshint validthis: true */
         var vm = this;
         vm.css = {
@@ -200,7 +200,9 @@
                 container: '#profile-alert-container'
             },
             defaultAvatar: 'app/css/images/profile_avatar_2.png',
-            errorFields: {}
+            errorFields: {},
+            mobileVerifyCodeResend : false,
+            mobileVerifyCodeTimeCounter : 60
         };
         vm.css.alertSuccessInfo = angular.extend({}, vm.css.alertInfo, {template: 'profile-alert-success.html'});
         vm.css.alertFailedInfo = angular.extend({}, vm.css.alertInfo, {template: 'profile-alert-failed.html'});
@@ -226,6 +228,7 @@
         vm.clickEditProfile = editProfile;
         vm.clickSwitchTab = switchTab;
         vm.clickCancelEditProfile = cancelEditProfile;
+        vm.clickSendMobileVerifyCode = sendMobileVerifyCode;
 
 
         /**********  Function Declarations  **********/
@@ -315,6 +318,19 @@
                     }
                 });
             }
+        }
+
+        function sendMobileVerifyCode() {
+            vm.css.mobileVerifyCodeResend = true;
+            vm.css.mobileVerifyCodeTimeCounter = 60;
+
+            var timer = $interval(function() {
+                if(vm.css.mobileVerifyCodeTimeCounter > 0){
+                    vm.css.mobileVerifyCodeTimeCounter = vm.css.mobileVerifyCodeTimeCounter - 1;
+                }else {
+                    $interval.cancel(timer);
+                }
+            }, 1000);
         }
 
         function updatePassword(form) {
