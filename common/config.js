@@ -50,7 +50,13 @@ module.exports = (function(){
             "Small Pack",
             "Normal Pack",
             "Large Pack"
-        ]
+        ],
+
+        messageConfig : {
+            appid : 10129,
+            appkey : '4868d6fa40cd727640518011e3549b29',
+            signtype : 'normal'
+        }
     };
 
     switch(process.env.NODE_ENV){

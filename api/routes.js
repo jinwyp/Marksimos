@@ -191,6 +191,8 @@ apiRouter.post('/e4e/api/register/email', auth.verifyEmail);
 
 //apiRouter.get('/e4e/api/captcha', auth.generateCaptcha);
 
+apiRouter.get('/e4e/api/phonecode', auth.authLoginToken(), auth.generatePhoneCode);
+
 apiRouter.post('/e4e/api/forgotpasswordstep1', auth.sendResetPasswordEmail);
 apiRouter.post('/e4e/api/forgotpasswordstep2', auth.verifyResetPasswordCode);
 apiRouter.post('/e4e/api/forgotpasswordstep3', auth.resetNewPassword);

@@ -6,7 +6,7 @@ var Token = require('../../models/user/authenticationtoken.js');
 var emailModel = require('../../models/user/emailContent.js');
 var Captcha = require('../../models/user/captcha.js');
 var _ = require('lodash');
-
+var MessageXSend = require('../../../common/submail/messageXSend.js');
 
 var mailProvider = require('../../../common/sendCloud.js');
 var mailSender = mailProvider.createEmailSender();
@@ -744,17 +744,6 @@ exports.forgotPasswordStep2 = function(req, res, next){
 };
 
 
-
-
-
-
-
-
-
-
-
-
-
 //
 //var ccap = require('ccap')();//Instantiated ccap class
 //exports.generateCaptcha = function(req, res, next) {
@@ -784,6 +773,23 @@ exports.forgotPasswordStep2 = function(req, res, next){
 //
 
 
+exports.generatePhoneCode = function(req, res, next) {
+    console.log(req.user);
 
+    var messageXSend = new MessageXSend();
 
+    var verifyCode = String(Math.floor(Math.random() * (999999 - 100000) + 100000 ));
+    var verifyCodeExpires = new Date(new Date().getTime() + expiresTime * 30)
 
+    userModel.updateQ({_id: req.user._id}, {$set: {phoneVerifyCode: verifyCode, phoneVerifyCodeExpires:verifyCodeExpires}})
+    .then(function(){
+        messageXSend.add_var('code',verifyCode);
+        messageXSend.add_to(req.user.mobilePhone);
+        messageXSend.set_project('pPlo2');
+        messageXSend.xsend();
+
+        return res.status(200).send({message: 'Register new company success'});
+    })
+    .fail(next)
+    .done();
+};

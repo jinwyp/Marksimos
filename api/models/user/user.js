@@ -40,6 +40,9 @@ var userSchema = new Schema({
     emailActivated: {type: Boolean, default: false},
     activated: {type: Boolean, default: false},
 
+    phoneVerifyCode: {type: String},
+    phoneVerifyCodeExpires: {type: String},
+    phoneVerified: {type: Boolean, default: false},
 
     role: {type: Number, default: 4, required: true},  //1 admin, 2 distributor, 3 facilitator, 4  students,   5 B2C Enterprise
     studentType : {type: Number, default: 10, required: true}, //10 B2B students,  20 B2C students, 30 Both B2C and B2B students
