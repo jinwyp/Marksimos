@@ -70,6 +70,12 @@
             forgetPasswordStep3 : function(user){
                 return $http.post(apiPathB2C + 'forgotpasswordstep3', user);
             },
+            verifyUsername : function(username) {
+                return $http.post(apiPathB2C + 'register/username', username);
+            },
+            verifyEmail : function(email) {
+                return $http.post(apiPathB2C + 'register/email', email);
+            },
 
             login : function(user){
                 return $http.post(apiPath + 'login', user).then(function(result){
