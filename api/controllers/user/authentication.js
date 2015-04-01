@@ -472,6 +472,51 @@ exports.registerB2CEnterprise = function(req, res, next){
 };
 
 
+
+
+
+exports.verifyUsername = function(req, res, next){
+
+    var validationErrors = userModel.usernameValidations(req);
+
+    if(validationErrors){
+        return res.status(400).send( {message: validationErrors} );
+    }
+
+    userModel.findOneQ({ username : req.body.username}).then(function(resultUser) {
+        if (!resultUser) {
+            throw new Error('Cancel promise chains. Because username is existed.');
+        }
+
+        return res.status(200).send({message: 'username is ok'});
+
+    }).fail(next).done();
+
+};
+
+exports.verifyEmail = function(req, res, next){
+
+    var validationErrors = userModel.emailValidations(req);
+
+    if(validationErrors){
+        return res.status(400).send( {message: validationErrors} );
+    }
+
+    userModel.findOneQ({ email : req.body.email}).then(function(resultUser) {
+        if (!resultUser) {
+            throw new Error('Cancel promise chains. Because email is existed.');
+        }
+
+        return res.status(200).send({message: 'email is ok'});
+
+    }).fail(next).done();
+
+};
+
+
+
+
+
 // http://www.hcdlearning.com/e4e/emailverify/registration?email=jinwyp@163.com&emailtoken=f70c16b5-2cf1-42d1-90ba-b2fa1bcd3db8
 
 exports.activateRegistrationEmail = function(req, res, next){
@@ -702,6 +747,15 @@ exports.forgotPasswordStep2 = function(req, res, next){
 
 
 
+
+
+
+
+
+
+
+
+//
 //var ccap = require('ccap')();//Instantiated ccap class
 //exports.generateCaptcha = function(req, res, next) {
 //    var ary = ccap.get();
@@ -726,8 +780,8 @@ exports.forgotPasswordStep2 = function(req, res, next){
 //    .fail(next)
 //    .done();
 //};
-
-
+//
+//
 
 
 

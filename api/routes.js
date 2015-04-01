@@ -186,11 +186,15 @@ apiRouter.all("/marksimos/api/*", function(req, res, next){
 apiRouter.post('/e4e/api/registercompany', auth.registerB2CEnterprise);
 apiRouter.post('/e4e/api/registerstudent', auth.registerB2CStudent);
 
+apiRouter.post('/e4e/api/register/username', auth.verifyUsername);
+apiRouter.post('/e4e/api/register/email', auth.verifyEmail);
+
+//apiRouter.get('/e4e/api/captcha', auth.generateCaptcha);
+
 apiRouter.post('/e4e/api/forgotpasswordstep1', auth.sendResetPasswordEmail);
 apiRouter.post('/e4e/api/forgotpasswordstep2', auth.verifyResetPasswordCode);
 apiRouter.post('/e4e/api/forgotpasswordstep3', auth.resetNewPassword);
 
-//apiRouter.get('/e4e/api/captcha', auth.generateCaptcha);
 
 apiRouter.put('/e4e/api/student/password', auth.authLoginToken(), auth.authRole(userRoleModel.right.marksimos.studentInfoSingleCUD), studentController.updateStudentB2CPassword);
 apiRouter.put('/e4e/api/student', auth.authLoginToken(), auth.authRole(userRoleModel.right.marksimos.studentInfoSingleCUD), studentController.updateStudentB2CInfo);

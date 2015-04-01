@@ -355,9 +355,7 @@ userSchema.statics.resetForgotPasswordValidations = function(req, userRoleId, st
 };
 
 
-userSchema.statics.usernameValidations = function(req, userRoleId, studentType){
-
-    studentType = studentType || 20;
+userSchema.statics.usernameValidations = function(req){
 
     if(req.body.username.indexOf('@') > -1 ){
         req.body.email = req.body.username;
@@ -368,6 +366,15 @@ userSchema.statics.usernameValidations = function(req, userRoleId, studentType){
 
     return req.validationErrors();
 };
+
+
+userSchema.statics.emailValidations = function(req){
+
+    req.checkBody('email', 'Invalid email').notEmpty().isEmail();
+
+    return req.validationErrors();
+};
+
 
 userSchema.statics.passwordValidations = function(req, userRoleId, studentType){
 
