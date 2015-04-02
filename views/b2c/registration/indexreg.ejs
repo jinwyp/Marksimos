@@ -9,57 +9,57 @@
         <div class="middle right">
 
             <form class="reg-form" name="regForm" novalidate ng-cloak>
-                <div class="title">注册</div>
+                <div class="title">{{'RegisterPageRegisterPageRegisterLabel' | translate}}</div>
 
                 <div class="form-group has-feedback" ng-class="{'has-success':regForm.username.$dirty&&regForm.username.$valid, 'has-error':regForm.username.$dirty&&regForm.username.$invalid}">
-                    <input ng-model-options="{ debounce: 500 }" async-validate="register.verifyUsername" class="input-lg form-control" type="text" name="username" placeholder="用户名" ng-model="register.newUser.username" required ng-minlength="6" ng-maxlength="20"/>
+                    <input ng-model-options="{ debounce: 500 }" async-validate="register.verifyUsername" class="input-lg form-control" type="text" name="username" placeholder="{{'RegisterPageUsernamePlaceholder' | translate}}" ng-model="register.newUser.username" required ng-minlength="6" ng-maxlength="20"/>
                     <span class="glyphicon glyphicon-ok form-control-feedback" aria-hidden="true" ng-if="regForm.username.$dirty&&regForm.username.$valid"></span>
                     <span class="glyphicon glyphicon-remove form-control-feedback" aria-hidden="true" ng-if="regForm.username.$dirty&&regForm.username.$invalid"></span>
-                    <span class="err-msg" ng-if="regForm.username.$dirty&&regForm.username.$error.required">请输入正确的用户名!</span>
-                    <span class="err-msg" ng-if="regForm.username.$dirty&&regForm.username.$error.minlength || regForm.username.$dirty&&regForm.username.$error.maxlength">用户名长度为6-20个字符!</span>
-                    <span class="err-msg" ng-if="regForm.username.$dirty&&regForm.username.$error.asyncValid">用户名已经存在!</span>
+                    <span class="err-msg" ng-if="regForm.username.$dirty&&regForm.username.$error.required">{{'RegisterPageInputNameTip' | translate}}</span>
+                    <span class="err-msg" ng-if="regForm.username.$dirty&&regForm.username.$error.minlength || regForm.username.$dirty&&regForm.username.$error.maxlength">{{'RegisterPageNameLengthTip' | translate}}!</span>
+                    <span class="err-msg" ng-if="regForm.username.$dirty&&regForm.username.$error.asyncValid">{{'RegisterPageNameExistTip' | translate}}</span>
                 </div>
 
                 <div class="form-group has-feedback" ng-class="{'has-success':regForm.email.$dirty&&regForm.email.$valid, 'has-error':regForm.email.$dirty&&regForm.email.$invalid}">
-                    <input ng-model-options="{ debounce: 500 }" async-validate="register.verifyEmail" class="input-lg form-control" type="email" name="email" placeholder="邮箱"  ng-model="register.newUser.email" required/>
+                    <input ng-model-options="{ debounce: 500 }" async-validate="register.verifyEmail" class="input-lg form-control" type="email" name="email" placeholder="{{'RegisterPageEmailPlaceholder' | translate}}"  ng-model="register.newUser.email" required/>
                     <span class="glyphicon glyphicon-ok form-control-feedback" aria-hidden="true" ng-if="regForm.email.$dirty&&regForm.email.$valid"></span>
                     <span class="glyphicon glyphicon-remove form-control-feedback" aria-hidden="true" ng-if="regForm.email.$dirty&&regForm.email.$invalid"></span>
-                    <span class="err-msg" ng-if="regForm.email.$dirty&&regForm.email.$error.required || regForm.email.$dirty&&regForm.email.$error.email">请输入正确的邮箱!</span>
-                    <span class="err-msg" ng-if="regForm.username.$dirty&&regForm.email.$error.asyncValid">邮箱已经存在!</span>
+                    <span class="err-msg" ng-if="regForm.email.$dirty&&regForm.email.$error.required || regForm.email.$dirty&&regForm.email.$error.email">{{'RegisterPageInputEmailTip' | translate}}</span>
+                    <span class="err-msg" ng-if="regForm.username.$dirty&&regForm.email.$error.asyncValid">{{'RegisterPageEmailExistTip' | translate}}</span>
                 </div>
 
                 <div class="form-group has-feedback" ng-class="{'has-success':regForm.password.$dirty&&regForm.password.$valid, 'has-error':regForm.password.$dirty&&regForm.password.$invalid}">
-                    <input class="input-lg form-control" type="password" name="password" placeholder="密码" ng-model="register.newUser.password" required ng-minlength="6" ng-maxlength="20"/>
+                    <input class="input-lg form-control" type="password" name="password" placeholder="{{'RegisterPagePasswordPlaceholder' | translate}}" ng-model="register.newUser.password" required ng-minlength="6" ng-maxlength="20"/>
                     <span class="glyphicon glyphicon-ok form-control-feedback" aria-hidden="true" ng-if="regForm.password.$dirty&&regForm.password.$valid"></span>
                     <span class="glyphicon glyphicon-remove form-control-feedback" aria-hidden="true" ng-if="regForm.password.$dirty&&regForm.password.$invalid"></span>
-                    <span class="err-msg" ng-if="regForm.password.$dirty&&regForm.password.$invalid">请输入正确的密码 6-20个字符!</span>
+                    <span class="err-msg" ng-if="regForm.password.$dirty&&regForm.password.$invalid">{{'RegisterPageInputPasswordTip' | translate}}!</span>
                 </div>
 
                 <div class="form-group has-feedback" ng-class="{'has-success':regForm.passwordreinput.$dirty&&regForm.passwordreinput.$valid, 'has-error':regForm.passwordreinput.$dirty&&regForm.passwordreinput.$invalid}">
-                    <input class="input-lg form-control" type="password" name="passwordreinput" placeholder="再次输入密码" ng-model="register.newUser.passwordreinput" required ng-match="register.newUser.password"/>
+                    <input class="input-lg form-control" type="password" name="passwordreinput" placeholder="{{'RegisterPageReTypePasswordPlaceholder' | translate}}" ng-model="register.newUser.passwordreinput" required ng-match="register.newUser.password"/>
                     <span class="glyphicon glyphicon-ok form-control-feedback" aria-hidden="true" ng-if="regForm.passwordreinput.$dirty&&regForm.passwordreinput.$valid"></span>
                     <span class="glyphicon glyphicon-remove form-control-feedback" aria-hidden="true" ng-if="regForm.passwordreinput.$dirty&&regForm.passwordreinput.$invalid"></span>
-                    <span class="err-msg" ng-if="regForm.passwordreinput.$dirty&&regForm.passwordreinput.$invalid">请输入正确的再次输入密码!</span>
+                    <span class="err-msg" ng-if="regForm.passwordreinput.$dirty&&regForm.passwordreinput.$invalid">{{'RegisterPageReTypePasswordTip' | translate}}</span>
                 </div>
 
                 <div class="form-group has-feedback" ng-class="{'has-success':regForm.captcha.$dirty&&regForm.captcha.$valid, 'has-error':regForm.captcha.$dirty&&regForm.captcha.$invalid}">
                     <div class="reg-captcha-input-container">
-                        <input class="input-lg form-control" type="text" name="captcha" placeholder="验证码" ng-model="register.newUser.captcha" required/>
+                        <input class="input-lg form-control" type="text" name="captcha" placeholder="{{'RegisterPageCaptchaPlaceholder' | translate}}" ng-model="register.newUser.captcha" required/>
                         <span ng-if="regForm.captcha.$dirty&&regForm.captcha.$valid" class="glyphicon glyphicon-ok form-control-feedback" aria-hidden="true" ></span>
                         <span ng-if="regForm.captcha.$dirty&&regForm.captcha.$invalid" class="glyphicon glyphicon-remove form-control-feedback" aria-hidden="true" ></span>
                     </div>
                     <!--<span class="glyphicon glyphicon-ok form-control-feedback" aria-hidden="true" ng-if="regForm.captcha.$dirty&&regForm.captcha.$valid"></span>-->
                     <img class="reg-captcha" ng-click="register.captchaImageNum = register.captchaImageNum+1" ng-src="/e4e/api/captcha?num={{register.captchaImageNum}}">
-                    <span class="err-msg reg-captcha-error-tip" ng-if="regForm.captcha.$dirty&&regForm.captcha.$invalid">请输入正确的验证码!</span>
+                    <span class="err-msg reg-captcha-error-tip" ng-if="regForm.captcha.$dirty&&regForm.captcha.$invalid">{{'RegisterPageInputCaptchaTip' | translate}}</span>
                 </div>
 
                 <div class="form-group radio" ng-class="{'has-success':regForm.gender.$dirty&&regForm.gender.$valid, 'has-error':regForm.gender.$dirty&&regForm.gender.$invalid}">
-                    <label class="radio-inline"><input type="radio" name="gender" value="1" ng-model="register.newUser.gender" ng-required="true"/>男</label>
-                    <label class="radio-inline female"><input type="radio" name="gender" value="2" ng-model="register.newUser.gender" ng-required="true"/>女</label>
-                    <span class="err-msg" ng-if="!register.newUser.gender&&register.newUser.clickSubmit">请选择性别!</span>
+                    <label class="radio-inline"><input type="radio" name="gender" value="1" ng-model="register.newUser.gender" ng-required="true"/>{{'RegisterPageMaleLabel' | translate}}</label>
+                    <label class="radio-inline female"><input type="radio" name="gender" value="2" ng-model="register.newUser.gender" ng-required="true"/>{{'RegisterPageFemale' | translate}}</label>
+                    <span class="err-msg" ng-if="!register.newUser.gender&&register.newUser.clickSubmit">{{'RegisterPageSelectGenderTip' | translate}}</span>
                 </div>
 
-                <div class="form-group"><button class="btn btn-default" type="submit" ng-click="register.clickregister(regForm)" >注&nbsp;&nbsp;册</button></div>
+                <div class="form-group"><button class="btn btn-default" type="submit" ng-click="register.clickregister(regForm)" >{{'RegisterPageRegisterButton' | translate}}</button></div>
             </form>
         </div>
 
@@ -74,10 +74,10 @@
 
     <div class="middle b2c-container" ng-if="!register.css.showRegForm" ng-cloak>
         <div class="reg-verify-account text-justify">
-            <p class="tip-header">{{register.newUser.username}} 您好:</p>
-            <p>感谢您注册E4E !</p>
-            <p>我们发送了一封邮件到您的邮箱: <a href="{{register.newUser.email | emailaddress}}" target="_blank">{{register.newUser.email}}</a></p>
-            <p>请打开您的邮箱, 点击邮件中链接即可完成注册. <a class="btn btn-info" href="{{register.newUser.email | emailaddress}}" target="_blank">立即查看</a></p>
+            <p class="tip-header">{{register.newUser.username}} {{'RegisterPageGreet' | translate}}</p>
+            <p>{{'RegisterPageCheckEmailText1' | translate}}</p>
+            <p>{{'RegisterPageCheckEmailText2' | translate}}<a href="{{register.newUser.email | emailaddress}}" target="_blank">{{register.newUser.email}}</a></p>
+            <p>{{'RegisterPageCheckEmailText3' | translate}} <a class="btn btn-info" href="{{register.newUser.email | emailaddress}}" target="_blank">{{'RegisterPageCheckEmailText4' | translate}}</a></p>
 
         </div>
     </div>
@@ -165,8 +165,8 @@
 
         <div class="b2c-container">
                 <div  class="switch-button">
-                    <a href="javascript:void(0);" class="selected">什么是E4E?</a>
-                    <a href="javascript:void(0);">我们可以为你带来什么?</a>
+                    <a href="javascript:void(0);" class="selected">{{'RegisterPageIntroduction1' | translate}}</a>
+                    <a href="javascript:void(0);">{{'RegisterPageIntroduction2' | translate}}</a>
                 </div>
         </div>
     </div>

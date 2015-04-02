@@ -135,7 +135,42 @@
             CampaignListPageJoinedCountPlural       : 's',
             CampaignListPageJoin                    : 'Join',
             CampaignListPageHotGames                : 'Hot Games',
-            CampaignListPageBusinessSimulationMatch : 'Business Simulation Match'
+            CampaignListPageBusinessSimulationMatch : 'Business Simulation Match',
+
+
+
+            //Register Page
+            //Register Form
+            RegisterPageRegisterPageRegisterLabel: 'Register',
+            RegisterPageUsernamePlaceholder: 'Username',
+            RegisterPageEmailPlaceholder: 'Email',
+            RegisterPagePasswordPlaceholder: 'Password',
+            RegisterPageReTypePasswordPlaceholder: 'Re-enter password',
+            RegisterPageCaptchaPlaceholder: 'Captcha',
+            RegisterPageMaleLabel: 'Male',
+            RegisterPageFemale: 'Female',
+            RegisterPageRegisterButton: 'Register',
+            //Error Tips for Validation
+            RegisterPageInputNameTip: 'Please enter your username!',
+            RegisterPageNameLengthTip: "Username's length should be 6-20 characters",
+            RegisterPageNameExistTip: 'This username is already exist',
+            RegisterPageInputEmailTip: "Please enter your email",
+            RegisterPageEmailExistTip: "This email is already exist",
+            RegisterPageInputPasswordTip: 'Please enter your correct password, 6-20 characters!',
+            RegisterPageReTypePasswordTip: 'Please re-enter your password!',
+            RegisterPageInputCaptchaTip: 'Please enter the captcha!',
+            RegisterPageSelectGenderTip: 'Please select your gender！',
+
+            //Check Email
+            RegisterPageGreet: 'Hi:',
+            RegisterPageCheckEmailText1: 'Thanks for registering for E4E!',
+            RegisterPageCheckEmailText2: 'We send an email to your email box: ',
+            RegisterPageCheckEmailText3: 'Please open your email, and click the link in the email to complete your registering.',
+            RegisterPageCheckEmailText4: 'Open immediately',
+
+            //Introduction
+            RegisterPageIntroduction1: 'What is E4E?',
+            RegisterPageIntroduction2: 'What can we provide to you?'
         });
 
 
@@ -261,7 +296,42 @@
             CampaignListPageJoinedCountPlural       : '',
             CampaignListPageJoin                    : '参加',
             CampaignListPageHotGames                : '热门游戏',
-            CampaignListPageBusinessSimulationMatch : '商战模拟大赛'
+            CampaignListPageBusinessSimulationMatch : '商战模拟大赛',
+
+
+
+            //Register Page
+            //Register Form
+            RegisterPageRegisterPageRegisterLabel: '注册',
+            RegisterPageUsernamePlaceholder: '用户名',
+            RegisterPageEmailPlaceholder: '邮箱',
+            RegisterPagePasswordPlaceholder: '密码',
+            RegisterPageReTypePasswordPlaceholder: '再次输入密码',
+            RegisterPageCaptchaPlaceholder: '验证码',
+            RegisterPageMaleLabel: '男',
+            RegisterPageFemale: '女',
+            RegisterPageRegisterButton: '注  册',
+            //Error Tips for Validation
+            RegisterPageInputNameTip: '请输入正确的用户名！',
+            RegisterPageNameLengthTip: '用户名长度为6-20个字符',
+            RegisterPageNameExistTip: '用户名已经存在！',
+            RegisterPageInputEmailTip: "请输入正确的邮箱",
+            RegisterPageEmailExistTip: "邮箱已经存在",
+            RegisterPageInputPasswordTip: '请输入正确的密码 6-20个字符!',
+            RegisterPageReTypePasswordTip: '请输入正确的再次输入密码!',
+            RegisterPageInputCaptchaTip: '请输入正确的验证码!',
+            RegisterPageSelectGenderTip: '请选择性别！',
+
+            //Check Email
+            RegisterPageGreet: '您好:',
+            RegisterPageCheckEmailText1: '感谢您注册E4E !',
+            RegisterPageCheckEmailText2: '我们发送了一封邮件到您的邮箱: ',
+            RegisterPageCheckEmailText3: '请打开您的邮箱, 点击邮件中链接即可完成注册.',
+            RegisterPageCheckEmailText4: '立即查看',
+
+            //Introduction
+            RegisterPageIntroduction1: '什么是E4E?',
+            RegisterPageIntroduction2: '我们可以为你带来什么?'
         });
 
         // Tell the module what language to use by default
