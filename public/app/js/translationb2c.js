@@ -52,6 +52,8 @@
             ProfileContactInfoMobilePhoneVerify      : 'Verify Mobile',
             ProfileContactInfoMobilePhoneVerifySend  : 'Get verify code for free',
             ProfileContactInfoMobilePhoneVerifyReSend : 'Resend verify code',
+            ProfileVerified                          : 'Verified',
+            ProfileUnverified                        : 'Unverified',
 
             //Error Tips for Validation
             ProfilePagePasswordError                 : 'Please input password 6-20 characters',
@@ -177,7 +179,9 @@
             ProfileContactInfoMobilePhone            : '手机',
             ProfileContactInfoMobilePhoneVerify      : '验证手机',
             ProfileContactInfoMobilePhoneVerifySend  : '免费获取验证码',
-            ProfileContactInfoMobilePhoneVerifyReSend  : '重新发送验证码',
+            ProfileContactInfoMobilePhoneVerifyReSend: '重新发送验证码',
+            ProfileVerified                          : '已验证',
+            ProfileUnverified                        : '未验证',
 
             //Error Tips for Validation
             ProfilePagePasswordError                      : '请输入密码 6-20个字符',

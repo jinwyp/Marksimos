@@ -19,7 +19,7 @@ function Message() {
             requestParams['timestamp'] = result["timestamp"];
             requestParams['sign_type'] = self.signtype;
             requestParams['signature'] = self.createSignature(requestParams);
-            request.post({url: api, formData: requestParams}, function optionalCallback(err, httpResponse, body) {
+            request.post({url: api, form: requestParams}, function optionalCallback(err, httpResponse, body) {
                 if (err) {
                     return console.error('upload failed:', err);
                 }
@@ -27,7 +27,7 @@ function Message() {
             });
         });
     };
-    this.xsend = function(params) {
+    this.xsend = function(params, cb) {
         var api = 'https://api.submail.cn/message/xsend.json';
         var requestParams = params;
         requestParams['appid'] = this.appid;
@@ -36,15 +36,20 @@ function Message() {
             uri: 'https://api.submail.cn/service/timestamp.json',
             method: 'GET'
         }, function(error, response, body) {
+            if(error) {
+               return cb(error);
+            }
             var result = JSON.parse(body);
             requestParams['timestamp'] = result["timestamp"];
             requestParams['sign_type'] = self.signtype;
             requestParams['signature'] = self.createSignature(requestParams);
             request.post({url: api, form: requestParams}, function optionalCallback(err, httpResponse, body) {
                 if (err) {
-                    return console.error('upload failed:', err);
+                    console.error('upload failed:', err);
+                    return cb(error);
                 }
                 console.log('Upload successful!  Server responded with:', body);
+                return cb(undefined, body);
             });
         });
     };
@@ -82,7 +87,7 @@ function Message() {
             requestParams['timestamp'] = result["timestamp"];
             requestParams['sign_type'] = self.signtype;
             requestParams['signature'] = self.createSignature(requestParams);
-            request.post({url: api, formData: requestParams}, function optionalCallback(err, httpResponse, body) {
+            request.post({url: api, form: requestParams}, function optionalCallback(err, httpResponse, body) {
                 if (err) {
                     return console.error('upload failed:', err);
                 }

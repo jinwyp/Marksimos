@@ -15,7 +15,7 @@ var uuid = require('node-uuid');
 var logger = require('../../../common/logger.js');
 var util = require('util');
 var utility = require('../../../common/utility.js');
-
+var Q = require('q');
 
 var expiresTime = 1000 * 60 * 60 * 24; // 1 days
 
@@ -784,8 +784,10 @@ exports.generatePhoneVerifyCode = function(req, res, next) {
         messageXSend.add_var('code',verifyCode);
         messageXSend.add_to(req.user.mobilePhone);
         messageXSend.set_project('pPlo2');
-        messageXSend.xsend();
-
+        var xsendQ = Q.nbind(messageXSend.xsend, messageXSend);
+        return xsendQ();
+    })
+    .then(function(){
         return res.status(200).send({message: 'generatePhoneCode succeed'});
     })
     .fail(next)

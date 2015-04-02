@@ -56,9 +56,9 @@ function MessageXSend() {
         }
         return params;
     };
-    this.xsend = function() {
+    this.xsend = function(cb) {
         var message = new Message();
-        message.xsend(this.build_params());
+        message.xsend(this.build_params(),cb);
     }
 };
 

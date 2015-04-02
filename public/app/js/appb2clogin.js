@@ -333,14 +333,21 @@
                 }
             }, 1000);
 
-            Student.getPhoneVerifyCode();
+            Student.getPhoneVerifyCode()
+            .then(function(){
+                //TODO: show succeed msg to user!
+            })
+            .catch(function(err){
+                //TODO: show error msg to user!
+                console.log(err);
+            });
 
         }
 
         function sendMobileVerifyCode(form) {
             Student.sendPhoneVerifyCode(vm.formData.mobilePhoneVerifyCode)
-            .then(function(data){
-
+            .then(function(){
+                vm.currentUser.phoneVerified = true;
             })
             .catch(function(err){
                 form.mobilePhoneVerifyCode.$valid = false;
