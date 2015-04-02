@@ -9,7 +9,7 @@
         <div class="middle right">
 
             <form class="reg-form" name="regForm" novalidate ng-cloak>
-                <div class="title">{{'RegisterPageRegisterPageRegisterLabel' | translate}}</div>
+                <div class="title">{{'RegisterPageRegisterLabel' | translate}}</div>
 
                 <div class="form-group has-feedback" ng-class="{'has-success':regForm.username.$dirty&&regForm.username.$valid, 'has-error':regForm.username.$dirty&&regForm.username.$invalid}">
                     <input ng-model-options="{ debounce: 500 }" async-validate="register.verifyUsername" class="input-lg form-control" type="text" name="username" placeholder="{{'RegisterPageUsernamePlaceholder' | translate}}" ng-model="register.newUser.username" required ng-minlength="6" ng-maxlength="20"/>
