@@ -5,10 +5,14 @@ var userModel = require('../../models/user/user.js');
 var userRoleModel = require('../../models/user/userrole.js');
 var teamModel = require('../../models/user/team.js');
 var fileUploadModel = require('../../models/user/fileupload.js');
+var _ = require('lodash');
 
 //var ObjectId = require('mongoose').Types.ObjectId;
 
 
+var pickedUpdatedKeys = ['gender', 'birthday', 'firstName', 'lastName', 'idcardNumber',  'mobilePhone', 'qq',
+    'majorsDegree', 'dateOfEnterCollege', 'dateOfGraduation', 'organizationOrUniversity', 'occupation',
+    'country', 'state', 'city', 'district', 'street', 'websiteLanguage'];
 
 exports.updateStudentB2CInfo = function(req, res, next){
     var validationErrors = userModel.userInfoValidations(req, userRoleModel.roleList.student.id, userModel.getStudentType().B2C);
@@ -17,29 +21,7 @@ exports.updateStudentB2CInfo = function(req, res, next){
         return res.status(400).send( {message: validationErrors} );
     }
 
-    var updatedUser = {};
-    if(typeof req.body.gender !== 'undefined') updatedUser.gender = req.body.gender;
-    if(typeof req.body.birthday !== 'undefined') updatedUser.birthday = req.body.birthday;
-    if(typeof req.body.firstName !== 'undefined') updatedUser.firstName = req.body.firstName;
-    if(typeof req.body.lastName !== 'undefined') updatedUser.lastName = req.body.lastName;
-    if(typeof req.body.idcardNumber !== 'undefined') updatedUser.idcardNumber = req.body.idcardNumber;
-
-    if(typeof req.body.mobilePhone !== 'undefined') updatedUser.mobilePhone = req.body.mobilePhone;
-    if(typeof req.body.qq !== 'undefined') updatedUser.qq = req.body.qq;
-
-    if(typeof req.body.majorsDegree !== 'undefined') updatedUser.majorsDegree = req.body.majorsDegree;
-    if(typeof req.body.dateOfEnterCollege !== 'undefined') updatedUser.dateOfEnterCollege = req.body.dateOfEnterCollege;
-    if(typeof req.body.dateOfGraduation !== 'undefined') updatedUser.dateOfGraduation = req.body.dateOfGraduation;
-    if(typeof req.body.organizationOrUniversity !== 'undefined') updatedUser.organizationOrUniversity = req.body.organizationOrUniversity;
-    if(typeof req.body.occupation !== 'undefined') updatedUser.occupation = req.body.occupation;
-
-    if(typeof req.body.country !== 'undefined') updatedUser.country = req.body.country;
-    if(typeof req.body.state !== 'undefined') updatedUser.state = req.body.state;
-    if(typeof req.body.city !== 'undefined') updatedUser.city = req.body.city;
-    if(typeof req.body.district !== 'undefined') updatedUser.district = req.body.district;
-    if(typeof req.body.street !== 'undefined') updatedUser.street = req.body.street;
-
-    if(typeof req.body.websiteLanguage !== 'undefined') updatedUser.websiteLanguage = req.body.websiteLanguage;
+    var updatedUser = _.pick(req.body, pickedUpdatedKeys);
 
     if(req.user.mobilePhone != updatedUser.mobilePhone) {
         updatedUser.phoneVerified = false;
