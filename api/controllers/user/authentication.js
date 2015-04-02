@@ -484,7 +484,7 @@ exports.verifyUsername = function(req, res, next){
     }
 
     userModel.findOneQ({ username : req.body.username}).then(function(resultUser) {
-        if (!resultUser) {
+        if (resultUser) {
             throw new Error('Cancel promise chains. Because username is existed.');
         }
 
@@ -503,7 +503,7 @@ exports.verifyEmail = function(req, res, next){
     }
 
     userModel.findOneQ({ email : req.body.email}).then(function(resultUser) {
-        if (!resultUser) {
+        if (resultUser) {
             throw new Error('Cancel promise chains. Because email is existed.');
         }
 
