@@ -61,6 +61,8 @@
         vm.clickForgetPasswordStep1 = forgetPasswordStep1;
         vm.clickForgetPasswordStep2 = forgetPasswordStep2;
         vm.clickResetPasswordStep3 = resetNewPassword;
+        vm.verifyUsername = verifyUsername;
+        vm.verifyEmail = verifyEmail;
 
         vm.captchaImageNum = 1;
 
@@ -113,6 +115,14 @@
 
                 });
             }
+        }
+
+        function verifyUsername(username) {
+            return Student.verifyUsername(username);
+        }
+
+        function verifyEmail(email) {
+            return Student.verifyEmail(email);
         }
 
 

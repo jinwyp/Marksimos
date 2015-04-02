@@ -24,7 +24,7 @@
             ProfilePageTabUploadAvatar               : 'Upload Avatar',
             ProfilePageTabBasicInfo                  : 'Basic Info',
             ProfilePageTabSecurityInfo               : 'Security Info',
-            ProfilePageTabSchoolInfo                 : 'School Info',
+            ProfilePageTabSchoolInfo                 : 'Education Background',
             ProfilePageTabTeamInfo                   : 'Team Info',
             ProfilePageTabContactInfo                : 'Contact Info',
 
@@ -152,7 +152,7 @@
             ProfilePageTabUploadAvatar               : '上传头像',
             ProfilePageTabBasicInfo                  : '基本信息',
             ProfilePageTabSecurityInfo               : '安全信息',
-            ProfilePageTabSchoolInfo                 : '学校信息',
+            ProfilePageTabSchoolInfo                 : '教育背景',
             ProfilePageTabTeamInfo                   : '团队信息',
             ProfilePageTabContactInfo                : '联系方式',
 
