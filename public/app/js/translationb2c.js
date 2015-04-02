@@ -162,7 +162,7 @@
             RegisterPageSelectGenderTip           : 'Please select your gender！',
 
             //Check Email
-            RegisterPageGreet                     : 'Hi:',
+            RegisterPageGreet                     : 'hi:',
             RegisterPageCheckEmailText1           : 'Thanks for registering for E4E!',
             RegisterPageCheckEmailText2           : 'We send an email to your email box: ',
             RegisterPageCheckEmailText3           : 'Please open your email, and click the link in the email to complete your registering.',
@@ -182,7 +182,23 @@
             LoginPageRememberMe          : 'Remember me',
             LoginPageLoginButton         : 'Login',
             LoginPageRegisterButton      : 'or register an E4E account',
-            LoginPageForgetPassword      : 'Forget password?'
+            LoginPageForgetPassword      : 'Forget password?',
+
+
+
+            // Register Success Page
+            LoginSuccessGreet: 'hi:',
+            LoginSuccessText1: 'You has successfully activated your',
+            LoginSuccessText2: 'email!',
+            LoginSuccessText3: 'Thanks for completing register.',
+            LoginSuccessText4: 'Enter user center.',
+
+
+
+            // Page Footer
+            FooterEnterpriseEntry: 'Enterprise Entry',
+            FooterMainPageLink: 'HCDLearning Education',
+            FooterGovernmentRecord: '沪ICP 13045400号'
         });
 
 
@@ -355,8 +371,23 @@
             LoginPageRememberMe          : '记住密码 自动登录',
             LoginPageLoginButton         : '登  录',
             LoginPageRegisterButton      : '或注册E4E账号',
-            LoginPageForgetPassword      : '忘记密码？'
+            LoginPageForgetPassword      : '忘记密码？',
 
+
+
+            // Register Success Page
+            LoginSuccessGreet: '您好:',
+            LoginSuccessText1: '您已经成功激活你的',
+            LoginSuccessText2: '邮箱!',
+            LoginSuccessText3: '感谢您已完成注册.',
+            LoginSuccessText4: '进入用户中心',
+
+
+
+            // Page Footer
+            FooterEnterpriseEntry: '企业入口',
+            FooterMainPageLink: '合得教育',
+            FooterGovernmentRecord: '沪ICP 13045400号'
         });
 
         // Tell the module what language to use by default

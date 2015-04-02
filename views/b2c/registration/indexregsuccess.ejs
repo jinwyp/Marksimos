@@ -7,9 +7,9 @@
 
     <div class="middle b2c-container" >
         <div class="reg-verify-account text-justify">
-            <p class="tip-header">  <%= username %> 您好:</p>
-            <p>您已经成功激活你的<%= useremail %>邮箱!</p>
-            <p>感谢您已完成注册. <a class="btn btn-info" href="/e4e/profile">进入用户中心</a></p>
+            <p class="tip-header">  <%= username %> {{'LoginSuccessGreet' | translate}}</p>
+            <p>{{'LoginSuccessText1' | translate}}<%= useremail %>{{'LoginSuccessText2' | translate}}</p>
+            <p>{{'LoginSuccessText3' | translate}}<a class="btn btn-info" href="/e4e/profile">{{'LoginSuccessText4' | translate}}</a></p>
 
         </div>
     </div>
