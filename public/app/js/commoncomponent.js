@@ -237,6 +237,24 @@
         };
     }]);
 
+    angular.module('marksimos.commoncomponent').directive('fixedFooter', ['$document', '$window', '$timeout', function($document, $window, $timeout) {
+        return {
+            restrict: 'A',
+            link: function (scope, elem, attrs, ctrl) {
+                var lastWindowHeight;
+                var elemHeight = elem[0].offsetHeight;
+
+                var unwatch = scope.$watch(function() {
+                    var newWindowHeight = $document[0].documentElement.clientHeight;
+                    if (newWindowHeight == lastWindowHeight) return;
+
+                    lastWindowHeight = newWindowHeight;
+
+                });
+            }
+        };
+    }]);
+
 
     // Prevent the backspace key from navigating back.
     angular.module('marksimos.commoncomponent').directive('preventBackspaceNavigateBack', ['$document', function($document) {
