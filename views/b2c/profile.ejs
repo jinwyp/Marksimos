@@ -274,8 +274,9 @@
                                     <input ng-model="profile.formData.mobilePhoneVerifyCode" type="text" id="mobilePhoneVerifyCode" name="mobilePhoneVerifyCode" class="form-control">
                                 </div>
                                 <div class="col-xs-2">
-                                    <button class="btn btn-default" ng-if="!profile.css.mobileVerifyCodeResend" ng-click="profile.clickSendMobileVerifyCode()">{{'ProfileContactInfoMobilePhoneVerifySend' | translate}}</button>
-                                    <button class="btn btn-default" ng-if="profile.css.mobileVerifyCodeResend" ng-click="profile.clickSendMobileVerifyCode()" ng-disabled="profile.css.mobileVerifyCodeTimeCounter>0">{{'ProfileContactInfoMobilePhoneVerifyReSend' | translate}} <span ng-hide="profile.css.mobileVerifyCodeTimeCounter==0">{{profile.css.mobileVerifyCodeTimeCounter}}</span></button>
+                                    <button class="btn btn-default" ng-if="!profile.css.mobileVerifyCodeResend" ng-click="profile.clickGetMobileVerifyCode()">{{'ProfileContactInfoMobilePhoneVerifySend' | translate}}</button>
+                                    <button class="btn btn-default" ng-if="profile.css.mobileVerifyCodeResend" ng-click="profile.clickGetMobileVerifyCode()" ng-disabled="profile.css.mobileVerifyCodeTimeCounter>0">{{'ProfileContactInfoMobilePhoneVerifyReSend' | translate}} <span ng-hide="profile.css.mobileVerifyCodeTimeCounter==0">{{profile.css.mobileVerifyCodeTimeCounter}}</span></button>
+                                    <button class="btn btn-default" ng-click="profile.clickSendMobileVerifyCode(contactForm)">Verify</button>
                                 </div>
                                 <span class="form-control-static err-msg control-label col-xs-3" ng-if="!contactForm.mobilePhoneVerifyCode.$dirty&&profile.css.errorFields.mobilePhoneVerifyCode">{{'ProfilePageInvalidMobilePhoneNumberVerifyCode' | translate}}</span>
                                 <!--<span class="err-msg control-label" ng-if="contactForm.qq.$dirty&&contactForm.qq.$error.required">{{'请输入正确的' | translate}}qq!</span>-->

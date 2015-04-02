@@ -228,6 +228,7 @@
         vm.clickEditProfile = editProfile;
         vm.clickSwitchTab = switchTab;
         vm.clickCancelEditProfile = cancelEditProfile;
+        vm.clickGetMobileVerifyCode = getMobileVerifyCode;
         vm.clickSendMobileVerifyCode = sendMobileVerifyCode;
 
 
@@ -320,7 +321,7 @@
             }
         }
 
-        function sendMobileVerifyCode() {
+        function getMobileVerifyCode() {
             vm.css.mobileVerifyCodeResend = true;
             vm.css.mobileVerifyCodeTimeCounter = 60;
 
@@ -331,7 +332,23 @@
                     $interval.cancel(timer);
                 }
             }, 1000);
+
+            Student.getPhoneVerifyCode();
+
         }
+
+        function sendMobileVerifyCode(form) {
+            Student.sendPhoneVerifyCode(vm.formData.mobilePhoneVerifyCode)
+            .then(function(data){
+
+            })
+            .catch(function(err){
+                form.mobilePhoneVerifyCode.$valid = false;
+                form.mobilePhoneVerifyCode.$invalid = true;
+                console.log(err);
+            })
+        }
+
 
         function updatePassword(form) {
             if (form.$valid) {

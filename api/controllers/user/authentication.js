@@ -773,7 +773,7 @@ exports.forgotPasswordStep2 = function(req, res, next){
 //
 
 
-exports.generatePhoneCode = function(req, res, next) {
+exports.generatePhoneVerifyCode = function(req, res, next) {
     var messageXSend = new MessageXSend();
 
     var verifyCode = String(Math.floor(Math.random() * (999999 - 100000) + 100000 ));
@@ -793,7 +793,7 @@ exports.generatePhoneCode = function(req, res, next) {
 };
 
 
-exports.verifyPhoneCode = function(req, res, next) {
+exports.verifyPhoneVerifyCode = function(req, res, next) {
     var phoneVerifyCode = req.body.phoneVerifyCode;
     if(typeof phoneVerifyCode === 'undefined') {
         return res.status(400).send( {message: "No phoneVerifyCode found in body!"});
@@ -819,4 +819,3 @@ exports.verifyPhoneCode = function(req, res, next) {
     .done();
 
 };
-z

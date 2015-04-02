@@ -114,6 +114,14 @@
                 return $http.put(apiPathB2C + 'student', data);
             },
 
+            getPhoneVerifyCode : function(){
+                return $http.get(apiPathB2C + 'student/phoneverifycode');
+            },
+
+            sendPhoneVerifyCode : function(phoneVerifyCode){
+                return $http.post(apiPathB2C + 'student/phoneverifycode', {phoneVerifyCode: phoneVerifyCode});
+            },
+
             updatePassword: function(passwordOld, passwordNew) {
                 return $http.put(apiPathB2C + 'student/password', {
                     passwordOld: passwordOld,

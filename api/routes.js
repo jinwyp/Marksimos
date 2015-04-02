@@ -191,10 +191,6 @@ apiRouter.post('/e4e/api/register/email', auth.verifyEmail);
 
 //apiRouter.get('/e4e/api/captcha', auth.generateCaptcha);
 
-apiRouter.get('/e4e/api/phonecode', auth.authLoginToken(), auth.generatePhoneCode);
-apiRouter.post('/e4e/api/phonecode', auth.authLoginToken(), auth.verifyPhoneCode);
-
-
 apiRouter.post('/e4e/api/forgotpasswordstep1', auth.sendResetPasswordEmail);
 apiRouter.post('/e4e/api/forgotpasswordstep2', auth.verifyResetPasswordCode);
 apiRouter.post('/e4e/api/forgotpasswordstep3', auth.resetNewPassword);
@@ -204,6 +200,9 @@ apiRouter.put('/e4e/api/student/password', auth.authLoginToken(), auth.authRole(
 apiRouter.put('/e4e/api/student', auth.authLoginToken(), auth.authRole(userRoleModel.right.marksimos.studentInfoSingleCUD), studentController.updateStudentB2CInfo);
 
 apiRouter.post('/e4e/api/student/avatar', auth.authLoginToken(), auth.authRole(userRoleModel.right.marksimos.studentInfoSingleCUD), fileUploadModel.multerUpload('studentavatar'), studentController.uploadStudentAvatar );
+
+apiRouter.get('/e4e/api/student/phoneverifycode', auth.authLoginToken(), auth.generatePhoneVerifyCode);
+apiRouter.post('/e4e/api/student/phoneverifycode', auth.authLoginToken(), auth.verifyPhoneVerifyCode);
 
 apiRouter.post('/e4e/api/team', auth.authLoginToken(), auth.authRole(userRoleModel.right.marksimos.teamInfoSingleCUD), studentController.updateTeam);
 apiRouter.post('/e4e/api/team/student',  auth.authLoginToken(), auth.authRole(userRoleModel.right.marksimos.teamInfoSingleGet), studentController.addStudentToTeam);
