@@ -41,6 +41,9 @@ exports.updateStudentB2CInfo = function(req, res, next){
 
     if(typeof req.body.websiteLanguage !== 'undefined') updatedUser.websiteLanguage = req.body.websiteLanguage;
 
+    if(req.user.mobilePhone != updatedUser.mobilePhone) {
+        updatedUser.phoneVerified = false;
+    }
 
     userModel.findOneAndUpdateQ( { _id : req.user._id }, {$set:updatedUser}  ).then(function(resultUser){
         if(!resultUser){

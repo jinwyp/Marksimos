@@ -259,7 +259,9 @@
                             <div class="form-group" ng-class="{'has-success':contactForm.mobilePhone.$dirty&&contactForm.mobilePhone.$valid, 'has-error':contactForm.mobilePhone.$dirty&&contactForm.mobilePhone.$invalid}" >
                                 <label for="mobilePhone" class="control-label col-md-3 text-right">{{'ProfileContactInfoMobilePhone' | translate}} :</label>
                                 <div class="col-xs-5" ng-if="!profile.css.formEditing">
-                                    <p class="form-control-static">{{profile.currentUser.mobilePhone}}</p>
+                                    <p class="form-control-static">{{profile.currentUser.mobilePhone}}
+                                        <span>&nbsp({{profile.currentUser.phoneVerified?'已验证':'未验证'}})</span>
+                                    </p>
                                 </div>
                                 <div ng-if="profile.css.formEditing" class="col-xs-5">
                                     <input ng-model="profile.formData.mobilePhone" type="text" id="mobilePhone" name="mobilePhone" class="form-control">
