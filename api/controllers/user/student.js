@@ -12,7 +12,7 @@ var _ = require('lodash');
 
 var pickedUpdatedKeys = ['gender', 'birthday', 'firstName', 'lastName', 'idcardNumber',  'mobilePhone', 'qq',
     'majorsDegree', 'dateOfEnterCollege', 'dateOfGraduation', 'organizationOrUniversity', 'occupation',
-    'country', 'state', 'city', 'district', 'street', 'websiteLanguage'];
+    'country', 'state', 'city', 'district', 'street', 'websiteLanguage', 'workExperiences'];
 
 exports.updateStudentB2CInfo = function(req, res, next){
     var validationErrors = userModel.userInfoValidations(req, userRoleModel.roleList.student.id, userModel.getStudentType().B2C);
@@ -23,19 +23,18 @@ exports.updateStudentB2CInfo = function(req, res, next){
 
     var updatedUser = _.pick(req.body, pickedUpdatedKeys);
 
-    if(req.user.mobilePhone != updatedUser.mobilePhone) {
+    if(updatedUser.mobilePhone && req.user.mobilePhone != updatedUser.mobilePhone) {
         updatedUser.phoneVerified = false;
     }
 
-    userModel.findOneAndUpdateQ( { _id : req.user._id }, {$set:updatedUser}  ).then(function(resultUser){
-        if(!resultUser){
-            throw new Error('Cancel promise chains. Because Update Team failed. more or less than 1 record is updated. it should be only one !');
-        }
-        return res.status(200).send({message: 'Student update success'});
+    _.extend(req.user, updatedUser);
 
-    }).fail(function(err){
-        next(err);
-    }).done();
+    req.user.saveQ()
+    .then(function() {
+        return res.status(200).send({message: 'Student update success'});
+    })
+    .fail(next)
+    .done()
 };
 
 
