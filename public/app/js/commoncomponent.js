@@ -237,49 +237,6 @@
         };
     }]);
 
-    angular.module('marksimos.commoncomponent').directive('fixedFooter', ['$document', '$window', '$timeout', function($document, $window, $timeout) {
-        return {
-            restrict: 'A',
-            link: function (scope, elem, attrs, ctrl) {
-                var className = attrs.fixedFooter;
-                if (!className) return;
-
-                var elemHeight = elem[0].offsetHeight;
-
-                var unwatch = scope.$watch(checkFix);
-                $timeout(function() {
-                    unwatch();
-                }, 2000);
-
-                $window.addEventListener('resize', checkFix);
-                scope.$on('destroy', function() {
-                    $window.removeEventListener('resize', checkFix);
-                });
-
-                function checkFix() {
-                    var windowHeight = $document[0].documentElement.clientHeight;
-                    var current = elem[0];
-                    var hasFixed = elem.hasClass(className);
-                    if (hasFixed) {
-                        var bodyHeight = $document[0].body.offsetHeight;
-                        if (bodyHeight > windowHeight) {
-                            elem.removeClass(className);
-                        }
-                    } else {
-                        var bottomToCeiling = current.offsetTop + elemHeight;
-
-                        while (current = current.offsetParent) {
-                            bottomToCeiling += current.offsetTop;
-                        }
-
-                        if (windowHeight > bottomToCeiling) {
-                            elem.addClass(className);
-                        }
-                    }
-                }
-            }
-        };
-    }]);
 
 
     // Prevent the backspace key from navigating back.
@@ -347,6 +304,51 @@
         }]
     );
 
+
+
+    angular.module('marksimos.commoncomponent').directive('fixedFooter', ['$document', '$window', '$timeout', function($document, $window, $timeout) {
+        return {
+            restrict: 'A',
+            link: function (scope, elem, attrs, ctrl) {
+                var className = attrs.fixedFooter;
+                if (!className) return;
+
+                var elemHeight = elem[0].offsetHeight;
+
+                var unwatch = scope.$watch(checkFix);
+                $timeout(function() {
+                    unwatch();
+                }, 2000);
+
+                $window.addEventListener('resize', checkFix);
+                scope.$on('destroy', function() {
+                    $window.removeEventListener('resize', checkFix);
+                });
+
+                function checkFix() {
+                    var windowHeight = $document[0].documentElement.clientHeight;
+                    var current = elem[0];
+                    var hasFixed = elem.hasClass(className);
+                    if (hasFixed) {
+                        var bodyHeight = $document[0].body.offsetHeight;
+                        if (bodyHeight > windowHeight) {
+                            elem.removeClass(className);
+                        }
+                    } else {
+                        var bottomToCeiling = current.offsetTop + elemHeight;
+
+                        while (current = current.offsetParent) {
+                            bottomToCeiling += current.offsetTop;
+                        }
+
+                        if (windowHeight > bottomToCeiling) {
+                            elem.addClass(className);
+                        }
+                    }
+                }
+            }
+        };
+    }]);
 
     // preview the image file specified by the `file` property of the param object parsed from the attribute 'ng-thumb'.
     angular.module('marksimos.commoncomponent').directive('ngThumb', ['$window', function($window) {
