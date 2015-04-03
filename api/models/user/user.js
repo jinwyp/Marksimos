@@ -68,17 +68,10 @@ var userSchema = new Schema({
     idcardNumber : String,
     mobilePhone  : String,
     qq           : String,
+    currentLocation: String,
 
 
-    //user degree info
-    majorsDegree: String,
-    dateOfEnterCollege: Date,
-    dateOfGraduation: Date,
-    organizationOrUniversity: String,
-    occupation: String,
-
-
-    //user address
+    //user address for teacher
     country: String,
     state: String,
     city: String,
@@ -113,6 +106,23 @@ var userSchema = new Schema({
         startDate: Date,
         endDate: Date,
         jobExperience: String
+    }],
+
+    LanguageSkills: [{
+        language: Number,
+        level: Number
+    }],
+
+    eductionBackgrounds: [{
+        university: String,
+        degree: String,
+        major: String,
+        entryDate: Date,
+        graduationDate: Date,
+        abroad: String,
+        achievements: [{
+            description: String
+        }]
     }]
 });
 
