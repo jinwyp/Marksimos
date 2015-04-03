@@ -258,10 +258,10 @@
 
                 function checkFix() {
                     var windowHeight = $document[0].documentElement.clientHeight;
-                    var bodyHeight = $document[0].body.offsetHeight;
                     var current = elem[0];
                     var hasFixed = elem.hasClass(className);
                     if (hasFixed) {
+                        var bodyHeight = $document[0].body.offsetHeight;
                         if (bodyHeight > windowHeight) {
                             elem.removeClass(className);
                         }
