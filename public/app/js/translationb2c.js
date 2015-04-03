@@ -202,7 +202,47 @@
             // Page Footer
             FooterEnterpriseEntry: 'Enterprise Entry',
             FooterMainPageLink: 'HCDLearning Education',
-            FooterGovernmentRecord: '沪ICP 13045400号'
+            FooterGovernmentRecord: '沪ICP 13045400号',
+
+
+
+            // Forgot Password Page
+            ForgotPasswordTitle: 'Security Center',
+            ForgotPasswordFindPassword: 'Find password',
+            ForgotPasswordEnterEmail: 'Enter mail',
+            ForgotPasswordResetPassword: 'Reset password',
+            ForgotPasswordDone: "Done",
+
+            ForgotPasswordEnterRegisterEmail: "Enter your registering email：",
+            ForgotPasswordErrorTip: "Email not exist",
+            ForgotPasswordGreet: "Hi:",
+            ForgotPasswordOpenEmailText1: "We have send a email to you for resetting your password:",
+            ForgotPasswordOpenEmailText2: "Please open your email, and click the link in the email to reset your password.",
+            ForgotPasswordOpenEmailText3: "Open immediately",
+
+            ForgotPasswordNoEmailText1: "Didn't receive an email？",
+            ForgotPasswordNoEmailText2: "Check your trash and spam box.",
+            ForgotPasswordNoEmailText3: "Re-sender an email.",
+
+
+
+            // Reset Password Page
+            ResetPasswordEnterPasswordText1: 'Please open your ',
+            ResetPasswordEnterPasswordText2: 'email, and enter the following verifying code',
+            ResetPasswordEnterPasswordText3: "verifying code is wrong",
+            ResetPasswordEnterPasswordText4: 'containing 6 characters!',
+            ResetPasswordEnterPasswordText5: 'confirm',
+
+            ResetPasswordResetNewPassword: "Reset new password:",
+            ResetPasswordErrorTip: "verifying code is wrong",
+            ResetPasswordPasswordPlaceholder: "Password",
+            ResetPasswordPasswordErrorTip1: 'Please enter the right password containing 6-20 characters!',
+            ResetPasswordReEnterPasswordPlaceholder: "Please re-enter the password",
+            ResetPasswordReEnterPasswordErrorTip: "Please re-enter the correct password！",
+            ResetPasswordResetPassword: "Reset password",
+            ResetPasswordGreet: 'Hi：',
+            ResetPasswordResetSuccessTip: 'Reset password successfully, please login.',
+            ResetPasswordLoginButton:  'login immediately'
         });
 
 
@@ -395,7 +435,47 @@
             // Page Footer
             FooterEnterpriseEntry: '企业入口',
             FooterMainPageLink: '合得教育',
-            FooterGovernmentRecord: '沪ICP 13045400号'
+            FooterGovernmentRecord: '沪ICP 13045400号',
+
+
+
+            // Forgot Password Page
+            ForgotPasswordForgotPasswordTitle: '安全中心',
+            ForgotPasswordFindPassword: '找回密码',
+            ForgotPasswordEnterEmail: '输入邮箱',
+            ForgotPasswordResetPassword: '重设密码',
+            ForgotPasswordDone: "完成",
+
+            ForgotPasswordEnterRegisterEmail: "输入你的注册邮箱：",
+            ForgotPasswordErrorTip: "邮箱不存在!",
+            ForgotPasswordGreet: "您好:",
+            ForgotPasswordOpenEmailText1: "我们发送了一封重置密码的邮件到您的邮箱:",
+            ForgotPasswordOpenEmailText2: "请打开您的邮箱, 点击邮件中链接即可进行重置密码.",
+            ForgotPasswordOpenEmailText3: "立即查看",
+
+            ForgotPasswordNoEmailText1: "没有收到邮件？",
+            ForgotPasswordNoEmailText2: "查看邮箱回收站、垃圾邮件",
+            ForgotPasswordNoEmailText3: "重新发送邮件",
+
+
+
+            // Reset Password Page
+            ResetPasswordEnterPasswordText1: '请查看您',
+            ResetPasswordEnterPasswordText2: '的邮箱, 并填入以下验证码',
+            ResetPasswordEnterPasswordText3: "验证码不正确",
+            ResetPasswordEnterPasswordText4: '长度为6个字符!',
+            ResetPasswordEnterPasswordText5: '确 认',
+
+            ResetPasswordResetNewPassword: "重置新密码:",
+            ResetPasswordErrorTip: "上一步输入的验证码不正确！",
+            ResetPasswordPasswordPlaceholder: "密码",
+            ResetPasswordPasswordErrorTip1: '请输入正确的密码 6-20个字符!',
+            ResetPasswordReEnterPasswordPlaceholder: "再次输入密码",
+            ResetPasswordReEnterPasswordErrorTip: "请再次输入正确的密码！",
+            ResetPasswordResetPassword: "重置密码",
+            ResetPasswordGreet: '您好：',
+            ResetPasswordResetSuccessTip: '重置密码成功，请返回登录.',
+            ResetPasswordLoginButton: '立即登录'
         });
 
         // Tell the module what language to use by default

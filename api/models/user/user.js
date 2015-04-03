@@ -68,17 +68,10 @@ var userSchema = new Schema({
     idcardNumber : String,
     mobilePhone  : String,
     qq           : String,
+    currentLocation: String,
 
 
-    //user degree info
-    majorsDegree: String,
-    dateOfEnterCollege: Date,
-    dateOfGraduation: Date,
-    organizationOrUniversity: String,
-    occupation: String,
-
-
-    //user address
+    //user address for teacher
     country: String,
     state: String,
     city: String,
@@ -102,8 +95,35 @@ var userSchema = new Schema({
     distributorId: {type: String, default: ''},
     facilitatorId: {type: String, default: ''},
 
-    websiteLanguage:{type: String, default: 'zh_CN'} // 'zh_CN'  'en_US'
+    websiteLanguage:{type: String, default: 'zh_CN'}, // 'zh_CN'  'en_US'
 
+    workExperiences: [{
+        company: String,
+        jobType: Number, //0: Internship
+        industry: String,
+        function: String,
+        sizeOfCompany: Number, //0: Less than 30 Employee, 1:
+        startDate: Date,
+        endDate: Date,
+        jobExperience: String
+    }],
+
+    LanguageSkills: [{
+        language: Number,
+        level: Number
+    }],
+
+    eductionBackgrounds: [{
+        university: String,
+        degree: String,
+        major: String,
+        entryDate: Date,
+        graduationDate: Date,
+        abroad: String,
+        achievements: [{
+            description: String
+        }]
+    }]
 });
 
 
@@ -296,8 +316,8 @@ userSchema.statics.userInfoValidations = function(req, userRoleId, studentType){
     removeProperty(req.body);
 
     if(userRoleId === userRoleModel.roleList.student.id ){
-        req.checkBody('gender', 'Gender is required').optional().isInt();
-        req.checkBody('birthday', 'Birthday is required').optional().isDate();
+        req.checkBody('gender', 'Gender wrong format').optional().isInt();
+        req.checkBody('birthday', 'Birthday wrong format').optional().isDate();
 
         req.checkBody('mobilePhone', 'mobilePhone wrong format').optional().isMobilePhone('zh-CN');
         req.checkBody('qq', 'qq number format wrong' ).optional().isInt();
