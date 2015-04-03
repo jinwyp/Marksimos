@@ -253,15 +253,15 @@
 
                 $window.addEventListener('resize', checkFix);
                 scope.$on('destroy', function() {
-                    $window.removeEventListener('resize', checkFix());
+                    $window.removeEventListener('resize', checkFix);
                 });
 
                 function checkFix() {
                     var windowHeight = $document[0].documentElement.clientHeight;
-                    var bodyHeight = $document[0].body.offsetHeight;
                     var current = elem[0];
                     var hasFixed = elem.hasClass(className);
                     if (hasFixed) {
+                        var bodyHeight = $document[0].body.offsetHeight;
                         if (bodyHeight > windowHeight) {
                             elem.removeClass(className);
                         }
@@ -274,9 +274,7 @@
 
                         if (windowHeight > bottomToCeiling) {
                             elem.addClass(className);
-                        }/* else if (windowHeight == bottomToCeiling && elem.hasClass(className)){
-                            elem.removeClass(className);
-                        }*/
+                        }
                     }
                 }
             }
