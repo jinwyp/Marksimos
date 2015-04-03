@@ -253,7 +253,7 @@
 
                 $window.addEventListener('resize', checkFix);
                 scope.$on('destroy', function() {
-                    $window.removeEventListener('resize', checkFix());
+                    $window.removeEventListener('resize', checkFix);
                 });
 
                 function checkFix() {
@@ -274,9 +274,7 @@
 
                         if (windowHeight > bottomToCeiling) {
                             elem.addClass(className);
-                        }/* else if (windowHeight == bottomToCeiling && elem.hasClass(className)){
-                            elem.removeClass(className);
-                        }*/
+                        }
                     }
                 }
             }
