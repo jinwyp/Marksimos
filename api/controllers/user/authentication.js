@@ -744,33 +744,33 @@ exports.forgotPasswordStep2 = function(req, res, next){
 };
 
 
-//
-//var ccap = require('ccap')();//Instantiated ccap class
-//exports.generateCaptcha = function(req, res, next) {
-//    var ary = ccap.get();
-//    var txt = ary[0];
-//    var buf = ary[1];
-//
-//    Captcha.findOneAndRemoveQ({_id: req.cookies['x-captcha-token']})
-//    .then(function(cpatcha) {})
-//    .fail(next)
-//    .done();
-//
-//    Captcha.createQ({txt: txt})
-//    .then(function(captcha) {
-//
-//        if(captcha){
-//            res.cookie('x-captcha-token', captcha._id.toString());
-//            res.set('Content-Type', 'image/jpeg');
-//            res.end(buf, 'binary');
-//        }
-//
-//    })
-//    .fail(next)
-//    .done();
-//};
-//
-//
+
+var ccap = require('ccap')();//Instantiated ccap class
+exports.generateCaptcha = function(req, res, next) {
+    var ary = ccap.get();
+    var txt = ary[0];
+    var buf = ary[1];
+
+    Captcha.findOneAndRemoveQ({_id: req.cookies['x-captcha-token']})
+    .then(function(cpatcha) {})
+    .fail(next)
+    .done();
+
+    Captcha.createQ({txt: txt})
+    .then(function(captcha) {
+
+        if(captcha){
+            res.cookie('x-captcha-token', captcha._id.toString());
+            res.set('Content-Type', 'image/jpeg');
+            res.end(buf, 'binary');
+        }
+
+    })
+    .fail(next)
+    .done();
+};
+
+
 
 
 exports.generatePhoneVerifyCode = function(req, res, next) {
@@ -780,7 +780,12 @@ exports.generatePhoneVerifyCode = function(req, res, next) {
     var verifyCodeExpires = new Date(new Date().getTime() + 1000 * 60 * 60); // one hour
 
     userModel.updateQ({_id: req.user._id}, {$set: {phoneVerifyCode: verifyCode, phoneVerifyCodeExpires:verifyCodeExpires}})
-    .then(function(){
+    .then(function(savedDoc){
+
+        if(!savedDoc ){
+            throw new Error('Cancel promise chains. Because Update phoneVerifyCode failed. More or less than 1 record is updated. it should be only one !');
+        }
+
         messageXSend.add_var('code',verifyCode);
         messageXSend.add_to(req.user.mobilePhone);
         messageXSend.set_project('pPlo2');
@@ -814,7 +819,10 @@ exports.verifyPhoneVerifyCode = function(req, res, next) {
 
     user.phoneVerified = true;
     user.saveQ()
-    .then(function(){
+    .then(function(savedDoc){
+        if(!savedDoc ){
+            throw new Error('Cancel promise chains. Because Update user phoneVerified failed. More or less than 1 record is updated. it should be only one !');
+        }
         return res.status(200).send({message: 'verifyPhoneCode succeed'});
     })
     .fail(next)

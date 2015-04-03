@@ -363,7 +363,7 @@
                 form.mobilePhoneVerifyCode.$valid = false;
                 form.mobilePhoneVerifyCode.$invalid = true;
                 console.log(err);
-            })
+            });
         }
 
 
