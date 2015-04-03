@@ -237,6 +237,52 @@
         };
     }]);
 
+    angular.module('marksimos.commoncomponent').directive('fixedFooter', ['$document', '$window', '$timeout', function($document, $window, $timeout) {
+        return {
+            restrict: 'A',
+            link: function (scope, elem, attrs, ctrl) {
+                var className = attrs.fixedFooter;
+                if (!className) return;
+
+                var elemHeight = elem[0].offsetHeight;
+
+                var unwatch = scope.$watch(checkFix);
+                $timeout(function() {
+                    unwatch();
+                }, 2000);
+
+                $window.addEventListener('resize', checkFix);
+                scope.$on('destroy', function() {
+                    $window.removeEventListener('resize', checkFix());
+                });
+
+                function checkFix() {
+                    var windowHeight = $document[0].documentElement.clientHeight;
+                    var bodyHeight = $document[0].body.offsetHeight;
+                    var current = elem[0];
+                    var hasFixed = elem.hasClass(className);
+                    if (hasFixed) {
+                        if (bodyHeight > windowHeight) {
+                            elem.removeClass(className);
+                        }
+                    } else {
+                        var bottomToCeiling = current.offsetTop + elemHeight;
+
+                        while (current = current.offsetParent) {
+                            bottomToCeiling += current.offsetTop;
+                        }
+
+                        if (windowHeight > bottomToCeiling) {
+                            elem.addClass(className);
+                        }/* else if (windowHeight == bottomToCeiling && elem.hasClass(className)){
+                            elem.removeClass(className);
+                        }*/
+                    }
+                }
+            }
+        };
+    }]);
+
 
     // Prevent the backspace key from navigating back.
     angular.module('marksimos.commoncomponent').directive('preventBackspaceNavigateBack', ['$document', function($document) {
