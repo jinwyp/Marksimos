@@ -74,7 +74,7 @@
                         <ul class="center-block preview-avatar profile-button-container">
                             <li ng-repeat="item in profile.uploader.queue">
                                 <div ng-thumb="{ file: item._file}"></div>
-                                <button type="submit" class="center-block" ng-click="item.upload()">{{'ProfilePageUploadAvatarUploadButton' | translate}}</button>
+                                <button type="submit" class="center-block" ng-click="item.upload()">{{'ProfilePageUploadAvatarSelectionButton' | translate}}</button>
                             </li>
                         </ul>
                     </div>
@@ -259,8 +259,8 @@
                             <div class="form-group" ng-class="{'has-success':contactForm.mobilePhone.$dirty&&contactForm.mobilePhone.$valid, 'has-error':contactForm.mobilePhone.$dirty&&contactForm.mobilePhone.$invalid}" >
                                 <label for="mobilePhone" class="control-label col-md-3 text-right">{{'ProfileContactInfoMobilePhone' | translate}} :</label>
                                 <div class="col-xs-5" ng-if="!profile.css.formEditing">
-                                    <p class="form-control-static">{{profile.currentUser.mobilePhone}}
-                                        <span>&nbsp({{profile.currentUser.phoneVerified?'ProfileVerified':'ProfileUnVerified' | translate}})</span>
+                                    <p class="form-control-static text-danger">{{profile.currentUser.mobilePhone}}
+                                        <span ng-if="profile.currentUser.mobilePhone">&nbsp({{profile.currentUser.phoneVerified?'ProfileContactInfoMobileVerified':'ProfileContactInfoMobileUnverified' | translate}})</span>
                                     </p>
                                 </div>
                                 <div ng-if="profile.css.formEditing" class="col-xs-5">
@@ -278,7 +278,6 @@
                                 <div class="col-xs-2">
                                     <button class="btn btn-default" ng-if="!profile.css.mobileVerifyCodeResend" ng-click="profile.clickGetMobileVerifyCode()">{{'ProfileContactInfoMobilePhoneVerifySend' | translate}}</button>
                                     <button class="btn btn-default" ng-if="profile.css.mobileVerifyCodeResend" ng-click="profile.clickGetMobileVerifyCode()" ng-disabled="profile.css.mobileVerifyCodeTimeCounter>0">{{'ProfileContactInfoMobilePhoneVerifyReSend' | translate}} <span ng-hide="profile.css.mobileVerifyCodeTimeCounter==0">{{profile.css.mobileVerifyCodeTimeCounter}}</span></button>
-                                    <button class="btn btn-default" ng-click="profile.clickSendMobileVerifyCode(contactForm)">Verify</button>
                                 </div>
                                 <span class="form-control-static err-msg control-label col-xs-3" ng-if="!contactForm.mobilePhoneVerifyCode.$dirty&&profile.css.errorFields.mobilePhoneVerifyCode">{{'ProfilePageInvalidMobilePhoneNumberVerifyCode' | translate}}</span>
                                 <!--<span class="err-msg control-label" ng-if="contactForm.qq.$dirty&&contactForm.qq.$error.required">{{'请输入正确的' | translate}}qq!</span>-->
@@ -288,6 +287,12 @@
                                 <div class="col-md-6 col-md-offset-3 profile-button-container">
                                     <button ng-click="profile.clickUpdateUserInfo(contactForm)" type="submit">{{'ProfilePageSaveButton' | translate}}</button>
                                     <button class="cancel" ng-click="profile.clickCancelEditProfile()">{{'ProfilePageCancelButton' | translate}}</button>
+                                </div>
+                            </div>
+
+                            <div class="row" ng-if="!profile.css.formEditing">
+                                <div class="col-md-6 col-md-offset-3 profile-button-container">
+                                    <button ng-click="profile.clickSendMobileVerifyCode(contactForm)" type="submit">{{'ProfileContactInfoMobileVerifiedButton' | translate}}</button>
                                 </div>
                             </div>
                         </form>

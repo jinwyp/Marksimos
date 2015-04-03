@@ -16,6 +16,8 @@ var faqController  =  require('./controllers/faq.js');
 var utility = require('../common/utility.js')
 var userModel = require('./models/user/user.js');
 var userRoleModel = require('./models/user/userrole.js');
+
+var marksimosRight = userRoleModel.right.marksimos;
 var logger = require('../common/logger.js');
 var mongoose = require('mongoose');
 var util = require('util');
@@ -75,12 +77,12 @@ apiRouter.get('/e4e/forgotpassword', function(req, res, next){
 });
 apiRouter.get('/e4e/emailverify/changepassword', auth.forgotPasswordStep2);
 
-apiRouter.get('/e4e/profile', auth.authLoginToken({failureRedirect: '/e4e/login'}), auth.authRole(userRoleModel.right.marksimos.studentLogin, {failureRedirect: '/e4e/login'}), function(req, res, next){
+apiRouter.get('/e4e/profile', auth.authLoginToken({failureRedirect: '/e4e/login'}), auth.authRole(marksimosRight.studentLogin, {failureRedirect: '/e4e/login'}), function(req, res, next){
     res.render('b2c/profile.ejs', {title:'E4E User Home | HCD Learning'});
 });
 
 apiRouter.get('/e4e/campaigns',  campaignController.campaignListPage);
-apiRouter.get('/e4e/campaign/:campaignId', auth.authLoginToken({failureRedirect: '/e4e/login'}), auth.authRole(userRoleModel.right.marksimos.studentLogin, {failureRedirect: '/e4e/login'}), campaignController.campaignSingleInfoPage);
+apiRouter.get('/e4e/campaign/:campaignId', auth.authLoginToken({failureRedirect: '/e4e/login'}), auth.authRole(marksimosRight.studentLogin, {failureRedirect: '/e4e/login'}), campaignController.campaignSingleInfoPage);
 
 
 
@@ -91,7 +93,7 @@ apiRouter.get('/e4e/campaign/:campaignId', auth.authLoginToken({failureRedirect:
 
 /**********     Routes for rendering templates MarkSimos User/Student     **********/
 
-apiRouter.get('/marksimos', auth.authLoginToken({failureRedirect: '/marksimos/login'}), auth.authRole(userRoleModel.right.marksimos.studentLogin, {failureRedirect: '/marksimos/login'}), function(req, res, next){
+apiRouter.get('/marksimos', auth.authLoginToken({failureRedirect: '/marksimos/login'}), auth.authRole(marksimosRight.studentLogin, {failureRedirect: '/marksimos/login'}), function(req, res, next){
     res.redirect('/marksimos/intro');
 });
 
@@ -99,11 +101,11 @@ apiRouter.get('/marksimos/login', function(req, res, next){
     res.render('marksimosuser/userlogin.ejs', { title : 'MarkSimos - Sign In'});
 });
 
-apiRouter.get('/marksimos/intro', auth.authLoginToken({failureRedirect: '/marksimos/login'}), auth.authRole(userRoleModel.right.marksimos.studentLogin, {failureRedirect: '/marksimos/login'}), function(req, res, next){
+apiRouter.get('/marksimos/intro', auth.authLoginToken({failureRedirect: '/marksimos/login'}), auth.authRole(marksimosRight.studentLogin, {failureRedirect: '/marksimos/login'}), function(req, res, next){
     res.render('marksimosuser/userintroduction.ejs', { title : 'MarkSimos - Introduction Videos'});
 });
 
-apiRouter.get('/marksimos/home', auth.authLoginToken({failureRedirect: '/marksimos/login'}), auth.authRole(userRoleModel.right.marksimos.studentLogin, {failureRedirect: '/marksimos/login'}), function(req, res, next){
+apiRouter.get('/marksimos/home', auth.authLoginToken({failureRedirect: '/marksimos/login'}), auth.authRole(marksimosRight.studentLogin, {failureRedirect: '/marksimos/login'}), function(req, res, next){
     res.render('marksimosuser/userhome.ejs', { title : 'MarkSimos - User Home'});
 });
 
@@ -146,11 +148,11 @@ apiRouter.get('/marksimos/admin', function(req, res, next){
     res.render('marksimosadmin/adminlogin.ejs', {title : 'Admin | Log in'});
 });
 
-apiRouter.get('/marksimos/adminhome', auth.authLoginToken({failureRedirect: '/marksimos/admin'}), auth.authRole(userRoleModel.right.marksimos.adminLogin, {failureRedirect: '/marksimos/admin'}), function(req, res, next){
+apiRouter.get('/marksimos/adminhome', auth.authLoginToken({failureRedirect: '/marksimos/admin'}), auth.authRole(marksimosRight.adminLogin, {failureRedirect: '/marksimos/admin'}), function(req, res, next){
     res.render('marksimosadmin/adminhome.ejs', {title : 'Admin | Dashboard'});
 });
 
-apiRouter.get('/marksimos/adminhomereport/:seminar_id', auth.authLoginToken({failureRedirect: '/marksimos/admin'}), auth.authRole(userRoleModel.right.marksimos.adminLogin, {failureRedirect: '/marksimos/admin'}), seminarController.seminarInfoForFacilitator);
+apiRouter.get('/marksimos/adminhomereport/:seminar_id', auth.authLoginToken({failureRedirect: '/marksimos/admin'}), auth.authRole(marksimosRight.adminLogin, {failureRedirect: '/marksimos/admin'}), seminarController.seminarInfoForFacilitator);
 
 
 
@@ -189,27 +191,27 @@ apiRouter.post('/e4e/api/registerstudent', auth.registerB2CStudent);
 apiRouter.post('/e4e/api/register/username', auth.verifyUsername);
 apiRouter.post('/e4e/api/register/email', auth.verifyEmail);
 
-//apiRouter.get('/e4e/api/captcha', auth.generateCaptcha);
+apiRouter.get('/e4e/api/captcha', auth.generateCaptcha);
 
 apiRouter.post('/e4e/api/forgotpasswordstep1', auth.sendResetPasswordEmail);
 apiRouter.post('/e4e/api/forgotpasswordstep2', auth.verifyResetPasswordCode);
 apiRouter.post('/e4e/api/forgotpasswordstep3', auth.resetNewPassword);
 
 
-apiRouter.put('/e4e/api/student/password', auth.authLoginToken(), auth.authRole(userRoleModel.right.marksimos.studentInfoSingleCUD), studentController.updateStudentB2CPassword);
-apiRouter.put('/e4e/api/student', auth.authLoginToken(), auth.authRole(userRoleModel.right.marksimos.studentInfoSingleCUD), studentController.updateStudentB2CInfo);
+apiRouter.put('/e4e/api/student/password', auth.authLoginToken(), auth.authRole(marksimosRight.studentInfoSingleCUD), studentController.updateStudentB2CPassword);
+apiRouter.put('/e4e/api/student', auth.authLoginToken(), auth.authRole(marksimosRight.studentInfoSingleCUD), studentController.updateStudentB2CInfo);
 
-apiRouter.post('/e4e/api/student/avatar', auth.authLoginToken(), auth.authRole(userRoleModel.right.marksimos.studentInfoSingleCUD), fileUploadModel.multerUpload('studentavatar'), studentController.uploadStudentAvatar );
+apiRouter.post('/e4e/api/student/avatar', auth.authLoginToken(), auth.authRole(marksimosRight.studentInfoSingleCUD), fileUploadModel.multerUpload('studentavatar'), studentController.uploadStudentAvatar );
 
-apiRouter.get('/e4e/api/student/phoneverifycode', auth.authLoginToken(), auth.generatePhoneVerifyCode);
-apiRouter.post('/e4e/api/student/phoneverifycode', auth.authLoginToken(), auth.verifyPhoneVerifyCode);
+apiRouter.get('/e4e/api/student/phoneverifycode', auth.authLoginToken(), auth.authRole(marksimosRight.studentInfoSingleCUD), auth.generatePhoneVerifyCode);
+apiRouter.post('/e4e/api/student/phoneverifycode', auth.authLoginToken(), auth.authRole(marksimosRight.studentInfoSingleCUD), auth.verifyPhoneVerifyCode);
 
-apiRouter.post('/e4e/api/team', auth.authLoginToken(), auth.authRole(userRoleModel.right.marksimos.teamInfoSingleCUD), studentController.updateTeam);
-apiRouter.post('/e4e/api/team/student',  auth.authLoginToken(), auth.authRole(userRoleModel.right.marksimos.teamInfoSingleGet), studentController.addStudentToTeam);
-apiRouter.delete('/e4e/api/team/student/:student_id',  auth.authLoginToken(), auth.authRole(userRoleModel.right.marksimos.teamInfoSingleCUD), studentController.removeStudentToTeam);
+apiRouter.post('/e4e/api/team', auth.authLoginToken(), auth.authRole(marksimosRight.teamInfoSingleCUD), studentController.updateTeam);
+apiRouter.post('/e4e/api/team/student',  auth.authLoginToken(), auth.authRole(marksimosRight.teamInfoSingleGet), studentController.addStudentToTeam);
+apiRouter.delete('/e4e/api/team/student/:student_id',  auth.authLoginToken(), auth.authRole(marksimosRight.teamInfoSingleCUD), studentController.removeStudentToTeam);
 
-apiRouter.get('/e4e/api/campaigns/:campaignId', auth.authLoginToken(), auth.authRole(userRoleModel.right.marksimos.campaignSingleGet), campaignController.campaignSingleInfo);
-apiRouter.post('/e4e/api/campaigns/teams', auth.authLoginToken(), auth.authRole(userRoleModel.right.marksimos.campaignSingleGet), campaignController.addTeamToCampaign);
+apiRouter.get('/e4e/api/campaigns/:campaignId', auth.authLoginToken(), auth.authRole(marksimosRight.campaignSingleGet), campaignController.campaignSingleInfo);
+apiRouter.post('/e4e/api/campaigns/teams', auth.authLoginToken(), auth.authRole(marksimosRight.campaignSingleGet), campaignController.addTeamToCampaign);
 
 
 
@@ -222,40 +224,40 @@ apiRouter.get('/marksimos/api/logout', auth.logout);
 
 
 // get seminar
-apiRouter.get('/marksimos/api/user', auth.authLoginToken(), auth.authRole(userRoleModel.right.marksimos.studentInfoSingleGet), auth.getUserInfo);
-apiRouter.get('/marksimos/api/student/seminar', auth.authLoginToken(), auth.authRole(userRoleModel.right.marksimos.seminarListOfStudentGet), seminarController.getSeminarList);
-apiRouter.get('/marksimos/api/choose_seminar', auth.authLoginToken(), auth.authRole(userRoleModel.right.marksimos.seminarListOfStudentGet), seminarController.chooseSeminarForStudent);
+apiRouter.get('/marksimos/api/user', auth.authLoginToken(), auth.authRole(marksimosRight.studentInfoSingleGet), auth.getUserInfo);
+apiRouter.get('/marksimos/api/student/seminar', auth.authLoginToken(), auth.authRole(marksimosRight.seminarListOfStudentGet), seminarController.getSeminarList);
+apiRouter.get('/marksimos/api/choose_seminar', auth.authLoginToken(), auth.authRole(marksimosRight.seminarListOfStudentGet), seminarController.chooseSeminarForStudent);
 
 //report
-apiRouter.get('/marksimos/api/report/:report_name', auth.authLoginToken(), auth.authRole(userRoleModel.right.marksimos.seminarSingleDecisionGet), reportController.getReport);
+apiRouter.get('/marksimos/api/report/:report_name', auth.authLoginToken(), auth.authRole(marksimosRight.seminarSingleDecisionGet), reportController.getReport);
 
 //chart
-apiRouter.get('/marksimos/api/chart/:chart_name', auth.authLoginToken(), auth.authRole(userRoleModel.right.marksimos.seminarSingleDecisionGet), chartController.getChart);
+apiRouter.get('/marksimos/api/chart/:chart_name', auth.authLoginToken(), auth.authRole(marksimosRight.seminarSingleDecisionGet), chartController.getChart);
 
 //final score
-apiRouter.get('/marksimos/api/finalscore', auth.authLoginToken(), auth.authRole(userRoleModel.right.marksimos.seminarSingleDecisionGet), reportController.getStudentFinalScore);
+apiRouter.get('/marksimos/api/finalscore', auth.authLoginToken(), auth.authRole(marksimosRight.seminarSingleDecisionGet), reportController.getStudentFinalScore);
 
 
 //company info
-apiRouter.get('/marksimos/api/company', auth.authLoginToken(), auth.authRole(userRoleModel.right.marksimos.seminarSingleDecisionGet), decisionController.getDecision);
-apiRouter.get('/marksimos/api/product_portfolio', auth.authLoginToken(), auth.authRole(userRoleModel.right.marksimos.seminarSingleDecisionGet), decisionController.getProductPortfolio);
-apiRouter.get('/marksimos/api/spending_details', auth.authLoginToken(), auth.authRole(userRoleModel.right.marksimos.seminarSingleDecisionGet), decisionController.getSpendingDetails);
-apiRouter.get('/marksimos/api/future_projection_calculator/:sku_id', auth.authLoginToken(), auth.authRole(userRoleModel.right.marksimos.seminarSingleDecisionGet), decisionController.getSKUInfoFutureProjection);
-apiRouter.get('/marksimos/api/company/otherinfo', auth.authLoginToken(), auth.authRole(userRoleModel.right.marksimos.seminarSingleDecisionGet), decisionController.getOtherinfo);
+apiRouter.get('/marksimos/api/company', auth.authLoginToken(), auth.authRole(marksimosRight.seminarSingleDecisionGet), decisionController.getDecision);
+apiRouter.get('/marksimos/api/product_portfolio', auth.authLoginToken(), auth.authRole(marksimosRight.seminarSingleDecisionGet), decisionController.getProductPortfolio);
+apiRouter.get('/marksimos/api/spending_details', auth.authLoginToken(), auth.authRole(marksimosRight.seminarSingleDecisionGet), decisionController.getSpendingDetails);
+apiRouter.get('/marksimos/api/future_projection_calculator/:sku_id', auth.authLoginToken(), auth.authRole(marksimosRight.seminarSingleDecisionGet), decisionController.getSKUInfoFutureProjection);
+apiRouter.get('/marksimos/api/company/otherinfo', auth.authLoginToken(), auth.authRole(marksimosRight.seminarSingleDecisionGet), decisionController.getOtherinfo);
 
 //make decision page
-apiRouter.put('/marksimos/api/sku/decision', auth.authLoginToken(), auth.authRole(userRoleModel.right.marksimos.seminarSingleDecisionCUD), decisionController.updateSKUDecision);
-apiRouter.post('/marksimos/api/sku/decision', auth.authLoginToken(), auth.authRole(userRoleModel.right.marksimos.seminarSingleDecisionCUD), decisionController.addSKU);
-apiRouter.delete('/marksimos/api/sku/decision/:company_id/:brand_id/:sku_id', auth.authLoginToken(), auth.authRole(userRoleModel.right.marksimos.seminarSingleDecisionCUD), decisionController.deleteSKU);
+apiRouter.put('/marksimos/api/sku/decision', auth.authLoginToken(), auth.authRole(marksimosRight.seminarSingleDecisionCUD), decisionController.updateSKUDecision);
+apiRouter.post('/marksimos/api/sku/decision', auth.authLoginToken(), auth.authRole(marksimosRight.seminarSingleDecisionCUD), decisionController.addSKU);
+apiRouter.delete('/marksimos/api/sku/decision/:company_id/:brand_id/:sku_id', auth.authLoginToken(), auth.authRole(marksimosRight.seminarSingleDecisionCUD), decisionController.deleteSKU);
 
-apiRouter.put('/marksimos/api/brand/decision', auth.authLoginToken(), auth.authRole(userRoleModel.right.marksimos.seminarSingleDecisionCUD), decisionController.updateBrandDecision);
-apiRouter.post('/marksimos/api/brand/decision', auth.authLoginToken(), auth.authRole(userRoleModel.right.marksimos.seminarSingleDecisionCUD), decisionController.addBrand);
+apiRouter.put('/marksimos/api/brand/decision', auth.authLoginToken(), auth.authRole(marksimosRight.seminarSingleDecisionCUD), decisionController.updateBrandDecision);
+apiRouter.post('/marksimos/api/brand/decision', auth.authLoginToken(), auth.authRole(marksimosRight.seminarSingleDecisionCUD), decisionController.addBrand);
 
-apiRouter.put('/marksimos/api/company/decision', auth.authLoginToken(), auth.authRole(userRoleModel.right.marksimos.seminarSingleDecisionCUD), decisionController.updateCompanyDecision);
+apiRouter.put('/marksimos/api/company/decision', auth.authLoginToken(), auth.authRole(marksimosRight.seminarSingleDecisionCUD), decisionController.updateCompanyDecision);
 
 //getQuestionnaire
-apiRouter.get('/marksimos/api/questionnaire', auth.authLoginToken(), auth.authRole(userRoleModel.right.marksimos.seminarSingleDecisionGet), questionnaireController.getQuestionnaire);
-apiRouter.put('/marksimos/api/questionnaire', auth.authLoginToken(), auth.authRole(userRoleModel.right.marksimos.seminarSingleDecisionCUD), questionnaireController.submitQuestionnaire);
+apiRouter.get('/marksimos/api/questionnaire', auth.authLoginToken(), auth.authRole(marksimosRight.seminarSingleDecisionGet), questionnaireController.getQuestionnaire);
+apiRouter.put('/marksimos/api/questionnaire', auth.authLoginToken(), auth.authRole(marksimosRight.seminarSingleDecisionCUD), questionnaireController.submitQuestionnaire);
 
 //getFaq
 apiRouter.get('/marksimos/api/faq', faqController.getFAQ);
@@ -273,66 +275,66 @@ apiRouter.get('/marksimos/api/faq', faqController.getFAQ);
 apiRouter.post('/marksimos/api/admin/login', auth.adminLogin);
 
 // get current admin role
-apiRouter.get('/marksimos/api/admin/user', auth.authLoginToken(), auth.authRole(userRoleModel.right.marksimos.adminLogin), auth.getUserInfo);
+apiRouter.get('/marksimos/api/admin/user', auth.authLoginToken(), auth.authRole(marksimosRight.adminLogin), auth.getUserInfo);
 
-apiRouter.get('/marksimos/api/admin/distributors', auth.authLoginToken(), auth.authRole(userRoleModel.right.marksimos.distributorInfoListGet), distributorController.searchDistributor);
-apiRouter.post('/marksimos/api/admin/distributors', auth.authLoginToken(), auth.authRole(userRoleModel.right.marksimos.distributorInfoSingleCUD), distributorController.addDistributor);
-apiRouter.put('/marksimos/api/admin/distributors/:distributor_id', auth.authLoginToken(), auth.authRole(userRoleModel.right.marksimos.distributorInfoSingleCUD), distributorController.updateDistributor);
-
-
-apiRouter.get('/marksimos/api/admin/facilitators', auth.authLoginToken(), auth.authRole(userRoleModel.right.marksimos.facilitatorInfoListGet), distributorController.searchFacilitator);
-apiRouter.post('/marksimos/api/admin/facilitators', auth.authLoginToken(), auth.authRole(userRoleModel.right.marksimos.facilitatorInfoSingleCUD), distributorController.addFacilitator);
-apiRouter.put('/marksimos/api/admin/facilitators/:facilitator_id',  auth.authLoginToken(), auth.authRole(userRoleModel.right.marksimos.facilitatorInfoSingleCUD), distributorController.updateFacilitator);
+apiRouter.get('/marksimos/api/admin/distributors', auth.authLoginToken(), auth.authRole(marksimosRight.distributorInfoListGet), distributorController.searchDistributor);
+apiRouter.post('/marksimos/api/admin/distributors', auth.authLoginToken(), auth.authRole(marksimosRight.distributorInfoSingleCUD), distributorController.addDistributor);
+apiRouter.put('/marksimos/api/admin/distributors/:distributor_id', auth.authLoginToken(), auth.authRole(marksimosRight.distributorInfoSingleCUD), distributorController.updateDistributor);
 
 
-apiRouter.get('/marksimos/api/admin/students', auth.authLoginToken(), auth.authRole(userRoleModel.right.marksimos.studentInfoListGet), distributorController.searchStudent);
-apiRouter.post('/marksimos/api/admin/students', auth.authLoginToken(), auth.authRole(userRoleModel.right.marksimos.studentInfoSingleCUD), distributorController.addStudent);
-apiRouter.put('/marksimos/api/admin/students/:student_id', auth.authLoginToken(), auth.authRole(userRoleModel.right.marksimos.studentInfoSingleCUD), distributorController.updateStudent);
+apiRouter.get('/marksimos/api/admin/facilitators', auth.authLoginToken(), auth.authRole(marksimosRight.facilitatorInfoListGet), distributorController.searchFacilitator);
+apiRouter.post('/marksimos/api/admin/facilitators', auth.authLoginToken(), auth.authRole(marksimosRight.facilitatorInfoSingleCUD), distributorController.addFacilitator);
+apiRouter.put('/marksimos/api/admin/facilitators/:facilitator_id',  auth.authLoginToken(), auth.authRole(marksimosRight.facilitatorInfoSingleCUD), distributorController.updateFacilitator);
 
-apiRouter.post('/marksimos/api/admin/students/reset_password',  auth.authLoginToken(), auth.authRole(userRoleModel.right.marksimos.studentInfoSingleCUD), distributorController.resetStudentPassword);
+
+apiRouter.get('/marksimos/api/admin/students', auth.authLoginToken(), auth.authRole(marksimosRight.studentInfoListGet), distributorController.searchStudent);
+apiRouter.post('/marksimos/api/admin/students', auth.authLoginToken(), auth.authRole(marksimosRight.studentInfoSingleCUD), distributorController.addStudent);
+apiRouter.put('/marksimos/api/admin/students/:student_id', auth.authLoginToken(), auth.authRole(marksimosRight.studentInfoSingleCUD), distributorController.updateStudent);
+
+apiRouter.post('/marksimos/api/admin/students/reset_password',  auth.authLoginToken(), auth.authRole(marksimosRight.studentInfoSingleCUD), distributorController.resetStudentPassword);
 
 
 //Facilitator manager Campaign
-apiRouter.get('/marksimos/api/admin/campaigns', auth.authLoginToken(), auth.authRole(userRoleModel.right.marksimos.campaignInfoListGet), campaignController.searchCampaign);
-apiRouter.post('/marksimos/api/admin/campaigns', auth.authLoginToken(), auth.authRole(userRoleModel.right.marksimos.campaignSingleCUD), campaignController.addCampaign);
-apiRouter.put('/marksimos/api/admin/campaigns', auth.authLoginToken(), auth.authRole(userRoleModel.right.marksimos.campaignSingleCUD), campaignController.updateCampaign);
-apiRouter.post('/marksimos/api/admin/campaigns/upload', auth.authLoginToken(), auth.authRole(userRoleModel.right.marksimos.campaignSingleCUD), fileUploadModel.multerUpload(), campaignController.uploadCampaignPics );
+apiRouter.get('/marksimos/api/admin/campaigns', auth.authLoginToken(), auth.authRole(marksimosRight.campaignInfoListGet), campaignController.searchCampaign);
+apiRouter.post('/marksimos/api/admin/campaigns', auth.authLoginToken(), auth.authRole(marksimosRight.campaignSingleCUD), campaignController.addCampaign);
+apiRouter.put('/marksimos/api/admin/campaigns', auth.authLoginToken(), auth.authRole(marksimosRight.campaignSingleCUD), campaignController.updateCampaign);
+apiRouter.post('/marksimos/api/admin/campaigns/upload', auth.authLoginToken(), auth.authRole(marksimosRight.campaignSingleCUD), fileUploadModel.multerUpload(), campaignController.uploadCampaignPics );
 
 
-apiRouter.post('/marksimos/api/admin/campaigns/seminars', auth.authLoginToken(), auth.authRole(userRoleModel.right.marksimos.campaignSingleCUD), campaignController.addMarkSimosSeminarToCampaign);
-apiRouter.post('/marksimos/api/admin/campaigns/seminars/remove', auth.authLoginToken(), auth.authRole(userRoleModel.right.marksimos.campaignSingleCUD), campaignController.removeMarkSimosSeminarFromCampaign);
+apiRouter.post('/marksimos/api/admin/campaigns/seminars', auth.authLoginToken(), auth.authRole(marksimosRight.campaignSingleCUD), campaignController.addMarkSimosSeminarToCampaign);
+apiRouter.post('/marksimos/api/admin/campaigns/seminars/remove', auth.authLoginToken(), auth.authRole(marksimosRight.campaignSingleCUD), campaignController.removeMarkSimosSeminarFromCampaign);
 
-apiRouter.post('/marksimos/api/admin/campaigns/teams', auth.authLoginToken(), auth.authRole(userRoleModel.right.marksimos.campaignSingleCUD), campaignController.addTeamToCampaign);
-apiRouter.post('/marksimos/api/admin/campaigns/teams/remove', auth.authLoginToken(), auth.authRole(userRoleModel.right.marksimos.campaignSingleCUD), campaignController.removeTeamFromCampaign);
+apiRouter.post('/marksimos/api/admin/campaigns/teams', auth.authLoginToken(), auth.authRole(marksimosRight.campaignSingleCUD), campaignController.addTeamToCampaign);
+apiRouter.post('/marksimos/api/admin/campaigns/teams/remove', auth.authLoginToken(), auth.authRole(marksimosRight.campaignSingleCUD), campaignController.removeTeamFromCampaign);
 
 
 //Facilitator manager seminars
-apiRouter.get('/marksimos/api/admin/facilitator/seminar', auth.authLoginToken(), auth.authRole(userRoleModel.right.marksimos.seminarListOfFacilitatorGet), seminarController.getSeminarOfFacilitator);
-apiRouter.post('/marksimos/api/admin/seminar', auth.authLoginToken(), auth.authRole(userRoleModel.right.marksimos.seminarSingleCUD), seminarController.addSeminar);
+apiRouter.get('/marksimos/api/admin/facilitator/seminar', auth.authLoginToken(), auth.authRole(marksimosRight.seminarListOfFacilitatorGet), seminarController.getSeminarOfFacilitator);
+apiRouter.post('/marksimos/api/admin/seminar', auth.authLoginToken(), auth.authRole(marksimosRight.seminarSingleCUD), seminarController.addSeminar);
 
-apiRouter.post('/marksimos/api/admin/assign_student_to_seminar', auth.authLoginToken(), auth.authRole(userRoleModel.right.marksimos.seminarAssignStudentCUD), seminarController.assignStudentToSeminar);
-apiRouter.post('/marksimos/api/admin/remove_student_from_seminar', auth.authLoginToken(), auth.authRole(userRoleModel.right.marksimos.seminarAssignStudentCUD), seminarController.removeStudentFromSeminar);
+apiRouter.post('/marksimos/api/admin/assign_student_to_seminar', auth.authLoginToken(), auth.authRole(marksimosRight.seminarAssignStudentCUD), seminarController.assignStudentToSeminar);
+apiRouter.post('/marksimos/api/admin/remove_student_from_seminar', auth.authLoginToken(), auth.authRole(marksimosRight.seminarAssignStudentCUD), seminarController.removeStudentFromSeminar);
 
-apiRouter.post('/marksimos/api/admin/seminar/:seminar_id/init', auth.authLoginToken(), auth.authRole(userRoleModel.right.marksimos.seminarInit), initController.init());
-apiRouter.post('/marksimos/api/admin/seminar/:seminar_id/runsimulation', auth.authLoginToken(), auth.authRole(userRoleModel.right.marksimos.seminarRunRound), initController.runSimulation());
+apiRouter.post('/marksimos/api/admin/seminar/:seminar_id/init', auth.authLoginToken(), auth.authRole(marksimosRight.seminarInit), initController.init());
+apiRouter.post('/marksimos/api/admin/seminar/:seminar_id/runsimulation', auth.authLoginToken(), auth.authRole(marksimosRight.seminarRunRound), initController.runSimulation());
 
-apiRouter.get('/marksimos/api/admin/delphi_cgi', auth.authLoginToken(), auth.authRole(userRoleModel.right.marksimos.seminarInit), initController.getCgiStatus);
+apiRouter.get('/marksimos/api/admin/delphi_cgi', auth.authLoginToken(), auth.authRole(marksimosRight.seminarInit), initController.getCgiStatus);
 
 
 
 //facilitator decisions, report, chart
 //note : To get full version of some reports, plz make sure user role != student
-apiRouter.get('/marksimos/api/admin/seminar/:seminar_id/decisions', auth.authLoginToken(), auth.authRole(userRoleModel.right.marksimos.seminarListOfFacilitatorGet), decisionController.getDecisionForFacilitator);
+apiRouter.get('/marksimos/api/admin/seminar/:seminar_id/decisions', auth.authLoginToken(), auth.authRole(marksimosRight.seminarListOfFacilitatorGet), decisionController.getDecisionForFacilitator);
 
-apiRouter.get('/marksimos/api/admin/report/:report_name', auth.authLoginToken(), auth.authRole(userRoleModel.right.marksimos.seminarListOfFacilitatorGet), reportController.getReport);
-apiRouter.get('/marksimos/api/admin/chart/:chart_name', auth.authLoginToken(), auth.authRole(userRoleModel.right.marksimos.seminarListOfFacilitatorGet), chartController.getChart);
-apiRouter.get('/marksimos/api/admin/finalscore/:seminarId', auth.authLoginToken(), auth.authRole(userRoleModel.right.marksimos.seminarListOfFacilitatorGet), reportController.getAdminFinalScore);
+apiRouter.get('/marksimos/api/admin/report/:report_name', auth.authLoginToken(), auth.authRole(marksimosRight.seminarListOfFacilitatorGet), reportController.getReport);
+apiRouter.get('/marksimos/api/admin/chart/:chart_name', auth.authLoginToken(), auth.authRole(marksimosRight.seminarListOfFacilitatorGet), chartController.getChart);
+apiRouter.get('/marksimos/api/admin/finalscore/:seminarId', auth.authLoginToken(), auth.authRole(marksimosRight.seminarListOfFacilitatorGet), reportController.getAdminFinalScore);
 
-apiRouter.get('/marksimos/api/admin/questionnaire/:seminarId', auth.authLoginToken(), auth.authRole(userRoleModel.right.marksimos.seminarListOfFacilitatorGet), questionnaireController.getQuestionnaireListForAdmin);
+apiRouter.get('/marksimos/api/admin/questionnaire/:seminarId', auth.authLoginToken(), auth.authRole(marksimosRight.seminarListOfFacilitatorGet), questionnaireController.getQuestionnaireListForAdmin);
 
-apiRouter.put('/marksimos/api/admin/sku/decision', auth.authLoginToken(), auth.authRole(userRoleModel.right.marksimos.seminarDecisionsOfFacilitatorCUD), decisionController.updateSKUDecision);
-apiRouter.put('/marksimos/api/admin/brand/decision', auth.authLoginToken(), auth.authRole(userRoleModel.right.marksimos.seminarDecisionsOfFacilitatorCUD), decisionController.updateBrandDecision);
-apiRouter.put('/marksimos/api/admin/company/decision', auth.authLoginToken(), auth.authRole(userRoleModel.right.marksimos.seminarDecisionsOfFacilitatorCUD), decisionController.updateCompanyDecision);
+apiRouter.put('/marksimos/api/admin/sku/decision', auth.authLoginToken(), auth.authRole(marksimosRight.seminarDecisionsOfFacilitatorCUD), decisionController.updateSKUDecision);
+apiRouter.put('/marksimos/api/admin/brand/decision', auth.authLoginToken(), auth.authRole(marksimosRight.seminarDecisionsOfFacilitatorCUD), decisionController.updateBrandDecision);
+apiRouter.put('/marksimos/api/admin/company/decision', auth.authLoginToken(), auth.authRole(marksimosRight.seminarDecisionsOfFacilitatorCUD), decisionController.updateCompanyDecision);
 
 
 
