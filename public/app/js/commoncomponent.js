@@ -241,16 +241,44 @@
         return {
             restrict: 'A',
             link: function (scope, elem, attrs, ctrl) {
-                var lastWindowHeight;
+                var className = attrs.fixedFooter;
+                if (!className) return;
+
                 var elemHeight = elem[0].offsetHeight;
 
-                var unwatch = scope.$watch(function() {
-                    var newWindowHeight = $document[0].documentElement.clientHeight;
-                    if (newWindowHeight == lastWindowHeight) return;
+                var unwatch = scope.$watch(checkFix);
+                $timeout(function() {
+                    unwatch();
+                }, 2000);
 
-                    lastWindowHeight = newWindowHeight;
-
+                $window.addEventListener('resize', checkFix);
+                scope.$on('destroy', function() {
+                    $window.removeEventListener('resize', checkFix());
                 });
+
+                function checkFix() {
+                    var windowHeight = $document[0].documentElement.clientHeight;
+                    var bodyHeight = $document[0].body.offsetHeight;
+                    var current = elem[0];
+                    var hasFixed = elem.hasClass(className);
+                    if (hasFixed) {
+                        if (bodyHeight > windowHeight) {
+                            elem.removeClass(className);
+                        }
+                    } else {
+                        var bottomToCeiling = current.offsetTop + elemHeight;
+
+                        while (current = current.offsetParent) {
+                            bottomToCeiling += current.offsetTop;
+                        }
+
+                        if (windowHeight > bottomToCeiling) {
+                            elem.addClass(className);
+                        }/* else if (windowHeight == bottomToCeiling && elem.hasClass(className)){
+                            elem.removeClass(className);
+                        }*/
+                    }
+                }
             }
         };
     }]);

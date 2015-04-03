@@ -579,7 +579,7 @@ $(function () {
     }
 
     // Footer Fixed
-    $(window).on('resize', function () {
+/*    $(window).on('resize', function () {
 
         //console.log($('b2c-header').height() , $('footer').height() , $('.b2c-login-main').height() , $(window).height());
 
@@ -589,5 +589,5 @@ $(function () {
         }else{
             $('footer').removeClass('b2c-footer-fix');
         }
-    }).trigger('resize');
+    }).trigger('resize');*/
 });
