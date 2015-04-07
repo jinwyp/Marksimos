@@ -48,9 +48,6 @@ function Message() {
                     console.error('upload failed:', err);
                     return cb(error);
                 }
-                if (/error/.test(body)){
-                    return cb(body);
-                }
                 console.log('Upload successful!  Server responded with:', body);
                 return cb(undefined, body);
             });
