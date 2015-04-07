@@ -23,7 +23,7 @@ exports.updateStudentB2CInfo = function(req, res, next){
 
     var updatedUser = _.pick(req.body, pickedUpdatedKeys);
 
-    if(updatedUser.mobilePhone && req.user.mobilePhone != updatedUser.mobilePhone) {
+    if(updatedUser.mobilePhone && req.user.mobilePhone !== updatedUser.mobilePhone) {
         updatedUser.phoneVerified = false;
     }
 
@@ -34,7 +34,7 @@ exports.updateStudentB2CInfo = function(req, res, next){
         return res.status(200).send({message: 'Student update success'});
     })
     .fail(next)
-    .done()
+    .done();
 };
 
 

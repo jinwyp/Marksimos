@@ -101,7 +101,7 @@ var userSchema = new Schema({
         company: String,
         jobType: Number, //0: Internship
         industry: String,
-        function: String,
+        position: String,
         sizeOfCompany: Number, //0: Less than 30 Employee, 1:
         startDate: Date,
         endDate: Date,
@@ -319,10 +319,8 @@ userSchema.statics.userInfoValidations = function(req, userRoleId, studentType){
         req.checkBody('gender', 'Gender wrong format').optional().isInt();
         req.checkBody('birthday', 'Birthday wrong format').optional().isDate();
 
-        if(req.body.mobilePhone)
-            req.checkBody('mobilePhone', 'mobilePhone wrong format').optional().isMobilePhone('zh-CN');
-        if(req.body.qq)
-            req.checkBody('qq', 'qq number format wrong' ).optional().isInt();
+        if(req.body.mobilePhone) req.checkBody('mobilePhone', 'mobilePhone wrong format').optional().isMobilePhone('zh-CN');
+        if(req.body.qq) req.checkBody('qq', 'qq number format wrong' ).optional().isInt();
 
         req.checkBody('firstName', '2 to 50 characters required.').optional().len(2, 50);
         req.checkBody('lastName', '2 to 50 characters required.').optional().len(2, 50);
