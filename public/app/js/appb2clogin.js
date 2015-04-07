@@ -353,11 +353,8 @@
                     form.mobilePhoneVerifyCode.$valid = false;
                     form.mobilePhoneVerifyCode.$invalid = true;
 
-                    if(err.data.message === 'Wrong phone number'){
-                        vm.css.errorFields.mobilePhoneWrongFormat = true;
-                    }
+                    vm.css.errorFields.mobilePhoneWrongFormat = true;
 
-                    console.log(vm.css.errorFields.mobilePhoneVerifyCode);
                 });
             }
 
