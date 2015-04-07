@@ -798,7 +798,11 @@ exports.generatePhoneVerifyCode = function(req, res, next) {
         var xsendQ = Q.nbind(messageXSend.xsend, messageXSend);
         return xsendQ();
     })
-    .then(function(){
+    .then(function(result){
+        var parsedRes = JSON.parse(result);
+        if(parsedRes.status === "error") {
+            return res.status(400).send(parsedRes);
+        }
         return res.status(200).send({message: 'generatePhoneCode succeed'});
     })
     .fail(next)
