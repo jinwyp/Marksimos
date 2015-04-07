@@ -774,10 +774,16 @@ exports.generateCaptcha = function(req, res, next) {
 
 
 exports.generatePhoneVerifyCode = function(req, res, next) {
+
+    if( typeof req.user.mobilePhone === 'undefined' || req.user.mobilePhone === '') {
+        return res.status(400).send( {message: "Wrong phone number"});
+    }
+
     var messageXSend = new MessageXSend();
 
     var verifyCode = String(Math.floor(Math.random() * (999999 - 100000) + 100000 ));
     var verifyCodeExpires = new Date(new Date().getTime() + 1000 * 60 * 60); // one hour
+
 
     userModel.updateQ({_id: req.user._id}, {$set: {phoneVerifyCode: verifyCode, phoneVerifyCodeExpires:verifyCodeExpires}})
     .then(function(savedDoc){
@@ -800,12 +806,15 @@ exports.generatePhoneVerifyCode = function(req, res, next) {
 };
 
 
+
 exports.verifyPhoneVerifyCode = function(req, res, next) {
-    var phoneVerifyCode = req.body.phoneVerifyCode;
-    if(typeof phoneVerifyCode === 'undefined') {
-        return res.status(400).send( {message: "No phoneVerifyCode found in body!"});
+    var validationErrors = userModel.mobilePhoneVerifyCodeValidations(req);
+
+    if(validationErrors){
+        return res.status(400).send( {message: validationErrors} );
     }
 
+    var phoneVerifyCode = req.body.phoneVerifyCode;
     var user = req.user;
     var nowDate = new Date();
 
@@ -825,7 +834,6 @@ exports.verifyPhoneVerifyCode = function(req, res, next) {
         }
         return res.status(200).send({message: 'verifyPhoneCode succeed'});
     })
-    .fail(next)
-    .done();
+    .fail(next).done();
 
 };

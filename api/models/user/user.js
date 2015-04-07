@@ -417,6 +417,10 @@ userSchema.statics.userIdValidations = function(req, userRoleId, studentType){
 };
 
 
+userSchema.statics.mobilePhoneVerifyCodeValidations = function(req){
+    req.checkBody('phoneVerifyCode', 'Mobile phone verify code wrong format ').notEmpty().len(6, 6);
+    return req.validationErrors();
+};
 
 
 /**

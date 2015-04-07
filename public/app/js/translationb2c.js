@@ -58,17 +58,17 @@
             ProfileContactInfoMobileVerifiedButton        : 'Verify',
 
             //Error Tips for Validation
-            ProfilePagePasswordError                 : 'Please input password 6-20 characters',
-            ProfilePageNewPasswordError              : 'Please input new password 6-20 characters',
-            ProfilePageTwoPasswordSameError          : "New password can't be same as current password",
-            ProfilePageConfirmPasswordError          : 'Please input new password again',
-            ProfilePageTwoPasswordsNotConsistent     : 'Inconsistent passwords',
-            ProfilePageDateFormatError               : 'Date format error',
-            ProfilePageTeamNameRequiredError         : "Please input team's name",
-            ProfilePageNewMemberNameError            : "Please input new member's name",
-            ProfilePageInvalidQQ                     : 'Invalid qq account',
-            ProfilePageInvalidMobilePhoneNumber      : 'Invalid mobile phone number',
-            ProfilePageInvalidMobilePhoneNumberVerifyCode      : 'Mobile verify code wrong',
+            ProfilePagePasswordError                      : 'Please input password 6-20 characters',
+            ProfilePageNewPasswordError                   : 'Please input new password 6-20 characters',
+            ProfilePageTwoPasswordSameError               : "New password can't be same as current password",
+            ProfilePageConfirmPasswordError               : 'Please input new password again',
+            ProfilePageTwoPasswordsNotConsistent          : 'Inconsistent passwords',
+            ProfilePageDateFormatError                    : 'Date format error',
+            ProfilePageTeamNameRequiredError              : "Please input team's name",
+            ProfilePageNewMemberNameError                 : "Please input new member's name",
+            ProfilePageInvalidQQ                          : 'Invalid qq account',
+            ProfilePageInvalidMobilePhoneNumber           : 'Invalid mobile phone number',
+            ProfilePageInvalidMobilePhoneNumberVerifyCode : 'Mobile verify code wrong',
 
             //Input Control Placeholder
             ProfilePageNewMemberInputPlaceholder     : 'Username/Email',

@@ -336,9 +336,10 @@
                         }
                     } else {
                         var bottomToCeiling = current.offsetTop + elemHeight;
-
-                        while (current = current.offsetParent) {
+                        current = current.offsetParent;
+                        while (current) {
                             bottomToCeiling += current.offsetTop;
+                            current = current.offsetParent;
                         }
 
                         if (windowHeight > bottomToCeiling) {

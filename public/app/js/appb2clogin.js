@@ -322,46 +322,58 @@
                     $alert(vm.css.alertFailedInfo);
                     if (err.data && err.data.message) {
                         err.data.message.forEach(function(item) {
+                            form[item.param].$valid = false;
+                            form[item.param].$invalid = true;
                             vm.css.errorFields[item.param] = true;
-                            // so the backend error tip will disappear if users edit it
-                            form[item.param].$setPristine();
                         });
                     }
                 });
             }
         }
 
-        function getMobileVerifyCode() {
-            vm.css.mobileVerifyCodeResend = true;
-            vm.css.mobileVerifyCodeTimeCounter = 60;
+        function getMobileVerifyCode(form) {
 
-            var timer = $interval(function() {
-                if(vm.css.mobileVerifyCodeTimeCounter > 0){
-                    vm.css.mobileVerifyCodeTimeCounter = vm.css.mobileVerifyCodeTimeCounter - 1;
-                }else {
-                    $interval.cancel(timer);
-                }
-            }, 1000);
+            if(form.$valid){
 
-            Student.getPhoneVerifyCode()
-            .then(function(){
-                //TODO: show succeed msg to user!
-            })
-            .catch(function(err){
-                //TODO: show error msg to user!
-                console.log(err);
-            });
+                Student.getPhoneVerifyCode().then(function(){
+
+                    vm.css.mobileVerifyCodeResend = true;
+                    vm.css.mobileVerifyCodeTimeCounter = 60;
+
+                    var timer = $interval(function() {
+                        if(vm.css.mobileVerifyCodeTimeCounter > 0){
+                            vm.css.mobileVerifyCodeTimeCounter = vm.css.mobileVerifyCodeTimeCounter - 1;
+                        }else {
+                            $interval.cancel(timer);
+                        }
+                    }, 1000);
+
+                }).catch(function(err){
+                    form.mobilePhoneVerifyCode.$setDirty();
+                    form.mobilePhoneVerifyCode.$valid = false;
+                    form.mobilePhoneVerifyCode.$invalid = true;
+
+                    if(err.data.message === 'Wrong phone number'){
+                        vm.css.errorFields.mobilePhoneWrongFormat = true;
+                    }
+
+                    console.log(vm.css.errorFields.mobilePhoneVerifyCode);
+                });
+            }
+
 
         }
 
         function sendMobileVerifyCode(form) {
-            Student.sendPhoneVerifyCode(vm.formData.mobilePhoneVerifyCode)
-            .then(function(){
+            Student.sendPhoneVerifyCode(vm.formData.mobilePhoneVerifyCode).then(function(){
                 vm.currentUser.phoneVerified = true;
-            })
-            .catch(function(err){
+            }).catch(function(err){
+                form.mobilePhoneVerifyCode.$setDirty();
                 form.mobilePhoneVerifyCode.$valid = false;
                 form.mobilePhoneVerifyCode.$invalid = true;
+
+                vm.css.errorFields.mobilePhoneVerifyCode = true;
+
                 console.log(err);
             });
         }
