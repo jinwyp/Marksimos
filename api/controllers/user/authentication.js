@@ -774,10 +774,14 @@ exports.generateCaptcha = function(req, res, next) {
 
 
 exports.generatePhoneVerifyCode = function(req, res, next) {
+    req.body.mobilePhone = req.user.mobilePhone || '';
 
-    if( typeof req.user.mobilePhone === 'undefined' || req.user.mobilePhone === '') {
-        return res.status(400).send( {message: "Wrong phone number"});
+    var validationErrors = userModel.mobilePhoneValidations(req);
+
+    if(validationErrors){
+        return res.status(400).send( {message: validationErrors} );
     }
+
 
     var messageXSend = new MessageXSend();
 
@@ -803,7 +807,7 @@ exports.generatePhoneVerifyCode = function(req, res, next) {
         if(parsedRes.status === "error") {
             return res.status(400).send(parsedRes);
         }
-        return res.status(200).send({message: 'generatePhoneCode succeed'});
+        return res.status(200).send({message: 'Generate MobilePhone verify code success'});
     })
     .fail(next)
     .done();

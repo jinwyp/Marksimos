@@ -422,6 +422,10 @@ userSchema.statics.mobilePhoneVerifyCodeValidations = function(req){
     return req.validationErrors();
 };
 
+userSchema.statics.mobilePhoneValidations = function(req){
+    req.checkBody('mobilePhone', 'mobilePhone wrong format').notEmpty().isMobilePhone('zh-CN');
+    return req.validationErrors();
+};
 
 /**
  * Methods
