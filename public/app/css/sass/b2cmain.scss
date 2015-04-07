@@ -868,11 +868,30 @@ $lineHeight_button: 1.8;
 		list-style: none;
 		padding-left: 0;
 	}
-	/*form > div > div {
-		margin-bottom: 0.5em;
-	}*/
 	padding-right: 30px;
 	padding-left: 25px;
+
+	button, .button {
+		width: 85px;
+		height: 32px;
+		font-size: 15px;
+		border-style: none;
+		color:$color_white;
+		background-color: #797979;
+		@include box-shadow(#797979 0px 2px 4px);
+		cursor: pointer;
+	}
+	.add-button, .remove-button{
+		margin-top: 5px;
+		height: auto;
+		width: auto;
+		padding: 3px;
+		font-size: 10px;
+	}
+	.add-button, .done {
+		background-color: #B82A0C;
+		@include box-shadow($color_register_button_border 0px 2px 4px);
+	}
 
 	// borrows from facebook.
 	.file-input-wrapper {
@@ -962,26 +981,6 @@ $lineHeight_button: 1.8;
 	.team-info {
 		.head {
 			margin-left: 80px;
-		}
-		button, .button {
-			width: 85px;
-			height: 32px;
-			font-size: 15px;
-			border-style: none;
-			color:$color_white;
-			background-color: #797979;
-			@include box-shadow(#797979 0px 2px 4px);
-		}
-		.add-button, .remove-button{
-			margin-top: 5px;
-			height: auto;
-			width: auto;
-			padding: 3px;
-			font-size: 10px;
-		}
-		.add-button, .done {
-			background-color: #B82A0C;
-			@include box-shadow($color_register_button_border 0px 2px 4px);
 		}
 	}
 }
