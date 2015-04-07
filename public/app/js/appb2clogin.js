@@ -196,7 +196,7 @@
 
 
 
-    angular.module('b2clogin').controller('profileController', ['Student', '$alert', 'FileUploader', '$translate', '$location', '$interval', function(Student, $alert, FileUploader, $translate, $location, $interval) {
+    angular.module('b2clogin').controller('profileController', ['Student', '$alert', 'FileUploader', '$translate', '$location', '$interval', 'languages', 'languageProficiency', function(Student, $alert, FileUploader, $translate, $location, $interval, languages, languageProficiency) {
         /* jshint validthis: true */
         var vm = this;
         vm.css = {
@@ -220,6 +220,8 @@
 
         vm.currentUser = {};
         vm.formData = {};
+        vm.languages = languages;
+        vm.languageProficiency = languageProficiency;
         vm.uploader = new FileUploader({
             url : '/e4e/api/student/avatar',
             alias : 'studentavatar',
@@ -243,9 +245,11 @@
 
 
         /**********  Function Declarations  **********/
-
-        function editProfile() {
+        function editProfile(specificForm) {
             vm.css.formEditing = true;
+            if(specificForm) {
+                vm.css[specificForm] = true;
+            }
         }
 
         function switchTab(index) {
@@ -256,6 +260,9 @@
 
         function cancelEditProfile() {
             vm.css.formEditing = false;
+            angular.forEach(arguments, function(form) {
+                vm.css[form] = false;
+            });
             app.resetForm();
         }
 
@@ -308,14 +315,16 @@
         }
 
 
-        function updateUserInfo(form) {
+        function updateUserInfo() {
             // todo, let what css info be false
-            if (form.$valid) {
+            var valid = [].every.call(arguments, function(form) {
+                return form.$valid;
+            });
+
+            if (valid) {
                 vm.css.errorFields = {};
                 Student.updateStudentB2CInfo(vm.formData).then(function() {
-                    Object.keys(vm.formData).forEach(function(key) {
-                        vm.currentUser[key] = vm.formData[key];
-                    });
+                    app.resetForm();
                     $alert(vm.css.alertSuccessInfo);
                     cancelEditProfile();
                 }).catch(function(err) {
@@ -363,7 +372,7 @@
                 form.mobilePhoneVerifyCode.$valid = false;
                 form.mobilePhoneVerifyCode.$invalid = true;
                 console.log(err);
-            })
+            });
         }
 
 
@@ -422,11 +431,7 @@
             resetForm: function() {
                 var formData = vm.formData;
 
-                angular.forEach(vm.currentUser, function(data, key) {
-                    if (!angular.isObject(data)) {
-                        formData[key] = data;
-                    }
-                });
+                angular.copy(vm.currentUser, formData);
 
                 formData.oldPassword = '';
                 formData.newPassword = '';

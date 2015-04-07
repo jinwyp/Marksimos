@@ -29,6 +29,7 @@
 
     /********************  Normal Html Template Filters  ********************/
 
+    angular.module('marksimos.filter').filter('language', userSegmentFilter);
     angular.module('marksimos.filter').filter('usersegment', userSegmentFilter);
     angular.module('marksimos.filter').filter('skupacksize', skuPackSizeFilter);
     angular.module('marksimos.filter').filter('companyname', companyNameFilter);
@@ -40,6 +41,53 @@
 
 
     angular.module('marksimos.filter').filter('emailaddress', emailAddressFilter);
+
+
+    function languageFilter() {
+        return function(input) {
+            var names = {
+                1000: 'LanguageChinese',
+                1001: 'LanguageEnglish',
+                1002: 'LanguageFrench',
+                1003: 'LanguageGerman',
+                1004: 'LanguageGreek',
+                1005: 'LanguageHindi',
+                1006: 'LanguageItalian',
+                1007: 'LanguageJapanese',
+                1008: 'LanguageKorean',
+                1009: 'LanguageRussian',
+                1010: 'LanguageSpanish',
+                1011: 'LanguageSwedish',
+                1012: 'LanguageTibetan',
+                1013: 'LanguageTurkish',
+                1014: 'LanguageUkrainian'
+            };
+
+            if (angular.isNumber(input)) {
+                return names[input];
+            }
+
+            return input;
+        };
+    }
+
+
+    function proficiencyFilter() {
+        return function(input) {
+            var names = {
+                10: 'LanguageBeginner',
+                15: 'LanguageIntermediate',
+                20: 'LanguageFluent',
+                25: 'LanguageNative'
+            };
+
+            if (angular.isNumber(input)) {
+                return names[input];
+            }
+
+            return input;
+        };
+    }
 
 
     function userSegmentFilter () {

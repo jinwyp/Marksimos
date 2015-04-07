@@ -16,20 +16,44 @@
         // Adding a translation table for the English language
         $translateProvider.translations('en_US', {
 
+            // Language
+            LanguageChinese   : 'Chinese',
+            LanguageEnglish   : 'English',
+            LanguageFrench    : 'French',
+            LanguageGerman    : 'German',
+            LanguageGreek     : 'Greek',
+            LanguageHindi     : 'Hindi',
+            LanguageItalian   : 'Italian',
+            LanguageJapanese  : 'Japanese',
+            LanguageKorean    : 'Korean',
+            LanguageRussian   : 'Russian',
+            LanguageSpanish   : 'Spanish',
+            LanguageSwedish   : 'Swedish',
+            LanguageTibetan   : 'Tibetan',
+            LanguageTurkish   : 'Turkish',
+            LanguageUkrainian : 'Ukrainian',
+
+            // Proficiency
+            LanguageBeginner: 'Beginner',
+            LanguageIntermediate: 'Intermediate',
+            LanguageFluent: 'Fluent',
+            LanguageNative: 'Native',
+
+
             //profile page
             //Header Title
             ProfilePageHeaderTitle                   : "Personal Info",
 
             //Labels for Navigator
-            ProfilePageTabUploadAvatar               : 'Upload Avatar',
-            ProfilePageTabBasicInfo                  : 'Basic Info',
-            ProfilePageTabSecurityInfo               : 'Security Info',
+            ProfilePageTabUploadAvatar               : 'Upload Picture',
+            ProfilePageTabBasicInfo                  : 'Basic Details',
+            ProfilePageTabSecurityInfo               : 'Security Details',
             ProfilePageTabSchoolInfo                 : 'Education Background',
-            ProfilePageTabTeamInfo                   : 'Team Info',
-            ProfilePageTabContactInfo                : 'Contact Info',
+            ProfilePageTabTeamInfo                   : 'Team Details',
+            ProfilePageTabWorkInfo: 'Work Experience',
 
             //Labels for Info Details
-            ProfilePageEditButton                    : 'Edit',
+            ProfilePageEditButton                    : 'Update',
             ProfilePageCancelButton                  : 'Cancel',
             ProfilePageChangeButton                  : 'Change',
             ProfilePageSaveButton                    : 'Save',
@@ -38,11 +62,21 @@
             ProfilePageBasicInfoGender               : 'Gender',
             ProfilePageBasicInfoGenderMale           : 'Male',
             ProfilePageBasicInfoGenderFemale         : 'Female',
-            ProfilePageBasicInfoBirthday             : 'Birthday',
+            ProfilePageBasicInfoBirthday             : 'Date of Birth',
+            ProfilePageCurrentLocation               : 'Current Location',
+            ProfilePageEmail                         : 'Email',
+            ProfilePageSchoolInfoMajor: 'Major',
+            ProfilePageSchoolInfoGraduationDate: 'Graduation Date',
+            ProfilePageSchoolInfoAbroad: 'Did you go abroad for exchange? (If yes, mention the University, country and time period)',
+            ProfilePageSchoolInfoAchievements: 'Achievements',
+            ProfilePageTabLanguageSkills: 'Language Skills',
+            ProfilePageEducation: 'Education',
+            ProfilePageAddEducation: 'Add Education',
+
             ProfilePageSecurityInfoCurrentPassword   : 'Current Password',
             ProfilePageSecurityInfoNewPassword       : 'New Password',
             ProfilePageSecurityInfoReTypeNewPassword : 'Confirm Password',
-            ProfilePageSchoolInfoCollege             : 'College',
+            ProfilePageSchoolInfoCollege             : 'University',
             ProfilePageSchoolInfoEnterDate           : 'Enter Date',
             ProfilePageSchoolInfoDegree              : 'Degree',
             ProfilePageTeamInfoTeamName              : 'Team Name',
@@ -246,6 +280,32 @@
 
         // Adding a translation table for the Chinese language
         $translateProvider.translations('zh_CN', {
+            
+            // Language 
+            LanguageChinese   : 'Chinese',
+            LanguageEnglish   : 'English',
+            LanguageFrench    : 'French',
+            LanguageGerman    : 'German',
+            LanguageGreek     : 'Greek',
+            LanguageHindi     : 'Hindi',
+            LanguageItalian   : 'Italian',
+            LanguageJapanese  : 'Japanese',
+            LanguageKorean    : 'Korean',
+            LanguageRussian   : 'Russian',
+            LanguageSpanish   : 'Spanish',
+            LanguageSwedish   : 'Swedish',
+            LanguageTibetan   : 'Tibetan',
+            LanguageTurkish   : 'Turkish',
+            LanguageUkrainian : 'Ukrainian',
+
+
+            // Proficiency
+            LanguageBeginner: 'Beginner',
+            LanguageIntermediate: 'Intermediate',
+            LanguageFluent: 'Fluent',
+            LanguageNative: 'Native',
+
+
 
             //Profile Page
             //Header Title
@@ -257,7 +317,8 @@
             ProfilePageTabSecurityInfo               : '安全信息',
             ProfilePageTabSchoolInfo                 : '教育背景',
             ProfilePageTabTeamInfo                   : '团队信息',
-            ProfilePageTabContactInfo                : '联系方式',
+            ProfilePageTabWorkInfo: '工作经历',
+
 
             //Labels for Info Details
             ProfilePageEditButton                    : '编辑',
@@ -270,6 +331,15 @@
             ProfilePageBasicInfoGenderMale           : '男',
             ProfilePageBasicInfoGenderFemale         : '女',
             ProfilePageBasicInfoBirthday             : '生日',
+            ProfilePageCurrentLocation               : '当前所在地',
+            ProfilePageEmail                         : '邮件',
+            ProfilePageSchoolInfoMajor: '专业',
+            ProfilePageSchoolInfoGraduationDate: '毕业日期',
+            ProfilePageSchoolInfoAbroad: '是否有国外留学经历? (如果是，请填写大学，国家以及时间)',
+            ProfilePageSchoolInfoAchievements: '成就',
+            ProfilePageTabLanguageSkills: '外语技能',
+            ProfilePageEducation:'教育经历',
+            ProfilePageAddEducation:'添加教育经历',
             ProfilePageSecurityInfoCurrentPassword   : '原始密码',
             ProfilePageSecurityInfoNewPassword       : '新密码',
             ProfilePageSecurityInfoReTypeNewPassword : '再输入新密码',
