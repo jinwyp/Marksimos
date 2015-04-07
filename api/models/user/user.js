@@ -249,7 +249,7 @@ userSchema.statics.registerValidations = function(req, userRoleId, studentType){
 
     studentType = studentType || 20;
 
-    removeProperty(req.body);
+//    removeProperty(req.body);
 
     req.checkBody('username', 'Username should be 6-20 characters').notEmpty().len(6, 20);
     req.checkBody('email', 'Email wrong format').notEmpty().isEmail();
@@ -313,14 +313,16 @@ userSchema.statics.registerValidations = function(req, userRoleId, studentType){
 userSchema.statics.userInfoValidations = function(req, userRoleId, studentType){
     studentType = studentType || 20;
 
-    removeProperty(req.body);
+//    removeProperty(req.body);
 
     if(userRoleId === userRoleModel.roleList.student.id ){
         req.checkBody('gender', 'Gender wrong format').optional().isInt();
         req.checkBody('birthday', 'Birthday wrong format').optional().isDate();
 
-        req.checkBody('mobilePhone', 'mobilePhone wrong format').optional().isMobilePhone('zh-CN');
-        req.checkBody('qq', 'qq number format wrong' ).optional().isInt();
+        if(req.body.mobilePhone)
+            req.checkBody('mobilePhone', 'mobilePhone wrong format').optional().isMobilePhone('zh-CN');
+        if(req.body.qq)
+            req.checkBody('qq', 'qq number format wrong' ).optional().isInt();
 
         req.checkBody('firstName', '2 to 50 characters required.').optional().len(2, 50);
         req.checkBody('lastName', '2 to 50 characters required.').optional().len(2, 50);
