@@ -29,8 +29,6 @@
 
     /********************  Normal Html Template Filters  ********************/
 
-    angular.module('marksimos.filter').filter('language', languageFilter);
-    angular.module('marksimos.filter').filter('proficiency', proficiencyFilter);
     angular.module('marksimos.filter').filter('usersegment', userSegmentFilter);
     angular.module('marksimos.filter').filter('skupacksize', skuPackSizeFilter);
     angular.module('marksimos.filter').filter('companyname', companyNameFilter);
@@ -43,44 +41,6 @@
 
     angular.module('marksimos.filter').filter('emailaddress', emailAddressFilter);
 
-
-    function languageFilter() {
-        return function(input) {
-            var names = {
-                1000: 'LanguageChinese',
-                1010: 'LanguageEnglish',
-                1020: 'LanguageFrench',
-                1030: 'LanguageGerman',
-                1040: 'LanguageGreek',
-                1050: 'LanguageHindi',
-                1060: 'LanguageItalian',
-                1070: 'LanguageJapanese',
-                1080: 'LanguageKorean',
-                1090: 'LanguageRussian',
-                1100: 'LanguageSpanish',
-                1110: 'LanguageSwedish',
-                1120: 'LanguageTibetan',
-                1130: 'LanguageTurkish',
-                1140: 'LanguageUkrainian'
-            };
-
-            return names[input];
-        };
-    }
-
-
-    function proficiencyFilter() {
-        return function(input) {
-            var names = {
-                10: 'LanguageBeginner',
-                20: 'LanguageIntermediate',
-                30: 'LanguageFluent',
-                40: 'LanguageNative'
-            };
-
-            return names[input];
-        };
-    }
 
 
     function userSegmentFilter () {

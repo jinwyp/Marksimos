@@ -99,8 +99,9 @@
 
     }]);
 
-    angular.module('b2c.config').constant('languages',
-        [
+    angular.module('b2c.config').constant('Constant',
+    {
+        language : [
             {
                 id : 1000, name : 'LanguageChinese', shortName : 'ZH'
             },
@@ -146,17 +147,38 @@
             {
                 id : 1140, name : 'LanguageUkrainian', shortName : 'UZ'
             }
+        ],
 
-        ]
-    );
-
-    angular.module('b2c.config').constant('languageProficiency',
-        [
+        languageProficiency : [
             { id: 10, name : 'LanguageBeginner'},
             { id: 20, name : 'LanguageIntermediate'},
             { id: 30, name : 'LanguageFluent'},
             { id: 40, name : 'LanguageNative'}
+        ],
+
+        jobType : [
+            { id: 10, name : 'jobTypeFullTime'},
+            { id: 20, name : 'jobTypePartTime'},
+            { id: 30, name : 'jobTypeIntern'}
+        ],
+
+        jobIndustry : [
+            { id: 1100, name : 'jobIndustryComputer'},
+            { id: 1200, name : 'jobIndustryFinance'},
+            { id: 1300, name : 'jobIndustryManufacturing'},
+            { id: 1400, name : 'jobIndustryBiotechnology'},
+            { id: 1500, name : 'jobIndustryAdvertising'},
+            { id: 1600, name : 'jobIndustryConstruction'},
+            { id: 1700, name : 'jobIndustryEducation'},
+            { id: 1800, name : 'jobIndustryService'},
+            { id: 1900, name : 'jobIndustryTransport'},
+            { id: 2000, name : 'jobIndustryEnergy'},
+            { id: 2100, name : 'jobIndustryOthers'}
         ]
+
+    }
     );
+
+
 
 }());

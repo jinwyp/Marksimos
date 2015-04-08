@@ -71,7 +71,7 @@ var userSchema = new Schema({
     currentLocation: String,
 
 
-    //user address for teacher
+    //user address for facilitator
     country: String,
     state: String,
     city: String,
@@ -272,8 +272,6 @@ userSchema.statics.registerValidations = function(req, userRoleId, studentType){
         req.checkBody('state', 'state is required').notEmpty();
         req.checkBody('city', 'city is required').notEmpty();
 
-        //req.checkBody('occupation', '2 to 100 characters required.').optional().len(2, 100);
-        req.checkBody('organizationOrUniversity', '2 to 100 characters required.').optional().len(2, 100);
 
         req.checkBody('studentType', 'Student B2B or B2C Type is required.').notEmpty().isInt();
 
@@ -317,19 +315,14 @@ userSchema.statics.userInfoValidations = function(req, userRoleId, studentType){
 
     if(userRoleId === userRoleModel.roleList.student.id ){
         req.checkBody('gender', 'Gender wrong format').optional().isInt();
-        req.checkBody('birthday', 'Birthday wrong format').optional().isDate();
+        if(req.body.birthday) req.checkBody('birthday', 'Birthday wrong format').optional().isDate();
 
         if(req.body.mobilePhone) req.checkBody('mobilePhone', 'mobilePhone wrong format').optional().isMobilePhone('zh-CN');
         if(req.body.qq) req.checkBody('qq', 'qq number format wrong' ).optional().isInt();
 
-        req.checkBody('firstName', '2 to 50 characters required.').optional().len(2, 50);
-        req.checkBody('lastName', '2 to 50 characters required.').optional().len(2, 50);
-        req.checkBody('idcardNumber', '18 to 19 characters required.').optional().matches( /^\d{17}([0-9]|X)$/ );
-
-        req.checkBody('occupation', '2 to 100 characters required.').optional().len(2, 100);
-        req.checkBody('organizationOrUniversity', '2 to 100 characters required.').optional().len(2, 100);
-        req.checkBody('dateOfEnterCollege', 'Date Of Enter College is date format').optional().isDate();
-        req.checkBody('dateOfGraduation', 'Date Of Graduation is date format').optional().isDate();
+        if(req.body.firstName) req.checkBody('firstName', '2 to 50 characters required.').optional().len(2, 50);
+        if(req.body.lastName) req.checkBody('lastName', '2 to 50 characters required.').optional().len(2, 50);
+        if(req.body.idcardNumber) req.checkBody('idcardNumber', '18 to 19 characters required.').optional().matches( /^\d{17}([0-9]|X)$/ );
 
     }
     return req.validationErrors();
