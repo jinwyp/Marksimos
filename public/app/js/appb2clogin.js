@@ -371,7 +371,7 @@
         function sendMobileVerifyCode(form) {
             vm.css.mobileVerifyCodeResend = false;
             vm.css.errorFields.mobilePhoneVerifyCode = false;
-            
+
             Student.sendPhoneVerifyCode(vm.formData.mobilePhoneVerifyCode).then(function(){
                 vm.currentUser.phoneVerified = true;
             }).catch(function(err){

@@ -100,12 +100,64 @@
     }]);
 
     angular.module('b2c.config').constant('languages',
-        {id: ['1000', '1001', '1002', '1003', '1004', '1005', '1006', '1007', '1008', '1009', '1010', '1011', '1012', '1013', '1014']}
+        [
+            {
+                id : 1000, name : 'LanguageChinese', shortName : 'ZH'
+            },
+            {
+                id : 1010, name : 'LanguageEnglish', shortName : 'EN'
+            },
+            {
+                id : 1020, name : 'LanguageFrench', shortName : 'FR'
+            },
+            {
+                id : 1030, name : 'LanguageGerman', shortName : 'DE'
+            },
+            {
+                id : 1040, name : 'LanguageGreek', shortName : 'EL'
+            },
+            {
+                id : 1050, name : 'LanguageHindi', shortName : 'HI'
+            },
+            {
+                id : 1060, name : 'LanguageItalian', shortName : 'IT'
+            },
+            {
+                id : 1070, name : 'LanguageJapanese', shortName : 'JA'
+            },
+            {
+                id : 1080, name : 'LanguageKorean', shortName : 'KO'
+            },
+            {
+                id : 1090, name : 'LanguageRussian', shortName : 'RU'
+            },
+            {
+                id : 1100, name : 'LanguageSpanish', shortName : 'ES'
+            },
+            {
+                id : 1110, name : 'LanguageSwedish', shortName : 'SV'
+            },
+            {
+                id : 1120, name : 'LanguageTibetan', shortName : 'BO'
+            },
+            {
+                id : 1130, name : 'LanguageTurkish', shortName : 'TR'
+            },
+            {
+                id : 1140, name : 'LanguageUkrainian', shortName : 'UZ'
+            }
+
+        ]
 
     );
 
     angular.module('b2c.config').constant('languageProficiency',
-        ['10', '15', '20', '25']
+        [
+            { id: 10, name : 'LanguageBeginner'},
+            { id: 20, name : 'LanguageIntermediate'},
+            { id: 30, name : 'LanguageFluent'},
+            { id: 40, name : 'LanguageNative'}
+        ]
     );
 
 }());

@@ -47,20 +47,20 @@
         return function(input) {
             var names = {
                 1000: 'LanguageChinese',
-                1001: 'LanguageEnglish',
-                1002: 'LanguageFrench',
-                1003: 'LanguageGerman',
-                1004: 'LanguageGreek',
-                1005: 'LanguageHindi',
-                1006: 'LanguageItalian',
-                1007: 'LanguageJapanese',
-                1008: 'LanguageKorean',
-                1009: 'LanguageRussian',
-                1010: 'LanguageSpanish',
-                1011: 'LanguageSwedish',
-                1012: 'LanguageTibetan',
-                1013: 'LanguageTurkish',
-                1014: 'LanguageUkrainian'
+                1010: 'LanguageEnglish',
+                1020: 'LanguageFrench',
+                1030: 'LanguageGerman',
+                1040: 'LanguageGreek',
+                1050: 'LanguageHindi',
+                1060: 'LanguageItalian',
+                1070: 'LanguageJapanese',
+                1080: 'LanguageKorean',
+                1090: 'LanguageRussian',
+                1100: 'LanguageSpanish',
+                1110: 'LanguageSwedish',
+                1120: 'LanguageTibetan',
+                1130: 'LanguageTurkish',
+                1140: 'LanguageUkrainian'
             };
 
             if (angular.isNumber(input)) {
@@ -76,9 +76,9 @@
         return function(input) {
             var names = {
                 10: 'LanguageBeginner',
-                15: 'LanguageIntermediate',
-                20: 'LanguageFluent',
-                25: 'LanguageNative'
+                20: 'LanguageIntermediate',
+                30: 'LanguageFluent',
+                40: 'LanguageNative'
             };
 
             if (angular.isNumber(input)) {
