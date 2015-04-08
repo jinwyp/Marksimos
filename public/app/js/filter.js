@@ -29,7 +29,8 @@
 
     /********************  Normal Html Template Filters  ********************/
 
-    angular.module('marksimos.filter').filter('language', userSegmentFilter);
+    angular.module('marksimos.filter').filter('language', languageFilter);
+    angular.module('marksimos.filter').filter('proficiency', proficiencyFilter);
     angular.module('marksimos.filter').filter('usersegment', userSegmentFilter);
     angular.module('marksimos.filter').filter('skupacksize', skuPackSizeFilter);
     angular.module('marksimos.filter').filter('companyname', companyNameFilter);
@@ -63,11 +64,7 @@
                 1014: 'LanguageUkrainian'
             };
 
-            if (angular.isNumber(input)) {
-                return names[input];
-            }
-
-            return input;
+            return names[input];
         };
     }
 
@@ -81,11 +78,7 @@
                 25: 'LanguageNative'
             };
 
-            if (angular.isNumber(input)) {
-                return names[input];
-            }
-
-            return input;
+            return names[input];
         };
     }
 

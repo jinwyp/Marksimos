@@ -203,7 +203,16 @@
             addStudentFailedInfo: false,
             currentTabIndex: 1,
             updateTeamNameDisabled: true,
+
             formEditing: false,
+            
+            //education background form editing states
+            educationEditing: false,
+            addEducationEditing: false,
+            languageEditing: false,
+            addLanguageEditing: false,
+
+            
             alertInfo: {
                 duration: 2,
                 template: '',
@@ -242,6 +251,8 @@
         vm.clickCancelEditProfile = cancelEditProfile;
         vm.clickGetMobileVerifyCode = getMobileVerifyCode;
         vm.clickSendMobileVerifyCode = sendMobileVerifyCode;
+        vm.clickSetEditingState = setEditingState;
+        vm.clickResetEditingState = resetEditingState;
 
 
         /**********  Function Declarations  **********/
@@ -250,6 +261,20 @@
             if(specificForm) {
                 vm.css[specificForm] = true;
             }
+        }
+
+        function setEditingState(state) {
+            angular.extend(vm.css, state);
+        }
+
+        function resetEditingState() {
+            angular.extend(vm.css, {
+                formEditing: false,
+                educationEditing: false,
+                subEducationEditing: false,
+                addEducationEditing: false,
+                languageEditing: false
+            });
         }
 
         function switchTab(index) {
