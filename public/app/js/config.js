@@ -163,17 +163,111 @@
         ],
 
         jobIndustry : [
-            { id: 1100, name : 'jobIndustryComputer'},
-            { id: 1200, name : 'jobIndustryFinance'},
-            { id: 1300, name : 'jobIndustryManufacturing'},
-            { id: 1400, name : 'jobIndustryBiotechnology'},
-            { id: 1500, name : 'jobIndustryAdvertising'},
-            { id: 1600, name : 'jobIndustryConstruction'},
-            { id: 1700, name : 'jobIndustryEducation'},
-            { id: 1800, name : 'jobIndustryService'},
-            { id: 1900, name : 'jobIndustryTransport'},
-            { id: 2000, name : 'jobIndustryEnergy'},
-            { id: 2100, name : 'jobIndustryOthers'}
+            { id: 1100, name : 'jobIndustryComputer', children:
+                [
+                    {id:1105, name : 'jobIndustryComputer01'},
+                    {id:1110, name : 'jobIndustryComputer02'},
+                    {id:1115, name : 'jobIndustryComputer03'},
+                    {id:1120, name : 'jobIndustryComputer04'},
+                    {id:1125, name : 'jobIndustryComputer05'},
+                    {id:1130, name : 'jobIndustryComputer06'},
+                    {id:1135, name : 'jobIndustryComputer07'},
+                    {id:1140, name : 'jobIndustryComputer08'},
+                    {id:1145, name : 'jobIndustryComputer09'}
+                ]
+            },
+            { id: 1200, name : 'jobIndustryFinance', children:
+                [
+                    {id:1205, name : 'jobIndustryFinance01'},
+                    {id:1210, name : 'jobIndustryFinance02'},
+                    {id:1215, name : 'jobIndustryFinance03'},
+                    {id:1220, name : 'jobIndustryFinance04'},
+                    {id:1225, name : 'jobIndustryFinance05'}
+                ]
+            },
+            { id: 1300, name : 'jobIndustryManufacturing', children:
+                [
+                    {id:1305, name : 'jobIndustryManufacturing01'},
+                    {id:1310, name : 'jobIndustryManufacturing02'},
+                    {id:1315, name : 'jobIndustryManufacturing03'},
+                    {id:1320, name : 'jobIndustryManufacturing04'},
+                    {id:1325, name : 'jobIndustryManufacturing05'},
+                    {id:1330, name : 'jobIndustryManufacturing06'},
+                    {id:1335, name : 'jobIndustryManufacturing07'},
+                    {id:1340, name : 'jobIndustryManufacturing08'},
+                    {id:1345, name : 'jobIndustryManufacturing09'}
+                ]
+            },
+            { id: 1400, name : 'jobIndustryBiotechnology', children:
+                [
+                    {id:1405, name : 'jobIndustryBiotechnology01'},
+                    {id:1410, name : 'jobIndustryBiotechnology02'},
+                    {id:1415, name : 'jobIndustryBiotechnology03'}
+                ]
+            },
+            { id: 1500, name : 'jobIndustryAdvertising', children:
+                [
+                    {id:1505, name : 'jobIndustryAdvertising01'},
+                    {id:1510, name : 'jobIndustryAdvertising02'},
+                    {id:1515, name : 'jobIndustryAdvertising03'},
+                    {id:1520, name : 'jobIndustryAdvertising04'},
+                    {id:1525, name : 'jobIndustryAdvertising05'}
+                ]
+            },
+            { id: 1600, name : 'jobIndustryConstruction', children:
+                [
+                    {id:1605, name : 'jobIndustryConstruction01'},
+                    {id:1610, name : 'jobIndustryConstruction02'},
+                    {id:1615, name : 'jobIndustryConstruction03'},
+                    {id:1620, name : 'jobIndustryConstruction04'}
+                ]
+            },
+            { id: 1700, name : 'jobIndustryEducation', children:
+                [
+                    {id:1705, name : 'jobIndustryEducation01'},
+                    {id:1710, name : 'jobIndustryEducation02'},
+                    {id:1715, name : 'jobIndustryEducation03'},
+                    {id:1720, name : 'jobIndustryEducation04'},
+                    {id:1725, name : 'jobIndustryEducation05'},
+                    {id:1730, name : 'jobIndustryEducation06'},
+                    {id:1735, name : 'jobIndustryEducation07'},
+                    {id:1740, name : 'jobIndustryEducation08'}
+                ]
+            },
+            { id: 1800, name : 'jobIndustryService', children:
+                [
+                    {id:1805, name : 'jobIndustryCustomerService01'},
+                    {id:1810, name : 'jobIndustryCustomerService02'},
+                    {id:1815, name : 'jobIndustryCustomerService03'},
+                    {id:1820, name : 'jobIndustryCustomerService04'},
+                    {id:1825, name : 'jobIndustryCustomerService05'}
+                ]
+            },
+            { id: 1900, name : 'jobIndustryTransport', children:
+                [
+                    {id:1905, name : 'jobIndustryTransportation01'},
+                    {id:1910, name : 'jobIndustryTransportation02'}
+                ]
+            },
+            { id: 2000, name : 'jobIndustryEnergy', children:
+                [
+                    {id:2005, name : 'jobIndustryEnergy01'},
+                    {id:2010, name : 'jobIndustryEnergy02'},
+                    {id:2015, name : 'jobIndustryEnergy03'},
+                    {id:2020, name : 'jobIndustryEnergy04'},
+                    {id:2025, name : 'jobIndustryEnergy05'}
+                ]
+            },
+            { id: 2100, name : 'jobIndustryOthers', children:
+                [
+                    {id:2105, name : 'jobIndustryOthers01'},
+                    {id:2110, name : 'jobIndustryOthers02'},
+                    {id:2115, name : 'jobIndustryOthers03'},
+                    {id:2120, name : 'jobIndustryOthers04'},
+                    {id:2125, name : 'jobIndustryOthers05'},
+                    {id:2130, name : 'jobIndustryOthers06'}
+                ]
+            }
         ]
 
     }

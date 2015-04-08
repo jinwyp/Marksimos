@@ -62,8 +62,10 @@
             jobIndustryComputer04      : 'Telecom & Network Equipment',
             jobIndustryComputer05      : 'Telecom Operators/Service Providers',
             jobIndustryComputer06      : 'Internet/E-commerce',
-            jobIndustryComputer07      : 'Electronics/Semiconductor/IC',
-            jobIndustryComputer08      : 'Instrument/Industry Automation',
+            jobIndustryComputer07      : 'Online Game',
+            jobIndustryComputer08      : 'Electronics/Semiconductor/IC',
+            jobIndustryComputer09      : 'Instrument/Industry Automation',
+
 
             jobIndustryFinance01         : 'Accounting, Auditing',
             jobIndustryFinance02         : 'Finance/Investments/Securities',
@@ -81,7 +83,51 @@
             jobIndustryManufacturing08   : 'Machinery, Equipment, Heavy Industries',
             jobIndustryManufacturing09   : 'Automobile & Components',
 
+            jobIndustryBiotechnology01   : 'Pharmaceuticals/Biotechnology',
+            jobIndustryBiotechnology02   : 'Medical Care/Healthcare/Public Health',
+            jobIndustryBiotechnology03   : 'Medical Facilities/Equipment',
 
+            jobIndustryAdvertising01     : 'Advertising',
+            jobIndustryAdvertising02     : 'Public Relations/Marketing/Exhibitions',
+            jobIndustryAdvertising03     : 'Flim & Television/Media/Arts/Communication',
+            jobIndustryAdvertising04     : 'Print Media/Publishing',
+            jobIndustryAdvertising05     : 'Printing/Packaging/Paper',
+
+            jobIndustryConstruction01    : 'Real Estate Development',
+            jobIndustryConstruction02    : 'Architectural Services/Building Materials/Construction',
+            jobIndustryConstruction03    : 'Interior Design/Decoration',
+            jobIndustryConstruction04    : 'Property Management',
+
+            jobIndustryEducation01       : 'Agency',
+            jobIndustryEducation02       : 'Professional Services (Consulting, HR, Finance/Accounting)',
+            jobIndustryEducation03       : 'Outsourcing Services',
+            jobIndustryEducation04       : 'Testing, Certification',
+            jobIndustryEducation05       : 'Legal',
+            jobIndustryEducation06       : 'Education/Training/Universities and Colleges',
+            jobIndustryEducation07       : 'Science/Research',
+            jobIndustryEducation08       : 'Leasing Service',
+
+            jobIndustryCustomerService01 : 'Restaurant & Food Services',
+            jobIndustryCustomerService02 : 'Hospitality/Tourism',
+            jobIndustryCustomerService03 : 'Entertainment/Leisure/Sports & Fitness',
+            jobIndustryCustomerService04 : 'Beauty/Health',
+            jobIndustryCustomerService05 : 'Personal Care & Services',
+
+            jobIndustryTransportation01  : 'Transportation/Logistic/Distribution',
+            jobIndustryTransportation02  : 'Aerospace/Aviation/Airlines',
+
+            jobIndustryEnergy01          : 'Oils/Chemicals/Mines/Geology',
+            jobIndustryEnergy02          : 'Mining/Metallurgy',
+            jobIndustryEnergy03          : 'Electricity/Utilities/Energy',
+            jobIndustryEnergy04          : 'New Energy',
+            jobIndustryEnergy05          : 'Raw Materials & Processing',
+
+            jobIndustryOthers01          : 'Government/Public Service',
+            jobIndustryOthers02          : 'Non-Profit Organizations',
+            jobIndustryOthers03          : 'Environmental Protection',
+            jobIndustryOthers04          : 'Agriculture/Forestry/Husbandry/Fishery',
+            jobIndustryOthers05          : 'Conglomerates',
+            jobIndustryOthers06          : 'Others',
 
 
             //profile page
@@ -377,8 +423,77 @@
             jobIndustryEnergy        : '能源/原材料',
             jobIndustryOthers        : '政府/非赢利机构/其他',
 
+            jobIndustryComputer01      : '计算机软件',
+            jobIndustryComputer02      : '计算机硬件',
+            jobIndustryComputer03      : '计算机服务(系统、数据服务、维修)',
+            jobIndustryComputer04      : '通信/电信/网络设备',
+            jobIndustryComputer05      : '通信/电信运营、增值服务',
+            jobIndustryComputer06      : '互联网/电子商务',
+            jobIndustryComputer07      : '网络游戏',
+            jobIndustryComputer08      : '电子技术/半导体/集成电路',
+            jobIndustryComputer09      : '仪器仪表/工业自动化',
 
+            jobIndustryFinance01         : '会计/审计',
+            jobIndustryFinance02         : '金融/投资/证券',
+            jobIndustryFinance03         : '银行',
+            jobIndustryFinance04         : '保险',
+            jobIndustryFinance05         : '信托/担保/拍卖/典当',
 
+            jobIndustryManufacturing01   : '贸易/进出口',
+            jobIndustryManufacturing02   : '批发/零售',
+            jobIndustryManufacturing03   : '快速消费品(食品、饮料、化妆品)',
+            jobIndustryManufacturing04   : '服装/纺织/皮革',
+            jobIndustryManufacturing05   : '家具/家电/玩具/礼品',
+            jobIndustryManufacturing06   : '奢侈品/收藏品/工艺品/珠宝',
+            jobIndustryManufacturing07   : '办公用品及设备',
+            jobIndustryManufacturing08   : '机械/设备/重工',
+            jobIndustryManufacturing09   : '汽车及零配件',
+
+            jobIndustryBiotechnology01   : '制药/生物工程',
+            jobIndustryBiotechnology02   : '医疗/护理/卫生',
+            jobIndustryBiotechnology03   : '医疗设备/器械',
+
+            jobIndustryAdvertising01     : '广告',
+            jobIndustryAdvertising02     : '公关/市场推广/会展',
+            jobIndustryAdvertising03     : '影视/媒体/艺术/文化传播',
+            jobIndustryAdvertising04     : '文字媒体/出版',
+            jobIndustryAdvertising05     : '印刷/包装/造纸',
+
+            jobIndustryConstruction01    : '房地产开发',
+            jobIndustryConstruction02    : '建筑/建材/工程',
+            jobIndustryConstruction03    : '家居/室内设计/装潢',
+            jobIndustryConstruction04    : '物业管理/商业中心',
+
+            jobIndustryEducation01       : '中介服务',
+            jobIndustryEducation02       : '专业服务(咨询、人力资源、财会)',
+            jobIndustryEducation03       : '外包服务',
+            jobIndustryEducation04       : '检测，认证',
+            jobIndustryEducation05       : '法律',
+            jobIndustryEducation06       : '教育/培训/院校',
+            jobIndustryEducation07       : '学术/科研',
+            jobIndustryEducation08       : '租赁服务',
+
+            jobIndustryCustomerService01 : '餐饮业',
+            jobIndustryCustomerService02 : '酒店/旅游',
+            jobIndustryCustomerService03 : '娱乐/休闲/体育',
+            jobIndustryCustomerService04 : '美容/保健',
+            jobIndustryCustomerService05 : '生活服务',
+
+            jobIndustryTransportation01  : '交通/运输/物流',
+            jobIndustryTransportation02  : '航天/航空',
+
+            jobIndustryEnergy01          : '石油/化工/矿产/地质',
+            jobIndustryEnergy02          : '采掘业/冶炼',
+            jobIndustryEnergy03          : '电气/电力/水利',
+            jobIndustryEnergy04          : '新能源',
+            jobIndustryEnergy05          : '原材料和加工',
+
+            jobIndustryOthers01          : '政府/公共事业',
+            jobIndustryOthers02          : '非盈利机构',
+            jobIndustryOthers03          : '环保',
+            jobIndustryOthers04          : '农/林/牧/渔',
+            jobIndustryOthers05          : '多元化业务集团公司',
+            jobIndustryOthers06          : '其他行业',
 
             //Profile Page
             //Header Title
