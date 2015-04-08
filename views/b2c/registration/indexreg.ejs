@@ -1,14 +1,15 @@
 ﻿<% include ../include/headcss.ejs %>
 
 
-<body ng-app="b2clogin" ng-controller="userLoginController as register">
+<body id="b2creg" ng-app="b2clogin" ng-controller="userLoginController as register">
 
     <b2c-header showlogin="true"></b2c-header>
 
     <div class="middle b2c-container" ng-if="register.css.showRegForm" >
-        <div class="middle right">
-
-            <form class="reg-form" name="regForm" novalidate ng-cloak>
+        <div class="header-pics pull-left">
+            <img src="app/css/images/b2c_reg_header_1.png">
+        </div>
+        <form class="reg-form pull-left" name="regForm" novalidate ng-cloak>
                 <div class="title">{{'RegisterPageRegisterLabel' | translate}}</div>
 
                 <div class="form-group has-feedback" ng-class="{'has-success':regForm.username.$dirty&&regForm.username.$valid, 'has-error':regForm.username.$dirty&&regForm.username.$invalid}">
@@ -61,15 +62,6 @@
 
                 <div class="form-group"><button class="btn btn-default" type="submit" ng-click="register.clickregister(regForm)" >{{'RegisterPageRegisterButton' | translate}}</button></div>
             </form>
-        </div>
-
-        <div class="middle left">
-            <div class="b2c-man man1"></div>
-            <div class="b2c-man man2"></div>
-            <div class="b2c-man man3"></div>
-            <div class="b2c-man man4"></div>
-            <div class="b2c-man-title">E4E helps you find their own stage.</div>
-        </div>
     </div>
 
     <div class="middle b2c-container" ng-if="!register.css.showRegForm" ng-cloak>
@@ -84,14 +76,12 @@
 
 
     <div class="down-box">
-        <div class="b2c-container pic-area">
+        <div class="pic-area b2c-container">
             <div class="pic pic-1">
                 <div class="flip-container">
                     <div class="flipper">
                         <div class="front"></div>
                         <div class="back">
-                            <p class="title">Learning by Playing</p>
-                            <p> HCD Learning strongly believes that the best learning comes through hands-on approach – by playing rather than passive learning.</p>
                         </div>
                     </div>
                 </div>
@@ -102,9 +92,6 @@
                     <div class="flipper">
                         <div class="front"></div>
                         <div class="back">
-                            <p class="title">Help students develop skills</p>
-                            <p>Through our state-of-art innovative learning games, we intend to help students develop skills to bridge skill gap between university learning and what the companies look for.
-                            </p>
                         </div>
                     </div>
                 </div>
@@ -114,11 +101,7 @@
                 <div class="flip-container">
                     <div class="flipper">
                         <div class="front"></div>
-                        <div class="back">
-                            <p class="title">Social Learning</p>
-                            <p>Learning is most effective when done in groups and that is the HCD Learning encourages social learning for maximum benefits.
-                            </p>
-                        </div>
+                        <div class="back"> </div>
                     </div>
                 </div>
             </div>
@@ -127,11 +110,7 @@
                 <div class="flip-container">
                     <div class="flipper">
                         <div class="front"></div>
-                        <div class="back">
-                            <p class="title">Discover job opportunities</p>
-                            <p>HCD Learning’s student competition intends to help students find job opportunities with big company brands. All you to have to do is register for the game and win.
-                            </p>
-                        </div>
+                        <div class="back"></div>
                     </div>
                 </div>
             </div>
@@ -140,11 +119,7 @@
                 <div class="flip-container">
                     <div class="flipper">
                         <div class="front"></div>
-                        <div class="back">
-                            <p class="title">Develop business skills </p>
-                            <p>Our competition game is designed not only to test you, but also to help you equip with the business skills and knowledge required to perform job at big companies.
-                            </p>
-                        </div>
+                        <div class="back"></div>
                     </div>
                 </div>
             </div>
@@ -153,21 +128,17 @@
                 <div class="flip-container">
                     <div class="flipper">
                         <div class="front"></div>
-                        <div class="back">
-                            <p class="title">Assessment  </p>
-                            <p>Through the HCD Learning competition, you can assess yourself against thousands of the participants from different universities all over China.
-                            </p>
-                        </div>
+                        <div class="back"></div>
                     </div>
                 </div>
             </div>
         </div>
 
         <div class="b2c-container">
-                <div  class="switch-button">
-                    <a href="javascript:void(0);" class="selected">{{'RegisterPageIntroduction1' | translate}}</a>
-                    <a href="javascript:void(0);">{{'RegisterPageIntroduction2' | translate}}</a>
-                </div>
+            <div  class="switch-button">
+                <a href="javascript:void(0);" class="selected">{{'RegisterPageIntroduction1' | translate}}</a>
+                <a href="javascript:void(0);">{{'RegisterPageIntroduction2' | translate}}</a>
+            </div>
         </div>
     </div>
 
