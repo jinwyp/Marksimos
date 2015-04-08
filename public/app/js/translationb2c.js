@@ -73,6 +73,7 @@
             ProfilePageTabLanguageSkills: 'Language Skills',
             ProfilePageEducation: 'Education',
             ProfilePageAddEducation: 'Add Education',
+            ProfilePageAddLanguage: 'Add Language',
 
             ProfilePageSecurityInfoCurrentPassword   : 'Current Password',
             ProfilePageSecurityInfoNewPassword       : 'New Password',
@@ -344,6 +345,7 @@
             ProfilePageTabLanguageSkills: '外语技能',
             ProfilePageEducation:'教育经历',
             ProfilePageAddEducation:'添加教育经历',
+            ProfilePageAddLanguage: '添加语言',
             ProfilePageSecurityInfoCurrentPassword   : '原始密码',
             ProfilePageSecurityInfoNewPassword       : '新密码',
             ProfilePageSecurityInfoReTypeNewPassword : '再输入新密码',
