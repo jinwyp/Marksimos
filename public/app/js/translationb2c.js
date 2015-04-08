@@ -33,11 +33,16 @@
             LanguageTurkish   : 'Turkish',
             LanguageUkrainian : 'Ukrainian',
 
-            // Proficiency
-            LanguageBeginner: 'Beginner',
-            LanguageIntermediate: 'Intermediate',
-            LanguageFluent: 'Fluent',
-            LanguageNative: 'Native',
+            // Language Proficiency
+            LanguageBeginner     : 'Beginner',
+            LanguageIntermediate : 'Intermediate',
+            LanguageFluent       : 'Fluent',
+            LanguageNative       : 'Native',
+
+            // Profile Work Experience
+            jobTypeFullTime      : 'Full-time',
+            jobTypePartTime      : 'Par-time ',
+            jobTypeIntern        : 'Intern',
 
 
             //profile page
@@ -281,6 +286,12 @@
         });
 
 
+
+
+
+
+
+
         // Adding a translation table for the Chinese language
         $translateProvider.translations('zh_CN', {
             
@@ -303,11 +314,15 @@
 
 
             // Proficiency
-            LanguageBeginner: 'Beginner',
-            LanguageIntermediate: 'Intermediate',
-            LanguageFluent: 'Fluent',
-            LanguageNative: 'Native',
+            LanguageBeginner: '初级',
+            LanguageIntermediate: '中等',
+            LanguageFluent: '精通',
+            LanguageNative: '母语',
 
+            // Profile Work Experience
+            jobTypeFullTime      : '全职',
+            jobTypePartTime      : '兼职',
+            jobTypeIntern        : '实习',
 
 
             //Profile Page

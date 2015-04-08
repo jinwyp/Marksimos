@@ -29,7 +29,11 @@
 
     /********************  Normal Html Template Filters  ********************/
 
-    angular.module('marksimos.filter').filter('language', userSegmentFilter);
+    angular.module('marksimos.filter').filter('language', languageFilter);
+    angular.module('marksimos.filter').filter('proficiency', proficiencyFilter);
+    angular.module('marksimos.filter').filter('jobtype', jobTypeFilter);
+
+
     angular.module('marksimos.filter').filter('usersegment', userSegmentFilter);
     angular.module('marksimos.filter').filter('skupacksize', skuPackSizeFilter);
     angular.module('marksimos.filter').filter('companyname', companyNameFilter);
@@ -79,6 +83,23 @@
                 20: 'LanguageIntermediate',
                 30: 'LanguageFluent',
                 40: 'LanguageNative'
+            };
+
+            if (angular.isNumber(input)) {
+                return names[input];
+            }
+
+            return input;
+        };
+    }
+
+
+    function jobTypeFilter() {
+        return function(input) {
+            var names = {
+                10: 'jobTypeFullTime',
+                20: 'jobTypePartTime',
+                30: 'jobTypeIntern'
             };
 
             if (angular.isNumber(input)) {

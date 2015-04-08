@@ -155,6 +155,12 @@
             { id: 20, name : 'LanguageIntermediate'},
             { id: 30, name : 'LanguageFluent'},
             { id: 40, name : 'LanguageNative'}
+        ],
+
+        jobType : [
+            { id: 10, name : 'jobTypeFullTime'},
+            { id: 20, name : 'jobTypePartTime'},
+            { id: 30, name : 'jobTypeIntern'}
         ]
 
     }
