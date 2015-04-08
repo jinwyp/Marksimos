@@ -212,7 +212,6 @@
             languageEditing: false,
             addLanguageEditing: false,
 
-            
             alertInfo: {
                 duration: 2,
                 template: '',
@@ -347,10 +346,19 @@
 
             if (valid) {
                 vm.css.errorFields = {};
+
+                if (angular.isObject(vm.formData.LanguageSkills.language)) {
+                    vm.formData.LanguageSkills.language = vm.formData.LanguageSkills.language.id;
+                }
+                if (angular.isObject(vm.formData.LanguageSkills.level)) {
+                    vm.formData.LanguageSkills.level = vm.formData.LanguageSkills.language.level.id;
+                }
+
                 Student.updateStudentB2CInfo(vm.formData).then(function() {
                     app.resetForm();
                     $alert(vm.css.alertSuccessInfo);
                     cancelEditProfile();
+                    resetEditingState();
                 }).catch(function(err) {
                     $alert(vm.css.alertFailedInfo);
                     if (err.data && err.data.message) {

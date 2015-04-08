@@ -189,7 +189,7 @@
                     </div>
 
                     <div class="row" ng-if="profile.css.currentTabIndex == 3">
-                        <div class="profile-detail-title">{{'ProfilePageTabSchoolInfo' | translate}}<span class="profile-edit" ng-click="profile.clickSetEditingState({educationEditing: true})">{{'ProfilePageEditButton' | translate}}</span></div>
+                        <div class="profile-detail-title">{{'ProfilePageTabSchoolInfo' | translate}}<span class="profile-edit" ng-click="profile.clickSetEditingState({educationEditing: true, languageEditing: false})">{{'ProfilePageEditButton' | translate}}</span></div>
                         <form name="schoolForm" class="form-horizontal">
                             <div class="education" ng-repeat="education in profile.currentUser.eductionBackgrounds">
                                 <h3>{{'ProfilePageEducation' | translate}} {{$index + 1}}:<span ng-if="profile.css.educationEditing && !profile.css.addEducationEditing" class="form-control-static remove-button glyphicon glyphicon-minus button"></span></h3>
@@ -266,8 +266,9 @@
                                         </div>
                                     </div>
                                 </div>
-
-                                <h3 ng-if="profile.css.educationEditing">{{'ProfilePageAddEducation' | translate}}: <span ng-if="profile.css.educationEditing && !profile.css.addEducationEditing" ng-click="profile.clickSetEditingState({addEducationEditing: true})" class="form-control-static add-button glyphicon glyphicon-plus button"></span></h3>
+                            </div>
+                            <div ng-if="profile.css.educationEditing" class="addEducation">
+                                <h3>{{'ProfilePageAddEducation' | translate}}: <span ng-if="!profile.css.addEducationEditing" ng-click="profile.clickSetEditingState({addEducationEditing: true})" class="form-control-static add-button glyphicon glyphicon-plus button"></span></h3>
                                 <div ng-if="profile.css.addEducationEditing">
                                     <div class="form-group">
                                         <label for="school" class="control-label col-md-3 text-right">{{'ProfilePageSchoolInfoCollege' | translate}} :</label>
@@ -320,42 +321,39 @@
                                         </div>
                                     </div>
                                 </div>
-
                             </div>
                         </form>
 
                         <div class="profile-detail-title">{{'ProfilePageTabLanguageSkills' | translate}}<span class="profile-edit" ng-click="profile.clickSetEditingState({educationEditing: false, languageEditing: true})">{{'ProfilePageEditButton' | translate}}</span></div>
                         <form name="languageForm" class="form-horizontal">
                             <ul>
-                                <li ng-repeat="skill in profile.currentUser.LanguageSkills">{{skill.language | translate}}({{skill.level | translate}})</li>
+                                <li ng-repeat="skill in profile.currentUser.LanguageSkills">{{skill.language | translate}}({{skill.level | translate}}) <span ng-if="profile.css.languageEditing && !profile.css.addLanguageEditing" class="form-control-static remove-button glyphicon glyphicon-minus button"></span></li>
                             </ul>
 
                             <div ng-if="profile.css.languageEditing">
-                                <h3>{{'ProfilePageAddLanguage' | translate}}</h3>
+                                <h3>{{'ProfilePageAddLanguage' | translate}}<span ng-if="!profile.css.addLanguageEditing" ng-click="profile.clickSetEditingState({addLanguageEditing: true})" class="form-control-static add-button glyphicon glyphicon-plus button"></span></h3>
                                 <div class="form-group" ng-if="profile.css.addLanguageEditing">
                                     <div class="col-xs-4">
-                                        <select class="form-control">
-                                            <option ng-repeat="lan in profile.languages" value="{{lan}}">{{lan | language | translate}}</option>
+                                        <select class="form-control" ng-model="profile.formData.LanguageSkills.language" ng-options="language.name | translate for language in profile.languages">
                                         </select>
                                     </div>
                                     <div class="col-xs-4">
-                                        <select class="form-control col-xs-4">
-                                            <option ng-repeat="level in profile.languageProficiency" value="{{level}}">{{level | proficiency | translate}}</option>
+                                        <select class="form-control col-xs-4" ng-model="profile.form.Data.LanguageSkills.level" ng-options="level.name | translate for level in profile.languageProficiency">
                                         </select>
                                     </div>
                                 </div>
                             </div>
                         </form>
 
-                        <div class="row" ng-if="profile.css.formEditing">
+                        <div class="row" ng-if="profile.css.educationEditing || profile.css.languageEditing">
                             <!--for edit education-->
-                            <div ng-if="profile.css.schoolForm" class="col-md-6 col-md-offset-3 profile-button-container">
+                            <div ng-if="profile.css.educationEditing" class="col-md-6 col-md-offset-3 profile-button-container">
                                 <button ng-click="profile.clickUpdateUserInfo(schoolForm)" type="submit">{{'ProfilePageSaveButton' | translate}}</button>
-                                <button class="cancel" ng-click="profile.clickCancelEditProfile('addNewEducation', 'schoolForm')">{{'ProfilePageCancelButton' | translate}}</button>
+                                <button class="cancel" ng-click="profile.clickResetEditingState()">{{'ProfilePageCancelButton' | translate}}</button>
                             </div>
-                            <div ng-if="profile.css.languageForm" class="col-md-6 col-md-offset-3 profile-button-container">
+                            <div ng-if="profile.css.languageEditing" class="col-md-6 col-md-offset-3 profile-button-container">
                                 <button ng-click="profile.clickUpdateUserInfo(languageForm)" type="submit">{{'ProfilePageSaveButton' | translate}}</button>
-                                <button class="cancel" ng-click="profile.clickCancelEditProfile('languageForm')">{{'ProfilePageCancelButton' | translate}}</button>
+                                <button class="cancel" ng-click="profile.clickResetEditingState()">{{'ProfilePageCancelButton' | translate}}</button>
                             </div>
                         </div>
                     </div>

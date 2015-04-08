@@ -42,7 +42,6 @@
     angular.module('marksimos.filter').filter('emailaddress', emailAddressFilter);
 
 
-
     function userSegmentFilter () {
         return function(input) {
             var names = {
