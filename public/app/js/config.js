@@ -99,8 +99,9 @@
 
     }]);
 
-    angular.module('b2c.config').constant('languages',
-        [
+    angular.module('b2c.config').constant('Constant',
+    {
+        language : [
             {
                 id : 1000, name : 'LanguageChinese', shortName : 'ZH'
             },
@@ -147,17 +148,18 @@
                 id : 1140, name : 'LanguageUkrainian', shortName : 'UZ'
             }
 
-        ]
+        ],
 
-    );
-
-    angular.module('b2c.config').constant('languageProficiency',
-        [
+        languageProficiency : [
             { id: 10, name : 'LanguageBeginner'},
             { id: 20, name : 'LanguageIntermediate'},
             { id: 30, name : 'LanguageFluent'},
             { id: 40, name : 'LanguageNative'}
         ]
+
+    }
     );
+
+
 
 }());
