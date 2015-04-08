@@ -273,28 +273,28 @@
                                     <div class="form-group">
                                         <label for="school" class="control-label col-md-3 text-right">{{'ProfilePageSchoolInfoCollege' | translate}} :</label>
                                         <div class="col-xs-5">
-                                            <input type="text" ng-model="profile.formData.eductionBackgrounds[$index].university" name="school" id="school" class="form-control">
+                                            <input type="text" ng-model="profile.newEducation.university" name="school" id="school" class="form-control">
                                         </div>
                                     </div>
 
                                     <div class="row form-group">
                                         <label for="degree" class="control-label col-md-3 text-right">{{'ProfilePageSchoolInfoDegree' | translate}} :</label>
                                         <div class="col-xs-5">
-                                            <input type="text" ng-model="profile.formData.eductionBackgrounds[$index].degree" id="degree" name="degree" class="col-md-2 form-control">
+                                            <input type="text" ng-model="profile.newEducation.degree" id="degree" name="degree" class="col-md-2 form-control">
                                         </div>
                                     </div>
 
                                     <div class="row form-group">
                                         <label for="major" class="control-label col-md-3 text-right">{{'ProfilePageSchoolInfoMajor' | translate}} :</label>
                                         <div class="col-xs-5">
-                                            <input type="text" ng-model="profile.formData.eductionBackgrounds[$index].major" id="major" name="major" class="col-md-2 form-control">
+                                            <input type="text" ng-model="profile.newEducation.major" id="major" name="major" class="col-md-2 form-control">
                                         </div>
                                     </div>
 
                                     <div class="row form-group" ng-class="{'has-error': schoolForm.entryDate.$invalid, 'has-success':schoolForm.entryDate.$dirty&&schoolForm.entryDate.$valid}">
                                         <label for="entryDate" class="control-label col-md-3 text-right">{{'ProfilePageSchoolInfoEnterDate' | translate}} :</label>
                                         <div class="col-xs-5">
-                                            <input type="text" data-date-format="yyyy-MM-dd" data-min-date="02/10/70" data-max-date="today" data-autoclose="1" ng-model="profile.formData.eductionBackgrounds[$index].entryDate" id="entryDate" name="entryDate" class="form-control" bs-datepicker>
+                                            <input type="text" data-date-format="yyyy-MM-dd" data-min-date="02/10/70" data-max-date="today" data-autoclose="1" ng-model="profile.newEducation.entryDate" id="entryDate" name="entryDate" class="form-control" bs-datepicker>
                                         </div>
                                         <span class="err-msg control-label form-control-static col-xs-4" ng-if="schoolForm.entryDate.$invalid">{{'ProfilePageDateFormatError' | translate}}</span>
                                     </div>
@@ -302,7 +302,7 @@
                                     <div class="row form-group" ng-class="{'has-error': schoolForm.graduationDate.$invalid, 'has-success':schoolForm.graduationDate.$dirty&&schoolForm.graduationDate.$valid}">
                                         <label for="graduationDate" class="control-label col-md-3 text-right">{{'ProfilePageSchoolInfoGraduationDate' | translate}} :</label>
                                         <div class="col-xs-5">
-                                            <input type="text" data-date-format="yyyy-MM-dd" data-min-date="02/10/70" data-max-date="today" data-autoclose="1" ng-model="profile.formData.eductionBackgrounds[$index].graduationDate" id="graduationDate" name="graduationDate" class="form-control" bs-datepicker>
+                                            <input type="text" data-date-format="yyyy-MM-dd" data-min-date="02/10/70" data-max-date="today" data-autoclose="1" ng-model="profile.newEducation.graduationDate" id="graduationDate" name="graduationDate" class="form-control" bs-datepicker>
                                         </div>
                                         <span class="err-msg control-label form-control-static col-xs-4" ng-if="schoolForm.graduationDate.$invalid">{{'ProfilePageDateFormatError' | translate}}</span>
                                     </div>
@@ -310,7 +310,7 @@
                                     <div class="form-group">
                                         <label for="abroad" class="control-label col-md-3 text-right">{{'ProfilePageSchoolInfoAbroad' | translate}} :</label>
                                         <div class="col-xs-5">
-                                            <input type="text" ng-model="profile.formData.eductionBackgrounds[$index].abroad" name="abroad" id="abroad" class="form-control">
+                                            <input type="text" ng-model="profile.newEducation.abroad" name="abroad" id="abroad" class="form-control">
                                         </div>
                                     </div>
 
@@ -334,11 +334,11 @@
                                 <h3>{{'ProfilePageAddLanguage' | translate}}<span ng-if="!profile.css.addLanguageEditing" ng-click="profile.clickSetEditingState({addLanguageEditing: true})" class="form-control-static add-button glyphicon glyphicon-plus button"></span></h3>
                                 <div class="form-group" ng-if="profile.css.addLanguageEditing">
                                     <div class="col-xs-4">
-                                        <select class="form-control" ng-model="profile.formData.LanguageSkills.language" ng-options="language.name | translate for language in profile.languages">
+                                        <select class="form-control" ng-model="profile.newLanguageSkill.language" ng-options="language.name | translate for language in profile.Constant.language">
                                         </select>
                                     </div>
                                     <div class="col-xs-4">
-                                        <select class="form-control col-xs-4" ng-model="profile.form.Data.LanguageSkills.level" ng-options="level.name | translate for level in profile.languageProficiency">
+                                        <select class="form-control col-xs-4" ng-model="profile.newLanguageSkill.level" ng-options="level.name | translate for level in profile.Constant.languageProficiency">
                                         </select>
                                     </div>
                                 </div>
