@@ -314,7 +314,6 @@
             }
         }
 
-
         function updateUserInfo() {
             // todo, let what css info be false
             var valid = [].every.call(arguments, function(form) {
@@ -341,7 +340,8 @@
         }
 
         function getMobileVerifyCode(form) {
-
+            vm.css.mobileVerifyCodeResend = false;
+            vm.css.errorFields.mobilePhoneVerifyCode = false;
             if(form.$valid){
 
                 Student.getPhoneVerifyCode().then(function(){
@@ -366,11 +366,12 @@
 
                 });
             }
-
-
         }
 
         function sendMobileVerifyCode(form) {
+            vm.css.mobileVerifyCodeResend = false;
+            vm.css.errorFields.mobilePhoneVerifyCode = false;
+            
             Student.sendPhoneVerifyCode(vm.formData.mobilePhoneVerifyCode).then(function(){
                 vm.currentUser.phoneVerified = true;
             }).catch(function(err){
