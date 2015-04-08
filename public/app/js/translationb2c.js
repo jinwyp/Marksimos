@@ -44,6 +44,45 @@
             jobTypePartTime      : 'Par-time ',
             jobTypeIntern        : 'Intern',
 
+            jobIndustryComputer        : 'Computer, Internet, Telecom, Electronics',
+            jobIndustryFinance         : 'Accounting, Finance, Banking, Insurance',
+            jobIndustryManufacturing   : 'Trade, Sales, Manufacturing, Operations',
+            jobIndustryBiotechnology   : 'Biotechnology, Pharmaceuticals, Healthcare',
+            jobIndustryAdvertising     : 'Advertising, Marketing, Media, Design',
+            jobIndustryConstruction    : 'Construction, Real Estate',
+            jobIndustryEducation       : 'Professional Services, Education, Training',
+            jobIndustryCustomerService : 'Customer Services',
+            jobIndustryTransportation  : 'Logistics, Transportation',
+            jobIndustryEnergy          : 'Energy, Utilities and Raw Materials Related',
+            jobIndustryOthers          : 'Government, Non Profit, Others',
+
+            jobIndustryComputer01      : 'Computers,Software',
+            jobIndustryComputer02      : 'Computers, Hardware',
+            jobIndustryComputer03      : 'Computer Services',
+            jobIndustryComputer04      : 'Telecom & Network Equipment',
+            jobIndustryComputer05      : 'Telecom Operators/Service Providers',
+            jobIndustryComputer06      : 'Internet/E-commerce',
+            jobIndustryComputer07      : 'Electronics/Semiconductor/IC',
+            jobIndustryComputer08      : 'Instrument/Industry Automation',
+
+            jobIndustryFinance01         : 'Accounting, Auditing',
+            jobIndustryFinance02         : 'Finance/Investments/Securities',
+            jobIndustryFinance03         : 'Banking',
+            jobIndustryFinance04         : 'Insurance',
+            jobIndustryFinance05         : 'Trust/Auction/Guarantee/Pawn',
+
+            jobIndustryManufacturing01   : 'Trading/Import & Export',
+            jobIndustryManufacturing02   : 'Wholesale/Retail',
+            jobIndustryManufacturing03   : 'FMCG( Food,Beverage,Cosmetics)',
+            jobIndustryManufacturing04   : 'Apparel/Textiles/Leather Goods',
+            jobIndustryManufacturing05   : 'Furniture/Home Appliances/Toys/Gifts',
+            jobIndustryManufacturing06   : 'Luxury/Collectibles/Arts&Craft/Jewelry',
+            jobIndustryManufacturing07   : 'Office Supplies & Equipment',
+            jobIndustryManufacturing08   : 'Machinery, Equipment, Heavy Industries',
+            jobIndustryManufacturing09   : 'Automobile & Components',
+
+
+
 
             //profile page
             //Header Title
@@ -323,6 +362,21 @@
             jobTypeFullTime      : '全职',
             jobTypePartTime      : '兼职',
             jobTypeIntern        : '实习',
+
+
+            jobIndustryComputer      : '计算机/互联网/通信/电子',
+            jobIndustryFinance       : '会计/金融/银行/保险',
+            jobIndustryManufacturing : '贸易/消费/制造/营运',
+            jobIndustryBiotechnology : '制药/医疗',
+            jobIndustryAdvertising   : '广告/媒体',
+            jobIndustryConstruction  : '房地产/建筑',
+            jobIndustryEducation     : '专业服务/教育/培训',
+            jobIndustryService       : '服务业',
+            jobIndustryTransport     : '物流/运输',
+            jobIndustryEnergy        : '能源/原材料',
+            jobIndustryOthers        : '政府/非赢利机构/其他',
+
+
 
 
             //Profile Page

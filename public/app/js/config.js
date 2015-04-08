@@ -161,6 +161,20 @@
             { id: 10, name : 'jobTypeFullTime'},
             { id: 20, name : 'jobTypePartTime'},
             { id: 30, name : 'jobTypeIntern'}
+        ],
+
+        jobIndustry : [
+            { id: 1100, name : 'jobIndustryComputer'},
+            { id: 1200, name : 'jobIndustryFinance'},
+            { id: 1300, name : 'jobIndustryManufacturing'},
+            { id: 1400, name : 'jobIndustryBiotechnology'},
+            { id: 1500, name : 'jobIndustryAdvertising'},
+            { id: 1600, name : 'jobIndustryConstruction'},
+            { id: 1700, name : 'jobIndustryEducation'},
+            { id: 1800, name : 'jobIndustryService'},
+            { id: 1900, name : 'jobIndustryTransport'},
+            { id: 2000, name : 'jobIndustryEnergy'},
+            { id: 2100, name : 'jobIndustryOthers'}
         ]
 
     }
