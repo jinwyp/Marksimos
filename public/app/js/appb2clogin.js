@@ -196,7 +196,7 @@
 
 
 
-    angular.module('b2clogin').controller('profileController', ['Student', '$alert', 'FileUploader', '$translate', '$location', '$interval', 'languages', 'languageProficiency', function(Student, $alert, FileUploader, $translate, $location, $interval, languages, languageProficiency) {
+    angular.module('b2clogin').controller('profileController', ['Student', '$alert', 'FileUploader', '$translate', '$location', '$interval', 'Constant', function(Student, $alert, FileUploader, $translate, $location, $interval, Constant) {
         /* jshint validthis: true */
         var vm = this;
         vm.css = {
@@ -205,7 +205,7 @@
             updateTeamNameDisabled: true,
 
             formEditing: false,
-            
+
             //education background form editing states
             educationEditing: false,
             addEducationEditing: false,
@@ -227,9 +227,11 @@
         vm.css.alertInvalidPassword = angular.extend({}, vm.css.alertInfo, {template: 'profile-alert-invalid-password.html'});
 
         vm.currentUser = {};
+        vm.newEducation = null;
+        vm.newLanguageSkill = null;
         vm.formData = {};
-        vm.languages = languages;
-        vm.languageProficiency = languageProficiency;
+        vm.Constant = Constant;
+
         vm.uploader = new FileUploader({
             url : '/e4e/api/student/avatar',
             alias : 'studentavatar',
@@ -252,6 +254,8 @@
         vm.clickSendMobileVerifyCode = sendMobileVerifyCode;
         vm.clickSetEditingState = setEditingState;
         vm.clickResetEditingState = resetEditingState;
+        vm.clickAddNewEducation = addNewEducation;
+        vm.clickAddNewLanguage = addNewLanguage;
 
 
         /**********  Function Declarations  **********/
@@ -260,6 +264,20 @@
             if(specificForm) {
                 vm.css[specificForm] = true;
             }
+        }
+
+        function addNewEducation(form) {
+            if (form.$invalid) {
+                vm.formData.eductionBackgrounds.push(vm.newEducation);
+            }
+            updateUserInfo(form);
+        }
+
+        function addNewLanguage(form) {
+            if (form.$invalid) {
+                vm.formData.LanguageSkills.push(vm.newEducation);
+            }
+            updateUserInfo(form);
         }
 
         function setEditingState(state) {
@@ -338,20 +356,17 @@
             }
         }
 
-        function updateUserInfo() {
-            // todo, let what css info be false
-            var valid = [].every.call(arguments, function(form) {
-                return form.$valid;
-            });
-
-            if (valid) {
+        function updateUserInfo(form) {
+            if (form.$valid) {
                 vm.css.errorFields = {};
 
-                if (angular.isObject(vm.formData.LanguageSkills.language)) {
-                    vm.formData.LanguageSkills.language = vm.formData.LanguageSkills.language.id;
+                if (vm.newEducation) {
+                    vm.formData.eductionBackgrounds.push(vm.newEducation);
                 }
-                if (angular.isObject(vm.formData.LanguageSkills.level)) {
-                    vm.formData.LanguageSkills.level = vm.formData.LanguageSkills.language.level.id;
+
+                if (vm.newLanguageSkill) {
+                    vm.newLanguageSkill.language = vm.newLanguageSkill.language.id;
+                    vm.formData.LanguageSkills.push(vm.newLanguageSkill);
                 }
 
                 Student.updateStudentB2CInfo(vm.formData).then(function() {
