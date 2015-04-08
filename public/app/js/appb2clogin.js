@@ -273,6 +273,10 @@
             updateUserInfo(form);
         }
 
+        function deleteEducation(index) {
+            vm.formData.eductionBackgrounds
+        }
+
         function addNewLanguage(form) {
             if (form.$invalid) {
                 vm.formData.LanguageSkills.push(vm.newEducation);
@@ -366,11 +370,12 @@
 
                 if (vm.newLanguageSkill) {
                     vm.newLanguageSkill.language = vm.newLanguageSkill.language.id;
+                    vm.newLanguageSkill.level = vm.newLanguageSkill.level.id;
                     vm.formData.LanguageSkills.push(vm.newLanguageSkill);
                 }
 
                 Student.updateStudentB2CInfo(vm.formData).then(function() {
-                    app.resetForm();
+                    angular.copy(vm.formData, vm.currentUser);
                     $alert(vm.css.alertSuccessInfo);
                     cancelEditProfile();
                     resetEditingState();

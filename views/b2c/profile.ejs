@@ -327,7 +327,7 @@
                         <div class="profile-detail-title">{{'ProfilePageTabLanguageSkills' | translate}}<span class="profile-edit" ng-click="profile.clickSetEditingState({educationEditing: false, languageEditing: true})">{{'ProfilePageEditButton' | translate}}</span></div>
                         <form name="languageForm" class="form-horizontal">
                             <ul>
-                                <li ng-repeat="skill in profile.currentUser.LanguageSkills">{{skill.language | translate}}({{skill.level | translate}}) <span ng-if="profile.css.languageEditing && !profile.css.addLanguageEditing" class="form-control-static remove-button glyphicon glyphicon-minus button"></span></li>
+                                <li ng-repeat="skill in profile.currentUser.LanguageSkills">{{skill.language | language | translate}}({{skill.level | proficiency | translate}}) <span ng-if="profile.css.languageEditing && !profile.css.addLanguageEditing" class="form-control-static remove-button glyphicon glyphicon-minus button"></span></li>
                             </ul>
 
                             <div ng-if="profile.css.languageEditing">
