@@ -7,7 +7,28 @@
 
     <div class="middle b2c-container" ng-if="register.css.showRegForm" >
         <div class="header-pics pull-left">
-            <img src="app/css/images/b2c_reg_header_1.png">
+            <div id="carousel-header-pics" class="carousel slide" data-ride="carousel">
+                <!-- Indicators -->
+                <ol class="carousel-indicators">
+                    <li data-target="#carousel-header-pics" data-slide-to="0" class="active"></li>
+                    <li data-target="#carousel-header-pics" data-slide-to="1"></li>
+                    <li data-target="#carousel-header-pics" data-slide-to="2"></li>
+                </ol>
+
+                <!-- Wrapper for slides -->
+                <div class="carousel-inner" role="listbox">
+                    <div class="item active">
+                        <img src="app/css/images/b2c_reg_header_1.png">
+                    </div>
+                    <div class="item">
+                        <img src="app/css/images/b2c_reg_header_2.png">
+                    </div>
+                    <div class="item">
+                        <img src="app/css/images/b2c_reg_header_3.png">
+                    </div>
+                </div>
+
+            </div>
         </div>
         <form class="reg-form pull-left" name="regForm" novalidate ng-cloak>
                 <div class="title">{{'RegisterPageRegisterLabel' | translate}}</div>
