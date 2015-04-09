@@ -101,7 +101,7 @@ body {
 
 .b2c-header {
     height: 82px;
-    background-color: #bd2a0b;
+    background-color: #c52e0d;
     $icon-repeat: repeat-x;
     background-image: url(../images/b2c_nav_1x82.png);
 
@@ -255,20 +255,66 @@ body {
 }
 
 .b2c-footer-content {
-    width: 900px;
-    margin: 0 auto;
-    height: 126px;
+    height: 340px;
     font-size: 12px;
-    padding-top: 37px;
-    a {
-        margin-right: 65px;
-        margin-top: 37px;
-        color: #fff;
+    padding-top: 40px;
+    color: #919191;
+    position: relative;
+
+    .logo {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        margin-left: -26px;
+        margin-top: -21px;
     }
-    img {
-        margin-left: 80px;
+    .weibo {
+        position: absolute;
+        bottom: 50%;
+        right: 0px;
+        .weibo-msg {
+            display: inline-block;
+            font-size: 1.1em;
+            color: white;
+            width: 80px;
+            margin-right: 20px;
+        }
+        .weibo-img {
+            vertical-align: bottom;
+            display: inline-block;
+        }
     }
 
+    .b2c-footer-row {
+        @include clearfix();
+        ul,div{
+            width: 110px;
+            float: left;
+            margin-bottom: 20px;
+        }
+        li{
+            margin: 2px 0;
+            a {
+                color: inherit;
+                &:hover{
+                    text-decoration: none;
+                }
+            }
+        }
+        li:first-child {
+            color: #ffffff;
+            font-size: 1.1em;
+            margin-bottom: 8px;
+            &:before{
+                position: absolute;
+                content: '';
+                border-left: 2px solid #c52e0d;
+                margin-left: -14px;
+                margin-top: 1px;
+                height: 15px;
+            }
+        }
+    }
 }
 
 
@@ -292,19 +338,6 @@ body {
             }
         }
     }
-
-//    .left {
-////        padding-left: 132px;
-//        padding-top: 60px;
-//        @include float-right;
-//    }
-
-//    .right {
-//        @include float-right;
-//        margin-left: 100px;
-//        margin-right: 50px;
-//    }
-
 
     .b2c-footer {
         background-image: url(/app/css/images/b2c_reg_bg.jpg);
@@ -333,7 +366,7 @@ body {
         .title {
             font-weight: 900;
             font-size: 32px;
-            margin-bottom: 10px;
+            margin: 12px 0px;
             color: #c42e0d;
             text-shadow: -3px 3px 2px black;
         }
@@ -421,7 +454,7 @@ body {
 
     .down-box {
         height: 550px;
-        background-color: #c42e0d;
+        background-color: #c52e0d;
         padding: 105px 0px 0px 0px;
 
         .pic-area {
