@@ -140,7 +140,7 @@
             ProfilePageTabSecurityInfo               : 'Security Details',
             ProfilePageTabSchoolInfo                 : 'Education Background',
             ProfilePageTabTeamInfo                   : 'Team Details',
-            ProfilePageTabWorkInfo: 'Work Experience',
+            ProfilePageTabExperienceInfo: 'Work Experience',
 
             //Labels for Info Details
             ProfilePageEditButton                    : 'Update',
@@ -165,12 +165,25 @@
             ProfilePageAddEducation: 'Add Education',
             ProfilePageAddLanguage: 'Add Language',
 
+            ProfilePageExperience: 'Experience',
+            ProfilePageExperienceInfoCompany: 'Company',
+            ProfilePageExperienceInfoJobType: 'Jon Type',
+            ProfilePageExperienceInfoIndustry: 'Industry',
+            ProfilePageExperienceInfoPosition: 'Position',
+            ProfilePageExperienceInfoSizeOfCompany: 'Size of Company',
+            ProfilePageExperienceInfoStartDate: 'Start Date',
+            ProfilePageExperienceInfoEndDate: 'End Date',
+            ProfilePageExperienceInfoJobExperience: 'Job Experience',
+            ProfilePageAddExperience: 'Add Experience',
+
             ProfilePageSecurityInfoCurrentPassword   : 'Current Password',
             ProfilePageSecurityInfoNewPassword       : 'New Password',
             ProfilePageSecurityInfoReTypeNewPassword : 'Confirm Password',
             ProfilePageSchoolInfoCollege             : 'University',
             ProfilePageSchoolInfoEnterDate           : 'Enter Date',
             ProfilePageSchoolInfoDegree              : 'Degree',
+
+
             ProfilePageTeamInfoTeamName              : 'Team Name',
             ProfilePageTeamInfoMember                : 'Member',
             ProfilePageTeamInfoNewMember             : 'New Member',
@@ -505,7 +518,7 @@
             ProfilePageTabSecurityInfo               : '安全信息',
             ProfilePageTabSchoolInfo                 : '教育背景',
             ProfilePageTabTeamInfo                   : '团队信息',
-            ProfilePageTabWorkInfo: '工作经历',
+            ProfilePageTabExperienceInfo: '工作经历',
 
 
             //Labels for Info Details
@@ -530,6 +543,18 @@
             ProfilePageEducation:'教育经历',
             ProfilePageAddEducation:'添加教育经历',
             ProfilePageAddLanguage: '添加语言',
+
+            ProfilePageExperience: '工作经验',
+            ProfilePageExperienceInfoCompany: '公司',
+            ProfilePageExperienceInfoJobType: '工作类型',
+            ProfilePageExperienceInfoIndustry: '行业',
+            ProfilePageExperienceInfoPosition: '职位',
+            ProfilePageExperienceInfoSizeOfCompany: '公司规模',
+            ProfilePageExperienceInfoStartDate: '开始日期',
+            ProfilePageExperienceInfoEndDate: '结束日期',
+            ProfilePageExperienceInfoJobExperience: '经历介绍',
+            ProfilePageAddExperience: '添加新的工作经验',
+
             ProfilePageSecurityInfoCurrentPassword   : '原始密码',
             ProfilePageSecurityInfoNewPassword       : '新密码',
             ProfilePageSecurityInfoReTypeNewPassword : '再输入新密码',

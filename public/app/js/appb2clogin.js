@@ -212,6 +212,10 @@
             languageEditing: false,
             addLanguageEditing: false,
 
+            //experience form editing states
+            experienceEditing: false,
+            addExperienceEditing: false,
+
             alertInfo: {
                 duration: 2,
                 template: '',
@@ -228,7 +232,10 @@
 
         vm.currentUser = {};
         vm.newEducation = null;
-        vm.newLanguageSkill = null;
+        vm.newLanguageSkill = {};
+        vm.newAchievement = {};
+        vm.newExperience = null;
+
         vm.formData = {};
         vm.Constant = Constant;
 
@@ -254,8 +261,13 @@
         vm.clickSendMobileVerifyCode = sendMobileVerifyCode;
         vm.clickSetEditingState = setEditingState;
         vm.clickResetEditingState = resetEditingState;
-        vm.clickAddNewEducation = addNewEducation;
         vm.clickAddNewLanguage = addNewLanguage;
+        vm.clickDeleteEducation = deleteEducation;
+        vm.clickDeleteLanguage = deleteLanguage;
+        vm.clickAddNewAchievement = addNewAchievement;
+        vm.clickAddNewAchievementToExistEducation = addNewAchievementToExistEducation;
+        vm.clickDeleteExperience = deleteExperience;
+
 
 
         /**********  Function Declarations  **********/
@@ -266,18 +278,57 @@
             }
         }
 
-        function addNewEducation(form) {
-            if (form.$invalid) {
-                vm.formData.eductionBackgrounds.push(vm.newEducation);
-            }
-            updateUserInfo(form);
+        function deleteEducation(index) {
+            vm.formData.eductionBackgrounds.splice(index, 1);
         }
 
-        function addNewLanguage(form) {
-            if (form.$invalid) {
-                vm.formData.LanguageSkills.push(vm.newEducation);
+        function addNewLanguage() {
+            vm.newLanguageSkill.language = vm.newLanguageSkill.language.id;
+            vm.newLanguageSkill.level = vm.newLanguageSkill.level.id;
+            if (!vm.newLanguageSkill.language || !vm.newLanguageSkill.level) {
+                return;
             }
-            updateUserInfo(form);
+
+            var isExist = vm.formData.LanguageSkills.some(function(lan, i) {
+                if (lan.language == vm.newLanguageSkill.language) {
+                    vm.formData.LanguageSkills[i] = vm.newLanguageSkill;
+                    return true;
+                }
+            });
+            if (!isExist) {
+                vm.formData.LanguageSkills.push(vm.newLanguageSkill);
+            }
+            vm.newLanguageSkill = {};
+        }
+
+        function deleteLanguage(index) {
+            vm.formData.LanguageSkills.splice(index, 1);
+        }
+
+        function addNewAchievement() {
+            if (vm.newAchievement) {
+                if (!vm.newEducation) {
+                    vm.newEducation = {
+                        achievements: []
+                    };
+                }
+                if (!vm.newEducation.achievements) {
+                    vm.newEducation.achievements = [];
+                }
+
+                vm.newEducation.achievements.push(vm.newAchievement);
+                vm.newAchievement = {};
+            }
+        }
+
+        function addNewAchievementToExistEducation(index) {
+            var education = vm.formData.eductionBackgrounds[index];
+            education.achievements.push(education._newAchievement);
+            education._newAchievement = {};
+        }
+
+        function deleteExperience(index) {
+            vm.formData.workExperiences.splice(index, 1);
         }
 
         function setEditingState(state) {
@@ -288,9 +339,10 @@
             angular.extend(vm.css, {
                 formEditing: false,
                 educationEditing: false,
-                subEducationEditing: false,
                 addEducationEditing: false,
-                languageEditing: false
+                languageEditing: false,
+                experienceEditing: false,
+                addExperienceEditing: false
             });
         }
 
@@ -302,9 +354,6 @@
 
         function cancelEditProfile() {
             vm.css.formEditing = false;
-            angular.forEach(arguments, function(form) {
-                vm.css[form] = false;
-            });
             app.resetForm();
         }
 
@@ -356,24 +405,33 @@
             }
         }
 
-        function updateUserInfo(form) {
+        function updateUserInfo(form, slient) {
             if (form.$valid) {
                 vm.css.errorFields = {};
 
                 if (vm.newEducation) {
+                    if (!vm.newEducation.achievements) {
+                        vm.newEducation.achievements = [];
+                    }
                     vm.formData.eductionBackgrounds.push(vm.newEducation);
                 }
 
-                if (vm.newLanguageSkill) {
-                    vm.newLanguageSkill.language = vm.newLanguageSkill.language.id;
-                    vm.formData.LanguageSkills.push(vm.newLanguageSkill);
+                if (vm.newExperience) {
+                    vm.formData.workExperiences.push(vm.newExperience);
                 }
 
                 Student.updateStudentB2CInfo(vm.formData).then(function() {
-                    app.resetForm();
-                    $alert(vm.css.alertSuccessInfo);
-                    cancelEditProfile();
-                    resetEditingState();
+                    angular.copy(vm.formData, vm.currentUser);
+
+                    vm.newEducation = null;
+                    vm.newLanguage = null;
+                    vm.newExperience = null;
+
+                    if (!slient) {
+                        $alert(vm.css.alertSuccessInfo);
+                        cancelEditProfile();
+                        resetEditingState();
+                    }
                 }).catch(function(err) {
                     $alert(vm.css.alertFailedInfo);
                     if (err.data && err.data.message) {
