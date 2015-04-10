@@ -341,8 +341,8 @@ body {
     }
 
     .reg-form {
-        width: 50%;
-        padding-left: 110px;
+        width: 496px;
+        padding-left: 100px;
         .reg-captcha-input-container {
             position: relative;
             input {
@@ -377,7 +377,6 @@ body {
             font-size: 15px;
         }
         input[type=text], input[type=password], input[type=email] {
-            width: 395px;
             &:focus {
                 outline: none !important;
                 background-color: #FFFFEE;
