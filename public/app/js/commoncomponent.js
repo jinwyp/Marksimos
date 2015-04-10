@@ -207,6 +207,37 @@
         };
     }]);
 
+    angular.module('marksimos.commoncomponent').directive('asyncValidate', ['$http', '$q', function($http, $q) {
+        return {
+            restrict: 'A',
+            require: 'ngModel',
+            scope: {
+                asyncValidate: "="
+            },
+            link: function (scope, element, attrs, ctrl) {
+
+                var name = attrs.name;
+
+                // if ngModel is not defined, we don't need to do anything
+                if (!name || !ctrl || !scope.asyncValidate) return;
+
+                ctrl.$asyncValidators.asyncValid = function(modelValue, viewValue) {
+                    var type = typeof scope.asyncValidate;
+                    var data = {};
+                    data[name] = viewValue;
+                    if (type == 'string') {
+                        return $http.post(type, data);
+                    } else if (type == 'function'){
+                        return scope.asyncValidate(data);
+                    } else {
+                        return $q.reject(Error('`asyncValidate` should be either a string or a function'));
+                    }
+                };
+            }
+        };
+    }]);
+
+
 
     // Prevent the backspace key from navigating back.
     angular.module('marksimos.commoncomponent').directive('preventBackspaceNavigateBack', ['$document', function($document) {
@@ -273,6 +304,52 @@
         }]
     );
 
+
+
+    angular.module('marksimos.commoncomponent').directive('fixedFooter', ['$document', '$window', '$timeout', function($document, $window, $timeout) {
+        return {
+            restrict: 'A',
+            link: function (scope, elem, attrs, ctrl) {
+                var className = attrs.fixedFooter;
+                if (!className) return;
+
+                var elemHeight = elem[0].offsetHeight;
+
+                var unwatch = scope.$watch(checkFix);
+                $timeout(function() {
+                    unwatch();
+                }, 2000);
+
+                $window.addEventListener('resize', checkFix);
+                scope.$on('destroy', function() {
+                    $window.removeEventListener('resize', checkFix);
+                });
+
+                function checkFix() {
+                    var windowHeight = $document[0].documentElement.clientHeight;
+                    var current = elem[0];
+                    var hasFixed = elem.hasClass(className);
+                    if (hasFixed) {
+                        var bodyHeight = $document[0].body.offsetHeight;
+                        if (bodyHeight > windowHeight) {
+                            elem.removeClass(className);
+                        }
+                    } else {
+                        var bottomToCeiling = current.offsetTop + elemHeight;
+                        current = current.offsetParent;
+                        while (current) {
+                            bottomToCeiling += current.offsetTop;
+                            current = current.offsetParent;
+                        }
+
+                        if (windowHeight > bottomToCeiling) {
+                            elem.addClass(className);
+                        }
+                    }
+                }
+            }
+        };
+    }]);
 
     // preview the image file specified by the `file` property of the param object parsed from the attribute 'ng-thumb'.
     angular.module('marksimos.commoncomponent').directive('ngThumb', ['$window', function($window) {

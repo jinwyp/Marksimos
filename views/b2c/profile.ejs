@@ -1,7 +1,7 @@
-<% include include/headcss.ejs %>
+    <% include include/headcss.ejs %>
 
 
-<body ng-app="b2clogin" class="profile-body" ng-controller="profileController as profile">
+    <body ng-app="b2clogin" class="profile-body" ng-controller="profileController as profile">
 
     <b2c-header currentuser="profile.currentUser"></b2c-header>
 
@@ -38,15 +38,32 @@
                         <ul><!--['{{'上传头像' | translate}}', '{{'基本信息' | translate}}', '{{'安全信息' | translate}}', '{{'学校信息' | translate}}', '{{'团队信息' | translate}}', '{{'联系方式' | translate}}']-->
                             <li ng-class="{selected: profile.css.currentTabIndex == 0}" ng-click="profile.clickSwitchTab(0)">{{'ProfilePageTabUploadAvatar' | translate}}</li>
                             <li ng-class="{selected: profile.css.currentTabIndex == 1}" ng-click="profile.clickSwitchTab(1)">{{'ProfilePageTabBasicInfo' | translate}}</li>
-                            <li ng-class="{selected: profile.css.currentTabIndex == 2}" ng-click="profile.clickSwitchTab(2)">{{'ProfilePageTabSecurityInfo' | translate}}</li>
                             <li ng-class="{selected: profile.css.currentTabIndex == 3}" ng-click="profile.clickSwitchTab(3)">{{'ProfilePageTabSchoolInfo' | translate}}</li>
+                            <li ng-class="{selected: profile.css.currentTabIndex == 5}" ng-click="profile.clickSwitchTab(5)">{{'ProfilePageTabExperienceInfo' | translate}}</li>
+                            <li ng-class="{selected: profile.css.currentTabIndex == 2}" ng-click="profile.clickSwitchTab(2)">{{'ProfilePageTabSecurityInfo' | translate}}</li>
                             <li ng-class="{selected: profile.css.currentTabIndex == 4}" ng-click="profile.clickSwitchTab(4)">{{'ProfilePageTabTeamInfo' | translate}}</li>
-                            <li ng-class="{selected: profile.css.currentTabIndex == 5}" ng-click="profile.clickSwitchTab(5)">{{'ProfilePageTabContactInfo' | translate}}</li>
                         </ul>
                     </nav>
                 </aside>
                 <article class="col-md-8 profile-detail">
-                    <div class="row alert-container"><div id="profile-alert-container"></div></div>
+                    <div class="row alert-container">
+                        <div id="profile-alert-container"></div>
+                        <script type="text/ng-template" id="profile-alert-success.html">
+                            <div class="alert alert-success">
+                                <span>{{'ProfilePageAlertSaveSuccessful' | translate}}</span>
+                            </div>
+                        </script>
+                        <script type="text/ng-template" id="profile-alert-failed.html">
+                            <div class="alert alert-danger">
+                                <span>{{'ProfilePageAlertSaveFailed' | translate}}</span>
+                            </div>
+                        </script>
+                        <script type="text/ng-template" id="profile-alert-invalid-password.html">
+                            <div class="alert alert-danger">
+                                <span>{{'ProfilePageAlertInvalidPassword' | translate}}</span>
+                            </div>
+                        </script>
+                    </div>
                     <div class="row" ng-if="profile.css.currentTabIndex == 0">
                         <div class="file-input-wrapper glyphicon glyphicon-plus center-block">
                             <span class="file-upload-text">{{'ProfilePageUploadAvatarSelectionButton' | translate}}</span>
@@ -57,7 +74,7 @@
                         <ul class="center-block preview-avatar profile-button-container">
                             <li ng-repeat="item in profile.uploader.queue">
                                 <div ng-thumb="{ file: item._file}"></div>
-                                <button type="submit" class="center-block" ng-click="item.upload()">{{'ProfilePageUploadAvatarUploadButton' | translate}}</button>
+                                <button type="submit" class="center-block" ng-click="item.upload()">{{'ProfilePageUploadAvatarSelectionButton' | translate}}</button>
                             </li>
                         </ul>
                     </div>
@@ -65,8 +82,15 @@
                     <div class="row" ng-if="profile.css.currentTabIndex == 1">
                         <div class="profile-detail-title">{{'ProfilePageTabBasicInfo' | translate}}<span class="profile-edit" ng-click="profile.clickEditProfile()">{{'ProfilePageEditButton' | translate}}</span></div>
                         <form name="basicInfoForm" class="form-horizontal">
-                            <div class="form-group firstName">
-                                <label for="school" class="control-label col-md-3 text-right">{{'ProfilePageBasicInfoName' | translate}} :</label>
+                            <div class="form-group">
+                                <label for="currentLocation" class="control-label col-md-3 text-right">{{'ProfilePageEmail' | translate}} :</label>
+                                <div class="col-xs-9">
+                                    <p class="form-control-static">{{profile.currentUser.email}}</p>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="firstName" class="control-label col-md-3 text-right">{{'ProfilePageBasicInfoName' | translate}} :</label>
                                 <div class="col-xs-5" ng-if="!profile.css.formEditing">
                                     <p class="form-control-static">{{profile.currentUser.firstName}}&nbsp</p>
                                 </div>
@@ -74,9 +98,8 @@
                                     <input type="text" ng-model="profile.formData.firstName" name="firstName" id="firstName" class="form-control">
                                 </div>
                             </div>
-                            <!--<div class="row"><label for="firstName" class="col-md-3 text-right">{{'用户名' | translate}} :</label><input type="text" name="name" id="name" class="col-md-7"></div>
-                            <div class="row"><label for="email" class="col-md-3 text-right">{{'邮箱' | translate}} :</label><input type="text" id="email" name="email" class="col-md-7"></div>-->
-                            <div class="form-group radio" ng-class="{'has-success':basicInfoForm.gender.$dirty&&basicInfoForm.gender.$valid, 'has-error':basicInfoForm.gender.$dirty&&basicInfoForm.gender.$invalid}">
+
+                            <div class="form-group radio gender" ng-class="{'has-success':basicInfoForm.gender.$dirty&&basicInfoForm.gender.$valid, 'has-error':basicInfoForm.gender.$dirty&&basicInfoForm.gender.$invalid}">
                                 <label class="col-md-3 control-label  text-right">{{'ProfilePageBasicInfoGender' | translate}} :</label>
                                 <div class="col-xs-9" ng-if="!profile.css.formEditing">
                                     <p class="form-control-static" ng-if="profile.currentUser.gender == 1">{{'ProfilePageBasicInfoGenderMale' | translate}}&nbsp;&nbsp;</p>
@@ -88,23 +111,475 @@
                                 </div>
                             </div>
 
-                            <div class="form-group" ng-class="{'has-error': basicInfoForm.birthday.$invalid, 'has-success':basicInfoForm.birthday.$dirty&&basicInfoForm.birthday.$valid}">
+                            <div class="form-group">
                                 <label for="birthday" class="control-label col-md-3 text-right">{{'ProfilePageBasicInfoBirthday' | translate}} :</label>
                                 <div class="col-xs-9" ng-if="!profile.css.formEditing">
-                                    <p class="form-control-static">{{profile.currentUser.birthday|date:"yyyy-MM-dd"}}</p>
+                                    <p class="form-control-static">{{profile.currentUser.birthday|date:"dd-MMM-yyyy"}}</p>
                                 </div>
                                 <div class="col-md-5" ng-if="profile.css.formEditing">
                                     <input type="text" data-date-format="yyyy-MM-dd" data-min-date="02/10/70" data-max-date="today" data-autoclose="1" class="form-control" ng-model="profile.formData.birthday" name="birthday" id="birthday" bs-datepicker>
                                 </div>
                                 <span class="err-msg control-label form-control-static col-xs-4" ng-if="basicInfoForm.birthday.$invalid">{{'ProfilePageDateFormatError' | translate}}</span>
                             </div>
+
+                            <div class="form-group" ng-class="{'has-error': basicInfoForm.currentLocation.$invalid, 'has-success':basicInfoForm.currentLocation.$dirty&&basicInfoForm.currentLocation.$valid}">
+                                <label for="currentLocation" class="control-label col-md-3 text-right">{{'ProfilePageCurrentLocation' | translate}} :</label>
+                                <div class="col-xs-9" ng-if="!profile.css.formEditing">
+                                    <p class="form-control-static">{{profile.currentUser.currentLocation}}</p>
+                                </div>
+                                <div class="col-md-5" ng-if="profile.css.formEditing">
+                                    <input type="text" class="form-control" ng-model="profile.formData.currentLocation" name="currentLocation" id="currentLocation">
+                                </div>
+                                <span class="err-msg control-label form-control-static col-xs-4" ng-if="basicInfoForm.currentLocation.$invalid">{{'ProfilePageCurrentLocationFormatError' | translate}}</span>
+                            </div>
+
+                            <div class="form-group" ng-class="{'has-success':basicInfoForm.qq.$dirty&&basicInfoForm.qq.$valid, 'has-error':basicInfoForm.qq.$dirty&&basicInfoForm.qq.$invalid}" >
+                                <label for="qq" class="control-label col-md-3 text-right">QQ :</label>
+                                <div class="col-xs-5" ng-if="!profile.css.formEditing">
+                                    <p class="form-control-static">{{profile.currentUser.qq}}</p>
+                                </div>
+                                <div ng-if="profile.css.formEditing" class="col-xs-5">
+                                    <input ng-model="profile.formData.qq" type="text" id="qq" name="qq" class="form-control">
+                                </div>
+                                <span class="form-control-static err-msg control-label col-xs-3" ng-if="basicInfoForm.qq.$invalid&&profile.css.errorFields.qq">{{'ProfilePageInvalidQQ' | translate}}</span>
+                            </div>
+
+                            <div class="form-group" ng-class="{'has-success':basicInfoForm.mobilePhone.$dirty&&basicInfoForm.mobilePhone.$valid, 'has-error':basicInfoForm.mobilePhone.$dirty&&basicInfoForm.mobilePhone.$invalid}" >
+                                <label for="mobilePhone" class="control-label col-md-3 text-right">{{'ProfileContactInfoMobilePhone' | translate}} :</label>
+                                <div class="col-xs-5" ng-if="!profile.css.formEditing">
+                                    <p class="form-control-static " ng-class="{'text-success':profile.currentUser.phoneVerified, 'text-danger':!profile.currentUser.phoneVerified}">
+                                        {{profile.currentUser.mobilePhone}} <span ng-if="profile.currentUser.mobilePhone">({{profile.currentUser.phoneVerified?'ProfileContactInfoMobileVerified':'ProfileContactInfoMobileUnverified' | translate}})</span>
+                                    </p>
+                                </div>
+                                <div ng-if="profile.css.formEditing" class="col-xs-5">
+                                    <input ng-model="profile.formData.mobilePhone" type="text" id="mobilePhone" name="mobilePhone" class="form-control">
+                                </div>
+                                <span class="form-control-static err-msg control-label col-xs-3" ng-if="basicInfoForm.mobilePhone.$invalid&&profile.css.errorFields.mobilePhone">{{'ProfilePageInvalidMobilePhoneNumber' | translate}}</span>
+                            </div>
+
+                            <div class="form-group" ng-if="!profile.css.formEditing" ng-class="{'has-success':basicInfoForm.mobilePhoneVerifyCode.$dirty&&basicInfoForm.mobilePhoneVerifyCode.$valid, 'has-error':basicInfoForm.mobilePhoneVerifyCode.$dirty&&basicInfoForm.mobilePhoneVerifyCode.$invalid}" >
+                                <label for="mobilePhoneVerifyCode" class="control-label col-md-3 text-right">{{'ProfileContactInfoMobilePhoneVerify' | translate}} :</label>
+
+                                <div class="col-xs-2">
+                                    <input ng-model="profile.formData.mobilePhoneVerifyCode" type="text" id="mobilePhoneVerifyCode" name="mobilePhoneVerifyCode" class="form-control">
+                                </div>
+                                <div class="col-xs-3">
+                                    <button class="btn btn-default" ng-if="!profile.css.mobileVerifyCodeResend" ng-click="profile.clickGetMobileVerifyCode(basicInfoForm)">{{'ProfileContactInfoMobilePhoneVerifySend' | translate}}</button>
+                                    <button class="btn btn-default" ng-if="profile.css.mobileVerifyCodeResend" ng-click="profile.clickGetMobileVerifyCode(basicInfoForm)" ng-disabled="profile.css.mobileVerifyCodeTimeCounter>0">{{'ProfileContactInfoMobilePhoneVerifyReSend' | translate}}
+                                        <span ng-hide="profile.css.mobileVerifyCodeTimeCounter==0">{{profile.css.mobileVerifyCodeTimeCounter}}</span>
+                                    </button>
+                                </div>
+                                <span class="form-control-static err-msg control-label col-xs-3" ng-if="basicInfoForm.mobilePhoneVerifyCode.$invalid&&profile.css.errorFields.mobilePhoneVerifyCode">{{'ProfilePageInvalidMobilePhoneNumberVerifyCode' | translate}}</span>
+                                <span class="form-control-static err-msg control-label col-xs-3" ng-if="basicInfoForm.mobilePhoneVerifyCode.$invalid&&profile.css.errorFields.mobilePhoneWrongFormat">{{'ProfilePageInvalidMobilePhoneNumber' | translate}}</span>
+                            </div>
+
                             <div class="form-group" ng-if="profile.css.formEditing">
                                 <div class="col-md-6 col-md-offset-3 profile-button-container">
                                     <button ng-click="profile.clickUpdateUserInfo(basicInfoForm)" type="submit">{{'ProfilePageSaveButton' | translate}}</button>
                                     <button ng-click="profile.clickCancelEditProfile()" class="cancel">{{'ProfilePageCancelButton' | translate}}</button>
                                 </div>
                             </div>
+
+                            <div class="row" ng-if="!profile.css.formEditing">
+                                <div class="col-md-6 col-md-offset-3 profile-button-container">
+                                    <button ng-click="profile.clickSendMobileVerifyCode(basicInfoForm)" type="submit">{{'ProfileContactInfoMobileVerifiedButton' | translate}}</button>
+                                </div>
+                            </div>
                         </form>
+                    </div>
+
+                    <div class="row education-background" ng-if="profile.css.currentTabIndex == 3">
+                        <div class="profile-detail-title">{{'ProfilePageTabSchoolInfo' | translate}}<span class="profile-edit" ng-click="profile.clickSetEditingState({educationEditing: true, languageEditing: false, addLanguageEditing: false})">{{'ProfilePageEditButton' | translate}}</span></div>
+                        <form name="schoolForm" class="form-horizontal">
+                            <div class="education" ng-repeat="education in profile.formData.eductionBackgrounds" ng-init="outerIndex = $index">
+                                <h3>{{'ProfilePageEducation' | translate}} {{$index + 1}}:<span ng-click="profile.clickDeleteEducation($index)" ng-if="profile.css.educationEditing" class="form-control-static remove-button glyphicon glyphicon-minus button"></span></h3>
+                                <div>
+                                    <div class="form-group">
+                                        <label for="school{{$index}}" class="control-label col-md-3 text-right">{{'ProfilePageSchoolInfoCollege' | translate}} :</label>
+                                        <div class="col-xs-5" ng-if="!profile.css.educationEditing">
+                                            <p class="form-control-static">{{profile.currentUser.eductionBackgrounds[$index].university}}&nbsp</p>
+                                        </div>
+                                        <div class="col-xs-5" ng-if="profile.css.educationEditing">
+                                            <input type="text" ng-model="profile.formData.eductionBackgrounds[$index].university" name="school{{$index}}" id="school{{$index}}" class="form-control">
+                                        </div>
+                                    </div>
+
+                                    <div class="row form-group">
+                                        <label for="degree{{$index}}" class="control-label col-md-3 text-right">{{'ProfilePageSchoolInfoDegree' | translate}} :</label>
+                                        <div class="col-xs-5" ng-if="!profile.css.educationEditing">
+                                            <p class="form-control-static">{{profile.currentUser.eductionBackgrounds[$index].degree}}&nbsp</p>
+                                        </div>
+                                        <div class="col-xs-5" ng-if="profile.css.educationEditing">
+                                            <input type="text" ng-model="profile.formData.eductionBackgrounds[$index].degree" id="degree{{$index}}" name="degree{{$index}}" class="col-md-2 form-control">
+                                        </div>
+                                    </div>
+
+                                    <div class="row form-group">
+                                        <label for="major{{$index}}" class="control-label col-md-3 text-right">{{'ProfilePageSchoolInfoMajor' | translate}} :</label>
+                                        <div class="col-xs-5" ng-if="!profile.css.educationEditing">
+                                            <p class="form-control-static">{{profile.currentUser.eductionBackgrounds[$index].major}}&nbsp</p>
+                                        </div>
+                                        <div class="col-xs-5" ng-if="profile.css.educationEditing">
+                                            <input type="text" ng-model="profile.formData.eductionBackgrounds[$index].major" id="major{{$index}}" name="major{{$index}}" class="col-md-2 form-control">
+                                        </div>
+                                    </div>
+
+                                    <div class="row form-group" ng-class="{'has-error': schoolForm['entryDate' +  $index].$invalid, 'has-success':schoolForm.entryDate.$dirty&&schoolForm.entryDate.$valid}">
+                                        <label for="entryDate{{$index}}" class="control-label col-md-3 text-right">{{'ProfilePageSchoolInfoEnterDate' | translate}} :</label>
+                                        <div class="col-xs-3" ng-if="!profile.css.educationEditing">
+                                            <p class="form-control-static">{{profile.currentUser.eductionBackgrounds[$index].entryDate|date:"yyyy-MM-dd"}}&nbsp</p>
+                                        </div>
+                                        <div class="col-xs-5" ng-if="profile.css.educationEditing">
+                                            <input type="text" data-date-format="yyyy-MM-dd" data-min-date="02/10/70" data-max-date="today" data-autoclose="1" ng-model="profile.formData.eductionBackgrounds[$index].entryDate" id="entryDate{{$index}}" name="entryDate{{$index}}" class="form-control" bs-datepicker>
+                                        </div>
+                                        <span class="err-msg control-label form-control-static col-xs-4" ng-if="schoolForm['entryDate' +  $index].$invalid">{{'ProfilePageDateFormatError' | translate}}</span>
+                                    </div>
+
+                                    <div class="row form-group" ng-class="{'has-error': schoolForm['graduationDate' + $index].$invalid, 'has-success':schoolForm.graduationDate.$dirty&&schoolForm.graduationDate.$valid}">
+                                        <label for="graduationDate{{$index}}" class="control-label col-md-3 text-right">{{'ProfilePageSchoolInfoGraduationDate' | translate}} :</label>
+                                        <div class="col-xs-3" ng-if="!profile.css.educationEditing">
+                                            <p class="form-control-static">{{profile.currentUser.eductionBackgrounds[$index].graduationDate|date:"yyyy-MM-dd"}}&nbsp</p>
+                                        </div>
+                                        <div class="col-xs-5" ng-if="profile.css.educationEditing">
+                                            <input type="text" data-date-format="yyyy-MM-dd" data-min-date="{{profile.formData.eductionBackgrounds[$index].entryDate}}" data-autoclose="1" ng-model="profile.formData.eductionBackgrounds[$index].graduationDate" id="graduationDate{{$index}}" name="graduationDate{{$index}}" class="form-control" bs-datepicker>
+                                        </div>
+                                        <span class="err-msg control-label form-control-static col-xs-4" ng-if="schoolForm['graduationDate' + $index].$invalid">{{'ProfilePageDateFormatError' | translate}}</span>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label for="abroad{{$index}}" class="control-label col-md-3 text-right">{{'ProfilePageSchoolInfoAbroad' | translate}} :</label>
+                                        <div class="col-xs-9" ng-if="!profile.css.educationEditing">
+                                            <p class="form-control-static">{{profile.currentUser.eductionBackgrounds[$index].abroad}}&nbsp</p>
+                                        </div>
+                                        <div class="col-xs-9" ng-if="profile.css.educationEditing">
+                                            <div class="row">
+                                                <div class="col-xs-11">
+                                                    <textarea placeholder="{{'ProfilePageSchoolInfoAbroadInfo' | translate}}" rows="3" ng-model="profile.formData.eductionBackgrounds[$index].abroad" name="abroad{{$index}}" id="abroad{{$index}}" class="form-control"></textarea>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label for="achievements{{$index}}" class="control-label col-md-3 text-right">{{'ProfilePageSchoolInfoAchievements' | translate}} :</label>
+                                        <div class="col-xs-9" ng-if="!profile.css.educationEditing">
+                                            <p class="form-control-static" ng-repeat="achievement in profile.currentUser.eductionBackgrounds[$index].achievements">{{achievement.description}}</p>
+                                        </div>
+                                        <div class="col-xs-9" ng-if="profile.css.educationEditing">
+                                            <div class="row" ng-init="innerIndex = $index" ng-repeat="achievement in profile.formData.eductionBackgrounds[outerIndex].achievements">
+                                                <div class="col-xs-11">
+                                                    <textarea rows="3" ng-model="achievement.description" name="achievements{{outerIndex}}{{innerIndex}}" class="form-control"></textarea>
+                                                </div>
+                                                <div class="col-xs-1">
+                                                    <span ng-click="profile.formData.eductionBackgrounds[outerIndex].achievements.splice(innerIndex, 1)" class="form-control-static remove-button glyphicon glyphicon-minus button"></span>
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-xs-11">
+                                                    <textarea rows="3" ng-model="education._newAchievement.description" name="newAchievement" id="newAchievement" class="form-control"></textarea>
+                                                </div>
+                                                <div class="col-xs-1" ng-if="education._newAchievement">
+                                                    <span ng-click="profile.clickAddNewAchievementToExistEducation(outerIndex)" class="form-control-static add-button glyphicon glyphicon-plus button"></span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div ng-if="profile.css.educationEditing" class="addEducation">
+                                <h3>{{'ProfilePageAddEducation' | translate}}: <span ng-if="!profile.css.addEducationEditing" ng-click="profile.clickSetEditingState({addEducationEditing: true})" class="form-control-static add-button glyphicon glyphicon-plus button"></span></h3>
+                                <div ng-if="profile.css.addEducationEditing">
+                                    <div class="form-group">
+                                        <label for="school" class="control-label col-md-3 text-right">{{'ProfilePageSchoolInfoCollege' | translate}} :</label>
+                                        <div class="col-xs-5">
+                                            <input type="text" ng-model="profile.newEducation.university" name="school" id="school" class="form-control">
+                                        </div>
+                                    </div>
+
+                                    <div class="row form-group">
+                                        <label for="degree" class="control-label col-md-3 text-right">{{'ProfilePageSchoolInfoDegree' | translate}} :</label>
+                                        <div class="col-xs-5">
+                                            <input type="text" ng-model="profile.newEducation.degree" id="degree" name="degree" class="col-md-2 form-control">
+                                        </div>
+                                    </div>
+
+                                    <div class="row form-group">
+                                        <label for="major" class="control-label col-md-3 text-right">{{'ProfilePageSchoolInfoMajor' | translate}} :</label>
+                                        <div class="col-xs-5">
+                                            <input type="text" ng-model="profile.newEducation.major" id="major" name="major" class="col-md-2 form-control">
+                                        </div>
+                                    </div>
+
+                                    <div class="row form-group" ng-class="{'has-error': schoolForm.newEntryDate.$invalid, 'has-success':schoolForm.newEntryDate.$dirty&&schoolForm.newEntryDate.$valid}">
+                                        <label for="newEntryDate" class="control-label col-md-3 text-right">{{'ProfilePageSchoolInfoEnterDate' | translate}} :</label>
+                                        <div class="col-xs-5">
+                                            <input type="text" data-date-format="yyyy-MM-dd" data-min-date="02/10/70" data-max-date="{{profile.newEducation.graduationDate}}" data-autoclose="1" ng-model="profile.newEducation.entryDate" id="newEntryDate" name="newEntryDate" class="form-control" bs-datepicker>
+                                        </div>
+                                        <span class="err-msg control-label form-control-static col-xs-4" ng-if="schoolForm.newEntryDate.$invalid">{{'ProfilePageDateFormatError' | translate}}</span>
+                                    </div>
+
+                                    <div class="row form-group" ng-class="{'has-error': schoolForm.newGraduationDate.$invalid, 'has-success':schoolForm.newGraduationDate.$dirty&&schoolForm.newGraduationDate.$valid}">
+                                        <label for="newGraduationDate" class="control-label col-md-3 text-right">{{'ProfilePageSchoolInfoGraduationDate' | translate}} :</label>
+                                        <div class="col-xs-5">
+                                            <input type="text" data-date-format="yyyy-MM-dd" data-min-date="{{profile.newEducation.entryDate}}" data-autoclose="1" ng-model="profile.newEducation.graduationDate" id="newGraduationDate" name="newGraduationDate" class="form-control" bs-datepicker>
+                                        </div>
+                                        <span class="err-msg control-label form-control-static col-xs-4" ng-if="schoolForm.newGraduationDate.$invalid">{{'ProfilePageDateFormatError' | translate}}</span>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label for="abroad" class="control-label col-md-3 text-right">{{'ProfilePageSchoolInfoAbroad' | translate}} :</label>
+                                        <div class="col-xs-9">
+                                            <div class="row">
+                                                <div class="col-xs-11">
+                                                    <textarea placeholder="{{'ProfilePageSchoolInfoAbroadInfo' | translate}}" rows="3" ng-model="profile.newEducation.abroad" name="abroad" id="abroad" class="form-control"></textarea>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label for="achievements" class="control-label col-md-3 text-right">{{'ProfilePageSchoolInfoAchievements' | translate}} :</label>
+                                        <div class="col-xs-9">
+                                            <div class="row" ng-repeat="achievement in profile.newEducation.achievements">
+                                                <div class="col-xs-11">
+                                                    <!--<input type="text" ng-model="achievement.description" name="achievements{{$index}}" id="achievements{{$index}}" class="form-control">-->
+                                                    <textarea rows="3" ng-model="achievement.description" name="achievements{{$index}}" id="achievements{{$index}}" class="form-control"></textarea>
+                                                </div>
+                                                <div class="col-xs-1">
+                                                    <span ng-click="profile.newEducation.achievements.splice($index, 1)" class="form-control-static remove-button glyphicon glyphicon-minus button"></span>
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-xs-11">
+                                                    <textarea rows="3" ng-model="profile.newAchievement.description" name="newAchievement" id="newAchievement" class="form-control"></textarea>
+                                                </div>
+                                                <div class="col-xs-1">
+                                                    <span ng-click="profile.clickAddNewAchievement()" class="form-control-static add-button glyphicon glyphicon-plus button"></span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+
+                        <div class="profile-detail-title">{{'ProfilePageTabLanguageSkills' | translate}}<span class="profile-edit" ng-click="profile.clickSetEditingState({educationEditing: false, languageEditing: true, addLanguageEditing: false})">{{'ProfilePageEditButton' | translate}}</span></div>
+                        <form name="languageForm" class="form-horizontal">
+                            <ul>
+                                <li class="form-group added-language" ng-repeat="skill in profile.formData.LanguageSkills">
+                                    <span class="col-xs-4">{{skill.language | language | translate}} ({{skill.level | proficiency | translate}})</span>
+                                    <span ng-click="profile.clickDeleteLanguage($index)" ng-if="profile.css.languageEditing && !profile.css.addLanguageEditing" class="col-xs-1 form-control-static remove-button glyphicon glyphicon-minus button"></span>
+                                </li>
+                            </ul>
+
+                            <div ng-if="profile.css.languageEditing">
+                                <h3>{{'ProfilePageAddLanguage' | translate}}<span ng-if="!profile.css.addLanguageEditing" ng-click="profile.clickSetEditingState({addLanguageEditing: true})" class="form-control-static add-button glyphicon glyphicon-plus button"></span></h3>
+                                <div class="form-group" ng-if="profile.css.addLanguageEditing">
+                                    <div class="col-xs-4">
+                                        <select class="form-control" ng-model="profile.newLanguageSkill.language" ng-options="language.id as language.name | translate for language in profile.Constant.language">
+                                        </select>
+                                    </div>
+                                    <div class="col-xs-4">
+                                        <select class="form-control col-xs-4" ng-model="profile.newLanguageSkill.level" ng-options="level.id as level.name | translate for level in profile.Constant.languageProficiency">
+                                        </select>
+                                    </div>
+                                    <div class="col-xs-4">
+                                        <span ng-click="profile.clickAddNewLanguage()" class="form-control-static add-button glyphicon glyphicon-plus button"></span>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+
+                        <div class="row" ng-if="profile.css.educationEditing || profile.css.languageEditing">
+                            <!--for edit education-->
+                            <div ng-if="profile.css.educationEditing" class="col-md-6 col-md-offset-3 profile-button-container">
+                                <button ng-click="profile.clickUpdateUserInfo(schoolForm)" type="submit">{{'ProfilePageSaveButton' | translate}}</button>
+                                <button class="cancel" ng-click="profile.clickResetEditingState()">{{'ProfilePageCancelButton' | translate}}</button>
+                            </div>
+                            <div ng-if="profile.css.languageEditing" class="col-md-6 col-md-offset-3 profile-button-container">
+                                <button ng-click="profile.clickUpdateUserInfo(languageForm)" type="submit">{{'ProfilePageSaveButton' | translate}}</button>
+                                <button class="cancel" ng-click="profile.clickResetEditingState()">{{'ProfilePageCancelButton' | translate}}</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row work-experience" ng-if="profile.css.currentTabIndex == 5">
+                        <div class="profile-detail-title">{{'ProfilePageTabExperienceInfo' | translate}}<span class="profile-edit" ng-click="profile.clickSetEditingState({experienceEditing: true, addLanguageEditing: false})">{{'ProfilePageEditButton' | translate}}</span></div>
+                        <form name="experienceForm" class="form-horizontal">
+                            <div class="experience" ng-repeat="experience in profile.formData.workExperiences">
+                                <h3>{{'ProfilePageExperience' | translate}} {{$index + 1}}:<span ng-click="profile.clickDeleteExperience($index)" ng-if="profile.css.experienceEditing" class="form-control-static remove-button glyphicon glyphicon-minus button"></span></h3>
+                                <div>
+                                    <div class="form-group">
+                                        <label for="company{{$index}}" class="control-label col-md-3 text-right">{{'ProfilePageExperienceInfoCompany' | translate}} :</label>
+                                        <div class="col-xs-5" ng-if="!profile.css.experienceEditing">
+                                            <p class="form-control-static">{{profile.currentUser.workExperiences[$index].company}}&nbsp</p>
+                                        </div>
+                                        <div class="col-xs-5" ng-if="profile.css.experienceEditing">
+                                            <input type="text" ng-model="profile.formData.workExperiences[$index].company" name="company{{$index}}" id="company{{$index}}" class="form-control">
+                                        </div>
+                                    </div>
+
+                                    <div class="row form-group">
+                                        <label for="jobType{{$index}}" class="control-label col-md-3 text-right">{{'ProfilePageExperienceInfoJobType' | translate}} :</label>
+                                        <div class="col-xs-5" ng-if="!profile.css.experienceEditing">
+                                            <p class="form-control-static">{{profile.currentUser.workExperiences[$index].jobType | jobtype | translate}}&nbsp</p>
+                                        </div>
+                                        <div class="col-xs-5" ng-if="profile.css.experienceEditing">
+                                            <!--<input type="text" ng-model="profile.formData.workExperiences[$index].jobType" id="jobType{{$index}}" name="jobType{{$index}}" class="col-md-2 form-control">-->
+                                            <select class="form-control col-xs-4" ng-model="profile.formData.workExperiences[$index].jobType" ng-options="type.id as type.name | translate for type in profile.Constant.jobType"></select>
+                                        </div>
+                                    </div>
+
+                                    <div class="row form-group">
+                                        <label for="industry{{$index}}" class="control-label col-md-3 text-right">{{'ProfilePageExperienceInfoIndustry' | translate}} :</label>
+                                        <div class="col-xs-5" ng-if="!profile.css.experienceEditing">
+                                            <p class="form-control-static">{{profile.currentUser.workExperiences[$index].industry}}&nbsp</p>
+                                        </div>
+                                        <div class="col-xs-5" ng-if="profile.css.experienceEditing">
+                                            <input type="text" ng-model="profile.formData.workExperiences[$index].industry" id="industry{{$index}}" name="industry{{$index}}" class="col-md-2 form-control">
+                                        </div>
+                                    </div>
+
+
+                                    <div class="form-group">
+                                        <label for="position{{$index}}" class="control-label col-md-3 text-right">{{'ProfilePageExperienceInfoPosition' | translate}} :</label>
+                                        <div class="col-xs-5" ng-if="!profile.css.experienceEditing">
+                                            <p class="form-control-static">{{profile.currentUser.workExperiences[$index].position}}&nbsp</p>
+                                        </div>
+                                        <div class="col-xs-5" ng-if="profile.css.experienceEditing">
+                                            <input type="text" ng-model="profile.formData.workExperiences[$index].position" name="position{{$index}}" id="position{{$index}}" class="form-control">
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="form-group">
+                                        <label for="sizeOfCompany{{$index}}" class="control-label col-md-3 text-right">{{'ProfilePageExperienceInfoSizeOfCompany' | translate}} :</label>
+                                        <div class="col-xs-5" ng-if="!profile.css.experienceEditing">
+                                            <p class="form-control-static">{{profile.currentUser.workExperiences[$index].sizeOfCompany | companysize | translate}}&nbsp</p>
+                                        </div>
+                                        <div class="col-xs-5" ng-if="profile.css.experienceEditing">
+                                            <select class="form-control col-xs-4" ng-model="profile.formData.workExperiences[$index].sizeOfCompany" ng-options="size.id as size.name | translate for size in profile.Constant.jobCompanySize"></select>
+                                        </div>
+                                    </div>
+
+                                    <div class="row form-group" ng-class="{'has-error': experienceForm['startDate' +  $index].$invalid, 'has-success':experienceForm.startDate.$dirty&&experienceForm.startDate.$valid}">
+                                        <label for="startDate{{$index}}" class="control-label col-md-3 text-right">{{'ProfilePageExperienceInfoStartDate' | translate}} :</label>
+                                        <div class="col-xs-3" ng-if="!profile.css.experienceEditing">
+                                            <p class="form-control-static">{{profile.currentUser.workExperiences[$index].startDate|date:"yyyy-MM-dd"}}&nbsp</p>
+                                        </div>
+                                        <div class="col-xs-5" ng-if="profile.css.experienceEditing">
+                                            <input type="text" data-date-format="yyyy-MM-dd" data-min-date="02/10/70" data-max-date="{{profile.formData.workExperiences[$index].endDate}}" data-autoclose="1" ng-model="profile.formData.workExperiences[$index].startDate" id="startDate{{$index}}" name="startDate{{$index}}" class="form-control" bs-datepicker>
+                                        </div>
+                                        <span class="err-msg control-label form-control-static col-xs-4" ng-if="experienceForm['startDate' +  $index].$invalid">{{'ProfilePageDateFormatError' | translate}}</span>
+                                    </div>
+
+                                    <div class="row form-group" ng-class="{'has-error': experienceForm['endDate' +  $index].$invalid, 'has-success':experienceForm.endDate.$dirty&&experienceForm.endDate.$valid}">
+                                        <label for="endDate{{$index}}" class="control-label col-md-3 text-right">{{'ProfilePageExperienceInfoEndDate' | translate}} :</label>
+                                        <div class="col-xs-3" ng-if="!profile.css.experienceEditing">
+                                            <p class="form-control-static">{{profile.currentUser.workExperiences[$index].endDate|date:"yyyy-MM-dd"}}&nbsp</p>
+                                        </div>
+                                        <div class="col-xs-5" ng-if="profile.css.experienceEditing">
+                                            <input type="text" data-date-format="yyyy-MM-dd" data-min-date="{{profile.formData.workExperiences[$index].startDate}}" data-autoclose="1" ng-model="profile.formData.workExperiences[$index].endDate" id="endDate{{$index}}" name="endDate{{$index}}" class="form-control" bs-datepicker>
+                                        </div>
+                                        <span class="err-msg control-label form-control-static col-xs-4" ng-if="experienceForm['endDate' +  $index].$invalid">{{'ProfilePageDateFormatError' | translate}}</span>
+                                    </div>
+
+
+                                    <div class="form-group">
+                                        <label for="jobExperience{{$index}}" class="control-label col-md-3 text-right">{{'ProfilePageExperienceInfoJobExperience' | translate}} :</label>
+                                        <div class="col-xs-5" ng-if="!profile.css.experienceEditing">
+                                            <p class="form-control-static">{{profile.currentUser.workExperiences[$index].jobExperience}}&nbsp</p>
+                                        </div>
+                                        <div class="col-xs-9" ng-if="profile.css.experienceEditing">
+                                            <div class="row">
+                                                <div class="col-xs-11">
+                                                    <textarea rows="10" ng-model="profile.formData.workExperiences[$index].jobExperience" name="jobExperience{{$index}}" id="jobExperience{{$index}}" class="form-control"></textarea>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    
+                                </div>
+                            </div>
+
+                            <div ng-if="profile.css.experienceEditing" class="addExperience">
+                                <h3>{{'ProfilePageAddExperience' | translate}}: <span ng-if="!profile.css.addExperienceEditing" ng-click="profile.clickSetEditingState({addExperienceEditing: true})" class="form-control-static add-button glyphicon glyphicon-plus button"></span></h3>
+                                <div ng-if="profile.css.addExperienceEditing">
+                                    <div class="form-group">
+                                        <label for="company" class="control-label col-md-3 text-right">{{'ProfilePageExperienceInfoCompany' | translate}} :</label>
+                                        <div class="col-xs-5">
+                                            <input type="text" ng-model="profile.newExperience.company" name="company" id="company" class="form-control">
+                                        </div>
+                                    </div>
+
+                                    <div class="row form-group">
+                                        <label for="jobType" class="control-label col-md-3 text-right">{{'ProfilePageExperienceInfoJobType' | translate}} :</label>
+                                        <div class="col-xs-5">
+                                            <!--<input type="text" ng-model="profile.newExperience.jobType" id="jobType" name="jobType" class="col-md-2 form-control">-->
+                                            <select class="form-control" ng-model="profile.newExperience.jobType" ng-options="type.id as type.name | translate for type in profile.Constant.jobType"></select>
+                                        </div>
+                                    </div>
+
+                                    <div class="row form-group">
+                                        <label for="industry" class="control-label col-md-3 text-right">{{'ProfilePageExperienceInfoIndustry' | translate}} :</label>
+                                        <div class="col-xs-5">
+                                            <input type="text" ng-model="profile.newExperience.industry" id="industry" name="industry" class="col-md-2 form-control">
+                                        </div>
+                                    </div>
+
+
+                                    <div class="form-group">
+                                        <label for="position" class="control-label col-md-3 text-right">{{'ProfilePageExperienceInfoPosition' | translate}} :</label>
+                                        <div class="col-xs-5">
+                                            <input type="text" ng-model="profile.newExperience.position" name="position" id="position" class="form-control">
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label for="sizeOfCompany" class="control-label col-md-3 text-right">{{'ProfilePageExperienceInfoSizeOfCompany' | translate}} :</label>
+                                        <div class="col-xs-5">
+                                            <select class="form-control" ng-model="profile.newExperience.sizeOfCompany" ng-options="size.id as size.name | translate for size in profile.Constant.jobCompanySize"></select>
+                                        </div>
+                                    </div>
+
+                                    <div class="row form-group" ng-class="{'has-error': experienceForm['startDate' +  $index].$invalid, 'has-success':experienceForm.startDate.$dirty&&experienceForm.startDate.$valid}">
+                                        <label for="startDate" class="control-label col-md-3 text-right">{{'ProfilePageExperienceInfoStartDate' | translate}} :</label>
+                                        <div class="col-xs-5">
+                                            <input type="text" data-date-format="yyyy-MM-dd" data-min-date="02/10/70" data-max-date="{{profile.newExperience.endDate}}" data-autoclose="1" ng-model="profile.newExperience.startDate" id="startDate" name="startDate" class="form-control" bs-datepicker>
+                                        </div>
+                                        <span class="err-msg control-label form-control-static col-xs-4" ng-if="experienceForm['startDate' +  $index].$invalid">{{'ProfilePageDateFormatError' | translate}}</span>
+                                    </div>
+
+                                    <div class="row form-group" ng-class="{'has-error': experienceForm['endDate' +  $index].$invalid, 'has-success':experienceForm.endDate.$dirty&&experienceForm.endDate.$valid}">
+                                        <label for="endDate" class="control-label col-md-3 text-right">{{'ProfilePageExperienceInfoEndDate' | translate}} :</label>
+                                        <div class="col-xs-5">
+                                            <input type="text" data-date-format="yyyy-MM-dd" data-min-date="{{profile.newExperience.startDate}}" data-autoclose="1" ng-model="profile.newExperience.endDate" id="endDate" name="endDate" class="form-control" bs-datepicker>
+                                        </div>
+                                        <span class="err-msg control-label form-control-static col-xs-4" ng-if="experienceForm['endDate' +  $index].$invalid">{{'ProfilePageDateFormatError' | translate}}</span>
+                                    </div>
+
+
+                                    <div class="form-group">
+                                        <label for="jobExperience" class="control-label col-md-3 text-right">{{'ProfilePageExperienceInfoJobExperience' | translate}} :</label>
+                                        <div class="col-xs-9">
+                                            <div class="row">
+                                                <div class="col-xs-11">
+                                                    <textarea rows="10" ng-model="profile.newExperience.jobExperience" name="jobExperience" id="jobExperience" class="form-control"></textarea>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row save-button-container" ng-if="profile.css.experienceEditing">
+                                <div class="col-md-6 col-md-offset-3 profile-button-container">
+                                    <button ng-click="profile.clickUpdateUserInfo(experienceForm)" type="submit">{{'ProfilePageSaveButton' | translate}}</button>
+                                    <button class="cancel" ng-click="profile.clickResetEditingState()">{{'ProfilePageCancelButton' | translate}}</button>
+                                </div>
+                            </div>
+                        </form>
+
                     </div>
 
                     <div class="row" ng-if="profile.css.currentTabIndex == 2">
@@ -142,51 +617,6 @@
                         </form>
                     </div>
 
-
-                    <div class="row" ng-if="profile.css.currentTabIndex == 3">
-                        <div class="profile-detail-title">{{'ProfilePageTabSchoolInfo' | translate}}<span class="profile-edit" ng-click="profile.clickEditProfile()">{{'ProfilePageEditButton' | translate}}</span></div>
-                        <form name="schoolForm" class="form-horizontal">
-                            <div class="form-group">
-                                <label for="school" class="control-label col-md-3 text-right">{{'ProfilePageSchoolInfoCollege' | translate}} :</label>
-                                <div class="col-xs-5" ng-if="!profile.css.formEditing">
-                                    <p class="form-control-static">{{profile.currentUser.organizationOrUniversity}}&nbsp</p>
-                                </div>
-                                <div class="col-xs-5" ng-if="profile.css.formEditing">
-                                    <input type="text" ng-model="profile.formData.organizationOrUniversity" name="school" id="school" class="form-control">
-                                </div>
-                            </div>
-                            <!--<div class="row"><label for="email" class="col-md-3 text-right">{{'院系' | translate}} :</label><input type="text" id="email" name="email" class="col-md-7"></div>-->
-                            <div class="row form-group" ng-class="{'has-error': schoolForm.dateOfEnterCollege.$invalid, 'has-success':schoolForm.dateOfEnterCollege.$dirty&&schoolForm.dateOfEnterCollege.$valid}">
-                                <label for="dateOfEnterCollege" class="control-label col-md-3 text-right">{{'ProfilePageSchoolInfoEnterDate' | translate}} :</label>
-                                <div class="col-xs-3" ng-if="!profile.css.formEditing">
-                                    <p class="form-control-static">{{profile.currentUser.dateOfEnterCollege|date:"yyyy-MM-dd"}}&nbsp</p>
-                                </div>
-                                <div class="col-xs-5" ng-if="profile.css.formEditing">
-                                    <input type="text" data-date-format="yyyy-MM-dd" data-min-date="02/10/70" data-max-date="today" data-autoclose="1" ng-model="profile.formData.dateOfEnterCollege" id="dateOfEnterCollege" name="dateOfEnterCollege" class="form-control" bs-datepicker>
-                                </div>
-                                <span class="err-msg control-label form-control-static col-xs-4" ng-if="schoolForm.dateOfEnterCollege.$invalid">{{'ProfilePageDateFormatError' | translate}}</span>
-                            </div>
-                            <div class="row form-group">
-                                <label for="degree" class="control-label col-md-3 text-right">{{'ProfilePageSchoolInfoDegree' | translate}} :</label>
-                                <div class="col-xs-5" ng-if="!profile.css.formEditing">
-                                    <p class="form-control-static">{{profile.currentUser.majorsDegree}}&nbsp</p>
-                                </div>
-                                <div class="col-xs-5" ng-if="profile.css.formEditing">
-                                    <input type="text" ng-model="profile.formData.majorsDegree" id="degree" name="degree" class="col-md-2 form-control">
-                                </div>
-                                <!--<lable class="col-md-3 text-right">{{'学年' | translate}} :</lable><input type="text" id="email" name="email" class="col-md-2">-->
-                            </div>
-                            <div class="row" ng-if="profile.css.formEditing">
-                                <div class="col-md-6 col-md-offset-3 profile-button-container">
-                                    <button ng-click="profile.clickUpdateUserInfo(schoolForm)" type="submit">{{'ProfilePageSaveButton' | translate}}</button>
-                                    <button class="cancel" ng-click="profile.clickCancelEditProfile()">{{'ProfilePageCancelButton' | translate}}</button>
-                                </div>
-                            </div>
-                        </form>
-                    </div>
-
-
-
                     <div class="row team-info" ng-if="profile.css.currentTabIndex == 4">
                         <div class="profile-detail-title">{{'ProfilePageTabTeamInfo' | translate}}<!--<span class="profile-edit" ng-click="profile.clickEditProfile(3)">{{'ProfilePageEditButton' | translate}}</span>--></div>
                         <form novalidate name="teamNameForm" class="none-bottom form-horizontal" ng-submit="profile.clickUpdateTeamName(teamNameForm)">
@@ -199,8 +629,8 @@
                                     <input class="form-control col-md-6" required ng-model="profile.formData.teamName" type="text" id="teamName" name="teamName">
                                 </div>
                                 <span class="err-msg control-label" ng-if="teamNameForm.teamName.$dirty&&teamNameForm.teamName.$error.required">{{'ProfilePageTeamNameRequiredError' | translate}}!</span>
-                                <button ng-if="!profile.css.formEditing" class="done col-md-3">{{'ProfilePageChangeButton' | translate}}</button>
-                                <button ng-if="profile.css.formEditing" class="col-md-3">{{'ProfilePageSaveButton' | translate}}</button>
+                                <button ng-if="!profile.css.formEditing" class="button done col-md-3">{{'ProfilePageChangeButton' | translate}}</button>
+                                <button ng-if="profile.css.formEditing" class="button col-md-3">{{'ProfilePageSaveButton' | translate}}</button>
                             </div>
                         </form>
                         <form novalidate name="teamForm" class="form-horizontal none-top">
@@ -215,47 +645,12 @@
                             <div class="form-group" ng-class="{'has-success':teamForm.name.$dirty&&teamForm.name.$valid, 'has-error':teamForm.name.$dirty&&teamForm.name.$invalid}">
                                 <label for="name" class="control-label col-xs-3 text-right team-label">{{'ProfilePageTeamInfoNewMember' | translate}} :</label>
                                 <div class="col-xs-5">
-                                    <input placeholder="{{'用户名/邮箱' | translate}}" ng-model="profile.formData.newTeamMember" required type="text" name="name" id="name" class="form-control">
+                                    <input placeholder="{{'ProfilePageNewMemberInputPlaceholder' | translate}}" ng-model="profile.formData.newTeamMember" required type="text" name="name" id="name" class="form-control">
                                 </div>
-                                <button type="submit" ng-click="profile.clickAddStudentToTeam(teamForm)" class="glyphicon glyphicon-plus add-button col-xs-1"></button>
+                                <button type="submit" ng-click="profile.clickAddStudentToTeam(teamForm)" class="button glyphicon glyphicon-plus add-button col-xs-1"></button>
                                 <span class="form-control-static err-msg control-label col-xs-3" ng-if="teamForm.name.$dirty&&teamForm.name.$error.required">{{'ProfilePageNewMemberNameError' | translate}}!</span>
                             </div>
                             <!--<div class="row"><label for="name" class="col-md-3 team-label">{{'队员二' | translate}} :</label><input type="text" name="name" id="name" class="col-md-6"></div>-->
-                        </form>
-                    </div>
-
-
-                    <div class="row" ng-if="profile.css.currentTabIndex == 5">
-                        <div class="profile-detail-title">{{'ProfilePageTabContactInfo' | translate}}<span class="profile-edit" ng-click="profile.clickEditProfile()">{{'ProfilePageEditButton' | translate}}</span></div>
-                        <form name="contactForm" class="form-horizontal" novalidate>
-                            <div class="form-group" ng-class="{'has-success':contactForm.qq.$dirty&&contactForm.qq.$valid, 'has-error':contactForm.qq.$dirty&&contactForm.qq.$invalid}" >
-                                <label for="qq" class="control-label col-md-3 text-right">QQ :</label>
-                                <div class="col-xs-5" ng-if="!profile.css.formEditing">
-                                    <p class="form-control-static">{{profile.currentUser.qq}}</p>
-                                </div>
-                                <div ng-if="profile.css.formEditing" class="col-xs-5">
-                                    <input ng-model="profile.formData.qq" type="text" id="qq" name="qq" class="form-control">
-                                </div>
-                                <span class="form-control-static err-msg control-label col-xs-3" ng-if="!contactForm.qq.$dirty&&profile.css.errorFields.qq">{{'ProfilePageInvalidQQ' | translate}}</span>
-                                <!--<span class="err-msg control-label" ng-if="contactForm.qq.$dirty&&contactForm.qq.$error.required">{{'请输入正确的' | translate}}qq!</span>-->
-                            </div>
-                            <div class="form-group" ng-class="{'has-success':contactForm.mobilePhone.$dirty&&contactForm.mobilePhone.$valid, 'has-error':contactForm.mobilePhone.$dirty&&contactForm.mobilePhone.$invalid}" >
-                                <label for="mobilePhone" class="control-label col-md-3 text-right">{{'ProfileContactInfoMobilePhone' | translate}} :</label>
-                                <div class="col-xs-5" ng-if="!profile.css.formEditing">
-                                    <p class="form-control-static">{{profile.currentUser.mobilePhone}}</p>
-                                </div>
-                                <div ng-if="profile.css.formEditing" class="col-xs-5">
-                                    <input ng-model="profile.formData.mobilePhone" type="text" id="mobilePhone" name="mobilePhone" class="form-control">
-                                </div>
-                                <span class="form-control-static err-msg control-label col-xs-3" ng-if="!contactForm.mobilePhone.$dirty&&profile.css.errorFields.mobilePhone">{{'ProfilePageInvalidMobilePhoneNumber' | translate}}</span>
-                                <!--<span class="err-msg control-label" ng-if="contactForm.qq.$dirty&&contactForm.qq.$error.required">{{'请输入正确的' | translate}}qq!</span>-->
-                            </div>
-                            <div class="row" ng-if="profile.css.formEditing">
-                                <div class="col-md-6 col-md-offset-3 profile-button-container">
-                                    <button ng-click="profile.clickUpdateUserInfo(contactForm)" type="submit">{{'ProfilePageSaveButton' | translate}}</button>
-                                    <button class="cancel" ng-click="profile.clickCancelEditProfile()">{{'ProfilePageCancelButton' | translate}}</button>
-                                </div>
-                            </div>
                         </form>
                     </div>
 
@@ -265,4 +660,4 @@
     </div>
 
 
-<% include ./include/footerscriptlogin.ejs %>
+    <% include ./include/footerscriptlogin.ejs %>

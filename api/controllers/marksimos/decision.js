@@ -20,6 +20,8 @@ var productPortfolioAssembler = require('../../dataAssemblers/productPortfolio.j
 var spendingDetailsAssembler  = require('../../dataAssemblers/spendingDetails.js');
 var SKUInfoAssembler          = require('../../dataAssemblers/SKUInfo.js');
 
+var socketio = require('../../../common/socketio.js');
+
 
 /**
  * Sumit decision to CGI service  Not Used Now
@@ -207,7 +209,6 @@ exports.getDecisionForFacilitator = function(req, res, next){
 
 
 exports.updateSKUDecision = function(req, res, next){
-
     var companyId = +req.body.companyId;
     var brandId = req.body.brand_id;
     var SKUID = req.body.sku_id;
@@ -255,6 +256,7 @@ exports.updateSKUDecision = function(req, res, next){
 
     SKUDecisionModel.updateSKU(seminarId, period, companyId, brandId, SKUID, tempSKU)
     .then(function(doc){
+        socketio.emitMarksimosDecisionUpdate(req.gameMarksimos.socketRoomName, req.user);
         res.status(200).send( {status: 1, message: 'update success.'});
     })
     .fail(function(err){
@@ -330,6 +332,7 @@ exports.updateBrandDecision = function(req, res, next){
 
     brandDecisionModel.updateBrand(seminarId, period, companyId, brandId, tempBrand)
     .then(function(doc){
+        socketio.emitMarksimosDecisionUpdate(req.gameMarksimos.socketRoomName, req.user);
         res.send({status: 1, message: 'update success.'});
     })
     .fail(function(err){
@@ -386,6 +389,7 @@ exports.updateCompanyDecision = function(req, res, next){
     //logger.log('tempCompanyDecision:' + util.inspect(tempCompanyDecision));
     companyDecisionModel.updateCompanyDecision(seminarId, period, companyId, tempCompanyDecision)
     .then(function(result){
+        socketio.emitMarksimosDecisionUpdate(req.gameMarksimos.socketRoomName, req.user);
         res.send({message: 'update success.'});
     })
     .fail(function(err){
@@ -447,6 +451,7 @@ exports.addBrand = function(req, res, next){
         });
     })
     .then(function(){
+        socketio.emitMarksimosDecisionUpdate(req.gameMarksimos.socketRoomName, req.user);
         res.send({message: "add brand and sku success."});
     })
     .fail(function(err){
@@ -528,6 +533,7 @@ exports.addSKU = function(req, res, next){
         d_SKUName: '_' + sku_name
     })
     .then(function(result){
+        socketio.emitMarksimosDecisionUpdate(req.gameMarksimos.socketRoomName, req.user);
         res.send(result);
     })
     .fail(function(err){
@@ -559,6 +565,7 @@ exports.deleteSKU = function(req, res, next){
 
     SKUDecisionModel.remove(seminarId, period, companyId, brand_id, sku_id)
     .then(function(result){
+        socketio.emitMarksimosDecisionUpdate(req.gameMarksimos.socketRoomName, req.user);
         res.send(result);
     })
     .fail(function(err){

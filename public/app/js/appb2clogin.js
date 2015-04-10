@@ -61,7 +61,10 @@
         vm.clickForgetPasswordStep1 = forgetPasswordStep1;
         vm.clickForgetPasswordStep2 = forgetPasswordStep2;
         vm.clickResetPasswordStep3 = resetNewPassword;
+        vm.verifyUsername = verifyUsername;
+        vm.verifyEmail = verifyEmail;
 
+        vm.captchaImageNum = 1;
 
 
 
@@ -97,14 +100,29 @@
                     vm.css.showRegForm = false;
 
                 }).catch(function(err){
-                    form.username.$valid = false;
-                    form.username.$invalid = true;
-                    form.email.$valid = false;
-                    form.email.$invalid = true;
+                    vm.captchaImageNum++;
+                    if(err.data.message === 'Cancel captcha error') {
+                        form.captcha.$valid = false;
+                        form.captcha.$invalid = true;
+                    }else{
+                        form.username.$valid = false;
+                        form.username.$invalid = true;
+                        form.email.$valid = false;
+                        form.email.$invalid = true;
 
-                    vm.css.usernameExistedInfo = true;
+                        vm.css.usernameExistedInfo = true;
+                    }
+
                 });
             }
+        }
+
+        function verifyUsername(username) {
+            return Student.verifyUsername(username);
+        }
+
+        function verifyEmail(email) {
+            return Student.verifyEmail(email);
         }
 
 
@@ -178,34 +196,49 @@
 
 
 
-    angular.module('b2clogin').controller('profileController', ['Student', '$alert', 'FileUploader', '$translate', function(Student, $alert, FileUploader, $translate) {
+    angular.module('b2clogin').controller('profileController', ['Student', '$alert', 'FileUploader', '$translate', '$location', '$interval', 'Constant', function(Student, $alert, FileUploader, $translate, $location, $interval, Constant) {
         /* jshint validthis: true */
         var vm = this;
         vm.css = {
             addStudentFailedInfo: false,
             currentTabIndex: 1,
             updateTeamNameDisabled: true,
+
             formEditing: false,
-            alertSuccessInfo: {
-                content: '保存成功！',
+
+            //education background form editing states
+            educationEditing: false,
+            addEducationEditing: false,
+            languageEditing: false,
+            addLanguageEditing: false,
+
+            //experience form editing states
+            experienceEditing: false,
+            addExperienceEditing: false,
+
+            alertInfo: {
                 duration: 2,
-                container: '#profile-alert-container',
-                type: 'success',
-                dismissable: false
-            },
-            alertFailedInfo: {
-                content: '保存失败！',
-                duration: 2,
-                container: '#profile-alert-container',
-                type: 'danger',
-                dismissable: false
+                template: '',
+                container: '#profile-alert-container'
             },
             defaultAvatar: 'app/css/images/profile_avatar_2.png',
-            errorFields: {}
+            errorFields: {},
+            mobileVerifyCodeResend : false,
+            mobileVerifyCodeTimeCounter : 60
         };
+        vm.css.alertSuccessInfo = angular.extend({}, vm.css.alertInfo, {template: 'profile-alert-success.html'});
+        vm.css.alertFailedInfo = angular.extend({}, vm.css.alertInfo, {template: 'profile-alert-failed.html'});
+        vm.css.alertInvalidPassword = angular.extend({}, vm.css.alertInfo, {template: 'profile-alert-invalid-password.html'});
 
         vm.currentUser = {};
+        vm.newEducation = null;
+        vm.newLanguageSkill = {};
+        vm.newAchievement = {};
+        vm.newExperience = null;
+
         vm.formData = {};
+        vm.Constant = Constant;
+
         vm.uploader = new FileUploader({
             url : '/e4e/api/student/avatar',
             alias : 'studentavatar',
@@ -224,12 +257,91 @@
         vm.clickEditProfile = editProfile;
         vm.clickSwitchTab = switchTab;
         vm.clickCancelEditProfile = cancelEditProfile;
+        vm.clickGetMobileVerifyCode = getMobileVerifyCode;
+        vm.clickSendMobileVerifyCode = sendMobileVerifyCode;
+        vm.clickSetEditingState = setEditingState;
+        vm.clickResetEditingState = resetEditingState;
+        vm.clickAddNewLanguage = addNewLanguage;
+        vm.clickDeleteEducation = deleteEducation;
+        vm.clickDeleteLanguage = deleteLanguage;
+        vm.clickAddNewAchievement = addNewAchievement;
+        vm.clickAddNewAchievementToExistEducation = addNewAchievementToExistEducation;
+        vm.clickDeleteExperience = deleteExperience;
+
 
 
         /**********  Function Declarations  **********/
-
-        function editProfile() {
+        function editProfile(specificForm) {
             vm.css.formEditing = true;
+            if(specificForm) {
+                vm.css[specificForm] = true;
+            }
+        }
+
+        function deleteEducation(index) {
+            vm.formData.eductionBackgrounds.splice(index, 1);
+        }
+
+        function addNewLanguage() {
+            if (!vm.newLanguageSkill.language || !vm.newLanguageSkill.level) {
+                return;
+            }
+
+            var isExist = vm.formData.LanguageSkills.some(function(lan, i) {
+                if (lan.language == vm.newLanguageSkill.language) {
+                    vm.formData.LanguageSkills[i] = vm.newLanguageSkill;
+                    return true;
+                }
+            });
+            if (!isExist) {
+                vm.formData.LanguageSkills.push(vm.newLanguageSkill);
+            }
+            vm.newLanguageSkill = {};
+        }
+
+        function deleteLanguage(index) {
+            vm.formData.LanguageSkills.splice(index, 1);
+        }
+
+        function addNewAchievement() {
+            if (vm.newAchievement) {
+                if (!vm.newEducation) {
+                    vm.newEducation = {
+                        achievements: []
+                    };
+                }
+                if (!vm.newEducation.achievements) {
+                    vm.newEducation.achievements = [];
+                }
+
+                vm.newEducation.achievements.push(vm.newAchievement);
+                vm.newAchievement = {};
+            }
+        }
+
+        function addNewAchievementToExistEducation(index) {
+            var education = vm.formData.eductionBackgrounds[index];
+            education.achievements.push(education._newAchievement);
+            education._newAchievement = {};
+        }
+
+        function deleteExperience(index) {
+            vm.formData.workExperiences.splice(index, 1);
+        }
+
+        function setEditingState(state) {
+            angular.extend(vm.css, state);
+        }
+
+        function resetEditingState() {
+            angular.extend(vm.css, {
+                formEditing: false,
+                educationEditing: false,
+                addEducationEditing: false,
+                languageEditing: false,
+                experienceEditing: false,
+                addExperienceEditing: false
+            });
         }
 
         function switchTab(index) {
@@ -291,29 +403,92 @@
             }
         }
 
-
-        function updateUserInfo(form) {
-            // todo, let what css info be false
+        function updateUserInfo(form, slient) {
             if (form.$valid) {
                 vm.css.errorFields = {};
+
+                if (vm.newEducation) {
+                    if (!vm.newEducation.achievements) {
+                        vm.newEducation.achievements = [];
+                    }
+                    vm.formData.eductionBackgrounds.push(vm.newEducation);
+                }
+
+                if (vm.newExperience) {
+                    vm.formData.workExperiences.push(vm.newExperience);
+                }
+
                 Student.updateStudentB2CInfo(vm.formData).then(function() {
-                    Object.keys(vm.formData).forEach(function(key) {
-                        vm.currentUser[key] = vm.formData[key];
-                    });
-                    $alert(vm.css.alertSuccessInfo);
-                    cancelEditProfile();
+                    angular.copy(vm.formData, vm.currentUser);
+
+                    vm.newEducation = null;
+                    vm.newLanguage = null;
+                    vm.newExperience = null;
+
+                    if (!slient) {
+                        $alert(vm.css.alertSuccessInfo);
+                        cancelEditProfile();
+                        resetEditingState();
+                    }
                 }).catch(function(err) {
                     $alert(vm.css.alertFailedInfo);
                     if (err.data && err.data.message) {
                         err.data.message.forEach(function(item) {
+                            form[item.param].$valid = false;
+                            form[item.param].$invalid = true;
                             vm.css.errorFields[item.param] = true;
-                            // so the backend error tip will disappear if users edit it
-                            form[item.param].$setPristine();
                         });
                     }
                 });
             }
         }
+
+        function getMobileVerifyCode(form) {
+            vm.css.mobileVerifyCodeResend = false;
+            vm.css.errorFields.mobilePhoneVerifyCode = false;
+            if(form.$valid){
+
+                Student.getPhoneVerifyCode().then(function(){
+
+                    vm.css.mobileVerifyCodeResend = true;
+                    vm.css.mobileVerifyCodeTimeCounter = 60;
+
+                    var timer = $interval(function() {
+                        if(vm.css.mobileVerifyCodeTimeCounter > 0){
+                            vm.css.mobileVerifyCodeTimeCounter = vm.css.mobileVerifyCodeTimeCounter - 1;
+                        }else {
+                            $interval.cancel(timer);
+                        }
+                    }, 1000);
+
+                }).catch(function(err){
+                    form.mobilePhoneVerifyCode.$setDirty();
+                    form.mobilePhoneVerifyCode.$valid = false;
+                    form.mobilePhoneVerifyCode.$invalid = true;
+
+                    vm.css.errorFields.mobilePhoneWrongFormat = true;
+
+                });
+            }
+        }
+
+        function sendMobileVerifyCode(form) {
+            vm.css.mobileVerifyCodeResend = false;
+            vm.css.errorFields.mobilePhoneVerifyCode = false;
+
+            Student.sendPhoneVerifyCode(vm.formData.mobilePhoneVerifyCode).then(function(){
+                vm.currentUser.phoneVerified = true;
+            }).catch(function(err){
+                form.mobilePhoneVerifyCode.$setDirty();
+                form.mobilePhoneVerifyCode.$valid = false;
+                form.mobilePhoneVerifyCode.$invalid = true;
+
+                vm.css.errorFields.mobilePhoneVerifyCode = true;
+
+                console.log(err);
+            });
+        }
+
 
         function updatePassword(form) {
             if (form.$valid) {
@@ -323,7 +498,7 @@
                     $alert(vm.css.alertFailedInfo);
                 });
             } else {
-                $alert(angular.extend({}, vm.css.alertFailedInfo, {content: '密码信息无效！'}));
+                $alert(vm.css.alertInvalidPassword);
             }
         }
 
@@ -350,6 +525,9 @@
 
         var app = {
             init : function(){
+                if (+$location.hash() >= 0) {
+                    switchTab(+$location.hash());
+                }
                 this.getUserInfo().then(function() {
                     app.resetForm();
                 });
@@ -367,11 +545,7 @@
             resetForm: function() {
                 var formData = vm.formData;
 
-                angular.forEach(vm.currentUser, function(data, key) {
-                    if (!angular.isObject(data)) {
-                        formData[key] = data;
-                    }
-                });
+                angular.copy(vm.currentUser, formData);
 
                 formData.oldPassword = '';
                 formData.newPassword = '';
@@ -452,6 +626,7 @@
         /**********  Function Declarations  **********/
         function studentEnter() {
             if (vm.css.hasEntered) return;
+
             Student.addTeamToCampaign({
                 username: vm.currentUser.username,
                 campaignId: vm.campaignId
@@ -547,7 +722,7 @@ $(function () {
     }
 
     // Footer Fixed
-    $(window).on('resize', function () {
+/*    $(window).on('resize', function () {
 
         //console.log($('b2c-header').height() , $('footer').height() , $('.b2c-login-main').height() , $(window).height());
 
@@ -557,5 +732,5 @@ $(function () {
         }else{
             $('footer').removeClass('b2c-footer-fix');
         }
-    }).trigger('resize');
+    }).trigger('resize');*/
 });

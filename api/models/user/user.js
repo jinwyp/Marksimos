@@ -40,6 +40,9 @@ var userSchema = new Schema({
     emailActivated: {type: Boolean, default: false},
     activated: {type: Boolean, default: false},
 
+    phoneVerifyCode: {type: String},
+    phoneVerifyCodeExpires: {type: String},
+    phoneVerified: {type: Boolean, default: false},
 
     role: {type: Number, default: 4, required: true},  //1 admin, 2 distributor, 3 facilitator, 4  students,   5 B2C Enterprise
     studentType : {type: Number, default: 10, required: true}, //10 B2B students,  20 B2C students, 30 Both B2C and B2B students
@@ -65,17 +68,10 @@ var userSchema = new Schema({
     idcardNumber : String,
     mobilePhone  : String,
     qq           : String,
+    currentLocation: String,
 
 
-    //user degree info
-    majorsDegree: String,
-    dateOfEnterCollege: Date,
-    dateOfGraduation: Date,
-    organizationOrUniversity: String,
-    occupation: String,
-
-
-    //user address
+    //user address for facilitator
     country: String,
     state: String,
     city: String,
@@ -99,8 +95,35 @@ var userSchema = new Schema({
     distributorId: {type: String, default: ''},
     facilitatorId: {type: String, default: ''},
 
-    websiteLanguage:{type: String, default: 'zh_CN'} // 'zh_CN'  'en_US'
+    websiteLanguage:{type: String, default: 'zh_CN'}, // 'zh_CN'  'en_US'
 
+    workExperiences: [{
+        company: String,
+        jobType: Number, //0: Internship
+        industry: String,
+        position: String,
+        sizeOfCompany: Number, //0: Less than 30 Employee, 1:
+        startDate: Date,
+        endDate: Date,
+        jobExperience: String
+    }],
+
+    LanguageSkills: [{
+        language: Number,
+        level: Number
+    }],
+
+    eductionBackgrounds: [{
+        university: String,
+        degree: String,
+        major: String,
+        entryDate: Date,
+        graduationDate: Date,
+        abroad: String,
+        achievements: [{
+            description: String
+        }]
+    }]
 });
 
 
@@ -226,7 +249,7 @@ userSchema.statics.registerValidations = function(req, userRoleId, studentType){
 
     studentType = studentType || 20;
 
-    removeProperty(req.body);
+//    removeProperty(req.body);
 
     req.checkBody('username', 'Username should be 6-20 characters').notEmpty().len(6, 20);
     req.checkBody('email', 'Email wrong format').notEmpty().isEmail();
@@ -249,8 +272,6 @@ userSchema.statics.registerValidations = function(req, userRoleId, studentType){
         req.checkBody('state', 'state is required').notEmpty();
         req.checkBody('city', 'city is required').notEmpty();
 
-        //req.checkBody('occupation', '2 to 100 characters required.').optional().len(2, 100);
-        req.checkBody('organizationOrUniversity', '2 to 100 characters required.').optional().len(2, 100);
 
         req.checkBody('studentType', 'Student B2B or B2C Type is required.').notEmpty().isInt();
 
@@ -290,23 +311,18 @@ userSchema.statics.registerValidations = function(req, userRoleId, studentType){
 userSchema.statics.userInfoValidations = function(req, userRoleId, studentType){
     studentType = studentType || 20;
 
-    removeProperty(req.body);
+//    removeProperty(req.body);
 
     if(userRoleId === userRoleModel.roleList.student.id ){
-        req.checkBody('gender', 'Gender is required').optional().isInt();
-        req.checkBody('birthday', 'Birthday is required').optional().isDate();
+        req.checkBody('gender', 'Gender wrong format').optional().isInt();
+        if(req.body.birthday) req.checkBody('birthday', 'Birthday wrong format').optional().isDate();
 
-        req.checkBody('mobilePhone', 'mobilePhone wrong format').optional().isMobilePhone('zh-CN');
-        req.checkBody('qq', 'qq number format wrong' ).optional().isInt();
+        if(req.body.mobilePhone) req.checkBody('mobilePhone', 'mobilePhone wrong format').optional().isMobilePhone('zh-CN');
+        if(req.body.qq) req.checkBody('qq', 'qq number format wrong' ).optional().isInt();
 
-        req.checkBody('firstName', '2 to 50 characters required.').optional().len(2, 50);
-        req.checkBody('lastName', '2 to 50 characters required.').optional().len(2, 50);
-        req.checkBody('idcardNumber', '18 to 19 characters required.').optional().matches( /^\d{17}([0-9]|X)$/ );
-
-        req.checkBody('occupation', '2 to 100 characters required.').optional().len(2, 100);
-        req.checkBody('organizationOrUniversity', '2 to 100 characters required.').optional().len(2, 100);
-        req.checkBody('dateOfEnterCollege', 'Date Of Enter College is date format').optional().isDate();
-        req.checkBody('dateOfGraduation', 'Date Of Graduation is date format').optional().isDate();
+        if(req.body.firstName) req.checkBody('firstName', '2 to 50 characters required.').optional().len(2, 50);
+        if(req.body.lastName) req.checkBody('lastName', '2 to 50 characters required.').optional().len(2, 50);
+        if(req.body.idcardNumber) req.checkBody('idcardNumber', '18 to 19 characters required.').optional().matches( /^\d{17}([0-9]|X)$/ );
 
     }
     return req.validationErrors();
@@ -355,9 +371,7 @@ userSchema.statics.resetForgotPasswordValidations = function(req, userRoleId, st
 };
 
 
-userSchema.statics.usernameValidations = function(req, userRoleId, studentType){
-
-    studentType = studentType || 20;
+userSchema.statics.usernameValidations = function(req){
 
     if(req.body.username.indexOf('@') > -1 ){
         req.body.email = req.body.username;
@@ -368,6 +382,15 @@ userSchema.statics.usernameValidations = function(req, userRoleId, studentType){
 
     return req.validationErrors();
 };
+
+
+userSchema.statics.emailValidations = function(req){
+
+    req.checkBody('email', 'Invalid email').notEmpty().isEmail();
+
+    return req.validationErrors();
+};
+
 
 userSchema.statics.passwordValidations = function(req, userRoleId, studentType){
 
@@ -387,7 +410,15 @@ userSchema.statics.userIdValidations = function(req, userRoleId, studentType){
 };
 
 
+userSchema.statics.mobilePhoneVerifyCodeValidations = function(req){
+    req.checkBody('phoneVerifyCode', 'Mobile phone verify code wrong format ').notEmpty().len(6, 6);
+    return req.validationErrors();
+};
 
+userSchema.statics.mobilePhoneValidations = function(req){
+    req.checkBody('mobilePhone', 'mobilePhone wrong format').notEmpty().isMobilePhone('zh-CN');
+    return req.validationErrors();
+};
 
 /**
  * Methods

@@ -16,35 +16,35 @@
               <div class="col-md-6">
 
                   <form name="loginForm" novalidate ng-cloak>
-                      <div class="title">登录</div>
+                      <div class="title">{{'LoginPageLoginLabel' | translate}}</div>
 
                       <div class="form-group">
-                          <span class="b2c-login-errmsg" ng-if="login.css.loginFailedInfo">您输入的用户名/邮箱或密码错误!</span>
+                          <span class="b2c-login-errmsg" ng-if="login.css.loginFailedInfo">{{'LoginPageUsernameErrorTip' | translate}}!</span>
                       </div>
 
                       <div class="form-group has-feedback" ng-class="{'has-success':loginForm.username.$dirty&&loginForm.username.$valid, 'has-error':loginForm.username.$dirty&&loginForm.username.$invalid}">
-                          <input type="text" class="input-lg form-control" name="username" placeholder="用户名/邮箱" ng-model="login.newUser.username" required ng-minlength="6" ng-maxlength="30"/>
+                          <input type="text" class="input-lg form-control" name="username" placeholder="{{'LoginPageUsernamePlaceholder' | translate}}" ng-model="login.newUser.username" required ng-minlength="6" ng-maxlength="30"/>
                           <span class="glyphicon glyphicon-remove form-control-feedback" aria-hidden="true" ng-if="loginForm.username.$dirty&&loginForm.username.$invalid"></span>
                           <span class="glyphicon glyphicon-ok form-control-feedback" aria-hidden="true" ng-if="loginForm.username.$dirty&&loginForm.username.$valid"></span>
                       </div>
 
                       <div class="form-group has-feedback" ng-class="{'has-success':loginForm.password.$dirty&&loginForm.password.$valid, 'has-error':loginForm.password.$dirty&&loginForm.password.$invalid}">
-                          <input type="password" class="input-lg form-control" name="password" placeholder="密码" ng-model="login.newUser.password" required ng-minlength="6" ng-maxlength="20"/>
+                          <input type="password" class="input-lg form-control" name="password" placeholder="{{'LoginPagePasswordPlaceholder' | translate}}" ng-model="login.newUser.password" required ng-minlength="6" ng-maxlength="20"/>
                           <span class="glyphicon glyphicon-remove form-control-feedback" aria-hidden="true" ng-if="loginForm.password.$dirty&&loginForm.password.$invalid"></span>
                           <span class="glyphicon glyphicon-ok form-control-feedback" aria-hidden="true" ng-if="loginForm.password.$dirty&&loginForm.password.$valid"></span>
                       </div>
 
                       <div class="form-group">
-                          <label class="checkbox-inline"><input type="checkbox" ng-model="login.newUser.rememberMe" />记住密码 自动登录</label>
+                          <label class="checkbox-inline"><input type="checkbox" ng-model="login.newUser.rememberMe" />{{'LoginPageRememberMe' | translate}}</label>
                       </div>
 
                       <div>
-                          <button class="btn btn-default" ng-click="login.clicklogin(loginForm)">登&nbsp;&nbsp;录</button>
-                          <a class="register" href="/e4e" role="button">或注册E4E账号</a>
+                          <button class="btn btn-default" ng-click="login.clicklogin(loginForm)">{{'LoginPageLoginButton' | translate}}</button>
+                          <a class="register" href="/e4e" role="button">{{'LoginPageRegisterButton' | translate}}</a>
                       </div>
 
                       <div class="forgot-password">
-                          <a href="/e4e/forgotpassword">忘记密码？</a>
+                          <a href="/e4e/forgotpassword">{{'LoginPageForgetPassword' | translate}}</a>
                       </div>
                   </form>
 

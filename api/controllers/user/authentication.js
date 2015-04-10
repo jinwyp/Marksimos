@@ -4,8 +4,9 @@ var teamModel = require('../../models/user/team.js');
 var seminarModel = require('../../models/marksimos/seminar.js');
 var Token = require('../../models/user/authenticationtoken.js');
 var emailModel = require('../../models/user/emailContent.js');
-
-
+var Captcha = require('../../models/user/captcha.js');
+var _ = require('lodash');
+var MessageXSend = require('../../../common/submail/messageXSend.js');
 
 var mailProvider = require('../../../common/sendCloud.js');
 var mailSender = mailProvider.createEmailSender();
@@ -14,7 +15,7 @@ var uuid = require('node-uuid');
 var logger = require('../../../common/logger.js');
 var util = require('util');
 var utility = require('../../../common/utility.js');
-
+var Q = require('q');
 
 var expiresTime = 1000 * 60 * 60 * 24; // 1 days
 
@@ -146,6 +147,7 @@ exports.logout = function(req, res, next){
  *
  */
 
+
 exports.authLoginToken = function (options) {
     return function (req, res, next) {
         options = options || {};
@@ -189,58 +191,49 @@ exports.authLoginToken = function (options) {
         var token = req.headers[tokenName] || lookup(req.body, tokenName) || lookup(req.query, tokenName) || req.cookies[tokenName];
 
         if (token) {
-            //查找token记录
-            Token.findOne({ token: token }, function (errToken, tokenInfo) {
-                if (errToken) { return next(errToken); }
-
-                //token存在且未过期
-                if (tokenInfo && tokenInfo.expires > new Date()) {
-
-                    userModel.findOne({ _id: tokenInfo.userId }).populate('avatar', '-physicalAbsolutePath').select( userModel.selectFields()).exec(function (err, user) {
-
-                        if (err) { return next(err);}
-
-                        if (!user) {
-                            //token存在，用户不存在，则可能用户已被删除
-                            options.message = 'Token existed, but user not found.';
-                            sendFailureResponse(options, next);
-                        }else{
-                            req.user = user;
-
-                            // 同时查询改用户当前所玩的Seminar
-                            seminarModel.findSeminarByUserId(user.id).then(function(seminarResult){
-                                if(seminarResult){
-
-                                    req.gameMarksimos = {
-                                        currentStudent : user,
-                                        currentStudentSeminar : seminarResult
-                                    };
-
-                                    // very important, after seminar finished currentPeriod is last round
-                                    if(req.gameMarksimos.currentStudentSeminar.currentPeriod > req.gameMarksimos.currentStudentSeminar.simulationSpan){
-                                        req.gameMarksimos.currentStudentSeminar.currentPeriod =  req.gameMarksimos.currentStudentSeminar.simulationSpan;
-                                    }
-
-                                }else{
-                                    req.gameMarksimos = {
-                                        currentStudent : false,
-                                        currentStudentSeminar : false
-                                    };
-                                }
-
-                                return sendSuccessResponse(options, next);
-
-                            }).fail(function(err){
-                                next(err);
-                            }).done();
-
-                        }
-                    });
-                }else {
-                    //token过期
-                    options.message = 'Token have expired.';
-                    sendFailureResponse(options, next);
+            Token.verifyToken(token, function(err, user) {
+                if (err) {
+                    options.message = err;
+                    return sendFailureResponse(options, next);
                 }
+                req.user = user;
+
+                // 同时查询改用户当前所玩的Seminar
+                seminarModel.findSeminarByUserId(user.id).then(function(seminarResult){
+                    if(seminarResult){
+
+                        req.gameMarksimos = {
+                            currentStudent : user,
+                            currentStudentSeminar : seminarResult,
+                            socketRoomName : false
+                        };
+
+                        var company = _.find(seminarResult.companyAssignment, function(company) {
+                            return company.studentList.indexOf(user.email) > -1;
+                        });
+
+                        if (typeof company !== 'undefined') {
+                            req.gameMarksimos.socketRoomName = seminarResult.seminarId.toString() + company.companyId.toString();
+                        }
+
+                        // very important, after seminar finished currentPeriod is last round
+                        if(req.gameMarksimos.currentStudentSeminar.currentPeriod > req.gameMarksimos.currentStudentSeminar.simulationSpan){
+                            req.gameMarksimos.currentStudentSeminar.currentPeriod =  req.gameMarksimos.currentStudentSeminar.simulationSpan;
+                        }
+
+                    }else{
+                        req.gameMarksimos = {
+                            currentStudent : false,
+                            currentStudentSeminar : false,
+                            socketRoomName : false
+                        };
+                    }
+
+                    return sendSuccessResponse(options, next);
+
+                }).fail(function(err){
+                    next(err);
+                }).done();
             });
         }else {
             options.message = 'Token not found, pls login .';
@@ -385,7 +378,23 @@ exports.registerB2CStudent = function(req, res, next){
     };
 
 
-    userModel.register(newUser).then(function(resultUser) {
+    Captcha.findOneQ({_id: req.cookies['x-captcha-token']})
+    .then(function(cpatcha){
+
+        if(cpatcha) {
+            cpatcha.removeQ();
+        }else{
+            throw new Error('Cancel captcha not found');
+        }
+
+        if( cpatcha.txt !== req.body.captcha.toUpperCase() ) {
+            throw new Error('Cancel captcha error');
+        }
+
+
+        return userModel.register(newUser);
+    })
+    .then(function(resultUser) {
         if (!resultUser) {
             throw new Error('Cancel promise chains. Because Save new user to database error.');
         }
@@ -461,6 +470,51 @@ exports.registerB2CEnterprise = function(req, res, next){
 
 
 };
+
+
+
+
+
+exports.verifyUsername = function(req, res, next){
+
+    var validationErrors = userModel.usernameValidations(req);
+
+    if(validationErrors){
+        return res.status(400).send( {message: validationErrors} );
+    }
+
+    userModel.findOneQ({ username : req.body.username}).then(function(resultUser) {
+        if (resultUser) {
+            throw new Error('Cancel promise chains. Because username is existed.');
+        }
+
+        return res.status(200).send({message: 'username is ok'});
+
+    }).fail(next).done();
+
+};
+
+exports.verifyEmail = function(req, res, next){
+
+    var validationErrors = userModel.emailValidations(req);
+
+    if(validationErrors){
+        return res.status(400).send( {message: validationErrors} );
+    }
+
+    userModel.findOneQ({ email : req.body.email}).then(function(resultUser) {
+        if (resultUser) {
+            throw new Error('Cancel promise chains. Because email is existed.');
+        }
+
+        return res.status(200).send({message: 'email is ok'});
+
+    }).fail(next).done();
+
+};
+
+
+
 
 
 // http://www.hcdlearning.com/e4e/emailverify/registration?email=jinwyp@163.com&emailtoken=f70c16b5-2cf1-42d1-90ba-b2fa1bcd3db8
@@ -691,10 +745,103 @@ exports.forgotPasswordStep2 = function(req, res, next){
 
 
 
+/*var ccap = require('ccap')();//Instantiated ccap class
+exports.generateCaptcha = function(req, res, next) {
+    var ary = ccap.get();
+    var txt = ary[0];
+    var buf = ary[1];
+
+    Captcha.findOneAndRemoveQ({_id: req.cookies['x-captcha-token']})
+    .then(function(cpatcha) {})
+    .fail(next)
+    .done();
+
+    Captcha.createQ({txt: txt})
+    .then(function(captcha) {
+
+        if(captcha){
+            res.cookie('x-captcha-token', captcha._id.toString());
+            res.set('Content-Type', 'image/jpeg');
+            res.end(buf, 'binary');
+        }
+
+    })
+    .fail(next)
+    .done();
+};*/
 
 
 
 
+exports.generatePhoneVerifyCode = function(req, res, next) {
+    req.body.mobilePhone = req.user.mobilePhone || '';
+
+    var validationErrors = userModel.mobilePhoneValidations(req);
+
+    if(validationErrors){
+        return res.status(400).send( {message: validationErrors} );
+    }
+
+
+    var messageXSend = new MessageXSend();
+
+    var verifyCode = String(Math.floor(Math.random() * (999999 - 100000) + 100000 ));
+    var verifyCodeExpires = new Date(new Date().getTime() + 1000 * 60 * 60); // one hour
+
+
+    userModel.updateQ({_id: req.user._id}, {$set: {phoneVerifyCode: verifyCode, phoneVerifyCodeExpires:verifyCodeExpires}})
+    .then(function(savedDoc){
+
+        if(!savedDoc ){
+            throw new Error('Cancel promise chains. Because Update phoneVerifyCode failed. More or less than 1 record is updated. it should be only one !');
+        }
+
+        messageXSend.add_var('code',verifyCode);
+        messageXSend.add_to(req.user.mobilePhone);
+        messageXSend.set_project('pPlo2');
+        var xsendQ = Q.nbind(messageXSend.xsend, messageXSend);
+        return xsendQ();
+    })
+    .then(function(result){
+        var parsedRes = JSON.parse(result);
+        if(parsedRes.status === "error") {
+            return res.status(400).send(parsedRes);
+        }
+        return res.status(200).send({message: 'Generate MobilePhone verify code success'});
+    })
+    .fail(next)
+    .done();
+};
 
 
 
+exports.verifyPhoneVerifyCode = function(req, res, next) {
+    var validationErrors = userModel.mobilePhoneVerifyCodeValidations(req);
+
+    if(validationErrors){
+        return res.status(400).send( {message: validationErrors} );
+    }
+
+    var phoneVerifyCode = req.body.phoneVerifyCode;
+    var user = req.user;
+    var nowDate = new Date();
+
+    if(user.phoneVerifyCodeExpires < nowDate) {
+        return res.status(400).send( {message: "PhoneVerifyCode Expired!"});
+    }
+
+    if(user.phoneVerifyCode !== phoneVerifyCode) {
+        return res.status(400).send( {message: "PhoneVerifyCode not match!"});
+    }
+
+    user.phoneVerified = true;
+    user.saveQ()
+    .then(function(savedDoc){
+        if(!savedDoc ){
+            throw new Error('Cancel promise chains. Because Update user phoneVerified failed. More or less than 1 record is updated. it should be only one !');
+        }
+        return res.status(200).send({message: 'verifyPhoneCode succeed'});
+    })
+    .fail(next).done();
+
+};
