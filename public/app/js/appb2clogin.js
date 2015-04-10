@@ -283,8 +283,6 @@
         }
 
         function addNewLanguage() {
-            vm.newLanguageSkill.language = vm.newLanguageSkill.language.id;
-            vm.newLanguageSkill.level = vm.newLanguageSkill.level.id;
             if (!vm.newLanguageSkill.language || !vm.newLanguageSkill.level) {
                 return;
             }

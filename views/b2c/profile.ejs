@@ -368,11 +368,11 @@
                                 <h3>{{'ProfilePageAddLanguage' | translate}}<span ng-if="!profile.css.addLanguageEditing" ng-click="profile.clickSetEditingState({addLanguageEditing: true})" class="form-control-static add-button glyphicon glyphicon-plus button"></span></h3>
                                 <div class="form-group" ng-if="profile.css.addLanguageEditing">
                                     <div class="col-xs-4">
-                                        <select class="form-control" ng-model="profile.newLanguageSkill.language" ng-options="language.name | translate for language in profile.Constant.language">
+                                        <select class="form-control" ng-model="profile.newLanguageSkill.language" ng-options="language.id as language.name | translate for language in profile.Constant.language">
                                         </select>
                                     </div>
                                     <div class="col-xs-4">
-                                        <select class="form-control col-xs-4" ng-model="profile.newLanguageSkill.level" ng-options="level.name | translate for level in profile.Constant.languageProficiency">
+                                        <select class="form-control col-xs-4" ng-model="profile.newLanguageSkill.level" ng-options="level.id as level.name | translate for level in profile.Constant.languageProficiency">
                                         </select>
                                     </div>
                                     <div class="col-xs-4">
@@ -414,12 +414,11 @@
                                     <div class="row form-group">
                                         <label for="jobType{{$index}}" class="control-label col-md-3 text-right">{{'ProfilePageExperienceInfoJobType' | translate}} :</label>
                                         <div class="col-xs-5" ng-if="!profile.css.experienceEditing">
-                                            <p class="form-control-static">{{profile.currentUser.workExperiences[$index].jobType}}&nbsp</p>
+                                            <p class="form-control-static">{{profile.currentUser.workExperiences[$index].jobType | jobtype | translate}}&nbsp</p>
                                         </div>
                                         <div class="col-xs-5" ng-if="profile.css.experienceEditing">
-                                            <input type="text" ng-model="profile.formData.workExperiences[$index].jobType" id="jobType{{$index}}" name="jobType{{$index}}" class="col-md-2 form-control">
-                                            <!--<select class="form-control col-xs-4" ng-model="profile.formData.workExperiences[$index].jobType" ng-options="job.name | translate for type in profile.Constant.jobType">
-                                            </select>-->
+                                            <!--<input type="text" ng-model="profile.formData.workExperiences[$index].jobType" id="jobType{{$index}}" name="jobType{{$index}}" class="col-md-2 form-control">-->
+                                            <select class="form-control col-xs-4" ng-model="profile.formData.workExperiences[$index].jobType" ng-options="type.id as type.name | translate for type in profile.Constant.jobType"></select>
                                         </div>
                                     </div>
 
@@ -447,12 +446,11 @@
                                     <div class="form-group">
                                         <label for="sizeOfCompany{{$index}}" class="control-label col-md-3 text-right">{{'ProfilePageExperienceInfoSizeOfCompany' | translate}} :</label>
                                         <div class="col-xs-5" ng-if="!profile.css.experienceEditing">
-                                            <p class="form-control-static">{{profile.currentUser.workExperiences[$index].sizeOfCompany}}&nbsp</p>
+                                            <p class="form-control-static">{{profile.currentUser.workExperiences[$index].sizeOfCompany | }}&nbsp</p>
                                         </div>
                                         <div class="col-xs-5" ng-if="profile.css.experienceEditing">
-                                            <input type="text" ng-model="profile.formData.workExperiences[$index].sizeOfCompany" name="sizeOfCompany{{$index}}" id="sizeOfCompany{{$index}}" class="form-control">
-                                            <!--<select class="form-control col-xs-4" ng-model="profile.formData.workExperiences[$index].jobType" ng-options="job.name | translate for type in profile.Constant.sizeOfCompany">
-                                            </select>-->
+                                            <select class="form-control col-xs-4" ng-model="profile.formData.workExperiences[$index].sizeOfCompany" ng-options="job.id as job.name | translate for type in profile.Constant.sizeOfCompany">
+                                            </select>
                                         </div>
                                     </div>
 
@@ -505,7 +503,8 @@
                                     <div class="row form-group">
                                         <label for="jobType" class="control-label col-md-3 text-right">{{'ProfilePageExperienceInfoJobType' | translate}} :</label>
                                         <div class="col-xs-5">
-                                            <input type="text" ng-model="profile.newExperience.jobType" id="jobType" name="jobType" class="col-md-2 form-control">
+                                            <!--<input type="text" ng-model="profile.newExperience.jobType" id="jobType" name="jobType" class="col-md-2 form-control">-->
+                                            <select class="form-control" ng-model="profile.newExperience.jobType" ng-options="type.id as type.name | translate for type in profile.Constant.jobType"></select>
                                         </div>
                                     </div>
 
