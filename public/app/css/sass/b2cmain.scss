@@ -859,6 +859,9 @@ $lineHeight_button: 1.8;
 	padding-right: 30px;
 	padding-left: 25px;
 
+    textarea {
+        resize: vertical;
+    }
 	label {
 		font-weight: normal;
 	}
@@ -957,7 +960,9 @@ $lineHeight_button: 1.8;
 			cursor: pointer;
 		}
 	}
-
+	.gender {
+		margin-bottom: 15px;
+	}
 	.profile-button-container {
 		button {
 			/*margin-right: 0.5em;
