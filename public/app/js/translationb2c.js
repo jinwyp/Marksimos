@@ -694,14 +694,14 @@
             RegisterPageFemale                    : '女',
             RegisterPageRegisterButton            : '确 定',
             //Error Tips for Validation
-            RegisterPageInputNameTip              : '请输入正确的用户名！',
+            RegisterPageInputNameTip              : '请输入正确的用户名',
             RegisterPageNameLengthTip             : '用户名长度为6-20个字符',
             RegisterPageNameExistTip              : '用户名已经存在！',
             RegisterPageInputEmailTip             : "请输入正确的邮箱",
             RegisterPageEmailExistTip             : "邮箱已经存在",
-            RegisterPageInputPasswordTip          : '请输入正确的密码 6-20个字符!',
-            RegisterPageReTypePasswordTip         : '请输入正确的再次输入密码!',
-            RegisterPageInputCaptchaTip           : '请输入正确的验证码!',
+            RegisterPageInputPasswordTip          : '密码长度 6-20个字符',
+            RegisterPageReTypePasswordTip         : '请再次输入密码',
+            RegisterPageInputCaptchaTip           : '请输入正确的验证码',
             RegisterPageSelectGenderTip           : '请选择性别！',
 
             //Check Email
