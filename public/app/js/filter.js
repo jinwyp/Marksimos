@@ -32,6 +32,7 @@
     angular.module('marksimos.filter').filter('language', languageFilter);
     angular.module('marksimos.filter').filter('proficiency', proficiencyFilter);
     angular.module('marksimos.filter').filter('jobtype', jobTypeFilter);
+    angular.module('marksimos.filter').filter('companysize', companySizeFilter);
 
     angular.module('marksimos.filter').filter('usersegment', userSegmentFilter);
     angular.module('marksimos.filter').filter('skupacksize', skuPackSizeFilter);
@@ -99,6 +100,31 @@
             return input || 'jobTypeFullTime';
         };
     }
+
+    function companySizeFilter() {
+        return function(input) {
+            var names = {
+                110: 'jobCompanySize20',
+                120: 'jobCompanySize50',
+                130: 'jobCompanySize100',
+                140: 'jobCompanySize200',
+                150: 'jobCompanySize500',
+                160: 'jobCompanySize1000',
+                170: 'jobCompanySize2000',
+                180: 'jobCompanySize5000',
+                190: 'jobCompanySize10000'
+            };
+
+            if (angular.isNumber(input)) {
+                return names[input];
+            }
+
+            return input || 'jobTypeFullTime';
+        };
+    }
+
+
+
 
 
     function userSegmentFilter () {

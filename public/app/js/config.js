@@ -163,7 +163,7 @@
         ],
 
         jobCompanySize : [
-            { id: 100, name : 'jobCompanySize20'},
+            { id: 110, name : 'jobCompanySize20'},
             { id: 120, name : 'jobCompanySize50'},
             { id: 130, name : 'jobCompanySize100'},
             { id: 140, name : 'jobCompanySize200'},

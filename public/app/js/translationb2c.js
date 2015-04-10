@@ -44,6 +44,17 @@
             jobTypePartTime      : 'Par-time ',
             jobTypeIntern        : 'Intern',
 
+            jobCompanySize20 : 'Less than 20 Employees',
+            jobCompanySize50 : '20-50Employees',
+            jobCompanySize100 : '50-100Employees',
+            jobCompanySize200 : '100-200Employees',
+            jobCompanySize500 : '200-500Employees',
+            jobCompanySize1000 : '500-1000Employees',
+            jobCompanySize2000 : '1000-2000Employees',
+            jobCompanySize5000 : '2000-5000Employees',
+            jobCompanySize10000 : 'Above 5000 Employees',
+            
+
             jobIndustryComputer        : 'Computer, Internet, Telecom, Electronics',
             jobIndustryFinance         : 'Accounting, Finance, Banking, Insurance',
             jobIndustryManufacturing   : 'Trade, Sales, Manufacturing, Operations',
@@ -422,6 +433,17 @@
             jobTypeFullTime      : '全职',
             jobTypePartTime      : '兼职',
             jobTypeIntern        : '实习',
+
+            jobCompanySize20 : '少于20人',
+            jobCompanySize50 : '20-50人',
+            jobCompanySize100 : '50-100人',
+            jobCompanySize200 : '100-200人',
+            jobCompanySize500 : '200-500人',
+            jobCompanySize1000 : '500-1000人',
+            jobCompanySize2000 : '1000-2000人',
+            jobCompanySize5000 : '2000-5000人',
+            jobCompanySize10000 : '5000人以上',
+
 
 
             jobIndustryComputer      : '计算机/互联网/通信/电子',
