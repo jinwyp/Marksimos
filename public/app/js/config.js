@@ -162,6 +162,18 @@
             { id: 30, name : 'jobTypeIntern'}
         ],
 
+        jobCompanySize : [
+            { id: 100, name : 'jobCompanySize20'},
+            { id: 120, name : 'jobCompanySize50'},
+            { id: 130, name : 'jobCompanySize100'},
+            { id: 140, name : 'jobCompanySize200'},
+            { id: 150, name : 'jobCompanySize500'},
+            { id: 160, name : 'jobCompanySize1000'},
+            { id: 170, name : 'jobCompanySize2000'},
+            { id: 180, name : 'jobCompanySize5000'},
+            { id: 190, name : 'jobCompanySize10000'}
+        ],
+
         jobIndustry : [
             { id: 1100, name : 'jobIndustryComputer', children:
                 [
