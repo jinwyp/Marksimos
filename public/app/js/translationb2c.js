@@ -318,7 +318,7 @@
 
             //Check Email
             RegisterPageGreet                     : 'hi:',
-            RegisterPageCheckEmailText1           : 'Thanks for registering for E4E!',
+            RegisterPageCheckEmailText1           : 'Thanks for registering for Bridge+!',
             RegisterPageCheckEmailText2           : 'We send an email to your email box: ',
             RegisterPageCheckEmailText3           : 'Please open your email, and click the link in the email to complete your registering.',
             RegisterPageCheckEmailText4           : 'Open immediately',
@@ -336,7 +336,7 @@
             LoginPagePasswordPlaceholder : 'Password',
             LoginPageRememberMe          : 'Remember me',
             LoginPageLoginButton         : 'Login',
-            LoginPageRegisterButton      : 'or register an E4E account',
+            LoginPageRegisterButton      : 'or register an account',
             LoginPageForgetPassword      : 'Forget password?',
 
 
@@ -706,7 +706,7 @@
 
             //Check Email
             RegisterPageGreet                     : '您好:',
-            RegisterPageCheckEmailText1           : '感谢您注册E4E !',
+            RegisterPageCheckEmailText1           : '感谢您注册Bridge+ !',
             RegisterPageCheckEmailText2           : '我们发送了一封邮件到您的邮箱: ',
             RegisterPageCheckEmailText3           : '请打开您的邮箱, 点击邮件中链接即可完成注册.',
             RegisterPageCheckEmailText4           : '立即查看',
@@ -724,7 +724,7 @@
             LoginPagePasswordPlaceholder : '密码',
             LoginPageRememberMe          : '记住密码 自动登录',
             LoginPageLoginButton         : '登  录',
-            LoginPageRegisterButton      : '或注册E4E账号',
+            LoginPageRegisterButton      : '或注册账号',
             LoginPageForgetPassword      : '忘记密码？',
 
 
