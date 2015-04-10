@@ -854,6 +854,9 @@ $lineHeight_button: 1.8;
 }
 
 .profile-detail {
+	padding-right: 30px;
+	padding-left: 25px;
+
 	label {
 		font-weight: normal;
 	}
@@ -861,17 +864,14 @@ $lineHeight_button: 1.8;
 		padding: 1em;
 		font-size:0.9em;
 		label {
-			height: 34px;
+			min-height: 34px;
 		}
 	}
 	ul {
 		list-style: none;
 		padding-left: 0;
 	}
-	padding-right: 30px;
-	padding-left: 25px;
-
-	button, .button {
+	.button {
 		width: 85px;
 		height: 32px;
 		font-size: 15px;
@@ -881,11 +881,12 @@ $lineHeight_button: 1.8;
 		@include box-shadow(#797979 0px 2px 4px);
 		cursor: pointer;
 	}
+
 	.add-button, .remove-button{
 		margin-top: 5px;
 		height: auto;
 		width: auto;
-		padding: 3px;
+		padding: 2px;
 		font-size: 10px;
 	}
 	.add-button, .done {
@@ -981,6 +982,36 @@ $lineHeight_button: 1.8;
 	.team-info {
 		.head {
 			margin-left: 80px;
+		}
+	}
+
+	.education-background, .work-experience {
+		h3 {
+			font-size: 16px;
+			margin-top: 0;
+			.button {
+				margin-left: 17px;
+				margin-top: 0;
+			}
+		}
+
+		.added-language {
+			margin-bottom: 6px;
+			.button {
+				margin-top: 0;
+			}
+			.col-xs-4 {
+				width: 28%;
+			}
+		}
+
+		.education, .experience {
+			margin-bottom: 30px;
+		}
+	}
+	.work-experience {
+		.save-button-container {
+			margin-top: 40px;
 		}
 	}
 }
