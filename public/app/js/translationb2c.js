@@ -53,7 +53,7 @@
             jobCompanySize2000 : '1000-2000Employees',
             jobCompanySize5000 : '2000-5000Employees',
             jobCompanySize10000 : 'Above 5000 Employees',
-            
+
 
             jobIndustryComputer        : 'Computer, Internet, Telecom, Electronics',
             jobIndustryFinance         : 'Accounting, Finance, Banking, Insurance',
@@ -169,7 +169,8 @@
             ProfilePageEmail                         : 'Email',
             ProfilePageSchoolInfoMajor: 'Major',
             ProfilePageSchoolInfoGraduationDate: 'Graduation Date',
-            ProfilePageSchoolInfoAbroad: 'Did you go abroad for exchange? (If yes, mention the University, country and time period)',
+            ProfilePageSchoolInfoAbroad: 'Did you go abroad for exchange?',
+            ProfilePageSchoolInfoAbroadInfo: '(If yes, mention the University, country and time period)',
             ProfilePageSchoolInfoAchievements: 'Achievements',
             ProfilePageTabLanguageSkills: 'Language Skills',
             ProfilePageEducation: 'Education',
@@ -559,7 +560,8 @@
             ProfilePageEmail                         : '邮件',
             ProfilePageSchoolInfoMajor: '专业',
             ProfilePageSchoolInfoGraduationDate: '毕业日期',
-            ProfilePageSchoolInfoAbroad: '是否有国外留学经历? (如果是，请填写大学，国家以及时间)',
+            ProfilePageSchoolInfoAbroad: '是否有国外留学经历?',
+            ProfilePageSchoolInfoAbroadInfo: '(如果是，请填写大学，国家以及时间)',
             ProfilePageSchoolInfoAchievements: '成就',
             ProfilePageTabLanguageSkills: '外语技能',
             ProfilePageEducation:'教育经历',
