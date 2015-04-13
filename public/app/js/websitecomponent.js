@@ -18,10 +18,17 @@
 
 
     angular.module('marksimos.websitecomponent').directive('b2cHeader', ['$window', '$translate', 'Student', b2cHeaderComponent ]);
+    angular.module('marksimos.websitecomponent').directive('b2cSubMenu', [b2cSubMenuComponent]);
     angular.module('marksimos.websitecomponent').directive('userHeader', ['$window', '$translate', 'Student', userHeaderComponent ]);
     angular.module('marksimos.websitecomponent').directive('headerAdmin', ['$window', '$translate', 'Student', adminHeaderComponent]);
     angular.module('marksimos.websitecomponent').directive('menuAdmin', [adminMenuComponent]);
 
+    function b2cSubMenuComponent(){
+        return {
+            restrict: 'AE',
+            templateUrl: 'b2csubmenu.html'
+        }
+    }
 
     function b2cHeaderComponent($window, $translate, Student){
         return {
