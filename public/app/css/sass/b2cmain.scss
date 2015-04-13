@@ -89,7 +89,6 @@ body {
     min-width: 1200px;
     font-family: "Microsoft YaHei" ! important;
     font-size: 16px;
-    min-height: 100%;
 }
 
 .b2c-container {
@@ -876,6 +875,13 @@ $lineHeight_button: 1.8;
 		list-style: none;
 		padding-left: 0;
 	}
+    pre {
+        padding-left: 0;
+        margin: 0;
+        font-size: inherit;
+        background-color: $color_white;
+        border: none;
+    }
 	.button {
 		width: 85px;
 		height: 32px;

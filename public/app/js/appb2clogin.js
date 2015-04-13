@@ -421,6 +421,8 @@
                     addNewAchievement();
                 }
 
+                if (vm.newLanguageSkill && vm.newLanguageSkill)
+
                 vm.formData.eductionBackgrounds && vm.formData.eductionBackgrounds.forEach(function(education, i) {
                     if (education._newAchievement) {
                         addNewAchievementToExistEducation(i);
@@ -433,7 +435,7 @@
                     angular.copy(vm.formData, vm.currentUser);
 
                     vm.newEducation = null;
-                    vm.newLanguage = null;
+                    vm.newLanguageSkill = null;
                     vm.newExperience = null;
 
                     if (!slient) {

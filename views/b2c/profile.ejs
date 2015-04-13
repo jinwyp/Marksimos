@@ -239,21 +239,22 @@
                                         <span class="err-msg control-label form-control-static col-xs-4" ng-if="schoolForm['entryDate' +  $index].$dirty && schoolForm['entryDate' +  $index].$error.$required">{{'ProfilePageRequiredError' | translate}}</span>
                                     </div>
 
-                                    <div class="row form-group" ng-class="{'has-error': schoolForm['graduationDate' + $index].$invalid, 'has-success':schoolForm.graduationDate.$dirty&&schoolForm.graduationDate.$valid}">
+                                    <div class="row form-group" ng-class="{'has-error': schoolForm['graduationDate' +  $index].$dirty && schoolForm['graduationDate' + $index].$invalid, 'has-success':schoolForm['graduationDate' + $index].$dirty&&schoolForm['graduationDate' + $index].$valid}">
                                         <label for="graduationDate{{$index}}" class="control-label col-md-3 text-right">{{'ProfilePageSchoolInfoGraduationDate' | translate}} :</label>
                                         <div class="col-xs-3" ng-if="!profile.css.educationEditing">
                                             <p class="form-control-static">{{profile.currentUser.eductionBackgrounds[$index].graduationDate|date:"yyyy-MM-dd"}}&nbsp</p>
                                         </div>
                                         <div class="col-xs-5" ng-if="profile.css.educationEditing">
-                                            <input type="text" data-date-format="yyyy-MM-dd" data-min-date="{{profile.formData.eductionBackgrounds[$index].entryDate}}" data-autoclose="1" ng-model="profile.formData.eductionBackgrounds[$index].graduationDate" id="graduationDate{{$index}}" name="graduationDate{{$index}}" class="form-control" bs-datepicker>
+                                            <input required type="text" data-date-format="yyyy-MM-dd" data-min-date="{{profile.formData.eductionBackgrounds[$index].entryDate}}" data-autoclose="1" ng-model="profile.formData.eductionBackgrounds[$index].graduationDate" id="graduationDate{{$index}}" name="graduationDate{{$index}}" class="form-control" bs-datepicker>
                                         </div>
-                                        <span class="err-msg control-label form-control-static col-xs-4" ng-if="schoolForm['graduationDate' + $index].$invalid">{{'ProfilePageDateFormatError' | translate}}</span>
+                                        <span class="err-msg control-label form-control-static col-xs-4" ng-if="schoolForm['graduationDate' +  $index].$dirty && schoolForm['graduationDate' + $index].$invalid">{{'ProfilePageDateFormatError' | translate}}</span>
+                                        <span class="err-msg control-label form-control-static col-xs-4" ng-if="schoolForm['graduationDate' +  $index].$dirty && schoolForm['graduationDate' +  $index].$error.$required">{{'ProfilePageRequiredError' | translate}}</span>
                                     </div>
 
                                     <div class="form-group">
                                         <label for="abroad{{$index}}" class="control-label col-md-3 text-right">{{'ProfilePageSchoolInfoAbroad' | translate}} :</label>
                                         <div class="col-xs-9" ng-if="!profile.css.educationEditing">
-                                            <p class="form-control-static">{{profile.currentUser.eductionBackgrounds[$index].abroad}}&nbsp</p>
+                                            <pre class="form-control-static">{{profile.currentUser.eductionBackgrounds[$index].abroad}}&nbsp</pre>
                                         </div>
                                         <div class="col-xs-9" ng-if="profile.css.educationEditing">
                                             <div class="row">
@@ -267,7 +268,7 @@
                                     <div class="form-group">
                                         <label for="achievements{{$index}}" class="control-label col-md-3 text-right">{{'ProfilePageSchoolInfoAchievements' | translate}} :</label>
                                         <div class="col-xs-9" ng-if="!profile.css.educationEditing">
-                                            <p class="form-control-static" ng-repeat="achievement in profile.currentUser.eductionBackgrounds[$index].achievements">{{achievement.description}}</p>
+                                            <pre class="form-control-static" ng-repeat="achievement in profile.currentUser.eductionBackgrounds[$index].achievements">{{achievement.description}}</pre>
                                         </div>
                                         <div class="col-xs-9" ng-if="profile.css.educationEditing">
                                             <div class="row" ng-init="innerIndex = $index" ng-repeat="achievement in profile.formData.eductionBackgrounds[outerIndex].achievements">
@@ -294,41 +295,46 @@
                             <div ng-if="profile.css.educationEditing" class="addEducation">
                                 <h3>{{'ProfilePageAddEducation' | translate}}: <span ng-if="!profile.css.addEducationEditing" ng-click="profile.clickSetEditingState({addEducationEditing: true})" class="form-control-static add-button glyphicon glyphicon-plus button"></span></h3>
                                 <div ng-if="profile.css.addEducationEditing">
-                                    <div class="form-group">
+                                    <div class="form-group" ng-class="{'has-success':schoolForm.school.$dirty&&schoolForm.school.$valid, 'has-error':schoolForm.school.$dirty&&schoolForm.school.$invalid}">
                                         <label for="school" class="control-label col-md-3 text-right">{{'ProfilePageSchoolInfoCollege' | translate}} :</label>
                                         <div class="col-xs-5">
-                                            <input type="text" ng-model="profile.newEducation.university" name="school" id="school" class="form-control">
+                                            <input required type="text" ng-model="profile.newEducation.university" name="school" id="school" class="form-control">
                                         </div>
+                                        <span class="err-msg control-label form-control-static col-xs-4" ng-if="schoolForm.school.$dirty && schoolForm.school.$invalid">{{'ProfilePageRequiredError' | translate}}</span>
                                     </div>
 
-                                    <div class="row form-group">
+                                    <div class="row form-group" ng-class="{'has-success':schoolForm.degree.$dirty&&schoolForm.degree.$valid, 'has-error':schoolForm.degree.$dirty&&schoolForm.degree.$invalid}">
                                         <label for="degree" class="control-label col-md-3 text-right">{{'ProfilePageSchoolInfoDegree' | translate}} :</label>
                                         <div class="col-xs-5">
-                                            <input type="text" ng-model="profile.newEducation.degree" id="degree" name="degree" class="col-md-2 form-control">
+                                            <input required type="text" ng-model="profile.newEducation.degree" id="degree" name="degree" class="col-md-2 form-control">
                                         </div>
+                                        <span class="err-msg control-label form-control-static col-xs-4" ng-if="schoolForm.degree.$dirty && schoolForm.degree.$invalid">{{'ProfilePageRequiredError' | translate}}</span>
                                     </div>
 
-                                    <div class="row form-group">
+                                    <div class="row form-group" ng-class="{'has-success':schoolForm.major.$dirty&&schoolForm.major.$valid, 'has-error':schoolForm.major.$dirty&&schoolForm.major.$invalid}">
                                         <label for="major" class="control-label col-md-3 text-right">{{'ProfilePageSchoolInfoMajor' | translate}} :</label>
                                         <div class="col-xs-5">
-                                            <input type="text" ng-model="profile.newEducation.major" id="major" name="major" class="col-md-2 form-control">
+                                            <input required type="text" ng-model="profile.newEducation.major" id="major" name="major" class="col-md-2 form-control">
                                         </div>
+                                        <span class="err-msg control-label form-control-static col-xs-4" ng-if="schoolForm['major' +  $index].$dirty && schoolForm.major.$invalid">{{'ProfilePageRequiredError' | translate}}</span>
                                     </div>
 
-                                    <div class="row form-group" ng-class="{'has-error': schoolForm.newEntryDate.$invalid, 'has-success':schoolForm.newEntryDate.$dirty&&schoolForm.newEntryDate.$valid}">
-                                        <label for="newEntryDate" class="control-label col-md-3 text-right">{{'ProfilePageSchoolInfoEnterDate' | translate}} :</label>
+                                    <div class="row form-group" ng-class="{'has-error': schoolForm.entryDate.$dirty && schoolForm.entryDate.$invalid, 'has-success':schoolForm.entryDate.$dirty && schoolForm.entryDate.$valid}">
+                                        <label for="entryDate" class="control-label col-md-3 text-right">{{'ProfilePageSchoolInfoEnterDate' | translate}} :</label>
                                         <div class="col-xs-5">
-                                            <input type="text" data-date-format="yyyy-MM-dd" data-min-date="02/10/70" data-max-date="{{profile.newEducation.graduationDate}}" data-autoclose="1" ng-model="profile.newEducation.entryDate" id="newEntryDate" name="newEntryDate" class="form-control" bs-datepicker>
+                                            <input required type="text" data-date-format="yyyy-MM-dd" data-min-date="02/10/70" data-max-date="{{profile.newEducation.graduationDate}}" data-autoclose="1" ng-model="profile.newEducation.entryDate" id="entryDate" name="entryDate" class="form-control" bs-datepicker>
                                         </div>
-                                        <span class="err-msg control-label form-control-static col-xs-4" ng-if="schoolForm.newEntryDate.$invalid">{{'ProfilePageDateFormatError' | translate}}</span>
+                                        <span class="err-msg control-label form-control-static col-xs-4" ng-if="schoolForm.entryDate.$dirty && schoolForm.entryDate.$invalid">{{'ProfilePageDateFormatError' | translate}}</span>
+                                        <span class="err-msg control-label form-control-static col-xs-4" ng-if="schoolForm.entryDate.$dirty && schoolForm.entryDate.$error.$required">{{'ProfilePageRequiredError' | translate}}</span>
                                     </div>
 
-                                    <div class="row form-group" ng-class="{'has-error': schoolForm.newGraduationDate.$invalid, 'has-success':schoolForm.newGraduationDate.$dirty&&schoolForm.newGraduationDate.$valid}">
-                                        <label for="newGraduationDate" class="control-label col-md-3 text-right">{{'ProfilePageSchoolInfoGraduationDate' | translate}} :</label>
+                                    <div class="row form-group" ng-class="{'has-error': schoolForm.graduationDate.$dirty && schoolForm.graduationDate.$invalid, 'has-success':schoolForm.graduationDate.$dirty&&schoolForm.graduationDate.$valid}">
+                                        <label for="graduationDate" class="control-label col-md-3 text-right">{{'ProfilePageSchoolInfoGraduationDate' | translate}} :</label>
                                         <div class="col-xs-5">
-                                            <input type="text" data-date-format="yyyy-MM-dd" data-min-date="{{profile.newEducation.entryDate}}" data-autoclose="1" ng-model="profile.newEducation.graduationDate" id="newGraduationDate" name="newGraduationDate" class="form-control" bs-datepicker>
+                                            <input required type="text" data-date-format="yyyy-MM-dd" data-min-date="{{profile.newEducation.entryDate}}" data-autoclose="1" ng-model="profile.newEducation.graduationDate" id="graduationDate" name="graduationDate" class="form-control" bs-datepicker>
                                         </div>
-                                        <span class="err-msg control-label form-control-static col-xs-4" ng-if="schoolForm.newGraduationDate.$invalid">{{'ProfilePageDateFormatError' | translate}}</span>
+                                        <span class="err-msg control-label form-control-static col-xs-4" ng-if="schoolForm.graduationDate.$dirty && schoolForm.graduationDate.$invalid">{{'ProfilePageDateFormatError' | translate}}</span>
+                                        <span class="err-msg control-label form-control-static col-xs-4" ng-if="schoolForm.graduationDate.$dirty && schoolForm.graduationDate.$error.$required">{{'ProfilePageRequiredError' | translate}}</span>
                                     </div>
 
                                     <div class="form-group">
@@ -445,7 +451,6 @@
                                         </div>
                                     </div>
 
-
                                     <div class="form-group">
                                         <label for="position{{$index}}" class="control-label col-md-3 text-right">{{'ProfilePageExperienceInfoPosition' | translate}} :</label>
                                         <div class="col-xs-5" ng-if="!profile.css.experienceEditing">
@@ -488,11 +493,10 @@
                                         <span class="err-msg control-label form-control-static col-xs-4" ng-if="experienceForm['endDate' +  $index].$invalid">{{'ProfilePageDateFormatError' | translate}}</span>
                                     </div>
 
-
                                     <div class="form-group">
                                         <label for="jobExperience{{$index}}" class="control-label col-md-3 text-right">{{'ProfilePageExperienceInfoJobExperience' | translate}} :</label>
                                         <div class="col-xs-5" ng-if="!profile.css.experienceEditing">
-                                            <p class="form-control-static">{{profile.currentUser.workExperiences[$index].jobExperience}}&nbsp</p>
+                                            <pre class="form-control-static">{{profile.currentUser.workExperiences[$index].jobExperience}}&nbsp</pre>
                                         </div>
                                         <div class="col-xs-9" ng-if="profile.css.experienceEditing">
                                             <div class="row">

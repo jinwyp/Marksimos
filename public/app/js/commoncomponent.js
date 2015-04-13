@@ -327,24 +327,14 @@
 
                 function checkFix() {
                     var windowHeight = $document[0].documentElement.clientHeight;
-                    var current = elem[0];
+                    var bodyHeight = $document[0].body.offsetHeight;
                     var hasFixed = elem.hasClass(className);
                     if (hasFixed) {
-                        var bodyHeight = $document[0].body.offsetHeight;
-                        if (bodyHeight > windowHeight) {
+                        if (bodyHeight + elemHeight > windowHeight) {
                             elem.removeClass(className);
                         }
-                    } else {
-                        var bottomToCeiling = current.offsetTop + elemHeight;
-                        current = current.offsetParent;
-                        while (current) {
-                            bottomToCeiling += current.offsetTop;
-                            current = current.offsetParent;
-                        }
-
-                        if (windowHeight > bottomToCeiling) {
-                            elem.addClass(className);
-                        }
+                    } else if (bodyHeight < windowHeight) {
+                        elem.addClass(className);
                     }
                 }
             }
