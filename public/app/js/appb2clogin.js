@@ -203,6 +203,7 @@
             addStudentFailedInfo: false,
             currentTabIndex: 1,
             updateTeamNameDisabled: true,
+            saving: false,
 
             formEditing: false,
 
@@ -304,25 +305,23 @@
         }
 
         function addNewAchievement() {
-            if (vm.newAchievement) {
-                if (!vm.newEducation) {
-                    vm.newEducation = {
-                        achievements: []
-                    };
-                }
-                if (!vm.newEducation.achievements) {
-                    vm.newEducation.achievements = [];
-                }
-
-                vm.newEducation.achievements.push(vm.newAchievement);
-                vm.newAchievement = {};
+            if (!vm.newEducation) {
+                vm.newEducation = {
+                    achievements: []
+                };
             }
+            if (!vm.newEducation.achievements) {
+                vm.newEducation.achievements = [];
+            }
+
+            vm.newEducation.achievements.push(vm.newAchievement);
+            vm.newAchievement = null;
         }
 
         function addNewAchievementToExistEducation(index) {
             var education = vm.formData.eductionBackgrounds[index];
             education.achievements.push(education._newAchievement);
-            education._newAchievement = {};
+            education._newAchievement = null;
         }
 
         function deleteExperience(index) {
@@ -418,6 +417,18 @@
                     vm.formData.workExperiences.push(vm.newExperience);
                 }
 
+                if (vm.newAchievement) {
+                    addNewAchievement();
+                }
+
+                vm.formData.eductionBackgrounds && vm.formData.eductionBackgrounds.forEach(function(education, i) {
+                    if (education._newAchievement) {
+                        addNewAchievementToExistEducation(i);
+                    }
+                });
+
+
+                vm.css.saving = true;
                 Student.updateStudentB2CInfo(vm.formData).then(function() {
                     angular.copy(vm.formData, vm.currentUser);
 
@@ -439,6 +450,8 @@
                             vm.css.errorFields[item.param] = true;
                         });
                     }
+                }).finally(function() {
+                    vm.css.saving = false;
                 });
             }
         }

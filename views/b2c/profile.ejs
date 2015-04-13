@@ -194,45 +194,49 @@
                             <div class="education" ng-repeat="education in profile.formData.eductionBackgrounds" ng-init="outerIndex = $index">
                                 <h3>{{'ProfilePageEducation' | translate}} {{$index + 1}}:<span ng-click="profile.clickDeleteEducation($index)" ng-if="profile.css.educationEditing" class="form-control-static remove-button glyphicon glyphicon-minus button"></span></h3>
                                 <div>
-                                    <div class="form-group">
+                                    <div class="form-group" ng-class="{'has-success':schoolForm['school' + $index].$dirty&&schoolForm['school' + $index].$valid, 'has-error':schoolForm['school' + $index].$dirty&&schoolForm['school' + $index].$invalid}">
                                         <label for="school{{$index}}" class="control-label col-md-3 text-right">{{'ProfilePageSchoolInfoCollege' | translate}} :</label>
                                         <div class="col-xs-5" ng-if="!profile.css.educationEditing">
                                             <p class="form-control-static">{{profile.currentUser.eductionBackgrounds[$index].university}}&nbsp</p>
                                         </div>
                                         <div class="col-xs-5" ng-if="profile.css.educationEditing">
-                                            <input type="text" ng-model="profile.formData.eductionBackgrounds[$index].university" name="school{{$index}}" id="school{{$index}}" class="form-control">
+                                            <input required type="text" ng-model="profile.formData.eductionBackgrounds[$index].university" name="school{{$index}}" id="school{{$index}}" class="form-control">
                                         </div>
+                                        <span class="err-msg control-label form-control-static col-xs-4" ng-if="schoolForm['school' + $index].$dirty && schoolForm['school' + $index].$invalid">{{'ProfilePageRequiredError' | translate}}</span>
                                     </div>
 
-                                    <div class="row form-group">
+                                    <div class="row form-group" ng-class="{'has-success':schoolForm['degree' + $index].$dirty&&schoolForm['degree' + $index].$valid, 'has-error':schoolForm['degree' + $index].$dirty&&schoolForm['degree' + $index].$invalid}">
                                         <label for="degree{{$index}}" class="control-label col-md-3 text-right">{{'ProfilePageSchoolInfoDegree' | translate}} :</label>
                                         <div class="col-xs-5" ng-if="!profile.css.educationEditing">
                                             <p class="form-control-static">{{profile.currentUser.eductionBackgrounds[$index].degree}}&nbsp</p>
                                         </div>
                                         <div class="col-xs-5" ng-if="profile.css.educationEditing">
-                                            <input type="text" ng-model="profile.formData.eductionBackgrounds[$index].degree" id="degree{{$index}}" name="degree{{$index}}" class="col-md-2 form-control">
+                                            <input required type="text" ng-model="profile.formData.eductionBackgrounds[$index].degree" id="degree{{$index}}" name="degree{{$index}}" class="col-md-2 form-control">
                                         </div>
+                                        <span class="err-msg control-label form-control-static col-xs-4" ng-if="schoolForm['degree' + $index].$dirty && schoolForm['degree' + $index].$invalid">{{'ProfilePageRequiredError' | translate}}</span>
                                     </div>
 
-                                    <div class="row form-group">
+                                    <div class="row form-group" ng-class="{'has-success':schoolForm['major' + $index].$dirty&&schoolForm['major' + $index].$valid, 'has-error':schoolForm['major' + $index].$dirty&&schoolForm['major' + $index].$invalid}">
                                         <label for="major{{$index}}" class="control-label col-md-3 text-right">{{'ProfilePageSchoolInfoMajor' | translate}} :</label>
                                         <div class="col-xs-5" ng-if="!profile.css.educationEditing">
                                             <p class="form-control-static">{{profile.currentUser.eductionBackgrounds[$index].major}}&nbsp</p>
                                         </div>
                                         <div class="col-xs-5" ng-if="profile.css.educationEditing">
-                                            <input type="text" ng-model="profile.formData.eductionBackgrounds[$index].major" id="major{{$index}}" name="major{{$index}}" class="col-md-2 form-control">
+                                            <input required type="text" ng-model="profile.formData.eductionBackgrounds[$index].major" id="major{{$index}}" name="major{{$index}}" class="col-md-2 form-control">
                                         </div>
+                                        <span class="err-msg control-label form-control-static col-xs-4" ng-if="schoolForm['major' +  $index].$dirty && schoolForm['major' + $index].$invalid">{{'ProfilePageRequiredError' | translate}}</span>
                                     </div>
 
-                                    <div class="row form-group" ng-class="{'has-error': schoolForm['entryDate' +  $index].$invalid, 'has-success':schoolForm.entryDate.$dirty&&schoolForm.entryDate.$valid}">
+                                    <div class="row form-group" ng-class="{'has-error': schoolForm['entryDate' +  $index].$dirty && schoolForm['entryDate' +  $index].$invalid, 'has-success':schoolForm['entryDate' +  $index].$dirty && schoolForm['entryDate' +  $index].$valid}">
                                         <label for="entryDate{{$index}}" class="control-label col-md-3 text-right">{{'ProfilePageSchoolInfoEnterDate' | translate}} :</label>
                                         <div class="col-xs-3" ng-if="!profile.css.educationEditing">
                                             <p class="form-control-static">{{profile.currentUser.eductionBackgrounds[$index].entryDate|date:"yyyy-MM-dd"}}&nbsp</p>
                                         </div>
                                         <div class="col-xs-5" ng-if="profile.css.educationEditing">
-                                            <input type="text" data-date-format="yyyy-MM-dd" data-min-date="02/10/70" data-max-date="today" data-autoclose="1" ng-model="profile.formData.eductionBackgrounds[$index].entryDate" id="entryDate{{$index}}" name="entryDate{{$index}}" class="form-control" bs-datepicker>
+                                            <input required type="text" data-date-format="yyyy-MM-dd" data-min-date="02/10/70" data-max-date="today" data-autoclose="1" ng-model="profile.formData.eductionBackgrounds[$index].entryDate" id="entryDate{{$index}}" name="entryDate{{$index}}" class="form-control" bs-datepicker>
                                         </div>
-                                        <span class="err-msg control-label form-control-static col-xs-4" ng-if="schoolForm['entryDate' +  $index].$invalid">{{'ProfilePageDateFormatError' | translate}}</span>
+                                        <span class="err-msg control-label form-control-static col-xs-4" ng-if="schoolForm['entryDate' +  $index].$dirty && schoolForm['entryDate' +  $index].$invalid">{{'ProfilePageDateFormatError' | translate}}</span>
+                                        <span class="err-msg control-label form-control-static col-xs-4" ng-if="schoolForm['entryDate' +  $index].$dirty && schoolForm['entryDate' +  $index].$error.$required">{{'ProfilePageRequiredError' | translate}}</span>
                                     </div>
 
                                     <div class="row form-group" ng-class="{'has-error': schoolForm['graduationDate' + $index].$invalid, 'has-success':schoolForm.graduationDate.$dirty&&schoolForm.graduationDate.$valid}">
@@ -274,7 +278,7 @@
                                                     <span ng-click="profile.formData.eductionBackgrounds[outerIndex].achievements.splice(innerIndex, 1)" class="form-control-static remove-button glyphicon glyphicon-minus button"></span>
                                                 </div>
                                             </div>
-                                            <div class="row">
+                                            <div ng-if="!profile.css.saving" class="row">
                                                 <div class="col-xs-11">
                                                     <textarea rows="3" ng-model="education._newAchievement.description" name="newAchievement" id="newAchievement" class="form-control"></textarea>
                                                 </div>
@@ -350,11 +354,11 @@
                                                     <span ng-click="profile.newEducation.achievements.splice($index, 1)" class="form-control-static remove-button glyphicon glyphicon-minus button"></span>
                                                 </div>
                                             </div>
-                                            <div class="row">
+                                            <div ng-if="!profile.css.saving" class="row">
                                                 <div class="col-xs-11">
                                                     <textarea rows="3" ng-model="profile.newAchievement.description" name="newAchievement" id="newAchievement" class="form-control"></textarea>
                                                 </div>
-                                                <div class="col-xs-1">
+                                                <div class="col-xs-1" ng-if="profile.newAchievement.description">
                                                     <span ng-click="profile.clickAddNewAchievement()" class="form-control-static add-button glyphicon glyphicon-plus button"></span>
                                                 </div>
                                             </div>
