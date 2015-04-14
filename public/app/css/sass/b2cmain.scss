@@ -89,7 +89,6 @@ body {
     min-width: 1200px;
     font-family: "Microsoft YaHei" ! important;
     font-size: 16px;
-    min-height: 100%;
 }
 
 .b2c-container {
@@ -857,6 +856,7 @@ $lineHeight_button: 1.8;
     textarea {
         resize: vertical;
     }
+<<<<<<< HEAD
     label {
         font-weight: normal;
     }
@@ -1014,6 +1014,174 @@ $lineHeight_button: 1.8;
             margin-top: 40px;
         }
     }
+	label {
+		font-weight: normal;
+	}
+	form {
+		padding: 1em;
+		font-size:0.9em;
+		label {
+			min-height: 34px;
+		}
+	}
+	ul {
+		list-style: none;
+		padding-left: 0;
+	}
+    pre {
+        padding-left: 0;
+        margin: 0;
+        font-size: inherit;
+        background-color: $color_white;
+        border: none;
+    }
+	.button {
+		width: 85px;
+		height: 32px;
+		font-size: 15px;
+		border-style: none;
+		color:$color_white;
+		background-color: #797979;
+		@include box-shadow(#797979 0px 2px 4px);
+		cursor: pointer;
+	}
+
+	.add-button, .remove-button{
+		margin-top: 5px;
+		height: auto;
+		width: auto;
+		padding: 2px;
+		font-size: 10px;
+	}
+	.add-button, .done {
+		background-color: #B82A0C;
+		@include box-shadow($color_register_button_border 0px 2px 4px);
+	}
+
+	// borrows from facebook.
+	.file-input-wrapper {
+		overflow: hidden;
+		position: relative;
+		border: dotted 3px #D3D3D3;
+		background-color: #F5F5F5;
+		width: 240px;
+		height: 100px;
+		font-size: 20px;
+		line-height: 90px;
+		color: #888;
+		cursor: pointer;
+		text-align: center;
+		.file-upload-text {
+			margin-left: -16px;
+			line-height: 27px;
+			font-weight: bold;
+		}
+		.wrapper {
+			position:absolute;
+			top:0;
+			left: 0;
+			width: 100%;
+			height: 100%;
+			.file-input {
+				cursor: pointer;
+				font-size:500px;
+				height: 300px;
+				@include opacity(0);
+				outline: none;
+				position: absolute;
+				bottom:0;
+				right:0;
+			}
+		}
+	}
+	.preview-avatar{
+		width: 240px;
+	}
+	.err-msg {
+		width:auto;
+	}
+    .textarea-err-msg {
+        position: absolute;
+        right: -10px;
+    }
+	.none-bottom {
+		border-bottom: none;
+		padding-bottom:0;
+	}
+	.none-top {
+		border-top: none;
+		padding-top: 0;
+	}
+	.profile-detail-title {
+		line-height: 1.8;
+		border-bottom: #9F9F9F solid 2px;
+		.profile-edit {
+			font-size: 0.8em;
+			float: right;
+			padding-top: 3px;
+			color: #0480CB;
+			cursor: pointer;
+		}
+	}
+	.gender {
+		margin-bottom: 15px;
+	}
+	.profile-button-container {
+		button {
+			/*margin-right: 0.5em;
+			padding: 0.2em 0.5em;*/
+			padding-top:0.2em;
+			padding-bottom: 0.2em;
+			width: 85px;
+			border-style:none;
+			color: $color_white;
+
+			@include border-radius(0px);
+		}
+		button[type=submit] {
+			background-color: #B82A0C;
+			@include box-shadow($color_register_button_border 0px 2px 4px);
+		}
+		.cancel {
+			background-color: #797979;
+			@include box-shadow(#797979 0px 2px 4px);
+		}
+	}
+	.team-info {
+		.head {
+			margin-left: 80px;
+		}
+	}
+
+	.education-background, .work-experience {
+		h3 {
+			font-size: 16px;
+			margin-top: 0;
+			.button {
+				margin-left: 17px;
+				margin-top: 0;
+			}
+		}
+
+		.added-language {
+			margin-bottom: 6px;
+			.button {
+				margin-top: 0;
+			}
+			.col-xs-4 {
+				width: 28%;
+			}
+		}
+
+		.education, .experience {
+			margin-bottom: 30px;
+		}
+	}
+	.work-experience {
+		.save-button-container {
+			margin-top: 40px;
+		}
+	}
 }
 
 .datepicker .text-muted {
