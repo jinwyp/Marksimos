@@ -172,36 +172,73 @@
                     {id:1305, name : 'educationMajorManagement01'},
                     {id:1310, name : 'educationMajorManagement02'},
                     {id:1315, name : 'educationMajorManagement03'},
-                    {id:1320, name : 'educationMajorManagement04'},
-                    {id:1325, name : 'educationMajorManagement05'},
-                    {id:1330, name : 'educationMajorManagement06'},
-                    {id:1335, name : 'educationMajorManagement07'},
-                    {id:1340, name : 'educationMajorManagement08'},
-                    {id:1345, name : 'educationMajorManagement09'}
+                    {id:1320, name : 'educationMajorManagement04'}
                 ]
             },
-            { id: 1400, name : 'educationMajorBiotechnology', children:
+            { id: 1400, name : 'educationMajorLiterature', children:
                 [
-                    {id:1405, name : 'educationMajorBiotechnology01'},
-                    {id:1410, name : 'educationMajorBiotechnology02'},
-                    {id:1415, name : 'educationMajorBiotechnology03'}
+                    {id:1405, name : 'educationMajorLiterature01'},
+                    {id:1410, name : 'educationMajorLiterature02'},
+                    {id:1415, name : 'educationMajorLiterature03'}
                 ]
             },
-            { id: 1500, name : 'educationMajorAdvertising', children:
+            { id: 1500, name : 'educationMajorEngineering', children:
                 [
-                    {id:1505, name : 'educationMajorAdvertising01'},
-                    {id:1510, name : 'educationMajorAdvertising02'},
-                    {id:1515, name : 'educationMajorAdvertising03'},
-                    {id:1520, name : 'educationMajorAdvertising04'},
-                    {id:1525, name : 'educationMajorAdvertising05'}
+                    {id:1505, name : 'educationMajorEngineering01'},
+                    {id:1510, name : 'educationMajorEngineering02'},
+                    {id:1515, name : 'educationMajorEngineering03'},
+                    {id:1520, name : 'educationMajorEngineering04'},
+                    {id:1525, name : 'educationMajorEngineering05'},
+                    {id:1530, name : 'educationMajorEngineering06'},
+                    {id:1535, name : 'educationMajorEngineering07'},
+                    {id:1540, name : 'educationMajorEngineering08'},
+                    {id:1545, name : 'educationMajorEngineering09'},
+                    {id:1550, name : 'educationMajorEngineering10'},
+                    {id:1555, name : 'educationMajorEngineering11'},
+                    {id:1560, name : 'educationMajorEngineering12'},
+                    {id:1565, name : 'educationMajorEngineering13'},
+                    {id:1570, name : 'educationMajorEngineering14'},
+                    {id:1575, name : 'educationMajorEngineering16'},
+                    {id:1580, name : 'educationMajorEngineering17'}
                 ]
             },
-            { id: 1600, name : 'educationMajorConstruction', children:
+            { id: 1600, name : 'educationMajorLaw', children:
                 [
-                    {id:1605, name : 'educationMajorConstruction01'},
-                    {id:1610, name : 'educationMajorConstruction02'},
-                    {id:1615, name : 'educationMajorConstruction03'},
-                    {id:1620, name : 'educationMajorConstruction04'}
+                    {id:1605, name : 'educationMajorLaw01'}
+                ]
+            },
+            { id: 1700, name : 'educationMajorHistory', children:
+                [
+                    {id:1705, name : 'educationMajorHistory01'}
+                ]
+            },
+            { id: 1800, name : 'educationMajorScience', children:
+                [
+                    {id:1805, name : 'educationMajorScience01'},
+                    {id:1810, name : 'educationMajorScience02'},
+                    {id:1815, name : 'educationMajorScience03'},
+                    {id:1820, name : 'educationMajorScience04'},
+                    {id:1825, name : 'educationMajorScience05'},
+                    {id:1830, name : 'educationMajorScience06'},
+                    {id:1835, name : 'educationMajorScience07'},
+                    {id:1840, name : 'educationMajorScience08'},
+                    {id:1845, name : 'educationMajorScience09'},
+                ]
+            },
+            { id: 1900, name : 'educationMajorEducation', children:
+                [
+                    {id:1905, name : 'educationMajorEducation01'}
+                ]
+            },
+            { id: 2000, name : 'educationMajorMedicine', children:
+                [
+                    {id:2005, name : 'educationMajorMedicine01'},
+                    {id:2010, name : 'educationMajorMedicine02'}
+                ]
+            },
+            { id: 2100, name : 'educationMajorAgriculture', children:
+                [
+                    {id:2105, name : 'educationMajorAgriculture01'}
                 ]
             }
 
