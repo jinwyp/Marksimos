@@ -181,7 +181,7 @@
 
             ProfilePageExperience: 'Experience',
             ProfilePageExperienceInfoCompany: 'Company',
-            ProfilePageExperienceInfoJobType: 'Jon Type',
+            ProfilePageExperienceInfoJobType: 'Job Type',
             ProfilePageExperienceInfoIndustry: 'Industry',
             ProfilePageExperienceInfoPosition: 'Position',
             ProfilePageExperienceInfoSizeOfCompany: 'Size of Company',

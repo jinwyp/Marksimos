@@ -233,8 +233,8 @@
 
         vm.currentUser = {};
         vm.newEducation = null;
-        vm.newLanguageSkill = {};
-        vm.newAchievement = {};
+        vm.newLanguageSkill = null;
+        vm.newAchievement = null;
         vm.newExperience = null;
 
         vm.formData = {};
@@ -297,7 +297,7 @@
             if (!isExist) {
                 vm.formData.LanguageSkills.push(vm.newLanguageSkill);
             }
-            vm.newLanguageSkill = {};
+            vm.newLanguageSkill = null;
         }
 
         function deleteLanguage(index) {
@@ -421,13 +421,17 @@
                     addNewAchievement();
                 }
 
-                if (vm.newLanguageSkill && vm.newLanguageSkill)
+                if (vm.newLanguageSkill) {
+                    addNewLanguage();
+                }
 
-                vm.formData.eductionBackgrounds && vm.formData.eductionBackgrounds.forEach(function(education, i) {
-                    if (education._newAchievement) {
-                        addNewAchievementToExistEducation(i);
-                    }
-                });
+                if (vm.formData.eductionBackgrounds) {
+                    vm.formData.eductionBackgrounds.forEach(function(education, i) {
+                        if (education._newAchievement) {
+                            addNewAchievementToExistEducation(i);
+                        }
+                    });
+                }
 
 
                 vm.css.saving = true;
@@ -454,6 +458,12 @@
                     }
                 }).finally(function() {
                     vm.css.saving = false;
+                });
+            } else {
+                Object.keys(form).forEach(function(key){
+                    if (key[0] != '$') {
+                        form[key].$setDirty();
+                    }
                 });
             }
         }
