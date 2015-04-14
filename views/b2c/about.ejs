@@ -1,14 +1,85 @@
 ﻿<% include include/headcss.ejs %>
 
 
-<body ng-app="b2clogin" >
+<body id="about" ng-app="b2cwebsite">
 
     <b2c-header showlogin="true"></b2c-header>
     <b2c-sub-menu></b2c-sub-menu>
 
-    <div class="middle b2c-container">
-        placeholder
+    <div class="middle">
+        <div class="b2c-container">
+            <img src="/app/css/images/b2c_about_header.jpg" width="1160" alt=""/>
+
+            <div id="bridge-discription">
+                <div class="static clearfix">
+                    <div class="title">Bridge+</div>
+                    <div class="module">
+                        <div class="icon icon1"></div>
+                        <p>
+                            Bridge+ 是由全球第一个飞上亚太空的华人女性、MIT媒体实验室中国特别顾问、哈佛中国校友会副主席李青青 (Julia Li) 女士
+                        发起，邀请曾在北京、上海、硅谷、南美
+                        非洲工作，曾服务于高盛、玛氏......
+                        </p>
+                        <button>更多</button>
+                    </div>
+                    <div class="module">
+                        <div class="icon icon2"></div>
+                        <p>
+                            Bridge+ 旨在为学生搭建校园学习与社会职业发展之间的桥梁，解决学生在商业技能水平与企业要求之间的断层问题；为企业
+                        以最高效且精准的方式对接潜在人才，解决企业寻找人才与学生寻找就业机会之......
+                        </p>
+                        <button>更多</button>
+                    </div>
+                    <div class="module">
+                        <div class="icon icon3"></div>
+                        <p>
+                            Bridge+ 旨在为学生搭建校园学习与社会职业发展之间的桥梁，解决学生在商业技能水平与企业要求之间的断层问题；为企业
+                        以最高效且精准的方式对接潜在人才，解决企业寻找人才与学生寻找就业机会之......
+                        </p>
+                        <button>更多</button>
+                    </div>
+                </div>
+                <div></div>
+            </div>
+
+            <div id="vision">
+                <h3>我们的愿景</h3>
+                <p>培养具有创新创业精神的未来领导者，引领体验式学习的革命</p>
+            </div>
+
+            <div id="philosophy">
+                <h3>我们的理念</h3>
+                <ul class="nav nav-tabs">
+                    <li>
+                        <a href ng-click="tabsecond=false">体验式学习</a>
+                    </li>
+                    <li>
+                        <a href ng-click="tabsecond=true">互助学习</a>
+                    </li>
+                </ul>
+                <div class="clearfix" ng-if="!tabsecond">
+                    <p>
+                        体验式学习，结合“做中学learning by doing”、“经验学习圈experiential lea
+                        rning cycle”、“认知发展论theory of cognitive development”等学习理论，
+                        为达到某些预期结果而特别为学员设计。在训练过程中，学员在引导下进行”学习”
+                        而非听训练员“说教”，透过个人在人际活动中充分参与，获得实作经验，经观察
+                        反省与对话交流中获得新的态度信念，并将之整合运用于未来新情境的解决行动方
+                        案或策略上。简单来说，体验式学习解决传统教育的瓶颈，如伽利略所说：“你无
+                        法教别人任何东西，你只能帮助别人发现一些东西
+                    </p>
+                    <img src="/app/css/images/learning_by_doing.jpg" alt=""/>
+                </div>
+                <div class="clearfix" ng-if="tabsecond">
+                    <p>
+                        互助学习是指同伴以教育者的身份，在一定范围内相互帮助培训学习。互助学习
+                        侧重于态度的讨论和技能的培训，而不是知识的传授。我们希望青年可以学会团
+                        队合作、共享共赢，一同成长。
+                    </p>
+                    <img src="/app/css/images/learning_by_help.jpg" alt=""/>
+                </div>
+            </div>
+        </div>
     </div>
 
-
-<% include ./include/footerscriptlogin.ejs %>
+<% include ./include/footer.ejs %>
+<% include ./include/footerscriptwebsite.ejs %>

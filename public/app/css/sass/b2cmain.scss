@@ -317,9 +317,8 @@ body {
 }
 
 #b2creg {
-    background-image: url(/app/css/images/b2c_reg_bg.jpg);
-
     .middle {
+        background-image: url(/app/css/images/b2c_reg_bg.jpg);
         height: 616px;
         padding-top: 88px;
         .header-pics {
@@ -356,7 +355,6 @@ body {
             border-radius: 5px;
             height: 40px;
         }
-
 
         .title {
             font-weight: 900;
@@ -853,169 +851,169 @@ $lineHeight_button: 1.8;
 }
 
 .profile-detail {
-	padding-right: 30px;
-	padding-left: 25px;
+    padding-right: 30px;
+    padding-left: 25px;
 
     textarea {
         resize: vertical;
     }
-	label {
-		font-weight: normal;
-	}
-	form {
-		padding: 1em;
-		font-size:0.9em;
-		label {
-			min-height: 34px;
-		}
-	}
-	ul {
-		list-style: none;
-		padding-left: 0;
-	}
-	.button {
-		width: 85px;
-		height: 32px;
-		font-size: 15px;
-		border-style: none;
-		color:$color_white;
-		background-color: #797979;
-		@include box-shadow(#797979 0px 2px 4px);
-		cursor: pointer;
-	}
+    label {
+        font-weight: normal;
+    }
+    form {
+        padding: 1em;
+        font-size: 0.9em;
+        label {
+            min-height: 34px;
+        }
+    }
+    ul {
+        list-style: none;
+        padding-left: 0;
+    }
+    .button {
+        width: 85px;
+        height: 32px;
+        font-size: 15px;
+        border-style: none;
+        color: $color_white;
+        background-color: #797979;
+        @include box-shadow(#797979 0px 2px 4px);
+        cursor: pointer;
+    }
 
-	.add-button, .remove-button{
-		margin-top: 5px;
-		height: auto;
-		width: auto;
-		padding: 2px;
-		font-size: 10px;
-	}
-	.add-button, .done {
-		background-color: #B82A0C;
-		@include box-shadow($color_register_button_border 0px 2px 4px);
-	}
+    .add-button, .remove-button {
+        margin-top: 5px;
+        height: auto;
+        width: auto;
+        padding: 2px;
+        font-size: 10px;
+    }
+    .add-button, .done {
+        background-color: #B82A0C;
+        @include box-shadow($color_register_button_border 0px 2px 4px);
+    }
 
-	// borrows from facebook.
-	.file-input-wrapper {
-		overflow: hidden;
-		position: relative;
-		border: dotted 3px #D3D3D3;
-		background-color: #F5F5F5;
-		width: 240px;
-		height: 100px;
-		font-size: 20px;
-		line-height: 90px;
-		color: #888;
-		cursor: pointer;
-		text-align: center;
-		.file-upload-text {
-			margin-left: -16px;
-			line-height: 27px;
-			font-weight: bold;
-		}
-		.wrapper {
-			position:absolute;
-			top:0;
-			left: 0;
-			width: 100%;
-			height: 100%;
-			.file-input {
-				cursor: pointer;
-				font-size:500px;
-				height: 300px;
-				@include opacity(0);
-				outline: none;
-				position: absolute;
-				bottom:0;
-				right:0;
-			}
-		}
-	}
-	.preview-avatar{
-		width: 240px;
-	}
-	.err-msg {
-		width:auto;
-	}
-	.none-bottom {
-		border-bottom: none;
-		padding-bottom:0;
-	}
-	.none-top {
-		border-top: none;
-		padding-top: 0;
-	}
-	.profile-detail-title {
-		line-height: 1.8;
-		border-bottom: #9F9F9F solid 2px;
-		.profile-edit {
-			font-size: 0.8em;
-			float: right;
-			padding-top: 3px;
-			color: #0480CB;
-			cursor: pointer;
-		}
-	}
-	.gender {
-		margin-bottom: 15px;
-	}
-	.profile-button-container {
-		button {
-			/*margin-right: 0.5em;
-			padding: 0.2em 0.5em;*/
-			padding-top:0.2em;
-			padding-bottom: 0.2em;
-			width: 85px;
-			border-style:none;
-			color: $color_white;
+    // borrows from facebook.
+    .file-input-wrapper {
+        overflow: hidden;
+        position: relative;
+        border: dotted 3px #D3D3D3;
+        background-color: #F5F5F5;
+        width: 240px;
+        height: 100px;
+        font-size: 20px;
+        line-height: 90px;
+        color: #888;
+        cursor: pointer;
+        text-align: center;
+        .file-upload-text {
+            margin-left: -16px;
+            line-height: 27px;
+            font-weight: bold;
+        }
+        .wrapper {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            .file-input {
+                cursor: pointer;
+                font-size: 500px;
+                height: 300px;
+                @include opacity(0);
+                outline: none;
+                position: absolute;
+                bottom: 0;
+                right: 0;
+            }
+        }
+    }
+    .preview-avatar {
+        width: 240px;
+    }
+    .err-msg {
+        width: auto;
+    }
+    .none-bottom {
+        border-bottom: none;
+        padding-bottom: 0;
+    }
+    .none-top {
+        border-top: none;
+        padding-top: 0;
+    }
+    .profile-detail-title {
+        line-height: 1.8;
+        border-bottom: #9F9F9F solid 2px;
+        .profile-edit {
+            font-size: 0.8em;
+            float: right;
+            padding-top: 3px;
+            color: #0480CB;
+            cursor: pointer;
+        }
+    }
+    .gender {
+        margin-bottom: 15px;
+    }
+    .profile-button-container {
+        button {
+            /*margin-right: 0.5em;
+            padding: 0.2em 0.5em;*/
+            padding-top: 0.2em;
+            padding-bottom: 0.2em;
+            width: 85px;
+            border-style: none;
+            color: $color_white;
 
-			@include border-radius(0px);
-		}
-		button[type=submit] {
-			background-color: #B82A0C;
-			@include box-shadow($color_register_button_border 0px 2px 4px);
-		}
-		.cancel {
-			background-color: #797979;
-			@include box-shadow(#797979 0px 2px 4px);
-		}
-	}
-	.team-info {
-		.head {
-			margin-left: 80px;
-		}
-	}
+            @include border-radius(0px);
+        }
+        button[type=submit] {
+            background-color: #B82A0C;
+            @include box-shadow($color_register_button_border 0px 2px 4px);
+        }
+        .cancel {
+            background-color: #797979;
+            @include box-shadow(#797979 0px 2px 4px);
+        }
+    }
+    .team-info {
+        .head {
+            margin-left: 80px;
+        }
+    }
 
-	.education-background, .work-experience {
-		h3 {
-			font-size: 16px;
-			margin-top: 0;
-			.button {
-				margin-left: 17px;
-				margin-top: 0;
-			}
-		}
+    .education-background, .work-experience {
+        h3 {
+            font-size: 16px;
+            margin-top: 0;
+            .button {
+                margin-left: 17px;
+                margin-top: 0;
+            }
+        }
 
-		.added-language {
-			margin-bottom: 6px;
-			.button {
-				margin-top: 0;
-			}
-			.col-xs-4 {
-				width: 28%;
-			}
-		}
+        .added-language {
+            margin-bottom: 6px;
+            .button {
+                margin-top: 0;
+            }
+            .col-xs-4 {
+                width: 28%;
+            }
+        }
 
-		.education, .experience {
-			margin-bottom: 30px;
-		}
-	}
-	.work-experience {
-		.save-button-container {
-			margin-top: 40px;
-		}
-	}
+        .education, .experience {
+            margin-bottom: 30px;
+        }
+    }
+    .work-experience {
+        .save-button-container {
+            margin-top: 40px;
+        }
+    }
 }
 
 .datepicker .text-muted {
@@ -1518,15 +1516,113 @@ $lineHeight_button: 1.8;
     }
 }
 
-.b2c-sub-menu  {
+.b2c-sub-menu {
     background-color: #444444;
     height: 56px;
-    .navbar-nav>li>a {
+    .navbar-nav > li > a {
         line-height: 26px;
         color: #a9a9a9;
-        &:hover,&:focus{
+        &:hover, &:focus {
             background-color: #2b2b2b;
             color: white;
         }
+    }
+    .navbar-nav > .active > a {
+        background-color: #2b2b2b;
+        color: white;
+    }
+}
+
+#about {
+    background: #e6e6e6;
+    #bridge-discription {
+        background: #ffffff;
+        .static {
+            padding: 60px;
+            .title {
+                font-size: 42px;
+                padding-left: 48px;
+            }
+            .module {
+                padding: 0 48px;
+                margin-top: 40px;
+                float: left;
+                width: 33.3%;
+                .icon {
+                    width: 43px;
+                    height: 26px;
+                    margin-bottom: 20px;
+                }
+                .icon1 {
+                    @include icon_b2c-sprite(icon1);
+                }
+                .icon2 {
+                    @include icon_b2c-sprite(icon2);
+                }
+                .icon3 {
+                    @include icon_b2c-sprite(icon3);
+                }
+                button {
+                    position: absolute;
+                }
+            }
+        }
+    }
+
+    #vision {
+        height: 693px;
+        background-image: url("/app/css/images/b2c_about_banner.jpg");
+        padding-left: 100px;
+        padding-top: 540px;
+        color: white;
+        h3 {
+            margin-top: 0px;
+            margin-bottom: 28px;
+        }
+    }
+    #philosophy {
+        height: 422px;
+        background: #ffffff;
+        padding-left: 100px;
+        padding-top: 50px;
+        h3 {
+            margin-top: 0px;
+            margin-bottom: 28px;
+        }
+
+        .nav-tabs {
+            border: none;
+            > li {
+                border-left: 4px solid red;
+                > a {
+                    border: none;
+                    padding: 0 30px 0 15px;
+                    color: #000000;
+                    line-height: 14px;
+                    font-size: 14px;
+                    &:hover, &:focus {
+                        background-color: white;
+                        color: red;
+                        border: none;
+                    }
+                }
+            }
+            .nav-tabs > .active > a {
+                background-color: white;
+                color: white;
+            }
+        }
+
+
+        p {
+            padding-top: 45px;
+            width: 512px;
+            float: left;
+        }
+        img {
+            margin-left: 70px;
+            margin-top: -20px;
+        }
+
     }
 }
