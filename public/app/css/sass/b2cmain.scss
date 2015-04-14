@@ -1517,3 +1517,16 @@ $lineHeight_button: 1.8;
         top: 59px;
     }
 }
+
+.b2c-sub-menu  {
+    background-color: #444444;
+    height: 56px;
+    .navbar-nav>li>a {
+        line-height: 26px;
+        color: #a9a9a9;
+        &:hover,&:focus{
+            background-color: #2b2b2b;
+            color: white;
+        }
+    }
+}
