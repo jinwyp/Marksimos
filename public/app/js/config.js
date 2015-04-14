@@ -156,6 +156,58 @@
             { id: 40, name : 'LanguageNative'}
         ],
 
+        educationMajor : [
+            { id: 1100, name : 'educationMajorPhilosophy', children:
+                [
+                    {id:1105, name : 'educationMajorPhilosophy01'}
+                ]
+            },
+            { id: 1200, name : 'educationMajorEconomics', children:
+                [
+                    {id:1205, name : 'educationMajorEconomics01'}
+                ]
+            },
+            { id: 1300, name : 'educationMajorManagement', children:
+                [
+                    {id:1305, name : 'educationMajorManagement01'},
+                    {id:1310, name : 'educationMajorManagement02'},
+                    {id:1315, name : 'educationMajorManagement03'},
+                    {id:1320, name : 'educationMajorManagement04'},
+                    {id:1325, name : 'educationMajorManagement05'},
+                    {id:1330, name : 'educationMajorManagement06'},
+                    {id:1335, name : 'educationMajorManagement07'},
+                    {id:1340, name : 'educationMajorManagement08'},
+                    {id:1345, name : 'educationMajorManagement09'}
+                ]
+            },
+            { id: 1400, name : 'educationMajorBiotechnology', children:
+                [
+                    {id:1405, name : 'educationMajorBiotechnology01'},
+                    {id:1410, name : 'educationMajorBiotechnology02'},
+                    {id:1415, name : 'educationMajorBiotechnology03'}
+                ]
+            },
+            { id: 1500, name : 'educationMajorAdvertising', children:
+                [
+                    {id:1505, name : 'educationMajorAdvertising01'},
+                    {id:1510, name : 'educationMajorAdvertising02'},
+                    {id:1515, name : 'educationMajorAdvertising03'},
+                    {id:1520, name : 'educationMajorAdvertising04'},
+                    {id:1525, name : 'educationMajorAdvertising05'}
+                ]
+            },
+            { id: 1600, name : 'educationMajorConstruction', children:
+                [
+                    {id:1605, name : 'educationMajorConstruction01'},
+                    {id:1610, name : 'educationMajorConstruction02'},
+                    {id:1615, name : 'educationMajorConstruction03'},
+                    {id:1620, name : 'educationMajorConstruction04'}
+                ]
+            }
+
+        ],
+
+
         jobType : [
             { id: 10, name : 'jobTypeFullTime'},
             { id: 20, name : 'jobTypePartTime'},

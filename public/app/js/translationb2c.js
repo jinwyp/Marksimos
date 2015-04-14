@@ -430,6 +430,13 @@
             LanguageFluent: '精通',
             LanguageNative: '母语',
 
+
+            // Education Major
+            educationMajorPhilosophy      : '全职',
+            educationMajorEconomics      : '兼职',
+            educationMajorManagement        : '实习',
+
+
             // Profile Work Experience
             jobTypeFullTime      : '全职',
             jobTypePartTime      : '兼职',
