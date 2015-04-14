@@ -293,7 +293,7 @@
                             </div>
 
                             <div ng-if="profile.css.educationEditing" class="addEducation">
-                                <h3>{{'ProfilePageAddEducation' | translate}}: <span ng-if="!profile.css.addEducationEditing" ng-click="profile.clickSetEditingState({addEducationEditing: true})" class="form-control-static add-button glyphicon glyphicon-plus button"></span></h3>
+                                <h3>{{'ProfilePageAddEducation' | translate}}: <span ng-click="profile.clickDeleteNewEducation()" ng-if="profile.css.addEducationEditing" class="form-control-static remove-button glyphicon glyphicon-minus button"></span><span ng-if="!profile.css.addEducationEditing" ng-click="profile.clickSetEditingState({addEducationEditing: true})" class="form-control-static add-button glyphicon glyphicon-plus button"></span></h3>
                                 <div ng-if="profile.css.addEducationEditing">
                                     <div class="form-group" ng-class="{'has-success':schoolForm.school.$dirty&&schoolForm.school.$valid, 'has-error':schoolForm.school.$dirty&&schoolForm.school.$invalid}">
                                         <label for="school" class="control-label col-md-3 text-right">{{'ProfilePageSchoolInfoCollege' | translate}} :</label>
@@ -511,19 +511,19 @@
                                                 </div>
                                             </div>
                                         </div>
-                                        <span class="err-msg control-label form-control-static col-xs-4" ng-if="experienceForm['jobExperience' + $index].$dirty && experienceForm['jobExperience' + $index].$invalid">{{'ProfilePageRequiredError' | translate}}</span>
+                                        <span class="err-msg textarea-err-msg control-label form-control-static col-xs-4" ng-if="experienceForm['jobExperience' + $index].$dirty && experienceForm['jobExperience' + $index].$invalid">{{'ProfilePageRequiredError' | translate}}</span>
                                     </div>
                                     
                                 </div>
                             </div>
 
                             <div ng-if="profile.css.experienceEditing" class="addExperience">
-                                <h3>{{'ProfilePageAddExperience' | translate}}: <span ng-if="!profile.css.addExperienceEditing" ng-click="profile.clickSetEditingState({addExperienceEditing: true})" class="form-control-static add-button glyphicon glyphicon-plus button"></span></h3>
+                                <h3>{{'ProfilePageAddExperience' | translate}}: <span ng-click="profile.clickDeleteNewExperience()" ng-if="profile.css.addExperienceEditing" class="form-control-static remove-button glyphicon glyphicon-minus button"></span><span ng-if="!profile.css.addExperienceEditing" ng-click="profile.clickSetEditingState({addExperienceEditing: true})" class="form-control-static add-button glyphicon glyphicon-plus button"></span></h3>
                                 <div ng-if="profile.css.addExperienceEditing">
                                     <div class="form-group" ng-class="{'has-success':experienceForm.company.$dirty&&experienceForm.company.$valid, 'has-error':experienceForm.company.$dirty&&experienceForm.company.$invalid}">
                                         <label for="company" class="control-label col-md-3 text-right">{{'ProfilePageExperienceInfoCompany' | translate}} :</label>
                                         <div class="col-xs-5">
-                                            <input type="text" ng-model="profile.newExperience.company" name="company" id="company" class="form-control">
+                                            <input required type="text" ng-model="profile.newExperience.company" name="company" id="company" class="form-control">
                                         </div>
                                         <span class="err-msg control-label form-control-static col-xs-4" ng-if="experienceForm.company.$dirty && experienceForm.company.$invalid">{{'ProfilePageRequiredError' | translate}}</span>
                                     </div>
@@ -531,7 +531,7 @@
                                     <div class="row form-group" ng-class="{'has-success':experienceForm.jobType.$dirty&&experienceForm.jobType.$valid, 'has-error':experienceForm.jobType.$dirty&&experienceForm.jobType.$invalid}">
                                         <label for="jobType" class="control-label col-md-3 text-right">{{'ProfilePageExperienceInfoJobType' | translate}} :</label>
                                         <div class="col-xs-5">
-                                            <select class="form-control" ng-model="profile.newExperience.jobType" ng-options="type.id as type.name | translate for type in profile.Constant.jobType"></select>
+                                            <select required name="jobType" id="jobType" class="form-control" ng-model="profile.newExperience.jobType" ng-options="type.id as type.name | translate for type in profile.Constant.jobType"></select>
                                         </div>
                                         <span class="err-msg control-label form-control-static col-xs-4" ng-if="experienceForm.jobType.$dirty && experienceForm.jobType.$invalid">{{'ProfilePageRequiredError' | translate}}</span>
                                     </div>
@@ -539,7 +539,7 @@
                                     <div class="row form-group" ng-class="{'has-success':experienceForm.industry.$dirty&&experienceForm.industry.$valid, 'has-error':experienceForm.industry.$dirty&&experienceForm.industry.$invalid}">
                                         <label for="industry" class="control-label col-md-3 text-right">{{'ProfilePageExperienceInfoIndustry' | translate}} :</label>
                                         <div class="col-xs-5">
-                                            <input type="text" ng-model="profile.newExperience.industry" id="industry" name="industry" class="col-md-2 form-control">
+                                            <input required type="text" ng-model="profile.newExperience.industry" id="industry" name="industry" class="col-md-2 form-control">
                                         </div>
                                         <span class="err-msg control-label form-control-static col-xs-4" ng-if="experienceForm.industry.$dirty && experienceForm.industry.$invalid">{{'ProfilePageRequiredError' | translate}}</span>
                                     </div>
@@ -547,7 +547,7 @@
                                     <div class="form-group" ng-class="{'has-success':experienceForm.position.$dirty&&experienceForm.position.$valid, 'has-error':experienceForm.position.$dirty&&experienceForm.position.$invalid}">
                                         <label for="position" class="control-label col-md-3 text-right">{{'ProfilePageExperienceInfoPosition' | translate}} :</label>
                                         <div class="col-xs-5">
-                                            <input type="text" ng-model="profile.newExperience.position" name="position" id="position" class="form-control">
+                                            <input required type="text" ng-model="profile.newExperience.position" name="position" id="position" class="form-control">
                                         </div>
                                         <span class="err-msg control-label form-control-static col-xs-4" ng-if="experienceForm.position.$dirty && experienceForm.position.$invalid">{{'ProfilePageRequiredError' | translate}}</span>
                                     </div>
@@ -584,11 +584,11 @@
                                         <div class="col-xs-9">
                                             <div class="row">
                                                 <div class="col-xs-11">
-                                                    <textarea rows="10" ng-model="profile.newExperience.jobExperience" name="jobExperience" id="jobExperience" class="form-control"></textarea>
+                                                    <textarea required rows="10" ng-model="profile.newExperience.jobExperience" name="jobExperience" id="jobExperience" class="form-control"></textarea>
                                                 </div>
                                             </div>
                                         </div>
-                                        <span class="err-msg control-label form-control-static col-xs-4" ng-if="experienceForm.jobExperience.$dirty && experienceForm.jobExperience.$invalid">{{'ProfilePageRequiredError' | translate}}</span>
+                                        <span class="err-msg textarea-err-msg control-label form-control-static col-xs-4" ng-if="experienceForm.jobExperience.$dirty && experienceForm.jobExperience.$invalid">{{'ProfilePageRequiredError' | translate}}</span>
                                     </div>
                                 </div>
                             </div>

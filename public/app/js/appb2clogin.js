@@ -268,6 +268,8 @@
         vm.clickAddNewAchievement = addNewAchievement;
         vm.clickAddNewAchievementToExistEducation = addNewAchievementToExistEducation;
         vm.clickDeleteExperience = deleteExperience;
+        vm.clickDeleteNewEducation = deleteNewEducation;
+        vm.clickDeleteNewExperience = deleteNewExperience;
 
 
 
@@ -281,6 +283,16 @@
 
         function deleteEducation(index) {
             vm.formData.eductionBackgrounds.splice(index, 1);
+        }
+
+        function deleteNewEducation() {
+            vm.css.addEducationEditing = false;
+            vm.newEducation = null;
+        }
+
+        function deleteNewExperience() {
+            vm.css.addExperienceEditing = false;
+            vm.newExperience = null;
         }
 
         function addNewLanguage() {
