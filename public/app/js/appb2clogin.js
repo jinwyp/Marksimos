@@ -203,6 +203,7 @@
             addStudentFailedInfo: false,
             currentTabIndex: 1,
             updateTeamNameDisabled: true,
+            saving: false,
 
             formEditing: false,
 
@@ -232,8 +233,8 @@
 
         vm.currentUser = {};
         vm.newEducation = null;
-        vm.newLanguageSkill = {};
-        vm.newAchievement = {};
+        vm.newLanguageSkill = null;
+        vm.newAchievement = null;
         vm.newExperience = null;
 
         vm.formData = {};
@@ -267,6 +268,8 @@
         vm.clickAddNewAchievement = addNewAchievement;
         vm.clickAddNewAchievementToExistEducation = addNewAchievementToExistEducation;
         vm.clickDeleteExperience = deleteExperience;
+        vm.clickDeleteNewEducation = deleteNewEducation;
+        vm.clickDeleteNewExperience = deleteNewExperience;
 
 
 
@@ -280,6 +283,16 @@
 
         function deleteEducation(index) {
             vm.formData.eductionBackgrounds.splice(index, 1);
+        }
+
+        function deleteNewEducation() {
+            vm.css.addEducationEditing = false;
+            vm.newEducation = null;
+        }
+
+        function deleteNewExperience() {
+            vm.css.addExperienceEditing = false;
+            vm.newExperience = null;
         }
 
         function addNewLanguage() {
@@ -296,7 +309,7 @@
             if (!isExist) {
                 vm.formData.LanguageSkills.push(vm.newLanguageSkill);
             }
-            vm.newLanguageSkill = {};
+            vm.newLanguageSkill = null;
         }
 
         function deleteLanguage(index) {
@@ -304,25 +317,23 @@
         }
 
         function addNewAchievement() {
-            if (vm.newAchievement) {
-                if (!vm.newEducation) {
-                    vm.newEducation = {
-                        achievements: []
-                    };
-                }
-                if (!vm.newEducation.achievements) {
-                    vm.newEducation.achievements = [];
-                }
-
-                vm.newEducation.achievements.push(vm.newAchievement);
-                vm.newAchievement = {};
+            if (!vm.newEducation) {
+                vm.newEducation = {
+                    achievements: []
+                };
             }
+            if (!vm.newEducation.achievements) {
+                vm.newEducation.achievements = [];
+            }
+
+            vm.newEducation.achievements.push(vm.newAchievement);
+            vm.newAchievement = null;
         }
 
         function addNewAchievementToExistEducation(index) {
             var education = vm.formData.eductionBackgrounds[index];
             education.achievements.push(education._newAchievement);
-            education._newAchievement = {};
+            education._newAchievement = null;
         }
 
         function deleteExperience(index) {
@@ -418,11 +429,29 @@
                     vm.formData.workExperiences.push(vm.newExperience);
                 }
 
+                if (vm.newAchievement) {
+                    addNewAchievement();
+                }
+
+                if (vm.newLanguageSkill) {
+                    addNewLanguage();
+                }
+
+                if (vm.formData.eductionBackgrounds) {
+                    vm.formData.eductionBackgrounds.forEach(function(education, i) {
+                        if (education._newAchievement) {
+                            addNewAchievementToExistEducation(i);
+                        }
+                    });
+                }
+
+
+                vm.css.saving = true;
                 Student.updateStudentB2CInfo(vm.formData).then(function() {
                     angular.copy(vm.formData, vm.currentUser);
 
                     vm.newEducation = null;
-                    vm.newLanguage = null;
+                    vm.newLanguageSkill = null;
                     vm.newExperience = null;
 
                     if (!slient) {
@@ -438,6 +467,14 @@
                             form[item.param].$invalid = true;
                             vm.css.errorFields[item.param] = true;
                         });
+                    }
+                }).finally(function() {
+                    vm.css.saving = false;
+                });
+            } else {
+                Object.keys(form).forEach(function(key){
+                    if (key[0] != '$') {
+                        form[key].$setDirty();
                     }
                 });
             }

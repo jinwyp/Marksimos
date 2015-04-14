@@ -209,7 +209,9 @@
             jobIndustryOthers06          : 'Others',
 
 
-            //profile page
+            //profile page validation
+            ProfilePageRequiredError: 'Required',
+
             //Header Title
             ProfilePageHeaderTitle                   : "Personal Info",
 
@@ -247,7 +249,7 @@
 
             ProfilePageExperience: 'Experience',
             ProfilePageExperienceInfoCompany: 'Company',
-            ProfilePageExperienceInfoJobType: 'Jon Type',
+            ProfilePageExperienceInfoJobType: 'Job Type',
             ProfilePageExperienceInfoIndustry: 'Industry',
             ProfilePageExperienceInfoPosition: 'Position',
             ProfilePageExperienceInfoSizeOfCompany: 'Size of Company',
@@ -668,6 +670,10 @@
             jobIndustryOthers06          : '其他行业',
 
             //Profile Page
+            //validation Error Tip
+            ProfilePageRequiredError: '必填',
+
+
             //Header Title
             ProfilePageHeaderTitle                   : "个人信息",
 
