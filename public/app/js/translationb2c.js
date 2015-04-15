@@ -374,10 +374,11 @@
             RegisterPageCaptchaPlaceholder        : 'Captcha',
             RegisterPageMaleLabel                 : 'Male',
             RegisterPageFemale                    : 'Female',
-            RegisterPageRegisterButton            : 'Conform',
+            RegisterPageRegisterButton            : 'Sign Up',
+            
             //Error Tips for Validation
             RegisterPageInputNameTip              : 'Please enter your username!',
-            RegisterPageNameLengthTip             : "Username's length should be 6-20 characters",
+            RegisterPageNameLengthTip             : "Username should be 6-20 characters",
             RegisterPageNameExistTip              : 'This username is already exist',
             RegisterPageInputEmailTip             : "Please enter your email",
             RegisterPageEmailExistTip             : "This email is already exist",
@@ -834,7 +835,8 @@
             RegisterPageCaptchaPlaceholder        : '验证码',
             RegisterPageMaleLabel                 : '男',
             RegisterPageFemale                    : '女',
-            RegisterPageRegisterButton            : '确 定',
+            RegisterPageRegisterButton            : '立即注册',
+
             //Error Tips for Validation
             RegisterPageInputNameTip              : '请输入正确的用户名',
             RegisterPageNameLengthTip             : '用户名长度为6-20个字符',
