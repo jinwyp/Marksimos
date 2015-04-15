@@ -42,7 +42,7 @@
     "jquery": "1.9.1",
     "jquery-migrate": "~1.2.1",
     "aight": "~1.2.5",
-    "angular-strap": "~2.2.0",
+    "angular-strap": "~2.2.1",
     "angular-motion": "~0.3.4",
     "angular-socket-io": "~0.7.0"
   }
