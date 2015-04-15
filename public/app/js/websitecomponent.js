@@ -27,7 +27,7 @@
         return {
             restrict: 'AE',
             templateUrl: 'b2csubmenu.html'
-        }
+        };
     }
 
     function b2cHeaderComponent($window, $translate, Student){
