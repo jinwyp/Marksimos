@@ -100,8 +100,8 @@ var userSchema = new Schema({
     workExperiences: [{
         company: String,
         jobType: Number, //0: Internship
-        industry: String,
-        position: String,
+        industry: Number,
+        position: Number,
         sizeOfCompany: Number, //0: Less than 30 Employee, 1:
         startDate: Date,
         endDate: Date,
@@ -116,7 +116,7 @@ var userSchema = new Schema({
     eductionBackgrounds: [{
         university: String,
         degree: String,
-        major: String,
+        major: Number,
         entryDate: Date,
         graduationDate: Date,
         abroad: String,
