@@ -383,25 +383,25 @@
                                     <tr>
                                         <!-- <th>ID</th> -->
                                         <th>UserName</th>
-                                        <th>First/Last Name</th>
-                                        <th>Email</th>
+                                        <th>First/Last Name / Gender</th>
+                                        <th>Email/Activated</th>
                                         <th>Status</th>
-                                        <th>Cell Phone</th>
+                                        <th>Cell Phone/Verified</th>
                                         <th>Country / Province / City</th>
-                                        <th>University / Organization</th>
-                                        <th>Current Occupation</th>
+                                        <th>University</th>
+                                        <th>Work Experiences</th>
                                         <th>Reset Password</th>
                                     </tr>
                                     <tr ng-repeat="user in data.students" >
                                         <!-- <td>{{user._id}}</td> -->
                                         <td>{{user.username}}</td>
-                                        <td>{{user.firstName}} {{user.lastName}}</td>
-                                        <td>{{user.email}}</td>
+                                        <td>{{user.firstName}} {{user.lastName}} {{user.gender}} </td>
+                                        <td>{{user.email}} / {{user.emailActivated}}</td>
                                         <td>{{user.activated}}</td>
-                                        <td>{{user.mobilePhone}}</td>
-                                        <td>{{user.country}} / {{user.state}} / {{user.city}} </td>
-                                        <td>{{user.organizationOrUniversity}}</td>
-                                        <td>{{user.occupation}}</td>
+                                        <td>{{user.mobilePhone }} / {{user.phoneVerified}}</td>
+                                        <td>{{user.currentLocation}} </td>
+                                        <td> <span ng-repeat="edu in user.eductionBackgrounds">{{edu.university}} / {{ edu.degree}} / {{ edu.major}} / {{ edu.entryDate | date:'yyyy-MM-dd'}} / {{ edu.graduationDate | date:'yyyy-MM-dd'}} <br/></span> </td>
+                                        <td><span ng-repeat="work in user.workExperiences">{{work.company}} / {{work.jobType}} / {{work.industry}} / {{work.position}} / {{work.sizeOfCompany}} / {{work.startDate | date:'yyyy-MM-dd'}} / {{ work.endDate | date:'yyyy-MM-dd'}} <br/></span></td>
                                         <td>
                                             <button ng-click='resetStudentPassword(user._id)'>Reset</button>
                                         </td>
