@@ -1,8 +1,15 @@
 <div class="b2c-sub-menu">
     <div class="b2c-container clearfix">
         <ul class="nav navbar-nav">
-            <li class="active"><a href="#">关于我们<span class="sr-only">(current)</span></a></li>
-            <li><a href="#">项目介绍</a></li>
+            <!--<li ng-class="{active:isActive('about')}"><a href="about">关于我们</a></li>-->
+            <!--<li><a href="intro">项目介绍</a></li>-->
+            <!--<li><a href="activity">最新活动</a></li>-->
+            <!--<li><a href="media">媒体报道</a></li>-->
+            <!--<li><a href="cooperate">企业合作</a></li>-->
+            <!--<li><a href="contact">联系我们</a></li>-->
+            <li ng-repeat="item in menu" ng-class="{active: isActive(item.link)}">
+                <a ng-href="{{item.link}}">{{item.title}}</a>
+            </li>
         </ul>
     </div>
 </div>
