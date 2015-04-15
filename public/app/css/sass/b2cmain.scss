@@ -1681,9 +1681,45 @@ $lineHeight_button: 1.8;
         h3 {
             margin: 0 0 40px 100px;
         }
-        img{
-            display: inline;
-            margin: 0 6px ;
+        .carousel-inner {
+            .item {
+                .person_card {
+                    display: inline-block;
+                    margin: 0 6px;
+                    width: 178px;
+                    height: 254px;
+                    position: relative;
+                    .person_info {
+                        position: absolute;
+                        background-color: rgba(195,46,13,0);
+                        color: rgba(255,255,255,0);
+                        z-index: 100;
+                        width: 100%;
+                        height: 100%;
+                        left: 0;
+                        top: 0;
+                        transition: all 300ms ease;
+                        -webkit-transition: all 300ms ease;
+                        text-align: left;
+                        .name {
+                            position: absolute;
+                            bottom: 40%;
+                            left: 20px;
+                            line-height: 1.5;
+                        }
+                        .title {
+                            position: absolute;
+                            top: 65%;
+                            left: 20px;
+                            line-height: 1.5;
+                        }
+                    }
+                    &:hover .person_info {
+                        color: rgba(255,255,255,1);
+                        background-color: rgba(195,46,13,0.5);
+                    }
+                }
+            }
         }
         .carousel-control {
             background: none;
