@@ -187,6 +187,7 @@
                 show        : '=',
                 datasource  : '=',
                 selectclick : '&',
+                close : '&',
                 ngModel : '=',
                 selectfitler : '@'
             },

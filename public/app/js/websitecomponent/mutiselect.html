@@ -5,5 +5,5 @@
                 <span class="level2title" ng-repeat="level2 in level1.children" ng-click="selectLevel2(level2)">{{ level2.id | filterpick:selectfitler | translate }}</span>
                 <span class="clearfix"></span>
             </li>
+            <button class="btn btn-default btn-xs" ng-click="close()">X</button>
         </ul>
-

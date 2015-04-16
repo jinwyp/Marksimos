@@ -908,6 +908,12 @@ $lineHeight_button: 1.8;
             height: 20px;
             cursor: pointer;
         }
+        button {
+            position: absolute;
+            top:4px;
+            right:5px;
+            z-index: 999;
+        }
     }
 
     .button {
