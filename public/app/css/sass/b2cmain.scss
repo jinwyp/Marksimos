@@ -876,6 +876,37 @@ $lineHeight_button: 1.8;
         background-color: $color_white;
         border: none;
     }
+    .mutiselect {
+        border: 1px solid #CCC;
+        background-color: #EDEDED;
+        width: 500px;
+        z-index: 99;
+        position: absolute;
+        top:36px;
+        left:15px;
+        li {
+            width: 100%;
+            background-color: #EDEDED;
+            padding: 5px 10px;
+        }
+        .level1title {
+            font-weight: bold;
+            font-size: 14px;
+            display: block;
+            padding: 0 0 5px 0;
+            border-bottom: 1px solid #ddd ;
+            margin-bottom: 5px;
+        }
+
+        .level2title {
+            font-size: 12px;
+            display: block;
+            float: left;
+            padding: 0px 5px 0px 5px;
+            height: 20px;
+        }
+    }
+
     .button {
         width: 85px;
         height: 32px;

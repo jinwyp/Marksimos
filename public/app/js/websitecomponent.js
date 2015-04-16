@@ -19,7 +19,10 @@
 
     angular.module('marksimos.websitecomponent').directive('b2cHeader', ['$window', '$translate', 'Student', b2cHeaderComponent ]);
     angular.module('marksimos.websitecomponent').directive('b2cSubMenu', ['$location' ,b2cSubMenuComponent]);
+
     angular.module('marksimos.websitecomponent').directive('userHeader', ['$window', '$translate', 'Student', userHeaderComponent ]);
+    angular.module('marksimos.websitecomponent').directive('mutiSelect', ['$window', '$translate', '$filter', mutiSelectComponent ]);
+
     angular.module('marksimos.websitecomponent').directive('headerAdmin', ['$window', '$translate', 'Student', adminHeaderComponent]);
     angular.module('marksimos.websitecomponent').directive('menuAdmin', [adminMenuComponent]);
 
@@ -175,6 +178,33 @@
             }
         };
     }
+
+
+    function mutiSelectComponent($window, $translate, $filter){
+        return {
+            scope: {
+                selectstyle : '=',
+                show        : '=',
+                datasource  : '=',
+                selectclick : '&',
+                ngModel : '=',
+                selectfitler : '@'
+            },
+            restrict: 'AE',
+            templateUrl: '/app/js/websitecomponent/mutiselect.html',
+            link: function (scope, element, attrs) {
+
+                scope.selectLevel2 = function (level2) {
+                    scope.selectclick({current:level2});
+                    scope.ngModel = level2;
+                };
+
+                scope.selectfilter = $filter(scope.selectfitler);
+
+            }
+        };
+    }
+
 
 
     function adminHeaderComponent($window, $translate, Student){

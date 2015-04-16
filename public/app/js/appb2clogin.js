@@ -206,6 +206,8 @@
             saving: false,
 
             formEditing: false,
+            currentJobIndustry : -1,
+            currentJobPosition : -1,
 
             //education background form editing states
             educationEditing: false,
@@ -271,6 +273,11 @@
         vm.clickDeleteNewEducation = deleteNewEducation;
         vm.clickDeleteNewExperience = deleteNewExperience;
 
+
+        vm.hideMutiSelect = function(){
+            vm.css.currentJobIndustry=-1;
+            vm.css.currentJobPosition=-1;
+        };
 
 
         /**********  Function Declarations  **********/
