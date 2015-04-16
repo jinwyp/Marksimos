@@ -283,11 +283,10 @@ exports.removeStudentFromSeminar = function(req, res, next){
 
         }else{
 
-            return teamModel.findOne({_id : teamid}).populate('memberList').execQ().then(function(resultTeam) {
+            return teamModel.findOne({_id : teamid}).populate('memberList').populate('creator').execQ().then(function(resultTeam) {
                 if (!resultTeam) {
                     throw new Error('Cancel promise chains. Because Team not found !');
                 }
-
 
                 companyAssignment.forEach(function(company){
 
@@ -310,6 +309,13 @@ exports.removeStudentFromSeminar = function(req, res, next){
                                         company.studentList.splice(studentindex, 1);
                                     }
                                 });
+                            });
+
+                            company.studentList.forEach(function(studentemail, studentindex){
+
+                                if(resultTeam.creator.email === studentemail){
+                                    company.studentList.splice(studentindex, 1);
+                                }
                             });
                         }
                     }
