@@ -1,8 +1,8 @@
 
         <ul class="list-group mutiselect" ng-if="show" ng-style="selectstyle">
             <li class="list-group-item" ng-repeat="level1 in datasource">
-                <span class="level1title" >{{ level1.id | jobndustry | translate  }}</span>
-                <span class="level2title" ng-repeat="level2 in level1.children" ng-click="selectLevel2(level2)">{{ level2.id | jobndustry | translate }}</span>
+                <span class="level1title" >{{ level1.id | filterpick:selectfitler | translate  }}</span>
+                <span class="level2title" ng-repeat="level2 in level1.children" ng-click="selectLevel2(level2)">{{ level2.id | filterpick:selectfitler | translate }}</span>
                 <span class="clearfix"></span>
             </li>
         </ul>

@@ -29,7 +29,7 @@
 
     /********************  Normal Html Template Filters  ********************/
 
-    angular.module('marksimos.filter').filter('filterpick', '$filter', [pickerFilter]);
+    angular.module('marksimos.filter').filter('filterpick', ['$filter', pickerFilter]);
 
     angular.module('marksimos.filter').filter('language', languageFilter);
     angular.module('marksimos.filter').filter('proficiency', proficiencyFilter);
@@ -52,8 +52,9 @@
 
 
     function pickerFilter($filter) {
-        return function(value, filterName) {
-            return $filter(filterName)(value);
+        return function() {
+            var filterName = [].splice.call(arguments, 1, 1)[0];
+            return $filter(filterName).apply(null, arguments);
         };
     }
 
