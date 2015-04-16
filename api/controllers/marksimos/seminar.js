@@ -191,6 +191,8 @@ exports.assignStudentToSeminar = function(req, res, next){
                     companyAssignment.forEach(function(company){
                         if(company.companyId == companyId) {
 
+                            company.studentList.push(userData.email);
+
                             resultTeam.memberList.forEach(function(student) {
 
                                 if(company.studentList.indexOf(student.email) === -1){
@@ -198,6 +200,8 @@ exports.assignStudentToSeminar = function(req, res, next){
                                 }
 
                             });
+
+
 
                             if(typeof company.teamList !== 'undefined'){
                                 company.teamList.push(resultTeam._id.toString());
