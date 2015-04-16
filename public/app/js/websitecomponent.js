@@ -199,8 +199,6 @@
                     scope.ngModel = level2;
                 };
 
-                scope.selectfilter = $filter(scope.selectfitler);
-
             }
         };
     }
