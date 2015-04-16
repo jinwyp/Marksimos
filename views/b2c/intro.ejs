@@ -1,0 +1,85 @@
+﻿<% include include/headcss.ejs %>
+
+
+<body id="intro" ng-app="b2clogin">
+
+    <b2c-header showlogin="true"></b2c-header>
+    <b2c-sub-menu></b2c-sub-menu>
+
+    <div class="middle">
+        <div class="b2c-container">
+            <!--<img src="" width="1160" alt=""/>-->
+            <div id="bridge-header">
+                <h3>Bridge+</h3>
+                <h3>中国首家商家模拟竞赛平台</h3>
+                <a type='button' class="btn btn-danger">加入</a>
+            </div>
+
+            <div id="sub-nav">
+                <ul class="nav nav-tabs" ng-init="introIdx=0">
+                    <li ng-class="{active: introIdx==0}">
+                        <a href ng-click="introIdx=0"><span>全国青年商业实战大赛<br>Bridge+ Competition</span></a>
+                    </li>
+                    <li ng-class="{active: introIdx==1}">
+                        <a href ng-click="introIdx=1"><span>青年导师桥<br>Mentor Bridge</span></a>
+                    </li>
+                    <li ng-class="{active: introIdx==2}">
+                        <a href ng-click="introIdx=2"><span>互助学习桥<br>Learning Bridge</span></a>
+                    </li>
+                    <li ng-class="{active: introIdx==3}">
+                        <a href ng-click="introIdx=3"><span>创业学者桥<br>Fellowship Bridge</span></a>
+                    </li>
+                </ul>
+            </div>
+
+            <div id="competition" ng-if="introIdx==0">
+                <div class="section1 clearfix">
+                    <p>
+                        我们以在业界享有盛名的商战模拟游戏MarkSimos为依托举办全国青年商业实战大赛，帮助参与者提高市场营销、数据分析、战略管理等方面的商业实战能力，同时搭建起校园学习和企业人才需求之间的桥梁
+                    </p>
+                    <div class="circle1">市场<br>营销</div>
+                    <div class="circle1">数据<br>分析</div>
+                    <div class="circle1">战略<br>管理</div>
+                    <div class="circle2"></div>
+                    <div class="circle3"></div>
+                </div>
+                <div class="section2">
+                    <p>大赛分为校园赛、地区赛和全国总决赛三轮，每年于5月到8月，10月到1月举办两次。</p>
+                </div>
+                <div class="section3 clearfix">
+                    <img src="/app/css/images/b2c_intro1.jpg" alt=""/>
+                    <p>MarkSimos是由中欧商学院的创始人之一Wilfried R. Vanhonacker教授主导研发的商战模拟类游戏。MarkSimos模拟体验者在逼真、无风险的虚拟环境下运营一家公司，通过激励团队分享与体验式学习的方式，鼓励学员锻炼管理者的视角，全方位了解整个公司及其运作形式。此款游戏为多家500强公司纳入为企业高管培训内容，国内外多家知名商学院采用其进行MBA教学。</p>
+                </div>
+                <div class="section4 clearfix">
+                    <img src="/app/css/images/b2c_intro2.png" alt=""/>
+                    <p>
+                        我们在比赛过程中将对参赛者辅以专家指导，同时帮助参赛者在团队合作中更加了解自己的商业技能及个人优势劣势，全方位提升自己。比赛优胜者将有机会获得会员企业的实习及就业机会，以及资深导师的针对性辅导和参与创业学者项目的机会。
+                        <br>
+                        <br>
+                        想要获取比赛更多资讯，请登录大赛官方主页！
+                    </p>
+                </div>
+                <div class="section5">
+                    <p>Marksimos曾服务的企业</p>
+                    <div class="brands">
+                        <img src="/app/css/images/b2c_intro3.png" alt=""/>
+                        <img src="/app/css/images/b2c_intro4.png" alt=""/>
+                        <img src="/app/css/images/b2c_intro5.png" alt=""/>
+                        <img src="/app/css/images/b2c_intro6.png" alt=""/>
+                        <img src="/app/css/images/b2c_intro7.png" alt=""/>
+                        <img src="/app/css/images/b2c_intro8.png" alt=""/>
+                        <img src="/app/css/images/b2c_intro9.png" alt=""/>
+                        <img src="/app/css/images/b2c_intro10.png" alt=""/>
+                    </div>
+                </div>
+            </div>
+
+            <div class="mentor" ng-if="introIdx==1">
+
+            </div>
+
+        </div>
+    </div>
+
+<% include ./include/footer.ejs %>
+<% include ./include/footerscriptlogin.ejs %>
