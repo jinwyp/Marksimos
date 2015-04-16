@@ -88,6 +88,10 @@ apiRouter.get('/e4e/about', function(req, res, next){
     res.render('b2c/about.ejs', {title:'About Bridge+'})
 });
 
+apiRouter.get('/e4e/intro', function(req, res, next){
+    res.render('b2c/intro.ejs', {title:'Project Introduction'})
+});
+
 
 
 
