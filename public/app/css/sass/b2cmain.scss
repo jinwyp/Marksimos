@@ -1873,4 +1873,63 @@ $lineHeight_button: 1.8;
             }
         }
     }
+    #mentor{
+        .section1{
+            padding: 41px 82px;
+            background-color: white;
+            p {
+                display: inline-block;
+                width: 50%;
+                padding-right: 95px;
+                margin-bottom: 30px;
+            }
+        }
+        .section2 {
+            padding: 20px 82px;
+            background-color: #f0f0f0;
+        }
+        .section3 {
+            padding: 84px 82px;
+            background-color: $color_base_red;
+            img {
+                float: left;
+                margin-left: 115px;
+                margin-right: 85px;
+            }
+            p {
+                color: white;
+                float: left;
+                width: 505px;
+                padding-top: 64px;
+            }
+        }
+    }
+    #learning {
+        .section1{
+            padding: 41px 82px;
+            background-color: white;
+            font-size: 14px;
+            p {
+                width: 50%;
+                padding-right: 40px;
+                padding-top: 40px;
+                margin-bottom: 80px;
+                float: left;
+            }
+        }
+    }
+    #fellowship {
+        .section1{
+            padding: 41px 82px;
+            background-color: white;
+            font-size: 14px;
+            p {
+                width: 50%;
+                padding-right: 40px;
+                padding-top: 17px;
+                margin-bottom: 40px;
+                float: left;
+            }
+        }
+    }
 }
