@@ -131,10 +131,10 @@ body {
     }
 
     .b2c-user {
-        width: 200px;
+        width: 100px;
         height: 82px;
         overflow: hidden;
-        margin-right: 45px;
+        margin-right: 10px;
 
         .glyphicon {
             top: 8px;
@@ -164,6 +164,7 @@ body {
         img {
             width: 70px;
             height: 70px;
+            border-radius: 40px;
         }
 
         .avatar {
@@ -722,7 +723,7 @@ $lineHeight_button: 1.8;
 }
 
 .profile-main {
-    width: 976px;
+    width: 1200px;
     margin: 0 auto;
 }
 
