@@ -374,8 +374,6 @@
                 Student.addStudentToTeam({username: vm.formData.newTeamMember}).then(function(result) {
                     app.getUserInfo();
                 }).catch(function(err) {
-                    form.$invalid = true;
-                    form.$valid = false;
                     $alert(vm.css.alertFailedInfo);
                 });
             }
