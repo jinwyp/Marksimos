@@ -191,6 +191,8 @@ exports.assignStudentToSeminar = function(req, res, next){
                     companyAssignment.forEach(function(company){
                         if(company.companyId == companyId) {
 
+                            company.studentList.push(userData.email);
+
                             resultTeam.memberList.forEach(function(student) {
 
                                 if(company.studentList.indexOf(student.email) === -1){
@@ -198,6 +200,8 @@ exports.assignStudentToSeminar = function(req, res, next){
                                 }
 
                             });
+
+
 
                             if(typeof company.teamList !== 'undefined'){
                                 company.teamList.push(resultTeam._id.toString());
@@ -279,11 +283,10 @@ exports.removeStudentFromSeminar = function(req, res, next){
 
         }else{
 
-            return teamModel.findOne({_id : teamid}).populate('memberList').execQ().then(function(resultTeam) {
+            return teamModel.findOne({_id : teamid}).populate('memberList').populate('creator').execQ().then(function(resultTeam) {
                 if (!resultTeam) {
                     throw new Error('Cancel promise chains. Because Team not found !');
                 }
-
 
                 companyAssignment.forEach(function(company){
 
@@ -306,6 +309,13 @@ exports.removeStudentFromSeminar = function(req, res, next){
                                         company.studentList.splice(studentindex, 1);
                                     }
                                 });
+                            });
+
+                            company.studentList.forEach(function(studentemail, studentindex){
+
+                                if(resultTeam.creator.email === studentemail){
+                                    company.studentList.splice(studentindex, 1);
+                                }
                             });
                         }
                     }

@@ -448,7 +448,9 @@
                                             <p class="form-control-static">{{profile.currentUser.workExperiences[$index].industry}}&nbsp</p>
                                         </div>
                                         <div class="col-xs-5" ng-if="profile.css.experienceEditing">
-                                            <input required type="text" ng-model="profile.formData.workExperiences[$index].industry" id="industry{{$index}}" name="industry{{$index}}" class="col-md-2 form-control">
+                                            <div muti-select selectfitler="jobndustry" datasource="profile.Constant.jobIndustry" show="$index == profile.css.currentJobIndustry"  selectclick="profile.hideMutiSelect()" ng-model="profile.formData.workExperiences[$index].industry"></div>
+
+                                            <input required type="text" ng-model="profile.formData.workExperiences[$index].industry" id="industry{{$index}}" name="industry{{$index}}" class="col-md-2 form-control" ng-focus="profile.css.currentJobIndustry=$index">
                                         </div>
                                         <span class="err-msg control-label form-control-static col-xs-4" ng-if="experienceForm['industry' + $index].$dirty && experienceForm['industry' + $index].$invalid">{{'ProfilePageRequiredError' | translate}}</span>
                                     </div>

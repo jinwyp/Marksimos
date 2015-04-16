@@ -29,12 +29,15 @@ exports.updateStudentB2CInfo = function(req, res, next){
 
     _.extend(req.user, updatedUser);
 
-    req.user.saveQ()
-    .then(function() {
+    req.user.saveQ().then(function(savedDoc) {
+
+        if(!savedDoc ){
+            throw new Error('Cancel promise chains. Because Update User failed. More or less than 1 record is updated. it should be only one !');
+        }
+
         return res.status(200).send({message: 'Student update success'});
     })
-    .fail(next)
-    .done();
+    .fail(next).done();
 };
 
 
@@ -57,9 +60,7 @@ exports.uploadStudentAvatar = function(req, res, next){
         return res.status(200).send({message: 'Upload Avatar picture success'});
 
 
-    }).fail(function(err){
-        next(err);
-    }).done();
+    }).fail(next).done();
 
 };
 

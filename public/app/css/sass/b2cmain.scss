@@ -4,13 +4,15 @@
 @import "compass/utilities/general/clearfix";
 
 $color_white: #ffffff;
+$color_base_red: #c42e0d;
 $color_profile_detail_title: #797978;
 $color_profile_tip: #d9d9d9;
-$color_register_button: #c42e0d;
+$color_register_button: $color_base_red;
 $color_register_button_border: #7e200b;
 $color_register_button_hover: #7e200b;
 $color_register_button_hover_border: #ca3413;
 $color_header_dropdown_button_hover: #7f1a03;
+$color_text: #686868;
 
 @mixin flippy($speed: 0.5s, $perspective: 500, $bgcolor: white) {
     position: relative;
@@ -87,7 +89,7 @@ html {
 
 body {
     min-width: 1200px;
-    font-family: "Microsoft YaHei" ! important;
+    font-family: "Microsoft YaHei", Arial, sans-serif ! important;
     font-size: 16px;
 }
 
@@ -339,7 +341,7 @@ body {
     }
 
     .reg-form {
-        width: 50%;
+        width: 510px;
         padding-left: 110px;
         .reg-captcha-input-container {
             position: relative;
@@ -354,14 +356,12 @@ body {
             border-radius: 5px;
             height: 40px;
         }
-        .reg-captcha-error-tip {
-            margin-top: 2px !important;
-        }
+
         .title {
             font-weight: 900;
             font-size: 32px;
             margin: 12px 0px;
-            color: #c42e0d;
+            color: $color_base_red;
             text-shadow: -3px 3px 2px black;
         }
         .form-group {
@@ -374,7 +374,6 @@ body {
             font-size: 15px;
         }
         input[type=text], input[type=password], input[type=email] {
-            width: 395px;
             &:focus {
                 outline: none !important;
                 background-color: #FFFFEE;
@@ -398,16 +397,15 @@ body {
             }
         }
         .err-msg {
-            right: 100%;
-            margin-top: -44px;
-            margin-right: 10px;
+            top: 2px;
+            right: 410px;
             z-index: 999;
             position: absolute;
-            width: 240px;
+            width: 210px;
             color: #FFFFFF;
             background: #da8449;
-            height: 40px;
-            line-height: 40px;
+            height: 35px;
+            line-height: 35px;
             text-align: center;
             border-radius: 6px;
             &:after {
@@ -525,7 +523,7 @@ body {
             width: 255px;
             height: 255px;
             position: relative;
-            @include flippy(0.6s, 1000, #c42e0d);
+            @include flippy(0.6s, 1000, $color_base_red);
         }
         .back {
             font-size: 12px;
@@ -880,6 +878,37 @@ $lineHeight_button: 1.8;
         background-color: $color_white;
         border: none;
     }
+    .mutiselect {
+        border: 1px solid #CCC;
+        background-color: #EDEDED;
+        width: 500px;
+        z-index: 99;
+        position: absolute;
+        top:36px;
+        left:15px;
+        li {
+            width: 100%;
+            background-color: #EDEDED;
+            padding: 5px 10px;
+        }
+        .level1title {
+            font-weight: bold;
+            font-size: 14px;
+            display: block;
+            padding: 0 0 5px 0;
+            border-bottom: 1px solid #ddd ;
+            margin-bottom: 5px;
+        }
+
+        .level2title {
+            font-size: 12px;
+            display: block;
+            float: left;
+            padding: 0px 5px 0px 5px;
+            height: 20px;
+        }
+    }
+
     .button {
         width: 85px;
         height: 32px;
@@ -1546,10 +1575,31 @@ $lineHeight_button: 1.8;
     }
 }
 
+@mixin bridge-header($background) {
+    height: 250px;
+    padding-left: 180px;
+    padding-top: 60px;
+    background-image: url($background);
+    h3 {
+        color: white;
+        margin: 2px 0;
+    }
+    a.btn{
+        margin-top: 40px;
+        padding: 6px 18px;
+    }
+}
+
 #about {
+    p {
+        font-size: 14px;
+        line-height: 2;
+    }
     background: #e6e6e6;
-    #bridge-discription {
+    #bridge-header { @include bridge-header("/app/css/images/b2c_about_banner.jpg")}
+    #bridge-description {
         background: #ffffff;
+        height: 402px;
         .static {
             padding: 60px;
             .title {
@@ -1557,7 +1607,7 @@ $lineHeight_button: 1.8;
                 padding-left: 48px;
             }
             .module {
-                padding: 0 48px;
+                padding: 0 32px 0 48px;
                 margin-top: 40px;
                 float: left;
                 width: 33.3%;
@@ -1577,14 +1627,32 @@ $lineHeight_button: 1.8;
                 }
                 button {
                     position: absolute;
+                    margin-top: 2px;
+                    &.btn {
+                        line-height: 26px;
+                        padding: 0px 16px;
+                        font-weight: bold;
+                    }
                 }
+            }
+        }
+        .disc-extend {
+            padding: 78px 0  0 210px;
+            p {
+                width: 540px;
+                padding-left: 65px;
+                padding-top: 40px;
+            }
+            .glyphicon-remove-circle{
+                font-size: 35px;
+                cursor: pointer;
             }
         }
     }
 
     #vision {
         height: 693px;
-        background-image: url("/app/css/images/b2c_about_banner.jpg");
+        background-image: url("/app/css/images/b2c_about_banner2.jpg");
         padding-left: 100px;
         padding-top: 540px;
         color: white;
@@ -1625,8 +1693,6 @@ $lineHeight_button: 1.8;
                 color: white;
             }
         }
-
-
         p {
             padding-top: 45px;
             width: 512px;
@@ -1637,5 +1703,264 @@ $lineHeight_button: 1.8;
             margin-top: -20px;
         }
 
+    }
+
+    #team{
+        background-color: #f0f0f0;
+        height: 507px;
+        padding: 45px 0;
+        h3 {
+            margin: 0 0 40px 100px;
+        }
+        .carousel-inner {
+            .item {
+                .person_card {
+                    display: inline-block;
+                    margin: 0 6px;
+                    width: 178px;
+                    height: 254px;
+                    position: relative;
+                    .person_info {
+                        position: absolute;
+                        background-color: rgba(195,46,13,0);
+                        color: rgba(255,255,255,0);
+                        z-index: 100;
+                        width: 100%;
+                        height: 100%;
+                        left: 0;
+                        top: 0;
+                        transition: all 300ms ease;
+                        -webkit-transition: all 300ms ease;
+                        text-align: left;
+                        .name {
+                            position: absolute;
+                            bottom: 40%;
+                            left: 20px;
+                            line-height: 1.5;
+                        }
+                        .title {
+                            position: absolute;
+                            top: 65%;
+                            left: 20px;
+                            line-height: 1.5;
+                        }
+                    }
+                    &:hover .person_info {
+                        color: rgba(255,255,255,1);
+                        background-color: rgba(195,46,13,0.5);
+                    }
+                }
+            }
+        }
+        .carousel-control {
+            background: none;
+            .glyphicon-chevron-left{
+                margin-left: -55px;
+            }
+            .glyphicon-chevron-right{
+                margin-right: -55px;
+            }
+        }
+        .carousel-indicators {
+            bottom: -90px;
+            li {
+                display: inline-block;
+                width: auto;
+                height: auto;
+                margin: 0 8px;
+                padding: 5px 13px;
+                text-indent: 0px;
+                cursor: pointer;
+                border: 1px solid $color_base_red;
+                border-radius: 10px;
+                color: $color_base_red;
+                font-weight: bold;
+                &.active {
+                    background-color: $color_base_red;
+                    color: white;
+                }
+            }
+        }
+    }
+}
+
+
+#intro {
+    p {
+        font-size: 14px;
+        line-height: 2;
+    }
+    background: #e6e6e6;
+    color: $color_text;
+    #bridge-header { @include bridge-header("/app/css/images/b2c_intro_banner.jpg")}
+    #sub-nav {
+        background-color: white;
+        padding: 41px 82px;
+        .nav-tabs {
+            border: none;
+            li {
+                margin-left: -1px;
+                border: 1px solid $color_text;
+                width: 25%;
+                &.active {
+                    a {
+                        background-color: #eee;
+                    }
+                }
+                a {
+                    border: none;
+                    border-radius: 0;
+                    margin: 0;
+                    color: $color_text;
+                    span {
+                        font-size: 14px;
+                        margin: 0 auto;
+                        display: table;
+                    }
+                }
+            }
+        }
+    }
+    #competition{
+        .section1 {
+            padding: 41px 82px;
+            background-color: white;
+            p {
+                width: 310px;
+                float: left;
+                margin-right: 35px;
+            }
+            .circle1 {
+                border: 1px solid $color_text;
+                float: left;
+                width: 150px;
+                height: 150px;
+                text-align: center;
+                border-radius: 75px;
+                padding-top: 54px;
+                margin-right: 30px;
+            }
+            .circle2 {
+                border: 1px solid $color_text;
+                float: left;
+                width: 40px;
+                height: 40px;
+                border-radius: 20px;
+                margin-right: 25px;
+                margin-top: 55px;
+            }
+            .circle3 {
+                border: 1px solid $color_text;
+                float: left;
+                width: 20px;
+                height: 20px;
+                border-radius: 10px;
+                margin-right: 20px;
+                margin-top: 65px;
+            }
+        }
+        .section2 {
+            padding: 20px 82px;
+            background-color: #f0f0f0;
+        }
+        .section3 {
+            padding: 84px 82px;
+            background-color: $color_base_red;
+            img {
+                float: left;
+                margin-left: 115px;
+                margin-right: 85px;
+            }
+            p {
+                color: white;
+                float: left;
+                width: 505px;
+                padding-top: 64px;
+            }
+        }
+        .section4 {
+            padding: 88px 82px;
+            background-color: white;
+            img {
+                float: left;
+                margin-left: 168px;
+                margin-right: 85px;
+            }
+            p {
+                float: left;
+                width: 505px;
+                padding-top: 5px;
+            }
+        }
+        .section5 {
+            padding: 30px 82px;
+            background-color: #f0f0f0;
+            .brands {
+                margin-top: 45px;
+                img{
+                    margin-right: 13px;
+                    margin-bottom: 16px;
+                }
+            }
+        }
+    }
+    #mentor{
+        .section1{
+            padding: 41px 82px;
+            background-color: white;
+            p {
+                display: inline-block;
+                width: 50%;
+                padding-right: 95px;
+                margin-bottom: 30px;
+            }
+        }
+        .section2 {
+            padding: 20px 82px;
+            background-color: #f0f0f0;
+        }
+        .section3 {
+            padding: 84px 82px;
+            background-color: $color_base_red;
+            img {
+                float: left;
+                margin-left: 115px;
+                margin-right: 85px;
+            }
+            p {
+                color: white;
+                float: left;
+                width: 505px;
+                padding-top: 64px;
+            }
+        }
+    }
+    #learning {
+        .section1{
+            padding: 41px 82px;
+            background-color: white;
+            font-size: 14px;
+            p {
+                width: 50%;
+                padding-right: 40px;
+                padding-top: 40px;
+                margin-bottom: 80px;
+                float: left;
+            }
+        }
+    }
+    #fellowship {
+        .section1{
+            padding: 41px 82px;
+            background-color: white;
+            font-size: 14px;
+            p {
+                width: 50%;
+                padding-right: 40px;
+                padding-top: 17px;
+                margin-bottom: 40px;
+                float: left;
+            }
+        }
     }
 }
