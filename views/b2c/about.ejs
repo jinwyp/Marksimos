@@ -1,45 +1,66 @@
 ﻿<% include include/headcss.ejs %>
 
 
-<body id="about" ng-app="b2cwebsite">
+<body id="about" ng-app="b2clogin">
 
     <b2c-header showlogin="true"></b2c-header>
     <b2c-sub-menu></b2c-sub-menu>
 
     <div class="middle">
         <div class="b2c-container">
-            <img src="/app/css/images/b2c_about_header.jpg" width="1160" alt=""/>
+            <!--<img src="" width="1160" alt=""/>-->
+            <div id="bridge-header">
+                <h3>Bridge+</h3>
+                <h3>中国首家商家模拟竞赛平台</h3>
+                <a type='button' class="btn btn-danger">加入</a>
+            </div>
 
-            <div id="bridge-discription">
-                <div class="static clearfix">
+            <div id="bridge-description" ng-init="bridge={}">
+                <div class="static clearfix" ng-hide="bridge.desc">
                     <div class="title">Bridge+</div>
                     <div class="module">
                         <div class="icon icon1"></div>
                         <p>
-                            Bridge+ 是由全球第一个飞上亚太空的华人女性、MIT媒体实验室中国特别顾问、哈佛中国校友会副主席李青青 (Julia Li) 女士
-                        发起，邀请曾在北京、上海、硅谷、南美
-                        非洲工作，曾服务于高盛、玛氏......
+                            Bridge+ 是由全球第一个飞上亚太空的华人女性、MIT媒体实验室中国特别顾问、哈佛中国校友会副主席李青青 (Julia Li) 女士发起，邀请曾在北京、上海、硅谷、南美非洲工作，曾服务于高盛、玛氏......
                         </p>
-                        <button>更多</button>
+                        <button class="btn btn-default" ng-click="console.log('wtf');bridge.desc='disc1'">更多</button>
                     </div>
                     <div class="module">
                         <div class="icon icon2"></div>
                         <p>
-                            Bridge+ 旨在为学生搭建校园学习与社会职业发展之间的桥梁，解决学生在商业技能水平与企业要求之间的断层问题；为企业
-                        以最高效且精准的方式对接潜在人才，解决企业寻找人才与学生寻找就业机会之......
+                            Bridge+ 旨在为学生搭建校园学习与社会职业发展之间的桥梁，解决学生在商业技能水平与企业要求之间的断层问题；为企业以最高效且精准的方式对接潜在人才，解决企业寻找人才与学生寻找就业机会之......
                         </p>
-                        <button>更多</button>
+                        <button class="btn btn-default" ng-click="bridge.desc='disc2'">更多</button>
                     </div>
                     <div class="module">
                         <div class="icon icon3"></div>
                         <p>
-                            Bridge+ 旨在为学生搭建校园学习与社会职业发展之间的桥梁，解决学生在商业技能水平与企业要求之间的断层问题；为企业
-                        以最高效且精准的方式对接潜在人才，解决企业寻找人才与学生寻找就业机会之......
+                            Bridge+ 旨在为学生搭建校园学习与社会职业发展之间的桥梁，解决学生在商业技能水平与企业要求之间的断层问题；为企业以最高效且精准的方式对接潜在人才，解决企业寻找人才与学生寻找就业机会之......
                         </p>
-                        <button>更多</button>
+                        <button class="btn btn-default" ng-click="bridge.desc='disc3'">更多</button>
                     </div>
                 </div>
-                <div></div>
+                <div class="disc-extend" ng-if="bridge.desc=='disc1'">
+                    <span class="glyphicon glyphicon-remove-circle" aria-hidden="true" ng-click="bridge.desc=false"></span>
+                    <img src="/app/css/images/desc1.jpg" alt="" class="pull-left"/>
+                    <p class="pull-left">
+                        Bridge+ 是由全球第一个飞上亚太空的华人女性、MIT媒体实验室中国特别顾问、哈佛中国校友会副主席李青青 (Julia Li) 女士发起，邀请曾在北京、上海、硅谷、南美、非洲工作，曾服务于高盛、玛氏、欧莱雅、博世等知名企业，平均年龄22岁的青年团队共同运营的青年教育革新项目。Bridge+ 相信，通过搭建起校园和企业之间的桥梁，学生与社会之间的桥梁，Bridge+ 能够惠及千万中国青年，为这一代的中国青年发展带来积极影响
+                    </p>
+                </div>
+                <div class="disc-extend" ng-if="bridge.desc=='disc2'">
+                    <span class="glyphicon glyphicon-remove-circle" aria-hidden="true" ng-click="bridge.desc=false"></span>
+                    <img src="/app/css/images/desc2.jpg" alt="" class="pull-left"/>
+                    <p class="pull-left">
+                        Bridge+ 旨在为学生搭建校园学习与社会职业发展之间的桥梁，解决学生在商业技能水平与企业要求之间的断层问题；为企业以最高效且精准的方式对接潜在人才，解决企业寻找人才与学生寻找就业机会之间的断层问题。同时，我们也搭建起偏远地区大学生和优质就业机会之间的桥梁，提供给所有中国学生更公平的求职机会，力求改善就业机会分布的不均等性，产生积极的社会影响力
+                    </p>
+                </div>
+                <div class="disc-extend" ng-if="bridge.desc=='disc3'">
+                    <span class="glyphicon glyphicon-remove-circle" aria-hidden="true" ng-click="bridge.desc=false"></span>
+                    <img src="/app/css/images/desc3.jpg" alt="" class="pull-left"/>
+                    <p class="pull-left">
+                        Bridge+ 通过以商战模拟游戏为主的全国青年商业实战大赛 (Bridge+ Competition)，同时辅以社会创新学者项目 (Fellowship Bridge)、青年导师项目 (Mentor Bridge)、在线互助学习平台 (Learning Bridge)、自媒体真人秀 (We-reality Show)以及青年创业家计划(Student Entrepreneur Program)等形式，强调体验式学习 (Experiential Leaning) 和互助学习 (Peer Learning) 的理念，培养青年的创新创业精神
+                    </p>
+                </div>
             </div>
 
             <div id="vision">
@@ -59,27 +80,127 @@
                 </ul>
                 <div class="clearfix" ng-if="!tabsecond">
                     <p>
-                        体验式学习，结合“做中学learning by doing”、“经验学习圈experiential lea
-                        rning cycle”、“认知发展论theory of cognitive development”等学习理论，
-                        为达到某些预期结果而特别为学员设计。在训练过程中，学员在引导下进行”学习”
-                        而非听训练员“说教”，透过个人在人际活动中充分参与，获得实作经验，经观察
-                        反省与对话交流中获得新的态度信念，并将之整合运用于未来新情境的解决行动方
-                        案或策略上。简单来说，体验式学习解决传统教育的瓶颈，如伽利略所说：“你无
-                        法教别人任何东西，你只能帮助别人发现一些东西
+                        体验式学习，结合“做中学learning by doing”、“经验学习圈experiential learning cycle”、“认知发展论theory of cognitive development”等学习理论，为达到某些预期结果而特别为学员设计。在训练过程中，学员在引导下进行”学习” 而非听训练员“说教”，透过个人在人际活动中充分参与，获得实作经验，经观察反省与对话交流中获得新的态度信念，并将之整合运用于未来新情境的解决行动方案或策略上。简单来说，体验式学习解决传统教育的瓶颈，如伽利略所说：“你无法教别人任何东西，你只能帮助别人发现一些东西”
                     </p>
                     <img src="/app/css/images/learning_by_doing.jpg" alt=""/>
                 </div>
                 <div class="clearfix" ng-if="tabsecond">
-                    <p>
-                        互助学习是指同伴以教育者的身份，在一定范围内相互帮助培训学习。互助学习
-                        侧重于态度的讨论和技能的培训，而不是知识的传授。我们希望青年可以学会团
-                        队合作、共享共赢，一同成长。
-                    </p>
                     <img src="/app/css/images/learning_by_help.jpg" alt=""/>
+                    <p>
+                        互助学习是指同伴以教育者的身份，在一定范围内相互帮助培训学习。互助学习侧重于态度的讨论和技能的培训，而不是知识的传授。我们希望青年可以学会团队合作、共享共赢，一同成长。
+                    </p>
+                </div>
+            </div>
+            <div id="team">
+                <h3>我们的团队</h3>
+                <div id="carousel-header-pics" class="carousel slide" data-ride="carousel">
+                    <!-- Indicators -->
+                    <ol class="carousel-indicators">
+                        <li data-target="#carousel-header-pics" data-slide-to="0" class="active">领导团队</li>
+                        <li data-target="#carousel-header-pics" data-slide-to="1">顾问团队</li>
+                        <li data-target="#carousel-header-pics" data-slide-to="2">执行团队</li>
+                    </ol>
+
+                    <!-- Wrapper for slides -->
+                    <div class="carousel-inner text-center" role="listbox">
+                        <div class="item active">
+                            <div class="person_card">
+                                <img src="/app/css/images/leader1.jpg">
+                                <div class="person_info">
+                                    <p class="name"> 李青青<br> Julia Li </p>
+                                    <p class="title"> 首席执行官<br> CEO </p>
+                                </div>
+                            </div>
+                            <div class="person_card">
+                                <img src="/app/css/images/leader2.jpg">
+                                <div class="person_info">
+                                    <p class="name"> 肖晔<br> Olive Shaw </p>
+                                    <p class="title"> 商务拓展总监<br> VP Business<br>Development </p>
+                                </div>
+                            </div>
+                            <div class="person_card">
+                                <img src="/app/css/images/leader3.jpg">
+                                <div class="person_info">
+                                    <p class="name"> Anil Raparla </p>
+                                    <p class="title"> 项目经理<br> Project Leader </p>
+                                </div>
+                            </div>
+                            <div class="person_card">
+                                <img src="/app/css/images/leader4.jpg">
+                                <div class="person_info">
+                                    <p class="name"> 王宇鹏<br> Yupeng Wang </p>
+                                    <p class="title"> 技术工程师<br> Technical Engineer </p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="item">
+                            <div class="person_card">
+                                <img src="/app/css/images/consultant1.jpg">
+                                <div class="person_info">
+                                    <p class="name"> WilFried Vanhonacker </p>
+                                    <p class="title"> 顾问<br> Advisor </p>
+                                </div>
+                            </div>
+                            <div class="person_card">
+                                <img src="/app/css/images/consultant2.jpg">
+                                <div class="person_info">
+                                    <p class="name"> Laurent de Vitton</p>
+                                    <p class="title"> 顾问<br> Advisor</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="item">
+                            <div class="person_card">
+                                <img src="/app/css/images/executor1.jpg">
+                                <div class="person_info">
+                                    <p class="name"> 吕晓宁<br> Xiaoning Lyu </p>
+                                    <p class="title"> 市场及运营主管<br> Director of Marketing <br>and Operation </p>
+                                </div>
+                            </div>
+                            <div class="person_card">
+                                <img src="/app/css/images/executor2.jpg">
+                                <div class="person_info">
+                                    <!--<p class="name"> 王宇鹏<br> Yupeng Wang </p>-->
+                                    <!--<p class="title"> 技术工程师<br> Technical Engineer </p>-->
+                                </div>
+                            </div>
+                            <div class="person_card">
+                                <img src="/app/css/images/executor3.jpg">
+                                <div class="person_info">
+                                    <!--<p class="name"> 王宇鹏<br> Yupeng Wang </p>-->
+                                    <!--<p class="title"> 技术工程师<br> Technical Engineer </p>-->
+                                </div>
+                            </div>
+                            <div class="person_card">
+                                <img src="/app/css/images/executor4.jpg">
+                                <div class="person_info">
+                                    <!--<p class="name"> 王宇鹏<br> Yupeng Wang </p>-->
+                                    <!--<p class="title"> 技术工程师<br> Technical Engineer </p>-->
+                                </div>
+                            </div>
+                            <div class="person_card">
+                                <img src="/app/css/images/executor5.jpg">
+                                <div class="person_info">
+                                    <!--<p class="name"> 王宇鹏<br> Yupeng Wang </p>-->
+                                    <!--<p class="title"> 技术工程师<br> Technical Engineer </p>-->
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Controls -->
+                    <a class="left carousel-control" href="#carousel-header-pics" role="button" data-slide="prev">
+                        <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
+                        <span class="sr-only">Previous</span>
+                    </a>
+                    <a class="right carousel-control" href="#carousel-header-pics" role="button" data-slide="next">
+                        <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
+                        <span class="sr-only">Next</span>
+                    </a>
                 </div>
             </div>
         </div>
     </div>
 
 <% include ./include/footer.ejs %>
-<% include ./include/footerscriptwebsite.ejs %>
+<% include ./include/footerscriptlogin.ejs %>

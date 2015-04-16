@@ -18,17 +18,49 @@
 
 
     angular.module('marksimos.websitecomponent').directive('b2cHeader', ['$window', '$translate', 'Student', b2cHeaderComponent ]);
-    angular.module('marksimos.websitecomponent').directive('b2cSubMenu', [b2cSubMenuComponent]);
+    angular.module('marksimos.websitecomponent').directive('b2cSubMenu', ['$location' ,b2cSubMenuComponent]);
     angular.module('marksimos.websitecomponent').directive('userHeader', ['$window', '$translate', 'Student', userHeaderComponent ]);
     angular.module('marksimos.websitecomponent').directive('headerAdmin', ['$window', '$translate', 'Student', adminHeaderComponent]);
     angular.module('marksimos.websitecomponent').directive('menuAdmin', [adminMenuComponent]);
 
-    function b2cSubMenuComponent(){
+    function b2cSubMenuComponent($location){
         return {
-            restrict: 'AE',
-            templateUrl: 'b2csubmenu.html'
+            restrict   : 'AE',
+            templateUrl: 'b2csubmenu.html',
+            link       : function (scope, element, attrs) {
+                scope.menu = [
+                    {
+                        title: '关于我们',
+                        link : 'about'
+                    },
+                    {
+                        title: '项目介绍',
+                        link : 'intro'
+                    },
+                    {
+                        title: '最新活动',
+                        link : 'activity'
+                    },
+                    {
+                        title: '媒体报道',
+                        link : 'media'
+                    },
+                    {
+                        title: '企业合作',
+                        link : 'cooperate'
+                    },
+                    {
+                        title: '联系我们',
+                        link : 'contact'
+                    }
+                ];
+
+                scope.isActive = function (route) {
+                    return $location.$$absUrl.indexOf(route) >= 1;
+                };
+            }
         };
-    }
+    };
 
     function b2cHeaderComponent($window, $translate, Student){
         return {
