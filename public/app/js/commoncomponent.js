@@ -283,27 +283,6 @@
     );
 
 
-    angular.module('marksimos.commoncomponent').directive('stickFooter', ['$window', function($window) {
-            return {
-                restrict : 'AE',
-                link  : function (element, attrs) {
-
-                    $window.on('resize', function () {
-                        if (element('header').height() + element('footer').height() + element('main').height() < $window.height()) {
-                            //$('footer').addClass('b2c-footer-fix');
-
-                            scope.css = true;
-                        }else {
-                            //$('footer').removeClass('b2c-footer-fix');
-                            scope.css = true;
-                        }
-                    }).trigger('resize');
-                }
-
-            };
-        }]
-    );
-
 
 
     angular.module('marksimos.commoncomponent').directive('fixedFooter', ['$document', '$window', '$timeout', function($document, $window, $timeout) {

@@ -60,7 +60,7 @@
                 };
             }
         };
-    };
+    }
 
     function b2cHeaderComponent($window, $translate, Student){
         return {
