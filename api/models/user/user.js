@@ -101,7 +101,7 @@ var userSchema = new Schema({
         company: String,
         jobType: Number, //0: Internship
         industry: Number,
-        position: Number,
+        position: String,
         sizeOfCompany: Number, //0: Less than 30 Employee, 1:
         startDate: Date,
         endDate: Date,
