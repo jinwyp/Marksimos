@@ -96,6 +96,9 @@ apiRouter.get('/e4e/activity', function(req, res, next){
     res.render('b2c/activity.ejs', {title:'Newest Activities'})
 });
 
+apiRouter.get('/e4e/contact', function(req, res, next){
+    res.render('b2c/contact.ejs', {title:'Newest Activities'})
+});
 
 
 
