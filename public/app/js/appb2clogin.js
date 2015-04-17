@@ -651,7 +651,7 @@
 
 
 
-    angular.module('b2clogin').controller('campaignController', ['Student', '$modal', '$translate', '$location', '$anchorScroll', '$q', function(Student, $modal, $translate, $location, $anchorScroll, $q) {
+    angular.module('b2clogin').controller('campaignController', ['Student', '$modal', '$translate', '$location', '$q', '$anchorScroll', function(Student, $modal, $translate, $location, $q, $anchorScroll) {
         /* jshint validthis: true */
         var vm = this;
 
@@ -709,7 +709,17 @@
     }]);
 
 
+    angular.module('b2clogin').controller('aboutController', ['$anchorScroll', function($anchorScroll) {
+        $anchorScroll();
+    }]);
 
+
+    angular.module('b2clogin').controller('introController', ['$location', '$scope', function($location, $scope) {
+        var vm = this;
+        $scope.$on('$locationChangeSuccess', function() {
+            vm.hash = $location.hash();
+        });
+    }]);
 }());
 
 

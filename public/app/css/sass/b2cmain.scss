@@ -849,6 +849,12 @@ $lineHeight_button: 1.8;
         background-color: #e5e5e4;
         color: $color_profile_detail_title;
     }
+    li {
+        &:hover,
+        &:focus {
+            background-color: #CACAC9;
+        }
+    }
     .avatar {
         width: 100%;
         height: 241px;
@@ -865,6 +871,7 @@ $lineHeight_button: 1.8;
     .selected {
         color: $color_white;
         background-color: $color_profile_detail_title;
+        &:hover,&:focus{background-color: $color_profile_detail_title;}
     }
 }
 
@@ -974,6 +981,9 @@ $lineHeight_button: 1.8;
         color: #888;
         cursor: pointer;
         text-align: center;
+        &:hover {
+            background-color: #e5e5e5;
+        }
         .file-upload-text {
             margin-left: -16px;
             line-height: 27px;
