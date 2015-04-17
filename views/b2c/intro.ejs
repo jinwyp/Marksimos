@@ -1,7 +1,7 @@
 ﻿<% include include/headcss.ejs %>
 
 
-<body id="intro" ng-app="b2clogin">
+<body id="intro" ng-app="b2clogin" ng-controller="introController as intro">
 
     <b2c-header showlogin="true"></b2c-header>
     <b2c-sub-menu></b2c-sub-menu>
@@ -16,23 +16,23 @@
             </div>
 
             <div id="sub-nav">
-                <ul class="nav nav-tabs" ng-init="introIdx=0">
-                    <li ng-class="{active: introIdx==0}">
-                        <a href ng-click="introIdx=0"><span>全国青年商业实战大赛<br>Bridge+ Competition</span></a>
+                <ul class="nav nav-tabs">
+                    <li ng-class="{active: intro.hash=='competition'}">
+                        <a href="#competition""><span>全国青年商业实战大赛<br>Bridge+ Competition</span></a>
                     </li>
-                    <li ng-class="{active: introIdx==1}">
-                        <a href ng-click="introIdx=1"><span>青年导师桥<br>Mentor Bridge</span></a>
+                    <li ng-class="{active: intro.hash=='mentor'}">
+                        <a href="#mentor"><span>青年导师桥<br>Mentor Bridge</span></a>
                     </li>
-                    <li ng-class="{active: introIdx==2}">
-                        <a href ng-click="introIdx=2"><span>互助学习桥<br>Learning Bridge</span></a>
+                    <li ng-class="{active: intro.hash=='learning'}">
+                        <a href="#learning"><span>互助学习桥<br>Learning Bridge</span></a>
                     </li>
-                    <li ng-class="{active: introIdx==3}">
-                        <a href ng-click="introIdx=3"><span>创业学者桥<br>Fellowship Bridge</span></a>
+                    <li ng-class="{active: intro.hash=='fellowship'}">
+                        <a href="#fellowship"><span>创业学者桥<br>Fellowship Bridge</span></a>
                     </li>
                 </ul>
             </div>
 
-            <div id="competition" ng-if="introIdx==0">
+            <div id="competition" ng-if="intro.hash=='competition'">
                 <div class="section1 clearfix">
                     <p>
                         我们以在业界享有盛名的商战模拟游戏MarkSimos为依托举办全国青年商业实战大赛，帮助参与者提高市场营销、数据分析、战略管理等方面的商业实战能力，同时搭建起校园学习和企业人才需求之间的桥梁
@@ -74,7 +74,7 @@
                 </div>
             </div>
 
-            <div id="mentor" ng-if="introIdx==1">
+            <div id="mentor" ng-if="intro.hash=='mentor'">
                 <div class="section1">
                     <p>
                         我们汇集最顶尖的企业导师、创业导师对大学生予以职业解惑、专业指导、经验分享，搭建起大学生和社会之间的桥梁。在商业大赛中获得优胜的大学生，将能免费获得与顶尖导师对话交流的机会
@@ -91,7 +91,7 @@
                     <p>MarkSimos是由中欧商学院的创始人之一Wilfried R. Vanhonacker教授主导研发的商战模拟类游戏。MarkSimos模拟体验者在逼真、无风险的虚拟环境下运营一家公司，通过激励团队分享与体验式学习的方式，鼓励学员锻炼管理者的视角，全方位了解整个公司及其运作形式。此款游戏为多家500强公司纳入为企业高管培训内容，国内外多家知名商学院采用其进行MBA教学。</p>
                 </div>
             </div>
-            <div id="learning" ng-if="introIdx==2">
+            <div id="learning" ng-if="intro.hash=='learning'">
                 <div class="section1 clearfix">
                     <p>
                         我们通过汇集最优质的在线学习资源，搭建专属于大学生的在线互助学习平台。平台包含在线商学院、Marksimos游戏辅导与其他的专业知识，分享教育资源，帮助学生随时随地地自主学习；同时平台秉承互助学习(Peer Learning)的理念，给在线学习者提供相互交流与彼此学习的机会。我们也将不定期开设线上导师交流会，超越地理限制地给大学生带去实时的互动交流
@@ -105,7 +105,7 @@
                     </div>
                 </div>
             </div>
-            <div id="fellowship" ng-if="introIdx==3">
+            <div id="fellowship" ng-if="intro.hash=='fellowship'">
                 <div class="section1 clearfix">
                     <p>
                         我们将每年招募30名左右具有创业精神并富有潜力的青年人，为他们提供为期一年的免费领导力培训、一对一导师对话、商业实战及海外参观游学等珍贵机会，帮助他们充分实现自身潜能并为社会带来积极影响力，同时打造创业学者精英社交圈。每期学员在完成既定的项目后，将予以Bridge+ Fellow的终身称号。我们希望Bridge+ Fellow能为中国社会发展注入源源不断的青年创新创业力量，带来全国甚至全球范围的积极影响力
