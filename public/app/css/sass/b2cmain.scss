@@ -295,14 +295,14 @@ body {
             float: left;
             margin-bottom: 20px;
         }
+        a{
+            color: inherit;
+            &:hover {
+                text-decoration: none;
+            }
+        }
         li {
             margin: 2px 0;
-            a {
-                color: inherit;
-                &:hover {
-                    text-decoration: none;
-                }
-            }
         }
         li:first-child {
             color: #ffffff;
@@ -2120,6 +2120,30 @@ $lineHeight_button: 1.8;
                 position: absolute;
                 margin-left: -25px;
                 margin-top: 2px;
+            }
+        }
+    }
+}
+
+#unfinished {
+    background: $color_background_gray_darker;
+    color: $color_text;
+    .section1 {
+        margin-top: 20px;
+        background-color: white;
+        padding: 41px 82px;
+        height: 290px;
+        .col-half {
+            float: left;
+            width: 50%;
+        }
+        p {
+            font-size: 18px;
+            padding-top: 50px;
+            padding-left: 50px;
+            a {
+                padding-left: 20px;
+                padding-right: 20px;
             }
         }
     }
