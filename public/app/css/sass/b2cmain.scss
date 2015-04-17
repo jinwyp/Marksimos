@@ -133,10 +133,10 @@ body {
     }
 
     .b2c-user {
-        width: 200px;
+        width: 100px;
         height: 82px;
         overflow: hidden;
-        margin-right: 45px;
+        margin-right: 10px;
 
         .glyphicon {
             top: 8px;
@@ -166,6 +166,7 @@ body {
         img {
             width: 70px;
             height: 70px;
+            border-radius: 40px;
         }
 
         .avatar {
@@ -723,8 +724,24 @@ $lineHeight_button: 1.8;
     width: 0;
 }
 
+@mixin SaveButtonHover {
+    &:hover,
+    &:focus {
+        color: $color_white;
+        background-color: $color_register_button_hover;
+    }
+}
+
+@mixin CancelButtonHover {
+    &:hover,
+    &:focus {
+        color: $color_white;
+        background-color: #b0b0b0;
+    }
+}
+
 .profile-main {
-    width: 976px;
+    width: 1200px;
     margin: 0 auto;
 }
 
@@ -741,7 +758,6 @@ $lineHeight_button: 1.8;
         }
     }
 }
-
 .profile-underline {
     text-decoration: underline;
 }
@@ -880,6 +896,44 @@ $lineHeight_button: 1.8;
         background-color: $color_white;
         border: none;
     }
+    .mutiselect {
+        border: 1px solid #CCC;
+        background-color: #EDEDED;
+        width: 500px;
+        z-index: 99;
+        position: absolute;
+        top:36px;
+        left:15px;
+        li {
+            width: 100%;
+            background-color: #EDEDED;
+            padding: 5px 10px;
+        }
+        .level1title {
+            font-weight: bold;
+            font-size: 14px;
+            display: block;
+            padding: 0 0 5px 0;
+            border-bottom: 1px solid #ddd ;
+            margin-bottom: 5px;
+        }
+
+        .level2title {
+            font-size: 12px;
+            display: block;
+            float: left;
+            padding: 0px 5px 0px 5px;
+            height: 20px;
+            cursor: pointer;
+        }
+        button {
+            position: absolute;
+            top:4px;
+            right:5px;
+            z-index: 999;
+        }
+    }
+
     .button {
         width: 85px;
         height: 32px;
@@ -901,6 +955,10 @@ $lineHeight_button: 1.8;
     .add-button, .done {
         background-color: #B82A0C;
         @include box-shadow($color_register_button_border 0px 2px 4px);
+        @include SaveButtonHover;
+    }
+    .remove-button, button.cancel {
+        @include CancelButtonHover;
     }
 
     // borrows from facebook.
@@ -986,6 +1044,7 @@ $lineHeight_button: 1.8;
         button[type=submit] {
             background-color: #B82A0C;
             @include box-shadow($color_register_button_border 0px 2px 4px);
+            @include SaveButtonHover;
         }
         .cancel {
             background-color: #797979;

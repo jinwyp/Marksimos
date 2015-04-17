@@ -29,6 +29,8 @@
 
     /********************  Normal Html Template Filters  ********************/
 
+    angular.module('marksimos.filter').filter('filterpick', ['$filter', pickerFilter]);
+
     angular.module('marksimos.filter').filter('language', languageFilter);
     angular.module('marksimos.filter').filter('proficiency', proficiencyFilter);
     angular.module('marksimos.filter').filter('major', majorFilter);
@@ -48,6 +50,13 @@
 
     angular.module('marksimos.filter').filter('emailaddress', emailAddressFilter);
 
+
+    function pickerFilter($filter) {
+        return function() {
+            var filterName = [].splice.call(arguments, 1, 1)[0];
+            return $filter(filterName).apply(null, arguments);
+        };
+    }
 
     function languageFilter() {
         return function(input) {
