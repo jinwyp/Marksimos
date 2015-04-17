@@ -92,7 +92,9 @@ apiRouter.get('/e4e/intro', function(req, res, next){
     res.render('b2c/intro.ejs', {title:'Project Introduction'})
 });
 
-
+apiRouter.get('/e4e/activity', function(req, res, next){
+    res.render('b2c/activity.ejs', {title:'Newest Activities'})
+});
 
 
 
