@@ -5,6 +5,8 @@
 
 $color_white: #ffffff;
 $color_base_red: #c42e0d;
+$color_background_gray: #f0f0f0;
+$color_background_gray_darker: #e6e6e6;
 $color_profile_detail_title: #797978;
 $color_profile_tip: #d9d9d9;
 $color_register_button: $color_base_red;
@@ -1633,7 +1635,7 @@ $lineHeight_button: 1.8;
         font-size: 14px;
         line-height: 2;
     }
-    background: #e6e6e6;
+    background: $color_background_gray_darker;
     #bridge-header { @include bridge-header("/app/css/images/b2c_about_banner.jpg")}
     #bridge-description {
         background: #ffffff;
@@ -1744,7 +1746,7 @@ $lineHeight_button: 1.8;
     }
 
     #team{
-        background-color: #f0f0f0;
+        background-color: $color_background_gray;
         height: 507px;
         padding: 45px 0;
         h3 {
@@ -1828,7 +1830,7 @@ $lineHeight_button: 1.8;
         font-size: 14px;
         line-height: 2;
     }
-    background: #e6e6e6;
+    background: $color_background_gray_darker;
     color: $color_text;
     #bridge-header { @include bridge-header("/app/css/images/b2c_intro_banner.jpg")}
     #sub-nav {
@@ -1899,7 +1901,7 @@ $lineHeight_button: 1.8;
         }
         .section2 {
             padding: 20px 82px;
-            background-color: #f0f0f0;
+            background-color: $color_background_gray;
         }
         .section3 {
             padding: 84px 82px;
@@ -1932,7 +1934,7 @@ $lineHeight_button: 1.8;
         }
         .section5 {
             padding: 30px 82px;
-            background-color: #f0f0f0;
+            background-color: $color_background_gray;
             .brands {
                 margin-top: 45px;
                 img{
@@ -1955,7 +1957,7 @@ $lineHeight_button: 1.8;
         }
         .section2 {
             padding: 20px 82px;
-            background-color: #f0f0f0;
+            background-color: $color_background_gray;
         }
         .section3 {
             padding: 84px 82px;
@@ -2000,5 +2002,65 @@ $lineHeight_button: 1.8;
                 float: left;
             }
         }
+    }
+}
+
+
+#activity {
+    p {
+        font-size: 14px;
+        line-height: 2;
+    }
+    background: $color_background_gray_darker;
+    color: $color_text;
+    #bridge-header {
+        @include bridge-header("/app/css/images/b2c_activity_banner.jpg")
+    }
+    .section1 {
+        padding: 84px 82px 0 82px;
+        background-color: white;
+        h4 {
+            font-size: 20px;
+        }
+        hr {
+            margin-top: 10px;
+            margin-bottom: 30px;
+        }
+        .col-half {
+            float: left;
+            width: 50%;
+        }
+        .activity {
+            img {
+                margin: 0 auto;
+                width: 416px;
+                height: 205px;
+                display: block;
+            }
+            .quote {
+                border: 1px solid $color_base_red;
+                color: $color_base_red;
+                line-height: 50px;
+            }
+            padding-bottom: 50px;
+        }
+    }
+    .section2 {
+        height: 360px;
+        background-image: url("/app/css/images/b2c_activity_bg.jpg");
+        position: relative;
+        img {
+            width: 403px;
+            height: 263px;
+            position: absolute;
+            left: 50%;
+            top: 50%;
+            margin-left: -201px;
+            margin-top: -133px;
+        }
+    }
+    .section3 {
+        background: $color_background_gray;
+        padding: 10px 82px;
     }
 }
