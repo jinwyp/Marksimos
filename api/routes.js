@@ -96,8 +96,17 @@ apiRouter.get('/e4e/activity', function(req, res, next){
     res.render('b2c/activity.ejs', {title:'Newest Activities'})
 });
 
+apiRouter.get('/e4e/contact', function(req, res, next){
+    res.render('b2c/contact.ejs', {title:'Newest Activities'})
+});
 
+apiRouter.get('/e4e/media', function(req, res, next){
+    res.render('b2c/unfinished.ejs', {title:'Media Reports'})
+});
 
+apiRouter.get('/e4e/cooperate', function(req, res, next){
+    res.render('b2c/unfinished.ejs', {title:'Cooperation'})
+});
 
 
 
