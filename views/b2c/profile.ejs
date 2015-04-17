@@ -36,12 +36,12 @@
 
                     <nav class="profile-nav">
                         <ul><!--['{{'上传头像' | translate}}', '{{'基本信息' | translate}}', '{{'安全信息' | translate}}', '{{'学校信息' | translate}}', '{{'团队信息' | translate}}', '{{'联系方式' | translate}}']-->
-                            <li ng-class="{selected: profile.css.currentTabIndex == 0}" ng-click="profile.clickSwitchTab(0)">{{'ProfilePageTabUploadAvatar' | translate}}</li>
-                            <li ng-class="{selected: profile.css.currentTabIndex == 1}" ng-click="profile.clickSwitchTab(1)">{{'ProfilePageTabBasicInfo' | translate}}</li>
-                            <li ng-class="{selected: profile.css.currentTabIndex == 3}" ng-click="profile.clickSwitchTab(3)">{{'ProfilePageTabSchoolInfo' | translate}}</li>
-                            <li ng-class="{selected: profile.css.currentTabIndex == 5}" ng-click="profile.clickSwitchTab(5)">{{'ProfilePageTabExperienceInfo' | translate}}</li>
-                            <li ng-class="{selected: profile.css.currentTabIndex == 2}" ng-click="profile.clickSwitchTab(2)">{{'ProfilePageTabSecurityInfo' | translate}}</li>
-                            <li ng-class="{selected: profile.css.currentTabIndex == 4}" ng-click="profile.clickSwitchTab(4)">{{'ProfilePageTabTeamInfo' | translate}}</li>
+                            <li ng-class="{selected: profile.css.currentTab == 'uploadAvatar'}" ng-click="profile.clickSwitchTab('uploadAvatar')">{{'ProfilePageTabUploadAvatar' | translate}}</li>
+                            <li ng-class="{selected: profile.css.currentTab == 'basicInfo'}" ng-click="profile.clickSwitchTab('basicInfo')">{{'ProfilePageTabBasicInfo' | translate}}</li>
+                            <li ng-class="{selected: profile.css.currentTab == 'schoolInfo'}" ng-click="profile.clickSwitchTab('schoolInfo')">{{'ProfilePageTabSchoolInfo' | translate}}</li>
+                            <li ng-class="{selected: profile.css.currentTab == 'experienceInfo'}" ng-click="profile.clickSwitchTab('experienceInfo')">{{'ProfilePageTabExperienceInfo' | translate}}</li>
+                            <li ng-class="{selected: profile.css.currentTab == 'securityInfo'}" ng-click="profile.clickSwitchTab('securityInfo')">{{'ProfilePageTabSecurityInfo' | translate}}</li>
+                            <li ng-class="{selected: profile.css.currentTab == 'teamInfo'}" ng-click="profile.clickSwitchTab('teamInfo')">{{'ProfilePageTabTeamInfo' | translate}}</li>
                         </ul>
                     </nav>
                 </aside>
@@ -64,7 +64,7 @@
                             </div>
                         </script>
                     </div>
-                    <div class="row" ng-if="profile.css.currentTabIndex == 0">
+                    <div class="row" ng-if="profile.css.currentTab == 'uploadAvatar'">
                         <div class="file-input-wrapper glyphicon glyphicon-plus center-block">
                             <span class="file-upload-text">{{'ProfilePageUploadAvatarSelectionButton' | translate}}</span>
                             <div class="wrapper">
@@ -79,7 +79,7 @@
                         </ul>
                     </div>
 
-                    <div class="row" ng-if="profile.css.currentTabIndex == 1">
+                    <div class="row" ng-if="profile.css.currentTab == 'basicInfo'">
                         <div class="profile-detail-title">{{'ProfilePageTabBasicInfo' | translate}}<span class="profile-edit" ng-click="profile.clickEditProfile()">{{'ProfilePageEditButton' | translate}}</span></div>
                         <form name="basicInfoForm" class="form-horizontal">
                             <div class="form-group">
@@ -188,7 +188,7 @@
                         </form>
                     </div>
 
-                    <div class="row education-background" ng-if="profile.css.currentTabIndex == 3">
+                    <div class="row education-background" ng-if="profile.css.currentTab == 'schoolInfo'">
                         <div class="profile-detail-title">{{'ProfilePageTabSchoolInfo' | translate}}<span class="profile-edit" ng-click="profile.clickSetEditingState({educationEditing: true, languageEditing: false, addLanguageEditing: false})">{{'ProfilePageEditButton' | translate}}</span></div>
                         <form novalidate name="schoolForm" class="form-horizontal">
                             <div class="education" ng-repeat="education in profile.formData.eductionBackgrounds">
@@ -423,7 +423,7 @@
                         </div>
                     </div>
 
-                    <div class="row work-experience" ng-if="profile.css.currentTabIndex == 5">
+                    <div class="row work-experience" ng-if="profile.css.currentTab == 'experienceInfo'">
                         <div class="profile-detail-title">{{'ProfilePageTabExperienceInfo' | translate}}<span class="profile-edit" ng-click="profile.clickSetEditingState({experienceEditing: true, addLanguageEditing: false})">{{'ProfilePageEditButton' | translate}}</span></div>
                         <form novalidate name="experienceForm" class="form-horizontal">
                             <div class="experience" ng-repeat="experience in profile.formData.workExperiences">
@@ -620,7 +620,7 @@
 
                     </div>
 
-                    <div class="row" ng-if="profile.css.currentTabIndex == 2">
+                    <div class="row" ng-if="profile.css.currentTab == 'securityInfo'">
                         <div class="profile-detail-title">{{'ProfilePageTabSecurityInfo' | translate}}<span class="profile-edit" ng-click="profile.clickEditProfile()">{{'ProfilePageEditButton' | translate}}</span></div>
                         <form name="securityInfoForm" class="form-horizontal" novalidate>
                             <div class="form-group" ng-class="{'has-success':securityInfoForm.oldPassword.$dirty&&securityInfoForm.oldPassword.$valid, 'has-error':securityInfoForm.oldPassword.$dirty&&securityInfoForm.oldPassword.$invalid}">
@@ -655,7 +655,7 @@
                         </form>
                     </div>
 
-                    <div class="row team-info" ng-if="profile.css.currentTabIndex == 4">
+                    <div class="row team-info" ng-if="profile.css.currentTab == 'teamInfo'">
                         <div class="profile-detail-title">{{'ProfilePageTabTeamInfo' | translate}}<!--<span class="profile-edit" ng-click="profile.clickEditProfile(3)">{{'ProfilePageEditButton' | translate}}</span>--></div>
                         <form novalidate name="teamNameForm" class="none-bottom form-horizontal" ng-submit="profile.clickUpdateTeamName(teamNameForm)">
                             <div class="form-group team-name" ng-class="{'has-success':teamNameForm.teamName.$dirty&&teamNameForm.teamName.$valid, 'has-error':teamNameForm.teamName.$dirty&&teamNameForm.teamName.$invalid}" >

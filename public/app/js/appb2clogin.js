@@ -201,7 +201,7 @@
         var vm = this;
         vm.css = {
             addStudentFailedInfo: false,
-            currentTabIndex: 1,
+            currentTab: 'basicInfo',
             updateTeamNameDisabled: true,
             saving: false,
 
@@ -362,9 +362,9 @@
             });
         }
 
-        function switchTab(index) {
-            if (vm.css.currentTabIndex == index) return;
-            vm.css.currentTabIndex = index;
+        function switchTab(tab) {
+            if (vm.css.currentTab == tab) return;
+            vm.css.currentTab = tab;
             cancelEditProfile();
         }
 
@@ -567,9 +567,9 @@
 
         var app = {
             init : function(){
-                if (+$location.hash() >= 0) {
-                    switchTab(+$location.hash());
-                }
+                if ($location.hash().length > 0) {
+                    switchTab($location.hash());
+                } else switchTab('basicInfo');
                 this.getUserInfo().then(function() {
                     app.resetForm();
                 });
