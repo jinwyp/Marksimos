@@ -430,7 +430,7 @@
 
 
             // Forgot Password Page
-            ForgotPasswordTitle: 'Security Center',
+            ForgotPasswordForgotPasswordTitle: 'Security Center',
             ForgotPasswordFindPassword: 'Find password',
             ForgotPasswordEnterEmail: 'Enter mail',
             ForgotPasswordResetPassword: 'Reset password',

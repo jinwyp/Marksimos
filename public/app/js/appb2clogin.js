@@ -716,6 +716,9 @@
         var vm = this;
         $scope.$on('$locationChangeSuccess', function() {
             vm.hash = $location.hash();
+            if (!vm.hash.length) {
+                vm.hash = 'competition';
+            }
         });
     }]);
 }());
