@@ -84,6 +84,9 @@
                 scope.css = {
                     language : 'zh_CN'
                 };
+
+                scope.css.language = $translate.use();
+
                 scope.changeLanguage = function (langKey) {
                     scope.css.language = langKey;
                     $translate.use(langKey);
