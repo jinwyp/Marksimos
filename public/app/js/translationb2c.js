@@ -317,6 +317,7 @@
             CampaignPageEnterCampaignCountPrefix      : 'Has Entered ',
             CampaignPageEnterCampaignCountSuffix      : ' People',
             CampaignPageEnterCampaignCountPlural      : 's',
+            ProfilePageSelectButton: 'Select',
 
             //Labels for Enter Successful popup window
             CampaignPageEnterSuccessTip1              : 'Enter Successful！',
@@ -693,6 +694,7 @@
             ProfilePageChangeButton                  : '修改',
             ProfilePageSaveButton                    : '保存',
             ProfilePageUploadAvatarSelectionButton   : '上传图片',
+            ProfilePageSelectButton: '选择',
 
             ProfilePageBasicInfoName                 : '姓名',
             ProfilePageBasicInfoGender               : '性别',

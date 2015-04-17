@@ -207,7 +207,7 @@
 
             formEditing: false,
             currentJobIndustry : -1,
-            currentJobPosition : -1,
+            currentMajor : -1,
 
             //education background form editing states
             educationEditing: false,
@@ -276,7 +276,7 @@
 
         vm.hideMutiSelect = function(){
             vm.css.currentJobIndustry=-1;
-            vm.css.currentJobPosition=-1;
+            vm.css.currentMajor = -1;
         };
 
 

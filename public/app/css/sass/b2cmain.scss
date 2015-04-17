@@ -722,6 +722,22 @@ $lineHeight_button: 1.8;
     width: 0;
 }
 
+@mixin SaveButtonHover {
+    &:hover,
+    &:focus {
+        color: $color_white;
+        background-color: $color_register_button_hover;
+    }
+}
+
+@mixin CancelButtonHover {
+    &:hover,
+    &:focus {
+        color: $color_white;
+        background-color: #b0b0b0;
+    }
+}
+
 .profile-main {
     width: 1200px;
     margin: 0 auto;
@@ -740,7 +756,6 @@ $lineHeight_button: 1.8;
         }
     }
 }
-
 .profile-underline {
     text-decoration: underline;
 }
@@ -938,6 +953,10 @@ $lineHeight_button: 1.8;
     .add-button, .done {
         background-color: #B82A0C;
         @include box-shadow($color_register_button_border 0px 2px 4px);
+        @include SaveButtonHover;
+    }
+    .remove-button, button.cancel {
+        @include CancelButtonHover;
     }
 
     // borrows from facebook.
@@ -1023,6 +1042,7 @@ $lineHeight_button: 1.8;
         button[type=submit] {
             background-color: #B82A0C;
             @include box-shadow($color_register_button_border 0px 2px 4px);
+            @include SaveButtonHover;
         }
         .cancel {
             background-color: #797979;
