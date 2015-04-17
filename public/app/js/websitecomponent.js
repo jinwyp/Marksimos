@@ -187,11 +187,12 @@
                 show        : '=',
                 datasource  : '=',
                 selectclick : '&',
+                close : '&',
                 ngModel : '=',
                 selectfitler : '@'
             },
             restrict: 'AE',
-            templateUrl: '/app/js/websitecomponent/mutiselect.html',
+            templateUrl: 'mutiselect.html',
             link: function (scope, element, attrs) {
 
                 scope.selectLevel2 = function (level2) {
