@@ -5,9 +5,9 @@
                 <img src="/app/css/images/b2c_logo.png" class="b2c-logo" />
             </a>
 
-            <div class="b2c-login pull-right">
+            <div class="b2c-login pull-right" ng-cloak>
 
-                <div class="pull-right" ng-if="showlogin">
+                <div class="pull-right" ng-if="!currentuser.username && showlogin" >
                     <div class="b2c-login-field">
                         <div>用户名/邮箱</div>
                         <div><input type="text" class="b2c-login-input" ng-model="newUser.username"/></div>
@@ -23,7 +23,7 @@
 
 
 
-                <div class="b2c-user pull-right" ng-if="!showlogin && currentuser.username">
+                <div class="b2c-user pull-right" ng-if="currentuser.username">
                     <button class="btn avatar" type="button" data-animation="am-flip-x" bs-dropdown="dropdown" data-template="dropdown-tpl.html" data-placement="bottom-left">
                         <img ng-src="/{{currentuser.avatar.path || 'app/css/images/profile_avatar_2.png'}}" alt="avatar"/>
                         <!--<span class="caret"></span>-->

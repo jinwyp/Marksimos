@@ -283,27 +283,6 @@
     );
 
 
-    angular.module('marksimos.commoncomponent').directive('stickFooter', ['$window', function($window) {
-            return {
-                restrict : 'AE',
-                link  : function (element, attrs) {
-
-                    $window.on('resize', function () {
-                        if (element('header').height() + element('footer').height() + element('main').height() < $window.height()) {
-                            //$('footer').addClass('b2c-footer-fix');
-
-                            scope.css = true;
-                        }else {
-                            //$('footer').removeClass('b2c-footer-fix');
-                            scope.css = true;
-                        }
-                    }).trigger('resize');
-                }
-
-            };
-        }]
-    );
-
 
 
     angular.module('marksimos.commoncomponent').directive('fixedFooter', ['$document', '$window', '$timeout', function($document, $window, $timeout) {
@@ -327,24 +306,14 @@
 
                 function checkFix() {
                     var windowHeight = $document[0].documentElement.clientHeight;
-                    var current = elem[0];
+                    var bodyHeight = $document[0].body.offsetHeight;
                     var hasFixed = elem.hasClass(className);
                     if (hasFixed) {
-                        var bodyHeight = $document[0].body.offsetHeight;
-                        if (bodyHeight > windowHeight) {
+                        if (bodyHeight + elemHeight > windowHeight) {
                             elem.removeClass(className);
                         }
-                    } else {
-                        var bottomToCeiling = current.offsetTop + elemHeight;
-                        current = current.offsetParent;
-                        while (current) {
-                            bottomToCeiling += current.offsetTop;
-                            current = current.offsetParent;
-                        }
-
-                        if (windowHeight > bottomToCeiling) {
-                            elem.addClass(className);
-                        }
+                    } else if (bodyHeight < windowHeight) {
+                        elem.addClass(className);
                     }
                 }
             }

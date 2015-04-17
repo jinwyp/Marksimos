@@ -201,10 +201,13 @@
         var vm = this;
         vm.css = {
             addStudentFailedInfo: false,
-            currentTabIndex: 1,
+            currentTab: 'basicInfo',
             updateTeamNameDisabled: true,
+            saving: false,
 
             formEditing: false,
+            currentJobIndustry : -1,
+            currentMajor : -1,
 
             //education background form editing states
             educationEditing: false,
@@ -232,8 +235,8 @@
 
         vm.currentUser = {};
         vm.newEducation = null;
-        vm.newLanguageSkill = {};
-        vm.newAchievement = {};
+        vm.newLanguageSkill = null;
+        vm.newAchievement = null;
         vm.newExperience = null;
 
         vm.formData = {};
@@ -256,6 +259,8 @@
         vm.clickUpdatePassword = updatePassword;
         vm.clickEditProfile = editProfile;
         vm.clickSwitchTab = switchTab;
+        vm.clickHideMutiSelect = hideMutiSelect;
+
         vm.clickCancelEditProfile = cancelEditProfile;
         vm.clickGetMobileVerifyCode = getMobileVerifyCode;
         vm.clickSendMobileVerifyCode = sendMobileVerifyCode;
@@ -267,10 +272,18 @@
         vm.clickAddNewAchievement = addNewAchievement;
         vm.clickAddNewAchievementToExistEducation = addNewAchievementToExistEducation;
         vm.clickDeleteExperience = deleteExperience;
+        vm.clickDeleteNewEducation = deleteNewEducation;
+        vm.clickDeleteNewExperience = deleteNewExperience;
 
 
 
         /**********  Function Declarations  **********/
+
+        function hideMutiSelect(){
+            vm.css.currentJobIndustry = -1;
+            vm.css.currentMajor = -1;
+        }
+
         function editProfile(specificForm) {
             vm.css.formEditing = true;
             if(specificForm) {
@@ -280,6 +293,16 @@
 
         function deleteEducation(index) {
             vm.formData.eductionBackgrounds.splice(index, 1);
+        }
+
+        function deleteNewEducation() {
+            vm.css.addEducationEditing = false;
+            vm.newEducation = null;
+        }
+
+        function deleteNewExperience() {
+            vm.css.addExperienceEditing = false;
+            vm.newExperience = null;
         }
 
         function addNewLanguage() {
@@ -296,7 +319,7 @@
             if (!isExist) {
                 vm.formData.LanguageSkills.push(vm.newLanguageSkill);
             }
-            vm.newLanguageSkill = {};
+            vm.newLanguageSkill = null;
         }
 
         function deleteLanguage(index) {
@@ -304,25 +327,23 @@
         }
 
         function addNewAchievement() {
-            if (vm.newAchievement) {
-                if (!vm.newEducation) {
-                    vm.newEducation = {
-                        achievements: []
-                    };
-                }
-                if (!vm.newEducation.achievements) {
-                    vm.newEducation.achievements = [];
-                }
-
-                vm.newEducation.achievements.push(vm.newAchievement);
-                vm.newAchievement = {};
+            if (!vm.newEducation) {
+                vm.newEducation = {
+                    achievements: []
+                };
             }
+            if (!vm.newEducation.achievements) {
+                vm.newEducation.achievements = [];
+            }
+
+            vm.newEducation.achievements.push(vm.newAchievement);
+            vm.newAchievement = null;
         }
 
         function addNewAchievementToExistEducation(index) {
             var education = vm.formData.eductionBackgrounds[index];
             education.achievements.push(education._newAchievement);
-            education._newAchievement = {};
+            education._newAchievement = null;
         }
 
         function deleteExperience(index) {
@@ -344,9 +365,9 @@
             });
         }
 
-        function switchTab(index) {
-            if (vm.css.currentTabIndex == index) return;
-            vm.css.currentTabIndex = index;
+        function switchTab(tab) {
+            if (vm.css.currentTab == tab) return;
+            vm.css.currentTab = tab;
             cancelEditProfile();
         }
 
@@ -416,11 +437,29 @@
                     vm.formData.workExperiences.push(vm.newExperience);
                 }
 
+                if (vm.newAchievement) {
+                    addNewAchievement();
+                }
+
+                if (vm.newLanguageSkill) {
+                    addNewLanguage();
+                }
+
+                if (vm.formData.eductionBackgrounds) {
+                    vm.formData.eductionBackgrounds.forEach(function(education, i) {
+                        if (education._newAchievement) {
+                            addNewAchievementToExistEducation(i);
+                        }
+                    });
+                }
+
+
+                vm.css.saving = true;
                 Student.updateStudentB2CInfo(vm.formData).then(function() {
-                    angular.copy(vm.formData, vm.currentUser);
+                    app.getUserInfo();
 
                     vm.newEducation = null;
-                    vm.newLanguage = null;
+                    vm.newLanguageSkill = null;
                     vm.newExperience = null;
 
                     if (!slient) {
@@ -436,6 +475,14 @@
                             form[item.param].$invalid = true;
                             vm.css.errorFields[item.param] = true;
                         });
+                    }
+                }).finally(function() {
+                    vm.css.saving = false;
+                });
+            } else {
+                Object.keys(form).forEach(function(key){
+                    if (key[0] != '$') {
+                        form[key].$setDirty();
                     }
                 });
             }
@@ -523,12 +570,11 @@
 
         var app = {
             init : function(){
-                if (+$location.hash() >= 0) {
-                    switchTab(+$location.hash());
-                }
-                this.getUserInfo().then(function() {
-                    app.resetForm();
-                });
+                if ($location.hash().length > 0) {
+                    switchTab($location.hash());
+                } else switchTab('basicInfo');
+
+                this.getUserInfo();
             },
             reRun : function(){
 
@@ -536,21 +582,21 @@
             getUserInfo : function(){
                 return Student.getStudent().then(function(result) {
                     vm.currentUser = result.data;
+                    app.resetForm();
                 }).catch(function(err) {
                     console.log('load student info failed');
                 });
             },
             resetForm: function() {
-                var formData = vm.formData;
 
-                angular.copy(vm.currentUser, formData);
+                angular.copy(vm.currentUser, vm.formData);
 
-                formData.oldPassword = '';
-                formData.newPassword = '';
-                formData.rePassword = '';
+                vm.formData.oldPassword = '';
+                vm.formData.newPassword = '';
+                vm.formData.rePassword = '';
 
-                formData.teamName = vm.currentUser.team && vm.currentUser.team.name;
-                formData.newTeamMember = '';
+                vm.formData.teamName = vm.currentUser.team && vm.currentUser.team.name;
+                vm.formData.newTeamMember = '';
 
                 vm.css.errorFields = {};
             }
@@ -605,7 +651,7 @@
 
 
 
-    angular.module('b2clogin').controller('campaignController', ['Student', '$modal', '$translate', '$location', '$anchorScroll', '$q', function(Student, $modal, $translate, $location, $anchorScroll, $q) {
+    angular.module('b2clogin').controller('campaignController', ['Student', '$modal', '$translate', '$location', '$q', '$anchorScroll', function(Student, $modal, $translate, $location, $q, $anchorScroll) {
         /* jshint validthis: true */
         var vm = this;
 
@@ -663,7 +709,20 @@
     }]);
 
 
+    angular.module('b2clogin').controller('aboutController', ['$anchorScroll', function($anchorScroll) {
+        $anchorScroll();
+    }]);
 
+
+    angular.module('b2clogin').controller('introController', ['$location', '$scope', function($location, $scope) {
+        var vm = this;
+        $scope.$on('$locationChangeSuccess', function() {
+            vm.hash = $location.hash();
+            if (!vm.hash.length) {
+                vm.hash = 'competition';
+            }
+        });
+    }]);
 }());
 
 

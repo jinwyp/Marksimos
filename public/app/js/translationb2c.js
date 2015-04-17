@@ -39,6 +39,74 @@
             LanguageFluent       : 'Fluent',
             LanguageNative       : 'Native',
 
+
+            // Education Major
+            educationMajorPhilosophy  : 'Philosophy',
+            educationMajorEconomics   : 'Economics',
+            educationMajorManagement  : 'Management',
+            educationMajorLiterature  : 'Literature',
+            educationMajorEngineering : 'Engineering',
+            educationMajorLaw         : 'Law',
+            educationMajorHistory     : 'History',
+            educationMajorScience     : 'Science',
+            educationMajorEducation   : 'Education',
+            educationMajorMedicine    : 'Medicine',
+            educationMajorAgriculture : 'Agriculture',
+
+
+            educationMajorPhilosophy01  : 'Philosophy',
+
+            educationMajorEconomics01  : 'Economics',
+
+            educationMajorManagement01  : 'Management Science and Engineering',
+            educationMajorManagement02  : 'Business Administration',
+            educationMajorManagement03  : 'Administrative Management Public Management',
+            educationMajorManagement04  : 'Library Science',
+
+            educationMajorLiterature01  : 'Languages And Literature',
+            educationMajorLiterature02  : 'Journalism and Communication',
+            educationMajorLiterature03  : 'Arts',
+
+            educationMajorEngineering01 : 'Electrical and Information Science',
+            educationMajorEngineering02 : 'Computer Science and Technology',
+            educationMajorEngineering03 : 'Mechanical Engineering',
+            educationMajorEngineering04 : 'Civil Engineering/Architect',
+            educationMajorEngineering05 : 'Materials Science',
+            educationMajorEngineering06 : 'Apparatus and instrument',
+            educationMajorEngineering07 : 'Energy Dynamics',
+            educationMajorEngineering08 : 'Water Resources',
+            educationMajorEngineering09 : 'Surveying',
+            educationMajorEngineering10 : 'Pharmaceutical Engineering',
+            educationMajorEngineering11 : 'Transportation',
+            educationMajorEngineering12 : 'Shipping/Oceanicographic Engineering',
+            educationMajorEngineering13 : 'Aviation and Aerospace',
+            educationMajorEngineering14 : 'Light industry, Textile and Food',
+            educationMajorEngineering15 : 'Weapons',
+            educationMajorEngineering16 : 'Public Security Technology',
+            educationMajorEngineering17 : 'Biomedical Engineering',
+
+            educationMajorLaw01         : 'Law',
+
+            educationMajorHistory01     : 'History',
+
+            educationMajorScience01     : 'Mathematics',
+            educationMajorScience02     : 'Physics',
+            educationMajorScience03     : 'Chemistry and Chemical Engineering',
+            educationMajorScience04     : 'Biological Science and Technology',
+            educationMajorScience05     : 'Astronomy/Geology/Geography ',
+            educationMajorScience06     : 'Mechanics',
+            educationMajorScience07     : 'Electronic Information Science',
+            educationMajorScience08     : 'Systems Science',
+            educationMajorScience09     : 'Environmental Science and Safety',
+
+            educationMajorEducation01   : 'Education',
+
+            educationMajorMedicine01    : 'Medicine',
+            educationMajorMedicine02    : 'Psychological Studies ',
+
+            educationMajorAgriculture01 : 'Agriculture',
+
+
             // Profile Work Experience
             jobTypeFullTime      : 'Full-time',
             jobTypePartTime      : 'Par-time ',
@@ -141,7 +209,9 @@
             jobIndustryOthers06          : 'Others',
 
 
-            //profile page
+            //profile page validation
+            ProfilePageRequiredError: 'Required',
+
             //Header Title
             ProfilePageHeaderTitle                   : "Personal Info",
 
@@ -179,7 +249,7 @@
 
             ProfilePageExperience: 'Experience',
             ProfilePageExperienceInfoCompany: 'Company',
-            ProfilePageExperienceInfoJobType: 'Jon Type',
+            ProfilePageExperienceInfoJobType: 'Job Type',
             ProfilePageExperienceInfoIndustry: 'Industry',
             ProfilePageExperienceInfoPosition: 'Position',
             ProfilePageExperienceInfoSizeOfCompany: 'Size of Company',
@@ -247,6 +317,7 @@
             CampaignPageEnterCampaignCountPrefix      : 'Has Entered ',
             CampaignPageEnterCampaignCountSuffix      : ' People',
             CampaignPageEnterCampaignCountPlural      : 's',
+            ProfilePageSelectButton: 'Select',
 
             //Labels for Enter Successful popup window
             CampaignPageEnterSuccessTip1              : 'Enter Successful！',
@@ -304,10 +375,11 @@
             RegisterPageCaptchaPlaceholder        : 'Captcha',
             RegisterPageMaleLabel                 : 'Male',
             RegisterPageFemale                    : 'Female',
-            RegisterPageRegisterButton            : 'Conform',
+            RegisterPageRegisterButton            : 'Sign Up',
+            
             //Error Tips for Validation
             RegisterPageInputNameTip              : 'Please enter your username!',
-            RegisterPageNameLengthTip             : "Username's length should be 6-20 characters",
+            RegisterPageNameLengthTip             : "Username should be 6-20 characters",
             RegisterPageNameExistTip              : 'This username is already exist',
             RegisterPageInputEmailTip             : "Please enter your email",
             RegisterPageEmailExistTip             : "This email is already exist",
@@ -358,7 +430,7 @@
 
 
             // Forgot Password Page
-            ForgotPasswordTitle: 'Security Center',
+            ForgotPasswordForgotPasswordTitle: 'Security Center',
             ForgotPasswordFindPassword: 'Find password',
             ForgotPasswordEnterEmail: 'Enter mail',
             ForgotPasswordResetPassword: 'Reset password',
@@ -429,6 +501,74 @@
             LanguageIntermediate: '中等',
             LanguageFluent: '精通',
             LanguageNative: '母语',
+
+
+            // Education Major
+            educationMajorPhilosophy  : '哲学',
+            educationMajorEconomics   : '经济学',
+            educationMajorManagement  : '管理学',
+            educationMajorLiterature  : '文学',
+            educationMajorEngineering : '工学',
+            educationMajorLaw         : '法学',
+            educationMajorHistory     : '历史学',
+            educationMajorScience     : '理学',
+            educationMajorEducation   : '教育学',
+            educationMajorMedicine    : '医学',
+            educationMajorAgriculture : '农学',
+
+
+            educationMajorPhilosophy01  : '哲学类',
+
+            educationMajorEconomics01  : '经济学类',
+
+            educationMajorManagement01  : '管理科学与工程类',
+            educationMajorManagement02  : '工商管理类',
+            educationMajorManagement03  : '行政管理、公共管理类',
+            educationMajorManagement04  : '图书档案学类',
+
+            educationMajorLiterature01  : '语言文学类',
+            educationMajorLiterature02  : '新闻传播学类',
+            educationMajorLiterature03  : '艺术类',
+
+            educationMajorEngineering01 : '电气信息类',
+            educationMajorEngineering02 : '计算机科学及技术类',
+            educationMajorEngineering03 : '机械类',
+            educationMajorEngineering04 : '土建类',
+            educationMajorEngineering05 : '材料类',
+            educationMajorEngineering06 : '仪器仪表类',
+            educationMajorEngineering07 : '能源动力类',
+            educationMajorEngineering08 : '水利类',
+            educationMajorEngineering09 : '测绘类',
+            educationMajorEngineering10 : '制药工程类',
+            educationMajorEngineering11 : '交通运输类',
+            educationMajorEngineering12 : '船舶与海洋工程类',
+            educationMajorEngineering13 : '航空航天类',
+            educationMajorEngineering14 : '轻工纺织食品类',
+            educationMajorEngineering15 : '武器类',
+            educationMajorEngineering16 : '公安技术类',
+            educationMajorEngineering17 : '生物医学工程类',
+
+            educationMajorLaw01         : '法学类',
+
+            educationMajorHistory01     : '历史学类',
+
+            educationMajorScience01     : '数学类',
+            educationMajorScience02     : '物理学类',
+            educationMajorScience03     : '化学类及化学工程类',
+            educationMajorScience04     : '生物科学及生物技术类',
+            educationMajorScience05     : '天文地质地理类',
+            educationMajorScience06     : '力学类',
+            educationMajorScience07     : '电子信息科学类',
+            educationMajorScience08     : '系统科学类',
+            educationMajorScience09     : '环境科学与安全类',
+
+            educationMajorEducation01   : '教育学类',
+
+            educationMajorMedicine01    : '医学类',
+            educationMajorMedicine02    : '心理学类',
+
+            educationMajorAgriculture01 : '农业类',
+
 
             // Profile Work Experience
             jobTypeFullTime      : '全职',
@@ -532,6 +672,10 @@
             jobIndustryOthers06          : '其他行业',
 
             //Profile Page
+            //validation Error Tip
+            ProfilePageRequiredError: '必填',
+
+
             //Header Title
             ProfilePageHeaderTitle                   : "个人信息",
 
@@ -550,6 +694,7 @@
             ProfilePageChangeButton                  : '修改',
             ProfilePageSaveButton                    : '保存',
             ProfilePageUploadAvatarSelectionButton   : '上传图片',
+            ProfilePageSelectButton: '选择',
 
             ProfilePageBasicInfoName                 : '姓名',
             ProfilePageBasicInfoGender               : '性别',
@@ -692,7 +837,8 @@
             RegisterPageCaptchaPlaceholder        : '验证码',
             RegisterPageMaleLabel                 : '男',
             RegisterPageFemale                    : '女',
-            RegisterPageRegisterButton            : '确 定',
+            RegisterPageRegisterButton            : '立即注册',
+
             //Error Tips for Validation
             RegisterPageInputNameTip              : '请输入正确的用户名',
             RegisterPageNameLengthTip             : '用户名长度为6-20个字符',

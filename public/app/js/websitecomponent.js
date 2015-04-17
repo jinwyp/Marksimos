@@ -17,13 +17,55 @@
     angular.module('marksimos.websitecomponent', ['marksimos.templates', 'marksimos.model', 'pascalprecht.translate', 'marksimos.translation', 'b2c.translation' ]);
 
 
-    angular.module('marksimos.websitecomponent').directive('b2cHeader', ['$window', '$translate', 'Student', b2cHeaderComponent ]);
+    angular.module('marksimos.websitecomponent').directive('b2cHeader', ['$window', '$translate', '$timeout', 'Student', b2cHeaderComponent ]);
+    angular.module('marksimos.websitecomponent').directive('b2cSubMenu', ['$location' ,b2cSubMenuComponent]);
+
     angular.module('marksimos.websitecomponent').directive('userHeader', ['$window', '$translate', 'Student', userHeaderComponent ]);
+    angular.module('marksimos.websitecomponent').directive('mutiSelect', ['$window', '$translate', '$filter', mutiSelectComponent ]);
+
     angular.module('marksimos.websitecomponent').directive('headerAdmin', ['$window', '$translate', 'Student', adminHeaderComponent]);
     angular.module('marksimos.websitecomponent').directive('menuAdmin', [adminMenuComponent]);
 
+    function b2cSubMenuComponent($location){
+        return {
+            restrict   : 'AE',
+            templateUrl: 'b2csubmenu.html',
+            link       : function (scope, element, attrs) {
+                scope.menu = [
+                    {
+                        title: '关于我们',
+                        link : 'about'
+                    },
+                    {
+                        title: '项目介绍',
+                        link : 'intro'
+                    },
+                    {
+                        title: '最新活动',
+                        link : 'activity'
+                    },
+                    {
+                        title: '媒体报道',
+                        link : 'media'
+                    },
+                    {
+                        title: '企业合作',
+                        link : 'cooperate'
+                    },
+                    {
+                        title: '联系我们',
+                        link : 'contact'
+                    }
+                ];
 
-    function b2cHeaderComponent($window, $translate, Student){
+                scope.isActive = function (route) {
+                    return $location.$$absUrl.indexOf(route) >= 1;
+                };
+            }
+        };
+    }
+
+    function b2cHeaderComponent($window, $translate, $timeout, Student){
         return {
             scope: {
                 showlogin  : '=',
@@ -42,6 +84,10 @@
                 scope.css = {
                     language : 'zh_CN'
                 };
+
+                scope.css.language = $translate.use();
+
+
                 scope.changeLanguage = function (langKey) {
                     scope.css.language = langKey;
                     $translate.use(langKey);
@@ -136,6 +182,32 @@
             }
         };
     }
+
+
+    function mutiSelectComponent($window, $translate, $filter){
+        return {
+            scope: {
+                selectstyle : '=',
+                show        : '=',
+                datasource  : '=',
+                selectclick : '&',
+                close : '&',
+                ngModel : '=',
+                selectfitler : '@'
+            },
+            restrict: 'AE',
+            templateUrl: 'mutiselect.html',
+            link: function (scope, element, attrs) {
+
+                scope.selectLevel2 = function (level2) {
+                    scope.selectclick({current:level2});
+                    scope.ngModel = level2.id;
+                };
+
+            }
+        };
+    }
+
 
 
     function adminHeaderComponent($window, $translate, Student){

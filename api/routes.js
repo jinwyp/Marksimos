@@ -84,10 +84,29 @@ apiRouter.get('/e4e/profile', auth.authLoginToken({failureRedirect: '/e4e/login'
 apiRouter.get('/e4e/campaigns',  campaignController.campaignListPage);
 apiRouter.get('/e4e/campaign/:campaignId', auth.authLoginToken({failureRedirect: '/e4e/login'}), auth.authRole(marksimosRight.studentLogin, {failureRedirect: '/e4e/login'}), campaignController.campaignSingleInfoPage);
 
+apiRouter.get('/e4e/about', function(req, res, next){
+    res.render('b2c/about.ejs', {title:'About Bridge+'})
+});
 
+apiRouter.get('/e4e/intro', function(req, res, next){
+    res.render('b2c/intro.ejs', {title:'Project Introduction'})
+});
 
+apiRouter.get('/e4e/activity', function(req, res, next){
+    res.render('b2c/activity.ejs', {title:'Newest Activities'})
+});
 
+apiRouter.get('/e4e/contact', function(req, res, next){
+    res.render('b2c/contact.ejs', {title:'Newest Activities'})
+});
 
+apiRouter.get('/e4e/media', function(req, res, next){
+    res.render('b2c/unfinished.ejs', {title:'Media Reports'})
+});
+
+apiRouter.get('/e4e/cooperate', function(req, res, next){
+    res.render('b2c/unfinished.ejs', {title:'Cooperation'})
+});
 
 
 
