@@ -196,7 +196,7 @@
 
                 scope.selectLevel2 = function (level2) {
                     scope.selectclick({current:level2});
-                    scope.ngModel = level2;
+                    scope.ngModel = level2.id;
                 };
 
             }
