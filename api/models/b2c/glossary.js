@@ -19,14 +19,13 @@ var mongooseTimestamps = require('mongoose-timestamp');
 /**
  * Mongoose schema
  */
-var chatMessageSchema = new Schema({
+var glossarySchema = new Schema({
 
-    text: { type: String },
+    name: { type: String },
+    description: { type: String },
 
-    creator: { type: schemaObjectId, ref: 'User' },
-
-    room : {
-        roomNumber : { type: String},
+    tags : {
+        name : { type: String},
         description: { type: String }
     }
 
@@ -36,7 +35,7 @@ var chatMessageSchema = new Schema({
 /**
  * Mongoose plugin
  */
-chatMessageSchema.plugin(mongooseTimestamps);
+glossarySchema.plugin(mongooseTimestamps);
 
 
 /**
@@ -52,7 +51,7 @@ chatMessageSchema.plugin(mongooseTimestamps);
  * Statics
  */
 
-chatMessageSchema.statics.updateValidations = function(req){
+glossarySchema.statics.updateValidations = function(req){
 
     //req.sanitize('activated').toBoolean();
 
@@ -76,5 +75,6 @@ chatMessageSchema.statics.updateValidations = function(req){
  */
 
 
-var chatMessage = mongoose.model("Chatmessage", chatMessageSchema);
-module.exports = chatMessage;
+var glossary = mongoose.model("Chatmessage", glossarySchema);
+module.exports = glossary;
+
