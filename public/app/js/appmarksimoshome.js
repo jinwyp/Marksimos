@@ -510,9 +510,9 @@
 
                 });
 
-                socket.socket.on('marksimosChatMsg', function(data){
+                socket.socket.on('marksimosChatMessageUpdate', function(data){
                     console.log(data);
-                })
+                });
 
             },
 

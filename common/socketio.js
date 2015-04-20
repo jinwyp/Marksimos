@@ -5,7 +5,7 @@
 'use strict';
 
 var seminarModel = require('../api/models/marksimos/seminar');
-var chatmessageModel = require('../api/models/b2c/chatmessage');
+
 var Token = require('../api/models/user/authenticationtoken');
 var _ = require('lodash');
 
@@ -54,7 +54,7 @@ exports.init = function (socketio) {
     socketio.on('connection', function (socket) {
         var token = socket.handshake.query.token;
         var roomMarksimosCompany;
-        var roomSeminar;
+        var roomMarksimosSeminar;
 
         Token.verifyToken(token, function(err, user) {
 
@@ -69,8 +69,8 @@ exports.init = function (socketio) {
                     roomMarksimosCompany = seminarResult.seminarId.toString() + company.companyId.toString();
                     socket.join(roomMarksimosCompany);
 
-                    roomSeminar = seminarResult.seminarId.toString();
-                    socket.join(roomSeminar);
+                    roomMarksimosSeminar = seminarResult.seminarId.toString();
+                    socket.join(roomMarksimosSeminar);
 
                 }).fail(function(err){
                     logger.error(err);
@@ -104,17 +104,11 @@ exports.emitMarksimosDecisionUpdate = function(roomName, data){
 };
 
 
+
 exports.emitMarksimosChatMsg = function(roomName, user, message){
-    gsocketio.to(roomName).emit('marksimosChatMsg', {
+    gsocketio.to(roomName).emit('marksimosChatMessageUpdate', {
         user: _.pick(user, 'username', 'avatar'),
         message: message
     });
 
-    chatmessageModel.create({
-        text: message,
-        creator: user._id,
-        room: {
-            roomNumber: roomName
-        }
-    });
 };

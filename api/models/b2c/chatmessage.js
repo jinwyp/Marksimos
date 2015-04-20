@@ -52,11 +52,9 @@ chatMessageSchema.plugin(mongooseTimestamps);
  * Statics
  */
 
-chatMessageSchema.statics.updateValidations = function(req){
+chatMessageSchema.statics.createValidations = function(req){
 
-    //req.sanitize('activated').toBoolean();
-
-    //req.checkBody('name', 'Campaign name should be 2-50 characters').notEmpty().len(2, 50);
+    req.checkBody('message', 'Chat Message should be 2-300 characters').notEmpty().len(2, 300);
     //req.checkBody('description', 'Campaign description should be 2-10000 characters').notEmpty().len(2, 10000);
 
     //req.checkBody('activated', 'Campaign activated should Boolean true or false').notEmpty();

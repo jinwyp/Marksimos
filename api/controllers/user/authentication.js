@@ -205,7 +205,10 @@ exports.authLoginToken = function (options) {
                         req.gameMarksimos = {
                             currentStudent : user,
                             currentStudentSeminar : seminarResult,
-                            socketRoomName : false
+                            socketRoom : {
+                                seminar : false,
+                                company : false
+                            }
                         };
 
                         var company = _.find(seminarResult.companyAssignment, function(company) {
@@ -213,8 +216,10 @@ exports.authLoginToken = function (options) {
                         });
 
                         if (typeof company !== 'undefined') {
-                            req.gameMarksimos.socketRoomName = seminarResult.seminarId.toString() + company.companyId.toString();
-                            req.gameMarksimos.seminarSocketRoomName = seminarResult.seminarId.toString();
+                            req.gameMarksimos.socketRoom = {
+                                seminar : seminarResult.seminarId.toString(),
+                                company : seminarResult.seminarId.toString() + company.companyId.toString()
+                            };
                         }
 
                         // very important, after seminar finished currentPeriod is last round
@@ -226,7 +231,10 @@ exports.authLoginToken = function (options) {
                         req.gameMarksimos = {
                             currentStudent : false,
                             currentStudentSeminar : false,
-                            socketRoomName : false
+                            socketRoom : {
+                                seminar : false,
+                                company : false
+                            }
                         };
                     }
 

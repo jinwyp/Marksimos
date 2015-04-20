@@ -3,6 +3,7 @@ var gameTokenModel = require('../../models/user/gameauthtoken.js');
 var userModel = require('../../models/user/user.js');
 var userRoleModel = require('../../models/user/userrole.js');
 var teamModel = require('../../models/user/team.js');
+var chatmessageModel = require('../../models/b2c/chatmessage.js');
 
 var logger = require('../../../common/logger.js');
 var consts = require('../../consts.js');
@@ -616,10 +617,34 @@ function validateSeminar(req){
 }
 
 
-exports.chat = function(req, res, next) {
-    socketio.emitMarksimosChatMsg(req.gameMarksimos.seminarSocketRoomName, req.user, req.body.msg);
-    res.status(200).send();
-}
+exports.sendChatMessage = function(req, res, next) {
+
+    var validationErrors = chatmessageModel.createValidations(req);
+
+    if(validationErrors){
+        return res.status(400).send( {message: validationErrors} );
+    }
+
+    chatmessageModel.createQ({
+        text: req.body.message,
+        creator: req.user._id,
+        room: {
+            roomNumber: req.gameMarksimos.socketRoom.seminar
+        }
+    }).then(function(resultMessage){
+
+        if(!resultMessage ){
+            throw new Error('Cancel promise chains. Because Create New ChatMessage failed !');
+        }
+
+        return res.status(200).send({message: 'Create New Chat Message success'});
+
+    }).fail(next).done();
+
+    socketio.emitMarksimosChatMsg(req.gameMarksimos.socketRoom.seminar, req.user, req.body.message);
+};
+
+
 
 
 
