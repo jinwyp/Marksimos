@@ -17,7 +17,7 @@
     angular.module('marksimos.websitecomponent', ['marksimos.templates', 'marksimos.model', 'pascalprecht.translate', 'marksimos.translation', 'b2c.translation' ]);
 
 
-    angular.module('marksimos.websitecomponent').directive('b2cHeader', ['$window', '$translate', 'Student', b2cHeaderComponent ]);
+    angular.module('marksimos.websitecomponent').directive('b2cHeader', ['$window', '$translate', '$timeout', 'Student', b2cHeaderComponent ]);
     angular.module('marksimos.websitecomponent').directive('b2cSubMenu', ['$location' ,b2cSubMenuComponent]);
 
     angular.module('marksimos.websitecomponent').directive('userHeader', ['$window', '$translate', 'Student', userHeaderComponent ]);
@@ -65,7 +65,7 @@
         };
     }
 
-    function b2cHeaderComponent($window, $translate, Student){
+    function b2cHeaderComponent($window, $translate, $timeout, Student){
         return {
             scope: {
                 showlogin  : '=',
@@ -84,6 +84,10 @@
                 scope.css = {
                     language : 'zh_CN'
                 };
+
+                scope.css.language = $translate.use();
+
+
                 scope.changeLanguage = function (langKey) {
                     scope.css.language = langKey;
                     $translate.use(langKey);

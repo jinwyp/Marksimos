@@ -29,7 +29,7 @@ exports.campaignListPage = function(req, res, next){
             campaign.totalMembers = totalMembers;
         });
 
-        return res.render('b2c/campaignlist.ejs',{
+        return res.render('b2c/campaign/campaignlist.ejs',{
             title : 'HCD E4E Campaign | HCD Learning',
             campaignList: resultCampaign
         });
@@ -60,7 +60,7 @@ exports.campaignSingleInfoPage = function(req, res, next){
         });
         resultCampaign.totalMembers = totalMembers;
 
-        return res.render('b2c/campaign.ejs',{
+        return res.render('b2c/campaign/campaign.ejs',{
             title : 'HCD E4E Campaign | HCD Learning',
             campaign: resultCampaign
         });

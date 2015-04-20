@@ -227,7 +227,7 @@
                                                 <p class="col-xs-8 form-control-static">{{profile.formData.eductionBackgrounds[$index].major | major | translate}}&nbsp;</p>
                                                 <div class="col-xs-4"><button class="btn btn-default form-control" ng-click="profile.css.currentMajor=$index">{{'ProfilePageSelectButton' | translate}}</button></div>
                                             </div>
-                                            <div muti-select selectfitler="major" datasource="profile.Constant.educationMajor" show="$index == profile.css.currentMajor"  selectclick="profile.hideMutiSelect()" close="profile.hideMutiSelect()" ng-model="profile.formData.eductionBackgrounds[$index].major"></div>
+                                            <div muti-select selectfitler="major" datasource="profile.Constant.educationMajor" show="$index == profile.css.currentMajor"  selectclick="profile.clickHideMutiSelect()" close="profile.clickHideMutiSelect()" ng-model="profile.formData.eductionBackgrounds[$index].major"></div>
                                         </div>
                                         <span class="err-msg control-label form-control-static col-xs-4" ng-if="schoolForm['major' +  $index].$dirty && schoolForm['major' + $index].$invalid">{{'ProfilePageRequiredError' | translate}}</span>
                                     </div>
@@ -323,7 +323,7 @@
                                                 <p class="col-xs-8 form-control-static">{{profile.newEducation.major | major | translate}}&nbsp;</p>
                                                 <div class="col-xs-4"><button class="btn btn-default form-control" ng-click="profile.css.currentMajor=-99">{{'ProfilePageSelectButton' | translate}}</button></div>
                                             </div>
-                                            <div muti-select selectfitler="major" datasource="profile.Constant.educationMajor" show="-99 == profile.css.currentMajor"  selectclick="profile.hideMutiSelect()" close="profile.hideMutiSelect()" ng-model="profile.newEducation.major"></div>
+                                            <div muti-select selectfitler="major" datasource="profile.Constant.educationMajor" show="-99 == profile.css.currentMajor"  selectclick="profile.clickHideMutiSelect()" close="profile.clickHideMutiSelect()" ng-model="profile.newEducation.major"></div>
                                         </div>
                                         <span class="err-msg control-label form-control-static col-xs-4" ng-if="schoolForm.major.$dirty && schoolForm.major.$invalid">{{'ProfilePageRequiredError' | translate}}</span>
                                     </div>
@@ -461,7 +461,7 @@
                                                 <p class="col-xs-8 form-control-static">{{profile.formData.workExperiences[$index].industry | jobndustry | translate}}&nbsp;</p>
                                                 <div class="col-xs-4"><button class="btn btn-default form-control" ng-click="profile.css.currentJobIndustry=$index">{{'ProfilePageSelectButton' | translate}}</button></div>
                                             </div>
-                                            <div muti-select selectfitler="jobndustry" datasource="profile.Constant.jobIndustry" show="$index == profile.css.currentJobIndustry"  selectclick="profile.hideMutiSelect()" close="profile.hideMutiSelect()" close="profile.hideMutiSelect()" ng-model="profile.formData.workExperiences[$index].industry"></div>
+                                            <div muti-select selectfitler="jobndustry" datasource="profile.Constant.jobIndustry" show="$index == profile.css.currentJobIndustry"  selectclick="profile.clickHideMutiSelect()" close="profile.clickHideMutiSelect()" close="profile.clickHideMutiSelect()" ng-model="profile.formData.workExperiences[$index].industry"></div>
                                         </div>
                                         <span class="err-msg control-label form-control-static col-xs-4" ng-if="experienceForm['industry' + $index].$dirty && experienceForm['industry' + $index].$invalid">{{'ProfilePageRequiredError' | translate}}</span>
                                     </div>
@@ -556,7 +556,7 @@
                                                 <p class="col-xs-8 form-control-static">{{profile.newExperience.industry | jobndustry | translate}}&nbsp;</p>
                                                 <div class="col-xs-4"><button class="btn btn-default form-control" ng-click="profile.css.currentJobIndustry=-99">{{'ProfilePageSelectButton' | translate}}</button></div>
                                             </div>
-                                            <div muti-select selectfitler="jobndustry" datasource="profile.Constant.jobIndustry" show="-99 == profile.css.currentJobIndustry"  selectclick="profile.hideMutiSelect()" close="profile.hideMutiSelect()" ng-model="profile.newExperience.industry"></div>
+                                            <div muti-select selectfitler="jobndustry" datasource="profile.Constant.jobIndustry" show="-99 == profile.css.currentJobIndustry"  selectclick="profile.clickHideMutiSelect()" close="profile.clickHideMutiSelect()" ng-model="profile.newExperience.industry"></div>
                                         </div>
                                         <span class="err-msg control-label form-control-static col-xs-4" ng-if="experienceForm.industry.$dirty && experienceForm.industry.$invalid">{{'ProfilePageRequiredError' | translate}}</span>
                                     </div>

@@ -259,6 +259,8 @@
         vm.clickUpdatePassword = updatePassword;
         vm.clickEditProfile = editProfile;
         vm.clickSwitchTab = switchTab;
+        vm.clickHideMutiSelect = hideMutiSelect;
+
         vm.clickCancelEditProfile = cancelEditProfile;
         vm.clickGetMobileVerifyCode = getMobileVerifyCode;
         vm.clickSendMobileVerifyCode = sendMobileVerifyCode;
@@ -274,13 +276,14 @@
         vm.clickDeleteNewExperience = deleteNewExperience;
 
 
-        vm.hideMutiSelect = function(){
-            vm.css.currentJobIndustry=-1;
-            vm.css.currentMajor = -1;
-        };
-
 
         /**********  Function Declarations  **********/
+
+        function hideMutiSelect(){
+            vm.css.currentJobIndustry = -1;
+            vm.css.currentMajor = -1;
+        }
+
         function editProfile(specificForm) {
             vm.css.formEditing = true;
             if(specificForm) {
@@ -453,7 +456,7 @@
 
                 vm.css.saving = true;
                 Student.updateStudentB2CInfo(vm.formData).then(function() {
-                    angular.copy(vm.formData, vm.currentUser);
+                    app.getUserInfo();
 
                     vm.newEducation = null;
                     vm.newLanguageSkill = null;
@@ -570,9 +573,8 @@
                 if ($location.hash().length > 0) {
                     switchTab($location.hash());
                 } else switchTab('basicInfo');
-                this.getUserInfo().then(function() {
-                    app.resetForm();
-                });
+
+                this.getUserInfo();
             },
             reRun : function(){
 
@@ -580,21 +582,21 @@
             getUserInfo : function(){
                 return Student.getStudent().then(function(result) {
                     vm.currentUser = result.data;
+                    app.resetForm();
                 }).catch(function(err) {
                     console.log('load student info failed');
                 });
             },
             resetForm: function() {
-                var formData = vm.formData;
 
-                angular.copy(vm.currentUser, formData);
+                angular.copy(vm.currentUser, vm.formData);
 
-                formData.oldPassword = '';
-                formData.newPassword = '';
-                formData.rePassword = '';
+                vm.formData.oldPassword = '';
+                vm.formData.newPassword = '';
+                vm.formData.rePassword = '';
 
-                formData.teamName = vm.currentUser.team && vm.currentUser.team.name;
-                formData.newTeamMember = '';
+                vm.formData.teamName = vm.currentUser.team && vm.currentUser.team.name;
+                vm.formData.newTeamMember = '';
 
                 vm.css.errorFields = {};
             }
