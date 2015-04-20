@@ -96,6 +96,7 @@ gulp.task('compass', function() {
             comments : false
         }))
         .pipe(gulp.dest(paths.cssOutputPath))
+        .pipe(livereload());
 
 });
 
@@ -217,20 +218,13 @@ gulp.task('watch', function() {
     gulp.watch(paths.cssSourceFiles, ['minifycssMarksimos']);
     gulp.watch(paths.cssSourceFiles, ['minifycssB2C']);
     gulp.watch(paths.javascript, ['jscompress']);
-
-//    var server = livereload();
-//    gulp.watch(paths.app).on('change', function(file) {
-//        server.changed(file.path);
-//    });
-//    gulp.watch(paths.views).on('change', function(file) {
-//        server.changed(file.path);
-//    });
 });
 
 
 
 
 gulp.task('watchdev', function() {
+    livereload.listen();
     gulp.watch(paths.angularTemplates, ['templates']);
     gulp.watch(paths.sassSourceFiles, ['compass']);
     gulp.watch(paths.javascript, ['jshint']);
