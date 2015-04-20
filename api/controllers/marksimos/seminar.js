@@ -7,7 +7,7 @@ var teamModel = require('../../models/user/team.js');
 var logger = require('../../../common/logger.js');
 var consts = require('../../consts.js');
 var utility = require('../../../common/utility.js');
-
+var socketio = require('../../../common/socketio.js');
 
 
 
@@ -616,10 +616,10 @@ function validateSeminar(req){
 }
 
 
-
-
-
-
+exports.chat = function(req, res, next) {
+    socketio.emitMarksimosChatMsg(req.gameMarksimos.seminarSocketRoomName, req.user, req.body.msg);
+    res.status(200).send();
+}
 
 
 

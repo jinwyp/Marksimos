@@ -214,6 +214,7 @@ exports.authLoginToken = function (options) {
 
                         if (typeof company !== 'undefined') {
                             req.gameMarksimos.socketRoomName = seminarResult.seminarId.toString() + company.companyId.toString();
+                            req.gameMarksimos.seminarSocketRoomName = seminarResult.seminarId.toString();
                         }
 
                         // very important, after seminar finished currentPeriod is last round

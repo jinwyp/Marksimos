@@ -282,7 +282,8 @@ apiRouter.put('/marksimos/api/questionnaire', auth.authLoginToken(), auth.authRo
 apiRouter.get('/marksimos/api/faq', faqController.getFAQ);
 
 
-
+//seminar chat
+apiRouter.post('/marksimos/api/seminar_chat', auth.authLoginToken(), seminarController.chat)
 
 
 
