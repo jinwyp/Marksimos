@@ -6,14 +6,23 @@
     angular.module('marksimos.socketmodel').factory('socket', function (socketFactory, localStorageService) {
         var socket = null;
 
-        var setup = function() {
+        var setup = function(seminarId) {
             var token = localStorageService.get('logintoken');
+            if (token == null){
+                return;
+            }
+
+            var queryString = 'token=' + token;
+            if(seminarId) {
+                queryString = queryString + '&seminarId=' + seminarId;
+            }
+
             var ioSocket = io.connect('', {
 //              'force new connection': true,
 //              'max reconnection attempts': Infinity,
 //              'reconnection limit': 10 * 1000
                 // Send auth token on connection, you will need to DI the Auth service above
-                'query': 'token=' + token
+                'query': queryString
             });
 
             socket = socketFactory({
@@ -29,11 +38,13 @@
             }
         };
 
-        setup();
+        //call setup in controller
+        //setup();
         //socket.emit('debugInfo', { my: 'data' });
 
         return {
-            socket: socket
+            setupSocket: setup,
+            getSocket: function(){return socket;}
         };
     });
 

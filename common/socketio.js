@@ -7,6 +7,7 @@
 var seminarModel = require('../api/models/marksimos/seminar');
 var chatmessageModel = require('../api/models/b2c/chatmessage');
 var Token = require('../api/models/user/authenticationtoken');
+var userRole = require('../api/models/user/userrole');
 var _ = require('lodash');
 
 var logger = require('./logger.js');
@@ -58,23 +59,28 @@ exports.init = function (socketio) {
 
         Token.verifyToken(token, function(err, user) {
 
-            if(err){
+            if(err || user===null){
                 logger.error(err);
-            }else{
-                seminarModel.findSeminarByUserId(user._id).then(function(seminarResult){
-                    var company = _.find(seminarResult.companyAssignment, function(company) {
-                        return company.studentList.indexOf(user.email) > -1;
-                    });
+            }else {
+                if (userRole.roleList.student.id == user.role){
+                    seminarModel.findSeminarByUserId(user._id).then(function (seminarResult) {
+                        var company = _.find(seminarResult.companyAssignment, function (company) {
+                            return company.studentList.indexOf(user.email) > -1;
+                        });
 
-                    roomMarksimosCompany = seminarResult.seminarId.toString() + company.companyId.toString();
-                    socket.join(roomMarksimosCompany);
+                        roomMarksimosCompany = seminarResult.seminarId.toString() + company.companyId.toString();
+                        socket.join(roomMarksimosCompany);
 
-                    roomSeminar = seminarResult.seminarId.toString();
-                    socket.join(roomSeminar);
+                        roomSeminar = seminarResult.seminarId.toString();
+                        socket.join(roomSeminar);
 
-                }).fail(function(err){
-                    logger.error(err);
-                }).done();
+                    }).fail(function (err) {
+                        logger.error(err);
+                    }).done();
+                }
+                else if(!_.isUndefined(socket.handshake.query.seminarId)) {
+                    socket.join(socket.handshake.query.seminarId);
+                }
             }
 
         });

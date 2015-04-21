@@ -7,7 +7,8 @@
     'use strict';
 
     /********************  Create New Module For Controllers ********************/
-    angular.module('marksimosadmin', ['pascalprecht.translate', 'angularCharts', 'nvd3ChartDirectives', 'notifications', 'angularFileUpload', 'marksimos.websitecomponent', 'marksimos.commoncomponent', 'marksimos.filter']);
+    angular.module('marksimosadmin', ['pascalprecht.translate', 'angularCharts', 'nvd3ChartDirectives', 'notifications', 'angularFileUpload',
+        'marksimos.websitecomponent', 'marksimos.commoncomponent', 'marksimos.filter', 'marksimos.socketmodel']);
 
 
 
@@ -27,13 +28,13 @@
         $scope.login = function(form) {
             if (form.$valid) {
 
-                Admin.login($scope.data.admin).success(function(data, status, headers, config) {
+                Admin.login($scope.data.admin).then(function() {
 
                     $window.location.href = "/marksimos/adminhome";
 
-                }).error(function (data, status, headers, config) {
-                    console.log(data, status);
-                    if (status === 401 || status === 403) {
+                }).catch(function (data) {
+                    console.log(data.status);
+                    if (data.status === 401 || data.status === 403) {
                         form.password.$valid = false;
                         form.password.$invalid = true;
                     }
@@ -952,7 +953,10 @@
 
 
 
-    angular.module('marksimosadmin').controller('adminMarksimosReportController', ['$scope', '$http', '$notification', '$translate', 'Admin', 'AdminTable', 'chartReport', 'AdminChart', function($scope, $http, $notification,$translate, Admin,  AdminTable, chartReport, AdminChart) {
+    angular.module('marksimosadmin').controller('adminMarksimosReportController',
+    ['$scope', '$http', '$notification', '$translate', 'Admin', 'AdminTable', 'chartReport', 'AdminChart', 'socket',
+    function($scope, $http, $notification,$translate, Admin,  AdminTable, chartReport, AdminChart, socket) {
+
         $scope.css = {
             showReportMenu : true,
             currentReportMenu : 'AllDecisions',
@@ -1205,6 +1209,11 @@
 
                 var that = this;
                 $scope.css.currentSeminarId = /.+\/adminhomereport\/(\d+).*/.exec(window.location.href)[1] || 0;
+
+                socket.setupSocket($scope.css.currentSeminarId);
+                socket.getSocket().on('marksimosChatMsg', function(data){
+                    console.log(data);
+                })
 
                 //加载 All Comapany Decisions
                 that.loadingAllDecisions();

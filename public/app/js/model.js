@@ -35,7 +35,7 @@
 
 
     /********************  Administrator Model  ********************/
-    angular.module('marksimos.model').factory('Admin', ['$http', adminModel]);
+    angular.module('marksimos.model').factory('Admin', ['$http', 'localStorageService', adminModel]);
     //管理员报表-表格
     angular.module('marksimos.model').factory('AdminTable', ['$http', adminTableModel]);
     //管理员报表-图表
@@ -1232,12 +1232,16 @@
 
 
     /********************  管理员界面数据  ********************/
-    function adminModel($http){
+    function adminModel($http, localStorageService){
 
         var factory = {
 
             login : function(user){
-                return $http.post(apiAdminPath + 'login', user);
+                return $http.post(apiAdminPath + 'login', user)
+                .then(function(result){
+                    localStorageService.set('logintoken', result.data.token);
+                    return result.data;
+                });
             },
             userInfo : function(){
                 return $http.get(apiAdminPath + 'user');
