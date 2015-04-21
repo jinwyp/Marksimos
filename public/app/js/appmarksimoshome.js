@@ -512,7 +512,7 @@
 
                 });
 
-                socket.getSocket().on('marksimosChatMsg', function(data){
+                socket.getSocket().on('marksimosChatMessageUpdate', function(data){
                     console.log(data);
                 })
 

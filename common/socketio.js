@@ -111,7 +111,7 @@ exports.emitMarksimosDecisionUpdate = function(roomName, data){
 
 
 exports.emitMarksimosChatMsg = function(roomName, user, message){
-    gsocketio.to(roomName).emit('marksimosChatMsg', {
+    gsocketio.to(roomName).emit('marksimosChatMessageUpdate', {
         user: _.pick(user, 'username', 'avatar'),
         message: message
     });
