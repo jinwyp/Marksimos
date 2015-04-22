@@ -1213,7 +1213,7 @@
                 socket.setup($scope.css.currentSeminarId);
                 socket.socket.on('marksimosChatMessageUpdate', function(data){
                     console.log(data);
-                })
+                });
 
                 //加载 All Comapany Decisions
                 that.loadingAllDecisions();

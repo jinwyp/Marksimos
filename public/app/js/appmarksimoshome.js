@@ -514,7 +514,7 @@
 
                 socket.socket.on('marksimosChatMessageUpdate', function(data){
                     console.log(data);
-                })
+                });
 
             },
 
