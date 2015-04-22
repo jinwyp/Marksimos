@@ -617,7 +617,7 @@ function validateSeminar(req){
 }
 
 
-exports.sendChatMessage = function(req, res, next) {
+exports.sendChatMessageSeminar = function(req, res, next) {
 
     var validationErrors = chatmessageModel.createValidations(req);
 
@@ -641,7 +641,36 @@ exports.sendChatMessage = function(req, res, next) {
 
     }).fail(next).done();
 
-    socketio.emitMarksimosChatMsg(req.gameMarksimos.socketRoom.seminar, req.user, req.body.message);
+    socketio.emitMarksimosChatMessageSeminar(req.gameMarksimos.socketRoom.seminar, req.user, req.body.message);
+};
+
+
+
+exports.sendChatMessageSeminarCompany = function(req, res, next) {
+
+    var validationErrors = chatmessageModel.createValidations(req);
+
+    if(validationErrors){
+        return res.status(400).send( {message: validationErrors} );
+    }
+
+    chatmessageModel.createQ({
+        text: req.body.message,
+        creator: req.user._id,
+        room: {
+            roomNumber: req.gameMarksimos.socketRoom.company
+        }
+    }).then(function(resultMessage){
+
+        if(!resultMessage ){
+            throw new Error('Cancel promise chains. Because Create New ChatMessage failed !');
+        }
+
+        return res.status(200).send({message: 'Create New Chat Message success'});
+
+    }).fail(next).done();
+
+    socketio.emitMarksimosChatMessageCompany(req.gameMarksimos.socketRoom.company, req.user, req.body.message);
 };
 
 

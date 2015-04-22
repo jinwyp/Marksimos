@@ -283,7 +283,8 @@ apiRouter.get('/marksimos/api/faq', faqController.getFAQ);
 
 
 //seminar online chat
-apiRouter.post('/marksimos/api/seminar_chat', auth.authLoginToken(), seminarController.sendChatMessage);
+apiRouter.post('/marksimos/api/seminar/chat/seminar', auth.authLoginToken(), seminarController.sendChatMessageSeminar);
+apiRouter.post('/marksimos/api/seminar/chat/company', auth.authLoginToken(), seminarController.sendChatMessageSeminarCompany);
 
 
 

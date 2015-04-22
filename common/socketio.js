@@ -118,17 +118,16 @@ exports.emitMarksimosDecisionUpdate = function(roomName, data){
 };
 
 
-exports.emitMarksimosChatMsg = function(roomName, user, message){
-    gsocketio.to(roomName).emit('marksimosChatMessageUpdate', {
+exports.emitMarksimosChatMessageSeminar = function(roomName, user, message){
+    gsocketio.to(roomName).emit('marksimosChatMessageSeminarUpdate', {
         user: _.pick(user, 'username', 'avatar'),
         message: message
     });
+};
 
-    chatmessageModel.create({
-        text: message,
-        creator: user._id,
-        room: {
-            roomNumber: roomName
-        }
+exports.emitMarksimosChatMessageCompany = function(roomName, user, message){
+    gsocketio.to(roomName).emit('marksimosChatMessageCompanyUpdate', {
+        user: _.pick(user, 'username', 'avatar'),
+        message: message
     });
 };
