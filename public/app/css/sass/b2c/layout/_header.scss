@@ -1,0 +1,156 @@
+.b2c-header {
+    height: 82px;
+    background-color: #c52e0d;
+    $icon-repeat: repeat-x;
+    background-image: url(../images/b2c_nav_1x82.png);
+
+    .button {
+        margin-top: 30px;
+        width: 49px;
+        height: 23px;
+        font-size: 12px;
+        @include inline-block;
+        @include icon_b2c-sprite(b2c_login_49x23);
+        &:hover {
+            @include icon_b2c-sprite(b2c_login_49x23_hover);
+        }
+    }
+
+    .b2c-logo {
+        //        margin-left: 157px;
+        margin-top: 12px;
+        float: left;
+    }
+
+    .b2c-login {
+        width: 700px;
+        height: 82px;
+        overflow: hidden;
+    }
+
+    .b2c-user {
+        width: 100px;
+        height: 82px;
+        overflow: hidden;
+        margin-right: 10px;
+
+        .glyphicon {
+            top: 8px;
+            color: white;
+        }
+
+        .dropdown-menu {
+            width: 100px;
+            min-width: 100px;
+            padding: 0;
+            margin-top: 10px;
+            background-color: $color_register_button;
+            li {
+                padding: 5px 5px 5px 5px;
+
+                a {
+                    text-align: center;
+                    padding: 2px 10px;
+                    color: white;
+                    &:hover {
+                        background-color: $color_header_dropdown_button_hover;
+                    }
+                }
+            }
+        }
+
+        img {
+            width: 70px;
+            height: 70px;
+            border-radius: 40px;
+        }
+
+        .avatar {
+            border-radius: 40px;
+            width: 70px;
+            height: 70px;
+            padding: 0;
+            margin-top: 7px;
+        }
+    }
+
+    .b2c-trans {
+        margin-right: 5px;
+        margin-top: 10px;
+        padding-top: 20px;
+        color: #fff;
+        font-size: 12px;
+        .selected {
+            background-color: #7f1a03;
+        }
+        span {
+            cursor: pointer;
+            display: block;
+            float: right;
+            margin-right: 7px;
+            width: 20px;
+            height: 20px;
+            line-height: 20px;
+            font-weight: bold;
+            text-align: center;
+            color: #eda494;
+            background-color: #b92909;
+            border: 1px solid #eda494;
+
+            &:hover {
+                background-color: #7f1a03;
+            }
+        }
+    }
+    //
+    //    .b2c-login-box {
+    //        margin-right: 50px;
+    //    }
+
+    .b2c-login-field {
+        float: left;
+        width: 165px;
+        color: #fff;
+        font-size: 12px;
+        margin-top: 10px;
+        div {
+            line-height: 20px;
+            height: 20px;
+        }
+
+        label, a {
+            color: #EDA694 !important;
+            padding-left: 2px;
+            vertical-align: top;
+        }
+    }
+
+    .b2c-login-input {
+        width: 150px;
+        padding: 0;
+        font-size: 12px;
+        height: 20px;
+        line-height: 20px;
+        border: solid #932F18 1px;
+        color: #333;
+    }
+
+}
+
+
+.b2c-sub-menu {
+    background-color: #444444;
+    height: 56px;
+    .navbar-nav > li > a {
+        line-height: 26px;
+        color: #a9a9a9;
+        &:hover, &:focus {
+            background-color: #2b2b2b;
+            color: white;
+        }
+    }
+    .navbar-nav > .active > a {
+        background-color: #2b2b2b;
+        color: white;
+    }
+}

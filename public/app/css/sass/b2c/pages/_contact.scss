@@ -1,0 +1,49 @@
+#contact{
+    background: $color_background_gray_darker;
+    color: $color_text;
+    #bridge-header {
+        @include bridge-header("/app/css/images/b2c_contact_banner.jpg")
+    }
+    .section1 {
+        background-color: white;
+        padding: 41px 82px;
+        h3 {
+            span{
+                color: $color_base_red;
+            }
+            font-size: 20px;
+        }
+        hr {
+            margin-top: 10px;
+            margin-bottom: 15px;
+        }
+        .contact-cards {
+            font-size: 12px;
+            line-height: 30px;
+            padding-bottom: 50px;
+            .contact-card {
+                width: 25%;
+                float: left;
+                .phone,.email{
+                    position: relative;
+                    i {
+                        position: absolute;
+                        margin-left: -23px;
+                        margin-top: 7px;
+                    }
+                }
+
+            }
+
+        }
+        .address {
+            font-size: 14px;
+            position: relative;
+            i {
+                position: absolute;
+                margin-left: -25px;
+                margin-top: 2px;
+            }
+        }
+    }
+}

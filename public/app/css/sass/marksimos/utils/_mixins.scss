@@ -1,0 +1,256 @@
+@mixin my_icon-sprite ($name, $repeat: no-repeat, $offset-x: 0, $offset-y: 0) {
+    background-image : $icon-sprites;
+    background-repeat : $repeat;
+    @include sprite-background-position($icon-sprites, $name, $offset-x, $offset-y);
+
+    // if no offsets given, set the dimensions of the element to match the image
+    @if $offset-x == 0 and $offset-y == 0{
+        @include sprite-dimensions($icon-sprites, $name);
+    }
+}
+
+
+/********************  Custom Button Style  ********************/
+
+
+@mixin user_decision_button{
+    color: #ffffff;
+    font-family: $font_main_header2;
+    background-color: $color_main_body_user_decision_button;
+    padding: 10px 40px 10px 40px;
+    @include background(linear-gradient(top, $color_main_body_user_decision_button, $color_main_body_user_decision_button));
+    //    @include background(linear-gradient(to bottom, $color_main_body_user_decision_button, $color_main_body_user_decision_button));
+
+    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#ff19acfe', endColorstr='#ff19acfe', GradientType=0);
+    filter: progid:DXImageTransform.Microsoft.gradient(enabled = false);
+    border-color: $color_main_body_user_decision_button;
+
+    &:hover,
+    &:focus{
+        background-color: #1F9BFE;
+        @include background(linear-gradient(top, #1F9BFE, #1F9BFE));
+        //        @include background(linear-gradient(to bottom, #1F9BFE, #1F9BFE));
+    }
+
+    .active,
+    &:active {
+        background-color: #298ffe;
+        @include background(linear-gradient(top, #298ffe, #298ffe));
+        //        @include background(linear-gradient(to bottom, #298ffe, #298ffe));
+        border-color: #298FFE;
+    }
+
+}
+
+
+
+
+
+@mixin icon_user_faq {
+    color: $color_login_title;
+    font-size: 30px;
+    @include icon-sprite(faq);
+
+    padding-left: 40px;
+    margin: 20px 0px;
+    display: block;
+
+}
+
+@mixin icon_user_pdf {
+    color: $color_login_title;
+    @include icon-sprite(filepdf);
+    padding-left: 37px;
+}
+
+
+@mixin icon_arrow_up {
+    @include icon-sprite(arrowup);
+    @include inline-block;
+    width: 13px;
+    height: 13px;
+}
+@mixin icon_arrow_right {
+    @include icon-sprite(arrowright);
+    @include inline-block;
+    width: 13px;
+    height: 13px;
+}
+
+@mixin icon_arrow_down {
+    @include icon-sprite(arrowdown);
+    @include inline-block;
+    width: 13px;
+    height: 13px;
+}
+
+
+
+
+
+
+@mixin icon_user_brand {
+    color: $color_main_body_brand;
+    font-size: 14px;
+    @include my_icon-sprite(userbrand, no-repeat, 3px, 2px);
+    padding-left: 25px;
+    margin: 32px 5px 20px 3px;
+    display: block;
+}
+
+@mixin icon_user_product{
+    color: $color_main_body_product;
+    -webkit-text-size-adjust:none;
+    font-size: 11px;
+    padding-left: 20px;
+    list-style-type: none;
+    @include my_icon-sprite(userproduct, no-repeat, 1px, 1px);
+
+    //    width: 150px;
+    height: 24px;
+
+    span{
+        color: $color_main_body_product_target;
+    }
+}
+
+
+@mixin icon_user_score {
+    color: $color_main_body_brand;
+    font-size: 14px;
+    @include my_icon-sprite(userscore, no-repeat, 1px, 7px);
+    padding: 5px 25px;
+    display: block;
+}
+
+
+
+@mixin table_report{
+
+    .table > thead > tr > th{
+        font-size: 12px;
+        font-family: $font_main_header2;
+        font-weight: normal;
+        color: $color_main_body_user_chart_leftmenu_title;
+        background-color: $color_login_background;
+    }
+
+    .table > thead > tr > td,
+    .table > tbody > tr > td,
+    .table > tfoot > tr > td {
+        vertical-align: middle;
+        border-top: 1px solid $color_login_panel_border;
+        font-family: $font_main_header2;
+        font-size: 12px;
+        color: $color_main_body_user_chart_leftmenu_title;
+    }
+
+    .table-striped > tbody > tr:nth-child(odd) > td,
+    .table-striped > tbody > tr:nth-child(odd) > th {
+        background-color: $color_login_panel_background;
+    }
+
+    .table-striped > tbody > tr:nth-child(even) > td,
+    .table-striped > tbody > tr:nth-child(even) > th {
+        background-color: $color_main_body_background;
+    }
+
+    .table-striped tbody tr:nth-child(odd):hover td,
+    .table-striped tbody tr:nth-child(odd):hover th,
+    .table-striped tbody tr:nth-child(even):hover td,
+    .table-striped tbody tr:nth-child(even):hover th{
+        background-color: $color_main_body_decision_table_hover;
+    }
+
+}
+
+
+
+@mixin seminar_table_list{
+
+    .table > thead > tr > th{
+        font-size: 12px;
+        font-family: $font_main_header2;
+        font-weight: bold;
+        color: $color_main_body_user_chart_leftmenu_title;
+        background-color: $color_login_content_background;
+        height: 50px;
+        vertical-align: middle;
+        border-bottom-width: 1px ;
+    }
+
+    .table > thead > tr > td,
+    .table > tbody > tr > td,
+    .table > tfoot > tr > td {
+        height: 45px;
+        border-top: 1px solid $color_main_body_user_muted_border;
+        font-family: $font_main_header2;
+        font-size: 12px;
+        color: $color_main_body_user_chart_leftmenu_title;
+        padding-left: 3px;
+        padding-right: 3px;
+    }
+
+    .table-striped > tbody > tr:nth-child(odd) > td,
+    .table-striped > tbody > tr:nth-child(odd) > th {
+        background-color: $color_login_panel_background;
+    }
+
+    .table-striped > tbody > tr:nth-child(even) > td,
+    .table-striped > tbody > tr:nth-child(even) > th {
+        background-color: $color_main_body_background;
+    }
+
+    .table-striped tbody tr:nth-child(odd):hover td,
+    .table-striped tbody tr:nth-child(odd):hover th,
+    .table-striped tbody tr:nth-child(even):hover td,
+    .table-striped tbody tr:nth-child(even):hover th{
+        background-color: $color_main_body_decision_table_hover;
+    }
+
+}
+
+
+
+@mixin divider_horizontal{
+    .divider_horizontal{
+        width: 100%;
+        border-top: 1px solid $color_login_title;
+        margin-bottom: 10px;
+    }
+}
+
+@mixin spotlight_overlay{
+    .spotlight_overlay {
+        z-index:1; /* show it on top of the other images (they have z-index 0) */
+        @include box-shadow( 0px 0px 10px 0px $color_main_body_user_chart_leftmenu_active_bgbefore);
+
+        a {
+            color: $color_main_body_user_chart_leftmenu_active_bgbefore;
+        }
+    }
+    .spotlight_overlay2 {
+        z-index:1; /* show it on top of the other images (they have z-index 0) */
+        @include box-shadow( 0px 0px 10px 0px $color_main_body_user_chart_leftmenu_active_bgbefore);
+
+        a {
+            color: $color_main_body_user_chart_leftmenu_active_bgbefore;
+        }
+    }
+    .spotlight_overlay3 {
+        z-index:1; /* show it on top of the other images (they have z-index 0) */
+        @include box-shadow( 0px 0px 10px 0px $color_main_body_user_chart_leftmenu_active_bgbefore);
+
+        a {
+            color: $color_main_body_user_chart_leftmenu_active_bgbefore;
+        }
+    }
+    .spotlight_overlay4 {
+        z-index:1; /* show it on top of the other images (they have z-index 0) */
+        @include box-shadow( 0px 0px 10px 0px $color_main_body_user_chart_leftmenu_active_bgbefore);
+
+        a {
+            color: $color_main_body_user_chart_leftmenu_active_bgbefore;
+        }
+    }
+}
