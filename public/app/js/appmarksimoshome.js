@@ -518,6 +518,7 @@
                 socket.socket.on('marksimosChatMessageUpdate', function(data){
                     $scope.data.messages.push(data);
                 });
+
             },
 
             reRun : function(){
