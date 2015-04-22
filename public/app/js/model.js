@@ -144,7 +144,7 @@
             },
 
             sendChatMessage: function(message) {
-                return $http.post(apiPath + 'seminar_chat', {message: message});
+                return $http.post(apiPath + 'chat/seminar', {message: message});
             }
 
 
