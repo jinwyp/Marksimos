@@ -31,7 +31,7 @@ $color_chat_me: #1289fe;
         text-align: center;
         margin: 0;
         padding-top: 12px;
-        border-top: 5px solid #2E4E9A;
+        border-top: 5px solid $color_chat_active;
     }
     .chat-header {
         height: 60px;
@@ -45,9 +45,9 @@ $color_chat_me: #1289fe;
         }
         .btn.active {
             box-shadow: none;
-            color: #2E4E9A;
+            color: $color_chat_active;
             background-color: white;
-            border-color: #2E4E9A;
+            border-color: $color_chat_active;
             &:hover {
                 background-color: #E6E6E6;
             }
@@ -59,11 +59,13 @@ $color_chat_me: #1289fe;
             &.left {
                 left: 52px;
             }
+            width: 26px;
+            height: 10px;
 
         }
     }
     .chat-body {
-        border-top: 1px solid #DDD;
+        border-top: 1px solid $color_chat_border;
         .messages {
             padding: 14px;
             height: 280px;

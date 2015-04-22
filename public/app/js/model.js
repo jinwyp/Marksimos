@@ -143,10 +143,13 @@
                 return $http.get(apiPathB2C + 'campaigns/' + id);
             },
 
-            sendChatMessage: function(message) {
-                return $http.post(apiPath + 'chat/seminar', {message: message});
-            }
+            sendSeminarChatMessage: function(message) {
+                return $http.post(apiPath + 'seminar/chat/seminar', {message: message});
+            },
 
+            sendCompanyChatMessage: function(message) {
+                return $http.post(apiPath + 'seminar/chat/company', {message: message});
+            }
 
         };
 
