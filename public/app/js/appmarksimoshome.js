@@ -14,7 +14,7 @@
     /********************  Use This Module To Set New Controllers  ********************/
     angular.module('marksimos').controller('chartController', ['$translate', '$scope', '$rootScope', '$document', '$timeout', '$interval', '$http', 'notify', 'chartReport', 'tableReport', 'Student', 'Company', 'socket', function($translate, $scope, $rootScope, $document, $timeout, $interval, $http, notify, chartReport, tableReport, Student, Company, socket) {
 
-        socket.setupSocket();
+        socket.setup();
 
         $rootScope.$on('$translateChangeSuccess', function () {
             app.loadingChartData();
@@ -499,7 +499,7 @@
             initOnce : function(){
                 this.loadingStudentData();
 
-                socket.getSocket().on('marksimosDecisionUpdate', function(message){
+                socket.socket.on('marksimosDecisionUpdate', function(message){
                     app.reRun();
 
                     if(message.username !== $scope.data.currentStudent.username){
@@ -512,7 +512,7 @@
 
                 });
 
-                socket.getSocket().on('marksimosChatMessageUpdate', function(data){
+                socket.socket.on('marksimosChatMessageUpdate', function(data){
                     console.log(data);
                 })
 

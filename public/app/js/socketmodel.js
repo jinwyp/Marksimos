@@ -4,9 +4,9 @@
     angular.module('marksimos.socketmodel', ['btford.socket-io', 'LocalStorageModule']);
 
     angular.module('marksimos.socketmodel').factory('socket', function (socketFactory, localStorageService) {
-        var socket = null;
+        var ret = {};
 
-        var setup = function(seminarId) {
+        ret.setup = function(seminarId) {
             var token = localStorageService.get('logintoken');
             if (token == null){
                 return;
@@ -25,16 +25,16 @@
                 'query': queryString
             });
 
-            socket = socketFactory({
+            ret.socket = socketFactory({
                 ioSocket: ioSocket
             });
         };
 
-        var close = function() {
-            if (socket !== null){
-                socket.removeAllListeners();
-                socket.disconnect();
-                socket = null;
+        ret.close = function() {
+            if (ret.socket !== null){
+                ret.socket.removeAllListeners();
+                ret.socket.disconnect();
+                ret.socket = null;
             }
         };
 
@@ -42,10 +42,7 @@
         //setup();
         //socket.emit('debugInfo', { my: 'data' });
 
-        return {
-            setupSocket: setup,
-            getSocket: function(){return socket;}
-        };
+        return ret;
     });
 
 

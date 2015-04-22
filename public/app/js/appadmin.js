@@ -1210,8 +1210,8 @@
                 var that = this;
                 $scope.css.currentSeminarId = /.+\/adminhomereport\/(\d+).*/.exec(window.location.href)[1] || 0;
 
-                socket.setupSocket($scope.css.currentSeminarId);
-                socket.getSocket().on('marksimosChatMessageUpdate', function(data){
+                socket.setup($scope.css.currentSeminarId);
+                socket.socket.on('marksimosChatMessageUpdate', function(data){
                     console.log(data);
                 })
 
