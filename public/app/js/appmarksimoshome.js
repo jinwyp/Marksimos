@@ -7,7 +7,7 @@
 
 
     /********************  Create New Module For Controllers ********************/
-    angular.module('marksimos', ['pascalprecht.translate', 'angularCharts', 'nvd3ChartDirectives', 'cgNotify', 'marksimos.config', 'marksimos.commoncomponent', 'marksimos.websitecomponent', 'marksimos.model', 'marksimos.socketmodel', 'marksimos.filter', 'marksimos.translation' ]);
+    angular.module('marksimos', ['pascalprecht.translate', 'angularCharts', 'nvd3ChartDirectives', 'cgNotify', 'marksimos.config', 'marksimos.commoncomponent', 'marksimos.websitecomponent', 'marksimos.model', 'marksimos.socketmodel', 'marksimos.filter', 'marksimos.translation']);
 
 
 
@@ -302,8 +302,10 @@
             chartC44SegmentValueShareTotalMarket : {
                 config : chartReport.getChartConfig3(),
                 data : $scope.dataChartSimple
-            }
+            },
 
+            // for chat message.
+            messages: []
         };
 
 
@@ -461,6 +463,7 @@
             };
         };
 
+        $scope.sendMessage = Student.sendChatMessage;
 
 
         /********************  APP 所有功能 运作函数  ********************/
@@ -513,9 +516,8 @@
                 });
 
                 socket.socket.on('marksimosChatMessageUpdate', function(data){
-                    console.log(data);
-                })
-
+                    $scope.data.messages.push(data);
+                });
             },
 
             reRun : function(){

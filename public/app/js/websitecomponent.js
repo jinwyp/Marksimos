@@ -14,7 +14,7 @@
 (function () {
     'use strict';
 
-    angular.module('marksimos.websitecomponent', ['marksimos.templates', 'marksimos.model', 'pascalprecht.translate', 'marksimos.translation', 'b2c.translation' ]);
+    angular.module('marksimos.websitecomponent', ['marksimos.templates', 'marksimos.model', 'pascalprecht.translate', 'marksimos.translation', 'b2c.translation']);
 
 
     angular.module('marksimos.websitecomponent').directive('b2cHeader', ['$window', '$translate', '$timeout', 'Student', b2cHeaderComponent ]);
@@ -25,6 +25,43 @@
 
     angular.module('marksimos.websitecomponent').directive('headerAdmin', ['$window', '$translate', 'Student', adminHeaderComponent]);
     angular.module('marksimos.websitecomponent').directive('menuAdmin', [adminMenuComponent]);
+
+    angular.module('marksimos.websitecomponent').directive('chatWindow', chatWindowComponent);
+
+    function chatWindowComponent() {
+        return {
+            restrict: 'E',
+            scope: {
+                me: '=username',
+                messages: '=',
+                sendMessage: '&'
+            },
+            templateUrl: 'chatwindow.html',
+            link: function(scope, elem, attrs, ctrl) {
+                scope.messages = [];
+
+/*                socket.socket.on('marksimosChatMessageUpdate', function(data){
+                    scope.messages.push(data);
+                    messagesWindow.scrollTop = messagesWindow.scrollHeight;
+                });*/
+
+                var chatWindow = elem[0];
+                chatWindow.querySelector('textarea').addEventListener('keydown', function(event) {
+                    // todo: handle line break?
+                    if (event.keyCode == 13 && scope.input) {
+                        scope.sendMessage({message: scope.input}).then(function() {
+                            scope.input = '';
+                        });
+                    }
+                });
+
+                var messagesWindow = chatWindow.querySelector('.messages');
+                scope.$watchCollection('messages', function() {
+                    messagesWindow.scrollTop = messagesWindow.scrollHeight;
+                });
+            }
+        };
+    }
 
     function b2cSubMenuComponent($location){
         return {
