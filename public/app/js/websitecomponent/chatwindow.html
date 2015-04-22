@@ -1,0 +1,38 @@
+<div class="chat-container">
+    <h1 class="header">Chat</h1><!--todo: remove?-->
+    <div class="chat-header">
+        <div class="text-center">
+            <button class="btn btn-default">Mentor</button>
+            <button class="btn btn-default active">Team</button>
+        </div>
+        <svg class="indicator" version="1.1" xmlns="http://www.w3.org/2000/svg" width="26" height="10">
+            <polyline points="0 10, 13 0, 26 10" stroke="#DDD" stroke-width="1" fill="#FFF"/>
+        </svg>
+    </div>
+    <div class="chat-body">
+        <div class="team"><!--todo: and mentor-->
+            <div class="messages">
+
+                <div ng-repeat="message in messages" class="message" ng-class="{me: message.user.username == me, them: message.user.username != me}">
+                    <!--me-->
+                    <p ng-if="message.user.username == me" class="text">{{message.message}}</p>
+
+                    <!--them-->
+                    <img ng-if="message.user.username != me" class="avatar" src=""/>
+                    <div ng-if="message.user.username != me">
+                        <div class="name">{{message.user.username}}</div>
+                        <p class="text">
+                            {{message.message}}
+                        </p>
+                    </div>
+                </div>
+
+            </div>
+            <div class="message-send">
+                <form>
+                    <textarea rows="5" ng-model="input" placeholder="Type in here :) Return to send"></textarea>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
