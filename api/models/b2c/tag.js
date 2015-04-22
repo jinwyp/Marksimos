@@ -1,5 +1,5 @@
 /**
- * Created by jinwyp on 4/20/15.
+ * Created by jinwyp on 4/22/15.
  */
 
 
@@ -19,14 +19,11 @@ var mongooseTimestamps = require('mongoose-timestamp');
 /**
  * Mongoose schema
  */
-var glossarySchema = new Schema({
+var tagSchema = new Schema({
 
     name: { type: String },
     description: { type: String },
-    type: { type: Number, default: 10  }, // 10 Glossary  20 FAQ questions
-
-
-    tagList: [{ type: schemaObjectId, ref: 'Tag' }]
+    category: { type: Number, default: 10  } // 10 Glossary  20 FAQ questions
 
 });
 
@@ -34,7 +31,7 @@ var glossarySchema = new Schema({
 /**
  * Mongoose plugin
  */
-glossarySchema.plugin(mongooseTimestamps);
+tagSchema.plugin(mongooseTimestamps);
 
 
 /**
@@ -50,7 +47,7 @@ glossarySchema.plugin(mongooseTimestamps);
  * Statics
  */
 
-glossarySchema.statics.updateValidations = function(req){
+tagSchema.statics.updateValidations = function(req){
 
     //req.sanitize('activated').toBoolean();
 
@@ -74,6 +71,6 @@ glossarySchema.statics.updateValidations = function(req){
  */
 
 
-var glossary = mongoose.model("Glossary", glossarySchema);
-module.exports = glossary;
+var tag = mongoose.model("Tag", tagSchema);
+module.exports = tag;
 
