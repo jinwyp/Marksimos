@@ -8,7 +8,7 @@
 
         ret.setup = function(seminarId) {
             var token = localStorageService.get('logintoken');
-            if (token == null){
+            if (token === null){
                 return;
             }
 
