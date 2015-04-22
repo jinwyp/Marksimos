@@ -619,22 +619,25 @@ function validateSeminar(req){
 
 exports.sendChatMessageSeminar = function(req, res, next) {
 
-    var validationErrors = chatmessageModel.createValidations(req);
+    var validationErrors = chatmessageModel.createValidations(req, req.user.role);
 
-    //if(userRole.roleList.facilitator.id == user.role){
-    //
-    //}else{
-    //
-    //}
     if(validationErrors){
         return res.status(400).send( {message: validationErrors} );
+    }
+
+    var socketRoom;
+
+    if(userRoleModel.roleList.facilitator.id === userRoleId){
+        socketRoom = req.gameMarksimos.socketRoom.seminar;
+    }else{
+        socketRoom = req.gameMarksimos.socketRoom.seminar;
     }
 
     chatmessageModel.createQ({
         text: req.body.message,
         creator: req.user._id,
         room: {
-            roomNumber: req.gameMarksimos.socketRoom.seminar
+            roomNumber: socketRoom
         }
     }).then(function(resultMessage){
 
@@ -646,14 +649,14 @@ exports.sendChatMessageSeminar = function(req, res, next) {
 
     }).fail(next).done();
 
-    socketio.emitMarksimosChatMessageSeminar(req.gameMarksimos.socketRoom.seminar, req.user, req.body.message);
+    socketio.emitMarksimosChatMessageSeminar(socketRoom, req.user, req.body.message);
 };
 
 
 
 exports.sendChatMessageSeminarCompany = function(req, res, next) {
 
-    var validationErrors = chatmessageModel.createValidations(req);
+    var validationErrors = chatmessageModel.createValidations(req, req.user.role);
 
     if(validationErrors){
         return res.status(400).send( {message: validationErrors} );
