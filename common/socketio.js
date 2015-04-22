@@ -78,8 +78,16 @@ exports.init = function (socketio) {
                         logger.error(err);
                     }).done();
                 }
-                else if(!_.isUndefined(socket.handshake.query.seminarId)) {
-                    socket.join(socket.handshake.query.seminarId);
+                else if(!_.isUndefined(socket.handshake.query.seminarId && userRole.roleList.facilitator.id == user.role)) {
+
+                    seminarModel.find({seminarId:socket.handshake.query.seminarId}).then(function (seminarResult) {
+                        if(user._id.equals(seminarResult.facilitatorId)){
+                            socket.join(socket.handshake.query.seminarId);
+                        }
+
+                    }).fail(function (err) {
+                        logger.error(err);
+                    }).done();
                 }
             }
 
