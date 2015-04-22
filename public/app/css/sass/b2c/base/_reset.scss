@@ -1,0 +1,15 @@
+/********************  Angular JS 首次载入页面默认隐藏模板显示  ********************/
+
+[ng\:cloak], [ng-cloak], [data-ng-cloak], [x-ng-cloak], .ng-cloak, .x-ng-cloak {
+    display: none !important;
+}
+
+html {
+    height: 100%;
+}
+
+body {
+    min-width: 1200px;
+    font-family: "Microsoft YaHei", Arial, sans-serif ! important;
+    font-size: 16px;
+}

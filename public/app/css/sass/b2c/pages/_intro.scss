@@ -1,0 +1,179 @@
+#intro {
+    p {
+        font-size: 14px;
+        line-height: 2;
+    }
+    background: $color_background_gray_darker;
+    color: $color_text;
+    #bridge-header { @include bridge-header("/app/css/images/b2c_intro_banner.jpg")}
+    #sub-nav {
+        background-color: white;
+        padding: 41px 82px;
+        .nav-tabs {
+            border: none;
+            li {
+                margin-left: -1px;
+                border: 1px solid $color_text;
+                width: 25%;
+                &.active {
+                    a {
+                        background-color: #eee;
+                    }
+                }
+                a {
+                    border: none;
+                    border-radius: 0;
+                    margin: 0;
+                    color: $color_text;
+                    span {
+                        font-size: 14px;
+                        margin: 0 auto;
+                        display: table;
+                    }
+                }
+            }
+        }
+    }
+    #competition{
+        .section1 {
+            padding: 41px 82px;
+            background-color: white;
+            p {
+                width: 310px;
+                float: left;
+                margin-right: 35px;
+            }
+            .circle1 {
+                border: 1px solid $color_text;
+                float: left;
+                width: 150px;
+                height: 150px;
+                text-align: center;
+                border-radius: 75px;
+                padding-top: 54px;
+                margin-right: 30px;
+            }
+            .circle2 {
+                border: 1px solid $color_text;
+                float: left;
+                width: 40px;
+                height: 40px;
+                border-radius: 20px;
+                margin-right: 25px;
+                margin-top: 55px;
+            }
+            .circle3 {
+                border: 1px solid $color_text;
+                float: left;
+                width: 20px;
+                height: 20px;
+                border-radius: 10px;
+                margin-right: 20px;
+                margin-top: 65px;
+            }
+        }
+        .section2 {
+            padding: 20px 82px;
+            background-color: $color_background_gray;
+        }
+        .section3 {
+            padding: 84px 82px;
+            background-color: $color_base_red;
+            img {
+                float: left;
+                margin-left: 115px;
+                margin-right: 85px;
+            }
+            p {
+                color: white;
+                float: left;
+                width: 505px;
+                padding-top: 64px;
+            }
+        }
+        .section4 {
+            padding: 88px 82px;
+            background-color: white;
+            img {
+                float: left;
+                margin-left: 168px;
+                margin-right: 85px;
+            }
+            p {
+                float: left;
+                width: 505px;
+                padding-top: 5px;
+            }
+        }
+        .section5 {
+            padding: 30px 82px;
+            background-color: $color_background_gray;
+            .brands {
+                margin-top: 45px;
+                img{
+                    margin-right: 13px;
+                    margin-bottom: 16px;
+                }
+            }
+        }
+    }
+    #mentor{
+        .section1{
+            padding: 41px 82px;
+            background-color: white;
+            p {
+                display: inline-block;
+                width: 50%;
+                padding-right: 95px;
+                margin-bottom: 30px;
+            }
+        }
+        .section2 {
+            padding: 20px 82px;
+            background-color: $color_background_gray;
+        }
+        .section3 {
+            padding: 84px 82px;
+            background-color: $color_base_red;
+            img {
+                float: left;
+                margin-left: 115px;
+                margin-right: 85px;
+            }
+            p {
+                color: white;
+                float: left;
+                width: 505px;
+                padding-top: 64px;
+            }
+        }
+    }
+    #learning {
+        .section1{
+            padding: 41px 82px;
+            background-color: white;
+            font-size: 14px;
+            p {
+                width: 50%;
+                padding-right: 40px;
+                padding-top: 40px;
+                margin-bottom: 80px;
+                float: left;
+            }
+        }
+    }
+    #fellowship {
+        .section1{
+            padding: 41px 82px;
+            background-color: white;
+            font-size: 14px;
+            p {
+                width: 50%;
+                padding-right: 40px;
+                padding-top: 17px;
+                margin-bottom: 40px;
+                float: left;
+            }
+        }
+    }
+}

@@ -1,0 +1,77 @@
+@mixin flippy($speed: 0.5s, $perspective: 500, $bgcolor: white) {
+    position: relative;
+    @include perspective($perspective);
+    .front, .back {
+        background-color: $bgcolor;
+        @include transition(all $speed ease-in-out);
+        @include backface-visibility(hidden);
+        @include transform-style(preserve-3d);
+        height: 100%;
+        width: 100%;
+        position: absolute;
+        top: 0;
+        left: 0;
+    }
+    .front {
+        .no-csstransforms3d & {
+            @include opacity(1);
+        }
+    }
+    .back {
+        @include rotateY(180deg);
+        .no-csstransforms3d & {
+            visibility: hidden;
+            display: none;
+            @include opacity(0);
+        }
+    }
+    &:hover {
+        .front {
+            @include rotateY(180deg);
+            .no-csstransforms3d & {
+                visibility: hidden;
+            }
+        }
+        .back {
+            @include rotateY(360deg);
+            .no-csstransforms3d & {
+                visibility: visible;
+                @include opacity(1);
+            }
+        }
+    }
+}
+
+@mixin registerButton {
+    border-style: none;
+    padding: 6px 25px;
+    color: $color_white;
+    font-size: 20px;
+    font-weight: 900;
+    background-color: $color_register_button;
+    //	border-bottom:2px solid $color_register_button_border;
+    @include box-shadow($color_register_button_border 0px 2px 4px);
+    @include border-radius(2px);
+
+    &:hover,
+    &:focus {
+        color: $color_white;
+        background-color: $color_register_button_hover;
+        //		border-bottom:2px solid #ca3413;
+    }
+}
+
+@mixin bridge-header($background) {
+    height: 250px;
+    padding-left: 180px;
+    padding-top: 60px;
+    background-image: url($background);
+    h3 {
+        color: white;
+        margin: 2px 0;
+    }
+    a.btn{
+        margin-top: 40px;
+        padding: 6px 18px;
+    }
+}
