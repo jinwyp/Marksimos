@@ -621,6 +621,11 @@ exports.sendChatMessageSeminar = function(req, res, next) {
 
     var validationErrors = chatmessageModel.createValidations(req);
 
+    //if(userRole.roleList.facilitator.id == user.role){
+    //
+    //}else{
+    //
+    //}
     if(validationErrors){
         return res.status(400).send( {message: validationErrors} );
     }
