@@ -627,9 +627,9 @@ exports.sendChatMessageSeminar = function(req, res, next) {
 
     var socketRoom;
 
-    if(userRoleModel.roleList.facilitator.id === userRoleId){
-        socketRoom = req.gameMarksimos.socketRoom.seminar;
-    }else{
+    if(userRoleModel.roleList.facilitator.id === req.user.role){
+        socketRoom = req.body.seminarRoom;
+    }else if(userRoleModel.roleList.student.id === req.user.role){
         socketRoom = req.gameMarksimos.socketRoom.seminar;
     }
 
