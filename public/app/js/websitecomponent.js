@@ -61,7 +61,6 @@
                         scope.sendCompanyMessage({messageInput: scope.data.companyInput});
                         scope.data.companyInput = '';
                     }
-                    console.log(scope.me);
                 });
 
                 scope.$watchCollection('seminarMessages', scrollToBottom);

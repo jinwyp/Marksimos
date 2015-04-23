@@ -1218,7 +1218,7 @@
                 Socket.socket.on('marksimosChatMessageSeminarUpdate', function(data){
                     $scope.data.seminarChatMessages.push(data);
                 });
-                
+
                 that.getAdminInfo();
 
                 //加载 All Comapany Decisions
