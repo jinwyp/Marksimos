@@ -70,8 +70,9 @@
 
                 function scrollToBottom() {
                     scope.$$postDigest(function() {
+                        if (!scope.css.showChat) return;
                         var messagesWindow = chatWindow.querySelector('.messages');
-                        messagesWindow && (messagesWindow.scrollTop = messagesWindow.scrollHeight);
+                        messagesWindow.scrollTop = messagesWindow.scrollHeight;
                     });
                 }
             }
