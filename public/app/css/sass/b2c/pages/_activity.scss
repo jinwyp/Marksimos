@@ -1,0 +1,66 @@
+
+#activity {
+    p {
+        font-size: 14px;
+        line-height: 2;
+    }
+    background: $color_background_gray_darker;
+    color: $color_text;
+    #bridge-header {
+        @include bridge-header("/app/css/images/b2c_activity_banner.jpg")
+    }
+    .section1 {
+        padding: 84px 82px 0 82px;
+        background-color: white;
+        h4 {
+            font-size: 20px;
+        }
+        hr {
+            margin-top: 10px;
+            margin-bottom: 30px;
+        }
+        .col-half {
+            float: left;
+            width: 50%;
+        }
+        .activity {
+            img {
+                margin: 0 auto;
+                width: 416px;
+                height: 205px;
+                display: block;
+            }
+            .quote {
+                border: 1px solid $color_base_red;
+                color: $color_base_red;
+                line-height: 50px;
+            }
+            padding-bottom: 50px;
+        }
+    }
+    .section2 {
+        height: 360px;
+        background-image: url("/app/css/images/b2c_activity_bg.jpg");
+        position: relative;
+        img {
+            width: 403px;
+            height: 263px;
+            position: absolute;
+            left: 50%;
+            top: 50%;
+            margin-left: -201px;
+            margin-top: -133px;
+        }
+    }
+    .section3 {
+        background-color: $color_background_gray;
+        height: 507px;
+        padding: 45px 0;
+        h3 {
+            margin: 0 0 40px 100px;
+        }
+        .carousel-indicators{
+            display: none;
+        }
+    }
+}

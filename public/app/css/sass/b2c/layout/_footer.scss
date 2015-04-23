@@ -1,0 +1,94 @@
+.b2c-footer-fix {
+    position: fixed;
+    width: 100%;
+    bottom: 0;
+}
+
+.b2c-footer {
+    background-color: #121318;
+    ul {
+        padding-left: 0px;
+        li {
+            display: block;
+        }
+    }
+}
+
+.b2c-footer-content {
+    height: 340px;
+    font-size: 12px;
+    padding-top: 40px;
+    color: #919191;
+    position: relative;
+
+    .logo {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        margin-left: -26px;
+        margin-top: -21px;
+    }
+    .weibo {
+        position: absolute;
+        bottom: 50%;
+        right: 0px;
+        .weibo-msg {
+            display: inline-block;
+            font-size: 1.1em;
+            color: white;
+            width: 80px;
+            margin-right: 20px;
+        }
+        .weibo-img {
+            vertical-align: bottom;
+            display: inline-block;
+        }
+    }
+
+    .b2c-footer-row {
+        @include clearfix();
+        ul, div {
+            width: 110px;
+            float: left;
+            margin-bottom: 20px;
+        }
+        a{
+            color: inherit;
+            &:hover {
+                text-decoration: none;
+            }
+        }
+        li {
+            margin: 2px 0;
+        }
+        li:first-child {
+            color: #ffffff;
+            font-size: 1.1em;
+            margin-bottom: 8px;
+            &:before {
+                position: absolute;
+                content: '';
+                border-left: 2px solid #c52e0d;
+                margin-left: -14px;
+                margin-top: 1px;
+                height: 15px;
+            }
+        }
+    }
+}
+
+
+.campaignlist-footer {
+    height: 181px;
+    background-color: #7AC269;
+    > div {
+        width: 1600px;
+        position: relative;
+    }
+    .join {
+        position: absolute;
+        left: 298px;
+        top: 59px;
+    }
+}
+
