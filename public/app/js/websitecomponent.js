@@ -40,12 +40,14 @@
             },
             templateUrl: 'chatwindow.html',
             link: function(scope, elem, attrs, ctrl) {
-                scope.currentTab = 'seminar';
                 scope.data = {
                     seminarInput: null,
                     companyInput: null
                 };
-
+                scope.css = {
+                    currentTab: 'seminar',
+                    showChat: false
+                };
                 var chatWindow = elem[0];
                 chatWindow.addEventListener('keydown', function(event) {
                     // todo: handle line break?
@@ -67,8 +69,10 @@
                 scope.$watchCollection('companyMessages', scrollToBottom);
 
                 function scrollToBottom() {
-                    var messagesWindow = chatWindow.querySelector('.messages');
-                    messagesWindow.scrollTop = messagesWindow.scrollHeight;
+                    scope.$$postDigest(function() {
+                        var messagesWindow = chatWindow.querySelector('.messages');
+                        messagesWindow && (messagesWindow.scrollTop = messagesWindow.scrollHeight);
+                    });
                 }
             }
         };
