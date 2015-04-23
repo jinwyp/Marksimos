@@ -28,7 +28,7 @@ var paths = {
     angularTemplates: ['./public/app/js/commoncomponent/*.html', './public/app/js/report/*.html', './public/app/js/websitecomponent/*.html'],
 
     compass_config : './public/app/css/config.rb',
-    sassSourceFiles: './public/app/css/sass/*.scss',
+    sassSourceFiles: ['./public/app/css/sass/*.scss','./public/app/css/sass/*/*.scss','./public/app/css/sass/*/*/*.scss'],
     cssSourceFiles: './public/app/css/stylesheets/marksimosmain.css',
     cssOutputPath: './public/app/css/stylesheets',
     cssDistPath: './public/app/css/distcss/',
