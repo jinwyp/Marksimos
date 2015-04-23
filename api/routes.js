@@ -357,8 +357,8 @@ apiRouter.put('/marksimos/api/admin/sku/decision', auth.authLoginToken(), auth.a
 apiRouter.put('/marksimos/api/admin/brand/decision', auth.authLoginToken(), auth.authRole(marksimosRight.seminarDecisionsOfFacilitatorCUD), decisionController.updateBrandDecision);
 apiRouter.put('/marksimos/api/admin/company/decision', auth.authLoginToken(), auth.authRole(marksimosRight.seminarDecisionsOfFacilitatorCUD), decisionController.updateCompanyDecision);
 
-
-
+//seminar online chat
+apiRouter.post('/marksimos/api/admin/seminar/chat/seminar', auth.authLoginToken(), auth.authRole(marksimosRight.seminarListOfFacilitatorGet), seminarController.sendChatMessageSeminar);
 
 
 

@@ -12,9 +12,9 @@
 
 
     /********************  Use This Module To Set New Controllers  ********************/
-    angular.module('marksimos').controller('chartController', ['$translate', '$scope', '$rootScope', '$document', '$timeout', '$interval', '$http', 'notify', 'chartReport', 'tableReport', 'Student', 'Company', 'socket', function($translate, $scope, $rootScope, $document, $timeout, $interval, $http, notify, chartReport, tableReport, Student, Company, socket) {
+    angular.module('marksimos').controller('chartController', ['$translate', '$scope', '$rootScope', '$document', '$timeout', '$interval', '$http', 'notify', 'chartReport', 'tableReport', 'Student', 'Company', 'Socket', function($translate, $scope, $rootScope, $document, $timeout, $interval, $http, notify, chartReport, tableReport, Student, Company, Socket) {
 
-        socket.setup();
+
 
         $rootScope.$on('$translateChangeSuccess', function () {
             app.loadingChartData();
@@ -502,7 +502,9 @@
             initOnce : function(){
                 this.loadingStudentData();
 
-                socket.socket.on('marksimosDecisionUpdate', function(message){
+                Socket.setup();
+
+                Socket.socket.on('marksimosDecisionUpdate', function(message){
                     app.reRun();
 
                     if(message.username !== $scope.data.currentStudent.username){
@@ -515,10 +517,10 @@
 
                 });
 
-                socket.socket.on('marksimosChatMessageSeminarUpdate', function(data){
+                Socket.socket.on('marksimosChatMessageSeminarUpdate', function(data){
                     $scope.data.seminarMessages.push(data);
                 });
-                socket.socket.on('marksimosChatMessageCompanyUpdate', function(data){
+                Socket.socket.on('marksimosChatMessageCompanyUpdate', function(data){
                     $scope.data.companyMessages.push(data);
                 });
 

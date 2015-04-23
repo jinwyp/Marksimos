@@ -3,7 +3,7 @@
 
     angular.module('marksimos.socketmodel', ['btford.socket-io', 'LocalStorageModule']);
 
-    angular.module('marksimos.socketmodel').factory('socket', function (socketFactory, localStorageService) {
+    angular.module('marksimos.socketmodel').factory('Socket', function (socketFactory, localStorageService) {
         var ret = {};
 
         ret.setup = function(seminarId) {

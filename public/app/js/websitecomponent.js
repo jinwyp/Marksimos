@@ -55,13 +55,9 @@
                     || (!scope.data.seminarInput && !scope.data.companyInput)) return;
 
                     if (event.target.matches('.seminar')) {
-                        scope.sendSeminarMessage({message: scope.data.seminarInput}).then(function() {
-                            scope.data.seminarInput = '';
-                        });
+                        scope.sendSeminarMessage({messageInput: scope.data.seminarInput});
                     } else {
-                        scope.sendCompanyMessage({message: scope.data.companyInput}).then(function() {
-                            scope.data.companyInput = '';
-                        });
+                        scope.sendCompanyMessage({messageInput: scope.data.companyInput});
                     }
                 });
 

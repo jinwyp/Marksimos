@@ -1346,6 +1346,10 @@
             },
             updateSkuDecision: function(postdata) {
                 return $http.put(apiAdminPath + 'sku/decision', postdata);
+            },
+
+            sendSeminarChatMessage: function(message, seminarRoom) {
+                return $http.post(apiAdminPath + 'seminar/chat/seminar', { message: message, seminarRoom:seminarRoom});
             }
 
         };
