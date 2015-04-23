@@ -464,9 +464,6 @@
             };
         };
 
-        $scope.sendSeminarMessage = Student.sendSeminarChatMessage;
-        $scope.sendCompanyMessage = Student.sendCompanyChatMessage;
-
 
 
         /********************  APP 所有功能 运作函数  ********************/
@@ -1623,6 +1620,21 @@
             }
 
         };
+
+
+
+
+
+
+
+
+        /********************  Chat Messages ********************/
+        $scope.sendSeminarMessage = Student.sendSeminarChatMessage;
+        $scope.sendCompanyMessage = Student.sendCompanyChatMessage;
+
+
+
+
 
     }]);
 
