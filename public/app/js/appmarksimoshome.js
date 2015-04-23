@@ -1631,8 +1631,44 @@
 
 
         /********************  Chat Messages ********************/
-        $scope.sendSeminarMessage = Student.sendSeminarChatMessage;
-        $scope.sendCompanyMessage = Student.sendCompanyChatMessage;
+        $scope.sendSeminarMessage = function(messageInput){
+            console.log(messageInput);
+            Student.sendSeminarChatMessage(messageInput).then(function(data, status, headers, config){
+
+                //notify({
+                //    message  : 'Message Send !',
+                //    templateUrl : notifytemplate.success,
+                //    position : 'center'
+                //});
+            }, function(data){
+                notify({
+                    message  : data.data.message,
+                    templateUrl : notifytemplate.failure,
+                    position : 'center'
+                });
+            });
+
+        };
+
+
+
+        $scope.sendCompanyMessage = function(messageInput){
+            Student.sendCompanyChatMessage(messageInput).then(function(data, status, headers, config){
+                //notify({
+                //    message  : 'Message Send !',
+                //    templateUrl : notifytemplate.success,
+                //    position : 'center'
+                //});
+            }, function(data){
+                notify({
+                    message  : data.data.message,
+                    templateUrl : notifytemplate.failure,
+                    position : 'center'
+                });
+            });
+
+        };
+
 
 
 

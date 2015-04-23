@@ -263,52 +263,55 @@
         .chat-container {
             position: fixed;
             right: -244px;
-            margin: auto 0;
             z-index: 9999;
             background-color: white;
             width: 244px;
-            height: 470px;
+            height: 600px;
             border: 1px solid #DDD;
             font-size: 12px;
-            top: 0;
+            top: 50px;
             bottom: 0;
         }
         .chat-container.active {
             right: 0;
         }
-        .chat-container .chat-icon {
+        .chat-container .chat-icon-wrapper {
+            background-color: white;
             cursor: pointer;
             position: absolute;
-            top: 50%;
-            left: -18px;
+            top: 0;
+            left: -51px;
+            width: 51px;
+            height: 52px;
+            border: 1px solid #DDD;
+        }
+        .chat-container .chat-icon-wrapper .chat-icon {
             background-image: url('/app/css/images/icon/iconmenuchat.png');
             background-repeat: no-repeat;
-            background-position: 0 -0px;
+            background-position: 0 0px;
             height: 16px;
             width: 16px;
         }
-        .chat-container .chat-icon.show-chat {
-            background: none white;
-            border: 1px solid #2E4E9A;
-            padding-top: 5px;
-            border-top-left-radius: 3px;
-            height: 25px;
-            color: #2E4E9A;
-            top: 6px;
-            left: -16px;
+        .chat-container .chat-icon-wrapper > div:not(.hide-btn) {
+            padding: 8px 17px;
         }
         .chat-container .hide-btn {
             padding-left: 3px;
             border-bottom: 1px solid #DDD;
             background-color: #F5F5F5;
         }
-        .chat-container .hide-btn .icon-right {
+        .chat-container .hide-btn .icon-left, .chat-container .hide-btn .icon-right {
             border-right: 1px solid #808080;
             border-top: 1px solid #808080;
             width: 6px;
             height: 6px;
-            transform: rotate(45deg);
             display: inline-block;
+        }
+        .chat-container .hide-btn .icon-left {
+            transform: rotate(-135deg);
+        }
+        .chat-container .hide-btn .icon-right {
+            transform: rotate(45deg);
         }
         .chat-container .header {
             font-size: 12px;
@@ -369,7 +372,7 @@
         }
         .chat-container .chat-body .messages {
             padding: 14px;
-            height: 280px;
+            height: 396px;
             overflow: auto;
         }
         .chat-container .chat-body .message {
@@ -449,6 +452,16 @@
             border-left: none;
             border-right: none;
         }
+
+
+
+
+
+
+
+
+
+
 
     </style>
 </head>

@@ -56,9 +56,12 @@
 
                     if (event.target.matches('.seminar')) {
                         scope.sendSeminarMessage({messageInput: scope.data.seminarInput});
+                        scope.data.seminarInput = '';
                     } else {
                         scope.sendCompanyMessage({messageInput: scope.data.companyInput});
+                        scope.data.companyInput = '';
                     }
+                    console.log(scope.me);
                 });
 
                 scope.$watchCollection('seminarMessages', scrollToBottom);
@@ -74,6 +77,8 @@
             }
         };
     }
+
+
 
     function b2cSubMenuComponent($location){
         return {

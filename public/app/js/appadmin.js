@@ -966,7 +966,9 @@
         };
 
         $scope.data = {
-            seminarChatMessages : '',
+            currentUser: null,
+
+            seminarChatMessages : [],
 
             allDecisions: {
                 data           : [],
@@ -1212,10 +1214,12 @@
                 $scope.css.currentSeminarId = /.+\/adminhomereport\/(\d+).*/.exec(window.location.href)[1] || 0;
 
                 Socket.setup($scope.css.currentSeminarId);
+
                 Socket.socket.on('marksimosChatMessageSeminarUpdate', function(data){
-                    console.log(data);
-                    $scope.data.seminarMessages.push(data);
+                    $scope.data.seminarChatMessages.push(data);
                 });
+                
+                that.getAdminInfo();
 
                 //加载 All Comapany Decisions
                 that.loadingAllDecisions();
@@ -1267,7 +1271,7 @@
 
                 $scope.sendSeminarMessage = function(messageInput) {
                     Admin.sendSeminarChatMessage(messageInput, $scope.css.currentSeminarId).success(function(data, status, headers, config) {
-                        $notification.success('Save success', 'Send Message Success');
+                        //$notification.success('Save success', 'Send Message Success');
 
                     }).error(function(data, status, headers, config) {
                         console.log(data);
@@ -1661,6 +1665,12 @@
                 };
 
 
+            },
+
+            getAdminInfo : function(){
+                Admin.userInfo().success(function(data, status, headers, config) {
+                    $scope.data.currentUser = data;
+                });
             },
 
 
