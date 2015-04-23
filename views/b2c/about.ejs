@@ -16,7 +16,7 @@
             </div>
 
             <div id="bridge-description" ng-init="bridge={}">
-                <div class="static clearfix" ng-hide="bridge.desc">
+                <div class="static clearfix anim-enter" ng-if="!bridge.desc">
                     <div class="title">Bridge+</div>
                     <div class="module">
                         <div class="icon icon1"></div>
@@ -40,21 +40,21 @@
                         <button class="btn btn-default" ng-click="bridge.desc='disc3'">更多</button>
                     </div>
                 </div>
-                <div class="disc-extend" ng-if="bridge.desc=='disc1'">
+                <div class="anim-enter disc-extend" ng-if="bridge.desc=='disc1'">
                     <span class="glyphicon glyphicon-remove-circle" aria-hidden="true" ng-click="bridge.desc=false"></span>
                     <img src="/app/css/images/desc1.jpg" alt="" class="pull-left"/>
                     <p class="pull-left">
                         Bridge+ 是由全球第一个飞上亚太空的华人女性、MIT媒体实验室中国特别顾问、哈佛中国校友会副主席李青青 (Julia Li) 女士发起，邀请曾在北京、上海、硅谷、南美、非洲工作，曾服务于高盛、玛氏、欧莱雅、博世等知名企业，平均年龄22岁的青年团队共同运营的青年教育革新项目。Bridge+ 相信，通过搭建起校园和企业之间的桥梁，学生与社会之间的桥梁，Bridge+ 能够惠及千万中国青年，为这一代的中国青年发展带来积极影响
                     </p>
                 </div>
-                <div class="disc-extend" ng-if="bridge.desc=='disc2'">
+                <div class="anim-enter disc-extend" ng-if="bridge.desc=='disc2'">
                     <span class="glyphicon glyphicon-remove-circle" aria-hidden="true" ng-click="bridge.desc=false"></span>
                     <img src="/app/css/images/desc2.jpg" alt="" class="pull-left"/>
                     <p class="pull-left">
                         Bridge+ 旨在为学生搭建校园学习与社会职业发展之间的桥梁，解决学生在商业技能水平与企业要求之间的断层问题；为企业以最高效且精准的方式对接潜在人才，解决企业寻找人才与学生寻找就业机会之间的断层问题。同时，我们也搭建起偏远地区大学生和优质就业机会之间的桥梁，提供给所有中国学生更公平的求职机会，力求改善就业机会分布的不均等性，产生积极的社会影响力
                     </p>
                 </div>
-                <div class="disc-extend" ng-if="bridge.desc=='disc3'">
+                <div class="anim-enter disc-extend" ng-if="bridge.desc=='disc3'">
                     <span class="glyphicon glyphicon-remove-circle" aria-hidden="true" ng-click="bridge.desc=false"></span>
                     <img src="/app/css/images/desc3.jpg" alt="" class="pull-left"/>
                     <p class="pull-left">
