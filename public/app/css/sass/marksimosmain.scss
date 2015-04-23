@@ -14,18 +14,56 @@ $color_chat_active: #2E4E9A;
 $color_chat_me: #1289fe;
 .chat-container {
     position: fixed;
+    right: -244px;
+    margin: auto 0;
     z-index:9999;
     background-color: white;
     width: 244px;
+    height: 470px;
     border: 1px solid $color_chat_border;
     font-size: 12px;
+    top: 0;
+    bottom: 0;
+    &.active {
+        right: 0;
+    }
+    .chat-icon {
+        cursor: pointer;
+        position: absolute;
+        top: 50%;
+        left: -18px;
+        @include my_icon-sprite(iconmenuchat);
+        &.show-chat {
+            background: none white;
+            border: 1px solid $color_chat_active;
+            padding-top: 5px;
+            border-top-left-radius: 3px;
+            height: 25px;
+            color: $color_chat_active;
+            top: 6px;
+            left: -16px;
+        }
+    }
+    .hide-btn {
+        padding-left: 3px;
+        border-bottom:  1px solid $color_chat_border;
+        background-color: #F5F5F5;
+        .icon-right {
+            border-right: 1px solid #808080;
+            border-top: 1px solid #808080;
+            width: 6px;
+            height: 6px;
+            transform: rotate(45deg);
+            display: inline-block;
+        }
+    }
     .header {
         font-size: 12px; // todo delete?
         font-weight: bold;
         text-align: center;
         margin: 0;
         padding-top: 12px;
-        border-top: 5px solid #2E4E9A;
+/*        border-top: 5px solid $color_chat_active;*/
     }
     .chat-header {
         height: 60px;
@@ -39,11 +77,27 @@ $color_chat_me: #1289fe;
         }
         .btn.active {
             box-shadow: none;
-            color: #2E4E9A;
+            color: $color_chat_active;
             background-color: white;
-            border-color: #2E4E9A;
+            border-color: $color_chat_active;
             &:hover {
                 background-color: #E6E6E6;
+            }
+        }
+        .btn.seminar {
+            @include icon-sprite(iconmentor);
+            @include sprite-background-position($icon-sprites, iconmentor, 13px, 6px);
+            &.active {
+                @include icon-sprite(iconmentoractive);
+                @include sprite-background-position($icon-sprites, iconmentoractive, 13px, 6px);
+            }
+        }
+        .btn.company {
+            @include icon-sprite(iconchatteam);
+            @include sprite-background-position($icon-sprites, iconchatteam, 13px, 6px);
+            &.active {
+                @include icon-sprite(iconchatteamactive);
+                @include sprite-background-position($icon-sprites, iconchatteamactive, 13px, 6px);
             }
         }
         .indicator {
@@ -53,11 +107,13 @@ $color_chat_me: #1289fe;
             &.left {
                 left: 52px;
             }
+            width: 26px;
+            height: 10px;
 
         }
     }
     .chat-body {
-        border-top: 1px solid #DDD;
+        border-top: 1px solid $color_chat_border;
         .messages {
             padding: 14px;
             height: 280px;

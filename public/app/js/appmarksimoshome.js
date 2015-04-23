@@ -305,7 +305,8 @@
             },
 
             // for chat message.
-            messages: []
+            seminarMessages: [],
+            companyMessages: []
         };
 
 
@@ -463,7 +464,9 @@
             };
         };
 
-        $scope.sendMessage = Student.sendChatMessage;
+        $scope.sendSeminarMessage = Student.sendSeminarChatMessage;
+        $scope.sendCompanyMessage = Student.sendCompanyChatMessage;
+
 
 
         /********************  APP 所有功能 运作函数  ********************/
@@ -515,8 +518,11 @@
 
                 });
 
-                socket.socket.on('marksimosChatMessageUpdate', function(data){
-                    $scope.data.messages.push(data);
+                socket.socket.on('marksimosChatMessageSeminarUpdate', function(data){
+                    $scope.data.seminarMessages.push(data);
+                });
+                socket.socket.on('marksimosChatMessageCompanyUpdate', function(data){
+                    $scope.data.companyMessages.push(data);
                 });
 
             },

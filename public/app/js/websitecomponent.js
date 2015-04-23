@@ -33,32 +33,47 @@
             restrict: 'E',
             scope: {
                 me: '=username',
-                messages: '=',
-                sendMessage: '&'
+                seminarMessages: '=',
+                companyMessages: '=',
+                sendSeminarMessage: '&',
+                sendCompanyMessage: '&'
             },
             templateUrl: 'chatwindow.html',
             link: function(scope, elem, attrs, ctrl) {
-                scope.messages = [];
-
-/*                socket.socket.on('marksimosChatMessageUpdate', function(data){
-                    scope.messages.push(data);
-                    messagesWindow.scrollTop = messagesWindow.scrollHeight;
-                });*/
-
+                scope.data = {
+                    seminarInput: null,
+                    companyInput: null
+                };
+                scope.css = {
+                    currentTab: 'seminar',
+                    showChat: false
+                };
                 var chatWindow = elem[0];
-                chatWindow.querySelector('textarea').addEventListener('keydown', function(event) {
+                chatWindow.addEventListener('keydown', function(event) {
                     // todo: handle line break?
-                    if (event.keyCode == 13 && scope.input) {
-                        scope.sendMessage({message: scope.input}).then(function() {
-                            scope.input = '';
+                    if (event.keyCode != 13 || event.target.tagName.toUpperCase() != 'TEXTAREA'
+                    || (!scope.data.seminarInput && !scope.data.companyInput)) return;
+
+                    if (event.target.matches('.seminar')) {
+                        scope.sendSeminarMessage({message: scope.data.seminarInput}).then(function() {
+                            scope.data.seminarInput = '';
+                        });
+                    } else {
+                        scope.sendCompanyMessage({message: scope.data.companyInput}).then(function() {
+                            scope.data.companyInput = '';
                         });
                     }
                 });
 
-                var messagesWindow = chatWindow.querySelector('.messages');
-                scope.$watchCollection('messages', function() {
-                    messagesWindow.scrollTop = messagesWindow.scrollHeight;
-                });
+                scope.$watchCollection('seminarMessages', scrollToBottom);
+                scope.$watchCollection('companyMessages', scrollToBottom);
+
+                function scrollToBottom() {
+                    scope.$$postDigest(function() {
+                        var messagesWindow = chatWindow.querySelector('.messages');
+                        messagesWindow && (messagesWindow.scrollTop = messagesWindow.scrollHeight);
+                    });
+                }
             }
         };
     }
