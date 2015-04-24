@@ -59,7 +59,7 @@
 
         $scope.css = {
             leftmenu: 11,
-            menuTabShow: [false, false, false, false, false, false, false], //从第二个false 开始第1个菜单
+            menuTabShow: [false, false, false, false, false, false, false, false, false], //从第二个false 开始第1个菜单
             editMenuStatus : false,
             seminarId: 0,
             campaignIdAddSeminar: 0,
@@ -215,6 +215,16 @@
             addTeamToCampaign: {
                 username: 0,
                 campaignId: 0
+            },
+
+            updateGlossary : {},
+            newGlossary : {
+                id : '',
+                name : '',
+                description : '',
+                question : '',
+                answer : '',
+                tags : []
             },
 
             country: [
@@ -398,12 +408,12 @@
                         app.getDistributorsInit();
                         app.getFacilitatorsInit();
                         app.getStudentsInit();
-                        $scope.css.menuTabShow = [false, true, true, true, true, true, true];
+                        $scope.css.menuTabShow = [false, true, true, true, true, true, true, true, true];
 
                     } else if ($scope.data.currentUser.role === 2) {
                         // Role Distributor
                         app.getFacilitatorsInit();
-                        $scope.css.menuTabShow = [false, true, false, true, false, false, false];
+                        $scope.css.menuTabShow = [false, true, false, true, false, false, false, false];
 
                     } else if ($scope.data.currentUser.role === 3) {
                         // Role Facilitator
@@ -411,7 +421,7 @@
                         app.getSeminarInit();
                         app.getCgiStatus();
                         app.getCampaignInit();
-                        $scope.css.menuTabShow = [false, true, false, false, true, true, true];
+                        $scope.css.menuTabShow = [false, true, false, false, true, true, true, true];
                     }
 
                 }).error(function(data, status, headers, config) {

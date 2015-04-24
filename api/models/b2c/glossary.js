@@ -20,10 +20,13 @@ var mongooseTimestamps = require('mongoose-timestamp');
  * Mongoose schema
  */
 var glossarySchema = new Schema({
+    type: { type: Number, default: 10  }, // 10 Glossary  20 FAQ questions
 
     name: { type: String },
     description: { type: String },
-    type: { type: Number, default: 10  }, // 10 Glossary  20 FAQ questions
+
+    question: { type: String },
+    answer: { type: String },
 
 
     tagList: [{ type: schemaObjectId, ref: 'Tag' }]
@@ -50,12 +53,18 @@ glossarySchema.plugin(mongooseTimestamps);
  * Statics
  */
 
-glossarySchema.statics.updateValidations = function(req){
+glossarySchema.statics.addValidations = function(req){
 
-    //req.sanitize('activated').toBoolean();
+    req.checkBody('type', 'Campaign description should be 2-10000 characters').notEmpty().isInt();
 
-    //req.checkBody('name', 'Campaign name should be 2-50 characters').notEmpty().len(2, 50);
-    //req.checkBody('description', 'Campaign description should be 2-10000 characters').notEmpty().len(2, 10000);
+    if(req.body.type == 10){
+        req.checkBody('name', 'Glossary name should be 2-50 characters').notEmpty().len(2, 200);
+        req.checkBody('description', 'Glossary description should be 2-5000 characters').notEmpty().len(2, 5000);
+    }else if(req.body.type == 20){
+        req.checkBody('question', 'Glossary name should be 2-50 characters').notEmpty().len(2, 200);
+        req.checkBody('answer', 'Glossary description should be 2-5000 characters').notEmpty().len(2, 5000);
+    }
+
 
     //req.checkBody('activated', 'Campaign activated should Boolean true or false').notEmpty();
 

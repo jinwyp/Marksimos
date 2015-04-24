@@ -940,6 +940,165 @@
 
 
 
+
+            <section class="content" ng-if="css.leftmenu==71">
+                <h2 class="page-header">Glossary Management</h2>
+
+                <div class="row" >
+                    <div class="col-md-12">
+
+                        <div class="box box-primary">
+
+                            <form class="form-horizontal" role="form" name="searchGlossaryForm">
+                                <div class="box-body">
+                                    <div class="form-group" ng-class="{'has-success':searchGlossaryForm.campaignKeyword.$dirty&&searchGlossaryForm.campaignKeyword.$valid, 'has-error':searchGlossaryForm.campaignKeyword.$dirty&&searchGlossaryForm.campaignKeyword.$invalid}">
+                                        <label class="col-sm-2 control-label" for="searchGlossaryKeyword">Keywords :</label>
+                                        <div class="col-sm-4">
+                                            <input type="text" class="form-control" id="searchGlossaryKeyword" name="campaignKeyword" ng-model="data.searchGlossary.keyword" placeholder="Name / Description / Location" ng-required="false" ng-minlength="2" ng-maxlength="100" ng-model-options="{ debounce: 500 }" />
+                                        </div>
+                                        <label class="control-label" ng-show="searchGlossaryForm.campaignKeyword.$invalid"><i class="fa fa-times-circle-o"></i>Search keyword length should be between 2 and 100</label>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label for="inputGlossaryStatus" class="col-sm-2 control-label">Status</label>
+                                        <div class="col-sm-4">
+                                            <label class="radio-inline">
+                                                <input ng-change="searchGlossary(searchGlossaryForm)" type="radio" name="inputGlossaryStatus" ng-model="data.searchGlossary.activated" value="all">All
+                                            </label>
+                                            <label class="radio-inline">
+                                                <input ng-change="searchGlossary(searchGlossaryForm)" type="radio" name="inputGlossaryStatus" ng-model="data.searchGlossary.activated" value="1">Active
+                                            </label>
+                                            <label class="radio-inline">
+                                                <input ng-change="searchGlossary(searchGlossaryForm)" type="radio" name="inputGlossaryStatus" ng-model="data.searchGlossary.activated" value="0">Inactive
+                                            </label>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="box-footer">
+                                    <div class="form-group">
+                                        <div class="col-sm-offset-2 col-sm-10">
+                                            <button type="submit" class="btn btn-primary" ng-click="searchGlossary(searchGlossaryForm)">Search</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+
+
+                        <div class="box">
+                            <div class="box-header">
+                                <h3 class="box-title">Glossary List</h3>
+                            </div><!-- /.box-header -->
+                            <div class="box-body table-responsive no-padding">
+                                <table class="table table-striped table-hover">
+                                    <tbody>
+                                    <tr>
+                                        <th style="width:100px">Action</th>
+                                        <th>Name</th>
+                                        <th>Description</th>
+                                        <th>Status</th>
+                                        <th>Location</th>
+                                        <th>Match Date</th>
+                                        <th>Seminar List</th>
+                                        <th>Team List</th>
+                                    </tr>
+                                    <tr ng-repeat="campaign in data.campaigns" >
+                                        <td style="width:100px">
+                                            <button type="button" class="btn btn-danger" ng-click="showEditCampaignMenu(campaign)" >Modify</button>
+                                        </td>
+                                        <td data-highlight-key="data.searchCampaign.keyword">{{campaign.name}}</td>
+                                        <td data-highlight-key="data.searchCampaign.keyword">{{campaign.description}}</td>
+                                        <td data-highlight-key="data.searchCampaign.keyword">{{campaign.activated}}</td>
+                                        <td data-highlight-key="data.searchCampaign.keyword">{{campaign.location}}</td>
+                                        <td data-highlight-key="data.searchCampaign.keyword">{{campaign.matchDate}}</td>
+                                        <td style="width:200px">
+                                            <div>
+                                                <p ng-repeat="seminar in campaign.seminarListMarksimos">
+                                                    <span>Seminar : {{seminar.seminarId }} <a href="" ng-click="removeSeminarFromCampaign(campaign._id, seminar.seminarId)">remove</a>, </span>
+                                                </p>
+
+                                                <div class="input-group ">
+                                                    <input type="text" class="form-control" placeholder="Seminar ID" ng-model="campaign.inputSeminarId">
+                                                    <span class="input-group-btn">
+                                                        <button class="btn btn-info" type="button" ng-click="addSeminarIntoCampaign(campaign._id, campaign.inputSeminarId)">Add</button>
+                                                    </span>
+                                                </div><!-- /input-group -->
+                                                <div class="callout callout-danger" ng-show="campaign._id == css.campaignIdAddSeminar">
+                                                    <p>Please Input Seminar ID !</p>
+                                                </div>
+                                            </div>
+
+                                        </td>
+                                        <td style="width:400px">
+                                            <div>
+                                                <div ng-repeat="team in campaign.teamList">
+                                                    <p>Team name : {{team.name }} / Creator : {{team.creator.username }} <a href="" ng-click="removeTeamFromCampaign(campaign._id, team._id)">remove</a>
+                                                        <br/>
+                                                        Team Members : <span ng-repeat="student in team.memberList">{{student.username }} , </span>
+                                                    </p>
+                                                </div>
+
+                                                <div class="input-group ">
+                                                    <input type="text" class="form-control" placeholder="Team Creator Username" ng-model="campaign.inputTeamCreatorUsername">
+                                                    <span class="input-group-btn">
+                                                        <button class="btn btn-info" type="button" ng-click="addTeamIntoCampaign(campaign._id, campaign.inputTeamCreatorUsername)">Add</button>
+                                                    </span>
+                                                </div><!-- /input-group -->
+                                                <div class="callout callout-danger" ng-show="campaign._id == css.campaignIdAddTeam">
+                                                    <p>Please Input Team Creator Username !</p>
+                                                </div>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    </tbody>
+                                </table>
+                            </div><!-- /.box-body -->
+                        </div>
+
+                    </div>
+                </div>
+            </section>
+
+            <section class="content" ng-if="css.leftmenu==72">
+                <h2 class="page-header" ng-if="!css.editMenuStatus">Create New Glossary</h2>
+                <h2 class="page-header" ng-if="css.editMenuStatus">Update Glossary</h2>
+
+                <div class="row" >
+                    <div class="col-md-12">
+
+                        <div class="box box-primary">
+                            <form class="form-horizontal" role="form" name="newGlossaryForm">
+                                <div class="box-body">
+                                    <text-form-input type="text" name="newGlossaryName" label="Name :" placeholder="Glossary Name" labelclass="col-sm-2" inputclass="col-sm-4" data="data.newGlossary.name" required="true" requirederrorinfo="Name is required"></text-form-input>
+                                    <text-form-input type="text" name="newGlossaryDescription" label="Description :" placeholder="Glossary Description" labelclass="col-sm-2" inputclass="col-sm-4" data="data.newGlossary.description" required="true" requirederrorinfo="Description is required" minlength="2" minlengtherrorinfo="Description must be at least 2 characters" maxlength="5000" maxlengtherrorinfo="Description is a maximum of 5000 characters"></text-form-input>
+
+                                    <text-form-input type="text" name="newGlossaryQuestion" label="Question :" placeholder="Country / State / City / Street" labelclass="col-sm-2" inputclass="col-sm-4" data="data.newGlossary.location" required="false" requirederrorinfo="Question is required"></text-form-input>
+                                    <text-form-input type="text" name="newGlossaryAnswer" label="Match Date :" placeholder="Match Start Date" labelclass="col-sm-2" inputclass="col-sm-4" data="data.newGlossary.matchDate" required="false" requirederrorinfo="Date is required"></text-form-input>
+
+                                    <text-form-input type="radio" name="newGlossaryActivated" label="Status :" labelclass="col-sm-2" inputclass="col-sm-4" data="data.newGlossary.activated" radiooptions="data.newGlossary.campaignActivatedRadioOptions" required="true"></text-form-input>
+
+
+
+                                    <text-form-input ng-if="css.editMenuStatus" type="text" name="newGlossaryFirstCoverBackgroundColor" label="First Cover Background Color :" placeholder="Color HEX" labelclass="col-sm-2" inputclass="col-sm-4" data="data.newGlossary.firstCoverBackgroundColor"></text-form-input>
+
+                                </div>
+
+                                <div class="box-footer">
+                                    <div class="form-group">
+                                        <div class="col-sm-offset-2 col-sm-10">
+                                            <button type="submit" class="btn btn-primary" ng-if="!css.editMenuStatus" ng-click="createNewGlossary(newGlossaryForm)"> Create </button>
+                                            <button type="submit" class="btn btn-primary" ng-if="css.editMenuStatus" ng-click="updateGlossary(newGlossaryForm)"> Update </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+
+                    </div>
+                </div>
+            </section>
+
         </aside>
     </div>
 

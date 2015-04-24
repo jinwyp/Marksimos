@@ -51,8 +51,8 @@
                 var chatWindow = elem[0];
                 chatWindow.addEventListener('keydown', function(event) {
                     // todo: handle line break?
-                    if (event.keyCode != 13 || event.target.tagName.toUpperCase() != 'TEXTAREA'
-                    || (!scope.data.seminarInput && !scope.data.companyInput)) return;
+
+                    if (event.keyCode != 13 || event.target.tagName.toUpperCase() != 'TEXTAREA' || (!scope.data.seminarInput && !scope.data.companyInput) ) return;
 
                     if (event.target.matches('.seminar')) {
                         scope.sendSeminarMessage({messageInput: scope.data.seminarInput});
@@ -301,7 +301,7 @@
             link : function(scope, element){
 
                 scope.css = {
-                    menuexpand : [false, false, true, true, true, true, true, true] // menus control expand
+                    menuexpand : [false, false, true, true, true, true, true, true, true, true] // menus control expand
                 };
 
                 scope.clickTab = function(tab){

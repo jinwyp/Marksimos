@@ -10,6 +10,7 @@ var distributorController = require('./controllers/user/admin.js');
 var studentController = require('./controllers/user/student.js');
 var campaignController = require('./controllers/b2c/campaign.js');
 var seminarController = require('./controllers/marksimos/seminar.js');
+var glossaryController = require('./controllers/b2c/glossary.js');
 
 var questionnaireController = require('./controllers/questionnaire.js');
 var faqController  =  require('./controllers/faq.js');
@@ -362,6 +363,8 @@ apiRouter.post('/marksimos/api/admin/seminar/chat/seminar', auth.authLoginToken(
 
 
 
+//Facilitator manager Glossary
+apiRouter.post('/marksimos/api/admin/glossary', auth.authLoginToken(), auth.authRole(marksimosRight.glossarySingleCUD), glossaryController.addGlossary);
 
 
 

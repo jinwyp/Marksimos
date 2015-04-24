@@ -83,7 +83,17 @@
                 </ul>
             </li>
 
-
+            <li class="treeview" ng-class="{'active':css.menuexpand[7]}" ng-if="showtab[7]">
+                <a href="" ng-click="clickTab(7)">
+                    <i class="fa fa-bullhorn"></i>
+                    <span>Glossary Management</span>
+                    <i class="fa pull-right"  ng-class="{'fa-angle-left':!css.menuexpand[7], 'fa-angle-down':css.menuexpand[7]}"></i>
+                </a>
+                <ul class="treeview-menu" ng-show="css.menuexpand[7]">
+                    <li ng-class="{'active' : currentMenu==71 }"><a href="" ng-click="clickMenu(71)"><i class="fa fa-angle-double-right"></i> Glossary List</a></li>
+                    <li ng-class="{'active' : currentMenu==72 }"><a href="" ng-click="clickMenu(72)"><i class="fa fa-angle-double-right"></i> Create Glossary</a></li>
+                </ul>
+            </li>
 
         </ul>
     </section>
