@@ -1,7 +1,7 @@
 ﻿<% include include/headcss.ejs %>
 
 
-<body id="activity" ng-app="b2clogin">
+<body id="activity" ng-app="b2clogin" ng-controller="activityController">
 
     <b2c-header showlogin="true"></b2c-header>
     <b2c-sub-menu></b2c-sub-menu>
@@ -10,11 +10,11 @@
         <div class="b2c-container">
             <div id="bridge-header">
                 <h3>Bridge+</h3>
-                <h3>中国首家商家模拟竞赛平台</h3>
+                <h3>中国首家商战模拟竞赛平台</h3>
                 <a type='button' class="btn btn-danger" href="/e4e">加入</a>
             </div>
 
-            <div class="section1">
+            <div class="section1" id="latest-activity">
                 <div class="activity clearfix">
                     <h4>最新活动</h4>
                     <hr/>
@@ -29,8 +29,8 @@
                     </div>
                 </div>
 
-                <div class="activity clearfix">
-                    <h4>最新活动</h4>
+                <div class="activity clearfix" id="entrepreneur-plan">
+                    <h4>青年创业家计划</h4>
                     <hr/>
 
                     <div class="col-half">
@@ -49,12 +49,12 @@
                 </div>
 
             </div>
-            <div class="section2">
+            <div class="section2" id="we-reality-show">
                 <img src="/app/css/images/b2c_activity_video.jpg">
             </div>
             <div class="section3">
                 <h3>
-                    青年企业家计划
+                    青年企业家风采
                 </h3>
                 <div id="carousel-header-pics" class="b2c-carousel carousel slide" data-ride="carousel">
                     <!-- Indicators -->
