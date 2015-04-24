@@ -39,6 +39,10 @@ $color_chat_me: #1289fe;
         .chat-icon {
             @include my_icon-sprite(iconmenuchat);
         }
+        .chat-icon.active {
+            background-image: url('/app/css/images/icon/iconmenuchatactive.gif');
+            background-position: 0;
+        }
         > div:not(.hide-btn) {
             padding:8px 17px;
         }

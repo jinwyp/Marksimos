@@ -47,7 +47,8 @@
                 };
                 scope.css = {
                     currentTab: 'seminar',
-                    showChat: false
+                    showChat: false,
+                    newMessage: false
                 };
                 var chatWindow = elem[0];
                 chatWindow.addEventListener('keydown', function(event) {
@@ -70,12 +71,21 @@
                 scope.$watchCollection('companyMessages', scrollToBottom);
 
                 function scrollToBottom() {
+                    if (scope.seminarMessages.length || scope.companyMessages.length) {
+                        scope.css.newMessage = true;
+                    }
+
                     scope.$$postDigest(function() {
                         if (!scope.css.showChat) return;
                         var messagesWindow = chatWindow.querySelector('.messages');
                         messagesWindow.scrollTop = messagesWindow.scrollHeight;
                     });
                 }
+
+                scope.clickToggleWindow = function() {
+                    scope.css.showChat = !scope.css.showChat;
+                    scope.css.newMessage = false;
+                };
             }
         };
     }

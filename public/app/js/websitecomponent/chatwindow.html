@@ -62,8 +62,8 @@
             </div>
         </div>
     </div>
-    <div class="chat-icon-wrapper" ng-if="!css.showChat" ng-click="css.showChat=!css.showChat">
+    <div class="chat-icon-wrapper" ng-if="!css.showChat" ng-click="clickToggleWindow()">
         <div class="hide-btn"><div class="icon-left"></div><div class="icon-left"></div></div>
-        <div><div class="chat-icon"></div></div>
+        <div><div class="chat-icon" ng-class="{active: css.newMessage}"></div></div>
     </div>
 </div>
