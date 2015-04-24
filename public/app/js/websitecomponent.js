@@ -26,9 +26,9 @@
     angular.module('marksimos.websitecomponent').directive('headerAdmin', ['$window', '$translate', 'Student', adminHeaderComponent]);
     angular.module('marksimos.websitecomponent').directive('menuAdmin', [adminMenuComponent]);
 
-    angular.module('marksimos.websitecomponent').directive('chatWindow', chatWindowComponent);
+    angular.module('marksimos.websitecomponent').directive('chatWindow', ['$q', chatWindowComponent]);
 
-    function chatWindowComponent() {
+    function chatWindowComponent($q) {
         return {
             restrict: 'E',
             scope: {
@@ -36,7 +36,8 @@
                 seminarMessages: '=',
                 companyMessages: '=',
                 sendSeminarMessage: '&',
-                sendCompanyMessage: '&'
+                sendCompanyMessage: '&',
+                hideChatHeader: '='
             },
             templateUrl: 'chatwindow.html',
             link: function(scope, elem, attrs, ctrl) {
@@ -55,11 +56,13 @@
                     || (!scope.data.seminarInput && !scope.data.companyInput)) return;
 
                     if (event.target.matches('.seminar')) {
-                        scope.sendSeminarMessage({messageInput: scope.data.seminarInput});
-                        scope.data.seminarInput = '';
+                        $q.when(scope.sendSeminarMessage({messageInput: scope.data.seminarInput})).then(function() {
+                            scope.data.seminarInput = '';
+                        });
                     } else {
-                        scope.sendCompanyMessage({messageInput: scope.data.companyInput});
-                        scope.data.companyInput = '';
+                        $q.when(scope.sendCompanyMessage({messageInput: scope.data.companyInput})).then(function() {
+                            scope.data.companyInput = '';
+                        });
                     }
                 });
 

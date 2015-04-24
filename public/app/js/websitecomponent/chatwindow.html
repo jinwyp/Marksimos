@@ -1,8 +1,8 @@
 <div class="chat-container" ng-class="{active: css.showChat}" ng-init="active=false">
     <div ng-if="css.showChat">
         <div ng-click="css.showChat=!css.showChat" class="hide-btn"><div class="icon-right"></div><div class="icon-right"></div></div>
-        <h1 class="header">Chat</h1><!--todo: remove?-->
-        <div class="chat-header">
+        <h1 class="header" ng-class="{'no-chat-header': hideChatHeader}">Chat</h1><!--todo: remove?-->
+        <div class="chat-header" ng-if="!hideChatHeader">
             <div class="text-center">
                 <button ng-click="css.currentTab = 'seminar'" ng-class="{active: css.currentTab == 'seminar'}" class="btn btn-default seminar">Mentor</button>
                 <button ng-click="css.currentTab = 'company'" ng-class="{active: css.currentTab == 'company'}" class="btn btn-default company">Team</button>
@@ -14,7 +14,7 @@
 
         <div class="chat-body">
             <div class="seminar" ng-if="css.currentTab == 'seminar'">
-                <div class="messages">
+                <div class="messages" ng-class="{'no-chat-header': hideChatHeader}">
 
                     <div ng-repeat="message in seminarMessages" class="message" ng-class="{me: message.user.username == me, them: message.user.username != me}">
                         <!--me-->
