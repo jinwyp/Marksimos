@@ -7,8 +7,10 @@
 @import "icon/*.png";
 
 @import "marksimos/utils/mixins";
+@import "marksimos/base/animation";
 
 /*********************************************************/
+
 $color_chat_border: #DDD;
 $color_chat_active: #2E4E9A;
 $color_chat_me: #1289fe;
@@ -25,7 +27,6 @@ $color_chat_me: #1289fe;
     bottom: 0;
     &.active {
         right: 0;
-
     }
     .chat-icon-wrapper {
         background-color: white;
@@ -895,6 +896,12 @@ body{
             padding-left: 3px;
             padding-right: 3px;
         }
+    }
+    .user_avatar {
+        width: 74px;
+        height: 74px;
+        @include border-radius(50%);
+        margin-top: 11px;
     }
     
     .user_home_divider{
