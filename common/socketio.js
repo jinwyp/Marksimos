@@ -80,7 +80,8 @@ exports.init = function (socketio) {
                 }
                 else if(!_.isUndefined(socket.handshake.query.seminarId && userRole.roleList.facilitator.id == user.role)) {
 
-                    seminarModel.findQ({seminarId:socket.handshake.query.seminarId}).then(function (seminarResult) {
+                    seminarModel.findOneQ({seminarId:socket.handshake.query.seminarId}).then(function (seminarResult) {
+
                         if(user._id.equals(seminarResult.facilitatorId)){
                             socket.join(socket.handshake.query.seminarId);
                         }
@@ -119,6 +120,7 @@ exports.emitMarksimosDecisionUpdate = function(roomName, data){
 
 
 exports.emitMarksimosChatMessageSeminar = function(roomName, user, message){
+
     gsocketio.to(roomName).emit('marksimosChatMessageSeminarUpdate', {
         user: _.pick(user, 'username', 'avatar'),
         message: message

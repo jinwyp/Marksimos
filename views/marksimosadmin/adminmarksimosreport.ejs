@@ -4,6 +4,8 @@
 <body class="skin-blue" ng-app="marksimosadmin" ng-controller="adminMarksimosReportController" ng-cloak>
     <header-admin class="header fixedtop" currentuser="data.currentUser"></header-admin>
 
+    <chat-window send-seminar-message="sendSeminarMessage(messageInput)" username="data.currentUser.username" seminar-messages="data.seminarChatMessages" ></chat-window>
+
 
     <div class="wrapper row-offcanvas row-offcanvas-left ">
 

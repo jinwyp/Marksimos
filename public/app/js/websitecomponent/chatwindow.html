@@ -62,5 +62,8 @@
             </div>
         </div>
     </div>
-    <div ng-if="!css.showChat" ng-click="css.showChat=!css.showChat" class="glyphicon chat-icon"></div>
+    <div class="chat-icon-wrapper" ng-if="!css.showChat" ng-click="css.showChat=!css.showChat">
+        <div class="hide-btn"><div class="icon-left"></div><div class="icon-left"></div></div>
+        <div><div class="chat-icon"></div></div>
+    </div>
 </div>

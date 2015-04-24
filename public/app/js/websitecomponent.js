@@ -55,13 +55,11 @@
                     || (!scope.data.seminarInput && !scope.data.companyInput)) return;
 
                     if (event.target.matches('.seminar')) {
-                        scope.sendSeminarMessage({message: scope.data.seminarInput}).then(function() {
-                            scope.data.seminarInput = '';
-                        });
+                        scope.sendSeminarMessage({messageInput: scope.data.seminarInput});
+                        scope.data.seminarInput = '';
                     } else {
-                        scope.sendCompanyMessage({message: scope.data.companyInput}).then(function() {
-                            scope.data.companyInput = '';
-                        });
+                        scope.sendCompanyMessage({messageInput: scope.data.companyInput});
+                        scope.data.companyInput = '';
                     }
                 });
 
@@ -70,13 +68,16 @@
 
                 function scrollToBottom() {
                     scope.$$postDigest(function() {
+                        if (!scope.css.showChat) return;
                         var messagesWindow = chatWindow.querySelector('.messages');
-                        messagesWindow && (messagesWindow.scrollTop = messagesWindow.scrollHeight);
+                        messagesWindow.scrollTop = messagesWindow.scrollHeight;
                     });
                 }
             }
         };
     }
+
+
 
     function b2cSubMenuComponent($location){
         return {

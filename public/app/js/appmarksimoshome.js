@@ -12,9 +12,9 @@
 
 
     /********************  Use This Module To Set New Controllers  ********************/
-    angular.module('marksimos').controller('chartController', ['$translate', '$scope', '$rootScope', '$document', '$timeout', '$interval', '$http', 'notify', 'chartReport', 'tableReport', 'Student', 'Company', 'socket', function($translate, $scope, $rootScope, $document, $timeout, $interval, $http, notify, chartReport, tableReport, Student, Company, socket) {
+    angular.module('marksimos').controller('chartController', ['$translate', '$scope', '$rootScope', '$document', '$timeout', '$interval', '$http', 'notify', 'chartReport', 'tableReport', 'Student', 'Company', 'Socket', function($translate, $scope, $rootScope, $document, $timeout, $interval, $http, notify, chartReport, tableReport, Student, Company, Socket) {
 
-        socket.setup();
+
 
         $rootScope.$on('$translateChangeSuccess', function () {
             app.loadingChartData();
@@ -502,7 +502,9 @@
             initOnce : function(){
                 this.loadingStudentData();
 
-                socket.socket.on('marksimosDecisionUpdate', function(message){
+                Socket.setup();
+
+                Socket.socket.on('marksimosDecisionUpdate', function(message){
                     app.reRun();
 
                     if(message.username !== $scope.data.currentStudent.username){
@@ -515,10 +517,10 @@
 
                 });
 
-                socket.socket.on('marksimosChatMessageSeminarUpdate', function(data){
+                Socket.socket.on('marksimosChatMessageSeminarUpdate', function(data){
                     $scope.data.seminarMessages.push(data);
                 });
-                socket.socket.on('marksimosChatMessageCompanyUpdate', function(data){
+                Socket.socket.on('marksimosChatMessageCompanyUpdate', function(data){
                     $scope.data.companyMessages.push(data);
                 });
 
@@ -1629,8 +1631,44 @@
 
 
         /********************  Chat Messages ********************/
-        $scope.sendSeminarMessage = Student.sendSeminarChatMessage;
-        $scope.sendCompanyMessage = Student.sendCompanyChatMessage;
+        $scope.sendSeminarMessage = function(messageInput){
+            console.log(messageInput);
+            Student.sendSeminarChatMessage(messageInput).then(function(data, status, headers, config){
+
+                //notify({
+                //    message  : 'Message Send !',
+                //    templateUrl : notifytemplate.success,
+                //    position : 'center'
+                //});
+            }, function(data){
+                notify({
+                    message  : data.data.message,
+                    templateUrl : notifytemplate.failure,
+                    position : 'center'
+                });
+            });
+
+        };
+
+
+
+        $scope.sendCompanyMessage = function(messageInput){
+            Student.sendCompanyChatMessage(messageInput).then(function(data, status, headers, config){
+                //notify({
+                //    message  : 'Message Send !',
+                //    templateUrl : notifytemplate.success,
+                //    position : 'center'
+                //});
+            }, function(data){
+                notify({
+                    message  : data.data.message,
+                    templateUrl : notifytemplate.failure,
+                    position : 'center'
+                });
+            });
+
+        };
+
 
 
 

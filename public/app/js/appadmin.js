@@ -954,8 +954,8 @@
 
 
     angular.module('marksimosadmin').controller('adminMarksimosReportController',
-    ['$scope', '$http', '$notification', '$translate', 'Admin', 'AdminTable', 'chartReport', 'AdminChart', 'socket',
-    function($scope, $http, $notification,$translate, Admin,  AdminTable, chartReport, AdminChart, socket) {
+    ['$scope', '$http', '$notification', '$translate', 'Admin', 'AdminTable', 'chartReport', 'AdminChart', 'Socket',
+    function($scope, $http, $notification,$translate, Admin,  AdminTable, chartReport, AdminChart, Socket) {
 
         $scope.css = {
             showReportMenu : true,
@@ -966,6 +966,9 @@
         };
 
         $scope.data = {
+            currentUser: null,
+
+            seminarChatMessages : [],
 
             allDecisions: {
                 data           : [],
@@ -1210,10 +1213,13 @@
                 var that = this;
                 $scope.css.currentSeminarId = /.+\/adminhomereport\/(\d+).*/.exec(window.location.href)[1] || 0;
 
-                socket.setup($scope.css.currentSeminarId);
-                socket.socket.on('marksimosChatMessageSeminarUpdate', function(data){
-                    console.log(data);
+                Socket.setup($scope.css.currentSeminarId);
+
+                Socket.socket.on('marksimosChatMessageSeminarUpdate', function(data){
+                    $scope.data.seminarChatMessages.push(data);
                 });
+
+                that.getAdminInfo();
 
                 //加载 All Comapany Decisions
                 that.loadingAllDecisions();
@@ -1259,6 +1265,23 @@
                 });
             },
             runOnce: function() {
+
+                /********************  Chat Messages ********************/
+
+
+                $scope.sendSeminarMessage = function(messageInput) {
+                    Admin.sendSeminarChatMessage(messageInput, $scope.css.currentSeminarId).success(function(data, status, headers, config) {
+                        //$notification.success('Save success', 'Send Message Success');
+
+                    }).error(function(data, status, headers, config) {
+                        console.log(data);
+                        $notification.error('Failed', data.message);
+                    });
+
+                };
+
+
+
                 /********************  Table A1 Company Status  *******************/
                 $scope.switchTableReportA1Company = function(company) {
                     $scope.data.tableA1CompanyStatus.currentCompany = company;
@@ -1642,6 +1665,12 @@
                 };
 
 
+            },
+
+            getAdminInfo : function(){
+                Admin.userInfo().success(function(data, status, headers, config) {
+                    $scope.data.currentUser = data;
+                });
             },
 
 
