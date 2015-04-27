@@ -49,16 +49,37 @@ exports.updateGlossary = function(req, res, next){
 };
 
 
+
+
+
 exports.searchGlossary = function(req, res, next){
 
-    var keywordFilter = req.query.keywords || '';
+    var keywordSearch = req.query.keyword || '';
+    var type = req.query.type || 'all';
 
-    glossaryModel.find({}).sort({updatedAt:-1}).execQ().then(function(results){
+    var query = {};
+
+    if (type !== 'all') {
+        query.$and = [
+            { type: type }
+        ];
+    }
+
+    if (keywordSearch) {
+        var strRegex = ".*[" + keywordSearch.split('').join('][') + "].*";
+        var regex = { $regex: strRegex , $options: 'i' }; // $options : 'i' Means case insensitivity to match upper and lower cases. 不区分大小写
+
+        query.$or = [
+            { 'name': regex },
+            { 'question': regex }
+        ];
+    }
+
+    glossaryModel.find(query).sort({updatedAt:-1}).execQ().then(function(results){
 
         if(results){
             return res.status(200).send(results);
         }
-
 
 
     }).fail(next).done();

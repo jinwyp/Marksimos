@@ -232,9 +232,9 @@
                 tags : []
             },
             glossaries : [],
-            searchGlossaries: {
+            searchGlossary: {
                 keyword: '',
-                activated: 'all'
+                type: 'all'
             },
 
             country: [
@@ -974,7 +974,17 @@
 
 
 
+        /********************  搜索 Glossary  ********************/
+        $scope.searchGlossary = function(form) {
+            if (form.$valid) {
+                Admin.getGlossaries($scope.data.searchGlossary).success(function(data, status, headers, config) {
+                    $scope.data.glossaries = data;
 
+                }).error(function(data, status, headers, config) {
+                    $notification.error('Failed', data.message);
+                });
+            }
+        };
         /********************  Create New Glossary  ********************/
         $scope.createNewGlossary = function(form) {
             if (form.$valid) {
