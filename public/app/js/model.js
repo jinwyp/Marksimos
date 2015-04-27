@@ -1326,6 +1326,10 @@
                 return $http.get(apiAdminPath + 'delphi_cgi');
             },
 
+            getTags : function(urlparams){
+                urlparams = angular.isUndefined(urlparams) ? {}  : urlparams ;
+                return $http.get(apiAdminPath + 'tags', {params : urlparams});
+            },
 
             getGlossaries : function(urlparams){
                 urlparams = angular.isUndefined(urlparams) ? {}  : urlparams ;

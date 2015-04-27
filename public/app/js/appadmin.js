@@ -974,6 +974,12 @@
 
 
 
+        /********************  搜索 Tags  ********************/
+        $scope.loadTag = function(query) {
+            console.log(query);
+            return Admin.getTags(query);
+        };
+
         /********************  搜索 Glossary  ********************/
         $scope.searchGlossary = function(form) {
             if (form.$valid) {
@@ -988,6 +994,7 @@
         /********************  Create New Glossary  ********************/
         $scope.createNewGlossary = function(form) {
             if (form.$valid) {
+                console.log($scope.data.newGlossary);
                 Admin.addGlossary($scope.data.newGlossary).success(function(data, status, headers, config) {
 
                     app.getGlossaryInit();

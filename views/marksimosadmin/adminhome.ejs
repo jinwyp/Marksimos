@@ -1038,12 +1038,12 @@
 
                                     <text-form-input type="text" name="newGlossaryQuestion" label="Question :" placeholder="Question" labelclass="col-sm-2" inputclass="col-sm-4" data="data.newGlossary.question" required="false" requirederrorinfo="Question is required"></text-form-input>
                                     <text-form-input type="textarea" name="newGlossaryAnswer" label="Answer :" placeholder="Answer" labelclass="col-sm-2" inputclass="col-sm-4" data="data.newGlossary.answer" required="false" requirederrorinfo="Answer is required"></text-form-input>
-                                    
+
                                     <div class="form-group has-feedback ">
                                         <label class="col-sm-2 control-label">Tags :</label>
                                         <div class=" col-sm-4">
-                                            <tags-input ng-model="data.newGlossary.tagList">
-                                                <auto-complete source="loadTags($query)"></auto-complete>
+                                            <tags-input ng-model="data.newGlossary.tagList" key-property="text">
+                                                <auto-complete source="loadTag($query)" display-property="text"></auto-complete>
                                             </tags-input>
                                         </div>
                                     </div>

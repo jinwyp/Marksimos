@@ -46,7 +46,7 @@ tagSchema.plugin(mongooseTimestamps);
  * Statics
  */
 
-tagSchema.statics.updateValidations = function(req){
+tagSchema.statics.addValidations = function(req){
 
     req.checkBody('name', 'Tag name should be 2-100 characters').notEmpty().len(2, 100);
     //req.checkBody('description', 'Campaign description should be 2-10000 characters').notEmpty().len(2, 10000);

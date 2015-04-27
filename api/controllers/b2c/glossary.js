@@ -16,27 +16,48 @@ exports.addGlossary = function(req, res, next){
         return res.status(400).send( {message: validationErrors} );
     }
 
-    if (Array.isArray(req.body.tags)) {
-        console.log('value is Array!');
-    }else{
+    if (!Array.isArray(req.body.tagList)) {
         return res.status(400).send( {message: 'Tag of Glossary is not array'} );
     }
 
+    var tagsCreate = [];
+    var tagsResult = [];
 
-    glossaryModel.createQ({
-        name : req.body.name || '',
-        description : req.body.description || '',
-        question : req.body.question || '',
-        answer : req.body.answer || '',
-        type : req.body.type
+    req.body.tagList.forEach(function( tag ){
+        if(tag.text !== ""){
+            tagsCreate.push({
+                name : tag.text
+            });
+        }
+    });
 
-    }).then(function(resultGlossary){
-        if(!resultGlossary){
-            throw new Error( "Cancel promise chains. save glossary to db failed.");
+
+    tagModel.update({}, tagsCreate, {upsert: true}, function (err) {
+        if (err) res.status(400).send( {message: 'Tag create error'} );
+
+        for (var i=1; i<arguments.length; ++i) {
+            tagsResult.push(arguments[i]._id);
         }
 
-        return res.status(200).send(resultGlossary);
-    }).fail(next).done();
+        console.log(tagsResult);
+
+        glossaryModel.createQ({
+            name : req.body.name || '',
+            description : req.body.description || '',
+            question : req.body.question || '',
+            answer : req.body.answer || '',
+            type : req.body.type
+
+        }).then(function(resultGlossary){
+            if(!resultGlossary){
+                throw new Error( "Cancel promise chains. save glossary to db failed.");
+            }
+
+            return res.status(200).send(resultGlossary);
+        }).fail(next).done();
+
+    });
+
 
 
 };
