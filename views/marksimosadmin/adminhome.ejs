@@ -951,25 +951,25 @@
 
                             <form class="form-horizontal" role="form" name="searchGlossaryForm">
                                 <div class="box-body">
-                                    <div class="form-group" ng-class="{'has-success':searchGlossaryForm.campaignKeyword.$dirty&&searchGlossaryForm.campaignKeyword.$valid, 'has-error':searchGlossaryForm.campaignKeyword.$dirty&&searchGlossaryForm.campaignKeyword.$invalid}">
+                                    <div class="form-group" ng-class="{'has-success':searchGlossaryForm.glossaryKeyword.$dirty&&searchGlossaryForm.glossaryKeyword.$valid, 'has-error':searchGlossaryForm.glossaryKeyword.$dirty&&searchGlossaryForm.glossaryKeyword.$invalid}">
                                         <label class="col-sm-2 control-label" for="searchGlossaryKeyword">Keywords :</label>
                                         <div class="col-sm-4">
-                                            <input type="text" class="form-control" id="searchGlossaryKeyword" name="campaignKeyword" ng-model="data.searchGlossary.keyword" placeholder="Name / Description / Location" ng-required="false" ng-minlength="2" ng-maxlength="100" ng-model-options="{ debounce: 500 }" />
+                                            <input type="text" class="form-control" id="searchGlossaryKeyword" name="glossaryKeyword" ng-model="data.searchGlossary.keyword" placeholder="Glossary Name / Question Name" ng-required="false" ng-minlength="2" ng-maxlength="100" />
                                         </div>
-                                        <label class="control-label" ng-show="searchGlossaryForm.campaignKeyword.$invalid"><i class="fa fa-times-circle-o"></i>Search keyword length should be between 2 and 100</label>
+                                        <label class="control-label" ng-show="searchGlossaryForm.glossaryKeyword.$invalid"><i class="fa fa-times-circle-o"></i>Search keyword length should be between 2 and 100</label>
                                     </div>
 
                                     <div class="form-group">
-                                        <label for="inputGlossaryStatus" class="col-sm-2 control-label">Status</label>
+                                        <label for="inputGlossaryStatus" class="col-sm-2 control-label">Type</label>
                                         <div class="col-sm-4">
                                             <label class="radio-inline">
-                                                <input ng-change="searchGlossary(searchGlossaryForm)" type="radio" name="inputGlossaryStatus" ng-model="data.searchGlossary.activated" value="all">All
+                                                <input type="radio" name="inputGlossaryStatus" ng-model="data.searchGlossary.type" value="all">All
                                             </label>
                                             <label class="radio-inline">
-                                                <input ng-change="searchGlossary(searchGlossaryForm)" type="radio" name="inputGlossaryStatus" ng-model="data.searchGlossary.activated" value="1">Active
+                                                <input type="radio" name="inputGlossaryStatus" ng-model="data.searchGlossary.type" value="10">Glossary
                                             </label>
                                             <label class="radio-inline">
-                                                <input ng-change="searchGlossary(searchGlossaryForm)" type="radio" name="inputGlossaryStatus" ng-model="data.searchGlossary.activated" value="0">Inactive
+                                                <input type="radio" name="inputGlossaryStatus" ng-model="data.searchGlossary.type" value="20">FAQ
                                             </label>
                                         </div>
                                     </div>
@@ -1006,10 +1006,10 @@
                                             <button type="button" class="btn btn-danger" ng-click="showEditCampaignMenu(glossary)" >Modify</button>
                                         </td>
                                         <td><span ng-show="glossary.type==10">Glossary</span><span ng-show="glossary.type==20">FAQ</span></td>
-                                        <td data-highlight-key="data.searchCampaign.keyword">{{glossary.name}}</td>
-                                        <td data-highlight-key="data.searchCampaign.keyword">{{glossary.description}}</td>
-                                        <td data-highlight-key="data.searchCampaign.keyword">{{glossary.question}}</td>
-                                        <td data-highlight-key="data.searchCampaign.keyword">{{glossary.answer}}</td>
+                                        <td data-highlight-key="data.searchGlossary.keyword">{{glossary.name}}</td>
+                                        <td >{{glossary.description}}</td>
+                                        <td data-highlight-key="data.searchGlossary.keyword">{{glossary.question}}</td>
+                                        <td >{{glossary.answer}}</td>
                                     </tr>
                                     </tbody>
                                 </table>
