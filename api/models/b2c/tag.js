@@ -22,8 +22,7 @@ var mongooseTimestamps = require('mongoose-timestamp');
 var tagSchema = new Schema({
 
     name: { type: String },
-    description: { type: String },
-    category: { type: Number, default: 10  } // 10 Glossary  20 FAQ questions
+    description: { type: String }
 
 });
 
@@ -49,9 +48,7 @@ tagSchema.plugin(mongooseTimestamps);
 
 tagSchema.statics.updateValidations = function(req){
 
-    //req.sanitize('activated').toBoolean();
-
-    //req.checkBody('name', 'Campaign name should be 2-50 characters').notEmpty().len(2, 50);
+    req.checkBody('name', 'Tag name should be 2-100 characters').notEmpty().len(2, 100);
     //req.checkBody('description', 'Campaign description should be 2-10000 characters').notEmpty().len(2, 10000);
 
     //req.checkBody('activated', 'Campaign activated should Boolean true or false').notEmpty();

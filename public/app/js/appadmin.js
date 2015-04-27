@@ -224,7 +224,17 @@
                 description : '',
                 question : '',
                 answer : '',
+                type : '',
+                typeRadioOptions : [
+                    {value : 10, text : 'Glossary'},
+                    {value : 20, text : 'FAQ'}
+                ],
                 tags : []
+            },
+            glossaries : [],
+            searchGlossaries: {
+                keyword: '',
+                activated: 'all'
             },
 
             country: [
@@ -421,6 +431,7 @@
                         app.getSeminarInit();
                         app.getCgiStatus();
                         app.getCampaignInit();
+                        app.getGlossaryInit();
                         $scope.css.menuTabShow = [false, true, false, false, true, true, true, true];
                     }
 
@@ -474,6 +485,15 @@
             getCampaignInit: function() {
                 Admin.getCampaigns().success(function(data, status, headers, config) {
                     $scope.data.campaigns = data;
+
+                }).error(function(data, status, headers, config) {
+                    console.log(data);
+                });
+            },
+
+            getGlossaryInit: function() {
+                Admin.getGlossaries().success(function(data, status, headers, config) {
+                    $scope.data.glossaries = data;
 
                 }).error(function(data, status, headers, config) {
                     console.log(data);
@@ -950,6 +970,29 @@
             $scope.css.currentRunSeminarId = 0;
             $scope.css.showConfirm = false;
         };
+
+
+
+
+
+        /********************  Create New Glossary  ********************/
+        $scope.createNewGlossary = function(form) {
+            if (form.$valid) {
+                Admin.addGlossary($scope.data.newGlossary).success(function(data, status, headers, config) {
+
+                    app.getGlossaryInit();
+                    //$scope.css.leftmenu = 71;
+
+                    $notification.success('Save success', 'Create Glossary success');
+
+                }).error(function(data, status, headers, config) {
+                    console.log(data);
+                    $notification.error('Failed', data.message);
+                });
+            }
+        };
+
+
 
 
     }]);

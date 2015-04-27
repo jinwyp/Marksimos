@@ -1327,6 +1327,18 @@
             },
 
 
+            getGlossaries : function(urlparams){
+                urlparams = angular.isUndefined(urlparams) ? {}  : urlparams ;
+                return $http.get(apiAdminPath + 'glossaries', {params : urlparams});
+            },
+            addGlossary : function(postdata){
+                return $http.post(apiAdminPath + 'glossaries', postdata);
+            },
+            updateGlossary : function(postdata){
+                return $http.put(apiAdminPath + 'glossaries', postdata);
+            },
+
+
             getAllCompanyDecisionsOfAllPeriods : function(seminarId){
                 return $http.get(apiAdminPath + 'seminar/' + seminarId + '/decisions') ;
             },

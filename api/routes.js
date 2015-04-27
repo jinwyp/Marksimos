@@ -364,7 +364,9 @@ apiRouter.post('/marksimos/api/admin/seminar/chat/seminar', auth.authLoginToken(
 
 
 //Facilitator manager Glossary
-apiRouter.post('/marksimos/api/admin/glossary', auth.authLoginToken(), auth.authRole(marksimosRight.glossarySingleCUD), glossaryController.addGlossary);
+apiRouter.get('/marksimos/api/admin/glossaries', auth.authLoginToken(), auth.authRole(marksimosRight.glossaryInfoListGet), glossaryController.searchGlossary);
+apiRouter.post('/marksimos/api/admin/glossaries', auth.authLoginToken(), auth.authRole(marksimosRight.glossarySingleCUD), glossaryController.addGlossary);
+apiRouter.put('/marksimos/api/admin/glossaries', auth.authLoginToken(), auth.authRole(marksimosRight.glossarySingleCUD), glossaryController.updateGlossary);
 
 
 
