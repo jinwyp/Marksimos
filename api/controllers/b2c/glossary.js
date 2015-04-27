@@ -67,7 +67,6 @@ exports.searchGlossary = function(req, res, next){
 
     if (keywordSearch) {
         var strRegex = ".*[" + keywordSearch.split('').join('][') + "].*";
-        console.log(strRegex);
         var regex = { $regex: strRegex , $options: 'i' }; // $options : 'i' Means case insensitivity to match upper and lower cases. 不区分大小写
 
         query.$or = [
