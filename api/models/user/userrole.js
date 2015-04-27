@@ -164,7 +164,9 @@ var roles = [
 
             appResource.marksimos.seminarListOfStudentGet,
             appResource.marksimos.seminarSingleDecisionGet,
-            appResource.marksimos.seminarSingleDecisionCUD
+            appResource.marksimos.seminarSingleDecisionCUD,
+
+            appResource.marksimos.glossaryInfoListGet
 
         ]
     },
