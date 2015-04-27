@@ -7,7 +7,7 @@
     'use strict';
 
     /********************  Create New Module For Controllers ********************/
-    angular.module('marksimosadmin', ['pascalprecht.translate', 'angularCharts', 'nvd3ChartDirectives', 'notifications', 'angularFileUpload',
+    angular.module('marksimosadmin', ['pascalprecht.translate', 'angularCharts', 'nvd3ChartDirectives', 'notifications', 'angularFileUpload', 'ngTagsInput',
         'marksimos.websitecomponent', 'marksimos.commoncomponent', 'marksimos.filter', 'marksimos.socketmodel']);
 
 
@@ -229,7 +229,7 @@
                     {value : 10, text : 'Glossary'},
                     {value : 20, text : 'FAQ'}
                 ],
-                tags : []
+                tagList : []
             },
             glossaries : [],
             searchGlossary: {
