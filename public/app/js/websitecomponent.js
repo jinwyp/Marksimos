@@ -26,9 +26,9 @@
     angular.module('marksimos.websitecomponent').directive('headerAdmin', ['$window', '$translate', 'Student', adminHeaderComponent]);
     angular.module('marksimos.websitecomponent').directive('menuAdmin', [adminMenuComponent]);
 
-    angular.module('marksimos.websitecomponent').directive('chatWindow', chatWindowComponent);
+    angular.module('marksimos.websitecomponent').directive('chatWindow', ['$q', chatWindowComponent]);
 
-    function chatWindowComponent() {
+    function chatWindowComponent($q) {
         return {
             restrict: 'E',
             scope: {
@@ -36,7 +36,8 @@
                 seminarMessages: '=',
                 companyMessages: '=',
                 sendSeminarMessage: '&',
-                sendCompanyMessage: '&'
+                sendCompanyMessage: '&',
+                hideChatHeader: '='
             },
             templateUrl: 'chatwindow.html',
             link: function(scope, elem, attrs, ctrl) {
@@ -46,7 +47,8 @@
                 };
                 scope.css = {
                     currentTab: 'seminar',
-                    showChat: false
+                    showChat: false,
+                    newMessage: false
                 };
                 var chatWindow = elem[0];
                 chatWindow.addEventListener('keydown', function(event) {
@@ -55,11 +57,13 @@
                     if (event.keyCode != 13 || event.target.tagName.toUpperCase() != 'TEXTAREA' || (!scope.data.seminarInput && !scope.data.companyInput) ) return;
 
                     if (event.target.matches('.seminar')) {
-                        scope.sendSeminarMessage({messageInput: scope.data.seminarInput});
-                        scope.data.seminarInput = '';
+                        $q.when(scope.sendSeminarMessage({messageInput: scope.data.seminarInput})).then(function() {
+                            scope.data.seminarInput = '';
+                        });
                     } else {
-                        scope.sendCompanyMessage({messageInput: scope.data.companyInput});
-                        scope.data.companyInput = '';
+                        $q.when(scope.sendCompanyMessage({messageInput: scope.data.companyInput})).then(function() {
+                            scope.data.companyInput = '';
+                        });
                     }
                 });
 
@@ -67,12 +71,21 @@
                 scope.$watchCollection('companyMessages', scrollToBottom);
 
                 function scrollToBottom() {
+                    if (scope.seminarMessages.length || scope.companyMessages.length) {
+                        scope.css.newMessage = true;
+                    }
+
                     scope.$$postDigest(function() {
                         if (!scope.css.showChat) return;
                         var messagesWindow = chatWindow.querySelector('.messages');
                         messagesWindow.scrollTop = messagesWindow.scrollHeight;
                     });
                 }
+
+                scope.clickToggleWindow = function() {
+                    scope.css.showChat = !scope.css.showChat;
+                    scope.css.newMessage = false;
+                };
             }
         };
     }

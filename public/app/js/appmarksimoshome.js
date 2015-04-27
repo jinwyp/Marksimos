@@ -7,7 +7,7 @@
 
 
     /********************  Create New Module For Controllers ********************/
-    angular.module('marksimos', ['pascalprecht.translate', 'angularCharts', 'nvd3ChartDirectives', 'cgNotify', 'marksimos.config', 'marksimos.commoncomponent', 'marksimos.websitecomponent', 'marksimos.model', 'marksimos.socketmodel', 'marksimos.filter', 'marksimos.translation']);
+    angular.module('marksimos', ['pascalprecht.translate', 'angularCharts', 'nvd3ChartDirectives', 'cgNotify', 'marksimos.config', 'marksimos.commoncomponent', 'marksimos.websitecomponent', 'marksimos.model', 'marksimos.socketmodel', 'marksimos.filter', 'marksimos.translation', 'ngAnimate']);
 
 
 

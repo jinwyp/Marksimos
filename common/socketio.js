@@ -61,6 +61,7 @@ exports.init = function (socketio) {
 
             if(err || user===null){
                 logger.error(err);
+                socket.disconnect('unauthorized');
             }else {
                 if (userRole.roleList.student.id == user.role){
                     seminarModel.findSeminarByUserId(user._id).then(function (seminarResult) {

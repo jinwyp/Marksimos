@@ -13,7 +13,7 @@
 
     <user-header showmenu="true" showlogout="true"  current-menu="css.menu" current-round="data.currentSeminar.currentPeriod" seminar-finished="css.seminarFinished"></user-header>
 
-    <chat-window send-seminar-message="sendSeminarMessage(messageInput)" send-company-message="sendCompanyMessage(messageInput)" username="data.currentStudent.username" seminar-messages = "data.seminarMessages" company-messages = "data.companyMessages" ></chat-window>
+    <chat-window send-seminar-message="sendSeminarMessage(messageInput)" send-company-message="sendCompanyMessage(messageInput)" username="data.currentStudent.username" seminar-messages="data.seminarMessages" company-messages="data.companyMessages"></chat-window>
 
 
 
@@ -27,7 +27,7 @@
             </div>
             <div class="row">
                 <div class="col-md-5">
-                    <img src="/app/css/images/avator.png">
+                    <img class="user_avatar" ng-src="{{'/' + (data.currentStudent.avatar.path || 'app/css/images/profile_avatar_2.png')}}">
                 </div>
                 <div class="col-md-7">
                     <h5>{{data.currentStudent.username}}</h5>

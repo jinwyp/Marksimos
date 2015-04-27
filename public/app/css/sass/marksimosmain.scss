@@ -7,8 +7,10 @@
 @import "icon/*.png";
 
 @import "marksimos/utils/mixins";
+@import "marksimos/base/animation";
 
 /*********************************************************/
+
 $color_chat_border: #DDD;
 $color_chat_active: #2E4E9A;
 $color_chat_me: #1289fe;
@@ -25,7 +27,6 @@ $color_chat_me: #1289fe;
     bottom: 0;
     &.active {
         right: 0;
-
     }
     .chat-icon-wrapper {
         background-color: white;
@@ -38,6 +39,10 @@ $color_chat_me: #1289fe;
         border: 1px solid $color_chat_border;
         .chat-icon {
             @include my_icon-sprite(iconmenuchat);
+        }
+        .chat-icon.active {
+            background-image: url('/app/css/images/icon/iconmenuchatactive.gif');
+            background-position: 0;
         }
         > div:not(.hide-btn) {
             padding:8px 17px;
@@ -67,6 +72,9 @@ $color_chat_me: #1289fe;
         text-align: center;
         margin: 0;
         padding-top: 12px;
+        &.no-chat-header {
+            padding-bottom: 12px;
+        }
 /*        border-top: 5px solid $color_chat_active;*/
     }
     .chat-header {
@@ -122,6 +130,9 @@ $color_chat_me: #1289fe;
             padding: 14px;
             height: 396px;
             overflow: auto;
+            &.no-chat-header {
+                height: 444px;
+            }
         }
         .message{
             clear:both;
@@ -885,6 +896,12 @@ body{
             padding-left: 3px;
             padding-right: 3px;
         }
+    }
+    .user_avatar {
+        width: 74px;
+        height: 74px;
+        @include border-radius(50%);
+        margin-top: 11px;
     }
     
     .user_home_divider{

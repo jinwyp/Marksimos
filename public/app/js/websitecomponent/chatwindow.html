@@ -1,8 +1,8 @@
-<div class="chat-container" ng-class="{active: css.showChat}" ng-init="active=false">
-    <div ng-if="css.showChat">
-        <div ng-click="css.showChat=!css.showChat" class="hide-btn"><div class="icon-right"></div><div class="icon-right"></div></div>
-        <h1 class="header">Chat</h1><!--todo: remove?-->
-        <div class="chat-header">
+<div class="chat-container anim-hide-left" ng-class="{active: css.showChat}" ng-init="active=false">
+    <div>
+        <div ng-click="clickToggleWindow()" class="hide-btn"><div class="icon-right"></div><div class="icon-right"></div></div>
+        <h1 class="header" ng-class="{'no-chat-header': hideChatHeader}">Chat</h1><!--todo: remove?-->
+        <div class="chat-header" ng-if="!hideChatHeader">
             <div class="text-center">
                 <button ng-click="css.currentTab = 'seminar'" ng-class="{active: css.currentTab == 'seminar'}" class="btn btn-default seminar">Mentor</button>
                 <button ng-click="css.currentTab = 'company'" ng-class="{active: css.currentTab == 'company'}" class="btn btn-default company">Team</button>
@@ -14,14 +14,14 @@
 
         <div class="chat-body">
             <div class="seminar" ng-if="css.currentTab == 'seminar'">
-                <div class="messages">
+                <div class="messages" ng-class="{'no-chat-header': hideChatHeader}">
 
                     <div ng-repeat="message in seminarMessages" class="message" ng-class="{me: message.user.username == me, them: message.user.username != me}">
                         <!--me-->
                         <p ng-if="message.user.username == me" class="text">{{message.message}}</p>
 
                         <!--them-->
-                        <img ng-if="message.user.username != me" class="avatar" src=""/>
+                        <img ng-if="message.user.username != me" class="avatar" ng-src="{{'/' + (message.user.avatar.path || 'app/css/images/icon/iconchatavatar.png')}}"/>
                         <div ng-if="message.user.username != me">
                             <div class="name">{{message.user.username}}</div>
                             <p class="text">{{message.message}}</p>
@@ -44,7 +44,7 @@
                         <p ng-if="message.user.username == me" class="text">{{message.message}}</p>
 
                         <!--them-->
-                        <img ng-if="message.user.username != me" class="avatar" src=""/>
+                        <img ng-if="message.user.username != me" class="avatar" ng-src="{{'/' + (message.user.avatar.path || '/app/css/images/icon/iconchatavatar.png')}}"/>
                         <div ng-if="message.user.username != me">
                             <div class="name">{{message.user.username}}</div>
                             <p class="text">
@@ -62,8 +62,8 @@
             </div>
         </div>
     </div>
-    <div class="chat-icon-wrapper" ng-if="!css.showChat" ng-click="css.showChat=!css.showChat">
+    <div class="chat-icon-wrapper" ng-if="!css.showChat" ng-click="clickToggleWindow()">
         <div class="hide-btn"><div class="icon-left"></div><div class="icon-left"></div></div>
-        <div><div class="chat-icon"></div></div>
+        <div><div class="chat-icon" ng-class="{active: css.newMessage}"></div></div>
     </div>
 </div>
