@@ -80,7 +80,6 @@ marksimos.sln
 marksimos.v12.suo
 
 Scripts/*
-commentCcapHook.js
 marksimos.njsproj
 .ntvs_analysis.dat
 obj/Debug/marksimos.njsproj.FileListAbsolute.txt
