@@ -4,7 +4,7 @@
         line-height: 2;
     }
     background: $color_background_gray_darker;
-    #bridge-header { @include bridge-header("/app/css/images/b2c_about_banner.jpg")}
+    #bridge-header { @include bridge-header("/app/css/images/b2c_about/b2c_about_banner.jpg")}
     #bridge-description {
         background: #ffffff;
         height: 402px;
@@ -60,7 +60,7 @@
 
     #vision {
         height: 693px;
-        background-image: url("/app/css/images/b2c_about_banner2.jpg");
+        background-image: url("/app/css/images/b2c_about/b2c_about_banner2.jpg");
         padding-left: 100px;
         padding-top: 540px;
         color: white;

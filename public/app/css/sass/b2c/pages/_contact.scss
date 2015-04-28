@@ -2,7 +2,7 @@
     background: $color_background_gray_darker;
     color: $color_text;
     #bridge-header {
-        @include bridge-header("/app/css/images/b2c_contact_banner.jpg")
+        @include bridge-header("/app/css/images/b2c_about/b2c_contact_banner.jpg")
     }
     .section1 {
         background-color: white;

@@ -7,7 +7,7 @@
     background: $color_background_gray_darker;
     color: $color_text;
     #bridge-header {
-        @include bridge-header("/app/css/images/b2c_activity_banner.jpg")
+        @include bridge-header("/app/css/images/b2c_about/b2c_activity_banner.jpg")
     }
     .section1 {
         padding: 84px 82px 0 82px;
@@ -40,7 +40,7 @@
     }
     .section2 {
         height: 360px;
-        background-image: url("/app/css/images/b2c_activity_bg.jpg");
+        background-image: url("/app/css/images/b2c_about/b2c_activity_bg.jpg");
         position: relative;
         img {
             width: 403px;
