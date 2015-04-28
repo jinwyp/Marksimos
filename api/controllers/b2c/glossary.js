@@ -21,44 +21,58 @@ exports.addGlossary = function(req, res, next){
     }
 
     var tagsCreate = [];
-    var tagsResult = [];
+    var tagsCreateTextArray = [];
 
     req.body.tagList.forEach(function( tag ){
         if(tag.text !== ""){
             tagsCreate.push({
                 name : tag.text
             });
+
+            tagsCreateTextArray.push(tag.text);
         }
     });
 
 
-    tagModel.update({}, tagsCreate, {upsert: true}, function (err) {
-        if (err) res.status(400).send( {message: 'Tag create error'} );
 
-        for (var i=1; i<arguments.length; ++i) {
-            tagsResult.push(arguments[i]._id);
+    tagModel.findQ({name : { $in:tagsCreateTextArray}})
+    .then(function(tagResult) {
+        if (tagResult.length > 0) {
+
+            tagResult.forEach(function (tagResult) {
+
+                for (var i = tagsCreate.length - 1; i >= 0; i--) {
+                    if (tagResult.name === tagsCreate[i].name) {
+                        tagsCreate.splice(i, 1);
+                    }
+                }
+            });
+
         }
+        console.log(tagsCreate);
 
-        console.log(tagsResult);
+        return tagModel.createQ(tagsCreate);
+    })
+    .then(function(tags){
+        console.log(tags);
 
-        glossaryModel.createQ({
+        return glossaryModel.createQ({
             name : req.body.name || '',
             description : req.body.description || '',
             question : req.body.question || '',
             answer : req.body.answer || '',
             type : req.body.type
 
-        }).then(function(resultGlossary){
-            if(!resultGlossary){
-                throw new Error( "Cancel promise chains. save glossary to db failed.");
-            }
+        });
+    })
+    .then(function(resultGlossary){
+        if(!resultGlossary){
+            throw new Error( "Cancel promise chains. save glossary to db failed.");
+        }
 
-            return res.status(200).send(resultGlossary);
-        }).fail(next).done();
+        return res.status(200).send(resultGlossary);
 
-    });
-
-
+    }).fail(next).done();
 
 };
 
