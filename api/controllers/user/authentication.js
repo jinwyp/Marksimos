@@ -777,7 +777,7 @@ exports.forgotPasswordStep2 = function(req, res, next){
 };
 
 
-
+// comment-captcha-start
 var ccap = require('ccap')();//Instantiated ccap class
 exports.generateCaptcha = function(req, res, next) {
     var ary = ccap.get();
@@ -802,6 +802,7 @@ exports.generateCaptcha = function(req, res, next) {
     .fail(next)
     .done();
 };
+// comment-captcha-end
 
 
 exports.generatePhoneVerifyCode = function(req, res, next) {

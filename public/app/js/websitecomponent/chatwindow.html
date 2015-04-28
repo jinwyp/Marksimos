@@ -1,63 +1,131 @@
 <div class="chat-container anim-hide-left" ng-class="{active: css.showChat}" ng-init="active=false">
     <div>
         <div ng-click="clickToggleWindow()" class="hide-btn"><div class="icon-right"></div><div class="icon-right"></div></div>
-        <h1 class="header" ng-class="{'no-chat-header': hideChatHeader}">Chat</h1><!--todo: remove?-->
-        <div class="chat-header" ng-if="!hideChatHeader">
-            <div class="text-center">
-                <button ng-click="css.currentTab = 'seminar'" ng-class="{active: css.currentTab == 'seminar'}" class="btn btn-default seminar">Mentor</button>
-                <button ng-click="css.currentTab = 'company'" ng-class="{active: css.currentTab == 'company'}" class="btn btn-default company">Team</button>
+
+        <ul class="header" ng-class="{'no-chat-header': hideChatHeader}">
+            <li ng-click="css.currentTab='dictionary'" ng-class="{active: css.currentTab == 'dictionary'}">Dictionary</li>
+            <li ng-click="css.currentTab='chat'" ng-class="{active: css.currentTab == 'chat'}" class="active">Chat</li>
+        </ul>
+
+        <div class="dictionary" ng-if="css.currentTab == 'dictionary'">
+            <div class="dictionary-body">
+                <div class="results">
+                    <div class="result">
+                        <div class="question row">
+                            <p class="col-xs-10">？？？？？fffffffffffffffffffffffffffffffffffffffff</p>
+                            <div class="col-xs-2 text-right">
+                                <button class="glyphicon glyphicon-plus extend btn btn-default"></button>
+                                <button class="collapse glyphicon glyphicon-minus btn btn-default"></button>
+                            </div>
+                        </div>
+                        <div class="answer">
+                            你问我我问谁？fffffffffffffffffffffffffffffffffffffffff
+                        </div>
+                    </div>
+                    <div class="result">
+                        <div class="question row">
+                            <p class="col-xs-10">？？？？？fffffffffffffffffffffffffffffffffffffffff</p>
+                            <div class="col-xs-2 text-right">
+                                <button class="glyphicon glyphicon-plus extend btn btn-default"></button>
+                                <button class="collapse glyphicon glyphicon-minus btn btn-default"></button>
+                            </div>
+                        </div>
+                        <div class="answer">
+                            你问我我问谁？fffffffffffffffffffffffffffffffffffffffff
+                        </div>
+                    </div>
+                    <div class="result">
+                        <div class="question row">
+                            <p class="col-xs-10">？？？？？fffffffffffffffffffffffffffffffffffffffff</p>
+                            <div class="col-xs-2 text-right">
+                                <button class="glyphicon glyphicon-plus extend btn btn-default"></button>
+                                <button class="collapse glyphicon glyphicon-minus btn btn-default"></button>
+                            </div>
+                        </div>
+                        <div class="answer">
+                            你问我我问谁？fffffffffffffffffffffffffffffffffffffffff
+                        </div>
+                    </div>
+                    <div class="result">
+                        <div class="question row">
+                            <p class="col-xs-10">？？？？？fffffffffffffffffffffffffffffffffffffffff</p>
+                            <div class="col-xs-2 text-right">
+                                <button class="glyphicon glyphicon-plus extend btn btn-default"></button>
+                                <button class="collapse glyphicon glyphicon-minus btn btn-default"></button>
+                            </div>
+                        </div>
+                        <div class="answer">
+                            你问我我问谁？fffffffffffffffffffffffffffffffffffffffff
+                        </div>
+                    </div>
+                </div>
+
+                <div class="message-send">
+                    <form>
+                        <textarea class="dictionary" rows="5" ng-model="data.dictionaryInput" placeholder="Type in here :) Return to send"></textarea>
+                    </form>
+                </div>
             </div>
-            <svg class="indicator" ng-class="{left: css.currentTab == 'seminar'}" version="1.1" xmlns="http://www.w3.org/2000/svg" width="26" height="10">
-                <polyline points="0 10, 13 0, 26 10" stroke="#DDD" stroke-width="1" fill="#FFF"/>
-            </svg>
         </div>
 
-        <div class="chat-body">
-            <div class="seminar" ng-if="css.currentTab == 'seminar'">
-                <div class="messages" ng-class="{'no-chat-header': hideChatHeader}">
-
-                    <div ng-repeat="message in seminarMessages" class="message" ng-class="{me: message.user.username == me, them: message.user.username != me}">
-                        <!--me-->
-                        <p ng-if="message.user.username == me" class="text">{{message.message}}</p>
-
-                        <!--them-->
-                        <img ng-if="message.user.username != me" class="avatar" ng-src="{{'/' + (message.user.avatar.path || 'app/css/images/icon/iconchatavatar.png')}}"/>
-                        <div ng-if="message.user.username != me">
-                            <div class="name">{{message.user.username}}</div>
-                            <p class="text">{{message.message}}</p>
-                        </div>
-                    </div>
-
+        <div class="chat" ng-if="css.currentTab == 'chat'">
+            <div class="chat-header" ng-if="!hideChatHeader">
+                <div class="text-center">
+                    <button ng-click="css.currentChatTab = 'seminar'" ng-class="{active: css.currentChatTab == 'seminar'}" class="btn btn-default seminar">Mentor</button>
+                    <button ng-click="css.currentChatTab = 'company'" ng-class="{active: css.currentChatTab == 'company'}" class="btn btn-default company">Team</button>
                 </div>
-                <div class="message-send">
-                    <form>
-                        <textarea class="seminar" rows="5" ng-model="data.seminarInput" placeholder="Type in here :) Return to send"></textarea>
-                    </form>
-                </div>
+                <svg class="indicator" ng-class="{left: css.currentChatTab == 'seminar'}" version="1.1" xmlns="http://www.w3.org/2000/svg" width="26" height="10">
+                    <polyline points="0 10, 13 0, 26 10" stroke="#DDD" stroke-width="1" fill="#FFF"/>
+                </svg>
             </div>
 
-            <div class="company" ng-if="css.currentTab == 'company'">
-                <div class="messages">
+            <div class="chat-body">
+                <div class="seminar" ng-if="css.currentChatTab == 'seminar'">
+                    <div class="messages" ng-class="{'no-chat-header': hideChatHeader}">
 
-                    <div ng-repeat="message in companyMessages" class="message" ng-class="{me: message.user.username == me, them: message.user.username != me}">
-                        <!--me-->
-                        <p ng-if="message.user.username == me" class="text">{{message.message}}</p>
+                        <div ng-repeat="message in seminarMessages" class="message" ng-class="{me: message.user.username == me, them: message.user.username != me}">
+                            <!--me-->
+                            <p ng-if="message.user.username == me" class="text">{{message.message}}</p>
 
-                        <!--them-->
-                        <img ng-if="message.user.username != me" class="avatar" ng-src="{{'/' + (message.user.avatar.path || '/app/css/images/icon/iconchatavatar.png')}}"/>
-                        <div ng-if="message.user.username != me">
-                            <div class="name">{{message.user.username}}</div>
-                            <p class="text">
-                                {{message.message}}
-                            </p>
+                            <!--them-->
+                            <img ng-if="message.user.username != me" class="avatar" ng-src="{{'/' + (message.user.avatar.path || 'app/css/images/icon/iconchatavatar.png')}}"/>
+                            <div ng-if="message.user.username != me">
+                                <div class="name">{{message.user.username}}</div>
+                                <p class="text">{{message.message}}</p>
+                            </div>
                         </div>
-                    </div>
 
+                    </div>
+                    <div class="message-send">
+                        <form>
+                            <textarea class="seminar" rows="5" ng-model="data.seminarInput" placeholder="Type in here :) Return to send"></textarea>
+                        </form>
+                    </div>
                 </div>
-                <div class="message-send">
-                    <form>
-                        <textarea class="company" rows="5" ng-model="data.companyInput" placeholder="Type in here :) Return to send"></textarea>
-                    </form>
+
+                <div class="company" ng-if="css.currentChatTab == 'company'">
+                    <div class="messages">
+
+                        <div ng-repeat="message in companyMessages" class="message" ng-class="{me: message.user.username == me, them: message.user.username != me}">
+                            <!--me-->
+                            <p ng-if="message.user.username == me" class="text">{{message.message}}</p>
+
+                            <!--them-->
+                            <img ng-if="message.user.username != me" class="avatar" ng-src="{{'/' + (message.user.avatar.path || '/app/css/images/icon/iconchatavatar.png')}}"/>
+                            <div ng-if="message.user.username != me">
+                                <div class="name">{{message.user.username}}</div>
+                                <p class="text">
+                                    {{message.message}}
+                                </p>
+                            </div>
+                        </div>
+
+                    </div>
+                    <div class="message-send">
+                        <form>
+                            <textarea class="company" rows="5" ng-model="data.companyInput" placeholder="Type in here :) Return to send"></textarea>
+                        </form>
+                    </div>
                 </div>
             </div>
         </div>
