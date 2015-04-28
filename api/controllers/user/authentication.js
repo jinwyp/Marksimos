@@ -17,6 +17,10 @@ var util = require('util');
 var utility = require('../../../common/utility.js');
 var Q = require('q');
 
+var request = require('request');
+
+var config = require('../../../common/config.js');
+
 var expiresTime = 1000 * 60 * 60 * 24; // 1 days
 
 
@@ -418,15 +422,35 @@ exports.registerB2CStudent = function(req, res, next){
 
         //mailContent.html = mailContent.html1 + resultUser.username + mailContent.html2 + resultUser.email + mailContent.html3 + resultUser.emailActivateToken + mailContent.html4 + resultUser.email + mailContent.html5 + resultUser.emailActivateToken + mailContent.htmlend;
 
-        mailSender.sendMailQ(mailContent).then(function(resultSendEmail){
+        mailSender.sendMailQ(mailContent).then(function (resultSendEmail) {
             if (!resultSendEmail) {
                 throw new Error('Cancel promise chains. Because Send email of new user failed !');
-            }else{
+            } else {
                 logger.log(resultSendEmail);
             }
-        }).fail(function(err){
+        }).fail(function (err) {
             next(err);
         }).done();
+
+        //register nodeBB user
+        if (process.env.NODE_ENV === 'ken' || process.env.NODE_ENV === 'production')
+        {
+            request.post({
+                url    : config.bbsService + 'api/v1/users',
+                headers: {
+                    Authorization: 'Bearer ' + config.bbsToken
+                },
+                form   : {
+                    username: req.body.username,
+                    email   : req.body.email,
+                    password: req.body.password
+                }
+            }, function (err) {
+                if (err) {
+                    console.log('Reister new user for NodeBB failed!' + err);
+                }
+            })
+        }
 
         return res.status(200).send({message: 'Register new user success'});
 
@@ -754,7 +778,7 @@ exports.forgotPasswordStep2 = function(req, res, next){
 
 
 
-/*var ccap = require('ccap')();//Instantiated ccap class
+var ccap = require('ccap')();//Instantiated ccap class
 exports.generateCaptcha = function(req, res, next) {
     var ary = ccap.get();
     var txt = ary[0];
@@ -777,9 +801,7 @@ exports.generateCaptcha = function(req, res, next) {
     })
     .fail(next)
     .done();
-};*/
-
-
+};
 
 
 exports.generatePhoneVerifyCode = function(req, res, next) {
