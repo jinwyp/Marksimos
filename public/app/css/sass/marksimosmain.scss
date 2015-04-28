@@ -35,14 +35,20 @@ $color_chat_me: #1289fe;
         top: 0;
         left: -51px;
         width: 51px;
-        height: 52px;
+        //height: 52px;
         border: 1px solid $color_chat_border;
+        .icon:not(:last-child) {
+            margin-bottom: 10px;
+        }
         .chat-icon {
             @include my_icon-sprite(iconmenuchat);
         }
         .chat-icon.active {
             background-image: url('/app/css/images/icon/iconmenuchatactive.gif');
             background-position: 0;
+        }
+        .dictionary-icon {
+            @include my_icon-sprite(iconmenubook);
         }
         > div:not(.hide-btn) {
             padding:8px 17px;
@@ -163,7 +169,7 @@ $color_chat_me: #1289fe;
                         padding-left: 1px;
                     }
                     &.collapse {
-                        //display: inline-block;
+                        display: inline-block;
                         visibility: visible;
                         padding-right: 1px;
                     }
