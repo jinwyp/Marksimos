@@ -210,7 +210,9 @@ apiRouter.post('/e4e/api/registerstudent', auth.registerB2CStudent);
 apiRouter.post('/e4e/api/register/username', auth.verifyUsername);
 apiRouter.post('/e4e/api/register/email', auth.verifyEmail);
 
-/*apiRouter.get('/e4e/api/captcha', auth.generateCaptcha);*/
+// comment-captcha-start
+apiRouter.get('/e4e/api/captcha', auth.generateCaptcha);
+// comment-captcha-end
 
 apiRouter.post('/e4e/api/forgotpasswordstep1', auth.sendResetPasswordEmail);
 apiRouter.post('/e4e/api/forgotpasswordstep2', auth.verifyResetPasswordCode);

@@ -46,9 +46,10 @@
                     companyInput: null
                 };
                 scope.css = {
-                    currentTab: 'seminar',
+                    currentChatTab: 'seminar',
                     showChat: false,
-                    newMessage: false
+                    newMessage: false,
+                    currentTab: 'chat'
                 };
                 var chatWindow = elem[0];
                 chatWindow.addEventListener('keydown', function(event) {
