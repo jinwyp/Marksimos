@@ -2,6 +2,7 @@
 var gulp = require('gulp'),
     argv = require('yargs').usage('Usage: $0 -p [num] -sid [num]').example('$0 -p 1 -sid 10001', 'count the lines in the given file').argv;
     livereload = require('gulp-livereload'),
+    replace = require('gulp-replace'),
     nodemon = require('gulp-nodemon'),
     jshint = require('gulp-jshint'),
     compass = require('gulp-compass'),
@@ -42,7 +43,9 @@ var paths = {
     scenario_testAdminRunSeminarNextRound: './api/test/marksimos/scenario/adminrunseminarnextround.js',
     scenario_testAdminReRunSeminar: './api/test/marksimos/scenario/adminrerundecision.js',
     scenario_testStudentUpdateDecisions: './api/test/marksimos/scenario/studentupdatedecision.js',
-    scenario_testStudentUpdateQuestionnaire: './api/test/marksimos/scenario/studentupdatequestionnaire.js'
+    scenario_testStudentUpdateQuestionnaire: './api/test/marksimos/scenario/studentupdatequestionnaire.js',
+
+    commentCcapFiles: ['api/controllers/user/authentication.js', 'api/routes.js']
 
 };
 
@@ -161,6 +164,25 @@ gulp.task('mocha', function () {
         .pipe(mocha({reporter: 'nyan', timeout: 2000}));
 });
 
+// comment ccap files for windows
+gulp.task('commentCCAP', function() {
+    paths.commentCcapFiles.forEach(function(path) {
+        gulp.src(path)
+            .pipe(replace('// comment-captcha-start', '/*comment-captcha-start'))
+            .pipe(replace('// comment-captcha-end', 'comment-captcha-end*/'))
+            .pipe(gulp.dest(path + '/..'));
+    });
+});
+
+gulp.task('uncommentCCAP', function() {
+    paths.commentCcapFiles.forEach(function(path) {
+        gulp.src(path)
+            .pipe(replace('/*comment-captcha-start', '// comment-captcha-start'))
+            .pipe(replace('comment-captcha-end*/', '// comment-captcha-end'))
+            .pipe(gulp.dest(path + '/..'));
+    });
+});
+
 
 
 
@@ -203,8 +225,9 @@ gulp.task('nodemonjinlocal', function () {
 
 gulp.task('nodemonyuekecheng', function () {
     nodemon({
-        script: 'app.js',
-        env: { 'NODE_ENV': 'yuekecheng' }
+        script: 'commentCcapHook.js',
+        ignore: paths.commentCcapFiles,
+        env: { 'NODE_ENV': 'yuekecheng', PORT: 3000 }
     });
 //        .on('restart', 'default')
 });
@@ -295,7 +318,7 @@ gulp.task('ken', [ 'compass', 'templates', 'nodemonken', 'watchdev']);
 gulp.task('jin', [ 'compass', 'templates', 'nodemonjin', 'watchdev']);
 gulp.task('jinco', ['compass', 'templates', 'nodemonjinlocal', 'watchdev']);
 gulp.task('jinpro', ['compass', 'templates', 'minifycssMarksimos', 'minifycssB2C', 'jscompress', 'nodemonjin', 'watch']);
-gulp.task('yuekecheng', [ 'compass', 'templates', 'nodemonyuekecheng', 'watchdev']);
+gulp.task('yuekecheng', ['compass', 'templates', 'nodemonyuekecheng', 'watchdev']);
 
 
 
