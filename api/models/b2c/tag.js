@@ -45,6 +45,41 @@ tagSchema.plugin(mongooseTimestamps);
 /**
  * Statics
  */
+tagSchema.statics.addTags = function (tagsCreateOriginalTextArray) {
+    var that = this;
+    var tagsCreateCopy = tagsCreateOriginalTextArray.slice();
+    var tagsCreateResult = [];
+
+    return that.findQ({name : { $in:tagsCreateOriginalTextArray}}).then(function(tagResult) {
+
+
+        if (tagResult.length > 0) {
+
+            tagResult.forEach(function (tagResult) {
+
+                for (var i = tagsCreateCopy.length - 1; i >= 0; i--) {
+                    if (tagResult.name === tagsCreateCopy[i]) {
+                        tagsCreateCopy.splice(i, 1);
+                    }
+                }
+            });
+        }
+
+        tagsCreateCopy.forEach(function(tagname){
+            tagsCreateResult.push({
+                name : tagname
+            });
+        });
+
+        return that.createQ(tagsCreateResult);
+    });
+
+
+
+
+};
+
+
 
 tagSchema.statics.addValidations = function(req){
 

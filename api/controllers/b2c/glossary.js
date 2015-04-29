@@ -20,54 +20,53 @@ exports.addGlossary = function(req, res, next){
         return res.status(400).send( {message: 'Tag of Glossary is not array'} );
     }
 
-    var tagsCreate = [];
-    var tagsCreateTextArray = [];
+    var tagsCreateOriginalTextArray = [];
+    var tagsCreateResultIdArray = [];
 
     req.body.tagList.forEach(function( tag ){
         if(tag.text !== ""){
-            tagsCreate.push({
-                name : tag.text
-            });
-
-            tagsCreateTextArray.push(tag.text);
+            tagsCreateOriginalTextArray.push(tag.text);
         }
     });
 
+    tagModel.addTags(tagsCreateOriginalTextArray)
+    .then(function(tags) {
+        // 注意 createQ 后如果用Promise Q 返回的 有可能是 undefined 或 一个对象(只创建一个) 或 一个数组(创建多个数据)
+        //if (typeof tags !== 'undefined') {
+        //
+        //    if (Array.isArray(tags)) {
+        //        tags.forEach(function (tag) {
+        //            tagsCreateResultIdArray.push(tag._id);
+        //        });
+        //    } else {
+        //        tagsCreateResultIdArray.push(tags._id);
+        //    }
+        //}
 
-
-    tagModel.findQ({name : { $in:tagsCreateTextArray}})
-    .then(function(tagResult) {
-        if (tagResult.length > 0) {
-
-            tagResult.forEach(function (tagResult) {
-
-                for (var i = tagsCreate.length - 1; i >= 0; i--) {
-                    if (tagResult.name === tagsCreate[i].name) {
-                        tagsCreate.splice(i, 1);
-                    }
-                }
-            });
-
-        }
-        console.log(tagsCreate);
-
-        return tagModel.createQ(tagsCreate);
+        return tagModel.findQ({name : {$in : tagsCreateOriginalTextArray}});
     })
-    .then(function(tags){
-        console.log(tags);
+    .then(function(tagResult) {
+
+        if (tagResult.length > 0) {
+            tagResult.forEach(function (tag) {
+                tagsCreateResultIdArray.push(tag._id);
+            });
+        }
 
         return glossaryModel.createQ({
             name : req.body.name || '',
             description : req.body.description || '',
             question : req.body.question || '',
             answer : req.body.answer || '',
-            type : req.body.type
+            type : req.body.type,
+            tagList : tagsCreateResultIdArray
 
         });
     })
     .then(function(resultGlossary){
+
         if(!resultGlossary){
-            throw new Error( "Cancel promise chains. save glossary to db failed.");
+            throw new Error( "Cancel promise chains. create glossary to db failed.");
         }
 
         return res.status(200).send(resultGlossary);
