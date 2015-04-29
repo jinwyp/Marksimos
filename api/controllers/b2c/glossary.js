@@ -153,6 +153,11 @@ exports.searchGlossaryWithWord = function(req, res, next){
 
 
     var query = {};
+    var results = {
+        tags : [],
+        glossaries : []
+    };
+
 
     if (type !== 'all') {
         query.$and = [
@@ -178,6 +183,8 @@ exports.searchGlossaryWithWord = function(req, res, next){
             tagResult.forEach(function (tag) {
                 tagsResultIdArray.push(tag._id);
             });
+
+            results.tags = tagResult;
         }
 
         query.$or.push(
@@ -186,9 +193,11 @@ exports.searchGlossaryWithWord = function(req, res, next){
 
         console.log("tagsResultIdArray: ", tagsResultIdArray);
 
-        return glossaryModel.find(query).sort({updatedAt:-1}).populate('tagList', tagModel.selectFields()).execQ().then(function(results){
+        return glossaryModel.find(query).sort({updatedAt:-1}).populate('tagList', tagModel.selectFields()).execQ().then(function(resultGlossaries){
 
             if(results){
+                results.glossaries = resultGlossaries;
+
                 return res.status(200).send(results);
             }
 
