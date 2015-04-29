@@ -21,7 +21,7 @@ exports.addTag = function(req, res, next){
 
     }).then(function(resultTag){
         if(!resultTag){
-            throw new Error( "Cancel promise chains. save glossary to db failed.");
+            throw new Error( "Cancel promise chains. save tag to db failed.");
         }
 
         return res.status(200).send(resultTag);

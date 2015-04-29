@@ -55,7 +55,7 @@ glossarySchema.plugin(mongooseTimestamps);
 
 glossarySchema.statics.addValidations = function(req){
 
-    req.checkBody('type', 'Campaign description should be 2-10000 characters').notEmpty().isInt();
+    req.checkBody('type', 'Glossary type should be int').notEmpty().isInt();
 
     if(req.body.type == 10){
         req.checkBody('name', 'Glossary name should be 2-50 characters').notEmpty().len(2, 200);
@@ -71,6 +71,17 @@ glossarySchema.statics.addValidations = function(req){
     return req.validationErrors();
 };
 
+
+glossarySchema.statics.searchWordValidations = function(req){
+
+    //req.checkBody('type', 'Glossary type should be int').notEmpty().isInt();
+    req.checkBody('keyword', 'Glossary keyword should be 2-200 characters').notEmpty().len(2, 200);
+
+
+    //req.checkBody('activated', 'Campaign activated should Boolean true or false').notEmpty();
+
+    return req.validationErrors();
+};
 
 /**
  * Methods
