@@ -139,7 +139,7 @@ exports.searchGlossaryWithWord = function(req, res, next){
     var segmentWord = new Segment();
     segmentWord.useDefault();
 
-    var words = segment.doSegment(keywordSearch);
+    var words = segmentWord.doSegment(keywordSearch);
     var wordsTextArray = [];
     var tagsResultIdArray = [];
 
@@ -166,8 +166,7 @@ exports.searchGlossaryWithWord = function(req, res, next){
 
         query.$or = [
             { 'name': regex },
-            { 'question': regex },
-            { 'tagList': { $in: [] } }
+            { 'question': regex }
         ];
     }
 

@@ -291,7 +291,7 @@ apiRouter.post('/marksimos/api/seminar/chat/seminar', auth.authLoginToken(), sem
 apiRouter.post('/marksimos/api/seminar/chat/company', auth.authLoginToken(), seminarController.sendChatMessageSeminarCompany);
 
 //get Glossary
-apiRouter.get('/marksimos/api/glossaries', auth.authLoginToken(), auth.authRole(marksimosRight.glossaryInfoListGet), glossaryController.searchGlossary);
+apiRouter.post('/marksimos/api/glossaries', auth.authLoginToken(), auth.authRole(marksimosRight.glossaryInfoListGet), glossaryController.searchGlossaryWithWord);
 
 
 
