@@ -1324,6 +1324,9 @@
             addSeminar : function(postdata){
                 return $http.post(apiAdminPath + 'seminar', postdata);
             },
+            updateSeminar : function(postdata){
+                return $http.put(apiAdminPath + 'seminar', postdata);
+            },
             initSeminar: function(seminarId) {
                 return $http.post(apiAdminPath + 'seminar/' + seminarId + '/init' );
             },

@@ -100,6 +100,41 @@ exports.addSeminar = function(req, res, next){
 
 
 
+
+
+exports.updateSeminar = function(req, res, next){
+    var validationErrors = seminarModel.updateValidations(req);
+
+    if(validationErrors){
+        return res.status(400).send( {message: validationErrors} );
+    }
+
+
+    seminarModel.findOneQ({_id: req.body.id}).then(function(resultSeminar){
+        if(!resultSeminar){
+            throw new Error( "Cancel promise chains. seminar not found.");
+        }
+
+        resultSeminar.showLastPeriodScore = req.body.showLastPeriodScore;
+
+        return resultSeminar.saveQ();
+    }).then(function(result){
+        if(result[1] !== 1){
+            throw new Error( "Cancel promise chains. update seminar failed, No seminar or more than one seminar update.");
+        }
+
+        return res.status(200).send(result);
+    }).fail(function(err){
+        next(err);
+    }).done();
+};
+
+
+
+
+
+
+
 exports.assignStudentToSeminar = function(req, res, next){
 
     req.checkBody('seminar_id', 'Invalid seminar id.').notEmpty().isInt();
