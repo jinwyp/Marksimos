@@ -35,15 +35,18 @@
                 me: '=username',
                 seminarMessages: '=',
                 companyMessages: '=',
+                dictionaryMessages: '=',
                 sendSeminarMessage: '&',
                 sendCompanyMessage: '&',
+                sendDictionaryMessage: '&',
                 hideChatHeader: '='
             },
             templateUrl: 'chatwindow.html',
             link: function(scope, elem, attrs, ctrl) {
                 scope.data = {
                     seminarInput: null,
-                    companyInput: null
+                    companyInput: null,
+                    dictionaryInput: null
                 };
                 scope.css = {
                     currentChatTab: 'seminar',
@@ -55,21 +58,26 @@
                 chatWindow.addEventListener('keydown', function(event) {
                     // todo: handle line break?
 
-                    if (event.keyCode != 13 || event.target.tagName.toUpperCase() != 'TEXTAREA' || (!scope.data.seminarInput && !scope.data.companyInput) ) return;
+                    if (event.keyCode != 13 || event.target.tagName.toUpperCase() != 'TEXTAREA' || (!scope.data.seminarInput && !scope.data.companyInput && !scope.data.dictionaryInput) ) return;
 
                     if (event.target.matches('.seminar')) {
                         $q.when(scope.sendSeminarMessage({messageInput: scope.data.seminarInput})).then(function() {
                             scope.data.seminarInput = '';
                         });
-                    } else {
+                    } else if(event.target.matches('.company')) {
                         $q.when(scope.sendCompanyMessage({messageInput: scope.data.companyInput})).then(function() {
                             scope.data.companyInput = '';
+                        });
+                    } else if(event.target.matches('.dictionary')) {
+                        $q.when(scope.sendDictionaryMessage({messageInput: scope.data.dictionaryInput})).then(function() {
+                            scope.data.dictionaryInput = '';
                         });
                     }
                 });
 
                 scope.$watchCollection('seminarMessages', scrollToBottom);
                 scope.$watchCollection('companyMessages', scrollToBottom);
+                scope.$watchCollection('dictionaryMessages', scrollToBottom);
 
                 function scrollToBottom() {
                     if (scope.seminarMessages.length || scope.companyMessages.length) {
@@ -83,7 +91,8 @@
                     });
                 }
 
-                scope.clickToggleWindow = function() {
+                scope.clickToggleWindow = function(tab) {
+                    if (tab) scope.css.currentTab = tab;
                     scope.css.showChat = !scope.css.showChat;
                     scope.css.newMessage = false;
                 };

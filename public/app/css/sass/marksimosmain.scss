@@ -35,17 +35,25 @@ $color_chat_me: #1289fe;
         top: 0;
         left: -51px;
         width: 51px;
-        height: 52px;
+        //height: 52px;
         border: 1px solid $color_chat_border;
+        .icon {
+            height: 36px;
+            &:hover {
+                background-color: #F5F5F5;
+            }
+        }
         .chat-icon {
-            @include my_icon-sprite(iconmenuchat);
+            @include icon-sprite(iconmenuchat);
+            @include sprite-background-position($icon-sprites, iconmenuchat, 17px, 10px);
         }
         .chat-icon.active {
             background-image: url('/app/css/images/icon/iconmenuchatactive.gif');
-            background-position: 0;
+            background-position: 50%;
         }
-        > div:not(.hide-btn) {
-            padding:8px 17px;
+        .dictionary-icon {
+            @include icon-sprite(iconmenubook);
+            @include sprite-background-position($icon-sprites, iconmenubook, 17px, 10px);
         }
     }
     .hide-btn {
@@ -139,7 +147,7 @@ $color_chat_me: #1289fe;
     }
 
     .dictionary-body {
-        .results {
+        .messages {
             height: 432px;
             padding: 15px;
             overflow: auto;
@@ -163,7 +171,7 @@ $color_chat_me: #1289fe;
                         padding-left: 1px;
                     }
                     &.collapse {
-                        //display: inline-block;
+                        display: inline-block;
                         visibility: visible;
                         padding-right: 1px;
                     }

@@ -9,53 +9,17 @@
 
         <div class="dictionary" ng-if="css.currentTab == 'dictionary'">
             <div class="dictionary-body">
-                <div class="results">
-                    <div class="result">
+                <div class="messages">
+                    <div class="result" ng-repeat="message in dictionaryMessages">
                         <div class="question row">
-                            <p class="col-xs-10">？？？？？fffffffffffffffffffffffffffffffffffffffff</p>
-                            <div class="col-xs-2 text-right">
-                                <button class="glyphicon glyphicon-plus extend btn btn-default"></button>
-                                <button class="collapse glyphicon glyphicon-minus btn btn-default"></button>
+                            <p class="col-xs-10">{{message.name || message.question}}</p>
+                            <div class="col-xs-2 text-right" ng-init="message.show=false">
+                                <button ng-if="!message.show" ng-click="message.show=true" class="glyphicon glyphicon-plus extend btn btn-default"></button>
+                                <button ng-if="message.show" ng-click="message.show=false" class="collapse glyphicon glyphicon-minus btn btn-default"></button>
                             </div>
                         </div>
-                        <div class="answer">
-                            你问我我问谁？fffffffffffffffffffffffffffffffffffffffff
-                        </div>
-                    </div>
-                    <div class="result">
-                        <div class="question row">
-                            <p class="col-xs-10">？？？？？fffffffffffffffffffffffffffffffffffffffff</p>
-                            <div class="col-xs-2 text-right">
-                                <button class="glyphicon glyphicon-plus extend btn btn-default"></button>
-                                <button class="collapse glyphicon glyphicon-minus btn btn-default"></button>
-                            </div>
-                        </div>
-                        <div class="answer">
-                            你问我我问谁？fffffffffffffffffffffffffffffffffffffffff
-                        </div>
-                    </div>
-                    <div class="result">
-                        <div class="question row">
-                            <p class="col-xs-10">？？？？？fffffffffffffffffffffffffffffffffffffffff</p>
-                            <div class="col-xs-2 text-right">
-                                <button class="glyphicon glyphicon-plus extend btn btn-default"></button>
-                                <button class="collapse glyphicon glyphicon-minus btn btn-default"></button>
-                            </div>
-                        </div>
-                        <div class="answer">
-                            你问我我问谁？fffffffffffffffffffffffffffffffffffffffff
-                        </div>
-                    </div>
-                    <div class="result">
-                        <div class="question row">
-                            <p class="col-xs-10">？？？？？fffffffffffffffffffffffffffffffffffffffff</p>
-                            <div class="col-xs-2 text-right">
-                                <button class="glyphicon glyphicon-plus extend btn btn-default"></button>
-                                <button class="collapse glyphicon glyphicon-minus btn btn-default"></button>
-                            </div>
-                        </div>
-                        <div class="answer">
-                            你问我我问谁？fffffffffffffffffffffffffffffffffffffffff
+                        <div class="answer" ng-if="message.show">
+                            {{message.description || message.answer}}
                         </div>
                     </div>
                 </div>
@@ -130,8 +94,13 @@
             </div>
         </div>
     </div>
-    <div class="chat-icon-wrapper" ng-if="!css.showChat" ng-click="clickToggleWindow()">
-        <div class="hide-btn"><div class="icon-left"></div><div class="icon-left"></div></div>
-        <div><div class="chat-icon" ng-class="{active: css.newMessage}"></div></div>
+    <div class="chat-icon-wrapper" ng-if="!css.showChat">
+        <div ng-click="clickToggleWindow()" class="hide-btn">
+            <div class="icon-left"></div><div class="icon-left"></div>
+        </div>
+        <div>
+            <div ng-click="clickToggleWindow('chat')" class="chat-icon icon" ng-class="{active: css.newMessage}"></div>
+            <div ng-click="clickToggleWindow('dictionary')" class="dictionary-icon icon"></div>
+        </div>
     </div>
 </div>

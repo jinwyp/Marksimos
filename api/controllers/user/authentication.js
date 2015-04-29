@@ -433,7 +433,7 @@ exports.registerB2CStudent = function(req, res, next){
         }).done();
 
         //register nodeBB user
-        if (process.env.NODE_ENV === 'ken' || process.env.NODE_ENV === 'production')
+        if (process.env.NODE_ENV === 'ken')
         {
             request.post({
                 url    : config.bbsService + 'api/v1/users',
@@ -445,10 +445,13 @@ exports.registerB2CStudent = function(req, res, next){
                     email   : req.body.email,
                     password: req.body.password
                 }
-            }, function (err) {
+            }, function (err, res) {
                 if (err) {
                     console.log('Reister new user for NodeBB failed!' + err);
+                    return;
                 }
+                resultUser.bbsUid = JSON.parse(res.body).payload.uid;
+                resultUser.save();
             })
         }
 

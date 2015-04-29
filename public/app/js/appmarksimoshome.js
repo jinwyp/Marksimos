@@ -1670,9 +1670,41 @@
         };
 
 
+        /********************  Glossaries ********************/
+        // todo: for testing
+        $scope.data.glossaries = [
+            {
+                type: 10,
+                name: 'HCD',
+                description: 'He C? De'
+            },
+            {
+                type: 20,
+                question: 'What dose HCD mean?',
+                answer: "Fucking don't know!"
+            },
+            {
+                type: 10,
+                name: 'HCD',
+                description: "他操?的"
+            },
+            {
+                type: 20,
+                name: 'HCD什么意思？',
+                answer: '操不知道！'
+            }
+        ];
+        $scope.getGlossary = function() {
+            setTimeout(function() {
+                $scope.data.glossaries.push({
+                    type: 20,
+                    question: "What's the difference between me and the person, if exist, who has the same memory with me?",
+                    answer: "W.T.F!"
+                });
 
-
-
+                $scope.$apply();
+            }, 500);
+        };
 
     }]);
 
