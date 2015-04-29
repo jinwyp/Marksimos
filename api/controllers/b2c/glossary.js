@@ -80,6 +80,58 @@ exports.addGlossary = function(req, res, next){
 
 exports.updateGlossary = function(req, res, next){
 
+    var validationErrors = glossaryModel.addValidations(req);
+
+    if(validationErrors){
+        return res.status(400).send( {message: validationErrors} );
+    }
+
+    if (!Array.isArray(req.body.tagList)) {
+        return res.status(400).send( {message: 'Tag of Glossary is not array'} );
+    }
+
+    var tagsCreateOriginalTextArray = [];
+    var tagsCreateResultIdArray = [];
+
+    req.body.tagList.forEach(function( tag ){
+        if(tag.text !== ""){
+            tagsCreateOriginalTextArray.push(tag.text);
+        }
+    });
+
+    tagModel.addTags(tagsCreateOriginalTextArray)
+    .then(function(tags) {
+
+        return tagModel.findQ({name : {$in : tagsCreateOriginalTextArray}});
+    })
+    .then(function(tagResult) {
+
+        if (tagResult.length > 0) {
+            tagResult.forEach(function (tag) {
+                tagsCreateResultIdArray.push(tag._id);
+            });
+        }
+        return glossaryModel.findByIdAndUpdateQ( req.body.id,
+        {
+            name : req.body.name || '',
+            description : req.body.description || '',
+            question : req.body.question || '',
+            answer : req.body.answer || '',
+            type : req.body.type,
+            tagList : tagsCreateResultIdArray
+
+        });
+    })
+    .then(function(resultGlossary){
+
+        if(!resultGlossary){
+            throw new Error( "Cancel promise chains. update glossary to db failed.");
+        }
+
+        return res.status(200).send(resultGlossary);
+
+    }).fail(next).done();
+
 };
 
 
