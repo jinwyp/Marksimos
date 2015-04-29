@@ -11,9 +11,9 @@
             <div class="dictionary-body">
                 <div class="messages">
                     <div ng-if="dictionaryMessages.noResult" class="no-result text-center">Sorry, no result.</div>
-                    <div class="result" ng-repeat="message in dictionaryMessages">
+                    <div class="result" ng-repeat="message in dictionaryMessages.glossaries">
                         <div class="question row">
-                            <p class="col-xs-10">{{message.name || message.question}}</p>
+                            <p class="col-xs-10" data-hightlight-key="dictionaryMessages.tags">{{message.name || message.question}}</p>
                             <div class="col-xs-2 text-right" ng-init="message.show=false">
                                 <button ng-if="!message.show" ng-click="message.show=true" class="glyphicon glyphicon-plus extend btn btn-default"></button>
                                 <button ng-if="message.show" ng-click="message.show=false" class="collapse glyphicon glyphicon-minus btn btn-default"></button>

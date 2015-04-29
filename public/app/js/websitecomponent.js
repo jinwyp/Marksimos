@@ -664,9 +664,21 @@
             compile: function (tElement, tAttrs) {
                 return function (scope, tElement, tAttrs) {                  
                     scope.$watch(tAttrs, function () {
+
                         if (scope.key) {
+                            var keys = angular.isArray(scope.key) ? scope.key : [scope.key];
+                            keys.forEach(function(key, i) {
+                                // use [] to escape some meta chars, like '+!' .
+                                keys[i] = '[' + key.split('').join('][') + ']';
+                            });
+                            // wrap the key into ([k][e][y])?
+                            keys = '([\\W\\w]*?)(' + keys.join('|') + ')?([\\W\\w]*?)';
+                            var tagREStr = '</?[a-z-]+[\\W\\w]*?>';
+
+
                             var html = tElement.html();
-                            html = html.replace(new RegExp("[" + scope.key.split('').join('][') + "]", "ig"), function (match) {
+                            html = html.replace(new RegExp(keys + tagREStr + keys, "ig"), function (match, s1, s2, s3, s4, s5, s6) {
+
                                 return "<span class='text-danger'>" + match + "</span>";
                             });
                             tElement.html(html);

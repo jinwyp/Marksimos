@@ -1678,9 +1678,8 @@
 
         $scope.getGlossary = function(keyword) {
             Student.getGlossaries({keyword: keyword}).then(function(data, status, headers, config){
-                $scope.data.glossaries.length = 0;
-                [].push.apply($scope.data.glossaries, data.data);
-                $scope.data.glossaries.noResult = !data.data.length;
+                $scope.data.glossaries = data.data;
+                $scope.data.glossaries.noResult = !data.data.glossaries.length;
             }, function(data){
                 notify({
                     message  : data.data.message,
