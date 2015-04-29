@@ -151,6 +151,9 @@ $color_chat_me: #1289fe;
             height: 432px;
             padding: 15px;
             overflow: auto;
+            .no-result {
+                padding: 10px;
+            }
             .question {
                 p {
                     //display: inline-block;

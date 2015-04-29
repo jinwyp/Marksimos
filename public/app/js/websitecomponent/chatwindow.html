@@ -10,6 +10,7 @@
         <div class="dictionary" ng-if="css.currentTab == 'dictionary'">
             <div class="dictionary-body">
                 <div class="messages">
+                    <div ng-if="dictionaryMessages.noResult" class="no-result text-center">Sorry, no result.</div>
                     <div class="result" ng-repeat="message in dictionaryMessages">
                         <div class="question row">
                             <p class="col-xs-10">{{message.name || message.question}}</p>
