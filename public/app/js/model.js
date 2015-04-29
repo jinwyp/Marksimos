@@ -77,6 +77,53 @@
                 return $http.post(apiPathB2C + 'register/email', email);
             },
 
+            updatePassword: function(passwordOld, passwordNew) {
+                return $http.put(apiPathB2C + 'student/password', {
+                    passwordOld: passwordOld,
+                    passwordNew: passwordNew
+                });
+            },
+
+
+            addStudentToTeam : function(user) {
+                return $http.post(apiPathB2C + 'team/student', user);
+            },
+
+            removeStudentToTeam : function(id) {
+                return $http.delete(apiPathB2C + 'team/student/' + id);
+            },
+
+            updateTeamName : function(name) {
+                return $http.post(apiPathB2C + 'team', {name: name});
+            },
+
+            updateStudentB2CInfo : function(data) {
+                return $http.put(apiPathB2C + 'student', data);
+            },
+
+            getPhoneVerifyCode : function(){
+                return $http.get(apiPathB2C + 'student/phoneverifycode');
+            },
+
+            sendPhoneVerifyCode : function(phoneVerifyCode){
+                return $http.post(apiPathB2C + 'student/phoneverifycode', {phoneVerifyCode: phoneVerifyCode});
+            },
+
+
+
+            addTeamToCampaign: function(data) {
+                return $http.post(apiPathB2C + 'campaigns/teams', data);
+            },
+
+            getCampaign: function(id) {
+                return $http.get(apiPathB2C + 'campaigns/' + id);
+            },
+
+
+
+
+
+
             login : function(user){
                 return $http.post(apiPath + 'login', user).then(function(result){
                     localStorageService.set('logintoken', result.data.token);
@@ -104,44 +151,11 @@
                 return $http.get(apiPath + 'choose_seminar', {params : queryParams});
             },
 
-            addStudentToTeam : function(user) {
-                return $http.post(apiPathB2C + 'team/student', user);
+
+            getGlossaries : function(queryParams){
+                return $http.post(apiPath + 'glossaries', queryParams);
             },
 
-            removeStudentToTeam : function(id) {
-                return $http.delete(apiPathB2C + 'team/student/' + id);
-            },
-
-            updateTeamName : function(name) {
-                return $http.post(apiPathB2C + 'team', {name: name});
-            },
-
-            updateStudentB2CInfo : function(data) {
-                return $http.put(apiPathB2C + 'student', data);
-            },
-
-            getPhoneVerifyCode : function(){
-                return $http.get(apiPathB2C + 'student/phoneverifycode');
-            },
-
-            sendPhoneVerifyCode : function(phoneVerifyCode){
-                return $http.post(apiPathB2C + 'student/phoneverifycode', {phoneVerifyCode: phoneVerifyCode});
-            },
-
-            updatePassword: function(passwordOld, passwordNew) {
-                return $http.put(apiPathB2C + 'student/password', {
-                    passwordOld: passwordOld,
-                    passwordNew: passwordNew
-                });
-            },
-
-            addTeamToCampaign: function(data) {
-                return $http.post(apiPathB2C + 'campaigns/teams', data);
-            },
-
-            getCampaign: function(id) {
-                return $http.get(apiPathB2C + 'campaigns/' + id);
-            },
 
             sendSeminarChatMessage: function(message) {
                 return $http.post(apiPath + 'seminar/chat/seminar', {message: message});
@@ -1326,6 +1340,10 @@
                 return $http.get(apiAdminPath + 'delphi_cgi');
             },
 
+            getTags : function(urlparams){
+                urlparams = angular.isUndefined(urlparams) ? {}  : urlparams ;
+                return $http.get(apiAdminPath + 'tags', {params : urlparams});
+            },
 
             getGlossaries : function(urlparams){
                 urlparams = angular.isUndefined(urlparams) ? {}  : urlparams ;

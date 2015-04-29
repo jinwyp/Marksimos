@@ -54,6 +54,7 @@
                     newMessage: false,
                     currentTab: 'chat'
                 };
+
                 var chatWindow = elem[0];
                 chatWindow.addEventListener('keydown', function(event) {
                     // todo: handle line break?

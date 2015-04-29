@@ -44,6 +44,7 @@
     "aight": "~1.2.5",
     "angular-strap": "~2.2.1",
     "angular-motion": "~0.3.4",
-    "angular-socket-io": "~0.7.0"
+    "angular-socket-io": "~0.7.0",
+    "ng-tags-input": "~2.3.0"
   }
 }

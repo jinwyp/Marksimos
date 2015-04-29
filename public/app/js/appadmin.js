@@ -7,7 +7,7 @@
     'use strict';
 
     /********************  Create New Module For Controllers ********************/
-    angular.module('marksimosadmin', ['pascalprecht.translate', 'angularCharts', 'nvd3ChartDirectives', 'notifications', 'angularFileUpload',
+    angular.module('marksimosadmin', ['pascalprecht.translate', 'angularCharts', 'nvd3ChartDirectives', 'notifications', 'angularFileUpload', 'ngTagsInput',
         'marksimos.websitecomponent', 'marksimos.commoncomponent', 'marksimos.filter', 'marksimos.socketmodel']);
 
 
@@ -229,7 +229,7 @@
                     {value : 10, text : 'Glossary'},
                     {value : 20, text : 'FAQ'}
                 ],
-                tags : []
+                tagList : []
             },
             glossaries : [],
             searchGlossary: {
@@ -974,6 +974,12 @@
 
 
 
+        /********************  搜索 Tags  ********************/
+        $scope.loadTag = function(query) {
+            console.log(query);
+            return Admin.getTags(query);
+        };
+
         /********************  搜索 Glossary  ********************/
         $scope.searchGlossary = function(form) {
             if (form.$valid) {
@@ -991,7 +997,7 @@
                 Admin.addGlossary($scope.data.newGlossary).success(function(data, status, headers, config) {
 
                     app.getGlossaryInit();
-                    //$scope.css.leftmenu = 71;
+                    $scope.css.leftmenu = 71;
 
                     $notification.success('Save success', 'Create Glossary success');
 
@@ -1002,8 +1008,51 @@
             }
         };
 
+        $scope.showEditGlossaryMenu = function(glossary) {
+            $scope.data.newGlossary.id = glossary._id;
+            $scope.data.newGlossary.name = glossary.name;
+            $scope.data.newGlossary.description = glossary.description;
+            $scope.data.newGlossary.type = glossary.type;
+            $scope.data.newGlossary.question = glossary.question;
+            $scope.data.newGlossary.answer = glossary.answer;
 
+            $scope.data.newGlossary.tagList = [];
+            glossary.tagList.forEach(function(tag){
+                $scope.data.newGlossary.tagList.push(tag.name);
+            });
 
+            $scope.css.editMenuStatus = true;
+            $scope.css.leftmenu = 72;
+
+        };
+
+        /********************  Update Glossary  ********************/
+        $scope.updateGlossary = function(form) {
+            if (form.$valid) {
+
+                $scope.data.updateGlossary = {
+                    id : $scope.data.newGlossary.id,
+                    name : $scope.data.newGlossary.name,
+                    description: $scope.data.newGlossary.description,
+                    type: $scope.data.newGlossary.type,
+                    question: $scope.data.newGlossary.question,
+                    answer : $scope.data.newGlossary.answer,
+                    tagList : $scope.data.newGlossary.tagList
+                };
+
+                Admin.updateGlossary($scope.data.updateGlossary).success(function(data, status, headers, config) {
+
+                    app.getGlossaryInit();
+                    $scope.css.leftmenu = 71;
+
+                    $notification.success('Save success', 'Update Campaign success');
+
+                }).error(function(data, status, headers, config) {
+                    console.log(data);
+                    $notification.error('Failed', data.message);
+                });
+            }
+        };
 
     }]);
 

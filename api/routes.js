@@ -11,6 +11,7 @@ var studentController = require('./controllers/user/student.js');
 var campaignController = require('./controllers/b2c/campaign.js');
 var seminarController = require('./controllers/marksimos/seminar.js');
 var glossaryController = require('./controllers/b2c/glossary.js');
+var tagController = require('./controllers/b2c/tag.js');
 
 var questionnaireController = require('./controllers/questionnaire.js');
 var faqController  =  require('./controllers/faq.js');
@@ -290,7 +291,9 @@ apiRouter.post('/marksimos/api/seminar/chat/seminar', auth.authLoginToken(), sem
 apiRouter.post('/marksimos/api/seminar/chat/company', auth.authLoginToken(), seminarController.sendChatMessageSeminarCompany);
 
 //get Glossary
-apiRouter.get('/marksimos/api/glossaries', auth.authLoginToken(), auth.authRole(marksimosRight.glossaryInfoListGet), glossaryController.searchGlossary);
+apiRouter.post('/marksimos/api/glossaries', auth.authLoginToken(), auth.authRole(marksimosRight.glossaryInfoListGet), glossaryController.searchGlossaryWithWord);
+
+
 
 
 
@@ -371,6 +374,7 @@ apiRouter.get('/marksimos/api/admin/glossaries', auth.authLoginToken(), auth.aut
 apiRouter.post('/marksimos/api/admin/glossaries', auth.authLoginToken(), auth.authRole(marksimosRight.glossarySingleCUD), glossaryController.addGlossary);
 apiRouter.put('/marksimos/api/admin/glossaries', auth.authLoginToken(), auth.authRole(marksimosRight.glossarySingleCUD), glossaryController.updateGlossary);
 
+apiRouter.get('/marksimos/api/admin/tags', auth.authLoginToken(), auth.authRole(marksimosRight.glossaryInfoListGet), tagController.searchTag);
 
 
 
