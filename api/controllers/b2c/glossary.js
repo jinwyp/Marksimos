@@ -6,7 +6,7 @@
 var glossaryModel = require('../../models/b2c/glossary.js');
 var tagModel = require('../../models/b2c/tag.js');
 
-
+var Segment = require('segment');
 
 
 exports.addGlossary = function(req, res, next){
@@ -117,6 +117,94 @@ exports.searchGlossary = function(req, res, next){
 
 
     }).fail(next).done();
+
+};
+
+
+
+
+
+exports.searchGlossaryWithWord = function(req, res, next){
+
+    var validationErrors = glossaryModel.searchWordValidations(req);
+
+    if(validationErrors){
+        return res.status(400).send( {message: validationErrors} );
+    }
+
+    var keywordSearch = req.body.keyword || '';
+    var type = req.body.type || 'all';
+
+
+    var segmentWord = new Segment();
+    segmentWord.useDefault();
+
+    var words = segmentWord.doSegment(keywordSearch);
+    var wordsTextArray = [];
+    var tagsResultIdArray = [];
+
+    console.log("word: ", words);
+
+
+    words.forEach(function( word ){
+        wordsTextArray.push(word.w);
+    });
+
+
+
+    var query = {};
+
+    if (type !== 'all') {
+        query.$and = [
+            { type: type }
+        ];
+    }
+
+    if (keywordSearch) {
+        var strRegex = ".*[" + keywordSearch.split('').join('][') + "].*";
+        var regex = { $regex: strRegex , $options: 'i' }; // $options : 'i' Means case insensitivity to match upper and lower cases. 不区分大小写
+
+        query.$or = [
+            { 'name': regex },
+            { 'question': regex }
+        ];
+    }
+
+
+    tagModel.findQ({name : { $in:wordsTextArray}})
+    .then(function(tagResult) {
+
+        if (tagResult.length > 0) {
+            tagResult.forEach(function (tag) {
+                tagsResultIdArray.push(tag._id);
+            });
+        }
+
+        query.$or.push(
+            { 'tagList': { $in: tagsResultIdArray } }
+        );
+
+        console.log("tagsResultIdArray: ", tagsResultIdArray);
+
+        return glossaryModel.find(query).sort({updatedAt:-1}).execQ().then(function(results){
+
+            if(results){
+                return res.status(200).send(results);
+            }
+
+
+        }).fail(next).done();
+    });
+
+
+
+
+
+
+
+
+
+
 
 };
 

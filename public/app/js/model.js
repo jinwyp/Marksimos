@@ -152,9 +152,8 @@
             },
 
 
-            getGlossaries : function(urlparams){
-                urlparams = angular.isUndefined(urlparams) ? {}  : urlparams ;
-                return $http.get(apiPath + 'glossaries', {params : urlparams});
+            getGlossaries : function(queryParams){
+                return $http.post(apiPath + 'glossaries', queryParams);
             },
 
 
