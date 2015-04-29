@@ -1002,7 +1002,7 @@
                                     </tr>
                                     <tr ng-repeat="glossary in data.glossaries" >
                                         <td style="width:100px">
-                                            <button type="button" class="btn btn-danger" ng-click="showEditCampaignMenu(glossary)" >Modify</button>
+                                            <button type="button" class="btn btn-danger" ng-click="showEditGlossaryMenu(glossary)" >Modify</button>
                                         </td>
                                         <td><span ng-show="glossary.type==10">Glossary</span><span ng-show="glossary.type==20">FAQ</span></td>
                                         <td data-highlight-key="data.searchGlossary.keyword">{{glossary.name}} / {{glossary.question}}</td>

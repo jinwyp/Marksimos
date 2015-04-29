@@ -583,13 +583,13 @@ exports.activateRegistrationEmail = function(req, res, next){
 
         return resultUser.saveQ();
 
-    }).then(function(savedDoc, numberAffectedRows){
+    }).then(function(savedDoc){
 
         //if(numberAffectedRows !== 1){
         //    throw new Error('Cancel promise chains. Because Update user emailActivated status failed. more or less than 1 record is updated. it should be only one !');
         //}
 
-        if(!savedDoc ){
+        if(savedDoc[1] !== 1 ){
             throw new Error('Cancel promise chains. Because Update user emailActivated status failed. more or less than 1 record is updated. it should be only one !');
         }
 
@@ -634,7 +634,7 @@ exports.sendResetPasswordEmail = function(req, res, next){
         return resultUser.saveQ();
     }).then(function(resultUser){
 
-        if(!resultUser){
+        if(resultUser[1] !== 1){
             throw new Error('Cancel promise chains. Because Update user resetPasswordToken failed. More or less than 1 record is updated. it should be only one !');
         }
 
@@ -691,7 +691,7 @@ exports.verifyResetPasswordCode = function(req, res, next){
 
     }).then(function(resultUser){
 
-        if(!resultUser){
+        if(resultUser[1] !== 1){
             throw new Error('Cancel promise chains. Because Update reset Password Verify Code failed. More or less than 1 record is updated. it should be only one !');
         }
 
@@ -725,10 +725,10 @@ exports.resetNewPassword = function(req, res, next){
 
         return resultUser.saveQ();
 
-    }).then(function(savedDoc, numberAffectedRows){
+    }).then(function(savedDoc){
         //console.log('reset password : ', savedDoc, numberAffectedRows);
 
-        if(!savedDoc ){
+        if(savedDoc[1] !== 1 ){
             throw new Error('Cancel promise chains. Because Update reset Password failed. More or less than 1 record is updated. it should be only one !');
         }
 
@@ -825,9 +825,9 @@ exports.generatePhoneVerifyCode = function(req, res, next) {
 
 
     userModel.updateQ({_id: req.user._id}, {$set: {phoneVerifyCode: verifyCode, phoneVerifyCodeExpires:verifyCodeExpires}})
-    .then(function(savedDoc){
+    .then(function(result){
 
-        if(!savedDoc ){
+        if(result[0] !== 1 ){
             throw new Error('Cancel promise chains. Because Update phoneVerifyCode failed. More or less than 1 record is updated. it should be only one !');
         }
 
@@ -872,7 +872,7 @@ exports.verifyPhoneVerifyCode = function(req, res, next) {
     user.phoneVerified = true;
     user.saveQ()
     .then(function(savedDoc){
-        if(!savedDoc ){
+        if(savedDoc[1] !== 1 ){
             throw new Error('Cancel promise chains. Because Update user phoneVerified failed. More or less than 1 record is updated. it should be only one !');
         }
         return res.status(200).send({message: 'verifyPhoneCode succeed'});
