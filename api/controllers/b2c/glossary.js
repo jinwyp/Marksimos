@@ -186,7 +186,7 @@ exports.searchGlossaryWithWord = function(req, res, next){
 
         console.log("tagsResultIdArray: ", tagsResultIdArray);
 
-        return glossaryModel.find(query).sort({updatedAt:-1}).execQ().then(function(results){
+        return glossaryModel.find(query).sort({updatedAt:-1}).populate('tagList', tagModel.selectFields()).execQ().then(function(results){
 
             if(results){
                 return res.status(200).send(results);
