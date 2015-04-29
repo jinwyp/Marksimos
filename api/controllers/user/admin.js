@@ -72,12 +72,12 @@ exports.updateDistributor = function(req, res, next){
         idcardNumber: req.body.idcardNumber || ''
     };
 
-    userModel.updateQ({_id: req.params.distributor_id}, distributor).then(function(numberAffected){
-        if(numberAffected === 1){
-            return res.send({message: 'update success.'});
-        }else{
-            return res.send(400, {message: 'user does not exist.'});
+    userModel.updateQ({_id: req.params.distributor_id}, distributor).then(function(result){
+        var numberAffected = result[0];
+        if(numberAffected !== 1){
+            throw new Error('Cancel promise chains. Because Update user failed. More or less than 1 record is updated. it should be only one !');
         }
+        return res.send({message: 'update success.'});
     }).fail(function(err){
         next(err);
     }).done();
@@ -248,10 +248,10 @@ exports.updateFacilitator = function(req, res, next){
                             numOfUsedLicense: dbDistributor.numOfUsedLicense + addedLicense,
                             numOfLicense: dbDistributor.numOfLicense - addedLicense
                         })
-                        .then(function(numAffected){
+                        .then(function(result){
+                            var numAffected = result[0];
                             if(numAffected!==1){
-                                throw {httpStatus: 400, message: 'failed to update distributor '
-                                + distributorId + ' during updating facilitator ' + req.params.facilitator_id}
+                                throw {httpStatus: 400, message: 'failed to update distributor ' + distributorId + ' during updating facilitator ' + req.params.facilitator_id};
                             }else{
                                 return userModel.updateQ({_id: req.params.facilitator_id}, facilitator);
                             }
@@ -269,12 +269,12 @@ exports.updateFacilitator = function(req, res, next){
         p = userModel.updateQ({_id: req.params.facilitator_id}, facilitator);
     }
 
-    p.then(function(numAffected){
-        if(numAffected===1){
-            return res.send({message: 'update success.'});
-        }else{
+    p.then(function(result){
+        var numAffected = result[0];
+        if(numAffected!==1){
             return res.send(400, {message: 'user does not exist.'});
         }
+        return res.send({message: 'update success.'});
     }).fail(function(err){
         next(err);
     }).done();
@@ -461,7 +461,9 @@ exports.updateStudent = function(req, res, next){
         }
 
         return userModel.updateQ({_id: student_id}, student);
-    }).then(function(numAffected){
+    }).then(function(result){
+        var numAffected = result[0];
+
         if(numAffected !== 1){
             if(numAffected > 1){
                 throw {httpStatus:400, message: "more than one row are updated."};
@@ -499,7 +501,7 @@ exports.resetStudentPassword = function(req, res, next){
         return resultStudent.saveQ();
 
     }).then(function(savedDoc){
-        if(!savedDoc ){
+        if(savedDoc[1] !== 1 ){
             throw new Error('Cancel promise chains. Because Update Password failed. More or less than 1 record is updated. it should be only one !');
         }
 

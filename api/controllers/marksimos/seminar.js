@@ -70,8 +70,9 @@ exports.addSeminar = function(req, res, next){
             numOfLicense: dbFacilitator.numOfLicense - 1,
             numOfUsedLicense: dbFacilitator.numOfUsedLicense + 1
         })
-    }).then(function(numAffected){
-        if(numAffected === 0 || numAffected > 1){
+    }).then(function(result){
+        var numAffected = result[0];
+        if(numAffected !== 1){
             throw new Error( "Cancel promise chains. update facilitator failed, or update more than one facilitator.");
         }
 
@@ -333,7 +334,8 @@ exports.removeStudentFromSeminar = function(req, res, next){
 
 
 
-    }).then(function(numberAffected){
+    }).then(function(result){
+        var numberAffected = result[0];
         if(numberAffected!==1){
             throw new Error('Cancel promise chains. Because Because Update seminar failed. More or less than 1 record is updated. it should be only one !');
         }

@@ -31,7 +31,7 @@ exports.updateStudentB2CInfo = function(req, res, next){
 
     req.user.saveQ().then(function(savedDoc) {
 
-        if(!savedDoc ){
+        if(savedDoc[1] !== 1 ){
             throw new Error('Cancel promise chains. Because Update User failed. More or less than 1 record is updated. it should be only one !');
         }
 
@@ -91,7 +91,7 @@ exports.updateStudentB2CPassword = function(req, res, next){
 
     }).then(function(savedDoc){
 
-        if(!savedDoc ){
+        if(savedDoc[1] !== 1 ){
             throw new Error('Cancel promise chains. Because Update Password failed. More or less than 1 record is updated. it should be only one !');
         }
 
@@ -171,7 +171,7 @@ exports.addStudentToTeam = function(req, res, next){
             resultTeam.memberList.push(userData._id);
             resultTeam.saveQ().then(function(savedDoc){
 
-                if(!savedDoc ){
+                if(savedDoc[1] !== 1 ){
                     throw new Error('Cancel promise chains. Because Update Team failed. more or less than 1 record is updated. it should be only one !');
                 }
 
@@ -239,7 +239,7 @@ exports.removeStudentToTeam = function(req, res, next){
 
     }).then(function(savedDoc){
 
-        if(!savedDoc ){
+        if(savedDoc[1] !== 1 ){
             throw new Error('Cancel promise chains. Because Update Team failed. more or less than 1 record is updated. it should be only one !');
         }
 
