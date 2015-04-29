@@ -92,6 +92,15 @@ tagSchema.statics.addValidations = function(req){
 };
 
 
+
+
+
+tagSchema.statics.selectFields = function(){
+    return '-createdAt -updatedAt -__v';
+};
+
+
+
 /**
  * Methods
  */

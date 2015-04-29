@@ -996,20 +996,18 @@
                                     <tr>
                                         <th style="width:100px">Action</th>
                                         <th>Type</th>
-                                        <th>Name</th>
-                                        <th>Description</th>
-                                        <th>Question</th>
-                                        <th>Answer</th>
+                                        <th>Name / Question</th>
+                                        <th>Description / Answer</th>
+                                        <th>Tags</th>
                                     </tr>
                                     <tr ng-repeat="glossary in data.glossaries" >
                                         <td style="width:100px">
                                             <button type="button" class="btn btn-danger" ng-click="showEditCampaignMenu(glossary)" >Modify</button>
                                         </td>
                                         <td><span ng-show="glossary.type==10">Glossary</span><span ng-show="glossary.type==20">FAQ</span></td>
-                                        <td data-highlight-key="data.searchGlossary.keyword">{{glossary.name}}</td>
-                                        <td >{{glossary.description}}</td>
-                                        <td data-highlight-key="data.searchGlossary.keyword">{{glossary.question}}</td>
-                                        <td >{{glossary.answer}}</td>
+                                        <td data-highlight-key="data.searchGlossary.keyword">{{glossary.name}} / {{glossary.question}}</td>
+                                        <td >{{glossary.description}} / {{glossary.answer}}</td>
+                                        <td ><span ng-repeat="tag in glossary.tagList">{{tag.name}}, </span></td>
                                     </tr>
                                     </tbody>
                                 </table>
@@ -1042,12 +1040,11 @@
                                     <div class="form-group has-feedback ">
                                         <label class="col-sm-2 control-label">Tags :</label>
                                         <div class=" col-sm-4">
-                                            <tags-input ng-model="data.newGlossary.tagList">
-                                                <!--<auto-complete source="loadTag($query)" display-property="text"></auto-complete>-->
+                                            <tags-input ng-model="data.newGlossary.tagList" min-length="2">
+                                                <auto-complete source="loadTag($query)" min-length="2"></auto-complete>
                                             </tags-input>
                                         </div>
                                     </div>
-
 
                                 </div>
 

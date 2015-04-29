@@ -43,13 +43,24 @@ exports.updateTag = function(req, res, next){
 
 exports.searchTag = function(req, res, next){
 
-    var keywordSearch = req.query.keyword || '';
+    var keywordSearch = req.query || '';
+    var keywordTag = '';
+
+    for (var prop in keywordSearch) {
+        // important check that this is objects own property
+        // not from prototype prop inherited
+        if(keywordSearch.hasOwnProperty(prop)){
+            keywordTag = keywordTag + keywordSearch[prop];
+        }
+    }
+
+
 
     var query = {};
 
 
-    if (keywordSearch) {
-        var strRegex = ".*[" + keywordSearch.split('').join('][') + "].*";
+    if (keywordTag) {
+        var strRegex = ".*[" + keywordTag.split('').join('][') + "].*";
         var regex = { $regex: strRegex , $options: 'i' }; // $options : 'i' Means case insensitivity to match upper and lower cases. 不区分大小写
 
         query.$or = [
@@ -57,10 +68,17 @@ exports.searchTag = function(req, res, next){
         ];
     }
 
-    tagModel.find(query).sort({updatedAt:-1}).execQ().then(function(results){
+    tagModel.find(query).sort({updatedAt:-1}).select(tagModel.selectFields()).execQ().then(function(results){
 
+        var tagResultTextArray = [];
         if(results){
-            return res.status(200).send(results);
+
+            results.forEach(function(tag){
+                tagResultTextArray.push(tag.name);
+            });
+
+
+            return res.status(200).send(tagResultTextArray);
         }
 
 

@@ -109,7 +109,7 @@ exports.searchGlossary = function(req, res, next){
         ];
     }
 
-    glossaryModel.find(query).sort({updatedAt:-1}).execQ().then(function(results){
+    glossaryModel.find(query).sort({updatedAt:-1}).populate('tagList', tagModel.selectFields()).execQ().then(function(results){
 
         if(results){
             return res.status(200).send(results);
