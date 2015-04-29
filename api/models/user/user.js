@@ -123,7 +123,9 @@ var userSchema = new Schema({
         achievements: [{
             description: String
         }]
-    }]
+    }],
+
+    bbsUid: Number
 });
 
 
