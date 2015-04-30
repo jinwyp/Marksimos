@@ -274,7 +274,8 @@ $color_chat_me: #1289fe;
         width: 100%;
         resize: none;
         padding: 6px 14px;
-        margin-bottom: -6px; /*wtf spaces*/
+        height: 99px; //for fucking ie
+        //margin-bottom: -6px; /*wtf spaces*/
         border-top: 1px solid $color_chat_border;
         border-bottom: 1px solid $color_chat_border;
         border-left: none;
