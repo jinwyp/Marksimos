@@ -433,7 +433,7 @@ exports.registerB2CStudent = function(req, res, next){
         }).done();
 
         //register nodeBB user
-        if (process.env.NODE_ENV === 'ken')
+        if (process.env.NODE_ENV === 'production' || process.env.NODE_ENV === 'ken')
         {
             request.post({
                 url    : config.bbsService + 'api/v1/users',
