@@ -588,7 +588,6 @@ exports.activateRegistrationEmail = function(req, res, next){
         //if(numberAffectedRows !== 1){
         //    throw new Error('Cancel promise chains. Because Update user emailActivated status failed. more or less than 1 record is updated. it should be only one !');
         //}
-
         if(savedDoc[1] !== 1 ){
             throw new Error('Cancel promise chains. Because Update user emailActivated status failed. more or less than 1 record is updated. it should be only one !');
         }
