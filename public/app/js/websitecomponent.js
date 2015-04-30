@@ -81,7 +81,7 @@
                 scope.$watchCollection('dictionaryMessages', scrollToBottom);
 
                 function scrollToBottom() {
-                    if (scope.seminarMessages.length || scope.companyMessages.length) {
+                    if (scope.seminarMessages.length || (scope.companyMessages && scope.companyMessages.length)) {
                         scope.css.newMessage = true;
                     }
 
@@ -663,28 +663,48 @@
             restrict: 'AE',
             compile: function (tElement, tAttrs) {
                 return function (scope, tElement, tAttrs) {                  
-                    scope.$watch(tAttrs, function () {
-
+                    scope.$watch(tAttrs, function (newValue, oldValue) {
                         if (scope.key) {
-                            var keys = angular.isArray(scope.key) ? scope.key : [scope.key];
+                            var keys = angular.isArray(scope.key) ? scope.key.slice() : [scope.key];
                             keys.forEach(function(key, i) {
                                 // use [] to escape some meta chars, like '+!' .
                                 keys[i] = '[' + key.split('').join('][') + ']';
                             });
-                            // wrap the key into ([k][e][y])?
-                            keys = '([\\W\\w]*?)(' + keys.join('|') + ')?([\\W\\w]*?)';
-                            var tagREStr = '</?[a-z-]+[\\W\\w]*?>';
-
-
-                            var html = tElement.html();
-                            html = html.replace(new RegExp(keys + tagREStr + keys, "ig"), function (match, s1, s2, s3, s4, s5, s6) {
-
-                                return "<span class='text-danger'>" + match + "</span>";
-                            });
-                            tElement.html(html);
+                            keys = keys.join('|');
+                            var re = new RegExp(keys, "ig");
+                            replace(tElement[0], re);
                         }
                     });
                 };
+
+                function replace(node, re) {
+                    var childNodes = node.childNodes,
+                        textNodes = [],
+                        elements = [];
+
+                    for (var i = 0; i < childNodes.length; i++) {
+                        var childNode = childNodes[i];
+                        if (childNode.nodeType == 3) {
+                            textNodes.push(childNode);
+                        } else if (childNode.nodeType == 1) {
+                            elements.push(childNode);
+                        }
+                    }
+
+                    for (i = 0; i < textNodes.length; i++) {
+                        var html = textNodes[i].nodeValue.replace(re, function(match) {
+                            return "<span class='text-danger'>" + match + "</span>";
+                        });
+                        if (html != textNodes[i].nodeValue) {
+                            var div = document.createElement('div');
+                            div.innerHTML = html;
+                            node.replaceChild(div, textNodes[i]);
+                            div.outerHTML = div.innerHTML;
+                        }
+                    }
+
+                    for (i = 0; i < elements; i++) replace(elements[i], re);
+                }
             }
         };
     });

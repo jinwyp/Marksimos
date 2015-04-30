@@ -3,7 +3,7 @@
         <div ng-click="clickToggleWindow()" class="hide-btn"><div class="icon-right"></div><div class="icon-right"></div></div>
 
         <ul class="header" ng-class="{'no-chat-header': hideChatHeader}">
-            <li ng-click="css.currentTab='dictionary'" ng-class="{active: css.currentTab == 'dictionary'}">Dictionary</li>
+            <li ng-if="!hideChatHeader" ng-click="css.currentTab='dictionary'" ng-class="{active: css.currentTab == 'dictionary'}">Dictionary</li>
             <li ng-click="css.currentTab='chat'" ng-class="{active: css.currentTab == 'chat'}" class="active">Chat</li>
         </ul>
 
@@ -13,7 +13,7 @@
                     <div ng-if="dictionaryMessages.noResult" class="no-result text-center">Sorry, no result.</div>
                     <div class="result" ng-repeat="message in dictionaryMessages.glossaries">
                         <div class="question row">
-                            <p class="col-xs-10" data-hightlight-key="dictionaryMessages.tags">{{message.name || message.question}}</p>
+                            <p class="col-xs-10" data-highlight-key="dictionaryMessages.tags">{{message.name || message.question}}</p>
                             <div class="col-xs-2 text-right" ng-init="message.show=false">
                                 <button ng-if="!message.show" ng-click="message.show=true" class="glyphicon glyphicon-plus extend btn btn-default"></button>
                                 <button ng-if="message.show" ng-click="message.show=false" class="collapse glyphicon glyphicon-minus btn btn-default"></button>
@@ -101,7 +101,7 @@
         </div>
         <div>
             <div ng-click="clickToggleWindow('chat')" class="chat-icon icon" ng-class="{active: css.newMessage}"></div>
-            <div ng-click="clickToggleWindow('dictionary')" class="dictionary-icon icon"></div>
+            <div ng-if="!hideChatHeader" ng-click="clickToggleWindow('dictionary')" class="dictionary-icon icon"></div>
         </div>
     </div>
 </div>

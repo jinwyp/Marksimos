@@ -266,7 +266,7 @@
         .chat-container {
             position: fixed;
             right: -244px;
-            z-index: 9999;
+            z-index: 9998;
             background-color: white;
             width: 244px;
             height: 600px;
@@ -285,21 +285,28 @@
             top: 0;
             left: -51px;
             width: 51px;
-            height: 52px;
             border: 1px solid #DDD;
         }
+        .chat-container .chat-icon-wrapper .icon {
+            height: 36px;
+        }
+        .chat-container .chat-icon-wrapper .icon:hover {
+            background-color: #F5F5F5;
+        }
         .chat-container .chat-icon-wrapper .chat-icon {
-            background-image: url('/app/css/images/icon/iconmenuchat.png');
+            background-position: 50%;
+            background-image: url("/app/css/images/icon/iconmenuchat.png");
             background-repeat: no-repeat;
-            background-position: 0 0px;
-            height: 16px;
-            width: 16px;
         }
         .chat-container .chat-icon-wrapper .chat-icon.active {
-            background-image: url('/app/css/images/icon/iconmenuchatactive.gif');
+            background-image: url("/app/css/images/icon/iconmenuchatactive.gif");
+            background-position: 50%;
+            background-repeat: no-repeat;
         }
-        .chat-container .chat-icon-wrapper > div:not(.hide-btn) {
-            padding: 8px 17px;
+        .chat-container .chat-icon-wrapper .dictionary-icon {
+            background-position: 50%;
+            background-image: url("/app/css/images/icon/iconmenubook.png");
+            background-repeat: no-repeat;
         }
         .chat-container .hide-btn {
             padding-left: 3px;
@@ -320,15 +327,31 @@
             transform: rotate(45deg);
         }
         .chat-container .header {
-            font-size: 12px;
-            font-weight: bold;
             text-align: center;
             margin: 0;
-            padding-top: 12px;
-            /*        border-top: 5px solid $color_chat_active;*/
+            cursor: pointer;
+        }
+        .chat-container .header li {
+            display: inline-block;
+            width: 50%;
+            padding: 16px 0;
+            border-bottom: 1px solid #DDD;
+            background: #FBFBFB;
+        }
+        .chat-container .header li:not(:first-child) {
+            border-left: 1px solid #DDD;
+        }
+        .chat-container .header li.active {
+            padding-top: 13px;
+            border-bottom: none;
+            border-top: 3px #2E4E9A solid;
+            background-color: white;
         }
         .chat-container .header.no-chat-header {
-            padding-bottom: 12px;
+            padding: 0;
+        }
+        .chat-container .header.no-chat-header li {
+            width: 100%;
         }
         .chat-container .chat-header {
             height: 60px;
@@ -351,20 +374,20 @@
             background-color: #E6E6E6;
         }
         .chat-container .chat-header .btn.seminar {
-            background-position: 0 -1191px;
-            background-position: 13px -1185px;
+            background-position: 0 -1351px;
+            background-position: 13px -1345px;
         }
         .chat-container .chat-header .btn.seminar.active {
-            background-position: 0 -1337px;
-            background-position: 13px -1331px;
+            background-position: 0 -1497px;
+            background-position: 13px -1491px;
         }
         .chat-container .chat-header .btn.company {
-            background-position: 0 -899px;
-            background-position: 13px -893px;
+            background-position: 0 -1059px;
+            background-position: 13px -1053px;
         }
         .chat-container .chat-header .btn.company.active {
-            background-position: 0 -1045px;
-            background-position: 13px -1039px;
+            background-position: 0 -1205px;
+            background-position: 13px -1199px;
         }
         .chat-container .chat-header .indicator {
             position: absolute;
@@ -376,16 +399,55 @@
         .chat-container .chat-header .indicator.left {
             left: 52px;
         }
+        .chat-container .dictionary-body .messages {
+            height: 432px;
+            padding: 15px;
+            overflow: auto;
+        }
+        .chat-container .dictionary-body .messages .no-result {
+            padding: 10px;
+        }
+        .chat-container .dictionary-body .messages .question p {
+            word-break: break-all;
+            margin-bottom: 5px;
+        }
+        .chat-container .dictionary-body .messages .question button {
+            font-size: 10px;
+            width: 17px;
+            height: 17px;
+            padding: 0;
+            border-radius: 2px;
+            color: #737373;
+        }
+        .chat-container .dictionary-body .messages .question button.extend {
+            padding-left: 1px;
+        }
+        .chat-container .dictionary-body .messages .question button.collapse {
+            display: inline-block;
+            visibility: visible;
+            padding-right: 1px;
+        }
+        .chat-container .dictionary-body .messages .answer {
+            color: #999;
+            padding: 5px;
+            border: #ECEFF1 1px solid;
+            border-radius: 2px;
+            background-color: #F8F8F8;
+            word-break: break-all;
+        }
+        .chat-container .dictionary-body .messages .result {
+            margin-bottom: 20px;
+        }
         .chat-container .chat-body {
             border-top: 1px solid #DDD;
         }
         .chat-container .chat-body .messages {
             padding: 14px;
-            height: 396px;
+            height: 371px;
             overflow: auto;
         }
         .chat-container .chat-body .messages.no-chat-header {
-            height: 444px;
+            height: 432px;
         }
         .chat-container .chat-body .message {
             clear: both;
@@ -453,7 +515,7 @@
             border-bottom-left-radius: 1em 0.5em;
             box-sizing: content-box;
         }
-        .chat-container .chat-body .message-send form textarea {
+        .chat-container .message-send form textarea {
             width: 100%;
             resize: none;
             padding: 6px 14px;

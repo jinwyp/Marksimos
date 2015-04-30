@@ -95,7 +95,10 @@ $color_chat_me: #1289fe;
             }
         }
         &.no-chat-header {
-            padding-bottom: 12px;
+            padding: 0;
+            li {
+                width: 100%;
+            }
         }
     }
     .chat-header {
@@ -156,7 +159,7 @@ $color_chat_me: #1289fe;
             }
             .question {
                 p {
-                    //display: inline-block;
+                    // display: inline-block;
                     //width: 196px;
                     word-break: break-all;
                     margin-bottom: 5px;
@@ -201,7 +204,7 @@ $color_chat_me: #1289fe;
             height: 371px;
             overflow: auto;
             &.no-chat-header {
-                height: 419px;
+                height: 432px;
             }
         }
         .message{
