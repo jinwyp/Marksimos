@@ -7,8 +7,8 @@ var teamModel = require('../../models/user/team.js');
 var fileUploadModel = require('../../models/user/fileupload.js');
 var _ = require('lodash');
 var request = require('request');
-
 var config = require('../../../common/config.js');
+var resetBbsPassword = require('./authentication.js').resetBbsPassword;
 
 //var ObjectId = require('mongoose').Types.ObjectId;
 
@@ -68,9 +68,6 @@ exports.uploadStudentAvatar = function(req, res, next){
 };
 
 
-
-
-
 exports.updateStudentB2CPassword = function(req, res, next){
 
     var validationErrors = userModel.passwordValidations(req, userRoleModel.roleList.student.id, userModel.getStudentType().B2C);
@@ -98,22 +95,8 @@ exports.updateStudentB2CPassword = function(req, res, next){
             throw new Error('Cancel promise chains. Because Update Password failed. More or less than 1 record is updated. it should be only one !');
         }
 
-        if(savedDoc.bbsUid){
-            request.put({
-                url    : config.bbsService + 'api/v1/users/' + savedDoc.bbsUid + '/password',
-                headers: {
-                    Authorization: 'Bearer ' + config.bbsToken
-                },
-                form   : {
-                    currentPassword: req.body.passwordOld,
-                    newPassword    : req.body.passwordNew
-                }
-            }, function(err, res){
-                if (err) {
-                    console.log('Reister new user for NodeBB failed!' + err);
-                    return;
-                }
-            });
+        if(savedDoc[0].bbsUid){
+            resetBbsPassword(savedDoc[0].bbsUid, req.body.passwordNew);
         }
 
         return res.status(200).send({message: 'Student password update success'});
