@@ -396,7 +396,7 @@
             RegisterPageCheckEmailText4           : 'Open immediately',
 
             //Introduction
-            RegisterPageIntroduction1             : 'What is E4E?',
+            RegisterPageIntroduction1             : 'What is Bridge+?',
             RegisterPageIntroduction2             : 'What can we provide to you?',
 
 
@@ -858,7 +858,7 @@
             RegisterPageCheckEmailText4           : '立即查看',
 
             //Introduction
-            RegisterPageIntroduction1             : '什么是E4E?',
+            RegisterPageIntroduction1             : '什么是Bridge+?',
             RegisterPageIntroduction2             : '我们可以为你带来什么?',
 
 
