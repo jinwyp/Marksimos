@@ -61,15 +61,19 @@
 
                     if (event.keyCode != 13 || event.target.tagName.toUpperCase() != 'TEXTAREA' || (!scope.data.seminarInput && !scope.data.companyInput && !scope.data.dictionaryInput) ) return;
 
-                    if (event.target.matches('.seminar')) {
+                    var target = event.target;
+                    var matches = target.matches || target.msMatchesSelector;
+                    matches = matches.bind(target);
+
+                    if (matches('.seminar')) {
                         $q.when(scope.sendSeminarMessage({messageInput: scope.data.seminarInput})).then(function() {
                             scope.data.seminarInput = '';
                         });
-                    } else if(event.target.matches('.company')) {
+                    } else if(matches('.company')) {
                         $q.when(scope.sendCompanyMessage({messageInput: scope.data.companyInput})).then(function() {
                             scope.data.companyInput = '';
                         });
-                    } else if(event.target.matches('.dictionary')) {
+                    } else if(matches('.dictionary')) {
                         $q.when(scope.sendDictionaryMessage({messageInput: scope.data.dictionaryInput})).then(function() {
                             scope.data.dictionaryInput = '';
                         });

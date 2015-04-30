@@ -589,15 +589,14 @@ exports.activateRegistrationEmail = function(req, res, next){
         //if(numberAffectedRows !== 1){
         //    throw new Error('Cancel promise chains. Because Update user emailActivated status failed. more or less than 1 record is updated. it should be only one !');
         //}
-
         if(savedDoc[1] !== 1 ){
             throw new Error('Cancel promise chains. Because Update user emailActivated status failed. more or less than 1 record is updated. it should be only one !');
         }
 
         return res.render('b2c/registration/indexregsuccess.ejs', {
             title     : ' Email Activate Success ! | HCD Learning',
-            username  : savedDoc.username,
-            useremail : savedDoc.email
+            username  : savedDoc[0].username,
+            useremail : savedDoc[0].email
         });
 
     }).fail(function(err){

@@ -3,7 +3,7 @@
         <div ng-click="clickToggleWindow()" class="hide-btn"><div class="icon-right"></div><div class="icon-right"></div></div>
 
         <ul class="header" ng-class="{'no-chat-header': hideChatHeader}">
-            <li ng-if="!hideChatHeader" ng-click="css.currentTab='dictionary'" ng-class="{active: css.currentTab == 'dictionary'}">Dictionary</li>
+            <li ng-if="!hideChatHeader" ng-click="css.currentTab='dictionary'" ng-class="{active: css.currentTab == 'dictionary'}">Glossary</li>
             <li ng-click="css.currentTab='chat'" ng-class="{active: css.currentTab == 'chat'}" class="active">Chat</li>
         </ul>
 
@@ -13,15 +13,15 @@
                     <div ng-if="dictionaryMessages.noResult" class="no-result text-center">Sorry, no result.</div>
                     <div class="result" ng-repeat="message in dictionaryMessages.glossaries">
                         <div class="question row">
-                            <p class="col-xs-10" data-highlight-key="dictionaryMessages.tags">{{message.name || message.question}}</p>
+                            <p class="col-xs-10" data-highlight-key="dictionaryMessages.tags" ng-if="message.type==10">{{message.name}}</p>
+                            <p class="col-xs-10" data-highlight-key="dictionaryMessages.tags" ng-if="message.type==20">{{ message.question}}</p>
                             <div class="col-xs-2 text-right" ng-init="message.show=false">
                                 <button ng-if="!message.show" ng-click="message.show=true" class="glyphicon glyphicon-plus extend btn btn-default"></button>
                                 <button ng-if="message.show" ng-click="message.show=false" class="collapse glyphicon glyphicon-minus btn btn-default"></button>
                             </div>
                         </div>
-                        <div class="answer" ng-if="message.show">
-                            {{message.description || message.answer}}
-                        </div>
+                        <div class="answer" ng-if="message.show&&message.type==10">{{message.description }}</div>
+                        <div class="answer" ng-if="message.show&&message.type==20">{{ message.answer}}</div>
                     </div>
                 </div>
 

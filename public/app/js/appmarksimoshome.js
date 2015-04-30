@@ -1645,7 +1645,7 @@
                 //});
             }, function(data){
                 notify({
-                    message  : data.data.message,
+                    message  : Student.errorHandler(data.data.message) ,
                     templateUrl : notifytemplate.failure,
                     position : 'center'
                 });
@@ -1664,7 +1664,7 @@
                 //});
             }, function(data){
                 notify({
-                    message  : data.data.message,
+                    message  : Student.errorHandler(data.data.message) ,
                     templateUrl : notifytemplate.failure,
                     position : 'center'
                 });
@@ -1685,7 +1685,7 @@
                 $scope.data.glossaries.noResult = !data.data.glossaries.length;
             }, function(data){
                 notify({
-                    message  : data.data.message,
+                    message  : Student.errorHandler(data.data.message),
                     templateUrl : notifytemplate.failure,
                     position : 'center'
                 });
