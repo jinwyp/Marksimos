@@ -125,8 +125,8 @@ module.exports = (function(){
             config.mongo_conn = 'mongodb://marksimosdbadmin:marksimossunhao@127.0.0.1:27017/Marksimos';
             config.host = 'http://121.40.121.187:3000/';
             config.cgiService = 'http://10.171.251.169/cgi-bin/';
-            config.bbsService = 'http://community.hcdlearning.com/'; //TODO: change to intranet IP
-            config.bbsToken = 'xxxx';
+            config.bbsService = 'http://10.171.248.11/';
+            config.bbsToken = '2ac528cb-b29c-4841-b0e8-2438c01d9f44';
             break;
         default:
             throw new Error("Invalid process.env.NODE_ENV");

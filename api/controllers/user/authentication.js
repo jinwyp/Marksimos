@@ -433,7 +433,7 @@ exports.registerB2CStudent = function(req, res, next){
         }).done();
 
         //register nodeBB user
-        if (process.env.NODE_ENV === 'ken')
+        if (process.env.NODE_ENV === 'production' || process.env.NODE_ENV === 'ken')
         {
             request.post({
                 url    : config.bbsService + 'api/v1/users',
@@ -703,6 +703,23 @@ exports.verifyResetPasswordCode = function(req, res, next){
 };
 
 
+var resetBbsPassword = function(uid, passwordNew){
+    request.put({
+        url    : config.bbsService + 'api/v1/users/' + uid + '/password_reset',
+        headers: {
+            Authorization: 'Bearer ' + config.bbsToken
+        },
+        form   : {
+            newPassword    : passwordNew
+        }
+    }, function(err, res){
+        if (err) {
+            console.log('reset password for NodeBB failed!' + err);
+            return;
+        }
+    });
+}
+exports.resetBbsPassword = resetBbsPassword;
 
 exports.resetNewPassword = function(req, res, next){
 
@@ -731,7 +748,9 @@ exports.resetNewPassword = function(req, res, next){
         if(savedDoc[1] !== 1 ){
             throw new Error('Cancel promise chains. Because Update reset Password failed. More or less than 1 record is updated. it should be only one !');
         }
-
+        if(savedDoc[0].bbsUid){
+            resetBbsPassword(savedDoc[0].bbsUid, req.body.password);
+        }
         return res.status(200).send({message: 'Reset New Password Success.'});
 
     }).fail(function(err){

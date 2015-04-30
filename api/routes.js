@@ -339,6 +339,8 @@ apiRouter.post('/marksimos/api/admin/campaigns/teams/remove', auth.authLoginToke
 //Facilitator manager seminars
 apiRouter.get('/marksimos/api/admin/facilitator/seminar', auth.authLoginToken(), auth.authRole(marksimosRight.seminarListOfFacilitatorGet), seminarController.getSeminarOfFacilitator);
 apiRouter.post('/marksimos/api/admin/seminar', auth.authLoginToken(), auth.authRole(marksimosRight.seminarSingleCUD), seminarController.addSeminar);
+apiRouter.put('/marksimos/api/admin/seminar', auth.authLoginToken(), auth.authRole(marksimosRight.seminarSingleCUD), seminarController.updateSeminar);
+
 
 apiRouter.post('/marksimos/api/admin/assign_student_to_seminar', auth.authLoginToken(), auth.authRole(marksimosRight.seminarAssignStudentCUD), seminarController.assignStudentToSeminar);
 apiRouter.post('/marksimos/api/admin/remove_student_from_seminar', auth.authLoginToken(), auth.authRole(marksimosRight.seminarAssignStudentCUD), seminarController.removeStudentFromSeminar);

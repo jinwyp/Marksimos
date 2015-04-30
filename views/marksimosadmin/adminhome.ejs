@@ -554,14 +554,17 @@
                                             <button type="button" class="btn btn-info btn-sm" ng-show="seminar.seminarId==css.currentRunSeminarId" ng-click="runSeminar(seminar.seminarId, seminar.companyMember)" ng-disabled="css.runButtonDisabled">Confirm Yes</button>
                                             <button type="button" class="btn btn-primary btn-sm" ng-show="seminar.seminarId==css.currentRunSeminarId" ng-click="showRunSeminarConfirmNo()" >No</button>
                                         </td>
-                                        <td data-highlight-key="data.searchSeminar.filterKey">{{seminar.seminarId}}
+                                        <td ><span data-highlight-key="data.searchSeminar.filterKey">{{seminar.seminarId}}</span>
                                             <a href="adminhomereport/{{seminar.seminarId}}" target="_blank"  ng-show="seminar.isInitialized"> Report</a>
                                         </td>
                                         <td data-highlight-key="data.searchSeminar.filterKey">{{seminar.description}}</td>
                                         <td>{{seminar.isInitialized}} / {{seminar.isSimulationFinished}}</td>
                                         <td>{{seminar.country}} / {{seminar.state}} / {{seminar.city}} </td>
                                         <td data-highlight-key="data.searchSeminar.filterKey">{{seminar.venue}}</td>
-                                        <td>{{seminar.currentPeriod}} / {{seminar.simulationSpan}} </td>
+                                        <td>{{seminar.currentPeriod}} / {{seminar.simulationSpan}}
+                                            <button type="button" class="btn btn-info" ng-hide="seminar.showLastPeriodScore" ng-click="showFinalScore(seminar)" >Show Score Page</button>
+                                            <button type="button" class="btn btn-info" ng-show="seminar.showLastPeriodScore" ng-click="hideFinalScore(seminar)" >Hide Score Page</button>
+                                        </td>
                                         <td>{{seminar.companyNum}} </td>
                                         <td>
                                             <p ng-repeat="company in seminar.companyAssignment">Company{{company.companyId | companyname }} :

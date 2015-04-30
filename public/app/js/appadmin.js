@@ -152,7 +152,7 @@
             },
             students: [],
 
-
+            updateSeminar : {},
             newSeminar: {
                 description: "",
                 country: null,
@@ -971,6 +971,37 @@
             $scope.css.showConfirm = false;
         };
 
+        /********************  Show Final Score  ********************/
+        $scope.showFinalScore = function(seminar){
+            $scope.data.updateSeminar = {
+                id : seminar._id,
+                showLastPeriodScore : true
+            };
+
+            Admin.updateSeminar($scope.data.updateSeminar).success(function(data, status, headers, config) {
+                app.getSeminarInit();
+                $notification.success('Save success', 'Update Seminar success');
+
+            }).error(function(data, status, headers, config) {
+                console.log(data);
+                $notification.error('Failed', data.message);
+            });
+        };
+        $scope.hideFinalScore = function(seminar){
+            $scope.data.updateSeminar = {
+                id : seminar._id,
+                showLastPeriodScore : false
+            };
+
+            Admin.updateSeminar($scope.data.updateSeminar).success(function(data, status, headers, config) {
+                app.getSeminarInit();
+                $notification.success('Save success', 'Update Seminar success');
+
+            }).error(function(data, status, headers, config) {
+                console.log(data);
+                $notification.error('Failed', data.message);
+            });
+        };
 
 
 

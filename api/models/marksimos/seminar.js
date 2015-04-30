@@ -73,6 +73,15 @@ seminarSchema.statics.findSeminarByUserId = function (userid) {
 
 
 
+seminarSchema.statics.updateValidations = function(req){
+
+    req.assert('id', 'Seminar mongoose ID should be 24 characters').notEmpty().len(24, 24);
+    req.sanitize('showLastPeriodScore').toBoolean();
+
+    return req.validationErrors();
+};
+
+
 
 /**
  * Methods
