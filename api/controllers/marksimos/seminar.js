@@ -3,11 +3,12 @@ var gameTokenModel = require('../../models/user/gameauthtoken.js');
 var userModel = require('../../models/user/user.js');
 var userRoleModel = require('../../models/user/userrole.js');
 var teamModel = require('../../models/user/team.js');
+var chatmessageModel = require('../../models/b2c/chatmessage.js');
 
 var logger = require('../../../common/logger.js');
 var consts = require('../../consts.js');
 var utility = require('../../../common/utility.js');
-
+var socketio = require('../../../common/socketio.js');
 
 
 
@@ -69,8 +70,9 @@ exports.addSeminar = function(req, res, next){
             numOfLicense: dbFacilitator.numOfLicense - 1,
             numOfUsedLicense: dbFacilitator.numOfUsedLicense + 1
         })
-    }).then(function(numAffected){
-        if(numAffected === 0 || numAffected > 1){
+    }).then(function(result){
+        var numAffected = result[0];
+        if(numAffected !== 1){
             throw new Error( "Cancel promise chains. update facilitator failed, or update more than one facilitator.");
         }
 
@@ -94,6 +96,41 @@ exports.addSeminar = function(req, res, next){
         next(err);
     }).done();
 };
+
+
+
+
+
+
+exports.updateSeminar = function(req, res, next){
+    var validationErrors = seminarModel.updateValidations(req);
+
+    if(validationErrors){
+        return res.status(400).send( {message: validationErrors} );
+    }
+
+
+    seminarModel.findOneQ({_id: req.body.id}).then(function(resultSeminar){
+        if(!resultSeminar){
+            throw new Error( "Cancel promise chains. seminar not found.");
+        }
+
+        resultSeminar.showLastPeriodScore = req.body.showLastPeriodScore;
+
+        return resultSeminar.saveQ();
+    }).then(function(result){
+        if(result[1] !== 1){
+            throw new Error( "Cancel promise chains. update seminar failed, No seminar or more than one seminar update.");
+        }
+
+        return res.status(200).send(result);
+    }).fail(function(err){
+        next(err);
+    }).done();
+};
+
+
+
 
 
 
@@ -332,7 +369,8 @@ exports.removeStudentFromSeminar = function(req, res, next){
 
 
 
-    }).then(function(numberAffected){
+    }).then(function(result){
+        var numberAffected = result[0];
         if(numberAffected!==1){
             throw new Error('Cancel promise chains. Because Because Update seminar failed. More or less than 1 record is updated. it should be only one !');
         }
@@ -616,8 +654,69 @@ function validateSeminar(req){
 }
 
 
+exports.sendChatMessageSeminar = function(req, res, next) {
+
+    var validationErrors = chatmessageModel.createValidations(req, req.user.role);
+
+    if(validationErrors){
+        return res.status(400).send( {message: validationErrors} );
+    }
+
+    var socketRoom;
+
+    if(userRoleModel.roleList.facilitator.id === req.user.role){
+        socketRoom = req.body.seminarRoom;
+    }else if(userRoleModel.roleList.student.id === req.user.role){
+        socketRoom = req.gameMarksimos.socketRoom.seminar;
+    }
+
+    chatmessageModel.createQ({
+        text: req.body.message,
+        creator: req.user._id,
+        room: {
+            roomNumber: socketRoom
+        }
+    }).then(function(resultMessage){
+
+        if(!resultMessage ){
+            throw new Error('Cancel promise chains. Because Create New ChatMessage failed !');
+        }
+
+        return res.status(200).send({message: 'Create New Chat Message success'});
+
+    }).fail(next).done();
+
+    socketio.emitMarksimosChatMessageSeminar(socketRoom, req.user, req.body.message);
+};
 
 
+
+exports.sendChatMessageSeminarCompany = function(req, res, next) {
+
+    var validationErrors = chatmessageModel.createValidations(req, req.user.role);
+
+    if(validationErrors){
+        return res.status(400).send( {message: validationErrors} );
+    }
+
+    chatmessageModel.createQ({
+        text: req.body.message,
+        creator: req.user._id,
+        room: {
+            roomNumber: req.gameMarksimos.socketRoom.company
+        }
+    }).then(function(resultMessage){
+
+        if(!resultMessage ){
+            throw new Error('Cancel promise chains. Because Create New ChatMessage failed !');
+        }
+
+        return res.status(200).send({message: 'Create New Chat Message success'});
+
+    }).fail(next).done();
+
+    socketio.emitMarksimosChatMessageCompany(req.gameMarksimos.socketRoom.company, req.user, req.body.message);
+};
 
 
 

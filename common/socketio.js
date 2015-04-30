@@ -5,7 +5,9 @@
 'use strict';
 
 var seminarModel = require('../api/models/marksimos/seminar');
+var chatmessageModel = require('../api/models/b2c/chatmessage');
 var Token = require('../api/models/user/authenticationtoken');
+var userRole = require('../api/models/user/userrole');
 var _ = require('lodash');
 
 var logger = require('./logger.js');
@@ -53,23 +55,42 @@ exports.init = function (socketio) {
     socketio.on('connection', function (socket) {
         var token = socket.handshake.query.token;
         var roomMarksimosCompany;
+        var roomSeminar;
 
         Token.verifyToken(token, function(err, user) {
 
-            if(err){
+            if(err || user===null){
                 logger.error(err);
-            }else{
-                seminarModel.findSeminarByUserId(user._id).then(function(seminarResult){
-                    var company = _.find(seminarResult.companyAssignment, function(company) {
-                        return company.studentList.indexOf(user.email) > -1;
-                    });
+                socket.disconnect('unauthorized');
+            }else {
+                if (userRole.roleList.student.id == user.role){
+                    seminarModel.findSeminarByUserId(user._id).then(function (seminarResult) {
+                        var company = _.find(seminarResult.companyAssignment, function (company) {
+                            return company.studentList.indexOf(user.email) > -1;
+                        });
 
-                    roomMarksimosCompany = seminarResult.seminarId.toString() + company.companyId.toString();
-                    socket.join(roomMarksimosCompany);
+                        roomMarksimosCompany = seminarResult.seminarId.toString() + company.companyId.toString();
+                        socket.join(roomMarksimosCompany);
 
-                }).fail(function(err){
-                    logger.error(err);
-                }).done();
+                        roomSeminar = seminarResult.seminarId.toString();
+                        socket.join(roomSeminar);
+
+                    }).fail(function (err) {
+                        logger.error(err);
+                    }).done();
+                }
+                else if(!_.isUndefined(socket.handshake.query.seminarId && userRole.roleList.facilitator.id == user.role)) {
+
+                    seminarModel.findOneQ({seminarId:socket.handshake.query.seminarId}).then(function (seminarResult) {
+
+                        if(user._id.equals(seminarResult.facilitatorId)){
+                            socket.join(socket.handshake.query.seminarId);
+                        }
+
+                    }).fail(function (err) {
+                        logger.error(err);
+                    }).done();
+                }
             }
 
         });
@@ -94,6 +115,23 @@ exports.init = function (socketio) {
 
 
 
-exports.emitMarksimosDecisionUpdate = function(roomName, message){
-    gsocketio.to(roomName).emit('marksimosDecisionUpdate', message);
+exports.emitMarksimosDecisionUpdate = function(roomName, data){
+    gsocketio.to(roomName).emit('marksimosDecisionUpdate', data);
+};
+
+
+exports.emitMarksimosChatMessageSeminar = function(roomName, user, message){
+
+    gsocketio.to(roomName).emit('marksimosChatMessageSeminarUpdate', {
+        user: _.pick(user, 'username', 'avatar'),
+        message: message
+    });
+};
+
+
+exports.emitMarksimosChatMessageCompany = function(roomName, user, message){
+    gsocketio.to(roomName).emit('marksimosChatMessageCompanyUpdate', {
+        user: _.pick(user, 'username', 'avatar'),
+        message: message
+    });
 };

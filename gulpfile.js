@@ -2,6 +2,7 @@
 var gulp = require('gulp'),
     argv = require('yargs').usage('Usage: $0 -p [num] -sid [num]').example('$0 -p 1 -sid 10001', 'count the lines in the given file').argv;
     livereload = require('gulp-livereload'),
+    replace = require('gulp-replace'),
     nodemon = require('gulp-nodemon'),
     jshint = require('gulp-jshint'),
     compass = require('gulp-compass'),
@@ -28,7 +29,7 @@ var paths = {
     angularTemplates: ['./public/app/js/commoncomponent/*.html', './public/app/js/report/*.html', './public/app/js/websitecomponent/*.html'],
 
     compass_config : './public/app/css/config.rb',
-    sassSourceFiles: './public/app/css/sass/*.scss',
+    sassSourceFiles: ['./public/app/css/sass/*.scss','./public/app/css/sass/*/*.scss','./public/app/css/sass/*/*/*.scss'],
     cssSourceFiles: './public/app/css/stylesheets/marksimosmain.css',
     cssOutputPath: './public/app/css/stylesheets',
     cssDistPath: './public/app/css/distcss/',
@@ -42,7 +43,9 @@ var paths = {
     scenario_testAdminRunSeminarNextRound: './api/test/marksimos/scenario/adminrunseminarnextround.js',
     scenario_testAdminReRunSeminar: './api/test/marksimos/scenario/adminrerundecision.js',
     scenario_testStudentUpdateDecisions: './api/test/marksimos/scenario/studentupdatedecision.js',
-    scenario_testStudentUpdateQuestionnaire: './api/test/marksimos/scenario/studentupdatequestionnaire.js'
+    scenario_testStudentUpdateQuestionnaire: './api/test/marksimos/scenario/studentupdatequestionnaire.js',
+
+    commentCcapFiles: ['api/controllers/user/authentication.js', 'api/routes.js']
 
 };
 
@@ -96,6 +99,7 @@ gulp.task('compass', function() {
             comments : false
         }))
         .pipe(gulp.dest(paths.cssOutputPath))
+        .pipe(livereload());
 
 });
 
@@ -160,6 +164,25 @@ gulp.task('mocha', function () {
         .pipe(mocha({reporter: 'nyan', timeout: 2000}));
 });
 
+// comment ccap files for windows
+gulp.task('commentCCAP', function() {
+    paths.commentCcapFiles.forEach(function(path) {
+        gulp.src(path)
+            .pipe(replace('// comment-captcha-start', '/*comment-captcha-start'))
+            .pipe(replace('// comment-captcha-end', 'comment-captcha-end*/'))
+            .pipe(gulp.dest(path + '/..'));
+    });
+});
+
+gulp.task('uncommentCCAP', function() {
+    paths.commentCcapFiles.forEach(function(path) {
+        gulp.src(path)
+            .pipe(replace('/*comment-captcha-start', '// comment-captcha-start'))
+            .pipe(replace('comment-captcha-end*/', '// comment-captcha-end'))
+            .pipe(gulp.dest(path + '/..'));
+    });
+});
+
 
 
 
@@ -202,8 +225,9 @@ gulp.task('nodemonjinlocal', function () {
 
 gulp.task('nodemonyuekecheng', function () {
     nodemon({
-        script: 'app.js',
-        env: { 'NODE_ENV': 'yuekecheng' }
+        script: 'commentCcapHook.js',
+        ignore: paths.commentCcapFiles,
+        env: { 'NODE_ENV': 'yuekecheng', PORT: 3000 }
     });
 //        .on('restart', 'default')
 });
@@ -217,20 +241,13 @@ gulp.task('watch', function() {
     gulp.watch(paths.cssSourceFiles, ['minifycssMarksimos']);
     gulp.watch(paths.cssSourceFiles, ['minifycssB2C']);
     gulp.watch(paths.javascript, ['jscompress']);
-
-//    var server = livereload();
-//    gulp.watch(paths.app).on('change', function(file) {
-//        server.changed(file.path);
-//    });
-//    gulp.watch(paths.views).on('change', function(file) {
-//        server.changed(file.path);
-//    });
 });
 
 
 
 
 gulp.task('watchdev', function() {
+    livereload.listen();
     gulp.watch(paths.angularTemplates, ['templates']);
     gulp.watch(paths.sassSourceFiles, ['compass']);
     gulp.watch(paths.javascript, ['jshint']);
@@ -301,7 +318,7 @@ gulp.task('ken', [ 'compass', 'templates', 'nodemonken', 'watchdev']);
 gulp.task('jin', [ 'compass', 'templates', 'nodemonjin', 'watchdev']);
 gulp.task('jinco', ['compass', 'templates', 'nodemonjinlocal', 'watchdev']);
 gulp.task('jinpro', ['compass', 'templates', 'minifycssMarksimos', 'minifycssB2C', 'jscompress', 'nodemonjin', 'watch']);
-gulp.task('yuekecheng', [ 'compass', 'templates', 'nodemonyuekecheng', 'watchdev']);
+gulp.task('yuekecheng', ['compass', 'templates', 'nodemonyuekecheng', 'watchdev']);
 
 
 

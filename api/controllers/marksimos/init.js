@@ -66,7 +66,6 @@ exports.init = function(req, res, next) {
                 status = 'active';
                 return res.send(400, {message: "seminarId cannot be empty."});
             }
-
             seminarModel.findOneQ({seminarId: seminarId}).then(function(dbSeminar){
                 if(!dbSeminar){
                     status = 'active';
@@ -93,7 +92,6 @@ exports.init = function(req, res, next) {
 
                 simulationSpan = dbSeminar.simulationSpan;
                 companyNum = dbSeminar.companyNum;
-
                 return initBinaryFile(seminarId, simulationSpan, companies);
                 //return initBinaryFile('TTT', 3);
             })
@@ -102,7 +100,6 @@ exports.init = function(req, res, next) {
                     status = 'active';
                     return res.send(403, {message: 'init binary file failed. initResult = ' + initResult.message});
                 }
-
                 return Q.all([
                     simulationResultModel.removeAll(seminarId),
                     dbutility.removeExistedDecisions(seminarId),
@@ -144,13 +141,15 @@ exports.init = function(req, res, next) {
                         isInitialized: true
                     })
                 })
-                .then(function(numAffected){
+                .then(function(result){
+                    var numAffected = result[0];
+
                     status = 'active';
                     if(numAffected!==1){
-                        throw {message: "Cancel promise chains. Because there's error during set isInitialized to true."};
+                        throw new Error("Cancel promise chains. Because there's error during set isInitialized to true.");
                     }
                     res.status(200).send( {message: 'initialize success'});
-                }).done();
+                }).fail(next).done();
             })
             .fail(function(err){
                 status = 'active';
@@ -160,7 +159,7 @@ exports.init = function(req, res, next) {
             .done();
         }
 
-    }
+    };
 };
 
 /**
@@ -325,7 +324,8 @@ exports.runSimulation = function(){
                                     return seminarModel.updateQ({seminarId: seminarId}, {
                                         currentPeriod: dbSeminar.currentPeriod + 1
                                     })
-                                    .then(function(numAffected){
+                                    .then(function(result){
+                                        var numAffected = result[0];
                                         if(numAffected!==1){
                                             throw {message: "Cancel promise chains. Because there's error during update seminar."}
                                         }else{
@@ -341,7 +341,8 @@ exports.runSimulation = function(){
                                     return seminarModel.updateQ({seminarId: seminarId}, {
                                         isSimulationFinished : true,
                                         currentPeriod       : dbSeminar.currentPeriod + 1
-                                    }).then(function(numAffected){
+                                    }).then(function(result){
+                                        var numAffected = result[0];
                                         if(numAffected!==1){
                                             throw {message: "Cancel promise chains. Because there's error during update isSimulationFinished to true."}
                                         }else{

@@ -37,6 +37,12 @@ var appResource = {
         facilitatorInfoSingleCUD : 'facilitatorInfoSingleCUD',
         facilitatorInfoListGet   : 'facilitatorInfoListGet',
 
+
+        glossarySingleGet   : 'glossarySingleGet',        // For  facilitator
+        glossarySingleCUD   : 'glossarySingleCUD',        // For  facilitator
+        glossaryInfoListGet : 'glossaryInfoListGet',      // For  facilitator
+
+
         teamInfoSingleGet : 'teamInfoSingleGet',  // For student
         teamInfoSingleCUD : 'teamInfoSingleCUD',  // For student
         teamInfoListGet   : 'teamInfoListGet',    // For student
@@ -120,6 +126,9 @@ var roles = [
             appResource.marksimos.studentInfoSingleCUD,
             appResource.marksimos.studentInfoListGet,
 
+            appResource.marksimos.glossarySingleGet,
+            appResource.marksimos.glossarySingleCUD,
+            appResource.marksimos.glossaryInfoListGet,
 
             appResource.marksimos.campaignSingleGet,
             appResource.marksimos.campaignSingleCUD,
@@ -155,7 +164,9 @@ var roles = [
 
             appResource.marksimos.seminarListOfStudentGet,
             appResource.marksimos.seminarSingleDecisionGet,
-            appResource.marksimos.seminarSingleDecisionCUD
+            appResource.marksimos.seminarSingleDecisionCUD,
+
+            appResource.marksimos.glossaryInfoListGet
 
         ]
     },

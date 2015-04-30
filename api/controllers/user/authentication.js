@@ -17,6 +17,10 @@ var util = require('util');
 var utility = require('../../../common/utility.js');
 var Q = require('q');
 
+var request = require('request');
+
+var config = require('../../../common/config.js');
+
 var expiresTime = 1000 * 60 * 60 * 24; // 1 days
 
 
@@ -205,7 +209,10 @@ exports.authLoginToken = function (options) {
                         req.gameMarksimos = {
                             currentStudent : user,
                             currentStudentSeminar : seminarResult,
-                            socketRoomName : false
+                            socketRoom : {
+                                seminar : false,
+                                company : false
+                            }
                         };
 
                         var company = _.find(seminarResult.companyAssignment, function(company) {
@@ -213,7 +220,10 @@ exports.authLoginToken = function (options) {
                         });
 
                         if (typeof company !== 'undefined') {
-                            req.gameMarksimos.socketRoomName = seminarResult.seminarId.toString() + company.companyId.toString();
+                            req.gameMarksimos.socketRoom = {
+                                seminar : seminarResult.seminarId.toString(),
+                                company : seminarResult.seminarId.toString() + company.companyId.toString()
+                            };
                         }
 
                         // very important, after seminar finished currentPeriod is last round
@@ -225,7 +235,10 @@ exports.authLoginToken = function (options) {
                         req.gameMarksimos = {
                             currentStudent : false,
                             currentStudentSeminar : false,
-                            socketRoomName : false
+                            socketRoom : {
+                                seminar : false,
+                                company : false
+                            }
                         };
                     }
 
@@ -409,15 +422,38 @@ exports.registerB2CStudent = function(req, res, next){
 
         //mailContent.html = mailContent.html1 + resultUser.username + mailContent.html2 + resultUser.email + mailContent.html3 + resultUser.emailActivateToken + mailContent.html4 + resultUser.email + mailContent.html5 + resultUser.emailActivateToken + mailContent.htmlend;
 
-        mailSender.sendMailQ(mailContent).then(function(resultSendEmail){
+        mailSender.sendMailQ(mailContent).then(function (resultSendEmail) {
             if (!resultSendEmail) {
                 throw new Error('Cancel promise chains. Because Send email of new user failed !');
-            }else{
+            } else {
                 logger.log(resultSendEmail);
             }
-        }).fail(function(err){
+        }).fail(function (err) {
             next(err);
         }).done();
+
+        //register nodeBB user
+        if (process.env.NODE_ENV === 'production' || process.env.NODE_ENV === 'ken')
+        {
+            request.post({
+                url    : config.bbsService + 'api/v1/users',
+                headers: {
+                    Authorization: 'Bearer ' + config.bbsToken
+                },
+                form   : {
+                    username: req.body.username,
+                    email   : req.body.email,
+                    password: req.body.password
+                }
+            }, function (err, res) {
+                if (err) {
+                    console.log('Reister new user for NodeBB failed!' + err);
+                    return;
+                }
+                resultUser.bbsUid = JSON.parse(res.body).payload.uid;
+                resultUser.save();
+            })
+        }
 
         return res.status(200).send({message: 'Register new user success'});
 
@@ -547,13 +583,13 @@ exports.activateRegistrationEmail = function(req, res, next){
 
         return resultUser.saveQ();
 
-    }).then(function(savedDoc, numberAffectedRows){
+    }).then(function(savedDoc){
 
         //if(numberAffectedRows !== 1){
         //    throw new Error('Cancel promise chains. Because Update user emailActivated status failed. more or less than 1 record is updated. it should be only one !');
         //}
 
-        if(!savedDoc ){
+        if(savedDoc[1] !== 1 ){
             throw new Error('Cancel promise chains. Because Update user emailActivated status failed. more or less than 1 record is updated. it should be only one !');
         }
 
@@ -598,7 +634,7 @@ exports.sendResetPasswordEmail = function(req, res, next){
         return resultUser.saveQ();
     }).then(function(resultUser){
 
-        if(!resultUser){
+        if(resultUser[1] !== 1){
             throw new Error('Cancel promise chains. Because Update user resetPasswordToken failed. More or less than 1 record is updated. it should be only one !');
         }
 
@@ -655,7 +691,7 @@ exports.verifyResetPasswordCode = function(req, res, next){
 
     }).then(function(resultUser){
 
-        if(!resultUser){
+        if(resultUser[1] !== 1){
             throw new Error('Cancel promise chains. Because Update reset Password Verify Code failed. More or less than 1 record is updated. it should be only one !');
         }
 
@@ -667,6 +703,23 @@ exports.verifyResetPasswordCode = function(req, res, next){
 };
 
 
+var resetBbsPassword = function(uid, passwordNew){
+    request.put({
+        url    : config.bbsService + 'api/v1/users/' + uid + '/password_reset',
+        headers: {
+            Authorization: 'Bearer ' + config.bbsToken
+        },
+        form   : {
+            newPassword    : passwordNew
+        }
+    }, function(err, res){
+        if (err) {
+            console.log('reset password for NodeBB failed!' + err);
+            return;
+        }
+    });
+}
+exports.resetBbsPassword = resetBbsPassword;
 
 exports.resetNewPassword = function(req, res, next){
 
@@ -689,13 +742,15 @@ exports.resetNewPassword = function(req, res, next){
 
         return resultUser.saveQ();
 
-    }).then(function(savedDoc, numberAffectedRows){
+    }).then(function(savedDoc){
         //console.log('reset password : ', savedDoc, numberAffectedRows);
 
-        if(!savedDoc ){
+        if(savedDoc[1] !== 1 ){
             throw new Error('Cancel promise chains. Because Update reset Password failed. More or less than 1 record is updated. it should be only one !');
         }
-
+        if(savedDoc[0].bbsUid){
+            resetBbsPassword(savedDoc[0].bbsUid, req.body.password);
+        }
         return res.status(200).send({message: 'Reset New Password Success.'});
 
     }).fail(function(err){
@@ -744,7 +799,7 @@ exports.forgotPasswordStep2 = function(req, res, next){
 };
 
 
-
+// comment-captcha-start
 var ccap = require('ccap')();//Instantiated ccap class
 exports.generateCaptcha = function(req, res, next) {
     var ary = ccap.get();
@@ -769,8 +824,7 @@ exports.generateCaptcha = function(req, res, next) {
     .fail(next)
     .done();
 };
-
-
+// comment-captcha-end
 
 
 exports.generatePhoneVerifyCode = function(req, res, next) {
@@ -790,9 +844,9 @@ exports.generatePhoneVerifyCode = function(req, res, next) {
 
 
     userModel.updateQ({_id: req.user._id}, {$set: {phoneVerifyCode: verifyCode, phoneVerifyCodeExpires:verifyCodeExpires}})
-    .then(function(savedDoc){
+    .then(function(result){
 
-        if(!savedDoc ){
+        if(result[0] !== 1 ){
             throw new Error('Cancel promise chains. Because Update phoneVerifyCode failed. More or less than 1 record is updated. it should be only one !');
         }
 
@@ -837,7 +891,7 @@ exports.verifyPhoneVerifyCode = function(req, res, next) {
     user.phoneVerified = true;
     user.saveQ()
     .then(function(savedDoc){
-        if(!savedDoc ){
+        if(savedDoc[1] !== 1 ){
             throw new Error('Cancel promise chains. Because Update user phoneVerified failed. More or less than 1 record is updated. it should be only one !');
         }
         return res.status(200).send({message: 'verifyPhoneCode succeed'});

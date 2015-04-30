@@ -7,7 +7,8 @@
     'use strict';
 
     /********************  Create New Module For Controllers ********************/
-    angular.module('marksimosadmin', ['pascalprecht.translate', 'angularCharts', 'nvd3ChartDirectives', 'notifications', 'angularFileUpload', 'marksimos.websitecomponent', 'marksimos.commoncomponent', 'marksimos.filter']);
+    angular.module('marksimosadmin', ['pascalprecht.translate', 'angularCharts', 'nvd3ChartDirectives', 'notifications', 'angularFileUpload', 'ngTagsInput',
+        'marksimos.websitecomponent', 'marksimos.commoncomponent', 'marksimos.filter', 'marksimos.socketmodel']);
 
 
 
@@ -27,13 +28,13 @@
         $scope.login = function(form) {
             if (form.$valid) {
 
-                Admin.login($scope.data.admin).success(function(data, status, headers, config) {
+                Admin.login($scope.data.admin).then(function() {
 
                     $window.location.href = "/marksimos/adminhome";
 
-                }).error(function (data, status, headers, config) {
-                    console.log(data, status);
-                    if (status === 401 || status === 403) {
+                }).catch(function (data) {
+                    console.log(data.status);
+                    if (data.status === 401 || data.status === 403) {
                         form.password.$valid = false;
                         form.password.$invalid = true;
                     }
@@ -58,7 +59,7 @@
 
         $scope.css = {
             leftmenu: 11,
-            menuTabShow: [false, false, false, false, false, false, false], //从第二个false 开始第1个菜单
+            menuTabShow: [false, false, false, false, false, false, false, false, false], //从第二个false 开始第1个菜单
             editMenuStatus : false,
             seminarId: 0,
             campaignIdAddSeminar: 0,
@@ -151,7 +152,7 @@
             },
             students: [],
 
-
+            updateSeminar : {},
             newSeminar: {
                 description: "",
                 country: null,
@@ -214,6 +215,26 @@
             addTeamToCampaign: {
                 username: 0,
                 campaignId: 0
+            },
+
+            updateGlossary : {},
+            newGlossary : {
+                id : '',
+                name : '',
+                description : '',
+                question : '',
+                answer : '',
+                type : '',
+                typeRadioOptions : [
+                    {value : 10, text : 'Glossary'},
+                    {value : 20, text : 'FAQ'}
+                ],
+                tagList : []
+            },
+            glossaries : [],
+            searchGlossary: {
+                keyword: '',
+                type: 'all'
             },
 
             country: [
@@ -397,12 +418,12 @@
                         app.getDistributorsInit();
                         app.getFacilitatorsInit();
                         app.getStudentsInit();
-                        $scope.css.menuTabShow = [false, true, true, true, true, true, true];
+                        $scope.css.menuTabShow = [false, true, true, true, true, true, true, true, true];
 
                     } else if ($scope.data.currentUser.role === 2) {
                         // Role Distributor
                         app.getFacilitatorsInit();
-                        $scope.css.menuTabShow = [false, true, false, true, false, false, false];
+                        $scope.css.menuTabShow = [false, true, false, true, false, false, false, false];
 
                     } else if ($scope.data.currentUser.role === 3) {
                         // Role Facilitator
@@ -410,7 +431,8 @@
                         app.getSeminarInit();
                         app.getCgiStatus();
                         app.getCampaignInit();
-                        $scope.css.menuTabShow = [false, true, false, false, true, true, true];
+                        app.getGlossaryInit();
+                        $scope.css.menuTabShow = [false, true, false, false, true, true, true, true];
                     }
 
                 }).error(function(data, status, headers, config) {
@@ -463,6 +485,15 @@
             getCampaignInit: function() {
                 Admin.getCampaigns().success(function(data, status, headers, config) {
                     $scope.data.campaigns = data;
+
+                }).error(function(data, status, headers, config) {
+                    console.log(data);
+                });
+            },
+
+            getGlossaryInit: function() {
+                Admin.getGlossaries().success(function(data, status, headers, config) {
+                    $scope.data.glossaries = data;
 
                 }).error(function(data, status, headers, config) {
                     console.log(data);
@@ -940,6 +971,119 @@
             $scope.css.showConfirm = false;
         };
 
+        /********************  Show Final Score  ********************/
+        $scope.showFinalScore = function(seminar){
+            $scope.data.updateSeminar = {
+                id : seminar._id,
+                showLastPeriodScore : true
+            };
+
+            Admin.updateSeminar($scope.data.updateSeminar).success(function(data, status, headers, config) {
+                app.getSeminarInit();
+                $notification.success('Save success', 'Update Seminar success');
+
+            }).error(function(data, status, headers, config) {
+                console.log(data);
+                $notification.error('Failed', data.message);
+            });
+        };
+        $scope.hideFinalScore = function(seminar){
+            $scope.data.updateSeminar = {
+                id : seminar._id,
+                showLastPeriodScore : false
+            };
+
+            Admin.updateSeminar($scope.data.updateSeminar).success(function(data, status, headers, config) {
+                app.getSeminarInit();
+                $notification.success('Save success', 'Update Seminar success');
+
+            }).error(function(data, status, headers, config) {
+                console.log(data);
+                $notification.error('Failed', data.message);
+            });
+        };
+
+
+
+        /********************  搜索 Tags  ********************/
+        $scope.loadTag = function(query) {
+            console.log(query);
+            return Admin.getTags(query);
+        };
+
+        /********************  搜索 Glossary  ********************/
+        $scope.searchGlossary = function(form) {
+            if (form.$valid) {
+                Admin.getGlossaries($scope.data.searchGlossary).success(function(data, status, headers, config) {
+                    $scope.data.glossaries = data;
+
+                }).error(function(data, status, headers, config) {
+                    $notification.error('Failed', data.message);
+                });
+            }
+        };
+        /********************  Create New Glossary  ********************/
+        $scope.createNewGlossary = function(form) {
+            if (form.$valid) {
+                Admin.addGlossary($scope.data.newGlossary).success(function(data, status, headers, config) {
+
+                    app.getGlossaryInit();
+                    $scope.css.leftmenu = 71;
+
+                    $notification.success('Save success', 'Create Glossary success');
+
+                }).error(function(data, status, headers, config) {
+                    console.log(data);
+                    $notification.error('Failed', data.message);
+                });
+            }
+        };
+
+        $scope.showEditGlossaryMenu = function(glossary) {
+            $scope.data.newGlossary.id = glossary._id;
+            $scope.data.newGlossary.name = glossary.name;
+            $scope.data.newGlossary.description = glossary.description;
+            $scope.data.newGlossary.type = glossary.type;
+            $scope.data.newGlossary.question = glossary.question;
+            $scope.data.newGlossary.answer = glossary.answer;
+
+            $scope.data.newGlossary.tagList = [];
+            glossary.tagList.forEach(function(tag){
+                $scope.data.newGlossary.tagList.push(tag.name);
+            });
+
+            $scope.css.editMenuStatus = true;
+            $scope.css.leftmenu = 72;
+
+        };
+
+        /********************  Update Glossary  ********************/
+        $scope.updateGlossary = function(form) {
+            if (form.$valid) {
+
+                $scope.data.updateGlossary = {
+                    id : $scope.data.newGlossary.id,
+                    name : $scope.data.newGlossary.name,
+                    description: $scope.data.newGlossary.description,
+                    type: $scope.data.newGlossary.type,
+                    question: $scope.data.newGlossary.question,
+                    answer : $scope.data.newGlossary.answer,
+                    tagList : $scope.data.newGlossary.tagList
+                };
+
+                Admin.updateGlossary($scope.data.updateGlossary).success(function(data, status, headers, config) {
+
+                    app.getGlossaryInit();
+                    $scope.css.leftmenu = 71;
+
+                    $notification.success('Save success', 'Update Campaign success');
+
+                }).error(function(data, status, headers, config) {
+                    console.log(data);
+                    $notification.error('Failed', data.message);
+                });
+            }
+        };
 
     }]);
 
@@ -952,7 +1096,10 @@
 
 
 
-    angular.module('marksimosadmin').controller('adminMarksimosReportController', ['$scope', '$http', '$notification', '$translate', 'Admin', 'AdminTable', 'chartReport', 'AdminChart', function($scope, $http, $notification,$translate, Admin,  AdminTable, chartReport, AdminChart) {
+    angular.module('marksimosadmin').controller('adminMarksimosReportController',
+    ['$scope', '$http', '$notification', '$translate', 'Admin', 'AdminTable', 'chartReport', 'AdminChart', 'Socket',
+    function($scope, $http, $notification,$translate, Admin,  AdminTable, chartReport, AdminChart, Socket) {
+
         $scope.css = {
             showReportMenu : true,
             currentReportMenu : 'AllDecisions',
@@ -962,6 +1109,9 @@
         };
 
         $scope.data = {
+            currentUser: null,
+
+            seminarChatMessages : [],
 
             allDecisions: {
                 data           : [],
@@ -1206,6 +1356,14 @@
                 var that = this;
                 $scope.css.currentSeminarId = /.+\/adminhomereport\/(\d+).*/.exec(window.location.href)[1] || 0;
 
+                Socket.setup($scope.css.currentSeminarId);
+
+                Socket.socket.on('marksimosChatMessageSeminarUpdate', function(data){
+                    $scope.data.seminarChatMessages.push(data);
+                });
+
+                that.getAdminInfo();
+
                 //加载 All Comapany Decisions
                 that.loadingAllDecisions();
 
@@ -1250,6 +1408,23 @@
                 });
             },
             runOnce: function() {
+
+                /********************  Chat Messages ********************/
+
+
+                $scope.sendSeminarMessage = function(messageInput) {
+                    Admin.sendSeminarChatMessage(messageInput, $scope.css.currentSeminarId).success(function(data, status, headers, config) {
+                        //$notification.success('Save success', 'Send Message Success');
+
+                    }).error(function(data, status, headers, config) {
+                        console.log(data);
+                        $notification.error('Failed', data.message);
+                    });
+
+                };
+
+
+
                 /********************  Table A1 Company Status  *******************/
                 $scope.switchTableReportA1Company = function(company) {
                     $scope.data.tableA1CompanyStatus.currentCompany = company;
@@ -1633,6 +1808,12 @@
                 };
 
 
+            },
+
+            getAdminInfo : function(){
+                Admin.userInfo().success(function(data, status, headers, config) {
+                    $scope.data.currentUser = data;
+                });
             },
 
 

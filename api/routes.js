@@ -10,6 +10,8 @@ var distributorController = require('./controllers/user/admin.js');
 var studentController = require('./controllers/user/student.js');
 var campaignController = require('./controllers/b2c/campaign.js');
 var seminarController = require('./controllers/marksimos/seminar.js');
+var glossaryController = require('./controllers/b2c/glossary.js');
+var tagController = require('./controllers/b2c/tag.js');
 
 var questionnaireController = require('./controllers/questionnaire.js');
 var faqController  =  require('./controllers/faq.js');
@@ -210,7 +212,9 @@ apiRouter.post('/e4e/api/registerstudent', auth.registerB2CStudent);
 apiRouter.post('/e4e/api/register/username', auth.verifyUsername);
 apiRouter.post('/e4e/api/register/email', auth.verifyEmail);
 
+// comment-captcha-start
 apiRouter.get('/e4e/api/captcha', auth.generateCaptcha);
+// comment-captcha-end
 
 apiRouter.post('/e4e/api/forgotpasswordstep1', auth.sendResetPasswordEmail);
 apiRouter.post('/e4e/api/forgotpasswordstep2', auth.verifyResetPasswordCode);
@@ -282,7 +286,12 @@ apiRouter.put('/marksimos/api/questionnaire', auth.authLoginToken(), auth.authRo
 apiRouter.get('/marksimos/api/faq', faqController.getFAQ);
 
 
+//seminar online chat
+apiRouter.post('/marksimos/api/seminar/chat/seminar', auth.authLoginToken(), seminarController.sendChatMessageSeminar);
+apiRouter.post('/marksimos/api/seminar/chat/company', auth.authLoginToken(), seminarController.sendChatMessageSeminarCompany);
 
+//get Glossary
+apiRouter.post('/marksimos/api/glossaries', auth.authLoginToken(), auth.authRole(marksimosRight.glossaryInfoListGet), glossaryController.searchGlossaryWithWord);
 
 
 
@@ -330,6 +339,8 @@ apiRouter.post('/marksimos/api/admin/campaigns/teams/remove', auth.authLoginToke
 //Facilitator manager seminars
 apiRouter.get('/marksimos/api/admin/facilitator/seminar', auth.authLoginToken(), auth.authRole(marksimosRight.seminarListOfFacilitatorGet), seminarController.getSeminarOfFacilitator);
 apiRouter.post('/marksimos/api/admin/seminar', auth.authLoginToken(), auth.authRole(marksimosRight.seminarSingleCUD), seminarController.addSeminar);
+apiRouter.put('/marksimos/api/admin/seminar', auth.authLoginToken(), auth.authRole(marksimosRight.seminarSingleCUD), seminarController.updateSeminar);
+
 
 apiRouter.post('/marksimos/api/admin/assign_student_to_seminar', auth.authLoginToken(), auth.authRole(marksimosRight.seminarAssignStudentCUD), seminarController.assignStudentToSeminar);
 apiRouter.post('/marksimos/api/admin/remove_student_from_seminar', auth.authLoginToken(), auth.authRole(marksimosRight.seminarAssignStudentCUD), seminarController.removeStudentFromSeminar);
@@ -355,12 +366,17 @@ apiRouter.put('/marksimos/api/admin/sku/decision', auth.authLoginToken(), auth.a
 apiRouter.put('/marksimos/api/admin/brand/decision', auth.authLoginToken(), auth.authRole(marksimosRight.seminarDecisionsOfFacilitatorCUD), decisionController.updateBrandDecision);
 apiRouter.put('/marksimos/api/admin/company/decision', auth.authLoginToken(), auth.authRole(marksimosRight.seminarDecisionsOfFacilitatorCUD), decisionController.updateCompanyDecision);
 
+//seminar online chat
+apiRouter.post('/marksimos/api/admin/seminar/chat/seminar', auth.authLoginToken(), auth.authRole(marksimosRight.seminarListOfFacilitatorGet), seminarController.sendChatMessageSeminar);
 
 
 
+//Facilitator manager Glossary
+apiRouter.get('/marksimos/api/admin/glossaries', auth.authLoginToken(), auth.authRole(marksimosRight.glossaryInfoListGet), glossaryController.searchGlossary);
+apiRouter.post('/marksimos/api/admin/glossaries', auth.authLoginToken(), auth.authRole(marksimosRight.glossarySingleCUD), glossaryController.addGlossary);
+apiRouter.put('/marksimos/api/admin/glossaries', auth.authLoginToken(), auth.authRole(marksimosRight.glossarySingleCUD), glossaryController.updateGlossary);
 
-
-
+apiRouter.get('/marksimos/api/admin/tags', auth.authLoginToken(), auth.authRole(marksimosRight.glossaryInfoListGet), tagController.searchTag);
 
 
 

@@ -35,7 +35,7 @@
 
 
     /********************  Administrator Model  ********************/
-    angular.module('marksimos.model').factory('Admin', ['$http', adminModel]);
+    angular.module('marksimos.model').factory('Admin', ['$http', 'localStorageService', adminModel]);
     //管理员报表-表格
     angular.module('marksimos.model').factory('AdminTable', ['$http', adminTableModel]);
     //管理员报表-图表
@@ -77,6 +77,53 @@
                 return $http.post(apiPathB2C + 'register/email', email);
             },
 
+            updatePassword: function(passwordOld, passwordNew) {
+                return $http.put(apiPathB2C + 'student/password', {
+                    passwordOld: passwordOld,
+                    passwordNew: passwordNew
+                });
+            },
+
+
+            addStudentToTeam : function(user) {
+                return $http.post(apiPathB2C + 'team/student', user);
+            },
+
+            removeStudentToTeam : function(id) {
+                return $http.delete(apiPathB2C + 'team/student/' + id);
+            },
+
+            updateTeamName : function(name) {
+                return $http.post(apiPathB2C + 'team', {name: name});
+            },
+
+            updateStudentB2CInfo : function(data) {
+                return $http.put(apiPathB2C + 'student', data);
+            },
+
+            getPhoneVerifyCode : function(){
+                return $http.get(apiPathB2C + 'student/phoneverifycode');
+            },
+
+            sendPhoneVerifyCode : function(phoneVerifyCode){
+                return $http.post(apiPathB2C + 'student/phoneverifycode', {phoneVerifyCode: phoneVerifyCode});
+            },
+
+
+
+            addTeamToCampaign: function(data) {
+                return $http.post(apiPathB2C + 'campaigns/teams', data);
+            },
+
+            getCampaign: function(id) {
+                return $http.get(apiPathB2C + 'campaigns/' + id);
+            },
+
+
+
+
+
+
             login : function(user){
                 return $http.post(apiPath + 'login', user).then(function(result){
                     localStorageService.set('logintoken', result.data.token);
@@ -104,45 +151,19 @@
                 return $http.get(apiPath + 'choose_seminar', {params : queryParams});
             },
 
-            addStudentToTeam : function(user) {
-                return $http.post(apiPathB2C + 'team/student', user);
+
+            getGlossaries : function(queryParams){
+                return $http.post(apiPath + 'glossaries', queryParams);
             },
 
-            removeStudentToTeam : function(id) {
-                return $http.delete(apiPathB2C + 'team/student/' + id);
+
+            sendSeminarChatMessage: function(message) {
+                return $http.post(apiPath + 'seminar/chat/seminar', {message: message});
             },
 
-            updateTeamName : function(name) {
-                return $http.post(apiPathB2C + 'team', {name: name});
-            },
-
-            updateStudentB2CInfo : function(data) {
-                return $http.put(apiPathB2C + 'student', data);
-            },
-
-            getPhoneVerifyCode : function(){
-                return $http.get(apiPathB2C + 'student/phoneverifycode');
-            },
-
-            sendPhoneVerifyCode : function(phoneVerifyCode){
-                return $http.post(apiPathB2C + 'student/phoneverifycode', {phoneVerifyCode: phoneVerifyCode});
-            },
-
-            updatePassword: function(passwordOld, passwordNew) {
-                return $http.put(apiPathB2C + 'student/password', {
-                    passwordOld: passwordOld,
-                    passwordNew: passwordNew
-                });
-            },
-
-            addTeamToCampaign: function(data) {
-                return $http.post(apiPathB2C + 'campaigns/teams', data);
-            },
-
-            getCampaign: function(id) {
-                return $http.get(apiPathB2C + 'campaigns/' + id);
+            sendCompanyChatMessage: function(message) {
+                return $http.post(apiPath + 'seminar/chat/company', {message: message});
             }
-
 
         };
 
@@ -1232,12 +1253,16 @@
 
 
     /********************  管理员界面数据  ********************/
-    function adminModel($http){
+    function adminModel($http, localStorageService){
 
         var factory = {
 
             login : function(user){
-                return $http.post(apiAdminPath + 'login', user);
+                return $http.post(apiAdminPath + 'login', user)
+                .then(function(result){
+                    localStorageService.set('logintoken', result.data.token);
+                    return result.data;
+                });
             },
             userInfo : function(){
                 return $http.get(apiAdminPath + 'user');
@@ -1299,6 +1324,9 @@
             addSeminar : function(postdata){
                 return $http.post(apiAdminPath + 'seminar', postdata);
             },
+            updateSeminar : function(postdata){
+                return $http.put(apiAdminPath + 'seminar', postdata);
+            },
             initSeminar: function(seminarId) {
                 return $http.post(apiAdminPath + 'seminar/' + seminarId + '/init' );
             },
@@ -1313,6 +1341,22 @@
             },
             getCgiStatus: function(){
                 return $http.get(apiAdminPath + 'delphi_cgi');
+            },
+
+            getTags : function(urlparams){
+                urlparams = angular.isUndefined(urlparams) ? {}  : urlparams ;
+                return $http.get(apiAdminPath + 'tags', {params : urlparams});
+            },
+
+            getGlossaries : function(urlparams){
+                urlparams = angular.isUndefined(urlparams) ? {}  : urlparams ;
+                return $http.get(apiAdminPath + 'glossaries', {params : urlparams});
+            },
+            addGlossary : function(postdata){
+                return $http.post(apiAdminPath + 'glossaries', postdata);
+            },
+            updateGlossary : function(postdata){
+                return $http.put(apiAdminPath + 'glossaries', postdata);
             },
 
 
@@ -1335,6 +1379,10 @@
             },
             updateSkuDecision: function(postdata) {
                 return $http.put(apiAdminPath + 'sku/decision', postdata);
+            },
+
+            sendSeminarChatMessage: function(message, seminarRoom) {
+                return $http.post(apiAdminPath + 'seminar/chat/seminar', { message: message, seminarRoom:seminarRoom});
             }
 
         };

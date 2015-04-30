@@ -1,0 +1,107 @@
+<div class="chat-container anim-hide-left" ng-class="{active: css.showChat}" ng-init="active=false">
+    <div>
+        <div ng-click="clickToggleWindow()" class="hide-btn"><div class="icon-right"></div><div class="icon-right"></div></div>
+
+        <ul class="header" ng-class="{'no-chat-header': hideChatHeader}">
+            <li ng-if="!hideChatHeader" ng-click="css.currentTab='dictionary'" ng-class="{active: css.currentTab == 'dictionary'}">Dictionary</li>
+            <li ng-click="css.currentTab='chat'" ng-class="{active: css.currentTab == 'chat'}" class="active">Chat</li>
+        </ul>
+
+        <div class="dictionary" ng-if="css.currentTab == 'dictionary'">
+            <div class="dictionary-body">
+                <div class="messages">
+                    <div ng-if="dictionaryMessages.noResult" class="no-result text-center">Sorry, no result.</div>
+                    <div class="result" ng-repeat="message in dictionaryMessages.glossaries">
+                        <div class="question row">
+                            <p class="col-xs-10" data-highlight-key="dictionaryMessages.tags">{{message.name || message.question}}</p>
+                            <div class="col-xs-2 text-right" ng-init="message.show=false">
+                                <button ng-if="!message.show" ng-click="message.show=true" class="glyphicon glyphicon-plus extend btn btn-default"></button>
+                                <button ng-if="message.show" ng-click="message.show=false" class="collapse glyphicon glyphicon-minus btn btn-default"></button>
+                            </div>
+                        </div>
+                        <div class="answer" ng-if="message.show">
+                            {{message.description || message.answer}}
+                        </div>
+                    </div>
+                </div>
+
+                <div class="message-send">
+                    <form>
+                        <textarea class="dictionary" rows="5" ng-model="data.dictionaryInput" placeholder="Type in here :) Return to send"></textarea>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        <div class="chat" ng-if="css.currentTab == 'chat'">
+            <div class="chat-header" ng-if="!hideChatHeader">
+                <div class="text-center">
+                    <button ng-click="css.currentChatTab = 'seminar'" ng-class="{active: css.currentChatTab == 'seminar'}" class="btn btn-default seminar">Mentor</button>
+                    <button ng-click="css.currentChatTab = 'company'" ng-class="{active: css.currentChatTab == 'company'}" class="btn btn-default company">Team</button>
+                </div>
+                <svg class="indicator" ng-class="{left: css.currentChatTab == 'seminar'}" version="1.1" xmlns="http://www.w3.org/2000/svg" width="26" height="10">
+                    <polyline points="0 10, 13 0, 26 10" stroke="#DDD" stroke-width="1" fill="#FFF"/>
+                </svg>
+            </div>
+
+            <div class="chat-body">
+                <div class="seminar" ng-if="css.currentChatTab == 'seminar'">
+                    <div class="messages" ng-class="{'no-chat-header': hideChatHeader}">
+
+                        <div ng-repeat="message in seminarMessages" class="message" ng-class="{me: message.user.username == me, them: message.user.username != me}">
+                            <!--me-->
+                            <p ng-if="message.user.username == me" class="text">{{message.message}}</p>
+
+                            <!--them-->
+                            <img ng-if="message.user.username != me" class="avatar" ng-src="{{'/' + (message.user.avatar.path || 'app/css/images/icon/iconchatavatar.png')}}"/>
+                            <div ng-if="message.user.username != me">
+                                <div class="name">{{message.user.username}}</div>
+                                <p class="text">{{message.message}}</p>
+                            </div>
+                        </div>
+
+                    </div>
+                    <div class="message-send">
+                        <form>
+                            <textarea class="seminar" rows="5" ng-model="data.seminarInput" placeholder="Type in here :) Return to send"></textarea>
+                        </form>
+                    </div>
+                </div>
+
+                <div class="company" ng-if="css.currentChatTab == 'company'">
+                    <div class="messages">
+
+                        <div ng-repeat="message in companyMessages" class="message" ng-class="{me: message.user.username == me, them: message.user.username != me}">
+                            <!--me-->
+                            <p ng-if="message.user.username == me" class="text">{{message.message}}</p>
+
+                            <!--them-->
+                            <img ng-if="message.user.username != me" class="avatar" ng-src="{{'/' + (message.user.avatar.path || '/app/css/images/icon/iconchatavatar.png')}}"/>
+                            <div ng-if="message.user.username != me">
+                                <div class="name">{{message.user.username}}</div>
+                                <p class="text">
+                                    {{message.message}}
+                                </p>
+                            </div>
+                        </div>
+
+                    </div>
+                    <div class="message-send">
+                        <form>
+                            <textarea class="company" rows="5" ng-model="data.companyInput" placeholder="Type in here :) Return to send"></textarea>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="chat-icon-wrapper" ng-if="!css.showChat">
+        <div ng-click="clickToggleWindow()" class="hide-btn">
+            <div class="icon-left"></div><div class="icon-left"></div>
+        </div>
+        <div>
+            <div ng-click="clickToggleWindow('chat')" class="chat-icon icon" ng-class="{active: css.newMessage}"></div>
+            <div ng-if="!hideChatHeader" ng-click="clickToggleWindow('dictionary')" class="dictionary-icon icon"></div>
+        </div>
+    </div>
+</div>

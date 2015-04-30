@@ -714,6 +714,11 @@
     }]);
 
 
+    angular.module('b2clogin').controller('activityController', ['$anchorScroll', function($anchorScroll) {
+        $anchorScroll();
+    }]);
+
+
     angular.module('b2clogin').controller('introController', ['$location', '$scope', function($location, $scope) {
         var vm = this;
         $scope.$on('$locationChangeSuccess', function() {

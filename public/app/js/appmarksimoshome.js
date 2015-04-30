@@ -7,12 +7,14 @@
 
 
     /********************  Create New Module For Controllers ********************/
-    angular.module('marksimos', ['pascalprecht.translate', 'angularCharts', 'nvd3ChartDirectives', 'cgNotify', 'marksimos.config', 'marksimos.commoncomponent', 'marksimos.websitecomponent', 'marksimos.model', 'marksimos.socketmodel', 'marksimos.filter', 'marksimos.translation' ]);
+    angular.module('marksimos', ['pascalprecht.translate', 'angularCharts', 'nvd3ChartDirectives', 'cgNotify', 'marksimos.config', 'marksimos.commoncomponent', 'marksimos.websitecomponent', 'marksimos.model', 'marksimos.socketmodel', 'marksimos.filter', 'marksimos.translation', 'ngAnimate']);
 
 
 
     /********************  Use This Module To Set New Controllers  ********************/
-    angular.module('marksimos').controller('chartController', ['$translate', '$scope', '$rootScope', '$document', '$timeout', '$interval', '$http', 'notify', 'chartReport', 'tableReport', 'Student', 'Company', 'socket', function($translate, $scope, $rootScope, $document, $timeout, $interval, $http, notify, chartReport, tableReport, Student, Company, socket) {
+    angular.module('marksimos').controller('chartController', ['$translate', '$scope', '$rootScope', '$document', '$timeout', '$interval', '$http', 'notify', 'chartReport', 'tableReport', 'Student', 'Company', 'Socket', function($translate, $scope, $rootScope, $document, $timeout, $interval, $http, notify, chartReport, tableReport, Student, Company, Socket) {
+
+
 
         $rootScope.$on('$translateChangeSuccess', function () {
             app.loadingChartData();
@@ -300,8 +302,14 @@
             chartC44SegmentValueShareTotalMarket : {
                 config : chartReport.getChartConfig3(),
                 data : $scope.dataChartSimple
-            }
+            },
 
+            // for chat message.
+            seminarMessages: [],
+            companyMessages: [],
+
+            // for glossary
+            glossaries: []
         };
 
 
@@ -497,7 +505,9 @@
             initOnce : function(){
                 this.loadingStudentData();
 
-                socket.socket.on('marksimosDecisionUpdate', function(message){
+                Socket.setup();
+
+                Socket.socket.on('marksimosDecisionUpdate', function(message){
                     app.reRun();
 
                     if(message.username !== $scope.data.currentStudent.username){
@@ -508,6 +518,13 @@
                         });
                     }
 
+                });
+
+                Socket.socket.on('marksimosChatMessageSeminarUpdate', function(data){
+                    $scope.data.seminarMessages.push(data);
+                });
+                Socket.socket.on('marksimosChatMessageCompanyUpdate', function(data){
+                    $scope.data.companyMessages.push(data);
                 });
 
             },
@@ -1607,6 +1624,72 @@
                 $scope.css.dragTargetBoxId = 'comparisonBox' +  targetboxid;
             }
 
+        };
+
+
+
+
+
+
+
+
+        /********************  Chat Messages ********************/
+        $scope.sendSeminarMessage = function(messageInput){
+            console.log(messageInput);
+            Student.sendSeminarChatMessage(messageInput).then(function(data, status, headers, config){
+
+                //notify({
+                //    message  : 'Message Send !',
+                //    templateUrl : notifytemplate.success,
+                //    position : 'center'
+                //});
+            }, function(data){
+                notify({
+                    message  : data.data.message,
+                    templateUrl : notifytemplate.failure,
+                    position : 'center'
+                });
+            });
+
+        };
+
+
+
+        $scope.sendCompanyMessage = function(messageInput){
+            Student.sendCompanyChatMessage(messageInput).then(function(data, status, headers, config){
+                //notify({
+                //    message  : 'Message Send !',
+                //    templateUrl : notifytemplate.success,
+                //    position : 'center'
+                //});
+            }, function(data){
+                notify({
+                    message  : data.data.message,
+                    templateUrl : notifytemplate.failure,
+                    position : 'center'
+                });
+            });
+
+        };
+
+
+        /********************  Glossaries ********************/
+        // todo: for testing
+
+        $scope.getGlossary = function(keyword) {
+            Student.getGlossaries({keyword: keyword}).then(function(data, status, headers, config){
+                data.data.tags = data.data.tags.map(function(item) {
+                    return item.name;
+                });
+                $scope.data.glossaries = data.data;
+                $scope.data.glossaries.noResult = !data.data.glossaries.length;
+            }, function(data){
+                notify({
+                    message  : data.data.message,
+                    templateUrl : notifytemplate.failure,
+                    position : 'center'
+                });
+            });
         };
 
     }]);

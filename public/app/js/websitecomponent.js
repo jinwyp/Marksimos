@@ -14,7 +14,7 @@
 (function () {
     'use strict';
 
-    angular.module('marksimos.websitecomponent', ['marksimos.templates', 'marksimos.model', 'pascalprecht.translate', 'marksimos.translation', 'b2c.translation' ]);
+    angular.module('marksimos.websitecomponent', ['marksimos.templates', 'marksimos.model', 'pascalprecht.translate', 'marksimos.translation', 'b2c.translation']);
 
 
     angular.module('marksimos.websitecomponent').directive('b2cHeader', ['$window', '$translate', '$timeout', 'Student', b2cHeaderComponent ]);
@@ -25,6 +25,83 @@
 
     angular.module('marksimos.websitecomponent').directive('headerAdmin', ['$window', '$translate', 'Student', adminHeaderComponent]);
     angular.module('marksimos.websitecomponent').directive('menuAdmin', [adminMenuComponent]);
+
+    angular.module('marksimos.websitecomponent').directive('chatWindow', ['$q', chatWindowComponent]);
+
+    function chatWindowComponent($q) {
+        return {
+            restrict: 'E',
+            scope: {
+                me: '=username',
+                seminarMessages: '=',
+                companyMessages: '=',
+                dictionaryMessages: '=',
+                sendSeminarMessage: '&',
+                sendCompanyMessage: '&',
+                sendDictionaryMessage: '&',
+                hideChatHeader: '='
+            },
+            templateUrl: 'chatwindow.html',
+            link: function(scope, elem, attrs, ctrl) {
+                scope.data = {
+                    seminarInput: null,
+                    companyInput: null,
+                    dictionaryInput: null
+                };
+                scope.css = {
+                    currentChatTab: 'seminar',
+                    showChat: false,
+                    newMessage: false,
+                    currentTab: 'chat'
+                };
+
+                var chatWindow = elem[0];
+                chatWindow.addEventListener('keydown', function(event) {
+                    // todo: handle line break?
+
+                    if (event.keyCode != 13 || event.target.tagName.toUpperCase() != 'TEXTAREA' || (!scope.data.seminarInput && !scope.data.companyInput && !scope.data.dictionaryInput) ) return;
+
+                    if (event.target.matches('.seminar')) {
+                        $q.when(scope.sendSeminarMessage({messageInput: scope.data.seminarInput})).then(function() {
+                            scope.data.seminarInput = '';
+                        });
+                    } else if(event.target.matches('.company')) {
+                        $q.when(scope.sendCompanyMessage({messageInput: scope.data.companyInput})).then(function() {
+                            scope.data.companyInput = '';
+                        });
+                    } else if(event.target.matches('.dictionary')) {
+                        $q.when(scope.sendDictionaryMessage({messageInput: scope.data.dictionaryInput})).then(function() {
+                            scope.data.dictionaryInput = '';
+                        });
+                    }
+                });
+
+                scope.$watchCollection('seminarMessages', scrollToBottom);
+                scope.$watchCollection('companyMessages', scrollToBottom);
+                scope.$watchCollection('dictionaryMessages', scrollToBottom);
+
+                function scrollToBottom() {
+                    if (scope.seminarMessages.length || (scope.companyMessages && scope.companyMessages.length)) {
+                        scope.css.newMessage = true;
+                    }
+
+                    scope.$$postDigest(function() {
+                        if (!scope.css.showChat) return;
+                        var messagesWindow = chatWindow.querySelector('.messages');
+                        messagesWindow.scrollTop = messagesWindow.scrollHeight;
+                    });
+                }
+
+                scope.clickToggleWindow = function(tab) {
+                    if (tab) scope.css.currentTab = tab;
+                    scope.css.showChat = !scope.css.showChat;
+                    scope.css.newMessage = false;
+                };
+            }
+        };
+    }
+
+
 
     function b2cSubMenuComponent($location){
         return {
@@ -248,7 +325,7 @@
             link : function(scope, element){
 
                 scope.css = {
-                    menuexpand : [false, false, true, true, true, true, true, true] // menus control expand
+                    menuexpand : [false, false, true, true, true, true, true, true, true, true] // menus control expand
                 };
 
                 scope.clickTab = function(tab){
@@ -586,16 +663,48 @@
             restrict: 'AE',
             compile: function (tElement, tAttrs) {
                 return function (scope, tElement, tAttrs) {                  
-                    scope.$watch(tAttrs, function () {
+                    scope.$watch(tAttrs, function (newValue, oldValue) {
                         if (scope.key) {
-                            var html = tElement.html();
-                            html = html.replace(new RegExp("[" + scope.key.split('').join('][') + "]", "ig"), function (match) {
-                                return "<span class='text-danger'>" + match + "</span>";
+                            var keys = angular.isArray(scope.key) ? scope.key.slice() : [scope.key];
+                            keys.forEach(function(key, i) {
+                                // use [] to escape some meta chars, like '+!' .
+                                keys[i] = '[' + key.split('').join('][') + ']';
                             });
-                            tElement.html(html);
+                            keys = keys.join('|');
+                            var re = new RegExp(keys, "ig");
+                            replace(tElement[0], re);
                         }
                     });
                 };
+
+                function replace(node, re) {
+                    var childNodes = node.childNodes,
+                        textNodes = [],
+                        elements = [];
+
+                    for (var i = 0; i < childNodes.length; i++) {
+                        var childNode = childNodes[i];
+                        if (childNode.nodeType == 3) {
+                            textNodes.push(childNode);
+                        } else if (childNode.nodeType == 1) {
+                            elements.push(childNode);
+                        }
+                    }
+
+                    for (i = 0; i < textNodes.length; i++) {
+                        var html = textNodes[i].nodeValue.replace(re, function(match) {
+                            return "<span class='text-danger'>" + match + "</span>";
+                        });
+                        if (html != textNodes[i].nodeValue) {
+                            var div = document.createElement('div');
+                            div.innerHTML = html;
+                            node.replaceChild(div, textNodes[i]);
+                            div.outerHTML = div.innerHTML;
+                        }
+                    }
+
+                    for (i = 0; i < elements; i++) replace(elements[i], re);
+                }
             }
         };
     });

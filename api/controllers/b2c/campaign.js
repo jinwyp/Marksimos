@@ -125,9 +125,9 @@ exports.addCampaign = function(req, res, next){
 
     });
 
-    newCampaign.saveQ().then(function(result){
+    newCampaign.saveQ().then(function(savedDoc){
 
-        if(!result){
+        if(savedDoc[1] !== 1 ){
             throw new Error('Cancel promise chains. Because Create Campaign failed. more or less than 1 record is updated. it should be only one !');
         }
 
@@ -231,7 +231,7 @@ exports.uploadCampaignPics = function(req, res, next){
 
     }).then(function( savedDoc){
 
-        if(!savedDoc ){
+        if(savedDoc[1] !== 1){
             throw new Error('Cancel promise chains. Because Update campaign failed. More or less than 1 record is updated. it should be only one !');
         }
         return res.status(200).send({message: 'Upload campaign picture success'});
@@ -344,8 +344,8 @@ exports.addMarkSimosSeminarToCampaign = function(req, res, next){
 
         return resultCampaign.saveQ();
 
-    }).then(function(saveDoc, numAffected){
-        if(!saveDoc){
+    }).then(function(savedDoc){
+        if(savedDoc[1] !== 1){
             throw new Error('Cancel promise chains. Because Update campaign failed. More or less than 1 record is updated. it should be only one !');
         }
         return res.status(200).send({message: "Assign seminar to campaign success."})
@@ -388,8 +388,8 @@ exports.removeMarkSimosSeminarFromCampaign = function(req, res, next){
 
         return resultCampaign.saveQ();
 
-    }).then(function(saveDoc, numAffected){
-        if(!saveDoc){
+    }).then(function(savedDoc){
+        if(savedDoc[1] !== 1){
             throw new Error('Cancel promise chains. Because Update campaign failed. More or less than 1 record is updated. it should be only one !');
         }
         return res.status(200).send({message: "Remove seminar from campaign success."})
@@ -452,8 +452,8 @@ exports.addTeamToCampaign = function(req, res, next){
 
         return resultCampaign.saveQ();
 
-    }).then(function(saveDoc, numAffected){
-        if(!saveDoc){
+    }).then(function(savedDoc){
+        if(savedDoc[1] !== 1){
             throw new Error('Cancel promise chains. Because Update campaign failed. More or less than 1 record is updated. it should be only one !');
         }
         return res.status(200).send({message: "Assign team to campaign success."})
@@ -497,8 +497,8 @@ exports.removeTeamFromCampaign = function(req, res, next){
 
         return resultCampaign.saveQ();
 
-    }).then(function(saveDoc, numAffected){
-        if(!saveDoc){
+    }).then(function(savedDoc){
+        if(savedDoc[1] !== 1){
             throw new Error('Cancel promise chains. Because Update campaign failed. More or less than 1 record is updated. it should be only one !');
         }
         return res.status(200).send({message: "Remove team from campaign success."})

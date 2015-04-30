@@ -1,0 +1,144 @@
+#about {
+    p {
+        font-size: 14px;
+        line-height: 2;
+    }
+    background: $color_background_gray_darker;
+    #bridge-header { @include bridge-header("/app/css/images/b2c_about/b2c_about_banner.jpg")}
+    #bridge-description {
+        background: #ffffff;
+        height: 402px;
+        .static {
+            padding: 60px;
+            .title {
+                font-size: 42px;
+                padding-left: 48px;
+            }
+            .module {
+                padding: 0 32px 0 48px;
+                margin-top: 40px;
+                float: left;
+                width: 33.3%;
+                .icon {
+                    width: 43px;
+                    height: 26px;
+                    margin-bottom: 20px;
+                }
+                .icon1 {
+                    @include icon_b2c-sprite(icon1);
+                }
+                .icon2 {
+                    @include icon_b2c-sprite(icon2);
+                }
+                .icon3 {
+                    @include icon_b2c-sprite(icon3);
+                }
+                button {
+                    position: absolute;
+                    margin-top: 2px;
+                    &.btn {
+                        line-height: 26px;
+                        padding: 0px 16px;
+                        font-weight: bold;
+                    }
+                }
+            }
+        }
+        .disc-extend {
+            padding: 78px 0  0 210px;
+            p {
+                width: 540px;
+                padding-left: 65px;
+                padding-top: 40px;
+            }
+            .glyphicon-remove-circle{
+                font-size: 35px;
+                cursor: pointer;
+            }
+        }
+    }
+
+    #vision {
+        height: 693px;
+        background-image: url("/app/css/images/b2c_about/b2c_about_banner2.jpg");
+        padding-left: 100px;
+        padding-top: 540px;
+        color: white;
+        h3 {
+            margin-top: 0px;
+            margin-bottom: 28px;
+        }
+    }
+    #philosophy {
+        height: 422px;
+        background: #ffffff;
+        padding-left: 100px;
+        padding-top: 50px;
+        h3 {
+            margin-top: 0px;
+            margin-bottom: 28px;
+        }
+
+        .nav-tabs {
+            border: none;
+            > li {
+                border-left: 4px solid red;
+                > a {
+                    border: none;
+                    padding: 0 30px 0 15px;
+                    color: #000000;
+                    line-height: 14px;
+                    font-size: 14px;
+                    &:hover, &:focus {
+                        background-color: white;
+                        color: red;
+                        border: none;
+                    }
+                }
+            }
+            .nav-tabs > .active > a {
+                background-color: white;
+                color: white;
+            }
+        }
+        p {
+            padding-top: 45px;
+            width: 512px;
+            float: left;
+        }
+        img {
+            margin-left: 70px;
+            margin-top: -20px;
+        }
+
+    }
+
+    #team{
+        background-color: $color_background_gray;
+        height: 507px;
+        padding: 45px 0;
+        h3 {
+            margin: 0 0 40px 100px;
+        }
+        .carousel-indicators {
+            bottom: -90px;
+            li {
+                display: inline-block;
+                width: auto;
+                height: auto;
+                margin: 0 8px;
+                padding: 5px 13px;
+                text-indent: 0px;
+                cursor: pointer;
+                border: 1px solid $color_base_red;
+                border-radius: 10px;
+                color: $color_base_red;
+                font-weight: bold;
+                &.active {
+                    background-color: $color_base_red;
+                    color: white;
+                }
+            }
+        }
+    }
+}

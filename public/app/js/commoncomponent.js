@@ -52,9 +52,7 @@
                 pattern          : '@',
                 patternerrorinfo : '@',
 
-
                 othererrorinfo : '='
-
 
             },
             restrict: 'AE',
@@ -65,6 +63,14 @@
                 var inputclass = tAttrs.inputclass || 'col-sm-3';
                 var inputgroupprefix = tAttrs.inputgroupprefix || '';
 
+                var labelTextarea1 = '<input type="';
+                var labelTextarea2 = '>';
+
+                if (tAttrs.type === 'textarea'){
+                    labelTextarea1 = '<textarea rows="5" ';
+                    labelTextarea2 = '></textarea>';
+                }
+
                 var type = tAttrs.type || 'text';
 
 
@@ -74,12 +80,13 @@
                 required = tAttrs.hasOwnProperty('required') ? 'ng-required="' + tAttrs.required + '"' : "";
                 requirederrorinfo = tAttrs.hasOwnProperty('requirederrorinfo') ? tAttrs.requirederrorinfo  : "field is required";
 
+
                 if(type === 'email'){
                     emailerrorinfo = tAttrs.hasOwnProperty('emailerrorinfo') ? tAttrs.emailerrorinfo  : 'Email format wrong';
                 }
 
 
-                if (type === 'checkbox'){
+                if(type === 'checkbox'){
                     required = tAttrs.hasOwnProperty('required') ? 'ng-required=" !data "' : "";
 
                     var tplcheckbox = '<div class="form-group" ng-class="{ \'has-success\':form.$dirty && form.$valid , \'has-error\':form.$dirty && form.$invalid}">' +
@@ -93,8 +100,9 @@
                                     '</div>';
 
                     return tplcheckbox;
+                }
 
-                }if (type === 'radio'){
+                if (type === 'radio'){
                     required = tAttrs.hasOwnProperty('required') ? 'ng-required=" !data "' : "";
 
 
@@ -109,8 +117,12 @@
                                     '</div>';
 
                     return tplradio;
+                }
 
-                }else if(type === 'number'){
+
+
+
+                if(type === 'number'){
                     min = tAttrs.hasOwnProperty('min') ? 'min="' + tAttrs.min + '"' : "";
                     max = tAttrs.hasOwnProperty('max') ? 'max="' + tAttrs.max + '"' : "";
                     numbererrorinfo = tAttrs.hasOwnProperty('numbererrorinfo') ? tAttrs.numbererrorinfo  : 'must be in range ' + tAttrs.min + ' to '+ tAttrs.max;
@@ -144,7 +156,7 @@
                                 '<label class="' + labelclass + ' control-label" for="ID' + tAttrs.name + '" >' + tAttrs.label + '</label>' +
                                 '<div class=" ' + inputclass + '">'  +
                                     '<span class="form-input-prefix" ng-if="inputgroupprefix">' + inputgroupprefix + '</span>' +
-                                    '<input type="' + type + '" class="form-control" id="ID' + tAttrs.name +'" name="' + tAttrs.name +'" placeholder="{{placeholder}}" ng-model="data" ' + required + minlength + maxlength + min + max + pattern + '>' +
+                                    labelTextarea1 + type + '" class="form-control" id="ID' + tAttrs.name +'" name="' + tAttrs.name +'" placeholder="{{placeholder}}" ng-model="data" ' + required + minlength + maxlength + min + max + pattern + labelTextarea2 +
                                     '<span ng-if="form.$dirty && form.$valid" class="glyphicon glyphicon-ok form-control-feedback"></span>' +
                                     '<span ng-if="form.$dirty && form.$invalid" class="glyphicon glyphicon-remove form-control-feedback"></span>' +
                                 '</div>' +

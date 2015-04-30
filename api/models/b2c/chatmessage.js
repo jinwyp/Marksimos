@@ -3,9 +3,6 @@
  */
 
 
-/**
- * Created by jinwyp on 3/3/15.
- */
 
 'use strict';
 
@@ -18,6 +15,7 @@ var schemaObjectId = Schema.Types.ObjectId;
 var Q = require('q');
 var mongooseTimestamps = require('mongoose-timestamp');
 
+var userRoleModel = require('../user/userrole.js');
 
 /**
  * Mongoose schema
@@ -29,11 +27,12 @@ var chatMessageSchema = new Schema({
     creator: { type: schemaObjectId, ref: 'User' },
 
     room : {
-        roomNumber : {type: String},
+        roomNumber : { type: String},
         description: { type: String }
     }
 
 });
+
 
 /**
  * Mongoose plugin
@@ -54,12 +53,13 @@ chatMessageSchema.plugin(mongooseTimestamps);
  * Statics
  */
 
-chatMessageSchema.statics.updateValidations = function(req){
+chatMessageSchema.statics.createValidations = function(req, userRoleId){
 
-    //req.sanitize('activated').toBoolean();
+    req.checkBody('message', 'Chat Message should be 2-300 characters').notEmpty().len(2, 300);
 
-    //req.checkBody('name', 'Campaign name should be 2-50 characters').notEmpty().len(2, 50);
-    //req.checkBody('description', 'Campaign description should be 2-10000 characters').notEmpty().len(2, 10000);
+    if(userRoleModel.roleList.facilitator.id === userRoleId){
+        req.checkBody('seminarRoom', 'seminar socket Room Number be string characters').notEmpty().len(5, 9);
+    }
 
     //req.checkBody('activated', 'Campaign activated should Boolean true or false').notEmpty();
 
@@ -78,5 +78,5 @@ chatMessageSchema.statics.updateValidations = function(req){
  */
 
 
-var Campaign = mongoose.model("Chatmessage", chatMessageSchema);
-module.exports = Campaign;
+var chatMessage = mongoose.model("Chatmessage", chatMessageSchema);
+module.exports = chatMessage;
