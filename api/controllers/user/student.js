@@ -8,7 +8,7 @@ var fileUploadModel = require('../../models/user/fileupload.js');
 var _ = require('lodash');
 var request = require('request');
 var config = require('../../../common/config.js');
-var resetBbsPassword = require('./authentication.js').resetBbsPassword;
+var nodeBB = require('../../../common/nodeBB.js');
 
 //var ObjectId = require('mongoose').Types.ObjectId;
 
@@ -96,7 +96,7 @@ exports.updateStudentB2CPassword = function(req, res, next){
         }
 
         if(savedDoc[0].bbsUid){
-            resetBbsPassword(savedDoc[0].bbsUid, req.body.passwordNew);
+            nodeBB.resetNodeBBPassword(savedDoc[0].bbsUid, req.body.passwordNew);
         }
 
         return res.status(200).send({message: 'Student password update success'});
