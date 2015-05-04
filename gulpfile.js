@@ -23,7 +23,7 @@ var paths = {
     base: './public',
     app: './public/app/**',
     views: './views/**',
-    javascript: './public/app/js/*.js',
+    javascript: './public/app/js/**/*.js',
     javascriptPath: './public/app/js/',
     javascriptOutputDist: './public/app/dist/',
     angularTemplates: ['./public/app/js/commoncomponent/*.html', './public/app/js/report/*.html', './public/app/js/websitecomponent/*.html'],
