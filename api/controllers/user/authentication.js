@@ -105,9 +105,6 @@ exports.studentLogin = function (req, res, next) {
         }
         if (user.role === userRoleModel.roleList.student.id) {
             if (user.bbsUid && (process.env.NODE_ENV === 'production' || process.env.NODE_ENV === 'ken')) {
-                // if username changed.. this will not work,
-                // TODO: step 1, use nodeBBUid & password to login
-                // TODO: step 2, use only nodeBBUid?
                 nodeBB.loginNodeBB(req.body.username, req.body.password, function(err, cookie) {
                     res.setHeader('Set-Cookie', cookie);
                     res.cookie('x-access-token', user.token, { maxAge: user.tokenExpires, httpOnly: true });

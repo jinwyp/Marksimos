@@ -17,7 +17,8 @@ exports.registerNodeBB = function(newUserInfo, cb){
         }
         return cb(undefined, JSON.parse(res.body).payload.uid);
     })
-}
+};
+
 
 exports.resetNodeBBPassword = function(uid, passwordNew){
     request.put({
@@ -34,7 +35,8 @@ exports.resetNodeBBPassword = function(uid, passwordNew){
             return;
         }
     });
-}
+};
+
 
 exports.loginNodeBB = function(username, password, cb){
     var j = request.jar();
@@ -49,9 +51,9 @@ exports.loginNodeBB = function(username, password, cb){
                 'x-csrf-token': JSON.parse(response.body).csrf_token,
                 'X-Requested-With:XMLHttpRequest': 'XMLHttpRequest',
                 'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8',
-                'Origin': 'http://bbs.test.com:4567',
+                'Origin': config.bbsService,
                 'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_10_3) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/42.0.2311.90 Safari/537.36',
-                'Referer': 'http://bbs.test.com:4567/login'
+                'Referer': config.bbsService + 'login'
             },
             form: {
                 username: username,
