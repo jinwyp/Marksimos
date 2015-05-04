@@ -67,9 +67,9 @@
 
                 <div class="form-group has-feedback" ng-class="{'has-success':regForm.captcha.$dirty&&regForm.captcha.$valid, 'has-error':regForm.captcha.$dirty&&regForm.captcha.$invalid}">
                     <div class="reg-captcha-input-container">
-                        <input class="input-lg form-control" type="text" name="captcha" placeholder="{{'RegisterPageCaptchaPlaceholder' | translate}}" ng-model="register.newUser.captcha" required/>
+                        <input class="input-lg form-control" type="text" name="captcha" placeholder="{{'RegisterPageCaptchaPlaceholder' | translate}}" ng-model="register.newUser.captcha" required ng-minlength="6" ng-maxlength="6"/>
                         <span ng-if="regForm.captcha.$dirty&&regForm.captcha.$valid" class="glyphicon glyphicon-ok form-control-feedback" aria-hidden="true" ></span>
-                        <span ng-if="regForm.captcha.$dirty&&regForm.captcha.$invalid" class="glyphicon glyphicon-remove form-control-feedback" aria-hidden="true" ></span>
+                        <span ng-if="regForm.captcha.$dirty&&(regForm.captcha.$error.minlength || regForm.captcha.$error.maxlength)" class="glyphicon glyphicon-remove form-control-feedback" aria-hidden="true" ></span>
                     </div>
                     <!--<span class="glyphicon glyphicon-ok form-control-feedback" aria-hidden="true" ng-if="regForm.captcha.$dirty&&regForm.captcha.$valid"></span>-->
                     <img class="reg-captcha" ng-click="register.captchaImageNum = register.captchaImageNum+1" ng-src="/e4e/api/captcha?num={{register.captchaImageNum}}">
