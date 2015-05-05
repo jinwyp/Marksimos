@@ -64,7 +64,7 @@
                     var target = angular.element(event.target);
                     //var matches = target.matches || target.msMatchesSelector;
                     //matches = matches.bind(target);
-                    
+
                     if (target.hasClass('seminar')) {
                         $q.when(scope.sendSeminarMessage({messageInput: scope.data.seminarInput})).then(function() {
                             console.log(scope.data.seminarInput);
