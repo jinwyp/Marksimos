@@ -20,6 +20,7 @@ var Q = require('q');
 var request = require('request');
 
 var config = require('../../../common/config.js');
+var nodeBB = require('../../../common/nodeBB.js');
 
 var expiresTime = 1000 * 60 * 60 * 24; // 1 days
 
@@ -103,10 +104,17 @@ exports.studentLogin = function (req, res, next) {
             return res.status(401).send( { message: info.message })
         }
         if (user.role === userRoleModel.roleList.student.id) {
-            //res.cookie('x-access-token', user.token, { maxAge: 12 * 60 * 60 * 1000, httpOnly: true });
-            res.cookie('x-access-token', user.token, { maxAge: user.tokenExpires, httpOnly: true });
-            return res.status(200).send({ message: 'Login success.' , token: user.token });
-
+            if (user.bbsUid && (process.env.NODE_ENV === 'production' || process.env.NODE_ENV === 'ken' || process.env.NODE_ENV === 'jin')) {
+                nodeBB.loginNodeBB(req.body.username, req.body.password, function(err, cookie) {
+                    res.setHeader('Set-Cookie', cookie);
+                    res.cookie('x-access-token', user.token, { maxAge: user.tokenExpires, httpOnly: true });
+                    return res.status(200).send({ message: 'Login success.', token: user.token });
+                });
+            }
+            else{
+                res.cookie('x-access-token', user.token, { maxAge: user.tokenExpires, httpOnly: true });
+                return res.status(200).send({ message: 'Login success.' , token: user.token });
+            }
         }else {
             return res.status(403).send({ message: 'Your account is a ' + user.roleName + ' account, you need a student account login' });
         }
@@ -433,24 +441,14 @@ exports.registerB2CStudent = function(req, res, next){
         }).done();
 
         //register nodeBB user
-        if (process.env.NODE_ENV === 'production' || process.env.NODE_ENV === 'ken')
+        if (process.env.NODE_ENV === 'production' || process.env.NODE_ENV === 'ken' || process.env.NODE_ENV === 'jin')
         {
-            request.post({
-                url    : config.bbsService + 'api/v1/users',
-                headers: {
-                    Authorization: 'Bearer ' + config.bbsToken
-                },
-                form   : {
-                    username: req.body.username,
-                    email   : req.body.email,
-                    password: req.body.password
-                }
-            }, function (err, res) {
-                if (err) {
-                    console.log('Reister new user for NodeBB failed!' + err);
+            var newUserInfo = _.pick(req.body, ['username', 'email', 'password']);
+            nodeBB.registerNodeBB(newUserInfo, function(err, uid){
+                if(err) {
                     return;
                 }
-                resultUser.bbsUid = JSON.parse(res.body).payload.uid;
+                resultUser.bbsUid = uid;
                 resultUser.save();
             })
         }
@@ -702,24 +700,6 @@ exports.verifyResetPasswordCode = function(req, res, next){
 };
 
 
-var resetBbsPassword = function(uid, passwordNew){
-    request.put({
-        url    : config.bbsService + 'api/v1/users/' + uid + '/password_reset',
-        headers: {
-            Authorization: 'Bearer ' + config.bbsToken
-        },
-        form   : {
-            newPassword    : passwordNew
-        }
-    }, function(err, res){
-        if (err) {
-            console.log('reset password for NodeBB failed!' + err);
-            return;
-        }
-    });
-}
-exports.resetBbsPassword = resetBbsPassword;
-
 exports.resetNewPassword = function(req, res, next){
 
     var validationErrors = userModel.resetForgotPasswordValidations(req, userRoleModel.roleList.student.id, userModel.getStudentType().B2C, 3);
@@ -748,7 +728,7 @@ exports.resetNewPassword = function(req, res, next){
             throw new Error('Cancel promise chains. Because Update reset Password failed. More or less than 1 record is updated. it should be only one !');
         }
         if(savedDoc[0].bbsUid){
-            resetBbsPassword(savedDoc[0].bbsUid, req.body.password);
+            nodeBB.resetNodeBBPassword(savedDoc[0].bbsUid, req.body.password);
         }
         return res.status(200).send({message: 'Reset New Password Success.'});
 

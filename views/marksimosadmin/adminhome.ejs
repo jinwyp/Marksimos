@@ -573,7 +573,8 @@
                                                 Members: <span ng-repeat="student in company.studentList">{{student}} <a href="" ng-hide="seminar.isSimulationFinished" ng-click="removeStudentFromSeminar(seminar.seminarId, student)">remove</a>, </span>
                                             </p>
                                         </td>
-                                        <td style="width:460px">
+
+                                        <td >
                                             <div class="input-group margin">
                                                 <div class="input-group-btn">
                                                     <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">{{seminar.currentCompanyName}} <span class="fa fa-caret-down"></span></button>
@@ -581,14 +582,14 @@
                                                         <li ng-repeat="company in seminar.companyAssignment"><a href="" ng-click="chooseCompany(seminar, company)">Company {{company.companyName}}</a></li>
                                                     </ul>
                                                 </div><!-- /btn-group -->
-                                                <input type="email" class="form-control" placeholder="Student or Team creator Email" ng-model="seminar.inputemail">
+                                                <input type="text" class="form-control" placeholder="Student / Team creator Email or Username" ng-model="seminar.inputemail">
                                                 <span class="input-group-btn">
                                                     <button class="btn btn-info" type="button" ng-click="addStudentToSeminar(seminar.seminarId, seminar.inputemail)">Add Student</button>
                                                     <button class="btn btn-primary" type="button" ng-click="addTeamToSeminar(seminar.seminarId, seminar.inputemail)">Add Team</button>
                                                 </span>
                                             </div><!-- /input-group -->
                                             <div class="callout callout-danger" ng-show="seminar.seminarId == css.seminarId">
-                                                <p>Please choose a company and input student email or team creator email !</p>
+                                                <p>Please choose a company and input student or team creator email/username !</p>
                                             </div>
                                         </td>
                                     </tr>
@@ -719,22 +720,22 @@
                                         <th>Status</th>
                                         <th>Location</th>
                                         <th>Match Date</th>
-                                        <th>Seminar List</th>
+                                        <th style="width:300px">Seminar List</th>
                                         <th>Team List</th>
                                     </tr>
                                     <tr ng-repeat="campaign in data.campaigns" >
-                                        <td style="width:100px">
+                                        <td >
                                             <button type="button" class="btn btn-danger" ng-click="showEditCampaignMenu(campaign)" >Modify</button>
                                         </td>
                                         <td data-highlight-key="data.searchCampaign.keyword">{{campaign.name}}</td>
                                         <td data-highlight-key="data.searchCampaign.keyword">{{campaign.description}}</td>
-                                        <td data-highlight-key="data.searchCampaign.keyword">{{campaign.activated}}</td>
+                                        <td >{{campaign.activated}}</td>
                                         <td data-highlight-key="data.searchCampaign.keyword">{{campaign.location}}</td>
-                                        <td data-highlight-key="data.searchCampaign.keyword">{{campaign.matchDate}}</td>
-                                        <td style="width:200px">
+                                        <td >{{campaign.matchDate}}</td>
+                                        <td >
                                             <div>
                                                 <p ng-repeat="seminar in campaign.seminarListMarksimos">
-                                                    <span>Seminar : {{seminar.seminarId }} <a href="" ng-click="removeSeminarFromCampaign(campaign._id, seminar.seminarId)">remove</a>, </span>
+                                                    <span>Seminar : {{seminar.seminarId }} / {{seminar.description }}<a href="" ng-click="removeSeminarFromCampaign(campaign._id, seminar.seminarId)">remove</a>, </span>
                                                 </p>
 
                                                 <div class="input-group ">
@@ -749,12 +750,12 @@
                                             </div>
 
                                         </td>
-                                        <td style="width:400px">
+                                        <td>
                                             <div>
                                                 <div ng-repeat="team in campaign.teamList">
-                                                    <p>Team name : {{team.name }} / Creator : {{team.creator.username }} <a href="" ng-click="removeTeamFromCampaign(campaign._id, team._id)">remove</a>
+                                                    <p>Team name : {{team.name }} / Creator : {{team.creator.username }} ( {{team.creator.email}} ) <a href="" ng-click="removeTeamFromCampaign(campaign._id, team._id)">remove</a>
                                                         <br/>
-                                                        Team Members : <span ng-repeat="student in team.memberList">{{student.username }} , </span>
+                                                        Team Members : <span ng-repeat="student in team.memberList">{{student.username}} ( {{student.email}} ), </span>
                                                     </p>
                                                 </div>
 
