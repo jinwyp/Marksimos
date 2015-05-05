@@ -1,6 +1,6 @@
 <div class="chat-container anim-hide-left" ng-class="{active: css.showChat}" ng-init="active=false">
     <div>
-        <div ng-click="clickToggleWindow()" class="hide-btn"><div class="icon-right"></div><div class="icon-right"></div></div>
+        <div ng-click="clickToggleWindow()" class="hide-btn"><div class="icon-right"></div><div class="icon-right"></div> </div>
 
         <ul class="header" ng-class="{'no-chat-header': hideChatHeader}">
             <li ng-if="!hideChatHeader" ng-click="css.currentTab='dictionary'" ng-class="{active: css.currentTab == 'dictionary'}">Glossary</li>
@@ -95,6 +95,8 @@
             </div>
         </div>
     </div>
+
+
     <div class="chat-icon-wrapper" ng-if="!css.showChat">
         <div ng-click="clickToggleWindow()" class="hide-btn">
             <div class="icon-left"></div><div class="icon-left"></div>
