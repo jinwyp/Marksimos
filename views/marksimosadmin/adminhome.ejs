@@ -573,7 +573,8 @@
                                                 Members: <span ng-repeat="student in company.studentList">{{student}} <a href="" ng-hide="seminar.isSimulationFinished" ng-click="removeStudentFromSeminar(seminar.seminarId, student)">remove</a>, </span>
                                             </p>
                                         </td>
-                                        <td style="width:460px">
+
+                                        <td >
                                             <div class="input-group margin">
                                                 <div class="input-group-btn">
                                                     <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">{{seminar.currentCompanyName}} <span class="fa fa-caret-down"></span></button>
@@ -581,14 +582,14 @@
                                                         <li ng-repeat="company in seminar.companyAssignment"><a href="" ng-click="chooseCompany(seminar, company)">Company {{company.companyName}}</a></li>
                                                     </ul>
                                                 </div><!-- /btn-group -->
-                                                <input type="email" class="form-control" placeholder="Student or Team creator Email" ng-model="seminar.inputemail">
+                                                <input type="text" class="form-control" placeholder="Student / Team creator Email or Username" ng-model="seminar.inputemail">
                                                 <span class="input-group-btn">
                                                     <button class="btn btn-info" type="button" ng-click="addStudentToSeminar(seminar.seminarId, seminar.inputemail)">Add Student</button>
                                                     <button class="btn btn-primary" type="button" ng-click="addTeamToSeminar(seminar.seminarId, seminar.inputemail)">Add Team</button>
                                                 </span>
                                             </div><!-- /input-group -->
                                             <div class="callout callout-danger" ng-show="seminar.seminarId == css.seminarId">
-                                                <p>Please choose a company and input student email or team creator email !</p>
+                                                <p>Please choose a company and input student or team creator email/username !</p>
                                             </div>
                                         </td>
                                     </tr>
