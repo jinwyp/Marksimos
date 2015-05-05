@@ -1,0 +1,51 @@
+#cooperate {
+    p {
+        font-size: 14px;
+        line-height: 2;
+    }
+    background: $color_background_gray_darker;
+    color: $color_text;
+    #bridge-header {
+        @include bridge-header("/app/css/images/b2c_about/b2c_cooperate_banner.jpg")
+    }
+    #sub-nav {
+        background-color: white;
+        padding: 41px 82px;
+        .nav-tabs {
+            border: none;
+            li {
+                margin-left: -1px;
+                border: 1px solid $color_text;
+                width: 16.66%;
+                &.active {
+                    a {
+                        background-color: #eee;
+                    }
+                }
+                a {
+                    border: none;
+                    border-radius: 0;
+                    margin: 0;
+                    color: $color_text;
+                    span {
+                        font-size: 14px;
+                        margin: 0 auto;
+                        display: table;
+                        line-height: 2.6;
+                    }
+                    .double-line {
+                        line-height: 1.3;
+                    }
+                }
+            }
+        }
+    }
+
+    .tab {
+        background-color: white;
+        img {
+            margin: 0 auto;
+            display: block;
+        }
+    }
+}

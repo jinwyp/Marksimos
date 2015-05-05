@@ -1,0 +1,64 @@
+﻿<% include include/headcss.ejs %>
+
+
+<body id="cooperate" ng-app="b2clogin" ng-controller="cooperateController as coop">
+
+    <b2c-header showlogin="true"></b2c-header>
+    <b2c-sub-menu></b2c-sub-menu>
+
+    <div class="middle">
+        <div class="b2c-container">
+            <!--<img src="" width="1160" alt=""/>-->
+            <div id="bridge-header">
+                <h3>Bridge+</h3>
+                <h3>中国首家商战模拟竞赛平台</h3>
+                <a type='button' class="btn btn-danger" href="/e4e">加入</a>
+            </div>
+
+            <div id="sub-nav">
+                <ul class="nav nav-tabs">
+                    <li ng-class="{active: coop.hash=='tab1'}">
+                        <a href="#tab1"><span>特许权益</span></a>
+                    </li>
+                    <li ng-class="{active: coop.hash=='tab2'}">
+                        <a href="#tab2"><span>荣誉权益回报</span></a>
+                    </li>
+                    <li ng-class="{active: coop.hash=='tab3'}">
+                        <a href="#tab3"><span class="double-line">赞助商公司或品牌标示传播效益</span></a>
+                    </li>
+                    <li ng-class="{active: coop.hash=='tab4'}">
+                        <a href="#tab4"><span>媒体传播效益</span></a>
+                    </li>
+                    <li ng-class="{active: coop.hash=='tab5'}">
+                        <a href="#tab5"><span>客户维护及社交权益</span></a>
+                    </li>
+                    <li ng-class="{active: coop.hash=='tab6'}">
+                        <a href="#tab6"><span>产品营销权益</span></a>
+                    </li>
+                </ul>
+            </div>
+
+            <div class="tab" ng-if="coop.hash=='tab1'">
+                <img src="/app/css/images/b2c_about/b2c_cooperate_tab1.jpg" alt=""/>
+            </div>
+            <div class="tab" ng-if="coop.hash=='tab2'">
+                <img src="/app/css/images/b2c_about/b2c_cooperate_tab2.jpg" alt=""/>
+            </div>
+            <div class="tab" ng-if="coop.hash=='tab3'">
+                <img src="/app/css/images/b2c_about/b2c_cooperate_tab3.jpg" alt=""/>
+            </div>
+            <div class="tab" ng-if="coop.hash=='tab4'">
+                <img src="/app/css/images/b2c_about/b2c_cooperate_tab4.jpg" alt=""/>
+            </div>
+            <div class="tab" ng-if="coop.hash=='tab5'">
+                <img src="/app/css/images/b2c_about/b2c_cooperate_tab5.jpg" alt=""/>
+            </div>
+            <div class="tab" ng-if="coop.hash=='tab6'">
+                <img src="/app/css/images/b2c_about/b2c_cooperate_tab6.jpg" alt=""/>
+            </div>
+
+        </div>
+    </div>
+
+<% include ./include/footer.ejs %>
+<% include ./include/footerscriptlogin.ejs %>
