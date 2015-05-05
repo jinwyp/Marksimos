@@ -19,7 +19,7 @@
 
 
     /********************  Create New Module For Controllers ********************/
-    angular.module('b2clogin', ['pascalprecht.translate', 'b2c.config', 'marksimos.commoncomponent', 'marksimos.websitecomponent', 'marksimos.model', 'marksimos.filter', 'mgcrea.ngStrap', 'ngAnimate', 'angularFileUpload']);
+    angular.module('b2clogin', ['pascalprecht.translate', 'b2c.config', 'marksimos.commoncomponent', 'marksimos.websitecomponent', 'marksimos.e4ecomponent', 'marksimos.model', 'marksimos.filter', 'mgcrea.ngStrap', 'ngAnimate', 'angularFileUpload']);
 
 
 
@@ -196,7 +196,7 @@
 
 
 
-    angular.module('b2clogin').controller('profileController', ['Student', '$alert', 'FileUploader', '$translate', '$location', '$interval', 'Constant', function(Student, $alert, FileUploader, $translate, $location, $interval, Constant) {
+    angular.module('b2clogin').controller('profileController', ['Student', '$alert', 'FileUploader', '$translate', '$location', '$interval', 'Constant', '$q', function(Student, $alert, FileUploader, $translate, $location, $interval, Constant, $q) {
         /* jshint validthis: true */
         var vm = this;
         vm.css = {
@@ -274,6 +274,16 @@
         vm.clickDeleteExperience = deleteExperience;
         vm.clickDeleteNewEducation = deleteNewEducation;
         vm.clickDeleteNewExperience = deleteNewExperience;
+
+        vm.update = function(data) {
+            return Student.updateStudentB2CInfo(data).then(function() {
+                app.getUserInfo();
+                $alert(vm.css.alertSuccessInfo);
+            }).catch(function(err) {
+                $alert(vm.css.alertFailedInfo);
+                return $q.reject(err.data.message);
+            });
+        };
 
 
 
