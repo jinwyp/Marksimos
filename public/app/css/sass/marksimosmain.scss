@@ -69,10 +69,10 @@ $color_chat_me: #1289fe;
             display: inline-block;
         }
         .icon-left {
-            transform: rotate(-135deg);
+            @include transform(rotate(-135deg));
         }
         .icon-right {
-            transform: rotate(45deg);
+            @include transform(rotate(45deg));
         }
     }
     .header {
