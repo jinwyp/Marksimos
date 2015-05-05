@@ -66,6 +66,8 @@ module.exports = (function(){
             config.mongo_conn = 'mongodb://localhost/Marksimos';
             config.host = 'http://localhost:3000/';
             config.cgiService = 'http://192.168.2.50/cgi-bin/';
+            config.bbsService = 'http://community.hcd.com:4567/';
+            config.bbsToken = '7d70d2de-4b09-4bf8-baf7-cd506e52f1ac';
             break;
         case 'jinlocal':
             config.fileUploadDirectory = '/Users/jinwyp/Documents/github/Marksimos/public/';
@@ -73,6 +75,8 @@ module.exports = (function(){
             config.mongo_conn = 'mongodb://marksimosdbadmin:marksimossunhao@127.0.0.1:27017/Marksimos';
             config.host = 'http://localhost:3000/';
             config.cgiService = 'http://192.168.2.50/cgi-bin/';
+            config.bbsService = 'http://community.hcd.com:4567/';
+            config.bbsToken = '7d70d2de-4b09-4bf8-baf7-cd506e52f1ac';
             break;
         case 'jin':
             config.fileUploadDirectory = '/Users/jinwyp/Documents/github/Marksimos/public/';
@@ -81,6 +85,8 @@ module.exports = (function(){
             config.mongo_conn = 'mongodb://marksimosdbadmin:marksimossunhao@192.168.2.50:27017/Marksimos';
             config.host = 'http://localhost:3000/';
             config.cgiService = 'http://192.168.2.50/cgi-bin/';
+            config.bbsService = 'http://community.hcd.com:4567/';
+            config.bbsToken = '7d70d2de-4b09-4bf8-baf7-cd506e52f1ac';
             break;
         case 'yuekecheng':
             config.fileUploadDirectory = 'D:/github/marksimos/public/';

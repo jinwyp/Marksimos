@@ -104,7 +104,7 @@ exports.studentLogin = function (req, res, next) {
             return res.status(401).send( { message: info.message })
         }
         if (user.role === userRoleModel.roleList.student.id) {
-            if (user.bbsUid && (process.env.NODE_ENV === 'production' || process.env.NODE_ENV === 'ken')) {
+            if (user.bbsUid && (process.env.NODE_ENV === 'production' || process.env.NODE_ENV === 'ken' || process.env.NODE_ENV === 'jin')) {
                 nodeBB.loginNodeBB(req.body.username, req.body.password, function(err, cookie) {
                     res.setHeader('Set-Cookie', cookie);
                     res.cookie('x-access-token', user.token, { maxAge: user.tokenExpires, httpOnly: true });
@@ -441,7 +441,7 @@ exports.registerB2CStudent = function(req, res, next){
         }).done();
 
         //register nodeBB user
-        if (process.env.NODE_ENV === 'production' || process.env.NODE_ENV === 'ken')
+        if (process.env.NODE_ENV === 'production' || process.env.NODE_ENV === 'ken' || process.env.NODE_ENV === 'jin')
         {
             var newUserInfo = _.pick(req.body, ['username', 'email', 'password']);
             nodeBB.registerNodeBB(newUserInfo, function(err, uid){
