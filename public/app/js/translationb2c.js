@@ -113,13 +113,14 @@
             jobTypeIntern        : 'Intern',
 
             jobCompanySize20 : 'Less than 20 Employees',
-            jobCompanySize50 : '20-50Employees',
-            jobCompanySize100 : '50-100Employees',
-            jobCompanySize200 : '100-200Employees',
-            jobCompanySize500 : '200-500Employees',
-            jobCompanySize1000 : '500-1000Employees',
-            jobCompanySize2000 : '1000-2000Employees',
-            jobCompanySize5000 : '2000-5000Employees',
+            jobCompanySize50 : '20-50 Employees',
+            jobCompanySize80 : '50-80 Employees',
+            jobCompanySize100 : '80-100 Employees',
+            jobCompanySize200 : '100-200 Employees',
+            jobCompanySize500 : '200-500 Employees',
+            jobCompanySize1000 : '500-1000 Employees',
+            jobCompanySize2000 : '1000-2000 Employees',
+            jobCompanySize5000 : '2000-5000 Employees',
             jobCompanySize10000 : 'Above 5000 Employees',
 
 
@@ -372,6 +373,7 @@
             PageHeaderLoginButton        : 'Sign In',
             PageHeaderRememberMe         : 'RememberMe',
             PageHeaderForgetPassword     : 'ForgetPassword',
+            PageHeaderLogOut             : 'Log Out',
 
 
 
@@ -586,7 +588,8 @@
 
             jobCompanySize20 : '少于20人',
             jobCompanySize50 : '20-50人',
-            jobCompanySize100 : '50-100人',
+            jobCompanySize80 : '50-80人',
+            jobCompanySize100 : '80-100人',
             jobCompanySize200 : '100-200人',
             jobCompanySize500 : '200-500人',
             jobCompanySize1000 : '500-1000人',
@@ -847,6 +850,7 @@
             PageHeaderLoginButton        : '登录',
             PageHeaderRememberMe         : '下次自动登录',
             PageHeaderForgetPassword     : '忘记密码',
+            PageHeaderLogOut             : '退出登录',
 
 
 

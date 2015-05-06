@@ -125,6 +125,15 @@ var userSchema = new Schema({
         }]
     }],
 
+    societyExperiences: [{
+        societyName: String,
+        position: String,
+        sizeOfSociety: Number,
+        entryDate: Date,
+        graduationDate: Date,
+        societyExperience: String
+    }],
+
     bbsUid: Number
 });
 

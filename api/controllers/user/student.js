@@ -15,7 +15,7 @@ var nodeBB = require('../../../common/nodeBB.js');
 
 var pickedUpdatedKeys = ['gender', 'birthday', 'firstName', 'lastName', 'idcardNumber',  'mobilePhone', 'qq',
     'majorsDegree', 'dateOfEnterCollege', 'dateOfGraduation', 'organizationOrUniversity', 'occupation', 'currentLocation',
-    'country', 'state', 'city', 'district', 'street', 'websiteLanguage', 'workExperiences', 'LanguageSkills', 'eductionBackgrounds'];
+    'country', 'state', 'city', 'district', 'street', 'websiteLanguage', 'workExperiences', 'LanguageSkills', 'eductionBackgrounds', 'societyExperiences'];
 
 exports.updateStudentB2CInfo = function(req, res, next){
     var validationErrors = userModel.userInfoValidations(req, userRoleModel.roleList.student.id, userModel.getStudentType().B2C);
