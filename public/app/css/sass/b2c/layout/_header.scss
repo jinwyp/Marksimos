@@ -4,17 +4,6 @@
     $icon-repeat: repeat-x;
     background-image: url(../images/b2c_nav_1x82.png);
 
-    .button {
-        margin-top: 30px;
-        width: 49px;
-        height: 23px;
-        font-size: 12px;
-        @include inline-block;
-        @include icon_b2c-sprite(b2c_login_49x23);
-        &:hover {
-            @include icon_b2c-sprite(b2c_login_49x23_hover);
-        }
-    }
 
     .b2c-logo {
         //        margin-left: 157px;
@@ -35,8 +24,9 @@
         margin-right: 10px;
 
         .glyphicon {
-            top: 8px;
+            top: 2px;
             color: white;
+            font-size: 16px;
         }
 
         .dropdown-menu {
@@ -102,38 +92,63 @@
             }
         }
     }
-    //
-    //    .b2c-login-box {
-    //        margin-right: 50px;
-    //    }
+
 
     .b2c-login-field {
         float: left;
-        width: 165px;
-        color: #fff;
-        font-size: 12px;
-        margin-top: 10px;
-        div {
-            line-height: 20px;
-            height: 20px;
+        width: 390px;
+        padding-top: 8px;
+
+        .inputlabel {
+            float: left;
+            margin-right: 10px;
+
+            label{
+                color: #ffffff;
+                font-size: 12px;
+                margin-bottom: 0px;
+                padding-left: 2px;
+            }
+
+            .b2c-login-input {
+                width: 150px;
+                padding: 0px 0px 0px 0px;
+                font-size: 12px;
+                height: 20px;
+                line-height: 20px;
+                border: solid #932F18 1px;
+                color: #333;
+                @include border-radius(0px);
+            }
+
+            .button {
+                margin-top: 21px;
+                padding: 3px 10px 0px 10px;
+                height: 22px;
+                font-size: 12px;
+                color: #ffffff;
+                @include inline-block;
+                @include icon_b2c-sprite(b2c_login_header);
+                &:hover {
+                    @include icon_b2c-sprite(b2c_login_header_hover);
+                }
+            }
         }
 
-        label, a {
-            color: #EDA694 !important;
-            padding-left: 2px;
-            vertical-align: top;
+        .checkboxlabel{
+            float: left;
+            width: 161px;
+
+            label, a {
+                color: #EDA694 !important;
+                font-size: 12px;
+                padding-left: 2px;
+            }
         }
+
     }
 
-    .b2c-login-input {
-        width: 150px;
-        padding: 0;
-        font-size: 12px;
-        height: 20px;
-        line-height: 20px;
-        border: solid #932F18 1px;
-        color: #333;
-    }
+
 
 }
 

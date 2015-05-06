@@ -365,8 +365,17 @@
 
 
 
-            //Register Page
-            //Register Form
+
+            //Page Header
+            PageHeaderLoginUsernameLabel : 'Username/Email',
+            PageHeaderLoginPasswordLabel : 'Password',
+            PageHeaderLoginButton        : 'Sign In',
+            PageHeaderRememberMe         : 'RememberMe',
+            PageHeaderForgetPassword     : 'ForgetPassword',
+
+
+
+            //Register Page Form
             RegisterPageRegisterLabel             : 'Register',
             RegisterPageUsernamePlaceholder       : 'Username',
             RegisterPageEmailPlaceholder          : 'Email',
@@ -671,6 +680,11 @@
             jobIndustryOthers05          : '多元化业务集团公司',
             jobIndustryOthers06          : '其他行业',
 
+
+
+
+
+
             //Profile Page
             //validation Error Tip
             ProfilePageRequiredError: '必填',
@@ -827,8 +841,16 @@
 
 
 
-            //Register Page
-            //Register Form
+            //Page Header
+            PageHeaderLoginUsernameLabel : '用户名/邮箱',
+            PageHeaderLoginPasswordLabel : '密码',
+            PageHeaderLoginButton        : '登录',
+            PageHeaderRememberMe         : '下次自动登录',
+            PageHeaderForgetPassword     : '忘记密码',
+
+
+
+            //Register Page Form
             RegisterPageRegisterLabel             : '注册',
             RegisterPageUsernamePlaceholder       : '用户名',
             RegisterPageEmailPlaceholder          : '邮箱',
@@ -929,6 +951,9 @@
             ResetPasswordResetSuccessTip: '重置密码成功，请返回登录.',
             ResetPasswordLoginButton: '立即登录'
         });
+
+
+
 
         // Tell the module what language to use by default
 //        $translateProvider.preferredLanguage('en_US');

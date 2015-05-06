@@ -46,7 +46,7 @@ auth.initAuth();
 /**********     Routes for rendering templates HCD Learning Website     **********/
 
 apiRouter.get('/', function(req, res, next){
-    res.redirect('/cn');
+    res.redirect('/e4e');
 });
 
 apiRouter.get('/admin', function(req, res, next){
