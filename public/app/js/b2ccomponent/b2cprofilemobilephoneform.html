@@ -1,0 +1,39 @@
+<div class="profile-detail-title">{{'ProfilePageTabSecurityInfo' | translate}}<span class="profile-edit" ng-click="profile.clickEditProfile()">{{'ProfilePageEditButton' | translate}}</span></div>
+<form name="basicInfoForm" class="form-horizontal">
+
+    <div class="form-group" ng-class="{'has-success':basicInfoForm.mobilePhone.$dirty&&basicInfoForm.mobilePhone.$valid, 'has-error':basicInfoForm.mobilePhone.$dirty&&basicInfoForm.mobilePhone.$invalid}" >
+        <label for="mobilePhone" class="control-label col-md-3 text-right">{{'ProfileContactInfoMobilePhone' | translate}} :</label>
+        <div class="col-xs-5" ng-if="!profile.css.formEditing">
+            <p class="form-control-static " ng-class="{'text-success':profile.currentUser.phoneVerified, 'text-danger':!profile.currentUser.phoneVerified}">
+                {{profile.currentUser.mobilePhone}} <span ng-if="profile.currentUser.mobilePhone">({{profile.currentUser.phoneVerified?'ProfileContactInfoMobileVerified':'ProfileContactInfoMobileUnverified' | translate}})</span>
+            </p>
+        </div>
+        <div ng-if="profile.css.formEditing" class="col-xs-5">
+            <input ng-model="profile.formData.mobilePhone" type="text" id="mobilePhone" name="mobilePhone" class="form-control">
+        </div>
+        <span class="form-control-static err-msg control-label col-xs-3" ng-if="basicInfoForm.mobilePhone.$invalid&&profile.css.errorFields.mobilePhone">{{'ProfilePageInvalidMobilePhoneNumber' | translate}}</span>
+    </div>
+
+    <div class="form-group" ng-if="!profile.css.formEditing" ng-class="{'has-success':basicInfoForm.mobilePhoneVerifyCode.$dirty&&basicInfoForm.mobilePhoneVerifyCode.$valid, 'has-error':basicInfoForm.mobilePhoneVerifyCode.$dirty&&basicInfoForm.mobilePhoneVerifyCode.$invalid}" >
+        <label for="mobilePhoneVerifyCode" class="control-label col-md-3 text-right">{{'ProfileContactInfoMobilePhoneVerify' | translate}} :</label>
+
+        <div class="col-xs-2">
+            <input ng-model="profile.formData.mobilePhoneVerifyCode" type="text" id="mobilePhoneVerifyCode" name="mobilePhoneVerifyCode" class="form-control">
+        </div>
+        <div class="col-xs-3">
+            <button class="btn btn-default" ng-if="!profile.css.mobileVerifyCodeResend" ng-click="profile.clickGetMobileVerifyCode(basicInfoForm)">{{'ProfileContactInfoMobilePhoneVerifySend' | translate}}</button>
+            <button class="btn btn-default" ng-if="profile.css.mobileVerifyCodeResend" ng-click="profile.clickGetMobileVerifyCode(basicInfoForm)" ng-disabled="profile.css.mobileVerifyCodeTimeCounter>0">{{'ProfileContactInfoMobilePhoneVerifyReSend' | translate}}
+                <span ng-hide="profile.css.mobileVerifyCodeTimeCounter==0">{{profile.css.mobileVerifyCodeTimeCounter}}</span>
+            </button>
+        </div>
+        <span class="form-control-static err-msg control-label col-xs-3" ng-if="basicInfoForm.mobilePhoneVerifyCode.$invalid&&profile.css.errorFields.mobilePhoneVerifyCode">{{'ProfilePageInvalidMobilePhoneNumberVerifyCode' | translate}}</span>
+        <span class="form-control-static err-msg control-label col-xs-3" ng-if="basicInfoForm.mobilePhoneVerifyCode.$invalid&&profile.css.errorFields.mobilePhoneWrongFormat">{{'ProfilePageInvalidMobilePhoneNumber' | translate}}</span>
+    </div>
+
+    <div class="row" ng-if="!profile.css.formEditing">
+        <div class="col-md-6 col-md-offset-3 profile-button-container">
+            <button ng-click="profile.clickSendMobileVerifyCode(basicInfoForm)" type="submit">{{'ProfileContactInfoMobileVerifiedButton' | translate}}</button>
+        </div>
+    </div>
+
+</form>

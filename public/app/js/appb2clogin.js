@@ -285,6 +285,16 @@
             });
         };
 
+        vm.updatePassword = function(data) {
+            return Student.updatePassword(data.oldPassword, data.newPassword).then(function() {
+                app.getUserInfo(); // may be need not to.
+                $alert(vm.css.alertSuccessInfo);
+            }).catch(function(err) {
+                $alert(vm.css.alertFailedInfo);
+                return $q.reject(err.data.message);
+            });
+        };
+
 
 
         /**********  Function Declarations  **********/
