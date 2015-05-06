@@ -97,7 +97,9 @@
                     scope.css.language = langKey;
                     $translate.use(langKey);
 
-                    Student.updateStudentB2CInfo({ 'websiteLanguage':langKey });
+                    if(!angular.isUndefined(scope.currentuser)){
+                        Student.updateStudentB2CInfo({ 'websiteLanguage':langKey });
+                    }
                 };
 
                 scope.newUser = {
