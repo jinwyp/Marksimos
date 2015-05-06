@@ -46,7 +46,10 @@ auth.initAuth();
 /**********     Routes for rendering templates HCD Learning Website     **********/
 
 apiRouter.get('/', function(req, res, next){
-    res.redirect('/e4e');
+    if(req.headers.host.indexOf('bridge.cn') !== -1){
+        res.redirect('/e4e');
+    }
+    res.redirect('/cn');
 });
 
 apiRouter.get('/admin', function(req, res, next){
