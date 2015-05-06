@@ -414,7 +414,11 @@ exports.addTeamToCampaign = function(req, res, next){
 
     if(req.user.role === userRoleModel.roleList.student.id && req.user.username !== req.body.username ){
         // For student role
-        return res.status(400).send( {message: 'Role student only can join campaign with own team'} );
+        return res.status(400).send( {message: 'only student own team can join campaign'} );
+    }
+
+    if(typeof req.user.firstName === 'undefined' || typeof req.user.mobilePhone === 'undefined' || req.user.firstName == '' || req.user.mobilePhone == ''){
+        return res.status(400).send( {message: 'student name and mobile phone can not empty'} );
     }
 
     var dataTeam ;
@@ -425,12 +429,22 @@ exports.addTeamToCampaign = function(req, res, next){
             throw new Error('Cancel promise chains. Because User not found !');
         }
 
-        return teamModel.findOneQ({creator : resultUser._id});
+        return teamModel.findOne({creator : resultUser._id}).populate('memberList').execQ();
 
     }).then(function(resultTeam) {
         if (!resultTeam) {
             throw new Error('Cancel promise chains. Because Team not found !');
         }
+
+        if(resultTeam.name == ''){
+            throw new Error('Cancel promise chains. Because team name can not empty !');
+        }
+
+        resultTeam.memberList.forEach(function(user){
+            if(typeof req.user.firstName === 'undefined' || typeof req.user.mobilePhone === 'undefined' || user.firstName == '' || user.mobilePhone == ''){
+                throw new Error('Cancel promise chains. Because team member name and mobile phone can not empty !');
+            }
+        });
 
         dataTeam = resultTeam;
         return campaignModel.findByIdQ(req.body.campaignId);

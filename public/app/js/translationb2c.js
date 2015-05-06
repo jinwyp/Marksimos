@@ -325,7 +325,7 @@
             CampaignPageEnterSuccessTip2              : 'Play The Game',
             //Labels for Enter Failed popup window
             CampaignPageEnterFailedTip1               : 'Tip',
-            CampaignPageEnterFailedTip2               : "Please Complete Your Team's Info",
+            CampaignPageEnterFailedTip2               : "Please Confirm Your Team's first name and mobile phone info",
             CampaignPageEnterFailedCompleteInfoButton : 'Complete Info',
 
             //Labels for Schedules
@@ -803,7 +803,7 @@
             CampaignPageEnterSuccessTip2              : '快来体验游戏吧',
             //Labels for Enter Failed popup window
             CampaignPageEnterFailedTip1               : '温馨提示',
-            CampaignPageEnterFailedTip2               : '请先完成你的队伍信息',
+            CampaignPageEnterFailedTip2               : '请完善所有组员的姓名和手机等信息',
             CampaignPageEnterFailedCompleteInfoButton : '完善信息',
 
             //Labels for Schedules
