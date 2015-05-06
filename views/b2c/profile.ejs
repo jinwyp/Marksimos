@@ -516,6 +516,7 @@
 
                     <div class="row" ng-if="profile.css.currentTab == 'securityInfo'">
                         <profile-change-password-form current-user="profile.currentUser" update="profile.updatePassword(data)"></profile-change-password-form>
+                        <profile-mobile-phone-form current-user="profile.currentUser" update="profile.update(data)" send-phone-verify-code="profile.sendPhoneVerifyCode(code)" get-phone-verify-code="profile.getPhoneVerifyCode()"></profile-mobile-phone-form>
                     </div>
 
                     <div class="row team-info" ng-if="profile.css.currentTab == 'teamInfo'">

@@ -221,6 +221,7 @@
             ProfilePageTabSecurityInfo               : 'Security Details',
             ProfilePageTabSchoolInfo                 : 'Education Background',
             ProfilePageTabTeamInfo                   : 'Team Details',
+            ProfilePageTabMobilePhoneInfo: 'Mobile Phone',
             ProfilePageTabExperienceInfo: 'Work Experience',
 
             //Labels for Info Details
@@ -270,12 +271,11 @@
             ProfilePageTeamInfoMember                : 'Member',
             ProfilePageTeamInfoNewMember             : 'New Member',
             ProfileContactInfoMobilePhone            : 'Mobile Phone',
-            ProfileContactInfoMobilePhoneVerify      : 'Verify Mobile',
+            ProfileContactInfoMobilePhoneVerify      : 'Verify',
             ProfileContactInfoMobilePhoneVerifySend  : 'Get verify code for free',
 
             ProfileContactInfoMobilePhoneVerifyReSend : 'Resend verify code',
             ProfileContactInfoMobileVerified          : 'Verified',
-            ProfileContactInfoMobileUnverified        : 'Unverified',
             ProfileContactInfoMobileVerifiedButton        : 'Verify',
 
             //Error Tips for Validation
@@ -685,6 +685,7 @@
             ProfilePageTabSecurityInfo               : '安全信息',
             ProfilePageTabSchoolInfo                 : '教育背景',
             ProfilePageTabTeamInfo                   : '团队信息',
+            ProfilePageTabMobilePhoneInfo: '手机',
             ProfilePageTabExperienceInfo: '工作经历',
 
 
@@ -738,7 +739,6 @@
             ProfileContactInfoMobilePhoneVerifySend   : '免费获取验证码',
             ProfileContactInfoMobilePhoneVerifyReSend : '重新发送验证码',
             ProfileContactInfoMobileVerified          : '已验证',
-            ProfileContactInfoMobileUnverified        : '未验证',
             ProfileContactInfoMobileVerifiedButton    : '点击验证',
 
             //Error Tips for Validation

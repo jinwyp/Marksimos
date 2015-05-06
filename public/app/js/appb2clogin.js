@@ -262,8 +262,6 @@
         vm.clickHideMutiSelect = hideMutiSelect;
 
         vm.clickCancelEditProfile = cancelEditProfile;
-        vm.clickGetMobileVerifyCode = getMobileVerifyCode;
-        vm.clickSendMobileVerifyCode = sendMobileVerifyCode;
         vm.clickSetEditingState = setEditingState;
         vm.clickResetEditingState = resetEditingState;
         vm.clickAddNewLanguage = addNewLanguage;
@@ -295,6 +293,13 @@
             });
         };
 
+        vm.getPhoneVerifyCode = function() {
+            return Student.getPhoneVerifyCode();
+        };
+
+        vm.sendPhoneVerifyCode = function(code) {
+            return Student.sendPhoneVerifyCode(code);
+        };
 
 
         /**********  Function Declarations  **********/
@@ -506,52 +511,6 @@
                     }
                 });
             }
-        }
-
-        function getMobileVerifyCode(form) {
-            vm.css.mobileVerifyCodeResend = false;
-            vm.css.errorFields.mobilePhoneVerifyCode = false;
-            if(form.$valid){
-
-                Student.getPhoneVerifyCode().then(function(){
-
-                    vm.css.mobileVerifyCodeResend = true;
-                    vm.css.mobileVerifyCodeTimeCounter = 60;
-
-                    var timer = $interval(function() {
-                        if(vm.css.mobileVerifyCodeTimeCounter > 0){
-                            vm.css.mobileVerifyCodeTimeCounter = vm.css.mobileVerifyCodeTimeCounter - 1;
-                        }else {
-                            $interval.cancel(timer);
-                        }
-                    }, 1000);
-
-                }).catch(function(err){
-                    form.mobilePhoneVerifyCode.$setDirty();
-                    form.mobilePhoneVerifyCode.$valid = false;
-                    form.mobilePhoneVerifyCode.$invalid = true;
-
-                    vm.css.errorFields.mobilePhoneWrongFormat = true;
-
-                });
-            }
-        }
-
-        function sendMobileVerifyCode(form) {
-            vm.css.mobileVerifyCodeResend = false;
-            vm.css.errorFields.mobilePhoneVerifyCode = false;
-
-            Student.sendPhoneVerifyCode(vm.formData.mobilePhoneVerifyCode).then(function(){
-                vm.currentUser.phoneVerified = true;
-            }).catch(function(err){
-                form.mobilePhoneVerifyCode.$setDirty();
-                form.mobilePhoneVerifyCode.$valid = false;
-                form.mobilePhoneVerifyCode.$invalid = true;
-
-                vm.css.errorFields.mobilePhoneVerifyCode = true;
-
-                console.log(err);
-            });
         }
 
 
