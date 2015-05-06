@@ -80,34 +80,34 @@ apiRouter.get('/e4e/forgotpassword', function(req, res, next){
 apiRouter.get('/e4e/emailverify/changepassword', auth.forgotPasswordStep2);
 
 apiRouter.get('/e4e/profile', auth.authLoginToken({failureRedirect: '/e4e/login'}), auth.authRole(marksimosRight.studentLogin, {failureRedirect: '/e4e/login'}), function(req, res, next){
-    res.render('b2c/profile.ejs', {title:'E4E User Home | HCD Learning'});
+    res.render('b2c/about/profile.ejs', {title:'E4E User Home | HCD Learning'});
 });
 
 apiRouter.get('/e4e/campaigns',  campaignController.campaignListPage);
 apiRouter.get('/e4e/campaign/:campaignId', auth.authLoginToken({failureRedirect: '/e4e/login'}), auth.authRole(marksimosRight.studentLogin, {failureRedirect: '/e4e/login'}), campaignController.campaignSingleInfoPage);
 
 apiRouter.get('/e4e/about', function(req, res, next){
-    res.render('b2c/about.ejs', {title:'About Bridge+'})
+    res.render('b2c/about/about.ejs', {title:'About Bridge+'})
 });
 
 apiRouter.get('/e4e/intro', function(req, res, next){
-    res.render('b2c/intro.ejs', {title:'Project Introduction'})
+    res.render('b2c/about/intro.ejs', {title:'Project Introduction'})
 });
 
 apiRouter.get('/e4e/activity', function(req, res, next){
-    res.render('b2c/activity.ejs', {title:'Newest Activities'})
+    res.render('b2c/about/activity.ejs', {title:'Newest Activities'})
 });
 
 apiRouter.get('/e4e/contact', function(req, res, next){
-    res.render('b2c/contact.ejs', {title:'Newest Activities'})
+    res.render('b2c/about/contact.ejs', {title:'Contact'})
 });
 
 apiRouter.get('/e4e/media', function(req, res, next){
-    res.render('b2c/unfinished.ejs', {title:'Media Reports'})
+    res.render('b2c/about/unfinished.ejs', {title:'Media Reports'})
 });
 
 apiRouter.get('/e4e/cooperate', function(req, res, next){
-    res.render('b2c/cooperate.ejs', {title:'Cooperation'})
+    res.render('b2c/about/cooperate.ejs', {title:'Cooperation'})
 });
 
 
