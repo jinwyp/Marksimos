@@ -63,14 +63,14 @@ apiRouter.get('/admin', function(req, res, next){
 /**********     Routes for rendering templates E4E Website     **********/
 
 apiRouter.get('/e4e', auth.authLoginToken({successRedirect: '/e4e/campaigns'}), function(req, res, next){
-    res.render('b2c/registration/indexreg.ejs', {title : 'Welcome to HCD Bridge+ | HCD Learning'});
+    res.render('b2c/registration/indexreg.ejs', {title : 'Welcome to Bridge+ | HCD Learning'});
 });
 
 apiRouter.get('/e4e/emailverify/registration', auth.activateRegistrationEmail);
 
 
 apiRouter.get('/e4e/login', function(req, res, next){
-    res.render('b2c/login.ejs', {title:'HCD Bridge+ Sign in to Your Account| HCD Learning'});
+    res.render('b2c/login.ejs', {title:'Bridge+ Sign in to Your Account| HCD Learning'});
 });
 
 
@@ -81,14 +81,14 @@ apiRouter.get('/e4e/emailverify/changepassword', auth.forgotPasswordStep2);
 
 
 apiRouter.get('/e4e/profile', auth.authLoginToken({failureRedirect: '/e4e/login'}), auth.authRole(marksimosRight.studentLogin, {failureRedirect: '/e4e/login'}), function(req, res, next){
-    res.render('b2c/about/profile.ejs', {title:'HCD Bridge+ User Home | HCD Learning'});
+    res.render('b2c/about/profile.ejs', {title:'Bridge+ User Home | HCD Learning'});
 });
 
 apiRouter.get('/e4e/campaigns',  campaignController.campaignListPage);
 apiRouter.get('/e4e/campaign/:campaignId', auth.authLoginToken({failureRedirect: '/e4e/login'}), auth.authRole(marksimosRight.studentLogin, {failureRedirect: '/e4e/login'}), campaignController.campaignSingleInfoPage);
 
 apiRouter.get('/e4e/about', function(req, res, next){
-    res.render('b2c/about/about.ejs', {title:'About HCD Bridge+ | HCD Learning'});
+    res.render('b2c/about/about.ejs', {title:'About Bridge+ | HCD Learning'});
 });
 
 apiRouter.get('/e4e/intro', function(req, res, next){
