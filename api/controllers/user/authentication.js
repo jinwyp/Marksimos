@@ -144,6 +144,10 @@ exports.logout = function(req, res, next){
     req.logout();
     res.clearCookie('x-access-token');
 
+    if(config.domain){
+        res.clearCookie('express.sid', {domain: '.'+config.domain});
+    }
+
     res.status(200).send({message: 'Logout success'});
 };
 

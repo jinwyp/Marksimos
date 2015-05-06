@@ -116,6 +116,7 @@ module.exports = (function(){
             config.host = 'http://localhost:3000/';
             config.cgiService = 'http://192.168.2.50/cgi-bin/';
             config.bbsService = 'http://bbs.test.com:4567/';
+            config.domain = 'test.com';
             config.bbsToken = '02763566-35f4-48f8-8cb4-8322554e53d0';
             break;
         case 'development':
@@ -132,6 +133,7 @@ module.exports = (function(){
             config.host = 'http://121.40.121.187:3000/';
             config.cgiService = 'http://10.171.251.169/cgi-bin/';
             config.bbsService = 'http://community.hcdlearning.com/';
+            config.domain = 'hcdlearning.com';
             config.bbsToken = '2ac528cb-b29c-4841-b0e8-2438c01d9f44';
             break;
         default:
