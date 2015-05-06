@@ -46,7 +46,7 @@ auth.initAuth();
 /**********     Routes for rendering templates HCD Learning Website     **********/
 
 apiRouter.get('/', function(req, res, next){
-    res.redirect('/cn');
+    res.redirect('/e4e');
 });
 
 apiRouter.get('/admin', function(req, res, next){
@@ -63,14 +63,14 @@ apiRouter.get('/admin', function(req, res, next){
 /**********     Routes for rendering templates E4E Website     **********/
 
 apiRouter.get('/e4e', auth.authLoginToken({successRedirect: '/e4e/campaigns'}), function(req, res, next){
-    res.render('b2c/registration/indexreg.ejs', {title : 'Welcome to HCD E4E | HCD Learning'});
+    res.render('b2c/registration/indexreg.ejs', {title : 'Welcome to HCD Bridge+ | HCD Learning'});
 });
 
 apiRouter.get('/e4e/emailverify/registration', auth.activateRegistrationEmail);
 
 
 apiRouter.get('/e4e/login', function(req, res, next){
-    res.render('b2c/login.ejs', {title:'HCD E4E Sign in to Your Account| HCD Learning'});
+    res.render('b2c/login.ejs', {title:'HCD Bridge+ Sign in to Your Account| HCD Learning'});
 });
 
 
@@ -79,36 +79,40 @@ apiRouter.get('/e4e/forgotpassword', function(req, res, next){
 });
 apiRouter.get('/e4e/emailverify/changepassword', auth.forgotPasswordStep2);
 
+
 apiRouter.get('/e4e/profile', auth.authLoginToken({failureRedirect: '/e4e/login'}), auth.authRole(marksimosRight.studentLogin, {failureRedirect: '/e4e/login'}), function(req, res, next){
-    res.render('b2c/profile.ejs', {title:'E4E User Home | HCD Learning'});
+    res.render('b2c/about/profile.ejs', {title:'HCD Bridge+ User Home | HCD Learning'});
 });
 
 apiRouter.get('/e4e/campaigns',  campaignController.campaignListPage);
 apiRouter.get('/e4e/campaign/:campaignId', auth.authLoginToken({failureRedirect: '/e4e/login'}), auth.authRole(marksimosRight.studentLogin, {failureRedirect: '/e4e/login'}), campaignController.campaignSingleInfoPage);
 
 apiRouter.get('/e4e/about', function(req, res, next){
-    res.render('b2c/about.ejs', {title:'About Bridge+'})
+    res.render('b2c/about/about.ejs', {title:'About HCD Bridge+ | HCD Learning'});
 });
 
 apiRouter.get('/e4e/intro', function(req, res, next){
-    res.render('b2c/intro.ejs', {title:'Project Introduction'})
+    res.render('b2c/about/intro.ejs', {title:'Project Introduction | HCD Learning'});
 });
 
 apiRouter.get('/e4e/activity', function(req, res, next){
-    res.render('b2c/activity.ejs', {title:'Newest Activities'})
+    res.render('b2c/about/activity.ejs', {title:'Newest Activities | HCD Learning'});
 });
 
 apiRouter.get('/e4e/contact', function(req, res, next){
-    res.render('b2c/contact.ejs', {title:'Newest Activities'})
+    res.render('b2c/about/contact.ejs', {title:'Contact | HCD Learning'});
 });
 
 apiRouter.get('/e4e/media', function(req, res, next){
-    res.render('b2c/unfinished.ejs', {title:'Media Reports'})
+    res.render('b2c/about/unfinished.ejs', {title:'Media Reports | HCD Learning'});
 });
 
 apiRouter.get('/e4e/cooperate', function(req, res, next){
-    res.render('b2c/cooperate.ejs', {title:'Cooperation'})
+    res.render('b2c/about/cooperate.ejs', {title:'Cooperation | HCD Learning'});
 });
+
+
+
 
 
 
@@ -119,21 +123,20 @@ apiRouter.get('/marksimos', auth.authLoginToken({failureRedirect: '/marksimos/lo
 });
 
 apiRouter.get('/marksimos/login', function(req, res, next){
-    res.render('marksimosuser/userlogin.ejs', { title : 'MarkSimos - Sign In'});
+    res.render('marksimosuser/userlogin.ejs', { title : 'MarkSimos - Sign In | HCD Learning'});
 });
 
 apiRouter.get('/marksimos/intro', auth.authLoginToken({failureRedirect: '/marksimos/login'}), auth.authRole(marksimosRight.studentLogin, {failureRedirect: '/marksimos/login'}), function(req, res, next){
-    res.render('marksimosuser/userintroduction.ejs', { title : 'MarkSimos - Introduction Videos'});
+    res.render('marksimosuser/userintroduction.ejs', { title : 'MarkSimos - Introduction Videos | HCD Learning'});
 });
 
 apiRouter.get('/marksimos/home', auth.authLoginToken({failureRedirect: '/marksimos/login'}), auth.authRole(marksimosRight.studentLogin, {failureRedirect: '/marksimos/login'}), function(req, res, next){
-    res.render('marksimosuser/userhome.ejs', { title : 'MarkSimos - User Home'});
+    res.render('marksimosuser/userhome.ejs', { title : 'MarkSimos - User Home | HCD Learning'});
 });
 
 
-
 apiRouter.get('/marksimos/help', function(req, res, next){
-    res.render('marksimosuser/userhelp.ejs', { title : 'MarkSimos - Help'});
+    res.render('marksimosuser/userhelp.ejs', { title : 'MarkSimos - Help | HCD Learning'});
 });
 
 //download file

@@ -101,6 +101,10 @@ Error:     error public/app/css/sass/main.scss (Line 136: Invalid GBK character"
 ```
 @charset "utf-8";
 ```
+
+
+
+
 ### Mongodb 数据库Windows下安装：
 *  到官网[下载最新安装包](http://www.mongodb.org/downloads)，选择自己的版本（32位或64位）
    zip包和msi的内容是一样的都有bin文件夹
@@ -256,6 +260,65 @@ This not only applies to Linode, but Digital Ocean, AWS EC2 and other VPS provid
 # 代码架构说明
 
 ## 前端
+
+
+### CSS SASS Compass 文件结构
+
+[参见大漠知乎回答](http://www.zhihu.com/question/29239526/)
+[相关SASS文章](http://www.w3cplus.com/blog/tags/466.html)
+
+
+通常使用7-1模式的结构：7个文件夹，1个文件。基本上，你需要将所有的部件放进7个不同的文件夹和一个位于根目录的文件（通常命名为 main.scss）中——这个文件编译时会引用所有文件夹而形成一个CSS样式表。
+
+sass/
+|
+|– base/
+|   |– _reset.scss       # Reset/normalize
+|   |– _typography.scss  # Typography rules
+|   ...                  # Etc…
+|
+|– components/
+|   |– _buttons.scss     # Buttons
+|   |– _carousel.scss    # Carousel
+|   |– _cover.scss       # Cover
+|   |– _dropdown.scss    # Dropdown
+|   ...                  # Etc…
+|
+|– layout/
+|   |– _navigation.scss  # Navigation
+|   |– _grid.scss        # Grid system
+|   |– _header.scss      # Header
+|   |– _footer.scss      # Footer
+|   |– _sidebar.scss     # Sidebar
+|   |– _forms.scss       # Forms
+|   ...                  # Etc…
+|
+|– pages/
+|   |– _home.scss        # Home specific styles
+|   |– _contact.scss     # Contact specific styles
+|   ...                  # Etc…
+|
+|– themes/
+|   |– _theme.scss       # Default theme
+|   |– _admin.scss       # Admin theme
+|   ...                  # Etc…
+|
+|– utils/
+|   |– _variables.scss   # Sass Variables
+|   |– _functions.scss   # Sass Functions
+|   |– _mixins.scss      # Sass Mixins
+|   |– _helpers.scss     # Class & placeholders helpers
+|
+|– vendors/
+|   |– _bootstrap.scss   # Bootstrap
+|   |– _jquery-ui.scss   # jQuery UI
+|   ...                  # Etc…
+|
+|
+`– main.scss             # primary Sass file
+
+
+
 
 ## 后端Nodejs
 
