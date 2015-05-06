@@ -107,7 +107,7 @@ apiRouter.get('/e4e/media', function(req, res, next){
 });
 
 apiRouter.get('/e4e/cooperate', function(req, res, next){
-    res.render('b2c/unfinished.ejs', {title:'Cooperation'})
+    res.render('b2c/cooperate.ejs', {title:'Cooperation'})
 });
 
 

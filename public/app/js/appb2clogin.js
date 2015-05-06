@@ -728,6 +728,16 @@
             }
         });
     }]);
+
+    angular.module('b2clogin').controller('cooperateController', ['$location', '$scope', function($location, $scope) {
+        var vm = this;
+        $scope.$on('$locationChangeSuccess', function() {
+            vm.hash = $location.hash();
+            if (!vm.hash.length) {
+                vm.hash = 'tab1';
+            }
+        });
+    }]);
 }());
 
 
