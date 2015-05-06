@@ -668,6 +668,10 @@ $lineHeight_button: 1.8;
         @include box-shadow($color_register_button_border 0px 2px 4px);
         @include SaveButtonHover;
     }
+    .button.done {
+        padding: 6px 15px;
+        text-align: center;
+    }
     .remove-button, button.cancel {
         @include CancelButtonHover;
     }
@@ -720,6 +724,10 @@ $lineHeight_button: 1.8;
     .textarea-err-msg {
         position: absolute;
         right: -10px;
+    }
+    .team-name-err-msg {
+        position: absolute;
+        right: 0;
     }
     .none-bottom {
         border-bottom: none;

@@ -520,40 +520,7 @@
                     </div>
 
                     <div class="row team-info" ng-if="profile.css.currentTab == 'teamInfo'">
-                        <div class="profile-detail-title">{{'ProfilePageTabTeamInfo' | translate}}<!--<span class="profile-edit" ng-click="profile.clickEditProfile(3)">{{'ProfilePageEditButton' | translate}}</span>--></div>
-                        <form novalidate name="teamNameForm" class="none-bottom form-horizontal" ng-submit="profile.clickUpdateTeamName(teamNameForm)">
-                            <div class="form-group team-name" ng-class="{'has-success':teamNameForm.teamName.$dirty&&teamNameForm.teamName.$valid, 'has-error':teamNameForm.teamName.$dirty&&teamNameForm.teamName.$invalid}" >
-                                <label class="col-md-3 control-label text-right team-label" for="teamName">{{'ProfilePageTeamInfoTeamName' | translate}} :</label>
-                                <div class="col-xs-5" ng-if="!profile.css.formEditing">
-                                    <p class="form-control-static">{{profile.currentUser.team.name}}&nbsp</p>
-                                </div>
-                                <div class="col-xs-5" ng-if="profile.css.formEditing">
-                                    <input class="form-control col-md-6" required ng-model="profile.formData.teamName" type="text" id="teamName" name="teamName">
-                                </div>
-                                <span class="err-msg control-label" ng-if="teamNameForm.teamName.$dirty&&teamNameForm.teamName.$error.required">{{'ProfilePageTeamNameRequiredError' | translate}}!</span>
-                                <button ng-if="!profile.css.formEditing" class="button done col-md-3">{{'ProfilePageChangeButton' | translate}}</button>
-                                <button ng-if="profile.css.formEditing" class="button col-md-3">{{'ProfilePageSaveButton' | translate}}</button>
-                            </div>
-                        </form>
-                        <form novalidate name="teamForm" class="form-horizontal none-top">
-                            <div class="form-group" ng-repeat="member in profile.currentUser.team.memberList">
-                                <label class="control-label col-md-3 team-label text-right">{{'ProfilePageTeamInfoMember' | translate}}{{$index + 1}} :</label>
-                                <div class="col-xs-5">
-                                    <p class="form-control-static">{{member.username}}</p>
-                                </div>
-                                <span ng-click="profile.clickRemoveStudentToTeam(member._id)" class="form-control-static remove-button glyphicon glyphicon-minus col-md-3 button"></span>
-                            </div>
-
-                            <div class="form-group" ng-class="{'has-success':teamForm.name.$dirty&&teamForm.name.$valid, 'has-error':teamForm.name.$dirty&&teamForm.name.$invalid}">
-                                <label for="name" class="control-label col-xs-3 text-right team-label">{{'ProfilePageTeamInfoNewMember' | translate}} :</label>
-                                <div class="col-xs-5">
-                                    <input placeholder="{{'ProfilePageNewMemberInputPlaceholder' | translate}}" ng-model="profile.formData.newTeamMember" required type="text" name="name" id="name" class="form-control">
-                                </div>
-                                <button type="submit" ng-click="profile.clickAddStudentToTeam(teamForm)" class="button glyphicon glyphicon-plus add-button col-xs-1"></button>
-                                <span class="form-control-static err-msg control-label col-xs-3" ng-if="teamForm.name.$dirty&&teamForm.name.$error.required">{{'ProfilePageNewMemberNameError' | translate}}!</span>
-                            </div>
-                            <!--<div class="row"><label for="name" class="col-md-3 team-label">{{'队员二' | translate}} :</label><input type="text" name="name" id="name" class="col-md-6"></div>-->
-                        </form>
+                        <profile-team-form current-user="profile.currentUser" update="profile.updateTeamName(data)" add-student-to-team="profile.addStudentToTeam(username)" remove-student-to-team="profile.removeStudentToTeam(id)" ></profile-team-form>
                     </div>
 
                 </article>

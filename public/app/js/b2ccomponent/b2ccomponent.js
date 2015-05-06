@@ -5,9 +5,9 @@
 
 
     angular.module('marksimos.e4ecomponent').directive('profileBasicInfoForm', [basicInfoFormComponent]);
-
     angular.module('marksimos.e4ecomponent').directive('profileChangePasswordForm', [changePasswordFormComponent]);
     angular.module('marksimos.e4ecomponent').directive('profileMobilePhoneForm', ['$interval', mobilePhoneFormComponent]);
+    angular.module('marksimos.e4ecomponent').directive('profileTeamForm', [teamFormComponent]);
 
 
     function basicInfoFormComponent() {
@@ -23,9 +23,7 @@
                 var formKeys = ['firstName', 'gender', 'birthday', 'currentLocation', 'qq'];
                 scope.css = {
                     formEditing: false,
-                    errorFields: {
-                        qq: false
-                    }
+                    errorFields: {}
                 };
 
                 scope.formData = {};
@@ -61,7 +59,12 @@
                 function editProfile() {
                     scope.css.formEditing = true;
                     formKeys.forEach(function(key) {
-                        var value = scope.currentUser[key];
+                        var keys = key.split('.'),
+                            value = scope.currentUser;
+                        keys.forEach(function(k) {
+                            if (!value) return;
+                            value = value[k];
+                        });
                         if (typeof value != 'undefined') {
                             scope.formData[key] = value;
                         }
@@ -75,7 +78,6 @@
             }
         };
     }
-
 
     function changePasswordFormComponent() {
         return {
@@ -125,7 +127,12 @@
                 function editProfile() {
                     scope.css.formEditing = true;
                     formKeys.forEach(function(key) {
-                        var value = scope.currentUser[key];
+                        var keys = key.split('.'),
+                            value = scope.currentUser;
+                        keys.forEach(function(k) {
+                            if (!value) return;
+                            value = value[k];
+                        });
                         if (typeof value != 'undefined') {
                             scope.formData[key] = value;
                         }
@@ -244,7 +251,105 @@
                 function editProfile() {
                     scope.css.formEditing = true;
                     formKeys.forEach(function(key) {
-                        var value = scope.currentUser[key];
+                        var keys = key.split('.'),
+                            value = scope.currentUser;
+                        keys.forEach(function(k) {
+                            if (!value) return;
+                            value = value[k];
+                        });
+                        if (typeof value != 'undefined') {
+                            scope.formData[key] = value;
+                        }
+                    });
+                }
+
+                function cancelEditProfile() {
+                    scope.css = {
+                        formEditing: false,
+                        errorFields: {}
+                    };
+                    scope.formData = {};
+                }
+            }
+        };
+    }
+
+    function teamFormComponent() {
+        return {
+            restrict: 'E',
+            scope: {
+                currentUser: '=',
+                update: '&',
+                removeStudentToTeam: '&',
+                addStudentToTeam: '&'
+            },
+            templateUrl: 'b2cprofileteamform.html',
+            link: function(scope, elem, attrs, ctrl) {
+                var formKeys = ['team.name'];
+
+                scope.css = {
+                    formEditing: false,
+                    errorFields: {}
+                };
+
+                scope.formData = {};
+
+                scope.clickUpdateUserInfo = updateUserInfo;
+                scope.clickEditProfile = editProfile;
+                scope.clickCancelEditProfile = cancelEditProfile;
+
+                scope.clickRemoveStudentToTeam = removeStudentToTeam;
+                scope.clickAddStudentToTeam = addStudentToTeam;
+
+                function updateUserInfo(form) {
+                    if (form.$valid) {
+                        scope.css.errorFields = {};
+
+                        scope.update({data: scope.formData}).then(function() {
+                            cancelEditProfile();
+                        }).catch(function(message) {
+                            if (angular.isArray(message)) {
+                                message.forEach(function(item) {
+                                    form[item.param].$valid = false;
+                                    form[item.param].$invalid = true;
+                                    scope.css.errorFields[item.param] = true;
+                                });
+                            }
+                        });
+                    } else {
+                        Object.keys(form).forEach(function(key) {
+                            if (key[0] != '$') {
+                                form[key].$setDirty();
+                            }
+                        });
+                    }
+                }
+
+                function removeStudentToTeam(id) {
+                    scope.removeStudentToTeam({id: id});
+                }
+
+                function addStudentToTeam(form) {
+                    if (form.$valid) {
+                        scope.addStudentToTeam({username: scope.formData.newTeamMember});
+                    } else {
+                        Object.keys(form).forEach(function(key) {
+                            if (key[0] != '$') {
+                                form[key].$setDirty();
+                            }
+                        });
+                    }
+                }
+
+                function editProfile() {
+                    scope.css.formEditing = true;
+                    formKeys.forEach(function(key) {
+                        var keys = key.split('.'),
+                            value = scope.currentUser;
+                        keys.forEach(function(k) {
+                            if (!value) return;
+                            value = value[k];
+                        });
                         if (typeof value != 'undefined') {
                             scope.formData[key] = value;
                         }

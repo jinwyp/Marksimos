@@ -274,23 +274,15 @@
         vm.clickDeleteNewExperience = deleteNewExperience;
 
         vm.update = function(data) {
-            return Student.updateStudentB2CInfo(data).then(function() {
-                app.getUserInfo();
-                $alert(vm.css.alertSuccessInfo);
-            }).catch(function(err) {
-                $alert(vm.css.alertFailedInfo);
-                return $q.reject(err.data.message);
-            });
+            return Student.updateStudentB2CInfo(data)
+                .then(updateSuccessHandler)
+                .catch(updateFailedHandler);
         };
 
         vm.updatePassword = function(data) {
-            return Student.updatePassword(data.oldPassword, data.newPassword).then(function() {
-                app.getUserInfo(); // may be need not to.
-                $alert(vm.css.alertSuccessInfo);
-            }).catch(function(err) {
-                $alert(vm.css.alertFailedInfo);
-                return $q.reject(err.data.message);
-            });
+            return Student.updatePassword(data.oldPassword, data.newPassword)
+                .then(updateSuccessHandler)
+                .catch(updateFailedHandler);
         };
 
         vm.getPhoneVerifyCode = function() {
@@ -300,6 +292,34 @@
         vm.sendPhoneVerifyCode = function(code) {
             return Student.sendPhoneVerifyCode(code);
         };
+
+        vm.updateTeamName = function(data) {
+            return Student.updateTeamName(data['team.name'])
+                .then(updateSuccessHandler)
+                .catch(updateFailedHandler);
+        };
+
+        vm.removeStudentToTeam = function(id) {
+            return Student.removeStudentToTeam(id)
+                .then(updateSuccessHandler)
+                .catch(updateFailedHandler);
+        };
+
+        vm.addStudentToTeam = function(name) {
+            return Student.addStudentToTeam(name)
+                .then(updateSuccessHandler)
+                .catch(updateFailedHandler);
+        };
+
+        function updateSuccessHandler() {
+            app.getUserInfo();
+            $alert(vm.css.alertSuccessInfo);
+        }
+
+        function updateFailedHandler(err) {
+            $alert(vm.css.alertFailedInfo);
+            return $q.reject(err.data.message);
+        }
 
 
         /**********  Function Declarations  **********/
@@ -399,52 +419,6 @@
         function cancelEditProfile() {
             vm.css.formEditing = false;
             app.resetForm();
-        }
-
-        function addStudentToTeam(form) {
-            vm.css.addTeamFailedInfo = false;
-            vm.css.addTeamSuccessInfo = false;
-
-            if (form.$valid) {
-                Student.addStudentToTeam({username: vm.formData.newTeamMember}).then(function(result) {
-                    app.getUserInfo();
-                }).catch(function(err) {
-                    $alert(vm.css.alertFailedInfo);
-                });
-            }
-        }
-
-        function removeStudentToTeam(id) {
-            Student.removeStudentToTeam(id).then(function(result) {
-                var members = vm.currentUser.team.memberList;
-                members.some(function(member, i) {
-                    if (member._id == id) {
-                        members.splice(i, 1);
-                        return true;
-                    }
-                });
-            });
-        }
-
-        function updateTeamName(form) {
-            vm.css.updateTeamNameFailedInfo = false;
-
-            if (form.$valid) {
-                if (!vm.css.formEditing) {
-                    vm.css.formEditing = true;
-                } else {
-                    var teamName = vm.formData.teamName;
-                    Student.updateTeamName(teamName).then(function(result) {
-                        vm.currentUser.team.name = teamName;
-                        $alert(vm.css.alertSuccessInfo);
-                    }).catch(function() {
-                        form.teamName.$valid = false;
-                        form.teamName.$invalid = true;
-                        $alert(vm.css.alertFailedInfo);
-                    });
-                    vm.css.formEditing = false;
-                }
-            }
         }
 
         function updateUserInfo(form, slient) {
