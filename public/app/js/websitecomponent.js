@@ -61,19 +61,20 @@
 
                     if (event.keyCode != 13 || event.target.tagName.toUpperCase() != 'TEXTAREA' || (!scope.data.seminarInput && !scope.data.companyInput && !scope.data.dictionaryInput) ) return;
 
-                    var target = event.target;
-                    var matches = target.matches || target.msMatchesSelector;
-                    matches = matches.bind(target);
+                    var target = angular.element(event.target);
+                    //var matches = target.matches || target.msMatchesSelector;
+                    //matches = matches.bind(target);
 
-                    if (matches('.seminar')) {
+                    if (target.hasClass('seminar')) {
                         $q.when(scope.sendSeminarMessage({messageInput: scope.data.seminarInput})).then(function() {
+                            console.log(scope.data.seminarInput);
                             scope.data.seminarInput = '';
                         });
-                    } else if(matches('.company')) {
+                    } else if(target.hasClass('company')) {
                         $q.when(scope.sendCompanyMessage({messageInput: scope.data.companyInput})).then(function() {
                             scope.data.companyInput = '';
                         });
-                    } else if(matches('.dictionary')) {
+                    } else if(target.hasClass('dictionary')) {
                         $q.when(scope.sendDictionaryMessage({messageInput: scope.data.dictionaryInput})).then(function() {
                             scope.data.dictionaryInput = '';
                         });
