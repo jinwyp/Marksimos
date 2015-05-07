@@ -286,10 +286,11 @@ exports.runSimulation = function(){
                             throw {message: 'Cancel promise chains. Because ' + simulationResult.message};
                         }
 
-                        return Q.all[removeCurrentPeriodSimulationResult(seminarId, selectedPeriod)
-                                    , chartModel.remove(seminarId)
-                                    , reportModel.remove(seminarId)
-                                ];
+                        return Q.all[
+                            removeCurrentPeriodSimulationResult(seminarId, selectedPeriod),
+                            chartModel.remove(seminarId),
+                            reportModel.remove(seminarId)
+                        ];
                     })
                     .then(function(){
                         logger.log('get current period simulation result finished.');
@@ -354,17 +355,17 @@ exports.runSimulation = function(){
                                     throw new Error( "Cancel promise chains. Because there's error during update seminar.");
                                 }
 
-                                console.log('1111111');
-
-                            }).fail(next).done();
+                            });
                         }
 
-                    }).fail(next).done();
-                }).fail(next).done();
+                    });
+
+                });
+
+
             })
             .then(function(){
                 status = 'active';
-                console.log('2222222');
                 return res.send({message: "run simulation success."});
             })
             .fail(function(err){
@@ -372,7 +373,7 @@ exports.runSimulation = function(){
                 if(err.httpStatus){
                     return res.send(err.httpStatus, {message: err.message});
                 }
-                res.status(500).send( {message: err.message})
+                res.status(500).send( {message: err.message});
             })
             .done();
         }
