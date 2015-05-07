@@ -252,9 +252,6 @@
 
 
         /**********  Event Center  **********/
-        vm.clickAddStudentToTeam = addStudentToTeam;
-        vm.clickRemoveStudentToTeam = removeStudentToTeam;
-        vm.clickUpdateTeamName = updateTeamName;
         vm.clickUpdateUserInfo = updateUserInfo;
         vm.clickUpdatePassword = updatePassword;
         vm.clickEditProfile = editProfile;
@@ -273,7 +270,7 @@
         vm.clickDeleteNewEducation = deleteNewEducation;
         vm.clickDeleteNewExperience = deleteNewExperience;
 
-        vm.update = function(data) {
+        vm.updateBasicInfo = function(data) {
             return Student.updateStudentB2CInfo(data)
                 .then(updateSuccessHandler)
                 .catch(updateFailedHandler);

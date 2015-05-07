@@ -5,6 +5,7 @@
 
 
     angular.module('marksimos.e4ecomponent').directive('profileBasicInfoForm', [basicInfoFormComponent]);
+    angular.module('marksimos.e4ecomponent').directive('profileWorkExperienceForm', ['Constant', workExperienceFormComponent]);
     angular.module('marksimos.e4ecomponent').directive('profileChangePasswordForm', [changePasswordFormComponent]);
     angular.module('marksimos.e4ecomponent').directive('profileMobilePhoneForm', ['$interval', mobilePhoneFormComponent]);
     angular.module('marksimos.e4ecomponent').directive('profileTeamForm', [teamFormComponent]);
@@ -72,9 +73,98 @@
                 }
 
                 function cancelEditProfile() {
-                    scope.css.formEditing = false;
+                    scope.css = {
+                        formEditing: false,
+                        errorFields: {}
+                    };
                     scope.formData = {};
                 }
+            }
+        };
+    }
+
+    function workExperienceFormComponent(Constant) {
+        return {
+            restrict: 'E',
+            scope: {
+                currentUser: '=',
+                update: '&'
+            },
+            templateUrl: 'b2cprofileworkexperienceform.html',
+            link: function(scope, elem, attrs, ctrl) {
+                scope.css = {
+                    formEditing: false,
+                    errorFields: {}
+                };
+
+                scope.formData = {};
+
+                scope.Constant = Constant;
+                scope.newExperience = {};
+
+                scope.clickUpdateUserInfo = updateUserInfo;
+                scope.clickHideMutiSelect = hideMutiSelect;
+                scope.clickDeleteExperience = deleteExperience;
+                scope.clickDeleteNewExperience = deleteNewExperience;
+                scope.clickSetEditingState = setEditingState;
+                scope.clickCancelEditProfile = cancelEditProfile;
+
+                function hideMutiSelect(){
+                    scope.css.currentJobIndustry = -1;
+                    scope.css.currentMajor = -1;
+                }
+
+                function deleteNewExperience() {
+                    scope.css.addExperienceEditing = false;
+                    scope.newExperience = {};
+                }
+
+                function deleteExperience(index) {
+                    scope.formData.workExperiences.splice(index, 1);
+                }
+
+                function setEditingState(state) {
+                    angular.extend(scope.css, state);
+                    scope.formData.workExperiences = [];
+                    angular.copy(scope.currentUser.workExperiences, scope.formData.workExperiences);
+                }
+
+                function updateUserInfo(form) {
+                    if (form.$valid) {
+                        scope.css.errorFields = {};
+
+                        if (Object.keys(scope.newExperience).length) {
+                            scope.formData.workExperiences.push(scope.newExperience);
+                        }
+
+                        scope.update({data: scope.formData}).then(function() {
+                            cancelEditProfile();
+                        }).catch(function(message) {
+                            if (angular.isArray(message)) {
+                                message.forEach(function(item) {
+                                    form[item.param].$valid = false;
+                                    form[item.param].$invalid = true;
+                                    scope.css.errorFields[item.param] = true;
+                                });
+                            }
+                        });
+                    } else {
+                        Object.keys(form).forEach(function(key) {
+                            if (key[0] != '$') {
+                                form[key].$setDirty();
+                            }
+                        });
+                    }
+                }
+
+                function cancelEditProfile() {
+                    scope.css = {
+                        formEditing: false,
+                        errorFields: {}
+                    };
+                    scope.formData = {};
+                }
+
             }
         };
     }
@@ -140,7 +230,10 @@
                 }
 
                 function cancelEditProfile() {
-                    scope.css.formEditing = false;
+                    scope.css = {
+                        formEditing: false,
+                        errorFields: {}
+                    };
                     scope.formData = {};
                 }
             }
