@@ -599,17 +599,25 @@
 
         /**********  Function Declarations  **********/
         function studentEnter() {
-            if (vm.css.hasEntered) return;
-
-            Student.addTeamToCampaign({
-                username: vm.currentUser.username,
-                campaignId: vm.campaignId
-            }).then(function() {
-                $modal({container: 'body', template: 'campaign-modal-enter-success.html'});
-                vm.css.hasEntered = true;
-            }).catch(function() {
-                $modal({container: 'body', template: 'campaign-modal-enter-tip-complete-info.html'});
-            });
+            if (vm.css.hasEntered) {
+                Student.removeTeamToCampaign({
+                    teamId: vm.currentUser.team._id,
+                    campaignId: vm.campaignId
+                }).then(function() {
+                    $modal({container: 'body', template: 'campaign-modal-cancel-enter-success.html'});
+                    vm.css.hasEntered = false;
+                });
+            } else {
+                Student.addTeamToCampaign({
+                    username: vm.currentUser.username,
+                    campaignId: vm.campaignId
+                }).then(function() {
+                    $modal({container: 'body', template: 'campaign-modal-enter-success.html'});
+                    vm.css.hasEntered = true;
+                }).catch(function() {
+                    $modal({container: 'body', template: 'campaign-modal-enter-tip-complete-info.html'});
+                });
+            }
         }
 
 
