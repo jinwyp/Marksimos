@@ -1,0 +1,35 @@
+<div class="profile-detail-title">{{'ProfilePageTabTeamInfo' | translate}}</div>
+
+<form novalidate name="teamNameForm" class="none-bottom form-horizontal">
+    <div class="form-group team-name" ng-class="{'has-success':teamNameForm.teamName.$dirty&&teamNameForm.teamName.$valid, 'has-error':teamNameForm.teamName.$dirty&&teamNameForm.teamName.$invalid}" >
+        <label class="col-md-3 control-label text-right team-label" for="teamName">{{'ProfilePageTeamInfoTeamName' | translate}} :</label>
+        <div class="col-xs-5" ng-if="!css.formEditing">
+            <p class="form-control-static">{{currentUser.team.name}}&nbsp</p>
+        </div>
+        <div class="col-xs-5" ng-if="css.formEditing">
+            <input class="form-control col-md-6" required ng-model="formData['team.name']" type="text" id="teamName" name="teamName">
+        </div>
+        <span class="err-msg control-label team-name-err-msg" ng-if="teamNameForm.teamName.$dirty&&teamNameForm.teamName.$error.required">{{'ProfilePageTeamNameRequiredError' | translate}}!</span>
+        <span ng-if="!css.formEditing" ng-click="clickEditProfile()" class="button done col-md-3">{{'ProfilePageChangeButton' | translate}}</span>
+        <button ng-if="css.formEditing" ng-click="clickUpdateUserInfo(teamNameForm)" class="button col-md-3">{{'ProfilePageSaveButton' | translate}}</button>
+    </div>
+</form>
+
+<form novalidate name="teamForm" class="form-horizontal none-top">
+    <div class="form-group" ng-repeat="member in currentUser.team.memberList">
+        <label class="control-label col-md-3 team-label text-right">{{'ProfilePageTeamInfoMember' | translate}}{{$index + 1}} :</label>
+        <div class="col-xs-5">
+            <p class="form-control-static">{{member.username}}</p>
+        </div>
+        <span ng-click="clickRemoveStudentToTeam(member._id)" class="form-control-static remove-button glyphicon glyphicon-minus col-md-3 button"></span>
+    </div>
+
+    <div class="form-group" ng-class="{'has-success':teamForm.name.$dirty&&teamForm.name.$valid, 'has-error':teamForm.name.$dirty&&teamForm.name.$invalid}">
+        <label for="name" class="control-label col-xs-3 text-right team-label">{{'ProfilePageTeamInfoNewMember' | translate}} :</label>
+        <div class="col-xs-5">
+            <input placeholder="{{'ProfilePageNewMemberInputPlaceholder' | translate}}" ng-model="formData.newTeamMember" required type="text" name="name" id="name" class="form-control">
+        </div>
+        <button type="submit" ng-click="clickAddStudentToTeam(teamForm)" class="button glyphicon glyphicon-plus add-button col-xs-1"></button>
+        <span class="form-control-static err-msg control-label col-xs-3" ng-if="teamForm.name.$dirty&&teamForm.name.$error.required">{{'ProfilePageNewMemberNameError' | translate}}!</span>
+    </div>
+</form>

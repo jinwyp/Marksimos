@@ -85,8 +85,8 @@
             },
 
 
-            addStudentToTeam : function(user) {
-                return $http.post(apiPathB2C + 'team/student', user);
+            addStudentToTeam : function(name) {
+                return $http.post(apiPathB2C + 'team/student', {username: name});
             },
 
             removeStudentToTeam : function(id) {

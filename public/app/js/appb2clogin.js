@@ -19,7 +19,7 @@
 
 
     /********************  Create New Module For Controllers ********************/
-    angular.module('b2clogin', ['pascalprecht.translate', 'b2c.config', 'marksimos.commoncomponent', 'marksimos.websitecomponent', 'marksimos.model', 'marksimos.filter', 'mgcrea.ngStrap', 'ngAnimate', 'angularFileUpload']);
+    angular.module('b2clogin', ['pascalprecht.translate', 'b2c.config', 'marksimos.commoncomponent', 'marksimos.websitecomponent', 'marksimos.e4ecomponent', 'marksimos.model', 'marksimos.filter', 'mgcrea.ngStrap', 'ngAnimate', 'angularFileUpload']);
 
 
 
@@ -196,7 +196,7 @@
 
 
 
-    angular.module('b2clogin').controller('profileController', ['Student', '$alert', 'FileUploader', '$translate', '$location', '$interval', 'Constant', function(Student, $alert, FileUploader, $translate, $location, $interval, Constant) {
+    angular.module('b2clogin').controller('profileController', ['Student', '$alert', 'FileUploader', '$translate', '$location', '$interval', 'Constant', '$q', function(Student, $alert, FileUploader, $translate, $location, $interval, Constant, $q) {
         /* jshint validthis: true */
         var vm = this;
         vm.css = {
@@ -214,10 +214,6 @@
             addEducationEditing: false,
             languageEditing: false,
             addLanguageEditing: false,
-
-            //experience form editing states
-            experienceEditing: false,
-            addExperienceEditing: false,
 
             alertInfo: {
                 duration: 2,
@@ -252,9 +248,6 @@
 
 
         /**********  Event Center  **********/
-        vm.clickAddStudentToTeam = addStudentToTeam;
-        vm.clickRemoveStudentToTeam = removeStudentToTeam;
-        vm.clickUpdateTeamName = updateTeamName;
         vm.clickUpdateUserInfo = updateUserInfo;
         vm.clickUpdatePassword = updatePassword;
         vm.clickEditProfile = editProfile;
@@ -262,8 +255,6 @@
         vm.clickHideMutiSelect = hideMutiSelect;
 
         vm.clickCancelEditProfile = cancelEditProfile;
-        vm.clickGetMobileVerifyCode = getMobileVerifyCode;
-        vm.clickSendMobileVerifyCode = sendMobileVerifyCode;
         vm.clickSetEditingState = setEditingState;
         vm.clickResetEditingState = resetEditingState;
         vm.clickAddNewLanguage = addNewLanguage;
@@ -271,10 +262,55 @@
         vm.clickDeleteLanguage = deleteLanguage;
         vm.clickAddNewAchievement = addNewAchievement;
         vm.clickAddNewAchievementToExistEducation = addNewAchievementToExistEducation;
-        vm.clickDeleteExperience = deleteExperience;
         vm.clickDeleteNewEducation = deleteNewEducation;
-        vm.clickDeleteNewExperience = deleteNewExperience;
 
+        vm.updateBasicInfo = function(data) {
+            return Student.updateStudentB2CInfo(data)
+                .then(updateSuccessHandler)
+                .catch(updateFailedHandler);
+        };
+
+        vm.updatePassword = function(data) {
+            return Student.updatePassword(data.oldPassword, data.newPassword)
+                .then(updateSuccessHandler)
+                .catch(updateFailedHandler);
+        };
+
+        vm.getPhoneVerifyCode = function() {
+            return Student.getPhoneVerifyCode();
+        };
+
+        vm.sendPhoneVerifyCode = function(code) {
+            return Student.sendPhoneVerifyCode(code);
+        };
+
+        vm.updateTeamName = function(data) {
+            return Student.updateTeamName(data['team.name'])
+                .then(updateSuccessHandler)
+                .catch(updateFailedHandler);
+        };
+
+        vm.removeStudentToTeam = function(id) {
+            return Student.removeStudentToTeam(id)
+                .then(updateSuccessHandler)
+                .catch(updateFailedHandler);
+        };
+
+        vm.addStudentToTeam = function(name) {
+            return Student.addStudentToTeam(name)
+                .then(updateSuccessHandler)
+                .catch(updateFailedHandler);
+        };
+
+        function updateSuccessHandler() {
+            app.getUserInfo();
+            $alert(vm.css.alertSuccessInfo);
+        }
+
+        function updateFailedHandler(err) {
+            $alert(vm.css.alertFailedInfo);
+            return $q.reject(err.data.message);
+        }
 
 
         /**********  Function Declarations  **********/
@@ -298,11 +334,6 @@
         function deleteNewEducation() {
             vm.css.addEducationEditing = false;
             vm.newEducation = null;
-        }
-
-        function deleteNewExperience() {
-            vm.css.addExperienceEditing = false;
-            vm.newExperience = null;
         }
 
         function addNewLanguage() {
@@ -346,10 +377,6 @@
             education._newAchievement = null;
         }
 
-        function deleteExperience(index) {
-            vm.formData.workExperiences.splice(index, 1);
-        }
-
         function setEditingState(state) {
             angular.extend(vm.css, state);
         }
@@ -376,52 +403,6 @@
             app.resetForm();
         }
 
-        function addStudentToTeam(form) {
-            vm.css.addTeamFailedInfo = false;
-            vm.css.addTeamSuccessInfo = false;
-
-            if (form.$valid) {
-                Student.addStudentToTeam({username: vm.formData.newTeamMember}).then(function(result) {
-                    app.getUserInfo();
-                }).catch(function(err) {
-                    $alert(vm.css.alertFailedInfo);
-                });
-            }
-        }
-
-        function removeStudentToTeam(id) {
-            Student.removeStudentToTeam(id).then(function(result) {
-                var members = vm.currentUser.team.memberList;
-                members.some(function(member, i) {
-                    if (member._id == id) {
-                        members.splice(i, 1);
-                        return true;
-                    }
-                });
-            });
-        }
-
-        function updateTeamName(form) {
-            vm.css.updateTeamNameFailedInfo = false;
-
-            if (form.$valid) {
-                if (!vm.css.formEditing) {
-                    vm.css.formEditing = true;
-                } else {
-                    var teamName = vm.formData.teamName;
-                    Student.updateTeamName(teamName).then(function(result) {
-                        vm.currentUser.team.name = teamName;
-                        $alert(vm.css.alertSuccessInfo);
-                    }).catch(function() {
-                        form.teamName.$valid = false;
-                        form.teamName.$invalid = true;
-                        $alert(vm.css.alertFailedInfo);
-                    });
-                    vm.css.formEditing = false;
-                }
-            }
-        }
-
         function updateUserInfo(form, slient) {
             if (form.$valid) {
                 vm.css.errorFields = {};
@@ -431,10 +412,6 @@
                         vm.newEducation.achievements = [];
                     }
                     vm.formData.eductionBackgrounds.push(vm.newEducation);
-                }
-
-                if (vm.newExperience) {
-                    vm.formData.workExperiences.push(vm.newExperience);
                 }
 
                 if (vm.newAchievement) {
@@ -460,7 +437,6 @@
 
                     vm.newEducation = null;
                     vm.newLanguageSkill = null;
-                    vm.newExperience = null;
 
                     if (!slient) {
                         $alert(vm.css.alertSuccessInfo);
@@ -486,52 +462,6 @@
                     }
                 });
             }
-        }
-
-        function getMobileVerifyCode(form) {
-            vm.css.mobileVerifyCodeResend = false;
-            vm.css.errorFields.mobilePhoneVerifyCode = false;
-            if(form.$valid){
-
-                Student.getPhoneVerifyCode().then(function(){
-
-                    vm.css.mobileVerifyCodeResend = true;
-                    vm.css.mobileVerifyCodeTimeCounter = 60;
-
-                    var timer = $interval(function() {
-                        if(vm.css.mobileVerifyCodeTimeCounter > 0){
-                            vm.css.mobileVerifyCodeTimeCounter = vm.css.mobileVerifyCodeTimeCounter - 1;
-                        }else {
-                            $interval.cancel(timer);
-                        }
-                    }, 1000);
-
-                }).catch(function(err){
-                    form.mobilePhoneVerifyCode.$setDirty();
-                    form.mobilePhoneVerifyCode.$valid = false;
-                    form.mobilePhoneVerifyCode.$invalid = true;
-
-                    vm.css.errorFields.mobilePhoneWrongFormat = true;
-
-                });
-            }
-        }
-
-        function sendMobileVerifyCode(form) {
-            vm.css.mobileVerifyCodeResend = false;
-            vm.css.errorFields.mobilePhoneVerifyCode = false;
-
-            Student.sendPhoneVerifyCode(vm.formData.mobilePhoneVerifyCode).then(function(){
-                vm.currentUser.phoneVerified = true;
-            }).catch(function(err){
-                form.mobilePhoneVerifyCode.$setDirty();
-                form.mobilePhoneVerifyCode.$valid = false;
-                form.mobilePhoneVerifyCode.$invalid = true;
-
-                vm.css.errorFields.mobilePhoneVerifyCode = true;
-
-                console.log(err);
-            });
         }
 
 
