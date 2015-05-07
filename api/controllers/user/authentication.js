@@ -1,6 +1,7 @@
 var userModel = require('../../models/user/user.js');
 var userRoleModel = require('../../models/user/userrole.js');
 var teamModel = require('../../models/user/team.js');
+var campaignModel = require('../../models/b2c/campaign.js');
 var seminarModel = require('../../models/marksimos/seminar.js');
 var Token = require('../../models/user/authenticationtoken.js');
 var emailModel = require('../../models/user/emailContent.js');
@@ -348,7 +349,21 @@ exports.getUserInfo = function (req, res, next){
 
     }).then(function(resultTeam2){
         userResult.belongToTeam = resultTeam2 || [];
-        res.status(200).send(userResult);
+
+        var teamid;
+        if(typeof userResult.team._id === 'undefined'){
+            teamid = '';
+        }else{
+            teamid = userResult.team._id;
+        }
+
+        return campaignModel.find({teamList: {$elemMatch: {$in:[teamid]} }}).execQ();
+
+
+    }).then(function(resultCampaign){
+        userResult.joinedCampaign = resultCampaign || [];
+
+        return res.status(200).send(userResult);
 
     }).fail(next).done();
 
