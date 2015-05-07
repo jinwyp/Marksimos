@@ -267,10 +267,17 @@
             ProfilePageSchoolInfoEnterDate           : 'Enter Date',
             ProfilePageSchoolInfoDegree              : 'Degree',
 
-
+            // team
             ProfilePageTeamInfoTeamName              : 'Team Name',
             ProfilePageTeamInfoMember                : 'Member',
             ProfilePageTeamInfoNewMember             : 'New Member',
+            ProfilePageJoinedCampaigns: 'Joined campaigns',
+            ProfilePageCancelEnter: 'Cancel',
+            ProfilePageGoToCampaigns: 'I want to join!',
+            ProfilePageJoinedNoCampaign: 'You have not joined any campaigns yet.',
+            ProfilePageJoinedTeams: 'Teams you have already joined',
+            ProfilePageJoinedNoTeam: 'You have not joined any other teams yet.',
+
             ProfileContactInfoMobilePhone            : 'Mobile Phone',
             ProfileContactInfoMobilePhoneVerify      : 'Verify',
             ProfileContactInfoMobilePhoneVerifySend  : 'Get verify code for free',
@@ -313,7 +320,7 @@
 
             //Labels for Enter Campaign Section
             CampaignPageEnterCampaignEnterButton      : 'Enter',
-            CampaignPageEnterCampaignHasEnteredButton : 'Already Entered',
+            CampaignPageEnterCampaignHasEnteredButton : 'Cancel',
             CampaignPageEnterCampaignIntroduce        : 'Introduce',
             CampaignPageEnterCampaignCountPrefix      : 'Has Entered ',
             CampaignPageEnterCampaignCountSuffix      : ' People',
@@ -323,6 +330,9 @@
             //Labels for Enter Successful popup window
             CampaignPageEnterSuccessTip1              : 'Enter Successful！',
             CampaignPageEnterSuccessTip2              : 'Play The Game',
+            //Labels for Cancel Enter Successful popup window
+            CampaignPageCancelEnterSuccessTip1              : 'Canceled！',
+            CampaignPageCancelEnterSuccessTip2              : '',
             //Labels for Enter Failed popup window
             CampaignPageEnterFailedTip1               : 'Tip',
             CampaignPageEnterFailedTip2               : "Please Confirm Your Team's first name and mobile phone info",
@@ -748,9 +758,21 @@
             ProfilePageSchoolInfoCollege             : '大学',
             ProfilePageSchoolInfoEnterDate           : '入学时间',
             ProfilePageSchoolInfoDegree              : '学历',
+
+            //Team
             ProfilePageTeamInfoTeamName              : '战队名称',
             ProfilePageTeamInfoMember                : '队员',
             ProfilePageTeamInfoNewMember             : '新队员',
+            ProfilePageJoinedCampaigns: '已报名的活动',
+            ProfilePageCancelEnter: '取消报名',
+            ProfilePageGoToCampaigns: '我要报名',
+            ProfilePageJoinedNoCampaign: '你尚未加入任何活动',
+            ProfilePageJoinedTeams: '你已加入的团队',
+            ProfilePageJoinedNoTeam: '你尚未加入其他团队',
+
+
+
+            //Mobile Phone
             ProfileContactInfoMobilePhone             : '手机',
             ProfileContactInfoMobilePhoneVerify       : '验证手机',
             ProfileContactInfoMobilePhoneVerifySend   : '免费获取验证码',
@@ -793,7 +815,7 @@
 
             //Labels for Enter Campaign Section
             CampaignPageEnterCampaignEnterButton      : '马上报名',
-            CampaignPageEnterCampaignHasEnteredButton : '您已报名',
+            CampaignPageEnterCampaignHasEnteredButton : '取消报名',
             CampaignPageEnterCampaignIntroduce        : '游戏介绍',
             CampaignPageEnterCampaignCountPrefix      : '已有',
             CampaignPageEnterCampaignCountSuffix      : '人参加',
@@ -801,6 +823,9 @@
             //Labels for Enter Successful popup window
             CampaignPageEnterSuccessTip1              : '报名成功！',
             CampaignPageEnterSuccessTip2              : '快来体验游戏吧',
+            //Labels for Enter Successful popup window
+            CampaignPageCancelEnterSuccessTip1              : '取消成功！',
+            CampaignPageCancelEnterSuccessTip2              : '',
             //Labels for Enter Failed popup window
             CampaignPageEnterFailedTip1               : '温馨提示',
             CampaignPageEnterFailedTip2               : '请完善所有组员的姓名和手机等信息',
