@@ -140,21 +140,13 @@ exports.assignStudentToSeminar = function(req, res, next){
     req.checkBody('seminar_id', 'Invalid seminar id.').notEmpty().isInt();
     req.checkBody('company_id', 'Invalid company id.').notEmpty().isInt();
 
-    var email;
-
-    if(req.body.studentemail !== ''){
-        req.checkBody('studentemail', 'Invalid email.').notEmpty().isEmail();
-        email = req.body.studentemail;
-    }else{
-        req.checkBody('teamcreatoremail', 'Invalid email.').notEmpty().isEmail();
-        email = req.body.teamcreatoremail;
-    }
-
     var seminarId = req.body.seminar_id;
     var companyId = +req.body.company_id;
 
 
-    var validationErrors = req.validationErrors();
+    //var validationErrors = req.validationErrors();
+
+    var validationErrors = seminarModel.studentEmailValidations(req);
 
     if(validationErrors){
         return res.status(400).send( {message: validationErrors} );
@@ -163,7 +155,11 @@ exports.assignStudentToSeminar = function(req, res, next){
 
     var userData;
 
-    userModel.findOneQ({email: email}).then(function(resultUser){
+    userModel.findOneQ({$or : [
+        { username: req.body.username},
+        { email: req.body.email}
+
+    ]}).then(function(resultUser){
 
         if(!resultUser){
             throw new Error('Cancel promise chains. Because User not found !');

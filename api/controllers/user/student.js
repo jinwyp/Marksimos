@@ -8,14 +8,14 @@ var fileUploadModel = require('../../models/user/fileupload.js');
 var _ = require('lodash');
 var request = require('request');
 var config = require('../../../common/config.js');
-var resetBbsPassword = require('./authentication.js').resetBbsPassword;
+var nodeBB = require('../../../common/nodeBB.js');
 
 //var ObjectId = require('mongoose').Types.ObjectId;
 
 
 var pickedUpdatedKeys = ['gender', 'birthday', 'firstName', 'lastName', 'idcardNumber',  'mobilePhone', 'qq',
     'majorsDegree', 'dateOfEnterCollege', 'dateOfGraduation', 'organizationOrUniversity', 'occupation', 'currentLocation',
-    'country', 'state', 'city', 'district', 'street', 'websiteLanguage', 'workExperiences', 'LanguageSkills', 'eductionBackgrounds'];
+    'country', 'state', 'city', 'district', 'street', 'websiteLanguage', 'workExperiences', 'LanguageSkills', 'eductionBackgrounds', 'societyExperiences'];
 
 exports.updateStudentB2CInfo = function(req, res, next){
     var validationErrors = userModel.userInfoValidations(req, userRoleModel.roleList.student.id, userModel.getStudentType().B2C);
@@ -96,7 +96,7 @@ exports.updateStudentB2CPassword = function(req, res, next){
         }
 
         if(savedDoc[0].bbsUid){
-            resetBbsPassword(savedDoc[0].bbsUid, req.body.passwordNew);
+            nodeBB.resetNodeBBPassword(savedDoc[0].bbsUid, req.body.passwordNew);
         }
 
         return res.status(200).send({message: 'Student password update success'});

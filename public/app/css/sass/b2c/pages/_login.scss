@@ -1,0 +1,50 @@
+
+/********************  Login Form  ********************/
+.b2c-login-main {
+    padding-top: 80px;
+    padding-left: 250px;
+    padding-bottom: 60px;
+    vertical-align: top;
+
+    .title {
+        font-weight: 900;
+        font-size: 24px;
+    }
+
+    .form-group {
+        width: 290px;
+    }
+    .checkbox-inline {
+        font-size: 12px;
+        display: inline;
+    }
+
+    .b2c-icon {
+        margin-top: 23px;
+        width: 180px;
+        height: 180px;
+        @include inline-block;
+        @include icon_b2c-sprite(login-icon);
+    }
+    .b2c-login-area {
+        width: 360px;
+        height: 365px;
+        background-color: #dedede;
+        @include inline-block;
+    }
+    .b2c-login-errmsg {
+        background-color: rgb(255, 230, 225);
+        padding: 5px 10px;
+        font-size: 12px;
+    }
+    .btn {
+        @include registerButton
+    }
+    .register {
+        margin-left: 10px;
+    }
+    .forgot-password {
+        font-size: 12px;
+        margin-top: 15px;
+    }
+}

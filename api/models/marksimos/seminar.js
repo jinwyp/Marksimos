@@ -83,6 +83,36 @@ seminarSchema.statics.updateValidations = function(req){
 
 
 
+seminarSchema.statics.studentEmailValidations = function(req){
+
+    if(req.body.studentemail !== ''){
+
+        if(req.body.studentemail.indexOf('@') > -1 ){
+            req.checkBody('studentemail', 'Invalid email.').notEmpty().isEmail();
+            req.body.email = req.body.studentemail;
+
+        }else{
+            req.checkBody('studentemail', 'Username should be 6-20 characters').notEmpty().len(6, 20);
+            req.body.username = req.body.studentemail;
+        }
+
+    }else{
+
+        if(req.body.studentemail.indexOf('@') > -1 ){
+            req.checkBody('teamcreatoremail', 'Invalid email.').notEmpty().isEmail();
+            req.body.email = req.body.teamcreatoremail;
+
+        }else{
+            req.checkBody('teamcreatoremail', 'Username should be 6-20 characters').notEmpty().len(6, 20);
+            req.body.username = req.body.studentemail;
+        }
+
+    }
+
+    return req.validationErrors();
+};
+
+
 /**
  * Methods
  */

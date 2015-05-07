@@ -113,13 +113,14 @@
             jobTypeIntern        : 'Intern',
 
             jobCompanySize20 : 'Less than 20 Employees',
-            jobCompanySize50 : '20-50Employees',
-            jobCompanySize100 : '50-100Employees',
-            jobCompanySize200 : '100-200Employees',
-            jobCompanySize500 : '200-500Employees',
-            jobCompanySize1000 : '500-1000Employees',
-            jobCompanySize2000 : '1000-2000Employees',
-            jobCompanySize5000 : '2000-5000Employees',
+            jobCompanySize50 : '20-50 Employees',
+            jobCompanySize80 : '50-80 Employees',
+            jobCompanySize100 : '80-100 Employees',
+            jobCompanySize200 : '100-200 Employees',
+            jobCompanySize500 : '200-500 Employees',
+            jobCompanySize1000 : '500-1000 Employees',
+            jobCompanySize2000 : '1000-2000 Employees',
+            jobCompanySize5000 : '2000-5000 Employees',
             jobCompanySize10000 : 'Above 5000 Employees',
 
 
@@ -324,7 +325,7 @@
             CampaignPageEnterSuccessTip2              : 'Play The Game',
             //Labels for Enter Failed popup window
             CampaignPageEnterFailedTip1               : 'Tip',
-            CampaignPageEnterFailedTip2               : "Please Complete Your Team's Info",
+            CampaignPageEnterFailedTip2               : "Please Confirm Your Team's first name and mobile phone info",
             CampaignPageEnterFailedCompleteInfoButton : 'Complete Info',
 
             //Labels for Schedules
@@ -365,8 +366,18 @@
 
 
 
-            //Register Page
-            //Register Form
+
+            //Page Header
+            PageHeaderLoginUsernameLabel : 'Username/Email',
+            PageHeaderLoginPasswordLabel : 'Password',
+            PageHeaderLoginButton        : 'Sign In',
+            PageHeaderRememberMe         : 'RememberMe',
+            PageHeaderForgetPassword     : 'ForgetPassword',
+            PageHeaderLogOut             : 'Log Out',
+
+
+
+            //Register Page Form
             RegisterPageRegisterLabel             : 'Register',
             RegisterPageUsernamePlaceholder       : 'Username',
             RegisterPageEmailPlaceholder          : 'Email',
@@ -577,7 +588,8 @@
 
             jobCompanySize20 : '少于20人',
             jobCompanySize50 : '20-50人',
-            jobCompanySize100 : '50-100人',
+            jobCompanySize80 : '50-80人',
+            jobCompanySize100 : '80-100人',
             jobCompanySize200 : '100-200人',
             jobCompanySize500 : '200-500人',
             jobCompanySize1000 : '500-1000人',
@@ -670,6 +682,11 @@
             jobIndustryOthers04          : '农/林/牧/渔',
             jobIndustryOthers05          : '多元化业务集团公司',
             jobIndustryOthers06          : '其他行业',
+
+
+
+
+
 
             //Profile Page
             //validation Error Tip
@@ -786,7 +803,7 @@
             CampaignPageEnterSuccessTip2              : '快来体验游戏吧',
             //Labels for Enter Failed popup window
             CampaignPageEnterFailedTip1               : '温馨提示',
-            CampaignPageEnterFailedTip2               : '请先完成你的队伍信息',
+            CampaignPageEnterFailedTip2               : '请完善所有组员的姓名和手机等信息',
             CampaignPageEnterFailedCompleteInfoButton : '完善信息',
 
             //Labels for Schedules
@@ -827,8 +844,17 @@
 
 
 
-            //Register Page
-            //Register Form
+            //Page Header
+            PageHeaderLoginUsernameLabel : '用户名/邮箱',
+            PageHeaderLoginPasswordLabel : '密码',
+            PageHeaderLoginButton        : '登录',
+            PageHeaderRememberMe         : '下次自动登录',
+            PageHeaderForgetPassword     : '忘记密码',
+            PageHeaderLogOut             : '退出登录',
+
+
+
+            //Register Page Form
             RegisterPageRegisterLabel             : '注册',
             RegisterPageUsernamePlaceholder       : '用户名',
             RegisterPageEmailPlaceholder          : '邮箱',
@@ -929,6 +955,9 @@
             ResetPasswordResetSuccessTip: '重置密码成功，请返回登录.',
             ResetPasswordLoginButton: '立即登录'
         });
+
+
+
 
         // Tell the module what language to use by default
 //        $translateProvider.preferredLanguage('en_US');

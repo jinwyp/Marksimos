@@ -254,6 +254,7 @@
         jobCompanySize : [
             { id: 110, name : 'jobCompanySize20'},
             { id: 120, name : 'jobCompanySize50'},
+            { id: 125, name : 'jobCompanySize80'},
             { id: 130, name : 'jobCompanySize100'},
             { id: 140, name : 'jobCompanySize200'},
             { id: 150, name : 'jobCompanySize500'},

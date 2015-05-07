@@ -9,17 +9,33 @@
 
                 <div class="pull-right" ng-if="!currentuser.username && showlogin" >
                     <div class="b2c-login-field">
-                        <div>用户名/邮箱</div>
-                        <div><input type="text" class="b2c-login-input" ng-model="newUser.username"/></div>
-                        <div><label><input type="checkbox" ng-model="newUser.rememberMe">下次自动登录</label> </div>
+
+                        <div class="inputlabel">
+                            <label for="username">{{'PageHeaderLoginUsernameLabel' | translate}}</label>
+                            <input type="text" class="b2c-login-input form-control" id="username" ng-model="newUser.username"/>
+                        </div>
+
+                        <div class="inputlabel">
+                            <label for="password">{{'PageHeaderLoginPasswordLabel' | translate}}</label>
+                            <input type="password" class="b2c-login-input form-control" id="password" ng-model="newUser.password"/>
+                        </div>
+
+                        <div class="inputlabel">
+                            <a href="" class="button" ng-click="clickLogin()"> {{'PageHeaderLoginButton' | translate}} </a>
+                        </div>
+
+                        <div class="checkboxlabel">
+                            <label><input type="checkbox" ng-model="newUser.rememberMe"> {{'PageHeaderRememberMe' | translate}} </label>
+                        </div>
+                        <div class="checkboxlabel">
+                            <a href="/e4e/forgotpassword">{{'PageHeaderForgetPassword' | translate}}</a>
+                        </div>
+
                     </div>
-                    <div class="b2c-login-field">
-                        <div>密码</div>
-                        <div><input type="password" class="b2c-login-input" ng-model="newUser.password"/></div>
-                        <div><a href="/e4e/forgotpassword">忘记密码</a></div>
-                    </div>
-                    <a href="" class="button" ng-click="clickLogin()"></a>
+
                 </div>
+
+
 
 
 
@@ -27,13 +43,13 @@
                     <button class="btn avatar" type="button" data-animation="am-flip-x" bs-dropdown="dropdown" data-template="dropdown-tpl.html" data-placement="bottom-left">
                         <img ng-src="/{{currentuser.avatar.path || 'app/css/images/profile_avatar_2.png'}}" alt="avatar"/>
                         <!--<span class="caret"></span>-->
+                        <span class="glyphicon glyphicon-chevron-down" aria-hidden="true"></span>
                     </button>
-                    <span class="glyphicon glyphicon-chevron-down" aria-hidden="true"></span>
 
                     <script type="text/ng-template" id="dropdown-tpl.html">
                         <ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu1">
-                            <li role="presentation"><a role="menuitem" tabindex="-1" href="/e4e/profile" >个人信息</a></li>
-                            <li role="presentation"><a role="menuitem" tabindex="-1" href="#" ng-click="clickLogout()">退出登录</a></li>
+                            <li role="presentation"><a role="menuitem" tabindex="-1" href="/e4e/profile" > {{'ProfilePageHeaderTitle' | translate}} </a></li>
+                            <li role="presentation"><a role="menuitem" tabindex="-1" href="#" ng-click="clickLogout()"> {{'PageHeaderLogOut' | translate}}</a></li>
                         </ul>
                     </script>
 

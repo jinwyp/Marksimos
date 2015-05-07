@@ -270,54 +270,6 @@
     }
 }
 
-/********************  Login Form  ********************/
-.b2c-login-main {
-    padding-top: 100px;
-    padding-left: 250px;
-    vertical-align: top;
-
-    .title {
-        font-weight: 900;
-        font-size: 24px;
-    }
-
-    .form-group {
-        width: 290px;
-    }
-    .checkbox-inline {
-        font-size: 12px;
-        display: inline;
-    }
-
-    .b2c-icon {
-        margin-top: 23px;
-        width: 180px;
-        height: 180px;
-        @include inline-block;
-        @include icon_b2c-sprite(login-icon);
-    }
-    .b2c-login-area {
-        width: 360px;
-        height: 365px;
-        background-color: #dedede;
-        @include inline-block;
-    }
-    .b2c-login-errmsg {
-        background-color: rgb(255, 230, 225);
-        padding: 5px 10px;
-        font-size: 12px;
-    }
-    .btn {
-        @include registerButton
-    }
-    .register {
-        margin-left: 10px;
-    }
-    .forgot-password {
-        font-size: 12px;
-        margin-top: 15px;
-    }
-}
 
 /********************  Verify Email  ********************/
 .b2c-top-line {
@@ -410,6 +362,9 @@
         margin-top: 30px;
     }
 }
+
+
+
 
 /********************  User Profile  ********************/
 $color_chat_border: #DDD;
@@ -1418,8 +1373,12 @@ $lineHeight_button: 1.8;
 
 @import "b2c/components/carousel";
 
+
+@import "b2c/pages/login";
+
 @import "b2c/pages/about";
 @import "b2c/pages/intro";
 @import "b2c/pages/activity";
 @import "b2c/pages/contact";
 @import "b2c/pages/unfinished";
+@import "b2c/pages/cooperate";

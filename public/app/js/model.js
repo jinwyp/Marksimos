@@ -163,6 +163,13 @@
 
             sendCompanyChatMessage: function(message) {
                 return $http.post(apiPath + 'seminar/chat/company', {message: message});
+            },
+
+            errorHandler : function(message){
+                if(angular.isArray(message)){
+                    return message[0].msg;
+                }
+                return message;
             }
 
         };
