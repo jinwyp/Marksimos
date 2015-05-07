@@ -343,11 +343,14 @@ exports.getUserInfo = function (req, res, next){
 
     teamModel.findOne({ creator: userResult._id }).populate('memberList', userModel.selectFields()).execQ().then(function(resultTeam){
         userResult.team = resultTeam || [];
+
+        return teamModel.find({ memberList: { $elemMatch: {$in:[userResult._id]} } }).populate('memberList', userModel.selectFields()).populate('creator', userModel.selectFields()).execQ();
+
+    }).then(function(resultTeam2){
+        userResult.belongToTeam = resultTeam2 || [];
         res.status(200).send(userResult);
 
-    }).fail(function(err){
-        next(err);
-    }).done();
+    }).fail(next).done();
 
 
 };
@@ -357,8 +360,10 @@ exports.getUserInfo = function (req, res, next){
 
 
 
+
+
 /**
- * Registration .
+ * Registration
  *
  *  * Examples:
  *

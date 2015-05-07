@@ -244,7 +244,7 @@ userSchema.statics.verifyPassword = function(password, hashedPassword){
 };
 
 userSchema.statics.selectFields = function(){
-    return '-password -facebook -resetPasswordVerifyCode -resetPasswordToken -resetPasswordTokenExpires -emailActivateToken -emailActivateTokenExpires';
+    return '-password -facebook -resetPasswordVerifyCode -resetPasswordToken -resetPasswordTokenExpires -emailActivateToken -emailActivateTokenExpires -phoneVerifyCode -phoneVerifyCodeExpires' ;
 };
 
 
