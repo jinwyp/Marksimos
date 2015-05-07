@@ -241,6 +241,7 @@ apiRouter.delete('/e4e/api/team/student/:student_id',  auth.authLoginToken(), au
 
 apiRouter.get('/e4e/api/campaigns/:campaignId', auth.authLoginToken(), auth.authRole(marksimosRight.campaignSingleGet), campaignController.campaignSingleInfo);
 apiRouter.post('/e4e/api/campaigns/teams', auth.authLoginToken(), auth.authRole(marksimosRight.campaignSingleGet), campaignController.addTeamToCampaign);
+apiRouter.post('/e4e/api/campaigns/teams/remove', auth.authLoginToken(), auth.authRole(marksimosRight.campaignSingleGet), campaignController.removeTeamFromCampaign);
 
 
 

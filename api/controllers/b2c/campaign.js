@@ -417,9 +417,7 @@ exports.addTeamToCampaign = function(req, res, next){
         return res.status(400).send( {message: 'only student own team can join campaign'} );
     }
 
-    if(typeof req.user.firstName === 'undefined' || typeof req.user.mobilePhone === 'undefined' || req.user.firstName == '' || req.user.mobilePhone == ''){
-        return res.status(400).send( {message: 'student name and mobile phone can not empty'} );
-    }
+
 
     var dataTeam ;
 
@@ -427,6 +425,10 @@ exports.addTeamToCampaign = function(req, res, next){
 
         if(!resultUser){
             throw new Error('Cancel promise chains. Because User not found !');
+        }
+
+        if(typeof resultUser.firstName === 'undefined' || typeof resultUser.mobilePhone === 'undefined' || resultUser.firstName == '' || resultUser.mobilePhone == ''){
+            throw new Error('Cancel promise chains. Because team creator name and mobile phone can not empty!');
         }
 
         return teamModel.findOne({creator : resultUser._id}).populate('memberList').execQ();
