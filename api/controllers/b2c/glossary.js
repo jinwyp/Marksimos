@@ -195,7 +195,7 @@ exports.searchGlossaryWithWord = function(req, res, next){
     var wordsTextArray = [];
     var tagsResultIdArray = [];
 
-    console.log("word: ", words);
+    //console.log("word: ", words);
 
 
     words.forEach(function( word ){
@@ -245,7 +245,7 @@ exports.searchGlossaryWithWord = function(req, res, next){
 
         console.log("tagsResultIdArray: ", tagsResultIdArray);
 
-        return glossaryModel.find(query).sort({updatedAt:-1}).populate('tagList', tagModel.selectFields()).execQ().then(function(resultGlossaries){
+        return glossaryModel.find(query).sort({type:1, updatedAt:-1 }).populate('tagList', tagModel.selectFields()).execQ().then(function(resultGlossaries){
 
             if(results){
                 results.glossaries = resultGlossaries;
