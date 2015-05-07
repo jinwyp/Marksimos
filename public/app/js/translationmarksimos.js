@@ -1034,7 +1034,7 @@
             "HomePageMenuBarLabelsHelpVideo"  : "视频",
             "HomePageMenuBarLabelsHelpManual" : "手册",
             "HomePageMenuBarLabelsAbout"      : "关于 MarkSimos",
-            "HomePageMenuBarLabelsLogout"     : "登出",
+            "HomePageMenuBarLabelsLogout"     : "退出",
 
             //Labels for Segment
             "HomePageSegmentLabelPriceSensitive" : "1 价格敏感型",

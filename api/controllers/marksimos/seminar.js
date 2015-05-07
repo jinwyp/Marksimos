@@ -18,21 +18,21 @@ var socketio = require('../../../common/socketio.js');
 
 
 exports.addSeminar = function(req, res, next){
-    var checkRequiredFieldResult = checkRequiredField(req);
+    var validationErrors = seminarModel.createValidations(req);
 
-    if(checkRequiredFieldResult){
-        return res.status(400).send( {message: checkRequiredFieldResult});
+    if(validationErrors){
+        return res.status(400).send( {message: validationErrors} );
     }
 
-    var validateResult = validateSeminar(req);
-
-    if(validateResult){
-        return res.send(400, {message: validateResult});
+    if(!Array.isArray(req.body.roundTime)){
+        return res.status(400).send( {message: 'round time is wrong format, should be int'} );
     }
+
 
     var seminar = {};
 
     var facilitatorId = req.user.id;
+
 
     seminar.description = req.body.description;
     seminar.country = req.body.country;
@@ -56,6 +56,30 @@ exports.addSeminar = function(req, res, next){
         });
     }
 
+
+    seminar.roundTime = [];
+    var tempRoundTime = {};
+
+    req.body.roundTime.forEach(function(time, index){
+        if(typeof time.period !== 'undefined' && typeof time.hour !== 'undefined'){
+            tempRoundTime[time.period] = time.hour;
+        }
+    });
+
+
+    for(var j = 1; j<=seminar.simulationSpan; j++){
+
+        var oneRoundTime = {
+            period : j,
+            roundTimeHour : tempRoundTime[j] || 0,
+            lockDecisionTime : seminar.companyAssignment
+        };
+
+        seminar.roundTime.push(oneRoundTime);
+    }
+
+
+
     userModel.findOneQ({_id: facilitatorId})
     .then(function(dbFacilitator){
         if(!dbFacilitator){
@@ -69,7 +93,7 @@ exports.addSeminar = function(req, res, next){
         return userModel.updateQ({_id: facilitatorId}, {
             numOfLicense: dbFacilitator.numOfLicense - 1,
             numOfUsedLicense: dbFacilitator.numOfUsedLicense + 1
-        })
+        });
     }).then(function(result){
         var numAffected = result[0];
         if(numAffected !== 1){
@@ -617,37 +641,9 @@ exports.chooseSeminarForStudent = function(req, res, next){
 
 
 
-function checkRequiredField(req){
-    if(!req.body.description) return "description can't be empty.";
-
-    if(!req.body.country) return "country can't be empty";
-
-    if(!req.body.state) return "state can't be empty";
-
-    if(!req.body.city) return "city can't be empty";
-
-    if(!req.body.venue) return "venue can't be empty";
-
-    if(!req.body.simulation_span) return "simulation_span can't be empty";
-
-    if(!req.body.company_num) return "company_num can't be empty.";
-}
-
-function validateSeminar(req){
-    if(req.body.simulation_span){
-        var span = parseInt(req.body.simulation_span);
-        if(span <= 0 || span > consts.Period_Max){
-            return "Invalid simulation_span";
-        }
-    }
-
-    if(req.body.company_num){
-        var companyNum = parseInt(req.body.company_num);
-        if(companyNum <= 0 || companyNum > consts.CompaniesMax){
-            return "Invalid company_num";
-        }
-    }
-}
+/**
+ * Seminar Socket.IO API
+ */
 
 
 exports.sendChatMessageSeminar = function(req, res, next) {

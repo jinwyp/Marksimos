@@ -28,6 +28,23 @@ var seminarSchema = new Schema({
 
     currentPeriod: {type: Number, default: consts.Period_0 + 1},
     simulationSpan: Number,  //seminar有多少个round
+
+
+    roundTime : [{
+        period : {type: Number},
+        roundTimeHour : {type: Number},
+        startTime : {type: Date},
+        endTime : {type: Date},
+        lockDecisionTime : [
+            {
+                companyId : {type: Number},
+                companyName : {type: String},
+                lockTime : {type: Date},
+                spendHour : {type: Number}
+            }
+        ]
+    }],
+
     companyNum: Number,  //team name list
 
     companyAssignment: [],
@@ -70,6 +87,21 @@ seminarSchema.statics.findSeminarByUserId = function (userid) {
     });
 };
 
+
+seminarSchema.statics.createValidations = function(req){
+
+    req.checkBody('description', 'Description should be 6-20 characters').notEmpty().len(6, 200);
+    req.checkBody('country', 'Country should be 6-20 characters').notEmpty();
+    req.checkBody('state', 'State should be 6-20 characters').notEmpty();
+    req.checkBody('city', 'City should be 6-20 characters').notEmpty();
+    req.checkBody('venue', 'Venue should be 6-20 characters').notEmpty().len(2, 200);
+
+    req.checkBody('simulation_span', 'Invalid postparam').notEmpty().isInt({ min: 2, max: 8 });
+    req.checkBody('company_num', 'Invalid postparam').notEmpty().isInt({ min: 2, max: 6 });
+
+
+    return req.validationErrors();
+};
 
 
 
