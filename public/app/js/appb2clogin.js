@@ -215,10 +215,6 @@
             languageEditing: false,
             addLanguageEditing: false,
 
-            //experience form editing states
-            experienceEditing: false,
-            addExperienceEditing: false,
-
             alertInfo: {
                 duration: 2,
                 template: '',
@@ -266,9 +262,7 @@
         vm.clickDeleteLanguage = deleteLanguage;
         vm.clickAddNewAchievement = addNewAchievement;
         vm.clickAddNewAchievementToExistEducation = addNewAchievementToExistEducation;
-        vm.clickDeleteExperience = deleteExperience;
         vm.clickDeleteNewEducation = deleteNewEducation;
-        vm.clickDeleteNewExperience = deleteNewExperience;
 
         vm.updateBasicInfo = function(data) {
             return Student.updateStudentB2CInfo(data)
@@ -342,11 +336,6 @@
             vm.newEducation = null;
         }
 
-        function deleteNewExperience() {
-            vm.css.addExperienceEditing = false;
-            vm.newExperience = null;
-        }
-
         function addNewLanguage() {
             if (!vm.newLanguageSkill.language || !vm.newLanguageSkill.level) {
                 return;
@@ -388,10 +377,6 @@
             education._newAchievement = null;
         }
 
-        function deleteExperience(index) {
-            vm.formData.workExperiences.splice(index, 1);
-        }
-
         function setEditingState(state) {
             angular.extend(vm.css, state);
         }
@@ -429,10 +414,6 @@
                     vm.formData.eductionBackgrounds.push(vm.newEducation);
                 }
 
-                if (vm.newExperience) {
-                    vm.formData.workExperiences.push(vm.newExperience);
-                }
-
                 if (vm.newAchievement) {
                     addNewAchievement();
                 }
@@ -456,7 +437,6 @@
 
                     vm.newEducation = null;
                     vm.newLanguageSkill = null;
-                    vm.newExperience = null;
 
                     if (!slient) {
                         $alert(vm.css.alertSuccessInfo);
