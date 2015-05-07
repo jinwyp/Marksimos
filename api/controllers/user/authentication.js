@@ -352,7 +352,7 @@ exports.getUserInfo = function (req, res, next){
 
         var teamid;
         if(typeof userResult.team._id === 'undefined'){
-            teamid = '';
+            teamid = null;
         }else{
             teamid = userResult.team._id;
         }
