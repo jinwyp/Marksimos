@@ -121,6 +121,7 @@
 
                 function deleteExperience(index) {
                     scope.formData.workExperiences.splice(index, 1);
+                    updateUserInfo({$valid: true}, true);
                 }
 
                 function setEditingState(state) {
@@ -129,7 +130,7 @@
                     angular.copy(scope.currentUser.workExperiences, scope.formData.workExperiences);
                 }
 
-                function updateUserInfo(form) {
+                function updateUserInfo(form, slient) {
                     if (form.$valid) {
                         scope.css.errorFields = {};
 
@@ -138,6 +139,7 @@
                         }
 
                         scope.update({data: scope.formData}).then(function() {
+                            if (slient) return;
                             cancelEditProfile();
                         }).catch(function(message) {
                             if (angular.isArray(message)) {
