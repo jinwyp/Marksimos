@@ -129,8 +129,8 @@ var userSchema = new Schema({
         societyName: String,
         position: String,
         sizeOfSociety: Number,
-        entryDate: Date,
-        graduationDate: Date,
+        startDate: Date,
+        endDate: Date,
         societyExperience: String
     }],
 

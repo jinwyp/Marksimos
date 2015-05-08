@@ -39,6 +39,7 @@ var seminarSchema = new Schema({
             {
                 companyId : {type: Number},
                 companyName : {type: String},
+                lockStatus : {type: Boolean , default: false},
                 lockTime : {type: Date},
                 spendHour : {type: Number}
             }
