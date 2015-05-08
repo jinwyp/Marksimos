@@ -1,14 +1,14 @@
-<div class="profile-detail-title">{{'ProfilePageTabExperienceInfo' | translate}}<span class="profile-edit" ng-click="clickSetEditingState({experienceEditing: true, addLanguageEditing: false})">{{'ProfilePageEditButton' | translate}}</span></div>
+<div class="profile-detail-title">{{'ProfilePageTabExperienceInfo' | translate}}<span class="profile-edit" ng-click="clickEditProfile()">{{'ProfilePageEditButton' | translate}}</span></div>
 <form novalidate name="experienceForm" class="form-horizontal">
     <div class="experience" ng-repeat="experience in currentUser.workExperiences">
-        <h3>{{'ProfilePageExperience' | translate}} {{$index + 1}}:<span ng-click="clickDeleteExperience($index)" ng-if="!css.experienceEditing" class="form-control-static remove-button glyphicon glyphicon-minus button"></span></h3>
+        <h3>{{'ProfilePageExperience' | translate}} {{$index + 1}}:<span ng-click="clickDeleteExperience($index)" ng-if="!css.formEditing" class="form-control-static remove-button glyphicon glyphicon-minus button"></span></h3>
         <div>
             <div class="form-group" ng-class="{'has-success':experienceForm['company' + $index].$dirty&&experienceForm['company' + $index].$valid, 'has-error':experienceForm['company' + $index].$dirty&&experienceForm['company' + $index].$invalid}">
                 <label for="company{{$index}}" class="control-label col-md-3 text-right">{{'ProfilePageExperienceInfoCompany' | translate}} :</label>
-                <div class="col-xs-5" ng-if="!css.experienceEditing">
+                <div class="col-xs-5" ng-if="!css.formEditing">
                     <pre class="form-control-static">{{experience.company}}&nbsp</pre>
                 </div>
-                <div class="col-xs-5" ng-if="css.experienceEditing">
+                <div class="col-xs-5" ng-if="css.formEditing">
                     <input required type="text" ng-model="formData.workExperiences[$index].company" name="company{{$index}}" id="company{{$index}}" class="form-control">
                 </div>
                 <span class="err-msg control-label form-control-static col-xs-4" ng-if="experienceForm['company' + $index].$dirty && experienceForm['company' + $index].$invalid">{{'ProfilePageRequiredError' | translate}}</span>
@@ -16,10 +16,10 @@
 
             <div class="row form-group" ng-class="{'has-success':experienceForm['jobType' + $index].$dirty&&experienceForm['jobType' + $index].$valid, 'has-error':experienceForm['jobType' + $index].$dirty&&experienceForm['jobType' + $index].$invalid}">
                 <label for="jobType{{$index}}" class="control-label col-md-3 text-right">{{'ProfilePageExperienceInfoJobType' | translate}} :</label>
-                <div class="col-xs-5" ng-if="!css.experienceEditing">
+                <div class="col-xs-5" ng-if="!css.formEditing">
                     <p class="form-control-static">{{experience.jobType | jobtype | translate}}&nbsp</p>
                 </div>
-                <div class="col-xs-5" ng-if="css.experienceEditing">
+                <div class="col-xs-5" ng-if="css.formEditing">
                     <select required id="jobType{{$index}}" name="jobType{{$index}}" class="form-control col-xs-4" ng-model="formData.workExperiences[$index].jobType" ng-options="type.id as type.name | translate for type in Constant.jobType"></select>
                 </div>
                 <span class="err-msg control-label form-control-static col-xs-4" ng-if="experienceForm['jobType' + $index].$dirty && experienceForm['jobType' + $index].$invalid">{{'ProfilePageRequiredError' | translate}}</span>
@@ -27,10 +27,10 @@
 
             <div class="row form-group" ng-class="{'has-success':experienceForm['industry' + $index].$dirty&&experienceForm['industry' + $index].$valid, 'has-error':experienceForm['industry' + $index].$dirty&&experienceForm['industry' + $index].$invalid}">
                 <label for="industry{{$index}}" class="control-label col-md-3 text-right">{{'ProfilePageExperienceInfoIndustry' | translate}} :</label>
-                <div class="col-xs-5" ng-if="!css.experienceEditing">
+                <div class="col-xs-5" ng-if="!css.formEditing">
                     <p class="form-control-static">{{experience.industry | jobndustry | translate}}&nbsp</p>
                 </div>
-                <div class="col-xs-5" ng-if="css.experienceEditing">
+                <div class="col-xs-5" ng-if="css.formEditing">
                     <div class="row">
                         <p class="col-xs-8 form-control-static">{{formData.workExperiences[$index].industry | jobndustry | translate}}&nbsp;</p>
                         <div class="col-xs-4"><button class="btn btn-default form-control" ng-click="css.currentJobIndustry=$index">{{'ProfilePageSelectButton' | translate}}</button></div>
@@ -42,10 +42,10 @@
 
             <div class="form-group" ng-class="{'has-success':experienceForm['position' + $index].$dirty&&experienceForm['position' + $index].$valid, 'has-error':experienceForm['position' + $index].$dirty&&experienceForm['position' + $index].$invalid}">
                 <label for="position{{$index}}" class="control-label col-md-3 text-right">{{'ProfilePageExperienceInfoPosition' | translate}} :</label>
-                <div class="col-xs-5" ng-if="!css.experienceEditing">
+                <div class="col-xs-5" ng-if="!css.formEditing">
                     <p class="form-control-static">{{experience.position}}&nbsp</p>
                 </div>
-                <div class="col-xs-5" ng-if="css.experienceEditing">
+                <div class="col-xs-5" ng-if="css.formEditing">
                     <input required type="text" ng-model="formData.workExperiences[$index].position" name="position{{$index}}" id="position{{$index}}" class="form-control">
                 </div>
                 <span class="err-msg control-label form-control-static col-xs-4" ng-if="experienceForm['position' + $index].$dirty && experienceForm['position' + $index].$invalid">{{'ProfilePageRequiredError' | translate}}</span>
@@ -53,10 +53,10 @@
 
             <div class="form-group" ng-class="{'has-success':experienceForm['sizeOfCompany' + $index].$dirty&&experienceForm['sizeOfCompany' + $index].$valid, 'has-error':experienceForm['sizeOfCompany' + $index].$dirty&&experienceForm['sizeOfCompany' + $index].$invalid}">
                 <label for="sizeOfCompany{{$index}}" class="control-label col-md-3 text-right">{{'ProfilePageExperienceInfoSizeOfCompany' | translate}} :</label>
-                <div class="col-xs-5" ng-if="!css.experienceEditing">
+                <div class="col-xs-5" ng-if="!css.formEditing">
                     <p class="form-control-static">{{experience.sizeOfCompany | companysize | translate}}&nbsp</p>
                 </div>
-                <div class="col-xs-5" ng-if="css.experienceEditing">
+                <div class="col-xs-5" ng-if="css.formEditing">
                     <select required id="sizeOfCompany{{$index}}" name="sizeOfCompany{{$index}}" class="form-control col-xs-4" ng-model="formData.workExperiences[$index].sizeOfCompany" ng-options="size.id as size.name | translate for size in Constant.jobCompanySize"></select>
                 </div>
                 <span class="err-msg control-label form-control-static col-xs-4" ng-if="experienceForm['sizeOfCompany' + $index].$dirty && experienceForm['sizeOfCompany' + $index].$invalid">{{'ProfilePageRequiredError' | translate}}</span>
@@ -64,10 +64,10 @@
 
             <div class="row form-group" ng-class="{'has-error': experienceForm['startDate' +  $index].$dirty&&experienceForm['startDate' +  $index].$invalid, 'has-success':experienceForm['startDate' +  $index].$dirty&&experienceForm['startDate' +  $index].$valid}">
                 <label for="startDate{{$index}}" class="control-label col-md-3 text-right">{{'ProfilePageExperienceInfoStartDate' | translate}} :</label>
-                <div class="col-xs-3" ng-if="!css.experienceEditing">
+                <div class="col-xs-3" ng-if="!css.formEditing">
                     <p class="form-control-static">{{experience.startDate|date:"yyyy-MM-dd"}}&nbsp</p>
                 </div>
-                <div class="col-xs-5" ng-if="css.experienceEditing">
+                <div class="col-xs-5" ng-if="css.formEditing">
                     <input required type="text" data-date-format="yyyy-MM-dd" data-min-date="02/10/70" data-max-date="{{formData.workExperiences[$index].endDate}}" data-autoclose="1" ng-model="formData.workExperiences[$index].startDate" id="startDate{{$index}}" name="startDate{{$index}}" class="form-control" bs-datepicker>
                 </div>
                 <span class="err-msg control-label form-control-static col-xs-4" ng-if="experienceForm['startDate' +  $index].$dirty&&experienceForm['startDate' +  $index].$error.date">{{'ProfilePageDateFormatError' | translate}}</span>
@@ -76,10 +76,10 @@
 
             <div class="row form-group" ng-class="{'has-error': experienceForm['endDate' +  $index].$dirty&&experienceForm['endDate' +  $index].$invalid, 'has-success':experienceForm['endDate' +  $index].$dirty&&experienceForm['endDate' +  $index].$valid}">
                 <label for="endDate{{$index}}" class="control-label col-md-3 text-right">{{'ProfilePageExperienceInfoEndDate' | translate}} :</label>
-                <div class="col-xs-3" ng-if="!css.experienceEditing">
+                <div class="col-xs-3" ng-if="!css.formEditing">
                     <p class="form-control-static">{{experience.endDate|date:"yyyy-MM-dd"}}&nbsp</p>
                 </div>
-                <div class="col-xs-5" ng-if="css.experienceEditing">
+                <div class="col-xs-5" ng-if="css.formEditing">
                     <input required type="text" data-date-format="yyyy-MM-dd" data-min-date="{{formData.workExperiences[$index].startDate}}" data-autoclose="1" ng-model="formData.workExperiences[$index].endDate" id="endDate{{$index}}" name="endDate{{$index}}" class="form-control" bs-datepicker>
                 </div>
                 <span class="err-msg control-label form-control-static col-xs-4" ng-if="experienceForm['endDate' +  $index].$dirty&&experienceForm['endDate' +  $index].$error.date">{{'ProfilePageDateFormatError' | translate}}</span>
@@ -88,10 +88,10 @@
 
             <div class="form-group" ng-class="{'has-success':experienceForm['jobExperience' + $index].$dirty&&experienceForm['jobExperience' + $index].$valid, 'has-error':experienceForm['jobExperience' + $index].$dirty&&experienceForm['jobExperience' + $index].$invalid}">
                 <label for="jobExperience{{$index}}" class="control-label col-md-3 text-right">{{'ProfilePageExperienceInfoJobExperience' | translate}} :</label>
-                <div class="col-xs-5" ng-if="!css.experienceEditing">
+                <div class="col-xs-5" ng-if="!css.formEditing">
                     <pre class="form-control-static">{{experience.jobExperience}}&nbsp</pre>
                 </div>
-                <div class="col-xs-9" ng-if="css.experienceEditing">
+                <div class="col-xs-9" ng-if="css.formEditing">
                     <div class="row">
                         <div class="col-xs-11">
                             <textarea required rows="10" ng-model="formData.workExperiences[$index].jobExperience" name="jobExperience{{$index}}" id="jobExperience{{$index}}" class="form-control"></textarea>
@@ -104,7 +104,7 @@
         </div>
     </div>
 
-    <div class="row save-button-container" ng-if="css.experienceEditing">
+    <div class="row save-button-container" ng-if="css.formEditing">
         <div class="col-md-6 col-md-offset-3 profile-button-container">
             <button ng-click="clickUpdateUserInfo(experienceForm)" type="submit">{{'ProfilePageSaveButton' | translate}}</button>
             <button class="cancel" ng-click="clickCancelEditProfile()">{{'ProfilePageCancelButton' | translate}}</button>

@@ -5,8 +5,11 @@
 
 
     angular.module('marksimos.b2ccomponent').directive('profileBasicInfoForm', [basicInfoFormComponent]);
+    angular.module('marksimos.b2ccomponent').directive('profileLanguageForm', ['Constant', languageFormComponent]);
     angular.module('marksimos.b2ccomponent').directive('profileWorkExperienceForm', ['Constant', workExperienceFormComponent]);
     angular.module('marksimos.b2ccomponent').directive('profileNewWorkExperienceForm', ['Constant', newWorkExperienceFormComponent]);
+    angular.module('marksimos.b2ccomponent').directive('profileSocietyExperienceForm', ['Constant', societyExperienceFormComponent]);
+    angular.module('marksimos.b2ccomponent').directive('profileNewSocietyExperienceForm', ['Constant', newSocietyExperienceFormComponent]);
     angular.module('marksimos.b2ccomponent').directive('profileChangePasswordForm', [changePasswordFormComponent]);
     angular.module('marksimos.b2ccomponent').directive('profileMobilePhoneForm', ['$interval', mobilePhoneFormComponent]);
     angular.module('marksimos.b2ccomponent').directive('profileTeamForm', [teamFormComponent]);
@@ -68,7 +71,7 @@
                             value = value[k];
                         });
                         if (typeof value != 'undefined') {
-                            scope.formData[key] = value;
+                            scope.formData[key] = angular.copy(value);
                         }
                     });
                 }
@@ -84,14 +87,14 @@
         };
     }
 
-    function workExperienceFormComponent(Constant) {
+    function languageFormComponent(Constant) {
         return {
             restrict: 'E',
             scope: {
                 currentUser: '=',
                 update: '&'
             },
-            templateUrl: 'b2cprofileworkexperienceform.html',
+            templateUrl: 'b2cprofilelanguageform.html',
             link: function(scope, elem, attrs, ctrl) {
                 scope.css = {
                     formEditing: false,
@@ -128,6 +131,99 @@
                 function setEditingState(state) {
                     angular.extend(scope.css, state);
                     scope.formData.workExperiences = angular.copy(scope.currentUser.workExperiences);
+                }
+
+                function updateUserInfo(form) {
+                    if (form.$valid) {
+                        scope.css.errorFields = {};
+
+                        scope.update({data: scope.formData}).then(function() {
+                            cancelEditProfile();
+                        }).catch(function(message) {
+                            if (angular.isArray(message)) {
+                                message.forEach(function(item) {
+                                    form[item.param].$valid = false;
+                                    form[item.param].$invalid = true;
+                                    scope.css.errorFields[item.param] = true;
+                                });
+                            }
+                        });
+                    } else {
+                        Object.keys(form).forEach(function(key) {
+                            if (key[0] != '$') {
+                                form[key].$setDirty();
+                            }
+                        });
+                    }
+                }
+
+                function cancelEditProfile() {
+                    scope.css = {
+                        formEditing: false,
+                        errorFields: {}
+                    };
+                    scope.formData = {};
+                }
+
+            }
+        };
+    }
+
+    function workExperienceFormComponent(Constant) {
+        return {
+            restrict: 'E',
+            scope: {
+                currentUser: '=',
+                update: '&'
+            },
+            templateUrl: 'b2cprofileworkexperienceform.html',
+            link: function(scope, elem, attrs, ctrl) {
+                var formKeys = ['workExperiences'];
+                scope.css = {
+                    formEditing: false,
+                    errorFields: {}
+                };
+
+                scope.formData = {};
+
+                scope.Constant = Constant;
+
+                scope.clickUpdateUserInfo = updateUserInfo;
+                scope.clickHideMutiSelect = hideMutiSelect;
+                scope.clickDeleteExperience = deleteExperience;
+                scope.clickEditProfile = editProfile;
+                scope.clickCancelEditProfile = cancelEditProfile;
+
+                scope.$watchCollection('currentUser.workExperiences', function() {
+                    if (scope.css.formEditing) {
+                        angular.copy(scope.currentUser.workExperiences, scope.formData.workExperiences);
+                    }
+                });
+
+                function hideMutiSelect(){
+                    scope.css.currentJobIndustry = -1;
+                    scope.css.currentMajor = -1;
+                }
+
+                function deleteExperience(index) {
+                    scope.formData.workExperiences = angular.copy(scope.currentUser.workExperiences);
+                    scope.formData.workExperiences.splice(index, 1);
+                    updateUserInfo({$valid: true});
+                }
+
+                function editProfile() {
+                    scope.css.formEditing = true;
+                    formKeys.forEach(function(key) {
+                        var keys = key.split('.'),
+                            value = scope.currentUser;
+                        keys.forEach(function(k) {
+                            if (!value) return;
+                            value = value[k];
+                        });
+                        if (typeof value != 'undefined') {
+                            scope.formData[key] = angular.copy(value);
+                        }
+                    });
                 }
 
                 function updateUserInfo(form) {
@@ -247,7 +343,185 @@
                             value = value[k];
                         });
                         if (typeof value != 'undefined') {
-                            scope.formData[key] = value;
+                            scope.formData[key] = angular.copy(value);
+                        }
+                    });
+                }
+
+                function cancelEditProfile() {
+                    scope.css = {
+                        formEditing: false,
+                        errorFields: {}
+                    };
+                    scope.formData = {};
+                }
+            }
+        };
+    }
+
+    function societyExperienceFormComponent(Constant) {
+        return {
+            restrict: 'E',
+            scope: {
+                currentUser: '=',
+                update: '&'
+            },
+            templateUrl: 'b2cprofilesocietyexperienceform.html',
+            link: function(scope, elem, attrs, ctrl) {
+                var formKeys = ['societyExperiences'];
+                scope.css = {
+                    formEditing: false,
+                    errorFields: {}
+                };
+
+                scope.formData = {};
+
+                scope.Constant = Constant;
+
+                scope.clickUpdateUserInfo = updateUserInfo;
+                scope.clickDeleteExperience = deleteExperience;
+                scope.clickEditProfile = editProfile;
+                scope.clickCancelEditProfile = cancelEditProfile;
+
+                scope.$watchCollection('currentUser.societyExperiences', function() {
+                    if (scope.css.formEditing) {
+                        angular.copy(scope.currentUser.societyExperiences, scope.formData.societyExperiences);
+                    }
+                });
+
+                function deleteExperience(index) {
+                    scope.formData.societyExperiences = angular.copy(scope.currentUser.societyExperiences);
+                    scope.formData.societyExperiences.splice(index, 1);
+                    updateUserInfo({$valid: true});
+                }
+
+                function editProfile() {
+                    scope.css.formEditing = true;
+                    formKeys.forEach(function(key) {
+                        var keys = key.split('.'),
+                            value = scope.currentUser;
+                        keys.forEach(function(k) {
+                            if (!value) return;
+                            value = value[k];
+                        });
+                        if (typeof value != 'undefined') {
+                            scope.formData[key] = angular.copy(value);
+                        }
+                    });
+                }
+
+                function updateUserInfo(form) {
+                    if (form.$valid) {
+                        scope.css.errorFields = {};
+
+                        scope.update({data: scope.formData}).then(function() {
+                            cancelEditProfile();
+                        }).catch(function(message) {
+                            if (angular.isArray(message)) {
+                                message.forEach(function(item) {
+                                    form[item.param].$valid = false;
+                                    form[item.param].$invalid = true;
+                                    scope.css.errorFields[item.param] = true;
+                                });
+                            }
+                        });
+                    } else {
+                        Object.keys(form).forEach(function(key) {
+                            if (key[0] != '$') {
+                                form[key].$setDirty();
+                            }
+                        });
+                    }
+                }
+
+                function cancelEditProfile() {
+                    scope.css = {
+                        formEditing: false,
+                        errorFields: {}
+                    };
+                    scope.formData = {};
+                }
+
+            }
+        };
+    }
+
+    function newSocietyExperienceFormComponent(Constant) {
+        return {
+            restrict: 'E',
+            scope: {
+                currentUser: '=',
+                update: '&'
+            },
+            templateUrl: 'b2cprofilenewsocietyexperienceform.html',
+            link: function(scope, elem, attrs, ctrl) {
+                var formKeys = [];
+                scope.css = {
+                    formEditing: false,
+                    errorFields: {}
+                };
+
+                scope.formData = {};
+                scope.Constant = Constant;
+
+                scope.clickUpdateUserInfo = updateUserInfo;
+                scope.clickAddNewExperience = addNewExperience;
+                scope.clickEditProfile = editProfile;
+                scope.clickCancelEditProfile = cancelEditProfile;
+
+                function addNewExperience(form) {
+                    if (form.$valid) {
+                        var newItem = angular.copy(scope.formData);
+                        scope.formData.societyExperiences = [];
+                        angular.copy(scope.currentUser.societyExperiences, scope.formData.societyExperiences);
+                        scope.formData.societyExperiences.push(newItem);
+                    }
+                    updateUserInfo(form);
+                }
+
+                function updateUserInfo(form, deleteItem) {
+                    if (form.$valid) {
+                        scope.css.errorFields = {};
+
+                        if (deleteItem && scope.css.itemDeleted) {
+                            cancelEditProfile();
+                        }
+
+                        scope.update({data: scope.formData}).then(function() {
+                            if (deleteItem) {
+                                scope.css.itemDeleted = true;
+                                return;
+                            }
+                            cancelEditProfile();
+                        }).catch(function(message) {
+                            if (angular.isArray(message)) {
+                                message.forEach(function(item) {
+                                    form[item.param].$valid = false;
+                                    form[item.param].$invalid = true;
+                                    scope.css.errorFields[item.param] = true;
+                                });
+                            }
+                        });
+                    } else {
+                        Object.keys(form).forEach(function(key) {
+                            if (key[0] != '$') {
+                                form[key].$setDirty();
+                            }
+                        });
+                    }
+                }
+
+                function editProfile() {
+                    scope.css.formEditing = true;
+                    formKeys.forEach(function(key) {
+                        var keys = key.split('.'),
+                            value = scope.currentUser;
+                        keys.forEach(function(k) {
+                            if (!value) return;
+                            value = value[k];
+                        });
+                        if (typeof value != 'undefined') {
+                            scope.formData[key] = angular.copy(value);
                         }
                     });
                 }
@@ -318,7 +592,7 @@
                             value = value[k];
                         });
                         if (typeof value != 'undefined') {
-                            scope.formData[key] = value;
+                            scope.formData[key] = angular.copy(value);
                         }
                     });
                 }
@@ -445,7 +719,7 @@
                             value = value[k];
                         });
                         if (typeof value != 'undefined') {
-                            scope.formData[key] = value;
+                            scope.formData[key] = angular.copy(value);
                         }
                     });
                 }
@@ -538,7 +812,7 @@
                             value = value[k];
                         });
                         if (typeof value != 'undefined') {
-                            scope.formData[key] = value;
+                            scope.formData[key] = angular.copy(value);
                         }
                     });
                 }

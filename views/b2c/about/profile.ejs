@@ -39,6 +39,7 @@
                             <li ng-class="{selected: profile.css.currentTab == 'basicInfo'}" ng-click="profile.clickSwitchTab('basicInfo')">{{'ProfilePageTabBasicInfo' | translate}}</li>
                             <li ng-class="{selected: profile.css.currentTab == 'schoolInfo'}" ng-click="profile.clickSwitchTab('schoolInfo')">{{'ProfilePageTabSchoolInfo' | translate}}</li>
                             <li ng-class="{selected: profile.css.currentTab == 'experienceInfo'}" ng-click="profile.clickSwitchTab('experienceInfo')">{{'ProfilePageTabExperienceInfo' | translate}}</li>
+                            <li ng-class="{selected: profile.css.currentTab == 'societyExperienceInfo'}" ng-click="profile.clickSwitchTab('societyExperienceInfo')">{{'ProfilePageTabSocietyExperienceInfo' | translate}}</li>
                             <li ng-class="{selected: profile.css.currentTab == 'securityInfo'}" ng-click="profile.clickSwitchTab('securityInfo')">{{'ProfilePageTabSecurityInfo' | translate}}</li>
                             <li ng-class="{selected: profile.css.currentTab == 'teamInfo'}" ng-click="profile.clickSwitchTab('teamInfo')">{{'ProfilePageTabTeamInfo' | translate}}</li>
                         </ul>
@@ -320,6 +321,10 @@
                     <div class="row work-experience" ng-if="profile.css.currentTab == 'experienceInfo'">
                         <profile-work-experience-form current-user="profile.currentUser" update="profile.updateBasicInfo(data)"></profile-work-experience-form>
                         <profile-new-work-experience-form current-user="profile.currentUser" update="profile.updateBasicInfo(data)"></profile-new-work-experience-form>
+                    </div>
+                    <div class="row work-experience" ng-if="profile.css.currentTab == 'societyExperienceInfo'">
+                        <profile-society-experience-form current-user="profile.currentUser" update="profile.updateBasicInfo(data)"></profile-society-experience-form>
+                        <profile-new-society-experience-form current-user="profile.currentUser" update="profile.updateBasicInfo(data)"></profile-new-society-experience-form>
                     </div>
 
                     <div class="row" ng-if="profile.css.currentTab == 'securityInfo'">
