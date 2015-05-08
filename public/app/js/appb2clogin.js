@@ -37,7 +37,9 @@
             loginFailedInfo : false,
             usernameExistedInfo : false,
             emailNotExistedInfo : false,
-            resetPasswordTokenNotExistedInfo : false
+            resetPasswordTokenNotExistedInfo : false,
+            mobileVerifyCodeResend : false,
+            mobileVerifyCodeTimeCounter : 60
         };
 
         vm.newUser =  {
@@ -46,7 +48,8 @@
             password : '',
             passwordReInput : '',
             passwordResetVerifyCode : '',
-            gender : "",
+//            gender : "",
+            mobilePhone: "",
             clickSubmit : false,
             rememberMe : false
         };
@@ -63,6 +66,8 @@
         vm.clickResetPasswordStep3 = resetNewPassword;
         vm.verifyUsername = verifyUsername;
         vm.verifyEmail = verifyEmail;
+        vm.verifyPhone = verifyPhone;
+        vm.getCaptcha = getCaptcha;
 
         vm.captchaImageNum = 1;
 
@@ -70,6 +75,14 @@
 
 
         /**********  Function Declarations  **********/
+
+        function getCaptcha() {
+            return Student.getCaptcha(vm.newUser.mobilePhone);
+        };
+
+        function verifyPhone() {
+            //TODO: verify phone
+        };
 
         function userLogin(form){
             if(form.$valid){
@@ -100,18 +113,18 @@
                     vm.css.showRegForm = false;
 
                 }).catch(function(err){
-                    vm.captchaImageNum++;
-                    if(err.data.message === 'Cancel captcha error') {
-                        form.captcha.$valid = false;
-                        form.captcha.$invalid = true;
-                    }else{
+//                    vm.captchaImageNum++;
+//                    if(err.data.message === 'Cancel captcha error') {
+//                        form.captcha.$valid = false;
+//                        form.captcha.$invalid = true;
+//                    }else{
                         form.username.$valid = false;
                         form.username.$invalid = true;
                         form.email.$valid = false;
                         form.email.$invalid = true;
-
-                        vm.css.usernameExistedInfo = true;
-                    }
+//
+//                        vm.css.usernameExistedInfo = true;
+//                    }
 
                 });
             }

@@ -61,7 +61,7 @@ var userSchema = new Schema({
 
 
     //user basic info
-    gender       : {type: Number, default: 1 , min: 0, max: 10},  // 1 male 2 female
+    gender       : {type: Number,  min: 0, max: 10},  // 1 male 2 female
     birthday: Date,
     firstName    : String,
     lastName     : String,
@@ -196,13 +196,14 @@ userSchema.statics.register = function (newUser) {
 
     User.findOne( {$or : [
         {username: newUser.username},
-        {'email': newUser.email}
+        {'email': newUser.email},
+        {'mobilePhone': newUser.mobilePhone}
     ]}, function(err, userexisted) {
         // In case of any error return
         if (err) return deferred.reject(err);
         // already exists
         if (userexisted) {
-            return deferred.reject(new Error('Cancel register new user, because username or email is existed.'));
+            return deferred.reject(new Error('Cancel register new user, because username or email or mobilePhone is existed.'));
         }else {
             User.create(newUser, function(err, result){
                 if(err){
@@ -267,7 +268,7 @@ userSchema.statics.registerValidations = function(req, userRoleId, studentType){
     req.checkBody('password', 'Password should be 6-20 characters').notEmpty().len(6, 20);
 
     if(userRoleId === userRoleModel.roleList.student.id && studentType === 20){
-        req.checkBody('gender', 'Gender is required').notEmpty().isInt();
+        req.checkBody('mobilePhone', 'mobilePhone is required').notEmpty().isInt();
     }
 
     if(userRoleId === userRoleModel.roleList.student.id && studentType === 10){
