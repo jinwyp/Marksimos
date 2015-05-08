@@ -1423,7 +1423,23 @@
             });
         };
 
+        /********************  Submit and Lock Company Decision  ********************/
+        $scope.lockCompanyDecision = function(){
 
+            Company.lockCompanyDecision().success(function(data, status, headers, config){
+                notify({
+                    message : 'Save Success !',
+                    templateUrl : notifytemplate.success,
+                    position : 'center'
+                });
+            }).error(function(data, status, headers, config){
+                notify({
+                    message : data.message,
+                    templateUrl : notifytemplate.failure,
+                    position : 'center'
+                });
+            });
+        };
 
 
 

@@ -166,6 +166,7 @@ exports.submitDecision = function(req, res, next){
 };
 
 
+
 exports.getDecision = function(req, res, next){
     var seminarId = req.gameMarksimos.currentStudentSeminar.seminarId;
     var period = req.gameMarksimos.currentStudentSeminar.currentPeriod;
@@ -183,6 +184,7 @@ exports.getDecision = function(req, res, next){
         next(err);
     }).done();
 };
+
 
 
 exports.getDecisionForFacilitator = function(req, res, next){
@@ -206,6 +208,82 @@ exports.getDecisionForFacilitator = function(req, res, next){
     }
 };
 
+
+
+
+
+
+
+/**
+ *   SKU Decisions
+ */
+
+exports.addSKU = function(req, res, next){
+    var seminarId = req.gameMarksimos.currentStudentSeminar.seminarId;
+    var period = req.gameMarksimos.currentStudentSeminar.currentPeriod;
+
+    if(!seminarId){
+        return res.send(400, {message: "You don't choose a seminar."});
+    }
+
+    var companyId = +req.body.companyId;
+
+    var brand_id = req.body.brand_id;
+    var sku_name = req.body.sku_name;
+
+    if(!sku_name){
+        return res.send(400, {message: "Invalid parameter sku_name."})
+    }
+
+    SKUDecisionModel.create({
+        seminarId: seminarId,
+        period: period,
+        d_CID: companyId,
+        d_BrandID: brand_id,
+        d_SKUName: '_' + sku_name
+    })
+    .then(function(result){
+        socketio.emitMarksimosDecisionUpdate(req.gameMarksimos.socketRoom.company, req.user);
+        res.send(result);
+    })
+    .fail(function(err){
+        var message = JSON.stringify(err, ['message'], 2);
+        res.send(400, message)
+    })
+    .done();
+};
+
+
+exports.deleteSKU = function(req, res, next){
+    var seminarId = req.gameMarksimos.currentStudentSeminar.seminarId;
+    var period = req.gameMarksimos.currentStudentSeminar.currentPeriod;
+
+    if(!seminarId){
+        return res.send(400, {message: "You don't choose a seminar."});
+    }
+
+    var companyId = +req.params.company_id;
+    var brand_id = req.params.brand_id;
+    var sku_id = req.params.sku_id;
+
+    if(!brand_id){
+        return res.send(400, {message: "Invalid parameter brand_id."});
+    }
+
+    if(!sku_id){
+        return res.send(400, {message: "Invalid parameter sku_id."})
+    }
+
+    SKUDecisionModel.remove(seminarId, period, companyId, brand_id, sku_id)
+    .then(function(result){
+        socketio.emitMarksimosDecisionUpdate(req.gameMarksimos.socketRoom.company, req.user);
+        res.send(result);
+    })
+    .fail(function(err){
+        next(err);
+    })
+    .done();
+};
 
 
 exports.updateSKUDecision = function(req, res, next){
@@ -284,134 +362,12 @@ exports.updateSKUDecision = function(req, res, next){
     }
 };
 
-exports.updateBrandDecision = function(req, res, next){
-    /*
-    application/json; charset=utf-8
-    {
-      "brand_id": 12,
-      "brand_data": {
-        "d_SalesForce": 10
-      }
-    }
-    */
-    var brandId = req.body.brand_id;
-    var brand_data = req.body.brand_data;
-
-    var companyId = +req.body.companyId;
-
-    var seminarId = req.gameMarksimos.currentStudentSeminar.seminarId;
-    var period = req.gameMarksimos.currentStudentSeminar.currentPeriod;
 
 
-    if(req.user.role !== userRoleModel.roleList.student.id){
-        period = req.body.periodId;
-        seminarId = req.body.seminarId;
-    }
 
-    if(!brandId){
-        return res.send(400, {message: "Invalid parameter brand_id."});
-    }
-
-    if(!brand_data){
-        return res.send(400, {message: "Invalid parameter brand_data"});
-    }
-
-    if(!seminarId){
-        return res.send(400, {message: "Invalid seminarId in session."});
-    }
-
-    if(!companyId){
-        return res.send(400, {message: "Invalid companyId."});
-    }
-
-    if(period === undefined){
-        return res.send(400, {message: "Invalid period in session."});
-    }
-
-    var tempBrand = filterBrandField(brand_data);
-
-    brandDecisionModel.updateBrand(seminarId, period, companyId, brandId, tempBrand)
-    .then(function(doc){
-        socketio.emitMarksimosDecisionUpdate(req.gameMarksimos.socketRoom.company, req.user);
-        res.send({status: 1, message: 'update success.'});
-    })
-    .fail(function(err){
-        var message = JSON.stringify(err, ['message', 'lower', 'upper', 'modifiedField'], 2);
-        res.send(400, message);
-    })
-    .done();
-
-    function filterBrandField(postedBrand){
-        var result = {};
-
-        var fields = ['d_SalesForce'];
-        fields.forEach(function(field){
-            if(postedBrand[field] !== undefined){
-                result[field] = postedBrand[field];
-            }
-        });
-
-        return result;
-    }
-};
-
-exports.updateCompanyDecision = function(req, res, next){
-
-    var company_data = req.body.company_data;
-    var companyId = +req.body.companyId;
-
-    var seminarId = req.gameMarksimos.currentStudentSeminar.seminarId;
-    var period = req.gameMarksimos.currentStudentSeminar.currentPeriod;
-
-    if(req.user.role !== userRoleModel.roleList.student.id){
-        period = req.body.periodId;
-        seminarId = req.body.seminarId;
-    }
-
-    if(!company_data){
-        return res.send(400, {message: "Invalid parameter company_data"});
-    }
-
-    if(!seminarId){
-        return res.send(400, {message: "Invalid seminarId in session."});
-    }
-
-    if(!companyId){
-        return res.send(400, {message: "Invalid companyId ."});
-    }
-
-    if(period === undefined){
-        return res.send(400, {message: "Invalid period in session."});
-    }
-
-    var tempCompanyDecision = filterCompanyDecision(company_data);
-
-    //logger.log('tempCompanyDecision:' + util.inspect(tempCompanyDecision));
-    companyDecisionModel.updateCompanyDecision(seminarId, period, companyId, tempCompanyDecision)
-    .then(function(result){
-        socketio.emitMarksimosDecisionUpdate(req.gameMarksimos.socketRoom.company, req.user);
-        res.send({message: 'update success.'});
-    })
-    .fail(function(err){
-        var message = JSON.stringify(err, ['message', 'lower', 'upper', 'modifiedField'], 2);
-        res.send(400, message);
-    })
-    .done();
-
-
-    function filterCompanyDecision(postedCompanyDecision){
-        var result = {};
-
-        var fields = ['d_CompanyName','d_IsAdditionalBudgetAccepted','d_RequestedAdditionalBudget','d_InvestmentInEfficiency','d_InvestmentInTechnology','d_InvestmentInServicing'];
-        fields.forEach(function(field){
-            if(postedCompanyDecision[field] !== undefined){
-                result[field] = postedCompanyDecision[field];
-            }
-        });
-
-        return result;
-    }
-};
+/**
+ *   Brand Decisions
+ */
 
 exports.addBrand = function(req, res, next){
     var seminarId = req.gameMarksimos.currentStudentSeminar.seminarId;
@@ -508,71 +464,200 @@ exports.addBrand = function(req, res, next){
 
 };
 
-exports.addSKU = function(req, res, next){
-    var seminarId = req.gameMarksimos.currentStudentSeminar.seminarId;
-    var period = req.gameMarksimos.currentStudentSeminar.currentPeriod;
-
-    if(!seminarId){
-        return res.send(400, {message: "You don't choose a seminar."});
+exports.updateBrandDecision = function(req, res, next){
+    /*
+    application/json; charset=utf-8
+    {
+      "brand_id": 12,
+      "brand_data": {
+        "d_SalesForce": 10
+      }
     }
+    */
+    var brandId = req.body.brand_id;
+    var brand_data = req.body.brand_data;
 
     var companyId = +req.body.companyId;
 
-    var brand_id = req.body.brand_id;
-    var sku_name = req.body.sku_name;
-
-    if(!sku_name){
-        return res.send(400, {message: "Invalid parameter sku_name."})
-    }
-
-    SKUDecisionModel.create({
-        seminarId: seminarId,
-        period: period,
-        d_CID: companyId,
-        d_BrandID: brand_id,
-        d_SKUName: '_' + sku_name
-    })
-    .then(function(result){
-        socketio.emitMarksimosDecisionUpdate(req.gameMarksimos.socketRoom.company, req.user);
-        res.send(result);
-    })
-    .fail(function(err){
-        var message = JSON.stringify(err, ['message'], 2);
-        res.send(400, message)
-    })
-    .done();
-};
-
-exports.deleteSKU = function(req, res, next){
     var seminarId = req.gameMarksimos.currentStudentSeminar.seminarId;
     var period = req.gameMarksimos.currentStudentSeminar.currentPeriod;
 
-    if(!seminarId){
-        return res.send(400, {message: "You don't choose a seminar."});
+
+    if(req.user.role !== userRoleModel.roleList.student.id){
+        period = req.body.periodId;
+        seminarId = req.body.seminarId;
     }
 
-    var companyId = +req.params.company_id;
-    var brand_id = req.params.brand_id;
-    var sku_id = req.params.sku_id;
-
-    if(!brand_id){
+    if(!brandId){
         return res.send(400, {message: "Invalid parameter brand_id."});
     }
 
-    if(!sku_id){
-        return res.send(400, {message: "Invalid parameter sku_id."})
+    if(!brand_data){
+        return res.send(400, {message: "Invalid parameter brand_data"});
     }
 
-    SKUDecisionModel.remove(seminarId, period, companyId, brand_id, sku_id)
-    .then(function(result){
+    if(!seminarId){
+        return res.send(400, {message: "Invalid seminarId in session."});
+    }
+
+    if(!companyId){
+        return res.send(400, {message: "Invalid companyId."});
+    }
+
+    if(period === undefined){
+        return res.send(400, {message: "Invalid period in session."});
+    }
+
+    var tempBrand = filterBrandField(brand_data);
+
+    brandDecisionModel.updateBrand(seminarId, period, companyId, brandId, tempBrand)
+    .then(function(doc){
         socketio.emitMarksimosDecisionUpdate(req.gameMarksimos.socketRoom.company, req.user);
-        res.send(result);
+        res.send({status: 1, message: 'update success.'});
     })
     .fail(function(err){
-        next(err);
+        var message = JSON.stringify(err, ['message', 'lower', 'upper', 'modifiedField'], 2);
+        res.send(400, message);
     })
     .done();
+
+    function filterBrandField(postedBrand){
+        var result = {};
+
+        var fields = ['d_SalesForce'];
+        fields.forEach(function(field){
+            if(postedBrand[field] !== undefined){
+                result[field] = postedBrand[field];
+            }
+        });
+
+        return result;
+    }
 };
+
+
+
+
+
+/**
+ *   Company Decisions
+ */
+
+
+exports.updateCompanyDecision = function(req, res, next){
+
+    var company_data = req.body.company_data;
+    var companyId = +req.body.companyId;
+
+    var seminarId = req.gameMarksimos.currentStudentSeminar.seminarId;
+    var period = req.gameMarksimos.currentStudentSeminar.currentPeriod;
+
+    if(req.user.role !== userRoleModel.roleList.student.id){
+        period = req.body.periodId;
+        seminarId = req.body.seminarId;
+    }
+
+    if(!company_data){
+        return res.send(400, {message: "Invalid parameter company_data"});
+    }
+
+    if(!seminarId){
+        return res.send(400, {message: "Invalid seminarId in session."});
+    }
+
+    if(!companyId){
+        return res.send(400, {message: "Invalid companyId ."});
+    }
+
+    if(period === undefined){
+        return res.send(400, {message: "Invalid period in session."});
+    }
+
+    var tempCompanyDecision = filterCompanyDecision(company_data);
+
+    //logger.log('tempCompanyDecision:' + util.inspect(tempCompanyDecision));
+    companyDecisionModel.updateCompanyDecision(seminarId, period, companyId, tempCompanyDecision)
+    .then(function(result){
+        socketio.emitMarksimosDecisionUpdate(req.gameMarksimos.socketRoom.company, req.user);
+        res.send({message: 'update success.'});
+    })
+    .fail(function(err){
+        var message = JSON.stringify(err, ['message', 'lower', 'upper', 'modifiedField'], 2);
+        res.send(400, message);
+    })
+    .done();
+
+
+    function filterCompanyDecision(postedCompanyDecision){
+        var result = {};
+
+        var fields = ['d_CompanyName','d_IsAdditionalBudgetAccepted','d_RequestedAdditionalBudget','d_InvestmentInEfficiency','d_InvestmentInTechnology','d_InvestmentInServicing'];
+        fields.forEach(function(field){
+            if(postedCompanyDecision[field] !== undefined){
+                result[field] = postedCompanyDecision[field];
+            }
+        });
+
+        return result;
+    }
+};
+
+
+
+exports.lockCompanyDecision = function(req, res, next){
+
+    var company = {};
+
+    for(var i=0; i<req.gameMarksimos.currentStudentSeminar.companyAssignment.length; i++){
+        //if this student is in this company
+        if(req.gameMarksimos.currentStudentSeminar.companyAssignment[i].studentList.indexOf(req.user.email) > -1){
+
+            company = {
+                companyId : req.gameMarksimos.currentStudentSeminar.companyAssignment[i].companyId,
+                companyName : req.gameMarksimos.currentStudentSeminar.companyAssignment[i].companyName,
+                numOfTeamMember : req.gameMarksimos.currentStudentSeminar.companyAssignment[i].studentList.length
+            };
+        }
+    }
+
+    var seminarId = req.gameMarksimos.currentStudentSeminar.seminarId;
+    var period = req.gameMarksimos.currentStudentSeminar.currentPeriod;
+
+    seminarModel.findOneQ({
+        seminarId : seminarId
+
+    }).then(function(resultSeminar){
+
+        if(!resultSeminar){
+            throw new Error( "Cancel promise chains. Because seminar not found.");
+        }
+
+        console.log(resultSeminar.roundTime[resultSeminar.currentPeriod - 1].lockDecisionTime[company.companyId - 1]);
+        resultSeminar.roundTime[resultSeminar.currentPeriod - 1].lockDecisionTime[company.companyId - 1].lockStatus = true;
+        resultSeminar.roundTime[resultSeminar.currentPeriod - 1].lockDecisionTime[company.companyId - 1].lockTime = new Date();
+        resultSeminar.roundTime[resultSeminar.currentPeriod - 1].lockDecisionTime[company.companyId - 1].spendHour = resultSeminar.roundTime[resultSeminar.currentPeriod - 1].lockDecisionTime[company.companyId - 1].lockTime - resultSeminar.roundTime[resultSeminar.currentPeriod - 1].startTime ;
+
+
+
+        return resultSeminar.saveQ();
+    }).then(function(result){
+        if(result[1] === 0 ){
+            throw new Error( "Cancel promise chains. update seminar failed, No seminar update.");
+        }
+
+        if(result[1] > 1 ){
+            throw new Error( "Cancel promise chains. update seminar failed, More than one seminar update.");
+        }
+
+
+        return res.status(200).send(result);
+    }).fail(function(err){
+        next(err);
+    }).done();
+
+};
+
+
 
 
 exports.getProductPortfolio = function(req, res, next){
