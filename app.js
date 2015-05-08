@@ -6,6 +6,7 @@ var path = require('path');
 var favicon = require('serve-favicon');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
+var compression = require('compression');
 
 var mongoose = require('mongoose');
 
@@ -47,7 +48,7 @@ app.use(morgan('dev'));
 //app.use(morgan('combined', {
 //    stream: morganFileStream
 //}));
-
+app.use(compression());
 app.use(cookieParser());
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
