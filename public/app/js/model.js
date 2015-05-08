@@ -110,6 +110,12 @@
             },
 
 
+            getCaptcha : function(mobilePhone){
+                console.log(mobilePhone);
+                return $http.get(apiPathB2C + 'captcha', {params: {mobilePhone: mobilePhone}});
+            },
+
+
 
             addTeamToCampaign: function(data) {
                 return $http.post(apiPathB2C + 'campaigns/teams', data);

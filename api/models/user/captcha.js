@@ -15,7 +15,8 @@ var mongooseTimestamps = require('mongoose-timestamp');
  * Mongoose schema
  */
 var captchaSchema = new Schema({
-    txt: { type: String, required: true }
+    txt: { type: String, required: true },
+    mobilePhone: {type: String, required: true}
 });
 
 /**

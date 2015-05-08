@@ -55,7 +55,7 @@
             input {
                 width: 100% !important;
             }
-            width: 224px;
+            width: 185px;
             display: inline-block;
         }
         .reg-captcha {
@@ -94,14 +94,6 @@
         }
         button {
             @include registerButton
-        }
-        .radio {
-            color: #ffffff;
-            font-size: 15px;
-            margin-bottom: 40px;
-            .err-msg {
-                margin-top: -7px;
-            }
         }
         .err-msg {
             top: 2px;
