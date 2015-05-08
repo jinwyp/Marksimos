@@ -33,7 +33,7 @@ exports.updateStudentB2CInfo = function(req, res, next){
     _.extend(req.user, updatedUser);
 
     req.user.saveQ().then(function(savedDoc) {
-        console.log(savedDoc);
+
         if(savedDoc[1] === 0 ){
             throw new Error('Cancel promise chains. Because Update User failed. no record is updated. !');
         }

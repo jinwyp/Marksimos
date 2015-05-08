@@ -2202,12 +2202,11 @@
                     </div>
 
                     <div class="row ">
-                        <div class="col-md-offset-1 col-sm-4">
-                            <button type="submit" class="btn btn-primary decision_button" ng-click="updateCompany()">{{'DecisionPageDecisionLockButton' | translate}}</button>
+                        <div class="col-md-offset-1 col-sm-10">
+                            <button type="submit" class="btn btn-primary decision_button" ng-click="updateCompany()"><span class="glyphicon glyphicon-lock" aria-hidden="true"></span> {{'DecisionPageDecisionLockButton' | translate}}</button>
+                            <p class="bg-danger decision_button_info"><span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span> {{'DecisionPageDecisionLockButtonInfo' | translate}}</p>
                         </div>
-                        <div class="col-sm-6">
-                            <p class="bg-danger">{{'DecisionPageDecisionLockButtonInfo' | translate}}</p>
-                        </div>
+
                     </div>
 
                 </div>

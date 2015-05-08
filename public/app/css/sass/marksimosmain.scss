@@ -1817,7 +1817,11 @@ body{
 
         .decision_button{
             @include user_decision_button;
-            margin: 0px 0px 20px 0px;
+            margin: 0px 0px 10px 0px;
+        }
+
+        .decision_button_info{
+            padding: 7px 5px 7px 12px;
         }
 
     }

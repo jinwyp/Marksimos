@@ -787,7 +787,7 @@
             "DecisionPageDecisionNewProductDevelopmentInvestmentNote"                                                   : "Note: Investment on Efficiency could increase Flexibility at the same time",
 
             "DecisionPageDecisionLockButton"     : "Submit and Lock Decision",
-            "DecisionPageDecisionLockButtonInfo" : "Attention: Your team can not change any decisions after you lock decision",
+            "DecisionPageDecisionLockButtonInfo" : "Attention: Your team can't change any decisions after you lock decision",
 
             "DecisionPageDecisionTabProcessingTechnologyFrontendValidation" : "Must be integer",
             "DecisionPageDecisionTabIngredientsQualityFrontendValidation"   : "Must be integer",
