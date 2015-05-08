@@ -119,7 +119,7 @@ app.use(function(err, req, res, next){
 
 
 
-    if(typeof err.message !== 'undefined' && err.message.toLowerCase().substr(0, 6) == 'cancel' ){
+    if((typeof err.message !== 'undefined' && err.message.toLowerCase().substr(0, 6) == 'cancel') || typeof err.errorCode != 'undefined' ){
         // respond promise stop chains info with no system error
 
         logger.log('400 Error.  Type:', typeof err.message, '   Message:',  err.message);
@@ -130,7 +130,9 @@ app.use(function(err, req, res, next){
         if (/application\/json/.test(req.get('accept'))) {
             res.send({
                 title: '400 Data Error',
-                message: err.message });
+                message: err.message,
+                errorCode: err.errorCode
+            });
             return;
         }
 

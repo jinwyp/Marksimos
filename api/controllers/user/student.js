@@ -5,6 +5,7 @@ var userModel = require('../../models/user/user.js');
 var userRoleModel = require('../../models/user/userrole.js');
 var teamModel = require('../../models/user/team.js');
 var fileUploadModel = require('../../models/user/fileupload.js');
+var MKError = require('../../../common/error-code.js');
 var _ = require('lodash');
 var request = require('request');
 var config = require('../../../common/config.js');
@@ -35,7 +36,7 @@ exports.updateStudentB2CInfo = function(req, res, next){
     req.user.saveQ().then(function(savedDoc) {
         console.log(savedDoc);
         if(savedDoc[1] === 0 ){
-            throw new Error('Cancel promise chains. Because Update User failed. no record is updated. !');
+            throw new MKError('Cancel promise chains. Because Update User failed. no record is updated. !', MKError.errorCode.common.notUpdate);
         }
 
         if(savedDoc[1] > 1 ){

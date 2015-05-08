@@ -222,6 +222,7 @@
             ProfilePageTabSecurityInfo               : 'Security Details',
             ProfilePageTabSchoolInfo                 : 'Education Background',
             ProfilePageTabTeamInfo                   : 'Team Details',
+            ProfilePageTabChangePassword: 'Change Password',
             ProfilePageTabMobilePhoneInfo: 'Mobile Phone',
             ProfilePageTabExperienceInfo: 'Work Experience',
 
@@ -712,6 +713,7 @@
             ProfilePageTabSecurityInfo               : '安全信息',
             ProfilePageTabSchoolInfo                 : '教育背景',
             ProfilePageTabTeamInfo                   : '团队信息',
+            ProfilePageTabChangePassword: '修改密码',
             ProfilePageTabMobilePhoneInfo: '手机',
             ProfilePageTabExperienceInfo: '工作经历',
 

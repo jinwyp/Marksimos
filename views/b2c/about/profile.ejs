@@ -319,6 +319,7 @@
 
                     <div class="row work-experience" ng-if="profile.css.currentTab == 'experienceInfo'">
                         <profile-work-experience-form current-user="profile.currentUser" update="profile.updateBasicInfo(data)"></profile-work-experience-form>
+                        <profile-new-work-experience-form current-user="profile.currentUser" update="profile.updateBasicInfo(data)"></profile-new-work-experience-form>
                     </div>
 
                     <div class="row" ng-if="profile.css.currentTab == 'securityInfo'">
