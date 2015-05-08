@@ -47,9 +47,11 @@ auth.initAuth();
 
 apiRouter.get('/', function(req, res, next){
     if(req.headers.host.indexOf('bridgeplus.cn') !== -1){
-        res.redirect('/e4e');
+        return res.redirect('/e4e');
+    }else{
+        return res.redirect('/cn');
     }
-    res.redirect('/cn');
+
 });
 
 apiRouter.get('/admin', function(req, res, next){

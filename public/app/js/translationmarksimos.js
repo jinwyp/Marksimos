@@ -786,6 +786,8 @@
             "DecisionPageDecisionNewProductDevelopmentInvestmentExtraBudgetRequiredToIncreaseTechnologyLevelBy12points" : "Extra Budget Required to Increase Technology Level by 1 / 2 Step(s)",
             "DecisionPageDecisionNewProductDevelopmentInvestmentNote"                                                   : "Note: Investment on Efficiency could increase Flexibility at the same time",
 
+            "DecisionPageDecisionLockButton"     : "Submit and Lock Decision",
+            "DecisionPageDecisionLockButtonInfo" : "Attention: Your team can not change any decisions after you lock decision",
 
             "DecisionPageDecisionTabProcessingTechnologyFrontendValidation" : "Must be integer",
             "DecisionPageDecisionTabIngredientsQualityFrontendValidation"   : "Must be integer",
@@ -1745,6 +1747,9 @@
             "DecisionPageDecisionNewProductDevelopmentInvestmentExtraBudgetRequiredToIncreaseFlexibilityBy25points"     : "提高 2% / 5%生产灵活性，预计所需的额外预算",
             "DecisionPageDecisionNewProductDevelopmentInvestmentExtraBudgetRequiredToIncreaseTechnologyLevelBy12points" : "每提高一个/两个级别的技术水平，预计所需的额外预算",
             "DecisionPageDecisionNewProductDevelopmentInvestmentNote"                                                   : "注意: 在提高生产效率中的预算投入将等量影响生产灵活性 ",
+
+            "DecisionPageDecisionLockButton"     : "提交并锁定决策",
+            "DecisionPageDecisionLockButtonInfo" : "注意: 锁定决策后您的团队将无法在更改决策",
 
 
             "DecisionPageDecisionTabProcessingTechnologyFrontendValidation"   : "必须为整数",
