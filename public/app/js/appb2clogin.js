@@ -19,7 +19,7 @@
 
 
     /********************  Create New Module For Controllers ********************/
-    angular.module('b2clogin', ['pascalprecht.translate', 'b2c.config', 'marksimos.commoncomponent', 'marksimos.websitecomponent', 'marksimos.e4ecomponent', 'marksimos.model', 'marksimos.filter', 'mgcrea.ngStrap', 'ngAnimate', 'angularFileUpload']);
+    angular.module('b2clogin', ['pascalprecht.translate', 'b2c.config', 'marksimos.commoncomponent', 'marksimos.websitecomponent', 'marksimos.b2ccomponent', 'marksimos.model', 'marksimos.filter', 'mgcrea.ngStrap', 'ngAnimate', 'angularFileUpload']);
 
 
 
@@ -322,7 +322,7 @@
 
         function updateFailedHandler(err) {
             $alert(vm.css.alertFailedInfo);
-            return $q.reject(err.data.message);
+            return $q.reject(err.data);
         }
 
 
