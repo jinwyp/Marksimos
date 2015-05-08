@@ -55,7 +55,7 @@
 
 <div class="joined-team">
     <h3>{{'ProfilePageJoinedTeams' | translate}}</h3>
-    <ul ng-if="currentUser.belongToTeam.length" class="col-xs-offset-1">
+    <ul ng-if="currentUser.belongToTeam.length" class="col-xs-offset-1 team-name">
         <li ng-repeat="team in currentUser.belongToTeam">{{team.name}}</li>
     </ul>
     <span class="col-xs-offset-1" ng-if="!currentUser.belongToTeam.length">{{'ProfilePageJoinedNoTeam' | translate}}</span>

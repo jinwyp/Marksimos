@@ -610,6 +610,10 @@ $lineHeight_button: 1.8;
         padding: 2px;
         font-size: 10px;
     }
+    .remove-button {
+        padding-left: 1px;
+        padding-right: 3px;
+    }
     .add-button, .done {
         background-color: #B82A0C;
         @include box-shadow($color_register_button_border 0px 2px 4px);
@@ -725,11 +729,14 @@ $lineHeight_button: 1.8;
             margin-left: 80px;
         }
     }
-
     h3 {
         font-size: 16px;
     }
+    .team-name {
+        font-size: 14px;
+    }
     .campaign-link {
+        font-size: 14px;
         text-decoration: none;
         .campaign-name {
             color: #333;

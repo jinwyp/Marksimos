@@ -222,8 +222,11 @@
             ProfilePageTabSecurityInfo               : 'Security Details',
             ProfilePageTabSchoolInfo                 : 'Education Background',
             ProfilePageTabTeamInfo                   : 'Team Details',
+            ProfilePageTabChangePassword: 'Change Password',
             ProfilePageTabMobilePhoneInfo: 'Mobile Phone',
             ProfilePageTabExperienceInfo: 'Work Experience',
+            ProfilePageTabSocietyExperienceInfo: 'Society Experience',
+
 
             //Labels for Info Details
             ProfilePageEditButton                    : 'Update',
@@ -259,6 +262,12 @@
             ProfilePageExperienceInfoEndDate: 'End Date',
             ProfilePageExperienceInfoJobExperience: 'Job Experience',
             ProfilePageAddExperience: 'Add Experience',
+
+            ProfilePageSocietyExperience: 'Experience',
+            ProfilePageExperienceInfoSociety: 'Society',
+            ProfilePageExperienceInfoSizeOfSociety: 'Size of Society',
+            ProfilePageExperienceInfoSocietyExperience: 'Job Experience',
+            ProfilePageAddSocietyExperience: 'Add Society Experience',
 
             ProfilePageSecurityInfoCurrentPassword   : 'Current Password',
             ProfilePageSecurityInfoNewPassword       : 'New Password',
@@ -713,8 +722,10 @@
             ProfilePageTabSecurityInfo               : '安全信息',
             ProfilePageTabSchoolInfo                 : '教育背景',
             ProfilePageTabTeamInfo                   : '团队信息',
+            ProfilePageTabChangePassword: '修改密码',
             ProfilePageTabMobilePhoneInfo: '手机',
             ProfilePageTabExperienceInfo: '工作经历',
+            ProfilePageTabSocietyExperienceInfo: '社团经历',
 
 
             //Labels for Info Details
@@ -752,6 +763,12 @@
             ProfilePageExperienceInfoEndDate: '结束日期',
             ProfilePageExperienceInfoJobExperience: '经历介绍',
             ProfilePageAddExperience: '添加新的工作经验',
+
+            ProfilePageSocietyExperience: '社团经验',
+            ProfilePageExperienceInfoSociety: '社团',
+            ProfilePageExperienceInfoSizeOfSociety: '社团规模',
+            ProfilePageExperienceInfoSocietyExperience: '社团经验',
+            ProfilePageAddSocietyExperience: '添加新的社团经验',
 
             ProfilePageSecurityInfoCurrentPassword   : '原始密码',
             ProfilePageSecurityInfoNewPassword       : '新密码',

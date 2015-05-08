@@ -1,0 +1,87 @@
+<div class="profile-detail-title">{{'ProfilePageTabSocietyExperienceInfo' | translate}}<span class="profile-edit" ng-click="clickEditProfile()">{{'ProfilePageEditButton' | translate}}</span></div>
+<form novalidate name="experienceForm" class="form-horizontal">
+    <div class="experience" ng-repeat="experience in currentUser.societyExperiences">
+        <h3>{{'ProfilePageSocietyExperience' | translate}} {{$index + 1}}:<span ng-click="clickDeleteExperience($index)" ng-if="!css.formEditing" class="form-control-static remove-button glyphicon glyphicon-minus button"></span></h3>
+        <div>
+            <div class="form-group" ng-class="{'has-success':experienceForm['societyName' + $index].$dirty&&experienceForm['societyName' + $index].$valid, 'has-error':experienceForm['societyName' + $index].$dirty&&experienceForm['societyName' + $index].$invalid}">
+                <label for="societyName{{$index}}" class="control-label col-md-3 text-right">{{'ProfilePageExperienceInfoSociety' | translate}} :</label>
+                <div class="col-xs-5" ng-if="!css.formEditing">
+                    <pre class="form-control-static">{{experience.societyName}}&nbsp</pre>
+                </div>
+                <div class="col-xs-5" ng-if="css.formEditing">
+                    <input required type="text" ng-model="formData.societyExperiences[$index].societyName" name="societyName{{$index}}" id="societyName{{$index}}" class="form-control">
+                </div>
+                <span class="err-msg control-label form-control-static col-xs-4" ng-if="experienceForm['societyName' + $index].$dirty && experienceForm['societyName' + $index].$invalid">{{'ProfilePageRequiredError' | translate}}</span>
+            </div>
+
+            <div class="form-group" ng-class="{'has-success':experienceForm['position' + $index].$dirty&&experienceForm['position' + $index].$valid, 'has-error':experienceForm['position' + $index].$dirty&&experienceForm['position' + $index].$invalid}">
+                <label for="position{{$index}}" class="control-label col-md-3 text-right">{{'ProfilePageExperienceInfoPosition' | translate}} :</label>
+                <div class="col-xs-5" ng-if="!css.formEditing">
+                    <p class="form-control-static">{{experience.position}}&nbsp</p>
+                </div>
+                <div class="col-xs-5" ng-if="css.formEditing">
+                    <input required type="text" ng-model="formData.societyExperiences[$index].position" name="position{{$index}}" id="position{{$index}}" class="form-control">
+                </div>
+                <span class="err-msg control-label form-control-static col-xs-4" ng-if="experienceForm['position' + $index].$dirty && experienceForm['position' + $index].$invalid">{{'ProfilePageRequiredError' | translate}}</span>
+            </div>
+
+            <div class="form-group" ng-class="{'has-success':experienceForm['sizeOfSociety' + $index].$dirty&&experienceForm['sizeOfSociety' + $index].$valid, 'has-error':experienceForm['sizeOfSociety' + $index].$dirty&&experienceForm['sizeOfSociety' + $index].$invalid}">
+                <label for="sizeOfSociety{{$index}}" class="control-label col-md-3 text-right">{{'ProfilePageExperienceInfoSizeOfSociety' | translate}} :</label>
+                <div class="col-xs-5" ng-if="!css.formEditing">
+                    <p class="form-control-static">{{experience.sizeOfSociety | companysize | translate}}&nbsp</p>
+                </div>
+                <div class="col-xs-5" ng-if="css.formEditing">
+                    <select required id="sizeOfSociety{{$index}}" name="sizeOfSociety{{$index}}" class="form-control col-xs-4" ng-model="formData.societyExperiences[$index].sizeOfSociety" ng-options="size.id as size.name | translate for size in Constant.jobCompanySize"></select>
+                </div>
+                <span class="err-msg control-label form-control-static col-xs-4" ng-if="experienceForm['sizeOfSociety' + $index].$dirty && experienceForm['sizeOfSociety' + $index].$invalid">{{'ProfilePageRequiredError' | translate}}</span>
+            </div>
+
+            <div class="row form-group" ng-class="{'has-error': experienceForm['startDate' +  $index].$dirty&&experienceForm['startDate' +  $index].$invalid, 'has-success':experienceForm['startDate' +  $index].$dirty&&experienceForm['startDate' +  $index].$valid}">
+                <label for="startDate{{$index}}" class="control-label col-md-3 text-right">{{'ProfilePageExperienceInfoStartDate' | translate}} :</label>
+                <div class="col-xs-3" ng-if="!css.formEditing">
+                    <p class="form-control-static">{{experience.startDate|date:"yyyy-MM-dd"}}&nbsp</p>
+                </div>
+                <div class="col-xs-5" ng-if="css.formEditing">
+                    <input required type="text" data-date-format="yyyy-MM-dd" data-min-date="02/10/70" data-max-date="{{formData.societyExperiences[$index].endDate}}" data-autoclose="1" ng-model="formData.societyExperiences[$index].startDate" id="startDate{{$index}}" name="startDate{{$index}}" class="form-control" bs-datepicker>
+                </div>
+                <span class="err-msg control-label form-control-static col-xs-4" ng-if="experienceForm['startDate' +  $index].$dirty&&experienceForm['startDate' +  $index].$error.date">{{'ProfilePageDateFormatError' | translate}}</span>
+                <span class="err-msg control-label form-control-static col-xs-4" ng-if="experienceForm['startDate' +  $index].$dirty&&experienceForm['startDate' +  $index].$error.required">{{'ProfilePageRequiredError' | translate}}</span>
+            </div>
+
+            <div class="row form-group" ng-class="{'has-error': experienceForm['endDate' +  $index].$dirty&&experienceForm['endDate' +  $index].$invalid, 'has-success':experienceForm['endDate' +  $index].$dirty&&experienceForm['endDate' +  $index].$valid}">
+                <label for="endDate{{$index}}" class="control-label col-md-3 text-right">{{'ProfilePageExperienceInfoEndDate' | translate}} :</label>
+                <div class="col-xs-3" ng-if="!css.formEditing">
+                    <p class="form-control-static">{{experience.endDate|date:"yyyy-MM-dd"}}&nbsp</p>
+                </div>
+                <div class="col-xs-5" ng-if="css.formEditing">
+                    <input required type="text" data-date-format="yyyy-MM-dd" data-min-date="{{formData.societyExperiences[$index].startDate}}" data-autoclose="1" ng-model="formData.societyExperiences[$index].endDate" id="endDate{{$index}}" name="endDate{{$index}}" class="form-control" bs-datepicker>
+                </div>
+                <span class="err-msg control-label form-control-static col-xs-4" ng-if="experienceForm['endDate' +  $index].$dirty&&experienceForm['endDate' +  $index].$error.date">{{'ProfilePageDateFormatError' | translate}}</span>
+                <span class="err-msg control-label form-control-static col-xs-4" ng-if="experienceForm['endDate' +  $index].$dirty&&experienceForm['endDate' +  $index].$error.required">{{'ProfilePageRequiredError' | translate}}</span>
+            </div>
+
+            <div class="form-group" ng-class="{'has-success':experienceForm['societyExperience' + $index].$dirty&&experienceForm['societyExperience' + $index].$valid, 'has-error':experienceForm['societyExperience' + $index].$dirty&&experienceForm['societyExperience' + $index].$invalid}">
+                <label for="societyExperience{{$index}}" class="control-label col-md-3 text-right">{{'ProfilePageExperienceInfoJobExperience' | translate}} :</label>
+                <div class="col-xs-5" ng-if="!css.formEditing">
+                    <pre class="form-control-static">{{experience.societyExperience}}&nbsp</pre>
+                </div>
+                <div class="col-xs-9" ng-if="css.formEditing">
+                    <div class="row">
+                        <div class="col-xs-11">
+                            <textarea required rows="10" ng-model="formData.societyExperiences[$index].societyExperience" name="societyExperience{{$index}}" id="societyExperience{{$index}}" class="form-control"></textarea>
+                        </div>
+                    </div>
+                </div>
+                <span class="err-msg textarea-err-msg control-label form-control-static col-xs-4" ng-if="experienceForm['societyExperience' + $index].$dirty && experienceForm['societyExperience' + $index].$invalid">{{'ProfilePageRequiredError' | translate}}</span>
+            </div>
+
+        </div>
+    </div>
+
+    <div class="row save-button-container" ng-if="css.formEditing">
+        <div class="col-md-6 col-md-offset-3 profile-button-container">
+            <button ng-click="clickUpdateUserInfo(experienceForm)" type="submit">{{'ProfilePageSaveButton' | translate}}</button>
+            <button class="cancel" ng-click="clickCancelEditProfile()">{{'ProfilePageCancelButton' | translate}}</button>
+        </div>
+    </div>
+</form>
