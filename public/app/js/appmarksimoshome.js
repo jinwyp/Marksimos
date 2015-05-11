@@ -535,6 +535,13 @@
             reRun : function(){
                 this.loadingCompanyDecisionData();
                 this.loadingCompanyOtherData();
+
+                Student.getStudent().success(function(data, status, headers, config){
+                    $scope.data.currentSeminar = data.currentMarksimosSeminar;
+                    $scope.data.currentTime.time = data.currentMarksimosSeminar.roundTime[$scope.data.currentSeminar.currentPeriod - 1];
+                    $scope.data.currentCompanyDecisionLock = $scope.data.currentTime.time.lockDecisionTime[$scope.data.currentSeminar.currentCompany.companyId - 1];
+
+                });
             },
             loadingTableData : function(){
                 /********************  Table Report A1  ********************/
