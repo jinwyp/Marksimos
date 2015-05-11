@@ -8,6 +8,7 @@ var emailModel = require('../../models/user/emailContent.js');
 var Captcha = require('../../models/user/captcha.js');
 var _ = require('lodash');
 var MessageXSend = require('../../../common/submail/messageXSend.js');
+var MKError = require('../../../common/error-code.js');
 
 var mailProvider = require('../../../common/sendCloud.js');
 var mailSender = mailProvider.createEmailSender();
@@ -428,11 +429,13 @@ exports.registerB2CStudent = function(req, res, next){
         if(cpatcha) {
             cpatcha.removeQ();
         }else{
-            throw new Error('Cancel captcha not found');
+            throw new MKError('Cancel promise chains. Because cannot found captcha.',
+                MKError.errorCode.register.captcha);
         }
 
         if( cpatcha.txt !== req.body.captcha.toUpperCase() ) {
-            throw new Error('Cancel captcha error');
+            throw new MKError('Cancel promise chains. Because captcha did not match.',
+                MKError.errorCode.register.captcha);
         }
         newUser.phoneVerified = true;
         return userModel.register(newUser);
@@ -570,6 +573,25 @@ exports.verifyEmail = function(req, res, next){
 };
 
 
+exports.verifyMobilePhone = function(req, res, next){
+
+    var validationErrors = userModel.mobilePhoneValidations(req);
+
+    if(validationErrors){
+        return res.status(400).send( {message: validationErrors} );
+    }
+
+    console.log( req.body.mobilePhone);
+    userModel.findOneQ({ mobilePhone : req.body.mobilePhone}).then(function(resultUser) {
+        if (resultUser) {
+            throw new Error('Cancel promise chains. Because mobilePhone is existed.');
+        }
+
+        return res.status(200).send({message: 'mobilePhone is ok'});
+
+    }).fail(next).done();
+
+};
 
 
 
