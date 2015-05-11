@@ -10,7 +10,7 @@ var _ = require('lodash');
 var request = require('request');
 var config = require('../../../common/config.js');
 var nodeBB = require('../../../common/nodeBB.js');
-
+var Q = require('q');
 //var ObjectId = require('mongoose').Types.ObjectId;
 
 
@@ -33,7 +33,20 @@ exports.updateStudentB2CInfo = function(req, res, next){
 
     _.extend(req.user, updatedUser);
 
-    req.user.saveQ().then(function(savedDoc) {
+    var promise = Q();
+    if(req.body.mobilePhone){
+        promise = userModel.findOneQ({ mobilePhone : req.body.mobilePhone})
+        .then(function(resultUser) {
+            if (resultUser) {
+                throw new MKError('Cancel promise chains. Because mobilePhone is existed.', MKError.errorCode.userInfo.phoneExisted);
+            }
+        })
+    }
+
+    promise.then(function(){
+        return req.user.saveQ();
+    })
+    .then(function(savedDoc) {
         console.log(savedDoc);
         if(savedDoc[1] === 0 ){
             throw new MKError('Cancel promise chains. Because Update User failed. no record is updated. !', MKError.errorCode.common.notUpdate);

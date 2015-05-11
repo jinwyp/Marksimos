@@ -692,6 +692,11 @@
                         scope.update({data: scope.formData}).then(function() {
                             cancelEditProfile();
                         }).catch(function(message) {
+                            if(message.errorCode === 30001){
+                                form.mobilePhone.$error.existed = true;
+                                form.mobilePhone.$invalid = true;
+                                form.mobilePhone.$valid = true;
+                            }
                             if (angular.isArray(message)) {
                                 message.forEach(function(item) {
                                     form[item.param].$valid = false;

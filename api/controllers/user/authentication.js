@@ -581,7 +581,6 @@ exports.verifyMobilePhone = function(req, res, next){
         return res.status(400).send( {message: validationErrors} );
     }
 
-    console.log( req.body.mobilePhone);
     userModel.findOneQ({ mobilePhone : req.body.mobilePhone}).then(function(resultUser) {
         if (resultUser) {
             throw new Error('Cancel promise chains. Because mobilePhone is existed.');

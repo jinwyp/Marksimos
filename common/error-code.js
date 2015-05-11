@@ -12,6 +12,9 @@ MKError.errorCode = {
     },
     register: {
         captcha: 20001
+    },
+    userInfo: {
+        phoneExisted: 30001
     }
 };
 
