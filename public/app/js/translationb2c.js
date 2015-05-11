@@ -287,6 +287,9 @@
             ProfilePageJoinedNoCampaign: 'You have not joined any campaigns yet.',
             ProfilePageJoinedTeams: 'Teams you have already joined',
             ProfilePageJoinedNoTeam: 'You have not joined any other teams yet.',
+            ProfilePageYourTeam: 'Your team',
+            ProfilePageTeamName: 'Team name',
+            ProfilePageTeamCreator: 'Team creator',
 
             ProfileContactInfoMobilePhone            : 'Mobile Phone',
             ProfileContactInfoMobilePhoneVerify      : 'Verify',
@@ -789,6 +792,9 @@
             ProfilePageJoinedNoCampaign: '你尚未加入任何活动',
             ProfilePageJoinedTeams: '你已加入的团队',
             ProfilePageJoinedNoTeam: '你尚未加入其他团队',
+            ProfilePageYourTeam: '你的团队',
+            ProfilePageTeamName: '团队名称',
+            ProfilePageTeamCreator: '团队创建者',
 
 
 
