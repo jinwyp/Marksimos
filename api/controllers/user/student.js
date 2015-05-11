@@ -27,15 +27,11 @@ exports.updateStudentB2CInfo = function(req, res, next){
 
     var updatedUser = _.pick(req.body, pickedUpdatedKeys);
 
+    var promise = Q();
+
     if(updatedUser.mobilePhone && req.user.mobilePhone !== updatedUser.mobilePhone) {
         updatedUser.phoneVerified = false;
-    }
-
-    _.extend(req.user, updatedUser);
-
-    var promise = Q();
-    if(req.body.mobilePhone){
-        promise = userModel.findOneQ({ mobilePhone : req.body.mobilePhone})
+        promise = userModel.findOneQ({mobilePhone : req.body.mobilePhone})
         .then(function(resultUser) {
             if (resultUser) {
                 throw new MKError('Cancel promise chains. Because this mobilePhone is taken by other user.', MKError.errorCode.userInfo.phoneExisted);
@@ -44,6 +40,7 @@ exports.updateStudentB2CInfo = function(req, res, next){
     }
 
     promise.then(function(){
+        _.extend(req.user, updatedUser);
         return req.user.saveQ();
     })
     .then(function(savedDoc) {
