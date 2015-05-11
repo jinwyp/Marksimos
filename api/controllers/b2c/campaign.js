@@ -427,8 +427,12 @@ exports.addTeamToCampaign = function(req, res, next){
             throw new Error('Cancel promise chains. Because User not found !');
         }
 
-        if(typeof resultUser.firstName === 'undefined' || typeof resultUser.mobilePhone === 'undefined' || resultUser.firstName == '' || resultUser.mobilePhone == ''){
-            throw new Error('Cancel promise chains. Because team creator name and mobile phone can not empty!');
+        if(typeof resultUser.firstName === 'undefined' || typeof resultUser.currentLocation === 'undefined' || resultUser.firstName == '' || resultUser.currentLocation == ''){
+            throw new Error('Cancel promise chains. Because team creator name and currentLocation can not empty!');
+        }
+
+        if(typeof resultUser.eductionBackgrounds === 'undefined' ||  resultUser.eductionBackgrounds.length < 1){
+            throw new Error('Cancel promise chains. Because team creator eductionBackgrounds can not empty!');
         }
 
         return teamModel.findOne({creator : resultUser._id}).populate('memberList').execQ();
@@ -443,8 +447,8 @@ exports.addTeamToCampaign = function(req, res, next){
         }
 
         resultTeam.memberList.forEach(function(user){
-            if(typeof req.user.firstName === 'undefined' || typeof req.user.mobilePhone === 'undefined' || user.firstName == '' || user.mobilePhone == ''){
-                throw new Error('Cancel promise chains. Because team member name and mobile phone can not empty !');
+            if(typeof resultUser.firstName === 'undefined' || typeof resultUser.currentLocation === 'undefined' || resultUser.firstName == '' || resultUser.currentLocation == ''){
+                throw new Error('Cancel promise chains. Because team member name and currentLocation can not empty !');
             }
         });
 
