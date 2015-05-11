@@ -734,6 +734,7 @@
             ProfilePageChangeButton                  : '修改',
             ProfilePageSaveButton                    : '保存',
             ProfilePageUploadAvatarSelectionButton   : '上传图片',
+            ProfilePageUploadAvatarSelectionButtonInfo   : ' (200px * 200px)',
             ProfilePageSelectButton: '选择',
 
             ProfilePageBasicInfoName                 : '姓名',

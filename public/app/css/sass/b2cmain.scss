@@ -647,8 +647,14 @@ $lineHeight_button: 1.8;
         }
         .file-upload-text {
             margin-left: -16px;
+            margin-right: -16px;
             line-height: 27px;
             font-weight: bold;
+        }
+        .file-upload-text-info {
+            font-size: 12px;
+            font-family: "Microsoft YaHei", Arial, sans-serif !important;
+            text-align: left;
         }
         .wrapper {
             position: absolute;
