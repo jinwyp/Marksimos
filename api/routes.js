@@ -287,6 +287,7 @@ apiRouter.put('/marksimos/api/brand/decision', auth.authLoginToken(), auth.authR
 apiRouter.post('/marksimos/api/brand/decision', auth.authLoginToken(), auth.authRole(marksimosRight.seminarSingleDecisionCUD), decisionController.addBrand);
 
 apiRouter.put('/marksimos/api/company/decision', auth.authLoginToken(), auth.authRole(marksimosRight.seminarSingleDecisionCUD), decisionController.updateCompanyDecision);
+apiRouter.put('/marksimos/api/company/decision/lock', auth.authLoginToken(), auth.authRole(marksimosRight.seminarSingleDecisionCUD), decisionController.lockCompanyDecision);
 
 //getQuestionnaire
 apiRouter.get('/marksimos/api/questionnaire', auth.authLoginToken(), auth.authRole(marksimosRight.seminarSingleDecisionGet), questionnaireController.getQuestionnaire);

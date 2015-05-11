@@ -257,6 +257,10 @@
                 return $http.put(apiPath + 'company/decision', postdata);
             },
 
+            lockCompanyDecision : function(postdata){
+                return $http.put(apiPath + 'company/decision/lock', postdata);
+            },
+
             getFinalScore: function() {
                 return $http.get(apiPath + 'finalscore');
             },
