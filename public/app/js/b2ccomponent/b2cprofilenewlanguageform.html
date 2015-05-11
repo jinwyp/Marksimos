@@ -1,0 +1,18 @@
+<form novalidate name="newLanguageForm" class="form-horizontal">
+    <div>
+        <h3>{{'ProfilePageAddLanguage' | translate}}</h3>
+        <div class="form-group">
+            <div class="col-xs-4">
+                <select required class="form-control" ng-model="formData.language" ng-options="language.id as language.name | translate for language in Constant.language">
+                </select>
+            </div>
+            <div class="col-xs-4">
+                <select required class="form-control col-xs-4" ng-model="formData.level" ng-options="level.id as level.name | translate for level in Constant.languageProficiency">
+                </select>
+            </div>
+            <div class="col-xs-4">
+                <span ng-click="clickAddNewLanguage(newLanguageForm)" class="form-control-static add-button glyphicon glyphicon-plus button"></span>
+            </div>
+        </div>
+    </div>
+</form>

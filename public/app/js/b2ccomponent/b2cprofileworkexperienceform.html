@@ -33,7 +33,7 @@
                 <div class="col-xs-5" ng-if="css.formEditing">
                     <div class="row">
                         <p class="col-xs-8 form-control-static">{{formData.workExperiences[$index].industry | jobndustry | translate}}&nbsp;</p>
-                        <div class="col-xs-4"><button class="btn btn-default form-control" ng-click="css.currentJobIndustry=$index">{{'ProfilePageSelectButton' | translate}}</button></div>
+                        <div class="col-xs-4"><span class="btn btn-default form-control" ng-click="css.currentJobIndustry=$index">{{'ProfilePageSelectButton' | translate}}</span></div>
                     </div>
                     <div muti-select selectfitler="jobndustry" datasource="Constant.jobIndustry" show="$index == css.currentJobIndustry"  selectclick="clickHideMutiSelect()" close="clickHideMutiSelect()" ng-model="formData.workExperiences[$index].industry"></div>
                 </div>
