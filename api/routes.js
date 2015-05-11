@@ -369,7 +369,7 @@ apiRouter.get('/marksimos/api/admin/seminar/:seminar_id/decisions', auth.authLog
 
 apiRouter.get('/marksimos/api/admin/report/:report_name', auth.authLoginToken(), auth.authRole(marksimosRight.seminarListOfFacilitatorGet), reportController.getReport);
 apiRouter.get('/marksimos/api/admin/chart/:chart_name', auth.authLoginToken(), auth.authRole(marksimosRight.seminarListOfFacilitatorGet), chartController.getChart);
-apiRouter.get('/marksimos/api/admin/finalscore/:seminarId', auth.authLoginToken(), auth.authRole(marksimosRight.seminarListOfFacilitatorGet), reportController.getAdminFinalScore);
+apiRouter.get('/marksimos/api/admin/finalscore/:seminarId', auth.authLoginToken(), auth.authRole(marksimosRight.seminarListOfFacilitatorGet), reportController.getStudentFinalScore);
 
 apiRouter.get('/marksimos/api/admin/questionnaire/:seminarId', auth.authLoginToken(), auth.authRole(marksimosRight.seminarListOfFacilitatorGet), questionnaireController.getQuestionnaireListForAdmin);
 

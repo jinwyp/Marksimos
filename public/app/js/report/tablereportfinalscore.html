@@ -48,6 +48,17 @@
                             {{score.originalBudget | number :2}}
                         </td>
                     </tr>
+                    <tr ng-if="showScaled">
+                        <td>{{'FinalScorePageFinalScoreTime' | translate}}</td>
+                        <td>&nbsp;</td>
+                        <td ng-repeat="score in data[selectedIndex].scores">
+
+                            <span ng-hide="score.lockStatus">{{'FinalScorePageFinalScoreTimeAll' | translate}}</span>
+                            <span ng-show="score.lockStatus">{{score.hours | number :0}} : {{score.minutes | number :0}} : {{score.seconds | number :0}}</span>
+
+
+                        </td>
+                    </tr>
                     <tr class="tr_warning" ng-if="showScaled">
                         <td>{{'FinalScorePageFinalScore' | translate}}</td>
                         <td>&nbsp;</td>

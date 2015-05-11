@@ -899,6 +899,8 @@
             "FinalScorePageShareInBrandTotalSalesValue"    : "Share in Brand Total Sales Value",
             "FinalScorePageAchievementOfInitialObjectives" : "Achievement of initial objectives",
             "FinalScorePageFinalScore"                     : "Final Score",
+            "FinalScorePageFinalScoreTime"                     : "Time",
+            "FinalScorePageFinalScoreTimeAll"                     : "All Time",
 
             "FinalScorePageCompany"             : "Company",
             "FinalScorePagePeriod"              : "Period",
@@ -1862,6 +1864,9 @@
             "FinalScorePageShareInBrandTotalSalesValue"    : "Share in Brand Total Sales Value",
             "FinalScorePageAchievementOfInitialObjectives" : "Achievement of initial objectives",
             "FinalScorePageFinalScore"                     : "最终得分",
+            "FinalScorePageFinalScoreTime"                     : "用时",
+            "FinalScorePageFinalScoreTimeAll"                     : "全部时间",
+
 
             "FinalScorePageCompany"                        : "公司",
             "FinalScorePagePeriod"                         : "阶段",
