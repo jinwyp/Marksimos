@@ -234,6 +234,7 @@
             ProfilePageChangeButton                  : 'Change',
             ProfilePageSaveButton                    : 'Save',
             ProfilePageUploadAvatarSelectionButton   : 'Upload',
+            ProfilePageUploadAvatarSelectionButtonInfo   : ' (200px * 200px)',
 
             ProfilePageBasicInfoName                 : 'Name',
             ProfilePageBasicInfoGender               : 'Gender',
