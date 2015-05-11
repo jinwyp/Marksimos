@@ -632,12 +632,9 @@ exports.lockCompanyDecision = function(req, res, next){
             throw new Error( "Cancel promise chains. Because seminar not found.");
         }
 
-        console.log(resultSeminar.roundTime[resultSeminar.currentPeriod - 1].lockDecisionTime[company.companyId - 1]);
         resultSeminar.roundTime[resultSeminar.currentPeriod - 1].lockDecisionTime[company.companyId - 1].lockStatus = true;
         resultSeminar.roundTime[resultSeminar.currentPeriod - 1].lockDecisionTime[company.companyId - 1].lockTime = new Date();
         resultSeminar.roundTime[resultSeminar.currentPeriod - 1].lockDecisionTime[company.companyId - 1].spendHour = resultSeminar.roundTime[resultSeminar.currentPeriod - 1].lockDecisionTime[company.companyId - 1].lockTime - resultSeminar.roundTime[resultSeminar.currentPeriod - 1].startTime ;
-
-
 
         return resultSeminar.saveQ();
     }).then(function(result){
@@ -649,7 +646,7 @@ exports.lockCompanyDecision = function(req, res, next){
             throw new Error( "Cancel promise chains. update seminar failed, More than one seminar update.");
         }
 
-
+        socketio.emitMarksimosDecisionUpdate(req.gameMarksimos.socketRoom.company, req.user);
         return res.status(200).send(result);
     }).fail(function(err){
         next(err);

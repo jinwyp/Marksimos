@@ -788,6 +788,10 @@
 
             "DecisionPageDecisionLockButton"     : "Submit and Lock Decision",
             "DecisionPageDecisionLockButtonInfo" : "Attention: Your team can't change any decisions after you lock decision",
+            "DecisionPageDecisionLockButtonConfirmYes" : "Confirm Yes",
+            "DecisionPageDecisionLockButtonConfirmNo" : "No",
+            "DecisionPageDecisionLockStatus" : "Decisions Locked",
+
 
             "DecisionPageDecisionTabProcessingTechnologyFrontendValidation" : "Must be integer",
             "DecisionPageDecisionTabIngredientsQualityFrontendValidation"   : "Must be integer",
@@ -1750,6 +1754,9 @@
 
             "DecisionPageDecisionLockButton"     : "提交并锁定决策",
             "DecisionPageDecisionLockButtonInfo" : "注意: 锁定决策后您的团队将无法在更改决策",
+            "DecisionPageDecisionLockButtonConfirmYes" : "确认锁定决策",
+            "DecisionPageDecisionLockButtonConfirmNo" : "取消",
+            "DecisionPageDecisionLockStatus" : "决策已锁定 无法修改",
 
 
             "DecisionPageDecisionTabProcessingTechnologyFrontendValidation"   : "必须为整数",

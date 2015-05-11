@@ -67,7 +67,8 @@
             dragHaveLeftReport       : false,
             dragHaveRightReport      : false,
             seminarFinished          : false,
-            showFeedback             : false
+            showFeedback             : false,
+            showConfirmLockDecision  : false
 
         };
 
@@ -96,6 +97,7 @@
                 minute : 0,
                 second : 0
             },
+            currentCompanyDecisionLock : null,
             currentStudent : null,
             currentSeminar : null,
             currentCompany : null,
@@ -804,6 +806,7 @@
                     $scope.data.currentStudent = data;
                     $scope.data.currentSeminar = data.currentMarksimosSeminar;
                     $scope.data.currentTime.time = data.currentMarksimosSeminar.roundTime[$scope.data.currentSeminar.currentPeriod - 1];
+                    $scope.data.currentCompanyDecisionLock = $scope.data.currentTime.time.lockDecisionTime[$scope.data.currentSeminar.currentCompany.companyId - 1];
 
                     var currentDate = new Date();
                     var roundEndDate = new Date($scope.data.currentTime.time.endTime);
@@ -1427,12 +1430,15 @@
         $scope.lockCompanyDecision = function(){
 
             Company.lockCompanyDecision().success(function(data, status, headers, config){
+                $scope.css.showConfirmLockDecision = false;
+
                 notify({
                     message : 'Save Success !',
                     templateUrl : notifytemplate.success,
                     position : 'center'
                 });
             }).error(function(data, status, headers, config){
+                $scope.css.showConfirmLockDecision = false;
                 notify({
                     message : data.message,
                     templateUrl : notifytemplate.failure,
@@ -1441,8 +1447,12 @@
             });
         };
 
-
-
+        $scope.confirmLockCompanyDecision = function(){
+            $scope.css.showConfirmLockDecision = true;
+        };
+        $scope.hideLockCompanyDecision = function(){
+            $scope.css.showConfirmLockDecision = false;
+        };
 
 
 

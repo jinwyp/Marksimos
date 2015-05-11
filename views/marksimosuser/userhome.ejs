@@ -1878,7 +1878,7 @@
                 <div class="form-group text-center" ng-class="{ 'has-success':updateCompanyForm2.companyAdditionalBudget.$dirty && updateCompanyForm2.companyAdditionalBudget.$valid , 'has-error': updateCompanyForm2.companyAdditionalBudget.$dirty && updateCompanyForm2.companyAdditionalBudget.$invalid}">
                     <label class="budget_title" for="companyAdditionalBudget" ng-show="css.additionalBudget" ng-click="css.additionalBudget=false" >${{data.currentCompany.d_RequestedAdditionalBudget}}</label>
                     <label for="companyAdditionalBudget" ng-show="css.additionalBudget" ng-click="css.additionalBudget=false">{{'DecisionPageSecondMenuBarLabelsAdditionalBudget' | translate}}</label>
-                    <input type="number" class="form-control input-sm" id="companyAdditionalBudget" name="companyAdditionalBudget" ng-hide="css.additionalBudget" required ng-model="data.currentCompany.d_RequestedAdditionalBudget" ng-blur="updateCompany('d_RequestedAdditionalBudget', updateCompanyForm2, 'companyAdditionalBudget')">
+                    <input type="number" class="form-control input-sm" id="companyAdditionalBudget" name="companyAdditionalBudget" ng-hide="css.additionalBudget" required ng-model="data.currentCompany.d_RequestedAdditionalBudget" ng-blur="updateCompany('d_RequestedAdditionalBudget', updateCompanyForm2, 'companyAdditionalBudget')" ng-disabled="data.currentCompanyDecisionLock.lockStatus">
                 </div>
             </form>
         </div>
@@ -2203,8 +2203,11 @@
 
                     <div class="row ">
                         <div class="col-md-offset-1 col-sm-10">
-                            <button type="submit" class="btn btn-primary decision_button" ng-click="lockCompanyDecision()"><span class="glyphicon glyphicon-lock" aria-hidden="true"></span> {{'DecisionPageDecisionLockButton' | translate}}</button>
-                            <p class="bg-danger decision_button_info"><span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span> {{'DecisionPageDecisionLockButtonInfo' | translate}}</p>
+                            <button type="submit" class="btn btn-primary decision_button" ng-hide="css.showConfirmLockDecision || data.currentCompanyDecisionLock.lockStatus" ng-click="confirmLockCompanyDecision()"><span class="glyphicon glyphicon-lock" aria-hidden="true"></span> {{'DecisionPageDecisionLockButton' | translate}}</button>
+                            <button type="submit" class="btn btn-info " ng-show="css.showConfirmLockDecision" ng-click="lockCompanyDecision()"> {{'DecisionPageDecisionLockButtonConfirmYes' | translate}}</button>
+                            <button type="submit" class="btn btn-primary " ng-show="css.showConfirmLockDecision" ng-click="hideLockCompanyDecision()"> {{'DecisionPageDecisionLockButtonConfirmNo' | translate}}</button>
+                            <p class="bg-danger decision_button_info" ng-hide="data.currentCompanyDecisionLock.lockStatus"><span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span> {{'DecisionPageDecisionLockButtonInfo' | translate}}</p>
+                            <p class="bg-info decision_button_info" ng-show="data.currentCompanyDecisionLock.lockStatus"><span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span> {{'DecisionPageDecisionLockStatus' | translate}}</p>
                         </div>
 
                     </div>
