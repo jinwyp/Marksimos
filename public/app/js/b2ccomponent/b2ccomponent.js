@@ -222,11 +222,13 @@
                 }
 
                 function addAchievement() {
-                    if (scope.formData.newAchievement && !scope.formData.achievements)
-                        scope.formData.achievements = [];
+                    if (scope.formData.newAchievement) {
+                        if (!scope.formData.achievements)
+                            scope.formData.achievements = [];
 
-                    scope.formData.achievements.push(scope.formData.newAchievement);
-                    scope.formData.newAchievement = null;
+                        scope.formData.achievements.push(scope.formData.newAchievement);
+                        scope.formData.newAchievement = null;
+                    }
                 }
 
                 function addNewEducation(form) {
