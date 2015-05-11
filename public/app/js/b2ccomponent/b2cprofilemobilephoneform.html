@@ -14,6 +14,7 @@
             <input ng-model="formData.mobilePhone" type="text" id="mobilePhone" name="mobilePhone" class="form-control">
         </div>
         <span class="form-control-static err-msg control-label col-xs-3" ng-if="mobilePhoneForm.mobilePhone.$invalid&&css.errorFields.mobilePhone">{{'ProfilePageInvalidMobilePhoneNumber' | translate}}</span>
+        <span class="form-control-static err-msg control-label col-xs-3" ng-if="mobilePhoneForm.mobilePhone.$error.existed">号码已存在</span>
     </div>
 
     <div class="form-group" ng-if="!css.formEditing && !currentUser.phoneVerified && css.showVerify" ng-class="{'has-success':mobilePhoneForm.mobilePhoneVerifyCode.$dirty&&mobilePhoneForm.mobilePhoneVerifyCode.$valid, 'has-error':mobilePhoneForm.mobilePhoneVerifyCode.$dirty&&mobilePhoneForm.mobilePhoneVerifyCode.$invalid}" >

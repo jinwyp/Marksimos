@@ -19,12 +19,12 @@
 
 
     /********************  Create New Module For Controllers ********************/
-    angular.module('b2clogin', ['pascalprecht.translate', 'b2c.config', 'marksimos.commoncomponent', 'marksimos.websitecomponent', 'marksimos.e4ecomponent', 'marksimos.model', 'marksimos.filter', 'mgcrea.ngStrap', 'ngAnimate', 'angularFileUpload']);
+    angular.module('b2clogin', ['pascalprecht.translate', 'b2c.config', 'marksimos.commoncomponent', 'marksimos.websitecomponent', 'marksimos.b2ccomponent', 'marksimos.model', 'marksimos.filter', 'mgcrea.ngStrap', 'ngAnimate', 'angularFileUpload']);
 
 
 
     /********************  Use This Module To Set New Controllers  ********************/
-    angular.module('b2clogin').controller('userLoginController', [ '$http', '$window', '$location', 'Student', function  ($http, $window, $location, Student) {
+    angular.module('b2clogin').controller('userLoginController', [ '$http', '$window', '$location', '$interval', 'Student', function  ($http, $window, $location, $interval, Student) {
 
         /* jshint validthis: true */
         var vm = this;
@@ -71,17 +71,33 @@
 
         vm.captchaImageNum = 1;
 
-
-
-
         /**********  Function Declarations  **********/
 
-        function getCaptcha() {
-            return Student.getCaptcha(vm.newUser.mobilePhone);
+        function getCaptcha(form) {
+            vm.css.mobileVerifyCodeResend = false;
+            Student.getCaptcha(vm.newUser.mobilePhone).then(function(){
+
+                vm.css.mobileVerifyCodeResend = true;
+                vm.css.mobileVerifyCodeTimeCounter = 60;
+
+                var timer = $interval(function() {
+                    if(vm.css.mobileVerifyCodeTimeCounter > 0){
+                        vm.css.mobileVerifyCodeTimeCounter = vm.css.mobileVerifyCodeTimeCounter - 1;
+                    }else {
+                        $interval.cancel(timer);
+                    }
+                }, 1000);
+
+            }).catch(function(err){
+                form.mobilePhone.$setDirty();
+                form.mobilePhone.$valid = false;
+                form.mobilePhone.$invalid = true;
+
+            });
         };
 
-        function verifyPhone() {
-            //TODO: verify phone
+        function verifyPhone(mobilePhone) {
+            return Student.verifyPhone(mobilePhone);
         };
 
         function userLogin(form){
@@ -113,19 +129,16 @@
                     vm.css.showRegForm = false;
 
                 }).catch(function(err){
-//                    vm.captchaImageNum++;
-//                    if(err.data.message === 'Cancel captcha error') {
-//                        form.captcha.$valid = false;
-//                        form.captcha.$invalid = true;
-//                    }else{
+                    if(err.data.errorCode === 20001) {
+                        form.captcha.$valid = false;
+                        form.captcha.$invalid = true;
+                    }
+                    else{
                         form.username.$valid = false;
                         form.username.$invalid = true;
                         form.email.$valid = false;
                         form.email.$invalid = true;
-//
-//                        vm.css.usernameExistedInfo = true;
-//                    }
-
+                    }
                 });
             }
         }
@@ -322,7 +335,7 @@
 
         function updateFailedHandler(err) {
             $alert(vm.css.alertFailedInfo);
-            return $q.reject(err.data.message);
+            return $q.reject(err.data);
         }
 
 
@@ -711,7 +724,7 @@
 $(function () {
 
     $('.switch-button a').each(function (idx) {
-        $(this).on('mouseenter', function (e) {           
+        $(this).on('mouseenter', function (e) {
             $('.switch-button .selected').removeClass("selected");
             $(this).addClass("selected");
             if (idx === 1) {

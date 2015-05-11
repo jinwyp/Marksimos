@@ -76,6 +76,9 @@
             verifyEmail : function(email) {
                 return $http.post(apiPathB2C + 'register/email', email);
             },
+            verifyPhone : function(mobilePhone) {
+                return $http.post(apiPathB2C + 'register/mobilePhone', mobilePhone);
+            },
 
             updatePassword: function(passwordOld, passwordNew) {
                 return $http.put(apiPathB2C + 'student/password', {
