@@ -9,6 +9,9 @@ MKError.constructor = MKError;
 MKError.errorCode = {
     common: {
         notUpdate: 10001
+    },
+    register: {
+        captcha: 20001
     }
 };
 

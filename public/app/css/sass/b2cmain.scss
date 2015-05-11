@@ -55,13 +55,15 @@
             input {
                 width: 100% !important;
             }
-            width: 185px;
+            width: 58%;
             display: inline-block;
         }
         .reg-captcha {
             vertical-align: bottom;
             border-radius: 5px;
             height: 40px;
+            line-height: 25px;
+            width: 40%;
         }
 
         .title {
