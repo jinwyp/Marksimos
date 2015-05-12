@@ -35,7 +35,11 @@
                 <div class="title">{{'RegisterPageRegisterLabel' | translate}}</div>
 
                 <div class="form-group has-feedback" ng-class="{'has-success':regForm.username.$dirty&&regForm.username.$valid, 'has-error':regForm.username.$dirty&&regForm.username.$invalid}">
-                    <input ng-model-options="{ debounce: 500 }" async-validate="register.verifyUsername" class="input-lg form-control" type="text" name="username" placeholder="{{'RegisterPageUsernamePlaceholder' | translate}}" ng-model="register.newUser.username" required ng-minlength="6" ng-maxlength="20"/>
+                    <input ng-model-options="{ debounce: 500 }"
+                           async-validate="register.verifyUsername"
+                           class="input-lg form-control" type="text" name="username"
+                           placeholder="{{'RegisterPageUsernamePlaceholder' | translate}}"
+                           ng-model="register.newUser.username" required ng-minlength="6" ng-maxlength="20"/>
                     <span class="glyphicon glyphicon-ok form-control-feedback" aria-hidden="true" ng-if="regForm.username.$dirty&&regForm.username.$valid"></span>
                     <span class="glyphicon glyphicon-remove form-control-feedback" aria-hidden="true" ng-if="regForm.username.$dirty&&regForm.username.$invalid"></span>
                     <span class="err-msg" ng-if="regForm.username.$dirty&&regForm.username.$error.required">{{'RegisterPageInputNameTip' | translate}}</span>
@@ -44,7 +48,11 @@
                 </div>
 
                 <div class="form-group has-feedback" ng-class="{'has-success':regForm.email.$dirty&&regForm.email.$valid, 'has-error':regForm.email.$dirty&&regForm.email.$invalid}">
-                    <input ng-model-options="{ debounce: 500 }" async-validate="register.verifyEmail" class="input-lg form-control" type="email" name="email" placeholder="{{'RegisterPageEmailPlaceholder' | translate}}"  ng-model="register.newUser.email" required/>
+                    <input ng-model-options="{ debounce: 500 }"
+                           async-validate="register.verifyEmail"
+                           class="input-lg form-control" type="email" name="email"
+                           placeholder="{{'RegisterPageEmailPlaceholder' | translate}}"
+                           ng-model="register.newUser.email" required/>
                     <span class="glyphicon glyphicon-ok form-control-feedback" aria-hidden="true" ng-if="regForm.email.$dirty&&regForm.email.$valid"></span>
                     <span class="glyphicon glyphicon-remove form-control-feedback" aria-hidden="true" ng-if="regForm.email.$dirty&&regForm.email.$invalid"></span>
                     <span class="err-msg" ng-if="regForm.email.$dirty&&regForm.email.$error.required || regForm.email.$dirty&&regForm.email.$error.email">{{'RegisterPageInputEmailTip' | translate}}</span>
@@ -65,21 +73,53 @@
                     <span class="err-msg" ng-if="regForm.passwordreinput.$dirty&&regForm.passwordreinput.$invalid">{{'RegisterPageReTypePasswordTip' | translate}}</span>
                 </div>
 
-                <div class="form-group has-feedback" ng-class="{'has-success':regForm.captcha.$dirty&&regForm.captcha.$valid, 'has-error':regForm.captcha.$dirty&&regForm.captcha.$invalid}">
-                    <div class="reg-captcha-input-container">
-                        <input class="input-lg form-control" type="text" name="captcha" placeholder="{{'RegisterPageCaptchaPlaceholder' | translate}}" ng-model="register.newUser.captcha" required/>
-                        <span ng-if="regForm.captcha.$dirty&&regForm.captcha.$valid" class="glyphicon glyphicon-ok form-control-feedback" aria-hidden="true" ></span>
-                        <span ng-if="regForm.captcha.$dirty&&regForm.captcha.$invalid" class="glyphicon glyphicon-remove form-control-feedback" aria-hidden="true" ></span>
-                    </div>
-                    <!--<span class="glyphicon glyphicon-ok form-control-feedback" aria-hidden="true" ng-if="regForm.captcha.$dirty&&regForm.captcha.$valid"></span>-->
-                    <img class="reg-captcha" ng-click="register.captchaImageNum = register.captchaImageNum+1" ng-src="/e4e/api/captcha?num={{register.captchaImageNum}}">
-                    <span class="err-msg" ng-if="regForm.captcha.$dirty&&regForm.captcha.$invalid">{{'RegisterPageInputCaptchaTip' | translate}}</span>
+                <div class="form-group has-feedback" ng-class="{'has-success':regForm.mobilePhone.$dirty&&regForm.mobilePhone.$valid, 'has-error':regForm.mobilePhone.$dirty&&regForm.mobilePhone.$invalid}">
+                    <input class="input-lg form-control"
+                           type="mobilePhone"
+                           name="mobilePhone"
+                           async-validate="register.verifyPhone"
+                           placeholder="{{'RegisterPageMobilePhonePlaceholder' | translate}}"
+                           ng-model-options="{ debounce: 500 }"
+                           ng-model="register.newUser.mobilePhone" required ng-minlength="11" ng-maxlength="11"/>
+
+                    <span class="glyphicon glyphicon-ok form-control-feedback" aria-hidden="true"
+                          ng-if="regForm.mobilePhone.$dirty&&regForm.mobilePhone.$valid"></span>
+                    <span class="glyphicon glyphicon-remove form-control-feedback" aria-hidden="true"
+                          ng-if="regForm.mobilePhone.$dirty&&regForm.mobilePhone.$invalid"></span>
+
+                    <span class="err-msg"
+                          ng-if="regForm.mobilePhone.$dirty&&regForm.mobilePhone.$error.minlength || regForm.mobilePhone.$dirty&&regForm.mobilePhone.$error.maxlength">
+                        {{'ProfilePageInvalidMobilePhoneNumber' | translate}}
+                    </span>
+                    <span class="err-msg"
+                          ng-if="regForm.mobilePhone.$dirty&&regForm.mobilePhone.$error.required || regForm.mobilePhone.$dirty&&regForm.mobilePhone.$error.email">
+                        必填
+                    </span>
+                    <span class="err-msg" ng-if="regForm.mobilePhone.$dirty&&regForm.mobilePhone.$error.asyncValid">号码已存在</span>
                 </div>
 
-                <div class="form-group radio">
-                    <label class="radio-inline">       <input type="radio" name="gender" value="1" ng-model="register.newUser.gender" ng-required="true"/>{{'RegisterPageMaleLabel' | translate}}</label>
-                    <label class="radio-inline female"><input type="radio" name="gender" value="2" ng-model="register.newUser.gender" ng-required="true"/>{{'RegisterPageFemale' | translate}}</label>
-                    <span class="err-msg" ng-if="!register.newUser.gender&&register.newUser.clickSubmit">{{'RegisterPageSelectGenderTip' | translate}}</span>
+                <div class="form-group has-feedback"
+                     ng-class="{'has-success':regForm.captcha.$dirty&&regForm.captcha.$valid, 'has-error':regForm.captcha.$dirty&&regForm.captcha.$invalid}">
+                    <div class="reg-captcha-input-container">
+                        <input class="input-lg form-control" type="text" name="captcha"
+                               ng-model-options="{ debounce: 500 }"
+                               placeholder="{{'RegisterPageCaptchaPlaceholder' | translate}}"
+                               ng-model="register.newUser.captcha" required ng-minlength="6" ng-maxlength="6"/>
+                        <span ng-if="regForm.captcha.$dirty&&regForm.captcha.$valid"
+                              class="glyphicon glyphicon-ok form-control-feedback" aria-hidden="true"></span>
+                        <span ng-if="regForm.captcha.$dirty&&(regForm.captcha.$error.minlength || regForm.captcha.$error.maxlength)"
+                              class="glyphicon glyphicon-remove form-control-feedback" aria-hidden="true"></span>
+                    </div>
+                    <span class="btn btn-default reg-captcha" ng-if="!register.css.mobileVerifyCodeResend"
+                          ng-click="register.getCaptcha(regForm)"
+                          ng-disabled="regForm.mobilePhone.$invalid">{{'ProfileContactInfoMobilePhoneVerifySend' | translate}}
+                    </span>
+                    <span class="btn btn-default reg-captcha" ng-if="register.css.mobileVerifyCodeResend"
+                          ng-click="register.getCaptcha(regForm)"
+                          ng-disabled="register.css.mobileVerifyCodeTimeCounter>0">{{'ProfileContactInfoMobilePhoneVerifyReSend' | translate}}
+                        <span ng-hide="register.css.mobileVerifyCodeTimeCounter==0">{{register.css.mobileVerifyCodeTimeCounter}}</span>
+                    </span>
+                    <span class="err-msg" ng-if="regForm.captcha.$dirty&&regForm.captcha.$invalid">{{'RegisterPageInputCaptchaTip' | translate}}</span>
                 </div>
 
                 <div class="form-group"><button class="btn btn-default" type="submit" ng-click="register.clickregister(regForm)" >{{'RegisterPageRegisterButton' | translate}}</button></div>

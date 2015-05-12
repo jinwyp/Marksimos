@@ -13,52 +13,121 @@ exports.getStudentFinalScore = function(req, res, next) {
 
     var seminarId = req.gameMarksimos.currentStudentSeminar.seminarId;
 
+
+
+    if(req.user.role !== userRoleModel.roleList.student.id){
+        seminarId = +req.params.seminarId;
+    }
+
     if (!seminarId) {
         return res.send(400, { message: "You don't choose a seminar." });
-    }else{
+    }
+
+
+    var tempRoundTime = {};
+    var seminarData = {};
+
+
+    seminarModel.findOneQ({seminarId: seminarId}).then(function(resultSeminar) {
+        if (!resultSeminar) {
+            throw new Error("Cancel promise chains. seminar not found.");
+        }
+
+        seminarData = resultSeminar;
+
+        return getFinalScore(seminarId);
+    })
+    .then(function(result) {
+        //成功操作
         //获取并处理分数
-        getFinalScore(seminarId).then(function(result) {
-            //成功操作
+
+        // 处理每个小组的提交锁定决策的时间
+        seminarData.roundTime.forEach(function(period){
+
+            tempRoundTime['p' + period.period] = {};
+
+            period.lockDecisionTime.forEach(function(company){
+
+                var time = {
+                    days : 0,
+                    leftDays : 0,
+                    hours : 0,
+                    leftHours : 0,
+                    minutes : 0,
+                    leftMinutes : 0,
+                    seconds : 0
+                };
+
+
+                time.days = Math.floor(company.spendHour/(24*3600*1000));
+
+                //计算出小时数
+                time.leftDays = company.spendHour % (24*3600*1000);   //计算天数后剩余的毫秒数
+                time.hours = Math.floor(time.leftDays / (3600*1000) );
+
+                //计算相差分钟数
+                time.leftHours = time.leftDays % (3600*1000);        //计算小时数后剩余的毫秒数
+                time.minutes = Math.floor(time.leftHours / (60*1000));
+
+                //计算相差秒数
+                time.leftMinutes = time.leftHours % (60*1000);      //计算分钟数后剩余的毫秒数
+                time.seconds = Math.round(time.leftMinutes/1000);
+
+
+                tempRoundTime['p' + period.period]['c' + company.companyId] = {
+                    lockStatus : company.lockStatus,
+                    spendHour : company.spendHour || 0,
+                    lockTime : company.lockTime || 0,
+                    startTime : period.startTime,
+                    hours : time.hours || 0,
+                    minutes : time.minutes || 0,
+                    seconds : time.seconds || 0
+                };
+            });
+
+        });
+
+
+        result.scoreData.forEach(function(period, pindex){
+            // 排除 起始的-3 -2 -1 0 阶段
+            if(period.period > 0){
+                period.scores.forEach(function(score, sindex){
+
+                    score.lockStatus = tempRoundTime['p'+ period.period]['c' + score.companyId].lockStatus;
+                    score.spendHour = tempRoundTime['p'+ period.period]['c' + score.companyId].spendHour;
+                    score.lockTime = tempRoundTime['p'+ period.period]['c' + score.companyId].lockTime;
+                    score.startTime = tempRoundTime['p'+ period.period]['c' + score.companyId].startTime;
+                    score.hours = tempRoundTime['p'+ period.period]['c' + score.companyId].hours;
+                    score.minutes = tempRoundTime['p'+ period.period]['c' + score.companyId].minutes;
+                    score.seconds = tempRoundTime['p'+ period.period]['c' + score.companyId].seconds;
+                });
+            }
+
+        });
+
+
+        if(req.user.role === userRoleModel.roleList.student.id){
             if (result.showLastPeriodScore) {
                 //如果显示最后一阶段的分数，则正常输出
                 res.status(200).send(result.scoreData);
             } else {
                 //如果不显示最后一阶段的分数，则数据length-1,原数据为排过序的数据
                 if (result.scoreData && result.scoreData.length > 1) {
-                    res.send(200, result.scoreData.slice(0, result.scoreData.length - 1));
-                }
-                else {
-                    res.send(200, result.scoreData);
+                    res.status(200).send( result.scoreData.slice(0, result.scoreData.length - 1));
+                }else {
+                    res.status(200).send( result.scoreData);
                 }
             }
-
-        }).fail(function(err){
-            logger.error(err);
-            next(err);
-        }).done();
-    }
-};
-
-
-exports.getAdminFinalScore = function(req, res, next) {
-
-    //得到seminarId,老师由参数传入
-    var seminarId = +req.params.seminarId;
-
-    if (!seminarId) {
-        return res.send(400, { message: "You don't choose a seminar." });
-    }else{
-        //获取并处理分数
-        getFinalScore(seminarId).then(function(result) {
-            //成功操作
+        }else{
             res.status(200).send(result.scoreData);
-        }).fail(function(err){
-            logger.error(err);
-            next(err);
-        }).done();
-    }
+        }
+
+
+    }).fail(next).done();
 
 };
+
+
 
 
 exports.getReport = function(req, res, next){

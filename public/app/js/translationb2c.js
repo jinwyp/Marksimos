@@ -210,6 +210,15 @@
             jobIndustryOthers06          : 'Others',
 
 
+
+
+
+
+
+
+
+
+
             //profile page validation
             ProfilePageRequiredError: 'Required',
 
@@ -222,7 +231,11 @@
             ProfilePageTabSecurityInfo               : 'Security Details',
             ProfilePageTabSchoolInfo                 : 'Education Background',
             ProfilePageTabTeamInfo                   : 'Team Details',
+            ProfilePageTabChangePassword: 'Change Password',
+            ProfilePageTabMobilePhoneInfo: 'Mobile Phone',
             ProfilePageTabExperienceInfo: 'Work Experience',
+            ProfilePageTabSocietyExperienceInfo: 'Society Experience',
+
 
             //Labels for Info Details
             ProfilePageEditButton                    : 'Update',
@@ -230,6 +243,7 @@
             ProfilePageChangeButton                  : 'Change',
             ProfilePageSaveButton                    : 'Save',
             ProfilePageUploadAvatarSelectionButton   : 'Upload',
+            ProfilePageUploadAvatarSelectionButtonInfo   : ' (200px * 200px)',
 
             ProfilePageBasicInfoName                 : 'Name',
             ProfilePageBasicInfoGender               : 'Gender',
@@ -259,6 +273,12 @@
             ProfilePageExperienceInfoJobExperience: 'Job Experience',
             ProfilePageAddExperience: 'Add Experience',
 
+            ProfilePageSocietyExperience: 'Experience',
+            ProfilePageExperienceInfoSociety: 'Society',
+            ProfilePageExperienceInfoSizeOfSociety: 'Size of Society',
+            ProfilePageExperienceInfoSocietyExperience: 'Job Experience',
+            ProfilePageAddSocietyExperience: 'Add Society Experience',
+
             ProfilePageSecurityInfoCurrentPassword   : 'Current Password',
             ProfilePageSecurityInfoNewPassword       : 'New Password',
             ProfilePageSecurityInfoReTypeNewPassword : 'Confirm Password',
@@ -266,17 +286,26 @@
             ProfilePageSchoolInfoEnterDate           : 'Enter Date',
             ProfilePageSchoolInfoDegree              : 'Degree',
 
-
+            // team
             ProfilePageTeamInfoTeamName              : 'Team Name',
             ProfilePageTeamInfoMember                : 'Member',
             ProfilePageTeamInfoNewMember             : 'New Member',
+            ProfilePageJoinedCampaigns: 'Joined campaigns',
+            ProfilePageCancelEnter: 'Cancel',
+            ProfilePageGoToCampaigns: 'I want to join!',
+            ProfilePageJoinedNoCampaign: 'You have not joined any campaigns yet.',
+            ProfilePageJoinedTeams: 'Teams you have already joined',
+            ProfilePageJoinedNoTeam: 'You have not joined any other teams yet.',
+            ProfilePageYourTeam: 'Your team',
+            ProfilePageTeamName: 'Team name',
+            ProfilePageTeamCreator: 'Team creator',
+
             ProfileContactInfoMobilePhone            : 'Mobile Phone',
-            ProfileContactInfoMobilePhoneVerify      : 'Verify Mobile',
+            ProfileContactInfoMobilePhoneVerify      : 'Verify',
             ProfileContactInfoMobilePhoneVerifySend  : 'Get verify code for free',
 
             ProfileContactInfoMobilePhoneVerifyReSend : 'Resend verify code',
             ProfileContactInfoMobileVerified          : 'Verified',
-            ProfileContactInfoMobileUnverified        : 'Unverified',
             ProfileContactInfoMobileVerifiedButton        : 'Verify',
 
             //Error Tips for Validation
@@ -313,7 +342,7 @@
 
             //Labels for Enter Campaign Section
             CampaignPageEnterCampaignEnterButton      : 'Enter',
-            CampaignPageEnterCampaignHasEnteredButton : 'Already Entered',
+            CampaignPageEnterCampaignHasEnteredButton : 'Cancel',
             CampaignPageEnterCampaignIntroduce        : 'Introduce',
             CampaignPageEnterCampaignCountPrefix      : 'Has Entered ',
             CampaignPageEnterCampaignCountSuffix      : ' People',
@@ -323,9 +352,12 @@
             //Labels for Enter Successful popup window
             CampaignPageEnterSuccessTip1              : 'Enter Successful！',
             CampaignPageEnterSuccessTip2              : 'Play The Game',
+            //Labels for Cancel Enter Successful popup window
+            CampaignPageCancelEnterSuccessTip1              : 'Canceled！',
+            CampaignPageCancelEnterSuccessTip2              : '',
             //Labels for Enter Failed popup window
             CampaignPageEnterFailedTip1               : 'Tip',
-            CampaignPageEnterFailedTip2               : "Please Complete Your Team's Info",
+            CampaignPageEnterFailedTip2               : "Please Confirm Your Team's basic info and education background",
             CampaignPageEnterFailedCompleteInfoButton : 'Complete Info',
 
             //Labels for Schedules
@@ -381,6 +413,7 @@
             RegisterPageRegisterLabel             : 'Register',
             RegisterPageUsernamePlaceholder       : 'Username',
             RegisterPageEmailPlaceholder          : 'Email',
+            RegisterPageMobilePhonePlaceholder    : 'Phone number',
             RegisterPagePasswordPlaceholder       : 'Password',
             RegisterPageReTypePasswordPlaceholder : 'Re-enter password',
             RegisterPageCaptchaPlaceholder        : 'Captcha',
@@ -702,7 +735,10 @@
             ProfilePageTabSecurityInfo               : '安全信息',
             ProfilePageTabSchoolInfo                 : '教育背景',
             ProfilePageTabTeamInfo                   : '团队信息',
+            ProfilePageTabChangePassword: '修改密码',
+            ProfilePageTabMobilePhoneInfo: '手机',
             ProfilePageTabExperienceInfo: '工作经历',
+            ProfilePageTabSocietyExperienceInfo: '社团经历',
 
 
             //Labels for Info Details
@@ -711,6 +747,7 @@
             ProfilePageChangeButton                  : '修改',
             ProfilePageSaveButton                    : '保存',
             ProfilePageUploadAvatarSelectionButton   : '上传图片',
+            ProfilePageUploadAvatarSelectionButtonInfo   : ' (200px * 200px)',
             ProfilePageSelectButton: '选择',
 
             ProfilePageBasicInfoName                 : '姓名',
@@ -741,21 +778,41 @@
             ProfilePageExperienceInfoJobExperience: '经历介绍',
             ProfilePageAddExperience: '添加新的工作经验',
 
+            ProfilePageSocietyExperience: '社团经验',
+            ProfilePageExperienceInfoSociety: '社团',
+            ProfilePageExperienceInfoSizeOfSociety: '社团规模',
+            ProfilePageExperienceInfoSocietyExperience: '社团经验',
+            ProfilePageAddSocietyExperience: '添加新的社团经验',
+
             ProfilePageSecurityInfoCurrentPassword   : '原始密码',
             ProfilePageSecurityInfoNewPassword       : '新密码',
             ProfilePageSecurityInfoReTypeNewPassword : '再输入新密码',
             ProfilePageSchoolInfoCollege             : '大学',
             ProfilePageSchoolInfoEnterDate           : '入学时间',
             ProfilePageSchoolInfoDegree              : '学历',
+
+            //Team
             ProfilePageTeamInfoTeamName              : '战队名称',
             ProfilePageTeamInfoMember                : '队员',
             ProfilePageTeamInfoNewMember             : '新队员',
+            ProfilePageJoinedCampaigns: '已报名的活动',
+            ProfilePageCancelEnter: '取消报名',
+            ProfilePageGoToCampaigns: '我要报名',
+            ProfilePageJoinedNoCampaign: '你尚未加入任何活动',
+            ProfilePageJoinedTeams: '你已加入的团队',
+            ProfilePageJoinedNoTeam: '你尚未加入其他团队',
+            ProfilePageYourTeam: '你的团队',
+            ProfilePageTeamName: '团队名称',
+            ProfilePageTeamCreator: '团队创建者',
+
+
+
+            //Mobile Phone
             ProfileContactInfoMobilePhone             : '手机',
             ProfileContactInfoMobilePhoneVerify       : '验证手机',
             ProfileContactInfoMobilePhoneVerifySend   : '免费获取验证码',
             ProfileContactInfoMobilePhoneVerifyReSend : '重新发送验证码',
             ProfileContactInfoMobileVerified          : '已验证',
-            ProfileContactInfoMobileUnverified        : '未验证',
             ProfileContactInfoMobileVerifiedButton    : '点击验证',
 
             //Error Tips for Validation
@@ -793,7 +850,7 @@
 
             //Labels for Enter Campaign Section
             CampaignPageEnterCampaignEnterButton      : '马上报名',
-            CampaignPageEnterCampaignHasEnteredButton : '您已报名',
+            CampaignPageEnterCampaignHasEnteredButton : '取消报名',
             CampaignPageEnterCampaignIntroduce        : '游戏介绍',
             CampaignPageEnterCampaignCountPrefix      : '已有',
             CampaignPageEnterCampaignCountSuffix      : '人参加',
@@ -801,9 +858,12 @@
             //Labels for Enter Successful popup window
             CampaignPageEnterSuccessTip1              : '报名成功！',
             CampaignPageEnterSuccessTip2              : '快来体验游戏吧',
+            //Labels for Enter Successful popup window
+            CampaignPageCancelEnterSuccessTip1              : '取消成功！',
+            CampaignPageCancelEnterSuccessTip2              : '',
             //Labels for Enter Failed popup window
             CampaignPageEnterFailedTip1               : '温馨提示',
-            CampaignPageEnterFailedTip2               : '请先完成你的队伍信息',
+            CampaignPageEnterFailedTip2               : '请完善所有组员的基本信息和教育背景',
             CampaignPageEnterFailedCompleteInfoButton : '完善信息',
 
             //Labels for Schedules
@@ -858,6 +918,7 @@
             RegisterPageRegisterLabel             : '注册',
             RegisterPageUsernamePlaceholder       : '用户名',
             RegisterPageEmailPlaceholder          : '邮箱',
+            RegisterPageMobilePhonePlaceholder    : '手机号',
             RegisterPagePasswordPlaceholder       : '密码',
             RegisterPageReTypePasswordPlaceholder : '再次输入密码',
             RegisterPageCaptchaPlaceholder        : '验证码',

@@ -102,7 +102,7 @@ exports.init = function (socketio) {
         // Call onDisconnect.
         socket.on('disconnect', onDisconnect);
 
-        logger.log('User CONNECTED SocketIO: ' + token + '. Address: ' + socket.handshake.address + '. Time: ' + socket.handshake.time);
+        //logger.log('User CONNECTED SocketIO: ' + token + '. Address: ' + socket.handshake.address + '. Time: ' + socket.handshake.time);
 
         // Call onConnect. API routes for Socket.IO
 

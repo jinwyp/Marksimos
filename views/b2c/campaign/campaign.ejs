@@ -60,6 +60,26 @@
             </div>
         </div>
     </script>
+    <!-- cancel enter success template-->
+    <script type="text/ng-template" id="campaign-modal-cancel-enter-success.html">
+        <div class="modal enter-success campaign-modal">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        &nbsp;
+                        <button class="close" ng-click="$hide()"><span>×</span></button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="enter-success-icon"></div>
+                        <div class="center-block">
+                            <h2>{{'CampaignPageCancelEnterSuccessTip1' | translate}}！</h2>
+                            <p>{{'CampaignPageCancelEnterSuccessTip2' | translate}}</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </script>
     <!-- enter failed template. to complete team info -->
     <script type="text/ng-template" id="campaign-modal-enter-tip-complete-info.html">
         <div class="modal enter-tip-complete-info campaign-modal">
@@ -74,7 +94,7 @@
                         <div class="center-block">
                             <h3>{{'CampaignPageEnterFailedTip2' | translate}}</h3>
                             <div>
-                                <a href="/e4e/profile#teamInfo">{{'CampaignPageEnterFailedCompleteInfoButton' | translate}}</a>
+                                <a href="/e4e/profile#basicInfo">{{'CampaignPageEnterFailedCompleteInfoButton' | translate}}</a>
                             </div>
                         </div>
                     </div>

@@ -176,8 +176,10 @@
                 };
 
                 scope.changeLanguage = function (langKey) {
+
                     $translate.use(langKey);
                     Student.updateStudentB2CInfo({ 'websiteLanguage':langKey });
+
                 };
 
                 scope.clickLogout = function () {

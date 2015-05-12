@@ -47,9 +47,11 @@ auth.initAuth();
 
 apiRouter.get('/', function(req, res, next){
     if(req.headers.host.indexOf('bridgeplus.cn') !== -1){
-        res.redirect('/e4e');
+        return res.redirect('/e4e');
+    }else{
+        return res.redirect('/cn');
     }
-    res.redirect('/cn');
+
 });
 
 apiRouter.get('/admin', function(req, res, next){
@@ -217,6 +219,7 @@ apiRouter.post('/e4e/api/registerstudent', auth.registerB2CStudent);
 
 apiRouter.post('/e4e/api/register/username', auth.verifyUsername);
 apiRouter.post('/e4e/api/register/email', auth.verifyEmail);
+apiRouter.post('/e4e/api/register/mobilePhone', auth.verifyMobilePhone);
 
 // comment-captcha-start
 apiRouter.get('/e4e/api/captcha', auth.generateCaptcha);
@@ -241,6 +244,7 @@ apiRouter.delete('/e4e/api/team/student/:student_id',  auth.authLoginToken(), au
 
 apiRouter.get('/e4e/api/campaigns/:campaignId', auth.authLoginToken(), auth.authRole(marksimosRight.campaignSingleGet), campaignController.campaignSingleInfo);
 apiRouter.post('/e4e/api/campaigns/teams', auth.authLoginToken(), auth.authRole(marksimosRight.campaignSingleGet), campaignController.addTeamToCampaign);
+apiRouter.post('/e4e/api/campaigns/teams/remove', auth.authLoginToken(), auth.authRole(marksimosRight.campaignSingleGet), campaignController.removeTeamFromCampaign);
 
 
 
@@ -283,6 +287,7 @@ apiRouter.put('/marksimos/api/brand/decision', auth.authLoginToken(), auth.authR
 apiRouter.post('/marksimos/api/brand/decision', auth.authLoginToken(), auth.authRole(marksimosRight.seminarSingleDecisionCUD), decisionController.addBrand);
 
 apiRouter.put('/marksimos/api/company/decision', auth.authLoginToken(), auth.authRole(marksimosRight.seminarSingleDecisionCUD), decisionController.updateCompanyDecision);
+apiRouter.put('/marksimos/api/company/decision/lock', auth.authLoginToken(), auth.authRole(marksimosRight.seminarSingleDecisionCUD), decisionController.lockCompanyDecision);
 
 //getQuestionnaire
 apiRouter.get('/marksimos/api/questionnaire', auth.authLoginToken(), auth.authRole(marksimosRight.seminarSingleDecisionGet), questionnaireController.getQuestionnaire);
@@ -364,7 +369,7 @@ apiRouter.get('/marksimos/api/admin/seminar/:seminar_id/decisions', auth.authLog
 
 apiRouter.get('/marksimos/api/admin/report/:report_name', auth.authLoginToken(), auth.authRole(marksimosRight.seminarListOfFacilitatorGet), reportController.getReport);
 apiRouter.get('/marksimos/api/admin/chart/:chart_name', auth.authLoginToken(), auth.authRole(marksimosRight.seminarListOfFacilitatorGet), chartController.getChart);
-apiRouter.get('/marksimos/api/admin/finalscore/:seminarId', auth.authLoginToken(), auth.authRole(marksimosRight.seminarListOfFacilitatorGet), reportController.getAdminFinalScore);
+apiRouter.get('/marksimos/api/admin/finalscore/:seminarId', auth.authLoginToken(), auth.authRole(marksimosRight.seminarListOfFacilitatorGet), reportController.getStudentFinalScore);
 
 apiRouter.get('/marksimos/api/admin/questionnaire/:seminarId', auth.authLoginToken(), auth.authRole(marksimosRight.seminarListOfFacilitatorGet), questionnaireController.getQuestionnaireListForAdmin);
 

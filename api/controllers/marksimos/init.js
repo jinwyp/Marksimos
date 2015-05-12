@@ -40,6 +40,8 @@ var consts = require('../../consts.js');
 var _ = require('underscore');
 
 
+var oneHour = 60 * 60 * 1000;
+
 /**
  * Initialize game data, only certain perople can call this method
  *
@@ -54,6 +56,9 @@ exports.init = function(req, res, next) {
             return res.send(400, {message: "Last request is still pending, please wait for runSimulation process complete..."})
         } else {
             status = 'pending';
+
+            var seminarResult;
+
             var seminarId = req.params.seminar_id;
             var simulationSpan; //should be posted from client
             var companyNum;
@@ -77,6 +82,7 @@ exports.init = function(req, res, next) {
                     throw {message: "Cancel promise chains. Because initialize a seminar that already starts."}
                 }
 
+                seminarResult = dbSeminar;
                 //before init, a new seminar should be created,
                 //and it's currentPeriod should be set correctly = 1
                 currentPeriod = dbSeminar.currentPeriod;
@@ -110,7 +116,7 @@ exports.init = function(req, res, next) {
                     return Q.all([
                         initSimulationResult(seminarId, periods),
                         initDecision(seminarId, periods, companyNum)
-                    ])
+                    ]);
                 })
                 .then(function(){
                     return Q.all([
@@ -137,26 +143,28 @@ exports.init = function(req, res, next) {
 
                 })
                 .then(function(){
-                    return seminarModel.updateQ({seminarId: seminarId}, {
-                        isInitialized: true
-                    })
+
+                    seminarResult.isInitialized = true;
+                    seminarResult.roundTime[0].startTime = new Date();
+
+                    if(seminarResult.roundTime[0].roundTimeHour !== 0){
+                        seminarResult.roundTime[0].endTime = new Date( new Date().getTime() + oneHour * seminarResult.roundTime[0].roundTimeHour);
+                    }
+
+                    return seminarResult.saveQ();
                 })
                 .then(function(result){
-                    var numAffected = result[0];
+                    var numAffected = result[1];
 
                     status = 'active';
                     if(numAffected!==1){
                         throw new Error("Cancel promise chains. Because there's error during set isInitialized to true.");
                     }
+
                     res.status(200).send( {message: 'initialize success'});
                 }).fail(next).done();
             })
-            .fail(function(err){
-                status = 'active';
-                logger.error(err);
-                res.send(500, {message: err.message})
-            })
-            .done();
+            .fail(next).done();
         }
 
     };
@@ -196,6 +204,8 @@ exports.runSimulation = function(){
             return res.send(400, {message: "Last request is still pending, please wait for runSimulation process complete..."})
         } else {
             status = 'pending';
+
+
             var seminarId = req.params.seminar_id;
             var goingToNewPeriod = req.body.goingToNewPeriod;
             var decisionsOverwriteSwitchers = req.body.decisionsOverwriteSwitchers || [];
@@ -225,12 +235,12 @@ exports.runSimulation = function(){
                 }
 
                 if(!dbSeminar.isInitialized){
-                    throw {message: "Cancel promise chains. Because you have not initialized this seminar."}
+                    throw {message: "Cancel promise chains. Because you have not initialized this seminar."};
                 }
 
                 //if all rounds are executed
                 if(dbSeminar.isSimulationFinished){
-                    throw {message: "the last round simulation has been executed."}
+                    throw {message: "the last round simulation has been executed."};
                 }
 
 
@@ -256,110 +266,106 @@ exports.runSimulation = function(){
                 }
 
                 //write decision to binary file
-                return submitDecisionForAllCompany(companies, selectedPeriod, seminarId)
-                    .then(function(submitDecisionResult){
-                        logger.log('write decision finished.');
+                return submitDecisionForAllCompany(companies, selectedPeriod, seminarId).then(function(submitDecisionResult){
+                    logger.log('write decision finished.');
 
-                        if(submitDecisionResult.message !== 'submit_decision_success'){
-                             throw {message: 'Cancel promise chains. Because ' + submitDecisionResult.message};
+                    if(submitDecisionResult.message !== 'submit_decision_success'){
+                         throw {message: 'Cancel promise chains. Because ' + submitDecisionResult.message};
+                    }
+
+                    //run simulation
+                    return cgiapi.runSimulation({
+                        seminarId: seminarId,
+                        simulationSpan: dbSeminar.simulationSpan,
+                        teams: utility.createCompanyArray(dbSeminar.companyNum),
+                        period: selectedPeriod
+                    })
+                    .then(function(simulationResult){
+                        logger.log('run simulation finished.');
+                        if(simulationResult.message !== 'run_simulation_success'){
+                            throw {message: 'Cancel promise chains. Because ' + simulationResult.message};
                         }
 
-                        //run simulation
-                        return cgiapi.runSimulation({
-                            seminarId: seminarId,
-                            simulationSpan: dbSeminar.simulationSpan,
-                            teams: utility.createCompanyArray(dbSeminar.companyNum),
-                            period: selectedPeriod
-                        })
-                        .then(function(simulationResult){
-                            logger.log('run simulation finished.');
-                            if(simulationResult.message !== 'run_simulation_success'){
-                                throw {message: 'Cancel promise chains. Because ' + simulationResult.message};
-                            }
-
-                            return Q.all[removeCurrentPeriodSimulationResult(seminarId, selectedPeriod)
-                                        , chartModel.remove(seminarId)
-                                        , reportModel.remove(seminarId)
-                                    ];
-                        })
-                        .then(function(){
-                            logger.log('get current period simulation result finished.');
-                            //once removeCurrentPeriodSimulationResult success,
-                            //query and save the current period simulation result
-                            return initCurrentPeriodSimulationResult(seminarId, selectedPeriod);
-                        })
-                        .then(function(){
+                        return Q.all[
+                            removeCurrentPeriodSimulationResult(seminarId, selectedPeriod),
+                            chartModel.remove(seminarId),
+                            reportModel.remove(seminarId)
+                        ];
+                    })
+                    .then(function(){
+                        logger.log('get current period simulation result finished.');
+                        //once removeCurrentPeriodSimulationResult success,
+                        //query and save the current period simulation result
+                        return initCurrentPeriodSimulationResult(seminarId, selectedPeriod);
+                    })
+                    .then(function(){
+                        return Q.all([
+                            simulationResultModel.findAll(seminarId)
+                        ])
+                        .spread(function(allResults){
                             return Q.all([
-                                simulationResultModel.findAll(seminarId)
-                            ])
-                            .spread(function(allResults){
-                                return Q.all([
-                                    initChartData(seminarId, allResults),
-                                    initCompanyStatusReport(seminarId, allResults, selectedPeriod),
-                                    initFinancialReport(seminarId, allResults),
-                                    initProfitabilityEvolutionReport(seminarId, allResults, selectedPeriod),
-                                    initSegmentDistributionReport(seminarId, allResults),
-                                    initCompetitorIntelligenceReport(seminarId, allResults),
-                                    initMarketTrendsReport(seminarId, allResults, selectedPeriod),
-                                    initMarketIndicatorReport(seminarId, selectedPeriod)
-                                ]);
-                            });
-                        })
-                        .then(function(){
-                            logger.log('generate report/chart finished.');
-                            //for the last period OR re-run last period,
-                            //DO NOT create the next period decision automatically
-                            if(dbSeminar.currentPeriod < dbSeminar.simulationSpan){
-                                status = 'active';
-                                return createNewDecisionBasedOnLastPeriodDecision(seminarId, selectedPeriod, decisionsOverwriteSwitchers, goingToNewPeriod);
-                            }else{
-                                return undefined;
-                            }
-                        })
-                        .then(function(){
-                            logger.log('create duplicate decision from last period finished.');
-                            if(dbSeminar.currentPeriod < dbSeminar.simulationSpan){
+                                initChartData(seminarId, allResults),
+                                initCompanyStatusReport(seminarId, allResults, selectedPeriod),
+                                initFinancialReport(seminarId, allResults),
+                                initProfitabilityEvolutionReport(seminarId, allResults, selectedPeriod),
+                                initSegmentDistributionReport(seminarId, allResults),
+                                initCompetitorIntelligenceReport(seminarId, allResults),
+                                initMarketTrendsReport(seminarId, allResults, selectedPeriod),
+                                initMarketIndicatorReport(seminarId, selectedPeriod)
+                            ]);
+                        });
+                    })
+                    .then(function(){
+                        logger.log('generate report/chart finished.');
+                        //for the last period OR re-run last period,
+                        //DO NOT create the next period decision automatically
+                        if(dbSeminar.currentPeriod < dbSeminar.simulationSpan){
+                            status = 'active';
+                            return createNewDecisionBasedOnLastPeriodDecision(seminarId, selectedPeriod, decisionsOverwriteSwitchers, goingToNewPeriod);
+                        }else{
+                            return undefined;
+                        }
+                    })
+                    .then(function(){
+                        logger.log('create duplicate decision from last period finished.');
+
+                        if(goingToNewPeriod){
+
+                            dbSeminar.currentPeriod = dbSeminar.currentPeriod + 1;
+
+                            if(dbSeminar.currentPeriod < dbSeminar.simulationSpan) {
                                 //after simulation success, set currentPeriod to next period, only when goingToNewPeriod = true
-                                if(goingToNewPeriod){
-                                    return seminarModel.updateQ({seminarId: seminarId}, {
-                                        currentPeriod: dbSeminar.currentPeriod + 1
-                                    })
-                                    .then(function(result){
-                                        var numAffected = result[0];
-                                        if(numAffected!==1){
-                                            throw {message: "Cancel promise chains. Because there's error during update seminar."}
-                                        }else{
-                                            return undefined;
-                                        }
-                                    })
-                                } else {
-                                    return undefined;
+
+                            }else if (dbSeminar.currentPeriod = dbSeminar.simulationSpan) {
+                                dbSeminar.isSimulationFinished = true;
+                            }else {
+                                throw new Error('Cancel promise chains. Because dbSeminar.currentPeriod > dbSeminar.simulationSpan, you cannot run into next period.');
+                            }
+
+                            dbSeminar.roundTime[dbSeminar.currentPeriod - 1 ].startTime = new Date();
+
+                            if(dbSeminar.roundTime[dbSeminar.currentPeriod - 1].roundTimeHour !== 0){
+                                dbSeminar.roundTime[dbSeminar.currentPeriod - 1].endTime = new Date( new Date().getTime() + oneHour * dbSeminar.roundTime[dbSeminar.currentPeriod - 1].roundTimeHour);
+                            }
+
+
+                            return dbSeminar.saveQ().then(function(result){
+                                var numAffected = result[1];
+                                if(numAffected!==1){
+                                    throw new Error( "Cancel promise chains. Because there's error during update seminar.");
                                 }
 
-                            }else if(dbSeminar.currentPeriod = dbSeminar.simulationSpan){
-                                if(goingToNewPeriod){
-                                    return seminarModel.updateQ({seminarId: seminarId}, {
-                                        isSimulationFinished : true,
-                                        currentPeriod       : dbSeminar.currentPeriod + 1
-                                    }).then(function(result){
-                                        var numAffected = result[0];
-                                        if(numAffected!==1){
-                                            throw {message: "Cancel promise chains. Because there's error during update isSimulationFinished to true."}
-                                        }else{
-                                            return undefined;
-                                        }
-                                    });
-                                } else {
-                                    return undefined;
-                                }
-                            } else {
-                                throw {message: 'Cancel promise chains. Because dbSeminar.currentPeriod > dbSeminar.simulationSpan, you cannot run into next period.'}
-                            }
-                        })
+                            });
+                        }
+
                     });
+
+                });
+
+
             })
             .then(function(){
-                 status = 'active';
+                status = 'active';
                 return res.send({message: "run simulation success."});
             })
             .fail(function(err){
@@ -367,7 +373,7 @@ exports.runSimulation = function(){
                 if(err.httpStatus){
                     return res.send(err.httpStatus, {message: err.message});
                 }
-                res.status(500).send( {message: err.message})
+                res.status(500).send( {message: err.message});
             })
             .done();
         }

@@ -612,9 +612,26 @@
                             <form class="form-horizontal" role="form" name="newSeminarForm">
                                 <div class="box-body">
 
-                                    <text-form-input type="text" name="newSeminarDescription" label="Description :" placeholder="Seminar Description" labelclass="col-sm-2" inputclass="col-sm-4" data="data.newSeminar.description" required="true" requirederrorinfo="Description is required" minlength="2" minlengtherrorinfo="Description must be at least 6 characters" maxlength="20" maxlengtherrorinfo="Description is a maximum of 20 characters"></text-form-input>
+                                    <text-form-input type="text" name="newSeminarDescription" label="Description :" placeholder="Seminar Description" labelclass="col-sm-2" inputclass="col-sm-4" data="data.newSeminar.description" required="true" requirederrorinfo="Description is required" minlength="2" minlengtherrorinfo="Description must be at least 6 characters" maxlength="100" maxlengtherrorinfo="Description is a maximum of 100 characters"></text-form-input>
 
                                     <text-form-input type="number" name="newSeminarRounds" label="No. of Rounds :" placeholder="No. of Rounds" labelclass="col-sm-2" inputclass="col-sm-4" data="data.newSeminar.simulation_span" min="2" minerrorinfo="Must be greater than 2" max="8" maxerrorinfo="Must be less than 8"></text-form-input>
+
+                                    <div class="form-group">
+                                        <label for="inputSeminarRoundTime" class="col-sm-2 control-label">Round Time(Hour) </label>
+                                        <div class="col-sm-2">
+                                            <button class="btn btn-info" ng-click="createNewSeminarRoundTime()"> Click to input round time (Default is infiniti time of each round)</button>
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group" ng-show="css.showCreateSeminarTimeInput">
+                                        <label for="inputSeminarRoundTime" class="col-sm-2 control-label"> </label>
+
+                                        <div class="col-sm-1" ng-repeat="time in data.newSeminar.roundTime">
+                                            <input type="number" class="form-control" id="inputSeminarRoundTime" name="seminarRoundTime" placeholder="input round {{time.period}} time" ng-model="time.hour" min="0" max="12">
+                                        </div>
+
+                                    </div>
+
                                     <text-form-input type="number" name="newSeminarTeams" label="No. of Teams :" placeholder="No. of Seminar Teams" labelclass="col-sm-2" inputclass="col-sm-4" data="data.newSeminar.company_num"  min="2" minerrorinfo="Must be greater than 2" max="6" maxerrorinfo="Must be less than 6" ></text-form-input>
 
 
@@ -639,7 +656,7 @@
                                         </div>
                                     </div>
 
-                                    <text-form-input type="text" name="newSeminarVenue" label="Venue :" placeholder="Seminar Description" labelclass="col-sm-2" inputclass="col-sm-4" data="data.newSeminar.venue" required="true" ></text-form-input>
+                                    <text-form-input type="text" name="newSeminarVenue" label="Venue :" placeholder="Seminar Venue" labelclass="col-sm-2" inputclass="col-sm-4" data="data.newSeminar.venue" required="true" ></text-form-input>
 
                                 </div>
 

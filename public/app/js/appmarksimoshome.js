@@ -67,7 +67,8 @@
             dragHaveLeftReport       : false,
             dragHaveRightReport      : false,
             seminarFinished          : false,
-            showFeedback             : false
+            showFeedback             : false,
+            showConfirmLockDecision  : false
 
         };
 
@@ -91,10 +92,12 @@
 
         $scope.data = {
             currentTime : {
+                time : 0,
                 hour : 0,
                 minute : 0,
                 second : 0
             },
+            currentCompanyDecisionLock : null,
             currentStudent : null,
             currentSeminar : null,
             currentCompany : null,
@@ -532,6 +535,13 @@
             reRun : function(){
                 this.loadingCompanyDecisionData();
                 this.loadingCompanyOtherData();
+
+                Student.getStudent().success(function(data, status, headers, config){
+                    $scope.data.currentSeminar = data.currentMarksimosSeminar;
+                    $scope.data.currentTime.time = data.currentMarksimosSeminar.roundTime[$scope.data.currentSeminar.currentPeriod - 1];
+                    $scope.data.currentCompanyDecisionLock = $scope.data.currentTime.time.lockDecisionTime[$scope.data.currentSeminar.currentCompany.companyId - 1];
+
+                });
             },
             loadingTableData : function(){
                 /********************  Table Report A1  ********************/
@@ -802,27 +812,53 @@
                 Student.getStudent().success(function(data, status, headers, config){
                     $scope.data.currentStudent = data;
                     $scope.data.currentSeminar = data.currentMarksimosSeminar;
+                    $scope.data.currentTime.time = data.currentMarksimosSeminar.roundTime[$scope.data.currentSeminar.currentPeriod - 1];
+                    $scope.data.currentCompanyDecisionLock = $scope.data.currentTime.time.lockDecisionTime[$scope.data.currentSeminar.currentCompany.companyId - 1];
 
                     var currentDate = new Date();
+                    var roundEndDate = new Date($scope.data.currentTime.time.endTime);
+                    var targetDate = 0;
 
-                    $scope.data.currentTime.hour = 1;
-                    $scope.data.currentTime.minute = 59;
-                    $scope.data.currentTime.second = 59 ;
+                    if($scope.data.currentTime.time.roundTimeHour === 0){
+                        $scope.data.currentTime.hour = 1;
+                        $scope.data.currentTime.minute = 59;
+                        $scope.data.currentTime.second = 59 ;
+                    }else{
 
-    //            var timer = $interval(function() {
-    //                currentDate = new Date();
-    //                if(currentDate.getHours() < 13 && currentDate.getHours() > 9){
-    //                    $scope.data.currentTime.hour = 12 - currentDate.getHours();
-    //                    $scope.data.currentTime.minute = 60 - currentDate.getMinutes();
-    //                    $scope.data.currentTime.second = 60 - currentDate.getSeconds() ;
-    //                }else if(currentDate.getHours() < 19 && currentDate.getHours() >= 13){
-    //                    $scope.data.currentTime.hour = 18 - currentDate.getHours();
-    //                    $scope.data.currentTime.minute = 60 - currentDate.getMinutes();
-    //                    $scope.data.currentTime.second = 60 - currentDate.getSeconds() ;
-    //                }else {
-    //                    $interval.cancel(timer);
-    //                }
-    //            }, 3000);
+                        var timer = $interval(function() {
+                            currentDate = new Date();
+                            targetDate = roundEndDate.getTime() - currentDate.getTime();
+
+                            if(currentDate.getTime() < roundEndDate.getTime() ){
+
+                                var days = Math.floor(targetDate/(24*3600*1000));
+
+                                //计算出小时数
+                                var leftDays = targetDate % (24*3600*1000);   //计算天数后剩余的毫秒数
+                                var hours = Math.floor(leftDays / (3600*1000) );
+
+                                //计算相差分钟数
+                                var leftHours = leftDays % (3600*1000);        //计算小时数后剩余的毫秒数
+                                var minutes = Math.floor(leftHours / (60*1000));
+
+                                //计算相差秒数
+                                var leftMinutes = leftHours % (60*1000);      //计算分钟数后剩余的毫秒数
+                                var seconds = Math.round(leftMinutes/1000);
+
+
+                                $scope.data.currentTime.hour = hours;
+                                $scope.data.currentTime.minute = minutes;
+                                $scope.data.currentTime.second = seconds;
+
+                            }else{
+                                $interval.cancel(timer);
+                            }
+                        }, 3000);
+                    }
+
+
+
+
 
 
 
@@ -1397,10 +1433,33 @@
             });
         };
 
+        /********************  Submit and Lock Company Decision  ********************/
+        $scope.lockCompanyDecision = function(){
 
+            Company.lockCompanyDecision().success(function(data, status, headers, config){
+                $scope.css.showConfirmLockDecision = false;
 
+                notify({
+                    message : 'Save Success !',
+                    templateUrl : notifytemplate.success,
+                    position : 'center'
+                });
+            }).error(function(data, status, headers, config){
+                $scope.css.showConfirmLockDecision = false;
+                notify({
+                    message : data.message,
+                    templateUrl : notifytemplate.failure,
+                    position : 'center'
+                });
+            });
+        };
 
-
+        $scope.confirmLockCompanyDecision = function(){
+            $scope.css.showConfirmLockDecision = true;
+        };
+        $scope.hideLockCompanyDecision = function(){
+            $scope.css.showConfirmLockDecision = false;
+        };
 
 
 

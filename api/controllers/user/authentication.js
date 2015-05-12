@@ -1,12 +1,14 @@
 var userModel = require('../../models/user/user.js');
 var userRoleModel = require('../../models/user/userrole.js');
 var teamModel = require('../../models/user/team.js');
+var campaignModel = require('../../models/b2c/campaign.js');
 var seminarModel = require('../../models/marksimos/seminar.js');
 var Token = require('../../models/user/authenticationtoken.js');
 var emailModel = require('../../models/user/emailContent.js');
 var Captcha = require('../../models/user/captcha.js');
 var _ = require('lodash');
 var MessageXSend = require('../../../common/submail/messageXSend.js');
+var MKError = require('../../../common/error-code.js');
 
 var mailProvider = require('../../../common/sendCloud.js');
 var mailSender = mailProvider.createEmailSender();
@@ -343,11 +345,28 @@ exports.getUserInfo = function (req, res, next){
 
     teamModel.findOne({ creator: userResult._id }).populate('memberList', userModel.selectFields()).execQ().then(function(resultTeam){
         userResult.team = resultTeam || [];
-        res.status(200).send(userResult);
 
-    }).fail(function(err){
-        next(err);
-    }).done();
+        return teamModel.find({ memberList: { $elemMatch: {$in:[userResult._id]} } }).populate('memberList', userModel.selectFields()).populate('creator', userModel.selectFields()).execQ();
+
+    }).then(function(resultTeam2){
+        userResult.belongToTeam = resultTeam2 || [];
+
+        var teamid;
+        if(typeof userResult.team._id === 'undefined'){
+            teamid = null;
+        }else{
+            teamid = userResult.team._id;
+        }
+
+        return campaignModel.find({teamList: {$elemMatch: {$in:[teamid]} }}).execQ();
+
+
+    }).then(function(resultCampaign){
+        userResult.joinedCampaign = resultCampaign || [];
+
+        return res.status(200).send(userResult);
+
+    }).fail(next).done();
 
 
 };
@@ -357,8 +376,10 @@ exports.getUserInfo = function (req, res, next){
 
 
 
+
+
 /**
- * Registration .
+ * Registration
  *
  *  * Examples:
  *
@@ -381,12 +402,12 @@ exports.registerB2CStudent = function(req, res, next){
         email: req.body.email,
         password: req.body.password,
 
-        gender : req.body.gender,
+//        gender : req.body.gender,
         //firstName : req.body.firstName,
         //lastName : req.body.lastName,
         //birthday : req.body.birthday,
         //idcardNumber : req.body.idcardNumber,
-        //mobilePhone : req.body.mobilePhone,
+        mobilePhone : req.body.mobilePhone,
         //qq : req.body.qq,
 
 
@@ -402,21 +423,21 @@ exports.registerB2CStudent = function(req, res, next){
         emailActivateTokenExpires : new Date(new Date().getTime() + expiresTime * 30)
     };
 
-
-    Captcha.findOneQ({_id: req.cookies['x-captcha-token']})
+    Captcha.findOneQ({_id: req.cookies['x-captcha-token'], mobilePhone: newUser.mobilePhone})
     .then(function(cpatcha){
-
+        console.log(cpatcha);
         if(cpatcha) {
             cpatcha.removeQ();
         }else{
-            throw new Error('Cancel captcha not found');
+            throw new MKError('Cancel promise chains. Because cannot found captcha.',
+                MKError.errorCode.register.captcha);
         }
 
         if( cpatcha.txt !== req.body.captcha.toUpperCase() ) {
-            throw new Error('Cancel captcha error');
+            throw new MKError('Cancel promise chains. Because captcha did not match.',
+                MKError.errorCode.register.captcha);
         }
-
-
+        newUser.phoneVerified = true;
         return userModel.register(newUser);
     })
     .then(function(resultUser) {
@@ -552,6 +573,24 @@ exports.verifyEmail = function(req, res, next){
 };
 
 
+exports.verifyMobilePhone = function(req, res, next){
+
+    var validationErrors = userModel.mobilePhoneValidations(req);
+
+    if(validationErrors){
+        return res.status(400).send( {message: validationErrors} );
+    }
+
+    userModel.findOneQ({ mobilePhone : req.body.mobilePhone}).then(function(resultUser) {
+        if (resultUser) {
+            throw new Error('Cancel promise chains. Because mobilePhone is existed.');
+        }
+
+        return res.status(200).send({message: 'mobilePhone is ok'});
+
+    }).fail(next).done();
+
+};
 
 
 
@@ -782,32 +821,45 @@ exports.forgotPasswordStep2 = function(req, res, next){
 };
 
 
-// comment-captcha-start
-var ccap = require('ccap')();//Instantiated ccap class
+
 exports.generateCaptcha = function(req, res, next) {
-    var ary = ccap.get();
-    var txt = ary[0];
-    var buf = ary[1];
 
     Captcha.findOneAndRemoveQ({_id: req.cookies['x-captcha-token']})
     .then(function(cpatcha) {})
     .fail(next)
     .done();
 
-    Captcha.createQ({txt: txt})
-    .then(function(captcha) {
+    var captcha = String(Math.floor(Math.random() * (999999 - 100000) + 100000 ));
+//    var verifyCodeExpires = new Date(new Date().getTime() + 1000 * 60 * 60); // one hour
 
+    // TODO: first verify unique phone
+    var mobilePhone = req.query.mobilePhone;
+
+
+    var messageXSend = new MessageXSend();
+    messageXSend.add_var('code',captcha);
+    messageXSend.add_to(mobilePhone);
+    messageXSend.set_project('pPlo2');
+
+    var xsendQ = Q.nbind(messageXSend.xsend, messageXSend);
+
+    xsendQ()
+    .then(function(result) {
+        var parsedRes = JSON.parse(result);
+        if (parsedRes.status === "error") {
+            throw new Error(parsedRes);
+        }
+        return Captcha.createQ({txt: captcha, mobilePhone: req.query.mobilePhone})
+    })
+    .then(function(captcha) {
         if(captcha){
             res.cookie('x-captcha-token', captcha._id.toString());
-            res.set('Content-Type', 'image/jpeg');
-            res.end(buf, 'binary');
+            res.status(200).send({message: 'Generate MobilePhone verify code success'});
         }
-
     })
     .fail(next)
     .done();
 };
-// comment-captcha-end
 
 
 exports.generatePhoneVerifyCode = function(req, res, next) {

@@ -6,6 +6,7 @@ var path = require('path');
 var favicon = require('serve-favicon');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
+var compression = require('compression');
 
 var mongoose = require('mongoose');
 
@@ -47,7 +48,7 @@ app.use(morgan('dev'));
 //app.use(morgan('combined', {
 //    stream: morganFileStream
 //}));
-
+app.use(compression());
 app.use(cookieParser());
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
@@ -119,7 +120,7 @@ app.use(function(err, req, res, next){
 
 
 
-    if(typeof err.message !== 'undefined' && err.message.toLowerCase().substr(0, 6) == 'cancel' ){
+    if((typeof err.message !== 'undefined' && err.message.toLowerCase().substr(0, 6) == 'cancel') || typeof err.errorCode != 'undefined' ){
         // respond promise stop chains info with no system error
 
         logger.log('400 Error.  Type:', typeof err.message, '   Message:',  err.message);
@@ -130,7 +131,9 @@ app.use(function(err, req, res, next){
         if (/application\/json/.test(req.get('accept'))) {
             res.send({
                 title: '400 Data Error',
-                message: err.message });
+                message: err.message,
+                errorCode: err.errorCode
+            });
             return;
         }
 

@@ -76,6 +76,9 @@
             verifyEmail : function(email) {
                 return $http.post(apiPathB2C + 'register/email', email);
             },
+            verifyPhone : function(mobilePhone) {
+                return $http.post(apiPathB2C + 'register/mobilePhone', mobilePhone);
+            },
 
             updatePassword: function(passwordOld, passwordNew) {
                 return $http.put(apiPathB2C + 'student/password', {
@@ -85,8 +88,8 @@
             },
 
 
-            addStudentToTeam : function(user) {
-                return $http.post(apiPathB2C + 'team/student', user);
+            addStudentToTeam : function(name) {
+                return $http.post(apiPathB2C + 'team/student', {username: name});
             },
 
             removeStudentToTeam : function(id) {
@@ -110,9 +113,19 @@
             },
 
 
+            getCaptcha : function(mobilePhone){
+                console.log(mobilePhone);
+                return $http.get(apiPathB2C + 'captcha', {params: {mobilePhone: mobilePhone}});
+            },
+
+
 
             addTeamToCampaign: function(data) {
                 return $http.post(apiPathB2C + 'campaigns/teams', data);
+            },
+
+            removeTeamToCampaign: function(data) {
+                return $http.post(apiPathB2C + 'campaigns/teams/remove', data);
             },
 
             getCampaign: function(id) {
@@ -242,6 +255,10 @@
 
             updateCompany : function(postdata){
                 return $http.put(apiPath + 'company/decision', postdata);
+            },
+
+            lockCompanyDecision : function(postdata){
+                return $http.put(apiPath + 'company/decision/lock', postdata);
             },
 
             getFinalScore: function() {

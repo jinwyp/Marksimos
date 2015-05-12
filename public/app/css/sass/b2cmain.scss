@@ -55,13 +55,15 @@
             input {
                 width: 100% !important;
             }
-            width: 224px;
+            width: 58%;
             display: inline-block;
         }
         .reg-captcha {
             vertical-align: bottom;
             border-radius: 5px;
             height: 40px;
+            line-height: 25px;
+            width: 40%;
         }
 
         .title {
@@ -94,14 +96,6 @@
         }
         button {
             @include registerButton
-        }
-        .radio {
-            color: #ffffff;
-            font-size: 15px;
-            margin-bottom: 40px;
-            .err-msg {
-                margin-top: -7px;
-            }
         }
         .err-msg {
             top: 2px;
@@ -367,133 +361,6 @@
 
 
 /********************  User Profile  ********************/
-$color_chat_border: #DDD;
-$color_chat_active: #2E4E9A;
-$color_chat_me: #1289fe;
-.chat-container {
-    position: fixed;
-    z-index:9999;
-    background-color: white;
-    width: 244px;
-    border: 1px solid $color_chat_border;
-    font-size: 12px;
-    .header {
-        font-size: 12px; // todo delete?
-        font-weight: bold;
-        text-align: center;
-        margin: 0;
-        padding-top: 12px;
-        border-top: 5px solid #2E4E9A;
-    }
-    .chat-header {
-        height: 60px;
-        padding: 14px 0;
-        position: relative;
-        .btn {
-            font-size: 12px;
-            width: 96px;
-            padding-left: 37px;
-            margin:0 6px;
-        }
-        .btn.active {
-            box-shadow: none;
-            color: #2E4E9A;
-            background-color: white;
-            border-color: #2E4E9A;
-            &:hover {
-                background-color: #E6E6E6;
-            }
-        }
-        .indicator {
-            position: absolute;
-            bottom: -1px;
-            right: 52px;
-            &.left {
-                left: 52px;
-            }
-
-        }
-    }
-    .chat-body {
-        border-top: 1px solid #DDD;
-        .messages {
-            padding: 14px;
-            height: 280px;
-            overflow: auto;
-        }
-        .message{
-            clear:both;
-            margin-bottom: 0.5em;
-            & > * {
-                display: inline-block;
-            }
-            .text{
-                margin: 0;
-                @include border-radius(1em);
-                padding: 0.5em 1em;
-                background: #e5e5ea;
-                position: relative;
-            }
-            .name {
-                color: #A6A4A9;
-                padding-left: 1em;
-                font-size: 10px;
-            }
-        }
-        .message.them {
-            max-width: 85%; // extra 5% for avatar
-            float: left;
-            .avatar {
-                width: 30px;
-                height: 30px;
-                margin-right: 5px;
-                @include border-radius(50%);
-                border: 1px solid gray; /*todo-to-delete*/
-            }
-            .text::after {
-                content: "";
-                position: absolute;
-                left: -0.5em;
-                bottom: 0;
-                width: 0.5em;
-                height: 1em;
-                border-right: 0.5em solid #e5e5ea;
-                border-bottom-right-radius: 1em 0.5em;
-                box-sizing: content-box;
-            }
-        }
-        .message.me {
-            max-width: 80%;
-            float: right;
-            .text {
-                background-color: $color_chat_me;
-                color: white;
-                &::after {
-                    content: "";
-                    position: absolute;
-                    right: -0.5em;
-                    bottom: 0;
-                    width: 0.5em;
-                    height: 1em;
-                    border-left: 0.5em solid $color_chat_me;
-                    border-bottom-left-radius: 1em 0.5em;
-                    box-sizing: content-box;
-                }
-            }
-        }
-        .message-send form textarea {
-            width: 100%;
-            resize: none;
-            padding: 6px 14px;
-            //margin-bottom: -6px; /*wtf cao spaces*/
-            border-top: 1px  solid $color_chat_border;
-            border-bottom: 1px solid $color_chat_border;
-            border-left: none;
-            border-right: none;
-        }
-    }
-}
-
 $left_of_avatar: 44px;
 $lineHeight_button: 1.8;
 
@@ -745,10 +612,18 @@ $lineHeight_button: 1.8;
         padding: 2px;
         font-size: 10px;
     }
+    .remove-button {
+        padding-left: 1px;
+        padding-right: 3px;
+    }
     .add-button, .done {
         background-color: #B82A0C;
         @include box-shadow($color_register_button_border 0px 2px 4px);
         @include SaveButtonHover;
+    }
+    .button.done {
+        padding: 6px 15px;
+        text-align: center;
     }
     .remove-button, button.cancel {
         @include CancelButtonHover;
@@ -772,8 +647,14 @@ $lineHeight_button: 1.8;
         }
         .file-upload-text {
             margin-left: -16px;
+            margin-right: -16px;
             line-height: 27px;
             font-weight: bold;
+        }
+        .file-upload-text-info {
+            font-size: 12px;
+            font-family: "Microsoft YaHei", Arial, sans-serif !important;
+            text-align: left;
         }
         .wrapper {
             position: absolute;
@@ -803,6 +684,10 @@ $lineHeight_button: 1.8;
         position: absolute;
         right: -10px;
     }
+    .team-name-err-msg {
+        position: absolute;
+        right: 0;
+    }
     .none-bottom {
         border-bottom: none;
         padding-bottom: 0;
@@ -810,6 +695,9 @@ $lineHeight_button: 1.8;
     .none-top {
         border-top: none;
         padding-top: 0;
+    }
+    .no-margin-bottom {
+       margin-bottom: 0;
     }
     .profile-detail-title {
         line-height: 1.8;
@@ -847,9 +735,45 @@ $lineHeight_button: 1.8;
             @include box-shadow(#797979 0px 2px 4px);
         }
     }
+    .new-school-form {
+        margin-bottom: 30px;
+    }
     .team-info {
         .head {
             margin-left: 80px;
+        }
+    }
+    h3 {
+        font-size: 16px;
+    }
+    .team-name {
+        font-size: 14px;
+    }
+    .campaign-link {
+        font-size: 14px;
+        text-decoration: none;
+        .campaign-name {
+            color: #333;
+        }
+        .cancel-enter {
+            margin-left: 20px;
+        }
+    }
+    .joined-campaigns {
+        margin-bottom: 0;
+        a {
+            padding-left: 0;
+        }
+    }
+    .join-campaign {
+        margin-left: 20px;
+    }
+
+    .phone-verify {
+        cursor: pointer;
+        margin-left: 25px;
+        &:hover, &:active {
+            color: #337AB7;
         }
     }
 

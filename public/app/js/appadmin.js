@@ -66,7 +66,9 @@
             campaignIdAddTeam: 0,
             runButtonDisabled: false,
             showConfirm : false,
-            currentRunSeminarId : 0
+            currentRunSeminarId : 0,
+
+            showCreateSeminarTimeInput : false
         };
 
         $scope.data = {
@@ -160,6 +162,7 @@
                 city: "shanghai",
                 venue: "",
                 simulation_span: 4,
+                roundTime:[],
                 company_num: 3
             },
             searchSeminar: {
@@ -816,6 +819,27 @@
                 });
             }
         };
+        $scope.createNewSeminarRoundTime = function() {
+            var round = Number($scope.data.newSeminar.simulation_span);
+
+            for (var i = 1; i <= round; i++) {
+                var time ={
+                    period : i,
+                    hour : 0
+                };
+
+                $scope.data.newSeminar.roundTime.push(time);
+            }
+            $scope.css.showCreateSeminarTimeInput = true;
+        };
+
+        $scope.$watch('data.newSeminar.simulation_span', function (newValue, oldValue) {
+            $scope.data.newSeminar.roundTime = [];
+
+            $scope.css.showCreateSeminarTimeInput = false;
+        }, true);
+
+
 
         /********************  Select Company/Team for StudentB2B  ********************/
         $scope.chooseCompany = function(seminar, company) {

@@ -414,8 +414,10 @@ exports.addTeamToCampaign = function(req, res, next){
 
     if(req.user.role === userRoleModel.roleList.student.id && req.user.username !== req.body.username ){
         // For student role
-        return res.status(400).send( {message: 'Role student only can join campaign with own team'} );
+        return res.status(400).send( {message: 'only student own team can join campaign'} );
     }
+
+
 
     var dataTeam ;
 
@@ -425,12 +427,30 @@ exports.addTeamToCampaign = function(req, res, next){
             throw new Error('Cancel promise chains. Because User not found !');
         }
 
-        return teamModel.findOneQ({creator : resultUser._id});
+        if(typeof resultUser.firstName === 'undefined' || typeof resultUser.currentLocation === 'undefined' || resultUser.firstName == '' || resultUser.currentLocation == ''){
+            throw new Error('Cancel promise chains. Because team creator name and currentLocation can not empty!');
+        }
+
+        if(typeof resultUser.eductionBackgrounds === 'undefined' ||  resultUser.eductionBackgrounds.length < 1){
+            throw new Error('Cancel promise chains. Because team creator eductionBackgrounds can not empty!');
+        }
+
+        return teamModel.findOne({creator : resultUser._id}).populate('memberList').execQ();
 
     }).then(function(resultTeam) {
         if (!resultTeam) {
             throw new Error('Cancel promise chains. Because Team not found !');
         }
+
+        if(resultTeam.name == ''){
+            throw new Error('Cancel promise chains. Because team name can not empty !');
+        }
+
+        resultTeam.memberList.forEach(function(user){
+            if(typeof resultUser.firstName === 'undefined' || typeof resultUser.currentLocation === 'undefined' || resultUser.firstName == '' || resultUser.currentLocation == ''){
+                throw new Error('Cancel promise chains. Because team member name and currentLocation can not empty !');
+            }
+        });
 
         dataTeam = resultTeam;
         return campaignModel.findByIdQ(req.body.campaignId);

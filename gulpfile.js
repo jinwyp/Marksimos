@@ -23,10 +23,10 @@ var paths = {
     base: './public',
     app: './public/app/**',
     views: './views/**',
-    javascript: './public/app/js/*.js',
+    javascript: './public/app/js/**/*.js',
     javascriptPath: './public/app/js/',
     javascriptOutputDist: './public/app/dist/',
-    angularTemplates: ['./public/app/js/commoncomponent/*.html', './public/app/js/report/*.html', './public/app/js/websitecomponent/*.html'],
+    angularTemplates: ['./public/app/js/commoncomponent/*.html', './public/app/js/report/*.html', './public/app/js/websitecomponent/*.html', './public/app/js/b2ccomponent/*.html'],
 
     compass_config : './public/app/css/config.rb',
     sassSourceFiles: ['./public/app/css/sass/*.scss','./public/app/css/sass/*/*.scss','./public/app/css/sass/*/*/*.scss'],
@@ -58,7 +58,7 @@ var paths = {
 gulp.task('templates', function () {
     gulp.src(paths.angularTemplates)
         .pipe(minifyHtml({
-//            empty: true, //do not remove empty attributes
+              empty: true, //do not remove empty attributes
 //            spare: true, //do not remove redundant attributes
             quotes: true
         }))
