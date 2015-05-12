@@ -107,6 +107,14 @@
             educationMajorAgriculture01 : 'Agriculture',
 
 
+            // Society Experiences Position
+            societyExperiencesPositionChairman     : 'Chairman',
+            societyExperiencesPositionViceChairman : 'Vice Chairman',
+            societyExperiencesPositionMinister     : 'Minister',
+            societyExperiencesPositionViceMinister : 'Vice Minister',
+            societyExperiencesPositionTeamLeader   : 'Team Leader',
+            societyExperiencesPositionMember       : 'Member',
+
             // Profile Work Experience
             jobTypeFullTime      : 'Full-time',
             jobTypePartTime      : 'Par-time ',
@@ -294,11 +302,12 @@
             ProfilePageCancelEnter: 'Cancel',
             ProfilePageGoToCampaigns: 'I want to join!',
             ProfilePageJoinedNoCampaign: 'You have not joined any campaigns yet.',
-            ProfilePageJoinedTeams: 'Teams you have already joined',
+            ProfilePageJoinedTeams: 'Joined teams',
             ProfilePageJoinedNoTeam: 'You have not joined any other teams yet.',
             ProfilePageYourTeam: 'Your team',
             ProfilePageTeamName: 'Team name',
             ProfilePageTeamCreator: 'Team creator',
+            ProfilePageAlreadyJoinedCampaignLabel: '/ Joined campaign: ',
 
             ProfileContactInfoMobilePhone            : 'Mobile Phone',
             ProfileContactInfoMobilePhoneVerify      : 'Verify',
@@ -614,6 +623,17 @@
             educationMajorAgriculture01 : '农业类',
 
 
+
+            // Society Experiences Position
+            societyExperiencesPositionChairman     : '主席',
+            societyExperiencesPositionViceChairman : '副主席',
+            societyExperiencesPositionMinister     : '部长',
+            societyExperiencesPositionViceMinister : '副部长',
+            societyExperiencesPositionTeamLeader   : '组长',
+            societyExperiencesPositionMember       : '成员',
+
+
+
             // Profile Work Experience
             jobTypeFullTime      : '全职',
             jobTypePartTime      : '兼职',
@@ -804,6 +824,7 @@
             ProfilePageYourTeam: '你的团队',
             ProfilePageTeamName: '团队名称',
             ProfilePageTeamCreator: '团队创建者',
+            ProfilePageAlreadyJoinedCampaignLabel: '/ 已加入活动：',
 
 
 
@@ -863,7 +884,7 @@
             CampaignPageCancelEnterSuccessTip2              : '',
             //Labels for Enter Failed popup window
             CampaignPageEnterFailedTip1               : '温馨提示',
-            CampaignPageEnterFailedTip2               : '请完善所有组员的基本信息和教育背景',
+            CampaignPageEnterFailedTip2               : '请完善不少于5个组员的基本信息和教育背景',
             CampaignPageEnterFailedCompleteInfoButton : '完善信息',
 
             //Labels for Schedules

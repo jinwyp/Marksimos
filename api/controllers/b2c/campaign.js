@@ -121,7 +121,8 @@ exports.addCampaign = function(req, res, next){
         matchDate   : req.body.matchDate || '',
         creator     : req.user._id,
         pictures     : {firstCoverBackgroundColor:'#FFFFFF', processBackgroundColor : '#FFFFFF'},
-        activated   : req.body.activated
+        activated   : req.body.activated,
+        memberNumberBase   : req.body.memberNumberBase
 
     });
 
@@ -457,7 +458,6 @@ exports.addTeamToCampaign = function(req, res, next){
         });
 
 
-
         dataTeam = resultTeam;
         return campaignModel.findByIdQ(req.body.campaignId);
 
@@ -482,7 +482,11 @@ exports.addTeamToCampaign = function(req, res, next){
         if(savedDoc[1] !== 1){
             throw new Error('Cancel promise chains. Because Update campaign failed. More or less than 1 record is updated. it should be only one !');
         }
-        return res.status(200).send({message: "Assign team to campaign success."})
+
+        dataTeam.joinCampaignTime = new Date();
+        dataTeam.save();
+
+        return res.status(200).send({message: "Assign team to campaign success."});
 
     }).fail(function(err){
         next (err);

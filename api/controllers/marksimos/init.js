@@ -145,11 +145,15 @@ exports.init = function(req, res, next) {
                 .then(function(){
 
                     seminarResult.isInitialized = true;
-                    seminarResult.roundTime[0].startTime = new Date();
 
-                    if(seminarResult.roundTime[0].roundTimeHour !== 0){
-                        seminarResult.roundTime[0].endTime = new Date( new Date().getTime() + oneHour * seminarResult.roundTime[0].roundTimeHour);
+                    if(seminarResult.roundTime.length > 0 ){
+                        seminarResult.roundTime[0].startTime = new Date();
+
+                        if(seminarResult.roundTime[0].roundTimeHour !== 0){
+                            seminarResult.roundTime[0].endTime = new Date( new Date().getTime() + oneHour * seminarResult.roundTime[0].roundTimeHour);
+                        }
                     }
+
 
                     return seminarResult.saveQ();
                 })
@@ -342,12 +346,15 @@ exports.runSimulation = function(){
                                 throw new Error('Cancel promise chains. Because dbSeminar.currentPeriod > dbSeminar.simulationSpan, you cannot run into next period.');
                             }
 
-                            dbSeminar.roundTime[dbSeminar.currentPeriod - 1 ].startTime = new Date();
+                            if(dbSeminar.roundTime.length > 0 ){
 
-                            if(dbSeminar.roundTime[dbSeminar.currentPeriod - 1].roundTimeHour !== 0){
-                                dbSeminar.roundTime[dbSeminar.currentPeriod - 1].endTime = new Date( new Date().getTime() + oneHour * dbSeminar.roundTime[dbSeminar.currentPeriod - 1].roundTimeHour);
+                                dbSeminar.roundTime[dbSeminar.currentPeriod - 1 ].startTime = new Date();
+
+                                if(dbSeminar.roundTime[dbSeminar.currentPeriod - 1].roundTimeHour !== 0){
+                                    dbSeminar.roundTime[dbSeminar.currentPeriod - 1].endTime = new Date( new Date().getTime() + oneHour * dbSeminar.roundTime[dbSeminar.currentPeriod - 1].roundTimeHour);
+                                }
+
                             }
-
 
                             return dbSeminar.saveQ().then(function(result){
                                 var numAffected = result[1];

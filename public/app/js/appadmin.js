@@ -189,6 +189,7 @@
                 name: '',
                 description: '',
                 location: '',
+                memberNumberBase: 0,
                 matchDate: '',
                 activated : '',
                 pictures : {},
@@ -737,6 +738,7 @@
             $scope.data.newCampaign.location = campaign.location;
             $scope.data.newCampaign.matchDate = campaign.matchDate;
             $scope.data.newCampaign.activated = campaign.activated;
+            $scope.data.newCampaign.memberNumberBase = campaign.memberNumberBase;
 
 
             $scope.data.newCampaign.firstCoverBackgroundColor = campaign.pictures.firstCoverBackgroundColor || '';
@@ -767,6 +769,7 @@
                     location: $scope.data.newCampaign.location,
                     matchDate: $scope.data.newCampaign.matchDate,
                     activated : $scope.data.newCampaign.activated,
+                    memberNumberBase : $scope.data.newCampaign.memberNumberBase,
                     firstCoverBackgroundColor : $scope.data.newCampaign.firstCoverBackgroundColor,
                     processBackgroundColor: $scope.data.newCampaign.processBackgroundColor
                 };
