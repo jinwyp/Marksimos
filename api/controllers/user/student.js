@@ -14,7 +14,7 @@ var Q = require('q');
 //var ObjectId = require('mongoose').Types.ObjectId;
 
 
-var pickedUpdatedKeys = ['gender', 'birthday', 'firstName', 'lastName', 'idcardNumber',  'mobilePhone', 'qq',
+var pickedUpdatedKeys = ['gender', 'birthday', 'firstName', 'lastName', 'idcardNumber',  'mobilePhone', 'qq', 'gameMarksimosPosition',
     'majorsDegree', 'dateOfEnterCollege', 'dateOfGraduation', 'organizationOrUniversity', 'occupation', 'currentLocation',
     'country', 'state', 'city', 'district', 'street', 'websiteLanguage', 'workExperiences', 'LanguageSkills', 'eductionBackgrounds', 'societyExperiences'];
 
@@ -45,7 +45,7 @@ exports.updateStudentB2CInfo = function(req, res, next){
     })
     .then(function(savedDoc) {
         if(savedDoc[1] === 0 ){
-            throw new MKError('Cancel promise chains. Because Update User failed. no record is updated. !', MKError.errorCode.common.notUpdate);
+            //throw new MKError('Cancel promise chains. Because Update User failed. no record is updated. !', MKError.errorCode.common.notUpdate);
         }
 
         if(savedDoc[1] > 1 ){

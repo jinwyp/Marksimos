@@ -26,7 +26,7 @@ exports.campaignListPage = function(req, res, next){
             campaign.teamList.forEach(function(team){
                 totalMembers = totalMembers + team.memberList.length + 1;
             });
-            campaign.totalMembers = totalMembers;
+            campaign.totalMembers = totalMembers + campaign.memberNumberBase;
         });
 
         return res.render('b2c/campaign/campaignlist.ejs',{
@@ -58,7 +58,7 @@ exports.campaignSingleInfoPage = function(req, res, next){
         resultCampaign.teamList.forEach(function(team){
             totalMembers = totalMembers + team.memberList.length + 1;
         });
-        resultCampaign.totalMembers = totalMembers;
+        resultCampaign.totalMembers = totalMembers  + resultCampaign.memberNumberBase;
 
         return res.render('b2c/campaign/campaign.ejs',{
             title : 'HCD E4E Campaign | HCD Learning',
@@ -90,7 +90,7 @@ exports.campaignSingleInfo = function(req, res, next){
             totalMembers = totalMembers + team.memberList.length + 1;
         });
 
-        resultCampaign.totalMembers = totalMembers;
+        resultCampaign.totalMembers = totalMembers + resultCampaign.memberNumberBase;;
 
         return res.status(200).send(resultCampaign);
 
@@ -121,7 +121,8 @@ exports.addCampaign = function(req, res, next){
         matchDate   : req.body.matchDate || '',
         creator     : req.user._id,
         pictures     : {firstCoverBackgroundColor:'#FFFFFF', processBackgroundColor : '#FFFFFF'},
-        activated   : req.body.activated
+        activated   : req.body.activated,
+        memberNumberBase   : req.body.memberNumberBase
 
     });
 
@@ -156,6 +157,7 @@ exports.updateCampaign = function(req, res, next){
             location    : req.body.location,
             matchDate   : req.body.matchDate,
             activated   : req.body.activated,
+            memberNumberBase   : req.body.memberNumberBase,
             "pictures.firstCoverBackgroundColor": req.body.firstCoverBackgroundColor,
             "pictures.processBackgroundColor": req.body.processBackgroundColor
         }}
@@ -446,11 +448,16 @@ exports.addTeamToCampaign = function(req, res, next){
             throw new Error('Cancel promise chains. Because team name can not empty !');
         }
 
+        if(resultTeam.memberList.length <= 4){
+            throw new Error('Cancel promise chains. Because team at least need 5 member !');
+        }
+
         resultTeam.memberList.forEach(function(user){
             if(typeof user.firstName === 'undefined' || typeof user.currentLocation === 'undefined' || user.firstName == '' || user.currentLocation == ''){
                 throw new Error('Cancel promise chains. Because team member name and currentLocation can not empty !');
             }
         });
+
 
         dataTeam = resultTeam;
         return campaignModel.findByIdQ(req.body.campaignId);
@@ -476,7 +483,11 @@ exports.addTeamToCampaign = function(req, res, next){
         if(savedDoc[1] !== 1){
             throw new Error('Cancel promise chains. Because Update campaign failed. More or less than 1 record is updated. it should be only one !');
         }
-        return res.status(200).send({message: "Assign team to campaign success."})
+
+        dataTeam.joinCampaignTime = new Date();
+        dataTeam.save();
+
+        return res.status(200).send({message: "Assign team to campaign success."});
 
     }).fail(function(err){
         next (err);

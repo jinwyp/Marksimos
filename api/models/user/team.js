@@ -25,8 +25,8 @@ var teamSchema = new Schema({
 
     creator: { type: schemaObjectId, ref: 'User' },
 
-    memberList: [{ type: schemaObjectId, ref: 'User' }]
-
+    memberList: [{ type: schemaObjectId, ref: 'User' }],
+    joinCampaignTime : { type : Date}
 });
 
 /**
