@@ -26,7 +26,7 @@ exports.campaignListPage = function(req, res, next){
             campaign.teamList.forEach(function(team){
                 totalMembers = totalMembers + team.memberList.length + 1;
             });
-            campaign.totalMembers = totalMembers;
+            campaign.totalMembers = totalMembers + campaign.memberNumberBase;
         });
 
         return res.render('b2c/campaign/campaignlist.ejs',{
@@ -58,7 +58,7 @@ exports.campaignSingleInfoPage = function(req, res, next){
         resultCampaign.teamList.forEach(function(team){
             totalMembers = totalMembers + team.memberList.length + 1;
         });
-        resultCampaign.totalMembers = totalMembers;
+        resultCampaign.totalMembers = totalMembers  + resultCampaign.memberNumberBase;
 
         return res.render('b2c/campaign/campaign.ejs',{
             title : 'HCD E4E Campaign | HCD Learning',
@@ -90,7 +90,7 @@ exports.campaignSingleInfo = function(req, res, next){
             totalMembers = totalMembers + team.memberList.length + 1;
         });
 
-        resultCampaign.totalMembers = totalMembers;
+        resultCampaign.totalMembers = totalMembers + resultCampaign.memberNumberBase;;
 
         return res.status(200).send(resultCampaign);
 
@@ -157,6 +157,7 @@ exports.updateCampaign = function(req, res, next){
             location    : req.body.location,
             matchDate   : req.body.matchDate,
             activated   : req.body.activated,
+            memberNumberBase   : req.body.memberNumberBase,
             "pictures.firstCoverBackgroundColor": req.body.firstCoverBackgroundColor,
             "pictures.processBackgroundColor": req.body.processBackgroundColor
         }}

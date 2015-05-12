@@ -702,11 +702,11 @@ exports.sendResetPasswordEmail = function(req, res, next){
 
         var mailContent = emailModel.resetPassword();
 
-        mailContent.substitution_vars.to.push(resultUser.email);
-        mailContent.substitution_vars.sub['%username%'].push(resultUser.username);
-        mailContent.substitution_vars.sub['%useremail%'].push(resultUser.email);
-        mailContent.substitution_vars.sub['%token%'].push(resultUser.resetPasswordToken);
-        mailContent.substitution_vars.sub['%verifycode%'].push(resultUser.resetPasswordVerifyCode);
+        mailContent.substitution_vars.to.push(resultUser[0].email);
+        mailContent.substitution_vars.sub['%username%'].push(resultUser[0].username);
+        mailContent.substitution_vars.sub['%useremail%'].push(resultUser[0].email);
+        mailContent.substitution_vars.sub['%token%'].push(resultUser[0].resetPasswordToken);
+        mailContent.substitution_vars.sub['%verifycode%'].push(resultUser[0].resetPasswordVerifyCode);
 
         //mailContent.to = resultUser.email;
         //mailContent.html = mailContent.html1 + resultUser.username + mailContent.html2 + resultUser.email + mailContent.html3 + resultUser.emailActivateToken + mailContent.html4 + resultUser.email + mailContent.html5 + resultUser.emailActivateToken + mailContent.htmlend ;
