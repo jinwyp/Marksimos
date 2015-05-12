@@ -225,9 +225,8 @@ gulp.task('nodemonjinlocal', function () {
 
 gulp.task('nodemonyuekecheng', function () {
     nodemon({
-        script: 'commentCcapHook.js',
-        ignore: paths.commentCcapFiles,
-        env: { 'NODE_ENV': 'yuekecheng', PORT: 3000 }
+        script: 'app.js',
+        env: { 'NODE_ENV': 'yuekecheng'}
     });
 //        .on('restart', 'default')
 });
