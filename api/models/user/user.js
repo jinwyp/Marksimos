@@ -127,7 +127,7 @@ var userSchema = new Schema({
 
     societyExperiences: [{
         societyName: String,
-        position: String,
+        position: Number,
         sizeOfSociety: Number,
         startDate: Date,
         endDate: Date,
