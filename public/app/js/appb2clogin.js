@@ -74,25 +74,23 @@
         /**********  Function Declarations  **********/
 
         function getCaptcha(form) {
-            vm.css.mobileVerifyCodeResend = false;
+            vm.css.mobileVerifyCodeResend = true;
+            vm.css.mobileVerifyCodeTimeCounter = 60;
+            var timer = $interval(function() {
+                if(vm.css.mobileVerifyCodeTimeCounter > 0){
+                    vm.css.mobileVerifyCodeTimeCounter = vm.css.mobileVerifyCodeTimeCounter - 1;
+                }else {
+                    $interval.cancel(timer);
+                }
+            }, 1000);
+
             Student.getCaptcha(vm.newUser.mobilePhone).then(function(){
-
-                vm.css.mobileVerifyCodeResend = true;
-                vm.css.mobileVerifyCodeTimeCounter = 60;
-
-                var timer = $interval(function() {
-                    if(vm.css.mobileVerifyCodeTimeCounter > 0){
-                        vm.css.mobileVerifyCodeTimeCounter = vm.css.mobileVerifyCodeTimeCounter - 1;
-                    }else {
-                        $interval.cancel(timer);
-                    }
-                }, 1000);
 
             }).catch(function(err){
                 form.mobilePhone.$setDirty();
                 form.mobilePhone.$valid = false;
                 form.mobilePhone.$invalid = true;
-
+                vm.css.mobileVerifyCodeTimeCounter = 0;
             });
         }
 
