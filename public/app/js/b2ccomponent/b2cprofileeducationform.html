@@ -65,6 +65,19 @@
                 <span class="err-msg control-label form-control-static col-xs-4" ng-if="schoolForm['graduationDate' +  $index].$dirty && schoolForm['graduationDate' +  $index].$error.required">{{'ProfilePageRequiredError' | translate}}</span>
             </div>
 
+            <div class="form-group radio gender">
+                <label class="col-md-3 control-label  text-right" for="abroad{{$index}}">{{'ProfilePageSchoolInfoAbroad' | translate}} :</label>
+                <div class="col-xs-5" ng-if="!css.formEditing">
+                    <p class="form-control-static" ng-if="education.abroadStatus === true">{{'ProfilePageBasicInfoGenderMale' | translate}}&nbsp;&nbsp;</p>
+                    <p class="form-control-static" ng-if="education.abroadStatus === false">{{'ProfilePageBasicInfoGenderFemale' | translate}}</p>
+                </div>
+                <div class="col-xs-5 gender-radio" ng-if="css.formEditing">
+                    <label  class="control-label control-inline"><input required type="radio" ng-model="formData.gender" name="gender" value="1"/>{{'ProfilePageBasicInfoGenderMale' | translate}}&nbsp;&nbsp;</label>
+                    <label class="female control-label control-inline"><input required type="radio" ng-model="formData.gender" name="gender" value="2"/>{{'ProfilePageBasicInfoGenderFemale' | translate}}</label>
+                </div>
+                <span class="err-msg control-label form-control-static col-xs-4" ng-if="basicInfoForm.gender.$dirty&&basicInfoForm.gender.$error.required">{{'ProfilePageRequiredError' | translate}}</span>
+            </div>
+
             <div class="form-group">
                 <label for="abroad{{$index}}" class="control-label col-md-3 text-right">{{'ProfilePageSchoolInfoAbroad' | translate}} :</label>
                 <div class="col-xs-9" ng-if="!css.formEditing">

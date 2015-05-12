@@ -122,6 +122,8 @@
                     }
                 });
 
+                preProcess();
+
                 function hideMutiSelect(){
                     scope.css.currentJobIndustry = -1;
                     scope.css.currentMajor = -1;
@@ -159,6 +161,7 @@
                         scope.css.errorFields = {};
 
                         scope.update({data: scope.formData}).then(function() {
+                            preProcess(); // todo, place to ?
                             cancelEditProfile();
                         }).catch(function(message) {
                             if (angular.isArray(message)) {
