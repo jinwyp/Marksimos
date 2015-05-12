@@ -45,7 +45,7 @@ exports.updateStudentB2CInfo = function(req, res, next){
     })
     .then(function(savedDoc) {
         if(savedDoc[1] === 0 ){
-            throw new MKError('Cancel promise chains. Because Update User failed. no record is updated. !', MKError.errorCode.common.notUpdate);
+            //throw new MKError('Cancel promise chains. Because Update User failed. no record is updated. !', MKError.errorCode.common.notUpdate);
         }
 
         if(savedDoc[1] > 1 ){
