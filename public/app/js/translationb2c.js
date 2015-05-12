@@ -260,6 +260,7 @@
             ProfilePageBasicInfoBirthday             : 'Date of Birth',
             ProfilePageCurrentLocation               : 'Current Location',
             ProfilePageEmail                         : 'Email',
+
             ProfilePageSchoolInfoMajor: 'Major',
             ProfilePageSchoolInfoGraduationDate: 'Graduation Date',
             ProfilePageSchoolInfoAbroad: 'Did you go abroad for exchange?',
@@ -267,6 +268,8 @@
             ProfilePageSchoolInfoAchievements: 'Achievements',
             ProfilePageTabLanguageSkills: 'Language Skills',
             ProfilePageEducation: 'Education',
+            ProfilePageLabelYes: 'Yes',
+            ProfilePageLabelNo: 'No',
             ProfilePageAddEducation: 'Add Education',
             ProfilePageAddLanguage: 'Add Language',
 
@@ -784,6 +787,8 @@
             ProfilePageSchoolInfoAchievements: '成就',
             ProfilePageTabLanguageSkills: '外语技能',
             ProfilePageEducation:'教育经历',
+            ProfilePageLabelYes: '是',
+            ProfilePageLabelNo: '否',
             ProfilePageAddEducation:'添加教育经历',
             ProfilePageAddLanguage: '添加语言',
 
