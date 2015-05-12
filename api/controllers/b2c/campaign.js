@@ -457,7 +457,6 @@ exports.addTeamToCampaign = function(req, res, next){
         });
 
 
-
         dataTeam = resultTeam;
         return campaignModel.findByIdQ(req.body.campaignId);
 
@@ -482,7 +481,11 @@ exports.addTeamToCampaign = function(req, res, next){
         if(savedDoc[1] !== 1){
             throw new Error('Cancel promise chains. Because Update campaign failed. More or less than 1 record is updated. it should be only one !');
         }
-        return res.status(200).send({message: "Assign team to campaign success."})
+
+        dataTeam.joinCampaignTime = new Date();
+        dataTeam.save();
+
+        return res.status(200).send({message: "Assign team to campaign success."});
 
     }).fail(function(err){
         next (err);
