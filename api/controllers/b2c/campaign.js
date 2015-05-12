@@ -157,6 +157,7 @@ exports.updateCampaign = function(req, res, next){
             location    : req.body.location,
             matchDate   : req.body.matchDate,
             activated   : req.body.activated,
+            memberNumberBase   : req.body.memberNumberBase,
             "pictures.firstCoverBackgroundColor": req.body.firstCoverBackgroundColor,
             "pictures.processBackgroundColor": req.body.processBackgroundColor
         }}
