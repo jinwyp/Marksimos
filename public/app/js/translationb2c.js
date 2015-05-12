@@ -302,12 +302,12 @@
             ProfilePageCancelEnter: 'Cancel',
             ProfilePageGoToCampaigns: 'I want to join!',
             ProfilePageJoinedNoCampaign: 'You have not joined any campaigns yet.',
-            ProfilePageJoinedTeams: 'Teams you have already joined',
+            ProfilePageJoinedTeams: 'Joined teams',
             ProfilePageJoinedNoTeam: 'You have not joined any other teams yet.',
             ProfilePageYourTeam: 'Your team',
             ProfilePageTeamName: 'Team name',
             ProfilePageTeamCreator: 'Team creator',
-            ProfilePageAlreadyJoinedCampaignLabel: '/Already joined the campaign: ',
+            ProfilePageAlreadyJoinedCampaignLabel: '/ Joined campaign: ',
 
             ProfileContactInfoMobilePhone            : 'Mobile Phone',
             ProfileContactInfoMobilePhoneVerify      : 'Verify',
@@ -824,7 +824,7 @@
             ProfilePageYourTeam: '你的团队',
             ProfilePageTeamName: '团队名称',
             ProfilePageTeamCreator: '团队创建者',
-            ProfilePageAlreadyJoinedCampaignLabel: '/已经加入活动：',
+            ProfilePageAlreadyJoinedCampaignLabel: '/ 已加入活动：',
 
 
 
