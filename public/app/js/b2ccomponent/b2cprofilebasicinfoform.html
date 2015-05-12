@@ -34,7 +34,7 @@
     <div class="form-group" ng-class="{'has-error': basicInfoForm.birthday.$dirty&&basicInfoForm.birthday.$invalid, 'has-success':basicInfoForm.birthday.$dirty&&basicInfoForm.birthday.$valid}">
         <label for="birthday" class="control-label col-md-3 text-right">{{'ProfilePageBasicInfoBirthday' | translate}} :</label>
         <div class="col-xs-9" ng-if="!css.formEditing">
-            <p class="form-control-static">{{currentUser.birthday|date:"dd-MMM-yyyy"}}</p>
+            <p class="form-control-static">{{currentUser.birthday|date:"yyyy-MM-dd"}}</p>
         </div>
         <div class="col-md-5" ng-if="css.formEditing">
             <input required type="text" bs-datepicker data-date-format="yyyy-MM-dd" data-min-date="02/10/70" data-max-date="today" data-autoclose="1" class="form-control" ng-model="formData.birthday" name="birthday" id="birthday">
