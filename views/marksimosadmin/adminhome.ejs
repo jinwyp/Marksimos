@@ -382,7 +382,7 @@
                                     <tbody>
                                     <tr>
                                         <!-- <th>ID</th> -->
-                                        <th>UserName</th>
+                                        <th>UserName / Registration Time</th>
                                         <th>First/Last Name / Gender</th>
                                         <th>Email/Activated</th>
                                         <th>Status</th>
@@ -394,7 +394,7 @@
                                     </tr>
                                     <tr ng-repeat="user in data.students" >
                                         <!-- <td>{{user._id}}</td> -->
-                                        <td>{{user.username}}</td>
+                                        <td>{{user.username}} / {{user.createdAt | date:'yyyy-MM-dd HH:mm:ss'}}</td>
                                         <td>{{user.firstName}} {{user.lastName}} {{user.gender}} </td>
                                         <td>{{user.email}} / {{user.emailActivated}}</td>
                                         <td>{{user.activated}}</td>
@@ -734,7 +734,7 @@
                                         <th style="width:100px">Action</th>
                                         <th>Name</th>
                                         <th>Description</th>
-                                        <th>Status</th>
+                                        <th>Status / ShowMembers</th>
                                         <th>Location</th>
                                         <th>Match Date</th>
                                         <th style="width:300px">Seminar List</th>
@@ -747,7 +747,7 @@
                                         </td>
                                         <td data-highlight-key="data.searchCampaign.keyword">{{campaign.name}}</td>
                                         <td data-highlight-key="data.searchCampaign.keyword">{{campaign.description}}</td>
-                                        <td >{{campaign.activated}}</td>
+                                        <td >{{campaign.activated}} / {{campaign.memberNumberBase}}</td>
                                         <td data-highlight-key="data.searchCampaign.keyword">{{campaign.location}}</td>
                                         <td >{{campaign.matchDate}}</td>
                                         <td >
@@ -770,7 +770,7 @@
                                         <td>
                                             <div>
                                                 <div ng-repeat="team in campaign.teamList">
-                                                    <p>Team name : {{team.name }} / Creator : {{team.creator.username }} ( {{team.creator.email}} ) / {{team.joinCampaignTime}}
+                                                    <p>Team name : {{team.name }} / Creator : {{team.creator.username }} ( {{team.creator.email}} ) / {{team.joinCampaignTime | date:'yyyy-MM-dd HH:mm:ss'}}
                                                         <a href="" ng-click="removeTeamFromCampaign(campaign._id, team._id)">remove</a>
                                                     </p>
                                                 </div>
@@ -821,6 +821,7 @@
                                     <text-form-input type="text" name="newCampaignMatchDate" label="Match Date :" placeholder="Match Start Date" labelclass="col-sm-2" inputclass="col-sm-4" data="data.newCampaign.matchDate" required="true" requirederrorinfo="Date is required"></text-form-input>
 
                                     <text-form-input type="radio" name="newCampaignActivated" label="Status :" labelclass="col-sm-2" inputclass="col-sm-4" data="data.newCampaign.activated" radiooptions="data.newCampaign.campaignActivatedRadioOptions" required="true"></text-form-input>
+                                    <text-form-input type="number" name="newCampaignActivated" label="Member Number :" labelclass="col-sm-2" inputclass="col-sm-4" data="data.newCampaign.memberNumberBase" required="true"></text-form-input>
 
 
                                     <div class="form-group has-feedback" ng-if="css.editMenuStatus">

@@ -121,7 +121,8 @@ exports.addCampaign = function(req, res, next){
         matchDate   : req.body.matchDate || '',
         creator     : req.user._id,
         pictures     : {firstCoverBackgroundColor:'#FFFFFF', processBackgroundColor : '#FFFFFF'},
-        activated   : req.body.activated
+        activated   : req.body.activated,
+        memberNumberBase   : req.body.memberNumberBase
 
     });
 
