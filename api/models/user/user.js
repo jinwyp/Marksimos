@@ -124,7 +124,7 @@ var userSchema = new Schema({
         entryDate: Date,
         graduationDate: Date,
         abroad: String,
-        abroadStatus: { type: Boolean, default: false },
+        abroadStatus: { type: Number, default: 0 },
         achievements: [{
             description: String
         }]

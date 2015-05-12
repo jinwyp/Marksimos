@@ -770,7 +770,7 @@
                                         <td>
                                             <div>
                                                 <div ng-repeat="team in campaign.teamList">
-                                                    <p>Team name : {{team.name }} / Creator : {{team.creator.username }} ( {{team.creator.email}} )
+                                                    <p>Team name : {{team.name }} / Creator : {{team.creator.username }} ( {{team.creator.email}} ) / {{team.joinCampaignTime}}
                                                         <a href="" ng-click="removeTeamFromCampaign(campaign._id, team._id)">remove</a>
                                                     </p>
                                                 </div>
