@@ -92,11 +92,11 @@
                 form.mobilePhone.$invalid = true;
                 vm.css.mobileVerifyCodeTimeCounter = 0;
             });
-        };
+        }
 
         function verifyPhone(mobilePhone) {
             return Student.verifyPhone(mobilePhone);
-        };
+        }
 
         function userLogin(form){
             if(form.$valid){

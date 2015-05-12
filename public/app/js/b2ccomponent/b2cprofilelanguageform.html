@@ -1,6 +1,6 @@
 <div class="profile-detail-title">{{'ProfilePageTabLanguageSkills' | translate}}</div>
 <form novalidate name="languageForm" class="form-horizontal">
-    <ul>
+    <ul class="no-margin-bottom">
         <li class="form-group added-language" ng-repeat="skill in currentUser.LanguageSkills">
             <span class="col-xs-4">{{skill.language | language | translate}} ({{skill.level | proficiency | translate}})</span>
             <span ng-click="clickDeleteLanguage($index)" class="col-xs-1 form-control-static remove-button glyphicon glyphicon-minus button"></span>

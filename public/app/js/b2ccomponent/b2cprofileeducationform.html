@@ -105,8 +105,7 @@
             </div>
         </div>
     </div>
-
-    <div class="row" ng-if="css.formEditing">
+    <div class="row" ng-if="css.formEditing && !!formData.eductionBackgrounds.length">
         <!--for edit education-->
         <div class="col-md-6 col-md-offset-3 profile-button-container">
             <button ng-click="clickUpdateUserInfo(schoolForm)" type="submit">{{'ProfilePageSaveButton' | translate}}</button>
