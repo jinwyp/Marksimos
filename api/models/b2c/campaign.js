@@ -42,6 +42,8 @@ var campaignSchema = new Schema({
         processBackgroundColor : {type: String, default: '#FFFFFF'}
     },
 
+    memberNumberBase: { type: Number, default: 0 },
+
     activated: { type: Boolean, default: false }
 
 });

@@ -766,7 +766,6 @@
                                                     <p>Please Input Seminar ID !</p>
                                                 </div>
                                             </div>
-
                                         </td>
                                         <td>
                                             <div>
@@ -787,15 +786,12 @@
                                                 </div>
                                             </div>
                                         </td>
-
                                         <td>
-                                            <div>
-                                                <div ng-repeat="team in campaign.teamList">
-                                                    <p>Team Creator : {{team.creator.username }} ( {{team.creator.email}} )
-                                                        <br/>
-                                                        Team Members : <span ng-repeat="student in team.memberList">{{student.username}} ( {{student.email}} ), </span>
-                                                    </p>
-                                                </div>
+                                            <div ng-repeat="team in campaign.teamList">
+                                                <p>Team Creator : {{team.creator.username }} ( {{team.creator.email}} )
+                                                    <br/>
+                                                    Team Members : <span ng-repeat="student in team.memberList">{{student.username}} ( {{student.email}} ), </span>
+                                                </p>
                                             </div>
                                         </td>
                                     </tr>
