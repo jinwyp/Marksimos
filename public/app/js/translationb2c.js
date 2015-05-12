@@ -884,7 +884,7 @@
             CampaignPageCancelEnterSuccessTip2              : '',
             //Labels for Enter Failed popup window
             CampaignPageEnterFailedTip1               : '温馨提示',
-            CampaignPageEnterFailedTip2               : '请完善所有组员的基本信息和教育背景',
+            CampaignPageEnterFailedTip2               : '请完善不少于5个组员的基本信息和教育背景',
             CampaignPageEnterFailedCompleteInfoButton : '完善信息',
 
             //Labels for Schedules
