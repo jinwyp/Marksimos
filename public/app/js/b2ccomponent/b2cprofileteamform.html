@@ -58,7 +58,7 @@
 
     <div class="form-group none-bottom" ng-repeat="team in currentUser.belongToTeam">
         <label class="control-label col-xs-2 text-right team-label">{{'ProfilePageTeamName' | translate}} :</label>
-        <div class="col-xs-6 form-control-static">{{team.name}}{{(team.campaign.name ? 'ProfilePageAlreadyJoinedCampaignLabel' : '') | translate}}<a href="/e4e/campaign/{{team.campaign._id}}">{{team.campaign.name}}</a></div>
+        <div class="col-xs-6 form-control-static">{{team.name}} {{(team.campaign.name ? 'ProfilePageAlreadyJoinedCampaignLabel' : '') | translate}}<a href="/e4e/campaign/{{team.campaign._id}}">{{team.campaign.name}}</a></div>
         <label class="control-label col-xs-2 text-right team-label">{{'ProfilePageTeamCreator' | translate}} :</label>
         <div class="col-xs-2 form-control-static">{{team.creator.username}}</div>
     </div>

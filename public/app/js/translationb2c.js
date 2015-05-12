@@ -299,7 +299,7 @@
             ProfilePageYourTeam: 'Your team',
             ProfilePageTeamName: 'Team name',
             ProfilePageTeamCreator: 'Team creator',
-            ProfilePageAlreadyJoinedCampaignLabel: '/Already joined the campaign: ',
+            ProfilePageAlreadyJoinedCampaignLabel: '/ Already joined the campaign: ',
 
             ProfileContactInfoMobilePhone            : 'Mobile Phone',
             ProfileContactInfoMobilePhoneVerify      : 'Verify',
@@ -805,7 +805,7 @@
             ProfilePageYourTeam: '你的团队',
             ProfilePageTeamName: '团队名称',
             ProfilePageTeamCreator: '团队创建者',
-            ProfilePageAlreadyJoinedCampaignLabel: '/已经加入活动：',
+            ProfilePageAlreadyJoinedCampaignLabel: '/ 已经加入活动：',
 
 
 
