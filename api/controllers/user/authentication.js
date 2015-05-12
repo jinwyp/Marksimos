@@ -824,10 +824,7 @@ exports.forgotPasswordStep2 = function(req, res, next){
 
 exports.generateCaptcha = function(req, res, next) {
 
-    Captcha.findOneAndRemoveQ({_id: req.cookies['x-captcha-token']})
-    .then(function(cpatcha) {})
-    .fail(next)
-    .done();
+    Captcha.findOneAndRemove({_id: req.cookies['x-captcha-token']})
 
     var captcha = String(Math.floor(Math.random() * (999999 - 100000) + 100000 ));
 //    var verifyCodeExpires = new Date(new Date().getTime() + 1000 * 60 * 60); // one hour
