@@ -71,6 +71,10 @@ var userSchema = new Schema({
     currentLocation: String,
 
 
+    gameMarksimosPosition: String,
+
+
+
     //user address for facilitator
     country: String,
     state: String,
@@ -120,6 +124,7 @@ var userSchema = new Schema({
         entryDate: Date,
         graduationDate: Date,
         abroad: String,
+        abroadStatus: { type: Boolean, default: false },
         achievements: [{
             description: String
         }]
@@ -127,7 +132,7 @@ var userSchema = new Schema({
 
     societyExperiences: [{
         societyName: String,
-        position: String,
+        position: Number,
         sizeOfSociety: Number,
         startDate: Date,
         endDate: Date,

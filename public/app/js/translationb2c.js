@@ -107,6 +107,14 @@
             educationMajorAgriculture01 : 'Agriculture',
 
 
+            // Society Experiences Position
+            societyExperiencesPositionChairman     : 'Chairman',
+            societyExperiencesPositionViceChairman : 'Vice Chairman',
+            societyExperiencesPositionMinister     : 'Minister',
+            societyExperiencesPositionViceMinister : 'Vice Minister',
+            societyExperiencesPositionTeamLeader   : 'Team Leader',
+            societyExperiencesPositionMember       : 'Member',
+
             // Profile Work Experience
             jobTypeFullTime      : 'Full-time',
             jobTypePartTime      : 'Par-time ',
@@ -613,6 +621,17 @@
             educationMajorMedicine02    : '心理学类',
 
             educationMajorAgriculture01 : '农业类',
+
+
+
+            // Society Experiences Position
+            societyExperiencesPositionChairman     : '主席',
+            societyExperiencesPositionViceChairman : '副主席',
+            societyExperiencesPositionMinister     : '部长',
+            societyExperiencesPositionViceMinister : '副部长',
+            societyExperiencesPositionTeamLeader   : '组长',
+            societyExperiencesPositionMember       : '成员',
+
 
 
             // Profile Work Experience

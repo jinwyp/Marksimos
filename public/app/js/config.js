@@ -244,6 +244,15 @@
 
         ],
 
+        societyExperiencesPosition : [
+            { id: 10, name : 'societyExperiencesPositionChairman'},
+            { id: 20, name : 'societyExperiencesPositionViceChairman'},
+            { id: 30, name : 'societyExperiencesPositionMinister'},
+            { id: 40, name : 'societyExperiencesPositionViceMinister'},
+            { id: 50, name : 'societyExperiencesPositionTeamLeader'},
+            { id: 60, name : 'societyExperiencesPositionMember'}
+        ],
+
 
         jobType : [
             { id: 10, name : 'jobTypeFullTime'},

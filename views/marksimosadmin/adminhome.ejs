@@ -739,6 +739,7 @@
                                         <th>Match Date</th>
                                         <th style="width:300px">Seminar List</th>
                                         <th>Team List</th>
+                                        <th>Member List</th>
                                     </tr>
                                     <tr ng-repeat="campaign in data.campaigns" >
                                         <td >
@@ -765,14 +766,12 @@
                                                     <p>Please Input Seminar ID !</p>
                                                 </div>
                                             </div>
-
                                         </td>
                                         <td>
                                             <div>
                                                 <div ng-repeat="team in campaign.teamList">
-                                                    <p>Team name : {{team.name }} / Creator : {{team.creator.username }} ( {{team.creator.email}} ) <a href="" ng-click="removeTeamFromCampaign(campaign._id, team._id)">remove</a>
-                                                        <br/>
-                                                        Team Members : <span ng-repeat="student in team.memberList">{{student.username}} ( {{student.email}} ), </span>
+                                                    <p>Team name : {{team.name }} / Creator : {{team.creator.username }} ( {{team.creator.email}} )
+                                                        <a href="" ng-click="removeTeamFromCampaign(campaign._id, team._id)">remove</a>
                                                     </p>
                                                 </div>
 
@@ -785,6 +784,14 @@
                                                 <div class="callout callout-danger" ng-show="campaign._id == css.campaignIdAddTeam">
                                                     <p>Please Input Team Creator Username !</p>
                                                 </div>
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div ng-repeat="team in campaign.teamList">
+                                                <p>Team Creator : {{team.creator.username }} ( {{team.creator.email}} )
+                                                    <br/>
+                                                    Team Members : <span ng-repeat="student in team.memberList">{{student.username}} ( {{student.email}} ), </span>
+                                                </p>
                                             </div>
                                         </td>
                                     </tr>
