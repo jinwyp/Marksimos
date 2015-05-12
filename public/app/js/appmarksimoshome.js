@@ -542,7 +542,7 @@
                         $scope.data.currentTime.time = data.currentMarksimosSeminar.roundTime[$scope.data.currentSeminar.currentPeriod - 1];
                         $scope.data.currentCompanyDecisionLock = $scope.data.currentTime.time.lockDecisionTime[$scope.data.currentSeminar.currentCompany.companyId - 1];
                     }
-                    
+
                 });
             },
             loadingTableData : function(){
