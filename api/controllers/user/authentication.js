@@ -342,14 +342,35 @@ exports.getUserInfo = function (req, res, next){
     }
 
     userResult.roleName = req.user.roleName;
+    var teamIdList = [];
 
     teamModel.findOne({ creator: userResult._id }).populate('memberList', userModel.selectFields()).execQ().then(function(resultTeam){
         userResult.team = resultTeam || [];
 
-        return teamModel.find({ memberList: { $elemMatch: {$in:[userResult._id]} } }).populate('memberList', userModel.selectFields()).populate('creator', userModel.selectFields()).execQ();
+        return teamModel.find({ memberList: { $elemMatch: {$in:[userResult._id]} } }).populate('memberList', userModel.selectFields()).populate('creator', userModel.selectFields()).lean().execQ();
 
     }).then(function(resultTeam2){
+        //用户已被加入哪些团队
+
         userResult.belongToTeam = resultTeam2 || [];
+
+        teamIdList = userResult.belongToTeam.map(function(team){
+            return team._id.toString();
+        });
+
+        return campaignModel.find({teamList: {$elemMatch: {$in:teamIdList} }}).execQ();
+
+    }).then(function(resultCampaign){
+
+        resultCampaign.forEach(function(campaign, cindex){
+
+            userResult.belongToTeam.forEach(function(team, tindex){
+                if(campaign.teamList.indexOf(team._id) > -1){
+                    team.campaign = campaign || null;
+                }
+            });
+        });
+
 
         var teamid;
         if(typeof userResult.team._id === 'undefined'){
@@ -360,9 +381,9 @@ exports.getUserInfo = function (req, res, next){
 
         return campaignModel.find({teamList: {$elemMatch: {$in:[teamid]} }}).execQ();
 
-
-    }).then(function(resultCampaign){
-        userResult.joinedCampaign = resultCampaign || [];
+    }).then(function(resultCampaign2){
+        //该用户所创建的组已被加入哪些活动Campaign
+        userResult.joinedCampaign = resultCampaign2 || [];
 
         return res.status(200).send(userResult);
 
@@ -438,6 +459,7 @@ exports.registerB2CStudent = function(req, res, next){
                 MKError.errorCode.register.captcha);
         }
         newUser.phoneVerified = true;
+        newUser.activated = true;
         return userModel.register(newUser);
     })
     .then(function(resultUser) {
