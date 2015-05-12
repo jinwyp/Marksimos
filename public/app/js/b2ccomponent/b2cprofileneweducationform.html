@@ -33,7 +33,7 @@
             <div class="row form-group" ng-class="{'has-error': newSchoolForm.entryDate.$dirty && newSchoolForm.entryDate.$invalid, 'has-success':newSchoolForm.entryDate.$dirty && newSchoolForm.entryDate.$valid}">
                 <label for="entryDate" class="control-label col-md-3 text-right">{{'ProfilePageSchoolInfoEnterDate' | translate}} :</label>
                 <div class="col-xs-5">
-                    <input required type="text" data-date-format="yyyy-MM-dd" data-min-date="02/10/70" data-max-date="{{formData.graduationDate}}" data-autoclose="1" ng-model="formData.entryDate" id="entryDate" name="entryDate" class="form-control" bs-datepicker>
+                    <input required type="text" data-date-format="yyyy-MM-dd" data-min-date="02/10/70" data-max-date="today" data-autoclose="1" ng-model="formData.entryDate" id="entryDate" name="entryDate" class="form-control" bs-datepicker>
                 </div>
                 <span class="err-msg control-label form-control-static col-xs-4" ng-if="newSchoolForm.entryDate.$dirty && newSchoolForm.entryDate.$error.date">{{'ProfilePageDateFormatError' | translate}}</span>
                 <span class="err-msg control-label form-control-static col-xs-4" ng-if="newSchoolForm.entryDate.$dirty && newSchoolForm.entryDate.$error.required">{{'ProfilePageRequiredError' | translate}}</span>
@@ -48,15 +48,24 @@
                 <span class="err-msg control-label form-control-static col-xs-4" ng-if="newSchoolForm.graduationDate.$dirty && newSchoolForm.graduationDate.$error.required">{{'ProfilePageRequiredError' | translate}}</span>
             </div>
 
-            <div class="form-group">
-                <label for="abroad" class="control-label col-md-3 text-right">{{'ProfilePageSchoolInfoAbroad' | translate}} :</label>
+            <div class="form-group radio gender">
+                <label class="col-md-3 control-label  text-right" for="abroadStatus">{{'ProfilePageSchoolInfoAbroad' | translate}} :</label>
+                <div class="col-xs-5 gender-radio">
+                    <label  class="control-label control-inline"><input type="radio" ng-model="formData.abroadStatus" name="abroadStatus" value="1"/>{{'ProfilePageLabelYes' | translate}}&nbsp;&nbsp;</label>
+                    <label class="female control-label control-inline"><input type="radio" ng-click="formData.abroad = ''" ng-model="formData.abroadStatus" name="abroadStatus" value="2"/>{{'ProfilePageLabelNo' | translate}}</label>
+                </div>
+            </div>
+
+            <div class="form-group" ng-if="formData.abroadStatus == 1" ng-class="{'has-error': newSchoolForm.abroad.$dirty && newSchoolForm.abroad.$invalid, 'has-success':newSchoolForm.abroad.$dirty&&newSchoolForm.abroad.$valid}">
+                <label class="control-label col-md-3 text-right"></label>
                 <div class="col-xs-9">
                     <div class="row">
                         <div class="col-xs-11">
-                            <textarea placeholder="{{'ProfilePageSchoolInfoAbroadInfo' | translate}}" rows="3" ng-model="formData.abroad" name="abroad" id="abroad" class="form-control"></textarea>
+                            <textarea required placeholder="{{'ProfilePageSchoolInfoAbroadInfo' | translate}}" rows="3" ng-model="formData.abroad" name="abroad" id="abroad" class="form-control"></textarea>
                         </div>
                     </div>
                 </div>
+                <span class="err-msg textarea-err-msg control-label form-control-static col-xs-4" ng-if="newSchoolForm.abroad.$dirty && newSchoolForm.abroad.$invalid">{{'ProfilePageRequiredError' | translate}}</span>
             </div>
 
             <div class="form-group">

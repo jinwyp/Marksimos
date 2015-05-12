@@ -16,6 +16,7 @@
     angular.module('marksimos.b2ccomponent').directive('profileChangePasswordForm', [changePasswordFormComponent]);
     angular.module('marksimos.b2ccomponent').directive('profileMobilePhoneForm', ['$interval', mobilePhoneFormComponent]);
     angular.module('marksimos.b2ccomponent').directive('profileTeamForm', [teamFormComponent]);
+    angular.module('marksimos.b2ccomponent').directive('profileTitleForm', [titleFormComponent]);
 
 
     function basicInfoFormComponent() {
@@ -1035,6 +1036,78 @@
                 function addStudentToTeam(form) {
                     if (form.$valid) {
                         scope.addStudentToTeam({username: scope.formData.newTeamMember});
+                    } else {
+                        Object.keys(form).forEach(function(key) {
+                            if (key[0] != '$') {
+                                form[key].$setDirty();
+                            }
+                        });
+                    }
+                }
+
+                function editProfile() {
+                    scope.css.formEditing = true;
+                    formKeys.forEach(function(key) {
+                        var keys = key.split('.'),
+                            value = scope.currentUser;
+                        keys.forEach(function(k) {
+                            if (!value) return;
+                            value = value[k];
+                        });
+                        if (typeof value != 'undefined') {
+                            scope.formData[key] = angular.copy(value);
+                        }
+                    });
+                }
+
+                function cancelEditProfile() {
+                    scope.css = {
+                        formEditing: false,
+                        errorFields: {}
+                    };
+                    scope.formData = {};
+                }
+            }
+        };
+    }
+
+    function titleFormComponent() {
+        return {
+            restrict: 'E',
+            scope: {
+                currentUser: '=',
+                update: '&'
+            },
+            templateUrl: 'b2cprofiletitleform.html',
+            link: function(scope, elem, attrs, ctrl) {
+                var formKeys = ['title'];
+
+                scope.css = {
+                    formEditing: false,
+                    errorFields: {}
+                };
+
+                scope.formData = {};
+
+                scope.clickUpdateUserInfo = updateUserInfo;
+                scope.clickEditProfile = editProfile;
+                scope.clickCancelEditProfile = cancelEditProfile;
+
+                function updateUserInfo(form) {
+                    if (form.$valid) {
+                        scope.css.errorFields = {};
+
+                        scope.update({data: scope.formData}).then(function() {
+                            cancelEditProfile();
+                        }).catch(function(message) {
+                            if (angular.isArray(message)) {
+                                message.forEach(function(item) {
+                                    form[item.param].$valid = false;
+                                    form[item.param].$invalid = true;
+                                    scope.css.errorFields[item.param] = true;
+                                });
+                            }
+                        });
                     } else {
                         Object.keys(form).forEach(function(key) {
                             if (key[0] != '$') {

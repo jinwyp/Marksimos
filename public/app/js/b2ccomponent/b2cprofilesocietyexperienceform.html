@@ -17,10 +17,10 @@
             <div class="form-group" ng-class="{'has-success':experienceForm['position' + $index].$dirty&&experienceForm['position' + $index].$valid, 'has-error':experienceForm['position' + $index].$dirty&&experienceForm['position' + $index].$invalid}">
                 <label for="position{{$index}}" class="control-label col-md-3 text-right">{{'ProfilePageExperienceInfoPosition' | translate}} :</label>
                 <div class="col-xs-5" ng-if="!css.formEditing">
-                    <p class="form-control-static">{{experience.position}}&nbsp</p>
+                    <p class="form-control-static">{{experience.position | societyposition | translate}}&nbsp</p>
                 </div>
                 <div class="col-xs-5" ng-if="css.formEditing">
-                    <input required type="text" ng-model="formData.societyExperiences[$index].position" name="position{{$index}}" id="position{{$index}}" class="form-control">
+                    <select required id="position{{$index}}" name="position{{$index}}" class="form-control col-xs-4" ng-model="formData.societyExperiences[$index].position" ng-options="type.id as type.name | translate for type in Constant.societyExperiencesPosition"></select>
                 </div>
                 <span class="err-msg control-label form-control-static col-xs-4" ng-if="experienceForm['position' + $index].$dirty && experienceForm['position' + $index].$invalid">{{'ProfilePageRequiredError' | translate}}</span>
             </div>
