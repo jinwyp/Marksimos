@@ -90,7 +90,7 @@ exports.campaignSingleInfo = function(req, res, next){
             totalMembers = totalMembers + team.memberList.length + 1;
         });
 
-        resultCampaign.totalMembers = totalMembers;
+        resultCampaign.totalMembers = totalMembers + resultCampaign.memberNumberBase;;
 
         return res.status(200).send(resultCampaign);
 
