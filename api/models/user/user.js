@@ -71,6 +71,10 @@ var userSchema = new Schema({
     currentLocation: String,
 
 
+    gameMarksimosPosition: String,
+
+
+
     //user address for facilitator
     country: String,
     state: String,
