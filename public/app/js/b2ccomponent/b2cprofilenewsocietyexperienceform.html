@@ -13,7 +13,7 @@
             <div class="form-group" ng-class="{'has-success':newExperienceForm.position.$dirty&&newExperienceForm.position.$valid, 'has-error':newExperienceForm.position.$dirty&&newExperienceForm.position.$invalid}">
                 <label for="position" class="control-label col-md-3 text-right">{{'ProfilePageExperienceInfoPosition' | translate}} :</label>
                 <div class="col-xs-5">
-                    <input required type="text" ng-model="formData.position" name="position" id="position" class="form-control">
+                    <select required name="position" id="position" class="form-control" ng-model="formData.position" ng-options="type.id as type.name | translate for type in Constant.societyExperiencesPosition"></select>
                 </div>
                 <span class="err-msg control-label form-control-static col-xs-4" ng-if="newExperienceForm.position.$dirty && newExperienceForm.position.$invalid">{{'ProfilePageRequiredError' | translate}}</span>
             </div>
