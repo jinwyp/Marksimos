@@ -260,6 +260,7 @@
             ProfilePageBasicInfoBirthday             : 'Date of Birth',
             ProfilePageCurrentLocation               : 'Current Location',
             ProfilePageEmail                         : 'Email',
+
             ProfilePageSchoolInfoMajor: 'Major',
             ProfilePageSchoolInfoGraduationDate: 'Graduation Date',
             ProfilePageSchoolInfoAbroad: 'Did you go abroad for exchange?',
@@ -267,6 +268,8 @@
             ProfilePageSchoolInfoAchievements: 'Achievements',
             ProfilePageTabLanguageSkills: 'Language Skills',
             ProfilePageEducation: 'Education',
+            ProfilePageLabelYes: 'Yes',
+            ProfilePageLabelNo: 'No',
             ProfilePageAddEducation: 'Add Education',
             ProfilePageAddLanguage: 'Add Language',
 
@@ -295,6 +298,8 @@
             ProfilePageSchoolInfoDegree              : 'Degree',
 
             // team
+            ProfilePageYourTitle: 'Your title',
+            ProfilePageInfoTitle: 'Title',
             ProfilePageTeamInfoTeamName              : 'Team Name',
             ProfilePageTeamInfoMember                : 'Member',
             ProfilePageTeamInfoNewMember             : 'New Member',
@@ -784,6 +789,8 @@
             ProfilePageSchoolInfoAchievements: '成就',
             ProfilePageTabLanguageSkills: '外语技能',
             ProfilePageEducation:'教育经历',
+            ProfilePageLabelYes: '是',
+            ProfilePageLabelNo: '否',
             ProfilePageAddEducation:'添加教育经历',
             ProfilePageAddLanguage: '添加语言',
 
@@ -812,6 +819,8 @@
             ProfilePageSchoolInfoDegree              : '学历',
 
             //Team
+            ProfilePageYourTitle: '你的职位',
+            ProfilePageInfoTitle: '职位',
             ProfilePageTeamInfoTeamName              : '战队名称',
             ProfilePageTeamInfoMember                : '队员',
             ProfilePageTeamInfoNewMember             : '新队员',

@@ -35,6 +35,7 @@
     angular.module('marksimos.filter').filter('proficiency', proficiencyFilter);
     angular.module('marksimos.filter').filter('major', majorFilter);
     angular.module('marksimos.filter').filter('jobtype', jobTypeFilter);
+    angular.module('marksimos.filter').filter('societyposition', societyExperiencesPositionFilter);
     angular.module('marksimos.filter').filter('jobndustry', jobIndustryFilter);
     angular.module('marksimos.filter').filter('companysize', companySizeFilter);
 
@@ -165,6 +166,25 @@
             };
 
             return names[input] || 'educationMajorPhilosophy01';
+        };
+    }
+
+    function societyExperiencesPositionFilter() {
+        return function(input) {
+            var names = {
+                10: 'societyExperiencesPositionChairman',
+                20: 'societyExperiencesPositionViceChairman',
+                30: 'societyExperiencesPositionMinister',
+                40: 'societyExperiencesPositionViceMinister',
+                50: 'societyExperiencesPositionTeamLeader',
+                60: 'societyExperiencesPositionMember'
+            };
+
+            if (angular.isNumber(input)) {
+                return names[input];
+            }
+
+            return input || 'societyExperiencesPositionChairman';
         };
     }
 

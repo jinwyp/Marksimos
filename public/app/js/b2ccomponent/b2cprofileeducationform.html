@@ -65,18 +65,31 @@
                 <span class="err-msg control-label form-control-static col-xs-4" ng-if="schoolForm['graduationDate' +  $index].$dirty && schoolForm['graduationDate' +  $index].$error.required">{{'ProfilePageRequiredError' | translate}}</span>
             </div>
 
-            <div class="form-group">
-                <label for="abroad{{$index}}" class="control-label col-md-3 text-right">{{'ProfilePageSchoolInfoAbroad' | translate}} :</label>
+            <div class="form-group radio gender">
+                <label class="col-md-3 control-label  text-right" for="abroadStatus{{$index}}">{{'ProfilePageSchoolInfoAbroad' | translate}} :</label>
+                <div class="col-xs-5" ng-if="!css.formEditing">
+                    <p class="form-control-static" ng-if="education.abroadStatus == 1">{{'ProfilePageLabelYes' | translate}}&nbsp;&nbsp;</p>
+                    <p class="form-control-static" ng-if="education.abroadStatus == 2">{{'ProfilePageLabelNo' | translate}}</p>
+                </div>
+                <div class="col-xs-5 gender-radio" ng-if="css.formEditing">
+                    <label  class="control-label control-inline"><input type="radio" ng-model="formData.eductionBackgrounds[$index].abroadStatus" name="abroadStatus{{$index}}" value="1"/>{{'ProfilePageLabelYes' | translate}}&nbsp;&nbsp;</label>
+                    <label class="female control-label control-inline"><input type="radio" ng-click="formData.eductionBackgrounds[$index].abroad = ''" ng-model="formData.eductionBackgrounds[$index].abroadStatus" name="abroadStatus{{$index}}" value="2"/>{{'ProfilePageLabelNo' | translate}}</label>
+                </div>
+            </div>
+
+            <div class="form-group" ng-if="(!css.formEditing && education.abroadStatus == 1) || (css.formEditing && formData.eductionBackgrounds[$index].abroadStatus == 1)" ng-class="{'has-error': schoolForm['abroad' +  $index].$dirty && schoolForm['abroad' + $index].$invalid, 'has-success':schoolForm['abroad' + $index].$dirty&&schoolForm['abroad' + $index].$valid}">
+                <label class="control-label col-md-3 text-right"></label>
                 <div class="col-xs-9" ng-if="!css.formEditing">
                     <pre class="form-control-static">{{currentUser.eductionBackgrounds[$index].abroad}}&nbsp</pre>
                 </div>
                 <div class="col-xs-9" ng-if="css.formEditing">
                     <div class="row">
                         <div class="col-xs-11">
-                            <textarea placeholder="{{'ProfilePageSchoolInfoAbroadInfo' | translate}}" rows="3" ng-model="formData.eductionBackgrounds[$index].abroad" name="abroad{{$index}}" id="abroad{{$index}}" class="form-control"></textarea>
+                            <textarea required placeholder="{{'ProfilePageSchoolInfoAbroadInfo' | translate}}" rows="3" ng-model="formData.eductionBackgrounds[$index].abroad" name="abroad{{$index}}" id="abroad{{$index}}" class="form-control"></textarea>
                         </div>
                     </div>
                 </div>
+                <span class="err-msg textarea-err-msg control-label form-control-static col-xs-4" ng-if="schoolForm['abroad' + $index].$dirty && schoolForm['abroad' + $index].$invalid">{{'ProfilePageRequiredError' | translate}}</span>
             </div>
 
             <div class="form-group">
