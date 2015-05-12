@@ -107,6 +107,7 @@
                     </div>
 
                     <div class="row team-info" ng-if="profile.css.currentTab == 'teamInfo'">
+                        <profile-title-form current-user="profile.currentUser" update="profile.updateBasicInfo(data)"></profile-title-form>
                         <profile-team-form current-user="profile.currentUser" update="profile.updateTeamName(data)" add-student-to-team="profile.addStudentToTeam(username)" remove-student-to-team="profile.removeStudentToTeam(id)" ></profile-team-form>
                     </div>
 

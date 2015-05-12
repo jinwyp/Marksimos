@@ -298,6 +298,8 @@
             ProfilePageSchoolInfoDegree              : 'Degree',
 
             // team
+            ProfilePageYourTitle: 'Your title',
+            ProfilePageInfoTitle: 'Title',
             ProfilePageTeamInfoTeamName              : 'Team Name',
             ProfilePageTeamInfoMember                : 'Member',
             ProfilePageTeamInfoNewMember             : 'New Member',
@@ -817,6 +819,8 @@
             ProfilePageSchoolInfoDegree              : '学历',
 
             //Team
+            ProfilePageYourTitle: '你的职位',
+            ProfilePageInfoTitle: '职位',
             ProfilePageTeamInfoTeamName              : '战队名称',
             ProfilePageTeamInfoMember                : '队员',
             ProfilePageTeamInfoNewMember             : '新队员',
