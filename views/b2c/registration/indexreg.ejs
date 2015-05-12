@@ -110,8 +110,13 @@
                         <span ng-if="regForm.captcha.$dirty&&(regForm.captcha.$error.minlength || regForm.captcha.$error.maxlength)"
                               class="glyphicon glyphicon-remove form-control-feedback" aria-hidden="true"></span>
                     </div>
-                    <span class="btn btn-default reg-captcha" ng-if="!register.css.mobileVerifyCodeResend" ng-click="register.getCaptcha(regForm)">{{'ProfileContactInfoMobilePhoneVerifySend' | translate}}</span>
-                    <span class="btn btn-default reg-captcha" ng-if="register.css.mobileVerifyCodeResend" ng-click="register.getCaptcha(regForm)" ng-disabled="register.css.mobileVerifyCodeTimeCounter>0">{{'ProfileContactInfoMobilePhoneVerifyReSend' | translate}}
+                    <span class="btn btn-default reg-captcha" ng-if="!register.css.mobileVerifyCodeResend"
+                          ng-click="register.getCaptcha(regForm)"
+                          ng-disabled="regForm.mobilePhone.$invalid">{{'ProfileContactInfoMobilePhoneVerifySend' | translate}}
+                    </span>
+                    <span class="btn btn-default reg-captcha" ng-if="register.css.mobileVerifyCodeResend"
+                          ng-click="register.getCaptcha(regForm)"
+                          ng-disabled="register.css.mobileVerifyCodeTimeCounter>0">{{'ProfileContactInfoMobilePhoneVerifyReSend' | translate}}
                         <span ng-hide="register.css.mobileVerifyCodeTimeCounter==0">{{register.css.mobileVerifyCodeTimeCounter}}</span>
                     </span>
                     <span class="err-msg" ng-if="regForm.captcha.$dirty&&regForm.captcha.$invalid">{{'RegisterPageInputCaptchaTip' | translate}}</span>
