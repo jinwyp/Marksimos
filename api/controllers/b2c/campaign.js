@@ -447,7 +447,7 @@ exports.addTeamToCampaign = function(req, res, next){
         }
 
         resultTeam.memberList.forEach(function(user){
-            if(typeof resultUser.firstName === 'undefined' || typeof resultUser.currentLocation === 'undefined' || resultUser.firstName == '' || resultUser.currentLocation == ''){
+            if(typeof user.firstName === 'undefined' || typeof user.currentLocation === 'undefined' || user.firstName == '' || user.currentLocation == ''){
                 throw new Error('Cancel promise chains. Because team member name and currentLocation can not empty !');
             }
         });
