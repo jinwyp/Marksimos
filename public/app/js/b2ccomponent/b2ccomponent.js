@@ -1080,7 +1080,7 @@
             },
             templateUrl: 'b2cprofiletitleform.html',
             link: function(scope, elem, attrs, ctrl) {
-                var formKeys = ['title'];
+                var formKeys = ['gameMarksimosPosition'];
 
                 scope.css = {
                     formEditing: false,
