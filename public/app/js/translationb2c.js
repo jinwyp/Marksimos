@@ -997,7 +997,7 @@
             LoginSuccessGreet: '您好:',
             LoginSuccessText1: '您已经成功激活',
             LoginSuccessText2: '邮箱!',
-            LoginSuccessText3: '感谢您已完成注册. 请完善个人及团队信息完成比赛报名',
+            LoginSuccessText3: '感谢您已完成注册. 请完善个人及团队信息完成比赛报名.',
             LoginSuccessText4: '进入用户中心',
             LoginSuccessText5: '您可以扫描右边的微信群二维码寻找队友或提出您的问题.',
 
