@@ -1,0 +1,15 @@
+﻿revert
+
+This reverts commit f9f52ce0b52854bfa221ff02db15a13f672c51c9.
+
+# Please enter the commit message for your changes. Lines starting
+# with '#' will be ignored, and an empty message aborts the commit.
+# On branch master
+# Your branch and 'origin/master' have diverged,
+# and have 1 and 1 different commit each, respectively.
+#   (use "git pull" to merge the remote branch into yours)
+#
+# Changes to be committed:
+#	deleted:    public/app/js/b2ccomponent/b2cprofiletitleform.html
+#
+
