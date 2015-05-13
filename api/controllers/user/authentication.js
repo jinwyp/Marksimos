@@ -625,7 +625,6 @@ exports.activateRegistrationEmail = function(req, res, next){
     }
 
     var nowDate = new Date();
-
     userModel.findOneQ({
         email: req.query.email,
         emailActivateToken: req.query.emailtoken,
@@ -640,7 +639,7 @@ exports.activateRegistrationEmail = function(req, res, next){
             throw new Error('Cancel promise chains. Because Email Activate Token Expire !');
         }
 
-        resultUser.emailActivated = true;
+        //resultUser.emailActivated = true;
         resultUser.activated = true;
 
         return resultUser.saveQ();
@@ -650,12 +649,12 @@ exports.activateRegistrationEmail = function(req, res, next){
         //if(numberAffectedRows !== 1){
         //    throw new Error('Cancel promise chains. Because Update user emailActivated status failed. more or less than 1 record is updated. it should be only one !');
         //}
-        if(savedDoc[1] !== 1 ){
+        if(savedDoc[1] > 1 ){
             throw new Error('Cancel promise chains. Because Update user emailActivated status failed. more or less than 1 record is updated. it should be only one !');
         }
 
         return res.render('b2c/registration/indexregsuccess.ejs', {
-            title     : ' Email Activate Success ! | HCD Learning',
+            title     : ' Email Activate Success ! | Bridge+',
             username  : savedDoc[0].username,
             useremail : savedDoc[0].email
         });
@@ -831,7 +830,7 @@ exports.forgotPasswordStep2 = function(req, res, next){
         }
 
         return res.render('b2c/forgotpassword/step2enterpassword.ejs', {
-            title     : ' Reset your password ! | HCD Learning',
+            title     : ' Reset your password ! | Bridge+',
             username  : resultUser.username,
             useremail : resultUser.email
         });
