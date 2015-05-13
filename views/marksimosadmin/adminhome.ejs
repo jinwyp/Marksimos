@@ -373,7 +373,7 @@
                             </form>
                         </div>
 
-                        <div class="box">
+                        <div class="box" ng-if="!data.currentStudent">
                             <div class="box-header">
                                 <h3 class="box-title">Student List</h3>
                             </div><!-- /.box-header -->
@@ -382,6 +382,7 @@
                                     <tbody>
                                     <tr>
                                         <!-- <th>ID</th> -->
+                                        <th style="width: 100px;">Action</th>
                                         <th>UserName / Registration Time</th>
                                         <th>First/Last Name / Gender</th>
                                         <th>Email/Activated</th>
@@ -394,20 +395,42 @@
                                     </tr>
                                     <tr ng-repeat="user in data.students" >
                                         <!-- <td>{{user._id}}</td> -->
+                                        <td><button type="button" class="btn btn-danger" ng-click="data.currentStudent = user">View</button></td>
                                         <td>{{user.username}} / {{user.createdAt | date:'yyyy-MM-dd HH:mm:ss'}}</td>
-                                        <td>{{user.firstName}} {{user.lastName}} {{user.gender}} </td>
+                                        <td>{{user.firstName}} {{user.lastName}} / {{user.gender == 1 ? 'ProfilePageBasicInfoGenderMale' : 'ProfilePageBasicInfoGenderFemale' | translate}} </td>
                                         <td>{{user.email}} / {{user.emailActivated}}</td>
                                         <td>{{user.activated}}</td>
                                         <td>{{user.mobilePhone }} / {{user.phoneVerified}}</td>
                                         <td>{{user.currentLocation}} </td>
-                                        <td> <span ng-repeat="edu in user.eductionBackgrounds">{{edu.university}} / {{ edu.degree}} / {{ edu.major}} / {{ edu.entryDate | date:'yyyy-MM-dd'}} / {{ edu.graduationDate | date:'yyyy-MM-dd'}} <br/></span> </td>
-                                        <td><span ng-repeat="work in user.workExperiences">{{work.company}} / {{work.jobType}} / {{work.industry}} / {{work.position}} / {{work.sizeOfCompany}} / {{work.startDate | date:'yyyy-MM-dd'}} / {{ work.endDate | date:'yyyy-MM-dd'}} <br/></span></td>
+                                        <td> <span ng-repeat="edu in user.eductionBackgrounds">{{edu.university}} / {{ edu.degree}} / {{ edu.major | major | translate}} / {{ edu.entryDate | date:'yyyy-MM-dd'}} / {{ edu.graduationDate | date:'yyyy-MM-dd'}} <br/></span> </td>
+                                        <td><span ng-repeat="work in user.workExperiences">{{work.company}} / {{work.jobType | jobtype | translate}} / {{work.industry | jobndustry | translate}} / {{work.position}} / {{work.sizeOfCompany | companysize | translate}} / {{work.startDate | date:'yyyy-MM-dd'}} / {{ work.endDate | date:'yyyy-MM-dd'}} <br/></span></td>
                                         <td>
                                             <button ng-click='resetStudentPassword(user._id)'>Reset</button>
                                         </td>
                                     </tr>
                                     </tbody>
                                 </table>
+                            </div><!-- /.box-body -->
+                        </div>
+
+                        <div class="box" ng-if="data.currentStudent">
+                            <div class="box-header" style="border-bottom:1px solid #f4f4f4;">
+                                <h3 class="box-title">User name: &nbsp;&nbsp;{{data.currentStudent.username}}<button type="button" class="btn btn-danger btn-view-student" ng-click="data.currentStudent=null">Return</button></h3>
+                            </div><!-- /.box-header -->
+                            <div class="box-body table-responsive no-padding student-detail">
+                                <profile-basic-info-form current-user="data.currentStudent"></profile-basic-info-form>
+
+                                <profile-education-form current-user="data.currentStudent"></profile-education-form>
+
+                                <profile-language-form current-user="data.currentStudent"></profile-language-form>
+
+                                <profile-work-experience-form current-user="data.currentStudent"></profile-work-experience-form>
+                                <profile-society-experience-form current-user="data.currentStudent"></profile-society-experience-form>
+
+                                <profile-mobile-phone-form current-user="data.currentStudent"></profile-mobile-phone-form>
+
+                                <profile-title-form current-user="data.currentStudent"></profile-title-form>
+                                <profile-team-form current-user="data.currentStudent"></profile-team-form>
                             </div><!-- /.box-body -->
                         </div>
 

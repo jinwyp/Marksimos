@@ -1,6 +1,8 @@
 (function () {
     'use strict';
 
+
+
     angular.module('marksimos.b2ccomponent', ['marksimos.templates', 'pascalprecht.translate', 'b2c.translation']);
 
 

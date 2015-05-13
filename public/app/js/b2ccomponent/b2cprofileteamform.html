@@ -24,7 +24,7 @@
         <span ng-if="!currentUser.joinedCampaign.length" ng-click="clickRemoveStudentToTeam(member._id)" class="form-control-static remove-button glyphicon glyphicon-minus col-md-3 button"></span>
     </div>
 
-    <div ng-if="!currentUser.joinedCampaign.length" class="form-group" ng-class="{'has-success':teamForm.name.$dirty&&teamForm.name.$valid, 'has-error':teamForm.name.$dirty&&teamForm.name.$invalid}">
+    <div ng-if="!currentUser.joinedCampaign.length" class="form-group add-new-member" ng-class="{'has-success':teamForm.name.$dirty&&teamForm.name.$valid, 'has-error':teamForm.name.$dirty&&teamForm.name.$invalid}">
         <label for="name" class="control-label col-xs-3 text-right team-label">{{'ProfilePageTeamInfoNewMember' | translate}} :</label>
         <div class="col-xs-5">
             <input ng-maxlength="20" ng-minlength="6" placeholder="{{'ProfilePageNewMemberInputPlaceholder' | translate}}" ng-model="formData.newTeamMember" required type="text" name="name" id="name" class="form-control">
