@@ -267,8 +267,7 @@ exports.authLoginToken = function (options) {
             sendFailureResponse(options, next);
         }
 
-
-    }
+    };
 };
 
 
@@ -472,7 +471,7 @@ exports.registerB2CStudent = function(req, res, next){
 
         mailContent.substitution_vars.to.push(resultUser.email);
         mailContent.substitution_vars.sub['%username%'].push(resultUser.username);
-        mailContent.substitution_vars.sub['%useremail%'].push(resultUser.email);
+        mailContent.substitution_vars.sub['%useremail%'].push(encodeURIComponent(resultUser.email));
         mailContent.substitution_vars.sub['%token%'].push(resultUser.emailActivateToken);
 
         //mailContent.html = mailContent.html1 + resultUser.username + mailContent.html2 + resultUser.email + mailContent.html3 + resultUser.emailActivateToken + mailContent.html4 + resultUser.email + mailContent.html5 + resultUser.emailActivateToken + mailContent.htmlend;
