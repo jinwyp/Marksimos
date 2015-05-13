@@ -475,8 +475,9 @@
             LoginSuccessGreet: 'hi:',
             LoginSuccessText1: 'You has successfully activated your',
             LoginSuccessText2: 'email!',
-            LoginSuccessText3: 'Thanks for completing register.',
+            LoginSuccessText3: 'Thanks for your registration.',
             LoginSuccessText4: 'Enter user center.',
+            LoginSuccessText5: 'Scan the QR code on the right to join the discussion.',
 
 
 
@@ -994,10 +995,11 @@
 
             // Register Success Page
             LoginSuccessGreet: '您好:',
-            LoginSuccessText1: '您已经成功激活你的',
+            LoginSuccessText1: '您已经成功激活',
             LoginSuccessText2: '邮箱!',
-            LoginSuccessText3: '感谢您已完成注册.',
+            LoginSuccessText3: '感谢您已完成注册. 请完善个人及团队信息完成比赛报名',
             LoginSuccessText4: '进入用户中心',
+            LoginSuccessText5: '您可以扫描右边的微信群二维码寻找队友或提出您的问题.',
 
 
 
