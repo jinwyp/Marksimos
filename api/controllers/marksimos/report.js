@@ -85,7 +85,6 @@ exports.getStudentFinalScore = function(req, res, next) {
                         seconds : time.seconds || 0
                     };
 
-                    console.log(tempRoundTime);
                 });
 
             });

@@ -914,6 +914,7 @@
             "FinalScoreAdminPanelDecisionsButton" : "All Decisions",
             "FinalScoreAdminPanelResultsButton"   : "All Results",
             "FinalScoreAdminPanelReRunButton" : "Rerun Last Period Decisions",
+            "FinalScoreAdminPanelUnlockDecisionButton" : "Unlock current Period Decision lock",
             "FinalScoreAdminPanelReRunSaveButton" : "Save",
 
 
@@ -1880,6 +1881,7 @@
             "FinalScoreAdminPanelDecisionsButton" : "显示所有阶段所有公司的决策",
             "FinalScoreAdminPanelResultsButton"   : "显示结果",
             "FinalScoreAdminPanelReRunButton"   : "重新运行上一轮决策",
+            "FinalScoreAdminPanelUnlockDecisionButton"   : "解锁本回合决策锁定",
             "FinalScoreAdminPanelReRunSaveButton" : "保存",
 
             //Labels for Questionnaire Page

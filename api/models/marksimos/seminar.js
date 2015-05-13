@@ -105,6 +105,12 @@ seminarSchema.statics.createValidations = function(req){
 };
 
 
+seminarSchema.statics.seminarIdValidations = function(req){
+
+    req.assert('seminar_id', 'Seminar ID should be 5 characters').notEmpty().len(5, 6);
+
+    return req.validationErrors();
+};
 
 seminarSchema.statics.updateValidations = function(req){
 

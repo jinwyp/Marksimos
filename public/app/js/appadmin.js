@@ -524,7 +524,7 @@
 
                 }).error(function(data, status, headers, config) {
                     console.log(data);
-                    $notification.error('Failed', data.message);
+                    $notification.error('Failed', Admin.errorHandler(data.message));
                 });
             }
         };
@@ -540,7 +540,7 @@
 
                 }).error(function(data, status, headers, config) {
                     console.log(data);
-                    $notification.error('Failed', data.message);
+                    $notification.error('Failed', Admin.errorHandler(data.message));
                 });
             }
         };
@@ -554,7 +554,7 @@
 
                 }).error(function(data, status, headers, config) {
                     console.log(data);
-                    $notification.error('Failed', data.message);
+                    $notification.error('Failed', Admin.errorHandler(data.message));
                 });
             }
         };
@@ -570,7 +570,7 @@
 
                 }).error(function(data, status, headers, config) {
                     console.log(data);
-                    $notification.error('Failed', data.message);
+                    $notification.error('Failed', Admin.errorHandler(data.message));
                 });
             }
         };
@@ -584,7 +584,7 @@
 
                 }).error(function(data, status, headers, config) {
                     console.log(data);
-                    $notification.error('Failed', data.message);
+                    $notification.error('Failed', Admin.errorHandler(data.message));
                 });
             }
         };
@@ -600,7 +600,7 @@
 
                 }).error(function(data, status, headers, config) {
                     console.log(data);
-                    $notification.error('Failed', data.message);
+                    $notification.error('Failed', Admin.errorHandler(data.message));
                 });
             }
         };
@@ -616,7 +616,7 @@
 
             }).error(function(data, status, headers, config) {
                 console.log(data);
-                $notification.error('Failed', data.message);
+                $notification.error('Failed', Admin.errorHandler(data.message));
             });
         };
 
@@ -629,7 +629,7 @@
                     $scope.data.campaigns = data;
 
                 }).error(function(data, status, headers, config) {
-                    $notification.error('Failed', data.message);
+                    $notification.error('Failed', Admin.errorHandler(data.message));
                 });
             }
         };
@@ -645,7 +645,7 @@
 
                 }).error(function(data, status, headers, config) {
                     console.log(data);
-                    $notification.error('Failed', data.message);
+                    $notification.error('Failed', Admin.errorHandler(data.message));
                 });
             }
         };
@@ -669,7 +669,7 @@
 
                 }).error(function(data, status, headers, config) {
                     console.log(data);
-                    $notification.error('Failed', data.message);
+                    $notification.error('Failed', Admin.errorHandler(data.message));
                 });
             }
         };
@@ -685,7 +685,7 @@
 
                 }).error(function(data, status, headers, config) {
                     console.log(data);
-                    $notification.error('Failed', data.message);
+                    $notification.error('Failed', Admin.errorHandler(data.message));
                 });
             }
         };
@@ -710,7 +710,7 @@
 
                 }).error(function(data, status, headers, config) {
                     console.log(data);
-                    $notification.error('Failed', data.message);
+                    $notification.error('Failed', Admin.errorHandler(data.message));
                 });
             }
         };
@@ -726,7 +726,7 @@
 
                 }).error(function(data, status, headers, config) {
                     console.log(data);
-                    $notification.error('Failed', data.message);
+                    $notification.error('Failed', Admin.errorHandler(data.message));
                 });
             }
         };
@@ -783,7 +783,7 @@
 
                 }).error(function(data, status, headers, config) {
                     console.log(data);
-                    $notification.error('Failed', data.message);
+                    $notification.error('Failed', Admin.errorHandler(data.message));
                 });
             }
         };
@@ -797,7 +797,7 @@
                     $scope.data.seminars = data;
 
                 }).error(function(data, status, headers, config) {                   
-                    $notification.error('Failed', data.message);
+                    $notification.error('Failed', Admin.errorHandler(data.message));
                 });
             }
         };
@@ -818,7 +818,7 @@
 
                 }).error(function(data, status, headers, config) {
                     console.log(data);
-                    $notification.error('Failed', data.message);
+                    $notification.error('Failed', Admin.errorHandler(data.message));
                 });
             }
         };
@@ -872,7 +872,7 @@
 
                 }).error(function(data, status, headers, config) {
                     console.log(data);
-                    $notification.error('Failed', data.message);
+                    $notification.error('Failed', Admin.errorHandler(data.message));
                 });
             }
         };
@@ -896,7 +896,7 @@
 
                 }).error(function(data, status, headers, config) {
                     console.log(data);
-                    $notification.error('Failed', data.message);
+                    $notification.error('Failed', Admin.errorHandler(data.message));
                 });
             }
         };
@@ -923,7 +923,7 @@
 
                 }).error(function(data, status, headers, config) {
                     console.log(data);
-                    $notification.error('Failed', data.message);
+                    $notification.error('Failed', Admin.errorHandler(data.message));
                 });
             }
         };
@@ -948,7 +948,7 @@
 
                 }).error(function(data, status, headers, config) {
                     console.log(data);
-                    $notification.error('Failed', data.message);
+                    $notification.error('Failed', Admin.errorHandler(data.message));
                 });
             }
         };
@@ -964,7 +964,7 @@
 
             }).error(function(data, status, headers, config) {
                 console.log(data);
-                $notification.error('Failed', data.message);
+                $notification.error('Failed', Admin.errorHandler(data.message));
                 $scope.css.runButtonDisabled = false;
             });
         };
@@ -982,7 +982,7 @@
 
             }).error(function(data, status, headers, config) {
                 console.log(data);
-                $notification.error('Failed', data.message);
+                $notification.error('Failed', Admin.errorHandler(data.message));
                 $scope.css.runButtonDisabled = false;
                 $scope.css.showConfirm = false;
                 $scope.css.currentRunSeminarId = 0;
@@ -1011,7 +1011,7 @@
 
             }).error(function(data, status, headers, config) {
                 console.log(data);
-                $notification.error('Failed', data.message);
+                $notification.error('Failed', Admin.errorHandler(data.message));
             });
         };
         $scope.hideFinalScore = function(seminar){
@@ -1026,7 +1026,7 @@
 
             }).error(function(data, status, headers, config) {
                 console.log(data);
-                $notification.error('Failed', data.message);
+                $notification.error('Failed', Admin.errorHandler(data.message));
             });
         };
 
@@ -1045,7 +1045,7 @@
                     $scope.data.glossaries = data;
 
                 }).error(function(data, status, headers, config) {
-                    $notification.error('Failed', data.message);
+                    $notification.error('Failed', Admin.errorHandler(data.message));
                 });
             }
         };
@@ -1061,7 +1061,7 @@
 
                 }).error(function(data, status, headers, config) {
                     console.log(data);
-                    $notification.error('Failed', data.message);
+                    $notification.error('Failed', Admin.errorHandler(data.message));
                 });
             }
         };
@@ -1107,7 +1107,7 @@
 
                 }).error(function(data, status, headers, config) {
                     console.log(data);
-                    $notification.error('Failed', data.message);
+                    $notification.error('Failed', Admin.errorHandler(data.message));
                 });
             }
         };
@@ -1149,6 +1149,7 @@
             },
 
             reRunCompanies : [false, false, false, false, false, false, false, false, false],
+            unlockCompanyDecisions : [false, false, false, false, false, false, false, false, false],
             reRunDecision : {
                 type : '',
                 seminarId : '',
@@ -1445,7 +1446,7 @@
 
                     }).error(function(data, status, headers, config) {
                         console.log(data);
-                        $notification.error('Failed', data.message);
+                        $notification.error('Failed', Admin.errorHandler(data.message));
                     });
 
                 };
@@ -1735,6 +1736,18 @@
                 };
 
 
+                /********************  Unlock Decisions  ********************/
+                $scope.unlockDecisions = function() {
+
+                    Admin.unlockDecisions($scope.css.currentSeminarId, $scope.data.unlockCompanyDecisions).success(function(data, status, headers, config) {
+                        $notification.success('Save success', 'Unlock Seminar Decisions Success');
+
+                    }).error(function(data, status, headers, config) {
+                        console.log(data);
+                        $notification.error('Failed', Admin.errorHandler(data.message));
+                    });
+                };
+
                 /********************  Run Seminar  ********************/
                 $scope.reRunSeminar = function() {
 
@@ -1743,7 +1756,7 @@
 
                     }).error(function(data, status, headers, config) {
                         console.log(data);
-                        $notification.error('Failed', data.message);
+                        $notification.error('Failed', Admin.errorHandler(data.message));
                     });
                 };
 
@@ -1800,7 +1813,7 @@
 
                         }).error(function(data, status, headers, config) {
                             console.log(data);
-                            $notification.error('Failed', data.message);
+                            $notification.error('Failed', Admin.errorHandler(data.message));
                         });
 
 
@@ -1813,7 +1826,7 @@
 
                         }).error(function(data, status, headers, config) {
                             console.log(data);
-                            $notification.error('Failed', data.message);
+                            $notification.error('Failed', Admin.errorHandler(data.message));
                         });
 
                     }else{
@@ -1825,15 +1838,11 @@
 
                         }).error(function(data, status, headers, config) {
                             console.log(data);
-                            $notification.error('Failed', data.message);
+                            $notification.error('Failed', Admin.errorHandler(data.message));
                         });
                     }
 
-
-
-
                 };
-
 
             },
 
