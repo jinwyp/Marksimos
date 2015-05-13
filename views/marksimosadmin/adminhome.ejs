@@ -382,6 +382,7 @@
                                     <tbody>
                                     <tr>
                                         <!-- <th>ID</th> -->
+                                        <th style="width: 100px;">Action</th>
                                         <th>UserName / Registration Time</th>
                                         <th>First/Last Name / Gender</th>
                                         <th>Email/Activated</th>
@@ -394,6 +395,7 @@
                                     </tr>
                                     <tr ng-repeat="user in data.students" >
                                         <!-- <td>{{user._id}}</td> -->
+                                        <td><button type="button" class="btn btn-danger" ng-click="showStudentInfo(user)">Modify</button></td>
                                         <td>{{user.username}} / {{user.createdAt | date:'yyyy-MM-dd HH:mm:ss'}}</td>
                                         <td>{{user.firstName}} {{user.lastName}} {{user.gender}} </td>
                                         <td>{{user.email}} / {{user.emailActivated}}</td>
