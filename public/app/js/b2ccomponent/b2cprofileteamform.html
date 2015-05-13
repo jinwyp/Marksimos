@@ -27,10 +27,11 @@
     <div ng-if="!currentUser.joinedCampaign.length" class="form-group" ng-class="{'has-success':teamForm.name.$dirty&&teamForm.name.$valid, 'has-error':teamForm.name.$dirty&&teamForm.name.$invalid}">
         <label for="name" class="control-label col-xs-3 text-right team-label">{{'ProfilePageTeamInfoNewMember' | translate}} :</label>
         <div class="col-xs-5">
-            <input placeholder="{{'ProfilePageNewMemberInputPlaceholder' | translate}}" ng-model="formData.newTeamMember" required type="text" name="name" id="name" class="form-control">
+            <input ng-maxlength="20" ng-minlength="6" placeholder="{{'ProfilePageNewMemberInputPlaceholder' | translate}}" ng-model="formData.newTeamMember" required type="text" name="name" id="name" class="form-control">
         </div>
         <button type="submit" ng-click="clickAddStudentToTeam(teamForm)" class="button glyphicon glyphicon-plus add-button col-xs-1"></button>
         <span class="form-control-static err-msg control-label col-xs-3" ng-if="teamForm.name.$dirty&&teamForm.name.$error.required">{{'ProfilePageNewMemberNameError' | translate}}!</span>
+        <span class="form-control-static err-msg control-label col-xs-3" ng-if="teamForm.name.$dirty&&(teamForm.name.$error.maxlength || teamForm.name.$error.minlength)">{{'ProfilePageNameLengthError' | translate}}!</span>
     </div>
 
     <div class="form-group joined-campaigns" ng-repeat="campaign in currentUser.joinedCampaign">

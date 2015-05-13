@@ -169,7 +169,7 @@ exports.addStudentToTeam = function(req, res, next){
     ]}).then(function(resultUser) {
 
         if (!resultUser) {
-            throw new Error('Cancel promise chains. Because User not found!');
+            throw new MKError('Cancel promise chains. Because User not found!', MKError.errorCode.common.notFound);
         }
 
         if (resultUser._id.equals(req.user._id)) {
