@@ -639,7 +639,7 @@ exports.activateRegistrationEmail = function(req, res, next){
             throw new Error('Cancel promise chains. Because Email Activate Token Expire !');
         }
 
-        resultUser.emailActivated = true;
+        //resultUser.emailActivated = true;
         resultUser.activated = true;
 
         return resultUser.saveQ();
@@ -654,7 +654,7 @@ exports.activateRegistrationEmail = function(req, res, next){
         }
 
         return res.render('b2c/registration/indexregsuccess.ejs', {
-            title     : ' Email Activate Success ! | HCD Learning',
+            title     : ' Email Activate Success ! | Bridge+',
             username  : savedDoc[0].username,
             useremail : savedDoc[0].email
         });
@@ -830,7 +830,7 @@ exports.forgotPasswordStep2 = function(req, res, next){
         }
 
         return res.render('b2c/forgotpassword/step2enterpassword.ejs', {
-            title     : ' Reset your password ! | HCD Learning',
+            title     : ' Reset your password ! | Bridge+',
             username  : resultUser.username,
             useremail : resultUser.email
         });

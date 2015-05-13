@@ -61,7 +61,7 @@ exports.campaignSingleInfoPage = function(req, res, next){
         resultCampaign.totalMembers = totalMembers  + resultCampaign.memberNumberBase;
 
         return res.render('b2c/campaign/campaign.ejs',{
-            title : 'HCD E4E Campaign | HCD Learning',
+            title : 'Bridge+ Campaign',
             campaign: resultCampaign
         });
 

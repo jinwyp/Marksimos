@@ -68,52 +68,52 @@ apiRouter.get('/admin', function(req, res, next){
 /**********     Routes for rendering templates E4E Website     **********/
 
 apiRouter.get('/e4e', auth.authLoginToken({successRedirect: '/e4e/campaigns'}), function(req, res, next){
-    res.render('b2c/registration/indexreg.ejs', {title : 'Welcome to Bridge+ | HCD Learning'});
+    res.render('b2c/registration/indexreg.ejs', {title : 'Welcome to Bridge+ '});
 });
 
 apiRouter.get('/e4e/emailverify/registration', auth.activateRegistrationEmail);
 
 
 apiRouter.get('/e4e/login', function(req, res, next){
-    res.render('b2c/login.ejs', {title:'Bridge+ Sign in to Your Account| HCD Learning'});
+    res.render('b2c/login.ejs', {title:'Bridge+ Sign in to Your Account | Bridge+'});
 });
 
 
 apiRouter.get('/e4e/forgotpassword', function(req, res, next){
-    res.render('b2c/forgotpassword/forgotpassword.ejs', {title:'Forgotten Your Password? | HCD Learning'});
+    res.render('b2c/forgotpassword/forgotpassword.ejs', {title:'Forgotten Your Password? | Bridge+'});
 });
 apiRouter.get('/e4e/emailverify/changepassword', auth.forgotPasswordStep2);
 
 
 apiRouter.get('/e4e/profile', auth.authLoginToken({failureRedirect: '/e4e/login'}), auth.authRole(marksimosRight.studentLogin, {failureRedirect: '/e4e/login'}), function(req, res, next){
-    res.render('b2c/about/profile.ejs', {title:'Bridge+ User Home | HCD Learning'});
+    res.render('b2c/about/profile.ejs', {title:'Bridge+ User Home | Bridge+'});
 });
 
 apiRouter.get('/e4e/campaigns',  campaignController.campaignListPage);
 apiRouter.get('/e4e/campaign/:campaignId', auth.authLoginToken({failureRedirect: '/e4e/login'}), auth.authRole(marksimosRight.studentLogin, {failureRedirect: '/e4e/login'}), campaignController.campaignSingleInfoPage);
 
 apiRouter.get('/e4e/about', function(req, res, next){
-    res.render('b2c/about/about.ejs', {title:'About Bridge+ | HCD Learning'});
+    res.render('b2c/about/about.ejs', {title:'About Bridge+ | Bridge+'});
 });
 
 apiRouter.get('/e4e/intro', function(req, res, next){
-    res.render('b2c/about/intro.ejs', {title:'Project Introduction | HCD Learning'});
+    res.render('b2c/about/intro.ejs', {title:'Project Introduction | Bridge+'});
 });
 
 apiRouter.get('/e4e/activity', function(req, res, next){
-    res.render('b2c/about/activity.ejs', {title:'Newest Activities | HCD Learning'});
+    res.render('b2c/about/activity.ejs', {title:'Newest Activities | Bridge+'});
 });
 
 apiRouter.get('/e4e/contact', function(req, res, next){
-    res.render('b2c/about/contact.ejs', {title:'Contact | HCD Learning'});
+    res.render('b2c/about/contact.ejs', {title:'Contact | Bridge+'});
 });
 
 apiRouter.get('/e4e/media', function(req, res, next){
-    res.render('b2c/about/unfinished.ejs', {title:'Media Reports | HCD Learning'});
+    res.render('b2c/about/unfinished.ejs', {title:'Media Reports | Bridge+'});
 });
 
 apiRouter.get('/e4e/cooperate', function(req, res, next){
-    res.render('b2c/about/cooperate.ejs', {title:'Cooperation | HCD Learning'});
+    res.render('b2c/about/cooperate.ejs', {title:'Cooperation | Bridge+'});
 });
 
 
