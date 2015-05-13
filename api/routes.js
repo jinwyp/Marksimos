@@ -358,6 +358,7 @@ apiRouter.post('/marksimos/api/admin/remove_student_from_seminar', auth.authLogi
 
 apiRouter.post('/marksimos/api/admin/seminar/:seminar_id/init', auth.authLoginToken(), auth.authRole(marksimosRight.seminarInit), initController.init());
 apiRouter.post('/marksimos/api/admin/seminar/:seminar_id/runsimulation', auth.authLoginToken(), auth.authRole(marksimosRight.seminarRunRound), initController.runSimulation());
+apiRouter.post('/marksimos/api/admin/seminar/:seminar_id/unlockDecision', auth.authLoginToken(), auth.authRole(marksimosRight.seminarRunRound), seminarController.updateSeminarUnlockDecision);
 
 apiRouter.get('/marksimos/api/admin/delphi_cgi', auth.authLoginToken(), auth.authRole(marksimosRight.seminarInit), initController.getCgiStatus);
 

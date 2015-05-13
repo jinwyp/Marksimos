@@ -331,6 +331,7 @@
             ProfilePageDateFormatError                    : 'Date format error',
             ProfilePageTeamNameRequiredError              : "Please input team's name",
             ProfilePageNewMemberNameError                 : "Please input new member's name",
+            ProfilePageNameLengthError                    : "The length of username should be 6-20",
             ProfilePageInvalidQQ                          : 'Invalid qq account',
             ProfilePageInvalidMobilePhoneNumber           : 'Invalid mobile phone number',
             ProfilePageInvalidMobilePhoneNumberVerifyCode : 'Mobile verify code wrong',
@@ -341,6 +342,7 @@
             //Tips for alerts in javascript
             ProfilePageAlertSaveSuccessful           : 'Save successful',
             ProfilePageAlertSaveFailed               : 'Save failed',
+            ProfilePageAlertUserNotFound: 'This user is not exist',
             ProfilePageAlertInvalidPassword          : 'Invalid password!',
 
 
@@ -855,6 +857,7 @@
             ProfilePageDateFormatError                    : '日期格式错误',
             ProfilePageTeamNameRequiredError              : '请输入正确的战队名称',
             ProfilePageNewMemberNameError                 : '请输入正确的用户名',
+            ProfilePageNameLengthError                    : "用户名长度应在6-20之间",
             ProfilePageInvalidQQ                          : '无效的QQ号码',
             ProfilePageInvalidMobilePhoneNumber           : '无效的手机号码',
             ProfilePageInvalidMobilePhoneNumberVerifyCode : '验证码错误',
@@ -866,6 +869,7 @@
             //Tips for alerts in javascript
             ProfilePageAlertSaveSuccessful           : '保存成功',
             ProfilePageAlertSaveFailed               : '保存失败',
+            ProfilePageAlertUserNotFound: '该用户不存在',
             ProfilePageAlertInvalidPassword          : '密码信息无效！',
 
 

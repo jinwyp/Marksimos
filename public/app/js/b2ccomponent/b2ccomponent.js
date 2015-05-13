@@ -1035,7 +1035,15 @@
 
                 function addStudentToTeam(form) {
                     if (form.$valid) {
-                        scope.addStudentToTeam({username: scope.formData.newTeamMember});
+                        scope.addStudentToTeam({username: scope.formData.newTeamMember}).catch(function(message) {
+                            if (angular.isArray(message)) {
+                                message.forEach(function(item) {
+                                    form[item.param].$valid = false;
+                                    form[item.param].$invalid = true;
+                                    scope.css.errorFields[item.param] = true;
+                                });
+                            }
+                        });
                     } else {
                         Object.keys(form).forEach(function(key) {
                             if (key[0] != '$') {

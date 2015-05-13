@@ -251,6 +251,7 @@
         };
         vm.css.alertSuccessInfo = angular.extend({}, vm.css.alertInfo, {template: 'profile-alert-success.html'});
         vm.css.alertFailedInfo = angular.extend({}, vm.css.alertInfo, {template: 'profile-alert-failed.html'});
+        vm.css.alertUserNotFound = angular.extend({}, vm.css.alertInfo, {template: 'profile-alert-user-not-found.html'});
         vm.css.alertInvalidPassword = angular.extend({}, vm.css.alertInfo, {template: 'profile-alert-invalid-password.html'});
 
         vm.currentUser = {};
@@ -332,7 +333,13 @@
         }
 
         function updateFailedHandler(err) {
-            $alert(vm.css.alertFailedInfo);
+            var alertInfo = vm.css.alertFailedInfo;
+
+            // see details in error-code.js
+            if (err.data.errorCode == 10002) {
+                alertInfo = vm.css.alertUserNotFound;
+            }
+            $alert(alertInfo);
             return $q.reject(err.data);
         }
 

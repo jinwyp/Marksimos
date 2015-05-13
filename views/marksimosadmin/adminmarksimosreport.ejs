@@ -82,6 +82,18 @@
                             {{'FinalScoreAdminPanelReRunSaveButton' | translate}}  {{'HomePageSecondMenuBarCurrentPeriod' | translate}}{{data.reRunDecision.periodId}} {{'HomePageSecondMenuBarLabelsCompany' | translate}}{{data.reRunDecision.companyId | companyname}} {{data.reRunDecision.type}} {{data.reRunDecision.sku_fieldname}}
                         </button>
                     </form>
+
+                    <br/>
+
+                    <form class="form-inline" role="form" >
+                        <div class="form-group ">
+                            <button type="submit" class="btn btn-default btn-sm" ng-click="unlockDecisions()">{{'FinalScoreAdminPanelUnlockDecisionButton' | translate}}</button>
+
+                            <label class="checkbox-inline" ng-repeat="companyid in data.allDecisions.allCompanyId">
+                                <input type="checkbox" ng-model="data.unlockCompanyDecisions[$index]"> {{'HomePageSecondMenuBarLabelsCompany' | translate}} {{companyid | companyname}}
+                            </label>
+                        </div>
+                    </form>
                 </div>
             </div>
 

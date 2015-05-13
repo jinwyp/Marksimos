@@ -154,6 +154,44 @@ exports.updateSeminar = function(req, res, next){
 };
 
 
+exports.updateSeminarUnlockDecision = function(req, res, next){
+    var validationErrors = seminarModel.seminarIdValidations(req);
+
+    if(validationErrors){
+        return res.status(400).send( {message: validationErrors} );
+    }
+
+    if(!Array.isArray(req.body.unlockDecision)){
+        return res.status(400).send( {message: 'Unlock Decision is not a array'} );
+    }
+
+    seminarModel.findOneQ({seminarId: req.params.seminar_id}).then(function(resultSeminar){
+        if(!resultSeminar){
+            throw new Error( "Cancel promise chains. seminar not found.");
+        }
+
+        if(resultSeminar.roundTime.length > 0){
+            resultSeminar.roundTime.forEach(function(period){
+                if(period.period === resultSeminar.currentPeriod){
+                    period.lockDecisionTime.forEach(function(company){
+                        if(req.body.unlockDecision[company.companyId - 1] === true){
+                            company.lockStatus = false;
+                        }
+                    });
+                }
+            });
+        }
+
+        return resultSeminar.saveQ();
+    }).then(function(result){
+        if(result[1] > 1){
+            throw new Error( "Cancel promise chains. update seminar failed, No seminar or more than one seminar update.");
+        }
+
+        return res.status(200).send(result);
+    }).fail(next).done();
+};
+
 
 
 

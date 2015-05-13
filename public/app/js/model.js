@@ -1356,6 +1356,9 @@
             runSeminar: function(seminarId, runNextPeriod, companyOverwrite) {
                 return $http.post(apiAdminPath + 'seminar/' + seminarId + '/runsimulation', {goingToNewPeriod : runNextPeriod, decisionsOverwriteSwitchers:companyOverwrite});
             },
+            unlockDecisions: function(seminarId, companyIdUnlockArray) {
+                return $http.post(apiAdminPath + 'seminar/' + seminarId + '/unlockDecision', { unlockDecision:companyIdUnlockArray});
+            },
             addStudentToSeminar : function(postdata){
                 return $http.post(apiAdminPath + 'assign_student_to_seminar', postdata);
             },
@@ -1406,7 +1409,15 @@
 
             sendSeminarChatMessage: function(message, seminarRoom) {
                 return $http.post(apiAdminPath + 'seminar/chat/seminar', { message: message, seminarRoom:seminarRoom});
+            },
+
+            errorHandler : function(message){
+                if(angular.isArray(message)){
+                    return message[0].msg;
+                }
+                return message;
             }
+
 
         };
         return factory;
