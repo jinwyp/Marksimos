@@ -267,8 +267,7 @@ exports.authLoginToken = function (options) {
             sendFailureResponse(options, next);
         }
 
-
-    }
+    };
 };
 
 
@@ -472,7 +471,7 @@ exports.registerB2CStudent = function(req, res, next){
 
         mailContent.substitution_vars.to.push(resultUser.email);
         mailContent.substitution_vars.sub['%username%'].push(resultUser.username);
-        mailContent.substitution_vars.sub['%useremail%'].push(resultUser.email);
+        mailContent.substitution_vars.sub['%useremail%'].push(encodeURIComponent(resultUser.email));
         mailContent.substitution_vars.sub['%token%'].push(resultUser.emailActivateToken);
 
         //mailContent.html = mailContent.html1 + resultUser.username + mailContent.html2 + resultUser.email + mailContent.html3 + resultUser.emailActivateToken + mailContent.html4 + resultUser.email + mailContent.html5 + resultUser.emailActivateToken + mailContent.htmlend;
@@ -626,7 +625,6 @@ exports.activateRegistrationEmail = function(req, res, next){
     }
 
     var nowDate = new Date();
-
     userModel.findOneQ({
         email: req.query.email,
         emailActivateToken: req.query.emailtoken,
@@ -651,7 +649,7 @@ exports.activateRegistrationEmail = function(req, res, next){
         //if(numberAffectedRows !== 1){
         //    throw new Error('Cancel promise chains. Because Update user emailActivated status failed. more or less than 1 record is updated. it should be only one !');
         //}
-        if(savedDoc[1] !== 1 ){
+        if(savedDoc[1] > 1 ){
             throw new Error('Cancel promise chains. Because Update user emailActivated status failed. more or less than 1 record is updated. it should be only one !');
         }
 
