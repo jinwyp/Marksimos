@@ -820,7 +820,7 @@
             ProfilePageSchoolInfoDegree              : '学历',
 
             //Team
-            ProfilePageYourTitle: '你的职位',
+            ProfilePageYourTitle: '您的职位',
             ProfilePageInfoTitle: '职位',
             ProfilePageTeamInfoTeamName              : '战队名称',
             ProfilePageTeamInfoMember                : '队员',
@@ -828,10 +828,10 @@
             ProfilePageJoinedCampaigns: '已报名的活动',
             ProfilePageCancelEnter: '取消报名',
             ProfilePageGoToCampaigns: '我要报名',
-            ProfilePageJoinedNoCampaign: '你尚未加入任何活动',
-            ProfilePageJoinedTeams: '你已加入的团队',
-            ProfilePageJoinedNoTeam: '你尚未加入其他团队',
-            ProfilePageYourTeam: '你的团队',
+            ProfilePageJoinedNoCampaign: '您尚未加入任何活动',
+            ProfilePageJoinedTeams: '您已加入的团队',
+            ProfilePageJoinedNoTeam: '您尚未加入其他团队',
+            ProfilePageYourTeam: '您的团队',
             ProfilePageTeamName: '团队名称',
             ProfilePageTeamCreator: '团队创建者',
             ProfilePageAlreadyJoinedCampaignLabel: '/ 已加入活动：',
