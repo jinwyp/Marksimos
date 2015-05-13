@@ -19,7 +19,7 @@
     <div class="form-group" ng-repeat="member in currentUser.team.memberList">
         <label class="control-label col-md-3 team-label text-right">{{'ProfilePageTeamInfoMember' | translate}}{{$index + 1}} :</label>
         <div class="col-xs-5">
-            <p class="form-control-static">{{member.username}}</p>
+            <p class="form-control-static">{{member.username}} {{member.gameMarksimosPosition ? '(' + member.gameMarksimosPosition + ')' : ''}}</p>
         </div>
         <span ng-if="!currentUser.joinedCampaign.length" ng-click="clickRemoveStudentToTeam(member._id)" class="form-control-static remove-button glyphicon glyphicon-minus col-md-3 button"></span>
     </div>
