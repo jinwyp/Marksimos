@@ -344,9 +344,7 @@ exports.runSimulation = function(){
                             }else {
                                 throw new Error('Cancel promise chains. Because dbSeminar.currentPeriod > dbSeminar.simulationSpan, you cannot run into next period.');
                             }
-
-
-                            console.log(dbSeminar.currentPeriod);
+                            
                             if(dbSeminar.roundTime.length > 0 ){
 
                                 dbSeminar.roundTime[dbSeminar.currentPeriod - 1 ].startTime = new Date();
