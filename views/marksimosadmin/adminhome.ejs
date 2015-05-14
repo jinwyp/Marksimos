@@ -415,21 +415,23 @@
 
                         <div class="box" ng-if="data.currentStudent">
                             <div class="box-header" style="border-bottom:1px solid #f4f4f4;">
-                                <h3 class="box-title">User name: &nbsp;&nbsp;{{data.currentStudent.username}}<button type="button" class="btn btn-danger btn-view-student" ng-click="data.currentStudent=null">Return</button></h3>
+                                <h3 class="box-title">User name: &nbsp;&nbsp;{{data.currentStudent.username}}<button type="button" class="btn btn-info btn-view-student" ng-click="data.currentStudent=null">Return</button></h3>
                             </div><!-- /.box-header -->
                             <div class="box-body table-responsive no-padding student-detail">
                                 <profile-basic-info-form current-user="data.currentStudent"></profile-basic-info-form>
+
+                                <profile-mobile-phone-form current-user="data.currentStudent"></profile-mobile-phone-form>
 
                                 <profile-education-form current-user="data.currentStudent"></profile-education-form>
 
                                 <profile-language-form current-user="data.currentStudent"></profile-language-form>
 
                                 <profile-work-experience-form current-user="data.currentStudent"></profile-work-experience-form>
+
                                 <profile-society-experience-form current-user="data.currentStudent"></profile-society-experience-form>
 
-                                <profile-mobile-phone-form current-user="data.currentStudent"></profile-mobile-phone-form>
-
                                 <profile-title-form current-user="data.currentStudent"></profile-title-form>
+
                                 <profile-team-form current-user="data.currentStudent"></profile-team-form>
                             </div><!-- /.box-body -->
                         </div>
