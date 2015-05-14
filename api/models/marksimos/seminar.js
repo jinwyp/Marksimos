@@ -137,13 +137,13 @@ seminarSchema.statics.studentEmailValidations = function(req){
 
     }else{
 
-        if(req.body.studentemail.indexOf('@') > -1 ){
+        if(req.body.teamcreatoremail.indexOf('@') > -1 ){
             req.checkBody('teamcreatoremail', 'Invalid email.').notEmpty().isEmail();
             req.body.email = req.body.teamcreatoremail;
 
         }else{
             req.checkBody('teamcreatoremail', 'Username should be 6-20 characters').notEmpty().len(6, 20);
-            req.body.username = req.body.studentemail;
+            req.body.username = req.body.teamcreatoremail;
         }
 
     }

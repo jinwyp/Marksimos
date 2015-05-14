@@ -209,7 +209,6 @@ exports.runSimulation = function(){
         } else {
             status = 'pending';
 
-
             var seminarId = req.params.seminar_id;
             var goingToNewPeriod = req.body.goingToNewPeriod;
             var decisionsOverwriteSwitchers = req.body.decisionsOverwriteSwitchers || [];
@@ -358,8 +357,7 @@ exports.runSimulation = function(){
                             dbSeminar.currentPeriod = dbSeminar.currentPeriod + 1;
 
                             return dbSeminar.saveQ().then(function(result){
-                                var numAffected = result[1];
-                                if(numAffected!==1){
+                                if(result[1] > 1){
                                     throw new Error( "Cancel promise chains. Because there's error during update seminar.");
                                 }
 
@@ -374,7 +372,8 @@ exports.runSimulation = function(){
             })
             .then(function(){
                 status = 'active';
-                return res.send({message: "run simulation success."});
+                return res.status(200).send({message: "run simulation success."});
+
             })
             .fail(function(err){
                  status = 'active';
