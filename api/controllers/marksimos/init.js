@@ -335,7 +335,6 @@ exports.runSimulation = function(){
 
                         if(goingToNewPeriod){
 
-                            dbSeminar.currentPeriod = dbSeminar.currentPeriod + 1;
 
                             if(dbSeminar.currentPeriod < dbSeminar.simulationSpan) {
                                 //after simulation success, set currentPeriod to next period, only when goingToNewPeriod = true
@@ -345,7 +344,7 @@ exports.runSimulation = function(){
                             }else {
                                 throw new Error('Cancel promise chains. Because dbSeminar.currentPeriod > dbSeminar.simulationSpan, you cannot run into next period.');
                             }
-
+                            
                             if(dbSeminar.roundTime.length > 0 ){
 
                                 dbSeminar.roundTime[dbSeminar.currentPeriod - 1 ].startTime = new Date();
@@ -355,6 +354,8 @@ exports.runSimulation = function(){
                                 }
 
                             }
+
+                            dbSeminar.currentPeriod = dbSeminar.currentPeriod + 1;
 
                             return dbSeminar.saveQ().then(function(result){
                                 var numAffected = result[1];
