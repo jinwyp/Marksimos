@@ -44,7 +44,7 @@ var userSchema = new Schema({
     phoneVerifyCodeExpires: {type: String},
     phoneVerified: {type: Boolean, default: false},
 
-    role: {type: Number, default: 4, required: true},  //1 admin, 2 distributor, 3 facilitator, 4  students,   5 B2C Enterprise
+    role: {type: Number, default: 4, required: true},  //1 admin, 2 distributor, 3 facilitator, 4  students,   9 B2C Enterprise  10 Mentor
     studentType : {type: Number, default: 10, required: true}, //10 B2B students,  20 B2C students, 30 Both B2C and B2B students
 
 
@@ -87,6 +87,7 @@ var userSchema = new Schema({
     companyName : String,
     companyAddress : String,
     companyContactPerson : String,
+    companyContactPersonPosition : String,
     companyContactMobileNumber: String,
     companyOfficeTelephone: String,
 
@@ -289,13 +290,18 @@ userSchema.statics.registerValidations = function(req, userRoleId, studentType){
         req.checkBody('state', 'state is required').notEmpty();
         req.checkBody('city', 'city is required').notEmpty();
 
-
         req.checkBody('studentType', 'Student B2B or B2C Type is required.').notEmpty().isInt();
 
     }
 
     if(userRoleId === userRoleModel.roleList.enterprise.id){
-        req.checkBody('companyName', 'Company Name is required').notEmpty().len(4, 100);
+
+        req.checkBody('companyName', 'Company Name is required').notEmpty().len(2, 100);
+        req.checkBody('companyAddress', 'Company Address is required').notEmpty().len(2, 100);
+        req.checkBody('companyContactPerson', 'Company Contact Person is required').notEmpty().len(2, 100);
+        req.checkBody('companyContactPersonPosition', 'Company Contact Person Position is required').notEmpty().len(2, 100);
+        req.checkBody('mobilePhone', 'Company Mobile Phone wrong format').notEmpty().isMobilePhone('zh-CN');
+        req.checkBody('companyOfficeTelephone', 'Company Office Telephone is required').notEmpty().len(2, 100);
     }
 
     if(userRoleId === userRoleModel.roleList.distributor.id){

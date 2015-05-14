@@ -3,8 +3,13 @@ var logger           = require('../../../common/logger.js');
 var simulationResult = require('../../models/marksimos/simulationResult.js');
 var seminarModel     = require('../../models/marksimos/seminar.js');
 var userRoleModel    = require('../../models/user/userrole.js');
+
+var teamScoreModel = require('../../models/b2c/teamscore.js');
+
 var Q                = require('q');
 var _                = require('underscore');
+
+
 
 
 
@@ -34,7 +39,7 @@ exports.getStudentFinalScore = function(req, res, next) {
         }
 
         seminarData = resultSeminar;
-
+        
         return getFinalScore(seminarId);
     })
     .then(function(result) {
@@ -109,20 +114,50 @@ exports.getStudentFinalScore = function(req, res, next) {
 
         }
 
+
+
+        // 保存比赛结果到teamScoreModel 里面
+        if(seminarData.isSimulationFinished === true){
+            //var finalScoreList = _.sortBy(result.scoreData[result.scoreData.length - 1].scores, 'finalScore').reverse();
+            //var teamScoreList = [];
+            //
+            //finalScoreList.forEach(function(score, sindex){
+            //    score.ranking = sindex + 1;
+            //
+            //    var companyScore = {
+            //        ranking : score.ranking,
+            //        timeCost : score.spendHour,
+            //        marksimosSeminar : seminarData._id,
+            //        student : '',
+            //        team : '',
+            //        campaign : ''
+            //    };
+            //
+            //    teamScoreList.push(companyScore);
+            //
+            //});
+            //
+            //
+            //console.log(finalScoreList);
+            //console.log(teamScoreList);
+            //teamScoreModel.create();
+        }
+
+
         if(req.user.role === userRoleModel.roleList.student.id){
             if (result.showLastPeriodScore) {
                 //如果显示最后一阶段的分数，则正常输出
-                res.status(200).send(result.scoreData);
+                return res.status(200).send(result.scoreData);
             } else {
                 //如果不显示最后一阶段的分数，则数据length-1,原数据为排过序的数据
                 if (result.scoreData && result.scoreData.length > 1) {
-                    res.status(200).send( result.scoreData.slice(0, result.scoreData.length - 1));
+                    return res.status(200).send( result.scoreData.slice(0, result.scoreData.length - 1));
                 }else {
-                    res.status(200).send( result.scoreData);
+                    return res.status(200).send( result.scoreData);
                 }
             }
         }else{
-            res.status(200).send(result.scoreData);
+            return res.status(200).send(result.scoreData);
         }
 
 
