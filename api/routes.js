@@ -6,7 +6,7 @@ var chartController = require('./controllers/marksimos/chart.js');
 var reportController = require('./controllers/marksimos/report.js');
 var initController = require('./controllers/marksimos/init.js');
 var auth = require('./controllers/user/authentication.js');
-var distributorController = require('./controllers/user/admin.js');
+var administratorController = require('./controllers/user/admin.js');
 var studentController = require('./controllers/user/student.js');
 var campaignController = require('./controllers/b2c/campaign.js');
 var seminarController = require('./controllers/marksimos/seminar.js');
@@ -316,21 +316,23 @@ apiRouter.post('/marksimos/api/admin/login', auth.adminLogin);
 // get current admin role
 apiRouter.get('/marksimos/api/admin/user', auth.authLoginToken(), auth.authRole(marksimosRight.adminLogin), auth.getUserInfo);
 
-apiRouter.get('/marksimos/api/admin/distributors', auth.authLoginToken(), auth.authRole(marksimosRight.distributorInfoListGet), distributorController.searchDistributor);
-apiRouter.post('/marksimos/api/admin/distributors', auth.authLoginToken(), auth.authRole(marksimosRight.distributorInfoSingleCUD), distributorController.addDistributor);
-apiRouter.put('/marksimos/api/admin/distributors/:distributor_id', auth.authLoginToken(), auth.authRole(marksimosRight.distributorInfoSingleCUD), distributorController.updateDistributor);
+apiRouter.get('/marksimos/api/admin/distributors', auth.authLoginToken(), auth.authRole(marksimosRight.distributorInfoListGet), administratorController.searchDistributor);
+apiRouter.post('/marksimos/api/admin/distributors', auth.authLoginToken(), auth.authRole(marksimosRight.distributorInfoSingleCUD), administratorController.addDistributor);
+apiRouter.put('/marksimos/api/admin/distributors/:distributor_id', auth.authLoginToken(), auth.authRole(marksimosRight.distributorInfoSingleCUD), administratorController.updateDistributor);
 
 
-apiRouter.get('/marksimos/api/admin/facilitators', auth.authLoginToken(), auth.authRole(marksimosRight.facilitatorInfoListGet), distributorController.searchFacilitator);
-apiRouter.post('/marksimos/api/admin/facilitators', auth.authLoginToken(), auth.authRole(marksimosRight.facilitatorInfoSingleCUD), distributorController.addFacilitator);
-apiRouter.put('/marksimos/api/admin/facilitators/:facilitator_id',  auth.authLoginToken(), auth.authRole(marksimosRight.facilitatorInfoSingleCUD), distributorController.updateFacilitator);
+apiRouter.get('/marksimos/api/admin/facilitators', auth.authLoginToken(), auth.authRole(marksimosRight.facilitatorInfoListGet), administratorController.searchFacilitator);
+apiRouter.post('/marksimos/api/admin/facilitators', auth.authLoginToken(), auth.authRole(marksimosRight.facilitatorInfoSingleCUD), administratorController.addFacilitator);
+apiRouter.put('/marksimos/api/admin/facilitators/:facilitator_id',  auth.authLoginToken(), auth.authRole(marksimosRight.facilitatorInfoSingleCUD), administratorController.updateFacilitator);
 
 
-apiRouter.get('/marksimos/api/admin/students', auth.authLoginToken(), auth.authRole(marksimosRight.studentInfoListGet), distributorController.searchStudent);
-apiRouter.post('/marksimos/api/admin/students', auth.authLoginToken(), auth.authRole(marksimosRight.studentInfoSingleCUD), distributorController.addStudent);
-apiRouter.put('/marksimos/api/admin/students/:student_id', auth.authLoginToken(), auth.authRole(marksimosRight.studentInfoSingleCUD), distributorController.updateStudent);
+apiRouter.get('/marksimos/api/admin/students', auth.authLoginToken(), auth.authRole(marksimosRight.studentInfoListGet), administratorController.searchStudent);
+apiRouter.post('/marksimos/api/admin/students', auth.authLoginToken(), auth.authRole(marksimosRight.studentInfoSingleCUD), administratorController.addStudent);
+apiRouter.put('/marksimos/api/admin/students/:student_id', auth.authLoginToken(), auth.authRole(marksimosRight.studentInfoSingleCUD), administratorController.updateStudent);
 
-apiRouter.post('/marksimos/api/admin/students/reset_password',  auth.authLoginToken(), auth.authRole(marksimosRight.studentInfoSingleCUD), distributorController.resetStudentPassword);
+
+
+apiRouter.post('/marksimos/api/admin/students/reset_password',  auth.authLoginToken(), auth.authRole(marksimosRight.studentInfoSingleCUD), administratorController.resetStudentPassword);
 
 
 //Facilitator manager Campaign

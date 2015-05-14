@@ -174,6 +174,12 @@ var roles = [
         id : 9,
         name : 'enterprise',
         permissions :[]
+    },
+
+    {
+        id : 10,
+        name : 'mentor',
+        permissions :[]
     }
 
 ];
@@ -184,7 +190,7 @@ var getRoleList = function (){
         roleListResult[role.name] = role ;
         roleListResult[role.id] = role ;
     });
-    return roleListResult
+    return roleListResult;
 };
 
 

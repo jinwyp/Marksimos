@@ -34,7 +34,7 @@ exports.updateStudentB2CInfo = function(req, res, next){
         promise = userModel.findOneQ({mobilePhone : req.body.mobilePhone})
         .then(function(resultUser) {
             if (resultUser) {
-                throw new MKError('Cancel promise chains. Because this mobilePhone is taken by other user.', MKError.errorCode.userInfo.phoneExisted);
+                throw new MKError('Cancel promise chains. Because this mobilePhone is taken by other user.', MKError.errorCode.userInfo.notCreate);
             }
         });
     }

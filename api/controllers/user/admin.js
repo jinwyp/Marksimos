@@ -3,7 +3,7 @@ var userRoleModel = require('../../models/user/userrole.js');
 var seminarModel = require('../../models/marksimos/seminar.js');
 
 var utility = require('../../../common/utility.js');
-
+var MKError = require('../../../common/error-code.js');
 
 
 exports.addDistributor = function(req, res, next){
@@ -367,6 +367,11 @@ exports.addStudent = function(req, res, next){
         return res.status(400).send( {message: validationErrors} );
     }
 
+    var userRoleId = userRoleModel.roleList.student.id;
+    if(req.body.userRole === userRoleModel.roleList.enterprise.id){
+        userRoleId = userRoleModel.roleList.enterprise.id;
+    }
+
     var facilitatorId = req.user._id;
 
     var newStudent = {
@@ -394,7 +399,7 @@ exports.addStudent = function(req, res, next){
 
         facilitatorId : facilitatorId,
 
-        role        : userRoleModel.roleList.student.id,
+        role        : userRoleId,
         studentType : req.body.studentType,
 
         activated : true
@@ -403,10 +408,10 @@ exports.addStudent = function(req, res, next){
 
     userModel.register(newStudent).then(function(result){
         if(!result) {
-            throw new Error('Create new B2B student to database error.');
+            throw new MKError('Cancel promise chains. Because Create new B2B student or Enterprise failed.', MKError.errorCode.common.phoneExisted);
         }
 
-        return res.status(200).send({message: 'Create new B2B student success'});
+        return res.status(200).send({message: 'Create new B2B student or Enterprise success'});
 
     }).fail(function(err){
         next(err);
