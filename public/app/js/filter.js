@@ -306,6 +306,7 @@
             var names = {
                 110: 'jobCompanySize20',
                 120: 'jobCompanySize50',
+                125: 'jobCompanySize80',
                 130: 'jobCompanySize100',
                 140: 'jobCompanySize200',
                 150: 'jobCompanySize500',
