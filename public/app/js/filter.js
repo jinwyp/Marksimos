@@ -165,7 +165,7 @@
                 2105 : 'educationMajorAgriculture01'
             };
 
-            return names[input] || 'educationMajorPhilosophy01';
+            return names[input] || '';
         };
     }
 
@@ -297,7 +297,7 @@
                 return names[input];
             }
 
-            return input || 'jobIndustryComputer';
+            return input || '';
         };
     }
 

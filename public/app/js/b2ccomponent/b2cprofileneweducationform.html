@@ -26,6 +26,7 @@
                         <div class="col-xs-4"><span class="btn btn-default form-control" ng-click="css.currentMajor=-99">{{'ProfilePageSelectButton' | translate}}</span></div>
                     </div>
                     <div muti-select selectfitler="major" datasource="Constant.educationMajor" show="-99 == css.currentMajor"  selectclick="clickHideMutiSelect()" close="clickHideMutiSelect()" ng-model="formData.major"></div>
+                    <input type="hidden" required name="major" id="major" ng-model="formData.major">
                 </div>
                 <span class="err-msg control-label form-control-static col-xs-4" ng-if="newSchoolForm.major.$dirty && newSchoolForm.major.$invalid">{{'ProfilePageRequiredError' | translate}}</span>
             </div>

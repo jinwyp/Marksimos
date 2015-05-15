@@ -17,7 +17,7 @@
                 formData: {}
             },
             $get: function() {
-                return function(scope, formKeys, updateErrorHandler) {
+                return function(scope, formKeys, updateErrorHandler, beforeUpdate) {
                     formKeys = formKeys || [];
 
                     Object.keys(me.defaults).forEach(function(key) {
@@ -33,11 +33,13 @@
                         if (form.$valid) {
                             scope.css.errorFields = {};
 
+                            beforeUpdate && beforeUpdate();
+
                             scope.update({data: data || scope.formData}).then(function() {
                                 cancelEditProfile();
                             }).catch(function(message) {
 
-                                if (updateErrorHandler) updateErrorHandler(message);
+                                updateErrorHandler && updateErrorHandler(message);
 
                                 if (angular.isArray(message)) {
                                     message.forEach(function(item) {
@@ -86,13 +88,14 @@
     });
 
     angular.module('marksimos.b2ccomponent').factory('profileFormScopeAddItemDecorator', function() {
-        return function(scope, itemsKey) {
+        return function(scope, itemsKey, beforeAddItem) {
             if (!scope.clickUpdateUserInfo)
                 throw Error('`profileFormScopeBaseDecorator` should be called before this one');
 
             scope.clickAddItem = function(form) {
                 var data;
                 if (form.$valid) {
+                    beforeAddItem && beforeAddItem();
                     var items = angular.copy(scope.currentUser[itemsKey]);
                     items.push(angular.copy(scope.formData));
                     data = {};
@@ -108,7 +111,7 @@
             if (!scope.clickUpdateUserInfo)
                 throw Error('`profileFormScopeBaseDecorator` should be called before this one');
 
-            scope.clickDeleteItem = function() {
+            scope.clickDeleteItem = function(index) {
                 scope.formData[itemsKey] = angular.copy(scope.currentUser[itemsKey]);
                 scope.formData[itemsKey].splice(index, 1);
                 scope.clickUpdateUserInfo({$valid: true});
@@ -168,7 +171,11 @@
             link: function(scope, elem, attrs, ctrl) {
                 var key = 'eductionBackgrounds';
 
-                profileFormScopeBaseDecorator(scope, [key]);
+                profileFormScopeBaseDecorator(scope, [key], null, function() {
+                    for (var i = 0; i < scope.formData.eductionBackgrounds.length; i++) {
+                        addAchievement(i);
+                    }
+                });
 
                 profileFormScopeDeleteItemDecorator(scope, key);
 
@@ -186,8 +193,10 @@
 
                 function addAchievement(index) {
                     var eduction = scope.formData.eductionBackgrounds[index];
-                    eduction.achievements.push(eduction._newAchievement);
-                    eduction._newAchievement = null;
+                    if (eduction && eduction._newAchievement) {
+                        eduction.achievements.push(eduction._newAchievement);
+                        eduction._newAchievement = null;
+                    }
                 }
             }
         };
@@ -204,7 +213,7 @@
             link: function(scope, elem, attrs, ctrl) {
                 profileFormScopeBaseDecorator(scope);
 
-                profileFormScopeAddItemDecorator(scope, 'eductionBackgrounds');
+                profileFormScopeAddItemDecorator(scope, 'eductionBackgrounds', addAchievement);
 
                 scope.Constant = Constant;
 
@@ -260,7 +269,9 @@
             link: function(scope, elem, attrs, ctrl) {
                 profileFormScopeBaseDecorator(scope);
 
-                profileFormScopeAddItemDecorator(scope, 'LanguageSkills');
+                profileFormScopeAddItemDecorator(scope, 'LanguageSkills', function() {
+
+                });
 
                 scope.Constant = Constant;
             }
@@ -278,7 +289,7 @@
             link: function(scope, elem, attrs, ctrl) {
                 var itemsKey = 'workExperiences';
 
-                profileFormScopeBaseDecorator(scope, itemsKey);
+                profileFormScopeBaseDecorator(scope, [itemsKey]);
 
                 profileFormScopeDeleteItemDecorator(scope, itemsKey);
 
@@ -464,7 +475,7 @@
             },
             templateUrl: 'b2cprofileteamform.html',
             link: function(scope, elem, attrs, ctrl) {
-                profileFormScopeBaseDecorator(scope, 'team.name');
+                profileFormScopeBaseDecorator(scope, ['team.name']);
 
                 scope.clickRemoveStudentToTeam = removeStudentToTeam;
                 scope.clickAddStudentToTeam = addStudentToTeam;

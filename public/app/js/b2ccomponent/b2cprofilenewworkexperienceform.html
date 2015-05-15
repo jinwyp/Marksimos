@@ -26,6 +26,7 @@
                         <div class="col-xs-4"><span class="btn btn-default form-control" ng-click="css.currentJobIndustry=-99">{{'ProfilePageSelectButton' | translate}}</span></div>
                     </div>
                     <div muti-select selectfitler="jobndustry" datasource="Constant.jobIndustry" show="-99 == css.currentJobIndustry"  selectclick="clickHideMutiSelect()" close="clickHideMutiSelect()" ng-model="formData.industry"></div>
+                    <input type="hidden" required id="industry" name="industry" ng-model="formData.industry"/>
                 </div>
                 <span class="err-msg control-label form-control-static col-xs-4" ng-if="newExperienceForm.industry.$dirty && newExperienceForm.industry.$invalid">{{'ProfilePageRequiredError' | translate}}</span>
             </div>
