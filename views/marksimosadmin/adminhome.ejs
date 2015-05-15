@@ -385,8 +385,9 @@
                                         <th style="width: 100px;">Action</th>
                                         <th>UserName / Registration Time</th>
                                         <th>First/Last Name / Gender</th>
-                                        <th>Email/Activated</th>
-                                        <th>Status</th>
+                                        <th>Gender</th>
+                                        <th>Email</th>
+                                        <th>Status / Email Activated / Phone Verified</th>
                                         <th>Cell Phone/Verified</th>
                                         <th>Country / Province / City</th>
                                         <th>University</th>
@@ -397,10 +398,11 @@
                                         <!-- <td>{{user._id}}</td> -->
                                         <td><button type="button" class="btn btn-danger" ng-click="data.currentStudent = user">View</button></td>
                                         <td>{{user.username}} / {{user.createdAt | date:'yyyy-MM-dd HH:mm:ss'}}</td>
-                                        <td>{{user.firstName}} {{user.lastName}} / {{user.gender == 1 ? 'ProfilePageBasicInfoGenderMale' : 'ProfilePageBasicInfoGenderFemale' | translate}} </td>
-                                        <td>{{user.email}} / {{user.emailActivated}}</td>
-                                        <td>{{user.activated}}</td>
-                                        <td>{{user.mobilePhone }} / {{user.phoneVerified}}</td>
+                                        <td>{{user.firstName}} {{user.lastName}} </td>
+                                        <td>{{user.gender == 1 ? 'ProfilePageBasicInfoGenderMale' : 'ProfilePageBasicInfoGenderFemale' | translate}} </td>
+                                        <td>{{user.email}} </td>
+                                        <td>{{user.activated}} / {{user.emailActivated}} / {{user.phoneVerified}}</td>
+                                        <td>{{user.mobilePhone }} </td>
                                         <td>{{user.currentLocation}} </td>
                                         <td> <span ng-repeat="edu in user.eductionBackgrounds">{{edu.university}} / {{ edu.degree}} / {{ edu.major | major | translate}} / {{ edu.entryDate | date:'yyyy-MM-dd'}} / {{ edu.graduationDate | date:'yyyy-MM-dd'}} <br/></span> </td>
                                         <td><span ng-repeat="work in user.workExperiences">{{work.company}} / {{work.jobType | jobtype | translate}} / {{work.industry | jobndustry | translate}} / {{work.position}} / {{work.sizeOfCompany | companysize | translate}} / {{work.startDate | date:'yyyy-MM-dd'}} / {{ work.endDate | date:'yyyy-MM-dd'}} <br/></span></td>

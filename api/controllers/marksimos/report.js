@@ -107,6 +107,7 @@ exports.getStudentFinalScore = function(req, res, next) {
                         score.hours = tempRoundTime['p'+ period.period]['c' + score.companyId].hours;
                         score.minutes = tempRoundTime['p'+ period.period]['c' + score.companyId].minutes;
                         score.seconds = tempRoundTime['p'+ period.period]['c' + score.companyId].seconds;
+
                     });
                 }
 
@@ -118,29 +119,57 @@ exports.getStudentFinalScore = function(req, res, next) {
 
         // 保存比赛结果到teamScoreModel 里面
         if(seminarData.isSimulationFinished === true){
-            //var finalScoreList = _.sortBy(result.scoreData[result.scoreData.length - 1].scores, 'finalScore').reverse();
-            //var teamScoreList = [];
-            //
-            //finalScoreList.forEach(function(score, sindex){
-            //    score.ranking = sindex + 1;
-            //
-            //    var companyScore = {
-            //        ranking : score.ranking,
-            //        timeCost : score.spendHour,
-            //        marksimosSeminar : seminarData._id,
-            //        student : '',
-            //        team : '',
-            //        campaign : ''
-            //    };
-            //
-            //    teamScoreList.push(companyScore);
-            //
-            //});
-            //
-            //
-            //console.log(finalScoreList);
-            //console.log(teamScoreList);
-            //teamScoreModel.create();
+            var finalScoreList = _.sortBy(result.scoreData[result.scoreData.length - 1].scores, 'finalScore').reverse();
+            var teamScoreList = [];
+
+
+            finalScoreList.forEach(function(score, sindex){
+                score.ranking = sindex + 1;
+
+                seminarData.companyAssignment.forEach(function(company){
+                    if(company.companyId === score.companyId){
+                        if(company.teamList.length > 0){
+                            score.teamid = company.teamList[0];
+                        }
+                    }
+                });
+
+
+                var companyScore = {
+                    ranking : score.ranking,
+                    timeCost : score.spendHour,
+                    marksimosSeminar : seminarData._id
+                    //student : '',
+                };
+
+                if(score.teamid){
+                    companyScore.team = score.teamid;
+                }
+
+                if(seminarData.belongToCampaign){
+                    companyScore.campaign = seminarData.belongToCampaign;
+                }
+
+                if(score.lockStatus){
+                    companyScore.timeCostStatus = 1;
+                }else{
+                    companyScore.timeCostStatus = 0;
+                }
+
+                teamScoreList.push(companyScore);
+
+            });
+
+
+            teamScoreModel.findQ({marksimosSeminar:seminarData._id}).then(function(results){
+
+                if(results.length === 0){
+                    teamScoreModel.createQ(teamScoreList);
+                }
+
+            }).fail(next).done();
+
+
         }
 
 

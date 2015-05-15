@@ -842,7 +842,7 @@ exports.forgotPasswordStep2 = function(req, res, next){
 
 
 
-exports.generateCaptcha = function(req, res, next) {
+exports.generateRegCaptcha = function(req, res, next) {
 
     Captcha.findOneAndRemove({_id: req.cookies['x-captcha-token']})
 
@@ -866,16 +866,14 @@ exports.generateCaptcha = function(req, res, next) {
         if (parsedRes.status === "error") {
             throw new Error(parsedRes);
         }
-        return Captcha.createQ({txt: captcha, mobilePhone: req.query.mobilePhone})
+        return Captcha.createQ({txt: captcha, mobilePhone: req.query.mobilePhone});
     })
     .then(function(captcha) {
         if(captcha){
             res.cookie('x-captcha-token', captcha._id.toString());
             res.status(200).send({message: 'Generate MobilePhone verify code success'});
         }
-    })
-    .fail(next)
-    .done();
+    }).fail(next).done();
 };
 
 
@@ -914,9 +912,7 @@ exports.generatePhoneVerifyCode = function(req, res, next) {
             return res.status(400).send(parsedRes);
         }
         return res.status(200).send({message: 'Generate MobilePhone verify code success'});
-    })
-    .fail(next)
-    .done();
+    }).fail(next).done();
 };
 
 
@@ -929,25 +925,37 @@ exports.verifyPhoneVerifyCode = function(req, res, next) {
     }
 
     var phoneVerifyCode = req.body.phoneVerifyCode;
-    var user = req.user;
+
     var nowDate = new Date();
 
-    if(user.phoneVerifyCodeExpires < nowDate) {
-        return res.status(400).send( {message: "PhoneVerifyCode Expired!"});
-    }
+    userModel.findOneQ({
+        username: req.user.username
+    }).then(function(resultUser){
 
-    if(user.phoneVerifyCode !== phoneVerifyCode) {
-        return res.status(400).send( {message: "PhoneVerifyCode not match!"});
-    }
+        if(!resultUser) {
+            throw new Error('Cancel promise chains. Because User Reset Password Token not found!');
+        }
 
-    user.phoneVerified = true;
-    user.saveQ()
-    .then(function(savedDoc){
+        if(resultUser.phoneVerifyCodeExpires < nowDate) {
+            return res.status(400).send( {message: "PhoneVerifyCode Expired!"});
+        }
+
+        if(resultUser.phoneVerifyCode !== phoneVerifyCode) {
+            return res.status(400).send( {message: "PhoneVerifyCode not match!"});
+        }
+
+        resultUser.phoneVerified = true;
+
+        return resultUser.saveQ();
+
+
+    }).then(function(savedDoc){
         if(savedDoc[1] !== 1 ){
             throw new Error('Cancel promise chains. Because Update user phoneVerified failed. More or less than 1 record is updated. it should be only one !');
         }
         return res.status(200).send({message: 'verifyPhoneCode succeed'});
-    })
-    .fail(next).done();
+    }).fail(next).done();
+
+
 
 };

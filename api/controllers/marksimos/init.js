@@ -419,8 +419,8 @@ function submitDecisionForAllCompany(companies, period, seminarId){
     companies.forEach(function(companyId){
         p = p.then(function(){
             //logger.log("submit decision finished.");
-            return submitDecision(companyId, period, seminarId)
-        })
+            return submitDecision(companyId, period, seminarId);
+        });
     });
 
     return p;

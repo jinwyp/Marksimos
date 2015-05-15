@@ -24,6 +24,7 @@ var teamScoreSchema = new Schema({
 
     ranking : { type: Number, default: 0 },
     timeCost:  { type: Number },
+    timeCostStatus:  { type: Number },
 
     student: { type: schemaObjectId, ref: 'User' },
     team: { type: schemaObjectId, ref: 'Team' },

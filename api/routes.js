@@ -222,7 +222,7 @@ apiRouter.post('/e4e/api/register/email', auth.verifyEmail);
 apiRouter.post('/e4e/api/register/mobilePhone', auth.verifyMobilePhone);
 
 // comment-captcha-start
-apiRouter.get('/e4e/api/captcha', auth.generateCaptcha);
+apiRouter.get('/e4e/api/captcha', auth.generateRegCaptcha);
 // comment-captcha-end
 
 apiRouter.post('/e4e/api/forgotpasswordstep1', auth.sendResetPasswordEmail);
@@ -337,6 +337,7 @@ apiRouter.post('/marksimos/api/admin/students/reset_password',  auth.authLoginTo
 
 //Facilitator manager Campaign
 apiRouter.get('/marksimos/api/admin/campaigns', auth.authLoginToken(), auth.authRole(marksimosRight.campaignInfoListGet), campaignController.searchCampaign);
+apiRouter.get('/marksimos/api/admin/campaigns/score', auth.authLoginToken(), auth.authRole(marksimosRight.campaignInfoListGet), campaignController.searchTeamMarksimosScore);
 apiRouter.post('/marksimos/api/admin/campaigns', auth.authLoginToken(), auth.authRole(marksimosRight.campaignSingleCUD), campaignController.addCampaign);
 apiRouter.put('/marksimos/api/admin/campaigns', auth.authLoginToken(), auth.authRole(marksimosRight.campaignSingleCUD), campaignController.updateCampaign);
 apiRouter.post('/marksimos/api/admin/campaigns/upload', auth.authLoginToken(), auth.authRole(marksimosRight.campaignSingleCUD), fileUploadModel.multerUpload(), campaignController.uploadCampaignPics );
