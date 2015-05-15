@@ -33,6 +33,7 @@
 
     angular.module('marksimos.filter').filter('language', languageFilter);
     angular.module('marksimos.filter').filter('proficiency', proficiencyFilter);
+    angular.module('marksimos.filter').filter('degree', degreeFilter);
     angular.module('marksimos.filter').filter('major', majorFilter);
     angular.module('marksimos.filter').filter('jobtype', jobTypeFilter);
     angular.module('marksimos.filter').filter('societyposition', societyExperiencesPositionFilter);
@@ -94,6 +95,23 @@
             };
 
             return names[input] || 'LanguageBeginner';
+        };
+    }
+
+
+    function degreeFilter() {
+        return function(input) {
+            var names = {
+                10: 'educationDegreeSeniorHighSchool',
+                20: 'educationDegreeJuniorCollege',
+                30: 'educationDegreeBachelor',
+                40: 'educationDegreeMaster',
+                50: 'educationDegreeMBA',
+                60: 'educationDegreeDoctor',
+                70: 'educationDegreeOther'
+            };
+
+            return names[input] || 'educationDegreeSeniorHighSchool';
         };
     }
 

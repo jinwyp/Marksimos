@@ -39,6 +39,15 @@
             LanguageFluent       : 'Fluent',
             LanguageNative       : 'Native',
 
+            // Education Degree
+            educationDegreeSeniorHighSchool : 'Senior High School',
+            educationDegreeJuniorCollege    : 'Junior College',
+            educationDegreeBachelor         : 'Bachelor',
+            educationDegreeMaster           : 'Master',
+            educationDegreeMBA              : 'MBA',
+            educationDegreeDoctor           : 'Doctor',
+            educationDegreeOther            : 'Other',
+
 
             // Education Major
             educationMajorPhilosophy  : 'Philosophy',
@@ -563,6 +572,15 @@
             LanguageFluent: '精通',
             LanguageNative: '母语',
 
+
+            // Education Degree
+            educationDegreeSeniorHighSchool : '高中',
+            educationDegreeJuniorCollege    : '大专',
+            educationDegreeBachelor         : '本科',
+            educationDegreeMaster           : '硕士',
+            educationDegreeMBA              : 'MBA',
+            educationDegreeDoctor           : '博士',
+            educationDegreeOther            : '其他',
 
             // Education Major
             educationMajorPhilosophy  : '哲学',
