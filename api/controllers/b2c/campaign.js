@@ -350,7 +350,11 @@ exports.addMarkSimosSeminarToCampaign = function(req, res, next){
         if(savedDoc[1] !== 1){
             throw new Error('Cancel promise chains. Because Update campaign failed. More or less than 1 record is updated. it should be only one !');
         }
-        return res.status(200).send({message: "Assign seminar to campaign success."})
+
+        dataSeminar.belongToCampaign = savedDoc[0]._id;
+        dataSeminar.saveQ();
+
+        return res.status(200).send({message: "Assign seminar to campaign success."});
 
     }).fail(function(err){
         next (err);
