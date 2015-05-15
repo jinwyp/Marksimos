@@ -32,7 +32,7 @@ exports.campaignListPage = function(req, res, next){
         });
 
         return res.render('b2c/campaign/campaignlist.ejs',{
-            title : 'HCD E4E Campaign | HCD Learning',
+            title : 'Bridge+ Campaign | Bridge+',
             campaignList: resultCampaign
         });
 
@@ -63,7 +63,7 @@ exports.campaignSingleInfoPage = function(req, res, next){
         resultCampaign.totalMembers = totalMembers  + resultCampaign.memberNumberBase;
 
         return res.render('b2c/campaign/campaign.ejs',{
-            title : 'Bridge+ Campaign',
+            title : 'Bridge+ Campaign | Bridge+',
             campaign: resultCampaign
         });
 
