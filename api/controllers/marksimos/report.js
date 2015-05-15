@@ -150,6 +150,12 @@ exports.getStudentFinalScore = function(req, res, next) {
                     companyScore.campaign = seminarData.belongToCampaign;
                 }
 
+                if(score.lockStatus){
+                    companyScore.timeCostStatus = 1;
+                }else{
+                    companyScore.timeCostStatus = 0;
+                }
+
                 teamScoreList.push(companyScore);
 
             });

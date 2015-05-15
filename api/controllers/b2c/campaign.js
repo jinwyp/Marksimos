@@ -9,8 +9,10 @@ var userRoleModel = require('../../models/user/userrole.js');
 var teamModel = require('../../models/user/team.js');
 var seminarModel = require('../../models/marksimos/seminar.js');
 var campaignModel = require('../../models/b2c/campaign.js');
-var fileUploadModel = require('../../models/user/fileupload.js');
+var teamScoreModel = require('../../models/b2c/teamscore.js');
 
+var fileUploadModel = require('../../models/user/fileupload.js');
+var MKError = require('../../../common/error-code.js');
 
 
 
@@ -99,6 +101,9 @@ exports.campaignSingleInfo = function(req, res, next){
     }).done();
 
 };
+
+
+
 
 
 
@@ -307,6 +312,103 @@ exports.searchCampaign = function(req, res, next){
         });
     });
 };
+
+
+
+
+exports.searchTeamMarksimosScore = function(req, res, next) {
+    var validationErrors = campaignModel.searchQueryValidations(req);
+
+    if (validationErrors) {
+        return res.status(400).send({message : validationErrors});
+    }
+
+    var searchKeyword = req.query.keyword || '';
+    var activated = req.query.activated || 'all';
+
+    var quantity = req.query.quantity || 5000;
+
+
+    var query = {};
+
+    if (activated !== 'all') {
+        query.$and = [
+            {activated : activated}
+        ];
+    }
+    if (searchKeyword) {
+        var strRegex = ".*[" + searchKeyword.split('').join('][') + "].*";
+        var regex = {$regex : strRegex, $options : 'i'}; // $options : 'i' Means case insensitivity to match upper and lower cases. 不区分大小写
+
+        query.$or = [
+            {'name' : regex},
+            {'description' : regex},
+            {'location' : regex},
+            {'matchDate' : regex}
+        ];
+    }
+
+    //campaignModel.find(query).populate('seminarListMarksimos').populate('pictures.listCover').populate('pictures.firstCover').populate('pictures.benefit1').populate('pictures.benefit2').populate('pictures.benefit3').populate('pictures.qualification').populate('pictures.process').populate('teamList').sort({createdAt: -1}).exec(function(err, resultCampaign){
+    //
+    //    if(err){
+    //        next(err);
+    //    }
+    //
+    //    if(!resultCampaign){
+    //        next( new Error('Cancel promise chains. Because campaign not found !') );
+    //    }
+    //
+    //    // Deep population is here
+    //    var campaignOptions = [
+    //        { path: 'teamList.memberList', model : 'User', select : userModel.selectFields() },
+    //        { path: 'teamList.creator', model : 'User', select : userModel.selectFields()}
+    //    ];
+    //
+    //    teamModel.populate(resultCampaign, campaignOptions, function(err, resultTeam){
+    //        if(err){
+    //            next(err);
+    //        }
+    //
+    //        if(!resultTeam){
+    //            next( new Error('Cancel promise chains. Because team not found !') );
+    //        }
+    //
+    //        return res.status(200).send(resultCampaign);
+    //
+    //    });
+    //});
+
+    var campaignIdList = [];
+
+    campaignModel.findQ(query)
+    .then(function (resultCampaigns) {
+
+        if (!resultCampaigns) {
+            throw new MKError('Cancel promise chains. Because campaign not found!', MKError.errorCode.common.notFound);
+        }
+
+        campaignIdList = resultCampaigns.map(function (campaign) {
+            return campaign._id;
+        });
+
+        console.log(campaignIdList);
+
+        return teamScoreModel.find({
+            campaign: { $in: campaignIdList}
+        }).limit(quantity).sort({ranking: 1, timeCostStatus: -1, timeCost: 1}).execQ();
+
+    }).then(function (resultTeamScores) {
+        if (!resultTeamScores) {
+            throw new MKError('Cancel promise chains. Because TeamScores not found!', MKError.errorCode.common.notFound);
+        }
+
+        res.status(200).send(resultTeamScores);
+
+    });
+
+};
+
+
 
 
 
