@@ -1,7 +1,7 @@
 <div class="profile-detail-title">{{'ProfilePageTabSocietyExperienceInfo' | translate}}<span class="profile-edit" ng-click="clickEditProfile()">{{'ProfilePageEditButton' | translate}}</span></div>
 <form novalidate name="experienceForm" class="form-horizontal">
     <div class="experience" ng-repeat="experience in currentUser.societyExperiences">
-        <h3>{{'ProfilePageSocietyExperience' | translate}} {{$index + 1}}:<span ng-click="clickDeleteExperience($index)" ng-if="!css.formEditing" class="form-control-static remove-button glyphicon glyphicon-minus button"></span></h3>
+        <h3>{{'ProfilePageSocietyExperience' | translate}} {{$index + 1}}:<span ng-click="clickDeleteItem($index)" ng-if="!css.formEditing" class="form-control-static remove-button glyphicon glyphicon-minus button"></span></h3>
         <div>
             <div class="form-group" ng-class="{'has-success':experienceForm['societyName' + $index].$dirty&&experienceForm['societyName' + $index].$valid, 'has-error':experienceForm['societyName' + $index].$dirty&&experienceForm['societyName' + $index].$invalid}">
                 <label for="societyName{{$index}}" class="control-label col-md-3 text-right">{{'ProfilePageExperienceInfoSociety' | translate}} :</label>

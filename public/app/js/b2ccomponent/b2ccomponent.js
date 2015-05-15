@@ -5,23 +5,145 @@
 
     angular.module('marksimos.b2ccomponent', ['marksimos.templates', 'pascalprecht.translate', 'b2c.translation']);
 
+    // base decorator required for other decorators(except `watchItemsDecorator`).
+    angular.module('marksimos.b2ccomponent').provider('profileFormScopeBaseDecorator', function() {
+        var me = {
+            // data exporting to scope
+            defaults: {
+                css: {
+                    formEditing: false,
+                    errorFields: {}
+                },
+                formData: {}
+            },
+            $get: function() {
+                return function(scope, formKeys, updateErrorHandler) {
+                    formKeys = formKeys || [];
 
-    angular.module('marksimos.b2ccomponent').directive('profileBasicInfoForm', [basicInfoFormComponent]);
-    angular.module('marksimos.b2ccomponent').directive('profileEducationForm', ['Constant', eductionFormComponent]);
-    angular.module('marksimos.b2ccomponent').directive('profileNewEducationForm', ['Constant', newEducationFormComponent]);
-    angular.module('marksimos.b2ccomponent').directive('profileLanguageForm', ['Constant', languageFormComponent]);
-    angular.module('marksimos.b2ccomponent').directive('profileNewLanguageForm', ['Constant', newLanguageFormComponent]);
-    angular.module('marksimos.b2ccomponent').directive('profileWorkExperienceForm', ['Constant', workExperienceFormComponent]);
-    angular.module('marksimos.b2ccomponent').directive('profileNewWorkExperienceForm', ['Constant', newWorkExperienceFormComponent]);
-    angular.module('marksimos.b2ccomponent').directive('profileSocietyExperienceForm', ['Constant', societyExperienceFormComponent]);
-    angular.module('marksimos.b2ccomponent').directive('profileNewSocietyExperienceForm', ['Constant', newSocietyExperienceFormComponent]);
-    angular.module('marksimos.b2ccomponent').directive('profileChangePasswordForm', [changePasswordFormComponent]);
-    angular.module('marksimos.b2ccomponent').directive('profileMobilePhoneForm', ['$interval', mobilePhoneFormComponent]);
-    angular.module('marksimos.b2ccomponent').directive('profileTeamForm', [teamFormComponent]);
-    angular.module('marksimos.b2ccomponent').directive('profileTitleForm', [titleFormComponent]);
+                    Object.keys(me.defaults).forEach(function(key) {
+                        scope[key] = angular.copy(me.defaults[key]);
+                    });
+
+                    // method exporting to scope
+                    scope.clickUpdateUserInfo = updateUserInfo;
+                    scope.clickEditProfile = editProfile;
+                    scope.clickCancelEditProfile = cancelEditProfile;
+
+                    function updateUserInfo(form, data) {
+                        if (form.$valid) {
+                            scope.css.errorFields = {};
+
+                            scope.update({data: data || scope.formData}).then(function() {
+                                cancelEditProfile();
+                            }).catch(function(message) {
+
+                                if (updateErrorHandler) updateErrorHandler(message);
+
+                                if (angular.isArray(message)) {
+                                    message.forEach(function(item) {
+                                        form[item.param].$valid = false;
+                                        form[item.param].$invalid = true;
+                                        scope.css.errorFields[item.param] = true;
+                                    });
+                                }
+                            });
+                        } else {
+                            Object.keys(form).forEach(function(key) {
+                                if (key[0] != '$') {
+                                    form[key].$setDirty();
+                                }
+                            });
+                        }
+                    }
+
+                    function editProfile() {
+                        scope.css.formEditing = true;
+                        formKeys.forEach(function(key) {
+                            var keys = key.split('.'),
+                                value = scope.currentUser;
+                            keys.forEach(function(k) {
+                                if (!value) return;
+                                value = value[k];
+                            });
+                            if (typeof value != 'undefined') {
+                                scope.formData[key] = angular.copy(value);
+                            }
+                        });
+                    }
+
+                    function cancelEditProfile() {
+                        scope.css = {
+                            formEditing: false,
+                            errorFields: {}
+                        };
+                        scope.formData = {};
+                    }
+                };
+            }
+        };
+
+        return me;
+    });
+
+    angular.module('marksimos.b2ccomponent').factory('profileFormScopeAddItemDecorator', function() {
+        return function(scope, itemsKey) {
+            if (!scope.clickUpdateUserInfo)
+                throw Error('`profileFormScopeBaseDecorator` should be called before this one');
+
+            scope.clickAddItem = function(form) {
+                var data;
+                if (form.$valid) {
+                    var items = angular.copy(scope.currentUser[itemsKey]);
+                    items.push(angular.copy(scope.formData));
+                    data = {};
+                    data[itemsKey] = items;
+                }
+                scope.clickUpdateUserInfo(form, data);
+            };
+        };
+    });
+
+    angular.module('marksimos.b2ccomponent').factory('profileFormScopeDeleteItemDecorator', function() {
+        return function(scope, itemsKey) {
+            if (!scope.clickUpdateUserInfo)
+                throw Error('`profileFormScopeBaseDecorator` should be called before this one');
+
+            scope.clickDeleteItem = function() {
+                scope.formData[itemsKey] = angular.copy(scope.currentUser[itemsKey]);
+                scope.formData[itemsKey].splice(index, 1);
+                scope.clickUpdateUserInfo({$valid: true});
+            };
+        };
+    });
+
+    // Watch current user's items property, and copy it to form data if it's changed
+    angular.module('marksimos.b2ccomponent').factory('profileFormScopeWatchItemsDecorator', function() {
+        return function(scope, itemsKey) {
+            scope.$watchCollection('currentUser.' + itemsKey, function() {
+                if (scope.css.formEditing) {
+                    angular.copy(scope.currentUser[itemsKey], scope.formData[itemsKey]);
+                }
+            });
+        };
+    });
 
 
-    function basicInfoFormComponent() {
+    angular.module('marksimos.b2ccomponent').directive('profileBasicInfoForm', ['profileFormScopeBaseDecorator', basicInfoFormComponent]);
+    angular.module('marksimos.b2ccomponent').directive('profileEducationForm', ['Constant', 'profileFormScopeBaseDecorator', 'profileFormScopeDeleteItemDecorator', 'profileFormScopeWatchItemsDecorator', eductionFormComponent]);
+    angular.module('marksimos.b2ccomponent').directive('profileNewEducationForm', ['Constant', 'profileFormScopeBaseDecorator', 'profileFormScopeAddItemDecorator', newEducationFormComponent]);
+    angular.module('marksimos.b2ccomponent').directive('profileLanguageForm', ['Constant', 'profileFormScopeBaseDecorator', 'profileFormScopeDeleteItemDecorator', languageFormComponent]);
+    angular.module('marksimos.b2ccomponent').directive('profileNewLanguageForm', ['Constant', 'profileFormScopeBaseDecorator', 'profileFormScopeAddItemDecorator', newLanguageFormComponent]);
+    angular.module('marksimos.b2ccomponent').directive('profileWorkExperienceForm', ['Constant', 'profileFormScopeBaseDecorator', 'profileFormScopeDeleteItemDecorator', 'profileFormScopeWatchItemsDecorator', workExperienceFormComponent]);
+    angular.module('marksimos.b2ccomponent').directive('profileNewWorkExperienceForm', ['Constant', 'profileFormScopeBaseDecorator', 'profileFormScopeAddItemDecorator', newWorkExperienceFormComponent]);
+    angular.module('marksimos.b2ccomponent').directive('profileSocietyExperienceForm', ['Constant', 'profileFormScopeBaseDecorator', 'profileFormScopeDeleteItemDecorator', 'profileFormScopeWatchItemsDecorator', societyExperienceFormComponent]);
+    angular.module('marksimos.b2ccomponent').directive('profileNewSocietyExperienceForm', ['Constant', 'profileFormScopeBaseDecorator', 'profileFormScopeAddItemDecorator', newSocietyExperienceFormComponent]);
+    angular.module('marksimos.b2ccomponent').directive('profileChangePasswordForm', ['profileFormScopeBaseDecorator', changePasswordFormComponent]);
+    angular.module('marksimos.b2ccomponent').directive('profileMobilePhoneForm', ['$interval', 'profileFormScopeBaseDecorator', mobilePhoneFormComponent]);
+    angular.module('marksimos.b2ccomponent').directive('profileTeamForm', ['profileFormScopeBaseDecorator', teamFormComponent]);
+    angular.module('marksimos.b2ccomponent').directive('profileTitleForm', ['profileFormScopeBaseDecorator', titleFormComponent]);
+
+
+    function basicInfoFormComponent(profileFormScopeBaseDecorator) {
         return {
             restrict: 'E',
             scope: {
@@ -30,70 +152,12 @@
             },
             templateUrl: 'b2cprofilebasicinfoform.html',
             link: function(scope, elem, attrs, ctrl) {
-                // will copy values from `currentUser` when click the edit button
-                var formKeys = ['firstName', 'gender', 'birthday', 'currentLocation', 'qq'];
-                scope.css = {
-                    formEditing: false,
-                    errorFields: {}
-                };
-
-                scope.formData = {};
-
-                scope.clickUpdateUserInfo = updateUserInfo;
-                scope.clickEditProfile = editProfile;
-                scope.clickCancelEditProfile = cancelEditProfile;
-
-                function updateUserInfo(form) {
-                    if (form.$valid) {
-                        scope.css.errorFields = {};
-
-                        scope.update({data: scope.formData}).then(function() {
-                            cancelEditProfile();
-                        }).catch(function(message) {
-                            if (angular.isArray(message)) {
-                                message.forEach(function(item) {
-                                    form[item.param].$valid = false;
-                                    form[item.param].$invalid = true;
-                                    scope.css.errorFields[item.param] = true;
-                                });
-                            }
-                        });
-                    } else {
-                        Object.keys(form).forEach(function(key) {
-                            if (key[0] != '$') {
-                                form[key].$setDirty();
-                            }
-                        });
-                    }
-                }
-
-                function editProfile() {
-                    scope.css.formEditing = true;
-                    formKeys.forEach(function(key) {
-                        var keys = key.split('.'),
-                            value = scope.currentUser;
-                        keys.forEach(function(k) {
-                            if (!value) return;
-                            value = value[k];
-                        });
-                        if (typeof value != 'undefined') {
-                            scope.formData[key] = angular.copy(value);
-                        }
-                    });
-                }
-
-                function cancelEditProfile() {
-                    scope.css = {
-                        formEditing: false,
-                        errorFields: {}
-                    };
-                    scope.formData = {};
-                }
+                profileFormScopeBaseDecorator(scope, ['firstName', 'gender', 'birthday', 'currentLocation', 'qq']);
             }
         };
     }
 
-    function eductionFormComponent(Constant) {
+    function eductionFormComponent(Constant, profileFormScopeBaseDecorator, profileFormScopeDeleteItemDecorator, profileFormScopeWatchItemsDecorator) {
         return {
             restrict: 'E',
             scope: {
@@ -102,38 +166,22 @@
             },
             templateUrl: 'b2cprofileeducationform.html',
             link: function(scope, elem, attrs, ctrl) {
-                var formKeys = ['eductionBackgrounds'];
-                scope.css = {
-                    formEditing: false,
-                    errorFields: {}
-                };
+                var key = 'eductionBackgrounds';
 
-                scope.formData = {};
+                profileFormScopeBaseDecorator(scope, [key]);
+
+                profileFormScopeDeleteItemDecorator(scope, key);
+
+                profileFormScopeWatchItemsDecorator(scope, key);
 
                 scope.Constant = Constant;
 
-                scope.clickUpdateUserInfo = updateUserInfo;
                 scope.clickHideMutiSelect = hideMutiSelect;
-                scope.clickDeleteEducation = deleteEducation;
-                scope.clickEditProfile = editProfile;
-                scope.clickCancelEditProfile = cancelEditProfile;
                 scope.clickAddAchievement = addAchievement;
 
-                scope.$watchCollection('currentUser.eductionBackgrounds', function() {
-                    if (scope.css.formEditing) {
-                        angular.copy(scope.currentUser.eductionBackgrounds, scope.formData.eductionBackgrounds);
-                    }
-                });
-
-                function hideMutiSelect(){
+                function hideMutiSelect() {
                     scope.css.currentJobIndustry = -1;
                     scope.css.currentMajor = -1;
-                }
-
-                function deleteEducation(index) {
-                    scope.formData.eductionBackgrounds = angular.copy(scope.currentUser.eductionBackgrounds);
-                    scope.formData.eductionBackgrounds.splice(index, 1);
-                    updateUserInfo({$valid: true});
                 }
 
                 function addAchievement(index) {
@@ -141,59 +189,11 @@
                     eduction.achievements.push(eduction._newAchievement);
                     eduction._newAchievement = null;
                 }
-
-                function editProfile() {
-                    scope.css.formEditing = true;
-                    formKeys.forEach(function(key) {
-                        var keys = key.split('.'),
-                            value = scope.currentUser;
-                        keys.forEach(function(k) {
-                            if (!value) return;
-                            value = value[k];
-                        });
-                        if (typeof value != 'undefined') {
-                            scope.formData[key] = angular.copy(value);
-                        }
-                    });
-                }
-
-                function updateUserInfo(form) {
-                    if (form.$valid) {
-                        scope.css.errorFields = {};
-
-                        scope.update({data: scope.formData}).then(function() {
-                            cancelEditProfile();
-                        }).catch(function(message) {
-                            if (angular.isArray(message)) {
-                                message.forEach(function(item) {
-                                    form[item.param].$valid = false;
-                                    form[item.param].$invalid = true;
-                                    scope.css.errorFields[item.param] = true;
-                                });
-                            }
-                        });
-                    } else {
-                        Object.keys(form).forEach(function(key) {
-                            if (key[0] != '$') {
-                                form[key].$setDirty();
-                            }
-                        });
-                    }
-                }
-
-                function cancelEditProfile() {
-                    scope.css = {
-                        formEditing: false,
-                        errorFields: {}
-                    };
-                    scope.formData = {};
-                }
-
             }
         };
     }
 
-    function newEducationFormComponent(Constant) {
+    function newEducationFormComponent(Constant, profileFormScopeBaseDecorator, profileFormScopeAddItemDecorator) {
         return {
             restrict: 'E',
             scope: {
@@ -202,22 +202,14 @@
             },
             templateUrl: 'b2cprofileneweducationform.html',
             link: function(scope, elem, attrs, ctrl) {
-                var formKeys = [];
-                scope.css = {
-                    formEditing: false,
-                    errorFields: {}
-                };
+                profileFormScopeBaseDecorator(scope);
 
-                scope.formData = {};
+                profileFormScopeAddItemDecorator(scope, 'eductionBackgrounds');
 
                 scope.Constant = Constant;
 
-                scope.clickUpdateUserInfo = updateUserInfo;
                 scope.clickHideMutiSelect = hideMutiSelect;
-                scope.clickEditProfile = editProfile;
-                scope.clickCancelEditProfile = cancelEditProfile;
                 scope.clickAddAchievement = addAchievement;
-                scope.clickAddNewEducation = addNewEducation;
 
                 function hideMutiSelect(){
                     scope.css.currentJobIndustry = -1;
@@ -233,68 +225,11 @@
                         scope.formData.newAchievement = null;
                     }
                 }
-
-                function addNewEducation(form) {
-                    if (form.$valid) {
-                        addAchievement();
-                        var newItem = angular.copy(scope.formData);
-                        scope.formData.eductionBackgrounds = angular.copy(scope.currentUser.eductionBackgrounds);
-                        scope.formData.eductionBackgrounds.push(newItem);
-                    }
-                    updateUserInfo(form);
-                }
-
-                function editProfile() {
-                    scope.css.formEditing = true;
-                    formKeys.forEach(function(key) {
-                        var keys = key.split('.'),
-                            value = scope.currentUser;
-                        keys.forEach(function(k) {
-                            if (!value) return;
-                            value = value[k];
-                        });
-                        if (typeof value != 'undefined') {
-                            scope.formData[key] = angular.copy(value);
-                        }
-                    });
-                }
-
-                function updateUserInfo(form) {
-                    if (form.$valid) {
-                        scope.css.errorFields = {};
-
-                        scope.update({data: scope.formData}).then(function() {
-                            cancelEditProfile();
-                        }).catch(function(message) {
-                            if (angular.isArray(message)) {
-                                message.forEach(function(item) {
-                                    form[item.param].$valid = false;
-                                    form[item.param].$invalid = true;
-                                    scope.css.errorFields[item.param] = true;
-                                });
-                            }
-                        });
-                    } else {
-                        Object.keys(form).forEach(function(key) {
-                            if (key[0] != '$') {
-                                form[key].$setDirty();
-                            }
-                        });
-                    }
-                }
-
-                function cancelEditProfile() {
-                    scope.css = {
-                        formEditing: false,
-                        errorFields: {}
-                    };
-                    scope.formData = {};
-                }
             }
         };
     }
 
-    function languageFormComponent(Constant) {
+    function languageFormComponent(Constant, profileFormScopeBaseDecorator, profileFormScopeDeleteItemDecorator) {
         return {
             restrict: 'E',
             scope: {
@@ -303,64 +238,18 @@
             },
             templateUrl: 'b2cprofilelanguageform.html',
             link: function(scope, elem, attrs, ctrl) {
-                var formKeys = ['LanguageSkills'];
+                var itemsKey = 'LanguageSkills';
 
-                scope.css = {
-                    formEditing: false,
-                    errorFields: {}
-                };
+                profileFormScopeBaseDecorator(scope, [itemsKey]);
 
-                scope.formData = {};
+                profileFormScopeDeleteItemDecorator(scope, itemsKey);
 
                 scope.Constant = Constant;
-
-                scope.clickUpdateUserInfo = updateUserInfo;
-                scope.clickDeleteLanguage = deleteLanguage;
-                scope.clickCancelEditProfile = cancelEditProfile;
-
-                function deleteLanguage(index) {
-                    scope.formData.LanguageSkills = angular.copy(scope.currentUser.LanguageSkills);
-                    scope.formData.LanguageSkills.splice(index, 1);
-                    updateUserInfo({$valid: true});
-                }
-
-                function updateUserInfo(form) {
-                    if (form.$valid) {
-                        scope.css.errorFields = {};
-
-                        scope.update({data: scope.formData}).then(function() {
-                            cancelEditProfile();
-                        }).catch(function(message) {
-                            if (angular.isArray(message)) {
-                                message.forEach(function(item) {
-                                    form[item.param].$valid = false;
-                                    form[item.param].$invalid = true;
-                                    scope.css.errorFields[item.param] = true;
-                                });
-                            }
-                        });
-                    } else {
-                        Object.keys(form).forEach(function(key) {
-                            if (key[0] != '$') {
-                                form[key].$setDirty();
-                            }
-                        });
-                    }
-                }
-
-                function cancelEditProfile() {
-                    scope.css = {
-                        formEditing: false,
-                        errorFields: {}
-                    };
-                    scope.formData = {};
-                }
-
             }
         };
     }
 
-    function newLanguageFormComponent(Constant) {
+    function newLanguageFormComponent(Constant, profileFormScopeBaseDecorator, profileFormScopeAddItemDecorator) {
         return {
             restrict: 'E',
             scope: {
@@ -369,63 +258,16 @@
             },
             templateUrl: 'b2cprofilenewlanguageform.html',
             link: function(scope, elem, attrs, ctrl) {
-                scope.css = {
-                    formEditing: false,
-                    errorFields: {}
-                };
+                profileFormScopeBaseDecorator(scope);
 
-                scope.formData = {};
+                profileFormScopeAddItemDecorator(scope, 'LanguageSkills');
 
                 scope.Constant = Constant;
-
-                scope.clickUpdateUserInfo = updateUserInfo;
-                scope.clickAddNewLanguage = addNewLanguage;
-
-                function updateUserInfo(form) {
-                    if (form.$valid) {
-                        scope.css.errorFields = {};
-
-                        scope.update({data: scope.formData}).then(function() {
-                            cancelEditProfile();
-                        }).catch(function(message) {
-                            if (angular.isArray(message)) {
-                                message.forEach(function(item) {
-                                    form[item.param].$valid = false;
-                                    form[item.param].$invalid = true;
-                                    scope.css.errorFields[item.param] = true;
-                                });
-                            }
-                        });
-                    } else {
-                        Object.keys(form).forEach(function(key) {
-                            if (key[0] != '$') {
-                                form[key].$setDirty();
-                            }
-                        });
-                    }
-                }
-
-                function addNewLanguage(form) {
-                    if (form.$valid) {
-                        var newItem = angular.copy(scope.formData);
-                        scope.formData.LanguageSkills = angular.copy(scope.currentUser.LanguageSkills);
-                        scope.formData.LanguageSkills.push(newItem);
-                    }
-                    updateUserInfo(form);
-                }
-
-                function cancelEditProfile() {
-                    scope.css = {
-                        formEditing: false,
-                        errorFields: {}
-                    };
-                    scope.formData = {};
-                }
             }
         };
     }
 
-    function workExperienceFormComponent(Constant) {
+    function workExperienceFormComponent(Constant, profileFormScopeBaseDecorator, profileFormScopeDeleteItemDecorator, profileFormScopeWatchItemsDecorator) {
         return {
             restrict: 'E',
             scope: {
@@ -434,91 +276,27 @@
             },
             templateUrl: 'b2cprofileworkexperienceform.html',
             link: function(scope, elem, attrs, ctrl) {
-                var formKeys = ['workExperiences'];
-                scope.css = {
-                    formEditing: false,
-                    errorFields: {}
-                };
+                var itemsKey = 'workExperiences';
 
-                scope.formData = {};
+                profileFormScopeBaseDecorator(scope, itemsKey);
+
+                profileFormScopeDeleteItemDecorator(scope, itemsKey);
+
+                profileFormScopeWatchItemsDecorator(scope, itemsKey);
 
                 scope.Constant = Constant;
 
-                scope.clickUpdateUserInfo = updateUserInfo;
                 scope.clickHideMutiSelect = hideMutiSelect;
-                scope.clickDeleteExperience = deleteExperience;
-                scope.clickEditProfile = editProfile;
-                scope.clickCancelEditProfile = cancelEditProfile;
-
-                scope.$watchCollection('currentUser.workExperiences', function() {
-                    if (scope.css.formEditing) {
-                        angular.copy(scope.currentUser.workExperiences, scope.formData.workExperiences);
-                    }
-                });
 
                 function hideMutiSelect(){
                     scope.css.currentJobIndustry = -1;
                     scope.css.currentMajor = -1;
                 }
-
-                function deleteExperience(index) {
-                    scope.formData.workExperiences = angular.copy(scope.currentUser.workExperiences);
-                    scope.formData.workExperiences.splice(index, 1);
-                    updateUserInfo({$valid: true});
-                }
-
-                function editProfile() {
-                    scope.css.formEditing = true;
-                    formKeys.forEach(function(key) {
-                        var keys = key.split('.'),
-                            value = scope.currentUser;
-                        keys.forEach(function(k) {
-                            if (!value) return;
-                            value = value[k];
-                        });
-                        if (typeof value != 'undefined') {
-                            scope.formData[key] = angular.copy(value);
-                        }
-                    });
-                }
-
-                function updateUserInfo(form) {
-                    if (form.$valid) {
-                        scope.css.errorFields = {};
-
-                        scope.update({data: scope.formData}).then(function() {
-                            cancelEditProfile();
-                        }).catch(function(message) {
-                            if (angular.isArray(message)) {
-                                message.forEach(function(item) {
-                                    form[item.param].$valid = false;
-                                    form[item.param].$invalid = true;
-                                    scope.css.errorFields[item.param] = true;
-                                });
-                            }
-                        });
-                    } else {
-                        Object.keys(form).forEach(function(key) {
-                            if (key[0] != '$') {
-                                form[key].$setDirty();
-                            }
-                        });
-                    }
-                }
-
-                function cancelEditProfile() {
-                    scope.css = {
-                        formEditing: false,
-                        errorFields: {}
-                    };
-                    scope.formData = {};
-                }
-
             }
         };
     }
 
-    function newWorkExperienceFormComponent(Constant) {
+    function newWorkExperienceFormComponent(Constant, profileFormScopeBaseDecorator, profileFormScopeAddItemDecorator) {
         return {
             restrict: 'E',
             scope: {
@@ -527,87 +305,23 @@
             },
             templateUrl: 'b2cprofilenewworkexperienceform.html',
             link: function(scope, elem, attrs, ctrl) {
-                var formKeys = [];
-                scope.css = {
-                    formEditing: false,
-                    errorFields: {}
-                };
+                profileFormScopeBaseDecorator(scope);
 
-                scope.formData = {};
+                profileFormScopeAddItemDecorator(scope, 'workExperiences');
+
                 scope.Constant = Constant;
 
-                scope.clickUpdateUserInfo = updateUserInfo;
                 scope.clickHideMutiSelect = hideMutiSelect;
-                scope.clickAddNewExperience = addNewExperience;
-                scope.clickEditProfile = editProfile;
-                scope.clickCancelEditProfile = cancelEditProfile;
 
                 function hideMutiSelect(){
                     scope.css.currentJobIndustry = -1;
                     scope.css.currentMajor = -1;
                 }
-
-                function addNewExperience(form) {
-                    if (form.$valid) {
-                        var newItem = angular.copy(scope.formData);
-                        scope.formData.workExperiences = [];
-                        angular.copy(scope.currentUser.workExperiences, scope.formData.workExperiences);
-                        scope.formData.workExperiences.push(newItem);
-                    }
-                    updateUserInfo(form);
-                }
-
-                function updateUserInfo(form) {
-                    if (form.$valid) {
-                        scope.css.errorFields = {};
-
-                        scope.update({data: scope.formData}).then(function() {
-                            cancelEditProfile();
-                        }).catch(function(message) {
-                            if (angular.isArray(message)) {
-                                message.forEach(function(item) {
-                                    form[item.param].$valid = false;
-                                    form[item.param].$invalid = true;
-                                    scope.css.errorFields[item.param] = true;
-                                });
-                            }
-                        });
-                    } else {
-                        Object.keys(form).forEach(function(key) {
-                            if (key[0] != '$') {
-                                form[key].$setDirty();
-                            }
-                        });
-                    }
-                }
-
-                function editProfile() {
-                    scope.css.formEditing = true;
-                    formKeys.forEach(function(key) {
-                        var keys = key.split('.'),
-                            value = scope.currentUser;
-                        keys.forEach(function(k) {
-                            if (!value) return;
-                            value = value[k];
-                        });
-                        if (typeof value != 'undefined') {
-                            scope.formData[key] = angular.copy(value);
-                        }
-                    });
-                }
-
-                function cancelEditProfile() {
-                    scope.css = {
-                        formEditing: false,
-                        errorFields: {}
-                    };
-                    scope.formData = {};
-                }
             }
         };
     }
 
-    function societyExperienceFormComponent(Constant) {
+    function societyExperienceFormComponent(Constant, profileFormScopeBaseDecorator, profileFormScopeDeleteItemDecorator, profileFormScopeWatchItemsDecorator) {
         return {
             restrict: 'E',
             scope: {
@@ -616,85 +330,20 @@
             },
             templateUrl: 'b2cprofilesocietyexperienceform.html',
             link: function(scope, elem, attrs, ctrl) {
-                var formKeys = ['societyExperiences'];
-                scope.css = {
-                    formEditing: false,
-                    errorFields: {}
-                };
-
-                scope.formData = {};
+                var key = 'societyExperiences';
 
                 scope.Constant = Constant;
 
-                scope.clickUpdateUserInfo = updateUserInfo;
-                scope.clickDeleteExperience = deleteExperience;
-                scope.clickEditProfile = editProfile;
-                scope.clickCancelEditProfile = cancelEditProfile;
+                profileFormScopeBaseDecorator(scope, [key]);
 
-                scope.$watchCollection('currentUser.societyExperiences', function() {
-                    if (scope.css.formEditing) {
-                        angular.copy(scope.currentUser.societyExperiences, scope.formData.societyExperiences);
-                    }
-                });
+                profileFormScopeDeleteItemDecorator(scope, key);
 
-                function deleteExperience(index) {
-                    scope.formData.societyExperiences = angular.copy(scope.currentUser.societyExperiences);
-                    scope.formData.societyExperiences.splice(index, 1);
-                    updateUserInfo({$valid: true});
-                }
-
-                function editProfile() {
-                    scope.css.formEditing = true;
-                    formKeys.forEach(function(key) {
-                        var keys = key.split('.'),
-                            value = scope.currentUser;
-                        keys.forEach(function(k) {
-                            if (!value) return;
-                            value = value[k];
-                        });
-                        if (typeof value != 'undefined') {
-                            scope.formData[key] = angular.copy(value);
-                        }
-                    });
-                }
-
-                function updateUserInfo(form) {
-                    if (form.$valid) {
-                        scope.css.errorFields = {};
-
-                        scope.update({data: scope.formData}).then(function() {
-                            cancelEditProfile();
-                        }).catch(function(message) {
-                            if (angular.isArray(message)) {
-                                message.forEach(function(item) {
-                                    form[item.param].$valid = false;
-                                    form[item.param].$invalid = true;
-                                    scope.css.errorFields[item.param] = true;
-                                });
-                            }
-                        });
-                    } else {
-                        Object.keys(form).forEach(function(key) {
-                            if (key[0] != '$') {
-                                form[key].$setDirty();
-                            }
-                        });
-                    }
-                }
-
-                function cancelEditProfile() {
-                    scope.css = {
-                        formEditing: false,
-                        errorFields: {}
-                    };
-                    scope.formData = {};
-                }
-
+                profileFormScopeWatchItemsDecorator(scope, key);
             }
         };
     }
 
-    function newSocietyExperienceFormComponent(Constant) {
+    function newSocietyExperienceFormComponent(Constant, profileFormScopeBaseDecorator, profileFormScopeAddItemDecorator) {
         return {
             restrict: 'E',
             scope: {
@@ -703,81 +352,16 @@
             },
             templateUrl: 'b2cprofilenewsocietyexperienceform.html',
             link: function(scope, elem, attrs, ctrl) {
-                var formKeys = [];
-                scope.css = {
-                    formEditing: false,
-                    errorFields: {}
-                };
+                profileFormScopeBaseDecorator(scope);
 
-                scope.formData = {};
+                profileFormScopeAddItemDecorator(scope, 'societyExperiences');
+
                 scope.Constant = Constant;
-
-                scope.clickUpdateUserInfo = updateUserInfo;
-                scope.clickAddNewExperience = addNewExperience;
-                scope.clickEditProfile = editProfile;
-                scope.clickCancelEditProfile = cancelEditProfile;
-
-                function addNewExperience(form) {
-                    if (form.$valid) {
-                        var newItem = angular.copy(scope.formData);
-                        scope.formData.societyExperiences = [];
-                        angular.copy(scope.currentUser.societyExperiences, scope.formData.societyExperiences);
-                        scope.formData.societyExperiences.push(newItem);
-                    }
-                    updateUserInfo(form);
-                }
-
-                function updateUserInfo(form) {
-                    if (form.$valid) {
-                        scope.css.errorFields = {};
-
-                        scope.update({data: scope.formData}).then(function() {
-                            cancelEditProfile();
-                        }).catch(function(message) {
-                            if (angular.isArray(message)) {
-                                message.forEach(function(item) {
-                                    form[item.param].$valid = false;
-                                    form[item.param].$invalid = true;
-                                    scope.css.errorFields[item.param] = true;
-                                });
-                            }
-                        });
-                    } else {
-                        Object.keys(form).forEach(function(key) {
-                            if (key[0] != '$') {
-                                form[key].$setDirty();
-                            }
-                        });
-                    }
-                }
-
-                function editProfile() {
-                    scope.css.formEditing = true;
-                    formKeys.forEach(function(key) {
-                        var keys = key.split('.'),
-                            value = scope.currentUser;
-                        keys.forEach(function(k) {
-                            if (!value) return;
-                            value = value[k];
-                        });
-                        if (typeof value != 'undefined') {
-                            scope.formData[key] = angular.copy(value);
-                        }
-                    });
-                }
-
-                function cancelEditProfile() {
-                    scope.css = {
-                        formEditing: false,
-                        errorFields: {}
-                    };
-                    scope.formData = {};
-                }
             }
         };
     }
 
-    function changePasswordFormComponent() {
+    function changePasswordFormComponent(profileFormScopeBaseDecorator) {
         return {
             restrict: 'E',
             scope: {
@@ -786,69 +370,12 @@
             },
             templateUrl: 'b2cprofilechangepasswordform.html',
             link: function(scope, elem, attrs, ctrl) {
-                var formKeys = [];
-                scope.css = {
-                    formEditing: false,
-                    errorFields: {}
-                };
-
-                scope.formData = {};
-
-                scope.clickUpdateUserInfo = updateUserInfo;
-                scope.clickEditProfile = editProfile;
-                scope.clickCancelEditProfile = cancelEditProfile;
-
-                function updateUserInfo(form) {
-                    if (form.$valid) {
-                        scope.css.errorFields = {};
-
-                        scope.update({data: scope.formData}).then(function() {
-                            cancelEditProfile();
-                        }).catch(function(message) {
-                            if (angular.isArray(message)) {
-                                message.forEach(function(item) {
-                                    form[item.param].$valid = false;
-                                    form[item.param].$invalid = true;
-                                    scope.css.errorFields[item.param] = true;
-                                });
-                            }
-                        });
-                    } else {
-                        Object.keys(form).forEach(function(key) {
-                            if (key[0] != '$') {
-                                form[key].$setDirty();
-                            }
-                        });
-                    }
-                }
-
-                function editProfile() {
-                    scope.css.formEditing = true;
-                    formKeys.forEach(function(key) {
-                        var keys = key.split('.'),
-                            value = scope.currentUser;
-                        keys.forEach(function(k) {
-                            if (!value) return;
-                            value = value[k];
-                        });
-                        if (typeof value != 'undefined') {
-                            scope.formData[key] = angular.copy(value);
-                        }
-                    });
-                }
-
-                function cancelEditProfile() {
-                    scope.css = {
-                        formEditing: false,
-                        errorFields: {}
-                    };
-                    scope.formData = {};
-                }
+                profileFormScopeBaseDecorator(scope);
             }
         };
     }
 
-    function mobilePhoneFormComponent($interval) {
+    function mobilePhoneFormComponent($interval, profileFormScopeBaseDecorator) {
         return {
             restrict: 'E',
             scope: {
@@ -859,17 +386,7 @@
             },
             templateUrl: 'b2cprofilemobilephoneform.html',
             link: function(scope, elem, attrs, ctrl) {
-                var formKeys = ['mobilePhone'];
-                scope.css = {
-                    formEditing: false,
-                    errorFields: {}
-                };
-
-                scope.formData = {};
-
-                scope.clickUpdateUserInfo = updateUserInfo;
-                scope.clickEditProfile = editProfile;
-                scope.clickCancelEditProfile = cancelEditProfile;
+                profileFormScopeBaseDecorator(scope, ['mobilePhone'], updateErrorHandler);
 
                 scope.clickSendMobileVerifyCode = sendMobileVerifyCode;
                 scope.clickGetMobileVerifyCode = getMobileVerifyCode;
@@ -925,62 +442,18 @@
                     }
                 }
 
-                function updateUserInfo(form) {
-                    if (form.$valid) {
-                        scope.css.errorFields = {};
-
-                        scope.update({data: scope.formData}).then(function() {
-                            cancelEditProfile();
-                        }).catch(function(message) {
-                            if(message.errorCode === 30001){
-                                form.mobilePhone.$error.existed = true;
-                                form.mobilePhone.$invalid = true;
-                                form.mobilePhone.$valid = true;
-                            }
-                            if (angular.isArray(message)) {
-                                message.forEach(function(item) {
-                                    form[item.param].$valid = false;
-                                    form[item.param].$invalid = true;
-                                    scope.css.errorFields[item.param] = true;
-                                });
-                            }
-                        });
-                    } else {
-                        Object.keys(form).forEach(function(key) {
-                            if (key[0] != '$') {
-                                form[key].$setDirty();
-                            }
-                        });
+                function updateErrorHandler(message) {
+                    if (message.errorCode == 30001) {
+                        form.mobilePhone.$error.existed = true;
+                        form.mobilePhone.$invalid = true;
+                        form.mobilePhone.$valid = true;
                     }
-                }
-
-                function editProfile() {
-                    scope.css.formEditing = true;
-                    formKeys.forEach(function(key) {
-                        var keys = key.split('.'),
-                            value = scope.currentUser;
-                        keys.forEach(function(k) {
-                            if (!value) return;
-                            value = value[k];
-                        });
-                        if (typeof value != 'undefined') {
-                            scope.formData[key] = angular.copy(value);
-                        }
-                    });
-                }
-
-                function cancelEditProfile() {
-                    scope.css = {
-                        formEditing: false,
-                        errorFields: {}
-                    };
-                    scope.formData = {};
                 }
             }
         };
     }
 
-    function teamFormComponent() {
+    function teamFormComponent(profileFormScopeBaseDecorator) {
         return {
             restrict: 'E',
             scope: {
@@ -991,45 +464,10 @@
             },
             templateUrl: 'b2cprofileteamform.html',
             link: function(scope, elem, attrs, ctrl) {
-                var formKeys = ['team.name'];
-
-                scope.css = {
-                    formEditing: false,
-                    errorFields: {}
-                };
-
-                scope.formData = {};
-
-                scope.clickUpdateUserInfo = updateUserInfo;
-                scope.clickEditProfile = editProfile;
-                scope.clickCancelEditProfile = cancelEditProfile;
+                profileFormScopeBaseDecorator(scope, 'team.name');
 
                 scope.clickRemoveStudentToTeam = removeStudentToTeam;
                 scope.clickAddStudentToTeam = addStudentToTeam;
-
-                function updateUserInfo(form) {
-                    if (form.$valid) {
-                        scope.css.errorFields = {};
-
-                        scope.update({data: scope.formData}).then(function() {
-                            cancelEditProfile();
-                        }).catch(function(message) {
-                            if (angular.isArray(message)) {
-                                message.forEach(function(item) {
-                                    form[item.param].$valid = false;
-                                    form[item.param].$invalid = true;
-                                    scope.css.errorFields[item.param] = true;
-                                });
-                            }
-                        });
-                    } else {
-                        Object.keys(form).forEach(function(key) {
-                            if (key[0] != '$') {
-                                form[key].$setDirty();
-                            }
-                        });
-                    }
-                }
 
                 function removeStudentToTeam(id) {
                     scope.removeStudentToTeam({id: id});
@@ -1054,34 +492,11 @@
                         });
                     }
                 }
-
-                function editProfile() {
-                    scope.css.formEditing = true;
-                    formKeys.forEach(function(key) {
-                        var keys = key.split('.'),
-                            value = scope.currentUser;
-                        keys.forEach(function(k) {
-                            if (!value) return;
-                            value = value[k];
-                        });
-                        if (typeof value != 'undefined') {
-                            scope.formData[key] = angular.copy(value);
-                        }
-                    });
-                }
-
-                function cancelEditProfile() {
-                    scope.css = {
-                        formEditing: false,
-                        errorFields: {}
-                    };
-                    scope.formData = {};
-                }
             }
         };
     }
 
-    function titleFormComponent() {
+    function titleFormComponent(profileFormScopeBaseDecorator) {
         return {
             restrict: 'E',
             scope: {
@@ -1090,65 +505,7 @@
             },
             templateUrl: 'b2cprofiletitleform.html',
             link: function(scope, elem, attrs, ctrl) {
-                var formKeys = ['gameMarksimosPosition'];
-
-                scope.css = {
-                    formEditing: false,
-                    errorFields: {}
-                };
-
-                scope.formData = {};
-
-                scope.clickUpdateUserInfo = updateUserInfo;
-                scope.clickEditProfile = editProfile;
-                scope.clickCancelEditProfile = cancelEditProfile;
-
-                function updateUserInfo(form) {
-                    if (form.$valid) {
-                        scope.css.errorFields = {};
-
-                        scope.update({data: scope.formData}).then(function() {
-                            cancelEditProfile();
-                        }).catch(function(message) {
-                            if (angular.isArray(message)) {
-                                message.forEach(function(item) {
-                                    form[item.param].$valid = false;
-                                    form[item.param].$invalid = true;
-                                    scope.css.errorFields[item.param] = true;
-                                });
-                            }
-                        });
-                    } else {
-                        Object.keys(form).forEach(function(key) {
-                            if (key[0] != '$') {
-                                form[key].$setDirty();
-                            }
-                        });
-                    }
-                }
-
-                function editProfile() {
-                    scope.css.formEditing = true;
-                    formKeys.forEach(function(key) {
-                        var keys = key.split('.'),
-                            value = scope.currentUser;
-                        keys.forEach(function(k) {
-                            if (!value) return;
-                            value = value[k];
-                        });
-                        if (typeof value != 'undefined') {
-                            scope.formData[key] = angular.copy(value);
-                        }
-                    });
-                }
-
-                function cancelEditProfile() {
-                    scope.css = {
-                        formEditing: false,
-                        errorFields: {}
-                    };
-                    scope.formData = {};
-                }
+                profileFormScopeBaseDecorator(scope, ['gameMarksimosPosition']);
             }
         };
     }
