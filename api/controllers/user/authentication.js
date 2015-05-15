@@ -873,7 +873,7 @@ exports.generateRegCaptcha = function(req, res, next) {
             res.cookie('x-captcha-token', captcha._id.toString());
             res.status(200).send({message: 'Generate MobilePhone verify code success'});
         }
-    })fail(next).done();
+    }).fail(next).done();
 };
 
 
