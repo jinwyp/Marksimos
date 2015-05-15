@@ -1,7 +1,7 @@
 <div class="profile-detail-title">{{'ProfilePageTabExperienceInfo' | translate}}<span class="profile-edit" ng-click="clickEditProfile()">{{'ProfilePageEditButton' | translate}}</span></div>
 <form novalidate name="experienceForm" class="form-horizontal">
     <div class="experience" ng-repeat="experience in currentUser.workExperiences">
-        <h3>{{'ProfilePageExperience' | translate}} {{$index + 1}}:<span ng-click="clickDeleteExperience($index)" ng-if="!css.formEditing" class="form-control-static remove-button glyphicon glyphicon-minus button"></span></h3>
+        <h3>{{'ProfilePageExperience' | translate}} {{$index + 1}}:<span ng-click="clickDeleteItem($index)" ng-if="!css.formEditing" class="form-control-static remove-button glyphicon glyphicon-minus button"></span></h3>
         <div>
             <div class="form-group" ng-class="{'has-success':experienceForm['company' + $index].$dirty&&experienceForm['company' + $index].$valid, 'has-error':experienceForm['company' + $index].$dirty&&experienceForm['company' + $index].$invalid}">
                 <label for="company{{$index}}" class="control-label col-md-3 text-right">{{'ProfilePageExperienceInfoCompany' | translate}} :</label>
@@ -36,6 +36,7 @@
                         <div class="col-xs-4"><span class="btn btn-default form-control" ng-click="css.currentJobIndustry=$index">{{'ProfilePageSelectButton' | translate}}</span></div>
                     </div>
                     <div muti-select selectfitler="jobndustry" datasource="Constant.jobIndustry" show="$index == css.currentJobIndustry"  selectclick="clickHideMutiSelect()" close="clickHideMutiSelect()" ng-model="formData.workExperiences[$index].industry"></div>
+                    <input required ng-model="formData.workExperiences[$index].industry" id="industry{{$index}}" name="industry{{$index}}">
                 </div>
                 <span class="err-msg control-label form-control-static col-xs-4" ng-if="experienceForm['industry' + $index].$dirty && experienceForm['industry' + $index].$invalid">{{'ProfilePageRequiredError' | translate}}</span>
             </div>
