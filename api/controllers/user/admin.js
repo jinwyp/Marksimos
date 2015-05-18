@@ -593,6 +593,7 @@ exports.listStudentNumberByDay = function(req, res, next){
     userModel.findQ(query, userModel.selectFields()).then(function(result1){
 
         resultData.push ({
+            date : yyyy + '/' + (mm+1) + '/' + (dd-1),
             userList : result1,
             count : result1.length
         });
@@ -608,6 +609,7 @@ exports.listStudentNumberByDay = function(req, res, next){
     }).then(function(result2){
 
         resultData.push ({
+            date : yyyy + '/' + (mm+1) + '/' + dd,
             userList : result2,
             count : result2.length
         });

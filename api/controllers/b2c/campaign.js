@@ -348,40 +348,9 @@ exports.searchTeamMarksimosScore = function(req, res, next) {
         ];
     }
 
-    //campaignModel.find(query).populate('seminarListMarksimos').populate('pictures.listCover').populate('pictures.firstCover').populate('pictures.benefit1').populate('pictures.benefit2').populate('pictures.benefit3').populate('pictures.qualification').populate('pictures.process').populate('teamList').sort({createdAt: -1}).exec(function(err, resultCampaign){
-    //
-    //    if(err){
-    //        next(err);
-    //    }
-    //
-    //    if(!resultCampaign){
-    //        next( new Error('Cancel promise chains. Because campaign not found !') );
-    //    }
-    //
-    //    // Deep population is here
-    //    var campaignOptions = [
-    //        { path: 'teamList.memberList', model : 'User', select : userModel.selectFields() },
-    //        { path: 'teamList.creator', model : 'User', select : userModel.selectFields()}
-    //    ];
-    //
-    //    teamModel.populate(resultCampaign, campaignOptions, function(err, resultTeam){
-    //        if(err){
-    //            next(err);
-    //        }
-    //
-    //        if(!resultTeam){
-    //            next( new Error('Cancel promise chains. Because team not found !') );
-    //        }
-    //
-    //        return res.status(200).send(resultCampaign);
-    //
-    //    });
-    //});
-
     var campaignIdList = [];
 
-    campaignModel.findQ(query)
-    .then(function (resultCampaigns) {
+    campaignModel.findQ(query).then(function (resultCampaigns) {
 
         if (!resultCampaigns) {
             throw new MKError('Cancel promise chains. Because campaign not found!', MKError.errorCode.common.notFound);
@@ -409,6 +378,74 @@ exports.searchTeamMarksimosScore = function(req, res, next) {
 };
 
 
+exports.countTeamJoinCampaign = function(req, res, next){
+
+    var now = new Date();
+
+    var dd = now.getDate();
+    var mm = now.getMonth(); //January is 0!
+    var yyyy = now.getFullYear();
+
+    var query = {};
+
+    query.joinCampaignTime = {
+        "$gte": new Date(yyyy, mm, dd - 1),
+        "$lt": new Date(yyyy, mm, dd)
+    };
+
+    var resultData = [];
+
+    teamModel.find(query).populate('memberList').execQ().then(function(result1){
+        if (!result1) {
+            throw new MKError('Cancel promise chains. Because Team not found!', MKError.errorCode.common.notFound);
+        }
+
+        var tempCount = 0;
+
+        result1.forEach(function(team){
+            tempCount = tempCount + team.memberList + 1;
+        });
+
+        resultData.push ({
+            date : yyyy + '/' + (mm+1) + '/' + (dd-1),
+            teamList : result1,
+            count : result1.length,
+            memberCount : tempCount
+        });
+
+
+        query.joinCampaignTime = {
+            "$gte": new Date(yyyy, mm, dd),
+            "$lt": new Date(yyyy, mm, dd + 1)
+        };
+
+        return teamModel.find(query).populate('memberList').execQ();
+
+    }).then(function(result2){
+
+        if (!result2) {
+            throw new MKError('Cancel promise chains. Because Team not found!', MKError.errorCode.common.notFound);
+        }
+
+        var tempCount = 0;
+
+        result2.forEach(function(team){
+            tempCount = tempCount + team.memberList + 1;
+        });
+
+        resultData.push ({
+            date : yyyy + '/' + (mm+1) + '/' + dd,
+            teamList : result2,
+            count : result2.length,
+            memberCount : tempCount
+        });
+
+        res.status(200).send(resultData);
+
+    }).fail(function(err){
+        next(err);
+    }).done();
+};
 
 
 
