@@ -222,7 +222,7 @@ apiRouter.post('/e4e/api/register/email', auth.verifyEmail);
 apiRouter.post('/e4e/api/register/mobilePhone', auth.verifyMobilePhone);
 
 // comment-captcha-start
-apiRouter.get('/e4e/api/captcha', auth.generateCaptcha);
+apiRouter.get('/e4e/api/captcha', auth.generateRegistrationCaptcha);
 // comment-captcha-end
 
 apiRouter.post('/e4e/api/forgotpasswordstep1', auth.sendResetPasswordEmail);
@@ -327,6 +327,7 @@ apiRouter.put('/marksimos/api/admin/facilitators/:facilitator_id',  auth.authLog
 
 
 apiRouter.get('/marksimos/api/admin/students', auth.authLoginToken(), auth.authRole(marksimosRight.studentInfoListGet), administratorController.searchStudent);
+apiRouter.get('/marksimos/api/admin/students/byday', auth.authLoginToken(), auth.authRole(marksimosRight.studentInfoListGet), administratorController.listStudentNumberByDay);
 apiRouter.post('/marksimos/api/admin/students', auth.authLoginToken(), auth.authRole(marksimosRight.studentInfoSingleCUD), administratorController.addStudent);
 apiRouter.put('/marksimos/api/admin/students/:student_id', auth.authLoginToken(), auth.authRole(marksimosRight.studentInfoSingleCUD), administratorController.updateStudent);
 

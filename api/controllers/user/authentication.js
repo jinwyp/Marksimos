@@ -445,7 +445,7 @@ exports.registerB2CStudent = function(req, res, next){
 
     Captcha.findOneQ({_id: req.cookies['x-captcha-token'], mobilePhone: newUser.mobilePhone})
     .then(function(cpatcha){
-        console.log(cpatcha);
+
         if(cpatcha) {
             cpatcha.removeQ();
         }else{
@@ -479,8 +479,6 @@ exports.registerB2CStudent = function(req, res, next){
         mailSender.sendMailQ(mailContent).then(function (resultSendEmail) {
             if (!resultSendEmail) {
                 throw new Error('Cancel promise chains. Because Send email of new user failed !');
-            } else {
-                logger.log(resultSendEmail);
             }
         }).fail(function (err) {
             next(err);
@@ -763,6 +761,7 @@ exports.verifyResetPasswordCode = function(req, res, next){
 };
 
 
+
 exports.resetNewPassword = function(req, res, next){
 
     var validationErrors = userModel.resetForgotPasswordValidations(req, userRoleModel.roleList.student.id, userModel.getStudentType().B2C, 3);
@@ -842,9 +841,13 @@ exports.forgotPasswordStep2 = function(req, res, next){
 
 
 
-exports.generateCaptcha = function(req, res, next) {
 
-    Captcha.findOneAndRemove({_id: req.cookies['x-captcha-token']})
+
+
+
+exports.generateRegistrationCaptcha = function(req, res, next) {
+
+    Captcha.findOneAndRemove({_id: req.cookies['x-captcha-token']});
 
     var captcha = String(Math.floor(Math.random() * (999999 - 100000) + 100000 ));
 //    var verifyCodeExpires = new Date(new Date().getTime() + 1000 * 60 * 60); // one hour
@@ -905,6 +908,7 @@ exports.generatePhoneVerifyCode = function(req, res, next) {
         messageXSend.add_var('code',verifyCode);
         messageXSend.add_to(req.user.mobilePhone);
         messageXSend.set_project('pPlo2');
+
         var xsendQ = Q.nbind(messageXSend.xsend, messageXSend);
         return xsendQ();
     })

@@ -555,13 +555,69 @@ exports.searchStudent = function(req, res, next){
     }).fail(function(err){
         next(err);
     }).done();
-}
+};
 
 
 
+exports.listStudentNumberByDay = function(req, res, next){
+
+    var query = {
+        role : userRoleModel.roleList.student.id
+    };
+
+    if(req.query.student_type){
+        query.studentType = req.query.student_type;
+    }
+
+    //only facilitator and admin can search students
+    //facilitator can only view its own students
+    if(req.user.roleId !== userRoleModel.roleList.admin.id){
+        query.facilitatorId = req.user.id;
+    }
 
 
+    var now = new Date();
 
+    var dd = now.getDate();
+    var mm = now.getMonth(); //January is 0!
+    var yyyy = now.getFullYear();
+
+
+    query.createdAt = {
+        "$gte": new Date(yyyy, mm, dd - 1),
+        "$lt": new Date(yyyy, mm, dd)
+    };
+
+    var resultData = [];
+
+    userModel.findQ(query, userModel.selectFields()).then(function(result1){
+
+        resultData.push ({
+            userList : result1,
+            count : result1.length
+        });
+
+
+        query.createdAt = {
+            "$gte": new Date(yyyy, mm, dd),
+            "$lt": new Date(yyyy, mm, dd + 1)
+        };
+
+        return userModel.findQ(query, userModel.selectFields());
+
+    }).then(function(result2){
+
+        resultData.push ({
+            userList : result2,
+            count : result2.length
+        });
+
+        res.status(200).send(resultData);
+
+    }).fail(function(err){
+        next(err);
+    }).done();
+};
 
 
 
