@@ -346,10 +346,10 @@ exports.runSimulation = function(){
                             
                             if(dbSeminar.roundTime.length > 0 ){
 
-                                dbSeminar.roundTime[dbSeminar.currentPeriod - 1 ].startTime = new Date();
+                                dbSeminar.roundTime[dbSeminar.currentPeriod ].startTime = new Date();
 
-                                if(dbSeminar.roundTime[dbSeminar.currentPeriod - 1].roundTimeHour !== 0){
-                                    dbSeminar.roundTime[dbSeminar.currentPeriod - 1].endTime = new Date( new Date().getTime() + oneHour * dbSeminar.roundTime[dbSeminar.currentPeriod - 1].roundTimeHour);
+                                if(dbSeminar.roundTime[dbSeminar.currentPeriod].roundTimeHour !== 0){
+                                    dbSeminar.roundTime[dbSeminar.currentPeriod].endTime = new Date( new Date().getTime() + oneHour * dbSeminar.roundTime[dbSeminar.currentPeriod].roundTimeHour);
                                 }
 
                             }
