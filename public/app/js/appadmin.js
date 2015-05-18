@@ -514,6 +514,21 @@
             $scope.css.editMenuStatus = false;
         };
 
+        /********************  dashboard  ********************/
+        $scope.getRegisteredStudentCount = function() {
+            if (!$scope.data.students || !$scope.data.students.length) return;
+
+            return $scope.data.students.length;
+        };
+
+
+        $scope.getYesterdayRegisteredStudentCount = function() {
+            if (!$scope.data.students || !$scope.data.students.length) return;
+
+            return $scope.data.students.reduce(function(count, cur) {
+
+            }, 0);
+        }
 
 
         /********************  搜索 Distributor  ********************/
