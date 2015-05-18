@@ -15,8 +15,9 @@ exports.registerNodeBB = function(newUserInfo, cb){
             console.log('Reister new user for NodeBB failed!' + err);
             return cb(err);
         }
+        // TODO BUG Cannot read property uid of undefined
         return cb(undefined, JSON.parse(res.body).payload.uid);
-    })
+    });
 };
 
 
