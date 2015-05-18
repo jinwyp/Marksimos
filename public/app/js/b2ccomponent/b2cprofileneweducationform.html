@@ -13,7 +13,8 @@
             <div class="row form-group" ng-class="{'has-success':newSchoolForm.degree.$dirty&&newSchoolForm.degree.$valid, 'has-error':newSchoolForm.degree.$dirty&&newSchoolForm.degree.$invalid}">
                 <label for="degree" class="control-label col-md-3 text-right">{{'ProfilePageSchoolInfoDegree' | translate}} :</label>
                 <div class="col-xs-5">
-                    <input required type="text" ng-model="formData.degree" id="degree" name="degree" class="col-md-2 form-control">
+                    <!--<input required type="text" ng-model="formData.degree" id="degree" name="degree" class="col-md-2 form-control">-->
+                    <select required id="degree" name="degree" class="form-control" ng-model="formData.degree" ng-options="type.id as type.name | translate for type in Constant.educationDegree"></select>
                 </div>
                 <span class="err-msg control-label form-control-static col-xs-4" ng-if="newSchoolForm.degree.$dirty && newSchoolForm.degree.$invalid">{{'ProfilePageRequiredError' | translate}}</span>
             </div>

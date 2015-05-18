@@ -17,10 +17,11 @@
             <div class="row form-group" ng-class="{'has-success':schoolForm['degree' + $index].$dirty&&schoolForm['degree' + $index].$valid, 'has-error':schoolForm['degree' + $index].$dirty&&schoolForm['degree' + $index].$invalid}">
                 <label for="degree{{$index}}" class="control-label col-md-3 text-right">{{'ProfilePageSchoolInfoDegree' | translate}} :</label>
                 <div class="col-xs-5" ng-if="!css.formEditing">
-                    <p class="form-control-static">{{currentUser.eductionBackgrounds[$index].degree}}&nbsp</p>
+                    <p class="form-control-static">{{currentUser.eductionBackgrounds[$index].degree | degree | translate}}&nbsp</p>
                 </div>
                 <div class="col-xs-5" ng-if="css.formEditing">
-                    <input required type="text" ng-model="formData.eductionBackgrounds[$index].degree" id="degree{{$index}}" name="degree{{$index}}" class="col-md-2 form-control">
+                    <!--<input required type="text" ng-model="formData.eductionBackgrounds[$index].degree" id="degree{{$index}}" name="degree{{$index}}" class="col-md-2 form-control">-->
+                    <select required id="degree{{$index}}" name="degree{{$index}}" class="form-control" ng-model="formData.eductionBackgrounds[$index].degree" ng-options="type.id as type.name | translate for type in Constant.educationDegree"></select>
                 </div>
                 <span class="err-msg control-label form-control-static col-xs-4" ng-if="schoolForm['degree' + $index].$dirty && schoolForm['degree' + $index].$invalid">{{'ProfilePageRequiredError' | translate}}</span>
             </div>
