@@ -33,13 +33,13 @@
                         if (form.$valid) {
                             scope.css.errorFields = {};
 
-                            beforeUpdate && beforeUpdate();
+                            if (beforeUpdate) beforeUpdate();
 
                             scope.update({data: data || scope.formData}).then(function() {
                                 cancelEditProfile();
                             }).catch(function(message) {
 
-                                updateErrorHandler && updateErrorHandler(message);
+                                if (updateErrorHandler) updateErrorHandler(message);
 
                                 if (angular.isArray(message)) {
                                     message.forEach(function(item) {
@@ -95,7 +95,7 @@
             scope.clickAddItem = function(form) {
                 var data;
                 if (form.$valid) {
-                    beforeAddItem && beforeAddItem();
+                    if (beforeAddItem) beforeAddItem();
                     var items = angular.copy(scope.currentUser[itemsKey]);
                     items.push(angular.copy(scope.formData));
                     data = {};

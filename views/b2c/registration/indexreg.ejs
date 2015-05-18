@@ -122,7 +122,44 @@
                     <span class="err-msg" ng-if="regForm.captcha.$dirty&&regForm.captcha.$invalid">{{'RegisterPageInputCaptchaTip' | translate}}</span>
                 </div>
 
-                <div class="form-group"><button class="btn btn-default" type="submit" ng-click="register.clickregister(regForm)" >{{'RegisterPageRegisterButton' | translate}}</button></div>
+                <div class="form-group">
+                    <span class="terms-link">点击注册即代表你同意我们的<a data-container="body" data-template="terms.html" bs-modal="modal" href="javascript:;">信息使用条款</a></span>
+                </div>
+                <!-- enter success template -->
+                <script type="text/ng-template" id="terms.html">
+                    <div class="terms">
+                        <button class="close" ng-click="$hide()"><span>×</span></button>
+                        <h5 class="text-center">Bridge+用户信息使用条款</h5>
+
+                        <h6>--我们收集哪些信息</h6>
+                        <p>
+                            我们收集您在使用我们的服务时提供的内容和其他信息，包括在注册帐户、填写个人信息
+                            、进行游戏、游戏结束，以及与他人发消息或交流时提供的信息。我们还收集有关您如何
+                            使用我们服务的信息，例如您查看或参与的内容类型或此类活动的频率及持续时间。
+                        </p>
+
+                        <h6>--我们如何使用这些信息</h6>
+                        <p>
+                            利用这些信息，我们能够了解您如何使用我们的服务并与之互动，从而使我们能够为您提
+                            供服务、个性化内容以及建议。<br>
+                            我们还利用这些信息对您的兴趣和能力进行评估，帮您与合适的企业进行匹配。<br>
+                            在您许可的情况下，我们有可能把您的信息推荐给企业，帮您带来职业发展机会。<br>
+                            我们使用您的信息向您发送营销信息、与您沟通我们的服务并让您了解我们的政策和条款
+                            。当您与我们联系时我们还使用您的信息给您答复。
+                        </p>
+
+                        <h6>--隐私政策</h6>
+                        <p>
+                            当您到我们网站上注册并填写个人信息的时候，您会被要求提供如您的姓名、生日、电子
+                            邮件、电话号码等等一系列信息。除非我们认为出于法律的需要，我们不会向第三方公开
+                            上述信息。但这些资料将会被我们统计、汇总进行使用，详见“我们如何使用这些信息”
+                        </p>
+                    </div>
+                </script>
+
+                <div class="form-group">
+                    <button class="btn btn-default" type="submit" ng-click="register.clickregister(regForm)" >{{'RegisterPageRegisterButton' | translate}}</button>
+                </div>
             </form>
     </div>
 

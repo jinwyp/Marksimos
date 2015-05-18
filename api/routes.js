@@ -222,7 +222,7 @@ apiRouter.post('/e4e/api/register/email', auth.verifyEmail);
 apiRouter.post('/e4e/api/register/mobilePhone', auth.verifyMobilePhone);
 
 // comment-captcha-start
-apiRouter.get('/e4e/api/captcha', auth.generateRegCaptcha);
+apiRouter.get('/e4e/api/captcha', auth.generateCaptcha);
 // comment-captcha-end
 
 apiRouter.post('/e4e/api/forgotpasswordstep1', auth.sendResetPasswordEmail);

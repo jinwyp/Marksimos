@@ -842,7 +842,7 @@ exports.forgotPasswordStep2 = function(req, res, next){
 
 
 
-exports.generateRegCaptcha = function(req, res, next) {
+exports.generateCaptcha = function(req, res, next) {
 
     Captcha.findOneAndRemove({_id: req.cookies['x-captcha-token']})
 
@@ -866,14 +866,16 @@ exports.generateRegCaptcha = function(req, res, next) {
         if (parsedRes.status === "error") {
             throw new Error(parsedRes);
         }
-        return Captcha.createQ({txt: captcha, mobilePhone: req.query.mobilePhone});
+        return Captcha.createQ({txt: captcha, mobilePhone: req.query.mobilePhone})
     })
     .then(function(captcha) {
         if(captcha){
             res.cookie('x-captcha-token', captcha._id.toString());
             res.status(200).send({message: 'Generate MobilePhone verify code success'});
         }
-    }).fail(next).done();
+    })
+    .fail(next)
+    .done();
 };
 
 
@@ -912,7 +914,9 @@ exports.generatePhoneVerifyCode = function(req, res, next) {
             return res.status(400).send(parsedRes);
         }
         return res.status(200).send({message: 'Generate MobilePhone verify code success'});
-    }).fail(next).done();
+    })
+    .fail(next)
+    .done();
 };
 
 

@@ -13,7 +13,8 @@
             <div class="row form-group" ng-class="{'has-success':newSchoolForm.degree.$dirty&&newSchoolForm.degree.$valid, 'has-error':newSchoolForm.degree.$dirty&&newSchoolForm.degree.$invalid}">
                 <label for="degree" class="control-label col-md-3 text-right">{{'ProfilePageSchoolInfoDegree' | translate}} :</label>
                 <div class="col-xs-5">
-                    <input required type="text" ng-model="formData.degree" id="degree" name="degree" class="col-md-2 form-control">
+                    <!--<input required type="text" ng-model="formData.degree" id="degree" name="degree" class="col-md-2 form-control">-->
+                    <select required id="degree" name="degree" class="form-control" ng-model="formData.degree" ng-options="type.id as type.name | translate for type in Constant.educationDegree"></select>
                 </div>
                 <span class="err-msg control-label form-control-static col-xs-4" ng-if="newSchoolForm.degree.$dirty && newSchoolForm.degree.$invalid">{{'ProfilePageRequiredError' | translate}}</span>
             </div>
@@ -75,7 +76,7 @@
                     <div class="row" ng-repeat="achievement in formData.achievements">
                         <div class="col-xs-11">
                             <!--<input type="text" ng-model="achievement.description" name="achievements{{$index}}" id="achievements{{$index}}" class="form-control">-->
-                            <textarea rows="3" ng-model="achievement.description" name="achievements{{$index}}" id="achievements{{$index}}" class="form-control"></textarea>
+                            <textarea placeholder="{{'ProfilePageAchievementPlaceholder' | translate}}" rows="3" ng-model="achievement.description" name="achievements{{$index}}" id="achievements{{$index}}" class="form-control"></textarea>
                         </div>
                         <div class="col-xs-1">
                             <span ng-click="formData.achievements.splice($index, 1)" class="form-control-static remove-button glyphicon glyphicon-minus button"></span>
@@ -83,7 +84,7 @@
                     </div>
                     <div class="row">
                         <div class="col-xs-11">
-                            <textarea rows="3" ng-model="formData.newAchievement.description" name="newAchievement" id="newAchievement" class="form-control"></textarea>
+                            <textarea placeholder="{{'ProfilePageAchievementPlaceholder' | translate}}" rows="3" ng-model="formData.newAchievement.description" name="newAchievement" id="newAchievement" class="form-control"></textarea>
                         </div>
                         <div class="col-xs-1" ng-if="formData.newAchievement.description">
                             <span ng-click="clickAddAchievement()" class="form-control-static add-button glyphicon glyphicon-plus button"></span>

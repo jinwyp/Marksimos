@@ -157,13 +157,13 @@
         ],
 
         educationDegree : [
-            { id: 10, name : 'educationDegreeSeniorHighSchool'},
-            { id: 20, name : 'educationDegreeJuniorCollege'},
-            { id: 30, name : 'educationDegreeBachelor'},
-            { id: 40, name : 'educationDegreeMaster'},
-            { id: 50, name : 'educationDegreeMBA'},
-            { id: 60, name : 'educationDegreeDoctor'},
-            { id: 70, name : 'educationDegreeOther'}
+            { id: '10', name : 'educationDegreeSeniorHighSchool'},
+            { id: '20', name : 'educationDegreeJuniorCollege'},
+            { id: '30', name : 'educationDegreeBachelor'},
+            { id: '40', name : 'educationDegreeMaster'},
+            { id: '50', name : 'educationDegreeMBA'},
+            { id: '60', name : 'educationDegreeDoctor'},
+            { id: '70', name : 'educationDegreeOther'}
         ],
 
         educationMajor : [
