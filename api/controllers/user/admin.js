@@ -361,15 +361,10 @@ exports.searchFacilitator = function(req, res, next){
 exports.addStudent = function(req, res, next){
     req.body.organizationOrUniversity = req.body.university;
 
-    var validationErrors = userModel.registerValidations(req, userRoleModel.roleList.student.id, userModel.getStudentType().B2B);
+    var validationErrors = userModel.registerValidations(req, req.body.userRole || userRoleModel.roleList.student.id, userModel.getStudentType().B2B);
 
     if(validationErrors){
         return res.status(400).send( {message: validationErrors} );
-    }
-
-    var userRoleId = userRoleModel.roleList.student.id;
-    if(req.body.userRole === userRoleModel.roleList.enterprise.id){
-        userRoleId = userRoleModel.roleList.enterprise.id;
     }
 
     var facilitatorId = req.user._id;
@@ -380,30 +375,42 @@ exports.addStudent = function(req, res, next){
         password : req.body.password,
 
         gender      : req.body.gender,
-        firstName   : req.body.firstName,
-        lastName    : req.body.lastName,
+
         //birthday : req.body.birthday,
         //idcardNumber : req.body.idcardNumber,
         mobilePhone : req.body.mobilePhone,
-        qq          : req.body.qq,
-
-
         country : req.body.country,
         state   : req.body.state,
         city    : req.body.city,
 
-        majorsDegree             : req.body.majorsDegree,
         //dateOfGraduation : req.body.dateOfGraduation,
-        organizationOrUniversity : req.body.university,
-        occupation               : req.body.occupation,
 
         facilitatorId : facilitatorId,
 
-        role        : userRoleId,
         studentType : req.body.studentType,
 
         activated : true
     };
+
+    if (req.body.userRole === userRoleModel.roleList.student.id) {
+
+        newStudent.role = userRoleModel.roleList.student.id;
+        newStudent.majorsDegree = req.body.majorsDegree;
+        newStudent.firstName = req.body.firstName;
+        newStudent.lastName = req.body.lastName;
+        newStudent.qq = req.body.qq;
+        newStudent.organizationOrUniversity = req.body.organizationOrUniversity;
+        newStudent.occupation = req.body.occupation;
+
+    } else if (req.body.userRole === userRoleModel.roleList.enterprise.id) {
+
+        newStudent.role = userRoleModel.roleList.enterprise.id;
+        newStudent.companyName = req.body.companyName;
+        newStudent.companyAddress = req.body.companyAddress;
+        newStudent.companyContactPerson = req.body.companyContactPerson;
+        newStudent.companyContactPersonPosition = req.body.companyContactPersonPosition;
+        newStudent.companyOfficeTelephone = req.body.companyOfficeTelephone;
+    }
 
 
     userModel.register(newStudent).then(function(result){

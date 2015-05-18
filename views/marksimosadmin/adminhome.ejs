@@ -15,6 +15,52 @@
 
             <section class="content" ng-if="css.leftmenu==11">
                 <h2 class="page-header">Dashboard coming soon !!</h2>
+
+                <div class="row" >
+                    <div class="col-md-12">
+
+                        <div class="box box-primary">
+                            <form class="form-horizontal" role="form">
+
+                                <div class="form-group">
+                                    <label class="col-xs-4 control-label  text-right">Registered students count:</label>
+                                    <div class="col-xs-5">
+                                        <p class="form-control-static">100</p>
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <label class="col-xs-4 control-label  text-right">Yesterday registered students count:</label>
+                                    <div class="col-xs-5">
+                                        <p class="form-control-static">100</p>
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <label class="col-xs-4 control-label  text-right">Today registered students count:</label>
+                                    <div class="col-xs-5">
+                                        <p class="form-control-static">100</p>
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <label class="col-xs-4 control-label  text-right">Yesterday registered students count:</label>
+                                    <div class="col-xs-5">
+                                        <p class="form-control-static">100</p>
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <label class="col-xs-4 control-label  text-right">Yesterday registered students count:</label>
+                                    <div class="col-xs-5">
+                                        <p class="form-control-static">100</p>
+                                    </div>
+                                </div>
+
+                            </form>
+                        </div>
+                    </div>
+                </div>
             </section>
 
 
@@ -489,6 +535,46 @@
                                     <text-form-input type="text" name="newStudentUniversity" label="University / Organization :" labelclass="col-sm-2" inputclass="col-sm-4" data="data.newStudent.organizationOrUniversity" minlength="2" minlengtherrorinfo="University must be at least 2 characters" maxlength="100" maxlengtherrorinfo="University is a maximum of 100 characters" ></text-form-input>
 
                                     <text-form-input type="radio" name="newStudentStudentType" label="Student For :" labelclass="col-sm-2" inputclass="col-sm-4" data="data.newStudent.studentType" radiooptions="data.newStudent.studentTypeRadioOptions" required></text-form-input>
+
+                                </div>
+
+                                <div class="box-footer">
+                                    <div class="form-group">
+                                        <div class="col-sm-offset-2 col-sm-10">
+                                            <button type="submit" class="btn btn-primary" ng-click="createNewStudent(newStudentForm)"> Create </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+
+                    </div>
+                </div>
+            </section>
+
+            <section class="content" ng-if="css.leftmenu==43">
+                <h2 class="page-header">Create New Company</h2>
+
+                <div class="row" >
+                    <div class="col-md-12">
+
+                        <div class="box box-primary">
+
+                            <form class="form-horizontal" role="form" name="newStudentForm">
+                                <div class="box-body">
+                                    <text-form-input type="text" name="newStudentUsername" label="User Name :" placeholder="User Name" labelclass="col-sm-2" inputclass="col-sm-4" data="data.newStudent.username" required="true" minlength="6" minlengtherrorinfo="Username must be at least 6 characters" maxlength="20" maxlengtherrorinfo="Username is a maximum of 20 characters"></text-form-input>
+                                    <text-form-input type="text" name="newCompanyName" label="Company Name :" placeholder="Company Name" labelclass="col-sm-2" inputclass="col-sm-4" data="data.newStudent.companyName" required="true"></text-form-input>
+                                    <text-form-input type="text" name="newStudentPassword" label="Password :" placeholder="Password" labelclass="col-sm-2" inputclass="col-sm-4" data="data.newStudent.password" required="true" requirederrorinfo="Password is required!" minlength="6" minlengtherrorinfo="Password must be at least 6 characters" maxlength="20" maxlengtherrorinfo="Password is a maximum of 20 characters" ></text-form-input>
+                                    <text-form-input type="text" name="contactPerson" label="Contact Person :" placeholder="Contact Person" labelclass="col-sm-2" inputclass="col-sm-4" data="data.newStudent.companyContactPerson" required="true" maxlength="20" maxlengtherrorinfo="Company is a maximum of 20 characters"></text-form-input>
+                                    <text-form-input type="radio" name="newStudentGender" label="Gender :" labelclass="col-sm-2" inputclass="col-sm-4" data="data.newStudent.gender" radiooptions="data.newStudent.studentGenderRadioOptions"></text-form-input>
+                                    <text-form-input type="text" name="position" label="Position :" placeholder="Position" labelclass="col-sm-2" inputclass="col-sm-4" data="data.newStudent.companyContactPersonPosition" required="true" maxlength="20" maxlengtherrorinfo="Position is a maximum of 20 characters"></text-form-input>
+                                    <text-form-input type="email" name="newStudentEmail" label="Email :" placeholder="Email" labelclass="col-sm-2" inputclass="col-sm-4" data="data.newStudent.email" required="true" requirederrorinfo="Email is required!" emailerrorinfo="Doesn't look like a valid email !" ></text-form-input>
+                                    <text-form-input type="text" name="newStudentOfficePhone" label="Office Phone :" placeholder="Office Phone" labelclass="col-sm-2" inputclass="col-sm-4" data="data.newStudent.companyOfficeTelephone" required="true" requirederrorinfo="Mobile Phone is required!" maxlengtherrorinfo="Phone is a maximum of 15 characters" ></text-form-input>
+                                    <text-form-input type="text" name="newStudentMobilePhone" label="Mobile :" placeholder="Cell Phone Number" labelclass="col-sm-2" inputclass="col-sm-4" data="data.newStudent.mobilePhone" required="true" requirederrorinfo="Mobile Phone is required!" minlength="11" minlengtherrorinfo="Phone must be at least 11 characters" maxlength="15" maxlengtherrorinfo="Phone is a maximum of 15 characters" ></text-form-input>
+                                    <text-form-input type="text" name="newStudentAddress" label="Address :" placeholder="Address" labelclass="col-sm-2" inputclass="col-sm-4" data="data.newStudent.companyAddress" required="true" requirederrorinfo="Address is required!"></text-form-input>
+
+                                    <input type="hidden" ng-model="data.newStudent.userRole" ng-init="data.newStudent.userRole=9"/>
+                                    <input type="hidden" ng-model="data.newStudent.studentType" ng-init="data.newStudent.studentType=20"/>
 
                                 </div>
 
