@@ -21,9 +21,9 @@ function Message() {
             requestParams['signature'] = self.createSignature(requestParams);
             request.post({url: api, form: requestParams}, function optionalCallback(err, httpResponse, body) {
                 if (err) {
-                    return console.error('upload failed:', err);
+                    return console.error('SMS upload failed:', err);
                 }
-                console.log('Upload successful!  Server responded with:', body);
+                console.log('SMS upload successful!  Server responded with:', body);
             });
         });
     };
@@ -45,10 +45,10 @@ function Message() {
             requestParams['signature'] = self.createSignature(requestParams);
             request.post({url: api, form: requestParams}, function optionalCallback(err, httpResponse, body) {
                 if (err) {
-                    console.error('upload failed:', err);
+                    console.error('SMS upload failed:', err);
                     return cb(error);
                 }
-                console.log('Upload successful!  Server responded with:', body);
+                console.log('SMS upload successful!  Server responded with:', body);
                 return cb(undefined, body);
             });
         });
@@ -68,9 +68,9 @@ function Message() {
             requestParams['signature'] = self.createSignature(requestParams);
             request.post({url: api, form: requestParams}, function optionalCallback(err, httpResponse, body) {
                 if (err) {
-                    return console.error('upload failed:', err);
+                    return console.error('SMS upload failed:', err);
                 }
-                console.log('Upload successful!  Server responded with:', body);
+                console.log('SMS upload successful!  Server responded with:', body);
             });
         });
     };
@@ -89,9 +89,9 @@ function Message() {
             requestParams['signature'] = self.createSignature(requestParams);
             request.post({url: api, form: requestParams}, function optionalCallback(err, httpResponse, body) {
                 if (err) {
-                    return console.error('upload failed:', err);
+                    return console.error('SMS upload failed:', err);
                 }
-                console.log('Upload successful!  Server responded with:', body);
+                console.log('SMS upload successful!  Server responded with:', body);
             });
         });
     };

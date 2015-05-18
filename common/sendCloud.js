@@ -216,7 +216,7 @@ NodemailerSendCloud.prototype.sendMailQ = function(mail) {
         });
 
         console.log("Email PostUrl: ", postUrl);
-        console.log("Email Content: ", mail);
+        //console.log("Email Content: ", mail);
     }
 
 
