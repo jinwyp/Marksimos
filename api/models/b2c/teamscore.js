@@ -31,6 +31,7 @@ var teamScoreSchema = new Schema({
     marksimosSeminar: { type: schemaObjectId, ref: 'Seminar' },
     campaign: { type: schemaObjectId, ref: 'Campaign' }
 
+
 });
 
 
