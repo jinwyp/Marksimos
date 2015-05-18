@@ -14,7 +14,8 @@ var teamScoreModel = require('../../models/b2c/teamscore.js');
 var fileUploadModel = require('../../models/user/fileupload.js');
 var MKError = require('../../../common/error-code.js');
 
-
+var MessageXSend = require('../../../common/submail/messageXSend.js');
+var Q = require('q');
 
 exports.campaignListPage = function(req, res, next){
 
@@ -564,7 +565,7 @@ exports.addTeamToCampaign = function(req, res, next){
 
 
 
-    var dataTeam ;
+    var dataTeam, dataUser ;
 
     userModel.findOneQ({username : req.body.username}).then(function(resultUser){
 
@@ -580,6 +581,7 @@ exports.addTeamToCampaign = function(req, res, next){
             throw new Error('Cancel promise chains. Because team creator eductionBackgrounds can not empty!');
         }
 
+        dataUser = resultUser;
         return teamModel.findOne({creator : resultUser._id}).populate('memberList').execQ();
 
     }).then(function(resultTeam) {
@@ -629,6 +631,13 @@ exports.addTeamToCampaign = function(req, res, next){
 
         dataTeam.joinCampaignTime = new Date();
         dataTeam.save();
+
+        var messageXSend = new MessageXSend();
+        messageXSend.add_to(dataUser.mobilePhone);
+        messageXSend.set_project('xyUwS4');
+
+        var xsendQ = Q.nbind(messageXSend.xsend, messageXSend);
+        xsendQ();
 
         return res.status(200).send({message: "Assign team to campaign success."});
 
