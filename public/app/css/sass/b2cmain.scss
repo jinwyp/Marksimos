@@ -122,6 +122,31 @@
                 border-bottom: 8px solid transparent;
             }
         }
+        .terms-link {
+            font-size: 12px;
+            color: #A09F9F;
+        }
+    }
+    .terms {
+        .close {
+            position: absolute;
+            top: 3px;
+            right: 7px;
+        }
+        h6 {
+            margin-bottom: 0;
+        }
+        font-size: 12px;
+        position: fixed;
+        width: 35%;
+        left: 0;
+        right: 0;
+        top: 200px;
+        margin: auto;
+        color: black;
+        background-color: white;
+        padding: 20px 20px;
+        z-index: 10000;
     }
 
     .reg-verify-account {
