@@ -30,7 +30,7 @@ var teamScoreSchema = new Schema({
     team: { type: schemaObjectId, ref: 'Team' },
     marksimosSeminar: { type: schemaObjectId, ref: 'Seminar' },
     campaign: { type: schemaObjectId, ref: 'Campaign' }
-
+    
 
 });
 
