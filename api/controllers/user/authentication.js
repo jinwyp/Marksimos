@@ -466,6 +466,13 @@ exports.registerB2CStudent = function(req, res, next){
             throw new Error('Cancel promise chains. Because Save new user to database error.');
         }
 
+        var messageXSend = new MessageXSend();
+        messageXSend.add_to(resultUser.mobilePhone);
+        messageXSend.set_project('k0tCo3');
+
+        var xsendQ = Q.nbind(messageXSend.xsend, messageXSend);
+        xsendQ();
+
         var mailContent = emailModel.registration();
         //mailContent.to = resultUser.email;
 
@@ -869,7 +876,7 @@ exports.generateRegistrationCaptcha = function(req, res, next) {
         if (parsedRes.status === "error") {
             throw new Error(parsedRes);
         }
-        return Captcha.createQ({txt: captcha, mobilePhone: req.query.mobilePhone})
+        return Captcha.createQ({txt: captcha, mobilePhone: req.query.mobilePhone});
     })
     .then(function(captcha) {
         if(captcha){
