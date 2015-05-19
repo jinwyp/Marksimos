@@ -404,7 +404,7 @@ exports.countTeamJoinCampaign = function(req, res, next){
         var tempCount = 0;
 
         result1.forEach(function(team){
-            tempCount = tempCount + team.memberList.length;
+            tempCount = tempCount + team.memberList.length + 1;
         });
 
         resultData.push ({
@@ -431,7 +431,7 @@ exports.countTeamJoinCampaign = function(req, res, next){
         var tempCount = 0;
 
         result2.forEach(function(team){
-            tempCount = tempCount + team.memberList.length;
+            tempCount = tempCount + team.memberList.length + 1;
         });
 
         resultData.push ({
