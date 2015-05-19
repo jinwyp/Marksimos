@@ -361,20 +361,31 @@ exports.searchTeamMarksimosScore = function(req, res, next) {
             return campaign._id;
         });
 
-        console.log(campaignIdList);
-
         return teamScoreModel.find({
             campaign: { $in: campaignIdList}
-        }).limit(quantity).sort({ranking: 1, timeCostStatus: -1, timeCost: 1}).execQ();
+        }).limit(quantity).sort({ranking: 1, timeCostStatus: -1, timeCost: 1}).populate('team').populate('campaign').populate('marksimosSeminar').execQ();
 
     }).then(function (resultTeamScores) {
         if (!resultTeamScores) {
             throw new MKError('Cancel promise chains. Because TeamScores not found!', MKError.errorCode.common.notFound);
         }
 
-        res.status(200).send(resultTeamScores);
+        // Deep population is here
+        var teamScoreOptions = [
+            {path : 'team.creator', model : 'User', select : userModel.selectFields()}
+        ];
 
-    });
+        return teamModel.populateQ(resultTeamScores, teamScoreOptions);
+
+    }).then(function(resultTeamScoreList){
+
+        if(!resultTeamScoreList){
+            throw new MKError('Cancel promise chains. Because team score list not found !', MKError.errorCode.common.notFound);
+        }
+
+        return res.status(200).send(resultTeamScoreList);
+
+    }).fail(next).done();
 
 };
 

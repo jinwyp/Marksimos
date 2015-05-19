@@ -26,11 +26,9 @@ var teamScoreSchema = new Schema({
     timeCost:  { type: Number },
     timeCostStatus:  { type: Number },
 
-    student: { type: schemaObjectId, ref: 'User' },
     team: { type: schemaObjectId, ref: 'Team' },
     marksimosSeminar: { type: schemaObjectId, ref: 'Seminar' },
     campaign: { type: schemaObjectId, ref: 'Campaign' }
-    
 
 });
 
