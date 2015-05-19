@@ -23,37 +23,67 @@
                             <form class="form-horizontal" role="form">
 
                                 <div class="form-group">
-                                    <label class="col-xs-4 control-label  text-right">Registered students count:</label>
+                                    <label class="col-xs-2 control-label  text-right">Registered students count(all):</label>
                                     <div class="col-xs-5">
-                                        <p class="form-control-static">100</p>
+                                        <p class="form-control-static">{{data.students.length}}</p>
                                     </div>
                                 </div>
 
                                 <div class="form-group">
-                                    <label class="col-xs-4 control-label  text-right">Yesterday registered students count:</label>
+                                    <label class="col-xs-2 control-label  text-right">Registered students count({{data.studentsCount[0].date}}):</label>
                                     <div class="col-xs-5">
-                                        <p class="form-control-static">100</p>
+                                        <p class="form-control-static">{{data.studentsCount[0].count}}</p>
                                     </div>
                                 </div>
 
                                 <div class="form-group">
-                                    <label class="col-xs-4 control-label  text-right">Today registered students count:</label>
+                                    <label class="col-xs-2 control-label  text-right">Registered students count({{data.studentsCount[1].date}}):</label>
                                     <div class="col-xs-5">
-                                        <p class="form-control-static">100</p>
+                                        <p class="form-control-static">{{data.studentsCount[1].count}}</p>
+                                    </div>
+                                </div>
+
+                                <hr>
+
+                                <div class="form-group" ng-repeat="campaign in data.campaigns">
+                                    <h5 class="dashboard-campaign-name">Campaign : <span>{{campaign.name}}</span></h5>
+                                    <label class="col-xs-2 control-label  text-right">Teams count:</label>
+                                    <div class="col-xs-1">
+                                        <p class="form-control-static">{{campaign.teamList.length}}</p>
+                                    </div>
+                                    <label class="col-xs-2 control-label  text-right">Members count:</label>
+                                    <div class="col-xs-2">
+                                        <p class="form-control-static">{{getTeamMemberCount(campaign.teamList)}}</p>
+                                    </div>
+                                </div>
+
+                                <hr>
+
+                                <div class="form-group">
+                                    <label class="col-xs-2 control-label  text-right">New joined teams count({{data.teamCount[0].date}}):</label>
+                                    <div class="col-xs-5">
+                                        <p class="form-control-static">{{data.teamCount[0].count}}</p>
                                     </div>
                                 </div>
 
                                 <div class="form-group">
-                                    <label class="col-xs-4 control-label  text-right">Yesterday registered students count:</label>
+                                    <label class="col-xs-2 control-label  text-right">New joined members count({{data.teamCount[0].date}}):</label>
                                     <div class="col-xs-5">
-                                        <p class="form-control-static">100</p>
+                                        <p class="form-control-static">{{data.teamCount[0].memberCount}}</p>
                                     </div>
                                 </div>
 
                                 <div class="form-group">
-                                    <label class="col-xs-4 control-label  text-right">Yesterday registered students count:</label>
+                                    <label class="col-xs-2 control-label  text-right">New joined teams count({{data.teamCount[1].date}}):</label>
                                     <div class="col-xs-5">
-                                        <p class="form-control-static">100</p>
+                                        <p class="form-control-static">{{data.teamCount[1].count}}</p>
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <label class="col-xs-2 control-label  text-right">New joined members count({{data.teamCount[1].date}}):</label>
+                                    <div class="col-xs-5">
+                                        <p class="form-control-static">{{data.teamCount[1].memberCount}}</p>
                                     </div>
                                 </div>
 

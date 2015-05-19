@@ -1310,6 +1310,12 @@
                 urlparams = angular.isUndefined(urlparams) ? {}  : urlparams ;
                 return $http.get(apiAdminPath + 'students', {params : urlparams});
             },
+            getStudentsByDay: function() {
+                return $http.get(apiAdminPath + 'students/byday');
+            },
+            getTeamCount: function() {
+                return $http.get(apiAdminPath + 'campaigns/teamcount');
+            },
             addStudent : function(postdata){
                 return $http.post(apiAdminPath + 'students', postdata);
             },

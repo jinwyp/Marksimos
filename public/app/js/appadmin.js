@@ -423,6 +423,8 @@
                         app.getDistributorsInit();
                         app.getFacilitatorsInit();
                         app.getStudentsInit();
+                        app.getStudentsByDay();
+                        app.getTeamCount();
                         $scope.css.menuTabShow = [false, true, true, true, true, true, true, true, true];
 
                     } else if ($scope.data.currentUser.role === 2) {
@@ -432,6 +434,8 @@
 
                     } else if ($scope.data.currentUser.role === 3) {
                         // Role Facilitator
+                        app.getStudentsByDay();
+                        app.getTeamCount();
                         app.getStudentsInit();
                         app.getSeminarInit();
                         app.getCgiStatus();
@@ -465,6 +469,22 @@
             getStudentsInit: function() {
                 Admin.getStudents().success(function(data, status, headers, config) {
                     $scope.data.students = data;
+                }).error(function(data, status, headers, config) {
+                    console.log(data);
+                });
+            },
+
+            getStudentsByDay: function() {
+                Admin.getStudentsByDay().success(function(data) {
+                    $scope.data.studentsCount = data;
+                }).error(function(data, status, headers, config) {
+                    console.log(data);
+                });
+            },
+
+            getTeamCount: function() {
+                Admin.getTeamCount().success(function(data) {
+                    $scope.data.teamCount = data;
                 }).error(function(data, status, headers, config) {
                     console.log(data);
                 });
@@ -515,20 +535,12 @@
         };
 
         /********************  dashboard  ********************/
-        $scope.getRegisteredStudentCount = function() {
-            if (!$scope.data.students || !$scope.data.students.length) return;
-
-            return $scope.data.students.length;
-        };
-
-
-        $scope.getYesterdayRegisteredStudentCount = function() {
-            if (!$scope.data.students || !$scope.data.students.length) return;
-
-            return $scope.data.students.reduce(function(count, cur) {
-
+        $scope.getTeamMemberCount = function(teamList) {
+            if (!teamList) return 0;
+            return teamList.reduce(function(count, team) {
+                return count + team.memberList.length;
             }, 0);
-        }
+        };
 
 
         /********************  搜索 Distributor  ********************/
