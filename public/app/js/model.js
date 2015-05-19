@@ -1316,6 +1316,9 @@
             getTeamCount: function() {
                 return $http.get(apiAdminPath + 'campaigns/teamcount');
             },
+            getScore: function(urlparams) {
+                return $http.get(apiAdminPath + 'campaigns/score', {params: urlparams || {}});
+            },
             addStudent : function(postdata){
                 return $http.post(apiAdminPath + 'students', postdata);
             },
