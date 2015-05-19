@@ -137,6 +137,7 @@ exports.getStudentFinalScore = function(req, res, next) {
 
                 var companyScore = {
                     ranking : score.ranking,
+                    marksimosScore : score.finalScore,
                     timeCost : score.spendHour,
                     marksimosSeminar : seminarData._id
                     //student : '',
