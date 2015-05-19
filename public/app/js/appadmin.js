@@ -151,7 +151,8 @@
                 email: '',
                 user_status: 'true',
                 //add for e4e
-                student_type: ""
+                student_type: "",
+                role: 4
             },
             students: [],
 

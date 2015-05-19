@@ -533,10 +533,11 @@ exports.searchStudent = function(req, res, next){
     var state = req.query.state;
     var city = req.query.city;
     var activated = req.query.user_status;
+    var role = req.query.role;
     //add for e4e
 
     var query = {
-        role : userRoleModel.roleList.student.id
+        //role : userRoleModel.roleList.student.id
     };
 
     if(req.query.student_type){
@@ -556,6 +557,7 @@ exports.searchStudent = function(req, res, next){
     if(state) query.state = state;
     if(city) query.city = city;
     if(activated) query.activated = activated;
+    if(role) query.role = role;
 
     userModel.findQ(query, userModel.selectFields()).then(function(result){
         res.send(result);
