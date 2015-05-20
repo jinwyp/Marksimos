@@ -502,7 +502,6 @@
             getScoresInit: function() {
                 Admin.getScore().success(function(data) {
                     $scope.data.scores = data;
-                    console.log(data);
                 }).error(function(data) {
                     console.log(data);
                 });
