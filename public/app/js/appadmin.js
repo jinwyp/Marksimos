@@ -852,6 +852,8 @@
             }
         };
         $scope.createNewSeminarRoundTime = function() {
+            $scope.data.newSeminar.roundTime = [];
+            
             var round = Number($scope.data.newSeminar.simulation_span);
 
             for (var i = 1; i <= round; i++) {
@@ -866,8 +868,6 @@
         };
 
         $scope.$watch('data.newSeminar.simulation_span', function (newValue, oldValue) {
-            $scope.data.newSeminar.roundTime = [];
-
             $scope.css.showCreateSeminarTimeInput = false;
         }, true);
 
