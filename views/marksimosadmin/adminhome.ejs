@@ -907,7 +907,7 @@
                                     <tr ng-repeat="score in data.scores">
                                         <td>{{$index}}</td>
                                         <td>{{score.team.name}}</td>
-                                        <td ><span ng-repeat="member in score.team.memberList">{{member}}&nbsp;</span></td>
+                                        <td ><span>{{score.team.creator.username}}&nbsp;</span><span ng-repeat="member in score.team.memberList">{{member.username}}&nbsp;</span></td>
                                         <td>{{score.team.creator.eductionBackgrounds[0].university}}</td>
                                         <td>{{score.timeCost}}</td>
                                         <td>{{score.campaign.name}}</td>
