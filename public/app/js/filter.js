@@ -51,6 +51,8 @@
 
 
     angular.module('marksimos.filter').filter('emailaddress', emailAddressFilter);
+    angular.module('marksimos.filter').filter('timecost', timeCostFilter);
+    
 
 
     function pickerFilter($filter) {
@@ -535,6 +537,24 @@
 
             return input;
 
+        };
+    }
+
+    function timeCostFilter() {
+        return function(millisecond) {
+            if (typeof millisecond == 'number') {
+                var hours = Math.floor(millisecond / (3600*1000) );
+
+                //计算相差分钟数
+                var leftHours = millisecond % (3600*1000);        //计算小时数后剩余的毫秒数
+                var minutes = Math.floor(leftHours / (60*1000));
+
+                //计算相差秒数
+                var leftMinutes = leftHours % (60*1000);      //计算分钟数后剩余的毫秒数
+                var seconds = Math.round(leftMinutes/1000);
+
+                return hours + ':' +minutes + ':' + seconds;
+            }
         };
     }
 
