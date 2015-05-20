@@ -607,7 +607,7 @@ exports.addTeamToCampaign = function(req, res, next){
         }
 
         if(resultTeam.memberList.length <= 4){
-            throw new Error('Cancel promise chains. Because team at least need 5 member !');
+            //throw new Error('Cancel promise chains. Because team at least need 5 member !');
         }
 
         resultTeam.memberList.forEach(function(user){

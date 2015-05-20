@@ -345,11 +345,15 @@ exports.runSimulation = function(){
                             }
                             
                             if(dbSeminar.roundTime.length > 0 ){
+                                console.log(dbSeminar.currentPeriod);
+                                console.log(dbSeminar.roundTime[dbSeminar.currentPeriod ]);
 
-                                dbSeminar.roundTime[dbSeminar.currentPeriod ].startTime = new Date();
+                                if (typeof dbSeminar.roundTime[dbSeminar.currentPeriod ] !== 'undefined') {
+                                    dbSeminar.roundTime[dbSeminar.currentPeriod ].startTime = new Date();
 
-                                if(dbSeminar.roundTime[dbSeminar.currentPeriod].roundTimeHour !== 0){
-                                    dbSeminar.roundTime[dbSeminar.currentPeriod].endTime = new Date( new Date().getTime() + oneHour * dbSeminar.roundTime[dbSeminar.currentPeriod].roundTimeHour);
+                                    if(dbSeminar.roundTime[dbSeminar.currentPeriod].roundTimeHour !== 0){
+                                        dbSeminar.roundTime[dbSeminar.currentPeriod].endTime = new Date( new Date().getTime() + oneHour * dbSeminar.roundTime[dbSeminar.currentPeriod].roundTimeHour);
+                                    }
                                 }
 
                             }
