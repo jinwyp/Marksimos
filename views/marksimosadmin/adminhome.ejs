@@ -773,7 +773,7 @@
                                     <div class="form-group">
                                         <label for="inputSeminarRoundTime" class="col-sm-2 control-label">Round Time(Hour) </label>
                                         <div class="col-sm-2">
-                                            <button class="btn btn-info" ng-click="createNewSeminarRoundTime()"> Click to input round time (Default is infiniti time of each round)</button>
+                                            <span class="btn btn-info" ng-click="createNewSeminarRoundTime()"> Click to input round time (Default is infiniti time of each round)</span>
                                         </div>
                                     </div>
 
@@ -782,6 +782,7 @@
 
                                         <div class="col-sm-1" ng-repeat="time in data.newSeminar.roundTime">
                                             <input type="number" class="form-control" id="inputSeminarRoundTime" name="seminarRoundTime" placeholder="input round {{time.period}} time" ng-model="time.hour" min="0" max="12">
+                                            {{time.period}}
                                         </div>
 
                                     </div>
