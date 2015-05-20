@@ -909,7 +909,7 @@
                                         <td>{{score.team.name}}</td>
                                         <td ><span>{{score.team.creator.username}}&nbsp;</span><span ng-repeat="member in score.team.memberList">{{member.username}}&nbsp;</span></td>
                                         <td>{{score.team.creator.eductionBackgrounds[0].university}}</td>
-                                        <td>{{score.timeCost}}</td>
+                                        <td>{{score.timeCost | timecost}}</td>
                                         <td>{{score.campaign.name}}</td>
                                         <td>{{score.campaign.activated}}</td>
                                         <td data-highlight-key="data.searchScore.keyword">{{score.campaign.location}}</td>

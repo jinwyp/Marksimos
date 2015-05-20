@@ -518,7 +518,6 @@
             getSeminarInit: function() {
                 Admin.getSeminars().success(function(data, status, headers, config) {
                     $scope.data.seminars = data;
-                    
                 }).error(function(data, status, headers, config) {
                     console.log(data);
                 });
