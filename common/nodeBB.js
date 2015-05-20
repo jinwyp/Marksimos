@@ -17,6 +17,7 @@ exports.registerNodeBB = function(newUserInfo, cb){
         }
         // TODO BUG Cannot read property uid of undefined
         if(typeof JSON.parse(res.body).payload.uid === 'undefined'){
+            console.error("NodeBB Uid", JSON.parse(res.body).payload );
             return cb( JSON.parse(res.body).payload);
         }
 
