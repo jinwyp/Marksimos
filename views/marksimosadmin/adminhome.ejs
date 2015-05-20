@@ -46,11 +46,16 @@
                                 <hr>
 
                                 <div class="form-group" ng-repeat="campaign in data.campaigns">
-                                    <h5 class="dashboard-campaign-name">Campaign : <span>{{campaign.name}}</span></h5>
+                                    <label class="col-xs-2 control-label text-right">Campaign :</label>
+                                    <div class="col-xs-2">
+                                        <p class="form-control-static">{{campaign.name}}</p>
+                                    </div>
+
                                     <label class="col-xs-2 control-label  text-right">Teams count:</label>
                                     <div class="col-xs-1">
                                         <p class="form-control-static">{{campaign.teamList.length}}</p>
                                     </div>
+
                                     <label class="col-xs-2 control-label  text-right">Members count:</label>
                                     <div class="col-xs-2">
                                         <p class="form-control-static">{{getTeamMemberCount(campaign.teamList)}}</p>
@@ -61,28 +66,22 @@
 
                                 <div class="form-group">
                                     <label class="col-xs-2 control-label  text-right">New joined teams count({{data.teamCount[0].date}}):</label>
-                                    <div class="col-xs-5">
+                                    <div class="col-xs-1">
                                         <p class="form-control-static">{{data.teamCount[0].count}}</p>
                                     </div>
-                                </div>
-
-                                <div class="form-group">
                                     <label class="col-xs-2 control-label  text-right">New joined members count({{data.teamCount[0].date}}):</label>
-                                    <div class="col-xs-5">
+                                    <div class="col-xs-1">
                                         <p class="form-control-static">{{data.teamCount[0].memberCount}}</p>
                                     </div>
                                 </div>
 
                                 <div class="form-group">
                                     <label class="col-xs-2 control-label  text-right">New joined teams count({{data.teamCount[1].date}}):</label>
-                                    <div class="col-xs-5">
+                                    <div class="col-xs-1">
                                         <p class="form-control-static">{{data.teamCount[1].count}}</p>
                                     </div>
-                                </div>
-
-                                <div class="form-group">
                                     <label class="col-xs-2 control-label  text-right">New joined members count({{data.teamCount[1].date}}):</label>
-                                    <div class="col-xs-5">
+                                    <div class="col-xs-1">
                                         <p class="form-control-static">{{data.teamCount[1].memberCount}}</p>
                                     </div>
                                 </div>
@@ -832,6 +831,100 @@
 
 
 
+            <section class="content" ng-if="css.leftmenu==63">
+                <h2 class="page-header">Team Scores</h2>
+
+                <div class="row" >
+                    <div class="col-md-12">
+
+                        <div class="box box-primary">
+
+                            <form class="form-horizontal" role="form" name="searchForm" novalidate>
+                                <div class="box-body">
+
+                                    <div class="form-group">
+                                        <label for="inputStatus" class="col-sm-2 control-label">Campaign Status</label>
+                                        <div class="col-sm-4">
+                                            <label class="radio-inline">
+                                                <input type="radio" name="inputStatus" ng-model="data.searchScore.activated" value="all">All
+                                            </label>
+                                            <label class="radio-inline">
+                                                <input type="radio" name="inputStatus" ng-model="data.searchScore.activated" value="1">Active
+                                            </label>
+                                            <label class="radio-inline">
+                                                <input type="radio" name="inputStatus" ng-model="data.searchScore.activated" value="0">Inactive
+                                            </label>
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group" ng-class="{'has-success':searchForm.keyword.$dirty&&searchForm.keyword.$valid, 'has-error':searchForm.keyword.$dirty&&searchForm.keyword.$invalid}">
+                                        <label class="col-sm-2 control-label" for="keyword">Keyword :</label>
+                                        <div class="col-sm-4">
+                                            <input type="text" class="form-control" id="keyword" name="keyword" ng-model="data.searchScore.keyword" placeholder="Name / Description / Location / Match Date" ng-required="false" ng-minlength="2" ng-maxlength="100" ng-model-options="{ debounce: 500 }" />
+                                        </div>
+                                        <label class="control-label" ng-show="searchForm.keyword.$invalid"><i class="fa fa-times-circle-o"></i>Search keyword length should be between 2 and 100</label>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label class="col-sm-2 control-label">How many to show company?</label>
+                                        <div class="col-sm-4">
+                                            <input class="form-control" type="text" name="quantity" ng-model="data.searchScore.quantity">
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="box-footer">
+                                    <div class="form-group">
+                                        <div class="col-sm-offset-2 col-sm-10">
+                                            <button type="submit" class="btn btn-primary" ng-click="searchScore(searchForm)">Search</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+
+
+                        <div class="box">
+                            <div class="box-header">
+                                <h3 class="box-title">Seminar List</h3>
+                            </div><!-- /.box-header -->
+                            <div class="box-body table-responsive no-padding">
+                                <table class="table table-striped table-hover">
+                                    <tbody>
+                                    <tr>
+                                        <th>Campaign Ranking</th>
+                                        <th>Team Name</th>
+                                        <th>Team Member</th>
+                                        <th>University</th>
+                                        <th>Time Cost</th>
+                                        <th>Campaign Name</th>
+                                        <th>Status</th>
+                                        <th>Location</th>
+                                        <th>Match Date</th>
+                                        <th>Seminar Name</th>
+                                        <th>Seminar Ranking</th>
+                                    </tr>
+                                    <tr ng-repeat="score in data.scores">
+                                        <td>{{$index}}</td>
+                                        <td>{{score.team.name}}</td>
+                                        <td ><span ng-repeat="member in score.team.memberList">{{member}}&nbsp;</span></td>
+                                        <td>{{score.team.creator.eductionBackgrounds[0].university}}</td>
+                                        <td>{{score.timeCost}}</td>
+                                        <td>{{score.campaign.name}}</td>
+                                        <td>{{score.campaign.activated}}</td>
+                                        <td data-highlight-key="data.searchScore.keyword">{{score.campaign.location}}</td>
+                                        <td data-highlight-key="data.searchScore.keyword">{{score.campaign.matchDate}}</td>
+                                        <td>{{score.marksimosSeminar.description}}{{score.marksimosSeminar.seminarId}}</td>
+                                        <td>{{score.ranking}}</td>
+                                    </tr>
+                                    </tbody>
+                                </table>
+                            </div><!-- /.box-body -->
+                        </div>
+
+                    </div>
+                </div>
+            </section>
 
             <section class="content" ng-if="css.leftmenu==61">
                 <h2 class="page-header">Campaign Management</h2>
