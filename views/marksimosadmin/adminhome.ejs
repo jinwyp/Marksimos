@@ -886,7 +886,7 @@
 
                         <div class="box">
                             <div class="box-header">
-                                <h3 class="box-title">Seminar List</h3>
+                                <h3 class="box-title">Team Score List</h3>
                             </div><!-- /.box-header -->
                             <div class="box-body table-responsive no-padding">
                                 <table class="table table-striped table-hover">
@@ -905,7 +905,7 @@
                                         <th>Seminar Ranking</th>
                                     </tr>
                                     <tr ng-repeat="score in data.scores">
-                                        <td>{{$index}}</td>
+                                        <td>{{$index + 1}}</td>
                                         <td>{{score.team.name}}</td>
                                         <td ><span>{{score.team.creator.username}}&nbsp;</span><span ng-repeat="member in score.team.memberList">{{member.username}}&nbsp;</span></td>
                                         <td>{{score.team.creator.eductionBackgrounds[0].university}}</td>
@@ -919,6 +919,16 @@
                                     </tr>
                                     </tbody>
                                 </table>
+<!--                                <pre ng-if="data.scores.length" class="explanation">
+说明：
+1.排名规则
+每个seminar的得分最高者为第一名，所有seminar的第一名按照决策用时排序。之后每个seminar的第二名按照决策用时排序。依次排序。
+2.Team Member同时显示每个人的名字和职位
+3.How many to show company?
+是指比如我们输入50，我们会给企业端提供该场次排名前50的人的简历信息。所以这个结果要base在选择的campaign。
+4.University用队长的大学
+5.Status是Campaign的status
+                                </pre>-->
                             </div><!-- /.box-body -->
                         </div>
 
