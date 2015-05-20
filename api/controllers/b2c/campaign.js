@@ -325,6 +325,7 @@ exports.searchTeamMarksimosScore = function(req, res, next) {
     }
 
     var searchKeyword = req.query.keyword || '';
+    console.log('keyword ' + req.query.keyword);
     var activated = req.query.activated || 'all';
 
     var quantity = req.query.quantity || 5000;
@@ -361,20 +362,32 @@ exports.searchTeamMarksimosScore = function(req, res, next) {
             return campaign._id;
         });
 
-        console.log(campaignIdList);
-
         return teamScoreModel.find({
             campaign: { $in: campaignIdList}
-        }).limit(quantity).sort({ranking: 1, timeCostStatus: -1, timeCost: 1}).execQ();
+        }).limit(quantity).sort({ranking: 1, timeCostStatus: -1, timeCost: 1}).populate('team').populate('campaign').populate('marksimosSeminar').execQ();
 
     }).then(function (resultTeamScores) {
         if (!resultTeamScores) {
             throw new MKError('Cancel promise chains. Because TeamScores not found!', MKError.errorCode.common.notFound);
         }
 
-        res.status(200).send(resultTeamScores);
+        // Deep population is here
+        var teamScoreOptions = [
+            { path: 'team.memberList', model : 'User', select : userModel.selectFields() },
+            {path : 'team.creator', model : 'User', select : userModel.selectFields()}
+        ];
 
-    });
+        return teamModel.populateQ(resultTeamScores, teamScoreOptions);
+
+    }).then(function(resultTeamScoreList){
+
+        if(!resultTeamScoreList){
+            throw new MKError('Cancel promise chains. Because team score list not found !', MKError.errorCode.common.notFound);
+        }
+
+        return res.status(200).send(resultTeamScoreList);
+
+    }).fail(next).done();
 
 };
 
@@ -404,7 +417,7 @@ exports.countTeamJoinCampaign = function(req, res, next){
         var tempCount = 0;
 
         result1.forEach(function(team){
-            tempCount = tempCount + team.memberList + 1;
+            tempCount = tempCount + team.memberList.length + 1;
         });
 
         resultData.push ({
@@ -431,7 +444,7 @@ exports.countTeamJoinCampaign = function(req, res, next){
         var tempCount = 0;
 
         result2.forEach(function(team){
-            tempCount = tempCount + team.memberList + 1;
+            tempCount = tempCount + team.memberList.length + 1;
         });
 
         resultData.push ({
@@ -594,7 +607,7 @@ exports.addTeamToCampaign = function(req, res, next){
         }
 
         if(resultTeam.memberList.length <= 4){
-            throw new Error('Cancel promise chains. Because team at least need 5 member !');
+            //throw new Error('Cancel promise chains. Because team at least need 5 member !');
         }
 
         resultTeam.memberList.forEach(function(user){

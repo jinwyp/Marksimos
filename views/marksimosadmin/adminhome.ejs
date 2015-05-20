@@ -15,6 +15,81 @@
 
             <section class="content" ng-if="css.leftmenu==11">
                 <h2 class="page-header">Dashboard coming soon !!</h2>
+
+                <div class="row" >
+                    <div class="col-md-12">
+
+                        <div class="box box-primary">
+                            <form class="form-horizontal" role="form">
+
+                                <div class="form-group">
+                                    <label class="col-xs-2 control-label  text-right">Registered students count(all):</label>
+                                    <div class="col-xs-5">
+                                        <p class="form-control-static">{{data.students.length}}</p>
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <label class="col-xs-2 control-label  text-right">Registered students count({{data.studentsCount[0].date}}):</label>
+                                    <div class="col-xs-5">
+                                        <p class="form-control-static">{{data.studentsCount[0].count}}</p>
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <label class="col-xs-2 control-label  text-right">Registered students count({{data.studentsCount[1].date}}):</label>
+                                    <div class="col-xs-5">
+                                        <p class="form-control-static">{{data.studentsCount[1].count}}</p>
+                                    </div>
+                                </div>
+
+                                <hr>
+
+                                <div class="form-group" ng-repeat="campaign in data.campaigns">
+                                    <label class="col-xs-2 control-label text-right">Campaign :</label>
+                                    <div class="col-xs-2">
+                                        <p class="form-control-static">{{campaign.name}}</p>
+                                    </div>
+
+                                    <label class="col-xs-2 control-label  text-right">Teams count:</label>
+                                    <div class="col-xs-1">
+                                        <p class="form-control-static">{{campaign.teamList.length}}</p>
+                                    </div>
+
+                                    <label class="col-xs-2 control-label  text-right">Members count:</label>
+                                    <div class="col-xs-2">
+                                        <p class="form-control-static">{{getTeamMemberCount(campaign.teamList)}}</p>
+                                    </div>
+                                </div>
+
+                                <hr>
+
+                                <div class="form-group">
+                                    <label class="col-xs-2 control-label  text-right">New joined teams count({{data.teamCount[0].date}}):</label>
+                                    <div class="col-xs-1">
+                                        <p class="form-control-static">{{data.teamCount[0].count}}</p>
+                                    </div>
+                                    <label class="col-xs-2 control-label  text-right">New joined members count({{data.teamCount[0].date}}):</label>
+                                    <div class="col-xs-1">
+                                        <p class="form-control-static">{{data.teamCount[0].memberCount}}</p>
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <label class="col-xs-2 control-label  text-right">New joined teams count({{data.teamCount[1].date}}):</label>
+                                    <div class="col-xs-1">
+                                        <p class="form-control-static">{{data.teamCount[1].count}}</p>
+                                    </div>
+                                    <label class="col-xs-2 control-label  text-right">New joined members count({{data.teamCount[1].date}}):</label>
+                                    <div class="col-xs-1">
+                                        <p class="form-control-static">{{data.teamCount[1].memberCount}}</p>
+                                    </div>
+                                </div>
+
+                            </form>
+                        </div>
+                    </div>
+                </div>
             </section>
 
 
@@ -319,7 +394,7 @@
 
 
             <section class="content" ng-if="css.leftmenu==41">
-                <h2 class="page-header">Student Management</h2>
+                <h2 class="page-header">User Management</h2>
 
                 <div class="row" >
                     <div class="col-md-12">
@@ -328,8 +403,8 @@
                             <form class="form-horizontal" role="form" name="searchStudentForm">
                                 <div class="box-body">
 
-                                    <text-form-input type="text" name="newStudentUsername" label="Student UserName :" placeholder="Student UserName" labelclass="col-sm-2" inputclass="col-sm-4" data="data.searchStudent.username" minlength="6" minlengtherrorinfo="Username must be at least 6 characters" maxlength="20" maxlengtherrorinfo="Username is a maximum of 20 characters"></text-form-input>
-                                    <text-form-input type="email" name="newStudentEmail" label="Student Email :" placeholder="Email" labelclass="col-sm-2" inputclass="col-sm-4" data="data.searchStudent.email" emailerrorinfo="Doesn't look like a valid email !" ></text-form-input>
+                                    <text-form-input type="text" name="newStudentUsername" label="User :" placeholder="UserName" labelclass="col-sm-2" inputclass="col-sm-4" data="data.searchStudent.username" minlength="6" minlengtherrorinfo="Username must be at least 6 characters" maxlength="20" maxlengtherrorinfo="Username is a maximum of 20 characters"></text-form-input>
+                                    <text-form-input type="email" name="newStudentEmail" label="Email :" placeholder="Email" labelclass="col-sm-2" inputclass="col-sm-4" data="data.searchStudent.email" emailerrorinfo="Doesn't look like a valid email !" ></text-form-input>
 
                                     <div class="form-group">
                                         <label for="inputStudentUserStatus" class="col-sm-2 control-label">User Status</label>
@@ -360,6 +435,18 @@
                                             </label>
                                         </div>
                                     </div>
+
+                                    <div class="form-group">
+                                        <label for="inputRoleFrom" class="col-sm-2 control-label">Role</label>
+                                        <div class="col-sm-8">
+                                            <label class="radio-inline">
+                                                <input type="radio" name="inputRoleFrom" ng-model="data.searchStudent.role" value="4">student
+                                            </label>
+                                            <label class="radio-inline">
+                                                <input type="radio" name="inputRoleFrom" ng-model="data.searchStudent.role" value="9">enterprise
+                                            </label>
+                                        </div>
+                                    </div>
                                 </div>
 
                                 <div class="box-footer">
@@ -375,7 +462,7 @@
 
                         <div class="box" ng-if="!data.currentStudent">
                             <div class="box-header">
-                                <h3 class="box-title">Student List</h3>
+                                <h3 class="box-title">User List</h3>
                             </div><!-- /.box-header -->
                             <div class="box-body table-responsive no-padding">
                                 <table class="table table-striped table-hover">
@@ -489,6 +576,46 @@
                                     <text-form-input type="text" name="newStudentUniversity" label="University / Organization :" labelclass="col-sm-2" inputclass="col-sm-4" data="data.newStudent.organizationOrUniversity" minlength="2" minlengtherrorinfo="University must be at least 2 characters" maxlength="100" maxlengtherrorinfo="University is a maximum of 100 characters" ></text-form-input>
 
                                     <text-form-input type="radio" name="newStudentStudentType" label="Student For :" labelclass="col-sm-2" inputclass="col-sm-4" data="data.newStudent.studentType" radiooptions="data.newStudent.studentTypeRadioOptions" required></text-form-input>
+
+                                </div>
+
+                                <div class="box-footer">
+                                    <div class="form-group">
+                                        <div class="col-sm-offset-2 col-sm-10">
+                                            <button type="submit" class="btn btn-primary" ng-click="createNewStudent(newStudentForm)"> Create </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+
+                    </div>
+                </div>
+            </section>
+
+            <section class="content" ng-if="css.leftmenu==43">
+                <h2 class="page-header">Create New Company</h2>
+
+                <div class="row" >
+                    <div class="col-md-12">
+
+                        <div class="box box-primary">
+
+                            <form class="form-horizontal" role="form" name="newStudentForm">
+                                <div class="box-body">
+                                    <text-form-input type="text" name="newStudentUsername" label="User Name :" placeholder="User Name" labelclass="col-sm-2" inputclass="col-sm-4" data="data.newStudent.username" required="true" minlength="6" minlengtherrorinfo="Username must be at least 6 characters" maxlength="20" maxlengtherrorinfo="Username is a maximum of 20 characters"></text-form-input>
+                                    <text-form-input type="text" name="newCompanyName" label="Company Name :" placeholder="Company Name" labelclass="col-sm-2" inputclass="col-sm-4" data="data.newStudent.companyName" required="true"></text-form-input>
+                                    <text-form-input type="text" name="newStudentPassword" label="Password :" placeholder="Password" labelclass="col-sm-2" inputclass="col-sm-4" data="data.newStudent.password" required="true" requirederrorinfo="Password is required!" minlength="6" minlengtherrorinfo="Password must be at least 6 characters" maxlength="20" maxlengtherrorinfo="Password is a maximum of 20 characters" ></text-form-input>
+                                    <text-form-input type="text" name="contactPerson" label="Contact Person :" placeholder="Contact Person" labelclass="col-sm-2" inputclass="col-sm-4" data="data.newStudent.companyContactPerson" required="true" maxlength="20" maxlengtherrorinfo="Company is a maximum of 20 characters"></text-form-input>
+                                    <text-form-input type="radio" name="newStudentGender" label="Gender :" labelclass="col-sm-2" inputclass="col-sm-4" data="data.newStudent.gender" radiooptions="data.newStudent.studentGenderRadioOptions"></text-form-input>
+                                    <text-form-input type="text" name="position" label="Position :" placeholder="Position" labelclass="col-sm-2" inputclass="col-sm-4" data="data.newStudent.companyContactPersonPosition" required="true" maxlength="20" maxlengtherrorinfo="Position is a maximum of 20 characters"></text-form-input>
+                                    <text-form-input type="email" name="newStudentEmail" label="Email :" placeholder="Email" labelclass="col-sm-2" inputclass="col-sm-4" data="data.newStudent.email" required="true" requirederrorinfo="Email is required!" emailerrorinfo="Doesn't look like a valid email !" ></text-form-input>
+                                    <text-form-input type="text" name="newStudentOfficePhone" label="Office Phone :" placeholder="Office Phone" labelclass="col-sm-2" inputclass="col-sm-4" data="data.newStudent.companyOfficeTelephone" required="true" requirederrorinfo="Mobile Phone is required!" maxlengtherrorinfo="Phone is a maximum of 15 characters" ></text-form-input>
+                                    <text-form-input type="text" name="newStudentMobilePhone" label="Mobile :" placeholder="Cell Phone Number" labelclass="col-sm-2" inputclass="col-sm-4" data="data.newStudent.mobilePhone" required="true" requirederrorinfo="Mobile Phone is required!" minlength="11" minlengtherrorinfo="Phone must be at least 11 characters" maxlength="15" maxlengtherrorinfo="Phone is a maximum of 15 characters" ></text-form-input>
+                                    <text-form-input type="text" name="newStudentAddress" label="Address :" placeholder="Address" labelclass="col-sm-2" inputclass="col-sm-4" data="data.newStudent.companyAddress" required="true" requirederrorinfo="Address is required!"></text-form-input>
+
+                                    <input type="hidden" ng-model="data.newStudent.userRole" ng-init="data.newStudent.userRole=9"/>
+                                    <input type="hidden" ng-model="data.newStudent.studentType" ng-init="data.newStudent.studentType=20"/>
 
                                 </div>
 
@@ -646,7 +773,7 @@
                                     <div class="form-group">
                                         <label for="inputSeminarRoundTime" class="col-sm-2 control-label">Round Time(Hour) </label>
                                         <div class="col-sm-2">
-                                            <button class="btn btn-info" ng-click="createNewSeminarRoundTime()"> Click to input round time (Default is infiniti time of each round)</button>
+                                            <span class="btn btn-info" ng-click="createNewSeminarRoundTime()"> Click to input round time (Default is infiniti time of each round)</span>
                                         </div>
                                     </div>
 
@@ -704,6 +831,110 @@
 
 
 
+            <section class="content" ng-if="css.leftmenu==63">
+                <h2 class="page-header">Team Scores</h2>
+
+                <div class="row" >
+                    <div class="col-md-12">
+
+                        <div class="box box-primary">
+
+                            <form class="form-horizontal" role="form" name="searchForm" novalidate>
+                                <div class="box-body">
+
+                                    <div class="form-group">
+                                        <label for="inputStatus" class="col-sm-2 control-label">Campaign Status</label>
+                                        <div class="col-sm-4">
+                                            <label class="radio-inline">
+                                                <input type="radio" name="inputStatus" ng-model="data.searchScore.activated" value="all">All
+                                            </label>
+                                            <label class="radio-inline">
+                                                <input type="radio" name="inputStatus" ng-model="data.searchScore.activated" value="1">Active
+                                            </label>
+                                            <label class="radio-inline">
+                                                <input type="radio" name="inputStatus" ng-model="data.searchScore.activated" value="0">Inactive
+                                            </label>
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group" ng-class="{'has-success':searchForm.keyword.$dirty&&searchForm.keyword.$valid, 'has-error':searchForm.keyword.$dirty&&searchForm.keyword.$invalid}">
+                                        <label class="col-sm-2 control-label" for="keyword">Keyword :</label>
+                                        <div class="col-sm-4">
+                                            <input type="text" class="form-control" id="keyword" name="keyword" ng-model="data.searchScore.keyword" placeholder="Name / Description / Location / Match Date" ng-required="false" ng-minlength="2" ng-maxlength="100" ng-model-options="{ debounce: 500 }" />
+                                        </div>
+                                        <label class="control-label" ng-show="searchForm.keyword.$invalid"><i class="fa fa-times-circle-o"></i>Search keyword length should be between 2 and 100</label>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label class="col-sm-2 control-label">How many to show company?</label>
+                                        <div class="col-sm-4">
+                                            <input class="form-control" type="text" name="quantity" ng-model="data.searchScore.quantity">
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="box-footer">
+                                    <div class="form-group">
+                                        <div class="col-sm-offset-2 col-sm-10">
+                                            <button type="submit" class="btn btn-primary" ng-click="searchScore(searchForm)">Search</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+
+
+                        <div class="box">
+                            <div class="box-header">
+                                <h3 class="box-title">Team Score List</h3>
+                            </div><!-- /.box-header -->
+                            <div class="box-body table-responsive no-padding">
+                                <table class="table table-striped table-hover">
+                                    <tbody>
+                                    <tr>
+                                        <th>Campaign Ranking</th>
+                                        <th>Team Name</th>
+                                        <th>Team Member</th>
+                                        <th>University</th>
+                                        <th>Time Cost</th>
+                                        <th>Campaign Name</th>
+                                        <th>Status</th>
+                                        <th>Location</th>
+                                        <th>Match Date</th>
+                                        <th>Seminar Name</th>
+                                        <th>Seminar Ranking</th>
+                                    </tr>
+                                    <tr ng-repeat="score in data.scores">
+                                        <td>{{$index + 1}}</td>
+                                        <td>{{score.team.name}}</td>
+                                        <td ><span>{{score.team.creator.username}}&nbsp;</span><span ng-repeat="member in score.team.memberList">{{member.username}}&nbsp;</span></td>
+                                        <td>{{score.team.creator.eductionBackgrounds[0].university}}</td>
+                                        <td>{{score.timeCost}}</td>
+                                        <td>{{score.campaign.name}}</td>
+                                        <td>{{score.campaign.activated}}</td>
+                                        <td data-highlight-key="data.searchScore.keyword">{{score.campaign.location}}</td>
+                                        <td data-highlight-key="data.searchScore.keyword">{{score.campaign.matchDate}}</td>
+                                        <td>{{score.marksimosSeminar.description}}{{score.marksimosSeminar.seminarId}}</td>
+                                        <td>{{score.ranking}}</td>
+                                    </tr>
+                                    </tbody>
+                                </table>
+<!--                                <pre ng-if="data.scores.length" class="explanation">
+说明：
+1.排名规则
+每个seminar的得分最高者为第一名，所有seminar的第一名按照决策用时排序。之后每个seminar的第二名按照决策用时排序。依次排序。
+2.Team Member同时显示每个人的名字和职位
+3.How many to show company?
+是指比如我们输入50，我们会给企业端提供该场次排名前50的人的简历信息。所以这个结果要base在选择的campaign。
+4.University用队长的大学
+5.Status是Campaign的status
+                                </pre>-->
+                            </div><!-- /.box-body -->
+                        </div>
+
+                    </div>
+                </div>
+            </section>
 
             <section class="content" ng-if="css.leftmenu==61">
                 <h2 class="page-header">Campaign Management</h2>
@@ -848,7 +1079,7 @@
                                     <text-form-input type="text" name="newCampaignMatchDate" label="Match Date :" placeholder="Match Start Date" labelclass="col-sm-2" inputclass="col-sm-4" data="data.newCampaign.matchDate" required="true" requirederrorinfo="Date is required"></text-form-input>
 
                                     <text-form-input type="radio" name="newCampaignActivated" label="Status :" labelclass="col-sm-2" inputclass="col-sm-4" data="data.newCampaign.activated" radiooptions="data.newCampaign.campaignActivatedRadioOptions" required="true"></text-form-input>
-                                    <text-form-input type="number" name="newCampaignActivated" label="Member Number :" labelclass="col-sm-2" inputclass="col-sm-4" data="data.newCampaign.memberNumberBase" required="true"></text-form-input>
+                                    <text-form-input type="number" name="newCampaignActivated" label="Member Number Base :" labelclass="col-sm-2" inputclass="col-sm-4" data="data.newCampaign.memberNumberBase" required="true"></text-form-input>
 
 
                                     <div class="form-group has-feedback" ng-if="css.editMenuStatus">

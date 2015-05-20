@@ -151,9 +151,16 @@
                 email: '',
                 user_status: 'true',
                 //add for e4e
-                student_type: ""
+                student_type: "",
+                role: 4
             },
             students: [],
+            searchScore: {
+                //keyword: '',
+                quantity: null,
+                activated: 'all'
+            },
+            scores: [],
 
             updateSeminar : {},
             newSeminar: {
@@ -423,6 +430,9 @@
                         app.getDistributorsInit();
                         app.getFacilitatorsInit();
                         app.getStudentsInit();
+                        app.getStudentsByDay();
+                        app.getTeamCount();
+                        app.getScoresInit();
                         $scope.css.menuTabShow = [false, true, true, true, true, true, true, true, true];
 
                     } else if ($scope.data.currentUser.role === 2) {
@@ -432,11 +442,14 @@
 
                     } else if ($scope.data.currentUser.role === 3) {
                         // Role Facilitator
+                        app.getStudentsByDay();
+                        app.getTeamCount();
                         app.getStudentsInit();
                         app.getSeminarInit();
                         app.getCgiStatus();
                         app.getCampaignInit();
                         app.getGlossaryInit();
+                        app.getScoresInit();
                         $scope.css.menuTabShow = [false, true, false, false, true, true, true, true];
                     }
 
@@ -466,6 +479,30 @@
                 Admin.getStudents().success(function(data, status, headers, config) {
                     $scope.data.students = data;
                 }).error(function(data, status, headers, config) {
+                    console.log(data);
+                });
+            },
+
+            getStudentsByDay: function() {
+                Admin.getStudentsByDay().success(function(data) {
+                    $scope.data.studentsCount = data;
+                }).error(function(data, status, headers, config) {
+                    console.log(data);
+                });
+            },
+
+            getTeamCount: function() {
+                Admin.getTeamCount().success(function(data) {
+                    $scope.data.teamCount = data;
+                }).error(function(data, status, headers, config) {
+                    console.log(data);
+                });
+            },
+
+            getScoresInit: function() {
+                Admin.getScore().success(function(data) {
+                    $scope.data.scores = data;
+                }).error(function(data) {
                     console.log(data);
                 });
             },
@@ -514,6 +551,13 @@
             $scope.css.editMenuStatus = false;
         };
 
+        /********************  dashboard  ********************/
+        $scope.getTeamMemberCount = function(teamList) {
+            if (!teamList) return 0;
+            return teamList.reduce(function(count, team) {
+                return count + team.memberList.length;
+            }, 0);
+        };
 
 
         /********************  搜索 Distributor  ********************/
@@ -619,6 +663,19 @@
                 console.log(data);
                 $notification.error('Failed', Admin.errorHandler(data.message));
             });
+        };
+
+        /********************  Search Scores   *********************/
+        $scope.searchScore = function(form) {
+            if (form.$valid) {
+                console.log($scope.data.searchScore);
+                Admin.getScore($scope.data.searchScore).success(function(data, status, headers, config) {
+                    $scope.data.scores = data;
+
+                }).error(function(data, status, headers, config) {
+                    $notification.error('Failed', Admin.errorHandler(data.message));
+                });
+            }
         };
 
 
@@ -824,6 +881,8 @@
             }
         };
         $scope.createNewSeminarRoundTime = function() {
+            $scope.data.newSeminar.roundTime = [];
+            
             var round = Number($scope.data.newSeminar.simulation_span);
 
             for (var i = 1; i <= round; i++) {
@@ -838,8 +897,6 @@
         };
 
         $scope.$watch('data.newSeminar.simulation_span', function (newValue, oldValue) {
-            $scope.data.newSeminar.roundTime = [];
-
             $scope.css.showCreateSeminarTimeInput = false;
         }, true);
 

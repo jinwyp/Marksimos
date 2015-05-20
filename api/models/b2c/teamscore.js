@@ -23,14 +23,13 @@ var mongooseTimestamps = require('mongoose-timestamp');
 var teamScoreSchema = new Schema({
 
     ranking : { type: Number, default: 0 },
+    marksimosScore : { type: Number, default: 0 },
     timeCost:  { type: Number },
     timeCostStatus:  { type: Number },
 
-    student: { type: schemaObjectId, ref: 'User' },
     team: { type: schemaObjectId, ref: 'Team' },
     marksimosSeminar: { type: schemaObjectId, ref: 'Seminar' },
     campaign: { type: schemaObjectId, ref: 'Campaign' }
-    
 
 });
 
