@@ -372,6 +372,7 @@ exports.searchTeamMarksimosScore = function(req, res, next) {
 
         // Deep population is here
         var teamScoreOptions = [
+            { path: 'team.memberList', model : 'User', select : userModel.selectFields() },
             {path : 'team.creator', model : 'User', select : userModel.selectFields()}
         ];
 
