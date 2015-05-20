@@ -543,7 +543,11 @@
     function timeCostFilter() {
         return function(millisecond) {
             if (typeof millisecond == 'number') {
-                var hours = Math.floor(millisecond / (3600*1000) );
+                var days = Math.floor(millisecond/(24*3600*1000));
+
+                //计算出小时数
+                var leftDays = millisecond % (24*3600*1000);   //计算天数后剩余的毫秒数
+                var hours = Math.floor(leftDays / (3600*1000) );
 
                 //计算相差分钟数
                 var leftHours = millisecond % (3600*1000);        //计算小时数后剩余的毫秒数
