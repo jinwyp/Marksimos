@@ -325,7 +325,6 @@ exports.searchTeamMarksimosScore = function(req, res, next) {
     }
 
     var searchKeyword = req.query.keyword || '';
-    console.log('keyword ' + req.query.keyword);
     var activated = req.query.activated || 'all';
 
     var quantity = req.query.quantity || 5000;
