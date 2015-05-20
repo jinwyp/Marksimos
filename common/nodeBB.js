@@ -16,7 +16,11 @@ exports.registerNodeBB = function(newUserInfo, cb){
             return cb(err);
         }
         // TODO BUG Cannot read property uid of undefined
-        return cb(undefined, JSON.parse(res.body).payload.uid);
+        if(typeof JSON.parse(res.body).payload.uid === 'undefined'){
+            return cb( JSON.parse(res.body).payload);
+        }
+
+        return cb(null, JSON.parse(res.body).payload.uid);
     });
 };
 
