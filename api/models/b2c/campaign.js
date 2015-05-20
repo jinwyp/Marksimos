@@ -81,8 +81,9 @@ campaignSchema.statics.updateValidations = function(req){
 
 
 campaignSchema.statics.searchQueryValidations = function(req){
-
-    // req.checkQuery('keyword', 'Campaign name should be 2-500 characters').optional().len(2, 500);
+    if (req.query.keyword) {
+        req.checkQuery('keyword', 'Campaign name should be 2-500 characters').optional().len(2, 500);
+    }
     req.checkQuery('activated', 'Campaign activated should Boolean true or false').optional();
 
     return req.validationErrors();
