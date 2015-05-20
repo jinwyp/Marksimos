@@ -155,6 +155,12 @@
                 role: 4
             },
             students: [],
+            searchScore: {
+                //keyword: '',
+                quantity: null,
+                activated: 'all'
+            },
+            scores: [],
 
             updateSeminar : {},
             newSeminar: {
@@ -426,6 +432,7 @@
                         app.getStudentsInit();
                         app.getStudentsByDay();
                         app.getTeamCount();
+                        app.getScoresInit();
                         $scope.css.menuTabShow = [false, true, true, true, true, true, true, true, true];
 
                     } else if ($scope.data.currentUser.role === 2) {
@@ -442,6 +449,7 @@
                         app.getCgiStatus();
                         app.getCampaignInit();
                         app.getGlossaryInit();
+                        app.getScoresInit();
                         $scope.css.menuTabShow = [false, true, false, false, true, true, true, true];
                     }
 
@@ -487,6 +495,15 @@
                 Admin.getTeamCount().success(function(data) {
                     $scope.data.teamCount = data;
                 }).error(function(data, status, headers, config) {
+                    console.log(data);
+                });
+            },
+
+            getScoresInit: function() {
+                Admin.getScore().success(function(data) {
+                    $scope.data.scores = data;
+                    console.log(data);
+                }).error(function(data) {
                     console.log(data);
                 });
             },
@@ -647,6 +664,19 @@
                 console.log(data);
                 $notification.error('Failed', Admin.errorHandler(data.message));
             });
+        };
+
+        /********************  Search Scores   *********************/
+        $scope.searchScore = function(form) {
+            if (form.$valid) {
+                console.log($scope.data.searchScore);
+                Admin.getScore($scope.data.searchScore).success(function(data, status, headers, config) {
+                    $scope.data.scores = data;
+
+                }).error(function(data, status, headers, config) {
+                    $notification.error('Failed', Admin.errorHandler(data.message));
+                });
+            }
         };
 
 

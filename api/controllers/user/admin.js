@@ -537,7 +537,7 @@ exports.searchStudent = function(req, res, next){
     //add for e4e
 
     var query = {
-        //role : userRoleModel.roleList.student.id
+        role : userRoleModel.roleList.student.id
     };
 
     if(req.query.student_type){
