@@ -72,13 +72,6 @@ apiRouter.get('/e4e', auth.authLoginToken({successRedirect: '/e4e/campaigns'}), 
 });
 
 apiRouter.get('/e4e/emailverify/registration', auth.activateRegistrationEmail);
-apiRouter.get('/e4e/emailverify/registration-fake', function(req, res) {
-    res.render('b2c/registration/indexregsuccess.ejs', {
-        title     : ' Email Activate Success ! | Bridge+',
-        username  : 'hehe',
-        useremail : 'haha'
-    });
-});
 
 
 apiRouter.get('/e4e/login', function(req, res, next){

@@ -353,6 +353,7 @@
             ProfilePageAlertSaveSuccessful           : 'Save successful',
             ProfilePageAlertSaveFailed               : 'Save failed',
             ProfilePageAlertUserNotFound: 'This user is not exist',
+            ProfilePageAlertTeamNameExist: 'This team name is already exist',
             ProfilePageAlertInvalidPassword          : 'Invalid password!',
 
 
@@ -893,6 +894,7 @@
             ProfilePageAlertSaveSuccessful           : '保存成功',
             ProfilePageAlertSaveFailed               : '保存失败',
             ProfilePageAlertUserNotFound: '该用户不存在',
+            ProfilePageAlertTeamNameExist: '该队名已存在',
             ProfilePageAlertInvalidPassword          : '密码信息无效！',
 
 
