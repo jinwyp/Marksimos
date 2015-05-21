@@ -443,6 +443,18 @@ userSchema.statics.mobilePhoneValidations = function(req){
     return req.validationErrors();
 };
 
+
+userSchema.statics.searchQueryValidations = function(req){
+    if (req.query.username) {
+        req.checkQuery('username', 'Username should be 6-20 characters').optional().len(6, 20);
+    }
+    if (req.query.email) {
+        req.checkQuery('email', 'Email format wrong !').optional().isEmail();
+    }
+
+    return req.validationErrors();
+};
+
 /**
  * Methods
  */

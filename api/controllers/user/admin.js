@@ -1,5 +1,6 @@
 var userModel = require('../../models/user/user.js');
 var userRoleModel = require('../../models/user/userrole.js');
+var teamModel = require('../../models/user/team.js');
 var seminarModel = require('../../models/marksimos/seminar.js');
 
 var utility = require('../../../common/utility.js');
@@ -527,23 +528,32 @@ exports.resetStudentPassword = function(req, res, next){
 
 
 exports.searchStudent = function(req, res, next){
-    var username = req.query.username;
-    var email = req.query.email;
-    var country = req.query.country;
-    var state = req.query.state;
-    var city = req.query.city;
-    var activated = req.query.user_status;
-    var role = req.query.role;
-    //add for e4e
 
-    var query = {
-        role : userRoleModel.roleList.student.id
-    };
+    var validationErrors = userModel.searchQueryValidations(req);
 
-    if(req.query.student_type){
-        query.studentType = req.query.student_type;
+    if(validationErrors){
+        return res.status(400).send( {message: validationErrors} );
     }
 
+
+    var activated = req.query.user_status;
+    var role = req.query.role;
+
+    var quantity = req.query.quantity || 5000;
+
+
+
+    var query = {};
+
+    if(activated) query.activated = activated;
+
+    query.role = userRoleModel.roleList.student.id;
+    if(role) query.role = role;
+
+    if(req.query.student_type) query.studentType = req.query.student_type;
+
+    if(req.query.username) query.username = req.query.username;
+    if(req.query.email) query.email = req.query.email;
 
     //only facilitator and admin can search students
     //facilitator can only view its own students
@@ -551,16 +561,34 @@ exports.searchStudent = function(req, res, next){
         query.facilitatorId = req.user.id;
     }
 
-    if(username) query.username = username;
-    if(email) query.email = email;
-    if(country) query.country = country;
-    if(state) query.state = state;
-    if(city) query.city = city;
-    if(activated) query.activated = activated;
-    if(role) query.role = role;
 
-    userModel.findQ(query, userModel.selectFields()).then(function(result){
-        res.send(result);
+    var dataUserList;
+    var userIdList = [];
+    var dataTeamMap ={};
+
+    userModel.find(query, userModel.selectFields()).lean().execQ().then(function(result){
+
+        dataUserList = result;
+
+        userIdList = result.map(function(user){
+            return user._id;
+        });
+
+        return teamModel.find({creator: {$in:userIdList} }).populate('memberList').execQ();
+
+    }).then(function(resultTeam) {
+
+        resultTeam.forEach(function(team, index){
+            dataTeamMap[team.creator] = team;
+        });
+
+        dataUserList.forEach(function(user){
+            if(typeof dataTeamMap[user._id] !== 'undefined'){
+                user.team = dataTeamMap[user._id];
+            }
+        });
+
+        res.status(200).send(dataUserList);
     }).fail(function(err){
         next(err);
     }).done();

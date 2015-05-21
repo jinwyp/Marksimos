@@ -605,7 +605,7 @@ exports.addTeamToCampaign = function(req, res, next){
             throw new Error('Cancel promise chains. Because team name can not empty !');
         }
 
-        if(resultTeam.memberList.length <= 4){
+        if(resultTeam.memberList.length < 4){
             throw new Error('Cancel promise chains. Because team at least need 5 member !');
         }
 
