@@ -2,6 +2,7 @@ var userModel = require('../../models/user/user.js');
 var userRoleModel = require('../../models/user/userrole.js');
 var teamModel = require('../../models/user/team.js');
 var seminarModel = require('../../models/marksimos/seminar.js');
+var campaignModel = require('../../models/b2c/campaign.js');
 
 var utility = require('../../../common/utility.js');
 var MKError = require('../../../common/error-code.js');
@@ -564,9 +565,15 @@ exports.searchStudent = function(req, res, next){
 
     var dataUserList;
     var userIdList = [];
+    var teamIdList = [];
     var dataTeamMap ={};
+    var dataCampaignMap ={};
 
     userModel.find(query, userModel.selectFields()).sort({createdAt: -1}).lean().execQ().then(function(result){
+
+        if(result.length === 0) {
+            throw new MKError('Cancel promise chains. Because user list not found.', MKError.errorCode.common.notFound);
+        }
 
         dataUserList = result;
 
@@ -578,13 +585,45 @@ exports.searchStudent = function(req, res, next){
 
     }).then(function(resultTeam) {
 
+        if(resultTeam.length === 0) {
+            throw new MKError('Cancel promise chains. Because team of user not found.', MKError.errorCode.common.notFound);
+        }
+
         resultTeam.forEach(function(team, index){
             dataTeamMap[team.creator] = team;
+            teamIdList.push(team._id);
         });
 
         dataUserList.forEach(function(user){
             if(typeof dataTeamMap[user._id] !== 'undefined'){
                 user.team = dataTeamMap[user._id];
+            }
+        });
+
+        return campaignModel.find({teamList: {$elemMatch: {$in:teamIdList} }}).execQ();
+
+    }).then(function(resultCampaign) {
+        //console.log(resultCampaign);
+        if(resultCampaign.length === 0) {
+            throw new MKError('Cancel promise chains. Because campaign of user not found.', MKError.errorCode.common.notFound);
+        }
+
+        resultCampaign.forEach(function(campaign, index){
+
+            teamIdList.forEach(function(teamid){
+                dataCampaignMap[teamid] = [];
+                if(campaign.teamList.indexOf(teamid) > -1){
+                    dataCampaignMap[teamid].push(campaign) ;
+                }
+            });
+
+        });
+
+        dataUserList.forEach(function(user){
+            if(typeof user.team !== 'undefined'){
+                if(typeof dataCampaignMap[user.team._id] !== 'undefined'){
+                    user.joinedCampaign = dataCampaignMap[user.team._id];
+                }
             }
         });
 

@@ -10,7 +10,8 @@ MKError.errorCode = {
     common: {
         notUpdate : 10001,
         notFound  : 10002,
-        notCreate : 10003
+        notCreate : 10003,
+        alreadyExist : 10004
     },
     register: {
         captcha: 20001
