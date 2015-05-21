@@ -566,7 +566,7 @@ exports.searchStudent = function(req, res, next){
     var userIdList = [];
     var dataTeamMap ={};
 
-    userModel.find(query, userModel.selectFields()).lean().execQ().then(function(result){
+    userModel.find(query, userModel.selectFields()).sort({createdAt: -1}).lean().execQ().then(function(result){
 
         dataUserList = result;
 
