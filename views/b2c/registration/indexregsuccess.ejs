@@ -5,13 +5,32 @@
 
     <b2c-header showlogin="false"></b2c-header>
 
-    <div class="middle b2c-container" >
-        <div class="reg-verify-account text-justify reg-success">
-            <p class="tip-header">  <%= username %> {{'LoginSuccessGreet' | translate}}</p>
-            <p>{{'LoginSuccessText1' | translate}}<%= useremail %>{{'LoginSuccessText2' | translate}}</p>
-            <p>{{'LoginSuccessText3' | translate}}<a class="btn btn-info" href="/e4e/profile">{{'LoginSuccessText4' | translate}}</a></p>
-            <p>{{'LoginSuccessText5' | translate}}</p>
+    <div class="container reg-success" >
+        <div class="row">
+            <div class="col-xs-6 reg-success-info middle">
+                <p class="tip-header">  <%= username %> {{'LoginSuccessGreet' | translate}}</p>
+                <p>{{'LoginSuccessText1' | translate}}<%= useremail %>{{'LoginSuccessText2' | translate}}</p>
+                <p>{{'LoginSuccessText3' | translate}}<a class="btn btn-info mk-btn-red" href="/e4e/profile">{{'LoginSuccessText4' | translate}}</a></p>
+                <p>{{'LoginSuccessText5' | translate}}</p>
 
+
+            </div>
+            <div class="col-xs-6">
+                <ul class="qr-codes row list-inline">
+                    <li class="qr-code col-xs-3 col-xs-offset-1 text-center">
+                        <div>华东赛区群</div>
+                        <img src="/app/css/images/huadong.jpg" alt="huadong qr code"/>
+                    </li>
+                    <li class="qr-code col-xs-3 text-center">
+                        <div>东北赛区群</div>
+                        <img src="/app/css/images/dongbei.jpg" alt="dongbei qr code"/>
+                    </li>
+                    <li class="qr-code col-xs-3 text-center">
+                        <div>京津赛区群</div>
+                        <img src="/app/css/images/jingjin.jpg" alt="jingjin qr code"/>
+                    </li>
+                </ul>
+            </div>
         </div>
     </div>
 

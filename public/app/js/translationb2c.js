@@ -378,6 +378,9 @@
             //Labels for Enter Successful popup window
             CampaignPageEnterSuccessTip1              : 'Enter Successful！',
             CampaignPageEnterSuccessTip2              : 'Play The Game',
+            CampaignPageEnterSuccessTip3              : 'Go to the community to get more information！',
+            CampaignPageGoToCommunity: 'Go!',
+
             //Labels for Cancel Enter Successful popup window
             CampaignPageCancelEnterSuccessTip1              : 'Canceled！',
             CampaignPageCancelEnterSuccessTip2              : '',
@@ -913,6 +916,9 @@
             //Labels for Enter Successful popup window
             CampaignPageEnterSuccessTip1              : '报名成功！',
             CampaignPageEnterSuccessTip2              : '快来体验游戏吧',
+            CampaignPageEnterSuccessTip3              : '马上进去社区公告板获取培训资料！',
+            CampaignPageGoToCommunity: '进入社区',
+
             //Labels for Enter Successful popup window
             CampaignPageCancelEnterSuccessTip1              : '取消成功！',
             CampaignPageCancelEnterSuccessTip2              : '',

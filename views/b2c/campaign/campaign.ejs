@@ -51,9 +51,11 @@
                     </div>
                     <div class="modal-body">
                         <div class="enter-success-icon"></div>
-                        <div class="center-block">
+                        <div class="enter-success-text center-block">
                             <h2>{{'CampaignPageEnterSuccessTip1' | translate}}！</h2>
                             <p>{{'CampaignPageEnterSuccessTip2' | translate}}</p>
+                            <p>{{'CampaignPageEnterSuccessTip3' | translate}}</p>
+                            <a class="btn mk-btn-red" href="http://community.bridgeplus.cn">{{'CampaignPageGoToCommunity' | translate}}</a>
                         </div>
                     </div>
                 </div>
@@ -155,7 +157,7 @@
             </div>
         </div>
     </div>
-    <div id="process" class="row campaign-process text-center" style="background-color: <%= campaign.pictures.processBackgroundColor%>" >
+    <div id="process" ng-if="campaign.campaign.pictures.process.path" class="row campaign-process text-center" style="background-color: <%= campaign.pictures.processBackgroundColor%>" >
         <img ng-src="/{{campaign.campaign.pictures.process.path}}">
     </div>
     <div id="winner" class="campaign-winner row">

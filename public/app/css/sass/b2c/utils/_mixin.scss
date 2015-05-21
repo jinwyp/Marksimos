@@ -61,6 +61,25 @@
     }
 }
 
+// todo-add-color-param
+@mixin mk-button-style(
+$background_color: $color_register_button,
+$color: $color_white,
+$box_shadow_color: $color_register_button_border,
+$border_radius: 2px,
+$background_hover: $color_register_button_hover) {
+    border-style: none;
+    background-color: $background_color;
+    color: $color;
+    @include box-shadow($box_shadow_color  0px 2px 4px);
+    @include border-radius($border_radius);
+    &:hover,
+    &:focus {
+        color: $color;
+        background-color: $color_register_button_hover;
+    }
+}
+
 @mixin bridge-header($background) {
     height: 250px;
     padding-left: 180px;
