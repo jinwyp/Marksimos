@@ -586,7 +586,7 @@ exports.searchStudent = function(req, res, next){
     }).then(function(resultTeam) {
 
         if(resultTeam.length === 0) {
-            throw new MKError('Cancel promise chains. Because team of user not found.', MKError.errorCode.common.notFound);
+            //throw new MKError('Cancel promise chains. Because team of user not found.', MKError.errorCode.common.notFound);
         }
 
         resultTeam.forEach(function(team, index){
@@ -603,9 +603,8 @@ exports.searchStudent = function(req, res, next){
         return campaignModel.find({teamList: {$elemMatch: {$in:teamIdList} }}).execQ();
 
     }).then(function(resultCampaign) {
-        //console.log(resultCampaign);
         if(resultCampaign.length === 0) {
-            throw new MKError('Cancel promise chains. Because campaign of user not found.', MKError.errorCode.common.notFound);
+            //throw new MKError('Cancel promise chains. Because campaign of user not found.', MKError.errorCode.common.notFound);
         }
 
         resultCampaign.forEach(function(campaign, index){

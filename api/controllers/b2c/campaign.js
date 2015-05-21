@@ -415,9 +415,14 @@ exports.countTeamJoinCampaign = function(req, res, next){
 
         var tempCount = 0;
 
-        result1.forEach(function(team){
-            tempCount = tempCount + team.memberList.length + 1;
-        });
+        if(result1.length > 0){
+            result1.forEach(function(team){
+                if(Array.isArray(team.memberList)){
+                    tempCount = tempCount + team.memberList.length + 1;
+                }
+            });
+        }
+
 
         resultData.push ({
             date : yyyy + '/' + (mm+1) + '/' + (dd-1),
@@ -442,9 +447,15 @@ exports.countTeamJoinCampaign = function(req, res, next){
 
         var tempCount = 0;
 
-        result2.forEach(function(team){
-            tempCount = tempCount + team.memberList.length + 1;
-        });
+        if(result2.length > 0){
+            result2.forEach(function(team){
+                if(Array.isArray(team.memberList)){
+                    tempCount = tempCount + team.memberList.length + 1;
+                }
+            });
+        }
+
+
 
         resultData.push ({
             date : yyyy + '/' + (mm+1) + '/' + dd,
