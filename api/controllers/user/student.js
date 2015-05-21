@@ -134,12 +134,18 @@ exports.updateTeam = function(req, res, next){
         return res.status(400).send( {message: validationErrors} );
     }
 
-    teamModel.findOneAndUpdateQ(
-        { creator : req.user._id },
-        { name:req.body.name, description:req.body.description||''  },
-        { upsert : true}
 
-    ).then(function(resultTeam){
+    teamModel.findOneQ({ name:req.body.name }).then(function(result){
+        if (result) {
+            throw new MKError('Cancel promise chains. Because team name exist', MKError.errorCode.common.alreadyExist);
+        }
+
+        return teamModel.findOneAndUpdateQ(
+            { creator : req.user._id },
+            { name:req.body.name, description:req.body.description||''  },
+            { upsert : true}
+        );
+    }).then(function(resultTeam){
 
         if(!resultTeam){
             throw new Error('Cancel promise chains. Because Update Team failed. more or less than 1 record is updated. it should be only one !');

@@ -15,7 +15,6 @@
     angular.module('marksimos').controller('chartController', ['$translate', '$scope', '$rootScope', '$document', '$timeout', '$interval', '$http', 'notify', 'chartReport', 'tableReport', 'Student', 'Company', 'Socket', function($translate, $scope, $rootScope, $document, $timeout, $interval, $http, notify, chartReport, tableReport, Student, Company, Socket) {
 
 
-
         $rootScope.$on('$translateChangeSuccess', function () {
             app.loadingChartData();
         });

@@ -31,6 +31,9 @@
 
 <% if(settings.env == "production"){ %>
 <script src="/app/dist/app.min.js"></script>
+
+<% include ../../statistic/baidu.html %>
+
 <% } else{ %>
 <script src="/app/js/directivetemplates.js"></script>
 <script src="/app/js/config.js"></script>
@@ -43,7 +46,6 @@
 <script src="/app/js/filter.js"></script>
 <script src="/app/js/appmarksimoshome.js"></script>
 <% } %>
-
 
 
 

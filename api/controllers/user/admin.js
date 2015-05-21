@@ -1,6 +1,8 @@
 var userModel = require('../../models/user/user.js');
 var userRoleModel = require('../../models/user/userrole.js');
+var teamModel = require('../../models/user/team.js');
 var seminarModel = require('../../models/marksimos/seminar.js');
+var campaignModel = require('../../models/b2c/campaign.js');
 
 var utility = require('../../../common/utility.js');
 var MKError = require('../../../common/error-code.js');
@@ -527,23 +529,32 @@ exports.resetStudentPassword = function(req, res, next){
 
 
 exports.searchStudent = function(req, res, next){
-    var username = req.query.username;
-    var email = req.query.email;
-    var country = req.query.country;
-    var state = req.query.state;
-    var city = req.query.city;
-    var activated = req.query.user_status;
-    var role = req.query.role;
-    //add for e4e
 
-    var query = {
-        role : userRoleModel.roleList.student.id
-    };
+    var validationErrors = userModel.searchQueryValidations(req);
 
-    if(req.query.student_type){
-        query.studentType = req.query.student_type;
+    if(validationErrors){
+        return res.status(400).send( {message: validationErrors} );
     }
 
+
+    var activated = req.query.user_status;
+    var role = req.query.role;
+
+    var quantity = req.query.quantity || 5000;
+
+
+
+    var query = {};
+
+    if(activated) query.activated = activated;
+
+    query.role = userRoleModel.roleList.student.id;
+    if(role) query.role = role;
+
+    if(req.query.student_type) query.studentType = req.query.student_type;
+
+    if(req.query.username) query.username = req.query.username;
+    if(req.query.email) query.email = req.query.email;
 
     //only facilitator and admin can search students
     //facilitator can only view its own students
@@ -551,16 +562,72 @@ exports.searchStudent = function(req, res, next){
         query.facilitatorId = req.user.id;
     }
 
-    if(username) query.username = username;
-    if(email) query.email = email;
-    if(country) query.country = country;
-    if(state) query.state = state;
-    if(city) query.city = city;
-    if(activated) query.activated = activated;
-    if(role) query.role = role;
 
-    userModel.findQ(query, userModel.selectFields()).then(function(result){
-        res.send(result);
+    var dataUserList;
+    var userIdList = [];
+    var teamIdList = [];
+    var dataTeamMap ={};
+    var dataCampaignMap ={};
+
+    userModel.find(query, userModel.selectFields()).sort({createdAt: -1}).lean().execQ().then(function(result){
+
+        if(result.length === 0) {
+            throw new MKError('Cancel promise chains. Because user list not found.', MKError.errorCode.common.notFound);
+        }
+
+        dataUserList = result;
+
+        userIdList = result.map(function(user){
+            return user._id;
+        });
+
+        return teamModel.find({creator: {$in:userIdList} }).populate('memberList').execQ();
+
+    }).then(function(resultTeam) {
+
+        if(resultTeam.length === 0) {
+            throw new MKError('Cancel promise chains. Because team of user not found.', MKError.errorCode.common.notFound);
+        }
+
+        resultTeam.forEach(function(team, index){
+            dataTeamMap[team.creator] = team;
+            teamIdList.push(team._id);
+        });
+
+        dataUserList.forEach(function(user){
+            if(typeof dataTeamMap[user._id] !== 'undefined'){
+                user.team = dataTeamMap[user._id];
+            }
+        });
+
+        return campaignModel.find({teamList: {$elemMatch: {$in:teamIdList} }}).execQ();
+
+    }).then(function(resultCampaign) {
+        //console.log(resultCampaign);
+        if(resultCampaign.length === 0) {
+            throw new MKError('Cancel promise chains. Because campaign of user not found.', MKError.errorCode.common.notFound);
+        }
+
+        resultCampaign.forEach(function(campaign, index){
+
+            teamIdList.forEach(function(teamid){
+                dataCampaignMap[teamid] = [];
+                if(campaign.teamList.indexOf(teamid) > -1){
+                    dataCampaignMap[teamid].push(campaign) ;
+                }
+            });
+
+        });
+
+        dataUserList.forEach(function(user){
+            if(typeof user.team !== 'undefined'){
+                if(typeof dataCampaignMap[user.team._id] !== 'undefined'){
+                    user.joinedCampaign = dataCampaignMap[user.team._id];
+                }
+            }
+        });
+
+        res.status(200).send(dataUserList);
     }).fail(function(err){
         next(err);
     }).done();

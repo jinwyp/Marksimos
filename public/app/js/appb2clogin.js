@@ -252,6 +252,7 @@
         vm.css.alertSuccessInfo = angular.extend({}, vm.css.alertInfo, {template: 'profile-alert-success.html'});
         vm.css.alertFailedInfo = angular.extend({}, vm.css.alertInfo, {template: 'profile-alert-failed.html'});
         vm.css.alertUserNotFound = angular.extend({}, vm.css.alertInfo, {template: 'profile-alert-user-not-found.html'});
+        vm.css.alertTeamNameIsExist = angular.extend({}, vm.css.alertInfo, {template: 'profile-alert-team-name-exist.html'});
         vm.css.alertInvalidPassword = angular.extend({}, vm.css.alertInfo, {template: 'profile-alert-invalid-password.html'});
 
         vm.currentUser = {};
@@ -338,6 +339,8 @@
             // see details in error-code.js
             if (err.data.errorCode == 10002) {
                 alertInfo = vm.css.alertUserNotFound;
+            } else if (err.data.errorCode == 10004) {
+                alertInfo = vm.css.alertTeamNameIsExist;
             }
             $alert(alertInfo);
             return $q.reject(err.data);
