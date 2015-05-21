@@ -15,13 +15,33 @@
 @import "b2c/layout/header";
 @import "b2c/layout/footer";
 
+@import "b2c/components/button";
+
 .forgetpasswordbox{
     height: 400px;
 }
 
 .reg-success{
-    font-size: 20px;
-    margin: 130px 200px;
+    width: 1300px;
+    font-size: 18px;
+    margin: 130px auto;
+    .mk-btn-red {
+        margin-left: 10px;
+    }
+
+    .reg-success-info {
+        margin-top: 20px;
+    }
+    .qr-codes {
+        .qr-code{
+            div {
+                margin-bottom: 10px;
+            }
+            img {
+                width: 90%;
+            }
+        }
+    }
 }
 
 #b2creg {
@@ -153,9 +173,12 @@
         padding-top: 100px;
         padding-left: 170px;
         font-weight: 700;
-        letter-spacing: 5px;
+        letter-spacing: 1px;
         color: #999;
 
+        .mk-btn-red {
+            margin-left: 10px;
+        }
         .tip-header {
             margin-left: 0px;
         }
@@ -937,9 +960,15 @@ $lineHeight_button: 1.8;
             background-color: #B72909;
             font-weight: bold;
             @include box-shadow($color_register_button_border 0px 2px 4px);
+            &:focus, &:hover, &:active {
+                background-color: $color_register_button_hover;
+            }
         }
         .already-entered-button {
-            @include box-shadow(#888 0px 2px 4px)
+            @include box-shadow(#888 0px 2px 4px);
+            &:focus, &:hover, &:active {
+                background-color: $color_background_gray_darker;
+            }
         }
         .introduce {
             display: inline-block;
@@ -952,6 +981,9 @@ $lineHeight_button: 1.8;
             text-align: center;
             line-height: 30px;
             text-decoration: none;
+            &:focus, &:hover, &:active {
+                background-color: $color_background_gray;
+            }
         }
         .enter-count {
             color: #888;
@@ -1106,8 +1138,14 @@ $lineHeight_button: 1.8;
         > div {
             padding: 75px 0;
             width: 400px;
-            * {
+            *:not(a) {
                 padding-left: 215px;
+            }
+        }
+        .enter-success-text {
+            margin-top: -50px;
+            a {
+                margin-left: 215px;
             }
         }
     }
