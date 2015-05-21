@@ -3,6 +3,7 @@ var logger           = require('../../../common/logger.js');
 var simulationResult = require('../../models/marksimos/simulationResult.js');
 var seminarModel     = require('../../models/marksimos/seminar.js');
 var userRoleModel    = require('../../models/user/userrole.js');
+var teamModel    = require('../../models/user/team.js');
 
 var teamScoreModel = require('../../models/b2c/teamscore.js');
 
@@ -174,21 +175,61 @@ exports.getStudentFinalScore = function(req, res, next) {
         }
 
 
-        if(req.user.role === userRoleModel.roleList.student.id){
-            if (result.showLastPeriodScore) {
-                //如果显示最后一阶段的分数，则正常输出
-                return res.status(200).send(result.scoreData);
-            } else {
-                //如果不显示最后一阶段的分数，则数据length-1,原数据为排过序的数据
-                if (result.scoreData && result.scoreData.length > 1) {
-                    return res.status(200).send( result.scoreData.slice(0, result.scoreData.length - 1));
-                }else {
-                    return res.status(200).send( result.scoreData);
+
+
+
+
+
+
+
+
+
+            var teamIdList = [];
+            var teamHashMap = {};
+            var companyHashMap = {};
+
+            seminarData.companyAssignment.forEach(function(company) {
+                if (company.teamList.length > 0) {
+                    teamIdList.push(company.teamList[0]);
                 }
-            }
-        }else{
-            return res.status(200).send(result.scoreData);
-        }
+            });
+
+            teamModel.find({_id: {$in: teamIdList}}).populate('creator').execQ().then(function(resultTeam) {
+                resultTeam.forEach(function(team) {
+                    teamHashMap[team._id] = team;
+                    console.log(team);
+                });
+
+                seminarData.companyAssignment.forEach(function(company) {
+                    if (company.teamList.length > 0) {
+                        companyHashMap[company.companyId] = teamHashMap[company.teamList[0]];
+                    }
+                });
+
+                result.scoreData.forEach(function(period) {
+                    period.scores.forEach(function(score) {
+                        score.team = companyHashMap[score.companyId];
+                    });
+                });
+
+                if(req.user.role === userRoleModel.roleList.student.id){
+                    if (result.showLastPeriodScore) {
+                        //如果显示最后一阶段的分数，则正常输出
+                        return res.status(200).send(result.scoreData);
+                    } else {
+                        //如果不显示最后一阶段的分数，则数据length-1,原数据为排过序的数据
+                        if (result.scoreData && result.scoreData.length > 1) {
+                            return res.status(200).send( result.scoreData.slice(0, result.scoreData.length - 1));
+                        }else {
+                            return res.status(200).send( result.scoreData);
+                        }
+                    }
+                }else{
+                    return res.status(200).send(result.scoreData);
+                }
+
+            });
+
 
 
     }).fail(next).done();
@@ -283,7 +324,7 @@ function getFinalScore(seminarId) {
                         originalProfit: originalProfit,
                         originalBudget: originalBudget
                     });
-                };
+                }
 
                 highest_SOM = _.max(scores, function(companyScore) { return companyScore.originalSOM; }).originalSOM;
                 lowest_SOM = _.min(scores, function(companyScore) { return companyScore.originalSOM; }).originalSOM;
