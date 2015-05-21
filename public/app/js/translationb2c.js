@@ -361,19 +361,19 @@
             //Campaign Page
             //Labels for Navigator
             CampaignPageNavEnterMatch                 : 'Enter Match',
-            CampaignPageNavSchedules                  : 'Schedules',
-            CampaignPageNavGains                      : 'Gains',
-            CampaignPageNavConditions                 : 'Conditions',
+            CampaignPageNavSchedules                  : 'Schedule',
+            CampaignPageNavGains                      : 'Benefits',
+            CampaignPageNavConditions                 : 'Qualification',
             CampaignPageNavProcess                    : 'Process',
             CampaignPageNavWinner                     : 'Winner',
 
             //Labels for Enter Campaign Section
             CampaignPageEnterCampaignEnterButton      : 'Enter',
             CampaignPageEnterCampaignHasEnteredButton : 'Cancel',
-            CampaignPageEnterCampaignIntroduce        : 'Introduce',
-            CampaignPageEnterCampaignCountPrefix      : 'Has Entered ',
-            CampaignPageEnterCampaignCountSuffix      : ' People',
-            CampaignPageEnterCampaignCountPlural      : 's',
+            CampaignPageEnterCampaignIntroduce        : 'Introduction',
+            CampaignPageEnterCampaignCountPrefix      : '',
+            CampaignPageEnterCampaignCountSuffix      : ' People attended',
+            CampaignPageEnterCampaignCountPlural      : '',
             ProfilePageSelectButton: 'Select',
 
             //Labels for Enter Successful popup window
