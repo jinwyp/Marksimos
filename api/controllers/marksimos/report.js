@@ -33,6 +33,11 @@ exports.getStudentFinalScore = function(req, res, next) {
     var tempRoundTime = {};
     var seminarData = {};
 
+    var teamIdList = [];
+    var teamHashMap = {};
+    var companyHashMap = {};
+
+    var scoreData = [];
 
     seminarModel.findOneQ({seminarId : seminarId}).then(function(resultSeminar) {
         if (!resultSeminar) {
@@ -161,21 +166,18 @@ exports.getStudentFinalScore = function(req, res, next) {
             });
 
 
-            teamScoreModel.findQ({marksimosSeminar : seminarData._id}).then(function(results) {
+            teamScoreModel.findQ({marksimosSeminar : seminarData._id}).then(function(resultTeamScores) {
 
-                if (results.length === 0) {
+                if (resultTeamScores.length === 0) {
                     teamScoreModel.createQ(teamScoreList);
                 }
 
             }).fail(next).done();
 
-
         }
 
+        scoreData = result;
 
-        var teamIdList = [];
-        var teamHashMap = {};
-        var companyHashMap = {};
 
         seminarData.companyAssignment.forEach(function(company) {
             if (company.teamList.length > 0) {
@@ -183,41 +185,37 @@ exports.getStudentFinalScore = function(req, res, next) {
             }
         });
 
-        teamModel.find({_id : {$in : teamIdList}}).populate('creator').execQ().then(function(resultTeam) {
-            resultTeam.forEach(function(team) {
-                teamHashMap[team._id] = team;
-            });
+        return teamModel.find({_id : {$in : teamIdList}}).populate('creator').execQ();
 
-            seminarData.companyAssignment.forEach(function(company) {
-                if (company.teamList.length > 0) {
-                    companyHashMap[company.companyId] = teamHashMap[company.teamList[0]];
-                }
-            });
-
-            result.scoreData.forEach(function(period) {
-                period.scores.forEach(function(score) {
-                    score.team = companyHashMap[score.companyId];
-                });
-            });
-
-            if (req.user.role === userRoleModel.roleList.student.id) {
-                if (result.showLastPeriodScore) {
-                    //如果显示最后一阶段的分数，则正常输出
-                    return res.status(200).send(result.scoreData);
-                } else {
-                    //如果不显示最后一阶段的分数，则数据length-1,原数据为排过序的数据
-                    if (result.scoreData && result.scoreData.length > 1) {
-                        return res.status(200).send(result.scoreData.slice(0, result.scoreData.length - 1));
-                    } else {
-                        return res.status(200).send(result.scoreData);
-                    }
-                }
-            } else {
-                return res.status(200).send(result.scoreData);
-            }
-
+    }).then(function(resultTeam) {
+        resultTeam.forEach(function(team) {
+            teamHashMap[team._id] = team;
         });
 
+        seminarData.companyAssignment.forEach(function(company) {
+            if (company.teamList.length > 0) {
+                companyHashMap[company.companyId] = teamHashMap[company.teamList[0]];
+            }
+        });
+
+        scoreData.scoreData.forEach(function(period) {
+            period.scores.forEach(function(score) {
+                score.team = companyHashMap[score.companyId];
+            });
+        });
+
+
+
+        if (req.user.role === userRoleModel.roleList.student.id && !scoreData.showLastPeriodScore) {
+
+            //如果不显示最后一阶段的分数，则数据length-1,原数据为排过序的数据  注意需要排除第一阶段,第一阶段不能隐藏结果
+            if (scoreData.scoreData && scoreData.scoreData.length > 1) {
+                return res.status(200).send(scoreData.scoreData.slice(0, scoreData.scoreData.length - 1));
+            }
+
+        }
+
+        return res.status(200).send(scoreData.scoreData);
 
     }).fail(next).done();
 
