@@ -34,61 +34,60 @@ exports.getStudentFinalScore = function(req, res, next) {
     var seminarData = {};
 
 
-    seminarModel.findOneQ({seminarId: seminarId}).then(function(resultSeminar) {
+    seminarModel.findOneQ({seminarId : seminarId}).then(function(resultSeminar) {
         if (!resultSeminar) {
             throw new Error("Cancel promise chains. seminar not found.");
         }
 
         seminarData = resultSeminar;
-        
+
         return getFinalScore(seminarId);
-    })
-    .then(function(result) {
+    }).then(function(result) {
         //成功操作
         //获取并处理分数
 
         // 处理每个小组的提交锁定决策的时间
-        if(seminarData.roundTime.length > 0){
+        if (seminarData.roundTime.length > 0) {
 
-            seminarData.roundTime.forEach(function(period){
+            seminarData.roundTime.forEach(function(period) {
                 tempRoundTime['p' + period.period] = {};
 
-                period.lockDecisionTime.forEach(function(company){
+                period.lockDecisionTime.forEach(function(company) {
 
                     var time = {
-                        days : 0,
-                        leftDays : 0,
-                        hours : 0,
-                        leftHours : 0,
-                        minutes : 0,
+                        days        : 0,
+                        leftDays    : 0,
+                        hours       : 0,
+                        leftHours   : 0,
+                        minutes     : 0,
                         leftMinutes : 0,
-                        seconds : 0
+                        seconds     : 0
                     };
 
 
-                    time.days = Math.floor(company.spendHour/(24*3600*1000));
+                    time.days = Math.floor(company.spendHour / (24 * 3600 * 1000));
 
                     //计算出小时数
-                    time.leftDays = company.spendHour % (24*3600*1000);   //计算天数后剩余的毫秒数
-                    time.hours = Math.floor(time.leftDays / (3600*1000) );
+                    time.leftDays = company.spendHour % (24 * 3600 * 1000);   //计算天数后剩余的毫秒数
+                    time.hours = Math.floor(time.leftDays / (3600 * 1000));
 
                     //计算相差分钟数
-                    time.leftHours = time.leftDays % (3600*1000);        //计算小时数后剩余的毫秒数
-                    time.minutes = Math.floor(time.leftHours / (60*1000));
+                    time.leftHours = time.leftDays % (3600 * 1000);        //计算小时数后剩余的毫秒数
+                    time.minutes = Math.floor(time.leftHours / (60 * 1000));
 
                     //计算相差秒数
-                    time.leftMinutes = time.leftHours % (60*1000);      //计算分钟数后剩余的毫秒数
-                    time.seconds = Math.round(time.leftMinutes/1000);
+                    time.leftMinutes = time.leftHours % (60 * 1000);      //计算分钟数后剩余的毫秒数
+                    time.seconds = Math.round(time.leftMinutes / 1000);
 
 
                     tempRoundTime['p' + period.period]['c' + company.companyId] = {
                         lockStatus : company.lockStatus,
-                        spendHour : company.spendHour || 0,
-                        lockTime : company.lockTime || 0,
-                        startTime : period.startTime,
-                        hours : time.hours || 0,
-                        minutes : time.minutes || 0,
-                        seconds : time.seconds || 0
+                        spendHour  : company.spendHour || 0,
+                        lockTime   : company.lockTime || 0,
+                        startTime  : period.startTime,
+                        hours      : time.hours || 0,
+                        minutes    : time.minutes || 0,
+                        seconds    : time.seconds || 0
                     };
 
                 });
@@ -96,18 +95,18 @@ exports.getStudentFinalScore = function(req, res, next) {
             });
 
 
-            result.scoreData.forEach(function(period, pindex){
+            result.scoreData.forEach(function(period, pindex) {
                 // 排除 起始的-3 -2 -1 0 阶段
-                if(period.period > 0){
-                    period.scores.forEach(function(score, sindex){
+                if (period.period > 0) {
+                    period.scores.forEach(function(score, sindex) {
 
-                        score.lockStatus = tempRoundTime['p'+ period.period]['c' + score.companyId].lockStatus;
-                        score.spendHour = tempRoundTime['p'+ period.period]['c' + score.companyId].spendHour;
-                        score.lockTime = tempRoundTime['p'+ period.period]['c' + score.companyId].lockTime;
-                        score.startTime = tempRoundTime['p'+ period.period]['c' + score.companyId].startTime;
-                        score.hours = tempRoundTime['p'+ period.period]['c' + score.companyId].hours;
-                        score.minutes = tempRoundTime['p'+ period.period]['c' + score.companyId].minutes;
-                        score.seconds = tempRoundTime['p'+ period.period]['c' + score.companyId].seconds;
+                        score.lockStatus = tempRoundTime['p' + period.period]['c' + score.companyId].lockStatus;
+                        score.spendHour = tempRoundTime['p' + period.period]['c' + score.companyId].spendHour;
+                        score.lockTime = tempRoundTime['p' + period.period]['c' + score.companyId].lockTime;
+                        score.startTime = tempRoundTime['p' + period.period]['c' + score.companyId].startTime;
+                        score.hours = tempRoundTime['p' + period.period]['c' + score.companyId].hours;
+                        score.minutes = tempRoundTime['p' + period.period]['c' + score.companyId].minutes;
+                        score.seconds = tempRoundTime['p' + period.period]['c' + score.companyId].seconds;
 
                     });
                 }
@@ -117,19 +116,18 @@ exports.getStudentFinalScore = function(req, res, next) {
         }
 
 
-
         // 保存比赛结果到teamScoreModel 里面
-        if(seminarData.isSimulationFinished === true){
+        if (seminarData.isSimulationFinished === true) {
             var finalScoreList = _.sortBy(result.scoreData[result.scoreData.length - 1].scores, 'finalScore').reverse();
             var teamScoreList = [];
 
 
-            finalScoreList.forEach(function(score, sindex){
+            finalScoreList.forEach(function(score, sindex) {
                 score.ranking = sindex + 1;
 
-                seminarData.companyAssignment.forEach(function(company){
-                    if(company.companyId === score.companyId){
-                        if(company.teamList.length > 0){
+                seminarData.companyAssignment.forEach(function(company) {
+                    if (company.companyId === score.companyId) {
+                        if (company.teamList.length > 0) {
                             score.teamid = company.teamList[0];
                         }
                     }
@@ -137,24 +135,24 @@ exports.getStudentFinalScore = function(req, res, next) {
 
 
                 var companyScore = {
-                    ranking : score.ranking,
-                    marksimosScore : score.finalScore,
-                    timeCost : score.spendHour,
+                    ranking          : score.ranking,
+                    marksimosScore   : score.finalScore,
+                    timeCost         : score.spendHour,
                     marksimosSeminar : seminarData._id
                     //student : '',
                 };
 
-                if(score.teamid){
+                if (score.teamid) {
                     companyScore.team = score.teamid;
                 }
 
-                if(seminarData.belongToCampaign){
+                if (seminarData.belongToCampaign) {
                     companyScore.campaign = seminarData.belongToCampaign;
                 }
 
-                if(score.lockStatus){
+                if (score.lockStatus) {
                     companyScore.timeCostStatus = 1;
-                }else{
+                } else {
                     companyScore.timeCostStatus = 0;
                 }
 
@@ -163,9 +161,9 @@ exports.getStudentFinalScore = function(req, res, next) {
             });
 
 
-            teamScoreModel.findQ({marksimosSeminar:seminarData._id}).then(function(results){
+            teamScoreModel.findQ({marksimosSeminar : seminarData._id}).then(function(results) {
 
-                if(results.length === 0){
+                if (results.length === 0) {
                     teamScoreModel.createQ(teamScoreList);
                 }
 
@@ -175,61 +173,50 @@ exports.getStudentFinalScore = function(req, res, next) {
         }
 
 
+        var teamIdList = [];
+        var teamHashMap = {};
+        var companyHashMap = {};
 
+        seminarData.companyAssignment.forEach(function(company) {
+            if (company.teamList.length > 0) {
+                teamIdList.push(company.teamList[0]);
+            }
+        });
 
-
-
-
-
-
-
-
-            var teamIdList = [];
-            var teamHashMap = {};
-            var companyHashMap = {};
+        teamModel.find({_id : {$in : teamIdList}}).populate('creator').execQ().then(function(resultTeam) {
+            resultTeam.forEach(function(team) {
+                teamHashMap[team._id] = team;
+            });
 
             seminarData.companyAssignment.forEach(function(company) {
                 if (company.teamList.length > 0) {
-                    teamIdList.push(company.teamList[0]);
+                    companyHashMap[company.companyId] = teamHashMap[company.teamList[0]];
                 }
             });
 
-            teamModel.find({_id: {$in: teamIdList}}).populate('creator').execQ().then(function(resultTeam) {
-                resultTeam.forEach(function(team) {
-                    teamHashMap[team._id] = team;
-                    console.log(team);
+            result.scoreData.forEach(function(period) {
+                period.scores.forEach(function(score) {
+                    score.team = companyHashMap[score.companyId];
                 });
+            });
 
-                seminarData.companyAssignment.forEach(function(company) {
-                    if (company.teamList.length > 0) {
-                        companyHashMap[company.companyId] = teamHashMap[company.teamList[0]];
-                    }
-                });
-
-                result.scoreData.forEach(function(period) {
-                    period.scores.forEach(function(score) {
-                        score.team = companyHashMap[score.companyId];
-                    });
-                });
-
-                if(req.user.role === userRoleModel.roleList.student.id){
-                    if (result.showLastPeriodScore) {
-                        //如果显示最后一阶段的分数，则正常输出
-                        return res.status(200).send(result.scoreData);
-                    } else {
-                        //如果不显示最后一阶段的分数，则数据length-1,原数据为排过序的数据
-                        if (result.scoreData && result.scoreData.length > 1) {
-                            return res.status(200).send( result.scoreData.slice(0, result.scoreData.length - 1));
-                        }else {
-                            return res.status(200).send( result.scoreData);
-                        }
-                    }
-                }else{
+            if (req.user.role === userRoleModel.roleList.student.id) {
+                if (result.showLastPeriodScore) {
+                    //如果显示最后一阶段的分数，则正常输出
                     return res.status(200).send(result.scoreData);
+                } else {
+                    //如果不显示最后一阶段的分数，则数据length-1,原数据为排过序的数据
+                    if (result.scoreData && result.scoreData.length > 1) {
+                        return res.status(200).send(result.scoreData.slice(0, result.scoreData.length - 1));
+                    } else {
+                        return res.status(200).send(result.scoreData);
+                    }
                 }
+            } else {
+                return res.status(200).send(result.scoreData);
+            }
 
-            });
-
+        });
 
 
     }).fail(next).done();
