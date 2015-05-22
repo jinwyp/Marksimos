@@ -27,7 +27,9 @@ exports.campaignListPage = function(req, res, next){
         resultCampaign.forEach(function(campaign){
             var totalMembers = 0;
             campaign.teamList.forEach(function(team){
-                totalMembers = totalMembers + team.memberList.length + 1;
+                if(Array.isArray(team.memberList)){
+                    totalMembers = totalMembers + team.memberList.length + 1;
+                }
             });
             campaign.totalMembers = totalMembers + campaign.memberNumberBase;
         });
@@ -59,7 +61,10 @@ exports.campaignSingleInfoPage = function(req, res, next){
 
         var totalMembers = 0;
         resultCampaign.teamList.forEach(function(team){
-            totalMembers = totalMembers + team.memberList.length + 1;
+            if(Array.isArray(team.memberList)){
+                totalMembers = totalMembers + team.memberList.length + 1;
+            }
+
         });
         resultCampaign.totalMembers = totalMembers  + resultCampaign.memberNumberBase;
 
@@ -90,10 +95,13 @@ exports.campaignSingleInfo = function(req, res, next){
 
         var totalMembers = 0;
         resultCampaign.teamList.forEach(function(team){
-            totalMembers = totalMembers + team.memberList.length + 1;
+            if(Array.isArray(team.memberList)){
+                totalMembers = totalMembers + team.memberList.length + 1;
+            }
+
         });
 
-        resultCampaign.totalMembers = totalMembers + resultCampaign.memberNumberBase;;
+        resultCampaign.totalMembers = totalMembers + resultCampaign.memberNumberBase;
 
         return res.status(200).send(resultCampaign);
 
