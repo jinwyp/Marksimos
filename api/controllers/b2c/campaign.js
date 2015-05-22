@@ -90,10 +90,13 @@ exports.campaignSingleInfo = function(req, res, next){
 
         var totalMembers = 0;
         resultCampaign.teamList.forEach(function(team){
-            totalMembers = totalMembers + team.memberList.length + 1;
+            if(Array.isArray(team.memberList)){
+                totalMembers = totalMembers + team.memberList.length + 1;
+            }
+
         });
 
-        resultCampaign.totalMembers = totalMembers + resultCampaign.memberNumberBase;;
+        resultCampaign.totalMembers = totalMembers + resultCampaign.memberNumberBase;
 
         return res.status(200).send(resultCampaign);
 
