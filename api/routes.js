@@ -46,6 +46,7 @@ auth.initAuth();
 /**********     Routes for rendering templates HCD Learning Website     **********/
 
 apiRouter.get('/', function(req, res, next){
+    logger.log("Website Host:", req.headers.host);
     if(req.headers.host.indexOf('bridgeplus.cn') !== -1){
         return res.redirect('/e4e');
     }else{
