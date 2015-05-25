@@ -191,6 +191,11 @@ gulp.task('uncommentCCAP', function() {
 gulp.task('nodemonludwik', function () {
     nodemon({
         script: 'app.js',
+        ignore : [
+            "tmp/**",
+            "public/**",
+            "views/**"
+        ],
         env: { 'NODE_ENV': 'ludwik' }
     });
 //        .on('restart', 'default')
@@ -199,18 +204,33 @@ gulp.task('nodemonludwik', function () {
 gulp.task('nodemonraven', function () {
     nodemon({
         script: 'app.js',
+        ignore : [
+            "tmp/**",
+            "public/**",
+            "views/**"
+        ],
         env: { 'NODE_ENV': 'raven' }
     });
 });
 gulp.task('nodemonken', function () {
   nodemon({
     script: 'app.js',
+      ignore : [
+          "tmp/**",
+          "public/**",
+          "views/**"
+      ],
     env: { 'NODE_ENV': 'ken' }
   });
 });
 gulp.task('nodemonjin', function () {
     nodemon({
         script: 'app.js',
+        ignore : [
+            "tmp/**",
+            "public/**",
+            "views/**"
+        ],
         env: { 'NODE_ENV': 'jin' }
     });
 //        .on('restart', 'default')
@@ -218,6 +238,11 @@ gulp.task('nodemonjin', function () {
 gulp.task('nodemonjinlocal', function () {
     nodemon({
         script: 'app.js',
+        ignore : [
+            "tmp/**",
+            "public/**",
+            "views/**"
+        ],
         env: { 'NODE_ENV': 'jinlocal' }
     });
 //        .on('restart', 'default')
@@ -226,6 +251,11 @@ gulp.task('nodemonjinlocal', function () {
 gulp.task('nodemonyuekecheng', function () {
     nodemon({
         script: 'app.js',
+        ignore : [
+            "tmp/**",
+            "public/**",
+            "views/**"
+        ],
         env: { 'NODE_ENV': 'yuekecheng'}
     });
 //        .on('restart', 'default')
