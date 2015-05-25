@@ -405,6 +405,7 @@
 
                                     <text-form-input type="text" name="newStudentUsername" label="User :" placeholder="UserName" labelclass="col-sm-2" inputclass="col-sm-4" data="data.searchStudent.username" minlength="6" minlengtherrorinfo="Username must be at least 6 characters" maxlength="20" maxlengtherrorinfo="Username is a maximum of 20 characters"></text-form-input>
                                     <text-form-input type="email" name="newStudentEmail" label="Email :" placeholder="Email" labelclass="col-sm-2" inputclass="col-sm-4" data="data.searchStudent.email" emailerrorinfo="Doesn't look like a valid email !" ></text-form-input>
+                                    <text-form-input type="number" name="newStudentMobile" label="Mobile :" placeholder="Mobile phone" labelclass="col-sm-2" inputclass="col-sm-4" data="data.searchStudent.mobilePhone" ></text-form-input>
 
                                     <div class="form-group">
                                         <label for="inputStudentUserStatus" class="col-sm-2 control-label">User Status</label>
@@ -415,6 +416,7 @@
                                             <label class="radio-inline">
                                                 <input type="radio" name="inputStudentUserStatus" ng-model="data.searchStudent.user_status" value="false">Inactive
                                             </label>
+
                                         </div>
                                     </div>
 

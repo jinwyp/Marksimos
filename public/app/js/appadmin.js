@@ -149,6 +149,7 @@
             searchStudent: {
                 username: '',
                 email: '',
+                mobilePhone: '',
                 user_status: 'true',
                 //add for e4e
                 student_type: "",

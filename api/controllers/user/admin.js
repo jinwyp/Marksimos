@@ -543,7 +543,6 @@ exports.searchStudent = function(req, res, next){
     var quantity = req.query.quantity || 5000;
 
 
-
     var query = {};
 
     if(activated) query.activated = activated;
@@ -555,6 +554,7 @@ exports.searchStudent = function(req, res, next){
 
     if(req.query.username) query.username = req.query.username;
     if(req.query.email) query.email = req.query.email;
+    if(req.query.mobilePhone) query.mobilePhone = req.query.mobilePhone;
 
     //only facilitator and admin can search students
     //facilitator can only view its own students
@@ -569,7 +569,7 @@ exports.searchStudent = function(req, res, next){
     var dataTeamMap ={};
     var dataCampaignMap ={};
 
-    userModel.find(query, userModel.selectFields()).sort({createdAt: -1}).lean().execQ().then(function(result){
+    userModel.find(query, userModel.selectFields()).sort({createdAt: -1}).limit(quantity).lean().execQ().then(function(result){
 
         if(result.length === 0) {
             throw new MKError('Cancel promise chains. Because user list not found.', MKError.errorCode.common.notFound);
