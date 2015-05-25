@@ -379,7 +379,7 @@ userSchema.statics.emailVerifyResetPasswordValidations = function(req, userRoleI
 userSchema.statics.resetForgotPasswordValidations = function(req, userRoleId, studentType, step){
 
     studentType = studentType || 20;
-    step = step || 1
+    step = step || 1;
 
     if(step === 1){
         req.checkBody('email', 'Email wrong format').notEmpty().isEmail();
