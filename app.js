@@ -49,7 +49,6 @@ var morganOption = {
     skip: function (req, res) { return res.statusCode < 400; }
 };
 
-console.log(app.get('env'));
 
 if(app.get('env') === 'production'){
     app.use(morgan('dev',morganOption) );
