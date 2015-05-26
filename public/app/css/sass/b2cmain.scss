@@ -476,28 +476,46 @@ $lineHeight_button: 1.8;
         background-color: $color_white;
         margin-bottom: 10px;
         position: relative;
-        nav {
-            margin-top: 19px;
-            margin-left: 180px;
-            margin-bottom: 14px;
-            text-align: center;
-            width: 350px;
 
-            & > div > div:not(:last-child) {
-                border-right: 1px solid $color_profile_tip;
+        .guide {
+            position: absolute;
+            width: 400px;
+            height: 120px;
+            right: 40px;
+            .steps {
+                position: absolute;
+                bottom: 40px;
+                left: 0;
+                z-index: 1;
+                h5 {
+                    background-color: #F0B317;
+                    color: $color_white;
+                }
+                .step div {
+                    background-color: $color_white;
+                    opacity: 0.8;
+                }
             }
-
-            .selected {
-                border-bottom: solid #C22D0F;
-                padding: 12px;
-                font-weight: bolder;
+            .progress-bar {
+                position: absolute;
+                z-index: 0;
+                right: 0;
+                width: 120px;
+                height: 120px;
+                background-color: #DDDDDD;
+                @include border-radius(50%);
             }
-            .small-down-triangle {
-                @include triangle(4px, 135deg);
-                bottom: 10px;
-                right: 25px;
+            .indicator {
+                position: absolute;
+                z-index: 2;
+                right: 20px;
+                width: 80px;
+                height: 80px;
+                background-color: #A12B04;//todo: 用渐变色来取代。
+                @include border-radius(50%);
             }
         }
+
     }
     section {
         background-color: $color_white;
