@@ -225,6 +225,7 @@
         var vm = this;
         vm.css = {
             currentTab: 'basicInfo',
+            guideStep: '',
             alertInfo: {
                 duration: 2,
                 template: '',
@@ -255,31 +256,34 @@
 
         /**********  Function Declarations  **********/
         vm.showGuide = function() {
-            return vm.css.finalGuideStep ||
-                !(vm.currentUser.firstName && vm.currentUser.gameMarksimosPosition &&
+            // todo: 这个是以加入活动，并填写了社团经历作为判断标准吗？
+            return !(vm.currentUser.firstName && vm.currentUser.gameMarksimosPosition &&
                 vm.currentUser.team && vm.currentUser.team.name);
         };
+
+        vm.stepOneDone = function() {return vm.currentUser.firstName;};
+        vm.stepTwoDone = function() {return vm.currentUser.eductionBackgrounds && vm.currentUser.eductionBackgrounds.length;};
+        vm.stepThreeDone = function() {return vm.currentUser.gameMarksimosPosition;};
+        vm.stepFourDone = function() {return hasJoinedCampaign();};
+        vm.stepFiveDone = function() {return vm.currentUser.societyExperiences && vm.currentUser.societyExperiences.length;};
+
 
         vm.guideProgress = function() {
             var progress = 0;
             // basic info
-            if (vm.currentUser.firstName) progress += 20;
+            if (vm.stepOneDone()) progress += 20;
             // education
-            if (vm.currentUser.eductionBackgrounds && vm.currentUser.eductionBackgrounds.length)
+            if (vm.stepTwoDone())
                 progress += 20;
             // team title
-            if (vm.currentUser.gameMarksimosPosition) progress += 20;
+            if (vm.stepThreeDone()) progress += 20;
             // joined a campaign
-            if (vm.currentUser.joinedCampaign && vm.currentUser.joinedCampaign.length ||
-                vm.currentUser.belongToTeam && vm.currentUser.belongToTeam.some(function(team) {
-                    return team.campaign && team.campaign.name;
-                })
-            ) progress += 20;
+            if (vm.stepFourDone()) progress += 20;
             // work experience
             if (vm.currentUser.workExperiences && vm.currentUser.workExperiences.length)
                 progress += 10;
             // society experience
-            if (vm.currentUser.societyExperiences && vm.currentUser.societyExperiences.length)
+            if (vm.stepFiveDone())
                 progress += 10;
 
             return progress / 100;
@@ -288,22 +292,25 @@
         vm.currentGuideStep = function() {
             // use `currentTab` as `step`.
             var step = '';
-            if (!(vm.currentUser.societyExperiences && vm.currentUser.societyExperiences.length))
-                step = 'societyExperienceInfo';
-            if (!(vm.currentUser.joinedCampaign && vm.currentUser.joinedCampaign.length ||
-                vm.currentUser.belongToTeam && vm.currentUser.belongToTeam.some(function(team) {
-                    return team.campaign && team.campaign.name;
-                }))
-            ) step = 'teamInfo';
-            if (!vm.currentUser.gameMarksimosPosition) step = 'teamInfo';
-            if (!(vm.currentUser.eductionBackgrounds && vm.currentUser.eductionBackgrounds.length))
+            if (!vm.stepOneDone())
+                step = 'basicInfo';
+            else if (!vm.stepTwoDone())
                 step = 'schoolInfo';
-            if (!vm.currentUser.firstName) step = 'basicInfo';
-            if (vm.css.finalGuideStep) step = 'final';
+            else if (!vm.stepThreeDone())
+                step = 'teamInfo';
+            else if (!vm.stepFourDone())
+                step = 'teamInfo';
+            else if (!vm.stepFiveDone())
+                step = 'societyExperienceInfo';
 
             return step;
         };
 
+        vm.goToStep = function(step) {
+            vm.css.currentTab = vm.css.guideStep = step;
+        };
+
+        /*** call model methods ***/
         vm.updateBasicInfo = function(data) {
             return Student.updateStudentB2CInfo(data)
                 .then(updateSuccessHandler)
@@ -360,6 +367,13 @@
             return $q.reject(err.data);
         }
 
+        function hasJoinedCampaign() {
+            return vm.currentUser.joinedCampaign && vm.currentUser.joinedCampaign.length ||
+            vm.currentUser.belongToTeam && vm.currentUser.belongToTeam.some(function(team) {
+                return team.campaign && team.campaign.name;
+            });
+        }
+
         function switchTab(tab) {
             if (vm.css.currentTab == tab) return;
             vm.css.currentTab = tab;
@@ -391,6 +405,8 @@
             init : function(){
                 if ($location.hash().length > 0) {
                     switchTab($location.hash());
+                } else if (vm.showGuide()) {
+
                 } else switchTab('basicInfo');
 
                 this.getUserInfo();

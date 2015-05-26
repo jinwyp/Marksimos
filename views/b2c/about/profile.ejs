@@ -26,6 +26,38 @@
                             </div>
                         </nav>
                     </div>
+
+                    <div class="guide" ng-if="profile.showGuide()">
+                        <div class="steps">
+                            <div class="step" ng-if="vm.css.guideStep == 'basicInfo'">
+                                <h5>{{'ProfilePageGuideStepOne' | translate}}</h5>
+                                <div>{{'ProfilePageGuideStepOneText' | translate}}<button ng-disabled="profile.stepOneDone()" ng-click="profile.goToStep('shcoolInfo')">{{'ProfilePageGuideStepNext' | translate}}</button></div>
+                            </div>
+                            <div class="step" ng-if="vm.css.guideStep == 'schoolInfo'">
+                                <h5>{{'ProfilePageGuideStepTwo' | translate}}</h5>
+                                <div>{{'ProfilePageGuideStepTwoText' | translate}}<button ng-disabled="profile.stepTwoDone()" ng-click="profile.goToStep('teamInfo')">{{'ProfilePageGuideStepNext' | translate}}</button></div>
+                            </div>
+                            <div class="step" ng-if="vm.css.guideStep == 'teamInfo'">
+                                <h5>{{'ProfilePageGuideStepThree' | translate}}</h5>
+                                <div>{{'ProfilePageGuideStepThreeText' | translate}}<button ng-disabled="profile.stepThreeDone()" ng-click="profile.goToStep('teamInfo')">{{'ProfilePageGuideStepNext' | translate}}</button></div>
+                            </div>
+                            <div class="step" ng-if="vm.css.guideStep == 'teamInfo'">
+                                <h5>{{'ProfilePageGuideStepFour' | translate}}</h5>
+                                <div>{{'ProfilePageGuideStepFourText1' | translate}}<br>{{'ProfilePageGuideStepFourText2' | translate}}<button ng-disabled="profile.stepFourDone()" ng-click="profile.goToStep('societyExperienceInfo')">{{'ProfilePageGuideStepNext' | translate}}</button></div>
+                            </div>
+                            <div class="step" ng-if="vm.css.guideStep == 'societyExperienceInfo'">
+                                <h5>{{'ProfilePageGuideStepFive' | translate}}</h5>
+                                <div>{{'ProfilePageGuideStepFiveText' | translate}}<button ng-disabled="profile.stepFiveDone()" ng-click="profile.css.guideStep=''">{{'ProfilePageGuideStepNext' | translate}}</button></div>
+                            </div>
+                        </div>
+                        <div class="progress-bar">
+                            <circle-progress-bar></circle-progress-bar>
+                        </div>
+                        <div class="indicator">
+                            {{profile.guideProgress() * 100}}<i class="percentage">%</i>
+                        </div>
+                    </div>
+
                     <style>
                         .profile-progress path {
                             stroke: #F5F5DC;
