@@ -803,7 +803,7 @@
                     cy = +scope.cy,
                     r = +scope.r,
                     w = +scope.strokeWidth,
-                    perimeter = 2 * Math.PI * r; //path.getTotalLength
+                    perimeter = 2 * Math.PI * r; //todo: may be should use path.getTotalLength to replace it.
 
                 if (!isFinite(cx + cy + r + w)) throw Error('cx, cy, r and stroke-width should be number');
 

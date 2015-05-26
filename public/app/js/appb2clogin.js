@@ -226,6 +226,8 @@
         vm.css = {
             currentTab: 'basicInfo',
             guideStep: '',
+            // means the user is new here, so always show the guide to such user.
+            firstTime: false,
             alertInfo: {
                 duration: 2,
                 template: '',
@@ -256,12 +258,16 @@
 
         /**********  Function Declarations  **********/
         vm.showGuide = function() {
+            if (!Object.keys(vm.currentUser).length) return false;
+
             // todo: 这个是以加入活动，并填写了社团经历作为判断标准吗？
-            return !(vm.currentUser.firstName && vm.currentUser.gameMarksimosPosition &&
+            return vm.css.firstTime || !(vm.currentUser.firstName && vm.currentUser.gameMarksimosPosition &&
                 vm.currentUser.team && vm.currentUser.team.name);
         };
 
-        vm.stepOneDone = function() {return vm.currentUser.firstName;};
+        vm.stepOneDone = function() {
+            return vm.currentUser.firstName;
+        };
         vm.stepTwoDone = function() {return vm.currentUser.eductionBackgrounds && vm.currentUser.eductionBackgrounds.length;};
         vm.stepThreeDone = function() {return vm.currentUser.gameMarksimosPosition;};
         vm.stepFourDone = function() {return hasJoinedCampaign();};
@@ -290,16 +296,16 @@
         };
 
         vm.currentGuideStep = function() {
-            // use `currentTab` as `step`.
+            // use `currentTab` as `step` except team.
             var step = '';
             if (!vm.stepOneDone())
                 step = 'basicInfo';
             else if (!vm.stepTwoDone())
                 step = 'schoolInfo';
             else if (!vm.stepThreeDone())
-                step = 'teamInfo';
+                step = 'teamInfo.title';
             else if (!vm.stepFourDone())
-                step = 'teamInfo';
+                step = 'teamInfo.join';
             else if (!vm.stepFiveDone())
                 step = 'societyExperienceInfo';
 
@@ -307,7 +313,16 @@
         };
 
         vm.goToStep = function(step) {
+            if (step == 'end') {
+                vm.css.guideStep = '';
+                vm.css.firstTime = false;
+                return;
+            }
+
             vm.css.currentTab = vm.css.guideStep = step;
+            if (step.indexOf('teamInfo') === 0) {
+                vm.css.currentTab = 'teamInfo';
+            }
         };
 
         /*** call model methods ***/
@@ -405,11 +420,17 @@
             init : function(){
                 if ($location.hash().length > 0) {
                     switchTab($location.hash());
-                } else if (vm.showGuide()) {
-
                 } else switchTab('basicInfo');
 
-                this.getUserInfo();
+                this.getUserInfo().then(function() {
+                    // If a user has no firstName and no gameMarksimosPosition, assume the user is new here.
+                    if (!vm.stepOneDone() || !vm.stepThreeDone()) {
+                        vm.css.firstTime = true;
+                    }
+                    if (vm.showGuide()) {
+                        vm.goToStep(vm.currentGuideStep());
+                    }
+                });
             },
             reRun : function(){
 
@@ -424,12 +445,6 @@
         };
 
         app.init();
-
-        vm._progress = 0;
-
-        $interval(function() {
-            vm._progress = (vm._progress + 0.1) % 1.00001;
-        }, 700);
 
 
     }]);
