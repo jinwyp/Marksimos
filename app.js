@@ -29,12 +29,14 @@ var fs = require('fs');
 var passport = require('passport');
 
 
+
 app.engine('md', function(path, options, fn){
   fs.readFile(path, 'utf8', function(err, str){
     if (err) return fn(err);
     fn(null, str);
   });
 });
+
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
@@ -43,11 +45,22 @@ app.set('view engine', 'ejs');
 app.use(favicon(path.join(__dirname, '/public/cn/assets/img/hcd-icon.ico')));
 
 var morganFileStream = fs.createWriteStream(config.logDirectory + 'accessmorgan.log', {'flags': 'a'});
-app.use(morgan('dev'));
+var morganOption = {
+    skip: function (req, res) { return res.statusCode < 400; }
+};
+
+
+if(app.get('env') === 'production'){
+    app.use(morgan('dev',morganOption) );
+}else{
+    app.use(morgan('dev') );
+}
+
 
 //app.use(morgan('combined', {
 //    stream: morganFileStream
 //}));
+
 app.use(compression());
 app.use(cookieParser());
 app.use(bodyParser.json());

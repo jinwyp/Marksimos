@@ -744,6 +744,91 @@
         };
     });
 
+    angular.module('marksimos.websitecomponent').directive('circleProgressBar', ['$compile', function($compile) {
+        // http://spencermortensen.com/articles/bezier-circle/
+        var factor = 0.5519;
+
+        var xmlns = 'http://www.w3.org/2000/svg';
+
+        /**
+         *  To fill a target square(L * L) with the circle, confirm the constraint: L = 2r + s.
+         *  Ex.: Given 200 * 200 svg, stroke width is 10, then r = (L - s)/2 = 95, and cx(cy) = 100,
+         *  so call getCirclePath(100, 100, 95)
+         */
+        function getCirclePath(cx, cy, r) {
+            var d = factor * r;
+            return  'M' + point(cx, cy - r) +
+                ' c' + [
+                    // top
+                    point(d, 0),
+                    // right
+                    point(r, r - d),
+                    point(r, r)
+                ].join(', ') +
+                ' c' + [
+                    point(0, d),
+                    // bottom
+                    point(d - r, r),
+                    point(-r, r)
+                ].join(', ') +
+                ' c' + [
+                    point(-d, 0),
+                    // left
+                    point(-r, d - r),
+                    point(-r, -r)
+                ].join(', ') +
+                ' c' + [
+                    point(0, -d),
+                    // top
+                    point(r - d, -r),
+                    point(r, -r)
+                ].join(', ') + 'Z';
+        }
+
+        function point(x, y) {
+            return x + ' ' + y;
+        }
+
+        return {
+            scope: {
+                progress: '=',
+                cx: '@',
+                cy: '@',
+                r: '@',
+                strokeWidth: '@'
+            },
+            restrict: 'E',
+            link: function(scope, elem) {
+                var cx = +scope.cx,
+                    cy = +scope.cy,
+                    r = +scope.r,
+                    w = +scope.strokeWidth,
+                    perimeter = 2 * Math.PI * r;
+
+                if (!isFinite(cx + cy + r + w)) throw Error('cx, cy, r and stroke-width should be number');
+
+                var svg = document.createElementNS(xmlns, 'svg'),
+                    path = document.createElementNS(xmlns, 'path'),
+                    width = 2 * r + w,
+                    d = getCirclePath(cx, cy, r);
+
+                svg.setAttribute('width', width);
+                svg.setAttribute('height', width);
+
+                path.setAttribute('d', getCirclePath(cx, cy, r));
+                path.setAttribute('stroke-width', w);
+                path.setAttribute('stroke-dasharray', perimeter);
+                path.setAttribute('stroke-dashoffset', '{{(1 - progress) * ' + perimeter + '}}');
+                path.setAttribute('fill', 'transparent');
+
+                svg.appendChild(path);
+                elem.append(svg);
+
+                $compile(svg)(scope);
+            }
+        };
+    }]);
+
 })();
 
 

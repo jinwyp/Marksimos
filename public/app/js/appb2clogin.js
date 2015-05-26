@@ -220,34 +220,17 @@
 
 
 
-    angular.module('b2clogin').controller('profileController', ['Student', '$alert', 'FileUploader', '$translate', '$location', '$interval', 'Constant', '$q', function(Student, $alert, FileUploader, $translate, $location, $interval, Constant, $q) {
+    angular.module('b2clogin').controller('profileController', ['Student', '$alert', 'FileUploader', '$translate', '$location', '$interval', '$q', function(Student, $alert, FileUploader, $translate, $location, $interval, $q) {
         /* jshint validthis: true */
         var vm = this;
         vm.css = {
-            addStudentFailedInfo: false,
             currentTab: 'basicInfo',
-            updateTeamNameDisabled: true,
-            saving: false,
-
-            formEditing: false,
-            currentJobIndustry : -1,
-            currentMajor : -1,
-
-            //education background form editing states
-            educationEditing: false,
-            addEducationEditing: false,
-            languageEditing: false,
-            addLanguageEditing: false,
-
             alertInfo: {
                 duration: 2,
                 template: '',
                 container: '#profile-alert-container'
             },
-            defaultAvatar: 'app/css/images/profile_avatar_2.png',
-            errorFields: {},
-            mobileVerifyCodeResend : false,
-            mobileVerifyCodeTimeCounter : 60
+            defaultAvatar: 'app/css/images/profile_avatar_2.png'
         };
         vm.css.alertSuccessInfo = angular.extend({}, vm.css.alertInfo, {template: 'profile-alert-success.html'});
         vm.css.alertFailedInfo = angular.extend({}, vm.css.alertInfo, {template: 'profile-alert-failed.html'});
@@ -256,13 +239,6 @@
         vm.css.alertInvalidPassword = angular.extend({}, vm.css.alertInfo, {template: 'profile-alert-invalid-password.html'});
 
         vm.currentUser = {};
-        vm.newEducation = null;
-        vm.newLanguageSkill = null;
-        vm.newAchievement = null;
-        vm.newExperience = null;
-
-        vm.formData = {};
-        vm.Constant = Constant;
 
         vm.uploader = new FileUploader({
             url : '/e4e/api/student/avatar',
@@ -274,21 +250,59 @@
 
 
         /**********  Event Center  **********/
-        vm.clickUpdateUserInfo = updateUserInfo;
-        vm.clickUpdatePassword = updatePassword;
-        vm.clickEditProfile = editProfile;
         vm.clickSwitchTab = switchTab;
-        vm.clickHideMutiSelect = hideMutiSelect;
 
-        vm.clickCancelEditProfile = cancelEditProfile;
-        vm.clickSetEditingState = setEditingState;
-        vm.clickResetEditingState = resetEditingState;
-        vm.clickAddNewLanguage = addNewLanguage;
-        vm.clickDeleteEducation = deleteEducation;
-        vm.clickDeleteLanguage = deleteLanguage;
-        vm.clickAddNewAchievement = addNewAchievement;
-        vm.clickAddNewAchievementToExistEducation = addNewAchievementToExistEducation;
-        vm.clickDeleteNewEducation = deleteNewEducation;
+
+        /**********  Function Declarations  **********/
+        vm.showGuide = function() {
+            return vm.css.finalGuideStep ||
+                !(vm.currentUser.firstName && vm.currentUser.gameMarksimosPosition &&
+                vm.currentUser.team && vm.currentUser.team.name);
+        };
+
+        vm.guideProgress = function() {
+            var progress = 0;
+            // basic info
+            if (vm.currentUser.firstName) progress += 20;
+            // education
+            if (vm.currentUser.eductionBackgrounds && vm.currentUser.eductionBackgrounds.length)
+                progress += 20;
+            // team title
+            if (vm.currentUser.gameMarksimosPosition) progress += 20;
+            // joined a campaign
+            if (vm.currentUser.joinedCampaign && vm.currentUser.joinedCampaign.length ||
+                vm.currentUser.belongToTeam && vm.currentUser.belongToTeam.some(function(team) {
+                    return team.campaign && team.campaign.name;
+                })
+            ) progress += 20;
+            // work experience
+            if (vm.currentUser.workExperiences && vm.currentUser.workExperiences.length)
+                progress += 10;
+            // society experience
+            if (vm.currentUser.societyExperiences && vm.currentUser.societyExperiences.length)
+                progress += 10;
+
+            return progress / 100;
+        };
+
+        vm.currentGuideStep = function() {
+            // use `currentTab` as `step`.
+            var step = '';
+            if (!(vm.currentUser.societyExperiences && vm.currentUser.societyExperiences.length))
+                step = 'societyExperienceInfo';
+            if (!(vm.currentUser.joinedCampaign && vm.currentUser.joinedCampaign.length ||
+                vm.currentUser.belongToTeam && vm.currentUser.belongToTeam.some(function(team) {
+                    return team.campaign && team.campaign.name;
+                }))
+            ) step = 'teamInfo';
+            if (!vm.currentUser.gameMarksimosPosition) step = 'teamInfo';
+            if (!(vm.currentUser.eductionBackgrounds && vm.currentUser.eductionBackgrounds.length))
+                step = 'schoolInfo';
+            if (!vm.currentUser.firstName) step = 'basicInfo';
+            if (vm.css.finalGuideStep) step = 'final';
+
+            return step;
+        };
 
         vm.updateBasicInfo = function(data) {
             return Student.updateStudentB2CInfo(data)
@@ -346,170 +360,11 @@
             return $q.reject(err.data);
         }
 
-
-        /**********  Function Declarations  **********/
-
-        function hideMutiSelect(){
-            vm.css.currentJobIndustry = -1;
-            vm.css.currentMajor = -1;
-        }
-
-        function editProfile(specificForm) {
-            vm.css.formEditing = true;
-            if(specificForm) {
-                vm.css[specificForm] = true;
-            }
-        }
-
-        function deleteEducation(index) {
-            vm.formData.eductionBackgrounds.splice(index, 1);
-        }
-
-        function deleteNewEducation() {
-            vm.css.addEducationEditing = false;
-            vm.newEducation = null;
-        }
-
-        function addNewLanguage() {
-            if (!vm.newLanguageSkill.language || !vm.newLanguageSkill.level) {
-                return;
-            }
-
-            var isExist = vm.formData.LanguageSkills.some(function(lan, i) {
-                if (lan.language == vm.newLanguageSkill.language) {
-                    vm.formData.LanguageSkills[i] = vm.newLanguageSkill;
-                    return true;
-                }
-            });
-            if (!isExist) {
-                vm.formData.LanguageSkills.push(vm.newLanguageSkill);
-            }
-            vm.newLanguageSkill = null;
-        }
-
-        function deleteLanguage(index) {
-            vm.formData.LanguageSkills.splice(index, 1);
-        }
-
-        function addNewAchievement() {
-            if (!vm.newEducation) {
-                vm.newEducation = {
-                    achievements: []
-                };
-            }
-            if (!vm.newEducation.achievements) {
-                vm.newEducation.achievements = [];
-            }
-
-            vm.newEducation.achievements.push(vm.newAchievement);
-            vm.newAchievement = null;
-        }
-
-        function addNewAchievementToExistEducation(index) {
-            var education = vm.formData.eductionBackgrounds[index];
-            education.achievements.push(education._newAchievement);
-            education._newAchievement = null;
-        }
-
-        function setEditingState(state) {
-            angular.extend(vm.css, state);
-        }
-
-        function resetEditingState() {
-            angular.extend(vm.css, {
-                formEditing: false,
-                educationEditing: false,
-                addEducationEditing: false,
-                languageEditing: false,
-                experienceEditing: false,
-                addExperienceEditing: false
-            });
-        }
-
         function switchTab(tab) {
             if (vm.css.currentTab == tab) return;
             vm.css.currentTab = tab;
-            cancelEditProfile();
         }
 
-        function cancelEditProfile() {
-            vm.css.formEditing = false;
-            app.resetForm();
-        }
-
-        function updateUserInfo(form, slient) {
-            if (form.$valid) {
-                vm.css.errorFields = {};
-
-                if (vm.newEducation) {
-                    if (!vm.newEducation.achievements) {
-                        vm.newEducation.achievements = [];
-                    }
-                    vm.formData.eductionBackgrounds.push(vm.newEducation);
-                }
-
-                if (vm.newAchievement) {
-                    addNewAchievement();
-                }
-
-                if (vm.newLanguageSkill) {
-                    addNewLanguage();
-                }
-
-                if (vm.formData.eductionBackgrounds) {
-                    vm.formData.eductionBackgrounds.forEach(function(education, i) {
-                        if (education._newAchievement) {
-                            addNewAchievementToExistEducation(i);
-                        }
-                    });
-                }
-
-
-                vm.css.saving = true;
-                Student.updateStudentB2CInfo(vm.formData).then(function() {
-                    app.getUserInfo();
-
-                    vm.newEducation = null;
-                    vm.newLanguageSkill = null;
-
-                    if (!slient) {
-                        $alert(vm.css.alertSuccessInfo);
-                        cancelEditProfile();
-                        resetEditingState();
-                    }
-                }).catch(function(err) {
-                    $alert(vm.css.alertFailedInfo);
-                    if (err.data && err.data.message) {
-                        err.data.message.forEach(function(item) {
-                            form[item.param].$valid = false;
-                            form[item.param].$invalid = true;
-                            vm.css.errorFields[item.param] = true;
-                        });
-                    }
-                }).finally(function() {
-                    vm.css.saving = false;
-                });
-            } else {
-                Object.keys(form).forEach(function(key){
-                    if (key[0] != '$') {
-                        form[key].$setDirty();
-                    }
-                });
-            }
-        }
-
-
-        function updatePassword(form) {
-            if (form.$valid) {
-                Student.updatePassword(vm.formData.oldPassword, vm.formData.newPassword).then(function(result) {
-                    $alert(vm.css.alertSuccessInfo);
-                }).catch(function(err) {
-                    $alert(vm.css.alertFailedInfo);
-                });
-            } else {
-                $alert(vm.css.alertInvalidPassword);
-            }
-        }
 
         // file upload
         function onAfterAddingFile() {
@@ -546,27 +401,20 @@
             getUserInfo : function(){
                 return Student.getStudent().then(function(result) {
                     vm.currentUser = result.data;
-                    app.resetForm();
                 }).catch(function(err) {
                     console.log('load student info failed');
                 });
-            },
-            resetForm: function() {
-
-                angular.copy(vm.currentUser, vm.formData);
-
-                vm.formData.oldPassword = '';
-                vm.formData.newPassword = '';
-                vm.formData.rePassword = '';
-
-                vm.formData.teamName = vm.currentUser.team && vm.currentUser.team.name;
-                vm.formData.newTeamMember = '';
-
-                vm.css.errorFields = {};
             }
         };
 
         app.init();
+
+        vm._progress = 0;
+
+        $interval(function() {
+            vm._progress = (vm._progress + 0.1) % 1.00001;
+        }, 700);
+
 
     }]);
 
