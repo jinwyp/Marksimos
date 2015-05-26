@@ -472,31 +472,39 @@
                                     <tr>
                                         <!-- <th>ID</th> -->
                                         <th style="width: 100px;">Action</th>
-                                        <th>UserName / Registration Time</th>
-                                        <th>First/Last Name / Gender</th>
+                                        <th>User Name</th>
+                                        <th>Registration Time</th>
+                                        <th>First/Last Name</th>
                                         <th>Gender</th>
+                                        <th>Status</th>
                                         <th>Email</th>
-                                        <th>Status / Email Activated / Phone Verified</th>
-                                        <th>Cell Phone/Verified</th>
-                                        <th>Country / Province / City</th>
+                                        <th>Email Activated</th>
+                                        <th>Cell Phone</th>
+                                        <th>Phone Verified</th>
+                                        <th>Location</th>
                                         <th>University</th>
                                         <th>Work Experiences</th>
                                         <th>Join Campaign</th>
+                                        <th>Join Campaign Name</th>
                                         <th>Reset Password</th>
                                     </tr>
                                     <tr ng-repeat="user in data.students" >
                                         <!-- <td>{{user._id}}</td> -->
                                         <td><button type="button" class="btn btn-danger" ng-click="data.currentStudent = user">View</button></td>
-                                        <td>{{user.username}} / {{user.createdAt | date:'yyyy-MM-dd HH:mm:ss'}}</td>
+                                        <td>{{user.username}}</td>
+                                        <td>{{user.createdAt | date:'yyyy-MM-dd HH:mm:ss'}}</td>
                                         <td>{{user.firstName}} {{user.lastName}} </td>
                                         <td>{{user.gender == 1 ? 'ProfilePageBasicInfoGenderMale' : 'ProfilePageBasicInfoGenderFemale' | translate}} </td>
+                                        <td>{{user.activated}}</td>
                                         <td>{{user.email}} </td>
-                                        <td>{{user.activated}} / {{user.emailActivated}} / {{user.phoneVerified}}</td>
+                                        <td>{{user.emailActivated}}</td>
                                         <td>{{user.mobilePhone }} </td>
+                                        <td>{{user.phoneVerified}}</td>
                                         <td>{{user.currentLocation}} </td>
-                                        <td> <span ng-repeat="edu in user.eductionBackgrounds">{{edu.university}} / {{ edu.degree}} / {{ edu.major | major | translate}} / {{ edu.entryDate | date:'yyyy-MM-dd'}} / {{ edu.graduationDate | date:'yyyy-MM-dd'}} <br/></span> </td>
-                                        <td><span ng-repeat="work in user.workExperiences">{{work.company}} / {{work.jobType | jobtype | translate}} / {{work.industry | jobndustry | translate}} / {{work.position}} / {{work.sizeOfCompany | companysize | translate}} / {{work.startDate | date:'yyyy-MM-dd'}} / {{ work.endDate | date:'yyyy-MM-dd'}} <br/></span></td>
-                                        <td>{{user.joinedCampaign.length}}  {{user.joinedCampaign[0].name}}</td>
+                                        <td> <span ng-repeat="edu in user.eductionBackgrounds">{{edu.university}} <br/> </span> </td>
+                                        <td> <span ng-repeat="work in user.workExperiences">{{work.company}}  <br/> </span> </td>
+                                        <td>{{user.joinedCampaign.length}}</td>
+                                        <td>{{user.joinedCampaign[0].name}}</td>
                                         <td>
                                             <button ng-click='resetStudentPassword(user._id)'>Reset</button>
                                         </td>
