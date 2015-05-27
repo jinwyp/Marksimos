@@ -537,18 +537,14 @@ exports.searchStudent = function(req, res, next){
     }
 
 
-    var activated = req.query.user_status;
-    var role = req.query.role;
-
     var quantity = req.query.quantity || 5000;
-
 
     var query = {};
 
-    if(activated) query.activated = activated;
+    if(req.query.user_status) query.activated = req.query.user_status;
 
     query.role = userRoleModel.roleList.student.id;
-    if(role) query.role = role;
+    if(req.query.role) query.role = req.query.role;
 
     if(req.query.student_type) query.studentType = req.query.student_type;
 
@@ -639,9 +635,8 @@ exports.listStudentNumberByDay = function(req, res, next){
         role : userRoleModel.roleList.student.id
     };
 
-    if(req.query.student_type){
-        query.studentType = req.query.student_type;
-    }
+    query.studentType = req.query.student_type || userModel.getStudentType().B2C;
+
 
     //only facilitator and admin can search students
     //facilitator can only view its own students
@@ -680,12 +675,27 @@ exports.listStudentNumberByDay = function(req, res, next){
 
         return userModel.findQ(query, userModel.selectFields());
 
-    }).then(function(result2){
+    }).then(function(result2) {
 
-        resultData.push ({
-            date : yyyy + '/' + (mm+1) + '/' + dd,
+        resultData.push({
+            date     : yyyy + '/' + (mm + 1) + '/' + dd,
             userList : result2,
-            count : result2.length
+            count    : result2.length
+        });
+
+        query.createdAt = {
+            "$gte": new Date(2013, 01, 01),
+            "$lt": new Date(yyyy, mm, dd + 1)
+        };
+
+        return userModel.findQ(query, userModel.selectFields());
+
+    }).then(function(result3){
+
+        resultData.push({
+            date     : '2013/01/01',
+            userList : result3,
+            count    : result3.length
         });
 
         res.status(200).send(resultData);
