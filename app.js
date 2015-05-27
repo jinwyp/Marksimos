@@ -133,10 +133,10 @@ app.use(function(err, req, res, next){
 
 
 
-    if((typeof err.message !== 'undefined' && err.message.toLowerCase().substr(0, 6) == 'cancel') || typeof err.errorCode != 'undefined' ){
+    if((typeof err.message !== 'undefined' && err.message.toLowerCase().substr(0, 6) == 'cancel') || typeof err.errorCode !== 'undefined' ){
         // respond promise stop chains info with no system error
 
-        logger.log('400 Error.  Type:', typeof err.message, '   Message:',  err.message);
+        logger.log('400 Error. ', 'Message:',  err.message);
 
         res.status(err.status || 400);
 
