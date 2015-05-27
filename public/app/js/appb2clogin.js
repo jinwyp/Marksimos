@@ -229,6 +229,7 @@
             // means the user is new here, so always show the guide to such user.
             firstTime: false,
             alertInfo: {
+                duration: 2,
                 template: '',
                 container: '#profile-alert-container'
             },
