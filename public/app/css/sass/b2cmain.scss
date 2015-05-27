@@ -575,12 +575,12 @@ $lineHeight_button: 1.8;
                 width: 102px;
                 height: 102px;
                 background-color: #A12B04;//todo: 用渐变色来取代。
-                background: -moz-linear-gradient(-45deg, rgba(181,55,0,1) 1%, rgba(145,34,12,1) 100%); /* FF3.6+ */
-                background: -webkit-gradient(linear, left top, right bottom, color-stop(1%,rgba(181,55,0,1)), color-stop(100%,rgba(145,34,12,1))); /* Chrome,Safari4+ */
-                background: -webkit-linear-gradient(-45deg, rgba(181,55,0,1) 1%,rgba(145,34,12,1) 100%); /* Chrome10+,Safari5.1+ */
-                background: -o-linear-gradient(-45deg, rgba(181,55,0,1) 1%,rgba(145,34,12,1) 100%); /* Opera 11.10+ */
-                background: -ms-linear-gradient(-45deg, rgba(181,55,0,1) 1%,rgba(145,34,12,1) 100%); /* IE10+ */
-                background: linear-gradient(135deg, rgba(181,55,0,1) 1%,rgba(145,34,12,1) 100%); /* W3C */
+                background: -moz-linear-gradient(-45deg, #C83E01 1%, #91220C 100%); /* FF3.6+ */
+                background: -webkit-gradient(linear, left top, right bottom, color-stop(1%,#C83E01), color-stop(100%,#91220C)); /* Chrome,Safari4+ */
+                background: -webkit-linear-gradient(-45deg, #C83E01 1%,#91220C 100%); /* Chrome10+,Safari5.1+ */
+                background: -o-linear-gradient(-45deg, #C83E01 1%,#91220C 100%); /* Opera 11.10+ */
+                background: -ms-linear-gradient(-45deg, #C83E01 1%,#91220C 100%); /* IE10+ */
+                background: linear-gradient(135deg, #C83E01 1%,#91220C 100%); /* W3C */
 
                 @include box-shadow(#B6B6B6 2px 2px 2px);
                 @include border-radius(50%);

@@ -87,7 +87,7 @@ apiRouter.get('/e4e/emailverify/changepassword', auth.forgotPasswordStep2);
 
 
 apiRouter.get('/e4e/profile', auth.authLoginToken({failureRedirect: '/e4e/login'}), auth.authRole(marksimosRight.studentLogin, {failureRedirect: '/e4e/login'}), function(req, res, next){
-    res.render('b2c/about/profile.ejs', {title:'Bridge+ User Home | Bridge+'});
+    res.render('b2c/profile.ejs', {title:'Bridge+ User Home | Bridge+'});
 });
 
 apiRouter.get('/e4e/campaigns',  campaignController.campaignListPage);
