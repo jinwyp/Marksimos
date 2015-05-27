@@ -262,7 +262,7 @@
 
             // todo: 这个是以加入活动，并填写了社团经历作为判断标准吗？
             return vm.css.firstTime || !(vm.currentUser.firstName && vm.currentUser.gameMarksimosPosition &&
-                vm.currentUser.team && vm.currentUser.team.name);
+                hasJoinedCampaign());
         };
 
         vm.stepOneDone = function() {
