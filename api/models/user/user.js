@@ -288,9 +288,9 @@ userSchema.statics.registerValidations = function(req, userRoleId, studentType){
         req.checkBody('mobilePhone', 'mobilePhone wrong format').notEmpty().isMobilePhone('zh-CN');
         req.checkBody('qq', 'qq number format wrong' ).optional().isInt();
 
-        req.checkBody('firstName', '2 to 50 characters required.').optional().len(2, 50);
-        req.checkBody('lastName', '2 to 50 characters required.').optional().len(2, 50);
-        req.checkBody('idcardNumber', '18 to 19 characters required.').optional().matches( /^\d{17}([0-9]|X)$/ );
+        req.checkBody('firstName', 'first Name 2 to 50 characters required.').optional().len(2, 50);
+        req.checkBody('lastName', 'last Name 2 to 50 characters required.').optional().len(2, 50);
+        req.checkBody('idcardNumber', 'idcardNumber 18 to 19 characters required.').optional().matches( /^\d{17}([0-9]|X)$/ );
 
         req.checkBody('country', 'country is required').notEmpty();
         req.checkBody('state', 'state is required').notEmpty();
@@ -312,7 +312,7 @@ userSchema.statics.registerValidations = function(req, userRoleId, studentType){
 
     if(userRoleId === userRoleModel.roleList.distributor.id){
         req.checkBody('mobilePhone', 'mobilePhone wrong format').notEmpty().isMobilePhone('zh-CN');
-        req.checkBody('idcardNumber', '18 to 19 characters required.').matches( /^\d{17}([0-9]|X)$/ );
+        req.checkBody('idcardNumber', 'idcardNumber 18 to 19 characters required.').matches( /^\d{17}([0-9]|X)$/ );
 
         req.checkBody('country', 'country is required').notEmpty();
         req.checkBody('state', 'state is required').notEmpty();
@@ -324,7 +324,7 @@ userSchema.statics.registerValidations = function(req, userRoleId, studentType){
 
     if(userRoleId === userRoleModel.roleList.facilitator.id){
         req.checkBody('mobilePhone', 'mobilePhone wrong format').notEmpty().isMobilePhone('zh-CN');
-        req.checkBody('idcardNumber', '18 to 19 characters required.').matches( /^\d{17}([0-9]|X)$/ );
+        req.checkBody('idcardNumber', 'idcard Number 18 to 19 characters required.').matches( /^\d{17}([0-9]|X)$/ );
 
         req.checkBody('country', 'country is required').notEmpty();
         req.checkBody('state', 'state is required').notEmpty();
@@ -349,9 +349,9 @@ userSchema.statics.userInfoValidations = function(req, userRoleId, studentType){
         if(req.body.mobilePhone) req.checkBody('mobilePhone', 'mobilePhone wrong format').optional().isMobilePhone('zh-CN');
         if(req.body.qq) req.checkBody('qq', 'qq number format wrong' ).optional().isInt();
 
-        if(req.body.firstName) req.checkBody('firstName', '2 to 50 characters required.').optional().len(2, 50);
-        if(req.body.lastName) req.checkBody('lastName', '2 to 50 characters required.').optional().len(2, 50);
-        if(req.body.idcardNumber) req.checkBody('idcardNumber', '18 to 19 characters required.').optional().matches( /^\d{17}([0-9]|X)$/ );
+        if(req.body.firstName) req.checkBody('firstName', 'first Name 2 to 50 characters required.').optional().len(2, 50);
+        if(req.body.lastName) req.checkBody('lastName', 'last Name 2 to 50 characters required.').optional().len(2, 50);
+        if(req.body.idcardNumber) req.checkBody('idcardNumber', 'idcard Number 18 to 19 characters required.').optional().matches( /^\d{17}([0-9]|X)$/ );
 
     }
     return req.validationErrors();
