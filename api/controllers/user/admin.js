@@ -610,7 +610,7 @@ exports.searchStudent = function(req, res, next){
         resultCampaign.forEach(function(campaign, index){
 
             teamIdList.forEach(function(teamid){
-                dataCampaignMap[teamid] = dataCampaignMap[teamid] || [];// todo, the orignal is a bug
+                dataCampaignMap[teamid] = dataCampaignMap[teamid] || [];
                 if(campaign.teamList.indexOf(teamid) > -1){
                     dataCampaignMap[teamid].push(campaign) ;
                 }
