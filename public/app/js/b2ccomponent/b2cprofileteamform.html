@@ -67,4 +67,54 @@
     <div ng-if="!currentUser.belongToTeam.length" class="form-group">
         <span class="col-xs-offset-1" ng-if="!currentUser.belongToTeam.length">{{'ProfilePageJoinedNoTeam' | translate}}</span>
     </div>
+
+    <div class="form-group text-center">
+        <span class="btn mk-btn-red find-teammate-btn" ng-click="clickFindTeammate()">找战友</span>
+    </div>
+    <!-- enter success template -->
+    <script type="text/ng-template" id="profile-find-teammate.html">
+        <div class="modal find-teammate-panel">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        &nbsp;
+                        <button class="close" ng-click="$hide()"><span>×</span></button>
+                    </div>
+                    <div class="modal-body">
+                        <h3 class="way-title">方法一</h3>
+                        <div class="way-detail">
+                            用Bridge+注册账号登陆社区(community.bridgeplus.cn)，<br>
+                            进入赛事组队板块，发布组队信息。
+                            <a class="btn mk-btn-red" href="http://community.bridgeplus.cn/category/5/%E8%B5%9B%E4%BA%8B%E7%BB%84%E9%98%9F">进入社区</a>
+                        </div>
+                        <h3 class="way-title">方法二</h3>
+                        <div class="way-detail">
+                            扫码进入各大赛区微信群，寻找队友。
+                            <ul class="qr-codes row list-inline">
+                                <li class="qr-code col-xs-4 text-center">
+                                    <img src="/app/css/images/huadong.jpg" alt="huadong qr code"/>
+                                    <div>华东赛区群</div>
+                                </li>
+                                <li class="qr-code col-xs-4 text-center">
+                                    <img src="/app/css/images/jingjin.jpg" alt="jingjin qr code"/>
+                                    <div>京津赛区群</div>
+                                </li>
+                                <li class="qr-code col-xs-4 text-center">
+                                    <img src="/app/css/images/dongbei.jpg" alt="dongbei qr code"/>
+                                    <div>东北赛区群</div>
+                                </li>
+                            </ul>
+                        </div>
+                        <h3 class="way-title">方法三</h3>
+                        <div class="way-detail">
+                            填写在线表单，接受组委员会的随机组队调配。（不推荐）
+                            <div class="text-center">
+                                <a class="btn mk-btn-red form-btn" href="http://app.askform.cn/48e3f40e-6099-4cd7-a451-a061d856ca6d.aspx?Type=2">填表单</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </script>
 </form>

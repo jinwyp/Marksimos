@@ -948,6 +948,50 @@ $lineHeight_button: 1.8;
     }
 }
 
+/***** find-team panel in team form *****/
+.find-teammate-btn {
+    margin-top: 12px;
+    font-size: 20px;
+}
+.find-teammate-panel {
+    .modal-dialog {
+        width: 768px;
+    }
+    .modal-header {
+        border-bottom: none;
+        padding: 6px 9px;
+    }
+    .modal-body {
+        padding: 0 20px;
+        h3 {
+            color: $color_white;
+            padding: 10px 27px;
+            margin: 0 -32px;
+            background-color: $color_base_red;
+        }
+        .way-detail {
+            padding: 17px 0;
+            .btn {
+                padding: 1px 6px;
+            }
+            img {
+                width: 115px;
+                margin-bottom: 13px;
+            }
+            .qr-codes {
+                margin-top: 33px;
+                margin-left: 10px;
+                margin-right: 10px;
+            }
+            .form-btn {
+                padding: 3px 19px;
+                font-size: 20px;
+                margin: 22px;
+            }
+        }
+    }
+}
+
 .datepicker .text-muted {
     color: #D1D1D1 !important;
 }
