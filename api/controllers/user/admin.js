@@ -625,7 +625,7 @@ exports.searchStudent = function(req, res, next){
                             dataUserMemberMap[member._id] = dataCampaignMap[user.team._id];
                         });
                     }
-                    
+
                 }
             }
         });

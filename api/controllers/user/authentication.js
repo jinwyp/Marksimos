@@ -863,8 +863,7 @@ exports.generateRegistrationCaptcha = function(req, res, next) {
 
     var xsendQ = Q.nbind(messageXSend.xsend, messageXSend);
 
-    xsendQ()
-    .then(function(result) {
+    xsendQ().then(function(result) {
         var parsedRes = JSON.parse(result);
         if (parsedRes.status === "error") {
             throw new Error(parsedRes);
