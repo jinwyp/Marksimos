@@ -3,7 +3,7 @@
 
 
 
-    angular.module('marksimos.b2ccomponent', ['marksimos.templates', 'pascalprecht.translate', 'b2c.translation']);
+    angular.module('marksimos.b2ccomponent', ['marksimos.templates', 'pascalprecht.translate', 'b2c.translation', 'mgcrea.ngStrap']);
 
     // base decorator required for other decorators(except `watchItemsDecorator`).
     angular.module('marksimos.b2ccomponent').provider('profileFormScopeBaseDecorator', function() {
@@ -142,7 +142,7 @@
     angular.module('marksimos.b2ccomponent').directive('profileNewSocietyExperienceForm', ['Constant', 'profileFormScopeBaseDecorator', 'profileFormScopeAddItemDecorator', newSocietyExperienceFormComponent]);
     angular.module('marksimos.b2ccomponent').directive('profileChangePasswordForm', ['profileFormScopeBaseDecorator', changePasswordFormComponent]);
     angular.module('marksimos.b2ccomponent').directive('profileMobilePhoneForm', ['$interval', 'profileFormScopeBaseDecorator', mobilePhoneFormComponent]);
-    angular.module('marksimos.b2ccomponent').directive('profileTeamForm', ['profileFormScopeBaseDecorator', teamFormComponent]);
+    angular.module('marksimos.b2ccomponent').directive('profileTeamForm', ['profileFormScopeBaseDecorator', '$modal', teamFormComponent]);
     angular.module('marksimos.b2ccomponent').directive('profileTitleForm', ['profileFormScopeBaseDecorator', titleFormComponent]);
 
 
@@ -464,7 +464,7 @@
         };
     }
 
-    function teamFormComponent(profileFormScopeBaseDecorator) {
+    function teamFormComponent(profileFormScopeBaseDecorator, $modal) {
         return {
             restrict: 'E',
             scope: {
@@ -479,6 +479,12 @@
 
                 scope.clickRemoveStudentToTeam = removeStudentToTeam;
                 scope.clickAddStudentToTeam = addStudentToTeam;
+                scope.clickFindTeammate = function() {
+                    $modal({
+                        template: 'profile-find-teammate.html',
+                        container: 'body'
+                    });
+                };
 
                 function removeStudentToTeam(id) {
                     scope.removeStudentToTeam({id: id});
