@@ -620,7 +620,7 @@ exports.searchStudent = function(req, res, next){
                 if(typeof dataCampaignMap[user.team._id] !== 'undefined'){
                     user.joinedCampaign = dataCampaignMap[user.team._id];
 
-                    if(isArray(user.team.memberList)){
+                    if(Array.isArray(user.team.memberList)){
                         user.team.memberList.forEach(function(member){
                             dataUserMemberMap[member._id] = dataCampaignMap[user.team._id];
                         });
