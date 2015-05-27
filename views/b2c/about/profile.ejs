@@ -26,15 +26,37 @@
                             </div>
                         </nav>
                     </div>
-                    <style>
-                        .profile-progress path {
-                            stroke: #F5F5DC;
-                            -webkit-transition: stroke-dashoffset ease 0.5s;
-                            transition: stroke-dashoffset ease 0.5s;
-                            stroke-linecap: round;
-                        }
 
-                    </style>
+                    <div class="guide" ng-if="profile.showGuide()" ng-class="{'extra-long': profile.css.guideStep == 'teamInfo.join'}">
+                        <div class="steps">
+                            <div class="step" ng-if="profile.css.guideStep == 'basicInfo'">
+                                <h5>{{'ProfilePageGuideStepOne' | translate}}</h5>
+                                <div>{{'ProfilePageGuideStepOneText' | translate}}<button class="btn mk-btn-red" ng-disabled="!profile.stepOneDone()" ng-click="profile.goToStep('schoolInfo')">{{'ProfilePageGuideStepNext' | translate}}</button></div>
+                            </div>
+                            <div class="step" ng-if="profile.css.guideStep == 'schoolInfo'">
+                                <h5>{{'ProfilePageGuideStepTwo' | translate}}</h5>
+                                <div>{{'ProfilePageGuideStepTwoText' | translate}}<button class="btn mk-btn-red" ng-disabled="!profile.stepTwoDone()" ng-click="profile.goToStep('teamInfo.title')">{{'ProfilePageGuideStepNext' | translate}}</button></div>
+                            </div>
+                            <div class="step" ng-if="profile.css.guideStep == 'teamInfo.title'">
+                                <h5>{{'ProfilePageGuideStepThree' | translate}}</h5>
+                                <div>{{'ProfilePageGuideStepThreeText' | translate}}<button class="btn mk-btn-red" ng-disabled="!profile.stepThreeDone()" ng-click="profile.goToStep('teamInfo.join')">{{'ProfilePageGuideStepNext' | translate}}</button></div>
+                            </div>
+                            <div class="step" ng-if="profile.css.guideStep == 'teamInfo.join'">
+                                <h5>{{'ProfilePageGuideStepFour' | translate}}</h5>
+                                <div>{{'ProfilePageGuideStepFourText1' | translate}}<br>{{'ProfilePageGuideStepFourText2' | translate}}<button class="btn mk-btn-red" ng-disabled="!profile.stepFourDone()" ng-click="profile.goToStep('societyExperienceInfo')">{{'ProfilePageGuideStepNext' | translate}}</button></div>
+                            </div>
+                            <div class="step" ng-if="profile.css.guideStep == 'societyExperienceInfo'">
+                                <h5>{{'ProfilePageGuideStepFive' | translate}}</h5>
+                                <div>{{'ProfilePageGuideStepFiveText' | translate}}<button class="btn mk-btn-red" ng-disabled="!profile.stepFiveDone()" ng-click="profile.goToStep('end')">{{'ProfilePageGuideStepNext' | translate}}</button></div>
+                            </div>
+                        </div>
+                        <div class="progress-bar">
+                            <circle-progress-bar cx="63.5" cy="63.5" r="60" stroke-width="7" progress="profile.guideProgress()"></circle-progress-bar>
+                        </div>
+                        <div class="indicator">
+                            {{profile.guideProgress() * 100}}<i class="percentage">%</i>
+                        </div>
+                    </div>
                     <!--<circle-progress-bar cx="100", cy="100", r="95" stroke-width="10" progress="profile._progress" class="profile-progress"></circle-progress-bar>-->
                 </div>
             </header>

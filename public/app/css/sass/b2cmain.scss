@@ -492,12 +492,104 @@ $lineHeight_button: 1.8;
                 padding: 12px;
                 font-weight: bolder;
             }
-            .small-down-triangle {
-                @include triangle(4px, 135deg);
-                bottom: 10px;
-                right: 25px;
+        }
+        .guide {
+            position: absolute;
+            width: 459px;
+            height: 138px;
+            right: 40px;
+            top: 42px;
+            &.extra-long {
+                width: 511px;
+                .step div {
+                    width: 416px !important;
+                }
+            }
+            .steps {
+                position: absolute;
+                bottom: 40px;
+                left: 0;
+                top: 38px;
+                z-index: 1;
+                h5 {
+                    margin: 0;
+                    border-top-left-radius: 2px;
+                    padding: 5px 11px;
+                    background-color: #F0B317;
+                    color: $color_white;
+                    font-size: 12px;
+                }
+                .step {
+                    position: relative;
+                }
+                .step div {
+                    width: 365px;
+                    height: 52px;
+                    padding: 6px 18px 6px 11px;
+                    font-size: 12px;
+                    background-color: $color_white;
+                    opacity: 0.85;
+                    button {
+                        padding: 0 5px;
+                        font-size: 10px;
+                        opacity: 1;
+                        position: absolute;
+                        bottom: 5px;
+                        right: 44px;
+                        &[disabled] {
+                            background-color: gray;
+                        }
+                    }
+                }
+            }
+            .progress-bar {
+                position: absolute;
+                z-index: 0;
+                right: 0;
+                width: 138px;
+                height: 138px;
+                background-color: #DDDDDD;
+                @include box-shadow(#7C1703 4px 4px 4px);
+                @include border-radius(50%);
+                svg {
+                    position: absolute;
+                    top: 5px;
+                    right: 5px;
+                }
+                path {
+                    stroke: #6ABC40;
+                    -webkit-transition: stroke-dashoffset ease 0.7s;
+                    transition: stroke-dashoffset ease 0.7s;
+                    stroke-linecap: round;
+                }
+            }
+            .indicator {
+                padding-top: 27px;
+                padding-left: 18px;
+                color: $color_white;
+                font-size: 32px;
+                position: absolute;
+                z-index: 2;
+                top: 17px;
+                right: 18px;
+                width: 102px;
+                height: 102px;
+                background-color: #A12B04;//todo: 用渐变色来取代。
+                background: -moz-linear-gradient(-45deg, rgba(181,55,0,1) 1%, rgba(145,34,12,1) 100%); /* FF3.6+ */
+                background: -webkit-gradient(linear, left top, right bottom, color-stop(1%,rgba(181,55,0,1)), color-stop(100%,rgba(145,34,12,1))); /* Chrome,Safari4+ */
+                background: -webkit-linear-gradient(-45deg, rgba(181,55,0,1) 1%,rgba(145,34,12,1) 100%); /* Chrome10+,Safari5.1+ */
+                background: -o-linear-gradient(-45deg, rgba(181,55,0,1) 1%,rgba(145,34,12,1) 100%); /* Opera 11.10+ */
+                background: -ms-linear-gradient(-45deg, rgba(181,55,0,1) 1%,rgba(145,34,12,1) 100%); /* IE10+ */
+                background: linear-gradient(135deg, rgba(181,55,0,1) 1%,rgba(145,34,12,1) 100%); /* W3C */
+
+                @include box-shadow(#B6B6B6 2px 2px 2px);
+                @include border-radius(50%);
+                .percentage {
+                    font-size: 25px;
+                }
             }
         }
+
     }
     section {
         background-color: $color_white;

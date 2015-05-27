@@ -242,6 +242,22 @@
             //Header Title
             ProfilePageHeaderTitle                   : "Personal Info",
 
+            //Guide
+            ProfilePageGuideStepOne: '第一步：填写个人信息',
+            ProfilePageGuideStepTwo: '第二步：填写教育信息',
+            ProfilePageGuideStepThree: '第三步：填写你的团队职位',
+            ProfilePageGuideStepFour: '第四步：加入队伍',
+            ProfilePageGuideStepFive: '报名成功！',
+
+            ProfilePageGuideStepOneText: '这是报名成功的必备信息，请详细填写',
+            ProfilePageGuideStepTwoText: '这是报名成功的必备信息，请详细填写',
+            ProfilePageGuideStepThreeText: '各司其职才能把团队力量发挥到最大！',
+            ProfilePageGuideStepFourText1: '队长:填写战队名称，添加战队队员点击“我要报名”选择赛区完成报名。',
+            ProfilePageGuideStepFourText2: '队员:等待队长添加你，就可以看到已加入的团队信息啦。',
+            ProfilePageGuideStepFiveText: '选择赛区报名成功后, 别忘了进一步完善你的简历信息, 为心仪企业或者创业机会面试做准备！',
+
+            ProfilePageGuideStepNext: '我完成了',
+
             //Labels for Navigator
             ProfilePageTabUploadAvatar               : 'Upload Picture',
             ProfilePageTabBasicInfo                  : 'Basic Details',
@@ -779,6 +795,22 @@
 
             //Header Title
             ProfilePageHeaderTitle                   : "个人信息",
+
+            //Guide
+            ProfilePageGuideStepOne: '第一步：填写个人信息',
+            ProfilePageGuideStepTwo: '第二步：填写教育信息',
+            ProfilePageGuideStepThree: '第三步：填写你的团队职位',
+            ProfilePageGuideStepFour: '第四步：加入队伍',
+            ProfilePageGuideStepFive: '报名成功！',
+
+            ProfilePageGuideStepOneText: '这是报名成功的必备信息，请详细填写',
+            ProfilePageGuideStepTwoText: '这是报名成功的必备信息，请详细填写',
+            ProfilePageGuideStepThreeText: '各司其职才能把团队力量发挥到最大！',
+            ProfilePageGuideStepFourText1: '队长:填写战队名称，添加战队队员点击“我要报名”选择赛区完成报名。',
+            ProfilePageGuideStepFourText2: '队员:等待队长添加你，就可以看到已加入的团队信息啦。',
+            ProfilePageGuideStepFiveText: '选择赛区报名成功后, 别忘了进一步完善你的简历信息, 为心仪企业或者创业机会面试做准备！',
+
+            ProfilePageGuideStepNext: '我完成了',
 
             //Labels for Navigator
             ProfilePageTabUploadAvatar               : '上传头像',
