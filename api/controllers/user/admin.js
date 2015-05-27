@@ -564,6 +564,7 @@ exports.searchStudent = function(req, res, next){
     var teamIdList = [];
     var dataTeamMap ={};
     var dataCampaignMap ={};
+    var dataUserMemberMap ={};
 
     userModel.find(query, userModel.selectFields()).sort({createdAt: -1}).limit(quantity).lean().execQ().then(function(result){
 
@@ -615,11 +616,23 @@ exports.searchStudent = function(req, res, next){
 
         dataUserList.forEach(function(user){
             if(typeof user.team !== 'undefined'){
+
                 if(typeof dataCampaignMap[user.team._id] !== 'undefined'){
                     user.joinedCampaign = dataCampaignMap[user.team._id];
+
+                    user.team.memberList.forEach(function(member){
+                        dataUserMemberMap[member._id] = dataCampaignMap[user.team._id];
+                    });
                 }
             }
         });
+
+        dataUserList.forEach(function(user){
+            if(typeof dataUserMemberMap[user._id] !== 'undefined'){
+                user.joinedCampaignAsMember = dataUserMemberMap[user._id];
+            }
+        });
+
 
         res.status(200).send(dataUserList);
     }).fail(function(err){

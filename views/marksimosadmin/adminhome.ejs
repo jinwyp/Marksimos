@@ -486,6 +486,7 @@
                                         <th>Work Experiences</th>
                                         <th>Join Campaign</th>
                                         <th>Join Campaign Name</th>
+                                        <th>Join Campaign As Team Member</th>
                                         <th>Reset Password</th>
                                     </tr>
                                     <tr ng-repeat="user in data.students" >
@@ -505,6 +506,7 @@
                                         <td> <span ng-repeat="work in user.workExperiences">{{work.company}}  <br/> </span> </td>
                                         <td>{{user.joinedCampaign.length}}</td>
                                         <td>{{user.joinedCampaign[0].name}}</td>
+                                        <td>{{user.joinedCampaignAsMember[0].name}}</td>
                                         <td>
                                             <button ng-click='resetStudentPassword(user._id)'>Reset</button>
                                         </td>
