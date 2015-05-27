@@ -615,7 +615,6 @@ exports.searchStudent = function(req, res, next){
                     dataCampaignMap[teamid].push(campaign) ;
                 }
             });
-
         });
 
         dataUserList.forEach(function(user){
