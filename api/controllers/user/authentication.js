@@ -449,13 +449,11 @@ exports.registerB2CStudent = function(req, res, next){
         if(cpatcha) {
             cpatcha.removeQ();
         }else{
-            throw new MKError('Cancel promise chains. Because cannot found captcha.',
-                MKError.errorCode.register.captcha);
+            throw new MKError('Cancel promise chains. Because cannot found captcha.', MKError.errorCode.register.captcha);
         }
 
         if( cpatcha.txt !== req.body.captcha.toUpperCase() ) {
-            throw new MKError('Cancel promise chains. Because captcha did not match.',
-                MKError.errorCode.register.captcha);
+            throw new MKError('Cancel promise chains. Because captcha did not match.', MKError.errorCode.register.captcha);
         }
         newUser.phoneVerified = true;
         newUser.activated = true;
@@ -863,11 +861,10 @@ exports.generateRegistrationCaptcha = function(req, res, next) {
 
     var xsendQ = Q.nbind(messageXSend.xsend, messageXSend);
 
-    xsendQ()
-    .then(function(result) {
+    xsendQ().then(function(result) {
         var parsedRes = JSON.parse(result);
         if (parsedRes.status === "error") {
-            throw new Error(parsedRes);
+            throw new Error('Cancel promise chains. Because ' + parsedRes.msg);
         }
         return Captcha.createQ({txt: captcha, mobilePhone: req.query.mobilePhone});
     })
