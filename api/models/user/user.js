@@ -200,11 +200,17 @@ userSchema.statics.register = function (newUser) {
 
     var deferred = Q.defer();
 
-    User.findOne( {$or : [
-        {username: newUser.username},
-        {'email': newUser.email},
-        {'mobilePhone': newUser.mobilePhone}
-    ]}, function(err, userexisted) {
+
+
+    var query = {
+        $and: [
+            {$or : [ {username: newUser.username}, {'email': newUser.email}, {'mobilePhone': newUser.mobilePhone}]}
+        ]
+    };
+
+    if(newUser.studentType) query.$and.push({studentType : newUser.studentType});
+
+    User.findOne( query, function(err, userexisted) {
         // In case of any error return
         if (err) return deferred.reject(err);
         // already exists

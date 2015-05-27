@@ -443,7 +443,7 @@ exports.registerB2CStudent = function(req, res, next){
         emailActivateTokenExpires : new Date(new Date().getTime() + expiresTime * 30)
     };
 
-    Captcha.findOneQ({_id: req.cookies['x-captcha-token'], mobilePhone: newUser.mobilePhone})
+    Captcha.findOneQ({_id: req.cookies['x-captcha-token'], mobilePhone: newUser.mobilePhone, studentType : userModel.getStudentType().B2C})
     .then(function(cpatcha){
 
         if(cpatcha) {
