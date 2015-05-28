@@ -243,7 +243,7 @@
             ProfilePageHeaderTitle                   : "Personal Info",
 
             //Guide
-            ProfilePageGuideStepOne: '第一步：填写个人信息',
+            ProfilePageGuideStepOne: '第一步：填写基本信息',
             ProfilePageGuideStepTwo: '第二步：填写教育信息',
             ProfilePageGuideStepThree: '第三步：填写你的团队职位',
             ProfilePageGuideStepFour: '第四步：加入队伍',
@@ -797,7 +797,7 @@
             ProfilePageHeaderTitle                   : "个人信息",
 
             //Guide
-            ProfilePageGuideStepOne: '第一步：填写个人信息',
+            ProfilePageGuideStepOne: '第一步：填写基本信息',
             ProfilePageGuideStepTwo: '第二步：填写教育信息',
             ProfilePageGuideStepThree: '第三步：填写你的团队职位',
             ProfilePageGuideStepFour: '第四步：加入队伍',
