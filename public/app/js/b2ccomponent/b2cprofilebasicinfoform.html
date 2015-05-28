@@ -39,7 +39,7 @@
         <div class="col-md-5" ng-if="css.formEditing">
             <input required type="text" bs-datepicker data-date-format="yyyy-MM-dd" data-min-date="02/10/70" data-max-date="today" data-autoclose="1" class="form-control" ng-model="formData.birthday" name="birthday" id="birthday">
         </div>
-        <span class="err-msg control-label form-control-static col-xs-4" ng-if="basicInfoForm.birthday.$dirty&&!basicInfoForm.birthday.$error.date">{{'ProfilePageDateFormatError' | translate}}</span>
+        <span class="err-msg control-label form-control-static col-xs-4" ng-if="basicInfoForm.birthday.$dirty&&basicInfoForm.birthday.$error.date">{{'ProfilePageDateFormatError' | translate}}</span>
         <span class="err-msg control-label form-control-static col-xs-4" ng-if="basicInfoForm.birthday.$dirty&&basicInfoForm.birthday.$error.required">{{'ProfilePageRequiredError' | translate}}</span>
     </div>
 
