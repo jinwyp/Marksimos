@@ -488,11 +488,9 @@ exports.getSeminarOfFacilitator = function(req, res, next){
                     });
                 }
 
-                //company.totalRoundTime = companyRoundTimeMap[company.companyName];
-
             });
 
-
+            // 处理每个小组的所有回合提交锁定决策的总时间
             if(Array.isArray(seminar.roundTime)){
                 seminar.roundTime.forEach(function(period){
 
