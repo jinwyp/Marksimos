@@ -182,7 +182,6 @@ exports.getStudentFinalScore = function(req, res, next) {
 
             });
 
-
             teamScoreModel.findQ({marksimosSeminar : seminarData._id}).then(function(resultTeamScores) {
 
                 if (resultTeamScores.length === 0) {
