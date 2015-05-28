@@ -75,6 +75,9 @@ unit.xml
 # mongo
 *mongodbdata
 
+# config
+common/config.js
+
 # Visual Studio 2013
 marksimos.sln
 marksimos.v12.suo

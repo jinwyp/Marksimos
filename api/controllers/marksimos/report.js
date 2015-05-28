@@ -126,6 +126,23 @@ exports.getStudentFinalScore = function(req, res, next) {
             var finalScoreList = _.sortBy(result.scoreData[result.scoreData.length - 1].scores, 'finalScore').reverse();
             var teamScoreList = [];
 
+            var companyRoundTimeMap = {};
+
+            // 处理每个小组的所有回合提交锁定决策的总时间
+            if(Array.isArray(seminarData.roundTime)){
+                seminarData.roundTime.forEach(function(period){
+
+                    period.lockDecisionTime.forEach(function(company){
+                        companyRoundTimeMap[company.companyId] = companyRoundTimeMap[company.companyId] || 0 ;
+                        if(company.lockStatus){
+                            companyRoundTimeMap[company.companyId] = companyRoundTimeMap[company.companyId] + company.spendHour;
+                        }else{
+                            companyRoundTimeMap[company.companyId] = companyRoundTimeMap[company.companyId] + period.roundTimeHour * 1000*60*60;
+                        }
+                    });
+                });
+            }
+
 
             finalScoreList.forEach(function(score, sindex) {
                 score.ranking = sindex + 1;
@@ -142,7 +159,7 @@ exports.getStudentFinalScore = function(req, res, next) {
                 var companyScore = {
                     ranking          : score.ranking,
                     marksimosScore   : score.finalScore,
-                    timeCost         : score.spendHour,
+                    timeCost         : companyRoundTimeMap[score.companyId],
                     marksimosSeminar : seminarData._id
                     //student : '',
                 };
@@ -164,7 +181,6 @@ exports.getStudentFinalScore = function(req, res, next) {
                 teamScoreList.push(companyScore);
 
             });
-
 
             teamScoreModel.findQ({marksimosSeminar : seminarData._id}).then(function(resultTeamScores) {
 

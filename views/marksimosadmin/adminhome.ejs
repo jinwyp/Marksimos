@@ -711,6 +711,7 @@
                                         <th>CurrentPeriod / Rounds</th>
                                         <th>Companies</th>
                                         <th>Company Member</th>
+                                        <th>Total time</th>
                                         <th>Add Students</th>
                                     </tr>
                                     <tr ng-repeat="seminar in data.seminars" >
@@ -739,6 +740,11 @@
                                                 <span ng-repeat="team in company.teamListData">Team: {{team.name}} / Creator: {{team.creator.username}} <a href="" ng-hide="seminar.isSimulationFinished" ng-click="removeTeamFromSeminar(seminar.seminarId, team._id)">remove</a>, </span>
                                                 <br>
                                                 Members: <span ng-repeat="student in company.studentList">{{student}} <a href="" ng-hide="seminar.isSimulationFinished" ng-click="removeStudentFromSeminar(seminar.seminarId, student)">remove</a>, </span>
+                                            </p>
+                                        </td>
+                                        <td>
+                                            <p ng-repeat="company in seminar.companyAssignment">
+                                                Company{{company.companyId | companyname }}: {{company.totalRoundTime | timecost}}
                                             </p>
                                         </td>
 
