@@ -76,7 +76,6 @@ unit.xml
 *mongodbdata
 
 # config
-common/config.js
 
 # Visual Studio 2013
 marksimos.sln
