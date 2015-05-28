@@ -476,6 +476,9 @@ exports.getSeminarOfFacilitator = function(req, res, next){
         var teamList = [];
         var teamListHashTable = {};
 
+        var companyRoundTimeMap = {};
+
+
         allSeminars.forEach(function(seminar){
             seminar.companyAssignment.forEach(function(company){
 
@@ -485,7 +488,25 @@ exports.getSeminarOfFacilitator = function(req, res, next){
                     });
                 }
 
+                //company.totalRoundTime = companyRoundTimeMap[company.companyName];
+
             });
+
+
+            if(Array.isArray(seminar.roundTime)){
+                seminar.roundTime.forEach(function(period){
+
+                    period.lockDecisionTime.forEach(function(company){
+                        companyRoundTimeMap[company.companyName] = companyRoundTimeMap[company.companyName] || 0 ;
+                        if(company.lockStatus){
+                            companyRoundTimeMap[company.companyName] = companyRoundTimeMap[company.companyName] + company.spendHour;
+                        }else{
+                            companyRoundTimeMap[company.companyName] = companyRoundTimeMap[company.companyName] + period.roundTimeHour * 1000*60*60;
+                        }
+                    });
+                });
+            }
+
         });
 
 
@@ -499,6 +520,8 @@ exports.getSeminarOfFacilitator = function(req, res, next){
             allSeminars.forEach(function(seminar){
                 seminar.companyAssignment.forEach(function(company){
                     company.teamListData = [];
+                    company.totalRoundTime = 0;
+                    company.totalRoundTime = companyRoundTimeMap[company.companyName];
 
                     if(typeof company.teamList !== 'undefined'){
                         company.teamList.forEach(function(teamid){
@@ -550,7 +573,7 @@ exports.getSeminarOfFacilitator = function(req, res, next){
 
                     }
                 }
-            })
+            });
         }
 
 
