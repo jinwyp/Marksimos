@@ -260,9 +260,9 @@
         vm.showGuide = function() {
             if (!Object.keys(vm.currentUser).length) return false;
 
-            // todo: 这个是以加入活动，并填写了社团经历作为判断标准吗？
-            return vm.css.firstTime || !(vm.currentUser.firstName && vm.currentUser.gameMarksimosPosition &&
-                hasJoinedCampaign());
+            return requiredSteps.some(function(stepDone) {
+                return !stepDone();
+            });
         };
 
         vm.stepOneDone = function() {
@@ -273,6 +273,8 @@
         vm.stepFourDone = function() {return hasJoinedCampaign();};
         vm.stepFiveDone = function() {return vm.currentUser.societyExperiences && vm.currentUser.societyExperiences.length;};
 
+        var requiredSteps = [vm.stepOneDone, vm.stepTwoDone, vm.stepFourDone, vm.stepFiveDone];
+
 
         vm.guideProgress = function() {
             var progress = 0;
@@ -282,7 +284,7 @@
             if (vm.stepTwoDone())
                 progress += 20;
             // team title
-            if (vm.stepThreeDone()) progress += 20;
+            if (vm.stepThreeDone()) progress += 10;
             // joined a campaign
             if (vm.stepFourDone()) progress += 20;
             // work experience
@@ -290,6 +292,8 @@
                 progress += 10;
             // society experience
             if (vm.stepFiveDone())
+                progress += 10;
+            if (vm.currentUser.avatar && vm.currentUser.avatar.path)
                 progress += 10;
 
             return progress / 100;
@@ -315,7 +319,6 @@
         vm.goToStep = function(step) {
             if (step == 'end') {
                 vm.css.guideStep = '';
-                vm.css.firstTime = false;
                 return;
             }
 
@@ -423,10 +426,6 @@
                 } else switchTab('basicInfo');
 
                 this.getUserInfo().then(function() {
-                    // If a user has no firstName and no gameMarksimosPosition, assume the user is new here.
-                    if (!vm.stepOneDone() || !vm.stepThreeDone()) {
-                        vm.css.firstTime = true;
-                    }
                     if (vm.showGuide()) {
                         vm.goToStep(vm.currentGuideStep());
                     }
