@@ -711,7 +711,7 @@
                                         <th>CurrentPeriod / Rounds</th>
                                         <th>Companies</th>
                                         <th>Company Member</th>
-                                        <th>consuminig time</th>
+                                        <th>Total time</th>
                                         <th>Add Students</th>
                                     </tr>
                                     <tr ng-repeat="seminar in data.seminars" >
@@ -744,7 +744,7 @@
                                         </td>
                                         <td>
                                             <p ng-repeat="company in seminar.companyAssignment">
-                                                Company{{company.companyId | companyname }} : {{company.totalRoundTime | timecost}}
+                                                Company{{company.companyId | companyname }}: {{company.totalRoundTime | timecost}}
                                             </p>
                                         </td>
 
