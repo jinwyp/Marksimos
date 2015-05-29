@@ -495,6 +495,8 @@ exports.registerB2CStudent = function(req, res, next){
             var newUserInfo = _.pick(req.body, ['username', 'email', 'password']);
             nodeBB.registerNodeBB(newUserInfo, function(err, uid){
                 if(err) {
+                    console.error('NodeBB register error:');
+                    console.error(newUserInfo);
                     return;
                 }
                 resultUser.bbsUid = uid;
