@@ -465,6 +465,7 @@
                         <div class="box" ng-if="!data.currentStudent">
                             <div class="box-header">
                                 <h3 class="box-title">User List</h3>
+                                <button type="button" class="btn btn-primary export-btn" ng-csv="data.students" filename="userList.csv">Export</button>
                             </div><!-- /.box-header -->
                             <div class="box-body table-responsive no-padding">
                                 <table class="table table-striped table-hover">
@@ -783,7 +784,7 @@
                     <div class="col-md-12">
 
                         <div class="box box-primary">
-                            <form class="form-horizontal" role="form" name="newSeminarForm">
+                            <form novalidate class="form-horizontal" role="form" name="newSeminarForm">
                                 <div class="box-body">
 
                                     <text-form-input type="text" name="newSeminarDescription" label="Description :" placeholder="Seminar Description" labelclass="col-sm-2" inputclass="col-sm-4" data="data.newSeminar.description" required="true" requirederrorinfo="Description is required" minlength="2" minlengtherrorinfo="Description must be at least 6 characters" maxlength="100" maxlengtherrorinfo="Description is a maximum of 100 characters"></text-form-input>
@@ -801,7 +802,7 @@
                                         <label for="inputSeminarRoundTime" class="col-sm-2 control-label"> </label>
 
                                         <div class="col-sm-1" ng-repeat="time in data.newSeminar.roundTime">
-                                            <input type="number" class="form-control" id="inputSeminarRoundTime" name="seminarRoundTime" placeholder="input round {{time.period}} time" ng-model="time.hour" min="0" max="12">
+                                            <input type="number" step="0.1" class="form-control" id="inputSeminarRoundTime" name="seminarRoundTime" placeholder="input round {{time.period}} time" ng-model="time.hour" min="0" max="12">
                                         </div>
 
                                     </div>

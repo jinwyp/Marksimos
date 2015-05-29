@@ -8,7 +8,7 @@
 
     /********************  Create New Module For Controllers ********************/
     angular.module('marksimosadmin', ['pascalprecht.translate', 'angularCharts', 'nvd3ChartDirectives', 'notifications', 'angularFileUpload', 'ngTagsInput',
-        'marksimos.websitecomponent', 'marksimos.commoncomponent', 'marksimos.filter', 'marksimos.socketmodel', 'marksimos.b2ccomponent', 'b2c.config']);
+        'marksimos.websitecomponent', 'marksimos.commoncomponent', 'marksimos.filter', 'marksimos.socketmodel', 'marksimos.b2ccomponent', 'b2c.config', 'ngSanitize', 'ngCsv']);
 
 
 
