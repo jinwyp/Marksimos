@@ -345,8 +345,6 @@ exports.runSimulation = function(){
                             }
                             
                             if(dbSeminar.roundTime.length > 0 ){
-                                console.log(dbSeminar.currentPeriod);
-                                console.log(dbSeminar.roundTime[dbSeminar.currentPeriod ]);
 
                                 if (typeof dbSeminar.roundTime[dbSeminar.currentPeriod ] !== 'undefined') {
                                     dbSeminar.roundTime[dbSeminar.currentPeriod ].startTime = new Date();
