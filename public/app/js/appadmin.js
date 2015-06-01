@@ -777,7 +777,7 @@
 
             if (campaignid === "" || teamid === "") {
 
-            }else{
+            }else if (confirm('确定要移除吗？')){
                 Admin.removeTeamFromCampaign({campaignId : campaignid, teamId : teamid } ).success(function(data, status, headers, config) {
                     app.getCampaignInit();
                     $notification.success('Save success', 'Remove Seminar From Campaign success.');
