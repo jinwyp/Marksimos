@@ -1701,7 +1701,6 @@
 
         /********************  Chat Messages ********************/
         $scope.sendSeminarMessage = function(messageInput){
-            console.log(messageInput);
             Student.sendSeminarChatMessage(messageInput).then(function(data, status, headers, config){
 
                 //notify({

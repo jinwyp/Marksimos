@@ -315,7 +315,6 @@
 
                     if (target.hasClass('seminar')) {
                         $q.when(scope.sendSeminarMessage({messageInput: scope.data.seminarInput})).then(function() {
-                            console.log(scope.data.seminarInput);
                             scope.data.seminarInput = '';
                         });
                     } else if(target.hasClass('company')) {
