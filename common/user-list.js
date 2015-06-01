@@ -1,3 +1,6 @@
+var userRoleModel = require('../api/models/user/userrole.js');
+var mongoose = require('mongoose');
+
 module.exports = [
     {
         "username": "hcd_administrator",
