@@ -226,8 +226,6 @@
         vm.css = {
             currentTab: 'basicInfo',
             guideStep: '',
-            // means the user is new here, so always show the guide to such user.
-            firstTime: false,
             alertInfo: {
                 duration: 2,
                 template: '',
@@ -265,9 +263,7 @@
             });
         };
 
-        vm.stepOneDone = function() {
-            return vm.currentUser.firstName;
-        };
+        vm.stepOneDone = function() {return vm.currentUser.firstName;};
         vm.stepTwoDone = function() {return vm.currentUser.eductionBackgrounds && vm.currentUser.eductionBackgrounds.length;};
         vm.stepThreeDone = function() {return vm.currentUser.gameMarksimosPosition;};
         vm.stepFourDone = function() {return hasJoinedCampaign();};

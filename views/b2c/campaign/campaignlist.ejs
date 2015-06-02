@@ -8,7 +8,27 @@
 <div class="container-fluid campaignlist-container" ng-cloak>
     <!-- banner -->
     <div class="campaignlist-banner row text-center">
-        <img src="/app/css/images/landing_page_banner.png">
+        <img src="/app/css/images/landing_page_banner.jpg" usemap="#goToCommunity">
+        <map name="goToCommunity" id="goToCommunity">
+            <area shape="circle" coords="1127, 227, 68" href ="http://community.bridgeplus.cn/" alt="Venus" />
+        </map>
+        <a class="" href="http://community.bridgeplus.cn/"></a>
+<!--        <div class="entry-container">
+            <div class="tips">
+                <div class="tip">
+                    <div class="text">了解一手资讯！</div>
+                </div>
+                <div class="tip">
+                    <div class="text">获取培训资料！</div>
+                </div>
+                <div class="tip">
+                    <div class="text">分享游戏心得！</div>
+                </div>
+            </div>
+            <div class="entry">
+                <div class="inner-entry">进入社区</div>
+            </div>
+        </div>-->
     </div>
 
     <!-- campaign-list -->
@@ -46,6 +66,27 @@
                 </div>
             </div>
         </div>
+    </div>
+
+    <div class="row">
+        <div class="col-xs-12">
+            <div class="center-block">
+                <div class="header row">
+                    <h3 class="col-xs-2 text-left">合作企业</h3>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row" style="margin-bottom: 0; height: 350px;">
+        <div class="camera_wrap camera_emboss pattern_1" id="camera_wrap_4" style="height: 350px;">
+            <div data-thumb="/app/css/images/num-01.png" data-src="/app/css/images/weblogo-01.jpg">
+            </div>
+            <div data-thumb="/app/css/images/num-02.png" data-src="/app/css/images/weblogo-02.jpg">
+            </div>
+            <div data-thumb="/app/css/images/num-03.png" data-src="/app/css/images/weblogo-03.jpg">
+            </div>
+
+        </div><!-- #camera_wrap_3 -->
     </div>
 
     <div class="row game-list">
@@ -138,3 +179,4 @@
 
 <% include ../include/footer.ejs %>
 <% include ../include/footerscriptlogin.ejs %>
+<% include ../include/footercamera.ejs %>

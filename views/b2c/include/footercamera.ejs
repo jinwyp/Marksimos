@@ -1,0 +1,31 @@
+<script src="/libs/jquery18/jquery.min.js"></script>
+<link rel="stylesheet" href="/app/css/stylesheets/camera.css"/>
+<style>
+    #camera_wrap_4 {
+        height: 350px;
+        margin-bottom: 0!important;
+    }
+
+
+    .camera_overlayer {
+        opacity: .05;
+    }
+</style>
+<script>
+    $(function() {
+
+        $('#camera_wrap_4').camera({
+            height        : 'auto',
+            loader        : 'bar',
+            pagination    : false,
+            //thumbnails    : true,
+            hover         : false,
+            opacityOnGrid : false,
+            imagePath     : '../images/'
+        });
+
+    });
+</script>
+<script src="/libs/camera/jquery.easing.1.3.js"></script>
+<script src="/libs/camera/jquery.mobile.customized.min.js"></script>
+<script src="/libs/camera/camera.min.js"></script>
