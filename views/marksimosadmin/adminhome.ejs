@@ -474,6 +474,7 @@
                                         <!-- <th>ID</th> -->
                                         <th style="width: 100px;">Action</th>
                                         <th>User Name</th>
+                                        <th>Team Name</th>
                                         <th>Registration Time</th>
                                         <th>First/Last Name</th>
                                         <th>Gender</th>
@@ -494,6 +495,7 @@
                                         <!-- <td>{{user._id}}</td> -->
                                         <td><button type="button" class="btn btn-danger" ng-click="data.currentStudent = user">View</button></td>
                                         <td>{{user.username}}</td>
+                                        <td>{{user.team.name}}</td>
                                         <td>{{user.createdAt | date:'yyyy-MM-dd HH:mm:ss'}}</td>
                                         <td>{{user.firstName}} {{user.lastName}} </td>
                                         <td>{{user.gender == 1 ? 'ProfilePageBasicInfoGenderMale' : 'ProfilePageBasicInfoGenderFemale' | translate}} </td>
