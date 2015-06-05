@@ -38,7 +38,6 @@ describe("Admin API Create Distributor and Facilitator and Student", function() 
             venue: utility.dateFormat("yyyy-MM-dd")
         };
         request.post(adminApiPath + "seminar", { json: seminarInfo }, function(err, res, body) {
-            console.log(res.statusCode);
             expect(res.statusCode).toBe(400);
             done();
         });
