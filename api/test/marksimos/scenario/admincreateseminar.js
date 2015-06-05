@@ -27,15 +27,18 @@ describe("Admin API Create Distributor and Facilitator and Student", function() 
 
     it("创建新的seminar(非法参数)", function(done) {
         var seminarInfo = {
-            city: "shanghai",
-            company_num: 0,//非法参数
-            country: "China",
             description: utility.dateFormat("yyyy-MM-dd") + "-" + utility.randomInt(),
+            company_num: 0,//非法参数
+
+            roundTime : [],
             simulation_span: 4,
+            country: "China",
+            city: "shanghai",
             state: "shanghai",
             venue: utility.dateFormat("yyyy-MM-dd")
         };
         request.post(adminApiPath + "seminar", { json: seminarInfo }, function(err, res, body) {
+            console.log(res.statusCode);
             expect(res.statusCode).toBe(400);
             done();
         });
@@ -44,11 +47,13 @@ describe("Admin API Create Distributor and Facilitator and Student", function() 
 
     it("创建新的seminar,初始化并分配学生到seminar", function(done) {
         var seminarInfo = {
-            city: "shanghai",
-            company_num: 4,
-            country: "China",
             description: utility.dateFormat("yyyy-MM-dd") + "-" + utility.randomInt(),
+            company_num: 4,
+
+            roundTime : [],
             simulation_span: 4,
+            country: "China",
+            city: "shanghai",
             state: "shanghai",
             venue: utility.dateFormat("yyyy-MM-dd")
         };
