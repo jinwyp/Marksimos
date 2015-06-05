@@ -97,8 +97,8 @@ seminarSchema.statics.createValidations = function(req){
     req.checkBody('city', 'City should be 6-20 characters').notEmpty();
     req.checkBody('venue', 'Venue should be 6-20 characters').notEmpty().len(2, 200);
 
-    req.checkBody('simulation_span', 'Invalid postparam').notEmpty().isInt({ min: 2, max: 8 });
-    req.checkBody('company_num', 'Invalid postparam').notEmpty().isInt({ min: 2, max: 6 });
+    req.checkBody('simulation_span', 'simulation_span should be 2-8').notEmpty().isInt().gt(1).lt(9);
+    req.checkBody('company_num', 'company_num should be 2-6').notEmpty().isInt().gt(1).lt(7);
 
 
     return req.validationErrors();
