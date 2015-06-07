@@ -267,7 +267,8 @@ gulp.task('nodemonykchome', function () {
     ignore : [
       "tmp/**",
       "public/**",
-      "views/**"
+      "views/**",
+      "node_modules/**"
     ],
     env: { 'NODE_ENV': 'ykchome'}
   });
@@ -377,10 +378,3 @@ gulp.task('jinpro', ['compass', 'templates', 'minifycssMarksimos', 'minifycssB2C
 gulp.task('yuekecheng', ['compass', 'templates', 'nodemonyuekecheng', 'watchdev']);
 gulp.task('ykchome', ['compass', 'templates', 'nodemonykchome', 'watchdev']);
 gulp.task('minify', ['compass', 'templates', 'minifycssMarksimos', 'minifycssB2C', 'jscompress']);
-
-
-
-
-
-
-

@@ -819,7 +819,6 @@
                         $scope.data.currentTime.time = data.currentMarksimosSeminar.roundTime[$scope.data.currentSeminar.currentPeriod - 1];
                         $scope.data.currentCompanyDecisionLock = $scope.data.currentTime.time.lockDecisionTime[$scope.data.currentSeminar.currentCompany.companyId - 1];
 
-                        var currentDate = new Date();
                         var roundEndDate = new Date($scope.data.currentTime.time.endTime);
                         var targetDate = 0;
 
@@ -828,9 +827,10 @@
                             $scope.data.currentTime.minute = 59;
                             $scope.data.currentTime.second = 59 ;
                         }else{
-
+                            var responseTime = new Date(headers('date'));
+                            var diff = responseTime - Date.now();
                             var timer = $interval(function() {
-                                currentDate = new Date();
+                                var currentDate = new Date(Date.now() + diff);
                                 targetDate = roundEndDate.getTime() - currentDate.getTime();
 
                                 if(currentDate.getTime() < roundEndDate.getTime() ){
