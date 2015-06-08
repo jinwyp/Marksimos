@@ -262,6 +262,20 @@ gulp.task('nodemonyuekecheng', function () {
 //        .on('restart', 'default')
 });
 
+gulp.task('nodemonykchome', function () {
+  nodemon({
+    script: 'app.js',
+    ignore : [
+      "tmp/**",
+      "public/**",
+      "views/**",
+      "node_modules/**"
+    ],
+    env: { 'NODE_ENV': 'ykchome'}
+  });
+//        .on('restart', 'default')
+});
+
 
 
 
@@ -363,11 +377,5 @@ gulp.task('jin', [ 'compass', 'templates', 'nodemonjin', 'watchdev']);
 gulp.task('jinco', ['compass', 'templates', 'nodemonjinlocal', 'watchdev']);
 gulp.task('jinpro', ['compass', 'templates', 'minifycssMarksimos', 'minifycssB2C', 'jscompress', 'nodemonjin', 'watch']);
 gulp.task('yuekecheng', ['compass', 'templates', 'nodemonyuekecheng', 'watchdev']);
+gulp.task('ykchome', ['compass', 'templates', 'nodemonykchome', 'watchdev']);
 gulp.task('minify', ['compass', 'templates', 'minifycssMarksimos', 'minifycssB2C', 'jscompress']);
-
-
-
-
-
-
-

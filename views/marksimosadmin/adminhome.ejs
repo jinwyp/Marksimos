@@ -714,6 +714,7 @@
                                         <th>CurrentPeriod / Rounds</th>
                                         <th>Companies</th>
                                         <th>Company Member</th>
+                                        <th>Decision End Time(current round)</th>
                                         <th>Total time</th>
                                         <th>Add Students</th>
                                     </tr>
@@ -744,6 +745,9 @@
                                                 <br>
                                                 Members: <span ng-repeat="student in company.studentList">{{student}} <a href="" ng-hide="seminar.isSimulationFinished" ng-click="removeStudentFromSeminar(seminar.seminarId, student)">remove</a>, </span>
                                             </p>
+                                        </td>
+                                        <td>
+                                            {{seminar.roundTime[seminar.currentPeriod - 1].endTime | date : "yyyy-MM-dd,HH:mm"}}
                                         </td>
                                         <td>
                                             <p ng-repeat="company in seminar.companyAssignment">
