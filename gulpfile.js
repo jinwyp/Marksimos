@@ -229,7 +229,8 @@ gulp.task('nodemonjin', function () {
         ignore : [
             "tmp/**",
             "public/**",
-            "views/**"
+            "views/**",
+            "node_modules/**"
         ],
         env: { 'NODE_ENV': 'jin' }
     });
@@ -284,7 +285,7 @@ gulp.task('watchdev', function() {
     livereload.listen();
     gulp.watch(paths.angularTemplates, ['templates']);
     gulp.watch(paths.sassSourceFiles, ['compass']);
-    gulp.watch(paths.javascript, ['jshint']);
+    //gulp.watch(paths.javascript, ['jshint']);
 });
 
 
