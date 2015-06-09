@@ -485,6 +485,7 @@
                                         <th>Phone Verified</th>
                                         <th>Location</th>
                                         <th>University</th>
+                                        <th>Major</th>
                                         <th>Work Experiences</th>
                                         <th>Join Campaign</th>
                                         <th>Join Campaign Name</th>
@@ -506,6 +507,7 @@
                                         <td>{{user.phoneVerified}}</td>
                                         <td>{{user.currentLocation}} </td>
                                         <td> <span ng-repeat="edu in user.eductionBackgrounds">{{edu.university}} <br/> </span> </td>
+                                        <td> <span ng-repeat="edu in user.eductionBackgrounds">{{edu.major | major | translate}} <br/> </span> </td>
                                         <td> <span ng-repeat="work in user.workExperiences">{{work.company}}  <br/> </span> </td>
                                         <td>{{user.joinedCampaign.length}}</td>
                                         <td>{{user.joinedCampaign[0].name}}</td>
