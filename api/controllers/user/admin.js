@@ -619,10 +619,15 @@ exports.searchStudent = function(req, res, next){
 
                 if(typeof dataCampaignMap[user.team._id] !== 'undefined'){
                     user.joinedCampaign = dataCampaignMap[user.team._id];
+                    user.joinCampaignTimes = user.joinCampaignTimes || [];
+                    // place the joined time when the user as a creator to the head
+                    user.joinCampaignTimes.unshift(user.team.joinCampaignTime);
 
                     if(Array.isArray(user.team.memberList)){
                         user.team.memberList.forEach(function(member){
                             dataUserMemberMap[member._id] = dataCampaignMap[user.team._id];
+                            member.joinCampaignTimes = member.joinCampaignTimes || [];
+                            member.joinCampaignTimes.push(user.team.joinCampaignTime);
                         });
                     }
 
