@@ -67,7 +67,7 @@
             'team.name': '战队名', // special handle for o.i
             joinCampaignTimes: '报名时间', // special handle for it is array
             joinedCampaign: {name: '作为队长加入的赛区'}, // deem the `name` as the array element's property. Same for the below.
-            campainNameAsTeamMember: {name: '作为队员加入的赛区'},
+            joinedCampaignAsMember: {name: '作为队员加入的赛区'},
             eductionBackgrounds: {
                 university: '大学',
                 major: '专业',
@@ -127,9 +127,6 @@
         function filter(val, key) {
             var filterFn = filterKeyMap[key];
             if (filterFn) {
-                if (typeof val == 'number') {
-                    console.log('hehe');
-                }
                 val =  translate(filterFn(val));
             }
 
@@ -196,9 +193,6 @@
                             var v = filter(array[0][_key] || (array[0][_key] === false ? false : ''), _key);
 
                             for (var i = 1; i < array.length; i++) {
-                                if (val == 1105) {
-                                    console.log('hehe');
-                                }
                                 var val = array[i][_key] || (array[i][_key] === false ? false : '');
                                 if (val) v += (', ' + filter(val, _key));
                             }
