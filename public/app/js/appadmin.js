@@ -45,11 +45,182 @@
 
 
 
+    angular.module('marksimosadmin').factory('export2xlsx', ['$filter', function ($filter) {
+        function Workbook() {
+            if (!(this instanceof Workbook)) return new Workbook();
+            this.SheetNames = [];
+            this.Sheets = {};
+        }
+
+        // for exporting keys
+        var keyMap = {
+            username: '用户名',
+            createdAt: '注册时间',
+            firstName: '姓名',
+            gender: '性别',
+            activated: 'Status',
+            email: '邮箱',
+            emailActivated: '邮箱验证',
+            mobilePhone: '手机',
+            phoneVerified: '手机验证',
+            currentLocation: '所在地',
+            'team.name': '战队名', // special handle for o.i
+            joinCampaignTimes: '报名时间', // special handle for it is array
+            joinedCampaign: {name: '作为队长加入的赛区'}, // deem the `name` as the array element's property. Same for the below.
+            campainNameAsTeamMember: {name: '作为队员加入的赛区'},
+            eductionBackgrounds: {
+                university: '大学',
+                major: '专业',
+                degree: '学历',
+                entryDate: '入学时间',
+                graduationDate: '毕业时间',
+                abroadStatus: '海外经历(有/无)'
+            },
+            societyExperiences: {
+                societyName: '社团名',
+                sizeOfSociety: '社团规模',
+                position: '职位',
+                startDate: '开始时间',
+                endDate: '结束时间'
+            },
+            workExperiences: {
+                company: '公司名',
+                jobType: '工作类型',
+                industry: '行业',
+                position: '职位', //special handle. prevent form filtering
+                sizeOfCompany: '公司规模',
+                startDate: '开始时间',
+                endDate: '结束时间'
+            }
+        };
+
+        var filterKeyMap = {
+            gender: $filter('gender'),
+            major: $filter('major'),
+            degree: $filter('degree'),
+            position: $filter('societyposition'),
+            sizeOfSociety: $filter('companysize'),
+            jobType: $filter('jobtype'),
+            industry: $filter('jobndustry'),
+            sizeOfCompany: $filter('companysize'),
+            abroadStatus: function (input) {
+                var ret = '';
+                if (input === 1) ret = '有';
+                if (input === 2) ret = '无';
+                return ret;
+            }
+        };
+        var translate = $filter('translate');
+
+        var dateKeyMap = {
+            createdAt: true,
+            joinCampaignTimes: true,
+            entryDate: true,
+            graduationDate: true,
+            startDate: true,
+            endDate: true
+        };
+        var dateFilter = $filter('date');
+        var encode = XLSX.utils.encode_cell;
+        var emptyArray = [{}];
+
+        function filter(val, key) {
+            var filterFn = filterKeyMap[key];
+            if (filterFn) {
+                if (typeof val == 'number') {
+                    console.log('hehe');
+                }
+                val =  translate(filterFn(val));
+            }
+
+            var isDate = dateKeyMap[key];
+            if (isDate) {
+                val = dateFilter(val, 'yyyy-MM-dd');
+            }
+            return String(val);
+        }
+
+        function s2ab(s) {
+            var buf = new ArrayBuffer(s.length);
+            var view = new Uint8Array(buf);
+            for (var i=0; i!=s.length; ++i) view[i] = s.charCodeAt(i) & 0xFF;
+            return buf;
+        }
+
+        return function (data) {
+            var wb = new Workbook();
+            var ws = {};
+
+            wb.SheetNames.push('userlist');
+            wb.Sheets['userlist'] = ws;
+            var c = 0, r = 0, C;
+            var keys = Object.keys(keyMap);
+
+            // generate header
+            keys.forEach(function (key) {
+                var head = keyMap[key];
+                if (typeof head == 'string') {
+                    ws[encode({c: c++, r: 0})] = {v: head, t: 's'};
+                } else {
+                    Object.keys(head).forEach(function(_key) {
+                        ws[encode({c: c++, r: 0})] = {v: head[_key], t: 's'};
+                    });
+                }
+            });
+            r++;
+            C = c; // hold c in C.
+            c = 0;
+
+            // outer col, inner each data
+            data.length && keys.forEach(function (key) {
+                var keyType = typeof keyMap[key];
+                r = 1;
+                data.forEach(function(el) {
+                    if (keyType == 'string') { // handel string
+                        if (key.indexOf('.') != -1) {
+                            var k = key.split('.');
+                            ws[encode({c: c, r: r})] = {v: (el[k[0]] && [k[0]][k[1]]) || '', t: 's'};
+                        } else if (key == 'joinCampaignTimes'){
+                            var times = (el[key] && el[key].length) ? el[key] : [];
+                            var v = '';
+                            times.forEach(function (time, i) {
+                                v += (i == 0 ? '' : ', ') + filter(time, key);
+                            });
+                            ws[encode({c: c, r: r})] = {v: v, t: 's'};
+                        } else {
+                            ws[encode({c: c, r: r})] = {v: filter(el[key] || (el[key] === false ? false : ''), key), t: 's'};
+                        }
+                    } else { // handle array
+                        var array = (el[key] && el[key].length) ? el[key] : emptyArray;
+                        Object.keys(keyMap[key]).forEach(function(_key) {
+                            var v = filter(array[0][_key] || (array[0][_key] === false ? false : ''), _key);
+
+                            for (var i = 1; i < array.length; i++) {
+                                if (val == 1105) {
+                                    console.log('hehe');
+                                }
+                                var val = array[i][_key] || (array[i][_key] === false ? false : '');
+                                if (val) v += (', ' + filter(val, _key));
+                            }
+                            ws[encode({c: c++, r: r})] = {v: v, t: 's'};
+                        });
+                        c -= Object.keys(keyMap[key]).length;
+                    }
+                    r++;
+                });
+                keyType == 'string' ? c++ : c+= Object.keys(keyMap[key]).length;
+            });
+
+            ws['!ref'] = XLSX.utils.encode_range({s: {c:0, r:0}, e: {c:C, r: data.length + 1}});
+            var wbout = XLSX.write(wb, {bookType:'xlsx', bookSST:true, type: 'binary'});
+
+            saveAs(new Blob([s2ab(wbout)],{type:"application/octet-stream"}), "userlist.xlsx");
+        };
+    }]);
 
 
 
-
-    angular.module('marksimosadmin').controller('adminHomeController', ['$scope', '$http', '$notification', 'FileUploader', 'Admin', function($scope, $http, $notification, FileUploader, Admin) {
+    angular.module('marksimosadmin').controller('adminHomeController', ['$scope', '$http', '$notification', 'FileUploader', 'Admin', 'export2xlsx', function($scope, $http, $notification, FileUploader, Admin, export2xlsx) {
         var fileUploaderOptions = {
             url : '/marksimos/api/admin/campaigns/upload',
             onSuccessItem : onSuccessItem,
@@ -546,6 +717,8 @@
         };
 
         app.initOnce();
+
+        $scope.export2xlsx = export2xlsx;
 
         $scope.changeMenu = function() {
             $scope.css.editMenuStatus = false;

@@ -465,7 +465,8 @@
                         <div class="box" ng-if="!data.currentStudent">
                             <div class="box-header">
                                 <h3 class="box-title">User List</h3>
-                                <button type="button" class="btn btn-primary export-btn" ng-csv="data.students" filename="userList.csv">Export</button>
+                                <!--<button type="button" class="btn btn-primary export-btn" ng-csv="data.students" filename="userList.csv">Export</button>-->
+                                <button type="button" class="btn btn-primary export-btn" ng-click="export2xlsx(data.students)">Export</button>
                             </div><!-- /.box-header -->
                             <div class="box-body table-responsive no-padding">
                                 <table class="table table-striped table-hover">

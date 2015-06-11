@@ -52,8 +52,19 @@
 
     angular.module('marksimos.filter').filter('emailaddress', emailAddressFilter);
     angular.module('marksimos.filter').filter('timecost', timeCostFilter);
-    
 
+    angular.module('marksimos.filter').filter('gender', genderFilter);
+
+
+    function genderFilter() {
+        return function (input) {
+            var names = {
+                0: 'ProfilePageBasicInfoGenderFemale',
+                1: 'ProfilePageBasicInfoGenderMale'
+            };
+            return names[input] || '';
+        };
+    }
 
     function pickerFilter($filter) {
         return function() {
@@ -204,7 +215,7 @@
                 return names[input];
             }
 
-            return input || 'societyExperiencesPositionChairman';
+            return input || '';
         };
     }
 
@@ -220,7 +231,7 @@
                 return names[input];
             }
 
-            return input || 'jobTypeFullTime';
+            return input || '';
         };
     }
 
@@ -340,7 +351,7 @@
                 return names[input];
             }
 
-            return input || 'jobTypeFullTime';
+            return input || '';
         };
     }
 
