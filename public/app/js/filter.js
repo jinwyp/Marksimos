@@ -93,7 +93,7 @@
                 1140: 'LanguageUkrainian'
             };
 
-            return names[input] || 'LanguageChinese';
+            return names[input] || '';
         };
     }
 
@@ -107,7 +107,7 @@
                 40: 'LanguageNative'
             };
 
-            return names[input] || 'LanguageBeginner';
+            return names[input] || '';
         };
     }
 
@@ -124,7 +124,7 @@
                 70: 'educationDegreeOther'
             };
 
-            return names[input] || 'educationDegreeSeniorHighSchool';
+            return names[input] || '';
         };
     }
 
