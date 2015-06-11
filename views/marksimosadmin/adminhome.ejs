@@ -511,7 +511,7 @@
                                         <td> <span ng-repeat="work in user.workExperiences">{{work.company}}  <br/> </span> </td>
                                         <td>{{user.joinedCampaign.length}}</td>
                                         <td><span ng-repeat="campaign in user.joinedCampaign">{{campaign.name}}<br/></span></td>
-                                        <td>{{user.joinedCampaignAsMember[0].name}}</td>
+                                        <td><span ng-repeat="campaign in user.joinedCampaignAsMember">{{campaign.name}}<br/></span></td>
                                         <td>
                                             <button ng-click='resetStudentPassword(user._id)'>Reset</button>
                                         </td>
