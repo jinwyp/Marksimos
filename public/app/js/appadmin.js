@@ -176,7 +176,7 @@
                     if (keyType == 'string') { // handel string
                         if (key.indexOf('.') != -1) {
                             var k = key.split('.');
-                            ws[encode({c: c, r: r})] = {v: (el[k[0]] && [k[0]][k[1]]) || '', t: 's'};
+                            ws[encode({c: c, r: r})] = {v: (el[k[0]] && el[k[0]][k[1]]) || '', t: 's'};
                         } else if (key == 'joinCampaignTimes'){
                             var times = (el[key] && el[key].length) ? el[key] : [];
                             var v = '';

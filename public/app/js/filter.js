@@ -59,7 +59,7 @@
     function genderFilter() {
         return function (input) {
             var names = {
-                0: 'ProfilePageBasicInfoGenderFemale',
+                2: 'ProfilePageBasicInfoGenderFemale',
                 1: 'ProfilePageBasicInfoGenderMale'
             };
             return names[input] || '';

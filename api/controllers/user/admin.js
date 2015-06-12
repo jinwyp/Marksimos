@@ -562,9 +562,10 @@ exports.searchStudent = function(req, res, next){
     var dataUserList;
     var userIdList = [];
     var teamIdList = [];
-    var dataTeamMap ={};
-    var dataCampaignMap ={};
-    var dataUserMemberMap ={};
+    var userIdTeamMap ={};
+    var userIdUserMap = {};
+    var teamIdCampaignMap ={};
+    var memberIdCampaignMap ={};
 
     userModel.find(query, userModel.selectFields()).sort({createdAt: -1}).limit(quantity).lean().execQ().then(function(result){
 
@@ -575,6 +576,7 @@ exports.searchStudent = function(req, res, next){
         dataUserList = result;
 
         userIdList = result.map(function(user){
+            userIdUserMap[user._id] = user;
             return user._id;
         });
 
@@ -587,13 +589,13 @@ exports.searchStudent = function(req, res, next){
         }
 
         resultTeam.forEach(function(team, index){
-            dataTeamMap[team.creator] = team;
+            userIdTeamMap[team.creator] = team;
             teamIdList.push(team._id);
         });
 
         dataUserList.forEach(function(user){
-            if(typeof dataTeamMap[user._id] !== 'undefined'){
-                user.team = dataTeamMap[user._id];
+            if(typeof userIdTeamMap[user._id] !== 'undefined'){
+                user.team = userIdTeamMap[user._id];
             }
         });
 
@@ -607,25 +609,28 @@ exports.searchStudent = function(req, res, next){
         resultCampaign.forEach(function(campaign, index){
 
             teamIdList.forEach(function(teamid){
-                dataCampaignMap[teamid] = dataCampaignMap[teamid] || [];
+                teamIdCampaignMap[teamid] = teamIdCampaignMap[teamid] || [];
                 if(campaign.teamList.indexOf(teamid) > -1){
-                    dataCampaignMap[teamid].push(campaign) ;
+                    teamIdCampaignMap[teamid].push(campaign) ;
                 }
             });
         });
 
         dataUserList.forEach(function(user){
             if(typeof user.team !== 'undefined'){
+                var campaign = teamIdCampaignMap[user.team._id];
 
-                if(typeof dataCampaignMap[user.team._id] !== 'undefined'){
-                    user.joinedCampaign = dataCampaignMap[user.team._id];
+                if(campaign && campaign.length){
+                    user.joinedCampaign = teamIdCampaignMap[user.team._id];
                     user.joinCampaignTimes = user.joinCampaignTimes || [];
                     // place the joined time when the user as a creator to the head
                     user.joinCampaignTimes.unshift(user.team.joinCampaignTime);
 
                     if(Array.isArray(user.team.memberList)){
                         user.team.memberList.forEach(function(member){
-                            dataUserMemberMap[member._id] = dataCampaignMap[user.team._id];
+                            memberIdCampaignMap[member._id] = teamIdCampaignMap[user.team._id];
+                            member = userIdUserMap[member._id];
+                            if (!member) return;
                             member.joinCampaignTimes = member.joinCampaignTimes || [];
                             member.joinCampaignTimes.push(user.team.joinCampaignTime);
                         });
@@ -636,8 +641,8 @@ exports.searchStudent = function(req, res, next){
         });
 
         dataUserList.forEach(function(user){
-            if(typeof dataUserMemberMap[user._id] !== 'undefined'){
-                user.joinedCampaignAsMember = dataUserMemberMap[user._id];
+            if(typeof memberIdCampaignMap[user._id] !== 'undefined'){
+                user.joinedCampaignAsMember = memberIdCampaignMap[user._id];
             }
         });
 
