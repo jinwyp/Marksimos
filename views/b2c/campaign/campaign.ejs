@@ -34,8 +34,8 @@
 </div>
 <div class="container-fluid campaign-main">
     <div id="enter" class="center-block campaign-enter">
-        <button ng-if="!campaign.css.hasEntered" class="enter-button" ng-click="campaign.clickStudentEnter()">{{'CampaignPageEnterCampaignEnterButton' | translate}}</button>
-        <button ng-if="campaign.css.hasEntered" class="already-entered-button" ng-click="campaign.clickStudentEnter()">{{'CampaignPageEnterCampaignHasEnteredButton' | translate}}</button>
+        <button class="already-entered-button">{{'已截止' | translate}}</button><!--enter-button CampaignPageEnterCampaignEnterButton-->
+        <!--<button ng-if="campaign.css.hasEntered" class="already-entered-button" ng-click="campaign.clickStudentEnter()">{{'CampaignPageEnterCampaignHasEnteredButton' | translate}}</button>-->
 
         <a href="/cn/marksimos.html" target="_blank" class="introduce">{{'CampaignPageEnterCampaignIntroduce' | translate}}</a>
         <span class="enter-count">{{'CampaignPageEnterCampaignCountPrefix' | translate}}<strong>{{campaign.campaign.totalMembers}}</strong>{{'CampaignPageEnterCampaignCountSuffix' | translate}}{{campaign.campaign.totalMembers > 1 ? 'CampaignPageEnterCampaignCountPlural' : '' | translate}}</span>
