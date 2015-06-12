@@ -363,7 +363,7 @@ exports.searchFacilitator = function(req, res, next){
 exports.addStudent = function(req, res, next){
     req.body.organizationOrUniversity = req.body.university;
 
-    var validationErrors = userModel.registerValidations(req, req.body.userRole || userRoleModel.roleList.student.id, userModel.getStudentType().B2B);
+    var validationErrors = userModel.registerValidations(req, req.body.userRole || userRoleModel.roleList.student.id, req.body.studentType || userModel.getStudentType().B2B);
 
     if(validationErrors){
         return res.status(400).send( {message: validationErrors} );
@@ -413,7 +413,6 @@ exports.addStudent = function(req, res, next){
         newStudent.companyContactPersonPosition = req.body.companyContactPersonPosition;
         newStudent.companyOfficeTelephone = req.body.companyOfficeTelephone;
     }
-
 
     userModel.register(newStudent).then(function(result){
         if(!result) {

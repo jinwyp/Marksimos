@@ -806,7 +806,7 @@
                 Admin.addStudent($scope.data.newStudent).success(function(data, status, headers, config) {
 
                     app.getStudentsInit();
-                    $scope.css.leftmenu = 41;
+                    //scope.css.leftmenu = 41;
 
                     $notification.success('Save success', 'Create Student success');
 
