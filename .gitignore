@@ -45,6 +45,7 @@ publish
 .idea
 imgstorage
 uploadimage
+log
 
 # Zend files
 .buildpath
