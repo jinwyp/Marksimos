@@ -81,8 +81,7 @@ common/config.js
 common/user-list.js
 
 # video
-public/appChangeReactor/video/CHANGERECTOER.mp4
-public/appChangeReactor/video/CHANGERECTOER.webm
+public/appChangeReactor/video/*
 
 # Visual Studio 2013
 marksimos.sln
