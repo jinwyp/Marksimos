@@ -263,7 +263,7 @@
             });
         };
 
-        vm.stepOneDone = function() {return vm.currentUser.firstName;};
+        vm.stepOneDone = function() {return vm.currentUser.firstName && vm.currentUser.currentLocation;};
         vm.stepTwoDone = function() {return vm.currentUser.eductionBackgrounds && vm.currentUser.eductionBackgrounds.length;};
         vm.stepThreeDone = function() {return vm.currentUser.gameMarksimosPosition;};
         vm.stepFourDone = function() {return hasJoinedCampaign();};

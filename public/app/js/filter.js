@@ -52,8 +52,19 @@
 
     angular.module('marksimos.filter').filter('emailaddress', emailAddressFilter);
     angular.module('marksimos.filter').filter('timecost', timeCostFilter);
-    
 
+    angular.module('marksimos.filter').filter('gender', genderFilter);
+
+
+    function genderFilter() {
+        return function (input) {
+            var names = {
+                2: 'ProfilePageBasicInfoGenderFemale',
+                1: 'ProfilePageBasicInfoGenderMale'
+            };
+            return names[input] || '';
+        };
+    }
 
     function pickerFilter($filter) {
         return function() {
@@ -82,7 +93,7 @@
                 1140: 'LanguageUkrainian'
             };
 
-            return names[input] || 'LanguageChinese';
+            return names[input] || '';
         };
     }
 
@@ -96,7 +107,7 @@
                 40: 'LanguageNative'
             };
 
-            return names[input] || 'LanguageBeginner';
+            return names[input] || '';
         };
     }
 
@@ -113,7 +124,7 @@
                 70: 'educationDegreeOther'
             };
 
-            return names[input] || 'educationDegreeSeniorHighSchool';
+            return names[input] || '';
         };
     }
 
@@ -204,7 +215,7 @@
                 return names[input];
             }
 
-            return input || 'societyExperiencesPositionChairman';
+            return input || '';
         };
     }
 
@@ -220,7 +231,7 @@
                 return names[input];
             }
 
-            return input || 'jobTypeFullTime';
+            return input || '';
         };
     }
 
@@ -340,7 +351,7 @@
                 return names[input];
             }
 
-            return input || 'jobTypeFullTime';
+            return input || '';
         };
     }
 

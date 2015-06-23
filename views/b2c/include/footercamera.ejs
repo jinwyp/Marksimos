@@ -2,9 +2,25 @@
 <link rel="stylesheet" href="/app/css/distcss/camera.css"/>
 <style>
     #camera_wrap_4 {
-        height: 350px;
+        height: 100%;
         margin-bottom: 0!important;
     }
+    @media (max-width: 1440px) {
+        .camera-container {
+            height: 290px;
+        }
+    }
+    @media (min-width: 1441px) and (max-width: 1600px) {
+        .camera-container {
+            height: 330px;
+        }
+    }
+    @media (min-width: 1601px) {
+        .camera-container {
+            height: 350px;
+        }
+    }
+
 
 
     .camera_overlayer {
@@ -21,7 +37,8 @@
             //thumbnails    : true,
             hover         : false,
             opacityOnGrid : false,
-            imagePath     : '../images/'
+            imagePath     : '../images/',
+            pauseOnClick  : false
         });
 
     });

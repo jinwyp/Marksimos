@@ -465,7 +465,8 @@
                         <div class="box" ng-if="!data.currentStudent">
                             <div class="box-header">
                                 <h3 class="box-title">User List</h3>
-                                <button type="button" class="btn btn-primary export-btn" ng-csv="data.students" filename="userList.csv">Export</button>
+                                <!--<button type="button" class="btn btn-primary export-btn" ng-csv="data.students" filename="userList.csv">Export</button>-->
+                                <button type="button" class="btn btn-primary export-btn" ng-click="export2xlsx(data.students)">Export</button>
                             </div><!-- /.box-header -->
                             <div class="box-body table-responsive no-padding">
                                 <table class="table table-striped table-hover">
@@ -511,7 +512,7 @@
                                         <td> <span ng-repeat="work in user.workExperiences">{{work.company}}  <br/> </span> </td>
                                         <td>{{user.joinedCampaign.length}}</td>
                                         <td><span ng-repeat="campaign in user.joinedCampaign">{{campaign.name}}<br/></span></td>
-                                        <td>{{user.joinedCampaignAsMember[0].name}}</td>
+                                        <td><span ng-repeat="campaign in user.joinedCampaignAsMember">{{campaign.name}}<br/></span></td>
                                         <td>
                                             <button ng-click='resetStudentPassword(user._id)'>Reset</button>
                                         </td>
@@ -595,7 +596,7 @@
                                     <text-form-input type="text" name="newStudentUniversity" label="University / Organization :" labelclass="col-sm-2" inputclass="col-sm-4" data="data.newStudent.organizationOrUniversity" minlength="2" minlengtherrorinfo="University must be at least 2 characters" maxlength="100" maxlengtherrorinfo="University is a maximum of 100 characters" ></text-form-input>
 
                                     <text-form-input type="radio" name="newStudentStudentType" label="Student For :" labelclass="col-sm-2" inputclass="col-sm-4" data="data.newStudent.studentType" radiooptions="data.newStudent.studentTypeRadioOptions" required></text-form-input>
-
+                                    <input type="hidden" ng-model="data.newStudent.userRole" ng-init="data.newStudent.userRole=4"/>
                                 </div>
 
                                 <div class="box-footer">
@@ -1012,7 +1013,7 @@
 
                         <div class="box">
                             <div class="box-header">
-                                <h3 class="box-title">Seminar List</h3>
+                                <h3 class="box-title">Campaign List</h3>
                             </div><!-- /.box-header -->
                             <div class="box-body table-responsive no-padding">
                                 <table class="table table-striped table-hover">
