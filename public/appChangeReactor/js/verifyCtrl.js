@@ -29,7 +29,7 @@ verifyApp.controller('verifyCtrl', [
             result: '',
             msg: ''
         }
-        if(Request['email']){
+        if (Request['email'] || Request['emailtoken']) {
             var email = Request['email'].substring(0, 3) + '***' + Request['email'].substring(Request['email'].length - 3, Request['email'].length);
 
             var data = {
@@ -39,7 +39,7 @@ verifyApp.controller('verifyCtrl', [
                 }
             };
             $http({
-                url: '/validate-email',
+                url: 'http://121.40.121.46:1337/validate-email',
                 method: 'POST',
                 data: data,
                 timeout: 7500
@@ -50,7 +50,7 @@ verifyApp.controller('verifyCtrl', [
                 $scope.result.result = "Verify " + email + " Fail";
                 $scope.result.msg = data.data.msg;
             });
-        }else{
+        } else {
             $scope.result.result = "Verify Fail";
             $scope.result.msg = "Wrong Verify Url";
         }
