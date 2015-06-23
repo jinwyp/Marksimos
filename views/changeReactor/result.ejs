@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Verify Result</title>
+    <link rel="stylesheet" type="text/css" href="/appChangeReactor/css/result.css">
+</head>
+
+<body ng-app="verifyApp" ng-controller="verifyCtrl">
+    <div class="fourohfour">
+        <div class="ocean">
+            <img class="fishy" src="http://sailsjs.org/images/image_devInTub.png">
+        </div>
+        <div class="main">
+            <h1 ng-cloak>{{result.result}}</h1>
+            <h2 ng-cloak>{{result.msg}}</h2>
+            <p class="help">
+                Any Problem ? <a href="http://www.hcdlearning.com/cn/contactus.html">Contact US</a>
+            </p>
+        </div>
+    </div>
+    <script src="/libs/angular/angular.js"></script>
+    <script src="/appChangeReactor/js/verifyCtrl.js"></script>
+</body>
+
+</html>

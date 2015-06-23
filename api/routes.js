@@ -190,7 +190,13 @@ apiRouter.get('/marksimos/adminhomereport/:seminar_id', auth.authLoginToken({fai
 
 
 
-
+/********** Change Reactor ******************************/
+apiRouter.get('/changeReactor', function(req, res, next){
+    res.render('changeReactor/index.ejs', {title : 'Change Reactor'});
+});
+apiRouter.get('/changeReactor/result', function(req, res, next){
+    res.render('changeReactor/result.ejs', {title : 'Verify Result'});
+});
 
 
 

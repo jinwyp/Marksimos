@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Change Reactor</title>
+    <link rel="stylesheet" type="text/css" href="/libs/bootstrap/dist/css/bootstrap.css">
+    <link rel="stylesheet" type="text/css" href="/appChangeReactor/css/cover.css">
+</head>
+
+<body ng-app="changeReactorApp" ng-controller="homeCtrl as home">
+    <div class="site-wrapper">
+        <div class="site-wrapper-inner">
+            <div class="cover-container">
+                <div class="masthead clearfix">
+                    <div class="inner">
+                        <h3 class="masthead-brand">Change Reactor</h3>
+                        <nav>
+                            <ul class="nav masthead-nav">
+                                <li ng-class="{'active':home.css.home}"><a href="#" ng-click="home.clickBar('home')">Home</a></li>
+                                <li ng-class="{'active':home.css.features}"><a href="#" ng-click="home.clickBar('features')">Features</a></li>
+                                <li ng-class="{'active':home.css.help}"><a href="#" ng-click="home.clickBar('help')">Help</a></li>
+                                <li ng-class="{'active':home.css.contract}"><a href="#" ng-click="home.clickBar('contract')">Contact</a></li>
+                            </ul>
+                        </nav>
+                    </div>
+                </div>
+                <div class="inner cover" ng-cloak ng-show='home.css.home'>
+                    <div class="videogular-container">
+                        <videogular vg-theme="home.config.theme.url">
+                            <vg-media vg-src="home.config.sources" vg-tracks="home.config.tracks" vg-native-controls="true">
+                            </vg-media>
+                        </videogular>
+                    </div>
+                </div>
+                <div class="inner cover" ng-cloak ng-show='home.css.features'>
+                    <h3 class="cover-heading">What is ChangeReactor</h3>
+                    <p class="lead">ChangeReactor is a tool that helps you spot resistance within your team or organization. Whenever there is a change, there is a reaction. This reaction could either be positive or negative. </p>
+                    <h3 class="cover-heading">What you get</h3>
+                    <ul>
+                        <li>Learn about changes and reactions</li>
+                        <li>Learn how to estimate reactions of your team or organization stakeholders</li>
+                        <li>Understand and identify various kinds of resistance types</li>
+                        <li>Training and Testing</li>
+                        <li>Create your own project containing stakeholders and plot their resistance levels to get a picture across departments and profiles</li>
+                    </ul>
+                </div>
+                <div class="inner cover" ng-cloak ng-show='home.css.help'>
+                    <h3 class="cover-heading">How to use</h3>
+                    <p class="lead">Install the app on your device and open it. Register using your email id. Browse theory section to understand concepts of changes and reactions. Train yourself by picking up a random case under training section. Once you have finished training, test yourself for a specific case. You can also apply the concepts you learned by creating your project stakeholders with their resistance levels under "Apply to your own projects"(still building).</p>
+                </div>
+                <div class="inner cover" ng-cloak ng-show='home.css.contract'>
+                    <h4 class="cover-heading">STRATEGIC PARTNERSHIP</h4>
+                    <dl>
+                        <dt>Olive Shaw</dt>
+                        <dd>Partner &amp; Director of Business Development</dd>
+                        <dd>+86 138 1752 2965</dd>
+                        <dd><a href="mailto:oliveshaw@hcdlearning.com">oliveshaw@hcdlearning.com</a></dd>
+                    </dl>
+
+                    <h4 class="cover-heading">DEVELOPMENT TEAM</h4>
+                    <dl>
+                        <dt>Anil Raparla</dt>
+                        <dd>Project Manager</dd>
+                        <dd>+86 139 1650 2743</dd>
+                        <dd><a href="mailto:anilraparla@hcdlearning.com">anilraparla@hcdlearning.com</a></dd>
+                    </dl>
+
+                    <h4 class="cover-heading">MARKETING &amp; MEDIA</h4>
+                    <dl>
+                        <dt>Roy Wu</dt>
+                        <dd>Social Media Marketing Specialist</dd>
+                        <dd>+86 136 4191 1527</dd>
+                        <dd><a href="mailto:roywu@hcdlearning.com.com">roywu@hcdlearning.com</a></dd>
+                    </dl>
+                </div>
+
+                <div class="mastfoot">
+                    <div class="inner">
+                        <p>© <a href="http://www.hcdlearning.com">HCD Learning</a> Ltd. All rights reserved. </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="/libs/angular/angular.js"></script>
+    <script src="/libs/angular-sanitize/angular-sanitize.js"></script>
+    <script src="/libs/videogular/videogular.js"></script>
+    <script src="/libs/jquery/jquery.js"></script>
+    <script src="/libs/bootstrap/dist/js/bootstrap.js"></script>
+    <script src="/appChangeReactor/js/homeCtrl.js"></script>
+</body>
+
+</html>

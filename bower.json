@@ -49,6 +49,7 @@
     "angular-sanitize": "~1.4.0",
     "ng-csv": "~0.3.3",
     "js-xlsx": "~0.8.0",
-    "file-saver.js": "~1.20150507.2"
+    "file-saver.js": "~1.20150507.2",
+    "videogular": "~1.2.2"
   }
 }
