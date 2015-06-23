@@ -80,6 +80,9 @@ unit.xml
 common/config.js
 common/user-list.js
 
+# video
+public/appChangeReactor/video
+
 # Visual Studio 2013
 marksimos.sln
 marksimos.v12.suo
