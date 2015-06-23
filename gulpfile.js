@@ -376,6 +376,7 @@ gulp.task('ken', [ 'compass', 'templates', 'nodemonken', 'watchdev']);
 gulp.task('jin', [ 'compass', 'templates', 'nodemonjin', 'watchdev']);
 gulp.task('jinco', ['compass', 'templates', 'nodemonjinlocal', 'watchdev']);
 gulp.task('jinpro', ['compass', 'templates', 'minifycssMarksimos', 'minifycssB2C', 'jscompress', 'nodemonjin', 'watch']);
+gulp.task('raven', ['compass', 'templates', 'minifycssMarksimos', 'minifycssB2C', 'jscompress', 'nodemonraven', 'watch']);
 gulp.task('yuekecheng', ['compass', 'templates', 'nodemonyuekecheng', 'watchdev']);
 gulp.task('ykchome', ['compass', 'templates', 'nodemonykchome', 'watchdev']);
 gulp.task('minify', ['compass', 'templates', 'minifycssMarksimos', 'minifycssB2C', 'jscompress']);
