@@ -18,6 +18,7 @@
                             <ul class="nav masthead-nav">
                                 <li ng-class="{'active':home.css.home}"><a href="#" ng-click="home.clickBar('home')">Home</a></li>
                                 <li ng-class="{'active':home.css.features}"><a href="#" ng-click="home.clickBar('features')">Features</a></li>
+                                <li ng-class="{'active':home.css.policy}"><a href="#" ng-click="home.clickBar('policy')">Privacy Policy</a></li>
                                 <li ng-class="{'active':home.css.help}"><a href="#" ng-click="home.clickBar('help')">Help</a></li>
                                 <li ng-class="{'active':home.css.contract}"><a href="#" ng-click="home.clickBar('contract')">Contact</a></li>
                             </ul>
@@ -44,36 +45,56 @@
                         <li>Create your own project containing stakeholders and plot their resistance levels to get a picture across departments and profiles</li>
                     </ul>
                 </div>
+                <div class="inner cover" ng-cloak ng-show='home.css.policy'>
+                    <p class="lead">At HCD Learning, maintaining your trust is our top priority. We adhere to the following principles on privacy policy: </p>
+                    <ul>
+                        <li>We protect your personal information and will not share it with any third parties without your consent or as required by law.</li>
+                        <li>We may use your information to provide feedback to your teams, departments and organizations, with your consent.</li>
+                        <li>We may use the information based on your information to improve our existing products and services in addition to creating new products.</li>
+                    </ul>
+                    <p class="lead">We may modify this Privacy Policy from time to time, and if we make material changes to it, we will provide notice through our Service, or by other means so that you may review the changes before you continue to use our Services. If you object to any changes, you may close your account. Continuing to use our services after we publish or communicate a notice about any changes to this Privacy Policy means that you are consenting to the changes. </p>
+                </div>
                 <div class="inner cover" ng-cloak ng-show='home.css.help'>
                     <h3 class="cover-heading">How to use</h3>
                     <p class="lead">Install the app on your device and open it. Register using your email id. Browse theory section to understand concepts of changes and reactions. Train yourself by picking up a random case under training section. Once you have finished training, test yourself for a specific case. You can also apply the concepts you learned by creating your project stakeholders with their resistance levels under "Apply to your own projects"(still building).</p>
                 </div>
                 <div class="inner cover" ng-cloak ng-show='home.css.contract'>
-                    <h4 class="cover-heading">STRATEGIC PARTNERSHIP</h4>
-                    <dl>
-                        <dt>Olive Shaw</dt>
-                        <dd>Partner &amp; Director of Business Development</dd>
-                        <dd>+86 138 1752 2965</dd>
-                        <dd><a href="mailto:oliveshaw@hcdlearning.com">oliveshaw@hcdlearning.com</a></dd>
-                    </dl>
-
-                    <h4 class="cover-heading">DEVELOPMENT TEAM</h4>
-                    <dl>
-                        <dt>Anil Raparla</dt>
-                        <dd>Project Manager</dd>
-                        <dd>+86 139 1650 2743</dd>
-                        <dd><a href="mailto:anilraparla@hcdlearning.com">anilraparla@hcdlearning.com</a></dd>
-                    </dl>
-
-                    <h4 class="cover-heading">MARKETING &amp; MEDIA</h4>
-                    <dl>
-                        <dt>Roy Wu</dt>
-                        <dd>Social Media Marketing Specialist</dd>
-                        <dd>+86 136 4191 1527</dd>
-                        <dd><a href="mailto:roywu@hcdlearning.com.com">roywu@hcdlearning.com</a></dd>
-                    </dl>
+                    <div class="row">
+                        <div class="col-sm-4">
+                            <h4 class="cover-heading">STRATEGIC PARTNERSHIP</h4>
+                            <dl>
+                                <dt>Olive Shaw</dt>
+                                <dd>Partner &amp; Director of Business Development</dd>
+                                <dd>+86 138 1752 2965</dd>
+                                <dd><a href="mailto:oliveshaw@hcdlearning.com">oliveshaw@hcdlearning.com</a></dd>
+                            </dl>
+                        </div>
+                        <div class="col-sm-4">
+                            <h4 class="cover-heading">MARKETING &amp; MEDIA</h4>
+                            <dl>
+                                <dt>Roy Wu</dt>
+                                <dd>Social Media Marketing Specialist</dd>
+                                <dd>+86 136 4191 1527</dd>
+                                <dd><a href="mailto:roywu@hcdlearning.com.com">roywu@hcdlearning.com</a></dd>
+                            </dl>
+                        </div>
+                        <div class="col-sm-4">
+                            <h4 class="cover-heading">DEVELOPMENT TEAM</h4>
+                            <dl>
+                                <dt>Anil Raparla</dt>
+                                <dd>Project Manager</dd>
+                                <dd>+86 139 1650 2743</dd>
+                                <dd><a href="mailto:anilraparla@hcdlearning.com">anilraparla@hcdlearning.com</a></dd>
+                            </dl>
+                            <dl>
+                                <dt>Monsoul wu</dt>
+                                <dd>Programmer</dd>
+                                <dd>+86 185 1604 3435</dd>
+                                <dd><a href="mailto:monsoul@hcdlearning.com">monsoul@hcdlearning.com</a></dd>
+                            </dl>
+                        </div>
+                    </div>
                 </div>
-
                 <div class="mastfoot">
                     <div class="inner">
                         <p>© <a href="http://www.hcdlearning.com">HCD Learning</a> Ltd. All rights reserved. </p>

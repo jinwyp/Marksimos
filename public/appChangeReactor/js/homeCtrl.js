@@ -12,10 +12,10 @@ changeReactorApp.controller('homeCtrl', [
         this.config = {
             preload: "none",
             sources: [{
-                src: $sce.trustAsResourceUrl("/appchangeReactor/video/CHANGERECTOER.mp4"),
+                src: $sce.trustAsResourceUrl("/appChangeReactor/video/CHANGERECTOER.mp4"),
                 type: "video/mp4"
             }, {
-                src: $sce.trustAsResourceUrl("/appchangeReactor/video/CHANGERECTOER.webm"),
+                src: $sce.trustAsResourceUrl("/appChangeReactor/video/CHANGERECTOER.webm"),
                 type: "video/webm"
             }],
             tracks: [{
@@ -34,7 +34,8 @@ changeReactorApp.controller('homeCtrl', [
             home: true,
             features: false,
             help: false,
-            contract: false
+            contract: false,
+            policy: false
         }
 
         this.clickBar = function(name) {
@@ -42,6 +43,7 @@ changeReactorApp.controller('homeCtrl', [
             this.css.features = false;
             this.css.help = false;
             this.css.contract = false;
+            this.css.policy = false;
 
             switch (name) {
                 case 'home':
@@ -55,6 +57,9 @@ changeReactorApp.controller('homeCtrl', [
                     break;
                 case 'contract':
                     this.css.contract = true;
+                    break;
+                case 'policy':
+                    this.css.policy = true;
                     break;
                 default:
                     this.css.home = true;
