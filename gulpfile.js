@@ -228,8 +228,11 @@ gulp.task('nodemonjin', function () {
         script: 'app.js',
         ignore : [
             "tmp/**",
+            "log/**",
             "public/**",
             "views/**",
+            "cgi/**",
+            "requirementdocument/**",
             "node_modules/**"
         ],
         env: { 'NODE_ENV': 'jin' }
@@ -257,7 +260,7 @@ gulp.task('nodemonjinlocal', function () {
             "public/**",
             "views/**"
         ],
-        env: { 'NODE_ENV': 'jinlocal' }
+        env: { 'NODE_ENV': 'jinlocal2' }
     });
 //        .on('restart', 'default')
 });
