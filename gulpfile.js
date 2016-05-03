@@ -244,8 +244,11 @@ gulp.task('nodemonjinstaging', function () {
         script: 'app.js',
         ignore : [
             "tmp/**",
+            "log/**",
             "public/**",
             "views/**",
+            "cgi/**",
+            "requirementdocument/**",
             "node_modules/**"
         ],
         env: { 'NODE_ENV': 'jinstaging' }
@@ -257,8 +260,12 @@ gulp.task('nodemonjinlocal', function () {
         script: 'app.js',
         ignore : [
             "tmp/**",
+            "log/**",
             "public/**",
-            "views/**"
+            "views/**",
+            "cgi/**",
+            "requirementdocument/**",
+            "node_modules/**"
         ],
         env: { 'NODE_ENV': 'jinlocal2' }
     });
