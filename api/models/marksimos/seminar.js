@@ -57,7 +57,7 @@ var seminarSchema = new Schema({
     facilitatorId: String,
 
     belongToCampaign : { type: schemaObjectId, ref: 'Campaign' }
-});
+}, { usePushEach: true });
 
 
 /**

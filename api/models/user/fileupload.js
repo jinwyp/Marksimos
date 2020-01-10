@@ -75,21 +75,23 @@ fileStorageSchema.plugin(mongooseTimestamps);
 
 
 fileStorageSchema.statics.creatFile = function (file, fieldname) {
+
     if( typeof file[fieldname] !== 'undefined' ) {
+        var tempFile = file[fieldname][0];
 
         return FileStorage.createQ({
-            name: file[fieldname].name,
-            path: file[fieldname].path,
-            physicalAbsolutePath: file[fieldname].pathAbsolute,
+            name: tempFile.name,
+            path: tempFile.path,
+            physicalAbsolutePath: tempFile.pathAbsolute,
 
-            uploadOriginalName: file[fieldname].originalname,
-            uploadOriginalFileSize : file[fieldname].size,
-            description : file[fieldname].fieldname,
+            uploadOriginalName: tempFile.originalname,
+            uploadOriginalFileSize : tempFile.size,
+            description : tempFile.fieldname,
 
-            mimetype: file[fieldname].mimetype,
-            encoding: file[fieldname].encoding,
-            extension: file[fieldname].extension,
-            truncated: file[fieldname].truncated
+            mimetype: tempFile.mimetype,
+            encoding: tempFile.encoding,
+            extension: tempFile.extension,
+            truncated: tempFile.truncated
         });
 
     }else{
@@ -200,8 +202,22 @@ uploadFeatureList.forEach(function(feature){
 FileStorage.multerUpload = function(fieldname){
     fieldname = fieldname || '';
 
+    var storage = multer.diskStorage({
+        destination: function (req, file, cb) {
+            cb(null, basePath + tempPath);
+        },
+        filename: function (req, file, cb) {
+
+            var datenow = new Date();
+            var datenowString = datenow.getFullYear() + '_' + datenow.getMonth() + '_' + datenow.getDate() + '_' + datenow.getHours() + '_' + datenow.getMinutes() + '_' + datenow.getSeconds() + '_';
+
+            cb(null, datenowString + file.originalname.replace(/\W+/g, '_').toLowerCase() +  '_' + datenow.getTime());
+        }
+    })
+
+
     return multer({
-        dest : basePath + tempPath,
+        storage: storage,
         limits: {
             fieldNameSize: 100,
             fields : 30,
@@ -210,28 +226,24 @@ FileStorage.multerUpload = function(fieldname){
             files: 2,
             fileSize: 1 * 1024 * 1024
         },
-        rename: function (fieldname, filename, req, res) {
-            var datenow = new Date();
-            var datenowString = datenow.getFullYear() + '_' + datenow.getMonth() + '_' + datenow.getDate() + '_' + datenow.getHours() + '_' + datenow.getMinutes() + '_' + datenow.getSeconds() + '_';
-            return datenowString + filename.replace(/\W+/g, '_').toLowerCase() +  '_' + datenow.getTime();
-        },
 
-        onFileUploadStart: function (file, req, res) {
+        fileFilter: function (req, file, cb) {
 
             if (mimeTypeLimit.indexOf(file.mimetype) === -1 ) {
-                return false;
+                cb(null, false);
             }
 
             if (uploadFieldsLimit.indexOf(file.fieldname) === -1 ) {
                 logger.log('Upload file failed! Form fieldname: ' + file.fieldname + '. File name: ' + file.originalname);
-                return false;
+                cb(null, false);
             }
 
             if(fieldname !== '' && fieldname !== file.fieldname){
                 logger.log('Upload file failed! Form fieldname: ' + file.fieldname + '. File name: ' + file.originalname);
-                return false;
+                cb(null, false);
             }
 
+            cb(null, true);
             //logger.log('Starting upload ... Form fieldname: '+ file.fieldname + '. File name: ' + file.originalname);
 
         },
@@ -254,5 +266,5 @@ FileStorage.multerUpload = function(fieldname){
 
             //logger.log('Upload Finished. File name ' + file.originalname + ' uploaded to  ' + file.path);
         }
-    });
+    }).fields([{name: fieldname }]);
 };

@@ -46,7 +46,7 @@ var campaignSchema = new Schema({
 
     activated: { type: Boolean, default: false }
 
-});
+}, { usePushEach: true });
 
 /**
  * Mongoose plugin

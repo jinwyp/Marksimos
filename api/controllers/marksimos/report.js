@@ -196,7 +196,7 @@ exports.getStudentFinalScore = function(req, res, next) {
 
 
         seminarData.companyAssignment.forEach(function(company) {
-            if (company.teamList.length > 0) {
+            if (company.teamList && company.teamList.length > 0) {
                 teamIdList.push(company.teamList[0]);
             }
         });
@@ -209,7 +209,7 @@ exports.getStudentFinalScore = function(req, res, next) {
         });
 
         seminarData.companyAssignment.forEach(function(company) {
-            if (company.teamList.length > 0) {
+            if ( company.teamList && company.teamList.length > 0) {
                 companyHashMap[company.companyId] = teamHashMap[company.teamList[0]];
             }
         });
