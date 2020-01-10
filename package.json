@@ -18,7 +18,7 @@
     "express-validator": "^2.8.0",
     "lodash": "^4.17.15",
     "mkdirp": "^0.5.1",
-    "mongoose": "^4.13.20",
+    "mongoose": "^5.8.6",
     "mongoose-q": "^0.1.0",
     "mongoose-timestamp": "^0.6.0",
     "morgan": "^1.9.1",
