@@ -72,7 +72,7 @@ app.use(expressValidator({
     customValidators: customValidator
 }));
 
-mongoose.connect(config.mongo_conn);
+mongoose.connect(config.mongo_conn, {useMongoClient: true});
 
 //app.use(session({
 //    secret: 'marksimos',
@@ -191,14 +191,14 @@ app.use(function(err, req, res, next){
 
 
 
-app.set('port', process.env.PORT || 3000);
+app.set('port', config.port || 3000);
 
 
 var db = mongoose.connection;
 db.on('error', console.error.bind(console, 'connection error:'));
 db.once('open', function(response,request) {
     var server = app.listen(app.get('port'), function() {
-      console.log('Express server listening on port ' + server.address().port);
+      console.log('==== Express server listening on port ' + server.address().port);
     });
 
     var socketio = require('socket.io').listen(server);
