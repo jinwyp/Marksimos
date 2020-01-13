@@ -44,22 +44,23 @@ app.set('view engine', 'ejs');
 
 app.use(favicon(path.join(__dirname, '/public/cn/assets/img/hcd-icon.ico')));
 
-var morganFileStream = fs.createWriteStream(config.logDirectory + 'accessmorgan.log', {'flags': 'a'});
+var morganFileStream = fs.createWriteStream(config.logDirectory + 'access-morgan.log', {'flags': 'a'});
 var morganOption = {
     skip: function (req, res) { return res.statusCode < 400; }
 };
 
 
 if(app.get('env') === 'production'){
-    app.use(morgan('dev',morganOption) );
+    app.use(morgan('dev', morganOption) );
+
 }else{
     app.use(morgan('dev') );
 }
 
+app.use(morgan('combined', {
+    stream: morganFileStream
+}));
 
-//app.use(morgan('combined', {
-//    stream: morganFileStream
-//}));
 
 app.use(compression());
 app.use(cookieParser());

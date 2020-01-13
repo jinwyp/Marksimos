@@ -25,15 +25,15 @@ var tokenSchema = new Schema({
     //令牌
     token: { type: String, required: true },
     //用户编号
-    
+
     userId: { type: String, required: true },
-    
+
     //其他信息
     request: {
         ip: { type: String, required: false },
         userAgent: { type: String, required: false }
     },
-    
+
     //过期时间
     expires: { type: Date, required: true }
 });
@@ -68,9 +68,9 @@ tokenSchema.statics.clearToken = function (userInfo) {
     var now = new Date();
     lastClearTime = now - OneMinute;
 
-    //删除 从现在开始已过期1分钟的数据,防止边界问题
+    // 删除 从现在开始已过期1分钟的数据,防止边界问题
     Token.remove({ expires: { $lt: lastClearTime } }, function (err, rowNum) {
-        logger.log("clear " + rowNum + " expired token.");
+        logger.log("Delete token : clear " + rowNum + " expired token.");
     });
 
     setTimeout(Token.clearToken, SevenDay);

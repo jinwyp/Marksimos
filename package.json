@@ -4,7 +4,8 @@
   "private": true,
   "scripts": {
     "start": "gulp nodemonjinlocal",
-    "jin": "NODE_ENV=jinlocal2 nodemon app.js"
+    "jin": "NODE_ENV=jinlocal2 nodemon app.js",
+    "production": "NODE_ENV=jinlocal2 node app.js"
   },
   "dependencies": {
     "bcrypt-nodejs": "^0.0.3",
