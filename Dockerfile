@@ -1,7 +1,6 @@
 FROM node:12
 
 
-
 # Create app directory
 WORKDIR /usr/src/nodejs/app
 
@@ -12,7 +11,7 @@ WORKDIR /usr/src/nodejs/app
 # where available (npm@5+)
 
 COPY package*.json ./
-RUN npm install
+RUN npm install --production
 
 
 # If you are building your code for production
